@@ -14,7 +14,15 @@
                         </div>
                     @endif
 
-                    Hello {{ $user->name }}, you're logged in!
+                    Hello {{ $user->name }}, you're logged in!<br><br>
+                    @if(sizeof($groups))
+                    Here are your groups:
+                    <ol>
+                        @foreach($groups as $groupEmail => $groupName)
+                        <li>{{ $groupName }}</li>
+                        @endforeach
+                    </ol>
+                    @endif
                 </div>
             </div>
         </div>
