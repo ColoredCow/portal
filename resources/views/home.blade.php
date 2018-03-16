@@ -2,6 +2,16 @@
 
 @section('content')
 <div class="container">
+    <div class="row">
+        <div class="offset-md-1 col-md-3 card">
+            <a class="card-body no-transition" href="{{ route('hr.index') }} ">
+                <br>
+                <h2 class="text-center">HR module</h2>
+                <br>
+            </div>
+        </div>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

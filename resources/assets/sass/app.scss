@@ -18,3 +18,11 @@
     width: 30px;
     border-radius: 50%;
 }
+
+.no-transition {
+	color: initial;
+	&:hover {
+		text-decoration: none;
+		color: initial;
+	}
+}
