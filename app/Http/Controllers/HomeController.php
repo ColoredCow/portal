@@ -26,6 +26,9 @@ class HomeController extends Controller
     public function index()
     {
         $user = session('oauthuser');
+        if (!$user) {
+            return redirect('logout');
+        }
         $userGroups = $this->getUserGroups($user->email);
 
         return view('home')->with([
