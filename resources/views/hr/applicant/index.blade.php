@@ -14,13 +14,15 @@
             <th>Name</th>
             <th>Contact</th>
             <th>Applied for</th>
-            <th>Resume</th>
             <th>Date of application</th>
+            <th>Resume</th>
             <th>Status</th>
         </tr>
         @foreach ($applicants as $applicant)
         <tr>
-            <td>{{ $applicant->name }}</td>
+            <td>
+                <a href="/hr/applicants/{{ $applicant->id }}">{{ $applicant->name }}</a>
+            </td>
             <td>{{ $applicant->email }}<br>{{ $applicant->phone }}</td>
             <td>{{ $applicant->job->title }}</td>
             <td>{{ $applicant->created_at }}</td>

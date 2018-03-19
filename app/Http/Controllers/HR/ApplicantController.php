@@ -77,7 +77,14 @@ class ApplicantController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = session('oauthuser');
+        if (!$user) {
+            return redirect('logout');
+        }
+        return view('hr.applicant.show')->with([
+            'user' => $user,
+            'applicant' => Applicant::with('job')->find($id),
+        ]);
     }
 
     /**
