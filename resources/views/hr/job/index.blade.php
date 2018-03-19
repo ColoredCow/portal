@@ -3,6 +3,8 @@
 @section('content')
 <div class="container">
     <br>
+    <h1>Jobs</h1>
+    <br>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Job title</th>
