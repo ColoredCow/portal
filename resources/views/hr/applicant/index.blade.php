@@ -5,10 +5,8 @@
     <br>
     <h1>Applicants</h1>
     <br>
-    {{-- <a class="btn btn-primary" href="/hr/applicants/create"><i class="fa fa-plus"></i>&nbsp;&nbsp;New applicant</a> --}}
     <a class="btn btn-info" href="/hr/jobs">See all jobs</a>
-    <br>
-    <br>
+    <br><br>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Name</th>
@@ -34,7 +32,7 @@
                 @endif
             </td>
             <td>
-                <span class="d-flex justify-content-center"><span class="badge badge-danger">Rejected</span>
+                <span class="d-flex justify-content-center"><span class="badge badge-pill badge-danger">Rejected</span>
                 </span>
             </td>
         </tr>

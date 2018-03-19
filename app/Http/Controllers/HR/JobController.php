@@ -21,7 +21,7 @@ class JobController extends Controller
         }
         return view('hr.job.index')->with([
             'user' => $user,
-            'jobs' => Job::all()
+            'jobs' => Job::with('applicants')->get(),
         ]);
     }
 
@@ -74,7 +74,14 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = session('oauthuser');
+        if (!$user) {
+            return redirect('logout');
+        }
+        return view('hr.job.edit')->with([
+            'user' => $user,
+            'job' => Job::find($id)
+        ]);
     }
 
     /**
@@ -86,7 +93,20 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $facebook_post = $request->input('facebook_post');
+        $instagram_post = $request->input('instagram_post');
+        $twitter_post = $request->input('twitter_post');
+        $linkedin_post = $request->input('linkedin_post');
+
+        $job = Job::find($id);
+        $job->facebook_post = $facebook_post;
+        $job->instagram_post = $instagram_post;
+        $job->twitter_post = $twitter_post;
+        $job->linkedin_post = $linkedin_post;
+
+        $job->save();
+
+        return redirect("/hr/jobs/$id/edit");
     }
 
     /**
