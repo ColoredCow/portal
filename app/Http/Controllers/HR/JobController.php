@@ -4,6 +4,7 @@ namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
 use App\Models\HR\Job;
+use App\Models\HR\Round;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -80,7 +81,8 @@ class JobController extends Controller
         }
         return view('hr.job.edit')->with([
             'user' => $user,
-            'job' => Job::find($id)
+            'job' => Job::with('rounds')->find($id),
+            'rounds' => Round::all(),
         ]);
     }
 
@@ -98,7 +100,12 @@ class JobController extends Controller
         $twitter_post = $request->input('twitter_post');
         $linkedin_post = $request->input('linkedin_post');
 
+        $rounds = $request->input('rounds');
+
         $job = Job::find($id);
+
+        $job->rounds()->sync($rounds, false);
+
         $job->facebook_post = $facebook_post;
         $job->instagram_post = $instagram_post;
         $job->twitter_post = $twitter_post;

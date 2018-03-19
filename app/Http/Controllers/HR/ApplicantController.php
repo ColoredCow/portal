@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Models\HR\Applicant;
 use App\Models\HR\Job;
+use App\Models\HR\Round;
 use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
@@ -84,6 +85,7 @@ class ApplicantController extends Controller
         return view('hr.applicant.show')->with([
             'user' => $user,
             'applicant' => Applicant::with('job')->find($id),
+            'rounds' => Round::all(),
         ]);
     }
 

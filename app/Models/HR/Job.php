@@ -20,4 +20,9 @@ class Job extends Model
     {
     	return $this->applicants->where('status', $status);
     }
+
+    public function rounds()
+    {
+        return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer');
+    }
 }
