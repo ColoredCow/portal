@@ -17,11 +17,11 @@ class CreateHrJobsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('posted_by');
-            $table->string('link');
-            $table->string('facebook_post');
-            $table->string('twitter_post');
-            $table->string('linkedin_post');
-            $table->string('instagram_post');
+            $table->string('link')->nullable();
+            $table->string('facebook_post')->nullable();
+            $table->string('twitter_post')->nullable();
+            $table->string('linkedin_post')->nullable();
+            $table->string('instagram_post')->nullable();
             $table->timestamps();
         });
     }

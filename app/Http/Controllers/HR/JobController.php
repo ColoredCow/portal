@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\HR;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\HR\Job;
+use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
@@ -14,7 +15,14 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        $user = session('oauthuser');
+        if (!$user) {
+            return redirect('logout');
+        }
+        return view('hr.job.index')->with([
+            'user' => $user,
+            'jobs' => Job::all()
+        ]);
     }
 
     /**
@@ -22,9 +30,18 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $title = $request->input('title');
+        $postedBy = urldecode($request->input('by'));
+        $link = urldecode($request->input('link'));
+
+        $job = new Job();
+        $job->title = $title;
+        $job->posted_by = $postedBy;
+        $job->link = $link;
+
+        return json_encode($job->save());
     }
 
     /**
