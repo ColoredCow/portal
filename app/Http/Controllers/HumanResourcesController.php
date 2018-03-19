@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class HumanResourcesController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +18,7 @@ class HumanResourcesController extends Controller
         if (!$user) {
             return redirect('logout');
         }
-        return view('human-resources')->with([
+        return view('human-resources.index')->with([
             'user' => $user
         ]);
     }
@@ -29,7 +30,13 @@ class HumanResourcesController extends Controller
      */
     public function create()
     {
-        //
+        $user = session('oauthuser');
+        if (!$user) {
+            return redirect('logout');
+        }
+        return view('human-resources.create')->with([
+            'user' => $user
+        ]);
     }
 
     /**
