@@ -14,18 +14,27 @@
             <th>Name</th>
             <th>Contact</th>
             <th>Applied for</th>
-            <th>Current Round</th>
             <th>Resume</th>
             <th>Date of application</th>
+            <th>Status</th>
         </tr>
         @foreach ($applicants as $applicant)
         <tr>
             <td>{{ $applicant->name }}</td>
             <td>{{ $applicant->email }}<br>{{ $applicant->phone }}</td>
             <td>{{ $applicant->job->title }}</td>
-            <td>Round 3: Detailed Tech</td>
-            <td>{{ $applicant->resume }}</td>
             <td>{{ $applicant->created_at }}</td>
+            <td>
+                @if ($applicant->resume)
+                    <a href="{{ $applicant->resume }}" class="d-flex justify-content-center" target="_blank"><i class="fa fa-file fa-2x"></i></a>
+                @else
+                    <span class="d-flex justify-content-center">–</span>
+                @endif
+            </td>
+            <td>
+                <span class="d-flex justify-content-center"><span class="badge badge-danger">Rejected</span>
+                </span>
+            </td>
         </tr>
         @endforeach
     </table>

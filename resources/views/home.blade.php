@@ -32,7 +32,7 @@
         <div class="offset-md-1 col-md-3 card">
             <a class="card-body no-transition" href="/hr/applicants/">
                 <br>
-                <h2 class="text-center">Human Resources</h2>
+                <h2 class="text-center">HR</h2>
                 <br>
             </div>
         </div>
