@@ -30,13 +30,13 @@ class ApplicantController extends Controller
      */
     public function create()
     {
-        // $user = session('oauthuser');
-        // if (!$user) {
-        //     return redirect('logout');
-        // }
-        // return view('human-resources.create')->with([
-        //     'user' => $user
-        // ]);
+        $user = session('oauthuser');
+        if (!$user) {
+            return redirect('logout');
+        }
+        return view('hr.applicant.create')->with([
+            'user' => $user
+        ]);
     }
 
     /**
