@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\HR;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class HumanResourcesController extends Controller
+class JobController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -14,13 +14,7 @@ class HumanResourcesController extends Controller
      */
     public function index()
     {
-        $user = session('oauthuser');
-        if (!$user) {
-            return redirect('logout');
-        }
-        return view('human-resources.index')->with([
-            'user' => $user
-        ]);
+        //
     }
 
     /**
@@ -30,13 +24,7 @@ class HumanResourcesController extends Controller
      */
     public function create()
     {
-        $user = session('oauthuser');
-        if (!$user) {
-            return redirect('logout');
-        }
-        return view('human-resources.create')->with([
-            'user' => $user
-        ]);
+        //
     }
 
     /**

@@ -24,5 +24,6 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::resource('hr', 'HumanResourcesController');
+Route::resource('hr/applicants', 'HR\ApplicantController');
+Route::resource('hr/jobs', 'HR\JobController');
 

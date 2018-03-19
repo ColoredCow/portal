@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <a class="btn btn-primary" href="{{ route('hr.create') }}"><i class="fa fa-plus"></i>&nbsp;&nbsp;New applicant</a>
+    <a class="btn btn-primary" href="#"><i class="fa fa-plus"></i>&nbsp;&nbsp;New applicant</a>
     <br>
     <br>
     <table class="table table-striped table-bordered">
