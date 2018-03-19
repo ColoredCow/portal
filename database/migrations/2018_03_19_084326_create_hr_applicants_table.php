@@ -19,8 +19,8 @@ class CreateHrApplicantsTable extends Migration
             $table->string('email');
             $table->string('phone')->nullable();
             $table->integer('hr_job_id')->unsigned();
-            $table->string('status');
-            $table->string('resume');
+            $table->string('status')->nullable();
+            $table->string('resume')->nullable();
             $table->timestamps();
 
         });

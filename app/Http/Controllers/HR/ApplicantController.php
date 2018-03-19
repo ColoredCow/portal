@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\HR;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\HR\Applicant;
+use App\Models\HR\Job;
+use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
 {
@@ -19,7 +21,8 @@ class ApplicantController extends Controller
             return redirect('logout');
         }
         return view('hr.applicant.index')->with([
-            'user' => $user
+            'user' => $user,
+            'applicants' => Applicant::with('job')->get(),
         ]);
     }
 
@@ -28,15 +31,31 @@ class ApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $user = session('oauthuser');
-        if (!$user) {
-            return redirect('logout');
-        }
-        return view('hr.applicant.create')->with([
-            'user' => $user
-        ]);
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $resume = $request->input('resume');
+        $jobTitle = $request->input('job_title');
+
+        $applicant = new Applicant();
+        $applicant->name = $name;
+        $applicant->email = $email;
+        $applicant->phone = $phone;
+        $applicant->resume = $resume;
+
+        $job = Job::where('title', $jobTitle)->first();
+        $applicant->hr_job_id = $job->id;
+
+        return json_encode($applicant->save());
+        // $user = session('oauthuser');
+        // if (!$user) {
+        //     return redirect('logout');
+        // }
+        // return view('hr.applicant.create')->with([
+        //     'user' => $user
+        // ]);
     }
 
     /**
