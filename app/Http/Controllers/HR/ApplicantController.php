@@ -142,6 +142,13 @@ class ApplicantController extends Controller
         $applicant_round->round_status = $round_status;
         $applicant_round->save();
 
+        if ($round_status == 'rejected')
+        {
+            $applicant = Applicant::find($id);
+            $applicant->status = 'rejected';
+            $applicant->save();
+        }
+
         return redirect("/hr/applicants/$id/edit");
     }
 

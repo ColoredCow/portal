@@ -5,6 +5,9 @@
 <div class="container" id="page-hr-applicant-edit">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <br>
+            <a class="btn btn-info" href="/hr/applicants">See all applicants</a>
+            <br><br>
             <div class="card">
                 <div class="card-header">Applicant Details</div>
                 <div class="card-body">
