@@ -19,7 +19,7 @@
         @foreach ($applicants as $applicant)
         <tr>
             <td>
-                <a href="/hr/applicants/{{ $applicant->id }}">{{ $applicant->name }}</a>
+                <a href="/hr/applicants/{{ $applicant->id }}/edit">{{ $applicant->name }}</a>
             </td>
             <td>{{ $applicant->email }}<br>{{ $applicant->phone }}</td>
             <td>{{ $applicant->job->title }}</td>
@@ -32,7 +32,7 @@
                 @endif
             </td>
             <td>
-                <span class="d-flex justify-content-center"><span class="badge badge-pill badge-danger">Rejected</span>
+                <span class="d-flex justify-content-center"><span class="badge badge-pill badge-danger">{{ $applicant->status }}</span>
                 </span>
             </td>
         </tr>

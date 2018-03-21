@@ -4,9 +4,13 @@ namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
 use App\Models\HR\Applicant;
+use App\Models\HR\ApplicantReview;
+use App\Models\HR\ApplicantRound;
 use App\Models\HR\Job;
 use App\Models\HR\Round;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicantController extends Controller
 {
@@ -45,18 +49,22 @@ class ApplicantController extends Controller
         $applicant->email = $email;
         $applicant->phone = $phone;
         $applicant->resume = $resume;
+        $applicant->status = 'new';
 
         $job = Job::where('title', $jobTitle)->first();
         $applicant->hr_job_id = $job->id;
+        $applicant->save();
 
-        return json_encode($applicant->save());
-        // $user = session('oauthuser');
-        // if (!$user) {
-        //     return redirect('logout');
-        // }
-        // return view('hr.applicant.create')->with([
-        //     'user' => $user
-        // ]);
+        $applicant_round = new ApplicantRound;
+        $applicant_round->hr_applicant_id = $applicant->id;
+        $applicant_round->hr_round_id = $job->rounds->first()->id;
+        $applicant_round->scheduled_date = Carbon::now()->addDay();
+        // update with $job->posted_by
+        $applicant_round->scheduled_person_id = 1;
+
+        $applicant_round->save();
+
+        return json_encode(true);
     }
 
     /**
@@ -78,15 +86,7 @@ class ApplicantController extends Controller
      */
     public function show($id)
     {
-        $user = session('oauthuser');
-        if (!$user) {
-            return redirect('logout');
-        }
-        return view('hr.applicant.show')->with([
-            'user' => $user,
-            'applicant' => Applicant::with('job')->find($id),
-            'rounds' => Round::all(),
-        ]);
+        //
     }
 
     /**
@@ -97,7 +97,17 @@ class ApplicantController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = session('oauthuser');
+        if (!$user) {
+            return redirect('logout');
+        }
+
+        return view('hr.applicant.edit')->with([
+            'user' => $user,
+            'applicant' => Applicant::with('job')->find($id),
+            'rounds' => Round::all(),
+            'applicant_rounds' => ApplicantRound::with('applicantReviews')->where('hr_applicant_id', $id)->get(),
+        ]);
     }
 
     /**
@@ -109,7 +119,30 @@ class ApplicantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $reviews = $request->input('reviews');
+        $round_id = $request->input('round_id');
+        $round_status = $request->input('round_status');
+
+        $applicant_round = ApplicantRound::where('hr_applicant_id', $id)->first();
+
+        foreach ($reviews as $review_key => $review_value) {
+            $applicant_reviews = ApplicantReview::updateOrCreate(
+                [
+                    'hr_applicant_round_id' => $applicant_round->id
+                ],
+                [
+                    'review_key' => $review_key,
+                    'review_value' => $review_value,
+                ]
+            );
+        }
+
+        $applicant_round->conducted_person_id = Auth::user()->id;
+        $applicant_round->conducted_date = Carbon::now();
+        $applicant_round->round_status = $round_status;
+        $applicant_round->save();
+
+        return redirect("/hr/applicants/$id/edit");
     }
 
     /**

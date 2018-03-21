@@ -11,7 +11,8 @@ class Applicant extends Model
 
     protected $table = 'hr_applicants';
 
-    public function job() {
+    public function job()
+    {
     	return $this->belongsTo(Job::class, 'hr_job_id');
     }
 }

@@ -20,7 +20,8 @@ class CreateHrApplicantsRoundsTable extends Migration
             $table->timestamp('scheduled_date')->nullable();
             $table->integer('scheduled_person_id')->unsigned();
             $table->timestamp('conducted_date')->nullable();
-            $table->integer('conducted_person_id')->unsigned();
+            $table->integer('conducted_person_id')->unsigned()->nullable();
+            $table->string('round_status')->nullable();
         });
 
         Schema::table('hr_applicants_rounds', function(Blueprint $table) {
