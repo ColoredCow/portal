@@ -21,12 +21,7 @@ class ApplicantController extends Controller
      */
     public function index()
     {
-        $user = session('oauthuser');
-        if (!$user) {
-            return redirect('logout');
-        }
         return view('hr.applicant.index')->with([
-            'user' => $user,
             'applicants' => Applicant::with('job')->get(),
         ]);
     }
@@ -97,15 +92,9 @@ class ApplicantController extends Controller
      */
     public function edit($id)
     {
-        $user = session('oauthuser');
-        if (!$user) {
-            return redirect('logout');
-        }
-
         $applicant = Applicant::with('job')->find($id);
 
         return view('hr.applicant.edit')->with([
-            'user' => $user,
             'job' => Job::with('rounds')->find($applicant->job->id),
             'applicant' => $applicant,
             'rounds' => Round::all(),
