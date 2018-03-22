@@ -7,7 +7,7 @@
     <br>
     <a class="btn btn-info" href="/hr/jobs">See all jobs</a>
     <br><br>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>
             <th>Contact</th>
