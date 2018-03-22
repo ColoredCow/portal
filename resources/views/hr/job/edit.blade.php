@@ -37,24 +37,13 @@
                     </div>
                 </div>
                 <br>
-                @if (sizeof($rounds))
+                @if (sizeof($job->rounds))
                     <h3>Interviewers</h3>
                     <div class="form-row">
-                    @foreach ($rounds as $key => $round)
+                    @foreach ($job->rounds as $key => $round)
                         <div class="form-group col-md-5 {{ $key%2 ? 'offset-md-1' : '' }}">
                             <label for="rounds[{{ $round->id }}][hr_round_interviewer]">{{ $round->name }}</label>
-                            @php
-                                $round_interviewer = '';
-                            @endphp
-                            @foreach ($job->rounds as $job_round)
-                                @if ($job_round->pivot->hr_round_id === $round->id )
-                                    @php
-                                        $round_interviewer = $job_round->pivot->hr_round_interviewer;
-                                    @endphp
-                                    @break
-                                @endif
-                            @endforeach
-                            <input type="text" class="form-control" name="rounds[{{ $round->id }}][hr_round_interviewer]" id="round_{{ $round->id }}" placeholder="{{ $round->name }}" value="{{ $round_interviewer }}">
+                            <input type="text" class="form-control" name="rounds[{{ $round->id }}][hr_round_interviewer]" id="round_{{ $round->id }}" placeholder="{{ $round->name }}" value="{{ $round->pivot->hr_round_interviewer }}">
                         </div>
                     @endforeach
                     </div>
@@ -62,7 +51,7 @@
             </div>
 
             <div class="card-footer">
-                <button class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
     </div>

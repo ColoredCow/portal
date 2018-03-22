@@ -82,7 +82,6 @@ class JobController extends Controller
         return view('hr.job.edit')->with([
             'user' => $user,
             'job' => Job::with('rounds')->find($id),
-            'rounds' => Round::all(),
         ]);
     }
 

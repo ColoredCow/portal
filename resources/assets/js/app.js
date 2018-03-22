@@ -20,3 +20,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app'
 });
+
+$('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
+	var form = $(this).closest('.applicant-round-form');
+	form.find('[name="round_status"]').val($(this).data('status'));
+	form.submit();
+});

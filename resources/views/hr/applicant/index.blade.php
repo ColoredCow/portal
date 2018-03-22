@@ -7,7 +7,7 @@
     <br>
     <a class="btn btn-info" href="/hr/jobs">See all jobs</a>
     <br><br>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>
             <th>Contact</th>
@@ -19,7 +19,7 @@
         @foreach ($applicants as $applicant)
         <tr>
             <td>
-                <a href="/hr/applicants/{{ $applicant->id }}">{{ $applicant->name }}</a>
+                <a href="/hr/applicants/{{ $applicant->id }}/edit">{{ $applicant->name }}</a>
             </td>
             <td>{{ $applicant->email }}<br>{{ $applicant->phone }}</td>
             <td>{{ $applicant->job->title }}</td>
@@ -32,7 +32,22 @@
                 @endif
             </td>
             <td>
-                <span class="d-flex justify-content-center"><span class="badge badge-pill badge-danger">Rejected</span>
+                <span class="d-flex justify-content-center">
+                    @switch ($applicant->status)
+                        @case('new')
+                        @default
+                            <span class="badge badge-pill badge-info">
+                            @break
+
+                        @case('rejected')
+                            <span class="badge badge-pill badge-danger">
+                            @break
+
+                        @case('in-progress')
+                            <span class="badge badge-pill badge-warning">
+                            @break
+                    @endswitch
+                    {{ $applicant->status }}</span>
                 </span>
             </td>
         </tr>
