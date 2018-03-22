@@ -41,8 +41,11 @@ class JobController extends Controller
         $job->title = $title;
         $job->posted_by = $postedBy;
         $job->link = $link;
+        $job->save();
 
-        return json_encode($job->save());
+        $job->rounds()->attach(Round::all()->pluck('id')->toArray());
+
+        return json_encode(true);
     }
 
     /**
