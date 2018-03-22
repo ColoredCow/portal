@@ -102,9 +102,12 @@ class ApplicantController extends Controller
             return redirect('logout');
         }
 
+        $applicant = Applicant::with('job')->find($id);
+
         return view('hr.applicant.edit')->with([
             'user' => $user,
-            'applicant' => Applicant::with('job')->find($id),
+            'job' => Job::with('rounds')->find($applicant->job->id),
+            'applicant' => $applicant,
             'rounds' => Round::all(),
             'applicant_rounds' => ApplicantRound::with('applicantReviews')->where('hr_applicant_id', $id)->get(),
         ]);
@@ -142,12 +145,9 @@ class ApplicantController extends Controller
         $applicant_round->round_status = $round_status;
         $applicant_round->save();
 
-        if ($round_status == 'rejected')
-        {
-            $applicant = Applicant::find($id);
-            $applicant->status = 'rejected';
-            $applicant->save();
-        }
+        $applicant = Applicant::find($id);
+        $applicant->status = $round_status == 'rejected' ? 'rejected' : 'in-progress';
+        $applicant->save();
 
         return redirect("/hr/applicants/$id/edit");
     }

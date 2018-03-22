@@ -43,8 +43,8 @@
                     </div>
                 </div>
             </div>
-            @if ($rounds)
-                @foreach ($rounds as $round)
+            @if ($job->rounds)
+                @foreach ($job->rounds as $round)
                     <br>
                     <form action="/hr/applicants/{{$applicant->id}}" method="POST" class="applicant-round-form">
 
@@ -54,25 +54,18 @@
                         <div class="card">
                             <div class="card-header">
                                 <span>{{ $round->name }}</span>
-                                {{-- <span class="float-right">Interviewer -  </span> --}}
+                                <span class="float-right">Interviewer - {{ $round->pivot->hr_round_interviewer }} </span>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="">Feedback</label>
                                         @php
-                                            $feedback = '';
+                                            $applicant_round = $applicant->applicantRounds->where('hr_round_id', $round->id)->first();
+                                            $applicant_review = $applicant_round->applicantReviews->where('review_key', 'feedback')->first();
+                                            $applicant_review_value = $applicant_review ? $applicant_review->review_value : '';
                                         @endphp
-                                        @foreach ($applicant_rounds as $applicant_round)
-                                            @foreach ($applicant_round->applicantReviews as $applicant_review)
-                                                @if ($applicant_review->review_key == 'feedback')
-                                                    @php
-                                                    $feedback = $applicant_review->review_value;
-                                                    @endphp
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                        <textarea name="reviews[feedback]" id="review[feedback]" rows="10" class="form-control">{{ $feedback }}</textarea>
+                                        <textarea name="reviews[feedback]" id="review[feedback]" rows="10" class="form-control">{{ $applicant_review_value }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -82,15 +75,11 @@
                                         <button type="button" class="btn btn-success round-submit" data-status="confirmed">Move to next round</button>
                                         <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
                                     @endif
-                                    @foreach ($applicant_round->applicantReviews as $applicant_review)
-                                        @if ($applicant_review->review_key == 'feedback')
-                                            @if ($applicant_round->round_status == 'confirmed')
-                                                <h6 class="text-success"><i class="fa fa-check"></i>Accepted in this round</h6>
-                                            @elseif ($applicant_round->round_status == 'rejected')
-                                                <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
-                                            @endif
-                                        @endif
-                                    @endforeach
+                                    @if ($applicant_round->round_status == 'confirmed')
+                                        <h6 class="text-success"><i class="fa fa-check"></i>Accepted in this round</h6>
+                                    @elseif ($applicant_round->round_status == 'rejected')
+                                        <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
