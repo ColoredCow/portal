@@ -3,6 +3,7 @@
 namespace App\Models\HR;
 
 use App\Models\HR\Applicant;
+use App\Models\HR\ApplicantReview;
 use App\Models\HR\Round;
 use App\User;
 use Illuminate\Database\Eloquent\Model;

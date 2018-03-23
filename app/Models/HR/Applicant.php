@@ -4,6 +4,7 @@ namespace App\Models\HR;
 
 use App\Events\HR\ApplicantCreated;
 use App\Events\HR\ApplicantUpdated;
+use App\Models\HR\ApplicantRound;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 

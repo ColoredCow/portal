@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers\HR;
 
-use App\Events\HR\ApplicantCreated;
-use App\Events\HR\ApplicantUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\HR\Applicant;
-use App\Models\HR\ApplicantReview;
 use App\Models\HR\ApplicantRound;
 use App\Models\HR\Job;
 use App\Models\HR\Round;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ApplicantController extends Controller
 {

@@ -3,9 +3,6 @@
 namespace App\Listeners\HR;
 
 use App\Events\HR\ApplicantUpdated;
-use App\Models\HR\ApplicantReview;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
