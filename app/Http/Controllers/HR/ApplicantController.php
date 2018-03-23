@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\HR;
 
+use App\Events\HR\ApplicantCreated;
+use App\Events\HR\ApplicantUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\HR\Applicant;
 use App\Models\HR\ApplicantReview;
@@ -33,33 +35,16 @@ class ApplicantController extends Controller
      */
     public function create(Request $request)
     {
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $phone = $request->input('phone');
-        $resume = $request->input('resume');
-        $jobTitle = $request->input('job_title');
+        $job = Job::where('title', $request->input('job_title'))->first();
 
-        $applicant = new Applicant();
-        $applicant->name = $name;
-        $applicant->email = $email;
-        $applicant->phone = $phone;
-        $applicant->resume = $resume;
-        $applicant->status = 'new';
-
-        $job = Job::where('title', $jobTitle)->first();
-        $applicant->hr_job_id = $job->id;
-        $applicant->save();
-
-        $applicant_round = new ApplicantRound;
-        $applicant_round->hr_applicant_id = $applicant->id;
-        $applicant_round->hr_round_id = $job->rounds->first()->id;
-        $applicant_round->scheduled_date = Carbon::now()->addDay();
-        // update with $job->posted_by
-        $applicant_round->scheduled_person_id = 1;
-
-        $applicant_round->save();
-
-        return json_encode(true);
+        return Applicant::_create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'resume' => $request->input('resume'),
+            'hr_job_id' => $job->id,
+            'status' => 'new',
+        ]);
     }
 
     /**
@@ -111,32 +96,20 @@ class ApplicantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $reviews = $request->input('reviews');
-        $round_id = $request->input('round_id');
+
         $round_status = $request->input('round_status');
 
-        $applicant_round = ApplicantRound::where('hr_applicant_id', $id)->first();
-
-        foreach ($reviews as $review_key => $review_value) {
-            $applicant_reviews = ApplicantReview::updateOrCreate(
-                [
-                    'hr_applicant_round_id' => $applicant_round->id
-                ],
-                [
-                    'review_key' => $review_key,
-                    'review_value' => $review_value,
-                ]
-            );
-        }
-
-        $applicant_round->conducted_person_id = Auth::user()->id;
-        $applicant_round->conducted_date = Carbon::now();
-        $applicant_round->round_status = $round_status;
-        $applicant_round->save();
-
+        $status = ($round_status === 'rejected') ? 'rejected' : 'in-progress';
         $applicant = Applicant::find($id);
-        $applicant->status = $round_status == 'rejected' ? 'rejected' : 'in-progress';
-        $applicant->save();
+        $applicant->_update([
+            'status' => $status
+        ]);
+
+        event(new ApplicantUpdated($applicant, [
+            'round_id' => $request->input('round_id'),
+            'round_status' => $round_status,
+            'reviews' => $request->input('reviews'),
+        ]));
 
         return redirect("/hr/applicants/$id/edit");
     }
