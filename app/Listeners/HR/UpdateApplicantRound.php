@@ -38,7 +38,7 @@ class UpdateApplicantRound
         ) return;
 
 
-        $applicant_round = $applicant->applicantRounds->where('hr_round_id', $attr['round_id'])->first();
+        $applicant_round = $applicant->getApplicantRound($attr['round_id']);
         $applicant_round->_update([
             'conducted_person_id' => Auth::user()->id,
             'conducted_date' => Carbon::now(),

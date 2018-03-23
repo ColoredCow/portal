@@ -43,7 +43,7 @@ class ApplicantController extends Controller
             'phone' => $request->input('phone'),
             'resume' => $request->input('resume'),
             'hr_job_id' => $job->id,
-            'status' => 'new',
+            'status' => config('constants.hr.round.statuses.new'),
         ]);
     }
 
@@ -99,17 +99,11 @@ class ApplicantController extends Controller
 
         $round_status = $request->input('round_status');
 
-        $status = ($round_status === 'rejected') ? 'rejected' : 'in-progress';
+        $status = ($round_status === config('constants.hr.round.statuses.rejected')) ? $round_status : config('constants.hr.round.statuses.in-progress');
         $applicant = Applicant::find($id);
         $applicant->_update([
             'status' => $status
         ]);
-
-        event(new ApplicantUpdated($applicant, [
-            'round_id' => $request->input('round_id'),
-            'round_status' => $round_status,
-            'reviews' => $request->input('reviews'),
-        ]));
 
         return redirect("/hr/applicants/$id/edit");
     }
