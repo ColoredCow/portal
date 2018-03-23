@@ -18,3 +18,23 @@
     width: 30px;
     border-radius: 50%;
 }
+
+.no-transition {
+	color: initial;
+	&:hover {
+		text-decoration: none;
+		color: initial;
+	}
+}
+
+.table {
+	td {
+		vertical-align: middle;
+	}
+}
+
+#applicants_table {
+	.badge {
+		line-height: 1.3;
+	}
+}
