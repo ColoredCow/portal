@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 
 class Round extends Model

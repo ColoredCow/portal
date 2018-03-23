@@ -16,6 +16,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
+        'App\Events\HR\ApplicantCreated' => [
+            'App\Listeners\HR\CreateApplicantRound',
+        ],
+        'App\Events\HR\ApplicantUpdated' => [
+            'App\Listeners\HR\UpdateApplicantRound',
+        ],
     ];
 
     /**

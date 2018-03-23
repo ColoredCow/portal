@@ -16,12 +16,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $user = session('oauthuser');
-        if (!$user) {
-            return redirect('logout');
-        }
         return view('hr.job.index')->with([
-            'user' => $user,
             'jobs' => Job::with('applicants')->get(),
         ]);
     }
@@ -41,8 +36,11 @@ class JobController extends Controller
         $job->title = $title;
         $job->posted_by = $postedBy;
         $job->link = $link;
+        $job->save();
 
-        return json_encode($job->save());
+        $job->rounds()->attach(Round::all()->pluck('id')->toArray());
+
+        return json_encode(true);
     }
 
     /**
@@ -75,12 +73,7 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        $user = session('oauthuser');
-        if (!$user) {
-            return redirect('logout');
-        }
         return view('hr.job.edit')->with([
-            'user' => $user,
             'job' => Job::with('rounds')->find($id),
         ]);
     }
