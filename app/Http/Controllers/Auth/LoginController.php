@@ -53,7 +53,7 @@ class LoginController extends Controller
                 break;
 
             default:
-                return Socialite::driver($provider)->with([ 'hd'])->redirect();
+                return Socialite::driver($provider)->redirect();
                 break;
         }
     }
