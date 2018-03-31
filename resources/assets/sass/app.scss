@@ -38,3 +38,21 @@
 		line-height: 1.3;
 	}
 }
+
+.btn-upload {
+    display: block;
+	width: 200px;
+}
+
+input[type="file"] {
+	&:focus, &:active {
+		outline: none;
+	}
+}
+
+.btn-file {
+	background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}

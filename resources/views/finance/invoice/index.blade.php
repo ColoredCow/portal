@@ -15,6 +15,8 @@
             <th>Name</th>
             <th>Project</th>
             <th>Status</th>
+            <th>Sent on</th>
+            <th>Invoice File</th>
         </tr>
         @foreach ($invoices as $invoice)
         <tr>
@@ -30,6 +32,16 @@
                         @break
                 @endswitch
                 {{ $invoice->status }}</span>
+            </td>
+            <td>
+                {{ date('Y-m-d', strtotime($invoice->sent_on)) }}
+            </td>
+            <td>
+            @if ($invoice->file_path)
+                <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-2x text-primary btn-file"></i></a>
+            @else
+                <span>-</span>
+            @endif
             </td>
         </tr>
         @endforeach

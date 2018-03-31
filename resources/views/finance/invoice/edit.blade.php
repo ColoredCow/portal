@@ -8,7 +8,7 @@
     <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
     <br><br>
     <div class="card">
-        <form action="/finance/invoices/{{ $invoice->id }}" method="POST">
+        <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data">
 
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -67,6 +67,19 @@
                     </div>
                 </div>
                 <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                    @if ($invoice->file_path)
+                        <label class="font-weight-bold">Invoice File</label>
+                        <div>
+                            <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
+                        </div>
+                    @else
+                        <label for="invoice_file">Upload Invoice</label>
+                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    @endif
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>

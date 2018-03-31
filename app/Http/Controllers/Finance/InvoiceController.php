@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Finance\Invoice;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -17,7 +19,7 @@ class InvoiceController extends Controller
     public function index()
     {
         return view('finance.invoice.index')->with([
-            'invoices' => Invoice::with('project')->get(),
+            'invoices' => Invoice::with('project')->orderBy('sent_on', 'desc')->get(),
         ]);
     }
 
@@ -41,6 +43,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        $path = self::upload($request->file('invoice_file'));
         $invoice = Invoice::create([
             'name' => $request->input('name'),
             'project_id' => $request->input('project_id'),
@@ -48,9 +51,10 @@ class InvoiceController extends Controller
             'status' => $request->input('status'),
             'sent_on' => date("Y-m-d", strtotime($request->input('sent_on'))),
             'paid_on' => $request->input('paid_on') ? date("Y-m-d", strtotime($request->input('paid_on'))) : null,
+            'file_path' => $path
         ]);
 
-        return redirect('/finance/invoices/' . $invoice->id . '/edit');
+        return redirect('/finance/invoices');
     }
 
     /**
@@ -87,6 +91,7 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
+        $path = self::upload($request->file('invoice_file'));
         $updated = $invoice->update([
             'name' => $request->input('name'),
             'project_id' => $request->input('project_id'),
@@ -94,6 +99,7 @@ class InvoiceController extends Controller
             'status' => $request->input('status'),
             'sent_on' => date("Y-m-d", strtotime($request->input('sent_on'))),
             'paid_on' => $request->input('paid_on') ? date("Y-m-d", strtotime($request->input('paid_on'))) : null,
+            'file_path' => $path,
         ]);
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
     }
@@ -107,5 +113,31 @@ class InvoiceController extends Controller
     public function destroy(Invoice $invoice)
     {
         //
+    }
+
+    /**
+     * Upload invoice file.
+     *
+     * @param  \Illuminate\Http\UploadedFile  $file
+     * @return string
+     */
+    public static function upload(UploadedFile $file)
+    {
+        $dir = date('Y') . '/' . date('m');
+        return $file->store($dir);
+    }
+
+    /**
+     * Download invoice file.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function download($year, $month, $file)
+    {
+        $file_path = $year . '/' . $month . '/' . $file;
+        if (Storage::exists($file_path)) {
+            return Storage::download($file_path);
+        }
     }
 }

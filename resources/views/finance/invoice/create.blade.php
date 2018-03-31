@@ -8,7 +8,7 @@
     <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
     <br><br>
     <div class="card">
-        <form action="/finance/invoices" method="POST">
+        <form action="/finance/invoices" method="POST" enctype="multipart/form-data">
 
             {{ csrf_field() }}
 
@@ -58,6 +58,12 @@
                     </div>
                 </div>
                 <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="invoice_file">Upload Invoice</label>
+                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Create</button>
