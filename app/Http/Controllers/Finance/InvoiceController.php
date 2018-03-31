@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Finance;
 
+use App\Http\Controllers\Controller;
 use App\Models\Finance\Invoice;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('finance.invoice.create');
     }
 
     /**
