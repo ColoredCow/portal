@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Finance\Invoice;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -38,19 +39,20 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
      * @return \App\Models\Finance\Invoice
      */
-    public function store(Request $request)
+    public function store(InvoiceRequest $request)
     {
-        $path = self::upload($request->file('invoice_file'));
+        $validated = $request->validated();
+        $path = self::upload($validated['invoice_file']);
         $invoice = Invoice::create([
-            'name' => $request->input('name'),
-            'project_id' => $request->input('project_id'),
-            'project_invoice_id' => $request->input('project_invoice_id'),
-            'status' => $request->input('status'),
-            'sent_on' => date("Y-m-d", strtotime($request->input('sent_on'))),
-            'paid_on' => $request->input('paid_on') ? date("Y-m-d", strtotime($request->input('paid_on'))) : null,
+            'name' => $validated['name'],
+            'project_id' => $validated['project_id'],
+            'project_invoice_id' => $validated['project_invoice_id'],
+            'status' => $validated['status'],
+            'sent_on' => date("Y-m-d", strtotime($validated['sent_on'])),
+            'paid_on' => $validated['paid_on'] ? date("Y-m-d", strtotime($validated['paid_on'])) : null,
             'file_path' => $path
         ]);
 
@@ -85,21 +87,20 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
      * @param  \App\Models\Finance\Invoice  $invoice
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(InvoiceRequest $request, Invoice $invoice)
     {
-        $path = self::upload($request->file('invoice_file'));
+        $validated = $request->validated();
         $updated = $invoice->update([
-            'name' => $request->input('name'),
-            'project_id' => $request->input('project_id'),
-            'project_invoice_id' => $request->input('project_invoice_id'),
-            'status' => $request->input('status'),
-            'sent_on' => date("Y-m-d", strtotime($request->input('sent_on'))),
-            'paid_on' => $request->input('paid_on') ? date("Y-m-d", strtotime($request->input('paid_on'))) : null,
-            'file_path' => $path,
+            'name' => $validated['name'],
+            'project_id' => $validated['project_id'],
+            'project_invoice_id' => $validated['project_invoice_id'],
+            'status' => $validated['status'],
+            'sent_on' => date("Y-m-d", strtotime($validated['sent_on'])),
+            'paid_on' => $validated['paid_on'] ? date("Y-m-d", strtotime($validated['paid_on'])) : null,
         ]);
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
     }

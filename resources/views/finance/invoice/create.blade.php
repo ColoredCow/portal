@@ -50,11 +50,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="sent_on">Sent on</label>
-                        <input type="text" class="form-control" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
+                        <input type="date" class="form-control" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="paid_on">Paid on</label>
-                        <input type="text" class="form-control" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
+                        <input type="date" class="form-control" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
                     </div>
                 </div>
                 <br>
