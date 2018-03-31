@@ -32,7 +32,7 @@ class InvoiceRequest extends FormRequest
             'paid_on' => 'nullable|date',
         ];
 
-        if ($this->method() == 'POST') {
+        if ($this->method() === 'POST') {
             $rules['invoice_file'] = 'required';
         }
 
