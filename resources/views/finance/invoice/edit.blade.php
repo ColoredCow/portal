@@ -4,8 +4,8 @@
 <div class="container">
     <br>
     <h1>Invoice</h1>
-    {{-- <br> --}}
-    {{-- <a class="btn btn-info" href="/hr/jobs">See all invoices</a> --}}
+    <br>
+    <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
     <br><br>
     <div class="card">
         <form action="/finance/invoices/{{ $invoice->id }}" method="POST">

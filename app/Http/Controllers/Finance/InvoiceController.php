@@ -16,7 +16,9 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        return view('finance.invoice.index')->with([
+            'invoices' => Invoice::with('project')->get(),
+        ]);
     }
 
     /**
