@@ -19,7 +19,6 @@ class CreateFinanceInvoicesTable extends Migration
             $table->integer('project_id')->unsigned();
             $table->string('status')->default('unpaid');
             $table->timestamp('sent_on')->nullable();
-            $table->string('sent_to')->nullable();
             $table->timestamp('paid_on')->nullable();
             $table->string('file_path')->nullable();
             $table->timestamps();
