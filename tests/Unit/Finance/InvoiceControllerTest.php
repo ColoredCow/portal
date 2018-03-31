@@ -7,41 +7,21 @@ use Tests\TestCase;
 class InvoiceControllerTest extends TestCase
 {
     /**
-     * Testing success for Finance\InvoiceController@store
+     * Test case for Finance\InvoiceController@store
      *
      * @return void
      */
-    public function testStoreSuccess()
+    public function testStore()
     {
         $this->assertTrue(true);
     }
 
     /**
-     * Testing failure for Finance\InvoiceController@store
+     * Test case for Finance\InvoiceController@update
      *
      * @return void
      */
-    public function testStoreFailure()
-    {
-        $this->assertTrue(true);
-    }
-
-    /**
-     * Testing success for Finance\InvoiceController@update
-     *
-     * @return void
-     */
-    public function testUpdateSuccess()
-    {
-        $this->assertTrue(true);
-    }
-
-    /**
-     * Testing failure for Finance\InvoiceController@update
-     *
-     * @return void
-     */
-    public function testUpdateFailure()
+    public function testUpdate()
     {
         $this->assertTrue(true);
     }
