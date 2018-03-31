@@ -13,4 +13,12 @@ return [
 			'scheduled_person_id' => 1,
 		],
 	],
+	'finance' => [
+		'invoice' => [
+			'status' => [
+				'unpaid' => 'Unpaid',
+				'paid' => 'Paid',
+			],
+		],
+	],
 ];

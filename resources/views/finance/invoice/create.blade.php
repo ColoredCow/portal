@@ -25,8 +25,9 @@
                         <label for="project_id">Project</label>
                         <select name="project_id" id="project_id" class="form-control" required="required">
                             <option value="">Select Project</option>
-                            <option value="1">ManageMyNGO</option>
-                            <option value="2">Etherapydocs</option>
+                            @foreach ($projects as $project)
+                                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -39,8 +40,9 @@
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="name">Status</label>
                         <select name="status" id="status" class="form-control" required="required">
-                            <option value="paid">Paid</option>
-                            <option value="unpaid" selected="selected">Unpaid</option>
+                        @foreach (config('constants.finance.invoice.status') as $status => $display_name)
+                            <option value="{{ $status }}">{{ $display_name }}</option>
+                        @endforeach
                         </select>
                     </div>
                 </div>
@@ -48,11 +50,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="sent_on">Sent on</label>
-                        <input type="text" class="form-control" name="sent_on" id="sent_on" placeholder="dd/mm/yy" required="required">
+                        <input type="text" class="form-control" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="paid_on">Paid on</label>
-                        <input type="text" class="form-control" name="paid_on" id="paid_on" placeholder="dd/mm/yy">
+                        <input type="text" class="form-control" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
                     </div>
                 </div>
                 <br>
