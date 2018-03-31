@@ -74,7 +74,6 @@ class InvoiceController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Finance\Invoice  $invoice
-     * @return \Illuminate\View\View
      */
     public function edit(Invoice $invoice)
     {
@@ -122,7 +121,7 @@ class InvoiceController extends Controller
      * @param  \Illuminate\Http\UploadedFile  $file
      * @return string
      */
-    public static function upload(UploadedFile $file)
+    protected static function upload(UploadedFile $file)
     {
         $dir = date('Y') . '/' . date('m');
         return $file->store($dir);
