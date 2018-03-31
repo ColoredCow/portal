@@ -10,7 +10,7 @@ class Project extends Model
     $fillable = ['name', 'client_id', 'project_client_id', 'started_on', 'invoice_email', 'status'];
 
     /**
-     * The clients that belong to the project.
+     * Get the client that owns the project.
      */
     public function client()
     {

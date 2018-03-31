@@ -10,7 +10,7 @@ class Client extends Model
     $fillable = ['name', 'email', 'phone', 'address'];
 
     /**
-     * The projects that belong to the client.
+     * Get the projects for the client.
      */
     public function projects()
     {
