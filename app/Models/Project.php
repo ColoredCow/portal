@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    $fillable = ['name', 'started_on', 'invoice_email', 'status'];
+    $fillable = ['name', 'client_id', 'project_client_id', 'started_on', 'invoice_email', 'status'];
 
     /**
      * The clients that belong to the project.
