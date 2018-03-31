@@ -16,7 +16,8 @@ class CreateFinanceInvoicesTable extends Migration
         Schema::create('finance_invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('project_id')->unsigned();
+            $table->unsignedInteger('project_id');
+            $table->unsignedInteger('project_invoice_id');
             $table->string('status')->default('unpaid');
             $table->timestamp('sent_on')->nullable();
             $table->timestamp('paid_on')->nullable();
