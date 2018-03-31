@@ -12,7 +12,7 @@ class Project extends Model
     /**
      * The clients that belong to the project.
      */
-    public function clients()
+    public function client()
     {
         return $this->belongsTo(Client::class);
     }
