@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DateHelper;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Client;
 use App\Models\Project;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -48,7 +47,7 @@ class ProjectController extends Controller
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
-            'started_on' => $validated['started_on'] ? format_date_to_save($validated['started_on']) : null,
+            'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
 
@@ -95,7 +94,7 @@ class ProjectController extends Controller
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
-            'started_on' => $validated['started_on'] ? format_date_to_save($validated['started_on']) : null,
+            'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
         return redirect('/projects/' . $project->id . '/edit');

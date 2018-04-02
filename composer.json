@@ -26,10 +26,7 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        },
-        "files": [
-            "app/Helpers/DateHelper.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

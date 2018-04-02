@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Finance;
 
+use App\Helpers\DateHelper;
+use App\Helpers\FileHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Finance\Invoice;
 use App\Models\Project;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -51,8 +51,8 @@ class InvoiceController extends Controller
             'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
-            'sent_on' => format_date_to_save($validated['sent_on']),
-            'paid_on' => $validated['paid_on'] ? format_date_to_save($validated['paid_on']) : null,
+            'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
+            'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'comments' => $validated['comments'],
             'file_path' => $path
         ]);
@@ -99,8 +99,8 @@ class InvoiceController extends Controller
             'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
-            'sent_on' => format_date_to_save($validated['sent_on']),
-            'paid_on' => $validated['paid_on'] ? format_date_to_save($validated['paid_on']) : null,
+            'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
+            'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'comments' => $validated['comments'],
         ]);
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
@@ -125,7 +125,7 @@ class InvoiceController extends Controller
      */
     protected static function upload(UploadedFile $file)
     {
-        return $file->store(self::getCurrentStorageDirectory());
+        return $file->store(FileHelper::getCurrentStorageDirectory());
     }
 
     /**
@@ -138,33 +138,9 @@ class InvoiceController extends Controller
      */
     public function download($year, $month, $file)
     {
-        $file_path = self::getFilePath($year, $month, $file);
+        $file_path = FileHelper::getFilePath($year, $month, $file);
         if (Storage::exists($file_path)) {
             return Storage::download($file_path);
         }
-    }
-
-    /**
-     * Retrieve file path based upon passed year and month
-     *
-     * @param  string $year  year directory of the file
-     * @param  string $month month directory of the file
-     * @param  string $file  invoice file name
-     * @return string
-     */
-    protected static function getFilePath($year, $month, $file)
-    {
-        return $year . '/' . $month . '/' . $file;
-    }
-
-    /**
-     * Retrieve storage directory based upon current year and month
-     *
-     * @return string
-     */
-    protected static function getCurrentStorageDirectory()
-    {
-        $now = Carbon::now();
-        return $now->format('Y') . '/' . $now->format('m');
     }
 }
