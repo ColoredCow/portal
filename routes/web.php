@@ -28,5 +28,7 @@ Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallb
 Route::middleware('auth')->group(function () {
 	Route::resource('hr/applicants', 'HR\ApplicantController');
 	Route::resource('hr/jobs', 'HR\JobController');
+	Route::resource('finance/invoices', 'Finance\InvoiceController');
+	Route::get('finance/invoices/download/{year}/{month}/{file}', 'Finance\InvoiceController@download');
 });
 
