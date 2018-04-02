@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
 	Route::resource('hr/applicants', 'HR\ApplicantController');
 	Route::resource('hr/jobs', 'HR\JobController');
 	Route::resource('finance/invoices', 'Finance\InvoiceController');
+	Route::resource('clients', 'ClientController');
+	Route::resource('projects', 'ProjectController');
 	Route::get('finance/invoices/download/{year}/{month}/{file}', 'Finance\InvoiceController@download');
 });
 

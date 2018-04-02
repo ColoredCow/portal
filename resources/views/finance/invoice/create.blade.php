@@ -18,10 +18,6 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Invoice Title" required="required">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
                         <label for="project_id">Project</label>
                         <select name="project_id" id="project_id" class="form-control" required="required">
                             <option value="">Select Project</option>
@@ -30,15 +26,15 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="project_invoice_id">Invoice ID</label>
+                        <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required">
+                    </div>
                 </div>
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="project_invoice_id">Invoice ID</label>
-                        <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
-                        <label for="name">Status</label>
+                        <label for="status">Status</label>
                         <select name="status" id="status" class="form-control" required="required">
                         @foreach (config('constants.finance.invoice.status') as $status => $display_name)
                             <option value="{{ $status }}">{{ $display_name }}</option>
@@ -50,11 +46,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="sent_on">Sent on</label>
-                        <input type="date" class="form-control" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
+                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="paid_on">Paid on</label>
-                        <input type="date" class="form-control" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
+                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
                     </div>
                 </div>
                 <br>
@@ -62,6 +58,13 @@
                     <div class="form-group col-md-5">
                         <label for="invoice_file">Upload Invoice</label>
                         <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="comments">Comments</label>
+                        <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
                     </div>
                 </div>
             </div>

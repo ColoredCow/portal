@@ -24,12 +24,12 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => 'required|string',
             'project_id' => 'required|integer',
             'project_invoice_id' => 'required',
             'status' => 'required|string',
-            'sent_on' => 'required|date',
-            'paid_on' => 'nullable|date',
+            'sent_on' => 'required',
+            'paid_on' => 'nullable',
+            'comments' => 'nullable|string',
         ];
 
         if ($this->method() === 'POST') {
