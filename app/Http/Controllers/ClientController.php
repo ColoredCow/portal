@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
@@ -10,32 +11,42 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        //
+        return view('client.index')->with([
+            'clients' => Client::orderBy('id', 'desc')->get(),
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('client.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
+     * @param  \App\Http\Requests\ClientRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $client = Client::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'address' => $validated['address'],
+        ]);
+
+        return redirect('/clients');
     }
 
     /**
@@ -53,23 +64,32 @@ class ClientController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Client  $client
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function edit(Client $client)
     {
-        //
+        return view('client.edit')->with([
+            'client' => $client,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ClientRequest  $request
      * @param  \App\Models\Client  $client
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Client $client)
+    public function update(ClientRequest $request, Client $client)
     {
-        //
+        $validated = $request->validated();
+        $updated = $client->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'address' => $validated['address'],
+        ]);
+        return redirect('/clients/' . $client->id . '/edit');
     }
 
     /**

@@ -15,7 +15,7 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -40,7 +40,7 @@ class InvoiceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\Finance\InvoiceRequest  $request
-     * @return \App\Models\Finance\Invoice
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(InvoiceRequest $request)
     {
