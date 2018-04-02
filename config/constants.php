@@ -21,4 +21,10 @@ return [
 			],
 		],
 	],
+	'project' => [
+		'status' => [
+			'active' => 'Active',
+			'inactive' => 'Inactive',
+		],
+	],
 ];

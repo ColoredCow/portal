@@ -34,7 +34,7 @@
                 {{ $invoice->status }}</span>
             </td>
             <td>
-                {{ date('Y-m-d', strtotime($invoice->sent_on)) }}
+                {{ date('d/m/Y', strtotime($invoice->sent_on)) }}
             </td>
             <td>
             @if ($invoice->file_path)

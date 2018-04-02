@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <br>
-    <h1>Client</h1>
+    <h1>Edit Client</h1>
     <br>
     <a class="btn btn-info" href="/clients">See all clients</a>
     <br><br>
