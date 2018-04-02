@@ -18,7 +18,7 @@ class ProjectController extends Controller
     public function index()
     {
         return view('project.index')->with([
-            'projects' => Project::with('client')->orderBy('id', 'desc')->get(),
+            'projects' => Project::getList(),
         ]);
     }
 
@@ -30,7 +30,7 @@ class ProjectController extends Controller
     public function create()
     {
         return view('project.create')->with([
-            'clients' => Client::all(),
+            'clients' => Client::select('id', 'name')->get(),
         ]);
     }
 
@@ -76,7 +76,7 @@ class ProjectController extends Controller
     {
         return view('project.edit')->with([
             'project' => $project,
-            'clients' => Client::all(),
+            'clients' => Client::select('id', 'name')->get(),
         ]);
     }
 

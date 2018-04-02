@@ -16,4 +16,18 @@ class Project extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    /**
+     * Get details to list projects
+     *
+     * @return self
+     */
+    public static function getList()
+    {
+    	return self::with([ 'client' => function($query) {
+	            $query->select('id', 'name');
+	        }])
+            ->orderBy('id', 'desc')
+            ->get();
+    }
 }
