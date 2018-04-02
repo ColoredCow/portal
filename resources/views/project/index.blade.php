@@ -25,7 +25,7 @@
         		<td>{{ $project->client->name }}</td>
         		<td>
         			@if ($project->started_on)
-        			<span>{{ date('d/m/Y', strtotime($project->started_on)) }}</span>
+        			<span>{{ date(config('constants.display_date_format'), strtotime($project->started_on)) }}</span>
         			@else
         			<span>-</span>
         			@endif

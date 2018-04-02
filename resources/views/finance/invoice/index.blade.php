@@ -32,7 +32,7 @@
                 {{ $invoice->status }}</span>
             </td>
             <td>
-                {{ date('d/m/Y', strtotime($invoice->sent_on)) }}
+                {{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}
             </td>
             <td>
             @if ($invoice->file_path)
