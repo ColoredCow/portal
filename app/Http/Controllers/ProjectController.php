@@ -48,7 +48,7 @@ class ProjectController extends Controller
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
-            'started_on' => $validated['started_on'] ? Carbon::parse(str_replace('/', '-', $validated['started_on']))->format(config('constants.date_format')) : null,
+            'started_on' => $validated['started_on'] ? format_date_to_save($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
 
@@ -95,7 +95,7 @@ class ProjectController extends Controller
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
-            'started_on' => $validated['started_on'] ? Carbon::parse(str_replace('/', '-', $validated['started_on']))->format(config('constants.date_format')) : null,
+            'started_on' => $validated['started_on'] ? format_date_to_save($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
         return redirect('/projects/' . $project->id . '/edit');
