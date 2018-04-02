@@ -44,7 +44,10 @@
                         <label for="name">Status</label>
                         <select name="status" id="status" class="form-control" required="required">
                         @foreach (config('constants.project.status') as $status => $display_name)
-                            <option value="{{ $status }}">{{ $display_name }}</option>
+                            @php
+                                $selected = $status === $project->status ? 'selected="selected"' : '';
+                            @endphp
+                            <option value="{{ $status }}" {{ $selected }}>{{ $display_name }}</option>
                         @endforeach
                         </select>
                     </div>
