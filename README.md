@@ -2,6 +2,10 @@
 
 Solution for organizations to manage all operations' data. Built over GSuite.
 
+### Status
+[![Build Status](https://travis-ci.org/ColoredCow/employee-portal.png)](https://travis-ci.org/ColoredCow/employee-portal)
+
+
 ### Installation
 1. Clone or download the repository in your project's plugins folder
 ```
