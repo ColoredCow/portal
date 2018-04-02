@@ -30,7 +30,6 @@ $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', 
 	form.submit();
 });
 
-// $('#form_project').find('#started_on').datepicker();
 $('.date-field').datepicker({
 	dateFormat: "dd/mm/yy"
 });
