@@ -26,11 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $userGroups = $this->getUserGroups(Auth::user()->email);
-
-        return view('home')->with([
-            'groups' => $userGroups,
-        ]);
+        return view('home');
     }
 
     /**

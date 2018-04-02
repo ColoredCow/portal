@@ -19,4 +19,17 @@ class Invoice extends Model
         return $this->belongsTo(Project::class);
     }
 
+    /**
+     * Get details to list invoices
+     *
+     * @return self
+     */
+    public static function getList()
+    {
+    	return self::with([ 'project' => function($query) {
+	            $query->select('id', 'name');
+	        }])
+            ->orderBy('sent_on', 'desc')
+            ->get();
+    }
 }
