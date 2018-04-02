@@ -47,12 +47,12 @@ class InvoiceController extends Controller
         $validated = $request->validated();
         $path = self::upload($validated['invoice_file']);
         $invoice = Invoice::create([
-            'name' => $validated['name'],
             'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
             'sent_on' => date("Y-m-d", strtotime($validated['sent_on'])),
             'paid_on' => $validated['paid_on'] ? date("Y-m-d", strtotime($validated['paid_on'])) : null,
+            'comments' => $validated['comments'],
             'file_path' => $path
         ]);
 
@@ -95,12 +95,12 @@ class InvoiceController extends Controller
     {
         $validated = $request->validated();
         $updated = $invoice->update([
-            'name' => $validated['name'],
             'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
             'sent_on' => date("Y-m-d", strtotime($validated['sent_on'])),
             'paid_on' => $validated['paid_on'] ? date("Y-m-d", strtotime($validated['paid_on'])) : null,
+            'comments' => $validated['comments'],
         ]);
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
     }

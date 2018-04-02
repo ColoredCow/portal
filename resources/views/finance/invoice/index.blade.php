@@ -12,7 +12,6 @@
     <br>
     <table class="table table-striped table-bordered">
         <tr>
-            <th>Name</th>
             <th>Project</th>
             <th>Status</th>
             <th>Sent on</th>
@@ -20,8 +19,7 @@
         </tr>
         @foreach ($invoices as $invoice)
         <tr>
-            <td><a href="/finance/invoices/{{ $invoice->id }}/edit">{{ $invoice->name }}</a></td>
-            <td>{{ $invoice->project->name }}</td>
+            <td><a href="/finance/invoices/{{ $invoice->id }}/edit">{{ $invoice->project->name }}</a></td>
             <td>
                 @switch ($invoice->status)
                     @case('paid')
