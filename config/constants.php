@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'display_date_format' => 'd/m/Y',
 	'hr' => [
 		'round' => [
 			'statuses' => [

@@ -53,7 +53,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="started_on">Started on</label>
-                        <input type="date" class="form-control" name="started_on" id="started_on" placeholder="dd/mm/yyyy" value="{{ date('Y-m-d', strtotime($project->started_on)) }}">
+                        <input type="text" class="form-control date-field" name="started_on" id="started_on" placeholder="dd/mm/yyyy" value="{{ date(config('constants.display_date_format'), strtotime($project->started_on)) }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="invoice_email">Email for invoice</label>

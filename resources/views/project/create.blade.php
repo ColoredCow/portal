@@ -8,7 +8,7 @@
     <a class="btn btn-info" href="/projects">See all projects</a>
     <br><br>
     <div class="card">
-        <form action="/projects" method="POST">
+        <form action="/projects" method="POST" id="form_project">
 
             {{ csrf_field() }}
 
@@ -50,7 +50,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="started_on">Started on</label>
-                        <input type="date" class="form-control" name="started_on" id="started_on" placeholder="dd/mm/yyyy">
+                        <input type="text" class="form-control date-field" name="started_on" id="started_on" placeholder="dd/mm/yyyy">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="invoice_email">Email for invoice</label>

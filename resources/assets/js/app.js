@@ -5,7 +5,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('./bootstrap');
+
+import 'jquery-ui/ui/widgets/datepicker.js';
 
 window.Vue = require('vue');
 
@@ -25,4 +28,9 @@ $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', 
 	var form = $(this).closest('.applicant-round-form');
 	form.find('[name="round_status"]').val($(this).data('status'));
 	form.submit();
+});
+
+// $('#form_project').find('#started_on').datepicker();
+$('.date-field').datepicker({
+	dateFormat: "dd/mm/yy"
 });

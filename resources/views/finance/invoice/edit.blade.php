@@ -52,14 +52,14 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="sent_on">Sent on</label>
-                        <input type="date" class="form-control" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required" value="{{ date('Y-m-d', strtotime($invoice->sent_on)) }}">
+                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="paid_on">Paid on</label>
                         @php
-                            $paid_on = $invoice->paid_on ? date('Y-m-d', strtotime($invoice->paid_on)) : $invoice->paid_on;
+                            $paid_on = $invoice->paid_on ? date(config('constants.display_date_format'), strtotime($invoice->paid_on)) : $invoice->paid_on;
                         @endphp
-                        <input type="date" class="form-control" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ $paid_on }}">
+                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ $paid_on }}">
                     </div>
                 </div>
                 <br>

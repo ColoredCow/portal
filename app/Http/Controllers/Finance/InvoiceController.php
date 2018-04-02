@@ -50,8 +50,8 @@ class InvoiceController extends Controller
             'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
-            'sent_on' => date("Y-m-d", strtotime($validated['sent_on'])),
-            'paid_on' => $validated['paid_on'] ? date("Y-m-d", strtotime($validated['paid_on'])) : null,
+            'sent_on' => date("Y-m-d", strtotime(str_replace('/', '-', $validated['sent_on']))),
+            'paid_on' => $validated['paid_on'] ?  date("Y-m-d", strtotime(str_replace('/', '-', $validated['paid_on']))) : null,
             'comments' => $validated['comments'],
             'file_path' => $path
         ]);
@@ -98,8 +98,8 @@ class InvoiceController extends Controller
             'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
-            'sent_on' => date("Y-m-d", strtotime($validated['sent_on'])),
-            'paid_on' => $validated['paid_on'] ? date("Y-m-d", strtotime($validated['paid_on'])) : null,
+            'sent_on' => date("Y-m-d", strtotime(str_replace('/', '-', $validated['sent_on']))),
+            'paid_on' => $validated['paid_on'] ? date("Y-m-d", strtotime(str_replace('/', '-', $validated['paid_on']))) : null,
             'comments' => $validated['comments'],
         ]);
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
