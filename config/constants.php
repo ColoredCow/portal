@@ -1,6 +1,8 @@
 <?php
 
 return [
+	'date_format' => 'Y-m-d',
+	'display_date_format' => 'd/m/Y',
 	'hr' => [
 		'round' => [
 			'statuses' => [
@@ -11,6 +13,20 @@ return [
 		],
 		'defaults' => [
 			'scheduled_person_id' => 1,
+		],
+	],
+	'finance' => [
+		'invoice' => [
+			'status' => [
+				'unpaid' => 'Unpaid',
+				'paid' => 'Paid',
+			],
+		],
+	],
+	'project' => [
+		'status' => [
+			'active' => 'Active',
+			'inactive' => 'Inactive',
 		],
 	],
 ];

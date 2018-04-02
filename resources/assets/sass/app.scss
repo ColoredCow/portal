@@ -8,15 +8,17 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import '~jquery-ui/themes/base/all.css';
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .user-avatar {
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
 }
 
 .no-transition {
@@ -33,8 +35,26 @@
 	}
 }
 
-#applicants_table {
+.table {
 	.badge {
 		line-height: 1.3;
 	}
+}
+
+.btn-upload {
+	display: block;
+	width: 200px;
+}
+
+input[type="file"] {
+	&:focus, &:active {
+		outline: none;
+	}
+}
+
+.btn-file {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
 }
