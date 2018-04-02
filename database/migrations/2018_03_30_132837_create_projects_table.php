@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->unsignedInteger('client_id');
             $table->unsignedInteger('client_project_id');
-            $table->timestamp('started_on')->nullable();
+            $table->date('started_on')->nullable();
             $table->string('invoice_email')->nullable();
             $table->string('status')->default('active');
             $table->timestamps();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Client;
 use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -47,7 +48,7 @@ class ProjectController extends Controller
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
-            'started_on' => $validated['started_on'] ? date("Y-m-d", strtotime(str_replace('/', '-', $validated['started_on']))) : null,
+            'started_on' => $validated['started_on'] ? Carbon::parse(str_replace('/', '-', $validated['started_on']))->format(config('constants.date_format')) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
 
@@ -94,7 +95,7 @@ class ProjectController extends Controller
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
-            'started_on' => $validated['started_on'] ? date("Y-m-d", strtotime(str_replace('/', '-', $validated['started_on']))) : null,
+            'started_on' => $validated['started_on'] ? Carbon::parse(str_replace('/', '-', $validated['started_on']))->format(config('constants.date_format')) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
         return redirect('/projects/' . $project->id . '/edit');

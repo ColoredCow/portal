@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Finance\Invoice;
 use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,7 @@ class InvoiceController extends Controller
     public function index()
     {
         return view('finance.invoice.index')->with([
-            'invoices' => Invoice::with('project')->orderBy('sent_on', 'desc')->get(),
+            'invoices' => Invoice::getList(),
         ]);
     }
 
@@ -32,7 +33,7 @@ class InvoiceController extends Controller
     public function create()
     {
         return view('finance.invoice.create')->with([
-            'projects' => Project::all(),
+            'projects' => Project::select('id', 'name')->get(),
         ]);
     }
 
@@ -50,8 +51,8 @@ class InvoiceController extends Controller
             'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
-            'sent_on' => date("Y-m-d", strtotime(str_replace('/', '-', $validated['sent_on']))),
-            'paid_on' => $validated['paid_on'] ?  date("Y-m-d", strtotime(str_replace('/', '-', $validated['paid_on']))) : null,
+            'sent_on' => Carbon::parse(str_replace('/', '-', $validated['sent_on']))->format(config('constants.date_format')),
+            'paid_on' => $validated['paid_on'] ? Carbon::parse(str_replace('/', '-', $validated['paid_on']))->format(config('constants.date_format')) : null,
             'comments' => $validated['comments'],
             'file_path' => $path
         ]);
@@ -80,7 +81,7 @@ class InvoiceController extends Controller
     {
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
-            'projects' => Project::all(),
+            'projects' => Project::select('id', 'name')->get(),
         ]);
     }
 
@@ -98,8 +99,8 @@ class InvoiceController extends Controller
             'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
-            'sent_on' => date("Y-m-d", strtotime(str_replace('/', '-', $validated['sent_on']))),
-            'paid_on' => $validated['paid_on'] ? date("Y-m-d", strtotime(str_replace('/', '-', $validated['paid_on']))) : null,
+            'sent_on' => Carbon::parse(str_replace('/', '-', $validated['sent_on']))->format(config('constants.date_format')),
+            'paid_on' => $validated['paid_on'] ? Carbon::parse(str_replace('/', '-', $validated['paid_on']))->format(config('constants.date_format')) : null,
             'comments' => $validated['comments'],
         ]);
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
@@ -120,25 +121,50 @@ class InvoiceController extends Controller
      * Upload invoice file.
      *
      * @param  \Illuminate\Http\UploadedFile  $file
-     * @return string
+     * @return string    path of the uploaded file
      */
     protected static function upload(UploadedFile $file)
     {
-        $dir = date('Y') . '/' . date('m');
-        return $file->store($dir);
+        return $file->store(self::getCurrentStorageDirectory());
     }
 
     /**
      * Download invoice file.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  string $year  uploaded year of the invoice file
+     * @param  string $month uploaded month of the invoice file
+     * @param  string $file  invoice file name
      * @return Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function download($year, $month, $file)
     {
-        $file_path = $year . '/' . $month . '/' . $file;
+        $file_path = self::getFilePath($year, $month, $file);
         if (Storage::exists($file_path)) {
             return Storage::download($file_path);
         }
+    }
+
+    /**
+     * Retrieve file path based upon passed year and month
+     *
+     * @param  string $year  year directory of the file
+     * @param  string $month month directory of the file
+     * @param  string $file  invoice file name
+     * @return string
+     */
+    protected static function getFilePath($year, $month, $file)
+    {
+        return $year . '/' . $month . '/' . $file;
+    }
+
+    /**
+     * Retrieve storage directory based upon current year and month
+     *
+     * @return string
+     */
+    protected static function getCurrentStorageDirectory()
+    {
+        $now = Carbon::now();
+        return $now->format('Y') . '/' . $now->format('m');
     }
 }

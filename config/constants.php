@@ -1,6 +1,7 @@
 <?php
 
 return [
+	'date_format' => 'Y-m-d',
 	'display_date_format' => 'd/m/Y',
 	'hr' => [
 		'round' => [
