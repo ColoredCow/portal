@@ -5,7 +5,7 @@ return [
 	'display_date_format' => 'd/m/Y',
 	'hr' => [
 		'round' => [
-			'statuses' => [
+			'status' => [
 				'new' => 'new',
 				'rejected' => 'rejected',
 				'in-progress' => 'in-progress',

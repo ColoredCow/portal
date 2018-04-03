@@ -18,5 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('hr/jobs/create', 'HR\JobController@create');
-Route::post('hr/applicants/create', 'HR\ApplicantController@create');
+Route::post('hr/jobs/create', 'HR\JobController@store');
+Route::post('hr/applicants/create', 'HR\ApplicantController@store');
