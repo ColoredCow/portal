@@ -55,11 +55,46 @@
                         <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
+                        <label for="sent_amount">Sent amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_sent_amount" id="currency_sent_amount" class="btn btn-secondary" required="required">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    @php
+                                        $selected = $currency === $invoice->currency_sent_amount ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Sent Amount" required="required" step=".01" min="0" value="{{ $invoice->sent_amount }}">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
                         @php
                             $paid_on = $invoice->paid_on ? date(config('constants.display_date_format'), strtotime($invoice->paid_on)) : $invoice->paid_on;
                         @endphp
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ $paid_on }}">
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="paid_amount">Paid amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" required="required">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    @php
+                                        $selected = $currency === $invoice->currency_paid_amount ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Paid Amount" step=".01" min="0" value="{{ $invoice->paid_amount }}">
+                        </div>
                     </div>
                 </div>
                 <br>
