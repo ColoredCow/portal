@@ -29,8 +29,10 @@ class InvoiceRequest extends FormRequest
             'status' => 'required|string',
             'sent_on' => 'required',
             'sent_amount' => 'required|numeric',
+            'currency_sent_amount' => 'required|string|size:3',
             'paid_on' => 'nullable',
             'paid_amount' => 'nullable|numeric',
+            'currency_paid_amount' => 'nullable|string|size:3',
             'comments' => 'nullable|string',
         ];
 

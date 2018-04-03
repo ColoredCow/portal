@@ -53,8 +53,10 @@ class InvoiceController extends Controller
             'status' => $validated['status'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'sent_amount' => $validated['sent_amount'],
+            'currency_sent_amount' => $validated['currency_sent_amount'],
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
+            'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
             'file_path' => $path
         ]);
@@ -103,8 +105,10 @@ class InvoiceController extends Controller
             'status' => $validated['status'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'sent_amount' => $validated['sent_amount'],
+            'currency_sent_amount' => $validated['currency_sent_amount'],
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
+            'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
         ]);
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
