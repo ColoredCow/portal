@@ -41,13 +41,11 @@ class JobController extends Controller
     {
         $validated = $request->validated();
 
-        $job = Job::create([
+        $job = Job::_create([
             'title' => $validated['title'],
             'posted_by' => $validated['by'],
             'link' => $validated['link'],
         ]);
-
-        $job->rounds()->attach(Round::all()->pluck('id')->toArray()); // should be in Job model event listener
 
         return json_encode(true); // need to change
     }
@@ -87,13 +85,12 @@ class JobController extends Controller
     {
         $validated = $request->validated();
 
-        $job->update([
+        $job->_update([
             'facebook_post' => $validated['facebook_post'],
             'instagram_post' => $validated['instagram_post'],
             'twitter_post' => $validated['twitter_post'],
             'linkedin_post' => $validated['linkedin_post'],
         ]);
-        $job->rounds()->sync($validated['rounds'], false); // should be in model
 
         return redirect("/hr/jobs/$job->id/edit");
     }

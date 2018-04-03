@@ -11,6 +11,23 @@ class Job extends Model
 
     protected $table = 'hr_jobs';
 
+    public static function _create($attr)
+    {
+        $job = self::create($attr);
+        event(new JobCreated($job));
+        return $job;
+    }
+
+    public function _update($attr)
+    {
+        $updated = $this->update($attr);
+        $request = request();
+        event(new JobUpdated($this, [
+            'rounds' => $request->input('rounds'),
+        ]));
+        return $updated;
+    }
+
     public function applicants()
     {
     	return $this->hasMany(Applicant::class, 'hr_job_id');
