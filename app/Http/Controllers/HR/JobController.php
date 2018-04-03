@@ -35,19 +35,17 @@ class JobController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\HR\JobRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \App\Models\HR\Job
      */
     public function store(JobRequest $request)
     {
         $validated = $request->validated();
 
-        $job = Job::_create([
+        return Job::_create([
             'title' => $validated['title'],
             'posted_by' => $validated['by'],
             'link' => $validated['link'],
         ]);
-
-        return json_encode(true); // need to change
     }
 
     /**
