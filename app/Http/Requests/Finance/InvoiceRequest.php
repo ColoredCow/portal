@@ -28,7 +28,9 @@ class InvoiceRequest extends FormRequest
             'project_invoice_id' => 'required',
             'status' => 'required|string',
             'sent_on' => 'required',
+            'sent_amount' => 'required|numeric',
             'paid_on' => 'nullable',
+            'paid_amount' => 'nullable|numeric',
             'comments' => 'nullable|string',
         ];
 

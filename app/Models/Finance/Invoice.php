@@ -9,7 +9,7 @@ class Invoice extends Model
 {
     protected $table = 'finance_invoices';
 
-    protected $fillable = ['project_id', 'project_invoice_id', 'review_value', 'status', 'sent_on', 'paid_on', 'comments', 'file_path'];
+    protected $fillable = ['project_id', 'project_invoice_id', 'review_value', 'status', 'sent_on', 'sent_amount', 'paid_on', 'paid_amount', 'comments', 'file_path'];
 
     /**
      * Get the project that associated with the invoice.

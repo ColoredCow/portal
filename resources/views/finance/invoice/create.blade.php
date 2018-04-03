@@ -49,8 +49,19 @@
                         <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
+                        <label for="sent_amount">Sent amount</label>
+                        <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Sent Amount" required="required" step=".01" min="0">
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="paid_amount">Paid amount</label>
+                        <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Paid Amount" step=".01" min="0">
                     </div>
                 </div>
                 <br>
