@@ -13,6 +13,12 @@ class Job extends Model
 
     protected $table = 'hr_jobs';
 
+    /**
+     * Custom create method that creates a job and fires specific events
+     *
+     * @param  array $attr  fillables to be stored
+     * @return this
+     */
     public static function _create($attr)
     {
         $job = self::create($attr);
@@ -20,6 +26,12 @@ class Job extends Model
         return $job;
     }
 
+    /**
+     * Custom update method that updates a job and fires specific events
+     *
+     * @param  array $attr      fillables to be updated
+     * @return boolean|mixed    true if update is successful, error object if update fails
+     */
     public function _update($attr)
     {
         $updated = $this->update($attr);
