@@ -26,6 +26,6 @@ class UpdateJobRounds
     {
         if (! array_key_exists('rounds', $event->attr)) return;
 
-        $job->rounds()->sync($event->attr['rounds'], false);
+        $event->job->rounds()->sync($event->attr['rounds'], false);
     }
 }

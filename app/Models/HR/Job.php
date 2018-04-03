@@ -2,6 +2,8 @@
 
 namespace App\Models\HR;
 
+use App\Events\HR\JobCreated;
+use App\Events\HR\JobUpdated;
 use App\Models\HR\Applicant;
 use Illuminate\Database\Eloquent\Model;
 

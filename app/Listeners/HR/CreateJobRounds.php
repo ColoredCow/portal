@@ -3,6 +3,7 @@
 namespace App\Listeners\HR;
 
 use App\Events\HR\JobCreated;
+use App\Models\HR\Round;
 
 class CreateJobRounds
 {
