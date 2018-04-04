@@ -32,4 +32,17 @@ class ProjectRequest extends FormRequest
             'invoice_email' => 'nullable|email',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'client_project_id.required' => 'Project ID is required',
+            'client_project_id.integer' => 'Project ID should be a valid integer value.',
+        ];
+    }
 }
