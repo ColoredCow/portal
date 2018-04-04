@@ -32,5 +32,6 @@ Route::middleware('auth')->group(function () {
 	Route::resource('clients', 'ClientController');
 	Route::resource('projects', 'ProjectController');
 	Route::get('finance/invoices/download/{year}/{month}/{file}', 'Finance\InvoiceController@download');
+	Route::resource('weeklydoses', 'WeeklyDoseController')->only([ 'index' ]);
 });
 
