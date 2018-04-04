@@ -23,6 +23,16 @@ return [
 			],
 		],
 	],
+	'currency' => [
+		'INR' => [
+			'name' => 'Indian Rupees',
+			'symbol' => '₹',
+		],
+		'USD' => [
+			'name' => 'US Dollars',
+			'symbol' => '$',
+		],
+	],
 	'project' => [
 		'status' => [
 			'active' => 'Active',
