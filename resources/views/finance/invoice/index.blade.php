@@ -21,7 +21,8 @@
         <tr>
             <td><a href="/finance/invoices/{{ $invoice->id }}/edit">
                 @foreach ($invoice->projects as $project)
-                    {{ $project->name }},
+                    {{ $loop->first ? '' : '|' }}
+                    {{ $project->name }}
                 @endforeach
             </a></td>
             <td>

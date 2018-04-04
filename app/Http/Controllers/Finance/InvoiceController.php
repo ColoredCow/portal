@@ -6,8 +6,8 @@ use App\Helpers\DateHelper;
 use App\Helpers\FileHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\InvoiceRequest;
+use App\Models\Client;
 use App\Models\Finance\Invoice;
-use App\Models\Project;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,7 +33,7 @@ class InvoiceController extends Controller
     public function create()
     {
         return view('finance.invoice.create')->with([
-            'projects' => Project::select('id', 'name')->get(),
+            'clients' => Client::select('id', 'name')->get(),
         ]);
     }
 
@@ -83,9 +83,17 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
+        $projects = $invoice->projects;
+        foreach ($projects as $project) {
+            $client = $project->client;
+            $client_projects = $client->projects;
+            break;
+        }
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
-            'projects' => Project::select('id', 'name')->get(),
+            'clients' => Client::select('id', 'name')->get(),
+            'invoice_client' => $client,
+            'client_projects' => $client_projects,
         ]);
     }
 
