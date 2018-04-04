@@ -24,7 +24,7 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'project_id' => 'required|integer',
+            'project_ids' => 'required',
             'project_invoice_id' => 'required',
             'status' => 'required|string',
             'sent_on' => 'required',

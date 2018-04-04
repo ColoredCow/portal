@@ -19,11 +19,17 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
+                        @php $invoice_projects = []; @endphp
+                        @foreach ($invoice->projects as $project)
+                            @php
+                                array_push($invoice_projects, $project->id);
+                            @endphp
+                        @endforeach
                         <label for="project_id">Project</label>
-                        <select name="project_id" id="project_id" class="form-control" required="required">
+                        <select name="project_ids[]" id="project_ids" class="form-control" required="required" multiple="multiple">
                             @foreach ($projects as $project)
                                 @php
-                                    $selected = $project->id === $invoice->project_id ? 'selected="selected"' : '';
+                                    $selected = in_array($project->id, $invoice_projects) ? 'selected="selected"' : '';
                                 @endphp
                                 <option value="{{ $project->id }}" {{ $selected }}>{{ $project->name }}</option>
                             @endforeach

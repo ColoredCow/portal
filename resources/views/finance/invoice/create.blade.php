@@ -19,8 +19,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="project_id">Project</label>
-                        <select name="project_id" id="project_id" class="form-control" required="required">
-                            <option value="">Select Project</option>
+                        <select name="project_ids[]" id="project_ids" class="form-control" required="required" multiple="multiple">
                             @foreach ($projects as $project)
                                 <option value="{{ $project->id }}">{{ $project->name }}</option>
                             @endforeach

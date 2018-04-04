@@ -19,7 +19,11 @@
         </tr>
         @foreach ($invoices as $invoice)
         <tr>
-            <td><a href="/finance/invoices/{{ $invoice->id }}/edit">{{ $invoice->project->name }}</a></td>
+            <td><a href="/finance/invoices/{{ $invoice->id }}/edit">
+                @foreach ($invoice->projects as $project)
+                    {{ $project->name }},
+                @endforeach
+            </a></td>
             <td>
                 @switch ($invoice->status)
                     @case('paid')
