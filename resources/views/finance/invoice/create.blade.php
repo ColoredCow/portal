@@ -49,7 +49,7 @@
                         <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="sent_amount">Sent amount</label>
+                        <label for="sent_amount">Invoice amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select name="currency_sent_amount" id="currency_sent_amount" class="btn btn-secondary" required="required">
@@ -58,7 +58,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Sent Amount" required="required" step=".01" min="0">
+                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0">
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="paid_amount">Paid amount</label>
+                        <label for="paid_amount">Received amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary">
@@ -78,7 +78,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Paid Amount" step=".01" min="0">
+                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0">
                         </div>
                     </div>
                 </div>
