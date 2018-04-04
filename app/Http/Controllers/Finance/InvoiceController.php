@@ -83,12 +83,10 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        $projects = $invoice->projects;
-        foreach ($projects as $project) {
-            $client = $project->client;
-            $client_projects = $client->projects;
-            break;
-        }
+        $project = $invoice->projects->first();
+        $client = $project->client;
+        $client_projects = $client->projects;
+
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
             'clients' => Client::select('id', 'name')->get(),
