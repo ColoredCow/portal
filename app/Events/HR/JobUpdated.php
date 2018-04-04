@@ -2,25 +2,28 @@
 
 namespace App\Events\HR;
 
-use App\Models\HR\Applicant;
+use App\Models\HR\Job;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ApplicantCreated
+class JobUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $applicant;
+    public $job;
+    public $attr;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Applicant $applicant)
+    public function __construct(Job $job, $attr = [])
     {
-        $this->applicant = $applicant;
+        $this->job = $job;
+        $this->attr = $attr;
     }
 
     /**
