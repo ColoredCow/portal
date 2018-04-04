@@ -101,4 +101,15 @@ class ClientController extends Controller
     {
         //
     }
+
+    /**
+     * Get all the projects for a client
+     *
+     * @param  \App\Models\Client $client
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getProjects(Client $client)
+    {
+        return $client->projects;
+    }
 }
