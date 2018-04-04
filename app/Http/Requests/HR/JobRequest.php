@@ -27,7 +27,7 @@ class JobRequest extends FormRequest
         {
             $rules = [
                 'title' => 'required|string',
-                'by' => 'required|email',
+                'by' => 'required|string',
                 'link' => 'required|url',
             ];
         }
