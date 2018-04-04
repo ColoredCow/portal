@@ -5,7 +5,7 @@ return [
 	'display_date_format' => 'd/m/Y',
 	'hr' => [
 		'round' => [
-			'statuses' => [
+			'status' => [
 				'new' => 'new',
 				'rejected' => 'rejected',
 				'in-progress' => 'in-progress',
@@ -21,6 +21,16 @@ return [
 				'unpaid' => 'Unpaid',
 				'paid' => 'Paid',
 			],
+		],
+	],
+	'currency' => [
+		'INR' => [
+			'name' => 'Indian Rupees',
+			'symbol' => '₹',
+		],
+		'USD' => [
+			'name' => 'US Dollars',
+			'symbol' => '$',
 		],
 	],
 	'project' => [

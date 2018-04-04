@@ -14,6 +14,12 @@ class Applicant extends Model
 
     protected $table = 'hr_applicants';
 
+    /**
+     * Custom create method that creates an applicant and fires specific events
+     *
+     * @param  array $attr  fillables to be stored
+     * @return this
+     */
     public static function _create($attr)
     {
         $applicant = self::create($attr);
@@ -21,6 +27,12 @@ class Applicant extends Model
         return $applicant;
     }
 
+    /**
+     * Custom update method that updates an applicant and fires specific events
+     *
+     * @param  array $attr       fillables to be updated
+     * @return boolean|object    true if update is successful, error object if update fails
+     */
     public function _update($attr)
     {
         $updated = $this->update($attr);
