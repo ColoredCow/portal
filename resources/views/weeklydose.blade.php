@@ -37,12 +37,12 @@
             <div class="modal-body">
                 <p>Follow the steps to get started with the WeeklyDose functionality:</p>
                 <ol>
-                    <li><a href="{{ env('WEEKLYDOSE_PLUGIN_URL') }}" target="_blank">Add the plugin to your Chrome.</a></li>
+                    <li><a href="{{ env('WEEKLYDOSE_PLUGIN_URL') }}" target="_blank">Add the chrome plugin.</a></li>
                     <li>Once added, you'll see a small ColoredCow icon at the top-right section of your browser.</li>
                     <li>Click on the icon and set your WeeklyDose configurations by clicking on the settings <i class="fa fa-cog"></i> icon.</li>
                     <li>
                         Save your name and add the following WeeklyDose service url:
-                        <div class="bg-light d-flex align-items-center justify-content-between pl-2" id="weeklydose_service_url">https://employee.coloredcow.com/weeklydose/store
+                        <div class="bg-light d-flex align-items-center justify-content-between pl-2" id="weeklydose_service_url">{{ env('WEEKLYDOSE_SERVICE_URL') }}
                             <button class="btn btn-secondary btn-clipboard" id="copy_weeklydose_service_url" data-clipboard-target="#weeklydose_service_url" data-original-title="Copy to clipboard">
                                 <i class="fa fa-copy"></i>
                             </button>
