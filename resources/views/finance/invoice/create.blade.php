@@ -12,7 +12,7 @@
     @endif
     <br>
     <div class="card">
-        <form action="/finance/invoices" method="POST" enctype="multipart/form-data">
+        <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_create_invoice">
 
             {{ csrf_field() }}
 
@@ -22,22 +22,27 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="project_id">Project</label>
-                        <select name="project_id" id="project_id" class="form-control" required="required">
-                            <option value="">Select Project</option>
-                            @foreach ($projects as $project)
-                                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                        <label for="client_id">Client</label>
+                        <select name="client_id" id="client_id" class="form-control" required="required">
+                            <option value="">Select Client</option>
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->id }}">{{ $client->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="project_invoice_id">Invoice ID</label>
-                        <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required">
+                        <label for="project_id">Project</label>
+                        <select name="project_ids[]" id="project_ids" class="form-control" required="required" multiple="multiple">
+                        </select>
                     </div>
                 </div>
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
+                        <label for="project_invoice_id">Invoice ID</label>
+                        <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required">
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control" required="required">
                         @foreach (config('constants.finance.invoice.status') as $status => $display_name)

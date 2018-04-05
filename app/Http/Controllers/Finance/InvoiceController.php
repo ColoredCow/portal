@@ -6,8 +6,8 @@ use App\Helpers\DateHelper;
 use App\Helpers\FileHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\InvoiceRequest;
+use App\Models\Client;
 use App\Models\Finance\Invoice;
-use App\Models\Project;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,7 +33,7 @@ class InvoiceController extends Controller
     public function create()
     {
         return view('finance.invoice.create')->with([
-            'projects' => Project::select('id', 'name')->get(),
+            'clients' => Client::select('id', 'name')->get(),
         ]);
     }
 
@@ -48,7 +48,6 @@ class InvoiceController extends Controller
         $validated = $request->validated();
         $path = self::upload($validated['invoice_file']);
         $invoice = Invoice::create([
-            'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
@@ -60,6 +59,7 @@ class InvoiceController extends Controller
             'comments' => $validated['comments'],
             'file_path' => $path
         ]);
+        $invoice->projects()->sync($validated['project_ids']);
 
         return redirect('/finance/invoices');
     }
@@ -83,9 +83,15 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
+        $project = $invoice->projects->first();
+        $client = $project->client;
+        $client_projects = $client->projects;
+
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
-            'projects' => Project::select('id', 'name')->get(),
+            'clients' => Client::select('id', 'name')->get(),
+            'invoice_client' => $client,
+            'client_projects' => $client_projects,
         ]);
     }
 
@@ -100,7 +106,6 @@ class InvoiceController extends Controller
     {
         $validated = $request->validated();
         $updated = $invoice->update([
-            'project_id' => $validated['project_id'],
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
@@ -111,6 +116,8 @@ class InvoiceController extends Controller
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
         ]);
+        $invoice->projects()->sync($validated['project_ids']);
+
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
     }
 
