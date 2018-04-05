@@ -34,6 +34,16 @@ $('.date-field').datepicker({
 	dateFormat: "dd/mm/yy"
 });
 
+$(document).ready(() => {
+	if ($('#form_create_invoice').length) {
+		let form = $('#form_create_invoice');
+		let client_id = form.find('#client_id').val();
+		if (client_id) {
+			updateClientProjects(form, client_id);
+		}
+	}
+});
+
 $('#form_create_invoice, #form_edit_invoice').on('change', '#client_id', function(){
 	let form = $(this).closest('form');
 	let client_id = $(this).val();
@@ -54,7 +64,6 @@ function updateClientProjects(form, client_id) {
 		error : function (err) {
 			console.log(err);
 		}
-
 	});
 }
 
