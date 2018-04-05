@@ -23,25 +23,25 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ old('name') }}">
                     </div>
                 </div>
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ old('email') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="phone">Phone</label>
-                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone">
+                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" value="{{ old('phone') }}">
                     </div>
                 </div>
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="name">Address</label>
-                        <textarea name="address" id="address" rows="5" class="form-control" placeholder="Address"></textarea>
+                        <textarea name="address" id="address" rows="5" class="form-control" placeholder="Address">{{ old('address') }}</textarea>
                     </div>
                 </div>
             </div>

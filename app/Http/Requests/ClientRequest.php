@@ -30,4 +30,17 @@ class ClientRequest extends FormRequest
             'address' => 'nullable|string',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => 'Client name is required',
+            'email.email' => 'Client email should be a valid email address',
+        ];
+    }
 }

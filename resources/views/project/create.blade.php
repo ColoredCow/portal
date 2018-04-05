@@ -27,14 +27,13 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="client_id">Client</label>
-                        {{ old('client_id') }}
                         <select name="client_id" id="client_id" class="form-control" required="required">
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
                                 @php
                                     $selected = $client->id == old('client_id') ? 'selected="selected"' : '';
                                 @endphp
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                <option value="{{ $client->id }}" {{ $selected }}>{{ $client->name }}</option>
                             @endforeach
                         </select>
                     </div>

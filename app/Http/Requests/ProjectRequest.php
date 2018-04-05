@@ -42,7 +42,8 @@ class ProjectRequest extends FormRequest
     {
         return [
             'client_project_id.required' => 'Project ID is required',
-            'client_project_id.integer' => 'Project ID should be a valid integer value.',
+            'client_project_id.integer' => 'Project ID should be a valid number',
+            'invoice_email.email' => 'Email for invoice should a valid email address',
         ];
     }
 }
