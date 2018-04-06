@@ -7,6 +7,10 @@
     <br>
     <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
     <br><br>
+    @if (sizeof($errors))
+        @include('errors', ['errors' => $errors->all()])
+    @endif
+    <br>
     <div class="card">
         <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_edit_invoice">
 
@@ -113,6 +117,21 @@
                             </div>
                             <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ $invoice->paid_amount }}">
                         </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="payment_type">Payment type</label>
+                        <select name="payment_type" id="payment_type" class="form-control">
+                            <option value="">Select payment type</option>
+                            @foreach (config('constants.payment_types') as $payment_type => $display_name)
+                                @php
+                                    $selected = $invoice->payment_type == $payment_type ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <br>

@@ -33,6 +33,11 @@ return [
 			'symbol' => '$',
 		],
 	],
+	'payment_types' => [
+		'cheque' => 'Cheque',
+		'cash' => 'Cash',
+		'wire-transfer' => 'Wire Transfer',
+	],
 	'project' => [
 		'status' => [
 			'active' => 'Active',

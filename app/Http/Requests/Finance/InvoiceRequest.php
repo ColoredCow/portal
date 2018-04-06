@@ -25,13 +25,14 @@ class InvoiceRequest extends FormRequest
     {
         $rules = [
             'project_ids' => 'required',
-            'project_invoice_id' => 'required',
+            'project_invoice_id' => 'required|integer|min:1',
             'status' => 'required|string',
             'sent_on' => 'required',
             'sent_amount' => 'required|numeric',
             'currency_sent_amount' => 'required|string|size:3',
             'paid_on' => 'nullable',
             'paid_amount' => 'nullable|numeric',
+            'payment_type' => 'nullable|string',
             'currency_paid_amount' => 'nullable|string|size:3',
             'comments' => 'nullable|string',
         ];
@@ -41,5 +42,24 @@ class InvoiceRequest extends FormRequest
         }
 
         return $rules;
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'project_ids.required' => 'At least one project is required',
+            'sent_on.required' => 'Invoice amount is required',
+            'paid_amount.numeric' => 'Invoice amount must be a valid decimal',
+            'paid_amount.numeric' => 'Received amount must be a valid decimal',
+            'project_invoice_id.required' => 'Invoice ID is required',
+            'project_invoice_id.min' => 'Invoice ID must be greater than 0',
+            'project_invoice_id.integer' => 'Invoice ID should be a valid number',
+            'invoice_file.required' => 'An invoice needs to be uploaded',
+        ];
     }
 }
