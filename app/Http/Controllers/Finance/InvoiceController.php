@@ -55,6 +55,7 @@ class InvoiceController extends Controller
             'currency_sent_amount' => $validated['currency_sent_amount'],
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
+            'payment_type' => $validated['payment_type'],
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
             'file_path' => $path
@@ -113,6 +114,7 @@ class InvoiceController extends Controller
             'currency_sent_amount' => $validated['currency_sent_amount'],
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
+            'payment_type' => $validated['payment_type'],
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
         ]);
