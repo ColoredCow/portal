@@ -122,6 +122,21 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
+                        <label for="payment_type">Payment type</label>
+                        <select name="payment_type" id="payment_type" class="form-control">
+                            <option value="">Select payment type</option>
+                            @foreach (config('constants.payment_types') as $payment_type => $display_name)
+                                @php
+                                    $selected = $invoice->payment_type == $payment_type ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                     @if ($invoice->file_path)
                         <label class="font-weight-bold">Invoice File</label>
                         <div>
