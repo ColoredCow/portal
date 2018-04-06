@@ -48,7 +48,7 @@
                             </button>
                         </div>
                     </li>
-                    <li>All done! Try sharing a nice article and see it on your WeeklyDose dashboard.</li>
+                    <li>Now open the article you want to share in a new tab. From the same tab, click on the ColoredCow icon. You'll see the article link in the popup. Add a brief description and hit send!</li>
                 </ol>
             </div>
         </div>
