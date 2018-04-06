@@ -7,6 +7,10 @@
     <br>
     <a class="btn btn-info" href="/clients">See all clients</a>
     <br><br>
+    @if (sizeof($errors))
+        @include('errors', ['errors' => $errors->all()])
+    @endif
+    <br>
     <div class="card">
         <form action="/clients/{{ $client->id }}" method="POST">
 

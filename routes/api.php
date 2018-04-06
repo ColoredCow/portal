@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('hr/jobs', 'HR\JobController')->only([ 'store' ]);
 Route::resource('hr/applicants', 'HR\ApplicantController')->only([ 'store' ]);
+Route::resource('weeklydose', 'WeeklyDoseController')->only([ 'store' ]);

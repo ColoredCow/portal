@@ -58,3 +58,13 @@ input[type="file"] {
 	padding: 0;
 	cursor: pointer;
 }
+
+#table_weeklydoses td {
+	min-width: 150px;
+}
+
+#weeklydose_setup_modal {
+	li {
+		padding-bottom: 10px;
+	}
+}
