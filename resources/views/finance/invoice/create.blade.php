@@ -7,6 +7,10 @@
     <br>
     <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
     <br><br>
+    @if (sizeof($errors))
+        @include('errors', ['errors' => $errors->all()])
+    @endif
+    <br>
     <div class="card">
         <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_create_invoice">
 
@@ -22,7 +26,11 @@
                         <select name="client_id" id="client_id" class="form-control" required="required">
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                @php
+                                    $selected = old('client_id') == $client->id ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $client->id }}" {{ $selected }}>{{ $client->name }}</option>
+                                }
                             @endforeach
                         </select>
                     </div>
@@ -36,13 +44,16 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="project_invoice_id">Invoice ID</label>
-                        <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required">
+                        <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required" value="{{ old('project_invoice_id') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control" required="required">
                         @foreach (config('constants.finance.invoice.status') as $status => $display_name)
-                            <option value="{{ $status }}">{{ $display_name }}</option>
+                            @php
+                                $selected = old('status') == $status ? 'selected="selected"' : '';
+                            @endphp
+                            <option value="{{ $status }}" {{ $selected }}>{{ $display_name }}</option>
                         @endforeach
                         </select>
                     </div>
@@ -51,7 +62,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="sent_on">Sent on</label>
-                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
+                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required"  value="{{ old('sent_on') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="sent_amount">Invoice amount</label>
@@ -59,11 +70,14 @@
                             <div class="input-group-prepend">
                                 <select name="currency_sent_amount" id="currency_sent_amount" class="btn btn-secondary" required="required">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    <option value="{{ $currency }}">{{ $currency }}</option>
+                                    @php
+                                        $selected = old('currency_sent_amount') == $currency ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0">
+                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" value="{{ old('sent_amount') }}">
                         </div>
                     </div>
                 </div>
@@ -71,7 +85,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
-                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
+                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ old('paid_on') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="paid_amount">Received amount</label>
@@ -79,11 +93,14 @@
                             <div class="input-group-prepend">
                                 <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    <option value="{{ $currency }}">{{ $currency }}</option>
+                                    @php
+                                        $selected = old('currency_paid_amount') == $currency ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0">
+                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ old('paid_amount') }}">
                         </div>
                     </div>
                 </div>
@@ -113,7 +130,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="comments">Comments</label>
-                        <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
+                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ old('comments') }}</textarea>
                     </div>
                 </div>
             </div>
