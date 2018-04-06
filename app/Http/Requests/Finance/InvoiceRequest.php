@@ -52,8 +52,8 @@ class InvoiceRequest extends FormRequest
     {
         return [
             'project_ids.required' => 'At least one project is required',
-            'sent_on.required' => 'Invoice amount is required',
-            'paid_amount.numeric' => 'Invoice amount must be a valid decimal',
+            'sent_on.required' => 'Invoice sent date is required',
+            'sent_amount.numeric' => 'Invoice amount must be a valid decimal',
             'paid_amount.numeric' => 'Received amount must be a valid decimal',
             'project_invoice_id.required' => 'Invoice ID is required',
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',
