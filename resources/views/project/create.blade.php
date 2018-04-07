@@ -7,6 +7,10 @@
     <br>
     <a class="btn btn-info" href="/projects">See all projects</a>
     <br><br>
+    @if (sizeof($errors))
+        @include('errors', ['errors' => $errors->all()])
+    @endif
+    <br>
     <div class="card">
         <form action="/projects" method="POST" id="form_project">
 
@@ -19,14 +23,17 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ old('name') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="client_id">Client</label>
                         <select name="client_id" id="client_id" class="form-control" required="required">
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                @php
+                                    $selected = $client->id == old('client_id') ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $client->id }}" {{ $selected }}>{{ $client->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -35,7 +42,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="client_project_id">Project ID</label>
-                        <input type="text" class="form-control" name="client_project_id" id="client_project_id" placeholder="Project ID" required="required">
+                        <input type="text" class="form-control" name="client_project_id" id="client_project_id" placeholder="Project ID" required="required" value="{{ old('client_project_id') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="name">Status</label>
@@ -50,11 +57,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="started_on">Started on</label>
-                        <input type="text" class="form-control date-field" name="started_on" id="started_on" placeholder="dd/mm/yyyy">
+                        <input type="text" class="form-control date-field" name="started_on" id="started_on" placeholder="dd/mm/yyyy" value="{{ old('started_on') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="invoice_email">Email for invoice</label>
-                        <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice">
+                        <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ old('invoice_email') }}">
                     </div>
                 </div>
             </div>
