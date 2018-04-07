@@ -14,7 +14,11 @@ class AdditionalDetailProjects extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('type')->after('status')->nullable();
+            $table->string('type')->nullable()->after('status');
+            $table->date('end_date')->nullable()->after('type');
+            $table->decimal('cost', 10, 2)->nullable()->after('end_date');
+            $table->boolean('gst_applicable')->default(false)->after('cost');
+            $table->boolean('cost_include_gst')->default(false)->after('gst_applicable');
         });
     }
 
@@ -26,7 +30,13 @@ class AdditionalDetailProjects extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->dropColumn(['type']);
+            $table->dropColumn([
+                'type',
+                'end_date',
+                'cost',
+                'gst_applicable',
+                'cost_include_gst'
+            ]);
         });
     }
 }
