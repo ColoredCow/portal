@@ -7,6 +7,7 @@ use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Models\HR\ApplicantRound;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicantRoundController extends Controller
 {
@@ -22,7 +23,11 @@ class ApplicantRoundController extends Controller
     {
         $validated = $request->validated();
 
-        // send the mail to the applicant.
+        Mail::raw($validated['mail_body'], function($message) use ($validated, $applicantRound) {
+            $message->to($applicantRound->applicant->email)
+                    ->subject($validated['mail_subject'])
+                    ->from(Auth::user()->email);
+        });
 
         $applicantRound->update([
             'mail_sent' => true,
