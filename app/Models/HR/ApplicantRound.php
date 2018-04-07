@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicantRound extends Model
 {
-    protected $fillable = ['hr_applicant_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender'];
+    protected $fillable = ['hr_applicant_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
 
     protected $table = 'hr_applicants_rounds';
 
@@ -65,5 +65,10 @@ class ApplicantRound extends Model
     public function applicantReviews()
     {
         return $this->hasMany(ApplicantReview::class, 'hr_applicant_round_id');
+    }
+
+    public function mailSender()
+    {
+        return $this->belongsTo(User::class, 'mail_sender');
     }
 }

@@ -18,6 +18,7 @@ class AddHrApplicantRoundCommunicationColumns extends Migration
             $table->string('mail_subject')->nullable();
             $table->text('mail_body')->nullable();
             $table->unsignedInteger('mail_sender')->nullable();
+            $table->timestamp('mail_sent_at')->nullable();
             $table->foreign('mail_sender')->references('id')->on('users');
         });
     }
@@ -31,7 +32,7 @@ class AddHrApplicantRoundCommunicationColumns extends Migration
     {
         Schema::table('hr_applicants_rounds', function (Blueprint $table) {
             $table->dropForeign([ 'mail_sender' ]);
-            $table->dropColumn(['mail_sent', 'mail_subject', 'mail_body', 'mail_sender']);
+            $table->dropColumn(['mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at']);
         });
     }
 }

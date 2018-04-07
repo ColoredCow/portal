@@ -68,3 +68,14 @@ input[type="file"] {
 		padding-bottom: 10px;
 	}
 }
+
+.space-wrap {
+	white-space: pre-wrap;
+}
+
+.modal-toggler-text {
+	cursor: pointer;
+	&:hover {
+		text-decoration: underline;
+	}
+}

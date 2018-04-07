@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Models\HR\ApplicantRound;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ApplicantRoundController extends Controller
@@ -28,6 +29,7 @@ class ApplicantRoundController extends Controller
             'mail_subject' => $validated['mail_subject'],
             'mail_body' => $validated['mail_body'],
             'mail_sender' => Auth::id(),
+            'mail_sent_at' => Carbon::now(),
         ]);
 
         return redirect()->back();

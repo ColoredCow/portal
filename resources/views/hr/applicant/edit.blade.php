@@ -83,7 +83,11 @@
                                     @elseif ($applicant_round->round_status == 'rejected')
                                         <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
                                     @endif
+                                    @if ($applicant_round->mail_sent)
+                                        <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#round_mail_{{ $applicant_round->id }}">Mail sent for this round</span>
+                                    @else
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#round_{{ $applicant_round->id }}">Send mail</button>
+                                    @endif
                                     </div>
                                 @endif
                             @endforeach
@@ -93,7 +97,11 @@
                         <input type="hidden" name="round_id" value="{{ $round->id }}">
                     </form>
                     @if ($applicant_round->round_status)
-                        @include('hr.round-review-mail-modal', [ 'applicant_round' => $applicant_round ])
+                        @if ($applicant_round->mail_sent)
+                            @include('hr.round-review-sent-mail-modal', [ 'applicant_round' => $applicant_round ])
+                        @else
+                            @include('hr.round-review-mail-modal', [ 'applicant_round' => $applicant_round ])
+                        @endif
                     @endif
                     @break
                 @endforeach
