@@ -8,6 +8,8 @@
             <br>
             <a class="btn btn-info" href="/hr/applicants">See all applicants</a>
             <br><br>
+            @include('errors', ['errors' => $errors->all()])
+            <br>
             <div class="card">
                 <div class="card-header">Applicant Details</div>
                 <div class="card-body">
@@ -70,22 +72,29 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                @foreach ($applicant_rounds as $applicant_round)
-                                    @if (! $applicant_round->round_status)
-                                        <button type="button" class="btn btn-success round-submit" data-status="confirmed">Move to next round</button>
-                                        <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
-                                    @endif
+                            @foreach ($applicant_rounds as $applicant_round)
+                                @if (! $applicant_round->round_status)
+                                    <button type="button" class="btn btn-success round-submit" data-status="confirmed">Move to next round</button>
+                                    <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
+                                @else
+                                    <div class="d-flex align-items-center justify-content-between">
                                     @if ($applicant_round->round_status == 'confirmed')
                                         <h6 class="text-success"><i class="fa fa-check"></i>Accepted in this round</h6>
                                     @elseif ($applicant_round->round_status == 'rejected')
                                         <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
                                     @endif
-                                @endforeach
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#round_{{ $applicant_round->id }}">Send mail</button>
+                                    </div>
+                                @endif
+                            @endforeach
                             </div>
                         </div>
                         <input type="hidden" name="round_status" value="">
                         <input type="hidden" name="round_id" value="{{ $round->id }}">
                     </form>
+                    @if ($applicant_round->round_status)
+                        @include('hr.round-review-mail-modal', [ 'applicant_round' => $applicant_round ])
+                    @endif
                     @break
                 @endforeach
             @endif

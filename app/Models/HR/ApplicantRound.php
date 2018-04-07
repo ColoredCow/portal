@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicantRound extends Model
 {
-    protected $fillable = ['hr_applicant_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status'];
+    protected $fillable = ['hr_applicant_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender'];
 
     protected $table = 'hr_applicants_rounds';
 
