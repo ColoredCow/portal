@@ -43,5 +43,9 @@ return [
             'active' => 'Active',
             'inactive' => 'Inactive',
         ],
+        'type' => [
+            'fixed_budget' => 'Fixed Budget',
+            'hourly' => 'Hourly',
+        ],
     ],
 ];

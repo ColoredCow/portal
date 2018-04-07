@@ -67,6 +67,22 @@
                         <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ $project->invoice_email }}">
                     </div>
                 </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="name">Type</label>
+                        <select name="type" id="type" class="form-control" required="required">
+                        @foreach (config('constants.project.type') as $type => $display_name)
+                            @php
+                                $selected = $type === $project->type ? 'selected="selected"' : '';
+                            @endphp
+                            <option value="{{ $type }}" {{ $selected }}>{{ $display_name }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>

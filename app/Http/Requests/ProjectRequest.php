@@ -28,6 +28,7 @@ class ProjectRequest extends FormRequest
             'client_id' => 'required|integer',
             'client_project_id' => 'required|integer',
             'status' => 'required|string',
+            'type' => 'required|string',
             'started_on' => 'nullable',
             'invoice_email' => 'nullable|email',
         ];
