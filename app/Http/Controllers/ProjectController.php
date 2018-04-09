@@ -48,6 +48,8 @@ class ProjectController extends Controller
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
             'type' => $validated['type'],
+            'cost' => $validated['cost'],
+            'currency_cost' => $validated['currency_cost'],
             'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
@@ -96,6 +98,8 @@ class ProjectController extends Controller
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
             'type' => $validated['type'],
+            'cost' => $validated['cost'],
+            'currency_cost' => $validated['currency_cost'],
             'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);

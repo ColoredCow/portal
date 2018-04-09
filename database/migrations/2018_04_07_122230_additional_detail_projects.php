@@ -17,6 +17,7 @@ class AdditionalDetailProjects extends Migration
             $table->string('type')->nullable()->after('status');
             $table->date('end_date')->nullable()->after('type');
             $table->decimal('cost', 10, 2)->nullable()->after('end_date');
+            $table->string('currency_cost')->default('USD')->after('cost');
             $table->boolean('gst_applicable')->default(false)->after('cost');
             $table->boolean('cost_include_gst')->default(false)->after('gst_applicable');
         });
@@ -34,6 +35,7 @@ class AdditionalDetailProjects extends Migration
                 'type',
                 'end_date',
                 'cost',
+                'currency_cost',
                 'gst_applicable',
                 'cost_include_gst'
             ]);

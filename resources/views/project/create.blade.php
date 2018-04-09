@@ -75,6 +75,20 @@
                         </select>
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
+                        <label for="sent_amount">Invoice amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_cost" id="currency_cost" class="btn btn-secondary" required="required">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    @php
+                                        $selected = $currency === old('currency_cost') ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="cost" id="cost" placeholder="Project cost" step=".01" min="0" value="{{ old('cost') }}">
+                        </div>
                     </div>
                 </div>
             </div>
