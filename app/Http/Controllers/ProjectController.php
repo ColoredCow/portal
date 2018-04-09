@@ -102,6 +102,8 @@ class ProjectController extends Controller
             'currency_cost' => $validated['currency_cost'],
             'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
+            'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
+            'cost_include_gst' => isset($validated['cost_include_gst']) ? true : false,
         ]);
         return redirect('/projects/' . $project->id . '/edit');
     }

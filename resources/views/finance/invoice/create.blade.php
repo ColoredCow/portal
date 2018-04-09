@@ -118,6 +118,22 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="tds">TDS amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    @php
+                                        $selected = $currency == old('currency_tds') ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ old('tds') }}">
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="form-row">

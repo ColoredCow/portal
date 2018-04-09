@@ -97,6 +97,20 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-3 d-flex align-items-center">
+                        <input type="checkbox" name="gst_applicable" id="gst_applicable" {{ $project->gst_applicable ? 'checked="checked"' : '' }}>
+                        <label for="sent_amount" class="mb-0 pl-2">Is GST applicable?</label>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-3 d-flex align-items-center">
+                        <input type="checkbox" name="cost_include_gst" id="cost_include_gst" {{ $project->cost_include_gst ? 'checked="checked"' : '' }}>
+                        <label for="sent_amount" class="mb-0 pl-2">Is GST excluded in Project Cost?</label>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>

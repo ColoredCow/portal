@@ -21,6 +21,11 @@ class AdditionalDetailProjects extends Migration
             $table->boolean('gst_applicable')->default(false)->after('cost');
             $table->boolean('cost_include_gst')->default(false)->after('gst_applicable');
         });
+
+        Schema::table('finance_invoices', function (Blueprint $table) {
+            $table->decimal('tds', 10, 2)->nullable()->after('currency_paid_amount');
+            $table->string('currency_tds')->default('INR')->after('tds');
+        });
     }
 
     /**
@@ -38,6 +43,12 @@ class AdditionalDetailProjects extends Migration
                 'currency_cost',
                 'gst_applicable',
                 'cost_include_gst'
+            ]);
+        });
+        Schema::table('finance_invoices', function (Blueprint $table) {
+            $table->dropColumn([
+                'tds',
+                'currency_tds'
             ]);
         });
     }

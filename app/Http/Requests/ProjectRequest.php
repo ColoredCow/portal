@@ -33,6 +33,8 @@ class ProjectRequest extends FormRequest
             'cost' => 'nullable|numeric',
             'currency_cost' => 'nullable|string|size:3',
             'invoice_email' => 'nullable|email',
+            'gst_applicable' => 'nullable',
+            'cost_include_gst' => 'nullable',
         ];
     }
 

@@ -58,6 +58,8 @@ class InvoiceController extends Controller
             'payment_type' => $validated['payment_type'],
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
+            'tds' => $validated['tds'],
+            'currency_tds' => $validated['currency_tds'],
             'file_path' => $path
         ]);
         $invoice->projects()->sync($validated['project_ids']);
@@ -117,6 +119,8 @@ class InvoiceController extends Controller
             'payment_type' => $validated['payment_type'],
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
+            'tds' => $validated['tds'],
+            'currency_tds' => $validated['currency_tds'],
         ]);
         $invoice->projects()->sync($validated['project_ids']);
 
