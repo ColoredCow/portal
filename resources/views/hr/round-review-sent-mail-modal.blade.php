@@ -12,8 +12,8 @@
                 <p class="bg-light p-3">{{ $applicant_round->mail_subject }}</p>
                 <strong class="d-block mb-1">Mail body:</strong>
                 <p class="bg-light p-3 space-wrap">{{ $applicant_round->mail_body }}</p>
-                <strong class="d-block mb-1">Mail sent by:</strong>
-                <p class="bg-light p-3">{{ $applicant_round->mailSender->name }} &lt;{{ $applicant_round->mailSender->email }}&gt;</p>
+                <strong class="d-block mb-1">Mail triggered by:</strong>
+                <p class="bg-light p-3">{{ $applicant_round->mailSender->name }}</p>
                 <strong class="d-block mb-1">Mail sent at:</strong>
                 <p class="bg-light p-3">{{ $applicant_round->mail_sent_at }}</p>
             </div>
