@@ -7,9 +7,7 @@
     <br>
     <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
     <br><br>
-    @if (sizeof($errors))
-        @include('errors', ['errors' => $errors->all()])
-    @endif
+    @include('errors', ['errors' => $errors->all()])
     <br>
     <div class="card">
         <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_edit_invoice">
