@@ -21,7 +21,7 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="name">Name</label>
+                        <label for="name" class="field-required">Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ $client->name }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
