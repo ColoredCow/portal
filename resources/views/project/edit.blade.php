@@ -81,7 +81,7 @@
                         </select>
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="sent_amount">Invoice amount</label>
+                        <label for="sent_amount">Project cost</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select name="currency_cost" id="currency_cost" class="btn btn-secondary" required="required">
