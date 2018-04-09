@@ -22,11 +22,13 @@ class ApplicantRoundController extends Controller
     public function sendMail(ApplicantRoundMailRequest $request, ApplicantRound $applicantRound)
     {
         $validated = $request->validated();
+        $applicant = $applicantRound->applicant;
 
-        Mail::raw($validated['mail_body'], function($message) use ($validated, $applicantRound) {
-            $message->to($applicantRound->applicant->email)
+        Mail::raw($validated['mail_body'], function($message) use ($validated, $applicant) {
+            $message->to($applicant->email, $applicant->name)
                     ->subject($validated['mail_subject'])
-                    ->from(Auth::user()->email);
+                    ->bcc($applicant->job->posted_by)
+                    ->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'));
         });
 
         $applicantRound->update([
