@@ -47,10 +47,13 @@ class ProjectStageController extends Controller
 
         if (isset($validated['new_billing']))
         {
-            foreach ($validated['new_billing'] as $billing) {
+            foreach ($validated['new_billing'] as $percentage) {
+                if (!$percentage) {
+                    continue;
+                }
                 ProjectStageBilling::create([
                     'project_stage_id' => $stage->id,
-                    'percentage' => $billing,
+                    'percentage' => $percentage,
                 ]);
             }
         }
@@ -101,6 +104,9 @@ class ProjectStageController extends Controller
         {
             foreach ($validated['billing'] as $billing) {
                 foreach ($billing as $billing_id => $percentage) {
+                    if (!$percentage) {
+                        continue;
+                    }
                     ProjectStageBilling::where('id', $billing_id)
                     ->update([
                         'percentage' => $percentage,
@@ -110,10 +116,13 @@ class ProjectStageController extends Controller
         }
         if (isset($validated['new_billing']))
         {
-            foreach ($validated['new_billing'] as $billing) {
+            foreach ($validated['new_billing'] as $percentage) {
+                if (!$percentage) {
+                    continue;
+                }
                 ProjectStageBilling::create([
                     'project_stage_id' => $stage->id,
-                    'percentage' => $billing,
+                    'percentage' => $percentage,
                 ]);
             }
         }
