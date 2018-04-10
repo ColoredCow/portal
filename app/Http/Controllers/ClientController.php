@@ -42,6 +42,7 @@ class ClientController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
+            'country' => $validated['country'],
             'address' => $validated['address'],
         ]);
 
@@ -86,6 +87,7 @@ class ClientController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
+            'country' => $validated['country'],
             'address' => $validated['address'],
         ]);
         return redirect('/clients/' . $client->id . '/edit');

@@ -7,9 +7,7 @@
     <br>
     <a class="btn btn-info" href="/clients">See all clients</a>
     <br><br>
-    @if (sizeof($errors))
-        @include('errors', ['errors' => $errors->all()])
-    @endif
+    @include('errors', ['errors' => $errors->all()])
     <br>
     <div class="card">
         <form action="/clients/{{ $client->id }}" method="POST">
@@ -22,20 +20,32 @@
             </div>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="name">Name</label>
+                    <div class="form-group col-md-5">
+                        <label for="name" class="field-required">Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ $client->name }}">
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ $client->email }}">
                     </div>
                 </div>
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ $client->email }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" value="{{ $client->phone }}">
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="country">Country</label>
+                        <select name="country" id="country" class="form-control">
+                            <option value="">Select country</option>
+                            @foreach (config('constants.countries') as $country => $country_name)
+                                @php
+                                    $selected = $client->country == $country ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $country }}" {{ $selected }}>{{ $country_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <br>

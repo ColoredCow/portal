@@ -3,6 +3,10 @@
 return [
     'date_format' => 'Y-m-d',
     'display_date_format' => 'd/m/Y',
+    'countries' => [
+        'india' => 'India',
+        'united-states' => 'United States',
+    ],
     'hr' => [
         'round' => [
             'status' => [

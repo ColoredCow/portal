@@ -68,3 +68,28 @@ input[type="file"] {
 		padding-bottom: 10px;
 	}
 }
+
+.space-wrap {
+	white-space: pre-wrap;
+}
+
+.modal-toggler-text {
+	cursor: pointer;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.field-required {
+    position: relative;
+    &:after {
+        content: ' *';
+        color: red;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 1;
+        position: absolute;
+        margin-top: 2px;
+        margin-left: 2px;
+    }
+}

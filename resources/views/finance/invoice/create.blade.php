@@ -7,9 +7,7 @@
     <br>
     <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
     <br><br>
-    @if (sizeof($errors))
-        @include('errors', ['errors' => $errors->all()])
-    @endif
+    @include('errors', ['errors' => $errors->all()])
     <br>
     <div class="card">
         <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_create_invoice">
@@ -22,7 +20,7 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="client_id">Client</label>
+                        <label for="client_id" class="field-required">Client</label>
                         <select name="client_id" id="client_id" class="form-control" required="required">
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
@@ -35,7 +33,7 @@
                         </select>
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="project_id">Project</label>
+                        <label for="project_id" class="field-required">Project</label>
                         <select name="project_ids[]" id="project_ids" class="form-control" required="required" multiple="multiple">
                         </select>
                     </div>
@@ -43,11 +41,11 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="project_invoice_id">Invoice ID</label>
+                        <label for="project_invoice_id" class="field-required">Invoice ID</label>
                         <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required" value="{{ old('project_invoice_id') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="status">Status</label>
+                        <label for="status" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" required="required">
                         @foreach (config('constants.finance.invoice.status') as $status => $display_name)
                             @php
@@ -61,11 +59,11 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="sent_on">Sent on</label>
+                        <label for="sent_on" class="field-required">Sent on</label>
                         <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required"  value="{{ old('sent_on') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="sent_amount">Invoice amount</label>
+                        <label for="sent_amount" class="field-required">Invoice amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select name="currency_sent_amount" id="currency_sent_amount" class="btn btn-secondary" required="required">
@@ -138,7 +136,7 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="invoice_file">Upload Invoice</label>
+                        <label for="invoice_file" class="field-required">Upload Invoice</label>
                         <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
                     </div>
                 </div>
