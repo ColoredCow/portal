@@ -8,6 +8,7 @@
     <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
     <br><br>
     @include('errors', ['errors' => $errors->all()])
+    @include('status')
     <br>
     <div class="card">
         <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_edit_invoice">

@@ -90,7 +90,7 @@ class JobController extends Controller
             'linkedin_post' => $validated['linkedin_post'],
         ]);
 
-        return redirect("/hr/jobs/$job->id/edit");
+        return redirect("/hr/jobs/$job->id/edit")->with('status', 'Job updated successfully!');
     }
 
     /**

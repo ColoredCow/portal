@@ -8,6 +8,7 @@
     <a class="btn btn-info" href="/projects">See all projects</a>
     <br><br>
     @include('errors', ['errors' => $errors->all()])
+    @include('status')
     <br>
     <div class="card">
         <form action="/projects" method="POST" id="form_project">

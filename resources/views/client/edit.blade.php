@@ -8,6 +8,7 @@
     <a class="btn btn-info" href="/clients">See all clients</a>
     <br><br>
     @include('errors', ['errors' => $errors->all()])
+    @include('status')
     <br>
     <div class="card">
         <form action="/clients/{{ $client->id }}" method="POST">
@@ -26,7 +27,7 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ $client->email }}">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ $client->email }}">
                     </div>
                 </div>
                 <br>

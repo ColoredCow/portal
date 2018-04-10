@@ -39,6 +39,10 @@ class ApplicantRoundController extends Controller
             'mail_sent_at' => Carbon::now(),
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with(
+            'status',
+            "Mail sent successfully to the <b>$applicant->name</b> at <b>$applicant->email</b>.<br>
+            <span data-toggle='modal' data-target='#round_mail_$applicantRound->id' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
+        );
     }
 }

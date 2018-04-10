@@ -96,7 +96,8 @@ class ApplicantController extends Controller
         $applicant->_update([
             'status' => $status
         ]);
-        return redirect("/hr/applicants/$applicant->id/edit");
+
+        return redirect("/hr/applicants/$applicant->id/edit")->with('status', 'Applicant updated successfully!');
     }
 
     /**
