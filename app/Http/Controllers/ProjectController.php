@@ -97,7 +97,7 @@ class ProjectController extends Controller
             'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
-        return redirect("/projects/$project->id/edit")->with('status', 'Project updated successfully <b>Test bold</b>!');
+        return redirect("/projects/$project->id/edit")->with('status', 'Project updated successfully!');
     }
 
     /**
