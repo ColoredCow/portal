@@ -41,7 +41,6 @@
                         ref="billingComponent">
                         </project-stage-billing-component>
 
-                        <button type="button" class="btn btn-info" v-on:click="addStageBilling">Add billing</button>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Create stage</button>

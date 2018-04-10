@@ -27,9 +27,6 @@ const app = new Vue({
     methods: {
         createProjectStage: function() {
             this.$refs.projectStageCreate.create();
-        },
-        addProjectStageBilling: function() {
-            this.$refs.projectStageBillingComponent.addBilling();
         }
     }
 });
