@@ -79,13 +79,6 @@
                         </select>
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-3 d-flex align-items-center">
-                        <input type="checkbox" name="gst_applicable" id="gst_applicable" {{ $project->gst_applicable ? 'checked="checked"' : '' }}>
-                        <label for="sent_amount" class="mb-0 pl-2">Is GST applicable?</label>
-                    </div>
-                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
@@ -101,15 +94,17 @@
             @foreach ($project->stages as $stage)
                 @include('project.stage.edit', ['stage' => $stage])
             @endforeach
+
             <project-stage-create-component
             :currencies="{{ json_encode(config('constants.currency')) }}"
             :csrf-token="{{ json_encode(csrf_token()) }}"
             :project-id="{{ $project->id }}"
             ref="projectStageCreate">
             </project-stage-create-component>
+
         </div>
         <div class="card-footer">
-            <button class="btn btn-secondary" type="button" id="project_new_stage" @click="createProjectStage">Add new stage</button>
+            <button class="btn btn-secondary float-right" type="button" id="project_new_stage" v-on:click="createProjectStage">Add new stage</button>
         </div>
     </div>
 </div>

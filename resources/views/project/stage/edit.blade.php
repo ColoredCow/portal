@@ -37,6 +37,14 @@
                     <label for="sent_amount" class="mb-0 pl-2">Is GST included in Stage Cost?</label>
                 </div>
             </div>
+
+            <br>
+            <project-stage-billing-component
+            :stage-billings="{{ json_encode($stage->billings) }}"
+            ref="projectStageBillingComponent">
+            </project-stage-billing-component>
+
+            <button type="button" class="btn btn-info" v-on:click="addProjectStageBilling">Add billing</button>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">Update stage</button>

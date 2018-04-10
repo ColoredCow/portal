@@ -29,6 +29,8 @@ class ProjectStageRequest extends FormRequest
             'cost' => 'nullable|numeric',
             'currency_cost' => 'nullable|string|size:3',
             'cost_include_gst' => 'nullable',
+            'billing' => 'nullable',
+            'new_billing' => 'nullable',
         ];
     }
 }

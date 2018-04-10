@@ -35,6 +35,13 @@
                                 <label for="sent_amount" class="mb-0 pl-2">Is GST included in Stage Cost?</label>
                             </div>
                         </div>
+
+                        <br>
+                        <project-stage-billing-component
+                        ref="billingComponent">
+                        </project-stage-billing-component>
+
+                        <button type="button" class="btn btn-info" v-on:click="addStageBilling">Add billing</button>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Create stage</button>
@@ -46,6 +53,8 @@
 </template>
 
 <script>
+    import ProjectStageBillingComponent from './ProjectStageBillingComponent.vue';
+
     export default {
         props: ['currencies', 'csrfToken', 'projectId'],
         data() {
@@ -53,13 +62,18 @@
                 items: []
             }
         },
+        components: {
+            'project-stage-billing-component': ProjectStageBillingComponent
+        },
         methods: {
             create() {
                 this.items.push({});
-            }
+            },
+            addStageBilling() {
+                this.$refs.billingComponent[0].addBilling();
+            },
         },
         mounted() {
-
         },
     }
 </script>

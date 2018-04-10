@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectStageRequest;
 use App\Models\ProjectStage;
+use App\Models\ProjectStageBilling;
 
 class ProjectStageController extends Controller
 {
@@ -36,13 +37,23 @@ class ProjectStageController extends Controller
     public function store(ProjectStageRequest $request)
     {
         $validated = $request->validated();
-        ProjectStage::create([
+        $stage = ProjectStage::create([
             'project_id' => $validated['project_id'],
             'name' => $validated['name'],
             'cost' => $validated['cost'],
             'currency_cost' => $validated['currency_cost'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] == 'on' ? true : false,
         ]);
+
+        if (isset($validated['new_billing']))
+        {
+            foreach ($validated['new_billing'] as $billing) {
+                ProjectStageBilling::create([
+                    'project_stage_id' => $stage->id,
+                    'percentage' => $billing,
+                ]);
+            }
+        }
 
         return redirect()->back();
     }
@@ -85,6 +96,27 @@ class ProjectStageController extends Controller
             'currency_cost' => $validated['currency_cost'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] == 'on' ? true : false,
         ]);
+
+        if (isset($validated['billing']))
+        {
+            foreach ($validated['billing'] as $billing) {
+                foreach ($billing as $billing_id => $percentage) {
+                    ProjectStageBilling::where('id', $billing_id)
+                    ->update([
+                        'percentage' => $percentage,
+                    ]);
+                }
+            }
+        }
+        if (isset($validated['new_billing']))
+        {
+            foreach ($validated['new_billing'] as $billing) {
+                ProjectStageBilling::create([
+                    'project_stage_id' => $stage->id,
+                    'percentage' => $billing,
+                ]);
+            }
+        }
 
         return redirect()->back();
     }

@@ -20,12 +20,16 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('project-stage-create-component', require('./components/ProjectStageCreateComponent.vue'));
+Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 
 const app = new Vue({
     el: '#app',
     methods: {
         createProjectStage: function() {
             this.$refs.projectStageCreate.create();
+        },
+        addProjectStageBilling: function() {
+            this.$refs.projectStageBillingComponent.addBilling();
         }
     }
 });
