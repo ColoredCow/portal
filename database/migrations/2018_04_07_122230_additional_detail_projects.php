@@ -16,10 +16,7 @@ class AdditionalDetailProjects extends Migration
         Schema::table('projects', function (Blueprint $table) {
             $table->string('type')->nullable()->after('status');
             $table->date('end_date')->nullable()->after('type');
-            $table->decimal('cost', 10, 2)->nullable()->after('end_date');
-            $table->string('currency_cost')->default('USD')->after('cost');
-            $table->boolean('gst_applicable')->default(false)->after('cost');
-            $table->boolean('cost_include_gst')->default(false)->after('gst_applicable');
+            $table->boolean('gst_applicable')->default(false)->after('end_date');
         });
 
         Schema::table('finance_invoices', function (Blueprint $table) {
@@ -39,10 +36,7 @@ class AdditionalDetailProjects extends Migration
             $table->dropColumn([
                 'type',
                 'end_date',
-                'cost',
-                'currency_cost',
                 'gst_applicable',
-                'cost_include_gst'
             ]);
         });
         Schema::table('finance_invoices', function (Blueprint $table) {
