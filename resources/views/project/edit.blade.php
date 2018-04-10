@@ -101,9 +101,15 @@
             @foreach ($project->stages as $stage)
                 @include('project.stage.edit', ['stage' => $stage])
             @endforeach
+            <project-stage-create-component
+            :currencies="{{ json_encode(config('constants.currency')) }}"
+            :csrf-token="{{ json_encode(csrf_token()) }}"
+            :project-id="{{ $project->id }}"
+            ref="projectStageCreate">
+            </project-stage-create-component>
         </div>
         <div class="card-footer">
-            <button class="btn btn-secondary" type="button" id="project_new_stage">Add new stage</button>
+            <button class="btn btn-secondary" type="button" id="project_new_stage" @click="createProjectStage">Add new stage</button>
         </div>
     </div>
 </div>

@@ -19,9 +19,15 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('project-stage-create-component', require('./components/ProjectStageCreateComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    methods: {
+        createProjectStage: function() {
+            this.$refs.projectStageCreate.create();
+        }
+    }
 });
 
 $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){

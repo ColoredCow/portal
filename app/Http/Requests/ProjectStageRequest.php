@@ -24,6 +24,7 @@ class ProjectStageRequest extends FormRequest
     public function rules()
     {
         return [
+            'project_id' => 'nullable|integer',
             'name' => 'required|string',
             'cost' => 'nullable|numeric',
             'currency_cost' => 'nullable|string|size:3',

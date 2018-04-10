@@ -35,7 +35,16 @@ class ProjectStageController extends Controller
      */
     public function store(ProjectStageRequest $request)
     {
-        //
+        $validated = $request->validated();
+        ProjectStage::create([
+            'project_id' => $validated['project_id'],
+            'name' => $validated['name'],
+            'cost' => $validated['cost'],
+            'currency_cost' => $validated['currency_cost'],
+            'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] == 'on' ? true : false,
+        ]);
+
+        return redirect()->back();
     }
 
     /**
