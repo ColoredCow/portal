@@ -79,3 +79,17 @@ input[type="file"] {
 		text-decoration: underline;
 	}
 }
+
+.field-required {
+    position: relative;
+    &:after {
+        content: ' *';
+        color: red;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 1;
+        position: absolute;
+        margin-top: 2px;
+        margin-left: 2px;
+    }
+}

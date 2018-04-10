@@ -27,6 +27,7 @@ class ClientRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'nullable|email',
             'phone' => 'nullable|string',
+            'country' => 'nullable|string',
             'address' => 'nullable|string',
         ];
     }
