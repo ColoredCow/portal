@@ -94,6 +94,31 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
+                    @if ($invoice->file_path)
+                        <label class="font-weight-bold">Invoice File</label>
+                        <div>
+                            <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
+                        </div>
+                    @else
+                        <label for="invoice_file" class="field-required">Upload Invoice</label>
+                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    @endif
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="comments">Comments</label>
+                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ $invoice->comments }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header">
+                Payment details
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
                         @php
                             $paid_on = $invoice->paid_on ? date(config('constants.display_date_format'), strtotime($invoice->paid_on)) : $invoice->paid_on;
@@ -149,26 +174,6 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                    @if ($invoice->file_path)
-                        <label class="font-weight-bold">Invoice File</label>
-                        <div>
-                            <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
-                        </div>
-                    @else
-                        <label for="invoice_file" class="field-required">Upload Invoice</label>
-                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
-                    @endif
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="comments">Comments</label>
-                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ $invoice->comments }}</textarea>
-                    </div>
-                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>

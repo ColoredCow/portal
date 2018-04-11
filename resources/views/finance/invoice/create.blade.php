@@ -82,6 +82,25 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
+                        <label for="invoice_file" class="field-required">Upload Invoice</label>
+                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="comments">Comments</label>
+                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ old('comments') }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header">
+                Payment details
+            </div>
+            <div class="card-body">
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ old('paid_on') }}">
                     </div>
@@ -134,19 +153,6 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="invoice_file" class="field-required">Upload Invoice</label>
-                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="comments">Comments</label>
-                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ old('comments') }}</textarea>
-                    </div>
-                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Create</button>
