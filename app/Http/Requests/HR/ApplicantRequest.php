@@ -31,6 +31,9 @@ class ApplicantRequest extends FormRequest
                 'phone' => 'nullable|string',
                 'resume' => 'required|url',
                 'job_title' => 'required|string',
+                'college' => 'string',
+                'graduation_year' => 'numeric',
+                'course' => 'string',
             ];
         }
 

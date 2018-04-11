@@ -49,6 +49,9 @@ class ApplicantController extends Controller
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,
             'resume' => $validated['resume'],
+            'college' => $validated['college'] ?? null,
+            'graduation_year' => $validated['graduation_year'] ?? null,
+            'course' => $validated['course'] ?? null,
             'hr_job_id' => $job->id,
             'status' => config('constants.hr.round.status.new'),
         ]);

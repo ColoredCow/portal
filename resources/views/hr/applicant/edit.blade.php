@@ -35,11 +35,35 @@
                             <div>{{ $applicant->email }}</div>
                         </div>
                         <div class="form-group col-md-5">
+                            <b>College</b>
+                            @if ($applicant->college)
+                                <div>{{ $applicant->college }}</div>
+                            @else
+                                <div>-</div>
+                            @endif
+                        </div>
+                        <div class="form-group offset-md-1 col-md-5">
+                            <b>Course</b>
+                            @if ($applicant->course)
+                                <div>{{ $applicant->course }}</div>
+                            @else
+                                <div>-</div>
+                            @endif
+                        </div>
+                        <div class="form-group col-md-5">
                             <b>Resume</b>
                             @if ($applicant->resume)
                                 <div><a href="{{ $applicant->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a></div>
                             @else
                                 <div>–</div>
+                            @endif
+                        </div>
+                        <div class="form-group offset-md-1 col-md-5">
+                            <b>Graduation Year</b>
+                            @if ($applicant->graduation_year)
+                                <div>{{ $applicant->graduation_year }}</div>
+                            @else
+                                <div>-</div>
                             @endif
                         </div>
                     </div>
