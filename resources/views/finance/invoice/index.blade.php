@@ -20,9 +20,9 @@
         @foreach ($invoices as $invoice)
         <tr>
             <td><a href="/finance/invoices/{{ $invoice->id }}/edit">
-                @foreach ($invoice->projects as $project)
+                @foreach ($invoice->projectStageBillings as $billing)
                     {{ $loop->first ? '' : '|' }}
-                    {{ $project->name }}
+                    {{ $billing->projectStage->project->name }}
                 @endforeach
             </a></td>
             <td>

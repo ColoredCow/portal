@@ -18,18 +18,4 @@ class Invoice extends Model
     {
         return $this->belongsToMany(ProjectStageBilling::class, 'project_stage_billing_invoices', 'finance_invoice_id');
     }
-
-    /**
-     * Get details to list invoices
-     *
-     * @return self
-     */
-    public static function getList()
-    {
-    	return self::with([ 'projects' => function($query) {
-	            $query->select('id', 'name');
-	        }])
-            ->orderBy('sent_on', 'desc')
-            ->get();
-    }
 }
