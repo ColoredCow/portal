@@ -5,7 +5,6 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRequest;
 use App\Models\HR\Applicant;
-use App\Models\HR\ApplicantRound;
 use App\Models\HR\Job;
 use App\Models\HR\Round;
 
@@ -73,11 +72,13 @@ class ApplicantController extends Controller
      */
     public function edit(Applicant $applicant)
     {
+        $applicant->load(['job', 'job.rounds', 'applicantRounds', 'applicantRounds.applicantReviews']);
+        
         return view('hr.applicant.edit')->with([
-            'job' => Job::with('rounds')->find($applicant->job->id),
+            'job' => $applicant->job,
             'applicant' => $applicant,
             'rounds' => Round::all(),
-            'applicant_rounds' => ApplicantRound::with('applicantReviews')->where('hr_applicant_id', $applicant->id)->get(),
+            'applicant_rounds' => $applicant->applicantRounds,
         ]);
     }
 

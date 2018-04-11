@@ -78,16 +78,24 @@
                                     <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
                                 @else
                                     <div class="d-flex align-items-center justify-content-between">
-                                    @if ($applicant_round->round_status == 'confirmed')
-                                        <h6 class="text-success"><i class="fa fa-check"></i>Accepted in this round</h6>
-                                    @elseif ($applicant_round->round_status == 'rejected')
-                                        <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
-                                    @endif
-                                    @if ($applicant_round->mail_sent)
-                                        <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#round_mail_{{ $applicant_round->id }}">Mail sent for this round</span>
-                                    @else
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#round_{{ $applicant_round->id }}">Send mail</button>
-                                    @endif
+                                        <div>
+                                            @if ($applicant_round->round_status == 'confirmed')
+                                                <h6 class="text-success"><i class="fa fa-check"></i>Accepted in this round</h6>
+                                                <button type="button" class="btn btn-info round-submit" data-status="confirmed">Update Round</button>
+                                                <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
+                                            @elseif ($applicant_round->round_status == 'rejected')
+                                                <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
+                                                <button type="button" class="btn btn-info round-submit" data-status="rejected">Update Round</button>
+                                                <button type="button" class="btn btn-success round-submit" data-status="confirmed">Move to next round</button>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            @if ($applicant_round->mail_sent)
+                                                <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#round_mail_{{ $applicant_round->id }}">Mail sent for this round</span>
+                                            @else
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#round_{{ $applicant_round->id }}">Send mail</button>
+                                            @endif
+                                        </div>
                                     </div>
                                 @endif
                             @endforeach
