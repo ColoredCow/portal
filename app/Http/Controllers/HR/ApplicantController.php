@@ -52,6 +52,8 @@ class ApplicantController extends Controller
             'college' => $validated['college'] ?? null,
             'graduation_year' => $validated['graduation_year'] ?? null,
             'course' => $validated['course'] ?? null,
+            'linkedin' => $validated['linkedin'] ?? null,
+            'reason_for_eligibility' => $validated['reason_for_eligibility'] ?? null,
             'hr_job_id' => $job->id,
             'status' => config('constants.hr.round.status.new'),
         ]);

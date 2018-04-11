@@ -17,6 +17,8 @@ class UpdateApplicantAddCollege extends Migration
             $table->string('college')->nullable()->after('resume');
             $table->string('graduation_year')->nullable()->after('resume');
             $table->string('course')->nullable()->after('resume');
+            $table->string('linkedin')->nullable()->after('resume');
+            $table->text('reason_for_eligibility')->nullable()->after('resume');
         });
     }
 
@@ -28,7 +30,7 @@ class UpdateApplicantAddCollege extends Migration
     public function down()
     {
         Schema::table('hr_applicants', function (Blueprint $table) {
-            $table->dropColumn(['college', 'graduation_year', 'course']);
+            $table->dropColumn(['college', 'graduation_year', 'course', 'linkedin', 'reason_for_eligibility']);
         });
     }
 }

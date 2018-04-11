@@ -16,7 +16,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <b>Name</b>
-                            <div>{{ $applicant->name }}</div>
+                            <div>
+                                {{ $applicant->name }} 
+                                @if ($applicant->linkedin)
+                                    <a href="{{ $applicant->linkedin }}" target="_blank"><i class="fa fa-linkedin-square pl-1 fa-lg"></i></a>
+                                @endif
+                            </div>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Applied for</b>
@@ -66,6 +71,15 @@
                                 <div>-</div>
                             @endif
                         </div>
+                        <div class="form-group col-md-12">
+                            <b>Reason for eligibility</b>
+                            @if ($applicant->reason_for_eligibility)
+                                <div>{{ $applicant->reason_for_eligibility }}</div>
+                            @else
+                                <div>-</div>
+                            @endif
+                        </div>
+                        
                     </div>
                 </div>
             </div>

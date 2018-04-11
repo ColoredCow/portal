@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Applicant extends Model
 {
-    protected $fillable = ['name', 'email', 'phone', 'resume', 'college', 'graduation_year', 'course', 'status', 'hr_job_id'];
+    protected $fillable = ['name', 'email', 'phone', 'resume', 'college', 'graduation_year', 'course', 'status', 'linkedin', 'reason_for_eligibility', 'hr_job_id'];
 
     protected $table = 'hr_applicants';
 
