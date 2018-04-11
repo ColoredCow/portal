@@ -132,7 +132,7 @@ class InvoiceController extends Controller
             'currency_tds' => $validated['currency_tds'],
         ]);
 
-        $invoice->project_stage_billings()->sync($validated['billings']);
+        $invoice->projectStageBillings()->sync($validated['billings']);
 
         return redirect('/finance/invoices/' . $invoice->id . '/edit');
     }

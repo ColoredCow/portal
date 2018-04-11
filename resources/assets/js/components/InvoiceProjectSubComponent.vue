@@ -3,19 +3,19 @@
         <div class="form-group col-md-3">
             <label for="projects[]">Project</label>
             <select name="projects[]" class="form-control" v-model="projectId" v-on:change="updateStages">
-                <option v-for="project in client.projects" :value="project.id" :selected="item.id == project.id">{{ project.name }}</option>
+                <option v-for="project in client.projects" :value="project.id" :selected="projectId == project.id">{{ project.name }}</option>
             </select>
         </div>
         <div class="form-group offset-md-1 col-md-3">
             <label for="stages[]">Stage</label>
             <select name="stages[]" class="form-control" v-model="stageId" v-on:change="updateBillings">
-                <option v-for="stage in stages" :value="stage.id">{{ stage.name }}</option>
+                <option v-for="stage in stages" :value="stage.id" :selected="stageId == stage.id">{{ stage.name }}</option>
             </select>
         </div>
         <div class="form-group offset-md-1 col-md-3">
             <label for="billings[]">Billing</label>
             <select name="billings[]" class="form-control">
-                <option v-for="billing in billings" :value="billing.id">{{ billing.percentage }}</option>
+                <option v-for="billing in billings" :value="billing.id" :selected="billingId == billing.id">{{ billing.percentage }}</option>
             </select>
         </div>
     </div>
@@ -27,9 +27,9 @@
         props: ['item', 'client'],
         data() {
             return {
-                projectId: this.item.project_stage.project.id,
-                stageId: this.item.project_stage.id,
-                billingId: this.item.id,
+                billingId: this.item.hasOwnProperty('id') ? this.item.id : [],
+                stageId: this.item.hasOwnProperty('project_stage') ? this.item.project_stage.id : [],
+                projectId: this.item.hasOwnProperty('project_stage') && this.item.project_stage.hasOwnProperty('project') ? this.item.project_stage.project.id : [],
             }
         },
         computed: {
