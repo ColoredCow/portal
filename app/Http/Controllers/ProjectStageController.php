@@ -56,6 +56,11 @@ class ProjectStageController extends Controller
                     'percentage' => $percentage,
                 ]);
             }
+        } else {
+            ProjectStageBilling::create([
+                'project_stage_id' => $stage->id,
+                'percentage' => 100,
+            ]);
         }
 
         return redirect()->back();
