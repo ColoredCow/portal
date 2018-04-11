@@ -26,7 +26,7 @@ class ProjectStageRequest extends FormRequest
         return [
             'project_id' => 'nullable|integer',
             'name' => 'required|string',
-            'cost' => 'nullable|numeric',
+            'cost' => 'required|numeric',
             'currency_cost' => 'nullable|string|size:3',
             'cost_include_gst' => 'nullable',
             'billing' => 'nullable',

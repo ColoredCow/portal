@@ -74,6 +74,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $project->load('stages', 'stages.billings');
+
         return view('project.edit')->with([
             'project' => $project,
             'clients' => Client::select('id', 'name')->get(),

@@ -91,16 +91,14 @@
             <span>Project Stages</span>
         </div>
         <div class="card-body" id="project_stages">
-            @foreach ($project->stages as $stage)
-                @include('project.stage.edit', ['stage' => $stage])
-            @endforeach
 
-            <project-stage-create-component
+            <project-stage-component
+            :stages="{{ json_encode($project->stages) }}"
             :currencies="{{ json_encode(config('constants.currency')) }}"
             :csrf-token="{{ json_encode(csrf_token()) }}"
             :project-id="{{ $project->id }}"
-            ref="projectStageCreate">
-            </project-stage-create-component>
+            ref="projectStage">
+            </project-stage-component>
 
         </div>
         <div class="card-footer">
