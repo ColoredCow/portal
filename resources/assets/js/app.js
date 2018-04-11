@@ -21,6 +21,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
+Vue.component('invoice-project-component', require('./components/InvoiceProjectComponent.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -41,39 +42,6 @@ $('.date-field').datepicker({
     dateFormat: "dd/mm/yy"
 });
 
-$(document).ready(() => {
-    if ($('#form_create_invoice').length) {
-        let form = $('#form_create_invoice');
-        let client_id = form.find('#client_id').val();
-        if (client_id) {
-            updateClientProjects(form, client_id);
-        }
-    }
-});
-
-$('#form_create_invoice, #form_edit_invoice').on('change', '#client_id', function(){
-    let form = $(this).closest('form');
-    let client_id = $(this).val();
-    if (! client_id) {
-        form.find('#project_ids').html('');
-        return false;
-    }
-    updateClientProjects(form, client_id);
-});
-
-function updateClientProjects(form, client_id) {
-    $.ajax({
-        url : '/clients/' + client_id + '/get-projects',
-        method : 'GET',
-        success : function (res) {
-            form.find('#project_ids').html(getProjectList(res));
-        },
-        error : function (err) {
-            console.log(err);
-        }
-    });
-}
-
 function getProjectList(projects) {
     let html = '';
     for (var index = 0; index < projects.length; index++) {
@@ -89,11 +57,13 @@ $('#copy_weeklydose_service_url').tooltip({
   trigger: 'click',
   placement: 'bottom'
 });
+
 function setTooltip(btn, message) {
 	$(btn).tooltip('hide')
 		.attr('data-original-title', message)
     	.tooltip('show');
 }
+
 function hideTooltip(btn) {
 	setTimeout(function() {
 		$(btn).tooltip('hide');

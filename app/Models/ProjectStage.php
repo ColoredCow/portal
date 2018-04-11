@@ -17,4 +17,12 @@ class ProjectStage extends Model
     {
         return $this->hasMany(ProjectStageBilling::class);
     }
+
+    /**
+     * Get the project that has the stage.
+     */
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

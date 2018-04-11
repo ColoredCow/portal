@@ -2,21 +2,21 @@
 
 namespace App\Models\Finance;
 
-use App\Models\Project;
+use App\Models\ProjectStageBilling;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
     protected $table = 'finance_invoices';
 
-    protected $fillable = ['project_id', 'project_invoice_id', 'review_value', 'status', 'sent_on', 'sent_amount', 'currency_sent_amount', 'paid_on', 'paid_amount', 'payment_type', 'currency_paid_amount', 'comments', 'file_path', 'tds', 'currency_tds'];
+    protected $fillable = ['project_invoice_id', 'review_value', 'status', 'sent_on', 'sent_amount', 'currency_sent_amount', 'paid_on', 'paid_amount', 'payment_type', 'currency_paid_amount', 'comments', 'file_path', 'tds', 'currency_tds'];
 
     /**
-     * Get the projects associated with the invoice.
+     * Get the project_stage_billings associated with the invoice.
      */
-    public function projects()
+    public function projectStageBillings()
     {
-        return $this->belongsToMany(Project::class, 'project_finance_invoices', 'finance_invoice_id');
+        return $this->belongsToMany(ProjectStageBilling::class, 'project_stage_billing_invoices', 'finance_invoice_id');
     }
 
     /**

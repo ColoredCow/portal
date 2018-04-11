@@ -24,7 +24,6 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'project_ids' => 'required',
             'project_invoice_id' => 'required|integer|min:1',
             'status' => 'required|string',
             'sent_on' => 'required',
@@ -37,6 +36,7 @@ class InvoiceRequest extends FormRequest
             'comments' => 'nullable|string',
             'tds' => 'nullable|numeric',
             'currency_tds' => 'nullable|string|size:3',
+            'billings' => 'nullable',
         ];
 
         if ($this->method() === 'POST') {
