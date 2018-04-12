@@ -4,6 +4,7 @@ namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRoundMailRequest;
+use App\Mail\HR\Applicant\RoundReviewed;
 use App\Models\HR\ApplicantRound;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -25,13 +26,6 @@ class ApplicantRoundController extends Controller
         $mail_body = preg_replace('/\r\n/', '', $validated['mail_body']);
         $applicant = $applicantRound->applicant;
 
-        Mail::raw($validated['mail_body'], function($message) use ($validated, $applicant) {
-            $message->to($applicant->email, $applicant->name)
-                    ->subject($validated['mail_subject'])
-                    ->bcc($applicant->job->posted_by)
-                    ->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'));
-        });
-
         $applicantRound->update([
             'mail_sent' => true,
             'mail_subject' => $validated['mail_subject'],
@@ -39,6 +33,10 @@ class ApplicantRoundController extends Controller
             'mail_sender' => Auth::id(),
             'mail_sent_at' => Carbon::now(),
         ]);
+
+        Mail::to($applicant->email, $applicant->name)
+            ->bcc($applicant->job->posted_by)
+            ->send(new RoundReviewed($applicantRound));
 
         return redirect()->back()->with(
             'status',
