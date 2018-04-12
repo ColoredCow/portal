@@ -35,5 +35,6 @@ Route::middleware('auth')->group(function () {
 	Route::resource('weeklydoses', 'WeeklyDoseController')->only([ 'index' ]);
 	Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 	Route::post('hr/applicant-round/{applicantRound}/sendmail', 'HR\ApplicantRoundController@sendMail');
+	Route::resource('hr/rounds', 'HR\RoundController');
 });
 

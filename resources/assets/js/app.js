@@ -109,9 +109,16 @@ tinymce.init({
     skin: 'lightgray',
     plugins: [ 'lists autolink link' ],
     menubar: false,
+    statusbar: false,
     entity_encoding: 'raw',
     forced_root_block : "",
     force_br_newlines : true,
     force_p_newlines : false,
     height : "280"
+});
+
+$('.hr_round_guide').on('click', '.edit-guide', function(){
+    let container = $(this).closest('.hr_round_guide');
+    container.find('.btn-guide, .guide-container').addClass('d-none');
+    container.find('.save-guide, .guide-editor').removeClass('d-none');
 });
