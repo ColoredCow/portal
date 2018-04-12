@@ -31,11 +31,11 @@ class ApplicantRequest extends FormRequest
                 'phone' => 'nullable|string',
                 'resume' => 'required|url',
                 'job_title' => 'required|string',
-                'college' => 'string',
-                'graduation_year' => 'numeric',
-                'course' => 'string',
-                'linkedin' => 'url',
-                'reason_for_eligibility' => 'string'
+                'college' => 'nullable|string',
+                'graduation_year' => 'nullable|numeric',
+                'course' => 'nullable|string',
+                'linkedin' => 'nullable|url',
+                'reason_for_eligibility' => 'nullable|string'
             ];
         }
 

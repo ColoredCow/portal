@@ -17,7 +17,7 @@
                         <div class="form-group col-md-5">
                             <b>Name</b>
                             <div>
-                                {{ $applicant->name }} 
+                                {{ $applicant->name }}
                                 @if ($applicant->linkedin)
                                     <a href="{{ $applicant->linkedin }}" target="_blank"><i class="fa fa-linkedin-square pl-1 fa-lg"></i></a>
                                 @endif
@@ -29,11 +29,7 @@
                         </div>
                         <div class="form-group col-md-5">
                             <b>Phone</b>
-                            @if ($applicant->phone)
-                                <div>{{ $applicant->phone }}</div>
-                            @else
-                                <div>-</div>
-                            @endif
+                            <div>{{ $applicant->phone ?? '-' }}</div>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Email</b>
@@ -41,45 +37,31 @@
                         </div>
                         <div class="form-group col-md-5">
                             <b>College</b>
-                            @if ($applicant->college)
-                                <div>{{ $applicant->college }}</div>
-                            @else
-                                <div>-</div>
-                            @endif
+                            <div>{{ $applicant->college ?? '-' }}</div>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Course</b>
-                            @if ($applicant->course)
-                                <div>{{ $applicant->course }}</div>
-                            @else
-                                <div>-</div>
-                            @endif
+                            <div>{{ $applicant->course ?? '-' }}</div>
                         </div>
                         <div class="form-group col-md-5">
                             <b>Resume</b>
+                            <div>
                             @if ($applicant->resume)
-                                <div><a href="{{ $applicant->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a></div>
+                                <a href="{{ $applicant->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a>
                             @else
-                                <div>–</div>
+                                –
                             @endif
+                            </div>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Graduation Year</b>
-                            @if ($applicant->graduation_year)
-                                <div>{{ $applicant->graduation_year }}</div>
-                            @else
-                                <div>-</div>
-                            @endif
+                            <div>{{ $applicant->graduation_year ?? '-' }}</div>
                         </div>
                         <div class="form-group col-md-12">
                             <b>Reason for eligibility</b>
-                            @if ($applicant->reason_for_eligibility)
-                                <div>{{ $applicant->reason_for_eligibility }}</div>
-                            @else
-                                <div>-</div>
-                            @endif
+                            <div>{{ $applicant->reason_for_eligibility ?? '-' }}</div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
