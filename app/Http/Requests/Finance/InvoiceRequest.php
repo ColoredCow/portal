@@ -37,6 +37,7 @@ class InvoiceRequest extends FormRequest
             'comments' => 'nullable|string',
             'tds' => 'nullable|numeric',
             'currency_tds' => 'nullable|string|size:3',
+            'gst' => 'nullable|numeric',
         ];
 
         if ($this->method() === 'POST') {

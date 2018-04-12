@@ -82,6 +82,20 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
+                        <label for="gst">GST amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select class="btn btn-secondary">
+                                    <option>INR</option>
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amoount" step=".01" min="0" value="{{ old('gst') }}">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ old('paid_on') }}">
                     </div>
