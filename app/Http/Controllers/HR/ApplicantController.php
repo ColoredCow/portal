@@ -46,8 +46,13 @@ class ApplicantController extends Controller
         return Applicant::_create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'phone' => $validated['phone'] ?? null,
+            'phone' => $validated['phone'],
             'resume' => $validated['resume'],
+            'college' => $validated['college'],
+            'graduation_year' => $validated['graduation_year'],
+            'course' => $validated['course'],
+            'linkedin' => $validated['linkedin'],
+            'reason_for_eligibility' => $validated['reason_for_eligibility'],
             'hr_job_id' => $job->id,
             'status' => config('constants.hr.round.status.new'),
         ]);

@@ -21,13 +21,9 @@
         		<td>
         			<a href="/clients/{{ $client->id }}/edit/">{{ $client->name }}</a>
         		</td>
-        		<td>{{ $client->email }}</td>
+        		<td>{{ $client->email ?? '-' }}</td>
         		<td>
-        			@if ($client->phone)
-        			<span>{{ $client->phone }}</span>
-        			@else
-        			<span>-</span>
-        			@endif
+        			<span>{{ $client->phone ?? '-' }}</span>
         		</td>
         	</tr>
         @endforeach
