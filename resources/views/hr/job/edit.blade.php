@@ -7,7 +7,7 @@
     <br>
     <a class="btn btn-info" href="/hr/jobs">See all jobs</a>
     <br><br>
-    @include('status')
+    @include('status', ['errors' => $errors->all()])
     <br>
     <div class="card">
         <form action="/hr/jobs/{{$job->id}}" method="POST">

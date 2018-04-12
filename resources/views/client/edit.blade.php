@@ -7,8 +7,7 @@
     <br>
     <a class="btn btn-info" href="/clients">See all clients</a>
     <br><br>
-    @include('errors', ['errors' => $errors->all()])
-    @include('status')
+    @include('status', ['errors' => $errors->all()])
     <br>
     <div class="card">
         <form action="/clients/{{ $client->id }}" method="POST">
