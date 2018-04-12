@@ -8,7 +8,7 @@
             <br>
             <a class="btn btn-info" href="/hr/applicants">See all applicants</a>
             <br><br>
-            @include('errors', ['errors' => $errors->all()])
+            @include('status', ['errors' => $errors->all()])
             <br>
             <div class="card">
                 <div class="card-header">Applicant Details</div>
@@ -16,7 +16,12 @@
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <b>Name</b>
-                            <div>{{ $applicant->name }}</div>
+                            <div>
+                                {{ $applicant->name }}
+                                @if ($applicant->linkedin)
+                                    <a href="{{ $applicant->linkedin }}" target="_blank"><i class="fa fa-linkedin-square pl-1 fa-lg"></i></a>
+                                @endif
+                            </div>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Applied for</b>
@@ -24,24 +29,39 @@
                         </div>
                         <div class="form-group col-md-5">
                             <b>Phone</b>
-                            @if ($applicant->phone)
-                                <div>{{ $applicant->phone }}</div>
-                            @else
-                                <div>-</div>
-                            @endif
+                            <div>{{ $applicant->phone ?? '-' }}</div>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Email</b>
                             <div>{{ $applicant->email }}</div>
                         </div>
                         <div class="form-group col-md-5">
-                            <b>Resume</b>
-                            @if ($applicant->resume)
-                                <div><a href="{{ $applicant->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a></div>
-                            @else
-                                <div>–</div>
-                            @endif
+                            <b>College</b>
+                            <div>{{ $applicant->college ?? '-' }}</div>
                         </div>
+                        <div class="form-group offset-md-1 col-md-5">
+                            <b>Course</b>
+                            <div>{{ $applicant->course ?? '-' }}</div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <b>Resume</b>
+                            <div>
+                            @if ($applicant->resume)
+                                <a href="{{ $applicant->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a>
+                            @else
+                                –
+                            @endif
+                            </div>
+                        </div>
+                        <div class="form-group offset-md-1 col-md-5">
+                            <b>Graduation Year</b>
+                            <div>{{ $applicant->graduation_year ?? '-' }}</div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <b>Reason for eligibility</b>
+                            <div>{{ $applicant->reason_for_eligibility ?? '-' }}</div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -78,16 +98,24 @@
                                     <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
                                 @else
                                     <div class="d-flex align-items-center justify-content-between">
-                                    @if ($applicant_round->round_status == 'confirmed')
-                                        <h6 class="text-success"><i class="fa fa-check"></i>Accepted in this round</h6>
-                                    @elseif ($applicant_round->round_status == 'rejected')
-                                        <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
-                                    @endif
-                                    @if ($applicant_round->mail_sent)
-                                        <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#round_mail_{{ $applicant_round->id }}">Mail sent for this round</span>
-                                    @else
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#round_{{ $applicant_round->id }}">Send mail</button>
-                                    @endif
+                                        <div>
+                                            @if ($applicant_round->round_status == 'confirmed')
+                                                <h6 class="text-success"><i class="fa fa-check"></i>Accepted in this round</h6>
+                                                <button type="button" class="btn btn-info round-submit" data-status="confirmed">Update Round</button>
+                                                <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
+                                            @elseif ($applicant_round->round_status == 'rejected')
+                                                <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
+                                                <button type="button" class="btn btn-info round-submit" data-status="rejected">Update Round</button>
+                                                <button type="button" class="btn btn-success round-submit" data-status="confirmed">Move to next round</button>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            @if ($applicant_round->mail_sent)
+                                                <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#round_mail_{{ $applicant_round->id }}">Mail sent for this round</span>
+                                            @else
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#round_{{ $applicant_round->id }}">Send mail</button>
+                                            @endif
+                                        </div>
                                     </div>
                                 @endif
                             @endforeach
