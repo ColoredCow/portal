@@ -1,4 +1,4 @@
-<div class="modal fade" id="round_mail_{{ $applicant_round->id }}" tabindex="-1" role="dialog" aria-labelledby="round_mail_{{ $applicant_round->id }}" aria-hidden="true">
+<div class="modal fade hr_round_review" id="round_mail_{{ $applicant_round->id }}" tabindex="-1" role="dialog" aria-labelledby="round_mail_{{ $applicant_round->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,7 +11,7 @@
                 <strong class="d-block mb-1">Mail subject:</strong>
                 <p class="bg-light p-3">{{ $applicant_round->mail_subject }}</p>
                 <strong class="d-block mb-1">Mail body:</strong>
-                <p class="bg-light p-3 space-wrap">{{ $applicant_round->mail_body }}</p>
+                <div class="bg-light p-3 mb-3 space-wrap">{!! $applicant_round->mail_body !!}</div>
                 <strong class="d-block mb-1">Mail triggered by:</strong>
                 <p class="bg-light p-3">{{ $applicant_round->mailSender->name }}</p>
                 <strong class="d-block mb-1">Mail sent at:</strong>

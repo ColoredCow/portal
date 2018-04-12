@@ -102,3 +102,9 @@ input[type="file"] {
     line-height: 1;
     cursor: pointer;
 }
+
+.modal.hr_round_review {
+    .modal-dialog {
+        max-width: 600px;
+    }
+}

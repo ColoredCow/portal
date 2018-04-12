@@ -22,6 +22,7 @@ class ApplicantRoundController extends Controller
     public function sendMail(ApplicantRoundMailRequest $request, ApplicantRound $applicantRound)
     {
         $validated = $request->validated();
+        $mail_body = preg_replace('/\r\n/', '', $validated['mail_body']);
         $applicant = $applicantRound->applicant;
 
         Mail::raw($validated['mail_body'], function($message) use ($validated, $applicant) {
@@ -34,7 +35,7 @@ class ApplicantRoundController extends Controller
         $applicantRound->update([
             'mail_sent' => true,
             'mail_subject' => $validated['mail_subject'],
-            'mail_body' => $validated['mail_body'],
+            'mail_body' => $mail_body,
             'mail_sender' => Auth::id(),
             'mail_sent_at' => Carbon::now(),
         ]);
