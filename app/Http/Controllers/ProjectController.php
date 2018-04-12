@@ -42,7 +42,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $validated = $request->validated();
-        $invoice = Project::create([
+        $project = Project::create([
             'name' => $validated['name'],
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
@@ -51,7 +51,7 @@ class ProjectController extends Controller
             'invoice_email' => $validated['invoice_email'],
         ]);
 
-        return redirect('/projects');
+        return redirect("/projects/$project->id/edit")->with('status', 'Project created successfully!');
     }
 
     /**
@@ -97,7 +97,7 @@ class ProjectController extends Controller
             'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
-        return redirect('/projects/' . $project->id . '/edit');
+        return redirect("/projects/$project->id/edit")->with('status', 'Project updated successfully!');
     }
 
     /**

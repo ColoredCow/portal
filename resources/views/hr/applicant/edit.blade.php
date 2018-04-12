@@ -8,7 +8,7 @@
             <br>
             <a class="btn btn-info" href="/hr/applicants">See all applicants</a>
             <br><br>
-            @include('errors', ['errors' => $errors->all()])
+            @include('status', ['errors' => $errors->all()])
             <br>
             <div class="card">
                 <div class="card-header">Applicant Details</div>
