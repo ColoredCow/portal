@@ -46,13 +46,13 @@ class ApplicantController extends Controller
         return Applicant::_create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'phone' => $validated['phone'],
             'resume' => $validated['resume'],
-            'college' => $validated['college'],
-            'graduation_year' => $validated['graduation_year'],
-            'course' => $validated['course'],
-            'linkedin' => $validated['linkedin'],
-            'reason_for_eligibility' => $validated['reason_for_eligibility'],
+            'phone' => isset($validated['phone']) ? $validated['phone'] : null,
+            'college' => isset($validated['college']) ? $validated['college'] : null,
+            'graduation_year' => isset($validated['graduation_year']) ? $validated['graduation_year'] : null,
+            'course' => isset($validated['course']) ? $validated['course'] : null,
+            'linkedin' => isset($validated['linkedin']) ? $validated['linkedin'] : null,
+            'reason_for_eligibility' => isset($validated['reason_for_eligibility']) ? $validated['reason_for_eligibility'] : null,
             'hr_job_id' => $job->id,
             'status' => config('constants.hr.round.status.new'),
         ]);
@@ -78,7 +78,7 @@ class ApplicantController extends Controller
     public function edit(Applicant $applicant)
     {
         $applicant->load(['job', 'job.rounds', 'applicantRounds', 'applicantRounds.applicantReviews']);
-        
+
         return view('hr.applicant.edit')->with([
             'job' => $applicant->job,
             'applicant' => $applicant,
