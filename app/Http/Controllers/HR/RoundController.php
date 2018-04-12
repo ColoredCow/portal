@@ -71,12 +71,12 @@ class RoundController extends Controller
     public function update(RoundRequest $request, Round $round)
     {
         $validated = $request->validated();
-        $guidelines = preg_replace('/\r\n/', '', $validated['guidelines']);
+        $guidelines = preg_replace('/[\r\n]/', '', $validated['guidelines']);
         $round->update([
             'guidelines' => $guidelines,
         ]);
 
-        return redirect()->back();
+        return $guidelines;
     }
 
     /**

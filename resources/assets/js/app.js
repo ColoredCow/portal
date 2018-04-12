@@ -119,6 +119,28 @@ tinymce.init({
 
 $('.hr_round_guide').on('click', '.edit-guide', function(){
     let container = $(this).closest('.hr_round_guide');
-    container.find('.btn-guide, .guide-container').addClass('d-none');
-    container.find('.save-guide, .guide-editor').removeClass('d-none');
+    container.find('.btn-guide, .guide-container').toggleClass('d-none');
+});
+
+$('.hr_round_guide').on('click', '.save-guide', function(){
+    let container = $(this).closest('.hr_round_guide');
+    let form = container.find('form');
+    let button = $(this);
+    $.ajax({
+        method: form.attr('method'),
+        url: form.attr('action'),
+        data: form.serialize() + '&guidelines=' + tinyMCE.activeEditor.getContent(),
+        beforeSend: function () {
+            button.find('.item').toggleClass('d-none');
+            button.prop('disabled', true);
+        },
+        success: function (res) {
+            container.find('.guide-display').html(res);
+        },
+        complete: function() {
+            button.find('.item').toggleClass('d-none');
+            button.prop('disabled', false);
+            container.find('.btn-guide, .guide-container').toggleClass('d-none');
+        },
+    });
 });

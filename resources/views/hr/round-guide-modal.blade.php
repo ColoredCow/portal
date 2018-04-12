@@ -13,14 +13,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <div class="bg-light p-3 mb-3 space-wrap guide-container">{!! $round->guidelines !!}</div>
+                        <div class="bg-light p-3 mb-3 space-wrap guide-display guide-container">{!! $round->guidelines !!}</div>
                         <div class="guide-container guide-editor d-none">
                             <textarea name="guidelines" class="form-control richeditor">{!! $round->guidelines !!}</textarea>
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-guide edit-guide">Edit</button>
-                    <button type="submit" class="btn btn-primary d-none btn-guide save-guide">Save</button>
+                    <div class="col-md-2 px-0 float-right">
+                        <button type="button" class="btn btn-secondary btn-block btn-guide edit-guide">Edit</button>
+                        <button type="button" class="btn btn-primary btn-block btn-guide save-guide d-none">
+                            <i class="fa fa-spinner fa-spin d-none item"></i>
+                            <span class="item">Save</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
