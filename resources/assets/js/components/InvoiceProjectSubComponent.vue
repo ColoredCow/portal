@@ -58,9 +58,17 @@
         methods: {
             updateStages(event) {
                 this.stages = this.stages
+                for(let i in this.stages) {
+                    this.stageId = this.stages[i].id;
+                    break;
+                }
             },
             updateBillings(event) {
                 this.billings = this.billings
+                for(let i in this.billings) {
+                    this.billingId = this.billings[i].id;
+                    break;
+                }
             },
         },
         mounted() {
