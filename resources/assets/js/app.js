@@ -105,3 +105,8 @@ weeklyDoseClipboard.on('success', function(e) {
   setTooltip(e.trigger, 'Copied!');
   hideTooltip(e.trigger);
 });
+
+$('.status-close').on('click', function(){
+    let wrapper = $(this).closest('.alert');
+    wrapper.fadeOut(500);
+});

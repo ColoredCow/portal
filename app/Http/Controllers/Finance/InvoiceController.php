@@ -65,7 +65,7 @@ class InvoiceController extends Controller
         ]);
         $invoice->projects()->sync($validated['project_ids']);
 
-        return redirect('/finance/invoices');
+        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
     }
 
     /**
@@ -126,7 +126,7 @@ class InvoiceController extends Controller
         ]);
         $invoice->projects()->sync($validated['project_ids']);
 
-        return redirect('/finance/invoices/' . $invoice->id . '/edit');
+        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice updated successfully!');
     }
 
     /**

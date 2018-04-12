@@ -46,7 +46,7 @@ class ClientController extends Controller
             'address' => $validated['address'],
         ]);
 
-        return redirect('/clients');
+        return redirect("/clients/$client->id/edit")->with('status', 'Client created succesfully!');
     }
 
     /**
@@ -90,7 +90,7 @@ class ClientController extends Controller
             'country' => $validated['country'],
             'address' => $validated['address'],
         ]);
-        return redirect('/clients/' . $client->id . '/edit');
+        return redirect("/clients/$client->id/edit")->with('status', 'Client updated succesfully!');
     }
 
     /**
