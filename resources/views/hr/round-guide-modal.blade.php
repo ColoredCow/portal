@@ -13,15 +13,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <div class="bg-light p-3 mb-3 space-wrap guide-display guide-container">{!! $round->guidelines !!}</div>
-                        <div class="guide-container guide-editor d-none">
-                            <textarea name="guidelines" class="form-control richeditor">{!! $round->guidelines !!}</textarea>
-                        </div>
+                    @php
+                        $guide_display = empty($round->guidelines) ? 'd-none' : '';
+                        $guide_editor = empty($round->guidelines) ? '' : 'd-none';
+                    @endphp
+                    <div class="bg-light p-3 mb-3 space-wrap guide-display guide-container {{ $guide_display }}">{!! $round->guidelines !!}</div>
+                    <div class="guide-container guide-editor {{ $guide_editor }}">
+                        <textarea name="guidelines" class="form-control richeditor">{!! $round->guidelines !!}</textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="col-md-2 px-0 float-right">
-                        <button type="button" class="btn btn-secondary btn-block btn-guide edit-guide">Edit</button>
-                        <button type="button" class="btn btn-primary btn-block btn-guide save-guide d-none">
+                        <button type="button" class="btn btn-secondary btn-block btn-guide edit-guide {{ $guide_display }}">Edit</button>
+                        <button type="button" class="btn btn-primary btn-block btn-guide save-guide {{ $guide_editor }}">
                             <i class="fa fa-spinner fa-spin d-none item"></i>
                             <span class="item">Save</span>
                         </button>

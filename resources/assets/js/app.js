@@ -131,16 +131,14 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
         url: form.attr('action'),
         data: form.serialize() + '&guidelines=' + tinyMCE.activeEditor.getContent(),
         beforeSend: function () {
-            button.find('.item').toggleClass('d-none');
-            button.prop('disabled', true);
+            button.prop('disabled', true).find('.item').toggleClass('d-none');
         },
         success: function (res) {
-            container.find('.guide-display').html(res);
-        },
-        complete: function() {
-            button.find('.item').toggleClass('d-none');
-            button.prop('disabled', false);
-            container.find('.btn-guide, .guide-container').toggleClass('d-none');
+            button.prop('disabled', false).find('.item').toggleClass('d-none');
+            if (res.length) {
+                container.find('.guide-display').html(res);
+                container.find('.btn-guide, .guide-container').toggleClass('d-none');
+            }
         },
     });
 });
