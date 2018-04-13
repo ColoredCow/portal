@@ -22,14 +22,26 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 
-const app = new Vue({
-    el: '#app',
-    methods: {
-        createProjectStage: function() {
-            this.$refs.projectStage.create();
+
+if (document.getElementById('project_container')) {
+    const projectContainer = new Vue({
+        el: '#project_container',
+        methods: {
+            createProjectStage: function() {
+                this.$refs.projectStage.create();
+            }
         }
-    }
-});
+    });
+}
+
+if (document.getElementById('form_invoice')) {
+    const invoiceForm = new Vue({
+        el: '#form_invoice',
+        data: {
+            paymentType: document.getElementById('payment_type').dataset.paymentType || ''
+        }
+    });
+}
 
 $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
@@ -51,7 +63,7 @@ $(document).ready(() => {
     }
 });
 
-$('#form_create_invoice, #form_edit_invoice').on('change', '#client_id', function(){
+$('#form_invoice').on('change', '#client_id', function(){
     let form = $(this).closest('form');
     let client_id = $(this).val();
     if (! client_id) {
@@ -109,12 +121,4 @@ weeklyDoseClipboard.on('success', function(e) {
 $('.status-close').on('click', function(){
     let wrapper = $(this).closest('.alert');
     wrapper.fadeOut(500);
-});
-
-$('.form-invoice').on('change', '#payment_type', function(){
-    if($(this).val() == 'cheque') {
-        $('.cheque-status').removeClass('d-none');
-    } else {
-        $('.cheque-status').addClass('d-none');
-    }
 });
