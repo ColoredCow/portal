@@ -54,8 +54,8 @@ $('.date-field').datepicker({
 });
 
 $(document).ready(() => {
-    if ($('#form_create_invoice').length) {
-        let form = $('#form_create_invoice');
+    if ($('.form-create-invoice').length) {
+        let form = $('.form-create-invoice');
         let client_id = form.find('#client_id').val();
         if (client_id) {
             updateClientProjects(form, client_id);
