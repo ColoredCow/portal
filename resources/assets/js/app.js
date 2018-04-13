@@ -110,3 +110,11 @@ $('.status-close').on('click', function(){
     let wrapper = $(this).closest('.alert');
     wrapper.fadeOut(500);
 });
+
+$('.form-invoice').on('change', '#payment_type', function(){
+    if($(this).val() == 'cheque') {
+        $('.cheque-status').removeClass('d-none');
+    } else {
+        $('.cheque-status').addClass('d-none');
+    }
+});

@@ -10,7 +10,7 @@
     @include('status', ['errors' => $errors->all()])
     <br>
     <div class="card">
-        <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_edit_invoice">
+        <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_edit_invoice" class="form-invoice">
 
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -145,7 +145,22 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-5 cheque-status {{ $invoice->payment_type != 'cheque' ? 'd-none' : '' }}">
+                        <label for="cheque_status">Cheque status</label>
+                        <select name="cheque_status" id="cheque_status" class="form-control">
+                            <option value="">Select payment type</option>
+                            @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
+                                @php
+                                    $selected = $invoice->cheque_status == $cheque_status ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $cheque_status }}" {{ $selected }}>{{ $display_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="tds">TDS amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
