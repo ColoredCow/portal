@@ -19,9 +19,16 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
+Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    methods: {
+        createProjectStage: function() {
+            this.$refs.projectStage.create();
+        }
+    }
 });
 
 $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){

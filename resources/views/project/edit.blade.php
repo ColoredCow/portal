@@ -65,11 +65,45 @@
                         <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ $project->invoice_email }}">
                     </div>
                 </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="name">Type</label>
+                        <select name="type" id="type" class="form-control" required="required">
+                        @foreach (config('constants.project.type') as $type => $display_name)
+                            @php
+                                $selected = $type === $project->type ? 'selected="selected"' : '';
+                            @endphp
+                            <option value="{{ $type }}" {{ $selected }}>{{ $display_name }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
+    </div>
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <span>Project Stages</span>
+        </div>
+        <div class="card-body" id="project_stages">
+
+            <project-stage-component
+            :stages="{{ json_encode($project->stages) }}"
+            :currencies="{{ json_encode(config('constants.currency')) }}"
+            :csrf-token="{{ json_encode(csrf_token()) }}"
+            :project-id="{{ $project->id }}"
+            ref="projectStage">
+            </project-stage-component>
+
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-secondary float-right" type="button" id="project_new_stage" v-on:click="createProjectStage">Add new stage</button>
+        </div>
     </div>
 </div>
 @endsection

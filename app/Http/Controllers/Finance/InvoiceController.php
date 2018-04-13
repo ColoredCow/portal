@@ -53,11 +53,14 @@ class InvoiceController extends Controller
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'sent_amount' => $validated['sent_amount'],
             'currency_sent_amount' => $validated['currency_sent_amount'],
+            'gst' => $validated['gst'],
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
             'payment_type' => $validated['payment_type'],
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
+            'tds' => $validated['tds'],
+            'currency_tds' => $validated['currency_tds'],
             'file_path' => $path
         ]);
         $invoice->projects()->sync($validated['project_ids']);
@@ -112,11 +115,14 @@ class InvoiceController extends Controller
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'sent_amount' => $validated['sent_amount'],
             'currency_sent_amount' => $validated['currency_sent_amount'],
+            'gst' => $validated['gst'],
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
             'payment_type' => $validated['payment_type'],
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
+            'tds' => $validated['tds'],
+            'currency_tds' => $validated['currency_tds'],
         ]);
         $invoice->projects()->sync($validated['project_ids']);
 
