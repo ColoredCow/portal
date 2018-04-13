@@ -47,6 +47,7 @@ class ProjectController extends Controller
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
+            'type' => $validated['type'],
             'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
@@ -73,6 +74,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $project->load('stages', 'stages.billings');
+
         return view('project.edit')->with([
             'project' => $project,
             'clients' => Client::select('id', 'name')->get(),
@@ -94,8 +97,10 @@ class ProjectController extends Controller
             'client_id' => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
             'status' => $validated['status'],
+            'type' => $validated['type'],
             'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
+            'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
         ]);
         return redirect("/projects/$project->id/edit")->with('status', 'Project updated successfully!');
     }
