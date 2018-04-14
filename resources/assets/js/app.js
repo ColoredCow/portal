@@ -20,8 +20,6 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
-Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
-
 
 if (document.getElementById('project_container')) {
     const projectContainer = new Vue({

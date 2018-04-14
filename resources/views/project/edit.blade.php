@@ -57,26 +57,8 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="started_on">Started on</label>
-                        <input type="text" class="form-control date-field" name="started_on" id="started_on" placeholder="dd/mm/yyyy" value="{{ date(config('constants.display_date_format'), strtotime($project->started_on)) }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
                         <label for="invoice_email">Email for invoice</label>
                         <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ $project->invoice_email }}">
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="name">Type</label>
-                        <select name="type" id="type" class="form-control" required="required">
-                        @foreach (config('constants.project.type') as $type => $display_name)
-                            @php
-                                $selected = $type === $project->type ? 'selected="selected"' : '';
-                            @endphp
-                            <option value="{{ $type }}" {{ $selected }}>{{ $display_name }}</option>
-                        @endforeach
-                        </select>
                     </div>
                 </div>
             </div>
@@ -85,7 +67,6 @@
             </div>
         </form>
     </div>
-
     <div class="card mt-5">
         <div class="card-header">
             <span>Project Stages</span>
@@ -97,6 +78,7 @@
             :currencies="{{ json_encode(config('constants.currency')) }}"
             :csrf-token="{{ json_encode(csrf_token()) }}"
             :project-id="{{ $project->id }}"
+            :project-types="{{ json_encode(config('constants.project.type')) }}"
             ref="projectStage">
             </project-stage-component>
 
