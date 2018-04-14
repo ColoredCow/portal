@@ -3,13 +3,22 @@
 @section('content')
 
 <div class="container" id="page-hr-applicant-edit">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row">
+        <div class="col-md-12">
             <br>
             <a class="btn btn-info" href="/hr/applicants">See all applicants</a>
             <br><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             @include('status', ['errors' => $errors->all()])
             <br>
+        </div>
+        <div class="col-md-3">
+            @include('hr.applicant.timeline', ['applicant' => $applicant])
+        </div>
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">Applicant Details</div>
                 <div class="card-body">
@@ -75,13 +84,16 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <span>{{ $round->name }}</span>
-                                <span class="float-right">Interviewer - {{ $round->pivot->hr_round_interviewer }} </span>
+                                <span>
+                                    {{ $round->name }}
+                                    &nbsp;&nbsp;
+                                    <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#round_guide_{{ $round->id }}">See guidelines</span>
+                                </span>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="">Feedback</label>
+                                        <label for="review[feedback]">Feedback</label>
                                         @php
                                             $applicant_round = $applicant->applicantRounds->where('hr_round_id', $round->id)->first();
                                             $applicant_review = $applicant_round->applicantReviews->where('review_key', 'feedback')->first();
@@ -124,6 +136,7 @@
                         <input type="hidden" name="round_status" value="">
                         <input type="hidden" name="round_id" value="{{ $round->id }}">
                     </form>
+                    @include('hr.round-guide-modal', ['round' => $round])
                     @if ($applicant_round->round_status)
                         @if ($applicant_round->mail_sent)
                             @include('hr.round-review-sent-mail-modal', [ 'applicant_round' => $applicant_round ])

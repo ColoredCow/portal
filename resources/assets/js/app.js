@@ -122,3 +122,42 @@ $('.status-close').on('click', function(){
     let wrapper = $(this).closest('.alert');
     wrapper.fadeOut(500);
 });
+
+tinymce.init({
+    selector: '.richeditor',
+    skin: 'lightgray',
+    plugins: [ 'lists autolink link' ],
+    menubar: false,
+    statusbar: false,
+    entity_encoding: 'raw',
+    forced_root_block : "",
+    force_br_newlines : true,
+    force_p_newlines : false,
+    height : "280"
+});
+
+$('.hr_round_guide').on('click', '.edit-guide', function(){
+    let container = $(this).closest('.hr_round_guide');
+    container.find('.btn-guide, .guide-container').toggleClass('d-none');
+});
+
+$('.hr_round_guide').on('click', '.save-guide', function(){
+    let container = $(this).closest('.hr_round_guide');
+    let form = container.find('form');
+    let button = $(this);
+    $.ajax({
+        method: form.attr('method'),
+        url: form.attr('action'),
+        data: form.serialize() + '&guidelines=' + tinyMCE.activeEditor.getContent(),
+        beforeSend: function () {
+            button.prop('disabled', true).find('.item').toggleClass('d-none');
+        },
+        success: function (res) {
+            button.prop('disabled', false).find('.item').toggleClass('d-none');
+            if (res.length) {
+                container.find('.guide-display').html(res);
+                container.find('.btn-guide, .guide-container').toggleClass('d-none');
+            }
+        },
+    });
+});
