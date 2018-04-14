@@ -103,6 +103,59 @@ input[type="file"] {
     cursor: pointer;
 }
 
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    &::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background-color: #FFF;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        margin-left: -3px;
+    }
+    .timeline-container {
+        padding: 15px 15px 15px 0;
+        position: relative;
+        background-color: inherit;
+        width: 100%;
+        &::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            right: -5px;
+            background-color: #FFF;
+            border: 3px solid #FF9F55;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+    }
+    .left {
+        left: 0;
+        &::after {
+            right: -8px;
+        }
+    }
+    .right {
+        left: 50%;
+        &::after {
+            left: -8px;
+        }
+    }
+
+    .content {
+        padding: 10px;
+        background-color: white;
+        position: relative;
+        border-radius: 6px;
+    }
+}
+
 .modal.hr_round_review {
     .modal-dialog {
         max-width: 600px;
