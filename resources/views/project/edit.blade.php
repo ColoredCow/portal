@@ -69,14 +69,19 @@
     </div>
     <h2 class="mt-5">Project Stages</h2>
 
-    <project-stage-component
-    :stages="{{ json_encode($project->stages) }}"
-    :currencies="{{ json_encode(config('constants.currency')) }}"
-    :csrf-token="{{ json_encode(csrf_token()) }}"
-    :project-id="{{ $project->id }}"
-    :project-types="{{ json_encode(config('constants.project.type')) }}"
-    ref="projectStage">
-    </project-stage-component>
+    @foreach ($project->stages as $stage)
+        <project-stage-component
+        :stage="{{ json_encode($stage) }}"
+        :configs="{{ json_encode([
+            'currencies' => config('constants.currency'),
+            'projectTypes' => config('constants.project.type'),
+            'gst' => config('constants.finance.gst'),
+        ]) }}"
+        :csrf-token="{{ json_encode(csrf_token()) }}"
+        :project-id="{{ $project->id }}"
+        ref="projectStage">
+        </project-stage-component>
+    @endforeach
 
     <button class="btn btn-secondary float-right my-5" type="button" id="project_new_stage" v-on:click="createProjectStage">Add new stage</button>
 </div>

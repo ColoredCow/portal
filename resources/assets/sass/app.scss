@@ -115,7 +115,27 @@ input[type="file"] {
 
 .card-edit {
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 10px;
-    cursor: pointer;
+
+    &.icon-pencil {
+        cursor: pointer;
+        top: 7px;
+        padding: 8px;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &.icon-pencil:hover {
+        background-color: $primary;
+        color: white;
+    }
+}
+
+.input-billing {
+    max-width: 75px;
 }

@@ -98,20 +98,15 @@ class ProjectStageController extends Controller
     {
         $validated = $request->validated();
 
-        $updateStage = [
+        $updated = $stage->update([
+            'name' => $validated['name'],
             'type' => $validated['type'],
             'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
             'end_date' => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
             'cost' => $validated['cost'],
             'currency_cost' => $validated['currency_cost'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] == 'on' ? true : false,
-        ];
-
-        if (isset($validated['name'])) {
-            $updateStage['name'] = $validated['name'];
-        }
-
-        $updated = $stage->update($updateStage);
+        ]);
 
         if (isset($validated['billing']))
         {

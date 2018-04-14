@@ -5,7 +5,7 @@
                 <div class="d-flex align-items-center">
                     <div for="billing" class="d-inline w-25">{{ index+1 }}. <strong>Billing:</strong></div>
                     <div class="input-group w-50">
-                        <input type="text" class="form-control" :name="billing.name ? billing.name : 'billing[][' + billing.id + ']'" id="billing" placeholder="percentage" :value="billing.percentage">
+                        <input type="number" class="form-control input-billing" :name="billing.name ? billing.name : 'billing[][' + billing.id + ']'" :value="billing.percentage" step="0.01" min="0">
                         <div class="input-group-append">
                             <span class="input-group-text">%</span>
                         </div>

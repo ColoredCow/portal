@@ -23,8 +23,9 @@ class ProjectStageRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
+        return [
             'project_id' => 'nullable|integer',
+            'name' => 'required|string',
             'cost' => 'required|numeric',
             'currency_cost' => 'nullable|string|size:3',
             'cost_include_gst' => 'nullable',
@@ -34,11 +35,5 @@ class ProjectStageRequest extends FormRequest
             'start_date' => 'nullable',
             'end_date' => 'nullable',
         ];
-
-        if ($this->method() == 'POST') {
-            $rules['name'] = 'required|string';
-        }
-
-        return $rules;
     }
 }

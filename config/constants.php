@@ -26,6 +26,7 @@ return [
                 'paid' => 'Paid',
             ],
         ],
+        'gst' => '18',
     ],
     'currency' => [
         'INR' => [
