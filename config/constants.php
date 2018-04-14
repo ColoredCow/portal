@@ -42,10 +42,19 @@ return [
         'cash' => 'Cash',
         'wire-transfer' => 'Wire Transfer',
     ],
+    'cheque_status' => [
+        'received' => 'Received',
+        'cleared' => 'Cleared',
+        'bounced' => 'Bounced',
+    ],
     'project' => [
         'status' => [
             'active' => 'Active',
             'inactive' => 'Inactive',
+        ],
+        'type' => [
+            'fixed_budget' => 'Fixed Budget',
+            'hourly' => 'Hourly',
         ],
     ],
 ];

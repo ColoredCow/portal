@@ -36,5 +36,6 @@ Route::middleware('auth')->group(function () {
 	Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 	Route::post('hr/applicant-round/{applicantRound}/sendmail', 'HR\ApplicantRoundController@sendMail');
 	Route::resource('hr/rounds', 'HR\RoundController');
+	Route::resource('project/stages', 'ProjectStageController')->only([ 'store', 'update' ]);
 });
 

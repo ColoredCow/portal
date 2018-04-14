@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="project_container">
     <br>
     <h1>Create Project</h1>
     <br>
@@ -60,6 +60,17 @@
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="invoice_email">Email for invoice</label>
                         <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ old('invoice_email') }}">
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="name">Type</label>
+                        <select name="type" id="type" class="form-control" required="required">
+                        @foreach (config('constants.project.type') as $type => $display_name)
+                            <option value="{{ $type }}">{{ $display_name }}</option>
+                        @endforeach
+                        </select>
                     </div>
                 </div>
             </div>

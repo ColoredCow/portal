@@ -10,7 +10,7 @@
     @include('status', ['errors' => $errors->all()])
     <br>
     <div class="card">
-        <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_create_invoice">
+        <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_invoice" class="form-invoice form-create-invoice">
 
             {{ csrf_field() }}
 
@@ -82,6 +82,20 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
+                        <label for="gst">GST amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select class="btn btn-secondary">
+                                    <option>INR</option>
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amoount" step=".01" min="0" value="{{ old('gst') }}">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ old('paid_on') }}">
                     </div>
@@ -106,7 +120,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="payment_type">Payment type</label>
-                        <select name="payment_type" id="payment_type" class="form-control">
+                        <select name="payment_type" id="payment_type" class="form-control" v-model="paymentType" data-payment-type="{{ old('payment_type') }}">
                             <option value="">Select payment type</option>
                             @foreach (config('constants.payment_types') as $payment_type => $display_name)
                                 @php
@@ -115,6 +129,37 @@
                                 <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5 cheque-status" v-show="paymentType == 'cheque'">
+                        <label for="cheque_status">Cheque status</label>
+                        <select name="cheque_status" id="cheque_status" class="form-control">
+                            <option value="">Select cheque status</option>
+                            @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
+                                @php
+                                    $selected = old('cheque_status') == $cheque_status ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $cheque_status }}" {{ $selected }}>{{ $display_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="tds">TDS amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    @php
+                                        $selected = $currency == old('currency_tds') ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ old('tds') }}">
+                        </div>
                     </div>
                 </div>
                 <br>

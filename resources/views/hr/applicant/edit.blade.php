@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Applied for</b>
-                            <div>{{ $applicant->job->title }}</div>
+                            <div><a href="{{ $applicant->job->link }}" target="_blank">{{ $applicant->job->title }}</a></div>
                         </div>
                         <div class="form-group col-md-5">
                             <b>Phone</b>
