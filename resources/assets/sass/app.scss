@@ -112,3 +112,10 @@ input[type="file"] {
 .input-group-prepend {
     z-index: 0;
 }
+
+.card-edit {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}

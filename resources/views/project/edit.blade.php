@@ -67,25 +67,17 @@
             </div>
         </form>
     </div>
-    <div class="card mt-5">
-        <div class="card-header">
-            <span>Project Stages</span>
-        </div>
-        <div class="card-body" id="project_stages">
+    <h2 class="mt-5">Project Stages</h2>
 
-            <project-stage-component
-            :stages="{{ json_encode($project->stages) }}"
-            :currencies="{{ json_encode(config('constants.currency')) }}"
-            :csrf-token="{{ json_encode(csrf_token()) }}"
-            :project-id="{{ $project->id }}"
-            :project-types="{{ json_encode(config('constants.project.type')) }}"
-            ref="projectStage">
-            </project-stage-component>
+    <project-stage-component
+    :stages="{{ json_encode($project->stages) }}"
+    :currencies="{{ json_encode(config('constants.currency')) }}"
+    :csrf-token="{{ json_encode(csrf_token()) }}"
+    :project-id="{{ $project->id }}"
+    :project-types="{{ json_encode(config('constants.project.type')) }}"
+    ref="projectStage">
+    </project-stage-component>
 
-        </div>
-        <div class="card-footer">
-            <button class="btn btn-secondary float-right" type="button" id="project_new_stage" v-on:click="createProjectStage">Add new stage</button>
-        </div>
-    </div>
+    <button class="btn btn-secondary float-right my-5" type="button" id="project_new_stage" v-on:click="createProjectStage">Add new stage</button>
 </div>
 @endsection
