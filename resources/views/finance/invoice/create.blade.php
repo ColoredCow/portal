@@ -10,7 +10,7 @@
     @include('status', ['errors' => $errors->all()])
     <br>
     <div class="card">
-        <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_create_invoice">
+        <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_invoice" class="form-invoice form-create-invoice">
 
             {{ csrf_field() }}
 
@@ -120,7 +120,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="payment_type">Payment type</label>
-                        <select name="payment_type" id="payment_type" class="form-control">
+                        <select name="payment_type" id="payment_type" class="form-control" v-model="paymentType" data-payment-type="{{ old('payment_type') }}">
                             <option value="">Select payment type</option>
                             @foreach (config('constants.payment_types') as $payment_type => $display_name)
                                 @php
@@ -130,7 +130,22 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-5 cheque-status" v-show="paymentType == 'cheque'">
+                        <label for="cheque_status">Cheque status</label>
+                        <select name="cheque_status" id="cheque_status" class="form-control">
+                            <option value="">Select cheque status</option>
+                            @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
+                                @php
+                                    $selected = old('cheque_status') == $cheque_status ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $cheque_status }}" {{ $selected }}>{{ $display_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="tds">TDS amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">

@@ -1,0 +1,3 @@
+<div>
+	{!! $mailBody !!}
+</div>

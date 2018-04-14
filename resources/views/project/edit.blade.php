@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="project_container">
     <br>
     <h1>Edit Project</h1>
     <br>

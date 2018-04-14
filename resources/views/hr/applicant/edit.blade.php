@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Applied for</b>
-                            <div>{{ $applicant->job->title }}</div>
+                            <div><a href="{{ $applicant->job->link }}" target="_blank">{{ $applicant->job->title }}</a></div>
                         </div>
                         <div class="form-group col-md-5">
                             <b>Phone</b>
@@ -90,7 +90,7 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="">Feedback</label>
+                                        <label for="review[feedback]">Feedback</label>
                                         @php
                                             $applicant_round = $applicant->applicantRounds->where('hr_round_id', $round->id)->first();
                                             $applicant_review = $applicant_round->applicantReviews->where('review_key', 'feedback')->first();

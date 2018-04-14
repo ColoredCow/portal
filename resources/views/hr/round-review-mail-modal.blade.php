@@ -1,4 +1,4 @@
-<div class="modal fade" id="round_{{ $applicant_round->id }}" tabindex="-1" role="dialog" aria-labelledby="round_{{ $applicant_round->id }}" aria-hidden="true">
+<div class="modal fade hr_round_review" id="round_{{ $applicant_round->id }}" tabindex="-1" role="dialog" aria-labelledby="round_{{ $applicant_round->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="/hr/applicant-round/{{ $applicant_round->id }}/sendmail" method="POST">
@@ -19,7 +19,7 @@
                     </div>
                     <div class="form-group">
                         <label for="mail_content">Mail body:</label>
-                        <textarea name="mail_body" rows="10" class="form-control" required="required" placeholder="Body"></textarea>
+                        <textarea name="mail_body" id="mail_body" rows="10" class="richeditor form-control" placeholder="Body"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

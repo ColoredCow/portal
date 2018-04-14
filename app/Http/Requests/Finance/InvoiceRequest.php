@@ -33,6 +33,7 @@ class InvoiceRequest extends FormRequest
             'paid_on' => 'nullable',
             'paid_amount' => 'nullable|numeric',
             'payment_type' => 'nullable|string',
+            'cheque_status' => 'nullable|string|required_if:payment_type,cheque',
             'currency_paid_amount' => 'nullable|string|size:3',
             'comments' => 'nullable|string',
             'tds' => 'nullable|numeric',

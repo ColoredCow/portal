@@ -22,14 +22,26 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 
-const app = new Vue({
-    el: '#app',
-    methods: {
-        createProjectStage: function() {
-            this.$refs.projectStage.create();
+
+if (document.getElementById('project_container')) {
+    const projectContainer = new Vue({
+        el: '#project_container',
+        methods: {
+            createProjectStage: function() {
+                this.$refs.projectStage.create();
+            }
         }
-    }
-});
+    });
+}
+
+if (document.getElementById('form_invoice')) {
+    const invoiceForm = new Vue({
+        el: '#form_invoice',
+        data: {
+            paymentType: document.getElementById('payment_type').dataset.paymentType || ''
+        }
+    });
+}
 
 $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
@@ -42,8 +54,8 @@ $('.date-field').datepicker({
 });
 
 $(document).ready(() => {
-    if ($('#form_create_invoice').length) {
-        let form = $('#form_create_invoice');
+    if ($('.form-create-invoice').length) {
+        let form = $('.form-create-invoice');
         let client_id = form.find('#client_id').val();
         if (client_id) {
             updateClientProjects(form, client_id);
@@ -51,7 +63,7 @@ $(document).ready(() => {
     }
 });
 
-$('#form_create_invoice, #form_edit_invoice').on('change', '#client_id', function(){
+$('#form_invoice').on('change', '#client_id', function(){
     let form = $(this).closest('form');
     let client_id = $(this).val();
     if (! client_id) {
@@ -109,4 +121,16 @@ weeklyDoseClipboard.on('success', function(e) {
 $('.status-close').on('click', function(){
     let wrapper = $(this).closest('.alert');
     wrapper.fadeOut(500);
+});
+
+tinymce.init({
+    selector: '.richeditor',
+    skin: 'lightgray',
+    plugins: [ 'lists autolink link' ],
+    menubar: false,
+    entity_encoding: 'raw',
+    forced_root_block : "",
+    force_br_newlines : true,
+    force_p_newlines : false,
+    height : "280"
 });
