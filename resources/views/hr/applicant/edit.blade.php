@@ -81,7 +81,7 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="">Feedback</label>
+                                        <label for="review[feedback]">Feedback</label>
                                         @php
                                             $applicant_round = $applicant->applicantRounds->where('hr_round_id', $round->id)->first();
                                             $applicant_review = $applicant_round->applicantReviews->where('review_key', 'feedback')->first();
