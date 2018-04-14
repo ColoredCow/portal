@@ -66,7 +66,7 @@ class RoundController extends Controller
      *
      * @param  \App\Http\Requests\HR\RoundRequest  $request
      * @param  \App\Models\HR\Round  $round
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function update(RoundRequest $request, Round $round)
     {

@@ -13,10 +13,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @php
-                        $guide_display = empty($round->guidelines) ? 'd-none' : '';
-                        $guide_editor = empty($round->guidelines) ? '' : 'd-none';
-                    @endphp
+                    @if (empty($round->guidelines))
+                        @php
+                            $guide_display = 'd-none';
+                            $guide_editor = '';
+                        @endphp
+                    @else
+                        @php
+                            $guide_display = '';
+                            $guide_editor = 'd-none';
+                        @endphp
+                    @endif
                     <div class="bg-light p-3 mb-3 space-wrap guide-display guide-container {{ $guide_display }}">{!! $round->guidelines !!}</div>
                     <div class="guide-container guide-editor {{ $guide_editor }}">
                         <textarea name="guidelines" class="form-control richeditor">{!! $round->guidelines !!}</textarea>
