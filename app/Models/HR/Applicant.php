@@ -45,6 +45,12 @@ class Applicant extends Model
         return $updated;
     }
 
+    public function getUnconductedRounds() {
+        $applicantRounds = $this->applicantRounds->keyBy('hr_round_id');
+        $jobRounds = $this->job->rounds->keyBy('id');
+        return array_values($jobRounds->diffKeys($applicantRounds)->all());
+    }
+
     public function getApplicantRound($round_id)
     {
         return $this->applicantRounds->where('hr_round_id', $round_id)->first();

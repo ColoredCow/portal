@@ -33,21 +33,7 @@
             </td>
             <td>
                 <span class="d-flex justify-content-center">
-                    @switch ($applicant->status)
-                        @case('new')
-                        @default
-                            <span class="badge badge-pill badge-info">
-                            @break
-
-                        @case('rejected')
-                            <span class="badge badge-pill badge-danger">
-                            @break
-
-                        @case('in-progress')
-                            <span class="badge badge-pill badge-warning">
-                            @break
-                    @endswitch
-                    {{ $applicant->status }}</span>
+                    <span class="{{ config("constants.hr.status.$applicant->status.class") }} badge-pill">{{ $applicant->status }}</span>
                 </span>
             </td>
         </tr>

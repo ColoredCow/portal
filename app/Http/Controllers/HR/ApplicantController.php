@@ -54,7 +54,7 @@ class ApplicantController extends Controller
             'linkedin' => isset($validated['linkedin']) ? $validated['linkedin'] : null,
             'reason_for_eligibility' => isset($validated['reason_for_eligibility']) ? $validated['reason_for_eligibility'] : null,
             'hr_job_id' => $job->id,
-            'status' => config('constants.hr.round.status.new'),
+            'status' => config('constants.hr.status.new.label'),
         ]);
     }
 
@@ -83,7 +83,7 @@ class ApplicantController extends Controller
             'job' => $applicant->job,
             'applicant' => $applicant,
             'rounds' => Round::all(),
-            'applicant_rounds' => $applicant->applicantRounds,
+            'unconductedApplicantRounds' => $applicant->getUnconductedRounds(),
         ]);
     }
 

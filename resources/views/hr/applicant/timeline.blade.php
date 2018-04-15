@@ -21,11 +21,9 @@
                     @if ($applicantRound->mail_sent)
                         <span data-toggle="modal" data-target="#round_mail_{{ $applicantRound->id }}" class="modal-toggler-text text-primary">Communication mail</span><br>
                     @endif
-                    @if ($applicantRound->round_status == 'rejected')
-                        <span class="badge badge-danger">rejected</span>
-                    @else
-                        <span class="badge badge-success">moved to next round</span>
-                    @endif
+                    <span class="{{ config("constants.hr.status.$applicantRound->round_status.class") }}">
+                        {{ config("constants.hr.status.$applicantRound->round_status.title") }}
+                    </span>
                 </div>
             </div>
         @endif

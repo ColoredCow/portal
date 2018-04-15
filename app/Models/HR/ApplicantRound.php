@@ -29,7 +29,7 @@ class ApplicantRound extends Model
 
         $applicant = $this->applicant;
         $applicant->update([
-            'status' => $attr['round_status'] == 'rejected' ? $attr['round_status'] : 'in-progress',
+            'status' => $attr['round_status'] == 'confirmed' ? 'in-progress' : config('constants.hr.status.' . $attr['round_status'] . '.label'),
         ]);
 
         if ($nextRound)

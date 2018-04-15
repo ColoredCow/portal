@@ -22,19 +22,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
-                    @switch ($applicant->status)
-                        @case('new')
-                        @default
-                            <div class="badge badge-info text-uppercase float-right card-status-highlight">
-                            @break
-                        @case('rejected')
-                            <div class="badge badge-danger text-uppercase float-right card-status-highlight">
-                            @break
-                        @case('in-progress')
-                            <div class="badge badge-warning text-uppercase float-right card-status-highlight">
-                            @break
-                    @endswitch
-                    {{ $applicant->status }}</div>
+                    <div class="{{ config("constants.hr.status.$applicant->status.class") }} text-uppercase float-right card-status-highlight">{{ $applicant->status }}</div>
                 </div>
                 <div class="card-body">
                     <div class="form-row">
@@ -126,7 +114,7 @@
                         <div class="card-footer">
                         @if (! $applicantRound->round_status)
                             <applicant-round-action-component
-                            :rounds="{{ json_encode($job->rounds) }}">
+                            :rounds="{{ json_encode($unconductedApplicantRounds) }}">
                             </applicant-round-action-component>
                             <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
                         @else
@@ -135,7 +123,7 @@
                                     <button type="button" class="btn btn-info round-update">Update</button>
                                     @if ($applicantRound->round_status == 'rejected')
                                         <applicant-round-action-component
-                                        :rounds="{{ json_encode($job->rounds) }}">
+                                        :rounds="{{ json_encode($unconductedApplicantRounds) }}">
                                         </applicant-round-action-component>
                                     @endif
                                 </div>
