@@ -21,12 +21,16 @@ class ApplicantRound extends Model
         return self::create($attr);
     }
 
-    public function _update($attr)
+    public function _update($attr, $reviews = [])
     {
-        return $this->update($attr);
+        $this->update($attr);
+        $this->_updateOrCreateReviews($reviews);
+        $this->applicant->update([
+            'status' => $attr['round_status'] == 'rejected' ? $attr['round_status'] : 'in-progress',
+        ]);
     }
 
-    public function _updateOrCreateReviews($reviews = [])
+    protected function _updateOrCreateReviews($reviews = [])
     {
         foreach ($reviews as $review_key => $review_value) {
             $applicant_reviews = $this->applicantReviews()->updateOrCreate(

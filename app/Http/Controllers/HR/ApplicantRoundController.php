@@ -14,22 +14,22 @@ use Illuminate\Support\Facades\Mail;
 class ApplicantRoundController extends Controller
 {
 
+    /**
+     * Update the specified resource in storage.
+     * @param  ApplicantRoundRequest $request
+     * @param  ApplicantRound        $round
+     * @return \Illuminate\Http\Response
+     */
     public function update(ApplicantRoundRequest $request, ApplicantRound $round)
     {
         $validated = $request->validated();
-        $round->update([
+        $round->_update([
             'round_status' => $validated['round_status'],
             'conducted_person_id' => Auth::id(),
             'conducted_date' => Carbon::now(),
-        ]);
-        $round->_updateOrCreateReviews($validated['reviews']);
+        ], $validated['reviews']);
 
-        $applicant = $round->applicant;
-        $applicant->update([
-            'status' => $validated['round_status'] == 'rejected' ? $validated['round_status'] : 'in-progress',
-        ]);
-
-        return redirect("/hr/applicants/$applicant->id/edit")->with('status', 'Applicant updated successfully!');
+        return redirect('/hr/applicants/' . $round->applicant->id . '/edit')->with('status', 'Applicant updated successfully!');
     }
 
     /**
