@@ -20,7 +20,22 @@
         </div>
         <div class="col-md-7">
             <div class="card">
-                <div class="card-header">Applicant Details</div>
+                <div class="card-header">
+                    <div class="d-inline float-left">Applicant Details</div>
+                    @switch ($applicant->status)
+                        @case('new')
+                        @default
+                            <div class="badge badge-info text-uppercase float-right card-status-highlight">
+                            @break
+                        @case('rejected')
+                            <div class="badge badge-danger text-uppercase float-right card-status-highlight">
+                            @break
+                        @case('in-progress')
+                            <div class="badge badge-warning text-uppercase float-right card-status-highlight">
+                            @break
+                    @endswitch
+                    {{ $applicant->status }}</div>
+                </div>
                 <div class="card-body">
                     <div class="form-row">
                         <div class="form-group col-md-5">
@@ -82,23 +97,32 @@
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
 
+                        @php
+                            $applicant_round = $applicant->applicantRounds->where('hr_round_id', $round->id)->first();
+                            $applicant_review = $applicant_round->applicantReviews->where('review_key', 'feedback')->first();
+                            $applicant_review_value = $applicant_review ? $applicant_review->review_value : '';
+                        @endphp
+
                         <div class="card">
                             <div class="card-header">
-                                <span>
+                                <div class="d-inline float-left">
                                     {{ $round->name }}
-                                    &nbsp;&nbsp;
-                                    <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#round_guide_{{ $round->id }}">See guidelines</span>
-                                </span>
+                                    <span title="{{ $round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $round->id }}">
+                                        <i class="fa fa-info-circle fa-lg"></i>
+                                    </span>
+                                </div>
+                                <div class="d-inline float-right">
+                                    @if ($applicant_round->round_status == 'confirmed')
+                                        <div class="text-success"><i class="fa fa-check"></i>Accepted in this round</div>
+                                    @elseif ($applicant_round->round_status == 'rejected')
+                                        <div class="text-danger"><i class="fa fa-close"></i>Rejected</div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="review[feedback]">Feedback</label>
-                                        @php
-                                            $applicant_round = $applicant->applicantRounds->where('hr_round_id', $round->id)->first();
-                                            $applicant_review = $applicant_round->applicantReviews->where('review_key', 'feedback')->first();
-                                            $applicant_review_value = $applicant_review ? $applicant_review->review_value : '';
-                                        @endphp
                                         <textarea name="reviews[feedback]" id="review[feedback]" rows="10" class="form-control">{{ $applicant_review_value }}</textarea>
                                     </div>
                                 </div>
@@ -112,13 +136,11 @@
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             @if ($applicant_round->round_status == 'confirmed')
-                                                <h6 class="text-success"><i class="fa fa-check"></i>Accepted in this round</h6>
-                                                <button type="button" class="btn btn-info round-submit" data-status="confirmed">Update Round</button>
-                                                <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
+                                                <button type="button" class="btn btn-info round-submit" data-status="confirmed">Update</button>
+                                                <button type="button" class="btn btn-outline-danger round-submit" data-status="rejected">Reject</button>
                                             @elseif ($applicant_round->round_status == 'rejected')
-                                                <h6 class="text-danger"><i class="fa fa-close"></i>Rejected</h6>
-                                                <button type="button" class="btn btn-info round-submit" data-status="rejected">Update Round</button>
-                                                <button type="button" class="btn btn-success round-submit" data-status="confirmed">Move to next round</button>
+                                                <button type="button" class="btn btn-info round-submit" data-status="rejected">Update</button>
+                                                <button type="button" class="btn btn-outline-success round-submit" data-status="confirmed">Move to next round</button>
                                             @endif
                                         </div>
                                         <div>
