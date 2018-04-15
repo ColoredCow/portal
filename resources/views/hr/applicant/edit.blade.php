@@ -125,17 +125,15 @@
                         </div>
                         <div class="card-footer">
                         @if (! $applicantRound->round_status)
-                            <applicant-round-action-component></applicant-round-action-component>
-                            <button type="button" class="btn btn-success round-submit" data-status="confirmed">Move to next round</button>
+                            <applicant-round-action-component
+                            :rounds="{{ json_encode($job->rounds) }}">
+                            </applicant-round-action-component>
                             <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
                         @else
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    @if ($applicantRound->round_status == 'confirmed')
-                                        <button type="button" class="btn btn-info round-submit" data-status="confirmed">Update</button>
-                                        <button type="button" class="btn btn-outline-danger round-submit" data-status="rejected">Reject</button>
-                                    @elseif ($applicantRound->round_status == 'rejected')
-                                        <button type="button" class="btn btn-info round-submit" data-status="rejected">Update</button>
+                                    <button type="button" class="btn btn-info round-update">Update</button>
+                                    @if ($applicantRound->round_status == 'rejected')
                                         <applicant-round-action-component
                                         :rounds="{{ json_encode($job->rounds) }}">
                                         </applicant-round-action-component>
@@ -152,7 +150,9 @@
                         @endif
                         </div>
                     </div>
-                    <input type="hidden" name="round_status" value="">
+                    <input type="hidden" name="round_status" value="{{ $applicantRound->round_status }}">
+                    <input type="hidden" name="next_round" value="0">
+                    <input type="hidden" name="action_type" value="new">
                 </form>
                 @include('hr.round-guide-modal', ['round' => $applicantRound->round])
                 @if ($applicantRound->round_status)
@@ -162,7 +162,6 @@
                         @include('hr.round-review-mail-modal', [ 'applicantRound' => $applicantRound ])
                     @endif
                 @endif
-                @break
             @endforeach
         </div>
     </div>
