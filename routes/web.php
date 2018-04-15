@@ -26,7 +26,7 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::middleware('auth')->group(function () {
-	Route::resource('hr/applicants', 'HR\ApplicantController')->except(['create', 'show', 'destroy']);
+	Route::resource('hr/applicants', 'HR\ApplicantController')->only(['index', 'edit']);
 	Route::resource('hr/applicants/rounds', 'HR\ApplicantRoundController')->only(['store', 'update']);
 	Route::resource('hr/jobs', 'HR\JobController')->except(['create', 'show', 'destroy']);
 	Route::resource('finance/invoices', 'Finance\InvoiceController')->except(['show', 'destroy']);

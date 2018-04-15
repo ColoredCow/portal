@@ -92,18 +92,11 @@ class ApplicantController extends Controller
      *
      * @param  \App\Http\Requests\HR\ApplicantRequest  $request
      * @param  \App\Models\HR\Applicant  $applicant
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function update(ApplicantRequest $request, Applicant $applicant)
     {
-        $validated = $request->validated();
-        $round_status = $validated['round_status'];
-        $status = ($round_status === config('constants.hr.round.status.rejected')) ? $round_status : config('constants.hr.round.status.in-progress');
-        $applicant->_update([
-            'status' => $status
-        ]);
-
-        return redirect("/hr/applicants/$applicant->id/edit")->with('status', 'Applicant updated successfully!');
+        //
     }
 
     /**
