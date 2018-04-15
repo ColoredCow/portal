@@ -33,7 +33,7 @@
             </td>
             <td>
                 <span class="d-flex justify-content-center">
-                    <span class="{{ config("constants.hr.status.$applicant->status.class") }} badge-pill">{{ $applicant->status }}</span>
+                    <span class="{{ config("constants.hr.status.$applicant->status.class") }} badge-pill">{{ config("constants.hr.status.$applicant->status.title") }}</span>
                 </span>
             </td>
         </tr>

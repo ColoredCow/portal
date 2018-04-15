@@ -27,7 +27,7 @@ class ApplicantRoundRequest extends FormRequest
             'reviews' => 'nullable',
             'action_type' => 'required|string',
             'round_status' => 'nullable|string|required_if:action_type,new',
-            'next_round' => 'nullable|string|required_if:round_status,confirmed',
+            'next_round' => 'nullable|string',
         ];
     }
 }

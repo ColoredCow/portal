@@ -9,8 +9,8 @@
                     <div class="dropdown-item" v-for="round in rounds" @click="updateNextRound(round)">{{ round.name }}</div>
                 </div>
         </div>
-        <div v-else>
-            <button class="btn btn-success round-submit" data-status="completed">Confirm</button>
+        <div v-else class="d-inline">
+            <button class="btn btn-success round-submit" data-status="confirmed">Complete</button>
         </div>
     </div>
 </template>
@@ -27,8 +27,6 @@
             updateNextRound: function(round) {
                 this.nextRound = round;
             },
-        },
-        mounted() {
         },
     }
 </script>

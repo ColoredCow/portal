@@ -27,7 +27,7 @@ class ApplicantRoundController extends Controller
             'round_status' => $validated['round_status'],
             'conducted_person_id' => Auth::id(),
             'conducted_date' => Carbon::now(),
-        ], $validated['reviews'], $validated['next_round']);
+        ], $validated['action_type'], $validated['reviews'], $validated['next_round']);
 
         return redirect('/hr/applicants/' . $round->applicant->id . '/edit')->with('status', 'Applicant updated successfully!');
     }

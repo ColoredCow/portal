@@ -22,7 +22,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
-                    <div class="{{ config("constants.hr.status.$applicant->status.class") }} text-uppercase float-right card-status-highlight">{{ $applicant->status }}</div>
+                    <div class="{{ config("constants.hr.status.$applicant->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$applicant->status.title") }}</div>
                 </div>
                 <div class="card-body">
                     <div class="form-row">

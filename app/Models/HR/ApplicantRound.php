@@ -22,18 +22,26 @@ class ApplicantRound extends Model
         return self::create($attr);
     }
 
-    public function _update($attr, $reviews = [], $nextRound = 0)
+    public function _update($attr, $type = 'new', $reviews = [], $nextRound = 0)
     {
         $this->update($attr);
         $this->_updateOrCreateReviews($reviews);
 
-        $applicant = $this->applicant;
-        $applicant->update([
-            'status' => $attr['round_status'] == 'confirmed' ? 'in-progress' : config('constants.hr.status.' . $attr['round_status'] . '.label'),
-        ]);
+        if ($type == 'update') {
+            return;
+        }
 
-        if ($nextRound)
-        {
+        $applicant = $this->applicant;
+        if ($attr['round_status']) {
+            if ($attr['round_status'] == 'rejected') {
+                $applicantStatus = 'rejected';
+            } else {
+                $applicantStatus = sizeof($applicant->getUnconductedRounds()) ? 'in-progress' : 'completed';
+            }
+            $applicant->update([ 'status' => $applicantStatus ]);
+        }
+
+        if ($nextRound) {
             $scheduled_person = User::findByEmail($applicant->job->posted_by);
             $applicantRound = self::_create([
                 'hr_applicant_id' => $applicant->id,
