@@ -91,17 +91,16 @@
             </div>
             @if ($job->rounds)
                 @foreach ($job->rounds as $round)
+                    @php
+                        $applicant_round = $applicant->applicantRounds->where('hr_round_id', $round->id)->first();
+                        $applicant_review = $applicant_round->applicantReviews->where('review_key', 'feedback')->first();
+                        $applicant_review_value = $applicant_review ? $applicant_review->review_value : '';
+                    @endphp
                     <br>
-                    <form action="/hr/applicants/{{$applicant->id}}" method="POST" class="applicant-round-form">
+                    <form action="/hr/applicants/rounds/{{ $applicant_round->id }}" method="POST" class="applicant-round-form">
 
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
-
-                        @php
-                            $applicant_round = $applicant->applicantRounds->where('hr_round_id', $round->id)->first();
-                            $applicant_review = $applicant_round->applicantReviews->where('review_key', 'feedback')->first();
-                            $applicant_review_value = $applicant_review ? $applicant_review->review_value : '';
-                        @endphp
 
                         <div class="card">
                             <div class="card-header">
@@ -122,8 +121,8 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="review[feedback]">Feedback</label>
-                                        <textarea name="reviews[feedback]" id="review[feedback]" rows="10" class="form-control">{{ $applicant_review_value }}</textarea>
+                                        <label for="reviews[feedback]">Feedback</label>
+                                        <textarea name="reviews[feedback]" id="reviews[feedback]" rows="10" class="form-control">{{ $applicant_review_value }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +155,6 @@
                             </div>
                         </div>
                         <input type="hidden" name="round_status" value="">
-                        <input type="hidden" name="round_id" value="{{ $round->id }}">
                     </form>
                     @include('hr.round-guide-modal', ['round' => $round])
                     @if ($applicant_round->round_status)

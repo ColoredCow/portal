@@ -13,6 +13,7 @@ return [
                 'new' => 'new',
                 'rejected' => 'rejected',
                 'in-progress' => 'in-progress',
+                'confirmed' => 'confirmed'
             ],
         ],
         'defaults' => [
