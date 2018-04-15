@@ -15,7 +15,7 @@ class ClientController extends Controller
     public function index()
     {
         return view('client.index')->with([
-            'clients' => Client::select('id', 'name', 'email', 'phone')->orderBy('id', 'desc')->get(),
+            'clients' => Client::select('id', 'name', 'email', 'phone')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);
     }
 

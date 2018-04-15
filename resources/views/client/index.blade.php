@@ -28,5 +28,6 @@
         	</tr>
         @endforeach
     </table>
+    {{ $clients->links() }}
 </div>
 @endsection

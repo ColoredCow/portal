@@ -28,7 +28,7 @@ class Project extends Model
 	            $query->select('id', 'name');
 	        }])
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(config('constants.pagination_size'));
     }
 
     /**
