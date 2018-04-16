@@ -107,7 +107,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="reviews[feedback]">Feedback</label>
-                                    <textarea name="reviews[feedback]" id="reviews[feedback]" rows="10" class="form-control">{{ $applicantReviewValue }}</textarea>
+                                    <textarea name="reviews[feedback]" id="reviews[feedback]" rows="6" class="form-control">{{ $applicantReviewValue }}</textarea>
                                 </div>
                             </div>
                         </div>
