@@ -7,23 +7,23 @@ use App\Models\Setting;
 
 class SettingController extends Controller
 {
-    public function index()
+    public function index(String $module)
     {
         $settings = Setting::all()->keyBy('setting_key');
-        return view('settings')->with(['settings' => $settings]);
+        return view("settings.$module")->with(['settings' => $settings]);
     }
 
-    public function update(SettingRequest $request)
+    public function update(SettingRequest $request, String $module)
     {
         $validated = $request->validated();
 
         foreach ($validated['setting_key'] as $key => $value) {
             $setting = Setting::updateOrCreate(
-                ['module' => $validated['module'], 'setting_key' => $key],
+                ['module' => $module, 'setting_key' => $key],
                 ['setting_value' => $value]
             );
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Settings saved!');
     }
 }

@@ -3,12 +3,14 @@
 @section('content')
 <div class="container">
     <br>
+    @include('settings.menu', ['active' => 'hr'])
+    <br><br>
     <h1>Settings</h1>
     <br>
+    @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <form action="{{ url('/settings/update') }}" method="POST">
+        <form action="{{ url('/settings/hr/update') }}" method="POST">
             {{ csrf_field() }}
-            <input type="hidden" name="module" value="hr">
 
             <div class="card-header">Auto responder mail to applicant</div>
             <div class="card-body">

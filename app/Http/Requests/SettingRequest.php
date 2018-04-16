@@ -24,7 +24,6 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'module' => 'required|string',
             'setting_key' => 'required|array',
         ];
     }
