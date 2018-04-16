@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ContentHelper;
 use App\Http\Requests\SettingRequest;
 use App\Models\Setting;
 
@@ -33,7 +34,7 @@ class SettingController extends Controller
         foreach ($validated['setting_key'] as $key => $value) {
             $setting = Setting::updateOrCreate(
                 ['module' => $module, 'setting_key' => $key],
-                ['setting_value' => $value]
+                ['setting_value' => ContentHelper::editorFormat($value)]
             );
         }
 

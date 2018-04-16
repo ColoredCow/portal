@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\HR;
 
+use App\Helpers\ContentHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Mail\HR\Applicant\RoundReviewed;
@@ -23,7 +24,7 @@ class ApplicantRoundController extends Controller
     public function sendMail(ApplicantRoundMailRequest $request, ApplicantRound $applicantRound)
     {
         $validated = $request->validated();
-        $mail_body = preg_replace('/\r\n/', '', $validated['mail_body']);
+        $mail_body = ContentHelper::editorFormat($validated['mail_body']);
         $applicant = $applicantRound->applicant;
 
         $applicantRound->update([
