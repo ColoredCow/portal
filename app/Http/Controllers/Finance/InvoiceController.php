@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Finance\Invoice;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class InvoiceController extends Controller
 {
@@ -166,13 +167,25 @@ class InvoiceController extends Controller
      * @param  string $year  uploaded year of the invoice file
      * @param  string $month uploaded month of the invoice file
      * @param  string $file  invoice file name
+     * @param  string $inline  download or inline in tab
      * @return Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function download($year, $month, $file)
+    public function download($year, $month, $file, $inline = true)
     {
+        $headers = [
+            'content-type'=>'application/pdf'
+        ];
+
         $file_path = FileHelper::getFilePath($year, $month, $file);
-        if (Storage::exists($file_path)) {
-            return Storage::download($file_path);
+
+        if(!Storage::exists($file_path)) {
+            return false;
         }
+
+        if($inline) {
+            return Response::make(Storage::get($file_path), 200, $headers);
+        }
+        
+        return Storage::download($file_path);
     }
 }
