@@ -7,12 +7,25 @@ use App\Models\Setting;
 
 class SettingController extends Controller
 {
+    /**
+     * List all settings for this module
+     * @param  String $module
+     *
+     * @return \Illuminate\View\View
+     */
     public function index(String $module)
     {
-        $settings = Setting::all()->keyBy('setting_key');
+        $settings = Setting::where('module', $module)->get()->keyBy('setting_key');
         return view("settings.$module")->with(['settings' => $settings]);
     }
 
+    /**
+     * Update the settings in the request
+     * @param  SettingRequest $request
+     * @param  String         $module
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function update(SettingRequest $request, String $module)
     {
         $validated = $request->validated();
