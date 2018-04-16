@@ -169,3 +169,20 @@ input[type="file"] {
 .applicant-round-actions {
     cursor: pointer;
 }
+
+.icon-pencil {
+    cursor: pointer;
+    top: 7px;
+    padding: 8px;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: $primary;
+        color: white;
+    }
+}

@@ -77,7 +77,7 @@ class ApplicantController extends Controller
      */
     public function edit(Applicant $applicant)
     {
-        $applicant->load(['job', 'job.rounds', 'applicantRounds', 'applicantRounds.applicantReviews']);
+        $applicant->load(['job', 'job.rounds', 'applicantRounds', 'applicantRounds.applicantReviews', 'applicantRounds.round']);
 
         return view('hr.applicant.edit')->with([
             'job' => $applicant->job,
