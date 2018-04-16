@@ -34,5 +34,10 @@ class AutoRespondApplicant
 
         Mail::to($applicant->email, $applicant->name)
             ->send(new ApplicantCreateAutoResponder($subject->setting_value, $body->setting_value));
+
+        $applicant->update([
+            'autoresponder_subject' => $subject->setting_value,
+            'autoresponder_body' => $body->setting_value,
+        ]);
     }
 }
