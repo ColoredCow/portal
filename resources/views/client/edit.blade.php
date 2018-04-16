@@ -10,7 +10,7 @@
     @include('status', ['errors' => $errors->all()])
     <br>
     <div class="card">
-        <form action="/clients/{{ $client->id }}" method="POST">
+        <form action="/clients/{{ $client->id }}" method="POST" class = "client-form" >
 
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -46,6 +46,14 @@
                                 <option value="{{ $country }}" {{ $selected }}>{{ $country_name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                </div>
+                <br>
+                
+                <div class="form-row" style="display:{{($client->country != 'india') ? 'none': ''}}">
+                    <div class="form-group col-md-5">
+                        <label for="phone">GST</label>
+                        <input type="text" class="form-control" name="gst_no" id="gst_no" placeholder="GST No" value="{{ $client->gst_no }}">
                     </div>
                 </div>
                 <br>

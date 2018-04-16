@@ -101,11 +101,13 @@ $('#copy_weeklydose_service_url').tooltip({
   trigger: 'click',
   placement: 'bottom'
 });
+
 function setTooltip(btn, message) {
 	$(btn).tooltip('hide')
 		.attr('data-original-title', message)
     	.tooltip('show');
 }
+
 function hideTooltip(btn) {
 	setTimeout(function() {
 		$(btn).tooltip('hide');
@@ -161,3 +163,12 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
         },
     });
 });
+
+$('.client-form').on('change', 'select[name="country"]', function() {
+    let gstInput = $(this).parents('.client-form').find('#gst_no');
+    if($(this).val() === 'india') {
+        gstInput.parents('.form-row').show();
+        return;
+    }
+    gstInput.parents('.form-row').hide();
+}) 
