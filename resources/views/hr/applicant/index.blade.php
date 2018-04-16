@@ -6,7 +6,6 @@
     @include('hr.menu', ['active' => 'applicants'])
     <br><br>
     <h1>Applicants</h1>
-    <br>
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>

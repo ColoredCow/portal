@@ -6,7 +6,6 @@
     @include('hr.menu', ['active' => 'jobs'])
     <br><br>
     <h1>{{ $job->title }}</h1>
-    <br>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
         <form action="/hr/jobs/{{$job->id}}" method="POST">
