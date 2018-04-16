@@ -18,7 +18,7 @@ class ApplicantController extends Controller
     public function index()
     {
         return view('hr.applicant.index')->with([
-            'applicants' => Applicant::with('job')->orderBy('id', 'desc')->get(),
+            'applicants' => Applicant::with('job')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);
     }
 
