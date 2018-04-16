@@ -12,6 +12,7 @@ return [
         'india' => 'India',
         'united-states' => 'United States',
     ],
+    'pagination_size' => 10,
     'hr' => [
         'round' => [
             'status' => [

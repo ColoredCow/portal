@@ -48,5 +48,6 @@
         </tr>
         @endforeach
     </table>
+    {{ $invoices->links() }}
 </div>
 @endsection
