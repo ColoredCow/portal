@@ -167,8 +167,8 @@ class InvoiceController extends Controller
      * @param  string $year  uploaded year of the invoice file
      * @param  string $month uploaded month of the invoice file
      * @param  string $file  invoice file name
-     * @param  string $inline  download or inline in tab
-     * @return Symfony\Component\HttpFoundation\StreamedResponse
+     * @param  string $inline  boolean
+     * @return mixed
      */
     public function download($year, $month, $file, $inline = true)
     {
