@@ -116,7 +116,7 @@
                             <applicant-round-action-component
                             :rounds="{{ json_encode($unconductedApplicantRounds) }}">
                             </applicant-round-action-component>
-                            <button type="button" class="btn btn-danger round-submit" data-status="rejected">Reject</button>
+                            <button type="button" class="btn btn-outline-danger round-submit" data-status="rejected">Reject</button>
                         @else
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
