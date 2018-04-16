@@ -150,7 +150,14 @@ class InvoiceController extends Controller
      */
     protected static function upload(UploadedFile $file)
     {
+        $fileName = $file->getClientOriginalName();
+
+        if($fileName) {
+            return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
+        }
+        
         return $file->store(FileHelper::getCurrentStorageDirectory());
+
     }
 
     /**
