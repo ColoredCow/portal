@@ -53,5 +53,6 @@
         </tr>
         @endforeach
     </table>
+    {{ $applicants->links() }}
 </div>
 @endsection

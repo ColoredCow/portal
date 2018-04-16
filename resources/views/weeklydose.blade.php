@@ -24,6 +24,7 @@
         </tr>
         @endforeach
     </table>
+    {{ $weeklydoses->links() }}
 </div>
 <div class="modal" tabindex="-1" role="dialog" id="weeklydose_setup_modal">
     <div class="modal-dialog" role="document">
