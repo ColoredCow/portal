@@ -14,7 +14,7 @@ class RoundReviewed extends Mailable
     /**
      * The applicantRound instance.
      *
-     * @var Order
+     * @var ApplicantRound
      */
     public $applicantRound;
 
