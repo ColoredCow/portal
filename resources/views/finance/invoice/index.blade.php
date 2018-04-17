@@ -4,12 +4,11 @@
 <div class="container">
     <br>
     @include('finance.menu', ['active' => 'invoices'])
-    <br>
+    <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Invoices</h1></div>
         <div class="col-md-6"><a href="/finance/invoices/create" class="btn btn-success float-right">Create Invoice</a></div>
     </div>
-    <br>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Project</th>
@@ -49,5 +48,6 @@
         </tr>
         @endforeach
     </table>
+    {{ $invoices->links() }}
 </div>
 @endsection

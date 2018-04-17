@@ -15,7 +15,7 @@ class WeeklyDoseController extends Controller
     public function index()
     {
         return view('weeklydose')->with([
-            'weeklydoses' => WeeklyDose::all()->sortByDesc('created_at'),
+            'weeklydoses' => WeeklyDose::latest()->paginate(config('constants.pagination_size')),
         ]);
     }
 

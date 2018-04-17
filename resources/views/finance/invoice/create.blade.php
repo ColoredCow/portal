@@ -3,12 +3,10 @@
 @section('content')
 <div class="container">
     <br>
-    <h1>Create Invoice</h1>
-    <br>
-    <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
+    @include('finance.menu', ['active' => 'invoices'])
     <br><br>
+    <h1>Create Invoice</h1>
     @include('status', ['errors' => $errors->all()])
-    <br>
     <div class="card">
         <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_invoice" class="form-invoice form-create-invoice">
 
