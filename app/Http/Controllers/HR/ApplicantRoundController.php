@@ -4,6 +4,7 @@ namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRoundMailRequest;
+use App\Http\Requests\HR\ApplicantRoundRequest;
 use App\Mail\HR\Applicant\RoundReviewed;
 use App\Models\HR\ApplicantRound;
 use Carbon\Carbon;
@@ -12,6 +13,24 @@ use Illuminate\Support\Facades\Mail;
 
 class ApplicantRoundController extends Controller
 {
+
+    /**
+     * Update the specified resource in storage.
+     * @param  ApplicantRoundRequest $request
+     * @param  ApplicantRound        $round
+     * @return \Illuminate\Http\Response
+     */
+    public function update(ApplicantRoundRequest $request, ApplicantRound $round)
+    {
+        $validated = $request->validated();
+        $round->_update([
+            'round_status' => $validated['round_status'],
+            'conducted_person_id' => Auth::id(),
+            'conducted_date' => Carbon::now(),
+        ], $validated['action_type'], $validated['reviews'], $validated['next_round']);
+
+        return redirect('/hr/applicants/' . $round->applicant->id . '/edit')->with('status', 'Applicant updated successfully!');
+    }
 
     /**
      * Send email to the applicant for current round

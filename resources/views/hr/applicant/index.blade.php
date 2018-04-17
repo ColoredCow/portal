@@ -3,10 +3,9 @@
 @section('content')
 <div class="container">
     <br>
-    <h1>Applicants</h1>
-    <br>
-    <a class="btn btn-info" href="/hr/jobs">See all jobs</a>
+    @include('hr.menu', ['active' => 'applicants'])
     <br><br>
+    <h1>Applicants</h1>
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>
@@ -33,21 +32,7 @@
             </td>
             <td>
                 <span class="d-flex justify-content-center">
-                    @switch ($applicant->status)
-                        @case('new')
-                        @default
-                            <span class="badge badge-pill badge-info">
-                            @break
-
-                        @case('rejected')
-                            <span class="badge badge-pill badge-danger">
-                            @break
-
-                        @case('in-progress')
-                            <span class="badge badge-pill badge-warning">
-                            @break
-                    @endswitch
-                    {{ $applicant->status }}</span>
+                    <span class="{{ config("constants.hr.status.$applicant->status.class") }} badge-pill">{{ config("constants.hr.status.$applicant->status.title") }}</span>
                 </span>
             </td>
         </tr>

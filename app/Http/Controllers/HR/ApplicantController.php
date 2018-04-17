@@ -54,7 +54,7 @@ class ApplicantController extends Controller
             'linkedin' => isset($validated['linkedin']) ? $validated['linkedin'] : null,
             'reason_for_eligibility' => isset($validated['reason_for_eligibility']) ? $validated['reason_for_eligibility'] : null,
             'hr_job_id' => $job->id,
-            'status' => config('constants.hr.round.status.new'),
+            'status' => config('constants.hr.status.new.label'),
         ]);
     }
 
@@ -83,7 +83,7 @@ class ApplicantController extends Controller
             'job' => $applicant->job,
             'applicant' => $applicant,
             'rounds' => Round::all(),
-            'applicant_rounds' => $applicant->applicantRounds,
+            'unconductedApplicantRounds' => $applicant->getUnconductedRounds(),
         ]);
     }
 
@@ -92,18 +92,11 @@ class ApplicantController extends Controller
      *
      * @param  \App\Http\Requests\HR\ApplicantRequest  $request
      * @param  \App\Models\HR\Applicant  $applicant
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function update(ApplicantRequest $request, Applicant $applicant)
     {
-        $validated = $request->validated();
-        $round_status = $validated['round_status'];
-        $status = ($round_status === config('constants.hr.round.status.rejected')) ? $round_status : config('constants.hr.round.status.in-progress');
-        $applicant->_update([
-            'status' => $status
-        ]);
-
-        return redirect("/hr/applicants/$applicant->id/edit")->with('status', 'Applicant updated successfully!');
+        //
     }
 
     /**

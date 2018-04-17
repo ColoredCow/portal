@@ -3,12 +3,13 @@
 @section('content')
 <div class="container" id="project_container">
     <br>
-    <h1>Edit Project</h1>
-    <br>
-    <a class="btn btn-info" href="/projects">See all projects</a>
+    @include('finance.menu', ['active' => 'projects'])
     <br><br>
+    <div class="row">
+        <div class="col-md-6"><h1>Edit Project</h1></div>
+        <div class="col-md-6"><a href="/projects/create" class="btn btn-success float-right">Create Project</a></div>
+    </div>
     @include('status', ['errors' => $errors->all()])
-    <br>
     <div class="card">
         <form action="/projects/{{ $project->id }}" method="POST">
 
