@@ -3,10 +3,9 @@
 @section('content')
 <div class="container">
     <br>
-    <h1>Applicants</h1>
-    <br>
-    <a class="btn btn-info" href="/hr/jobs">See all jobs</a>
+    @include('hr.menu', ['active' => 'applicants'])
     <br><br>
+    <h1>Applicants</h1>
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>

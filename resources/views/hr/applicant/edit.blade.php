@@ -6,14 +6,13 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            <a class="btn btn-info" href="/hr/applicants">See all applicants</a>
+            @include('hr.menu', ['active' => 'applicants'])
             <br><br>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             @include('status', ['errors' => $errors->all()])
-            <br>
         </div>
         <div class="col-md-3">
             @include('hr.applicant.timeline', ['applicant' => $applicant])
