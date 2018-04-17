@@ -1,40 +1,44 @@
 <template>
-    <div>
-        <div class="form-group row mt-3" v-for="(billing, index) in billings">
-            <div class="col-md-4">
-                <div class="d-flex align-items-center">
-                    <div for="billing" class="d-inline w-25">{{ index+1 }}. <strong>Billing:</strong></div>
-                    <div class="input-group w-50">
-                        <input type="number" class="form-control input-billing" :name="billing.name ? billing.name : 'billing[][' + billing.id + ']'" :value="billing.percentage" step="0.01" min="0">
-                        <div class="input-group-append">
-                            <span class="input-group-text">%</span>
-                        </div>
+    <tr>
+        <td class="form-group mt-3">
+            <div class="d-flex align-items-center">
+                <div for="billing" class="d-inline mr-2">{{ index+1 }}. <strong>Billing:</strong></div>
+                <div class="input-group w-50">
+                    <input type="number" class="form-control input-billing" v-model="billing.percentage" step="0.01" min="0" :name="billing.isNew ? 'new_billing[]' : 'billing[][' + billing.id + ']'">
+                    <div class="input-group-append">
+                        <span class="input-group-text">%</span>
                     </div>
                 </div>
             </div>
-        </div>
-        <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
-    </div>
+        </td>
+        <td>
+            {{ currency }}&nbsp;{{ billingCostWithoutGst }}
+        </td>
+        <td>
+            {{ currency }}&nbsp;{{ billingGstAmount }}
+        </td>
+        <td>
+            {{ currency }}&nbsp;{{ billingCostWithGst }}
+        </td>
+    </tr>
 </template>
 
 <script>
     export default {
-        props: ['stageBillings'],
-        data() {
-            return {
-                billings: this.stageBillings ? this.stageBillings : [],
+        props: ['billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency'],
+        computed: {
+            billingCostWithoutGst: function() {
+                return parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst);
+            },
+            billingGstAmount: function() {
+                return parseFloat((this.billing.percentage/100)*this.gstAmount);
+            },
+            billingCostWithGst: function() {
+                return parseFloat((this.billing.percentage/100)*this.stageCostWithGst);
             }
         },
-        methods: {
-            addBilling() {
-                this.billings.push({
-                    percentage: '',
-                    name: 'new_billing[]'
-                });
-            }
-        },
-        mounted() {
-
-        },
+        mounted: function() {
+            console.log(this.billing.percentage);
+        }
     }
 </script>

@@ -30,7 +30,7 @@
                                                 </option>
                                             </select>
                                         </div>
-                                        <input type="text" class="form-control" name="cost" id="cost" placeholder="Stage cost" step=".01" min="0"  required="required" v-model="inputStageCost">
+                                        <input type="number" class="form-control" name="cost" id="cost" placeholder="Stage cost" step=".01" min="0"  required="required" v-model="inputStageCost">
                                     </div>
                                 </div>
                             </div>
@@ -70,11 +70,29 @@
                         </div>
                     </div>
 
-                    <project-stage-billing-component
-                    :stage-billings="stage.billings"
-                    ref="billingComponent">
-                    </project-stage-billing-component>
-
+                    <table v-if="stage.billings.length" class="table table-bordered" id="billings_table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Percentage</th>
+                                <th>Cost without GST</th>
+                                <th>GST cost</th>
+                                <th>Cost with GST</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <project-stage-billing-component
+                            v-for="(billing, index) in stageBillings"
+                            :billing="billing"
+                            :stage-cost-without-gst="stageCostWithoutGst"
+                            :gst-amount="gstAmount"
+                            :stage-cost-with-gst="stageCostWithGst"
+                            :index="index"
+                            :currency="stageCurrencySymbol"
+                            :key="index">
+                            </project-stage-billing-component>
+                        </tbody>
+                    </table>
+                <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
                 </div>
             </form>
         </div>
@@ -91,7 +109,8 @@
                 editMode: false,
                 inputStageCost: parseFloat(this.stage.cost) || 0,
                 inputStageCurrency: this.stage.currency_cost,
-                inputStageCostIncludeGst: this.stage.cost_include_gst || false
+                inputStageCostIncludeGst: this.stage.cost_include_gst || false,
+                stageBillings: this.stage.billings
             }
         },
         components: {
@@ -103,9 +122,9 @@
             },
             stageCostWithGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return parseFloat(this.inputStageCost);
+                    return parseFloat(this.inputStageCost) || 0;
                 }
-                return parseFloat(this.inputStageCost) + parseFloat(this.gstAmount);
+                return (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)) || 0;
             },
             gstAmount: function() {
                 return parseFloat((this.configs.gst/100)*this.inputStageCost);
@@ -123,9 +142,12 @@
                     name: ''
                 });
             },
-            addStageBilling() {
-                this.$refs.billingComponent[0].addBilling();
-            },
-        }
+            addBilling() {
+                this.stageBillings.push({
+                    'percentage': 0,
+                    'isNew' : true
+                });
+            }
+        },
     }
 </script>
