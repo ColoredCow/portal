@@ -124,20 +124,14 @@
                             </div>
                         @elseif ($applicantRound->round_status == 'rejected' || !$applicantRound->mail_sent)
                             <div class="card-footer">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div>
-                                        @if ($applicantRound->round_status == 'rejected')
-                                            <applicant-round-action-component
-                                            :rounds="{{ json_encode($unconductedApplicantRounds) }}">
-                                            </applicant-round-action-component>
-                                        @endif
-                                    </div>
-                                    <div>
-                                        @if (!$applicantRound->mail_sent)
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#round_{{ $applicantRound->id }}">Send mail</button>
-                                        @endif
-                                    </div>
-                                </div>
+                                @if ($applicantRound->round_status == 'rejected')
+                                    <applicant-round-action-component
+                                    :rounds="{{ json_encode($unconductedApplicantRounds) }}">
+                                    </applicant-round-action-component>
+                                @endif
+                                @if (!$applicantRound->mail_sent)
+                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#round_{{ $applicantRound->id }}">Send mail</button>
+                                @endif
                             </div>
                         @endif
                     </div>
