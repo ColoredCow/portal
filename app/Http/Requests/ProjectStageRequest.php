@@ -31,6 +31,9 @@ class ProjectStageRequest extends FormRequest
             'cost_include_gst' => 'nullable',
             'billing' => 'nullable',
             'new_billing' => 'nullable',
+            'type' => 'required|string',
+            'start_date' => 'nullable',
+            'end_date' => 'nullable',
         ];
     }
 }
