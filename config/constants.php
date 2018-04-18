@@ -3,6 +3,11 @@
 return [
     'date_format' => 'Y-m-d',
     'display_date_format' => 'd/m/Y',
+    'modules' => [
+        'hr',
+        'finance',
+        'weeklydose'
+    ],
     'countries' => [
         'india' => 'India',
         'united-states' => 'United States',
@@ -52,6 +57,7 @@ return [
                 'paid' => 'Paid',
             ],
         ],
+        'gst' => '18',
     ],
     'currency' => [
         'INR' => [

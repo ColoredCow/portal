@@ -3,6 +3,11 @@
         <div class="content">
             <b><u>{{ date(config('constants.display_date_format'), strtotime($applicant->created_at)) }}</u></b><br>
             Applied for {{ $applicant->job->title }}
+            <br>
+            @if ($applicant->autoresponder_subject && $applicant->autoresponder_body)
+                <span data-toggle="modal" data-target="#autoresponder_mail" class="modal-toggler-text text-primary">Auto-respond mail for system</span>
+                @include('hr.applicant.auto-respond', ['applicant' => $applicant])
+            @endif
         </div>
     </div>
     @foreach ($applicant->applicantRounds as $applicantRound)

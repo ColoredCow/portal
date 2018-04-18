@@ -15,6 +15,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\HR\ApplicantCreated' => [
             'App\Listeners\HR\CreateFirstApplicantRound',
+            'App\Listeners\HR\AutoRespondApplicant',
         ],
         'App\Events\HR\JobCreated' => [
             'App\Listeners\HR\CreateJobRounds',
