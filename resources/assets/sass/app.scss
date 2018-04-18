@@ -73,6 +73,11 @@ input[type="file"] {
     white-space: pre-wrap;
 }
 
+
+.modal-toggler {
+    cursor: pointer;
+}
+
 .modal-toggler-text {
     cursor: pointer;
     &:hover {
