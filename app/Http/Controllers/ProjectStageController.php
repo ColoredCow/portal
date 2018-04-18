@@ -62,7 +62,7 @@ class ProjectStageController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Stage created successfully!');
     }
 
     /**
@@ -135,7 +135,7 @@ class ProjectStageController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Stage updated successfully!');
     }
 
     /**

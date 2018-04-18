@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="card mt-4">
-            <form :action="stage.name ? '/project/stages/' + stage.id : '/project/stages'" method="POST">
-                <input v-if="stage.name" type="hidden" name="_method" value="PATCH">
+            <form :action="stage.id ? '/project/stages/' + stage.id : '/project/stages'" method="POST">
+                <input v-if="stage.id" type="hidden" name="_method" value="PATCH">
                 <input type="hidden" name="_token" :value="csrfToken">
                 <input type="hidden" name="project_id" :value="projectId">
                 <div class="card-header">
@@ -10,11 +10,11 @@
                     <div class="form-group w-25 mb-0" v-show="editMode">
                         <div class="d-flex align-items-center">
                             <label for="name" class="mb-0">Name:&nbsp;</label>
-                            <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name*" required="required" :value="stage.name || ''">
+                            <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name*" required="required" v-model="stage.name">
                         </div>
                     </div>
                     <div class="card-edit icon-pencil" @click="editMode = !editMode" v-show="!editMode"><i class="fa fa-pencil"></i></div>
-                    <button type="submit" class="btn btn-primary card-edit" v-show="editMode">{{ stage.name ? 'Update' : 'Create' }}</button>
+                    <button type="submit" class="btn btn-primary card-edit" v-show="editMode">{{ stage.id ? 'Update' : 'Create' }}</button>
                 </div>
                 <div class="card-body" v-show="editMode">
                     <div class="row">
@@ -51,19 +51,19 @@
                             <div class="form-row">
                                 <div class="form-group col-md-8">
                                     <label for="name">Type</label>
-                                    <select name="type" id="type" class="form-control" required="required">
-                                        <option v-for="(displayName, type) in configs.projectTypes" :value="type" :selected="type == stage.type">
+                                    <select name="type" id="type" class="form-control" required="required" v-model="stageType">
+                                        <option v-for="(displayName, type) in configs.projectTypes" :value="type">
                                             {{ displayName }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="start_date">Start date</label>
-                                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="dd/mm/yy" :value="stage.start_date || ''">
+                                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="dd/mm/yy" v-model="stage.start_date">
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="end_date">End date</label>
-                                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="dd/mm/yy" :value="stage.end_date || ''">
+                                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="dd/mm/yy" v-model="stage.end_date">
                                 </div>
                             </div>
                             <br>
@@ -110,7 +110,8 @@
                 inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : 0,
                 inputStageCurrency: this.stage.hasOwnProperty('currency_cost') ? this.stage.currency_cost : 'INR',
                 inputStageCostIncludeGst: this.stage.hasOwnProperty('cost_include_gst') ? this.stage.cost_include_gst : false,
-                stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : []
+                stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
+                stageType: this.stage.hasOwnProperty('type') ? this.stage.type : 'fixed_budget',
             }
         },
         components: {
