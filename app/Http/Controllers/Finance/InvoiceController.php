@@ -167,7 +167,7 @@ class InvoiceController extends Controller
      * @param  string $year  uploaded year of the invoice file
      * @param  string $month uploaded month of the invoice file
      * @param  string $file  invoice file name
-     * @param  string $inline  boolean
+     * @param  boolean $inline download/view invoice file
      * @return mixed
      */
     public function download($year, $month, $file, $inline = true)
@@ -178,7 +178,7 @@ class InvoiceController extends Controller
 
         $file_path = FileHelper::getFilePath($year, $month, $file);
 
-        if(!Storage::exists($file_path)) {
+        if(!$file_path) {
             return false;
         }
 
@@ -186,6 +186,6 @@ class InvoiceController extends Controller
             return Response::make(Storage::get($file_path), 200, $headers);
         }
         
-        return Storage::download($file_path);
+        return  Storage::download($file_path);
     }
 }

@@ -16,7 +16,13 @@ class FileHelper
      */
     public static function getFilePath($year, $month, $file)
     {
-        return $year . '/' . $month . '/' . $file;
+        $filePath =  $year . '/' . $month . '/' . $file;
+
+        if(!Storage::exists($file_path)) {
+            return false;
+        }
+
+        return $filePath;
     }
 
     /**
