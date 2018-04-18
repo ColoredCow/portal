@@ -78,6 +78,7 @@
                 'projectTypes' => config('constants.project.type'),
                 'gst' => config('constants.finance.gst'),
             ]) }}"
+            :client="{{ json_encode($project->client) }}"
             :csrf-token="{{ json_encode(csrf_token()) }}"
             :project-id="{{ $project->id }}"
             ref="projectStage">
@@ -89,6 +90,7 @@
     :stage="[]"
     :csrf-token="{{ json_encode(csrf_token()) }}"
     :project-id="{{ $project->id }}"
+    :client="{{ json_encode($project->client) }}"
     :configs="{{ json_encode([
         'currencies' => config('constants.currency'),
         'projectTypes' => config('constants.project.type'),

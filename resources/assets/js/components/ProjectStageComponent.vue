@@ -34,13 +34,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div class="form-row" v-show="clientCountryGstApplicable">
                                 <div class="form-group col-md-8 d-flex align-items-center">
                                     <input type="checkbox" name="cost_include_gst" id="cost_include_gst" :checked="inputStageCostIncludeGst" v-model="inputStageCostIncludeGst">
                                     <label for="sent_amount" class="mb-0 pl-2">Is GST included in Stage Cost?</label>
                                 </div>
                             </div>
-                            <div class="mt-2 mb-2">
+                            <div class="mt-2 mb-2" v-show="clientCountryGstApplicable">
                                 <p><b>Cost with GST:</b> <span>{{ stageCurrencySymbol }} {{ stageCostWithGst }}</span></p>
                                 <p><b>GST amount:</b> <span>{{ stageCurrencySymbol }} {{ gstAmount }}</span></p>
                                 <p><b>Cost without GST:</b> <span>{{ stageCurrencySymbol }} {{ stageCostWithoutGst }}</span></p>
@@ -74,9 +74,10 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Percentage</th>
-                                <th>Cost without GST</th>
-                                <th>GST cost</th>
-                                <th>Cost with GST</th>
+                                <th v-show="!clientCountryGstApplicable">Cost</th>
+                                <th v-show="clientCountryGstApplicable">Cost without GST</th>
+                                <th v-show="clientCountryGstApplicable">GST cost</th>
+                                <th v-show="clientCountryGstApplicable">Cost with GST</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,6 +89,7 @@
                             :stage-cost-with-gst="stageCostWithGst"
                             :index="index"
                             :currency="stageCurrencySymbol"
+                            :client-country-gst-applicable="clientCountryGstApplicable"
                             :key="index">
                             </project-stage-billing-component>
                         </tbody>
@@ -103,7 +105,7 @@
     import ProjectStageBillingComponent from './ProjectStageBillingComponent.vue';
 
     export default {
-        props: ['stage', 'csrfToken', 'projectId', 'configs'],
+        props: ['stage', 'csrfToken', 'projectId', 'configs', 'client'],
         data() {
             return {
                 editMode: Object.keys(this.stage).length ? false : true,
@@ -112,6 +114,7 @@
                 inputStageCostIncludeGst: this.stage.hasOwnProperty('cost_include_gst') ? this.stage.cost_include_gst : false,
                 stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
                 stageType: this.stage.hasOwnProperty('type') ? this.stage.type : 'fixed_budget',
+                clientCountryGstApplicable: this.client.country == 'india' ? true : false,
             }
         },
         components: {
@@ -128,7 +131,10 @@
                 return (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)) || 0;
             },
             gstAmount: function() {
-                return parseFloat((this.configs.gst/100)*this.inputStageCost);
+                if (this.clientCountryGstApplicable) {
+                    return parseFloat((this.configs.gst/100)*this.inputStageCost);
+                }
+                return 0;
             },
             stageCostWithoutGst: function() {
                 if (this.inputStageCostIncludeGst) {

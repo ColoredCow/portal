@@ -14,10 +14,10 @@
         <td>
             {{ currency }}&nbsp;{{ billingCostWithoutGst }}
         </td>
-        <td>
+        <td v-show="clientCountryGstApplicable">
             {{ currency }}&nbsp;{{ billingGstAmount }}
         </td>
-        <td>
+        <td v-show="clientCountryGstApplicable">
             {{ currency }}&nbsp;{{ billingCostWithGst }}
         </td>
     </tr>
@@ -25,7 +25,7 @@
 
 <script>
     export default {
-        props: ['billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency'],
+        props: ['billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency', 'clientCountryGstApplicable'],
         computed: {
             billingCostWithoutGst: function() {
                 return parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst);
