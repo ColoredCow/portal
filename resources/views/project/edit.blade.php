@@ -68,22 +68,34 @@
             </div>
         </form>
     </div>
-    <h2 class="mt-5">Project Stages</h2>
+    @if (sizeof($project->stages))
+        <h2 class="mt-5">Project Stages</h2>
+        @foreach ($project->stages as $stage)
+            <project-stage-component
+            :stage="{{ json_encode($stage) }}"
+            :configs="{{ json_encode([
+                'currencies' => config('constants.currency'),
+                'projectTypes' => config('constants.project.type'),
+                'gst' => config('constants.finance.gst'),
+            ]) }}"
+            :csrf-token="{{ json_encode(csrf_token()) }}"
+            :project-id="{{ $project->id }}"
+            ref="projectStage">
+            </project-stage-component>
+        @endforeach
+    @endif
+    <project-stage-component
+    v-show="newStage"
+    :stage="[]"
+    :csrf-token="{{ json_encode(csrf_token()) }}"
+    :project-id="{{ $project->id }}"
+    :configs="{{ json_encode([
+        'currencies' => config('constants.currency'),
+        'projectTypes' => config('constants.project.type'),
+        'gst' => config('constants.finance.gst'),
+    ]) }}"
+    ></project-stage-component>
 
-    @foreach ($project->stages as $stage)
-        <project-stage-component
-        :stage="{{ json_encode($stage) }}"
-        :configs="{{ json_encode([
-            'currencies' => config('constants.currency'),
-            'projectTypes' => config('constants.project.type'),
-            'gst' => config('constants.finance.gst'),
-        ]) }}"
-        :csrf-token="{{ json_encode(csrf_token()) }}"
-        :project-id="{{ $project->id }}"
-        ref="projectStage">
-        </project-stage-component>
-    @endforeach
-
-    <button class="btn btn-secondary float-right my-5" type="button" id="project_new_stage" v-on:click="createProjectStage">Add new stage</button>
+    <button class="btn btn-secondary float-right my-5" type="button" id="project_new_stage" v-show="!newStage" v-on:click="newStage = !newStage">Add new stage</button>
 </div>
 @endsection

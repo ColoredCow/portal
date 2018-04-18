@@ -10,7 +10,7 @@
                     <div class="form-group w-25 mb-0" v-show="editMode">
                         <div class="d-flex align-items-center">
                             <label for="name" class="mb-0">Name:&nbsp;</label>
-                            <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name*" required="required" :value="stage.name">
+                            <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name*" required="required" :value="stage.name || ''">
                         </div>
                     </div>
                     <div class="card-edit icon-pencil" @click="editMode = !editMode" v-show="!editMode"><i class="fa fa-pencil"></i></div>
@@ -59,18 +59,18 @@
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="start_date">Start date</label>
-                                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="dd/mm/yy" :value="stage.start_date">
+                                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="dd/mm/yy" :value="stage.start_date || ''">
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="end_date">End date</label>
-                                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="dd/mm/yy" :value="stage.end_date">
+                                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="dd/mm/yy" :value="stage.end_date || ''">
                                 </div>
                             </div>
                             <br>
                         </div>
                     </div>
 
-                    <table v-if="stage.billings.length" class="table table-bordered" id="billings_table">
+                    <table v-if="stageBillings.length" class="table table-bordered" id="billings_table">
                         <thead class="thead-light">
                             <tr>
                                 <th>Percentage</th>
@@ -106,11 +106,11 @@
         props: ['stage', 'csrfToken', 'projectId', 'configs'],
         data() {
             return {
-                editMode: false,
-                inputStageCost: parseFloat(this.stage.cost) || 0,
-                inputStageCurrency: this.stage.currency_cost,
-                inputStageCostIncludeGst: this.stage.cost_include_gst || false,
-                stageBillings: this.stage.billings
+                editMode: Object.keys(this.stage).length ? false : true,
+                inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : 0,
+                inputStageCurrency: this.stage.hasOwnProperty('currency_cost') ? this.stage.currency_cost : 'INR',
+                inputStageCostIncludeGst: this.stage.hasOwnProperty('cost_include_gst') ? this.stage.cost_include_gst : false,
+                stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : []
             }
         },
         components: {
@@ -137,17 +137,12 @@
             },
         },
         methods: {
-            create() {
-                this.items.push({
-                    name: ''
-                });
-            },
             addBilling() {
                 this.stageBillings.push({
                     'percentage': 0,
                     'isNew' : true
                 });
             }
-        },
+        }
     }
 </script>

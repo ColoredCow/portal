@@ -36,9 +36,6 @@
             billingCostWithGst: function() {
                 return parseFloat((this.billing.percentage/100)*this.stageCostWithGst);
             }
-        },
-        mounted: function() {
-            console.log(this.billing.percentage);
         }
     }
 </script>

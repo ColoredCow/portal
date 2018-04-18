@@ -32,6 +32,9 @@ if (document.getElementById('page_hr_applicant_edit')) {
 if (document.getElementById('project_container')) {
     const projectContainer = new Vue({
         el: '#project_container',
+        data: {
+            newStage: false
+        },
         methods: {
             createProjectStage: function() {
                 this.$refs.projectStage.create();
