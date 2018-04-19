@@ -22,10 +22,11 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
+Vue.component('applicant-round-form-component', require('./components/HR/ApplicantRoundFormComponent.vue'));
 
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
-        el: '#page_hr_applicant_edit'
+        el: '#page_hr_applicant_edit',
     });
 }
 
