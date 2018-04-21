@@ -53,7 +53,7 @@
                 <div class="form-row" style="display:{{($client->country != 'india') ? 'none': ''}}">
                     <div class="form-group col-md-5">
                         <label for="phone">GST</label>
-                        <input type="text" class="form-control" name="gst_no" id="gst_no" placeholder="GST No" value="{{ $client->gst_no }}">
+                        <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Num" value="{{ $client->gst_num }}">
                     </div>
                 </div>
                 <br>

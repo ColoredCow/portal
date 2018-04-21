@@ -44,7 +44,7 @@ class ClientController extends Controller
             'phone' => $validated['phone'],
             'country' => $validated['country'],
             'address' => $validated['address'],
-            'gst_no' => $validated['gst_no'],
+            'gst_num' => $validated['gst_num'],
         ]);
 
         return redirect("/clients/$client->id/edit")->with('status', 'Client created succesfully!');
@@ -90,7 +90,7 @@ class ClientController extends Controller
             'phone' => $validated['phone'],
             'country' => $validated['country'],
             'address' => $validated['address'],
-            'gst_no' => $validated['gst_no'],
+            'gst_num' => $validated['gst_num'],
         ]);
         return redirect("/clients/$client->id/edit")->with('status', 'Client updated succesfully!');
     }

@@ -14,7 +14,7 @@ class UpdateClientWithGstNumberColumn extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->string('gst_no')->nullable()->after('address');
+            $table->string('gst_num')->nullable()->after('address');
         });
     }
 
@@ -26,7 +26,7 @@ class UpdateClientWithGstNumberColumn extends Migration
     public function down()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn(['gst_no']);
+            $table->dropColumn(['gst_num']);
         });
     }
 }

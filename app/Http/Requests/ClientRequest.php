@@ -29,7 +29,7 @@ class ClientRequest extends FormRequest
             'phone' => 'nullable|string',
             'country' => 'nullable|string',
             'address' => 'nullable|string',
-            'gst_no' => 'nullable|string',
+            'gst_num' => 'nullable|string',
         ];
     }
 

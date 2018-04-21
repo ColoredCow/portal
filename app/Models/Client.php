@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $fillable = ['name', 'email', 'phone', 'country', 'address', 'gst_no'];
+    protected $fillable = ['name', 'email', 'phone', 'country', 'address', 'gst_num'];
 
     /**
      * Get the projects for the client.
