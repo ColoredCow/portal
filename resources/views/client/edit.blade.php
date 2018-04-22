@@ -10,7 +10,7 @@
     @include('status', ['errors' => $errors->all()])
     <br>
     <div class="card">
-        <form action="/clients/{{ $client->id }}" method="POST" class = "client-form" >
+        <form action="/clients/{{ $client->id }}" method="POST"  id="client_form" >
 
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -37,23 +37,20 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="country">Country</label>
-                        <select name="country" id="country" class="form-control">
-                            <option value="">Select country</option>
+                            <select name="country" id="country" class="form-control" data-pre-select-country="{{$client->country}}" v-model="country" >
+                            <option value="">Select country @{{ country }}</option>
                             @foreach (config('constants.countries') as $country => $country_name)
-                                @php
-                                    $selected = $client->country == $country ? 'selected="selected"' : '';
-                                @endphp
-                                <option value="{{ $country }}" {{ $selected }}>{{ $country_name }}</option>
+                                <option value="{{ $country }}" >{{ $country_name }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <br>
                 
-                <div class="form-row" style="display:{{($client->country != 'india') ? 'none': ''}}">
+                <div class="form-row" v-if="country === 'india'">
                     <div class="form-group col-md-5">
                         <label for="phone">GST</label>
-                        <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Num" value="{{ $client->gst_num }}">
+                        <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ $client->gst_num }}">
                     </div>
                 </div>
                 <br>

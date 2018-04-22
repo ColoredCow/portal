@@ -43,6 +43,15 @@ if (document.getElementById('form_invoice')) {
     });
 }
 
+if (document.getElementById('client_form')) {
+    const invoiceForm = new Vue({
+        el: '#client_form',
+        data: {
+            country: document.getElementById('country').dataset.preSelectCountry || ''
+        }
+    });
+}
+
 $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
     form.find('[name="round_status"]').val($(this).data('status'));
@@ -163,12 +172,3 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
         },
     });
 });
-
-$('.client-form').on('change', 'select[name="country"]', function() {
-    let gstInput = $(this).parents('.client-form').find('#gst_num');
-    if($(this).val() === 'india') {
-        gstInput.parents('.form-row').show();
-        return;
-    }
-    gstInput.parents('.form-row').hide();
-}) 
