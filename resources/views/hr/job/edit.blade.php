@@ -24,12 +24,20 @@
                     <div class="form-row">
                     @foreach ($job->rounds as $key => $round)
                         <div class="form-group col-md-5 {{ $key%2 ? 'offset-md-1' : '' }}">
-                            <label for="rounds[{{ $round->id }}][hr_round_interviewer]">{{ $round->name }}</label>
-                            <input type="text" class="form-control" 
-                                name="rounds[{{ $round->id }}][hr_round_interviewer]" 
-                                id="round_{{ $round->id }}" 
-                                placeholder="{{ $round->name }}" 
-                                value="{{ $round->pivot->hr_round_interviewer }}">
+                            <label for="rounds[{{ $round->id }}][hr_round_interviewer_id]">{{ $round->name }}</label>
+                                <select
+                                    class="form-control"  
+                                    name="rounds[{{ $round->id }}][hr_round_interviewer_id]" 
+                                    id="round_{{ $round->id }}"
+                                    value="{{ $round->pivot->hr_round_interviewer_id }}">
+                                    <option value="">Select interviewer </option>
+                                    @foreach($interviewers as $interviewer ) 
+                                        @php
+                                            $selected = $round->pivot->hr_round_interviewer_id == $interviewer->id ? 'selected="selected"' : '';
+                                        @endphp
+                                        <option value="{{ $interviewer->id }}" {{ $selected }}>{{ $interviewer->name }}</option>
+                                    @endforeach
+                                </select>
                         </div>
                     @endforeach
                     </div>
