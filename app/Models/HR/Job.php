@@ -35,10 +35,11 @@ class Job extends Model
     public function _update($attr)
     {
         $updated = $this->update($attr);
+
         if(isset($attr['rounds'])) {
             $this->updateInterviewers($attr['rounds']);
         }
-
+        
         $request = request();
         event(new JobUpdated($this, [
             'rounds' => $request->input('rounds'),
