@@ -6,6 +6,7 @@ use App\Models\HR\Applicant;
 use App\Models\HR\ApplicantReview;
 use App\Models\HR\Round;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicantRound extends Model
@@ -21,12 +22,37 @@ class ApplicantRound extends Model
         return self::create($attr);
     }
 
-    public function _update($attr)
+    public function _update($attr, $type = 'new', $reviews = [], $nextRound = 0)
     {
-        return $this->update($attr);
+        $this->update($attr);
+        $this->_updateOrCreateReviews($reviews);
+
+        if ($type == 'update') {
+            return;
+        }
+
+        $applicant = $this->applicant;
+        if ($attr['round_status']) {
+            if ($attr['round_status'] == 'rejected') {
+                $applicantStatus = 'rejected';
+            } else {
+                $applicantStatus = sizeof($applicant->getUnconductedRounds()) ? 'in-progress' : 'completed';
+            }
+            $applicant->update([ 'status' => $applicantStatus ]);
+        }
+
+        if ($nextRound) {
+            $scheduled_person = User::findByEmail($applicant->job->posted_by);
+            $applicantRound = self::_create([
+                'hr_applicant_id' => $applicant->id,
+                'hr_round_id' => $nextRound,
+                'scheduled_date' => Carbon::now()->addDay(),
+                'scheduled_person_id' => $scheduled_person ? $scheduled_person->id : config('constants.hr.defaults.scheduled_person_id'),
+            ]);
+        }
     }
 
-    public function _updateOrCreateReviews($reviews = [])
+    protected function _updateOrCreateReviews($reviews = [])
     {
         foreach ($reviews as $review_key => $review_value) {
             $applicant_reviews = $this->applicantReviews()->updateOrCreate(

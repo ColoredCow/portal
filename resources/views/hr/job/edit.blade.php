@@ -3,12 +3,10 @@
 @section('content')
 <div class="container">
     <br>
-    <h1>{{ $job->title }}</h1>
-    <br>
-    <a class="btn btn-info" href="/hr/jobs">See all jobs</a>
+    @include('hr.menu', ['active' => 'jobs'])
     <br><br>
+    <h1>{{ $job->title }}</h1>
     @include('status', ['errors' => $errors->all()])
-    <br>
     <div class="card">
         <form action="/hr/jobs/{{$job->id}}" method="POST">
 

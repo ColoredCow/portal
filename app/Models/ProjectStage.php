@@ -8,7 +8,7 @@ class ProjectStage extends Model
 {
     protected $table = 'project_stages';
 
-    protected $fillable = ['project_id', 'name', 'cost', 'currency_cost', 'cost_include_gst'];
+    protected $guarded = [];
 
     /**
      * Get the billings for the project stage.

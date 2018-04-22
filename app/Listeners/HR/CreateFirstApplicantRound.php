@@ -8,7 +8,7 @@ use App\Models\HR\Job;
 use App\User;
 use Carbon\Carbon;
 
-class CreateApplicantRound
+class CreateFirstApplicantRound
 {
     /**
      * Create the event listener.
