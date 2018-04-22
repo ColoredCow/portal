@@ -3,12 +3,13 @@
 @section('content')
 <div class="container">
     <br>
-    <h1>Edit Client</h1>
-    <br>
-    <a class="btn btn-info" href="/clients">See all clients</a>
+    @include('finance.menu', ['active' => 'clients'])
     <br><br>
+    <div class="row">
+        <div class="col-md-6"><h1>Edit Client</h1></div>
+        <div class="col-md-6"><a href="/clients/create" class="btn btn-success float-right">Create Client</a></div>
+    </div>
     @include('status', ['errors' => $errors->all()])
-    <br>
     <div class="card">
         <form action="/clients/{{ $client->id }}" method="POST"  id="client_form" >
 

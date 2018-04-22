@@ -3,12 +3,10 @@
 @section('content')
 <div class="container" id="project_container">
     <br>
-    <h1>Create Project</h1>
-    <br>
-    <a class="btn btn-info" href="/projects">See all projects</a>
+    @include('finance.menu', ['active' => 'projects'])
     <br><br>
+    <h1>Create Project</h1>
     @include('status', ['errors' => $errors->all()])
-    <br>
     <div class="card">
         <form action="/projects" method="POST" id="form_project">
 
@@ -54,23 +52,8 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="started_on">Started on</label>
-                        <input type="text" class="form-control date-field" name="started_on" id="started_on" placeholder="dd/mm/yyyy" value="{{ old('started_on') }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
                         <label for="invoice_email">Email for invoice</label>
                         <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ old('invoice_email') }}">
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="name">Type</label>
-                        <select name="type" id="type" class="form-control" required="required">
-                        @foreach (config('constants.project.type') as $type => $display_name)
-                            <option value="{{ $type }}">{{ $display_name }}</option>
-                        @endforeach
-                        </select>
                     </div>
                 </div>
             </div>

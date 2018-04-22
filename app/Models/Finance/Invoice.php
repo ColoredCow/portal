@@ -30,6 +30,6 @@ class Invoice extends Model
 	            $query->select('id', 'name');
 	        }])
             ->orderBy('sent_on', 'desc')
-            ->get();
+            ->paginate(config('constants.pagination_size'));
     }
 }

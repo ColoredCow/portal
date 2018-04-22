@@ -3,12 +3,13 @@
 @section('content')
 <div class="container" id="project_container">
     <br>
-    <h1>Edit Project</h1>
-    <br>
-    <a class="btn btn-info" href="/projects">See all projects</a>
+    @include('finance.menu', ['active' => 'projects'])
     <br><br>
+    <div class="row">
+        <div class="col-md-6"><h1>Edit Project</h1></div>
+        <div class="col-md-6"><a href="/projects/create" class="btn btn-success float-right">Create Project</a></div>
+    </div>
     @include('status', ['errors' => $errors->all()])
-    <br>
     <div class="card">
         <form action="/projects/{{ $project->id }}" method="POST">
 
@@ -57,26 +58,8 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="started_on">Started on</label>
-                        <input type="text" class="form-control date-field" name="started_on" id="started_on" placeholder="dd/mm/yyyy" value="{{ date(config('constants.display_date_format'), strtotime($project->started_on)) }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
                         <label for="invoice_email">Email for invoice</label>
                         <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ $project->invoice_email }}">
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="name">Type</label>
-                        <select name="type" id="type" class="form-control" required="required">
-                        @foreach (config('constants.project.type') as $type => $display_name)
-                            @php
-                                $selected = $type === $project->type ? 'selected="selected"' : '';
-                            @endphp
-                            <option value="{{ $type }}" {{ $selected }}>{{ $display_name }}</option>
-                        @endforeach
-                        </select>
                     </div>
                 </div>
             </div>
@@ -85,25 +68,36 @@
             </div>
         </form>
     </div>
-
-    <div class="card mt-5">
-        <div class="card-header">
-            <span>Project Stages</span>
-        </div>
-        <div class="card-body" id="project_stages">
-
+    @if (sizeof($project->stages))
+        <h2 class="mt-5">Project Stages</h2>
+        @foreach ($project->stages as $stage)
             <project-stage-component
-            :stages="{{ json_encode($project->stages) }}"
-            :currencies="{{ json_encode(config('constants.currency')) }}"
+            :stage="{{ json_encode($stage) }}"
+            :configs="{{ json_encode([
+                'currencies' => config('constants.currency'),
+                'projectTypes' => config('constants.project.type'),
+                'gst' => config('constants.finance.gst'),
+            ]) }}"
+            :client="{{ json_encode($project->client) }}"
             :csrf-token="{{ json_encode(csrf_token()) }}"
             :project-id="{{ $project->id }}"
             ref="projectStage">
             </project-stage-component>
+        @endforeach
+    @endif
+    <project-stage-component
+    v-show="newStage"
+    :stage="[]"
+    :csrf-token="{{ json_encode(csrf_token()) }}"
+    :project-id="{{ $project->id }}"
+    :client="{{ json_encode($project->client) }}"
+    :configs="{{ json_encode([
+        'currencies' => config('constants.currency'),
+        'projectTypes' => config('constants.project.type'),
+        'gst' => config('constants.finance.gst'),
+    ]) }}"
+    ></project-stage-component>
 
-        </div>
-        <div class="card-footer">
-            <button class="btn btn-secondary float-right" type="button" id="project_new_stage" v-on:click="createProjectStage">Add new stage</button>
-        </div>
-    </div>
+    <button class="btn btn-secondary float-right my-5" type="button" id="project_new_stage" v-show="!newStage" v-on:click="newStage = !newStage">Add new stage</button>
 </div>
 @endsection

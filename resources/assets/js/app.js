@@ -21,11 +21,20 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
+Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
 
+if (document.getElementById('page_hr_applicant_edit')) {
+    const applicantEdit = new Vue({
+        el: '#page_hr_applicant_edit'
+    });
+}
 
 if (document.getElementById('project_container')) {
     const projectContainer = new Vue({
         el: '#project_container',
+        data: {
+            newStage: false
+        },
         methods: {
             createProjectStage: function() {
                 this.$refs.projectStage.create();
@@ -55,6 +64,13 @@ if (document.getElementById('client_form')) {
 $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
     form.find('[name="round_status"]').val($(this).data('status'));
+    form.find('[name="next_round"]').val($(this).data('next-round'));
+    form.submit();
+});
+
+$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-update', function(){
+    var form = $(this).closest('.applicant-round-form');
+    form.find('[name="action_type"]').val('update');
     form.submit();
 });
 
