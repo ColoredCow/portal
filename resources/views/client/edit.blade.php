@@ -39,7 +39,7 @@
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="country">Country</label>
                             <select name="country" id="country" class="form-control" data-pre-select-country="{{$client->country}}" v-model="country" >
-                            <option value="">Select country @{{ country }}</option>
+                            <option value="">Select country</option>
                             @foreach (config('constants.countries') as $country => $country_name)
                                 <option value="{{ $country }}" >{{ $country_name }}</option>
                             @endforeach
