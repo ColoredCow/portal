@@ -177,3 +177,14 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
         },
     });
 });
+
+//coloredcow
+
+if (document.getElementById('book_form')) {
+    const bookForm = new Vue({
+        el: '#book_form',
+        data: {
+            addMethod: 'from_image'
+        }
+    });
+}

@@ -43,4 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('project/stages', 'ProjectStageController')->only([ 'store', 'update' ]);
     Route::get('settings/{module}', 'SettingController@index');
     Route::post('settings/{module}/update', 'SettingController@update');
+    Route::get('/knowledgecafe', 'KnowledgeCafe\KnowledgeCafeController@index');
+    Route::resource('/knowledgecafe/library/book', 'KnowledgeCafe\Library\BookController');
 });
