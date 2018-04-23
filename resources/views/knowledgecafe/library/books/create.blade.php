@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <br>
@@ -22,21 +21,22 @@
                 <br>
                 <div class="form-row" v-if="addMethod === 'from_isbn'"> 
                     <div class="form-group col-md-5">
-                        <label for="phone">ISBN</label>
-                        <input type="text" class="form-control" name="isbn" id="isbn" placeholder="ISBN Number" value="{{ old('isbn') }}">
+                        <label for="isbn">ISBN</label>
+                        <input type="text" class="form-control" name="isbn" id="isbn" placeholder="978...." value="{{ old('isbn') }}">
                     </div>
                 </div>
 
                 <div class="form-row"> 
                     <div class="form-group col-md-5" v-if="addMethod === 'from_image'">
                         <label for="phone">Capture Image</label>
-                        <input type="file" class="form-control" name="fileToUpload" id="fileToUpload" value="{{ old('isbn') }}">
+                        <input type="file" class="form-control" name="book_image" id="book_image" >
                     </div>
                 </div>
+
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-primary" id="submit_book_form_btn" >Save</button>
             </div>
         </form>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\KnowledgeCafe\Library;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\BookServices;
 
 class BookController extends Controller
 {
@@ -35,7 +36,17 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $method = $request->input('add_method');
+        
+        if($method === 'from_image') {
+            $file = $request->file('book_image');
+            $info = BookServices::getBookInfo($file);
+        } 
+
+        if($method ==='from_isbn') {
+            $ISBNNumber = $request->input('isbn');
+            $info = BookServices::getBookDetails($ISBNNumber);
+        }
     }
 
     /**

@@ -9,6 +9,7 @@
 require('./bootstrap');
 
 import 'jquery-ui/ui/widgets/datepicker.js';
+import ImageCompressor from 'image-compressor.js';
 
 window.Vue = require('vue');
 
@@ -77,6 +78,8 @@ $(document).ready(() => {
             updateClientProjects(form, client_id);
         }
     }
+
+    $('#submit_book_form_btn').on('click', submitBookForm);
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -180,6 +183,8 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
 
 //coloredcow
 
+var compressedFile  = null;
+
 if (document.getElementById('book_form')) {
     const bookForm = new Vue({
         el: '#book_form',
@@ -187,4 +192,30 @@ if (document.getElementById('book_form')) {
             addMethod: 'from_image'
         }
     });
+
+
+
+document.getElementById('book_image').addEventListener('change', (e) => {
+    let file = e.target.files[0];
+    if (!file) { return; }
+    compressedFile =  null;
+    let image  = new ImageCompressor(file, {quality: .1, success: function(result) {
+        compressedFile = result;
+    }});
+  });
+
 }
+
+
+function submitBookForm() {
+    let formData = new FormData(document.getElementById('book_form'));
+
+    if(compressedFile) {
+        formData.append('book_image', compressedFile, compressedFile.name);
+    }
+    
+    axios.post('/knowledgecafe/library/book', formData).then((response) => {
+        console.log(response);
+    });
+}
+
