@@ -243,7 +243,5 @@ function saveBookToRecords() {
         alert("Error in saving records");
     }
 
-    axios.post('/knowledgecafe/library/books', bookData).then((response) => {
-       
-    });
+    axios.post('/knowledgecafe/library/books', bookData).then((response) => {});
 }
