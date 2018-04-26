@@ -84,7 +84,7 @@ $(document).ready(() => {
     $('#show_book').on('click', '#save_book_to_records', function() {
         saveBookToRecords();
     });
-    
+
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -238,7 +238,6 @@ function submitBookForm() {
        $('#show_book').show();
     });
 }
-
 
 function saveBookToRecords() {
     if(!bookData) {
