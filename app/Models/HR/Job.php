@@ -63,13 +63,6 @@ class Job extends Model
     }
 
     public function updateInterviewers($rounds = []) {
-
-        if (empty($rounds)) {
-            return false;
-        }
-
-        $this->rounds()->detach(array_divide($rounds)[0]);
-
-        return $this->rounds()->attach($rounds);
+        return (empty($rounds)) ? false : $this->rounds()->sync($rounds);
     }
 }
