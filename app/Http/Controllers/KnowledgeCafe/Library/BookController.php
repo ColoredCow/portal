@@ -85,6 +85,12 @@ class BookController extends Controller
     }
 
 
+     /**
+     * Fetch the book info.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function fetchBookInfo(Request $request) {
         $method = $request->input('add_method');
 
