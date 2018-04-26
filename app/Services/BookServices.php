@@ -31,12 +31,15 @@ class BookServices
 
     public static function getBookDetails($isbn)
     {
-        // $isbn = "9780199657780";
+        
         $client = new Client();
         $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn);
         $book = json_decode($res->getBody(), true);
 
-        // This is because of google api bug.
+        /**
+         * There is a bug in google books API.
+         * 
+         */
         if (!isset($book['items'])) {
             $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn);
             $book = json_decode($res->getBody(), true);
@@ -54,9 +57,7 @@ class BookServices
     public static function getISBN($file) {
         ini_set('max_execution_time', 3600);
         $apiKey = env('GOOGLE_VISION_API_KEY', 'AIzaSyCM1QEosQzkoe8-HFBFN9xBOfPPCZBEfEk');
-
         $vision = new Vision( $apiKey, [new Feature(Feature::TEXT_DETECTION, 100)]);
-
         $imagePath = $file->path();
         $response = $vision->request(new LocalImage($imagePath));
         $faces = $response->getTextAnnotations();

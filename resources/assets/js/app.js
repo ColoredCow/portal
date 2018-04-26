@@ -185,8 +185,11 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
     });
 });
 
-//coloredcow
 
+/**
+ * Knowledge Cafe
+ * 
+ */
 var compressedFile  = null;
 var bookData = null;
 
@@ -206,11 +209,7 @@ document.getElementById('book_image').addEventListener('change', (e) => {
         compressedFile = result;
     }});
   });
-
-
 }
-
-
 
 function submitBookForm() {
     let formData = new FormData(document.getElementById('book_form'));
