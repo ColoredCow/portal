@@ -115,15 +115,13 @@
                                 </div>
                             @endif
                         </div>
+                        <div class="card-footer">
                         @if (! $applicantRound->round_status)
-                            <div class="card-footer">
-                                <applicant-round-action-component
-                                :rounds="{{ json_encode($job->rounds) }}">
-                                </applicant-round-action-component>
-                                <button type="button" class="btn btn-outline-danger round-submit" data-status="rejected">Reject</button>
-                            </div>
+                            <applicant-round-action-component
+                            :rounds="{{ json_encode($job->rounds) }}">
+                            </applicant-round-action-component>
+                            <button type="button" class="btn btn-outline-danger round-submit" data-status="rejected">Reject</button>
                         @elseif ($applicantRound->round_status == 'rejected' || !$applicantRound->mail_sent)
-                            <div class="card-footer">
                                 @if ($applicantRound->round_status == 'rejected')
                                     <applicant-round-action-component
                                     :rounds="{{ json_encode($job->rounds) }}">
@@ -132,8 +130,8 @@
                                 @if (!$applicantRound->mail_sent)
                                     <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#round_{{ $applicantRound->id }}">Send mail</button>
                                 @endif
-                            </div>
                         @endif
+                        </div>
                     </div>
                     <input type="hidden" name="round_status" value="{{ $applicantRound->round_status }}">
                     <input type="hidden" name="next_round" value="0">
