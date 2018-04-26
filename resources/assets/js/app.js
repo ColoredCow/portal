@@ -80,6 +80,11 @@ $(document).ready(() => {
     }
 
     $('#submit_book_form_btn').on('click', submitBookForm);
+
+    $('#show_book').on('click', '#save_book_to_records', function() {
+        saveBookToRecords();
+    });
+    
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -184,6 +189,7 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
 //coloredcow
 
 var compressedFile  = null;
+var bookData = null;
 
 if (document.getElementById('book_form')) {
     const bookForm = new Vue({
@@ -192,8 +198,6 @@ if (document.getElementById('book_form')) {
             addMethod: 'from_image'
         }
     });
-
-
 
 document.getElementById('book_image').addEventListener('change', (e) => {
     let file = e.target.files[0];
@@ -204,7 +208,9 @@ document.getElementById('book_image').addEventListener('change', (e) => {
     }});
   });
 
+
 }
+
 
 
 function submitBookForm() {
@@ -213,9 +219,33 @@ function submitBookForm() {
     if(compressedFile) {
         formData.append('book_image', compressedFile, compressedFile.name);
     }
-    
-    axios.post('/knowledgecafe/library/book', formData).then((response) => {
-        console.log(response);
+    $('#show_book').html('');
+    bookData = null;
+    axios.post('/knowledgecafe/library/book/fetchinfo', formData).then((response) => {
+       let data = response.data;
+
+       if(!data) {
+           alert("Error:Please try again");
+       }
+
+       if(data.error) {
+           alert(data.message);
+           return;
+       }
+       bookData = data.book;
+       $('#show_book').html(data.view);
+       $('#add_book').hide();
+       $('#show_book').show();
     });
 }
 
+
+function saveBookToRecords() {
+    if(!bookData) {
+        alert("Error in saving records");
+    }
+
+    axios.post('/knowledgecafe/library/books', bookData).then((response) => {
+        console.log(response);
+    });
+}

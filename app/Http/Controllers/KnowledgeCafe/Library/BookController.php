@@ -36,17 +36,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $method = $request->input('add_method');
-        
-        if($method === 'from_image') {
-            $file = $request->file('book_image');
-            $info = BookServices::getBookInfo($file);
-        } 
-
-        if($method ==='from_isbn') {
-            $ISBNNumber = $request->input('isbn');
-            $info = BookServices::getBookDetails($ISBNNumber);
-        }
+        dd($request->all());
     }
 
     /**
@@ -92,5 +82,35 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function fetchBookInfo(Request $request) {
+        $method = $request->input('add_method');
+
+        if($method === 'from_image') {
+            $file = $request->file('book_image');
+            $ISBNNumber = BookServices::getISBN($file);
+
+            if(!$ISBNNumber || strlen($ISBNNumber) < 13) {
+                return json_encode(['view'=> null, 'error' => true, 'message' => 'Could not fetch valid ISBN : '. $ISBNNumber]);
+            }
+            $book= BookServices::getBookDetails($ISBNNumber);
+        } 
+
+        if($method ==='from_isbn') {
+            $ISBNNumber = $request->input('isbn');
+            $book = BookServices::getBookDetails($ISBNNumber);
+        }  
+
+        if(!isset($book['items'])) {
+            return json_encode(['view'=> null, 'error' => true, 'message' => 'Invalid ISBN : '. $ISBNNumber]);
+        }
+
+        $book = $book['items'][0];
+        $info = $book['volumeInfo'];
+        $view = view('knowledgecafe.library.books.info')->with(['info' => $info, 'book' => $book])->render();
+
+        return json_encode(['view'=> $view, 'error' => false, 'book' => $book]);
     }
 }

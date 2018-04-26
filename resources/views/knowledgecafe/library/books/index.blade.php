@@ -7,7 +7,7 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Books</h1></div>
-        <div class="col-md-6"><a href="/knowledgecafe/library/book/create" class="btn btn-success float-right">Add Book</a></div>
+        <div class="col-md-6"><a href="/knowledgecafe/library/books/create" class="btn btn-success float-right">Add Book</a></div>
     </div>
 
     <table class="table table-striped table-bordered" id="books_table">

@@ -35,9 +35,18 @@ class BookServices
         $client = new Client();
         $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn);
         $book = json_decode($res->getBody(), true);
+
+        // This is because of google api bug.
+        if (!isset($book['items'])) {
+            $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn);
+            $book = json_decode($res->getBody(), true);
+            return 'please try again';
+        }
+
         if (!isset($book['items'])) {
             return 'please try again';
         }
+
         return $book;
     }
 
