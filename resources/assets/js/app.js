@@ -84,7 +84,11 @@ $(document).ready(() => {
     $('#show_book').on('click', '#save_book_to_records', function() {
         saveBookToRecords();
     });
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 91b5c318e614ea3be66a043938c8f3eff4247a48
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -245,6 +249,6 @@ function saveBookToRecords() {
     }
 
     axios.post('/knowledgecafe/library/books', bookData).then((response) => {
-        console.log(response);
+       
     });
 }

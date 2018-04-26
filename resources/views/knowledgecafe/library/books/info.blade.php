@@ -57,5 +57,6 @@
     {{-- <div class="card-footer text-center">
         <button type="button" class="btn btn-primary" id="save_book_to_records" >Save to records</button>
     </div> --}}
+
 </div>
 
