@@ -63,22 +63,13 @@ class Job extends Model
     }
 
     public function updateInterviewers($rounds = []) {
-        foreach($rounds as $roundID => $round) {
-            $this->assignInterviewer($roundID, $round['hr_round_interviewer_id']);
-        }
-    }
 
-    public function assignInterviewer($roundID, $interviewerID) {
-        $round = $this->rounds->find($roundID);
-        if(!$round || !$interviewerID) {
+        if (empty($rounds)) {
             return false;
         }
 
-        if(! ($pivotTable = $round->pivot)) {
-            return false;
-        }
+        $this->rounds()->detach(array_divide($rounds)[0]);
 
-        $pivotTable->hr_round_interviewer_id = $interviewerID;
-        return $pivotTable->save();
+        return $this->rounds()->attach($rounds);
     }
 }
