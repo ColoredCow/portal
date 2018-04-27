@@ -40,7 +40,7 @@
             </td>
             <td>
             @if ($invoice->file_path)
-                <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-2x text-primary btn-file"></i></a>
+                <a target="_blank" href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-2x text-primary btn-file"></i></a>
             @else
                 <span>-</span>
             @endif
