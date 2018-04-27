@@ -10,40 +10,28 @@ use Vision\Vision;
 
 class BookServices
 {
-    public function __construct()
-    {
-    }
 
-    public static function getBookInfo($file, $onlyISBN = false)
-    {
-        $description = self::getISBN($file);
+     /**
+      * Fetch book details from $isbn
 
-        if (strlen($description) < 13) {
-            return 'try again with another image current isbn is invalid :' . $description;
-        }
-
-        if (!$description) {
-            return 'invalid image please try again';
-        }
-
-        return ($onlyISBN) ? $description : self::getBookDetails($description);
-    }
+      * @param String $isbn
+      * @return @mixed
+      */
 
     public static function getBookDetails($isbn)
     {
-        
         $client = new Client();
-        $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn);
+        $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn, [
+            'timeout' => 5.0
+        ]);
         $book = json_decode($res->getBody(), true);
 
-        /**
-         * There is a bug in google books API.
-         * 
-         */
         if (!isset($book['items'])) {
-            $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn);
+            $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn, [
+                'timeout' => 5.0
+            ]);
+
             $book = json_decode($res->getBody(), true);
-            return 'please try again';
         }
 
         if (!isset($book['items'])) {
@@ -53,26 +41,27 @@ class BookServices
         return $book;
     }
 
-
+    /**
+     * Fetch ISBN form book image
+     *
+     * @param File $file
+     * @return String
+     */
     public static function getISBN($file) {
-        ini_set('max_execution_time', 3600);
-        $apiKey = env('GOOGLE_VISION_API_KEY', 'AIzaSyCM1QEosQzkoe8-HFBFN9xBOfPPCZBEfEk');
+
+        $apiKey = env('GOOGLE_VISION_API_KEY');
         $vision = new Vision( $apiKey, [new Feature(Feature::TEXT_DETECTION, 100)]);
-        $imagePath = $file->path();
-        $response = $vision->request(new LocalImage($imagePath));
+        $response = $vision->request(new LocalImage($file->path()));
         $faces = $response->getTextAnnotations();
         $description = '';
-        $lastOne = '';
-        $data = [];
-        $i = 0;
+        $currentText = '';
 
         foreach ($faces as $face) {
-            $data[$i] = $face->getDescription();
-            $i++;
-            if ('isbn' === strtolower($lastOne) || 'sbn' === strtolower($lastOne)) {
+            $faceDescription = $face->getDescription();
+            if ('isbn' === strtolower($currentText) || 'sbn' === strtolower($currentText)) {
                 $description = $face->getDescription();
             }
-            $lastOne = $face->getDescription();
+            $currentText = $face->getDescription();
         }
 
         $description = str_replace('-', '', trim($description));
