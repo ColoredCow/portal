@@ -95,10 +95,10 @@
                                 </span>
                             </div>
                             <div class="d-inline float-right">
-                                @if ($applicantRound->round_status == 'confirmed')
-                                    <div class="text-success"><i class="fa fa-check"></i>Accepted in this round</div>
-                                @elseif ($applicantRound->round_status == 'rejected')
-                                    <div class="text-danger"><i class="fa fa-close"></i>Rejected</div>
+                                @if ($applicantRound->round_status === config('constants.hr.status.confirmed.label'))
+                                    <div class="text-success"><i class="fa fa-check"></i>{{ config('constants.hr.status.confirmed.title') }}</div>
+                                @elseif ($applicantRound->round_status == config('constants.hr.status.rejected.label'))
+                                    <div class="text-danger"><i class="fa fa-close"></i>{{ config('constants.hr.status.rejected.title') }}</div>
                                 @endif
                             </div>
                         </div>
@@ -120,11 +120,11 @@
                             <applicant-round-action-component
                             :rounds="{{ json_encode($job->rounds) }}">
                             </applicant-round-action-component>
-                            <button type="button" class="btn btn-outline-danger round-submit" data-status="rejected">Reject</button>
+                            <button type="button" class="btn btn-outline-danger round-submit" data-status="{{ config('constants.hr.status.rejected.label') }}">Reject</button>
                         </div>
-                        @elseif ($applicantRound->round_status == 'rejected' || !$applicantRound->mail_sent)
+                        @elseif ($applicantRound->round_status === config('constants.hr.status.rejected.label') || !$applicantRound->mail_sent)
                         <div class="card-footer">
-                            @if ($applicantRound->round_status == 'rejected')
+                            @if ($applicantRound->round_status === config('constants.hr.status.rejected.label'))
                                 <applicant-round-action-component
                                 :rounds="{{ json_encode($job->rounds) }}">
                                 </applicant-round-action-component>
