@@ -37,7 +37,7 @@ class Job extends Model
         $updated = $this->update($attr);
 
         if(isset($attr['rounds'])) {
-            $this->updateInterviewers($attr['rounds']);
+            $this->rounds()->sync($attr['rounds']);
         }
         
         $request = request();
@@ -60,9 +60,5 @@ class Job extends Model
     public function rounds()
     {
         return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id');
-    }
-
-    public function updateInterviewers($rounds = []) {
-        return (empty($rounds)) ? false : $this->rounds()->sync($rounds);
     }
 }
