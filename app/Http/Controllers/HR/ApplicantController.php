@@ -83,7 +83,6 @@ class ApplicantController extends Controller
             'job' => $applicant->job,
             'applicant' => $applicant,
             'rounds' => Round::all(),
-            'unconductedApplicantRounds' => $applicant->getUnconductedRounds(),
         ]);
     }
 
