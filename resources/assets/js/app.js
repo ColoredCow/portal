@@ -79,11 +79,6 @@ $(document).ready(() => {
         }
     }
 
-    $('#submit_book_form_btn').on('click', submitBookForm);
-
-    $('#show_book').on('click', '#save_book_to_records', function() {
-        saveBookToRecords();
-    });
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -198,49 +193,57 @@ if (document.getElementById('book_form')) {
         el: '#book_form',
         data: {
             addMethod: 'from_image'
+        },
+
+        methods: {
+            onFileSelected: function(e) {
+                let file = e.target.files[0];
+                if (!file) { return; }
+                this.compressedFile =  null;
+                let image  = new ImageCompressor(file, {
+                    quality: .1, 
+                    success: function(result) {
+                        this.compressedFile = result;
+                    }
+                });
+            },
+
+            submitBookForm: function() {
+                let formData = new FormData(document.getElementById('book_form'));
+                if(this.compressedFile) {
+                    formData.append('book_image', compressedFile, compressedFile.name);
+                }
+                $('#show_book').html('');
+                this.bookData = null;
+                axios.post('/knowledgecafe/library/book/fetchinfo', formData).then(
+                    (response) => {
+                        let data = response.data;
+                        if(!data) {
+                            alert("Error:Please try again");
+                        }
+            
+                        if(data.error) {
+                            alert(data.message);
+                            return;
+                        }
+
+                        this.bookData = data.book;
+                        $('#add_book').hide();
+                        $('#show_book').html(data.view).show();
+                });
+            }
         }
-    });
 
-document.getElementById('book_image').addEventListener('change', (e) => {
-    let file = e.target.files[0];
-    if (!file) { return; }
-    compressedFile =  null;
-    let image  = new ImageCompressor(file, {quality: .1, success: function(result) {
-        compressedFile = result;
-    }});
-  });
-}
-
-function submitBookForm() {
-    let formData = new FormData(document.getElementById('book_form'));
-
-    if(compressedFile) {
-        formData.append('book_image', compressedFile, compressedFile.name);
-    }
-    $('#show_book').html('');
-    bookData = null;
-    axios.post('/knowledgecafe/library/book/fetchinfo', formData).then((response) => {
-       let data = response.data;
-
-       if(!data) {
-           alert("Error:Please try again");
-       }
-
-       if(data.error) {
-           alert(data.message);
-           return;
-       }
-       bookData = data.book;
-       $('#show_book').html(data.view);
-       $('#add_book').hide();
-       $('#show_book').show();
     });
 }
+
 
 function saveBookToRecords() {
     if(!bookData) {
         alert("Error in saving records");
     }
-
-    axios.post('/knowledgecafe/library/books', bookData).then((response) => {});
+    axios.post('/knowledgecafe/library/books', bookData).then(
+        (response) => {
+            // Save book info to database
+        });
 }

@@ -31,14 +31,14 @@
                     <div class="form-row"> 
                         <div class="form-group col-md-5" v-if="addMethod === 'from_image'">
                             <label for="phone">Capture Image</label>
-                            <input type="file" class="form-control" name="book_image" id="book_image">
+                            <input @change="onFileSelected" type="file" class="form-control" name="book_image" id="book_image">
                         </div>
                     </div>
 
                 </div>
 
                 <div class="card-footer">
-                    <button type="button" class="btn btn-primary" id="submit_book_form_btn" >Show</button>
+                    <button type="button" v-on:click="submitBookForm" class="btn btn-primary" id="submit_book_form_btn" >Show</button>
                 </div>
             </form>
         </div>
