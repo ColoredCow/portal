@@ -8,7 +8,7 @@
     <h1>Create client</h1>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <form action="/clients" method="POST">
+        <form action="/clients" method="POST" id="client_form" >
 
             {{ csrf_field() }}
 
@@ -34,15 +34,19 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="country">Country</label>
-                        <select name="country" id="country" class="form-control">
+                        <select name="country" id="country" class="form-control" data-pre-select-country="{{ old('country') }}" v-model="country">
                             <option value="">Select country</option>
                             @foreach (config('constants.countries') as $country => $country_name)
-                                @php
-                                    $selected = old('country') == $country ? 'selected="selected"' : '';
-                                @endphp
-                                <option value="{{ $country }}" {{ $selected }}>{{ $country_name }}</option>
+                                <option value="{{ $country }}" >{{ $country_name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row" v-if="country === 'india'">
+                    <div class="form-group col-md-5">
+                        <label for="phone">GST </label>
+                        <input type="text"  class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ old('gst_num') }}">
                     </div>
                 </div>
                 <br>
