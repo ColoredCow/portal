@@ -31,7 +31,7 @@
                     <div class="form-row"> 
                         <div class="form-group col-md-5" v-if="addMethod === 'from_image'">
                             <label for="phone">Capture Image</label>
-                            <input type="file" class="form-control" name="book_image" id="book_image" >
+                            <input type="file" class="form-control" name="book_image" id="book_image">
                         </div>
                     </div>
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\BookServices;
+use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 
 class BookController extends Controller
 {
@@ -88,35 +88,47 @@ class BookController extends Controller
      /**
      * Fetch the book info.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return @return json
+     * @param  \App\Http\Requests\BookRequest  $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function fetchBookInfo(Request $request) {
-        $method = $request->input('add_method');
+    public function fetchBookInfo(BookRequest $request) {
+        $validated = $request->validated();
+        $method = $validated['add_method'];
 
         if($method === 'from_image') {
             $file = $request->file('book_image');
             $ISBNNumber = BookServices::getISBN($file);
 
             if(!$ISBNNumber || strlen($ISBNNumber) < 13) {
-                return json_encode(['view'=> null, 'error' => true, 'message' => 'Could not fetch valid ISBN : '. $ISBNNumber]);
+                return response()->json([
+                    'view'=> null, 
+                    'error' => true, 
+                    'message' => 'Could not fetch valid ISBN : '. $ISBNNumber
+                ]);
             }
-            $book= BookServices::getBookDetails($ISBNNumber);
-        } 
 
-        if($method ==='from_isbn') {
+            $book= BookServices::getBookDetails($ISBNNumber);
+        } else if($method ==='from_isbn') {
             $ISBNNumber = $request->input('isbn');
             $book = BookServices::getBookDetails($ISBNNumber);
         }  
 
         if(!isset($book['items'])) {
-            return json_encode(['view'=> null, 'error' => true, 'message' => 'Invalid ISBN : '. $ISBNNumber]);
+            return response()->json([
+                'view'=> null, 
+                'error' => true, 
+                'message' => 'Invalid ISBN : '. $ISBNNumber
+            ]);
         }
 
         $book = $book['items'][0];
         $info = $book['volumeInfo'];
         $view = view('knowledgecafe.library.books.info')->with(['info' => $info, 'book' => $book])->render();
 
-        return json_encode(['view'=> $view, 'error' => false, 'book' => $book]);
+        return response()->json([
+            'view'=> $view, 
+            'error' => false, 
+            'book' => $book
+        ]);
     }
 }
