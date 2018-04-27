@@ -50,14 +50,14 @@
                 
                 <div class="form-row" v-if="country === 'india'">
                     <div class="form-group col-md-5">
-                        <label for="phone">GST</label>
+                        <label for="gst_num">GST</label>
                         <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ $client->gst_num }}">
                     </div>
                 </div>
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="name">Address</label>
+                        <label for="address">Address</label>
                         <textarea name="address" id="address" rows="5" class="form-control" placeholder="Address">{{ $client->address }}</textarea>
                     </div>
                 </div>
