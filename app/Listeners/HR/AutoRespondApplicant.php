@@ -31,7 +31,6 @@ class AutoRespondApplicant
 
         $subject = Setting::where('module', 'hr')->where('setting_key', 'applicant_create_autoresponder_subject')->first();
         $body = Setting::where('module', 'hr')->where('setting_key', 'applicant_create_autoresponder_body')->first();
-
         Mail::to($applicant->email, $applicant->name)
             ->send(new ApplicantCreateAutoResponder($subject->setting_value, $body->setting_value));
 

@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Finance\Invoice;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class InvoiceController extends Controller
 {
@@ -150,7 +151,14 @@ class InvoiceController extends Controller
      */
     protected static function upload(UploadedFile $file)
     {
+        $fileName = $file->getClientOriginalName();
+
+        if($fileName) {
+            return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
+        }
+        
         return $file->store(FileHelper::getCurrentStorageDirectory());
+
     }
 
     /**
@@ -159,13 +167,25 @@ class InvoiceController extends Controller
      * @param  string $year  uploaded year of the invoice file
      * @param  string $month uploaded month of the invoice file
      * @param  string $file  invoice file name
-     * @return Symfony\Component\HttpFoundation\StreamedResponse
+     * @param  boolean $inline download/view invoice file
+     * @return mixed
      */
-    public function download($year, $month, $file)
+    public function download($year, $month, $file, $inline = true)
     {
+        $headers = [
+            'content-type'=>'application/pdf'
+        ];
+
         $file_path = FileHelper::getFilePath($year, $month, $file);
-        if (Storage::exists($file_path)) {
-            return Storage::download($file_path);
+
+        if(!$file_path) {
+            return false;
         }
+
+        if($inline) {
+            return Response::make(Storage::get($file_path), 200, $headers);
+        }
+        
+        return  Storage::download($file_path);
     }
 }

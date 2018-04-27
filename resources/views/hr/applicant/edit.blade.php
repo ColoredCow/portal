@@ -95,10 +95,10 @@
                                 </span>
                             </div>
                             <div class="d-inline float-right">
-                                @if ($applicantRound->round_status == 'confirmed')
-                                    <div class="text-success"><i class="fa fa-check"></i>Accepted in this round</div>
-                                @elseif ($applicantRound->round_status == 'rejected')
-                                    <div class="text-danger"><i class="fa fa-close"></i>Rejected</div>
+                                @if ($applicantRound->round_status === config('constants.hr.status.confirmed.label'))
+                                    <div class="text-success"><i class="fa fa-check"></i>{{ config('constants.hr.status.confirmed.title') }}</div>
+                                @elseif ($applicantRound->round_status == config('constants.hr.status.rejected.label'))
+                                    <div class="text-danger"><i class="fa fa-close"></i>{{ config('constants.hr.status.rejected.title') }}</div>
                                 @endif
                             </div>
                         </div>
@@ -109,46 +109,38 @@
                                     <textarea name="reviews[feedback]" id="reviews[feedback]" rows="6" class="form-control">{{ $applicantReviewValue }}</textarea>
                                 </div>
                             </div>
+                            @if ($applicantRound->round_status)
+                                <div class="form-row float-right">
+                                    <button type="button" class="btn btn-info btn-sm round-update">Update feedback</button>
+                                </div>
+                            @endif
                         </div>
-                        <div class="card-footer">
                         @if (! $applicantRound->round_status)
+                        <div class="card-footer">
                             <applicant-round-action-component
-                            :rounds="{{ json_encode($unconductedApplicantRounds) }}">
+                            :rounds="{{ json_encode($job->rounds) }}">
                             </applicant-round-action-component>
-                            <button type="button" class="btn btn-outline-danger round-submit" data-status="rejected">Reject</button>
-                        @else
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <button type="button" class="btn btn-info round-update">Update</button>
-                                    @if ($applicantRound->round_status == 'rejected')
-                                        <applicant-round-action-component
-                                        :rounds="{{ json_encode($unconductedApplicantRounds) }}">
-                                        </applicant-round-action-component>
-                                    @endif
-                                </div>
-                                <div>
-                                    @if ($applicantRound->mail_sent)
-                                        <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#round_mail_{{ $applicantRound->id }}">Mail sent for this round</span>
-                                    @else
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#round_{{ $applicantRound->id }}">Send mail</button>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
+                            <button type="button" class="btn btn-outline-danger round-submit" data-status="{{ config('constants.hr.status.rejected.label') }}">Reject</button>
                         </div>
+                        @elseif ($applicantRound->round_status === config('constants.hr.status.rejected.label') || !$applicantRound->mail_sent)
+                        <div class="card-footer">
+                            @if ($applicantRound->round_status === config('constants.hr.status.rejected.label'))
+                                <applicant-round-action-component
+                                :rounds="{{ json_encode($job->rounds) }}">
+                                </applicant-round-action-component>
+                            @endif
+                            @if (!$applicantRound->mail_sent)
+                                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#round_{{ $applicantRound->id }}">Send mail</button>
+                            @endif
+                        </div>
+                        @endif
                     </div>
                     <input type="hidden" name="round_status" value="{{ $applicantRound->round_status }}">
                     <input type="hidden" name="next_round" value="0">
                     <input type="hidden" name="action_type" value="new">
                 </form>
                 @include('hr.round-guide-modal', ['round' => $applicantRound->round])
-                @if ($applicantRound->round_status)
-                    @if ($applicantRound->mail_sent)
-                        @include('hr.round-review-sent-mail-modal', [ 'applicantRound' => $applicantRound ])
-                    @else
-                        @include('hr.round-review-mail-modal', [ 'applicantRound' => $applicantRound ])
-                    @endif
-                @endif
+                @includeWhen($applicantRound->round_status && !$applicantRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicantRound])
             @endforeach
         </div>
     </div>

@@ -11,7 +11,7 @@
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <form action="/clients/{{ $client->id }}" method="POST">
+        <form action="/clients/{{ $client->id }}" method="POST"  id="client_form" >
 
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -38,21 +38,26 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="country">Country</label>
-                        <select name="country" id="country" class="form-control">
+                            <select name="country" id="country" class="form-control" data-pre-select-country="{{$client->country}}" v-model="country" >
                             <option value="">Select country</option>
                             @foreach (config('constants.countries') as $country => $country_name)
-                                @php
-                                    $selected = $client->country == $country ? 'selected="selected"' : '';
-                                @endphp
-                                <option value="{{ $country }}" {{ $selected }}>{{ $country_name }}</option>
+                                <option value="{{ $country }}" >{{ $country_name }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <br>
+                
+                <div class="form-row" v-if="country === 'india'">
+                    <div class="form-group col-md-5">
+                        <label for="gst_num">GST</label>
+                        <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ $client->gst_num }}">
+                    </div>
+                </div>
+                <br>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="name">Address</label>
+                        <label for="address">Address</label>
                         <textarea name="address" id="address" rows="5" class="form-control" placeholder="Address">{{ $client->address }}</textarea>
                     </div>
                 </div>
