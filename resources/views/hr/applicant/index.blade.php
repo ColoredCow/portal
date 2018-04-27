@@ -21,7 +21,7 @@
             </td>
             <td>{{ $applicant->email }}</td>
             <td>{{ $applicant->job->title }}</td>
-            <td>{{ date(config('constants.display_date_format'), strtotime($applicant->created_at)) }}</td>
+            <td>{{ $applicant->created_at->format(config('constants.display_date_format')) }}</td>
             <td>
                 <span class="d-flex justify-content-start">
                     @if (in_array($applicant->status, ['in-progress', 'new']))
