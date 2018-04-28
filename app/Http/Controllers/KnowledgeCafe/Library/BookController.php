@@ -94,30 +94,30 @@ class BookController extends Controller
     public function fetchBookInfo(BookRequest $request) {
         $validated = $request->validated();
         $method = $validated['add_method'];
-
-        if($method === 'from_image') {
+        $ISBN = null;
+        
+        if($method === 'from_image' && $request->hasFile('book_image')) {
             $file = $request->file('book_image');
-            $ISBNNumber = BookServices::getISBN($file);
+            $ISBN = BookServices::getISBN($file);
+        } else if ($method ==='from_isbn') {
+            $ISBN = $request->input('isbn');
+        }
 
-            if(!$ISBNNumber || strlen($ISBNNumber) < 13) {
-                return response()->json([
-                    'view'=> null, 
-                    'error' => true, 
-                    'message' => 'Could not fetch valid ISBN : '. $ISBNNumber
-                ]);
-            }
+        if(!$ISBN || strlen($ISBN) < 13) {
+            return response()->json([
+                'view'=> null, 
+                'error' => true, 
+                'message' => 'Invalid ISBN : '. $ISBN
+            ]);
+        }
 
-            $book= BookServices::getBookDetails($ISBNNumber);
-        } else if($method ==='from_isbn') {
-            $ISBNNumber = $request->input('isbn');
-            $book = BookServices::getBookDetails($ISBNNumber);
-        }  
+        $book= BookServices::getBookDetails($ISBN);
 
         if(!isset($book['items'])) {
             return response()->json([
                 'view'=> null, 
                 'error' => true, 
-                'message' => 'Invalid ISBN : '. $ISBNNumber
+                'message' => 'Invalid ISBN : '. $ISBN
             ]);
         }
 
