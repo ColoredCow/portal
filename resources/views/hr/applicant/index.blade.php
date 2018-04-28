@@ -9,10 +9,9 @@
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>
-            <th>Contact</th>
+            <th>Email</th>
             <th>Applied for</th>
-            <th>Date of application</th>
-            <th>Resume</th>
+            <th>Applied on</th>
             <th>Status</th>
         </tr>
         @foreach ($applicants as $applicant)
@@ -20,19 +19,21 @@
             <td>
                 <a href="/hr/applicants/{{ $applicant->id }}/edit">{{ $applicant->name }}</a>
             </td>
-            <td>{{ $applicant->email }}<br>{{ $applicant->phone }}</td>
+            <td>{{ $applicant->email }}</td>
             <td>{{ $applicant->job->title }}</td>
-            <td>{{ $applicant->created_at }}</td>
+            <td>{{ $applicant->created_at->format(config('constants.display_date_format')) }}</td>
             <td>
-                @if ($applicant->resume)
-                    <a href="{{ $applicant->resume }}" class="d-flex justify-content-center" target="_blank"><i class="fa fa-file fa-2x"></i></a>
-                @else
-                    <span class="d-flex justify-content-center">–</span>
-                @endif
-            </td>
-            <td>
-                <span class="d-flex justify-content-center">
-                    <span class="{{ config("constants.hr.status.$applicant->status.class") }} badge-pill">{{ config("constants.hr.status.$applicant->status.title") }}</span>
+                <span class="d-flex justify-content-start">
+                    @if (in_array($applicant->status, ['in-progress', 'new']))
+                        <span class="badge badge-warning badge-pill">{{ $applicant->applicantRounds->last()->round->name }}</span>
+                        @if ($applicant->applicantRounds->count() > 1)
+                            <span class="badge badge-info badge-pill ml-1 px-2">Completed: {{ $applicant->applicantRounds->count() - 1 }}</span>
+                        @else
+                            <span class="badge badge-info badge-pill ml-1 px-2">New</span>
+                        @endif
+                    @else
+                        <span class="{{ config("constants.hr.status.$applicant->status.class") }} badge-pill">{{ config("constants.hr.status.$applicant->status.title") }}</span>
+                    @endif
                 </span>
             </td>
         </tr>

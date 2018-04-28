@@ -260,5 +260,3 @@ if (document.getElementById('show_and_save_book')) {
 
     });
 }
-
-

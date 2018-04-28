@@ -24,11 +24,9 @@
                     <b><u>{{ date(config('constants.display_date_format'), strtotime($applicantRound->conducted_date)) }}</u></b><br>
                     {{ $applicantRound->round->name }} conducted by {{ $applicantRound->conductedPerson->name }}<br>
                     @if ($applicantRound->mail_sent)
-                        <span data-toggle="modal" data-target="#round_mail_{{ $applicantRound->id }}" class="modal-toggler-text text-primary">Communication mail</span><br>
+                        <span data-toggle="modal" data-target="#round_mail_{{ $applicantRound->id }}" class="{{ config("constants.hr.status.$applicantRound->round_status.class") }} modal-toggler">Communication mail</span><br>
+                        @include('hr.round-review-sent-mail-modal', [ 'applicantRound' => $applicantRound ])
                     @endif
-                    <span class="{{ config("constants.hr.status.$applicantRound->round_status.class") }}">
-                        {{ config("constants.hr.status.$applicantRound->round_status.title") }}
-                    </span>
                 </div>
             </div>
         @endif

@@ -47,5 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('/knowledgecafe/library/books', 'KnowledgeCafe\Library\BookController')
                 ->only([ 'index', 'create', 'store', 'show' ])
                 ->names(['show' => 'books.show', 'index'=> 'books.index' ]);
+
     Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo');
 });

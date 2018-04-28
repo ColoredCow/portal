@@ -33,11 +33,10 @@ class ApplicantRound extends Model
 
         $applicant = $this->applicant;
         if ($attr['round_status']) {
-            if ($attr['round_status'] == 'rejected') {
-                $applicantStatus = 'rejected';
-            } else {
-                $applicantStatus = sizeof($applicant->getUnconductedRounds()) ? 'in-progress' : 'completed';
-            }
+            $status = config('constants.hr.status');
+            $rejectedStatus = $status['rejected']['label'];
+            $inProgressStatus = $status['in-progress']['label'];
+            $applicantStatus = ($attr['round_status'] === $rejectedStatus) ? $rejectedStatus : $inProgressStatus;
             $applicant->update([ 'status' => $applicantStatus ]);
         }
 
