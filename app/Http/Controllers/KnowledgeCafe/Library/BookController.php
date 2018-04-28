@@ -39,8 +39,8 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
 
-        $book = Book::create($request->validated());
-        return response()->json(['error'=> false]);
+        $stored = Book::_create($request->validated());
+        return response()->json(['error'=> !$stored]);
     }
 
     /**
@@ -114,7 +114,7 @@ class BookController extends Controller
         }
 
         $book = Book::where('isbn', $ISBN)->first();
-        
+
         if($book) {
             return response()->json([
                 'error' => false, 

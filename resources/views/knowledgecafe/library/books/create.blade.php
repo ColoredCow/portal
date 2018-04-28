@@ -8,7 +8,7 @@
             <h1>Add Book</h1>
             @include('status', ['errors' => $errors->all()])
             <div class="card">
-                <form action="#" method="POST" id="book_form" enctype="multipart/form-data">
+                <form action="{{ route('books.fetchInfo') }}" method="POST" id="book_form" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="card-body">
                         <div class="form-row">

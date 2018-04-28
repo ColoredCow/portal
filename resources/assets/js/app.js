@@ -206,7 +206,8 @@ if (document.getElementById('show_and_save_book')) {
             addMethod: 'from_image',
             showInfo: false,
             book: {},
-            redirectRoute: $('#show_book').attr('data-redirect-route')
+            redirectRoute: $('#show_book').attr('data-redirect-route'),
+            fetchDetailsRoute: $('#book_form').attr('action')
         },
 
         methods: {
@@ -231,7 +232,7 @@ if (document.getElementById('show_and_save_book')) {
 
                 this.book = {};
 
-                axios.post('/knowledgecafe/library/book/fetchinfo', formData).then(
+                axios.post(this.fetchDetailsRoute, formData).then(
                     (response) => {
 
                         let data = response.data;

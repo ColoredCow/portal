@@ -7,7 +7,7 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Books</h1></div>
-        <div class="col-md-6"><a href="/knowledgecafe/library/books/create" class="btn btn-success float-right">Add Book</a></div>
+        <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add Book</a></div>
     </div>
 
     <table class="table table-striped table-bordered" id="books_table">
@@ -21,7 +21,7 @@
         @foreach($books as $book)
             <tr>
                 <td> 
-                    <a target="_blank"  href="{{ route('books.show', $book->id) }}"> 
+                    <a href="{{ route('books.show', $book->id) }}"> 
                         {{ $book->title }} </a>
                     </td>
                 <td> {{ $book->author }} </td>
