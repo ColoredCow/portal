@@ -57,7 +57,7 @@
 
     <div class="card-footer">
         <div>
-            <button type="button" v-on:click= "saveBookInfo" class="btn btn-success" id="save_book_btn" >Save</button>
+            <button type="button" v-on:click= "saveBookToRecords" class="btn btn-success" id="save_book_btn" >Save</button>
         </div>
     </div>
 

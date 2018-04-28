@@ -31,12 +31,12 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\BookRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-        
+        dd($request->all());
     }
 
     /**
@@ -130,6 +130,11 @@ class BookController extends Controller
         ]);
     }
 
+    /**
+     * @param  Array  $book
+     *
+     * @return Array
+     */
 
 
     public function formatBookData($book) {

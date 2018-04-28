@@ -24,7 +24,7 @@ class BookRequest extends FormRequest
     public function rules()
     {
         return [
-            'add_method' => 'required|string',
+            'add_method' => 'nullable|string',
         ];
     }
 

@@ -233,7 +233,7 @@ if (document.getElementById('show_and_save_book')) {
                         }
 
                         this.book = data.book;
-                        console.log(" this.bookData",  this.book);
+
                         if (Object.keys(this.book).length ) // check for null
                         {
                             this.showInfo = true;
@@ -241,8 +241,14 @@ if (document.getElementById('show_and_save_book')) {
                 });
             },
 
-            saveBookInfo: function() {
-                console.log("Hello");
+            saveBookToRecords: function () {
+                if(!this.book ) {
+                    alert("Error in saving records");
+                }
+                axios.post('/knowledgecafe/library/books', this.book ).then (
+                (response) => {
+                    console.log("saveBookToRecords", response)
+                });
             }
         }
 
@@ -250,12 +256,3 @@ if (document.getElementById('show_and_save_book')) {
 }
 
 
-function saveBookToRecords() {
-    if(!bookData) {
-        alert("Error in saving records");
-    }
-    axios.post('/knowledgecafe/library/books', bookData).then(
-        (response) => {
-            // Save book info to database
-        });
-}
