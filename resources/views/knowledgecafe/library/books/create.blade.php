@@ -38,13 +38,20 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="button" v-on:click="submitBookForm" class="btn btn-primary" id="submit_book_form_btn">Show</button>
+                        <button type="button"
+                            data-loading-text="Loading..." 
+                            v-on:click="submitBookForm" 
+                            class="btn btn-primary" 
+                            id="submit_book_form_btn">
+                            <i class="fa fa-spinner fa-spin d-none item"></i>
+                            <span class="item">Show</span>
+                        </button>
                     </div>
                 </form>
             </div>
         </span>
 
-        <span id="show_book" v-show="showInfo" data-redirect-route = "{{ route('books.index') }}" >
+        <span id="show_book" v-show="showInfo" data-store-route = "{{ route('books.store') }}" data-index-route = "{{ route('books.index') }}" >
             @include('knowledgecafe.library.books.info')
         </span>
         

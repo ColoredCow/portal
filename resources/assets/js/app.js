@@ -206,8 +206,11 @@ if (document.getElementById('show_and_save_book')) {
             addMethod: 'from_image',
             showInfo: false,
             book: {},
-            redirectRoute: $('#show_book').attr('data-redirect-route'),
-            fetchDetailsRoute: $('#book_form').attr('action')
+            routes: {
+                index:$('#show_book').attr('data-index-route'),
+                fetch: $('#book_form').attr('action'),
+                store:$('#show_book').attr('data-store-route')
+            }
         },
 
         methods: {
@@ -231,14 +234,17 @@ if (document.getElementById('show_and_save_book')) {
                 }
 
                 this.book = {};
-
-                axios.post(this.fetchDetailsRoute, formData).then(
+                let button =  $('#submit_book_form_btn');
+                button.prop('disabled', true).find('.item').toggleClass('d-none');
+             
+                axios.post(this.routes.fetch, formData).then(
                     (response) => {
-
+                        button.prop('disabled', true).find('.item').toggleClass('d-none');
                         let data = response.data;
-
+                        
                         if(!data) {
                             alert("Error:Please try again");
+                            return;
                         }
             
                         if(data.error) {
@@ -259,13 +265,18 @@ if (document.getElementById('show_and_save_book')) {
                 if(!this.book ) {
                     alert("Error in saving records");
                 }
-                axios.post('/knowledgecafe/library/books', this.book ).then (
+                let button =  $('#save_book_btn');
+                button.prop('disabled', true).find('.item').toggleClass('d-none');
+
+                axios.post(this.routes.store, this.book ).then (
                 (response) => {
-                   if(response.data.error) {
+                    button.prop('disabled', true).find('.item').toggleClass('d-none');
+
+                    if(response.data.error) {
                         alert("Error in saving records");
                         return false;
-                   }
-                   window.location.href = this.redirectRoute
+                    }
+                   window.location.href = this.routes.index
                 });
             }
         }
