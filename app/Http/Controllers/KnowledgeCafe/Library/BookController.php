@@ -113,6 +113,15 @@ class BookController extends Controller
             ]);
         }
 
+        $book = Book::where('isbn', $ISBN)->first();
+        
+        if($book) {
+            return response()->json([
+                'error' => false, 
+                'book' => $book
+            ]);
+        }
+
         $book= BookServices::getBookDetails($ISBN);
 
         if(!isset($book['items'])) {
