@@ -59,9 +59,9 @@ class BookServices
         foreach ($faces as $face) {
             $faceDescription = $face->getDescription();
             if ('isbn' === strtolower($currentText) || 'sbn' === strtolower($currentText)) {
-                $description = $face->getDescription();
+                $description = $faceDescription;
             }
-            $currentText = $face->getDescription();
+            $currentText = $faceDescription;
         }
 
         $description = str_replace('-', '', trim($description));

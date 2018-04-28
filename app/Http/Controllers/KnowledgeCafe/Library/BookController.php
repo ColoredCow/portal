@@ -108,9 +108,8 @@ class BookController extends Controller
         
         if(!$ISBN || strlen($ISBN) < 13) {
             return response()->json([
-                'view'=> null, 
                 'error' => true, 
-                'message' => 'Could not fetch valid ISBN : '. $ISBN
+                'message' => 'Invalid ISBN : '. $ISBN
             ]);
         }
 
@@ -118,7 +117,6 @@ class BookController extends Controller
 
         if(!isset($book['items'])) {
             return response()->json([
-                'view'=> null, 
                 'error' => true, 
                 'message' => 'Invalid ISBN : '. $ISBN
             ]);
@@ -135,11 +133,8 @@ class BookController extends Controller
 
     /**
      * @param  Array  $book
-     *
      * @return Array
      */
-
-
     public function formatBookData($book) {
         $data = []; 
         $book = $book['items'][0];

@@ -53,7 +53,16 @@ if (document.getElementById('form_invoice')) {
     });
 }
 
-$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
+if (document.getElementById('client_form')) {
+    const invoiceForm = new Vue({
+        el: '#client_form',
+        data: {
+            country: document.getElementById('country').dataset.preSelectCountry || ''
+        }
+    });
+}
+
+$('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
     form.find('[name="round_status"]').val($(this).data('status'));
     form.find('[name="next_round"]').val($(this).data('next-round'));
@@ -119,11 +128,13 @@ $('#copy_weeklydose_service_url').tooltip({
   trigger: 'click',
   placement: 'bottom'
 });
+
 function setTooltip(btn, message) {
 	$(btn).tooltip('hide')
 		.attr('data-original-title', message)
     	.tooltip('show');
 }
+
 function hideTooltip(btn) {
 	setTimeout(function() {
 		$(btn).tooltip('hide');
@@ -131,6 +142,7 @@ function hideTooltip(btn) {
 }
 
 var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
+
 weeklyDoseClipboard.on('success', function(e) {
   setTooltip(e.trigger, 'Copied!');
   hideTooltip(e.trigger);
@@ -181,12 +193,11 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
 });
 
 
+
 /**
  * Knowledge Cafe
  * 
  */
-var compressedFile  = null;
-var bookData = null;
 
 if (document.getElementById('show_and_save_book')) {
     const bookForm = new Vue({
