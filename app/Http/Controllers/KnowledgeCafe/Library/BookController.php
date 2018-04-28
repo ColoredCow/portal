@@ -5,6 +5,7 @@ namespace App\Http\Controllers\KnowledgeCafe\Library;
 use App\Http\Controllers\Controller;
 use App\Services\BookServices;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
+use App\Models\KnowledgeCafe\Library\Book;
 
 class BookController extends Controller
 {
@@ -15,7 +16,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('knowledgecafe.library.books.index');
+        $books = Book::all();
+        return view('knowledgecafe.library.books.index', compact('books'));
     }
 
     /**
@@ -36,18 +38,20 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-        dd($request->all());
+
+        $book = Book::create($request->validated());
+        return response()->json(['error'=> false]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return @return void
+     * @param  App\Models\KnowledgeCafe\Library\Book  $book
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        //
+        return view('knowledgecafe.library.books.show', compact('book'));
     }
 
     /**
@@ -142,8 +146,8 @@ class BookController extends Controller
         $book = $book['items'][0];
         $info = $book['volumeInfo'];
         $data['title'] = $info['title'];
-        $data['authors'] = implode($info['authors']);
-        $data['webReaderLink'] = $book["accessInfo"]["webReaderLink"];
+        $data['author'] = implode($info['authors']);
+        $data['readable_link'] = $book["accessInfo"]["webReaderLink"];
         $data['categories'] = implode($info['categories']);
         $data['thumbnail'] = $info['imageLinks']['thumbnail'];
         return $data;

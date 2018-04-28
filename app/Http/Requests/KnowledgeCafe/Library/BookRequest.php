@@ -24,7 +24,13 @@ class BookRequest extends FormRequest
     public function rules()
     {
         return [
-            'add_method' => 'nullable|string',
+            'add_method' => 'filled|string',
+            'title' => 'filled|string',
+            'author' => 'filled|string',
+            'readable_link' => 'filled|string',
+            'categories' => 'filled|string',
+            'thumbnail' => 'filled|string',
+            'isbn' => 'filled|string'
         ];
     }
 

@@ -15,10 +15,23 @@
             <th>Name</th>
             <th>Author</th>
             <th>Categories</th>
-            <th>ISBN</th>
-            <th>Cover Page</th>
             <th>Readable link</th>
         </tr>
+
+        @foreach($books as $book)
+            <tr>
+                <td> 
+                    <a target="_blank" class="btn btn-primary" href="{{  }}"> 
+                        {{ $book->title }} </a>
+                    </td>
+                <td> {{ $book->author }} </td>
+                <td> {{ $book->categories }} </td>
+                <td> 
+                    <a target="_blank" class="btn btn-primary" href="{{ $book->readable_link }}">Read</a> 
+                </td>
+            </tr>
+        @endforeach
+
     </table>
 </div>
 @endsection

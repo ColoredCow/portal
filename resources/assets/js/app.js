@@ -247,7 +247,11 @@ if (document.getElementById('show_and_save_book')) {
                 }
                 axios.post('/knowledgecafe/library/books', this.book ).then (
                 (response) => {
-                    console.log("saveBookToRecords", response)
+                   if(response.data.error) {
+                        alert("Error in saving records");
+                        return false;
+                   }
+                   window.location.href = "/knowledgecafe/library/books"
                 });
             }
         }

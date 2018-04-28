@@ -1,5 +1,4 @@
 <div class="card">
-
     <div class="card-body">
         <h1 class="mt-1 mb-4 mx-2">
             @{{ book.title }}
@@ -15,7 +14,7 @@
                             </p>
                         </div>
                         <div class="col-6">
-                            @{{ book.authors }}
+                            @{{ book.author }}
                         </div>
                     </div>
 
@@ -27,7 +26,7 @@
                         </div>
                         <div class="col-6">
                             <p>
-                                <a class="btn btn-primary" v-bind:href="book.webReaderLink">Read</a>
+                                <a class="btn btn-primary" v-bind:href="book.readable_link">Read</a>
                             </p>
                         </div>
                     </div>
