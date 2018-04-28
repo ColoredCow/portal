@@ -121,14 +121,29 @@ class BookController extends Controller
             ]);
         }
 
-        $book = $book['items'][0];
-        $info = $book['volumeInfo'];
-        $view = view('knowledgecafe.library.books.info')->with(['info' => $info, 'book' => $book])->render();
+        $book = $this->formatBookData($book);
+        $book['isbn'] = $ISBNNumber;
 
         return response()->json([
-            'view'=> $view, 
             'error' => false, 
             'book' => $book
         ]);
     }
+
+
+
+    public function formatBookData($book) {
+        $data = []; 
+        $book = $book['items'][0];
+        $info = $book['volumeInfo'];
+        $data['title'] = $info['title'];
+        $data['authors'] = implode($info['authors']);
+        $data['webReaderLink'] = $book["accessInfo"]["webReaderLink"];
+        $data['categories'] = implode($info['categories']);
+        $data['thumbnail'] = $info['imageLinks']['thumbnail'];
+        return $data;
+    }   
+    
 }
+
+

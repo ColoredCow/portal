@@ -188,11 +188,13 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
 var compressedFile  = null;
 var bookData = null;
 
-if (document.getElementById('book_form')) {
+if (document.getElementById('show_and_save_book')) {
     const bookForm = new Vue({
-        el: '#book_form',
+        el: '#show_and_save_book',
         data: {
-            addMethod: 'from_image'
+            addMethod: 'from_image',
+            showInfo: false,
+            book: {}
         },
 
         methods: {
@@ -213,11 +215,14 @@ if (document.getElementById('book_form')) {
                 if(this.compressedFile) {
                     formData.append('book_image', compressedFile, compressedFile.name);
                 }
-                $('#show_book').html('');
-                this.bookData = null;
+
+                this.book = {};
+
                 axios.post('/knowledgecafe/library/book/fetchinfo', formData).then(
                     (response) => {
+
                         let data = response.data;
+
                         if(!data) {
                             alert("Error:Please try again");
                         }
@@ -227,10 +232,17 @@ if (document.getElementById('book_form')) {
                             return;
                         }
 
-                        this.bookData = data.book;
-                        $('#add_book').hide();
-                        $('#show_book').html(data.view).show();
+                        this.book = data.book;
+                        console.log(" this.bookData",  this.book);
+                        if (Object.keys(this.book).length ) // check for null
+                        {
+                            this.showInfo = true;
+                        }
                 });
+            },
+
+            saveBookInfo: function() {
+                console.log("Hello");
             }
         }
 

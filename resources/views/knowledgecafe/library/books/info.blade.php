@@ -1,10 +1,10 @@
 <div class="card">
 
     <div class="card-body">
-        <h1 class="mt-1 mb-4 mx-2" >
-            {{ $info['title'] }}
+        <h1 class="mt-1 mb-4 mx-2">
+            @{{ book.title }}
         </h1>
-
+        
         <div class="row">
             <div class="col-6">
                 <div class="ml-1 mb-1">
@@ -15,7 +15,7 @@
                             </p>
                         </div>
                         <div class="col-6">
-                            <p> {{ implode($info['authors']) }} </p>
+                            @{{ book.authors }}
                         </div>
                     </div>
 
@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-6">
                             <p>
-                                <a class="btn btn-primary" href="{{ ($book["accessInfo"]["webReaderLink"]) }}">Read</a>
+                                <a class="btn btn-primary" v-bind:href="book.webReaderLink">Read</a>
                             </p>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             </p>
                         </div>
                         <div class="col-6">
-                            <p> {{ implode ($book['volumeInfo']['categories']) }} </p>
+                            @{{ book.categories }}
                         </div>
                     </div>
                 </div>
@@ -48,10 +48,16 @@
             <div class="col-6">
                 <div class="row">
                     <div class="col-6">
-                        <img src="{{$info['imageLinks']['thumbnail']}}" alt="">
+                            <img v-bind:src="book.thumbnail" /> 
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div>
+            <button type="button" v-on:click= "saveBookInfo" class="btn btn-success" id="save_book_btn" >Save</button>
         </div>
     </div>
 
