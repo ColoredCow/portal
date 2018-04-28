@@ -21,7 +21,7 @@
         @foreach($books as $book)
             <tr>
                 <td> 
-                    <a target="_blank" class="btn btn-primary" href="{{  }}"> 
+                    <a target="_blank"  href="{{ route('books.show', $book->id) }}"> 
                         {{ $book->title }} </a>
                     </td>
                 <td> {{ $book->author }} </td>

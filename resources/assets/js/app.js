@@ -194,7 +194,8 @@ if (document.getElementById('show_and_save_book')) {
         data: {
             addMethod: 'from_image',
             showInfo: false,
-            book: {}
+            book: {},
+            redirectRoute: $('#show_book').attr('data-redirect-route')
         },
 
         methods: {
@@ -212,6 +213,7 @@ if (document.getElementById('show_and_save_book')) {
 
             submitBookForm: function() {
                 let formData = new FormData(document.getElementById('book_form'));
+                
                 if(this.compressedFile) {
                     formData.append('book_image', compressedFile, compressedFile.name);
                 }
@@ -234,7 +236,7 @@ if (document.getElementById('show_and_save_book')) {
 
                         this.book = data.book;
 
-                        if (Object.keys(this.book).length ) // check for null
+                        if (Object.keys(this.book).length ) 
                         {
                             this.showInfo = true;
                         }
@@ -251,7 +253,7 @@ if (document.getElementById('show_and_save_book')) {
                         alert("Error in saving records");
                         return false;
                    }
-                   window.location.href = "/knowledgecafe/library/books"
+                   window.location.href = this.redirectRoute
                 });
             }
         }

@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/{module}', 'SettingController@index');
     Route::post('settings/{module}/update', 'SettingController@update');
     Route::get('/knowledgecafe', 'KnowledgeCafe\KnowledgeCafeController@index');
-    Route::resource('/knowledgecafe/library/books', 'KnowledgeCafe\Library\BookController')->only([ 'index', 'create', 'store' ]);
+    Route::resource('/knowledgecafe/library/books', 'KnowledgeCafe\Library\BookController')
+                ->only([ 'index', 'create', 'store', 'show' ])
+                ->names(['show' => 'books.show', 'index'=> 'books.index' ]);
     Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo');
 });

@@ -1,6 +1,6 @@
 @extends('layouts.app') @section('content')
 <div class="container">
-    <span id="show_and_save_book">
+    <span id="show_and_save_book"  >
         <span id="add_book" v-show="!showInfo">
             <br>
             <br>
@@ -8,7 +8,7 @@
             <h1>Add Book</h1>
             @include('status', ['errors' => $errors->all()])
             <div class="card">
-                <form action="/knowledgecafe/library/books" method="POST" id="book_form" enctype="multipart/form-data">
+                <form action="#" method="POST" id="book_form" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="card-body">
                         <div class="form-row">
@@ -44,7 +44,7 @@
             </div>
         </span>
 
-        <span id="show_book" v-show="showInfo">
+        <span id="show_book" v-show="showInfo" data-redirect-route = "{{ route('books.index') }}" >
             @include('knowledgecafe.library.books.info')
         </span>
         
