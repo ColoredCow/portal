@@ -8,7 +8,7 @@
             <h1>Add Book</h1>
             @include('status', ['errors' => $errors->all()])
             <div class="card">
-                <form action="{{ route('books.fetchInfo') }}" method="POST" id="book_form" enctype="multipart/form-data">
+                <form data-action-route="{{ route('books.fetchInfo') }}" action="#"  id="book_form" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="card-body">
                         <div class="form-row">
@@ -24,7 +24,7 @@
                         <div class="form-row" v-if="addMethod === 'from_isbn'">
                             <div class="form-group col-md-5">
                                 <label for="isbn">ISBN</label>
-                                <input type="text" class="form-control" name="isbn" id="isbn" placeholder="978...." value="{{ old('isbn') }}">
+                                <input  type="text" class="form-control" name="isbn" id="isbn" placeholder="978...." value="{{ old('isbn') }} " autofocus>
                             </div>
                         </div>
 

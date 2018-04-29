@@ -203,12 +203,12 @@ if (document.getElementById('show_and_save_book')) {
     const bookForm = new Vue({
         el: '#show_and_save_book',
         data: {
-            addMethod: 'from_image',
+            addMethod: 'from_isbn',
             showInfo: false,
             book: {},
             routes: {
                 index:$('#show_book').attr('data-index-route'),
-                fetch: $('#book_form').attr('action'),
+                fetch: $('#book_form').attr('data-action-route'),
                 store:$('#show_book').attr('data-store-route')
             }
         },
@@ -239,7 +239,7 @@ if (document.getElementById('show_and_save_book')) {
              
                 axios.post(this.routes.fetch, formData).then(
                     (response) => {
-                        button.prop('disabled', true).find('.item').toggleClass('d-none');
+                        button.prop('disabled', false).find('.item').toggleClass('d-none');
                         let data = response.data;
                         
                         if(!data) {
@@ -270,7 +270,7 @@ if (document.getElementById('show_and_save_book')) {
 
                 axios.post(this.routes.store, this.book ).then (
                 (response) => {
-                    button.prop('disabled', true).find('.item').toggleClass('d-none');
+                    button.prop('disabled', false).find('.item').toggleClass('d-none');
 
                     if(response.data.error) {
                         alert("Error in saving records");

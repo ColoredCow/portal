@@ -147,12 +147,14 @@ class BookController extends Controller
     public function formatBookData($book) {
         $data = []; 
         $book = $book['items'][0];
-        $info = $book['volumeInfo'];
-        $data['title'] = $info['title'];
-        $data['author'] = implode($info['authors']);
-        $data['readable_link'] = $book["accessInfo"]["webReaderLink"];
-        $data['categories'] = implode($info['categories']);
-        $data['thumbnail'] = $info['imageLinks']['thumbnail'];
+        $info = collect($book['volumeInfo']);
+        $book = collect($book);
+        $data['title'] = $info->get('title');
+        $data['author'] = implode($info->get('authors', []));
+        $data['readable_link'] = $book->get("accessInfo")["webReaderLink"];
+        $data['categories'] = implode($info->get('categories', []));
+        $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
+        $data['selfLink'] = $book->get('selfLink');
         return $data;
     }   
     

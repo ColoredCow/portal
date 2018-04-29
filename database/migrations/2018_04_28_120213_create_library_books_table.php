@@ -21,6 +21,7 @@ class CreateLibraryBooksTable extends Migration
             $table->string('isbn')->nullable();
             $table->text('thumbnail')->nullable();
             $table->text('readable_link')->nullable();
+            $table->text('selfLink')->nullable();
             $table->timestamps();
         });
     }

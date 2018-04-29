@@ -26,12 +26,13 @@ class BookRequest extends FormRequest
         return [
             'add_method' => 'filled|string',
             'title' => 'filled|string',
-            'author' => 'filled|string',
+            'author' => 'nullable|string',
             'readable_link' => 'filled|string',
-            'categories' => 'filled|string',
+            'categories' => 'nullable|string',
             'thumbnail' => 'filled|string',
-            'isbn' => 'filled|string'
-        ];
+            'isbn' => 'filled|string',
+            'selfLink' => 'nullable|string'
+        ]; 
     }
 
 }
