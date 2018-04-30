@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <br>
-                <h3 class="mt-5 mb-4"><u>Payment Details</u></h3>
+                <h3 class="my-4"><u>Payment Details</u></h3>
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
