@@ -16,4 +16,14 @@ class Client extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    /**
+     * Retrive id and name of clients with active flag true
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getActiveClients()
+    {
+        return self::select('id', 'name')->where('active', true)->get();
+    }
 }
