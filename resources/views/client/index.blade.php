@@ -14,6 +14,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Status</th>
         </tr>
         @foreach ($clients as $client)
         	<tr>
@@ -24,6 +25,16 @@
         		<td>
         			<span>{{ $client->phone ?? '-' }}</span>
         		</td>
+                <td>
+                @switch ($client->is_active)
+                    @case(true)
+                        <span class="badge badge-pill badge-success">active</span>
+                        @break
+                    @case(false)
+                        <span class="badge badge-pill badge-danger">inactive</span>
+                        @break
+                @endswitch
+                </td>
         	</tr>
         @endforeach
     </table>

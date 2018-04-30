@@ -9,6 +9,7 @@
 require('./bootstrap');
 
 import 'jquery-ui/ui/widgets/datepicker.js';
+import ImageCompressor from 'image-compressor.js';
 
 window.Vue = require('vue');
 
@@ -56,7 +57,8 @@ if (document.getElementById('client_form')) {
     const invoiceForm = new Vue({
         el: '#client_form',
         data: {
-            country: document.getElementById('country').dataset.preSelectCountry || ''
+            country: document.getElementById('country').dataset.preSelectCountry || '',
+            is_active: document.getElementById('is_active').dataset.preSelectStatus || true,
         }
     });
 }
@@ -86,6 +88,7 @@ $(document).ready(() => {
             updateClientProjects(form, client_id);
         }
     }
+
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -140,6 +143,7 @@ function hideTooltip(btn) {
 }
 
 var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
+
 weeklyDoseClipboard.on('success', function(e) {
   setTooltip(e.trigger, 'Copied!');
   hideTooltip(e.trigger);
@@ -188,3 +192,97 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
         },
     });
 });
+
+
+
+/**
+ * Knowledge Cafe
+ *
+ */
+
+if (document.getElementById('show_and_save_book')) {
+    const bookForm = new Vue({
+        el: '#show_and_save_book',
+        data: {
+            addMethod: 'from_image',
+            showInfo: false,
+            book: {},
+            routes: {
+                index: document.getElementById('show_book').dataset.indexRoute || '',
+                fetch: document.getElementById('book_form').dataset.actionRoute || '',
+                store: document.getElementById('show_book').dataset.storeRoute || ''
+            },
+            buttons: {
+                disableSubmitButton:false,
+                disableSaveButton: false
+            }
+        },
+
+        methods: {
+            onFileSelected: function(e) {
+                let file = e.target.files[0];
+                if (!file) { return; }
+                this.compressedFile =  null;
+                let image  = new ImageCompressor(file, {
+                    quality: .1,
+                    success: function(result) {
+                        this.compressedFile = result;
+                    }
+                });
+            },
+
+            submitBookForm: function() {
+                let formData = new FormData(document.getElementById('book_form'));
+                
+                if(this.compressedFile) {
+                    formData.append('book_image', compressedFile, compressedFile.name);
+                }
+
+                this.book = {};
+                this.buttons.disableSubmitButton = true;
+             
+                axios.post(this.routes.fetch, formData).then(
+                    (response) => {
+                        this.buttons.disableSubmitButton = false;
+                        let data = response.data;
+                        
+                        if(!data) {
+                            alert("Error:Please try again");
+                            return;
+                        }
+
+                        if(data.error) {
+                            alert(data.message);
+                            return;
+                        }
+
+                        this.book = data.book;
+
+                        if (Object.keys(this.book).length ) 
+                        {
+                            this.showInfo = true;
+                        }
+                });
+            },
+
+            saveBookToRecords: function () {
+                if(!this.book ) {
+                    alert("Error in saving records");
+                }
+                this.buttons.disableSaveButton = true;
+
+                axios.post(this.routes.store, this.book ).then (
+                (response) => {
+                    this.buttons.disableSaveButton = false;
+
+                    if(response.data.error) {
+                        alert("Error in saving records");
+                        return false;
+                    }
+                   window.location.href = this.routes.index
+                });
+            }
+        }
+
+    });
+}

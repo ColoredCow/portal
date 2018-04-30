@@ -36,11 +36,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
     Route::resource('projects', 'ProjectController')->except(['show', 'destroy']);
     Route::get('finance/invoices/download/{year}/{month}/{file}', 'Finance\InvoiceController@download');
-    Route::resource('weeklydoses', 'WeeklyDoseController')->only([ 'index' ]);
+    Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::post('hr/applicant-round/{applicantRound}/sendmail', 'HR\ApplicantRoundController@sendMail');
     Route::resource('hr/rounds', 'HR\RoundController');
-    Route::resource('project/stages', 'ProjectStageController')->only([ 'store', 'update' ]);
+    Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
     Route::post('settings/{module}/update', 'SettingController@update');
+    Route::get('/knowledgecafe', 'KnowledgeCafe\KnowledgeCafeController@index');
+    Route::resource('/knowledgecafe/library/books', 'KnowledgeCafe\Library\BookController')
+                ->only(['index', 'create', 'store', 'show'])
+                ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
+
+    Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo')->name('books.fetchInfo');
 });
