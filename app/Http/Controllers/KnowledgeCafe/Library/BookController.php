@@ -103,7 +103,7 @@ class BookController extends Controller
             $file = $request->file('book_image');
             $ISBN = BookServices::getISBN($file);
         } else if($method ==='from_isbn') {
-            $ISBN = $request->input('isbn');
+            $ISBN = $validated['isbn'];
         } 
         
         if(!$ISBN || strlen($ISBN) < 13) {
