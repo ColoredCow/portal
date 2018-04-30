@@ -15,6 +15,7 @@
             <th>Name</th>
             <th>Author</th>
             <th>Categories</th>
+            <th>Cover Page</th>
             <th>Readable link</th>
         </tr>
 
@@ -22,10 +23,15 @@
             <tr>
                 <td> 
                     <a href="{{ route('books.show', $book->id) }}"> 
-                        {{ $book->title }} </a>
+                        {{ str_limit($book->title, 25) }} </a>
                     </td>
-                <td> {{ $book->author }} </td>
-                <td> {{ $book->categories }} </td>
+                <td> {{ str_limit($book->author, 20) }} </td>
+                <td> {{ str_limit($book->categories, 20) }} </td>
+                <td> 
+                    <div style = "width:75px; height:150px">
+                        <img style="width:100%;" src="{{ $book->thumbnail }}" alt="No Image"> 
+                    </div>
+                </td>
                 <td> 
                     <a target="_blank" class="btn btn-primary" href="{{ $book->readable_link }}">Read</a> 
                 </td>
