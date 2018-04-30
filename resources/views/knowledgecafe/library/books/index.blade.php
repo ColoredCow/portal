@@ -28,8 +28,8 @@
                 <td> {{ str_limit($book->author, 20) }} </td>
                 <td> {{ str_limit($book->categories, 20) }} </td>
                 <td> 
-                    <div style = "width:75px; height:150px">
-                        <img style="width:100%;" src="{{ $book->thumbnail }}" alt="No Image"> 
+                    <div class="w-25 h-75">
+                        <img class="w-100" src="{{ $book->thumbnail }}" alt="No Image"> 
                     </div>
                 </td>
                 <td> 
