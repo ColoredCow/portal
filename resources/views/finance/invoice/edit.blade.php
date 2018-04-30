@@ -75,7 +75,7 @@
                         <label for="sent_on" class="field-required">Sent on</label>
                         <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-3">
                         <label for="sent_amount" class="field-required">Invoice amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -91,10 +91,7 @@
                             <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" value="{{ $invoice->sent_amount }}">
                         </div>
                     </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-2">
                         <label for="gst">GST amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -102,11 +99,33 @@
                                     <option>INR</option>
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amoount" step=".01" min="0" value="{{ $invoice->gst }}">
+                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amount" step=".01" min="0" value="{{ $invoice->gst }}">
                         </div>
                     </div>
                 </div>
                 <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                    @if ($invoice->file_path)
+                        <label class="font-weight-bold">Invoice File</label>
+                        <div>
+                            <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
+                        </div>
+                    @else
+                        <label for="invoice_file" class="field-required">Upload Invoice</label>
+                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    @endif
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="comments">Comments</label>
+                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ $invoice->comments }}</textarea>
+                    </div>
+                </div>
+                <br>
+                <h3 class="mt-5 mb-4"><u>Payment Details</u></h3>
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
@@ -115,7 +134,7 @@
                         @endphp
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ $paid_on }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-3">
                         <label for="paid_amount">Received amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -129,6 +148,22 @@
                                 </select>
                             </div>
                             <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ $invoice->paid_amount }}">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="tds">TDS amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    @php
+                                        $selected = $currency === $invoice->currency_tds ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ $invoice->tds }}">
                         </div>
                     </div>
                 </div>
@@ -160,45 +195,6 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="tds">TDS amount</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
-                                @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    @php
-                                        $selected = $currency === $invoice->currency_tds ? 'selected="selected"' : '';
-                                    @endphp
-                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ $invoice->tds }}">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                    @if ($invoice->file_path)
-                        <label class="font-weight-bold">Invoice File</label>
-                        <div>
-                            <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
-                        </div>
-                    @else
-                        <label for="invoice_file" class="field-required">Upload Invoice</label>
-                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
-                    @endif
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="comments">Comments</label>
-                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ $invoice->comments }}</textarea>
-                    </div>
-                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
