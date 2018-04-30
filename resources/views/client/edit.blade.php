@@ -36,7 +36,7 @@
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" value="{{ $client->phone }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-3">
                         <label for="country">Country</label>
                             <select name="country" id="country" class="form-control" data-pre-select-country="{{$client->country}}" v-model="country" >
                             <option value="">Select country</option>
@@ -44,6 +44,10 @@
                                 <option value="{{ $country }}" >{{ $country_name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group col-md-2" v-if="country === 'india'">
+                        <label for="gst_num">GST</label>
+                        <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ $client->gst_num }}">
                     </div>
                 </div>
                 <br>
@@ -54,13 +58,6 @@
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
-                    </div>
-                </div>
-                <br>
-                <div class="form-row" v-if="country === 'india'">
-                    <div class="form-group col-md-5">
-                        <label for="gst_num">GST</label>
-                        <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ $client->gst_num }}">
                     </div>
                 </div>
                 <br>
