@@ -34,7 +34,7 @@ class InvoiceController extends Controller
     public function create()
     {
         return view('finance.invoice.create')->with([
-            'clients' => Client::select('id', 'name')->get(),
+            'clients' => Client::getActiveClients(),
         ]);
     }
 
@@ -156,7 +156,7 @@ class InvoiceController extends Controller
         if($fileName) {
             return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
         }
-        
+
         return $file->store(FileHelper::getCurrentStorageDirectory());
 
     }
@@ -185,7 +185,7 @@ class InvoiceController extends Controller
         if($inline) {
             return Response::make(Storage::get($file_path), 200, $headers);
         }
-        
+
         return  Storage::download($file_path);
     }
 }
