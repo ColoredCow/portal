@@ -207,9 +207,9 @@ if (document.getElementById('show_and_save_book')) {
             showInfo: false,
             book: {},
             routes: {
-                index:$('#show_book').attr('data-index-route'),
-                fetch: $('#book_form').attr('data-action-route'),
-                store:$('#show_book').attr('data-store-route')
+                index: document.getElementById('show_book').dataset.indexRoute || '',
+                fetch: document.getElementById('book_form').dataset.actionRoute || '',
+                store: document.getElementById('show_book').dataset.storeRoute || ''
             }
         },
 
