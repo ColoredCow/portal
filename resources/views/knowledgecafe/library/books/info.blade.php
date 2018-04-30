@@ -56,9 +56,14 @@
     
         <div class="card-footer">
             <div>
-                <button type="button" v-on:click= "saveBookToRecords" class="btn btn-success" id="save_book_btn" >
+                <button 
+                type="button" 
+                v-on:click= "saveBookToRecords" 
+                class="btn btn-success"
+                :disabled = "buttons.disableSaveButton" 
+                id="save_book_btn" >
                     <i class="fa fa-spinner fa-spin d-none item"></i>
-                    <span class="item">Save</span>
+                    <span v-if="!buttons.disableSaveButton" class="item">Save</span>
                 </button>
             </div>
         </div>

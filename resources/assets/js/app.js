@@ -203,13 +203,17 @@ if (document.getElementById('show_and_save_book')) {
     const bookForm = new Vue({
         el: '#show_and_save_book',
         data: {
-            addMethod: 'from_isbn',
+            addMethod: 'from_image',
             showInfo: false,
             book: {},
             routes: {
                 index: document.getElementById('show_book').dataset.indexRoute || '',
                 fetch: document.getElementById('book_form').dataset.actionRoute || '',
                 store: document.getElementById('show_book').dataset.storeRoute || ''
+            },
+            buttons: {
+                disableSubmitButton:false,
+                disableSaveButton: false
             }
         },
 
@@ -234,12 +238,11 @@ if (document.getElementById('show_and_save_book')) {
                 }
 
                 this.book = {};
-                let button =  $('#submit_book_form_btn');
-                button.prop('disabled', true).find('.item').toggleClass('d-none');
+                this.buttons.disableSubmitButton = true;
              
                 axios.post(this.routes.fetch, formData).then(
                     (response) => {
-                        button.prop('disabled', false).find('.item').toggleClass('d-none');
+                        this.buttons.disableSubmitButton = false;
                         let data = response.data;
                         
                         if(!data) {
@@ -265,12 +268,11 @@ if (document.getElementById('show_and_save_book')) {
                 if(!this.book ) {
                     alert("Error in saving records");
                 }
-                let button =  $('#save_book_btn');
-                button.prop('disabled', true).find('.item').toggleClass('d-none');
+                this.buttons.disableSaveButton = true;
 
                 axios.post(this.routes.store, this.book ).then (
                 (response) => {
-                    button.prop('disabled', false).find('.item').toggleClass('d-none');
+                    this.buttons.disableSaveButton = false;
 
                     if(response.data.error) {
                         alert("Error in saving records");

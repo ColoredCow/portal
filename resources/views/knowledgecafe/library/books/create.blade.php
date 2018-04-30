@@ -42,9 +42,10 @@
                             data-loading-text="Loading..." 
                             v-on:click="submitBookForm" 
                             class="btn btn-primary" 
+                            :disabled = "buttons.disableSubmitButton"
                             id="submit_book_form_btn">
                             <i class="fa fa-spinner fa-spin d-none item"></i>
-                            <span class="item">Show</span>
+                            <span v-if="!buttons.disableSubmitButton" class="item">Show</span>
                         </button>
                     </div>
                 </form>
