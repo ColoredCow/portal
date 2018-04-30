@@ -11,7 +11,7 @@ class Book extends Model
 
     public static function _create($data) {
         $ISBN = isset ($data['isbn']) ? $data['isbn'] : null;
-        return ($ISBN && self::where('isbn', $ISBN )->first()) ? true : self::create($data);
+        return self::firstOrCreate(['isbn' => $ISBN], $data);
     }  
 }
 
