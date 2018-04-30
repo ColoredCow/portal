@@ -47,7 +47,16 @@
                     </div>
                 </div>
                 <br>
-                
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="active">Status</label>
+                        <select name="active" id="active" class="form-control" data-pre-select-status="{{ $client->active }}" v-model="active">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
                 <div class="form-row" v-if="country === 'india'">
                     <div class="form-group col-md-5">
                         <label for="gst_num">GST</label>

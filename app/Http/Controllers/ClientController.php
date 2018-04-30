@@ -43,6 +43,7 @@ class ClientController extends Controller
             'email' => $validated['email'],
             'phone' => $validated['phone'],
             'country' => $validated['country'],
+            'active' => $validated['active'],
             'address' => $validated['address'],
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null
         ]);
@@ -89,6 +90,7 @@ class ClientController extends Controller
             'email' => $validated['email'],
             'phone' => $validated['phone'],
             'country' => $validated['country'],
+            'active' => $validated['active'],
             'address' => $validated['address'],
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null
         ]);
