@@ -181,17 +181,26 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5 cheque-status" v-show="paymentType == 'cheque'">
+                    <div class="form-group offset-md-1 col-md-3 cheque-status" v-show="paymentType == 'cheque'">
                         <label for="cheque_status">Cheque status</label>
-                        <select name="cheque_status" id="cheque_status" class="form-control">
+                        <select name="cheque_status" id="cheque_status" class="form-control" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
                             <option value="">Select cheque status</option>
                             @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
-                                @php
-                                    $selected = $invoice->cheque_status == $cheque_status ? 'selected="selected"' : '';
-                                @endphp
-                                <option value="{{ $cheque_status }}" {{ $selected }}>{{ $display_name }}</option>
+                                <option value="{{ $cheque_status }}">{{ $display_name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'received'">
+                        <label for="cheque_received_date">Cheque Received Date</label>
+                        <input type="text" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy" value="{{ $invoice->cheque_received_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_received_date)) : '' }}">
+                    </div>
+                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'cleared'">
+                        <label for="cheque_cleared_date">Cheque Cleared Date</label>
+                        <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy" value="{{ $invoice->cheque_cleared_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_cleared_date)) : '' }}">
+                    </div>
+                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
+                        <label for="cheque_bounced_date">Cheque Bounced Date</label>
+                        <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                     </div>
                 </div>
                 <br>

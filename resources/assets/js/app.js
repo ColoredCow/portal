@@ -48,7 +48,8 @@ if (document.getElementById('form_invoice')) {
     const invoiceForm = new Vue({
         el: '#form_invoice',
         data: {
-            paymentType: document.getElementById('payment_type').dataset.paymentType || ''
+            paymentType: document.getElementById('payment_type').dataset.paymentType || '',
+            chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null
         }
     });
 }
@@ -194,7 +195,7 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
 
 /**
  * Knowledge Cafe
- * 
+ *
  */
 var compressedFile  = null;
 var bookData = null;
@@ -212,7 +213,7 @@ if (document.getElementById('book_form')) {
                 if (!file) { return; }
                 this.compressedFile =  null;
                 let image  = new ImageCompressor(file, {
-                    quality: .1, 
+                    quality: .1,
                     success: function(result) {
                         this.compressedFile = result;
                     }
@@ -232,7 +233,7 @@ if (document.getElementById('book_form')) {
                         if(!data) {
                             alert("Error:Please try again");
                         }
-            
+
                         if(data.error) {
                             alert(data.message);
                             return;

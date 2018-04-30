@@ -122,6 +122,9 @@ class InvoiceController extends Controller
             'paid_amount' => $validated['paid_amount'],
             'payment_type' => $validated['payment_type'],
             'cheque_status' => $validated['cheque_status'],
+            'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
+            'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
+            'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
             'tds' => $validated['tds'],
@@ -156,7 +159,7 @@ class InvoiceController extends Controller
         if($fileName) {
             return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
         }
-        
+
         return $file->store(FileHelper::getCurrentStorageDirectory());
 
     }
@@ -185,7 +188,7 @@ class InvoiceController extends Controller
         if($inline) {
             return Response::make(Storage::get($file_path), 200, $headers);
         }
-        
+
         return  Storage::download($file_path);
     }
 }
