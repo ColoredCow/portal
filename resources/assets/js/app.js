@@ -58,7 +58,7 @@ if (document.getElementById('client_form')) {
         el: '#client_form',
         data: {
             country: document.getElementById('country').dataset.preSelectCountry || '',
-            active: document.getElementById('active').dataset.preSelectStatus || true,
+            is_active: document.getElementById('is_active').dataset.preSelectStatus || true,
         }
     });
 }

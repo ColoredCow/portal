@@ -24,6 +24,6 @@ class Client extends Model
      */
     public static function getActiveClients()
     {
-        return self::select('id', 'name')->where('active', true)->get();
+        return self::select('id', 'name')->where('is_active', true)->get();
     }
 }

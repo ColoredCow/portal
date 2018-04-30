@@ -28,7 +28,7 @@ class ClientRequest extends FormRequest
             'email' => 'nullable|email',
             'phone' => 'nullable|string',
             'country' => 'nullable|string',
-            'active' => 'required|boolean',
+            'is_active' => 'required|boolean',
             'address' => 'nullable|string',
             'gst_num' => 'nullable|string',
         ];
