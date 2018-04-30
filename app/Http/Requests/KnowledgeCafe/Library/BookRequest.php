@@ -31,7 +31,7 @@ class BookRequest extends FormRequest
             'categories' => 'nullable|string',
             'thumbnail' => 'filled|string',
             'isbn' => 'filled|string',
-            'selfLink' => 'nullable|string'
+            'self_link' => 'nullable|string'
         ]; 
     }
 
