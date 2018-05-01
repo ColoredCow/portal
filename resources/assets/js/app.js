@@ -61,7 +61,7 @@ if (document.getElementById('client_form')) {
             isActive: document.getElementById('is_active').dataset.preSelectStatus ? parseInt(document.getElementById('is_active').dataset.preSelectStatus) : 1,
             newEmailName: '',
             newEmailId: '',
-            clientEmails: document.getElementById('emails').value.split(',')
+            clientEmails: document.getElementById('emails').value == '' ? [] : document.getElementById('emails').value.split(',')
         },
         methods: {
             toggleActive: function() {

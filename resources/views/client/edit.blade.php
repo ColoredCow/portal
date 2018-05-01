@@ -36,12 +36,12 @@
                         <label for="email_name">Emails</label>
                         <input type="hidden" value="{{ $client->emails }}" v-model="clientEmails" name="emails" id="emails">
                         <div class="client_emails">
-                            <div class="mb-1" v-for="item in clientEmails">
-                                <span class="bg-info text-white py-1 px-2" style="border-radius: 3px">@{{ item }}</span>
-                                <span class="text-danger c-pointer" @click="removeEmail(item)"><i class="fa fa-close"></i></span>
+                            <div class="mb-1" v-for="email in clientEmails">
+                                <span class="bg-info text-white py-1 px-2" style="border-radius: 3px">@{{ email }}</span>
+                                <span class="text-danger c-pointer" @click="removeEmail(email)"><i class="fa fa-close"></i></span>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between mt-2">
+                        <div class="d-flex justify-content-between">
                             <input type="text" class="form-control mr-2 py-1 px-2" name="new_email_name" placeholder="Name" v-model="newEmailName">
                             <input type="email" class="form-control mr-2 py-1 px-2" name="new_email_id" id="email_id" placeholder="Email" v-model="newEmailId">
                             <button type="button" class="btn btn-info btn-sm" @click="addNewEmail">Add</button>
