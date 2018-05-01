@@ -58,7 +58,12 @@ if (document.getElementById('client_form')) {
         el: '#client_form',
         data: {
             country: document.getElementById('country').dataset.preSelectCountry || '',
-            is_active: document.getElementById('is_active').dataset.preSelectStatus || true,
+            isActive: document.getElementById('is_active').dataset.preSelectStatus ? parseInt(document.getElementById('is_active').dataset.preSelectStatus) : 1,
+        },
+        methods: {
+            toggleActive: function() {
+                this.isActive = !this.isActive;
+            }
         }
     });
 }
@@ -233,19 +238,19 @@ if (document.getElementById('show_and_save_book')) {
 
             submitBookForm: function() {
                 let formData = new FormData(document.getElementById('book_form'));
-                
+
                 if(this.compressedFile) {
                     formData.append('book_image', compressedFile, compressedFile.name);
                 }
 
                 this.book = {};
                 this.buttons.disableSubmitButton = true;
-             
+
                 axios.post(this.routes.fetch, formData).then(
                     (response) => {
                         this.buttons.disableSubmitButton = false;
                         let data = response.data;
-                        
+
                         if(!data) {
                             alert("Error:Please try again");
                             return;
@@ -258,7 +263,7 @@ if (document.getElementById('show_and_save_book')) {
 
                         this.book = data.book;
 
-                        if (Object.keys(this.book).length ) 
+                        if (Object.keys(this.book).length )
                         {
                             this.showInfo = true;
                         }

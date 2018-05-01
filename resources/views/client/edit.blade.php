@@ -16,8 +16,15 @@
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
 
-            <div class="card-header">
-                <span>Client Details</span>
+            <div class="card-header d-flex align-items-center">
+                <label class="d-inline mb-0 mr-2">Status:</label>
+                <label class="switch mb-0">
+                    <input type="checkbox" id="is_active" name="is_active" value="1" v-model="isActive" data-pre-select-status="{{ $client->is_active }}">
+                    <div class="slider round" @click="toggleActive" :class="[isActive ? 'active' : 'inactive']" >
+                        <span class="on w-100 text-left pl-3">Active</span>
+                        <span class="off w-100 text-right pr-3">Inactive</span>
+                    </div>
+                </label>
             </div>
             <div class="card-body">
                 <div class="form-row">
@@ -48,16 +55,6 @@
                     <div class="form-group col-md-2" v-if="country === 'india'">
                         <label for="gst_num">GST</label>
                         <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ $client->gst_num }}">
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="is_active">Status</label>
-                        <select name="is_active" id="is_active" class="form-control" data-pre-select-status="{{ $client->is_active }}" v-model="is_active">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
                     </div>
                 </div>
                 <br>

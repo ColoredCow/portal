@@ -205,3 +205,69 @@ input[type="file"] {
 .applicant-round-actions {
     cursor: pointer;
 }
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    height: 30px;
+    input {
+        display: none;
+    }
+}
+
+.slider {
+    position: relative;
+    cursor: pointer;
+    height: 100%;
+    transition: .4s;
+    &.round {
+        border-radius: 34px;
+        &:before {
+            border-radius: 50%;
+        }
+    }
+    &:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+}
+.slider.inactive {
+    background-color: $danger;
+    .off {
+        display: block;
+    }
+    .on {
+        display: none;
+    }
+}
+
+.slider.active {
+    background-color: $success;
+
+    &:before {
+        transform: translateX(60px);
+    }
+    .on {
+        display: block;
+    }
+    .off {
+        display: none;
+    }
+}
+input:focus + .slider {
+    box-shadow: 0 0 1px $secondary;
+}
+.on, .off {
+    color: white;
+    position: absolute;
+    top: 20%;
+    font-size: 12px;
+}
