@@ -14,9 +14,19 @@
         </tr>
         @foreach ($jobs as $job)
         <tr>
-            <td><a href="/hr/jobs/{{ $job->id }}/edit">{{ $job->title }}</a></td>
-            <td><a href="{{ $job->link }}" target="_blank">See</a></td>
-            <td>{{ $job->applicants->count() }}</td>
+            <td>
+                <a href="/hr/jobs/{{ $job->id }}/edit">{{ $job->title }}</a>
+            </td>
+            <td>
+                <a href="{{ $job->link }}" target="_blank">See</a>
+            </td>
+            <td>
+                @if($job->applicants->count())
+                <a href="/hr/applicants?hr_job_id={{$job->id }}">{{ $job->applicants->count() }}</a>
+                @else 
+                {{ $job->applicants->count() }}
+                @endif
+            </td>
         </tr>
         @endforeach
     </table>
