@@ -12,12 +12,13 @@ class ApplicantController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     *@param  \App\Http\Requests\HR\ApplicantRequest  $request
+     * 
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(ApplicantRequest $request)
     {  
-        $hrJobID = request()->input('job_id');
+        $hrJobID = request()->input('hr_job_id');
         $applicants = Applicant::with('job')
                         ->where(function($query) use ($hrJobID ) {
                             ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;

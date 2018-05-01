@@ -21,7 +21,11 @@
                 <a href="{{ $job->link }}" target="_blank">See</a>
             </td>
             <td>
-                <a href="/hr/applicants?job_id={{$job->id }}">{{ $job->applicants->count() }}</a>
+                @if($job->applicants->count())
+                <a href="/hr/applicants?hr_job_id={{$job->id }}">{{ $job->applicants->count() }}</a>
+                @else 
+                {{ $job->applicants->count() }}
+                @endif
             </td>
         </tr>
         @endforeach

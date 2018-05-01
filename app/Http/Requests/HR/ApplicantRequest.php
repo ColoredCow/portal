@@ -23,6 +23,10 @@ class ApplicantRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [
+            'hr_job_id' => 'nullable|exists:hr_jobs,id'
+        ];
+
         if ($this->method() === 'POST')
         {
             $rules = [
