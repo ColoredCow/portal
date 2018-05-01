@@ -34,7 +34,7 @@ class InvoiceController extends Controller
     public function create()
     {
         return view('finance.invoice.create')->with([
-            'clients' => Client::select('id', 'name')->get(),
+            'clients' => Client::getActiveClients(),
         ]);
     }
 

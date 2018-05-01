@@ -15,7 +15,7 @@ class ClientController extends Controller
     public function index()
     {
         return view('client.index')->with([
-            'clients' => Client::select('id', 'name', 'email', 'phone')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
+            'clients' => Client::select('id', 'name', 'email', 'phone', 'is_active')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);
     }
 
@@ -43,6 +43,7 @@ class ClientController extends Controller
             'email' => $validated['email'],
             'phone' => $validated['phone'],
             'country' => $validated['country'],
+            'is_active' => $validated['is_active'],
             'address' => $validated['address'],
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null
         ]);
@@ -89,6 +90,7 @@ class ClientController extends Controller
             'email' => $validated['email'],
             'phone' => $validated['phone'],
             'country' => $validated['country'],
+            'is_active' => $validated['is_active'],
             'address' => $validated['address'],
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null
         ]);

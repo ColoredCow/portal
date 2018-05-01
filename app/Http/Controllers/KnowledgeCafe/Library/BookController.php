@@ -5,6 +5,7 @@ namespace App\Http\Controllers\KnowledgeCafe\Library;
 use App\Http\Controllers\Controller;
 use App\Services\BookServices;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
+use App\Models\KnowledgeCafe\Library\Book;
 
 class BookController extends Controller
 {
@@ -15,7 +16,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('knowledgecafe.library.books.index');
+        $books = Book::all()->sortBy('title');
+        return view('knowledgecafe.library.books.index', compact('books'));
     }
 
     /**
@@ -31,23 +33,25 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\BookRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-        
+
+        $stored = Book::_create($request->validated());
+        return response()->json(['error'=> !$stored]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return @return void
+     * @param  App\Models\KnowledgeCafe\Library\Book  $book
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        //
+        return view('knowledgecafe.library.books.show', compact('book'));
     }
 
     /**
@@ -94,20 +98,27 @@ class BookController extends Controller
     public function fetchBookInfo(BookRequest $request) {
         $validated = $request->validated();
         $method = $validated['add_method'];
-        $ISBN = null;
-        
+
         if($method === 'from_image' && $request->hasFile('book_image')) {
             $file = $request->file('book_image');
             $ISBN = BookServices::getISBN($file);
-        } else if ($method ==='from_isbn') {
-            $ISBN = $request->input('isbn');
-        }
-
+        } else if($method ==='from_isbn') {
+            $ISBN = $validated['isbn'];
+        } 
+        
         if(!$ISBN || strlen($ISBN) < 13) {
             return response()->json([
-                'view'=> null, 
                 'error' => true, 
                 'message' => 'Invalid ISBN : '. $ISBN
+            ]);
+        }
+
+        $book = Book::where('isbn', $ISBN)->first();
+
+        if($book) {
+            return response()->json([
+                'error' => false, 
+                'book' => $book
             ]);
         }
 
@@ -115,20 +126,37 @@ class BookController extends Controller
 
         if(!isset($book['items'])) {
             return response()->json([
-                'view'=> null, 
                 'error' => true, 
                 'message' => 'Invalid ISBN : '. $ISBN
             ]);
         }
 
-        $book = $book['items'][0];
-        $info = $book['volumeInfo'];
-        $view = view('knowledgecafe.library.books.info')->with(['info' => $info, 'book' => $book])->render();
+        $book = $this->formatBookData($book);
+        $book['isbn'] = $ISBN;
 
         return response()->json([
-            'view'=> $view, 
             'error' => false, 
             'book' => $book
         ]);
     }
+
+    /**
+     * @param  Array  $book
+     * @return Array
+     */
+    public function formatBookData($book) {
+        $data = []; 
+        $book = $book['items'][0];
+        $info = collect($book['volumeInfo']);
+        $book = collect($book);
+        $data['title'] = $info->get('title');
+        $data['author'] = implode($info->get('authors', []));
+        $data['readable_link'] = $book->get("accessInfo")["webReaderLink"];
+        $data['categories'] = implode($info->get('categories', []));
+        $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
+        $data['self_link'] = $book->get('self_link');
+        return $data;
+    }   
+    
 }
+
