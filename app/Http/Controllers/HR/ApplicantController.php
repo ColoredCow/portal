@@ -12,13 +12,24 @@ class ApplicantController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     *@param  \App\Http\Requests\HR\ApplicantRequest  $request
+     * 
      * @return \Illuminate\View\View
      */
-    public function index()
-    {
+    public function index(ApplicantRequest $request)
+    {  
+        $validated = $request->validated();
+        $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;
+        
+        $applicants = Applicant::with('job')
+                        ->where(function($query) use ($hrJobID ) {
+                            ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
+                        })
+                        ->orderBy('id', 'desc')
+                        ->paginate(config('constants.pagination_size'));
+
         return view('hr.applicant.index')->with([
-            'applicants' => Applicant::with('job')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
+            'applicants' => $applicants,
         ]);
     }
 

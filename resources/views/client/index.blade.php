@@ -12,7 +12,6 @@
     <table class="table table-striped table-bordered">
         <tr>
             <th>Name</th>
-            <th>Email</th>
             <th>Phone</th>
             <th>Status</th>
         </tr>
@@ -21,7 +20,6 @@
         		<td>
         			<a href="/clients/{{ $client->id }}/edit/">{{ $client->name }}</a>
         		</td>
-        		<td>{{ $client->email ?? '-' }}</td>
         		<td>
         			<span>{{ $client->phone ?? '-' }}</span>
         		</td>

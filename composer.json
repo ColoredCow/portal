@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.1.3",
         "aws/aws-sdk-php": "~3.0",
+        "doctrine/dbal": "^2.7",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.2",
         "jordikroon/google-vision": "^1.7",

@@ -12,8 +12,15 @@
 
             {{ csrf_field() }}
 
-            <div class="card-header">
-                <span>Client Details</span>
+            <div class="card-header d-flex align-items-center">
+                <label class="d-inline mb-0 mr-2">Status:</label>
+                <label class="switch mb-0">
+                    <input type="checkbox" id="is_active" name="is_active" value="1" v-model="isActive" data-pre-select-status="{{ old('is_active') }}">
+                    <div class="slider round" @click="toggleActive" :class="[isActive ? 'active' : 'inactive']" >
+                        <span class="on w-100 text-left pl-3">Active</span>
+                        <span class="off w-100 text-right pr-3">Inactive</span>
+                    </div>
+                </label>
             </div>
             <div class="card-body">
                 <div class="form-row">
@@ -22,8 +29,19 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ old('name') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ old('email') }}">
+                        <label for="email_name">Emails</label>
+                        <input type="hidden" value="{{ old('emails') }}" v-model="clientEmails" name="emails" id="emails">
+                        <div class="client_emails">
+                            <div class="mb-1" v-for="email in clientEmails">
+                                <span class="bg-info text-white py-1 px-2" style="border-radius: 3px">@{{ email }}</span>
+                                <span class="text-danger c-pointer" @click="removeEmail(email)"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <input type="text" class="form-control mr-2 py-1 px-2" name="new_email_name" placeholder="Name" v-model="newEmailName">
+                            <input type="email" class="form-control mr-2 py-1 px-2" name="new_email_id" id="email_id" placeholder="Email" v-model="newEmailId">
+                            <button type="button" class="btn btn-info btn-sm" @click="addNewEmail">Add</button>
+                        </div>
                     </div>
                 </div>
                 <br>
@@ -39,16 +57,6 @@
                             @foreach (config('constants.countries') as $country => $country_name)
                                 <option value="{{ $country }}" >{{ $country_name }}</option>
                             @endforeach
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="is_active">Status</label>
-                        <select name="is_active" id="is_active" class="form-control" data-pre-select-status="{{ old('is_active') ?? true }}" v-model="is_active">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
                         </select>
                     </div>
                 </div>
