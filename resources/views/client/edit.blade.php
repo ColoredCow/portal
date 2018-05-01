@@ -33,7 +33,7 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ $client->name }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="email_name">Email Name</label>
+                        <label for="email_name">Emails</label>
                         <div class="client_emails">
 
                             <div class="mb-1" v-for="item in clientEmails">
