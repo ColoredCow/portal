@@ -61,10 +61,7 @@ if (document.getElementById('client_form')) {
             isActive: document.getElementById('is_active').dataset.preSelectStatus ? parseInt(document.getElementById('is_active').dataset.preSelectStatus) : 1,
             newEmailName: '',
             newEmailId: '',
-            clientEmails: [
-                'Vaibhav Rathore <vaibhav@coloredcow.com>',
-                'Tushar Bohra <tushar@coloredcow.com>'
-            ]
+            clientEmails: document.getElementById('emails').value.split(',')
         },
         methods: {
             toggleActive: function() {

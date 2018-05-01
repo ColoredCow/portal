@@ -25,7 +25,7 @@ class ClientRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'nullable|email',
+            'emails' => 'nullable|string',
             'phone' => 'nullable|string',
             'country' => 'nullable|string',
             'is_active' => 'nullable|boolean',

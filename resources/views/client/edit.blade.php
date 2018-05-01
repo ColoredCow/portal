@@ -34,10 +34,10 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="email_name">Emails</label>
+                        <input type="hidden" value="{{ $client->emails }}" v-model="clientEmails" name="emails" id="emails">
                         <div class="client_emails">
-
                             <div class="mb-1" v-for="item in clientEmails">
-                                <span class="bg-info text-white p-1">@{{ item }}</span>
+                                <span class="bg-info text-white py-1 px-2" style="border-radius: 3px">@{{ item }}</span>
                                 <span class="text-danger c-pointer" @click="removeEmail(item)"><i class="fa fa-close"></i></span>
                             </div>
                         </div>
