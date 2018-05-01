@@ -33,8 +33,19 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ $client->name }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ $client->email }}">
+                        <label for="email_name">Email Name</label>
+                        <div class="client_emails">
+
+                            <div class="mb-1" v-for="item in clientEmails">
+                                <span class="bg-info text-white p-1">@{{ item }}</span>
+                                <span class="text-danger c-pointer" @click="removeEmail(item)"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <input type="text" class="form-control mr-2 py-1 px-2" name="new_email_name" placeholder="Name" v-model="newEmailName">
+                            <input type="email" class="form-control mr-2 py-1 px-2" name="new_email_id" id="email_id" placeholder="Email" v-model="newEmailId">
+                            <button type="button" class="btn btn-info btn-sm" @click="addNewEmail">Add</button>
+                        </div>
                     </div>
                 </div>
                 <br>
