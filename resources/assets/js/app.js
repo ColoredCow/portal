@@ -59,7 +59,26 @@ if (document.getElementById('client_form')) {
         el: '#client_form',
         data: {
             country: document.getElementById('country').dataset.preSelectCountry || '',
-            is_active: document.getElementById('is_active').dataset.preSelectStatus || true,
+            isActive: document.getElementById('is_active').dataset.preSelectStatus ? parseInt(document.getElementById('is_active').dataset.preSelectStatus) : 1,
+            newEmailName: '',
+            newEmailId: '',
+            clientEmails: document.getElementById('emails').value == '' ? [] : document.getElementById('emails').value.split(',')
+        },
+        methods: {
+            toggleActive: function() {
+                this.isActive = !this.isActive;
+            },
+            addNewEmail: function() {
+                this.clientEmails.push(this.newEmailName + ' <' + this.newEmailId + '>');
+                this.newEmailName = '';
+                this.newEmailId = '';
+            },
+            removeEmail: function(item) {
+                let index = this.clientEmails.indexOf(item);
+                if (index !== -1) {
+                    this.clientEmails.splice(index, 1);
+                }
+            }
         }
     });
 }
