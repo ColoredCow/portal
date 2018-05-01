@@ -18,7 +18,9 @@ class ApplicantController extends Controller
      */
     public function index(ApplicantRequest $request)
     {  
-        $hrJobID = request()->input('hr_job_id');
+        $validated = $request->validated();
+        $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;
+        
         $applicants = Applicant::with('job')
                         ->where(function($query) use ($hrJobID ) {
                             ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
