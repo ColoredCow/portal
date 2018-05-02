@@ -146,7 +146,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <select class="btn btn-secondary">
-                                                    <option>INR</option>
+                                                    <option value="INR">INR</option>
                                                 </select>
                                             </div>
                                             <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amount" step=".01" min="0">
@@ -191,7 +191,7 @@
                                             <div class="input-group-prepend">
                                                 {{ configs.currency }}
                                                 <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
-                                                    <option :value="inputStageCurrency">{{ inputStageCurrency }}</option>
+                                                    <option value="INR">INR</option>
                                                 </select>
                                             </div>
                                             <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0">
@@ -269,21 +269,21 @@
             },
             stageCostWithGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return parseFloat(this.inputStageCost) || 0;
+                    return parseFloat(this.inputStageCost).toFixed(2) || 0;
                 }
-                return (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)) || 0;
+                return (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2) || 0;
             },
             gstAmount: function() {
                 if (this.clientCountryGstApplicable) {
-                    return parseFloat((this.configs.gst/100)*this.inputStageCost);
+                    return parseFloat((this.configs.gst/100)*this.inputStageCost).toFixed(2);
                 }
                 return 0;
             },
             stageCostWithoutGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return this.inputStageCost - this.gstAmount;
+                    return (this.inputStageCost - this.gstAmount).toFixed(2);
                 }
-                return parseFloat(this.inputStageCost);
+                return parseFloat(this.inputStageCost).toFixed(2);
             },
         },
         methods: {
