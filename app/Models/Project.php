@@ -38,12 +38,4 @@ class Project extends Model
     {
         return $this->hasMany(ProjectStage::class);
     }
-
-    /**
-     * Get the stages for the project.
-     */
-    public function stages()
-    {
-        return $this->hasMany(ProjectStage::class);
-    }
 }

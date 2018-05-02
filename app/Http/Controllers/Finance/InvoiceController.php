@@ -22,7 +22,7 @@ class InvoiceController extends Controller
     public function index()
     {
         return view('finance.invoice.index')->with([
-            'invoices' => Invoice::orderby('sent_on', 'desc')->get(),
+            'invoices' => Invoice::orderby('sent_on', 'desc')->paginate(config('constants.pagination_size')),
         ]);
     }
 

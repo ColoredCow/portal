@@ -110,8 +110,6 @@ $('.date-field').datepicker({
     dateFormat: "dd/mm/yy"
 });
 
-<<<<<<< HEAD
-=======
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
         let form = $('.form-create-invoice');
@@ -146,7 +144,6 @@ function updateClientProjects(form, client_id) {
     });
 }
 
->>>>>>> acff0bb5540666a5299a2a4b81babe238717374e
 function getProjectList(projects) {
     let html = '';
     for (var index = 0; index < projects.length; index++) {
