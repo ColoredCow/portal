@@ -16,7 +16,7 @@ class Invoice extends Model
      */
     public function projectStageBillings()
     {
-        return $this->belongsToMany(ProjectStageBilling::class, 'project_stage_billing_invoices', 'finance_invoice_id');
+        return $this->hasMany(ProjectStageBilling::class, 'finance_invoice_id');
     }
 
     /**

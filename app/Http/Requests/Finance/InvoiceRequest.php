@@ -40,7 +40,7 @@ class InvoiceRequest extends FormRequest
             'comments' => 'nullable|string',
             'tds' => 'nullable|numeric',
             'currency_tds' => 'nullable|string|size:3',
-            'billings' => 'nullable',
+            'billings' => 'required',
             'gst' => 'nullable|numeric',
         ];
 
@@ -67,6 +67,7 @@ class InvoiceRequest extends FormRequest
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',
             'project_invoice_id.integer' => 'Invoice ID should be a valid number',
             'invoice_file.required' => 'An invoice needs to be uploaded',
+            'billings.required' => 'At least one billing is required'
         ];
     }
 }

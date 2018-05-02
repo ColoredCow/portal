@@ -8,9 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Client;
 use App\Models\Finance\Invoice;
+use App\Models\ProjectStageBilling;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -70,7 +71,10 @@ class InvoiceController extends Controller
             'currency_tds' => $validated['currency_tds'],
             'file_path' => $path
         ]);
-        $invoice->projectStageBillings()->sync($validated['billings']);
+
+        foreach ($validated['billings'] as $billing) {
+            ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
+        }
 
         return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
     }
@@ -145,7 +149,20 @@ class InvoiceController extends Controller
             'currency_tds' => $validated['currency_tds'],
         ]);
 
-        $invoice->projectStageBillings()->sync($validated['billings']);
+        $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
+        foreach ($invoiceBillings as $billingId => $invoiceBilling) {
+            if (!array_key_exists($billingId, $validated['billings']))
+            {
+                $invoiceBillings[$billingId]->finance_invoice_id = NULL;
+                $invoiceBillings[$billingId]->update();
+            }
+        }
+        foreach ($validated['billings'] as $billing) {
+            if (!array_key_exists($billing, $invoiceBillings))
+            {
+                ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
+            }
+        }
 
         return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice updated successfully!');
     }
