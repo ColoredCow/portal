@@ -31,7 +31,6 @@
                     </div>
                 </div>
                 <br>
-                <br>
                 <invoice-project-component
                 :billings="{{ json_encode([]) }}"
                 :client="activeClient">
