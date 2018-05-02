@@ -91,13 +91,153 @@
                             :index="index"
                             :currency="stageCurrencySymbol"
                             :client-country-gst-applicable="clientCountryGstApplicable"
-                            :key="index">
+                            :key="index"
+                            @addBillingInvoice="addInvoice($event)">
                             </project-stage-billing-component>
                         </tbody>
                     </table>
                 <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
                 </div>
             </form>
+
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_new_invoice_billing">
+                            <input type="hidden" name="_token" :value="csrfToken">
+                            <input type="hidden" name="request_from_billing" value="1">
+                            <input type="hidden" name="billings[]" id="new_invoice_billing_id" :value="newInvoiceBillingId">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Create invoice</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-row">
+                                    <div class="form-group col-md-5">
+                                        <label for="project_invoice_id" class="field-required">Invoice ID</label>
+                                        <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required">
+                                    </div>
+                                    <div class="form-group offset-md-1 col-md-5">
+                                        <label for="status" class="field-required">Status</label>
+                                        <select name="status" id="status" class="form-control" required="required">
+                                            <option v-for="status in configs.invoiceStatus" :value="status">{{ status }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="sent_on" class="field-required">Sent on</label>
+                                        <input type="date" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="sent_amount" class="field-required">Invoice amount</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <select name="currency_sent_amount" id="currency_sent_amount" class="btn btn-secondary" required="required">
+                                                    <option :value="inputStageCurrency">{{ inputStageCurrency }}</option>
+                                                </select>
+                                            </div>
+                                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4" v-show="clientCountryGstApplicable">
+                                        <label for="gst">GST amount</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <select class="btn btn-secondary">
+                                                    <option>INR</option>
+                                                </select>
+                                            </div>
+                                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amount" step=".01" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-row">
+                                    <div class="form-group col-md-5">
+                                        <label for="invoice_file" class="field-required">Upload Invoice</label>
+                                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="comments">Comments</label>
+                                        <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <br>
+                                <h3 class="my-4"><u>Payment Details</u></h3>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="paid_on">Paid on</label>
+                                        <input type="date" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="paid_amount">Received amount</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary">
+                                                    <option :value="inputStageCurrency">{{ inputStageCurrency }}</option>
+                                                </select>
+                                            </div>
+                                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="tds">TDS amount</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                {{ configs.currency }}
+                                                <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
+                                                    <option :value="inputStageCurrency">{{ inputStageCurrency }}</option>
+                                                </select>
+                                            </div>
+                                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="payment_type">Payment type</label>
+                                        <select name="payment_type" id="payment_type" class="form-control">
+                                            <option value="">Select payment type</option>
+                                            <option v-for="(title, label) in configs.paymentTypes" :value="label">{{ title }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4 cheque-status">
+                                        <label for="cheque_status">Cheque status</label>
+                                        <select name="cheque_status" id="cheque_status" class="form-control">
+                                            <option value="">Select cheque status</option>
+                                            <option v-for="(title, label) in configs.chequeStatus" :value="label">{{ title }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="cheque_received_date">Cheque Received Date</label>
+                                        <input type="date" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy">
+                                    </div>
+                                    <div class="form-group col-md-4" style="display: none;">
+                                        <label for="cheque_cleared_date">Cheque Cleared Date</label>
+                                        <input type="date" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy">
+                                    </div>
+                                    <div class="form-group col-md-4" style="display: none;">
+                                        <label for="cheque_bounced_date">Cheque Bounced Date</label>
+                                        <input type="date" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Create" class="btn btn-primary">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- modal -->
+
         </div>
     </div>
 </template>
@@ -116,6 +256,7 @@
                 stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
                 stageType: this.stage.hasOwnProperty('type') ? this.stage.type : 'fixed_budget',
                 clientCountryGstApplicable: this.client.country == 'india' ? true : false,
+                newInvoiceBillingId: 0
             }
         },
         components: {
@@ -150,6 +291,10 @@
                     'percentage': 0,
                     'isNew' : true
                 });
+            },
+            addInvoice(billingId) {
+                this.newInvoiceBillingId = billingId;
+                document.getElementById('new_invoice_billing_id').value = billingId;
             }
         }
     }
