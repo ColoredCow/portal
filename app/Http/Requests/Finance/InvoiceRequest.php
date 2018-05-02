@@ -32,11 +32,16 @@ class InvoiceRequest extends FormRequest
             'paid_on' => 'nullable',
             'paid_amount' => 'nullable|numeric',
             'payment_type' => 'nullable|string',
+            'cheque_status' => 'nullable|string|required_if:payment_type,cheque',
+            'cheque_received_date' => 'nullable|string',
+            'cheque_cleared_date' => 'nullable|string',
+            'cheque_bounced_date' => 'nullable|string',
             'currency_paid_amount' => 'nullable|string|size:3',
             'comments' => 'nullable|string',
             'tds' => 'nullable|numeric',
             'currency_tds' => 'nullable|string|size:3',
             'billings' => 'nullable',
+            'gst' => 'nullable|numeric',
         ];
 
         if ($this->method() === 'POST') {

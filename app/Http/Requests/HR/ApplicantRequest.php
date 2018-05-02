@@ -23,6 +23,10 @@ class ApplicantRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [
+            'hr_job_id' => 'nullable|exists:hr_jobs,id'
+        ];
+
         if ($this->method() === 'POST')
         {
             $rules = [
@@ -31,6 +35,11 @@ class ApplicantRequest extends FormRequest
                 'phone' => 'nullable|string',
                 'resume' => 'required|url',
                 'job_title' => 'required|string',
+                'college' => 'nullable|string',
+                'graduation_year' => 'nullable|numeric',
+                'course' => 'nullable|string',
+                'linkedin' => 'nullable|url',
+                'reason_for_eligibility' => 'nullable|string'
             ];
         }
 

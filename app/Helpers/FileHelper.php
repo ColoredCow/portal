@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class FileHelper
 {
@@ -16,7 +17,13 @@ class FileHelper
      */
     public static function getFilePath($year, $month, $file)
     {
-        return $year . '/' . $month . '/' . $file;
+        $filePath =  $year . '/' . $month . '/' . $file;
+
+        if(!Storage::exists($filePath)) {
+            return false;
+        }
+
+        return $filePath;
     }
 
     /**

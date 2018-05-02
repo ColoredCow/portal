@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\DateHelper;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Client;
 use App\Models\Project;
@@ -29,7 +28,7 @@ class ProjectController extends Controller
     public function create()
     {
         return view('project.create')->with([
-            'clients' => Client::select('id', 'name')->get(),
+            'clients' => Client::getActiveClients(),
         ]);
     }
 
@@ -51,8 +50,7 @@ class ProjectController extends Controller
             'started_on' => $validated['started_on'] ? DateHelper::formatDateToSave($validated['started_on']) : null,
             'invoice_email' => $validated['invoice_email'],
         ]);
-
-        return redirect('/projects/' . $project->id . '/edit');
+        return redirect("/projects/$project->id/edit")->with('status', 'Project created successfully!');
     }
 
     /**
@@ -102,7 +100,7 @@ class ProjectController extends Controller
             'invoice_email' => $validated['invoice_email'],
             'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
         ]);
-        return redirect('/projects/' . $project->id . '/edit');
+        return redirect("/projects/$project->id/edit")->with('status', 'Project updated successfully!');
     }
 
     /**

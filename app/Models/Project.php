@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $fillable = ['name', 'client_id', 'client_project_id', 'started_on', 'invoice_email', 'status', 'type', 'gst_applicable'];
+    protected $guarded = [];
 
     /**
      * Get the client that owns the project.
@@ -28,7 +28,15 @@ class Project extends Model
 	            $query->select('id', 'name');
 	        }])
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(config('constants.pagination_size'));
+    }
+
+    /**
+     * Get the stages for the project.
+     */
+    public function stages()
+    {
+        return $this->hasMany(ProjectStage::class);
     }
 
     /**

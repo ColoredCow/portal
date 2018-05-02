@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $fillable = ['name', 'email', 'phone', 'country', 'address'];
+    protected $guarded = [];
 
     /**
      * Get the projects for the client.
@@ -15,5 +15,15 @@ class Client extends Model
     public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+
+    /**
+     * Retrive id and name of clients with active flag true
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getActiveClients()
+    {
+        return self::select('id', 'name')->where('is_active', true)->get();
     }
 }

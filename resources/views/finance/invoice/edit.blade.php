@@ -3,14 +3,15 @@
 @section('content')
 <div class="container">
     <br>
-    <h1>Edit Invoice</h1>
-    <br>
-    <a class="btn btn-info" href="/finance/invoices">See all invoices</a>
+    @include('finance.menu', ['active' => 'invoices'])
     <br><br>
-    @include('errors', ['errors' => $errors->all()])
-    <br>
+    <div class="row">
+        <div class="col-md-6"><h1>Edit Invoice</h1></div>
+        <div class="col-md-6"><a href="/finance/invoices/create" class="btn btn-success float-right">Create Invoice</a></div>
+    </div>
+    @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_edit_invoice">
+        <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_invoice" class="form-invoice">
 
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -63,7 +64,7 @@
                         <label for="sent_on" class="field-required">Sent on</label>
                         <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-3">
                         <label for="sent_amount" class="field-required">Invoice amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -78,6 +79,31 @@
                             </div>
                             <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" value="{{ $invoice->sent_amount }}">
                         </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="gst">GST amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select class="btn btn-secondary">
+                                    <option>INR</option>
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amount" step=".01" min="0" value="{{ $invoice->gst }}">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                    @if ($invoice->file_path)
+                        <label class="font-weight-bold">Invoice File</label>
+                        <div>
+                            <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
+                        </div>
+                    @else
+                        <label for="invoice_file" class="field-required">Upload Invoice</label>
+                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    @endif
                     </div>
                 </div>
                 <br>
@@ -101,11 +127,8 @@
                         <textarea name="comments" id="comments" rows="5" class="form-control">{{ $invoice->comments }}</textarea>
                     </div>
                 </div>
-            </div>
-            <div class="card-header">
-                Payment details
-            </div>
-            <div class="card-body">
+                <br>
+                <h3 class="my-4"><u>Payment Details</u></h3>
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="paid_on">Paid on</label>
@@ -114,7 +137,7 @@
                         @endphp
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ $paid_on }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-3">
                         <label for="paid_amount">Received amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -130,22 +153,7 @@
                             <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ $invoice->paid_amount }}">
                         </div>
                     </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="payment_type">Payment type</label>
-                        <select name="payment_type" id="payment_type" class="form-control">
-                            <option value="">Select payment type</option>
-                            @foreach (config('constants.payment_types') as $payment_type => $display_name)
-                                @php
-                                    $selected = $invoice->payment_type == $payment_type ? 'selected="selected"' : '';
-                                @endphp
-                                <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group col-md-2">
                         <label for="tds">TDS amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -160,6 +168,42 @@
                             </div>
                             <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ $invoice->tds }}">
                         </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="payment_type">Payment type</label>
+                        <select name="payment_type" id="payment_type" class="form-control" v-model="paymentType" data-payment-type="{{ $invoice->payment_type }}">
+                            <option value="">Select payment type</option>
+                            @foreach (config('constants.payment_types') as $payment_type => $display_name)
+                                @php
+                                    $selected = $invoice->payment_type == $payment_type ? 'selected="selected"' : '';
+                                @endphp
+                                <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group offset-md-1 col-md-3 cheque-status" v-show="paymentType == 'cheque'">
+                        <label for="cheque_status">Cheque status</label>
+                        <select name="cheque_status" id="cheque_status" class="form-control" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
+                            <option value="">Select cheque status</option>
+                            @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
+                                <option value="{{ $cheque_status }}">{{ $display_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'received'">
+                        <label for="cheque_received_date">Cheque Received Date</label>
+                        <input type="text" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy" value="{{ $invoice->cheque_received_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_received_date)) : '' }}">
+                    </div>
+                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'cleared'">
+                        <label for="cheque_cleared_date">Cheque Cleared Date</label>
+                        <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy" value="{{ $invoice->cheque_cleared_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_cleared_date)) : '' }}">
+                    </div>
+                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
+                        <label for="cheque_bounced_date">Cheque Bounced Date</label>
+                        <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                     </div>
                 </div>
                 <br>

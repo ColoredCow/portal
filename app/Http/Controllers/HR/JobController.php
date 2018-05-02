@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\JobRequest;
 use App\Models\HR\Job;
 use App\Models\HR\Round;
+use App\User;
 
 class JobController extends Controller
 {
@@ -69,6 +70,7 @@ class JobController extends Controller
     {
         return view('hr.job.edit')->with([
             'job' => $job,
+            'interviewers' => User::all()
         ]);
     }
 
@@ -82,15 +84,17 @@ class JobController extends Controller
     public function update(JobRequest $request, Job $job)
     {
         $validated = $request->validated();
-
         $job->_update([
             'facebook_post' => $validated['facebook_post'],
             'instagram_post' => $validated['instagram_post'],
             'twitter_post' => $validated['twitter_post'],
             'linkedin_post' => $validated['linkedin_post'],
+            'rounds' => $validated['rounds'],
         ]);
 
-        return redirect("/hr/jobs/$job->id/edit");
+
+
+        return redirect("/hr/jobs/$job->id/edit")->with('status', 'Job updated successfully!');
     }
 
     /**

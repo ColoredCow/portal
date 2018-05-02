@@ -12,6 +12,9 @@
 */
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect('home');
+    }
     return view('welcome');
 });
 
@@ -26,15 +29,24 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::middleware('auth')->group(function () {
-	Route::resource('hr/applicants', 'HR\ApplicantController');
-	Route::resource('hr/jobs', 'HR\JobController');
-	Route::resource('finance/invoices', 'Finance\InvoiceController');
-	Route::resource('clients', 'ClientController');
-	Route::resource('projects', 'ProjectController');
-	Route::get('finance/invoices/download/{year}/{month}/{file}', 'Finance\InvoiceController@download');
-	Route::resource('weeklydoses', 'WeeklyDoseController')->only([ 'index' ]);
-	Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
-	Route::post('hr/applicant-round/{applicantRound}/sendmail', 'HR\ApplicantRoundController@sendMail');
-	Route::resource('project/stages', 'ProjectStageController')->only([ 'store', 'update' ]);
-});
+    Route::resource('hr/applicants', 'HR\ApplicantController')->only(['index', 'edit']);
+    Route::resource('hr/applicants/rounds', 'HR\ApplicantRoundController')->only(['store', 'update']);
+    Route::resource('hr/jobs', 'HR\JobController')->except(['create', 'show', 'destroy']);
+    Route::resource('finance/invoices', 'Finance\InvoiceController')->except(['show', 'destroy']);
+    Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
+    Route::resource('projects', 'ProjectController')->except(['show', 'destroy']);
+    Route::get('finance/invoices/download/{year}/{month}/{file}', 'Finance\InvoiceController@download');
+    Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
+    Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
+    Route::post('hr/applicant-round/{applicantRound}/sendmail', 'HR\ApplicantRoundController@sendMail');
+    Route::resource('hr/rounds', 'HR\RoundController');
+    Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
+    Route::get('settings/{module}', 'SettingController@index');
+    Route::post('settings/{module}/update', 'SettingController@update');
+    Route::get('/knowledgecafe', 'KnowledgeCafe\KnowledgeCafeController@index');
+    Route::resource('/knowledgecafe/library/books', 'KnowledgeCafe\Library\BookController')
+                ->only(['index', 'create', 'store', 'show'])
+                ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
 
+    Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo')->name('books.fetchInfo');
+});

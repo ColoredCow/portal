@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DateHelper;
 use App\Http\Requests\ProjectStageRequest;
 use App\Models\ProjectStage;
 use App\Models\ProjectStageBilling;
@@ -41,6 +42,9 @@ class ProjectStageController extends Controller
             'project_id' => $validated['project_id'],
             'name' => $validated['name'],
             'cost' => $validated['cost'],
+            'type' => $validated['type'],
+            'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
+            'end_date' => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
             'currency_cost' => $validated['currency_cost'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] == 'on' ? true : false,
         ]);
@@ -63,7 +67,7 @@ class ProjectStageController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Stage created successfully!');
     }
 
     /**
@@ -100,6 +104,9 @@ class ProjectStageController extends Controller
         $validated = $request->validated();
         $updated = $stage->update([
             'name' => $validated['name'],
+            'type' => $validated['type'],
+            'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
+            'end_date' => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
             'cost' => $validated['cost'],
             'currency_cost' => $validated['currency_cost'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] == 'on' ? true : false,
@@ -132,7 +139,7 @@ class ProjectStageController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Stage updated successfully!');
     }
 
     /**

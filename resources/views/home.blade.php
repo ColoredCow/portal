@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <br>
-    <div class="d-flex justify-content-between">
-        <div class="col-md-3 card">
+    <div class="d-flex justify-content-between row">
+        <div class="col-md-3  card">
             <a class="card-body no-transition" href="/hr/applicants/">
                 <br><h2 class="text-center">HR</h2><br>
             </a>
@@ -20,5 +20,16 @@
             </a>
         </div>
     </div>
+
+    <br>
+
+    <div class="d-flex justify-content-between row">
+        <div class="col-md-3 card">
+            <a class="card-body no-transition" href="/knowledgecafe">
+                <br><h2 class="text-center">Knowledge Cafe</h2><br>
+            </a>
+        </div>
+    </div>
+
 </div>
 @endsection

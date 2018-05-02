@@ -4,12 +4,11 @@
 <div class="container">
     <br>
     @include('finance.menu', ['active' => 'invoices'])
-    <br>
+    <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Invoices</h1></div>
         <div class="col-md-6"><a href="/finance/invoices/create" class="btn btn-success float-right">Create Invoice</a></div>
     </div>
-    <br>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Project</th>
@@ -41,7 +40,7 @@
             </td>
             <td>
             @if ($invoice->file_path)
-                <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-2x text-primary btn-file"></i></a>
+                <a target="_blank" href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-2x text-primary btn-file"></i></a>
             @else
                 <span>-</span>
             @endif
@@ -49,5 +48,6 @@
         </tr>
         @endforeach
     </table>
+    {{ $invoices->links() }}
 </div>
 @endsection

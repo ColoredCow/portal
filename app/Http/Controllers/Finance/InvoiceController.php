@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Finance\Invoice;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class InvoiceController extends Controller
 {
@@ -33,7 +34,7 @@ class InvoiceController extends Controller
     public function create()
     {
         return view('finance.invoice.create')->with([
-            'clients' => Client::select('id', 'name')->get(),
+            'clients' => Client::getActiveClients(),
         ]);
     }
 
@@ -53,9 +54,14 @@ class InvoiceController extends Controller
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'sent_amount' => $validated['sent_amount'],
             'currency_sent_amount' => $validated['currency_sent_amount'],
+            'gst' => $validated['gst'],
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
             'payment_type' => $validated['payment_type'],
+            'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : '',
+            'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
+            'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
+            'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
             'tds' => $validated['tds'],
@@ -64,7 +70,7 @@ class InvoiceController extends Controller
         ]);
         $invoice->projects()->sync($validated['project_ids']);
 
-        return redirect('/finance/invoices');
+        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
     }
 
     /**
@@ -123,9 +129,14 @@ class InvoiceController extends Controller
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'sent_amount' => $validated['sent_amount'],
             'currency_sent_amount' => $validated['currency_sent_amount'],
+            'gst' => $validated['gst'],
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
             'payment_type' => $validated['payment_type'],
+            'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : '',
+            'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
+            'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
+            'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
             'currency_paid_amount' => $validated['currency_paid_amount'],
             'comments' => $validated['comments'],
             'tds' => $validated['tds'],
@@ -134,7 +145,7 @@ class InvoiceController extends Controller
 
         $invoice->projectStageBillings()->sync($validated['billings']);
 
-        return redirect('/finance/invoices/' . $invoice->id . '/edit');
+        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice updated successfully!');
     }
 
     /**
@@ -156,7 +167,14 @@ class InvoiceController extends Controller
      */
     protected static function upload(UploadedFile $file)
     {
+        $fileName = $file->getClientOriginalName();
+
+        if($fileName) {
+            return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
+        }
+
         return $file->store(FileHelper::getCurrentStorageDirectory());
+
     }
 
     /**
@@ -165,13 +183,25 @@ class InvoiceController extends Controller
      * @param  string $year  uploaded year of the invoice file
      * @param  string $month uploaded month of the invoice file
      * @param  string $file  invoice file name
-     * @return Symfony\Component\HttpFoundation\StreamedResponse
+     * @param  boolean $inline download/view invoice file
+     * @return mixed
      */
-    public function download($year, $month, $file)
+    public function download($year, $month, $file, $inline = true)
     {
+        $headers = [
+            'content-type'=>'application/pdf'
+        ];
+
         $file_path = FileHelper::getFilePath($year, $month, $file);
-        if (Storage::exists($file_path)) {
-            return Storage::download($file_path);
+
+        if(!$file_path) {
+            return false;
         }
+
+        if($inline) {
+            return Response::make(Storage::get($file_path), 200, $headers);
+        }
+
+        return  Storage::download($file_path);
     }
 }
