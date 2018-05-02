@@ -70,7 +70,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $project->load('stages', 'stages.billings');
+        $project->load('stages', 'stages.billings', 'stages.billings.invoice');
 
         return view('project.edit')->with([
             'project' => $project,
