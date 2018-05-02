@@ -26,10 +26,7 @@ class Invoice extends Model
      */
     public static function getList()
     {
-    	return self::with([ 'projects' => function($query) {
-	            $query->select('id', 'name');
-	        }])
-            ->orderBy('sent_on', 'desc')
+    	return self::orderBy('sent_on', 'desc')
             ->paginate(config('constants.pagination_size'));
     }
 }
