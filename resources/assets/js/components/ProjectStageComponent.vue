@@ -100,13 +100,13 @@
                 </div>
             </form>
 
-            <div id="myModal" class="modal fade" role="dialog">
+            <div id="new_billing_invoice_modal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_new_invoice_billing">
                             <input type="hidden" name="_token" :value="csrfToken">
                             <input type="hidden" name="request_from_billing" value="1">
-                            <input type="hidden" name="billings[]" id="new_invoice_billing_id" :value="newInvoiceBillingId">
+                            <input type="hidden" name="billings[]" id="new_invoice_billing_id" value="">
                             <div class="modal-header">
                                 <h4 class="modal-title">Create invoice</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -168,7 +168,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <h3 class="my-4"><u>Payment Details</u></h3>
+                                <h4 class="my-4"><u>Payment Details</u></h4>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="paid_on">Paid on</label>
@@ -202,27 +202,27 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="payment_type">Payment type</label>
-                                        <select name="payment_type" id="payment_type" class="form-control">
+                                        <select name="payment_type" id="payment_type" class="form-control" v-model="selectedPaymentType">
                                             <option value="">Select payment type</option>
                                             <option v-for="(title, label) in configs.paymentTypes" :value="label">{{ title }}</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4 cheque-status">
+                                    <div class="form-group col-md-4 cheque-status" v-show="selectedPaymentType == 'cheque'">
                                         <label for="cheque_status">Cheque status</label>
-                                        <select name="cheque_status" id="cheque_status" class="form-control">
+                                        <select name="cheque_status" id="cheque_status" class="form-control" v-model="selectedChequeStatus">
                                             <option value="">Select cheque status</option>
                                             <option v-for="(title, label) in configs.chequeStatus" :value="label">{{ title }}</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-4" v-show="selectedPaymentType == 'cheque' && selectedChequeStatus == 'received'">
                                         <label for="cheque_received_date">Cheque Received Date</label>
                                         <input type="date" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy">
                                     </div>
-                                    <div class="form-group col-md-4" style="display: none;">
+                                    <div class="form-group col-md-4" v-show="selectedPaymentType == 'cheque' && selectedChequeStatus == 'cleared'">
                                         <label for="cheque_cleared_date">Cheque Cleared Date</label>
                                         <input type="date" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy">
                                     </div>
-                                    <div class="form-group col-md-4" style="display: none;">
+                                    <div class="form-group col-md-4" v-show="selectedPaymentType == 'cheque' && selectedChequeStatus == 'bounced'">
                                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
                                         <input type="date" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy">
                                     </div>
@@ -256,7 +256,8 @@
                 stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
                 stageType: this.stage.hasOwnProperty('type') ? this.stage.type : 'fixed_budget',
                 clientCountryGstApplicable: this.client.country == 'india' ? true : false,
-                newInvoiceBillingId: 0
+                selectedPaymentType: '',
+                selectedChequeStatus: '',
             }
         },
         components: {
@@ -293,7 +294,6 @@
                 });
             },
             addInvoice(billingId) {
-                this.newInvoiceBillingId = billingId;
                 document.getElementById('new_invoice_billing_id').value = billingId;
             }
         }

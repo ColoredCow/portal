@@ -24,7 +24,7 @@
             <a target="_blank" :href="'/finance/invoices/download/' + billing.invoice.file_path"><i class="fa fa-file fa-2x text-primary btn-file"></i></a>
         </td>
         <td v-else>
-            <span class="modal-toggler text-primary" data-toggle="modal" data-target="#myModal" @click="$emit('addBillingInvoice', billing.id)">Create invoice</span>
+            <span class="modal-toggler text-primary" data-toggle="modal" data-target="#new_billing_invoice_modal" @click="$emit('addBillingInvoice', billing.id)">Create invoice</span>
         </td>
     </tr>
 </template>
