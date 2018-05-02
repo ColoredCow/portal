@@ -41,9 +41,9 @@
                                 </div>
                             </div>
                             <div class="mt-2 mb-2" v-show="clientCountryGstApplicable">
-                                <p><b>Cost with GST:</b> <span>{{ stageCurrencySymbol }} {{ stageCostWithGst }}</span></p>
-                                <p><b>GST amount:</b> <span>{{ stageCurrencySymbol }} {{ gstAmount }}</span></p>
-                                <p><b>Cost without GST:</b> <span>{{ stageCurrencySymbol }} {{ stageCostWithoutGst }}</span></p>
+                                <h5 class="mb-2"><b>Project Total Cost:</b> <span>{{ stageCurrencySymbol }} {{ stageCostWithGst }}</span></h5>
+                                <p class="mb-1"><b>GST:</b> <span>{{ stageCurrencySymbol }} {{ gstAmount }}</span></p>
+                                <p class="mb-1"><b>Project's Base Cost:</b> <span>{{ stageCurrencySymbol }} {{ stageCostWithoutGst }}</span></p>
                             </div>
                             <br>
                         </div>
@@ -75,9 +75,9 @@
                             <tr>
                                 <th>Percentage</th>
                                 <th v-show="!clientCountryGstApplicable">Cost</th>
-                                <th v-show="clientCountryGstApplicable">Cost without GST</th>
-                                <th v-show="clientCountryGstApplicable">GST cost</th>
-                                <th v-show="clientCountryGstApplicable">Cost with GST</th>
+                                <th v-show="clientCountryGstApplicable">Base Amount</th>
+                                <th v-show="clientCountryGstApplicable">GST</th>
+                                <th v-show="clientCountryGstApplicable">Total Amount</th>
                                 <th>Invoice</th>
                             </tr>
                         </thead>
