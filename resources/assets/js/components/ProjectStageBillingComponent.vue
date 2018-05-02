@@ -24,7 +24,7 @@
             <a target="_blank" :href="'/finance/invoices/download/' + billing.invoice.file_path"><i class="fa fa-file fa-2x text-primary btn-file"></i></a>
         </td>
         <td v-else>
-            <span class="modal-toggler text-primary" data-toggle="modal" data-target="#new_billing_invoice_modal" @click="$emit('addBillingInvoice', billing.id)">Create invoice</span>
+            <span class="modal-toggler text-primary" data-toggle="modal" data-target="#new_billing_invoice_modal" @click="addNewInvoice">Create invoice</span>
         </td>
     </tr>
 </template>
@@ -34,13 +34,23 @@
         props: ['billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency', 'clientCountryGstApplicable'],
         computed: {
             billingCostWithoutGst: function() {
-                return parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst);
+                return parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst).toFixed(2);
             },
             billingGstAmount: function() {
-                return parseFloat((this.billing.percentage/100)*this.gstAmount);
+                return parseFloat((this.billing.percentage/100)*this.gstAmount).toFixed(2);
             },
             billingCostWithGst: function() {
-                return parseFloat((this.billing.percentage/100)*this.stageCostWithGst);
+                return parseFloat((this.billing.percentage/100)*this.stageCostWithGst).toFixed(2);
+            }
+        },
+        methods: {
+            addNewInvoice() {
+                let args = {
+                    'billingId' : this.billing.id,
+                    'invoiceAmount' : this.clientCountryGstApplicable ? this.billingCostWithGst : this.billingCostWithoutGst,
+                    'gst' : this.billingGstAmount,
+                };
+                this.$emit('addBillingInvoice', args);
             }
         }
     }

@@ -293,8 +293,10 @@
                     'isNew' : true
                 });
             },
-            addInvoice(billingId) {
-                document.getElementById('new_invoice_billing_id').value = billingId;
+            addInvoice(args) {
+                document.getElementById('new_invoice_billing_id').value = args.billingId;
+                document.getElementById('sent_amount').value = args.invoiceAmount;
+                document.getElementById('gst').value = args.gst;
             }
         }
     }
