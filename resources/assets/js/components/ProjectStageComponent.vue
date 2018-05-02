@@ -78,6 +78,7 @@
                                 <th v-show="clientCountryGstApplicable">Cost without GST</th>
                                 <th v-show="clientCountryGstApplicable">GST cost</th>
                                 <th v-show="clientCountryGstApplicable">Cost with GST</th>
+                                <th>Invoice</th>
                             </tr>
                         </thead>
                         <tbody>
