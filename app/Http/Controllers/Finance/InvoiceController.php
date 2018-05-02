@@ -75,7 +75,6 @@ class InvoiceController extends Controller
         foreach ($validated['billings'] as $billing) {
             ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
         }
-
         if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
             $projectStageBilling = $invoice->projectStageBillings->first();
             $project = $projectStageBilling->projectStage->project;
