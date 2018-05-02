@@ -18,7 +18,7 @@
         </tr>
         @foreach ($invoices as $invoice)
         <tr>
-            <td><a href="/finance/invoices/{{ $invoice->id }}/edit">
+            <td><a href="/finance/invoices/{{ $invoice->id }}/edit">{{ $invoice->id }}
                 @foreach ($invoice->projectStageBillings as $billing)
                     {{ $loop->first ? '' : '|' }}
                     {{ $billing->projectStage->project->name }}

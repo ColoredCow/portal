@@ -33,8 +33,10 @@ class InvoiceController extends Controller
      */
     public function create()
     {
+        $clients = Client::getActiveClients();
+        $clients->load('projects', 'projects.stages', 'projects.stages.billings');
         return view('finance.invoice.create')->with([
-            'clients' => Client::getActiveClients(),
+            'clients' => $clients,
         ]);
     }
 
@@ -68,7 +70,7 @@ class InvoiceController extends Controller
             'currency_tds' => $validated['currency_tds'],
             'file_path' => $path
         ]);
-        $invoice->projects()->sync($validated['project_ids']);
+        $invoice->projectStageBillings()->sync($validated['billings']);
 
         return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
     }

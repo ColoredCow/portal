@@ -25,15 +25,6 @@ Vue.component('project-stage-billing-component', require('./components/ProjectSt
 Vue.component('invoice-project-component', require('./components/InvoiceProjectComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
 
-// const app = new Vue({
-//     el: '#app',
-//     methods: {
-//         createProjectStage: function() {
-//             this.$refs.projectStage.create();
-//         }
-//     }
-// });
-
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
         el: '#page_hr_applicant_edit'
@@ -59,7 +50,23 @@ if (document.getElementById('form_invoice')) {
         el: '#form_invoice',
         data: {
             paymentType: document.getElementById('payment_type').dataset.paymentType || '',
-            chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null
+            chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null,
+            selectedClient: '',
+            activeClient: [],
+
+        },
+        methods : {
+            updateActiveClient: function() {
+                let clients = JSON.parse(document.getElementById('client_id').dataset.clients);
+                let selected = this.selectedClient;
+                for (var index = 0; index < clients.length; index++) {
+                    let client = clients[index];
+                    if (client.id == this.selectedClient) {
+                        this.activeClient = client;
+                        break;
+                    }
+                }
+            }
         }
     });
 }
@@ -137,9 +144,6 @@ function updateClientProjects(form, client_id) {
         method : 'GET',
         success : function (res) {
             form.find('#project_ids').html(getProjectList(res));
-        },
-        error : function (err) {
-            console.log(err);
         }
     });
 }
