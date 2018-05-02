@@ -2,7 +2,7 @@
 
 namespace App\Models\Finance;
 
-use App\Models\Project;
+use App\Models\ProjectStageBilling;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -12,11 +12,11 @@ class Invoice extends Model
     protected $guarded = [];
 
     /**
-     * Get the projects associated with the invoice.
+     * Get the project_stage_billings associated with the invoice.
      */
-    public function projects()
+    public function projectStageBillings()
     {
-        return $this->belongsToMany(Project::class, 'project_finance_invoices', 'finance_invoice_id');
+        return $this->hasMany(ProjectStageBilling::class, 'finance_invoice_id');
     }
 
     /**
@@ -26,10 +26,7 @@ class Invoice extends Model
      */
     public static function getList()
     {
-    	return self::with([ 'projects' => function($query) {
-	            $query->select('id', 'name');
-	        }])
-            ->orderBy('sent_on', 'desc')
+    	return self::orderBy('sent_on', 'desc')
             ->paginate(config('constants.pagination_size'));
     }
 }

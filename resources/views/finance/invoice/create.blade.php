@@ -19,23 +19,23 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="client_id" class="field-required">Client</label>
-                        <select name="client_id" id="client_id" class="form-control" required="required">
+                        <select name="client_id" id="client_id" class="form-control" required="required" v-model="selectedClient" data-clients="{{ $clients }}" @change="updateActiveClient">
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
                                 @php
                                     $selected = old('client_id') == $client->id ? 'selected="selected"' : '';
                                 @endphp
-                                <option value="{{ $client->id }}" {{ $selected }}>{{ $client->name }}</option>
-                                }
+                                <option value="{{ $client->id }}" data-pre-select-client="{{ $client }}" {{ $selected }}>{{ $client->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
-                        <label for="project_id" class="field-required">Project</label>
-                        <select name="project_ids[]" id="project_ids" class="form-control" required="required" multiple="multiple">
-                        </select>
-                    </div>
                 </div>
+                <br>
+                <invoice-project-component
+                :billings="{{ json_encode([]) }}"
+                :client="activeClient">
+                </invoice-project-component>
+                <br>
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">

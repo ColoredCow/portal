@@ -8,9 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Client;
 use App\Models\Finance\Invoice;
+use App\Models\ProjectStageBilling;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -33,8 +34,10 @@ class InvoiceController extends Controller
      */
     public function create()
     {
+        $clients = Client::getActiveClients();
+        $clients->load('projects', 'projects.stages', 'projects.stages.billings');
         return view('finance.invoice.create')->with([
-            'clients' => Client::getActiveClients(),
+            'clients' => $clients,
         ]);
     }
 
@@ -68,7 +71,15 @@ class InvoiceController extends Controller
             'currency_tds' => $validated['currency_tds'],
             'file_path' => $path
         ]);
-        $invoice->projects()->sync($validated['project_ids']);
+
+        foreach ($validated['billings'] as $billing) {
+            ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
+        }
+        if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
+            $projectStageBilling = $invoice->projectStageBillings->first();
+            $project = $projectStageBilling->projectStage->project;
+            return redirect("/projects/$project->id/edit")->with('status', 'Billing invoice created successfully');
+        }
 
         return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
     }
@@ -92,15 +103,23 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        $project = $invoice->projects->first();
-        $client = $project->client;
-        $client_projects = $client->projects;
+        $projectStageBillings = $invoice->projectStageBillings;
+
+        $projectStageBilling = $projectStageBillings->first();
+        $client = $projectStageBilling->projectStage->project->client;
+        $client->load('projects', 'projects.stages', 'projects.stages.billings');
+
+        $billings = [];
+        foreach ($projectStageBillings as $key => $billing) {
+            $billing->load('projectStage', 'projectStage.project');
+            $billings[] = $billing;
+        }
 
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
             'clients' => Client::select('id', 'name')->get(),
             'invoice_client' => $client,
-            'client_projects' => $client_projects,
+            'invoice_billings' => $billings,
         ]);
     }
 
@@ -114,6 +133,7 @@ class InvoiceController extends Controller
     public function update(InvoiceRequest $request, Invoice $invoice)
     {
         $validated = $request->validated();
+
         $updated = $invoice->update([
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
@@ -133,7 +153,21 @@ class InvoiceController extends Controller
             'tds' => $validated['tds'],
             'currency_tds' => $validated['currency_tds'],
         ]);
-        $invoice->projects()->sync($validated['project_ids']);
+
+        $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
+        foreach ($invoiceBillings as $billingId => $invoiceBilling) {
+            if (!array_key_exists($billingId, $validated['billings']))
+            {
+                $invoiceBillings[$billingId]->finance_invoice_id = NULL;
+                $invoiceBillings[$billingId]->update();
+            }
+        }
+        foreach ($validated['billings'] as $billing) {
+            if (!array_key_exists($billing, $invoiceBillings))
+            {
+                ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
+            }
+        }
 
         return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice updated successfully!');
     }

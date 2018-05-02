@@ -23,7 +23,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="client_id" class="field-required">Client</label>
-                        <select name="client_id" id="client_id" class="form-control" required="required">
+                        <select name="client_id" id="client_id" class="form-control" required="required" disabled="disabled">
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
                                 @php
@@ -33,24 +33,13 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
-                        @php $invoice_projects = []; @endphp
-                        @foreach ($invoice->projects as $invoice_project)
-                            @php
-                                array_push($invoice_projects, $invoice_project->id);
-                            @endphp
-                        @endforeach
-                        <label for="project_id" class="field-required">Project</label>
-                        <select name="project_ids[]" id="project_ids" class="form-control" required="required" multiple="multiple">
-                            @foreach ($client_projects as $project)
-                                @php
-                                    $selected = in_array($project->id, $invoice_projects) ? 'selected="selected"' : '';
-                                @endphp
-                                <option value="{{ $project->id }}" {{ $selected }}>{{ $project->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
                 </div>
+                <br>
+                <invoice-project-component
+                :billings="{{ json_encode($invoice_billings) }}"
+                :client="{{ json_encode($invoice_client) }}">
+                </invoice-project-component>
+                <br>
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
