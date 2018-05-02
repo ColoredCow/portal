@@ -48,7 +48,6 @@ class ProjectController extends Controller
             'status' => $validated['status'],
             'invoice_email' => $validated['invoice_email'],
         ]);
-
         return redirect("/projects/$project->id/edit")->with('status', 'Project created successfully!');
     }
 

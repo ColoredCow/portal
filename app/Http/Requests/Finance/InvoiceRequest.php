@@ -24,7 +24,6 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'project_ids' => 'required',
             'project_invoice_id' => 'required|integer|min:1',
             'status' => 'required|string',
             'sent_on' => 'required',
@@ -41,6 +40,7 @@ class InvoiceRequest extends FormRequest
             'comments' => 'nullable|string',
             'tds' => 'nullable|numeric',
             'currency_tds' => 'nullable|string|size:3',
+            'billings' => 'required',
             'gst' => 'nullable|numeric',
         ];
 
@@ -67,6 +67,7 @@ class InvoiceRequest extends FormRequest
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',
             'project_invoice_id.integer' => 'Invoice ID should be a valid number',
             'invoice_file.required' => 'An invoice needs to be uploaded',
+            'billings.required' => 'At least one billing is required'
         ];
     }
 }
