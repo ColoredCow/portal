@@ -126,11 +126,11 @@
                                 </div>
                                 <br>
                                 <div class="form-row">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'col-md-5']">
                                         <label for="sent_on" class="field-required">Sent on</label>
                                         <input type="date" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'offset-md-1 col-md-5']">
                                         <label for="sent_amount" class="field-required">Invoice amount</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -170,11 +170,11 @@
                                 <br>
                                 <h4 class="my-4"><u>Payment Details</u></h4>
                                 <div class="form-row">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'col-md-5']">
                                         <label for="paid_on">Paid on</label>
                                         <input type="date" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'offset-md-1 col-md-5']">
                                         <label for="paid_amount">Received amount</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -185,7 +185,7 @@
                                             <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0">
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-4" v-show="clientCountryGstApplicable">
                                         <label for="tds">TDS amount</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
