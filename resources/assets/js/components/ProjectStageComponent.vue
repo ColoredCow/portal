@@ -120,7 +120,7 @@
                                     <div class="form-group offset-md-1 col-md-5">
                                         <label for="status" class="field-required">Status</label>
                                         <select name="status" id="status" class="form-control" required="required">
-                                            <option v-for="status in configs.invoiceStatus" :value="status">{{ status }}</option>
+                                            <option v-for="(title, status) in configs.invoiceStatus" :value="status">{{ title }}</option>
                                         </select>
                                     </div>
                                 </div>
