@@ -9,6 +9,7 @@ use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Client;
 use App\Models\Finance\Invoice;
 use App\Models\ProjectStageBilling;
+use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,9 @@ class InvoiceController extends Controller
     public function index()
     {
         return view('finance.invoice.index')->with([
-            'invoices' => Invoice::getList(),
+            'invoices' => Invoice::getLastMonthInvoices(),
+            'startDate' => (new Carbon('first day of last month'))->format(config('constants.display_date_format')),
+            'endDate' => (new Carbon('last day of last month'))->format(config('constants.display_date_format')),
         ]);
     }
 

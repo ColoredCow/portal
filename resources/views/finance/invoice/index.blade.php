@@ -9,6 +9,9 @@
         <div class="col-md-6"><h1>Invoices</h1></div>
         <div class="col-md-6"><a href="/finance/invoices/create" class="btn btn-success float-right">Create Invoice</a></div>
     </div>
+    <div class="row">
+        <div class="col-md-12"><h4>Showing results between {{ $startDate }} – {{ $endDate }}</h4></div>
+    </div>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Project</th>
@@ -48,6 +51,6 @@
         </tr>
         @endforeach
     </table>
-    {{ $invoices->links() }}
+    {{-- {{ $invoices->links() }} --}}
 </div>
 @endsection

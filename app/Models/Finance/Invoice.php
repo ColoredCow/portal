@@ -3,6 +3,7 @@
 namespace App\Models\Finance;
 
 use App\Models\ProjectStageBilling;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -28,5 +29,13 @@ class Invoice extends Model
     {
     	return self::orderBy('sent_on', 'desc')
             ->paginate(config('constants.pagination_size'));
+    }
+
+    public static function getLastMonthInvoices()
+    {
+        return self::whereDate('sent_on', '>=', new Carbon('first day of last month'))
+            ->whereDate('sent_on', '<=', new Carbon('last day of last month'))
+            ->orderBy('sent_on', 'desc')
+            ->get();
     }
 }
