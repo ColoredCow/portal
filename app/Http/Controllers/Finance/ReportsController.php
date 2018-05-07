@@ -37,6 +37,12 @@ class ReportsController extends Controller
         ]);
     }
 
+    /**
+     * Get an details of the report in the passed invoices to be printed
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection $invoices
+     * @return array
+     */
     public static function getReportDetails($invoices)
     {
         $report = [];
