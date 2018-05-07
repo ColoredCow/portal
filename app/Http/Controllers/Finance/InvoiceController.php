@@ -25,20 +25,21 @@ class InvoiceController extends Controller
     {
         $request = request();
 
-        if ($request->get('start') && $request->get('end'))
-        {
+        if ($request->get('start') && $request->get('end')) {
             $startDate = $request->get('start');
             $endDate = $request->get('end');
-            return view('finance.invoice.index')->with([
+            $attr = [
                 'invoices' => Invoice::filterByDates($startDate, $endDate)->appends(Input::except('page')),
                 'startDate' => $startDate,
                 'endDate' => $endDate,
-            ]);
+            ];
+        } else {
+            $attr = [
+                'invoices' => Invoice::getList()
+            ];
         }
 
-        return view('finance.invoice.index')->with([
-            'invoices' => Invoice::getList(),
-        ]);
+        return view('finance.invoice.index')->with($attr);
     }
 
     /**
