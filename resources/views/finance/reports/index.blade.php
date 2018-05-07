@@ -7,9 +7,17 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Reports</h1></div>
-        <div class="col-md-6 d-flex align-items-center justify-content-end">
-            {{-- range --}}
-        </div>
+        <form action="/finance/reports" method="GET" class="col-md-6 form-inline d-flex justify-content-end">
+            <div class="form-group">
+                <input type="date" name="start" id="start" placeholder="dd/mm/yyyy" class="form-control form-control-sm" value="{{ $startDate ?? '' }}">
+            </div>
+            <div class="form-group ml-2">
+                <input type="date" name="end" id="end" placeholder="dd/mm/yyyy" class="form-control form-control-sm" value="{{ $endDate ?? '' }}">
+            </div>
+            <div class="form-group ml-2">
+                <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+            </div>
+        </form>
     </div>
     <br>
     <div class="card">
@@ -23,7 +31,12 @@
                     <ul>
                     @foreach($invoices as $invoice)
                         <li>
-                            <a href="/finance/invoices/{{ $invoice->id }}/edit" target="_blank">Invoice ID {{ $invoice->id }}</a>
+                            <a href="/finance/invoices/{{ $invoice->id }}/edit" target="_blank">
+                                @foreach ($invoice->projectStageBillings as $billing)
+                                    {{ $loop->first ? '' : '|' }}
+                                    {{ $billing->projectStage->project->name }}
+                                @endforeach
+                            </a>
                             @switch ($invoice->status)
                                 @case('paid')
                                     <span class="badge badge-pill badge-success">
@@ -71,7 +84,13 @@
                     <h4>Due amount</h4>
                     @foreach ($report['sentAmount'] as $currency => $sentAmount)
                         @php
-                            $dueAmount = $sentAmount - $report['paidAmount'][$currency];
+                            if (isset($report['paidAmount'][$currency])) {
+                                if ($currency == 'INR') {
+                                    $dueAmount = $sentAmount - $report['paidAmount'][$currency] - $report['tds'];
+                                } else {
+                                    $dueAmount = $sentAmount - $report['paidAmount'][$currency];
+                                }
+                            }
                         @endphp
                         @if ($dueAmount)
                             <h5>
