@@ -41,11 +41,9 @@
                 <div class="col-md-4">
                     <h4>Balance left</h4>
                     @foreach ($report['dueAmount'] as $currency => $dueAmount)
-                        @if ($dueAmount)
                         <h5>
                             <b>{{ $currency }} : </b> {{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $dueAmount }}
                         </h5>
-                        @endif
                     @endforeach
                 </div>
             </div>
@@ -63,13 +61,13 @@
                 <div class="col-md-4">
                     <h4>Bank charges</h4>
                     @foreach ($report['transactionCharge'] as $currency => $amount)
-                        <h5>{{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
+                        <h5><b>{{ $currency }} : </b> {{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
                     @endforeach
                 </div>
                 <div class="col-md-6">
                     <h4>Bank taxes</h4>
                     @foreach ($report['transactionTax'] as $currency => $amount)
-                        <h5>{{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
+                        <h5><b>{{ $currency }} : </b> {{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
                     @endforeach
                 </div>
             </div>
