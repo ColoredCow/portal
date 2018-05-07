@@ -71,9 +71,9 @@ class ReportsController extends Controller
         foreach ($report['sentAmount'] as $currency => $sentAmount)
         {
             if ($currency == 'INR') {
-                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency] - $report['tds'] - $report['transactionCharge'][$currency] - $report['transactionTax'][$currency];
+                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency] - $report['tds'] - $report['transactionCharge'][$currency];
             } else {
-                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency] - $report['transactionCharge'][$currency] - $report['transactionTax'][$currency];
+                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency] - $report['transactionCharge'][$currency];
             }
         }
 

@@ -64,8 +64,8 @@
                         <h5><b>{{ $currency }} : </b> {{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
                     @endforeach
                 </div>
-                <div class="col-md-6">
-                    <h4>Bank taxes</h4>
+                <div class="col-md-4">
+                    <h4>Service Tax on Fund Transfer</h4>
                     @foreach ($report['transactionTax'] as $currency => $amount)
                         <h5><b>{{ $currency }} : </b> {{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
                     @endforeach
@@ -73,7 +73,7 @@
             </div>
             <div class="row mt-5">
                 <div class="col-md-12">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-striped">
                         <thead class="thead-light">
                             <tr>
                                 <th>Invoice</th>
@@ -84,7 +84,7 @@
                                 <th>Received amount</th>
                                 <th>TDS deducted</th>
                                 <th>Bank Charges</th>
-                                <th>Bank Taxes</th>
+                                <th>ST on Fund Transfer</th>
                             </tr>
                         </thead>
                         <tbody>
