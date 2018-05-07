@@ -48,27 +48,32 @@ class ReportsController extends Controller
         $report = [];
         $report['tds'] = 0;
         $report['gst'] = 0;
+        foreach (config('constants.currency') as $currency => $currencyMeta) {
+            $report['sentAmount'][$currency] = 0;
+            $report['paidAmount'][$currency] = 0;
+            $report['transactionCharge'][$currency] = 0;
+            $report['transactionTax'][$currency] = 0;
+        }
         foreach ($invoices as $invoice) {
             $report['gst'] += $invoice->gst;
-            if (!isset($report['sentAmount'][$invoice->currency_sent_amount])) {
-                $report['sentAmount'][$invoice->currency_sent_amount] = 0;
-                $report['paidAmount'][$invoice->currency_sent_amount] = 0;
-            }
             $report['sentAmount'][$invoice->currency_sent_amount] += $invoice->sent_amount;
 
             if ($invoice->status == 'paid')
             {
                 $report['tds'] += $invoice->tds;
+
                 $report['paidAmount'][$invoice->currency_paid_amount] += $invoice->paid_amount;
+                $report['transactionCharge'][$invoice->currency_transaction_charge] += $invoice->transaction_charge;
+                $report['transactionTax'][$invoice->currency_transaction_tax] += $invoice->transaction_tax;
             }
         }
 
         foreach ($report['sentAmount'] as $currency => $sentAmount)
         {
             if ($currency == 'INR') {
-                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency] - $report['tds'];
+                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency] - $report['tds'] - $report['transactionCharge'][$currency] - $report['transactionTax'][$currency];
             } else {
-                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency];
+                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency] - $report['transactionCharge'][$currency] - $report['transactionTax'][$currency];
             }
         }
 

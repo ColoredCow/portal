@@ -60,6 +60,20 @@
                 </div>
             </div>
             <div class="row mt-5">
+                <div class="col-md-4">
+                    <h4>Bank charges</h4>
+                    @foreach ($report['transactionCharge'] as $currency => $amount)
+                        <h5>{{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
+                    @endforeach
+                </div>
+                <div class="col-md-6">
+                    <h4>Bank taxes</h4>
+                    @foreach ($report['transactionTax'] as $currency => $amount)
+                        <h5>{{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
+                    @endforeach
+                </div>
+            </div>
+            <div class="row mt-5">
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         <thead class="thead-light">
@@ -71,6 +85,8 @@
                                 <th>Received on</th>
                                 <th>Received amount</th>
                                 <th>TDS deducted</th>
+                                <th>Bank Charges</th>
+                                <th>Bank Taxes</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,13 +118,25 @@
                             @endif
                             @if ($invoice->status == 'paid')
                                 <td>{{ date(config('constants.display_date_format'), strtotime($invoice->paid_on)) }}</td>
-                                <td>{{ config('constants.currency.' . $invoice->currency_paid_amount . '.symbol') }}&nbsp;{{ $invoice->paid_amount }}</td>
+                                <td>{{ config("constants.currency.$invoice->currency_paid_amount.symbol") }}&nbsp;{{ $invoice->paid_amount }}</td>
                                 @if ($invoice->currency_sent_amount == 'INR' && $invoice->tds)
                                     <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->tds }}</td>
                                 @else
                                     <td>-</td>
                                 @endif
+                                @if ($invoice->transaction_charge)
+                                    <td>{{ config("constants.currency.$invoice->currency_transaction_charge.symbol") }}&nbsp;{{ $invoice->transaction_charge }}</td>
+                                @else
+                                    <td>-</td>
+                                @endif
+                                @if ($invoice->transaction_tax)
+                                    <td>{{ config("constants.currency.$invoice->currency_transaction_tax.symbol") }}&nbsp;{{ $invoice->transaction_tax }}</td>
+                                @else
+                                    <td>-</td>
+                                @endif
                             @else
+                                <td>-</td>
+                                <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>

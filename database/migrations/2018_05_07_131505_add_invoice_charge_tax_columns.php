@@ -15,9 +15,9 @@ class AddInvoiceChargeTaxColumns extends Migration
     {
         Schema::table('finance_invoices', function (Blueprint $table) {
             $table->decimal('transaction_charge', 10, 2)->nullable()->after('conversion_rate');
-            $table->string('currency_transaction_charge')->nullable()->after('transaction_charge');
+            $table->string('currency_transaction_charge')->default('INR')->after('transaction_charge');
             $table->decimal('transaction_tax', 10, 2)->nullable()->after('currency_transaction_charge');
-            $table->string('currency_transaction_tax')->nullable()->after('transaction_tax');
+            $table->string('currency_transaction_tax')->default('INR')->after('transaction_tax');
         });
     }
 
