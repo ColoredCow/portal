@@ -8,4 +8,7 @@
     <li class="nav-item">
         <a class="nav-item nav-link {{ $active === 'invoices' ? 'active' : '' }}" href="/finance/invoices"><i class="fa fa-folder-open"></i>&nbsp;Invoices</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-item nav-link {{ $active === 'reports' ? 'active' : '' }}" href="/finance/reports"><i class="fa fa-line-chart"></i>&nbsp;Reports</a>
+    </li>
 </ul>
