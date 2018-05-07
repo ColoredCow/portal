@@ -121,7 +121,7 @@
                                         @endforeach
                                         </select>
                                     </div>
-                                    <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ old('paid_amount') }}">
+                                    <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" v-model="paidAmount" data-paid-amount="{{ old('paid_amount') }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-5">
@@ -140,9 +140,13 @@
                                     <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ old('tds') }}">
                                 </div>
                             </div>
-                            <div class="form-group col-md-6" v-show="paidAmountCurrency != 'INR'">
+                            <div class="form-group col-md-9" v-show="paidAmountCurrency != 'INR'">
                                 <label for="conversion_rate">Conversion rate</label>
-                                <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" value="{{ old('conversion_rate') }}" step="0.01" min="0">
+                                <div class="d-flex align-items-center">
+                                    <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ old('conversion_rate') }}">
+                                    <h4 class="my-0 mx-2">&rArr;</h4>
+                                    <h4 class="my-0 mx-2">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
