@@ -126,17 +126,17 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-row">
+                <div class="form-row" v-show="status == 'paid'">
                     <div class="form-group col-md-2">
                         <label for="bank_charges">Bank charges</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select name="currency_transaction_charge" id="currency_transaction_charge" class="btn btn-secondary" required="required">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    {{-- @php
-                                        $selected = $currency === $invoice->currency_tds ? 'selected="selected"' : '';
-                                    @endphp --}}
-                                    <option value="{{ $currency }}">{{ $currency }}</option>
+                                    @php
+                                        $selected = $currency === $invoice->currency_transaction_charge ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
                                 @endforeach
                                 </select>
                             </div>
@@ -149,26 +149,22 @@
                             <div class="input-group-prepend">
                                 <select name="currency_transaction_tax" id="currency_transaction_tax" class="btn btn-secondary" required="required">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    {{-- @php
-                                        $selected = $currency === $invoice->currency_tds ? 'selected="selected"' : '';
-                                    @endphp --}}
-                                    <option value="{{ $currency }}">{{ $currency }}</option>
+                                    @php
+                                        $selected = $currency === $invoice->currency_transaction_tax ? 'selected="selected"' : '';
+                                    @endphp
+                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
                                 @endforeach
                                 </select>
                             </div>
                             <input type="number" class="form-control" name="transaction_tax" id="transaction_tax" placeholder="amount" step=".01" min="0" value="{{ $invoice->transaction_tax }}">
                         </div>
                     </div>
-                    <div class="form-group offset-md-2 col-md-5" v-show="status == 'paid'">
-                        <div class="form-row">
-                            <div class="form-group col-md-9" v-show="paidAmountCurrency != 'INR'">
-                                <label for="conversion_rate">Conversion rate</label>
-                                <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ $invoice->conversion_rate }}">
-                                    <h4 class="my-0 mx-2">&rArr;</h4>
-                                    <h4 class="my-0 mx-2">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
-                                </div>
-                            </div>
+                    <div class="form-group offset-md-2 col-md-4" v-show="paidAmountCurrency != 'INR'">
+                        <label for="conversion_rate">Conversion rate</label>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ $invoice->conversion_rate }}">
+                            <h4 class="my-0 mx-2">&rArr;</h4>
+                            <h4 class="my-0 mx-2">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
                         </div>
                     </div>
                 </div>
