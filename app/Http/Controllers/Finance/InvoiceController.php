@@ -11,6 +11,7 @@ use App\Models\Finance\Invoice;
 use App\Models\ProjectStageBilling;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,11 +24,23 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $request = request();
+
+        if ($request->get('start') && $request->get('end'))
+        {
+            $startDate = $request->get('start');
+            $endDate = $request->get('end');
+            return view('finance.invoice.index')->with([
+                'invoices' => Invoice::filterByDates($startDate, $endDate)->appends(Input::except('page')),
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+            ]);
+        }
+
         return view('finance.invoice.index')->with([
-            'invoices' => Invoice::getLastMonthInvoices(),
-            'startDate' => (new Carbon('first day of last month'))->format(config('constants.display_date_format')),
-            'endDate' => (new Carbon('last day of last month'))->format(config('constants.display_date_format')),
+            'invoices' => Invoice::getList(),
         ]);
+
     }
 
     /**

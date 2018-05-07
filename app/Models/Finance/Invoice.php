@@ -31,11 +31,11 @@ class Invoice extends Model
             ->paginate(config('constants.pagination_size'));
     }
 
-    public static function getLastMonthInvoices()
+    public static function filterByDates($startDate, $endDate)
     {
-        return self::whereDate('sent_on', '>=', new Carbon('first day of last month'))
-            ->whereDate('sent_on', '<=', new Carbon('last day of last month'))
+        return self::whereDate('sent_on', '>=', $startDate)
+            ->whereDate('sent_on', '<=', $endDate)
             ->orderBy('sent_on', 'desc')
-            ->get();
+            ->paginate(config('constants.pagination_size'));
     }
 }
