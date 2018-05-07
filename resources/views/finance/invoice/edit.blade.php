@@ -80,6 +80,7 @@
                             <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" value="{{ $invoice->sent_amount }}">
                         </div>
                     </div>
+                @if ($invoice_client->country == 'india')
                     <div class="form-group col-md-2">
                         <label for="gst">GST amount</label>
                         <div class="input-group">
@@ -91,6 +92,7 @@
                             <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amount" step=".01" min="0" value="{{ $invoice->gst }}">
                         </div>
                     </div>
+                @endif
                 </div>
                 <br>
                 <div class="form-row">
@@ -139,6 +141,7 @@
                             <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ $invoice->paid_amount }}">
                         </div>
                     </div>
+                @if ($invoice_client->country == 'india')
                     <div class="form-group col-md-2">
                         <label for="tds">TDS amount</label>
                         <div class="input-group">
@@ -155,6 +158,7 @@
                             <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ $invoice->tds }}">
                         </div>
                     </div>
+                @endif
                 </div>
                 <br>
                 <div class="form-row">

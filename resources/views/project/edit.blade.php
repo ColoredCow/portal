@@ -80,6 +80,7 @@
                 'invoiceStatus' => config('constants.finance.invoice.status'),
                 'chequeStatus' => config('constants.cheque_status'),
                 'paymentTypes' => config('constants.payment_types'),
+                'countries' => config('constants.countries')
             ]) }}"
             :client="{{ json_encode($project->client) }}"
             :csrf-token="{{ json_encode(csrf_token()) }}"
@@ -98,6 +99,10 @@
         'currencies' => config('constants.currency'),
         'projectTypes' => config('constants.project.type'),
         'gst' => config('constants.finance.gst'),
+        'invoiceStatus' => config('constants.finance.invoice.status'),
+        'chequeStatus' => config('constants.cheque_status'),
+        'paymentTypes' => config('constants.payment_types'),
+        'countries' => config('constants.countries'),
     ]) }}"
     ></project-stage-component>
 

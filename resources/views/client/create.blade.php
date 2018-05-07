@@ -50,19 +50,16 @@
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" value="{{ old('phone') }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-3">
                         <label for="country">Country</label>
                         <select name="country" id="country" class="form-control" data-pre-select-country="{{ old('country') }}" v-model="country">
                             <option value="">Select country</option>
-                            @foreach (config('constants.countries') as $country => $country_name)
-                                <option value="{{ $country }}" >{{ $country_name }}</option>
+                            @foreach (config('constants.countries') as $country => $countryDetails)
+                                <option value="{{ $country }}" >{{ $countryDetails['title'] }}</option>
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <br>
-                <div class="form-row" v-if="country === 'india'">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-2" v-if="country === 'india'">
                         <label for="phone">GST </label>
                         <input type="text"  class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ old('gst_num') }}">
                     </div>
