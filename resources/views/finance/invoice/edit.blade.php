@@ -67,14 +67,14 @@
                         </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="gst">GST amount</label>
+                        <label for="gst">GST</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select class="btn btn-secondary">
                                     <option>INR</option>
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amount" step=".01" min="0" value="{{ $invoice->gst }}">
+                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST" step=".01" min="0" value="{{ $invoice->gst }}">
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="tds">TDS amount</label>
+                                <label for="tds">TDS deducted</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
@@ -123,7 +123,7 @@
                                         @endforeach
                                         </select>
                                     </div>
-                                    <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ $invoice->tds }}">
+                                    <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS deducted" step=".01" min="0" value="{{ $invoice->tds }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-9" v-show="paidAmountCurrency != 'INR'">

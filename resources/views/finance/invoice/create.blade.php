@@ -38,25 +38,11 @@
                 <br>
                 <br>
                 <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-2">
                         <label for="project_invoice_id" class="field-required">Invoice ID</label>
                         <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required" value="{{ old('project_invoice_id') }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
-                        <label for="status" class="field-required">Status</label>
-                        <select name="status" id="status" class="form-control" required="required">
-                        @foreach (config('constants.finance.invoice.status') as $status => $display_name)
-                            @php
-                                $selected = old('status') == $status ? 'selected="selected"' : '';
-                            @endphp
-                            <option value="{{ $status }}" {{ $selected }}>{{ $display_name }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-3">
                         <label for="sent_on" class="field-required">Sent on</label>
                         <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required"  value="{{ old('sent_on') }}">
                     </div>
@@ -77,39 +63,32 @@
                         </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="gst">GST amount</label>
+                        <label for="gst">GST</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select class="btn btn-secondary">
                                     <option>INR</option>
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST amoount" step=".01" min="0" value="{{ old('gst') }}">
+                            <input type="number" class="form-control" name="gst" id="gst" placeholder="GST" step=".01" min="0" value="{{ old('gst') }}">
                         </div>
                     </div>
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="invoice_file" class="field-required">Upload Invoice</label>
-                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    <div class="form-group col-md-2">
+                        <label for="status" class="field-required">Status</label>
+                        <select name="status" id="status" class="form-control" required="required" v-model="status" data-status="{{ old('status') ?? 'unpaid' }}">
+                        @foreach (config('constants.finance.invoice.status') as $status => $display_name)
+                            <option value="{{ $status }}">{{ $display_name }}</option>
+                        @endforeach
+                        </select>
                     </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="comments">Comments</label>
-                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ old('comments') }}</textarea>
-                    </div>
-                </div>
-                <br>
-                <h3 class="my-4"><u>Payment Details</u></h3>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-3" v-show="status == 'paid'">
                         <label for="paid_on">Paid on</label>
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ old('paid_on') }}">
                     </div>
-                    <div class="offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-5" v-show="status == 'paid'">
                         <div class="form-row">
                             <div class="form-group col-md-7">
                                 <label for="paid_amount">Received amount</label>
@@ -125,7 +104,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-5">
-                                <label for="tds">TDS amount</label>
+                                <label for="tds">TDS deducted</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
@@ -137,7 +116,7 @@
                                         @endforeach
                                         </select>
                                     </div>
-                                    <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ old('tds') }}">
+                                    <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS deducted" step=".01" min="0" value="{{ old('tds') }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-9" v-show="paidAmountCurrency != 'INR'">
@@ -152,7 +131,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-row">
+                <div class="form-row" v-show="status == 'paid'">
                     <div class="form-group col-md-5">
                         <label for="payment_type">Payment type</label>
                         <select name="payment_type" id="payment_type" class="form-control" v-model="paymentType" data-payment-type="{{ old('payment_type') }}">
@@ -185,6 +164,20 @@
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="invoice_file" class="field-required">Upload Invoice</label>
+                        <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="comments">Comments</label>
+                        <textarea name="comments" id="comments" rows="5" class="form-control">{{ old('comments') }}</textarea>
                     </div>
                 </div>
                 <br>
