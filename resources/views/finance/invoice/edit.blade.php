@@ -127,7 +127,39 @@
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group offset-md-6 col-md-6" v-show="status == 'paid'">
+                    <div class="form-group col-md-2">
+                        <label for="bank_charges">Bank charges</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_transaction_charge" id="currency_transaction_charge" class="btn btn-secondary" required="required">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    {{-- @php
+                                        $selected = $currency === $invoice->currency_tds ? 'selected="selected"' : '';
+                                    @endphp --}}
+                                    <option value="{{ $currency }}">{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="transaction_charge" id="transaction_charge" placeholder="amount" step=".01" min="0" value="{{ $invoice->transaction_charge }}">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="bank_taxes">Bank service tax</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_transaction_tax" id="currency_transaction_tax" class="btn btn-secondary" required="required">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    {{-- @php
+                                        $selected = $currency === $invoice->currency_tds ? 'selected="selected"' : '';
+                                    @endphp --}}
+                                    <option value="{{ $currency }}">{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="transaction_tax" id="transaction_tax" placeholder="amount" step=".01" min="0" value="{{ $invoice->transaction_tax }}">
+                        </div>
+                    </div>
+                    <div class="form-group offset-md-2 col-md-5" v-show="status == 'paid'">
                         <div class="form-row">
                             <div class="form-group col-md-9" v-show="paidAmountCurrency != 'INR'">
                                 <label for="conversion_rate">Conversion rate</label>

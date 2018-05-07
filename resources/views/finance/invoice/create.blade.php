@@ -120,7 +120,7 @@
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group offset-md-6 col-md-6" v-show="status == 'paid'">
+                    <div class="form-group offset-md-6 col-md-5" v-show="status == 'paid'">
                         <div class="form-row">
                             <div class="form-group col-md-9" v-show="paidAmountCurrency != 'INR'">
                                 <label for="conversion_rate">Conversion rate</label>
