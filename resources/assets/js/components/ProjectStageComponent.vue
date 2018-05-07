@@ -128,7 +128,7 @@
                                 <div class="form-row">
                                     <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'col-md-5']">
                                         <label for="sent_on" class="field-required">Sent on</label>
-                                        <input type="date" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
+                                        <input type="date" class="form-control" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required">
                                     </div>
                                     <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'offset-md-1 col-md-5']">
                                         <label for="sent_amount" class="field-required">Invoice amount</label>
@@ -172,7 +172,7 @@
                                 <div class="form-row">
                                     <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'col-md-5']">
                                         <label for="paid_on">Paid on</label>
-                                        <input type="date" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
+                                        <input type="date" class="form-control" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
                                     </div>
                                     <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'offset-md-1 col-md-5']">
                                         <label for="paid_amount">Received amount</label>
@@ -216,15 +216,15 @@
                                     </div>
                                     <div class="form-group col-md-4" v-show="selectedPaymentType == 'cheque' && selectedChequeStatus == 'received'">
                                         <label for="cheque_received_date">Cheque Received Date</label>
-                                        <input type="date" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy">
+                                        <input type="date" class="form-control" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy">
                                     </div>
                                     <div class="form-group col-md-4" v-show="selectedPaymentType == 'cheque' && selectedChequeStatus == 'cleared'">
                                         <label for="cheque_cleared_date">Cheque Cleared Date</label>
-                                        <input type="date" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy">
+                                        <input type="date" class="form-control" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy">
                                     </div>
                                     <div class="form-group col-md-4" v-show="selectedPaymentType == 'cheque' && selectedChequeStatus == 'bounced'">
                                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
-                                        <input type="date" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy">
+                                        <input type="date" class="form-control" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy">
                                     </div>
                                 </div>
                                 <br>
@@ -251,7 +251,7 @@
             return {
                 editMode: Object.keys(this.stage).length ? false : true,
                 inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : 0,
-                inputStageCurrency: this.stage.hasOwnProperty('currency_cost') ? this.stage.currency_cost : 'INR',
+                inputStageCurrency: this.stage.hasOwnProperty('currency_cost') ? this.stage.currency_cost : this.configs.countries[this.client.country].currency,
                 inputStageCostIncludeGst: this.stage.hasOwnProperty('cost_include_gst') ? this.stage.cost_include_gst : false,
                 stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
                 stageType: this.stage.hasOwnProperty('type') ? this.stage.type : 'fixed_budget',

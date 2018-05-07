@@ -57,6 +57,8 @@ if (document.getElementById('form_invoice')) {
             paidAmount: document.getElementById('paid_amount').dataset.paidAmount || '',
             conversionRate: document.getElementById('conversion_rate').dataset.conversionRate || '',
             status: document.getElementById('status').dataset.status || '',
+            countries: document.getElementById('client_id').dataset.countries || [],
+            activeClientCurrency: 'INR'
         },
         computed: {
             convertedAmount: function() {
@@ -71,6 +73,7 @@ if (document.getElementById('form_invoice')) {
                     let client = clients[index];
                     if (client.id == this.selectedClient) {
                         this.activeClient = client;
+                        this.activeClientCurrency = JSON.parse(this.countries)[client.country].currency;
                         break;
                     }
                 }
@@ -87,7 +90,7 @@ if (document.getElementById('client_form')) {
             isActive: document.getElementById('is_active').dataset.preSelectStatus ? parseInt(document.getElementById('is_active').dataset.preSelectStatus) : 1,
             newEmailName: '',
             newEmailId: '',
-            clientEmails: document.getElementById('emails').value == '' ? [] : document.getElementById('emails').value.split(',')
+            clientEmails: document.getElementById('emails').value == '' ? [] : document.getElementById('emails').value.split(','),
         },
         methods: {
             toggleActive: function() {

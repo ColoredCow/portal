@@ -66,6 +66,7 @@
                             <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" value="{{ $invoice->sent_amount }}">
                         </div>
                     </div>
+                @if ($invoice_client->country == 'india')
                     <div class="form-group col-md-2">
                         <label for="gst">GST</label>
                         <div class="input-group">
@@ -77,6 +78,7 @@
                             <input type="number" class="form-control" name="gst" id="gst" placeholder="GST" step=".01" min="0" value="{{ $invoice->gst }}">
                         </div>
                     </div>
+                @endif
                 </div>
                 <br>
                 <div class="form-row">
@@ -167,6 +169,7 @@
                             <h4 class="my-0 mx-2">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
                         </div>
                     </div>
+                @endif
                 </div>
                 <br>
                 <div class="form-row" v-show="status == 'paid'">

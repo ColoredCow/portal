@@ -19,7 +19,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="client_id" class="field-required">Client</label>
-                        <select name="client_id" id="client_id" class="form-control" required="required" v-model="selectedClient" data-clients="{{ $clients }}" @change="updateActiveClient">
+                        <select name="client_id" id="client_id" class="form-control" required="required" v-model="selectedClient" data-clients="{{ $clients }}" @change="updateActiveClient" data-countries="{{ json_encode(config('constants.countries')) }}">
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
                                 @php
@@ -50,7 +50,7 @@
                         <label for="sent_amount" class="field-required">Invoice amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_sent_amount" id="currency_sent_amount" class="btn btn-secondary" required="required">
+                                <select name="currency_sent_amount" id="currency_sent_amount" class="btn btn-secondary" required="required" v-model="activeClientCurrency">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
                                     @php
                                         $selected = old('currency_sent_amount') == $currency ? 'selected="selected"' : '';
@@ -62,7 +62,7 @@
                             <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" value="{{ old('sent_amount') }}">
                         </div>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2" v-show="activeClient.hasOwnProperty('country') && activeClient.country == 'india'">
                         <label for="gst">GST</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
