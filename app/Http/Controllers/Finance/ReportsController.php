@@ -44,18 +44,25 @@ class ReportsController extends Controller
         $report['gst'] = 0;
         foreach ($invoices as $invoice) {
             $report['gst'] += $invoice->gst;
-            if (!isset($report['sentAmount'][$invoice->currency_paid_amount])) {
-                $report['sentAmount'][$invoice->currency_paid_amount] = 0;
+            if (!isset($report['sentAmount'][$invoice->currency_sent_amount])) {
+                $report['sentAmount'][$invoice->currency_sent_amount] = 0;
+                $report['paidAmount'][$invoice->currency_sent_amount] = 0;
             }
-            $report['sentAmount'][$invoice->currency_paid_amount] += $invoice->sent_amount;
+            $report['sentAmount'][$invoice->currency_sent_amount] += $invoice->sent_amount;
 
-            if (!isset($report['paidAmount'][$invoice->currency_paid_amount])) {
-                $report['paidAmount'][$invoice->currency_paid_amount] = 0;
-            }
             if ($invoice->status == 'paid')
             {
                 $report['tds'] += $invoice->tds;
                 $report['paidAmount'][$invoice->currency_paid_amount] += $invoice->paid_amount;
+            }
+        }
+
+        foreach ($report['sentAmount'] as $currency => $sentAmount)
+        {
+            if ($currency == 'INR') {
+                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency] - $report['tds'];
+            } else {
+                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency];
             }
         }
 

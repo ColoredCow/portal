@@ -26,6 +26,40 @@
         </div>
         <div class="card-body">
             <div class="row">
+                <div class="col-md-4">
+                    <h4>Invoiced amount</h4>
+                    @foreach ($report['sentAmount'] as $currency => $sentAmount)
+                        <h5><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
+                    @endforeach
+                </div>
+                <div class="col-md-4">
+                    <h4>Paid amount</h4>
+                    @foreach ($report['paidAmount'] as $currency => $sentAmount)
+                        <h5><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
+                    @endforeach
+                </div>
+                <div class="col-md-4">
+                    <h4>Due amount</h4>
+                    @foreach ($report['dueAmount'] as $currency => $dueAmount)
+                        @if ($dueAmount)
+                        <h5>
+                            <b>{{ $currency }} : </b> {{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $dueAmount }}
+                        </h5>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <h4>GST paid</h4>
+                    <h5>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $report['gst'] }}</h5>
+                </div>
+                <div class="col-md-6">
+                    <h4>TDS paid</h4>
+                    <h5>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $report['tds'] }}</h5>
+                </div>
+            </div>
+            <div class="row mt-5">
                 <div class="col-md-6">
                     <h4>Invoices sent</h4>
                     <ul>
@@ -49,56 +83,6 @@
                         </li>
                     @endforeach
                     </ul>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-6">
-                    <h4>Amount invoiced</h4>
-                    @foreach ($report['sentAmount'] as $currency => $sentAmount)
-                        @if ($sentAmount)
-                            <h5><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
-                        @endif
-                    @endforeach
-                </div>
-                <div class="col-md-6">
-                    <h4>GST paid</h4>
-                    <h5>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $report['gst'] }}</h5>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-6">
-                    <h4>Paid amount</h4>
-                    @foreach ($report['paidAmount'] as $currency => $sentAmount)
-                        @if ($sentAmount)
-                            <h5><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
-                        @endif
-                    @endforeach
-                </div>
-                <div class="col-md-6">
-                    <h4>TDS paid</h4>
-                    <h5>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $report['tds'] }}</h5>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-6">
-                    <h4>Due amount</h4>
-                    @foreach ($report['sentAmount'] as $currency => $sentAmount)
-                        @php
-                            if (isset($report['paidAmount'][$currency])) {
-                                if ($currency == 'INR') {
-                                    $dueAmount = $sentAmount - $report['paidAmount'][$currency] - $report['tds'];
-                                } else {
-                                    $dueAmount = $sentAmount - $report['paidAmount'][$currency];
-                                }
-                            }
-                        @endphp
-                        @if ($dueAmount)
-                            <h5>
-                                <b>{{ $currency }} : </b>
-                                {{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $dueAmount }}
-                            </h5>
-                        @endif
-                    @endforeach
                 </div>
             </div>
         </div>
