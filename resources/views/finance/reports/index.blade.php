@@ -33,13 +33,13 @@
                     @endforeach
                 </div>
                 <div class="col-md-4">
-                    <h4>Paid amount</h4>
+                    <h4>Received amount</h4>
                     @foreach ($report['paidAmount'] as $currency => $sentAmount)
                         <h5><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
                     @endforeach
                 </div>
                 <div class="col-md-4">
-                    <h4>Due amount</h4>
+                    <h4>Balance left</h4>
                     @foreach ($report['dueAmount'] as $currency => $dueAmount)
                         @if ($dueAmount)
                         <h5>
@@ -51,38 +51,72 @@
             </div>
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <h4>GST paid</h4>
+                    <h4>GST received</h4>
                     <h5>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $report['gst'] }}</h5>
                 </div>
                 <div class="col-md-6">
-                    <h4>TDS paid</h4>
+                    <h4>TDS deducted</h4>
                     <h5>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $report['tds'] }}</h5>
                 </div>
             </div>
             <div class="row mt-5">
-                <div class="col-md-6">
-                    <h4>Invoices sent</h4>
-                    <ul>
-                    @foreach($invoices as $invoice)
-                        <li>
-                            <a href="/finance/invoices/{{ $invoice->id }}/edit" target="_blank">
-                                @foreach ($invoice->projectStageBillings as $billing)
-                                    {{ $loop->first ? '' : '|' }}
-                                    {{ $billing->projectStage->project->name }}
-                                @endforeach
-                            </a>
-                            @switch ($invoice->status)
-                                @case('paid')
-                                    <span class="badge badge-pill badge-success">
-                                    @break
-                                @case('unpaid')
-                                    <span class="badge badge-pill badge-danger">
-                                    @break
-                            @endswitch
-                            {{ $invoice->status }}</span>
-                        </li>
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Invoice</th>
+                                <th>Sent on</th>
+                                <th>Invoiced amount</th>
+                                <th>GST</th>
+                                <th>Received on</th>
+                                <th>Received amount</th>
+                                <th>TDS deducted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($invoices as $invoice)
+                        <tr>
+                            <td>
+                                <a href="/finance/invoices/{{ $invoice->id }}/edit" target="_blank">
+                                    @foreach ($invoice->projectStageBillings as $billing)
+                                        {{ $loop->first ? '' : '|' }}
+                                        {{ $billing->projectStage->project->name }}
+                                    @endforeach
+                                </a>
+                                @switch ($invoice->status)
+                                    @case('paid')
+                                        <span class="badge badge-pill badge-success">
+                                        @break
+                                    @case('unpaid')
+                                        <span class="badge badge-pill badge-danger">
+                                        @break
+                                @endswitch
+                                {{ $invoice->status }}</span>
+                            </td>
+                            <td>{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}</td>
+                            <td>{{ config('constants.currency.' . $invoice->currency_sent_amount . '.symbol') }}&nbsp;{{ $invoice->sent_amount }}</td>
+                            @if ($invoice->currency_sent_amount == 'INR' && $invoice->gst)
+                                <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->gst }}</td>
+                            @else
+                                <td>-</td>
+                            @endif
+                            @if ($invoice->status == 'paid')
+                                <td>{{ date(config('constants.display_date_format'), strtotime($invoice->paid_on)) }}</td>
+                                <td>{{ config('constants.currency.' . $invoice->currency_paid_amount . '.symbol') }}&nbsp;{{ $invoice->paid_amount }}</td>
+                                @if ($invoice->currency_sent_amount == 'INR' && $invoice->tds)
+                                    <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->tds }}</td>
+                                @else
+                                    <td>-</td>
+                                @endif
+                            @else
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            @endif
+                        </tr>
                     @endforeach
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
