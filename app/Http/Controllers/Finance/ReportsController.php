@@ -27,6 +27,8 @@ class ReportsController extends Controller
                 'report' => self::getReportDetails($invoices),
                 'startDate' => $startDate,
                 'endDate' => $endDate,
+                'displayStartDate' => (new Carbon($startDate))->format('F d, Y'),
+                'displayEndDate' => (new Carbon($endDate))->format('F d, Y'),
             ]);
         }
 

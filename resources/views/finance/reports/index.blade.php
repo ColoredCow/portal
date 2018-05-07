@@ -21,8 +21,11 @@
     </div>
     <br>
     <div class="card">
-        <div class="card-header">
-            Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $invoices->count() }}</h3>
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <div class="d-inline">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $invoices->count() }}</h3></div>
+            @if (isset($displayStartDate) && isset($displayEndDate))
+                <h5 class="d-inline mb-0">Showing results for <b>{{ $displayStartDate }} – {{ $displayEndDate }}</b></h5>
+            @endif
         </div>
         <div class="card-body">
             <div class="row">
