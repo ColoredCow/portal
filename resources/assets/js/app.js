@@ -53,7 +53,7 @@ if (document.getElementById('form_invoice')) {
             chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null,
             selectedClient: '',
             activeClient: [],
-
+            paidAmountCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR'
         },
         methods : {
             updateActiveClient: function() {
