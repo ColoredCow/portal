@@ -29,4 +29,19 @@ class Invoice extends Model
     	return self::orderBy('sent_on', 'desc')
             ->paginate(config('constants.pagination_size'));
     }
+
+    /**
+     * Get paginated invoices in the selected date range
+     *
+     * @param  string $startDate
+     * @param  string $endDate
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function filterByDates($start, $end)
+    {
+        return self::whereDate('sent_on', '>=', $start)
+            ->whereDate('sent_on', '<=', $end)
+            ->orderBy('sent_on', 'desc')
+            ->paginate(config('constants.pagination_size'));
+    }
 }
