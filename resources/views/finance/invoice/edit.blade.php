@@ -123,17 +123,14 @@
                         @endphp
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ $paid_on }}">
                     </div>
-                    <div class="offset-md-1 col-md-6">
+                    <div class="offset-md-1 col-md-5">
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-7">
                                 <label for="paid_amount">Received amount</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" v-model="paidAmountCurrency" data-paid-amount-currency="{{ $invoice->currency_paid_amount }}">
                                         @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                           {{--  @php
-                                                $selected = $currency === $invoice->currency_paid_amount ? 'selected="selected"' : '';
-                                            @endphp --}}
                                             <option value="{{ $currency }}">{{ $currency }}</option>
                                         @endforeach
                                         </select>
@@ -141,7 +138,7 @@
                                     <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ $invoice->paid_amount }}">
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-5">
                                 <label for="tds">TDS amount</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -159,7 +156,7 @@
                             </div>
                             <div class="form-group col-md-6" v-show="paidAmountCurrency != 'INR'">
                                 <label for="conversion_rate">Conversion rate</label>
-                                <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" value="{{-- {{ $invoice->conversion_rate }} --}}" step="0.01" min="0">
+                                <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" value="{{ $invoice->conversion_rate }}" step="0.01" min="0">
                             </div>
                         </div>
                     </div>

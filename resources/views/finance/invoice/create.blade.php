@@ -109,36 +109,41 @@
                         <label for="paid_on">Paid on</label>
                         <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ old('paid_on') }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-3">
-                        <label for="paid_amount">Received amount</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary">
-                                @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    @php
-                                        $selected = old('currency_paid_amount') == $currency ? 'selected="selected"' : '';
-                                    @endphp
-                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
-                                @endforeach
-                                </select>
+                    <div class="offset-md-1 col-md-5">
+                        <div class="form-row">
+                            <div class="form-group col-md-7">
+                                <label for="paid_amount">Received amount</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" v-model="paidAmountCurrency" data-paid-amount-currency="{{ old('currency_paid_amount') }}">
+                                        @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                            <option value="{{ $currency }}">{{ $currency }}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ old('paid_amount') }}">
+                                </div>
                             </div>
-                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" value="{{ old('paid_amount') }}">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="tds">TDS amount</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
-                                @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    @php
-                                        $selected = $currency == old('currency_tds') ? 'selected="selected"' : '';
-                                    @endphp
-                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
-                                @endforeach
-                                </select>
+                            <div class="form-group col-md-5">
+                                <label for="tds">TDS amount</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
+                                        @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                            @php
+                                                $selected = $currency == old('currency_tds') ? 'selected="selected"' : '';
+                                            @endphp
+                                            <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ old('tds') }}">
+                                </div>
                             </div>
-                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0" value="{{ old('tds') }}">
+                            <div class="form-group col-md-6" v-show="paidAmountCurrency != 'INR'">
+                                <label for="conversion_rate">Conversion rate</label>
+                                <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" value="{{ old('conversion_rate') }}" step="0.01" min="0">
+                            </div>
                         </div>
                     </div>
                 </div>

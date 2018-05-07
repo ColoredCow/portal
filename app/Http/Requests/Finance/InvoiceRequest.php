@@ -40,6 +40,7 @@ class InvoiceRequest extends FormRequest
             'comments' => 'nullable|string',
             'tds' => 'nullable|numeric',
             'currency_tds' => 'nullable|string|size:3',
+            'conversion_rate' => 'nullable|numeric',
             'billings' => 'required',
             'gst' => 'nullable|numeric',
             'request_from_billing' => 'nullable|boolean'
