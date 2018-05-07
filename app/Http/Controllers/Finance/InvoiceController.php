@@ -9,7 +9,6 @@ use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Client;
 use App\Models\Finance\Invoice;
 use App\Models\ProjectStageBilling;
-use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -40,7 +39,6 @@ class InvoiceController extends Controller
         return view('finance.invoice.index')->with([
             'invoices' => Invoice::getList(),
         ]);
-
     }
 
     /**

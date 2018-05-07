@@ -3,7 +3,6 @@
 namespace App\Models\Finance;
 
 use App\Models\ProjectStageBilling;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -31,10 +30,17 @@ class Invoice extends Model
             ->paginate(config('constants.pagination_size'));
     }
 
-    public static function filterByDates($startDate, $endDate)
+    /**
+     * Get paginated invoices in the selected date range
+     *
+     * @param  string $startDate
+     * @param  string $endDate
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function filterByDates($start, $end)
     {
-        return self::whereDate('sent_on', '>=', $startDate)
-            ->whereDate('sent_on', '<=', $endDate)
+        return self::whereDate('sent_on', '>=', $start)
+            ->whereDate('sent_on', '<=', $end)
             ->orderBy('sent_on', 'desc')
             ->paginate(config('constants.pagination_size'));
     }
