@@ -53,7 +53,15 @@ if (document.getElementById('form_invoice')) {
             chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null,
             selectedClient: '',
             activeClient: [],
-
+            paidAmountCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR',
+            paidAmount: document.getElementById('paid_amount').dataset.paidAmount || '',
+            conversionRate: document.getElementById('conversion_rate').dataset.conversionRate || '',
+            status: document.getElementById('status').dataset.status || '',
+        },
+        computed: {
+            convertedAmount: function() {
+                return (this.paidAmount * this.conversionRate).toFixed(2);
+            }
         },
         methods : {
             updateActiveClient: function() {
