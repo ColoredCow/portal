@@ -101,7 +101,7 @@
                             <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" v-model="paidAmount" data-paid-amount="{{ old('paid_amount') }}">
                         </div>
                     </div>
-                    <div class="form-group col-md-2" v-show="status == 'paid'">
+                    <div class="form-group col-md-2" v-show="status == 'paid' && activeClient.hasOwnProperty('country') && activeClient.country == 'india'">
                         <label for="tds">TDS deducted</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
