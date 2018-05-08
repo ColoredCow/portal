@@ -101,7 +101,7 @@
                         <label for="paid_amount">Received amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" v-model="paidAmountCurrency" data-paid-amount-currency="{{ $invoice->currency_paid_amount }}">
+                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" v-model="activeClientCurrency" data-paid-amount-currency="{{ $invoice->currency_paid_amount }}">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
                                     <option value="{{ $currency }}">{{ $currency }}</option>
                                 @endforeach
@@ -158,7 +158,7 @@
                             <input type="number" class="form-control" name="transaction_tax" id="transaction_tax" placeholder="amount" step=".01" min="0" value="{{ $invoice->transaction_tax }}">
                         </div>
                     </div>
-                    <div class="form-group offset-md-1 col-md-4" v-show="paidAmountCurrency != 'INR'">
+                    <div class="form-group offset-md-1 col-md-4" v-show="activeClientCurrency != 'INR'">
                         <label for="conversion_rate">Conversion rate</label>
                         <div class="d-flex align-items-center">
                             <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ $invoice->conversion_rate }}">
