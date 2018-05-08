@@ -158,13 +158,19 @@
                             <input type="number" class="form-control" name="transaction_tax" id="transaction_tax" placeholder="amount" step=".01" min="0" value="{{ $invoice->transaction_tax }}">
                         </div>
                     </div>
-                    <div class="form-group offset-md-1 col-md-4" v-show="activeClientCurrency != 'INR'">
+                    <div class="form-group offset-md-1 col-md-3" v-show="activeClientCurrency != 'INR'">
                         <label for="conversion_rate">Conversion rate</label>
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex flex-column">
                             <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ $invoice->conversion_rate }}">
-                            <h4 class="my-0 mx-2">&rArr;</h4>
-                            <h4 class="my-0 mx-2">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
+                            <div class="mt-3 mb-0">
+                                <p class="m-0">Received amount after conversion&nbsp;&nbsp;</p>
+                                <h4 class="m-0">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
+                            </div>
                         </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="due_amount">Balance left</label>
+                        <input type="number" class="form-control" name="due_amount" id="due_amount" placeholder="balance left" step=".01" min="0" value="{{ $invoice->due_amount }}">
                     </div>
                 </div>
                 <br>
