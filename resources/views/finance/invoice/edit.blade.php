@@ -169,6 +169,7 @@
                             <h4 class="my-0 mx-2">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
                         </div>
                     </div>
+                @endif
                 </div>
                 <br>
                 <div class="form-row" v-show="status == 'paid'">
