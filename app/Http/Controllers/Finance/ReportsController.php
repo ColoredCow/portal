@@ -62,6 +62,7 @@ class ReportsController extends Controller
             ];
             $report['transactionCharge'][$currency] = 0;
             $report['transactionTax'][$currency] = 0;
+            $report['dueAmount'][$currency] = 0;
         }
         $report['totalPaidAmount'] = 0;
         foreach ($invoices as $invoice) {
@@ -82,16 +83,17 @@ class ReportsController extends Controller
                 $report['tds'] += $invoice->tds;
                 $report['transactionCharge'][$invoice->currency_transaction_charge] += $invoice->transaction_charge;
                 $report['transactionTax'][$invoice->currency_transaction_tax] += $invoice->transaction_tax;
+                $report['dueAmount'][$invoice->currency_due_amount] += $invoice->due_amount;
             }
         }
 
-        foreach ($report['sentAmount'] as $currency => $sentAmount) {
-            if ($currency == 'INR') {
-                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency]['default'] - $report['tds'] - $report['transactionCharge'][$currency];
-            } else {
-                $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency]['default'] - $report['transactionCharge'][$currency];
-            }
-        }
+        // foreach ($report['sentAmount'] as $currency => $sentAmount) {
+        //     if ($currency == 'INR') {
+        //         $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency]['default'] - $report['tds'] - $report['transactionCharge'][$currency];
+        //     } else {
+        //         $report['dueAmount'][$currency] = $sentAmount - $report['paidAmount'][$currency]['default'] - $report['transactionCharge'][$currency];
+        //     }
+        // }
 
         return $report;
     }
