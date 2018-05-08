@@ -92,7 +92,7 @@
                         <label for="paid_amount">Received amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" v-model="paidAmountCurrency" data-paid-amount-currency="{{ old('currency_paid_amount') }}">
+                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" v-model="activeClientCurrency" data-paid-amount-currency="{{ old('currency_paid_amount') }}">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
                                     <option value="{{ $currency }}">{{ $currency }}</option>
                                 @endforeach
@@ -120,16 +120,13 @@
                 </div>
                 <br>
                 <div class="form-row" v-show="status == 'paid'">
-                    <div class="form-group col-md-2">
-                        <label for="bank_charges">Bank charges</label>
+                    <div class="form-group col-md-3">
+                        <label for="bank_charges">Bank charges on fund transfer</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_transaction_charge" id="currency_transaction_charge" class="btn btn-secondary" required="required">
+                                <select name="currency_transaction_charge" id="currency_transaction_charge" class="btn btn-secondary" required="required" v-model="currencyTransactionCharge" data-currency-transaction-charge="{{ old('currency_transaction_charge') }}">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    @php
-                                        $selected = $currency === old('currency_transaction_charge') ? 'selected="selected"' : '';
-                                    @endphp
-                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
+                                    <option value="{{ $currency }}">{{ $currency }}</option>
                                 @endforeach
                                 </select>
                             </div>
@@ -152,9 +149,9 @@
                             <input type="number" class="form-control" name="transaction_tax" id="transaction_tax" placeholder="amount" step=".01" min="0" value="{{ old('transaction_tax') }}">
                         </div>
                     </div>
-                    <div class="form-group offset-md-2 col-md-5">
+                    <div class="form-group offset-md-1 col-md-5">
                         <div class="form-row">
-                            <div class="form-group col-md-9" v-show="paidAmountCurrency != 'INR'">
+                            <div class="form-group col-md-9" v-show="activeClientCurrency != 'INR'">
                                 <label for="conversion_rate">Conversion rate</label>
                                 <div class="d-flex align-items-center">
                                     <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ old('conversion_rate') }}">
