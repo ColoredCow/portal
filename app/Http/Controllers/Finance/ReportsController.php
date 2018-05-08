@@ -22,21 +22,23 @@ class ReportsController extends Controller
             $startDate = $request->get('start');
             $endDate = $request->get('end');
             $invoices = Invoice::filterByDates($startDate, $endDate);
-            return view('finance.reports.index')->with([
+            $attr = [
                 'invoices' => $invoices,
                 'report' => self::getReportDetails($invoices),
                 'startDate' => $startDate,
                 'endDate' => $endDate,
                 'displayStartDate' => (new Carbon($startDate))->format('F d, Y'),
                 'displayEndDate' => (new Carbon($endDate))->format('F d, Y'),
-            ]);
+            ];
+        } else {
+            $invoices = Invoice::all();
+            $attr = [
+                'invoices' => $invoices,
+                'report' => self::getReportDetails($invoices),
+            ];
         }
 
-        $invoices = Invoice::all();
-        return view('finance.reports.index')->with([
-            'invoices' => $invoices,
-            'report' => self::getReportDetails($invoices),
-        ]);
+        return view('finance.reports.index')->with($attr);
     }
 
     /**
