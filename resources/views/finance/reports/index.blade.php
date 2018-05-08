@@ -117,7 +117,17 @@
                             @endif
                             @if ($invoice->status == 'paid')
                                 <td>{{ date(config('constants.display_date_format'), strtotime($invoice->paid_on)) }}</td>
-                                <td>{{ config("constants.currency.$invoice->currency_paid_amount.symbol") }}&nbsp;{{ $invoice->paid_amount }}</td>
+                                <td>
+                                    @php
+                                        if ($invoice->currency_paid_amount != 'INR') {
+                                            $conversionRate = $invoice->conversion_rate ?? 1;
+                                            $paidAmount = $invoice->paid_amount * $conversionRate;
+                                        } else {
+                                            $paidAmount = $invoice->paid_amount;
+                                        }
+                                    @endphp
+                                    {{ config("constants.currency.$invoice->currency_paid_amount.symbol") }}&nbsp;{{ $paidAmount }}
+                                </td>
                                 @if ($invoice->currency_sent_amount == 'INR' && $invoice->tds)
                                     <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->tds }}</td>
                                 @else
