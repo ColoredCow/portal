@@ -146,7 +146,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="bank_taxes">Bank service tax</label>
+                        <label for="bank_taxes">ST on fund transfer</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select name="currency_transaction_tax" id="currency_transaction_tax" class="btn btn-secondary" required="required">
@@ -169,7 +169,6 @@
                             <h4 class="my-0 mx-2">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
                         </div>
                     </div>
-                @endif
                 </div>
                 <br>
                 <div class="form-row" v-show="status == 'paid'">
