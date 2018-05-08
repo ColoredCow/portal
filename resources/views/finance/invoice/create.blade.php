@@ -59,7 +59,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" value="{{ old('sent_amount') }}">
+                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" v-model="sentAmount" data-sent-amount="{{ old('sent_amount') }}">
                         </div>
                     </div>
                     <div class="form-group col-md-2" v-show="activeClient.hasOwnProperty('country') && activeClient.country == 'india'">
@@ -114,7 +114,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS" step=".01" min="0" value="{{ old('tds') }}">
+                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS" step=".01" min="0" v-model="tdsAmount" data-tds="{{ old('tds') }}">
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="transaction_charge" id="transaction_charge" placeholder="amount" step=".01" min="0" value="{{ old('transaction_charge') }}">
+                            <input type="number" class="form-control" name="transaction_charge" id="transaction_charge" placeholder="amount" step=".01" min="0" v-model="transactionCharge" data-transaction-charge="{{ old('transaction_charge') }}">
                         </div>
                     </div>
                     <div class="form-group col-md-2">
@@ -169,7 +169,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="due_amount" id="due_amount" placeholder="balance left" step=".01" min="0" value="{{ old('due_amount') }}">
+                            <input type="number" class="form-control" name="due_amount" id="due_amount" placeholder="balance left" step=".01" min="0" v-model="suggestedDueAmount" data-due-amount="{{ old('due_amount') }}">
                         </div>
                     </div>
                 </div>
