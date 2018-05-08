@@ -36,8 +36,14 @@
                             </div>
                             <div class="form-row" v-show="clientCountryGstApplicable">
                                 <div class="form-group col-md-8 d-flex align-items-center">
-                                    <input type="checkbox" name="cost_include_gst" id="cost_include_gst" :checked="inputStageCostIncludeGst" v-model="inputStageCostIncludeGst">
-                                    <label for="sent_amount" class="mb-0 pl-2">Is GST included in Stage Cost?</label>
+                                    <label for="sent_amount" class="mb-0">Stage cost include GST?&nbsp;</label>
+                                    <label class="switch mb-0">
+                                        <input type="checkbox" id="cost_include_gst" name="cost_include_gst" value="1" v-model="inputStageCostIncludeGst">
+                                        <div class="slider secondary-slider round" @click="toggleInputStageCostIncludeGst" :class="[inputStageCostIncludeGst ? 'active' : 'inactive']" >
+                                            <span class="on w-100 text-left pl-3">Yes</span>
+                                            <span class="off w-100 text-right pr-3">No</span>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
                             <div class="mt-2 mb-2" v-show="clientCountryGstApplicable">
@@ -297,6 +303,9 @@
                 document.getElementById('new_invoice_billing_id').value = args.billingId;
                 document.getElementById('sent_amount').value = args.invoiceAmount;
                 document.getElementById('gst').value = args.gst;
+            },
+            toggleInputStageCostIncludeGst() {
+                this.inputStageCostIncludeGst = !this.inputStageCostIncludeGst;
             }
         }
     }
