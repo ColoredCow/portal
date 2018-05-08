@@ -37,9 +37,7 @@
                 </div>
                 <div class="col-md-4">
                     <h4>Received amount</h4>
-                    @foreach ($report['paidAmount'] as $currency => $sentAmount)
-                        <h5><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
-                    @endforeach
+                    <h5>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $report['totalPaidAmount'] }}</h5>
                 </div>
                 <div class="col-md-4">
                     <h4>Balance left</h4>
