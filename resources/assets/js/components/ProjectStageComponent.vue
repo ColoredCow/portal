@@ -39,7 +39,7 @@
                                     <label for="sent_amount" class="mb-0">Stage cost include GST?&nbsp;</label>
                                     <label class="switch mb-0">
                                         <input type="checkbox" id="cost_include_gst" name="cost_include_gst" value="1" v-model="inputStageCostIncludeGst">
-                                        <div class="slider round" @click="toggleInputStageCostIncludeGst" :class="[inputStageCostIncludeGst ? 'active' : 'inactive']" >
+                                        <div class="slider secondary-slider round" @click="toggleInputStageCostIncludeGst" :class="[inputStageCostIncludeGst ? 'active' : 'inactive']" >
                                             <span class="on w-100 text-left pl-3">Yes</span>
                                             <span class="off w-100 text-right pr-3">No</span>
                                         </div>

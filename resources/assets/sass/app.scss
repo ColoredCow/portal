@@ -251,6 +251,9 @@ input[type="file"] {
     .on {
         display: none;
     }
+    &.secondary-slider {
+        background-color: $secondary;
+    }
 }
 
 .slider.active {
@@ -264,6 +267,9 @@ input[type="file"] {
     }
     .off {
         display: none;
+    }
+    &.secondary-slider {
+        background-color: $info;
     }
 }
 input:focus + .slider {
