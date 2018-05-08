@@ -46,7 +46,7 @@ class ProjectStageController extends Controller
             'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
             'end_date' => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
             'currency_cost' => $validated['currency_cost'],
-            'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] == 'on' ? true : false,
+            'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] ? true : false,
         ]);
 
         if (isset($validated['new_billing']))
@@ -109,7 +109,7 @@ class ProjectStageController extends Controller
             'end_date' => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
             'cost' => $validated['cost'],
             'currency_cost' => $validated['currency_cost'],
-            'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] == 'on' ? true : false,
+            'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] ? true : false,
         ]);
 
         if (isset($validated['billing']))
