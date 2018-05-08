@@ -9,8 +9,14 @@ return [
         'weeklydose'
     ],
     'countries' => [
-        'india' => 'India',
-        'united-states' => 'United States',
+        'india' => [
+            'title' => 'India',
+            'currency' => 'INR'
+        ],
+        'united-states' => [
+            'title' => 'United States',
+            'currency' => 'USD'
+        ],
     ],
     'pagination_size' => 10,
     'hr' => [

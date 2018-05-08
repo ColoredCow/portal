@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Finance\Invoice;
 use App\Models\ProjectStageBilling;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,9 +23,23 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        return view('finance.invoice.index')->with([
-            'invoices' => Invoice::getList(),
-        ]);
+        $request = request();
+
+        if ($request->get('start') && $request->get('end')) {
+            $startDate = $request->get('start');
+            $endDate = $request->get('end');
+            $attr = [
+                'invoices' => Invoice::filterByDates($startDate, $endDate)->appends(Input::except('page')),
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+            ];
+        } else {
+            $attr = [
+                'invoices' => Invoice::getList()
+            ];
+        }
+
+        return view('finance.invoice.index')->with($attr);
     }
 
     /**

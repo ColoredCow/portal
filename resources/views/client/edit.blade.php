@@ -58,8 +58,8 @@
                         <label for="country">Country</label>
                             <select name="country" id="country" class="form-control" data-pre-select-country="{{$client->country}}" v-model="country" >
                             <option value="">Select country</option>
-                            @foreach (config('constants.countries') as $country => $country_name)
-                                <option value="{{ $country }}" >{{ $country_name }}</option>
+                            @foreach (config('constants.countries') as $country => $countryDetails)
+                                <option value="{{ $country }}" >{{ $countryDetails['title'] }}</option>
                             @endforeach
                         </select>
                     </div>
