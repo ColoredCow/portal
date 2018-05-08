@@ -19,7 +19,6 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('invoice-project-component', require('./components/InvoiceProjectComponent.vue'));
@@ -52,9 +51,18 @@ if (document.getElementById('form_invoice')) {
             paymentType: document.getElementById('payment_type').dataset.paymentType || '',
             chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null,
             selectedClient: '',
-            activeClient: [],
+            activeClient: document.getElementById('client_id').dataset.activeClient ? JSON.parse(document.getElementById('client_id').dataset.activeClient) : [],
+            paidAmountCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR',
+            paidAmount: document.getElementById('paid_amount').dataset.paidAmount || '',
+            conversionRate: document.getElementById('conversion_rate').dataset.conversionRate || '',
+            status: document.getElementById('status').dataset.status || '',
             countries: document.getElementById('client_id').dataset.countries || [],
             activeClientCurrency: 'INR'
+        },
+        computed: {
+            convertedAmount: function() {
+                return (this.paidAmount * this.conversionRate).toFixed(2);
+            }
         },
         methods : {
             updateActiveClient: function() {
