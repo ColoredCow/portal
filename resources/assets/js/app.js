@@ -51,7 +51,7 @@ if (document.getElementById('form_invoice')) {
             paymentType: document.getElementById('payment_type').dataset.paymentType || '',
             chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null,
             selectedClient: '',
-            activeClient: [],
+            activeClient: document.getElementById('client_id').dataset.activeClient ? JSON.parse(document.getElementById('client_id').dataset.activeClient) : [],
             paidAmountCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR',
             paidAmount: document.getElementById('paid_amount').dataset.paidAmount || '',
             conversionRate: document.getElementById('conversion_rate').dataset.conversionRate || '',

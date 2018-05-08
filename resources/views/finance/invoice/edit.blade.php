@@ -23,7 +23,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="client_id" class="field-required">Client</label>
-                        <select name="client_id" id="client_id" class="form-control" required="required" disabled="disabled">
+                        <select name="client_id" id="client_id" class="form-control" required="required" disabled="disabled" data-active-client="{{$invoice_client}}">
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
                                 @php
