@@ -37,11 +37,20 @@ class Invoice extends Model
      * @param  string $endDate
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function filterByDates($start, $end)
+    public static function filterByDates($start, $end, $paginated = false)
     {
-        return self::whereDate('sent_on', '>=', $start)
+        $invoices = self::whereDate('sent_on', '>=', $start)
             ->whereDate('sent_on', '<=', $end)
-            ->orderBy('sent_on', 'desc')
-            ->paginate(config('constants.pagination_size'));
+            ->orderBy('sent_on', 'desc');
+
+        return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
+    }
+
+    public static function filterByDatesReceived($start, $end)
+    {
+        return self::whereDate('paid_on', '>=', $start)
+            ->whereDate('paid_on', '<=', $end)
+            ->orderBy('paid_on', 'desc')
+            ->get();
     }
 }

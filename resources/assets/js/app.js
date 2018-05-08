@@ -115,6 +115,15 @@ if (document.getElementById('client_form')) {
     });
 }
 
+if (document.getElementById('finance_report')) {
+    const invoiceForm = new Vue({
+        el: '#finance_report',
+        data: {
+            showReportTable: 'received'
+        }
+    });
+}
+
 $('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
     form.find('[name="round_status"]').val($(this).data('status'));

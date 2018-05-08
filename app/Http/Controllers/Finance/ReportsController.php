@@ -21,10 +21,12 @@ class ReportsController extends Controller
         {
             $startDate = $request->get('start');
             $endDate = $request->get('end');
-            $invoices = Invoice::filterByDates($startDate, $endDate);
+            $sentInvoices = Invoice::filterByDates($startDate, $endDate);
+            $receivedInvoices = Invoice::filterByDatesReceived($startDate, $endDate);
             $attr = [
-                'invoices' => $invoices,
-                'report' => self::getReportDetails($invoices),
+                'sentInvoices' => $sentInvoices,
+                'receivedInvoices' => $receivedInvoices,
+                'report' => self::getReportDetails($sentInvoices),
                 'startDate' => $startDate,
                 'endDate' => $endDate,
                 'displayStartDate' => (new Carbon($startDate))->format('F d, Y'),
