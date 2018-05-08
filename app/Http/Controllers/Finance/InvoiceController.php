@@ -71,7 +71,7 @@ class InvoiceController extends Controller
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'sent_amount' => $validated['sent_amount'],
             'currency_sent_amount' => $validated['currency_sent_amount'],
-            'gst' => $validated['gst'],
+            'gst' => isset($validated['gst']) ? $validated['gst'] : null,
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
             'payment_type' => $validated['payment_type'],
@@ -86,7 +86,7 @@ class InvoiceController extends Controller
             'transaction_tax' => $validated['transaction_tax'],
             'currency_transaction_tax' => $validated['currency_transaction_tax'],
             'comments' => $validated['comments'],
-            'tds' => $validated['tds'],
+            'tds' => isset($validated['tds']) ? $validated['tds'] : null,
             'currency_tds' => $validated['currency_tds'],
             'file_path' => $path
         ]);
@@ -159,7 +159,7 @@ class InvoiceController extends Controller
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'sent_amount' => $validated['sent_amount'],
             'currency_sent_amount' => $validated['currency_sent_amount'],
-            'gst' => $validated['gst'],
+            'gst' => isset($validated['gst']) ? $validated['gst'] : null,
             'paid_on' => $validated['paid_on'] ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => $validated['paid_amount'],
             'payment_type' => $validated['payment_type'],
@@ -174,7 +174,7 @@ class InvoiceController extends Controller
             'transaction_tax' => $validated['transaction_tax'],
             'currency_transaction_tax' => $validated['currency_transaction_tax'],
             'comments' => $validated['comments'],
-            'tds' => $validated['tds'],
+            'tds' => isset($validated['tds']) ? $validated['tds'] : null,
             'currency_tds' => $validated['currency_tds'],
         ]);
 
