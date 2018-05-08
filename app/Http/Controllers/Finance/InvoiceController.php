@@ -24,7 +24,6 @@ class InvoiceController extends Controller
     public function index()
     {
         $request = request();
-
         if ($request->get('start') && $request->get('end')) {
             $startDate = $request->get('start');
             $endDate = $request->get('end');
@@ -81,6 +80,11 @@ class InvoiceController extends Controller
             'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
             'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
             'currency_paid_amount' => $validated['currency_paid_amount'],
+            'conversion_rate' => $validated['conversion_rate'],
+            'transaction_charge' => $validated['transaction_charge'],
+            'currency_transaction_charge' => $validated['currency_transaction_charge'],
+            'transaction_tax' => $validated['transaction_tax'],
+            'currency_transaction_tax' => $validated['currency_transaction_tax'],
             'comments' => $validated['comments'],
             'tds' => $validated['tds'],
             'currency_tds' => $validated['currency_tds'],
@@ -164,6 +168,11 @@ class InvoiceController extends Controller
             'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
             'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
             'currency_paid_amount' => $validated['currency_paid_amount'],
+            'conversion_rate' => $validated['conversion_rate'],
+            'transaction_charge' => $validated['transaction_charge'],
+            'currency_transaction_charge' => $validated['currency_transaction_charge'],
+            'transaction_tax' => $validated['transaction_tax'],
+            'currency_transaction_tax' => $validated['currency_transaction_tax'],
             'comments' => $validated['comments'],
             'tds' => $validated['tds'],
             'currency_tds' => $validated['currency_tds'],
