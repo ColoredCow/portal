@@ -37,9 +37,7 @@
                 </div>
                 <div class="col-md-4">
                     <h4>Received amount</h4>
-                    @foreach ($report['paidAmount'] as $currency => $sentAmount)
-                        <h5><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
-                    @endforeach
+                    <h5>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $report['totalPaidAmount'] }}</h5>
                 </div>
                 <div class="col-md-4">
                     <h4>Balance left</h4>
@@ -62,7 +60,7 @@
             </div>
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <h4>Bank charges</h4>
+                    <h4>Bank charges on Fund Transfer</h4>
                     @foreach ($report['transactionCharge'] as $currency => $amount)
                         <h5><b>{{ $currency }} : </b> {{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
                     @endforeach
@@ -86,7 +84,7 @@
                                 <th>Received on</th>
                                 <th>Received amount</th>
                                 <th>TDS deducted</th>
-                                <th>Bank Charges</th>
+                                <th>Bank charges</th>
                                 <th>ST on Fund Transfer</th>
                             </tr>
                         </thead>
@@ -119,7 +117,17 @@
                             @endif
                             @if ($invoice->status == 'paid')
                                 <td>{{ date(config('constants.display_date_format'), strtotime($invoice->paid_on)) }}</td>
-                                <td>{{ config("constants.currency.$invoice->currency_paid_amount.symbol") }}&nbsp;{{ $invoice->paid_amount }}</td>
+                                <td>
+                                    @php
+                                        if ($invoice->currency_paid_amount != 'INR') {
+                                            $conversionRate = $invoice->conversion_rate ?? 1;
+                                            $paidAmount = $invoice->paid_amount * $conversionRate;
+                                        } else {
+                                            $paidAmount = $invoice->paid_amount;
+                                        }
+                                    @endphp
+                                    {{ config("constants.currency.INR.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
+                                </td>
                                 @if ($invoice->currency_sent_amount == 'INR' && $invoice->tds)
                                     <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->tds }}</td>
                                 @else
