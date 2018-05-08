@@ -60,7 +60,7 @@
             </div>
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <h4>Bank charges</h4>
+                    <h4>Bank charges on Fund Transfer</h4>
                     @foreach ($report['transactionCharge'] as $currency => $amount)
                         <h5><b>{{ $currency }} : </b> {{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
                     @endforeach
@@ -84,7 +84,7 @@
                                 <th>Received on</th>
                                 <th>Received amount</th>
                                 <th>TDS deducted</th>
-                                <th>Bank Charges</th>
+                                <th>Bank charges</th>
                                 <th>ST on Fund Transfer</th>
                             </tr>
                         </thead>
@@ -126,7 +126,7 @@
                                             $paidAmount = $invoice->paid_amount;
                                         }
                                     @endphp
-                                    {{ config("constants.currency.$invoice->currency_paid_amount.symbol") }}&nbsp;{{ $paidAmount }}
+                                    {{ config("constants.currency.INR.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
                                 </td>
                                 @if ($invoice->currency_sent_amount == 'INR' && $invoice->tds)
                                     <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->tds }}</td>

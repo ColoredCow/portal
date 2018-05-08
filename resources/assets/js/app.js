@@ -52,16 +52,18 @@ if (document.getElementById('form_invoice')) {
             chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null,
             selectedClient: '',
             activeClient: document.getElementById('client_id').dataset.activeClient ? JSON.parse(document.getElementById('client_id').dataset.activeClient) : [],
-            paidAmountCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR',
+            activeClientCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR',
             paidAmount: document.getElementById('paid_amount').dataset.paidAmount || '',
             conversionRate: document.getElementById('conversion_rate').dataset.conversionRate || '',
             status: document.getElementById('status').dataset.status || '',
             countries: document.getElementById('client_id').dataset.countries || [],
-            activeClientCurrency: 'INR'
         },
         computed: {
             convertedAmount: function() {
                 return (this.paidAmount * this.conversionRate).toFixed(2);
+            },
+            currencyTransactionCharge: function() {
+                return this.activeClientCurrency || 'USD';
             }
         },
         methods : {
