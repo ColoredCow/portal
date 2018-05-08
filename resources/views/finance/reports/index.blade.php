@@ -86,6 +86,7 @@
                                 <th>TDS deducted</th>
                                 <th>Bank charges</th>
                                 <th>ST on Fund Transfer</th>
+                                <th>Balance left</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,7 +144,13 @@
                                 @else
                                     <td>-</td>
                                 @endif
+                                @if ($invoice->due_amount)
+                                    <td>{{ config("constants.currency.$invoice->currency_due_amount.symbol") }}&nbsp;{{ $invoice->due_amount }}</td>
+                                @else
+                                    <td>-</td>
+                                @endif
                             @else
+                                <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>

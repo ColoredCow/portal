@@ -168,9 +168,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group" :class="[activeClientCurrency == 'INR' ? 'offset-md-1 col-md-3' : 'col-md-2']">
                         <label for="due_amount">Balance left</label>
-                        <input type="number" class="form-control" name="due_amount" id="due_amount" placeholder="balance left" step=".01" min="0" value="{{ $invoice->due_amount }}">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_due_amount" id="currency_due_amount" class="btn btn-secondary" required="required" v-model="currencyDueAmount" data-currency-due-amount="{{ $invoice->currency_due_amount }}">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    <option value="{{ $currency }}">{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="due_amount" id="due_amount" placeholder="balance left" step=".01" min="0" value="{{ $invoice->due_amount }}">
+                        </div>
                     </div>
                 </div>
                 <br>

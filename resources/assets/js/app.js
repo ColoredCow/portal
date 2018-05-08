@@ -63,7 +63,10 @@ if (document.getElementById('form_invoice')) {
                 return (this.paidAmount * this.conversionRate).toFixed(2);
             },
             currencyTransactionCharge: function() {
-                return this.activeClientCurrency || 'USD';
+                return document.getElementById('currency_transaction_charge').dataset.currencyTransactionCharge || this.activeClientCurrency || 'USD';
+            },
+            currencyDueAmount: function() {
+                return document.getElementById('currency_due_amount').dataset.currencyDueAmount || this.activeClientCurrency || 'USD';
             }
         },
         methods : {

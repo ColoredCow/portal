@@ -89,6 +89,7 @@ class InvoiceController extends Controller
             'tds' => isset($validated['tds']) ? $validated['tds'] : null,
             'currency_tds' => $validated['currency_tds'],
             'due_amount' => $validated['due_amount'],
+            'currency_due_amount' => $validated['currency_due_amount'],
             'file_path' => $path
         ]);
 
@@ -178,6 +179,7 @@ class InvoiceController extends Controller
             'tds' => isset($validated['tds']) ? $validated['tds'] : null,
             'currency_tds' => $validated['currency_tds'],
             'due_amount' => $validated['due_amount'],
+            'currency_due_amount' => $validated['currency_due_amount'],
         ]);
 
         $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
