@@ -28,7 +28,7 @@ class InvoiceController extends Controller
             $startDate = $request->get('start');
             $endDate = $request->get('end');
             $attr = [
-                'invoices' => Invoice::filterByDates($startDate, $endDate, true)->appends(Input::except('page')),
+                'invoices' => Invoice::filterBySentDate($startDate, $endDate, true)->appends(Input::except('page')),
                 'startDate' => $startDate,
                 'endDate' => $endDate,
             ];

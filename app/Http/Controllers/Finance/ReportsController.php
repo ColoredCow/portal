@@ -20,7 +20,7 @@ class ReportsController extends Controller
         if ($request->get('start') && $request->get('end')) {
             $startDate = $request->get('start');
             $endDate = $request->get('end');
-            $invoices = Invoice::getSentAndReceivedInvoicesByDate($startDate, $endDate);
+            $invoices = Invoice::filterByDates($startDate, $endDate);
             $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
             $attr = [
                 'sentInvoices' => $arrangedInvoices['sent'],
