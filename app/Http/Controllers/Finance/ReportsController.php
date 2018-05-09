@@ -17,19 +17,35 @@ class ReportsController extends Controller
     public function index()
     {
         $request = request();
-        if ($request->get('start') && $request->get('end')) {
+
+        if ($request->get('show') && $request->get('show') == 'default') {
+            $startDate = new Carbon('first day of last month');
+            $endDate = new Carbon('last day of last month');
+            $formattedStartDate = $startDate->format(config('constants.date_format'));
+            $formattedEndDate = $endDate->format(config('constants.date_format'));
+            $invoices = Invoice::filterByDates($formattedStartDate, $formattedEndDate);
+            $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
+            $attr = [
+                'sentInvoices' => $arrangedInvoices['sent'],
+                'paidInvoices' => $arrangedInvoices['paid'],
+                'report' => self::getReportDetails($arrangedInvoices['sent'], $arrangedInvoices['paid']),
+                'startDate' => $formattedStartDate,
+                'endDate' => $formattedEndDate,
+                'showingResultsFor' => $startDate->format('F Y'),
+            ];
+        } else if ($request->get('start') && $request->get('end')) {
             $startDate = $request->get('start');
             $endDate = $request->get('end');
             $invoices = Invoice::filterByDates($startDate, $endDate);
             $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
+            $showingResultsFor = (new Carbon($startDate))->format('F d, Y') . ' - ' . (new Carbon($endDate))->format('F d, Y');
             $attr = [
                 'sentInvoices' => $arrangedInvoices['sent'],
                 'paidInvoices' => $arrangedInvoices['paid'],
                 'report' => self::getReportDetails($arrangedInvoices['sent'], $arrangedInvoices['paid']),
                 'startDate' => $startDate,
                 'endDate' => $endDate,
-                'displayStartDate' => (new Carbon($startDate))->format('F d, Y'),
-                'displayEndDate' => (new Carbon($endDate))->format('F d, Y'),
+                'showingResultsFor' => $showingResultsFor,
             ];
         } else {
             $invoices = Invoice::all();
@@ -38,6 +54,7 @@ class ReportsController extends Controller
                 'sentInvoices' => $arrangedInvoices['sent'],
                 'paidInvoices' => $arrangedInvoices['paid'],
                 'report' => self::getReportDetails($arrangedInvoices['sent'], $arrangedInvoices['paid']),
+                'showingResultsFor' => '',
             ];
         }
 

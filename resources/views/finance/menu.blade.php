@@ -9,9 +9,9 @@
         <a class="nav-item nav-link {{ $active === 'invoices' ? 'active' : '' }}" href="/finance/invoices"><i class="fa fa-folder-open"></i>&nbsp;Invoices</a>
     </li>
     <li class="nav-item">
-        <a class="nav-item nav-link {{ $active === 'reports' ? 'active' : '' }}"
-        href="/finance/reports?start={{ (new \Carbon\Carbon('first day of last month'))->format(config('constants.date_format')) }}&end={{ (new \Carbon\Carbon('last day of last month'))->format(config('constants.date_format')) }}">
+        <a href="/finance/reports?show=default" class="nav-item nav-link {{ $active === 'reports' ? 'active' : '' }}">
             <i class="fa fa-line-chart"></i>&nbsp;Reports
+        </a>
         </a>
     </li>
 </ul>
