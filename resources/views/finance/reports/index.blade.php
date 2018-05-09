@@ -26,7 +26,7 @@
                 <div class="col-md-3">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($sentInvoices) }}</div>
                 <div class="col-md-3">Total invoices received:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($paidInvoices) }}</div>
                 @if ($showingResultsFor)
-                    <div class="d-inline">Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $showingResultsFor }}</h3></div>
+                    <div class="col-md-6 text-right">Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $showingResultsFor }}</h3></div>
                 @endif
             </div>
         </div>

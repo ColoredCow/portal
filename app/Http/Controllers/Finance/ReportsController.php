@@ -24,9 +24,11 @@ class ReportsController extends Controller
             $formattedStartDate = $startDate->format(config('constants.date_format'));
             $formattedEndDate = $endDate->format(config('constants.date_format'));
             $invoices = Invoice::filterByDates($formattedStartDate, $formattedEndDate);
+            $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
             $attr = [
-                'invoices' => $invoices,
-                'report' => self::getReportDetails($invoices),
+                'sentInvoices' => $arrangedInvoices['sent'],
+                'paidInvoices' => $arrangedInvoices['paid'],
+                'report' => self::getReportDetails($arrangedInvoices['sent'], $arrangedInvoices['paid']),
                 'startDate' => $formattedStartDate,
                 'endDate' => $formattedEndDate,
                 'showingResultsFor' => $startDate->format('F Y'),
