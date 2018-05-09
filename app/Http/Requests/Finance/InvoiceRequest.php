@@ -47,7 +47,9 @@ class InvoiceRequest extends FormRequest
             'currency_transaction_tax' => 'nullable|string',
             'billings' => 'required',
             'gst' => 'nullable|numeric',
-            'request_from_billing' => 'nullable|boolean'
+            'request_from_billing' => 'nullable|boolean',
+            'due_amount' => 'nullable|numeric',
+            'currency_due_amount' => 'nullable|string',
         ];
 
         if ($this->method() === 'POST') {

@@ -63,7 +63,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" value="{{ $invoice->sent_amount }}">
+                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" v-model="sentAmount" data-sent-amount="{{ $invoice->sent_amount }}">
                         </div>
                     </div>
                 @if ($invoice_client->country == 'india')
@@ -123,7 +123,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS" step=".01" min="0" value="{{ $invoice->tds }}">
+                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS" step=".01" min="0" v-model="tdsAmount" data-tds="{{ $invoice->tds }}">
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="transaction_charge" id="transaction_charge" placeholder="amount" step=".01" min="0" value="{{ $invoice->transaction_charge }}">
+                            <input type="number" class="form-control" name="transaction_charge" id="transaction_charge" placeholder="amount" step=".01" min="0" v-model="transactionCharge" data-transaction-charge="{{ $invoice->transaction_charge }}">
                         </div>
                     </div>
                     <div class="form-group col-md-2">
@@ -158,12 +158,27 @@
                             <input type="number" class="form-control" name="transaction_tax" id="transaction_tax" placeholder="amount" step=".01" min="0" value="{{ $invoice->transaction_tax }}">
                         </div>
                     </div>
-                    <div class="form-group offset-md-1 col-md-4" v-show="activeClientCurrency != 'INR'">
+                    <div class="form-group offset-md-1 col-md-3" v-show="activeClientCurrency != 'INR'">
                         <label for="conversion_rate">Conversion rate</label>
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex flex-column">
                             <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ $invoice->conversion_rate }}">
-                            <h4 class="my-0 mx-2">&rArr;</h4>
-                            <h4 class="my-0 mx-2">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
+                            <div class="mt-3 mb-0">
+                                <p class="m-0">Received amount after conversion&nbsp;&nbsp;</p>
+                                <h4 class="m-0">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" :class="[activeClientCurrency == 'INR' ? 'offset-md-1 col-md-3' : 'col-md-2']">
+                        <label for="due_amount">Balance left</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="currency_due_amount" id="currency_due_amount" class="btn btn-secondary" required="required" v-model="currencyDueAmount" data-currency-due-amount="{{ $invoice->currency_due_amount }}">
+                                @foreach (config('constants.currency') as $currency => $currencyMeta)
+                                    <option value="{{ $currency }}">{{ $currency }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" name="due_amount" id="due_amount" placeholder="balance left" step=".01" min="0" v-model="suggestedDueAmount" data-due-amount="{{ $invoice->due_amount }}">
                         </div>
                     </div>
                 </div>
