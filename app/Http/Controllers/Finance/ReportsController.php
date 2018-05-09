@@ -33,10 +33,11 @@ class ReportsController extends Controller
             ];
         } else {
             $invoices = Invoice::all();
+            $arrangedInvoices = self::arrangeInvoices($invoices);
             $attr = [
-                'sentInvoices' => $invoices,
-                'paidInvoices' => $invoices,
-                'report' => self::getReportDetails($invoices, $invoices),
+                'sentInvoices' => $arrangedInvoices['sent'],
+                'paidInvoices' => $arrangedInvoices['paid'],
+                'report' => self::getReportDetails($arrangedInvoices['sent'], $arrangedInvoices['paid']),
             ];
         }
 
@@ -98,21 +99,32 @@ class ReportsController extends Controller
      * @param  string $end      End date
      * @return array
      */
-    public static function arrangeInvoices($invoices, $start, $end)
+    public static function arrangeInvoices($invoices, $start = '', $end = '')
     {
         $arrangedInvoices = [
             'sent' => [],
             'paid' => [],
         ];
-        foreach ($invoices as $invoice) {
-            $sent =  $start <= $invoice->sent_on && $invoice->sent_on <= $end ? true : false;
-            $paid = $invoice->status == 'paid' && $start <= $invoice->paid_on && $invoice->paid_on <= $end ? true : false;
+        if ($start && $end) {
+            foreach ($invoices as $invoice) {
+                $sent = $start <= $invoice->sent_on && $invoice->sent_on <= $end ? true : false;
+                $paid = $invoice->status == 'paid' && $start <= $invoice->paid_on && $invoice->paid_on <= $end ? true : false;
 
-            if ($sent) {
-                $arrangedInvoices['sent'][] = $invoice;
+                if ($sent) {
+                    $arrangedInvoices['sent'][] = $invoice;
+                }
+                if ($paid) {
+                    $arrangedInvoices['paid'][] = $invoice;
+                }
             }
-            if ($paid) {
-                $arrangedInvoices['paid'][] = $invoice;
+        } else {
+            foreach ($invoices as $invoice) {
+                $arrangedInvoices['sent'][] = $invoice;
+                $paid = $invoice->status == 'paid' ? true : false;
+
+                if ($paid) {
+                    $arrangedInvoices['paid'][] = $invoice;
+                }
             }
         }
         return $arrangedInvoices;
