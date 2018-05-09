@@ -25,7 +25,7 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'role:super-admin|admin'])->group(function () {
     Route::resource('hr/applicants', 'HR\ApplicantController')->only(['index', 'edit']);
     Route::resource('hr/applicants/rounds', 'HR\ApplicantRoundController')->only(['store', 'update']);
     Route::resource('hr/jobs', 'HR\JobController')->except(['create', 'show', 'destroy']);
@@ -46,5 +46,8 @@ Route::middleware('auth')->group(function () {
                 ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
 
     Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo')->name('books.fetchInfo');
+});
+
+Route::middleware(['auth', 'permission:view.finance_reports'])->group(function(){
     Route::get('/finance/reports', 'Finance\ReportsController@index');
 });

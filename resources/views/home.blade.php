@@ -4,31 +4,39 @@
 <div class="container">
     <br>
     <div class="d-flex justify-content-between row">
-        <div class="col-md-3  card">
+        @hasanyrole('super-admin|admin')
+        <div class="col-md-3 card">
             <a class="card-body no-transition" href="/hr/applicants/">
                 <br><h2 class="text-center">HR</h2><br>
             </a>
         </div>
+        @endhasanyrole
+        @hasanyrole('super-admin|admin|accountant')
         <div class="col-md-3 card">
-            <a class="card-body no-transition" href="/finance/invoices/">
+            <a class="card-body no-transition" href="/finance/reports?show=default">
                 <br><h2 class="text-center">Finance</h2><br>
             </a>
         </div>
+        @endhasanyrole
+        @hasanyrole('super-admin|admin')
         <div class="col-md-3 card">
             <a class="card-body no-transition" href="/weeklydoses/">
                 <br><h2 class="text-center">WeeklyDose</h2><br>
             </a>
         </div>
+        @endhasanyrole
     </div>
 
     <br>
 
     <div class="d-flex justify-content-between row">
+        @hasanyrole('super-admin|admin')
         <div class="col-md-3 card">
             <a class="card-body no-transition" href="/knowledgecafe">
                 <br><h2 class="text-center">Knowledge Cafe</h2><br>
             </a>
         </div>
+        @endhasanyrole
     </div>
 
 </div>
