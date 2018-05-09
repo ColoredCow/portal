@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="finance_report">
     <br>
     @include('finance.menu', ['active' => 'reports'])
     <br><br>
@@ -21,11 +21,14 @@
     </div>
     <br>
     <div class="card">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <div class="d-inline">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $invoices->count() }}</h3></div>
-            @if (isset($displayStartDate) && isset($displayEndDate))
-                <div class="d-inline">Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $displayStartDate }} – {{ $displayEndDate }}</h3></div>
-            @endif
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-3">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($sentInvoices) }}</div>
+                <div class="col-md-3">Total invoices received:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($paidInvoices) }}</div>
+                @if ($showingResultsFor)
+                    <div class="col-md-6 text-right">Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $showingResultsFor }}</h3></div>
+                @endif
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -72,90 +75,16 @@
                     @endforeach
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <table class="table table-bordered table-striped">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Invoice</th>
-                                <th>Sent on</th>
-                                <th>Invoiced amount</th>
-                                <th>GST</th>
-                                <th>Received on</th>
-                                <th>Received amount</th>
-                                <th>TDS deducted</th>
-                                <th>Bank charges</th>
-                                <th>ST on Fund Transfer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($invoices as $invoice)
-                        <tr>
-                            <td>
-                                <a href="/finance/invoices/{{ $invoice->id }}/edit" target="_blank">
-                                    @foreach ($invoice->projectStageBillings as $billing)
-                                        {{ $loop->first ? '' : '|' }}
-                                        {{ $billing->projectStage->project->name }}
-                                    @endforeach
-                                </a>
-                                @switch ($invoice->status)
-                                    @case('paid')
-                                        <span class="badge badge-pill badge-success">
-                                        @break
-                                    @case('unpaid')
-                                        <span class="badge badge-pill badge-danger">
-                                        @break
-                                @endswitch
-                                {{ $invoice->status }}</span>
-                            </td>
-                            <td>{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}</td>
-                            <td>{{ config('constants.currency.' . $invoice->currency_sent_amount . '.symbol') }}&nbsp;{{ $invoice->sent_amount }}</td>
-                            @if ($invoice->currency_sent_amount == 'INR' && $invoice->gst)
-                                <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->gst }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            @if ($invoice->status == 'paid')
-                                <td>{{ date(config('constants.display_date_format'), strtotime($invoice->paid_on)) }}</td>
-                                <td>
-                                    @php
-                                        if ($invoice->currency_paid_amount != 'INR') {
-                                            $conversionRate = $invoice->conversion_rate ?? 1;
-                                            $paidAmount = $invoice->paid_amount * $conversionRate;
-                                        } else {
-                                            $paidAmount = $invoice->paid_amount;
-                                        }
-                                    @endphp
-                                    {{ config("constants.currency.INR.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
-                                </td>
-                                @if ($invoice->currency_sent_amount == 'INR' && $invoice->tds)
-                                    <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->tds }}</td>
-                                @else
-                                    <td>-</td>
-                                @endif
-                                @if ($invoice->transaction_charge)
-                                    <td>{{ config("constants.currency.$invoice->currency_transaction_charge.symbol") }}&nbsp;{{ $invoice->transaction_charge }}</td>
-                                @else
-                                    <td>-</td>
-                                @endif
-                                @if ($invoice->transaction_tax)
-                                    <td>{{ config("constants.currency.$invoice->currency_transaction_tax.symbol") }}&nbsp;{{ $invoice->transaction_tax }}</td>
-                                @else
-                                    <td>-</td>
-                                @endif
-                            @else
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            @endif
-                        </tr>
-                    @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <ul class="nav nav-tabs mt-5">
+                <li class="nav-item">
+                    <span class="c-pointer nav-link" :class="[showReportTable == 'received' ? 'active' : '']"  @click="showReportTable = 'received'">Received Invoices</span>
+                </li>
+                <li class="nav-item">
+                    <span class="c-pointer nav-link" :class="[showReportTable == 'sent' ? 'active' : '']" @click="showReportTable = 'sent'">Sent Invoices</span>
+                </li>
+            </ul>
+            @include('finance.reports.report-table', ['invoices' => $paidInvoices, 'type' => 'received'])
+            @include('finance.reports.report-table', ['invoices' => $sentInvoices, 'type' => 'sent'])
         </div>
     </div>
 </div>
