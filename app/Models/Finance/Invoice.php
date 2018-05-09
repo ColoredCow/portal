@@ -53,4 +53,16 @@ class Invoice extends Model
             ->orderBy('paid_on', 'desc')
             ->get();
     }
+
+    public static function getSentAndReceivedInvoicesByDate($start, $end, $paginated = false)
+    {
+        return self::where(function ($query) use ($start, $end) {
+                $query->where('sent_on', '>=', $start)
+                      ->where('sent_on', '<=', $end);
+            })->orWhere(function ($query) use ($start, $end) {
+                $query->where('paid_on', '>=', $start)
+                      ->where('paid_on', '<=', $end);
+            })->get();
+
+    }
 }

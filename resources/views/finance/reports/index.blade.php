@@ -22,7 +22,7 @@
     <br>
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <div class="d-inline">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $sentInvoices->count() }}</h3></div>
+            <div class="d-inline">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($sentInvoices) }}</h3></div>
             @if (isset($displayStartDate) && isset($displayEndDate))
                 <div class="d-inline">Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $displayStartDate }} – {{ $displayEndDate }}</h3></div>
             @endif
@@ -80,7 +80,7 @@
                     <span class="c-pointer nav-link" :class="[showReportTable == 'sent' ? 'active' : '']" @click="showReportTable = 'sent'">Sent Invoices</span>
                 </li>
             </ul>
-            @include('finance.reports.report-table', ['invoices' => $receivedInvoices, 'type' => 'received'])
+            @include('finance.reports.report-table', ['invoices' => $paidInvoices, 'type' => 'received'])
             @include('finance.reports.report-table', ['invoices' => $sentInvoices, 'type' => 'sent'])
         </div>
     </div>
