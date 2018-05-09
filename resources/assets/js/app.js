@@ -129,7 +129,19 @@ if (document.getElementById('finance_report')) {
     const invoiceForm = new Vue({
         el: '#finance_report',
         data: {
-            showReportTable: 'received'
+            showReportTable: 'received',
+            sentAmountINR: document.getElementById('sent_amount_INR').dataset.sentAmount || 0,
+            sentAmountUSD: document.getElementById('sent_amount_USD').dataset.sentAmount || 0,
+            conversionRateUSD: 65,
+        },
+        computed: {
+            convertedUSDSentAmount: function() {
+                let convertedAmount = parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
+                return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
+            },
+            totalINREstimated: function() {
+                return parseFloat(this.sentAmountINR) + parseFloat(this.convertedUSDSentAmount);
+            }
         }
     });
 }

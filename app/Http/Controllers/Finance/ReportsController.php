@@ -79,12 +79,17 @@ class ReportsController extends Controller
             $report['transactionCharge'][$currency] = 0;
             $report['transactionTax'][$currency] = 0;
             $report['dueAmount'][$currency] = 0;
+            $report['receivable'][$currency] = 0;
         }
 
         $report['gst'] = 0;
         foreach ($sentInvoices as $invoice) {
             $report['gst'] += $invoice->gst;
             $report['sentAmount'][$invoice->currency_sent_amount] += $invoice->sent_amount;
+
+            if ($invoice->status != 'paid') {
+                $report['receivable'][$invoice->currency_sent_amount] += $invoice->sent_amount;
+            }
         }
 
         $report['tds'] = 0;
