@@ -94,7 +94,7 @@ class ReportsController extends Controller
     /**
      * arrange invoices based on their start and end date
      *
-     * @param  \Illuminate\Database\Collection $invoices
+     * @param  \Illuminate\Database\Eloquent\Collection $invoices
      * @param  string $start    Start date
      * @param  string $end      End date
      * @return array

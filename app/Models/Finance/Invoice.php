@@ -46,14 +46,13 @@ class Invoice extends Model
         return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
     }
 
-    public static function filterByDatesReceived($start, $end)
-    {
-        return self::whereDate('paid_on', '>=', $start)
-            ->whereDate('paid_on', '<=', $end)
-            ->orderBy('paid_on', 'desc')
-            ->get();
-    }
-
+    /**
+     * Get invoices sent and paid in the date range
+     * @param  string  $start
+     * @param  string  $end
+     * @param  boolean $paginated
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public static function getSentAndReceivedInvoicesByDate($start, $end, $paginated = false)
     {
         return self::where(function ($query) use ($start, $end) {
