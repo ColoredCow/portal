@@ -23,6 +23,7 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <div class="d-inline">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($sentInvoices) }}</h3></div>
+            <div class="d-inline">Total invoices received:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($paidInvoices) }}</h3></div>
             @if (isset($displayStartDate) && isset($displayEndDate))
                 <div class="d-inline">Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $displayStartDate }} – {{ $displayEndDate }}</h3></div>
             @endif

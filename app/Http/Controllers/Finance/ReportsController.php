@@ -90,9 +90,20 @@ class ReportsController extends Controller
         return $report;
     }
 
+    /**
+     * arrange invoices based on their start and end date
+     *
+     * @param  \Illuminate\Database\Collection $invoices
+     * @param  string $start    Start date
+     * @param  string $end      End date
+     * @return array
+     */
     public static function arrangeInvoices($invoices, $start, $end)
     {
-        $arrangedInvoices = [];
+        $arrangedInvoices = [
+            'sent' => [],
+            'paid' => [],
+        ];
         foreach ($invoices as $invoice) {
             $sent =  $start <= $invoice->sent_on && $invoice->sent_on <= $end ? true : false;
             $paid = $invoice->status == 'paid' && $start <= $invoice->paid_on && $invoice->paid_on <= $end ? true : false;
