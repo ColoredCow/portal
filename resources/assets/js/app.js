@@ -54,16 +54,29 @@ if (document.getElementById('form_invoice')) {
             activeClient: document.getElementById('client_id').dataset.activeClient ? JSON.parse(document.getElementById('client_id').dataset.activeClient) : [],
             activeClientCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR',
             paidAmount: document.getElementById('paid_amount').dataset.paidAmount || '',
+            sentAmount: document.getElementById('sent_amount').dataset.sentAmount || '',
             conversionRate: document.getElementById('conversion_rate').dataset.conversionRate || '',
             status: document.getElementById('status').dataset.status || '',
             countries: document.getElementById('client_id').dataset.countries || [],
+            tdsAmount: document.getElementById('tds').dataset.tds || '',
+            transactionCharge: document.getElementById('transaction_charge').dataset.tds || '',
         },
         computed: {
             convertedAmount: function() {
                 return (this.paidAmount * this.conversionRate).toFixed(2);
             },
+            suggestedDueAmount: function() {
+                let dueAmount = document.getElementById('due_amount').dataset.dueAmount;
+                if (dueAmount) {
+                    return dueAmount;
+                }
+                return this.sentAmount - this.paidAmount - this.tdsAmount - this.transactionCharge;
+            },
             currencyTransactionCharge: function() {
-                return this.activeClientCurrency || 'USD';
+                return document.getElementById('currency_transaction_charge').dataset.currencyTransactionCharge || this.activeClientCurrency || 'USD';
+            },
+            currencyDueAmount: function() {
+                return document.getElementById('currency_due_amount').dataset.currencyDueAmount || this.activeClientCurrency || 'USD';
             }
         },
         methods : {
@@ -108,6 +121,15 @@ if (document.getElementById('client_form')) {
                     this.clientEmails.splice(index, 1);
                 }
             }
+        }
+    });
+}
+
+if (document.getElementById('finance_report')) {
+    const invoiceForm = new Vue({
+        el: '#finance_report',
+        data: {
+            showReportTable: 'received'
         }
     });
 }

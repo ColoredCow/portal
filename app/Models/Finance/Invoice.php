@@ -31,17 +31,38 @@ class Invoice extends Model
     }
 
     /**
-     * Get paginated invoices in the selected date range
+     * Get invoices that were sent in the date range
      *
      * @param  string $startDate
      * @param  string $endDate
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function filterByDates($start, $end)
+    public static function filterBySentDate($start, $end, $paginated = false)
     {
-        return self::whereDate('sent_on', '>=', $start)
+        $invoices = self::whereDate('sent_on', '>=', $start)
             ->whereDate('sent_on', '<=', $end)
-            ->orderBy('sent_on', 'desc')
-            ->paginate(config('constants.pagination_size'));
+            ->orderBy('sent_on', 'desc');
+
+        return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
+    }
+
+    /**
+     * Get invoices that were sent or paid in the date range
+     * @param  string  $start
+     * @param  string  $end
+     * @param  boolean $paginated
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function filterByDates($start, $end, $paginated = false)
+    {
+        $invoices = self::where(function ($query) use ($start, $end) {
+                $query->where('sent_on', '>=', $start)
+                      ->where('sent_on', '<=', $end);
+            })->orWhere(function ($query) use ($start, $end) {
+                $query->where('paid_on', '>=', $start)
+                      ->where('paid_on', '<=', $end);
+            });
+
+        return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
     }
 }
