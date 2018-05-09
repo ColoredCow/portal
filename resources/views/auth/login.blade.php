@@ -61,6 +61,8 @@
                             </div>
                         </div>
                     </form>
+
+                    <a href="{{ url('auth/google') }}" class="text-primary"><i class="fa fa-google"></i>&nbsp;Login with Google</a>
                 </div>
             </div>
         </div>
