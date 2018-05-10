@@ -62,7 +62,11 @@
                         </div>
                     </form>
 
-                    <a href="{{ url('auth/google') }}" class="text-primary"><i class="fa fa-google"></i>&nbsp;Login with Google</a>
+                    <div class="d-flex align-items-center justify-content-center mt-5">
+                        <a href="{{ url('auth/google') }}" class="btn btn-outline-primary btn-lg px-5">
+                            <i class="fa fa-google"></i>&nbsp;&nbsp;|&nbsp;&nbsp;Login with Google
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
