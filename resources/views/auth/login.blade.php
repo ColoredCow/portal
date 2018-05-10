@@ -51,20 +51,20 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary px-3">
                                     {{ __('Login') }}
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                {{-- <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                     </form>
 
                     <div class="d-flex align-items-center justify-content-center mt-5">
                         <a href="{{ url('auth/google') }}" class="btn btn-outline-primary btn-lg px-5">
-                            <i class="fa fa-google"></i>&nbsp;&nbsp;|&nbsp;&nbsp;Login with Google
+                            <i class="fa fa-google"></i>&nbsp;&nbsp;|&nbsp;&nbsp;{{ __('Login with Google') }}
                         </a>
                     </div>
                 </div>
