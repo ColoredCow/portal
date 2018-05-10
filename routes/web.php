@@ -46,8 +46,8 @@ Route::middleware(['auth'])->group(function () {
                 ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
 
     Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo')->name('books.fetchInfo');
-});
-
-Route::middleware(['auth', 'permission:view.finance_reports'])->group(function(){
     Route::get('/finance/reports', 'Finance\ReportsController@index');
 });
+
+// Route::middleware(['auth', 'permission:view.finance_reports'])->group(function(){
+// });

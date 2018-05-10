@@ -16,6 +16,8 @@ class ReportsController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', ReportsController::class);
+
         $request = request();
 
         if ($request->get('show') && $request->get('show') == 'default') {

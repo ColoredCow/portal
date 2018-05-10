@@ -21,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\HR\Applicant' => 'App\Policies\HR\ApplicantPolicy',
         'App\Models\KnowledgeCafe\Library\Book' => 'App\Policies\KnowledgeCafe\Library\BookPolicy',
         'App\Models\Setting' => 'App\Policies\SettingPolicy',
+        'App\Http\Controllers\Finance\ReportsController' => 'App\Policies\Finance\ReportPolicy',
     ];
 
     /**
