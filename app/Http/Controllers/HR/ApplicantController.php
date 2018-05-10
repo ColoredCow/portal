@@ -13,14 +13,16 @@ class ApplicantController extends Controller
     /**
      * Display a listing of the resource.
      *@param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function index(ApplicantRequest $request)
-    {  
+    {
+        $this->authorize('view', new Applicant);
+
         $validated = $request->validated();
         $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;
-        
+
         $applicants = Applicant::with('job')
                         ->where(function($query) use ($hrJobID ) {
                             ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
@@ -40,7 +42,7 @@ class ApplicantController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', Applicant::class);
     }
 
     /**
@@ -77,7 +79,7 @@ class ApplicantController extends Controller
      */
     public function show(Applicant $applicant)
     {
-        //
+        $this->authorize('view', $applicant);
     }
 
     /**
@@ -88,6 +90,8 @@ class ApplicantController extends Controller
      */
     public function edit(Applicant $applicant)
     {
+        $this->authorize('update', $applicant);
+
         $applicant->load(['job', 'job.rounds', 'applicantRounds', 'applicantRounds.applicantReviews']);
 
         return view('hr.applicant.edit')->with([
@@ -106,7 +110,7 @@ class ApplicantController extends Controller
      */
     public function update(ApplicantRequest $request, Applicant $applicant)
     {
-        //
+        $this->authorize('update', $applicant);
     }
 
     /**
@@ -117,6 +121,6 @@ class ApplicantController extends Controller
      */
     public function destroy(Applicant $applicant)
     {
-        //
+        $this->authorize('delete', $applicant);
     }
 }
