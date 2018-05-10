@@ -19,6 +19,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\WeeklyDose' => 'App\Policies\WeeklyDosePolicy',
         'App\Models\HR\Job' => 'App\Policies\HR\JobPolicy',
         'App\Models\HR\Applicant' => 'App\Policies\HR\ApplicantPolicy',
+        'App\Models\KnowledgeCafe\Library\Book' => 'App\Policies\KnowledgeCafe\Library\BookPolicy',
+        'App\Models\Setting' => 'App\Policies\SettingPolicy',
     ];
 
     /**

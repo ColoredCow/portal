@@ -39,6 +39,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'update.hr_jobs']);
         Permission::create(['name' => 'delete.hr_jobs']);
 
+        Permission::create(['name' => 'create.settings']);
+        Permission::create(['name' => 'view.settings']);
+        Permission::create(['name' => 'update.settings']);
+        Permission::create(['name' => 'delete.settings']);
+
         Permission::create(['name' => 'view.weeklydoses']);
 
         Permission::create(['name' => 'create.library_books']);
