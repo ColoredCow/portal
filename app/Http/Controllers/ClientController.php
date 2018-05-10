@@ -14,6 +14,8 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', new Client);
+
         return view('client.index')->with([
             'clients' => Client::select('id', 'name', 'emails', 'phone', 'is_active')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);
@@ -26,6 +28,8 @@ class ClientController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Client::class);
+
         return view('client.create');
     }
 
@@ -37,6 +41,8 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
+        $this->authorize('create', Client::class);
+
         $validated = $request->validated();
         $client = Client::create([
             'name' => $validated['name'],
@@ -59,7 +65,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        $this->authorize('view', $client);
     }
 
     /**
@@ -70,6 +76,8 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
+        $this->authorize('update', $client);
+
         return view('client.edit')->with([
             'client' => $client,
         ]);
@@ -84,6 +92,8 @@ class ClientController extends Controller
      */
     public function update(ClientRequest $request, Client $client)
     {
+        $this->authorize('update', $client);
+
         $validated = $request->validated();
         $updated = $client->update([
             'name' => $validated['name'],
@@ -105,7 +115,7 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $this->authorize('delete', $client);
     }
 
     /**

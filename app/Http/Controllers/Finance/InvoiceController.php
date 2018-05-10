@@ -23,6 +23,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', new Invoice);
+
         $request = request();
         if ($request->get('start') && $request->get('end')) {
             $startDate = $request->get('start');
@@ -48,6 +50,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Invoice::class);
+
         $clients = Client::getActiveClients();
         $clients->load('projects', 'projects.stages', 'projects.stages.billings');
         return view('finance.invoice.create')->with([
@@ -63,6 +67,8 @@ class InvoiceController extends Controller
      */
     public function store(InvoiceRequest $request)
     {
+        $this->authorize('create', Invoice::class);
+
         $validated = $request->validated();
         $path = self::upload($validated['invoice_file']);
         $invoice = Invoice::create([
@@ -113,7 +119,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        $this->authorize('view', $invoice);
     }
 
     /**
@@ -124,6 +130,8 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
+        $this->authorize('update', $invoice);
+
         $projectStageBillings = $invoice->projectStageBillings;
 
         $projectStageBilling = $projectStageBillings->first();
@@ -153,6 +161,8 @@ class InvoiceController extends Controller
      */
     public function update(InvoiceRequest $request, Invoice $invoice)
     {
+        $this->authorize('update', $invoice);
+
         $validated = $request->validated();
 
         $updated = $invoice->update([
@@ -208,7 +218,7 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-        //
+        $this->authorize('delete', $invoice);
     }
 
     /**

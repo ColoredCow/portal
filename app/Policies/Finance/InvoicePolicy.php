@@ -3,26 +3,18 @@
 namespace App\Policies\Finance;
 
 use App\User;
-use App\Finance\Invoice;
+use App\Models\Finance\Invoice;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class InvoicePolicy
 {
     use HandlesAuthorization;
 
-
-    public function before(User $user, Invoice $invoice)
-    {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-    }
-
     /**
      * Determine whether the user can view the invoice.
      *
      * @param  \App\User  $user
-     * @param  \App\Finance\Invoice  $invoice
+     * @param  \App\Models\Finance\Invoice  $invoice
      * @return mixed
      */
     public function view(User $user, Invoice $invoice)
@@ -45,7 +37,7 @@ class InvoicePolicy
      * Determine whether the user can update the invoice.
      *
      * @param  \App\User  $user
-     * @param  \App\Finance\Invoice  $invoice
+     * @param  \App\Models\Finance\Invoice  $invoice
      * @return mixed
      */
     public function update(User $user, Invoice $invoice)
@@ -57,7 +49,7 @@ class InvoicePolicy
      * Determine whether the user can delete the invoice.
      *
      * @param  \App\User  $user
-     * @param  \App\Finance\Invoice  $invoice
+     * @param  \App\Models\Finance\Invoice  $invoice
      * @return mixed
      */
     public function delete(User $user, Invoice $invoice)
