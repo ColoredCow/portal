@@ -30,7 +30,6 @@ class WeeklyDosePolicy
      */
     public function create(User $user)
     {
-        //
         return false;
     }
 

@@ -29,24 +29,26 @@
                 @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        @hasanyrole('super-admin|admin')
+                        @can('view.hr_applicants')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/hr/applicants') }}">HR</a>
                         </li>
-                        @endhasanyrole
-                        @hasanyrole('super-admin|admin|accountant')
+                        @endcan
+                        @can('view.finance_reports')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/finance/reports?show=default') }}">Finance</a>
                         </li>
-                        @endhasanyrole
-                        @hasanyrole('super-admin|admin')
+                        @endcan
+                        @can('view.weeklydoses')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/weeklydoses') }}">WeeklyDose</a>
                         </li>
+                        @endcan
+                        @can('view.settings')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
                         </li>
-                        @endhasanyrole
+                        @endcan
                     </ul>
                 </div>
                 @endauth
