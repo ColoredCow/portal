@@ -14,6 +14,8 @@ class WeeklyDoseController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', new WeeklyDose);
+
         return view('weeklydose')->with([
             'weeklydoses' => WeeklyDose::latest()->paginate(config('constants.pagination_size')),
         ]);

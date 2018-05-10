@@ -15,6 +15,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', new Project);
+
         return view('project.index')->with([
             'projects' => Project::getList(),
         ]);
@@ -27,6 +29,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Project::class);
+
         return view('project.create')->with([
             'clients' => Client::getActiveClients(),
         ]);
@@ -40,6 +44,8 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
+        $this->authorize('create', Project::class);
+
         $validated = $request->validated();
         $project = Project::create([
             'name' => $validated['name'],
@@ -59,7 +65,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        $this->authorize('view', $project);
     }
 
     /**
@@ -70,6 +76,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $this->authorize('update', $project);
+
         $project->load('stages', 'stages.billings', 'stages.billings.invoice');
 
         return view('project.edit')->with([
@@ -87,6 +95,8 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
+        $this->authorize('update', $project);
+
         $validated = $request->validated();
         $updated = $project->update([
             'name' => $validated['name'],
@@ -107,6 +117,6 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $this->authorize('delete', $project);
     }
 }
