@@ -32,4 +32,14 @@ class User extends Authenticatable
     {
         return self::where('email', $email)->first();
     }
+
+    /**
+     * Checks if the user is super admin
+     *
+     * @return boolean
+     */
+    public function isSuperAdmin()
+    {
+        return $this->hasRole('super-admin');
+    }
 }
