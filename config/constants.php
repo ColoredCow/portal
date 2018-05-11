@@ -64,6 +64,7 @@ return [
             ],
         ],
         'gst' => '18',
+        'conversion-rate-usd-to-inr' => 65,
     ],
     'currency' => [
         'INR' => [
