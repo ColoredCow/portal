@@ -64,6 +64,9 @@ return [
             ],
         ],
         'gst' => '18',
+        'reports' => [
+            'list-previous-months' => 6,
+        ],
     ],
     'currency' => [
         'INR' => [

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Finance;
 
+use App\Helpers\DateHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Finance\Invoice;
 use Carbon\Carbon;
@@ -18,9 +19,19 @@ class ReportsController extends Controller
     {
         $request = request();
 
-        if ($request->get('show') && $request->get('show') == 'default') {
-            $startDate = new Carbon('first day of last month');
-            $endDate = new Carbon('last day of last month');
+        if ($request->get('type') == 'monthly') {
+
+            if ($request->get('month') && $request->get('year')) {
+                $month = $request->get('month');
+                $year = $request->get('year');
+                $date = "$year-$month-01";
+                $startDate = new Carbon($date);
+                $endDate = (new Carbon($date))->endOfMonth();
+            } else {
+                $startDate = new Carbon('first day of this month');
+                $endDate = new Carbon('last day of this month');
+            }
+
             $formattedStartDate = $startDate->format(config('constants.date_format'));
             $formattedEndDate = $endDate->format(config('constants.date_format'));
 
@@ -33,6 +44,7 @@ class ReportsController extends Controller
                 'startDate' => $formattedStartDate,
                 'endDate' => $formattedEndDate,
                 'showingResultsFor' => $startDate->format('F Y'),
+                'monthsList' => DateHelper::getPreviousMonths(config('constants.finance.reports.list-previous-months')),
             ];
         } else if ($request->get('start') && $request->get('end')) {
             $startDate = $request->get('start');

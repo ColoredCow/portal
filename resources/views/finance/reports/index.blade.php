@@ -26,7 +26,21 @@
                 <div class="col-md-3">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($sentInvoices) }}</div>
                 <div class="col-md-3">Total invoices received:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($paidInvoices) }}</div>
                 @if ($showingResultsFor)
-                    <div class="col-md-6 text-right">Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $showingResultsFor }}</h3></div>
+                    <div class="col-md-6 text-right">
+                        Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $showingResultsFor }}</h3>
+                        @if (isset($monthsList))
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-light btn-lg px-1 py-0 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                @foreach ($monthsList as $month)
+                                <a class="dropdown-item" href="/finance/reports?type=monthly&month={{ $month['id'] }}&year={{ $month['year'] }}">{{ $month['name'] }}&nbsp;{{ $month['year'] }}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+                    </div>
                 @endif
             </div>
         </div>
