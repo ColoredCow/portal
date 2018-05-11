@@ -20,7 +20,6 @@ class ReportsController extends Controller
         $request = request();
 
         if ($request->get('type') == 'monthly') {
-
             if ($request->get('month') && $request->get('year')) {
                 $month = $request->get('month');
                 $year = $request->get('year');
@@ -31,7 +30,6 @@ class ReportsController extends Controller
                 $startDate = new Carbon('first day of this month');
                 $endDate = new Carbon('last day of this month');
             }
-
             $formattedStartDate = $startDate->format(config('constants.date_format'));
             $formattedEndDate = $endDate->format(config('constants.date_format'));
 
@@ -92,12 +90,17 @@ class ReportsController extends Controller
             $report['transactionCharge'][$currency] = 0;
             $report['transactionTax'][$currency] = 0;
             $report['dueAmount'][$currency] = 0;
+            $report['receivable'][$currency] = 0;
         }
 
         $report['gst'] = 0;
         foreach ($sentInvoices as $invoice) {
             $report['gst'] += $invoice->gst;
             $report['sentAmount'][$invoice->currency_sent_amount] += $invoice->sent_amount;
+
+            if ($invoice->status != 'paid') {
+                $report['receivable'][$invoice->currency_sent_amount] += $invoice->sent_amount;
+            }
         }
 
         $report['tds'] = 0;

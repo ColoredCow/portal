@@ -61,7 +61,8 @@ class Invoice extends Model
             })->orWhere(function ($query) use ($start, $end) {
                 $query->where('paid_on', '>=', $start)
                       ->where('paid_on', '<=', $end);
-            });
+            })->orderBy('sent_on', 'desc')
+            ->orderBy('paid_on', 'desc');
 
         $invoices->with('projectStageBillings.projectStage.project.client');
 

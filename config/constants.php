@@ -67,6 +67,7 @@ return [
         'reports' => [
             'list-previous-months' => 6,
         ],
+        'conversion-rate-usd-to-inr' => 65,
     ],
     'currency' => [
         'INR' => [
