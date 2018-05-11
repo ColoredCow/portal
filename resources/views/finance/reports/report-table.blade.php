@@ -34,6 +34,7 @@
                             @break
                     @endswitch
                     {{ $invoice->status }}</span>
+                    <div>{{ $invoice->client->name }}</div>
                 </td>
                 <td>{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}</td>
                 <td>{{ config('constants.currency.' . $invoice->currency_sent_amount . '.symbol') }}&nbsp;{{ $invoice->sent_amount }}</td>

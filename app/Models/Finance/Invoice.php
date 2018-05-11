@@ -63,6 +63,13 @@ class Invoice extends Model
                       ->where('paid_on', '<=', $end);
             });
 
+        $invoices->with('projectStageBillings.projectStage.project.client');
+
         return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
+    }
+
+    public function getClientAttribute()
+    {
+        return optional($this->projectStageBillings()->first()->projectStage->project)->client;
     }
 }

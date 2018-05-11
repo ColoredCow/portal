@@ -23,6 +23,7 @@ class ReportsController extends Controller
             $endDate = new Carbon('last day of last month');
             $formattedStartDate = $startDate->format(config('constants.date_format'));
             $formattedEndDate = $endDate->format(config('constants.date_format'));
+
             $invoices = Invoice::filterByDates($formattedStartDate, $formattedEndDate);
             $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
             $attr = [
