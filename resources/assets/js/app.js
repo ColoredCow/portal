@@ -132,7 +132,7 @@ if (document.getElementById('finance_report')) {
             showReportTable: 'received',
             sentAmountINR: document.getElementById('sent_amount_INR').dataset.sentAmount || 0,
             sentAmountUSD: document.getElementById('sent_amount_USD').dataset.sentAmount || 0,
-            conversionRateUSD: 65,
+            conversionRateUSD: document.getElementById('conversion_rate_usd').dataset.conversionRateUsd || 0,
         },
         computed: {
             convertedUSDSentAmount: function() {

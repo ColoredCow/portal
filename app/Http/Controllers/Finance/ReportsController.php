@@ -19,12 +19,12 @@ class ReportsController extends Controller
         $request = request();
 
         if ($request->get('show') && $request->get('show') == 'default') {
-            $startDate = new Carbon('first day of last month');
-            $endDate = new Carbon('last day of last month');
+            $startDate = new Carbon('first day of this month');
+            $endDate = new Carbon('today');
             $formattedStartDate = $startDate->format(config('constants.date_format'));
             $formattedEndDate = $endDate->format(config('constants.date_format'));
             $invoices = Invoice::filterByDates($formattedStartDate, $formattedEndDate);
-            $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
+            $arrangedInvoices = self::arrangeInvoices($invoices, $formattedStartDate, $formattedEndDate);
             $attr = [
                 'sentInvoices' => $arrangedInvoices['sent'],
                 'paidInvoices' => $arrangedInvoices['paid'],
