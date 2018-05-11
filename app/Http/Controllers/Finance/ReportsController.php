@@ -25,14 +25,13 @@ class ReportsController extends Controller
                 $year = $request->get('year');
                 $date = "$year-$month-01";
                 $startDate = new Carbon($date);
-                $endDate = (new Carbon($date))->endOfMonth();
+                $endDate = $startDate->copy()->endOfMonth();
             } else {
                 $startDate = new Carbon('first day of this month');
-                $endDate = new Carbon('last day of this month');
+                $endDate = new Carbon('today');
             }
             $formattedStartDate = $startDate->format(config('constants.date_format'));
             $formattedEndDate = $endDate->format(config('constants.date_format'));
-
             $invoices = Invoice::filterByDates($formattedStartDate, $formattedEndDate);
             $arrangedInvoices = self::arrangeInvoices($invoices, $formattedStartDate, $formattedEndDate);
             $attr = [

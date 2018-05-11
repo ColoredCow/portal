@@ -18,6 +18,12 @@ class DateHelper
                ->format(config('constants.date_format'));
     }
 
+    /**
+     * Get an array of month details. Returns month number, name and year for that month.
+     *
+     * @param  integer $count    the number of previous months from today to retrieve
+     * @return array
+     */
     public static function getPreviousMonths($count)
     {
         $monthsList = [];
