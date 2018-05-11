@@ -97,7 +97,7 @@ if (document.getElementById('form_invoice')) {
 }
 
 if (document.getElementById('client_form')) {
-    const invoiceForm = new Vue({
+    const clientForm = new Vue({
         el: '#client_form',
         data: {
             country: document.getElementById('country').dataset.preSelectCountry || '',
@@ -126,7 +126,7 @@ if (document.getElementById('client_form')) {
 }
 
 if (document.getElementById('finance_report')) {
-    const invoiceForm = new Vue({
+    const financeReport = new Vue({
         el: '#finance_report',
         data: {
             showReportTable: 'received'
