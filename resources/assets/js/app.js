@@ -146,7 +146,7 @@ if (document.getElementById('finance_report')) {
     });
 }
 
-$('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
+$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
     form.find('[name="round_status"]').val($(this).data('status'));
     form.find('[name="next_round"]').val($(this).data('next-round'));
