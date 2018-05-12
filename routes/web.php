@@ -48,6 +48,3 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo')->name('books.fetchInfo');
     Route::get('/finance/reports', 'Finance\ReportsController@index');
 });
-
-// Route::middleware(['auth', 'permission:view.finance_reports'])->group(function(){
-// });
