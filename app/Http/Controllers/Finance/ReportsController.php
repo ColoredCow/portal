@@ -17,67 +17,69 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $request = request();
-
-        if ($request->get('type') == 'monthly') {
-            if ($request->get('month') && $request->get('year')) {
-                $month = $request->get('month');
-                $year = $request->get('year');
-                $date = "$year-$month-01";
-                $startDate = new Carbon($date);
-                $endDate = $startDate->copy()->endOfMonth();
-            } else {
-                $startDate = new Carbon('first day of this month');
-                $endDate = new Carbon('today');
-            }
-            $formattedStartDate = $startDate->format(config('constants.date_format'));
-            $formattedEndDate = $endDate->format(config('constants.date_format'));
-            $invoices = Invoice::filterByDates($formattedStartDate, $formattedEndDate);
-            $arrangedInvoices = self::arrangeInvoices($invoices, $formattedStartDate, $formattedEndDate);
-            $attr = [
-                'sentInvoices' => $arrangedInvoices['sent'],
-                'paidInvoices' => $arrangedInvoices['paid'],
-                'report' => self::getReportDetails($arrangedInvoices['sent'], $arrangedInvoices['paid']),
-                'startDate' => $formattedStartDate,
-                'endDate' => $formattedEndDate,
-                'showingResultsFor' => $startDate->format('F Y'),
-                'monthsList' => DateHelper::getPreviousMonths(config('constants.finance.reports.list-previous-months')),
-            ];
-        } else if ($request->get('start') && $request->get('end')) {
-            $startDate = $request->get('start');
-            $endDate = $request->get('end');
-            $invoices = Invoice::filterByDates($startDate, $endDate);
-            $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
-            $showingResultsFor = (new Carbon($startDate))->format('F d, Y') . ' - ' . (new Carbon($endDate))->format('F d, Y');
-            $attr = [
-                'sentInvoices' => $arrangedInvoices['sent'],
-                'paidInvoices' => $arrangedInvoices['paid'],
-                'report' => self::getReportDetails($arrangedInvoices['sent'], $arrangedInvoices['paid']),
-                'startDate' => $startDate,
-                'endDate' => $endDate,
-                'showingResultsFor' => $showingResultsFor,
-            ];
-        } else {
-            $invoices = Invoice::all();
-            $arrangedInvoices = self::arrangeInvoices($invoices);
-            $attr = [
-                'sentInvoices' => $arrangedInvoices['sent'],
-                'paidInvoices' => $arrangedInvoices['paid'],
-                'report' => self::getReportDetails($arrangedInvoices['sent'], $arrangedInvoices['paid']),
-                'showingResultsFor' => '',
-            ];
-        }
+        $attr = self::getReportAttributes();
 
         return view('finance.reports.index')->with($attr);
     }
 
+    public static function getReportAttributes()
+    {
+        $request = request();
+
+        $startDate = null;
+        $endDate = null;
+        $showingResultsFor = '';
+        $attr = [];
+
+        switch ($request->get('type')) {
+            case 'monthly':
+                if ($request->get('month') && $request->get('year')) {
+                    $date = $request->get('year') . '-' . $request->get('month') . '-01';
+                    $startDate = new Carbon($date);
+                    $endDate = $startDate->copy()->endOfMonth();
+                } else {
+                    $startDate = new Carbon('first day of this month');
+                    $endDate = new Carbon('today');
+                }
+                $showingResultsFor = $startDate->format('F Y');
+                $startDate = $startDate->format(config('constants.date_format'));
+                $endDate = $endDate->format(config('constants.date_format'));
+                $attr['monthsList'] = DateHelper::getPreviousMonths(config('constants.finance.reports.list-previous-months'));
+                break;
+
+            case 'dates':
+                if ($request->get('start') && $request->get('end')) {
+                    $startDate = $request->get('start');
+                    $endDate = $request->get('end');
+                    $showingResultsFor = (new Carbon($startDate))->format('F d, Y') . ' - ' . (new Carbon($endDate))->format('F d, Y');
+                }
+                break;
+        }
+
+        if ($startDate && $endDate) {
+            $invoices = Invoice::filterByDates($startDate, $endDate);
+            $attr['startDate'] = $startDate;
+            $attr['endDate'] = $endDate;
+        } else {
+            $invoices = Invoice::all();
+        }
+
+        $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
+        $attr['sentInvoices'] = $arrangedInvoices['sent'];
+        $attr['paidInvoices'] = $arrangedInvoices['paid'];
+        $attr['report'] = self::getCumulativeAmounts($arrangedInvoices['sent'], $arrangedInvoices['paid']);
+        $attr['showingResultsFor'] = $showingResultsFor;
+
+        return $attr;
+    }
+
     /**
-     * Get an details of the report in the passed invoices to be printed
-     *
-     * @param  \Illuminate\Database\Eloquent\Collection $invoices
+     * Get financial calcucations based on sent and paid invoices to be shown in the reports
+     * @param  \Illuminate\Database\Eloquent\Collection $sentInvoices
+     * @param  \Illuminate\Database\Eloquent\Collection $paidInvoices
      * @return array
      */
-    public static function getReportDetails($sentInvoices, $paidInvoices)
+    public static function getCumulativeAmounts($sentInvoices, $paidInvoices)
     {
         $report = [];
         foreach (config('constants.currency') as $currency => $currencyMeta) {
@@ -131,7 +133,7 @@ class ReportsController extends Controller
      * @param  string $end      End date
      * @return array
      */
-    public static function arrangeInvoices($invoices, $start = '', $end = '')
+    public static function arrangeInvoices($invoices, $start = null, $end = null)
     {
         $arrangedInvoices = [
             'sent' => [],

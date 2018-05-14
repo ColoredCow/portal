@@ -15,6 +15,7 @@
                 <input type="date" name="end" id="end" placeholder="dd/mm/yyyy" class="form-control form-control-sm" value="{{ $endDate ?? '' }}">
             </div>
             <div class="form-group ml-2">
+                <input type="hidden" name="type" value="dates">
                 <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
             </div>
         </form>
