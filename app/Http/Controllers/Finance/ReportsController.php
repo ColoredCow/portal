@@ -17,11 +17,13 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $attr = self::getReportAttributes();
-
-        return view('finance.reports.index')->with($attr);
+        return view('finance.reports.index')->with(self::getReportAttributes());
     }
 
+    /**
+     * Get a complete list attributes and their values to be displayed on the reports page
+     * @return array
+     */
     public static function getReportAttributes()
     {
         $request = request();
@@ -51,10 +53,12 @@ class ReportsController extends Controller
                 if ($request->get('start') && $request->get('end')) {
                     $startDate = $request->get('start');
                     $endDate = $request->get('end');
-                    $showingResultsFor = (new Carbon($startDate))->format('F d, Y') . ' - ' . (new Carbon($endDate))->format('F d, Y');
+                    $showingResultsFor = (new Carbon($startDate))->format(config('constants.full_display_date_format')) . ' - ' . (new Carbon($endDate))->format(config('constants.full_display_date_format'));
                 }
                 break;
         }
+
+        $attr['showingResultsFor'] = $showingResultsFor;
 
         if ($startDate && $endDate) {
             $invoices = Invoice::filterByDates($startDate, $endDate);
@@ -67,8 +71,8 @@ class ReportsController extends Controller
         $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
         $attr['sentInvoices'] = $arrangedInvoices['sent'];
         $attr['paidInvoices'] = $arrangedInvoices['paid'];
+
         $attr['report'] = self::getCumulativeAmounts($arrangedInvoices['sent'], $arrangedInvoices['paid']);
-        $attr['showingResultsFor'] = $showingResultsFor;
 
         return $attr;
     }
