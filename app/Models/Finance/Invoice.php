@@ -69,6 +69,10 @@ class Invoice extends Model
         return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
     }
 
+    /**
+     * Accessor to get invoice's client
+     * @return \App\Models\Client
+     */
     public function getClientAttribute()
     {
         return optional($this->projectStageBillings()->first()->projectStage->project)->client;
