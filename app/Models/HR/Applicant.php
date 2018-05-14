@@ -55,7 +55,7 @@ class Applicant extends Model
      */
     public function jobs()
     {
-    	return $this->belongsToMany(Job::class, 'hr_applicant_job', 'hr_applicant_id', 'hr_job_id');
+    	return $this->belongsToMany(Job::class, 'hr_applications', 'hr_applicant_id', 'hr_job_id');
     }
 
     public function applicantRounds()
