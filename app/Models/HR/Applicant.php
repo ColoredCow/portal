@@ -24,6 +24,10 @@ class Applicant extends Model
     public static function _create($attr)
     {
         $applicant = self::create($attr);
+        $application = Application::create([
+            'hr_job_id' => $attr['hr_job_id'],
+            'hr_applicant_id' => $applicant->id
+        ]);
         event(new ApplicantCreated($applicant));
         return $applicant;
     }
@@ -51,17 +55,9 @@ class Applicant extends Model
         return $this->applicantRounds->where('hr_round_id', $round_id)->first();
     }
 
-    /**
-     * Get the jobs that belong to the applicant
-     */
-    public function jobs()
-    {
-    	return $this->belongsToMany(Job::class, 'hr_applications', 'hr_applicant_id', 'hr_job_id');
-    }
-
     public function applications()
     {
-        return $this->belongsToMany(Application::class, 'hr_applications', 'hr_applicant_id')
+        return $this->hasMany(Application::class, 'hr_applicant_id');
     }
 
     public function applicantRounds()

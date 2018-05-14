@@ -2,8 +2,10 @@
     <div class="timeline-container">
         <div class="content">
             <b><u>{{ date(config('constants.display_date_format'), strtotime($applicant->created_at)) }}</u></b><br>
-            Applied for {{ $applicant->job->title }}
-            <br>
+            Applied for
+            @foreach($applicant->applications as $application)
+                <div>{{ $application->job->title }}</div>
+            @endforeach
             @if ($applicant->autoresponder_subject && $applicant->autoresponder_body)
                 <span data-toggle="modal" data-target="#autoresponder_mail" class="modal-toggler-text text-primary">Auto-respond mail for system</span>
                 @include('hr.applicant.auto-respond', ['applicant' => $applicant])

@@ -20,7 +20,11 @@
                 <a href="/hr/applicants/{{ $applicant->id }}/edit">{{ $applicant->name }}</a>
             </td>
             <td>{{ $applicant->email }}</td>
-            <td>{{ $applicant->job->title }}</td>
+            <td>
+                @foreach($applicant->applications as $application)
+                    {{ $application->job->title }}
+                @endforeach
+            </td>
             <td>{{ $applicant->created_at->format(config('constants.display_date_format')) }}</td>
             <td>
                 <span class="d-flex justify-content-start">
