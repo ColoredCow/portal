@@ -29,22 +29,22 @@
                 @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        @can('view.hr_applicants')
+                        @can('hr_applicants.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/hr/applicants') }}">HR</a>
                         </li>
                         @endcan
-                        @can('view.finance_reports')
+                        @can('finance_reports.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/finance/reports?show=default') }}">Finance</a>
                         </li>
                         @endcan
-                        @can('view.weeklydoses')
+                        @can('weeklydoses.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/weeklydoses') }}">WeeklyDose</a>
                         </li>
                         @endcan
-                        @can('view.settings')
+                        @can('settings.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
                         </li>
