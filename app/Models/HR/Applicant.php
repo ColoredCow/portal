@@ -50,9 +50,12 @@ class Applicant extends Model
         return $this->applicantRounds->where('hr_round_id', $round_id)->first();
     }
 
-    public function job()
+    /**
+     * Get the jobs that belong to the applicant
+     */
+    public function jobs()
     {
-    	return $this->belongsTo(Job::class, 'hr_job_id');
+    	return $this->belongsToMany(Job::class, 'hr_applicant_job', 'hr_applicant_id', 'hr_job_id');
     }
 
     public function applicantRounds()
