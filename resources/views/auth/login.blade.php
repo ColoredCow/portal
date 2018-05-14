@@ -60,7 +60,7 @@
 
                     <div class="d-flex align-items-center justify-content-center mt-5">
                         <a href="{{ url('auth/google') }}" class="btn btn-outline-primary btn-lg px-5">
-                            <i class="fa fa-google"></i>&nbsp;&nbsp;|&nbsp;&nbsp;{{ __('Login with Google') }}
+                            <i class="fa fa-google"></i>&nbsp;&nbsp;|&nbsp;&nbsp;{{ __('Login with G Suite') }}
                         </a>
                     </div>
                 </div>
