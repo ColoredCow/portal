@@ -10,6 +10,12 @@ use App\User;
 
 class JobController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Job::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +23,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', new Job);
+        //
 
         return view('hr.job.index')->with([
             'jobs' => Job::with('applicants')->orderBy('id', 'desc')->get(),
@@ -31,7 +37,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Job::class);
+        //
     }
 
     /**
@@ -59,7 +65,7 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        $this->authorize('view', $job);
+        //
     }
 
     /**
@@ -70,8 +76,6 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
-        $this->authorize('update', $job);
-
         return view('hr.job.edit')->with([
             'job' => $job,
             'interviewers' => User::all()
@@ -87,8 +91,6 @@ class JobController extends Controller
      */
     public function update(JobRequest $request, Job $job)
     {
-        $this->authorize('update', $job);
-
         $validated = $request->validated();
         $job->_update([
             'facebook_post' => $validated['facebook_post'],
@@ -109,6 +111,6 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        $this->authorize('delete', $job);
+        //
     }
 }

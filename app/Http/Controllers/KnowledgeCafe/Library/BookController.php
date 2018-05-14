@@ -9,6 +9,12 @@ use App\Models\KnowledgeCafe\Library\Book;
 
 class BookController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Book::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +22,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', new Book);
+        //
 
         $books = Book::all()->sortBy('title');
         return view('knowledgecafe.library.books.index', compact('books'));
@@ -29,8 +35,6 @@ class BookController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Book::class);
-
         return view('knowledgecafe.library.books.create');
     }
 
@@ -42,8 +46,6 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-        $this->authorize('create', Book::class);
-
         $stored = Book::_create($request->validated());
         return response()->json(['error'=> !$stored]);
     }
@@ -56,8 +58,6 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $this->authorize('view', $book);
-
         return view('knowledgecafe.library.books.show', compact('book'));
     }
 
@@ -69,7 +69,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        $this->authorize('update', $book);
+        //
     }
 
     /**
@@ -81,7 +81,7 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        $this->authorize('update', $book);
+        //
     }
 
     /**
@@ -92,7 +92,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        $this->authorize('delete', $book);
+        //
     }
 
 
