@@ -21,13 +21,11 @@ class ApplicantController extends Controller
         $validated = $request->validated();
         $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;
 
-        // $applicants = Applicant::with('job')
-        //                 ->where(function($query) use ($hrJobID ) {
-        //                     ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
-        //                 })
-        //                 ->orderBy('id', 'desc')
-        //                 ->paginate(config('constants.pagination_size'));
-        $applicants = Applicant::orderBy('id', 'desc')
+        $applicants = Applicant::with('applications', 'applications.job')
+                        ->where(function($query) use ($hrJobID ) {
+                            ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
+                        })
+                        ->orderBy('id', 'desc')
                         ->paginate(config('constants.pagination_size'));
 
         return view('hr.applicant.index')->with([

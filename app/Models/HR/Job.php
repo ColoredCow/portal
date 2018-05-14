@@ -49,7 +49,7 @@ class Job extends Model
 
     public function applications()
     {
-    	return $this->belongsToMany(Application::class, 'hr_applications', 'hr_job_id');
+    	return $this->hasMany(Application::class, 'hr_job_id');
     }
 
     public function getApplicantsByStatus($status = '')
