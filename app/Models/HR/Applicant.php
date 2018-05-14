@@ -5,6 +5,7 @@ namespace App\Models\HR;
 use App\Events\HR\ApplicantCreated;
 use App\Events\HR\ApplicantUpdated;
 use App\Models\HR\ApplicantRound;
+use App\Models\HR\Application;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,6 +57,11 @@ class Applicant extends Model
     public function jobs()
     {
     	return $this->belongsToMany(Job::class, 'hr_applications', 'hr_applicant_id', 'hr_job_id');
+    }
+
+    public function applications()
+    {
+        return $this->belongsToMany(Application::class, 'hr_applications', 'hr_applicant_id')
     }
 
     public function applicantRounds()
