@@ -34,6 +34,13 @@
                             @break
                     @endswitch
                     {{ $invoice->status }}</span>
+                    <span>
+                        <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-lg text-primary btn-file ml-2"></i></a>
+                    </span>
+                    <div>{{ $invoice->client->name }}</div>
+                    @if ($invoice->client->country == 'india' && $invoice->client->gst_num)
+                        <div><b>GST:&nbsp;</b>{{ $invoice->client->gst_num }}</div>
+                    @endif
                 </td>
                 <td>{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}</td>
                 <td>{{ config('constants.currency.' . $invoice->currency_sent_amount . '.symbol') }}&nbsp;{{ $invoice->sent_amount }}</td>
