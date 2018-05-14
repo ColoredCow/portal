@@ -19,7 +19,7 @@ class InvoicePolicy
      */
     public function view(User $user, Invoice $invoice)
     {
-        return $user->hasPermissionTo('view.finance_invoices');
+        return $user->hasPermissionTo('finance_invoices.view');
     }
 
     /**
@@ -30,7 +30,7 @@ class InvoicePolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create.finance_invoices');
+        return $user->hasPermissionTo('finance_invoices.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class InvoicePolicy
      */
     public function update(User $user, Invoice $invoice)
     {
-        return $user->hasPermissionTo('update.finance_invoices');
+        return $user->hasPermissionTo('finance_invoices.update');
     }
 
     /**
@@ -54,6 +54,6 @@ class InvoicePolicy
      */
     public function delete(User $user, Invoice $invoice)
     {
-        return $user->hasPermissionTo('delete.finance_invoices');
+        return $user->hasPermissionTo('finance_invoices.delete');
     }
 }

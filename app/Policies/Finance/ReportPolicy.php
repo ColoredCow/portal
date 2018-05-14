@@ -11,6 +11,6 @@ class ReportPolicy
 
     public function view(User $user)
     {
-        return $user->hasPermissionTo('view.finance_reports');
+        return $user->hasPermissionTo('finance_reports.view');
     }
 }

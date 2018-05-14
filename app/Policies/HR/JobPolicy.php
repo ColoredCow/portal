@@ -19,7 +19,7 @@ class JobPolicy
      */
     public function view(User $user, Job $job)
     {
-        return $user->hasPermissionTo('view.hr_jobs');
+        return $user->hasPermissionTo('hr_jobs.view');
     }
 
     /**
@@ -30,7 +30,7 @@ class JobPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create.hr_jobs');
+        return $user->hasPermissionTo('hr_jobs.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class JobPolicy
      */
     public function update(User $user, Job $job)
     {
-        return $user->hasPermissionTo('update.hr_jobs');
+        return $user->hasPermissionTo('hr_jobs.update');
     }
 
     /**
@@ -54,6 +54,6 @@ class JobPolicy
      */
     public function delete(User $user, Job $job)
     {
-        return $user->hasPermissionTo('delete.hr_jobs');
+        return $user->hasPermissionTo('hr_jobs.delete');
     }
 }

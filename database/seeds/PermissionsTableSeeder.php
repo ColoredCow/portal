@@ -12,43 +12,43 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'view.finance_reports']);
+        Permission::create(['name' => 'finance_reports.view']);
 
-        Permission::create(['name' => 'create.finance_invoices']);
-        Permission::create(['name' => 'view.finance_invoices']);
-        Permission::create(['name' => 'update.finance_invoices']);
-        Permission::create(['name' => 'delete.finance_invoices']);
+        Permission::create(['name' => 'finance_invoices.create']);
+        Permission::create(['name' => 'finance_invoices.view']);
+        Permission::create(['name' => 'finance_invoices.update']);
+        Permission::create(['name' => 'finance_invoices.delete']);
 
-        Permission::create(['name' => 'create.clients']);
-        Permission::create(['name' => 'view.clients']);
-        Permission::create(['name' => 'update.clients']);
-        Permission::create(['name' => 'delete.clients']);
+        Permission::create(['name' => 'clients.create']);
+        Permission::create(['name' => 'clients.view']);
+        Permission::create(['name' => 'clients.update']);
+        Permission::create(['name' => 'clients.delete']);
 
-        Permission::create(['name' => 'create.projects']);
-        Permission::create(['name' => 'view.projects']);
-        Permission::create(['name' => 'update.projects']);
-        Permission::create(['name' => 'delete.projects']);
+        Permission::create(['name' => 'projects.create']);
+        Permission::create(['name' => 'projects.view']);
+        Permission::create(['name' => 'projects.update']);
+        Permission::create(['name' => 'projects.delete']);
 
-        Permission::create(['name' => 'create.hr_applicants']);
-        Permission::create(['name' => 'view.hr_applicants']);
-        Permission::create(['name' => 'update.hr_applicants']);
-        Permission::create(['name' => 'delete.hr_applicants']);
+        Permission::create(['name' => 'hr_applicants.create']);
+        Permission::create(['name' => 'hr_applicants.view']);
+        Permission::create(['name' => 'hr_applicants.update']);
+        Permission::create(['name' => 'hr_applicants.delete']);
 
-        Permission::create(['name' => 'create.hr_jobs']);
-        Permission::create(['name' => 'view.hr_jobs']);
-        Permission::create(['name' => 'update.hr_jobs']);
-        Permission::create(['name' => 'delete.hr_jobs']);
+        Permission::create(['name' => 'hr_jobs.create']);
+        Permission::create(['name' => 'hr_jobs.view']);
+        Permission::create(['name' => 'hr_jobs.update']);
+        Permission::create(['name' => 'hr_jobs.delete']);
 
-        Permission::create(['name' => 'create.settings']);
-        Permission::create(['name' => 'view.settings']);
-        Permission::create(['name' => 'update.settings']);
-        Permission::create(['name' => 'delete.settings']);
+        Permission::create(['name' => 'settings.create']);
+        Permission::create(['name' => 'settings.view']);
+        Permission::create(['name' => 'settings.update']);
+        Permission::create(['name' => 'settings.delete']);
 
-        Permission::create(['name' => 'view.weeklydoses']);
+        Permission::create(['name' => 'weeklydoses.view']);
 
-        Permission::create(['name' => 'create.library_books']);
-        Permission::create(['name' => 'view.library_books']);
-        Permission::create(['name' => 'update.library_books']);
-        Permission::create(['name' => 'delete.library_books']);
+        Permission::create(['name' => 'library_books.create']);
+        Permission::create(['name' => 'library_books.view']);
+        Permission::create(['name' => 'library_books.update']);
+        Permission::create(['name' => 'library_books.delete']);
     }
 }

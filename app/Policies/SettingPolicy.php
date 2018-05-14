@@ -19,7 +19,7 @@ class SettingPolicy
      */
     public function view(User $user, Setting $setting)
     {
-        return $user->hasPermissionTo('view.settings');
+        return $user->hasPermissionTo('settings.view');
     }
 
     /**
@@ -30,7 +30,7 @@ class SettingPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create.settings');
+        return $user->hasPermissionTo('settings.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class SettingPolicy
      */
     public function update(User $user, Setting $setting)
     {
-        return $user->hasPermissionTo('update.settings');
+        return $user->hasPermissionTo('settings.update');
     }
 
     /**
@@ -54,6 +54,6 @@ class SettingPolicy
      */
     public function delete(User $user, Setting $setting)
     {
-        return $user->hasPermissionTo('delete.settings');
+        return $user->hasPermissionTo('settings.delete');
     }
 }

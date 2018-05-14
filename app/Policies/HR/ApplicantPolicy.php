@@ -19,7 +19,7 @@ class ApplicantPolicy
      */
     public function view(User $user, Applicant $applicant)
     {
-        return $user->hasPermissionTo('view.hr_applicants');
+        return $user->hasPermissionTo('hr_applicants.view');
     }
 
     /**
@@ -30,7 +30,7 @@ class ApplicantPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create.hr_applicants');
+        return $user->hasPermissionTo('hr_applicants.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class ApplicantPolicy
      */
     public function update(User $user, Applicant $applicant)
     {
-        return $user->hasPermissionTo('update.hr_applicants');
+        return $user->hasPermissionTo('hr_applicants.update');
     }
 
     /**
@@ -54,6 +54,6 @@ class ApplicantPolicy
      */
     public function delete(User $user, Applicant $applicant)
     {
-        return $user->hasPermissionTo('delete.hr_applicants');
+        return $user->hasPermissionTo('hr_applicants.delete');
     }
 }

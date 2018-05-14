@@ -19,7 +19,7 @@ class ProjectPolicy
      */
     public function view(User $user, Project $project)
     {
-        return $user->hasPermissionTo('view.projects');
+        return $user->hasPermissionTo('projects.view');
     }
 
     /**
@@ -30,7 +30,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create.projects');
+        return $user->hasPermissionTo('projects.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
-        return $user->hasPermissionTo('update.projects');
+        return $user->hasPermissionTo('projects.update');
     }
 
     /**
@@ -54,6 +54,6 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project)
     {
-        return $user->hasPermissionTo('delete.projects');
+        return $user->hasPermissionTo('projects.delete');
     }
 }

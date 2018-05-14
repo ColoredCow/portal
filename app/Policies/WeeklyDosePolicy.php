@@ -19,7 +19,7 @@ class WeeklyDosePolicy
      */
     public function view(User $user, WeeklyDose $weeklyDose)
     {
-        return $user->hasPermissionTo('view.weeklydoses');
+        return $user->hasPermissionTo('weeklydoses.view');
     }
 
     /**

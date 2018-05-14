@@ -20,6 +20,6 @@ class RoleHasPermissionsTableSeeder extends Seeder
         $admin->syncPermissions(Permission::all());
 
         $accountant = Role::where(['name' => 'accountant'])->first();
-        $accountant->givePermissionTo('view.finance_reports');
+        $accountant->givePermissionTo('finance_reports.view');
     }
 }

@@ -19,7 +19,7 @@ class BookPolicy
      */
     public function view(User $user, Book $book)
     {
-        return $user->hasPermissionTo('view.library_books');
+        return $user->hasPermissionTo('library_books.view');
     }
 
     /**
@@ -30,7 +30,7 @@ class BookPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create.library_books');
+        return $user->hasPermissionTo('library_books.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class BookPolicy
      */
     public function update(User $user, Book $book)
     {
-        return $user->hasPermissionTo('update.library_books');
+        return $user->hasPermissionTo('library_books.update');
     }
 
     /**
@@ -54,6 +54,6 @@ class BookPolicy
      */
     public function delete(User $user, Book $book)
     {
-        return $user->hasPermissionTo('delete.library_books');
+        return $user->hasPermissionTo('library_books.delete');
     }
 }
