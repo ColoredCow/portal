@@ -70,7 +70,7 @@ class Invoice extends Model
     }
 
     /**
-     * Accessor to get invoice's client
+     * Accessor to get invoice's client. This is called automatically when retrieving an invoice instance.
      * @return \App\Models\Client
      */
     public function getClientAttribute()
