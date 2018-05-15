@@ -61,8 +61,20 @@ class Invoice extends Model
             })->orWhere(function ($query) use ($start, $end) {
                 $query->where('paid_on', '>=', $start)
                       ->where('paid_on', '<=', $end);
-            });
+            })->orderBy('sent_on', 'desc')
+            ->orderBy('paid_on', 'desc');
+
+        $invoices->with('projectStageBillings.projectStage.project.client');
 
         return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
+    }
+
+    /**
+     * Accessor to get invoice's client. This is called automatically when retrieving an invoice instance.
+     * @return \App\Models\Client
+     */
+    public function getClientAttribute()
+    {
+        return optional($this->projectStageBillings()->first()->projectStage->project)->client;
     }
 }

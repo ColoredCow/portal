@@ -97,7 +97,7 @@ if (document.getElementById('form_invoice')) {
 }
 
 if (document.getElementById('client_form')) {
-    const invoiceForm = new Vue({
+    const clientForm = new Vue({
         el: '#client_form',
         data: {
             country: document.getElementById('country').dataset.preSelectCountry || '',
@@ -126,15 +126,27 @@ if (document.getElementById('client_form')) {
 }
 
 if (document.getElementById('finance_report')) {
-    const invoiceForm = new Vue({
+    const financeReport = new Vue({
         el: '#finance_report',
         data: {
-            showReportTable: 'received'
+            showReportTable: 'received',
+            sentAmountINR: document.getElementById('sent_amount_INR').dataset.sentAmount || 0,
+            sentAmountUSD: document.getElementById('sent_amount_USD').dataset.sentAmount || 0,
+            conversionRateUSD: document.getElementById('conversion_rate_usd').dataset.conversionRateUsd || 0,
+        },
+        computed: {
+            convertedUSDSentAmount: function() {
+                let convertedAmount = parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
+                return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
+            },
+            totalINREstimated: function() {
+                return parseFloat(this.sentAmountINR) + parseFloat(this.convertedUSDSentAmount);
+            }
         }
     });
 }
 
-$('#page-hr-applicant-edit .applicant-round-form').on('click', '.round-submit', function(){
+$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
     form.find('[name="round_status"]').val($(this).data('status'));
     form.find('[name="next_round"]').val($(this).data('next-round'));

@@ -3,6 +3,7 @@
 return [
     'date_format' => 'Y-m-d',
     'display_date_format' => 'd/m/Y',
+    'full_display_date_format' => 'F d, Y',
     'modules' => [
         'hr',
         'finance',
@@ -64,6 +65,10 @@ return [
             ],
         ],
         'gst' => '18',
+        'reports' => [
+            'list-previous-months' => 6,
+        ],
+        'conversion-rate-usd-to-inr' => 65,
     ],
     'currency' => [
         'INR' => [

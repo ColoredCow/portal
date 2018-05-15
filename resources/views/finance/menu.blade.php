@@ -16,7 +16,7 @@
     @endcan
     @can('finance_reports.view')
     <li class="nav-item">
-        <a href="/finance/reports?show=default" class="nav-item nav-link {{ $active === 'reports' ? 'active' : '' }}">
+        <a href="/finance/reports?type=monthly" class="nav-item nav-link {{ $active === 'reports' ? 'active' : '' }}">
             <i class="fa fa-line-chart"></i>&nbsp;Reports
         </a>
         </a>
