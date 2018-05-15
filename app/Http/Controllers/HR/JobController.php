@@ -10,6 +10,12 @@ use App\User;
 
 class JobController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Job::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +23,8 @@ class JobController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', Job::class);
+
         return view('hr.job.index')->with([
             'jobs' => Job::with('applicants')->orderBy('id', 'desc')->get(),
         ]);
@@ -91,8 +99,6 @@ class JobController extends Controller
             'linkedin_post' => $validated['linkedin_post'],
             'rounds' => $validated['rounds'],
         ]);
-
-
 
         return redirect("/hr/jobs/$job->id/edit")->with('status', 'Job updated successfully!');
     }

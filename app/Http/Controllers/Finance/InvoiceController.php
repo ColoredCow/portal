@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Invoice::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +29,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', Invoice::class);
+
         $request = request();
         if ($request->get('start') && $request->get('end')) {
             $startDate = $request->get('start');

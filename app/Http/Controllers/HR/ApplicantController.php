@@ -10,17 +10,27 @@ use App\Models\HR\Round;
 
 class ApplicantController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Applicant::class, null, [
+            'except' => ['store']
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *@param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function index(ApplicantRequest $request)
-    {  
+    {
+        $this->authorize('list', Applicant::class);
+
         $validated = $request->validated();
         $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;
-        
+
         $applicants = Applicant::with('job')
                         ->where(function($query) use ($hrJobID ) {
                             ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
@@ -113,7 +123,7 @@ class ApplicantController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\HR\Applicant  $applicant
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy(Applicant $applicant)
     {
