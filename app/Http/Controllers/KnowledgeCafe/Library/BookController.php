@@ -9,6 +9,12 @@ use App\Models\KnowledgeCafe\Library\Book;
 
 class BookController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Book::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +22,8 @@ class BookController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', Book::class);
+
         $books = Book::all()->sortBy('title');
         return view('knowledgecafe.library.books.index', compact('books'));
     }
@@ -38,7 +46,6 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-
         $stored = Book::_create($request->validated());
         return response()->json(['error'=> !$stored]);
     }
@@ -46,7 +53,7 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  App\Models\KnowledgeCafe\Library\Book  $book
+     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
      * @return \Illuminate\View\View
      */
     public function show(Book $book)
@@ -57,10 +64,10 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return @return void
+     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @return void
      */
-    public function edit($id)
+    public function edit(Book $book)
     {
         //
     }
@@ -69,10 +76,10 @@ class BookController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return @return void
+     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Book $book)
     {
         //
     }
@@ -80,10 +87,10 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return @return void
+     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @return void
      */
-    public function destroy($id)
+    public function destroy(Book $book)
     {
         //
     }
@@ -104,11 +111,11 @@ class BookController extends Controller
             $ISBN = BookServices::getISBN($file);
         } else if($method ==='from_isbn') {
             $ISBN = $validated['isbn'];
-        } 
-        
+        }
+
         if(!$ISBN || strlen($ISBN) < 13) {
             return response()->json([
-                'error' => true, 
+                'error' => true,
                 'message' => 'Invalid ISBN : '. $ISBN
             ]);
         }
@@ -117,7 +124,7 @@ class BookController extends Controller
 
         if($book) {
             return response()->json([
-                'error' => false, 
+                'error' => false,
                 'book' => $book
             ]);
         }
@@ -126,7 +133,7 @@ class BookController extends Controller
 
         if(!isset($book['items'])) {
             return response()->json([
-                'error' => true, 
+                'error' => true,
                 'message' => 'Invalid ISBN : '. $ISBN
             ]);
         }
@@ -135,7 +142,7 @@ class BookController extends Controller
         $book['isbn'] = $ISBN;
 
         return response()->json([
-            'error' => false, 
+            'error' => false,
             'book' => $book
         ]);
     }
@@ -145,7 +152,7 @@ class BookController extends Controller
      * @return Array
      */
     public function formatBookData($book) {
-        $data = []; 
+        $data = [];
         $book = $book['items'][0];
         $info = collect($book['volumeInfo']);
         $book = collect($book);
@@ -156,7 +163,7 @@ class BookController extends Controller
         $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
         $data['self_link'] = $book->get('self_link');
         return $data;
-    }   
-    
+    }
+
 }
 
