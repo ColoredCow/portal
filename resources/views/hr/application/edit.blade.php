@@ -15,13 +15,13 @@
             @include('status', ['errors' => $errors->all()])
         </div>
         <div class="col-md-3">
-            {{-- @include('hr.applicant.timeline', ['applicant' => $applicant]) --}}
+            @include('hr.application.timeline', ['applicant' => $applicant, 'application' => $application])
         </div>
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
-                    {{-- <div class="{{ config("constants.hr.status.$applicant->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$applicant->status.title") }}</div> --}}
+                    <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$application->status.title") }}</div>
                 </div>
                 <div class="card-body">
                     <div class="form-row">
