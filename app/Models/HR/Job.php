@@ -39,7 +39,7 @@ class Job extends Model
         if(isset($attr['rounds'])) {
             $this->rounds()->sync($attr['rounds']);
         }
-        
+
         $request = request();
         event(new JobUpdated($this, [
             'rounds' => $request->input('rounds'),
@@ -47,9 +47,9 @@ class Job extends Model
         return $updated;
     }
 
-    public function applicants()
+    public function applications()
     {
-    	return $this->hasMany(Applicant::class, 'hr_job_id');
+    	return $this->hasMany(Application::class, 'hr_job_id');
     }
 
     public function getApplicantsByStatus($status = '')

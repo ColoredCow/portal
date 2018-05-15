@@ -41,7 +41,7 @@ class ApplicantRound extends Model
         }
 
         if ($nextRound) {
-            $scheduled_person = User::findByEmail($applicant->job->posted_by);
+            $scheduled_person = User::findByEmail($applicant->applications->first()->job->posted_by);
             $applicantRound = self::_create([
                 'hr_applicant_id' => $applicant->id,
                 'hr_round_id' => $nextRound,

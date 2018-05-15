@@ -5,6 +5,7 @@ namespace App\Models\HR;
 use App\Events\HR\ApplicantCreated;
 use App\Events\HR\ApplicantUpdated;
 use App\Models\HR\ApplicantRound;
+use App\Models\HR\Application;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,10 @@ class Applicant extends Model
     public static function _create($attr)
     {
         $applicant = self::create($attr);
+        $application = Application::create([
+            'hr_job_id' => $attr['hr_job_id'],
+            'hr_applicant_id' => $applicant->id
+        ]);
         event(new ApplicantCreated($applicant));
         return $applicant;
     }
@@ -50,9 +55,9 @@ class Applicant extends Model
         return $this->applicantRounds->where('hr_round_id', $round_id)->first();
     }
 
-    public function job()
+    public function applications()
     {
-    	return $this->belongsTo(Job::class, 'hr_job_id');
+        return $this->hasMany(Application::class, 'hr_applicant_id');
     }
 
     public function applicantRounds()

@@ -13,15 +13,15 @@ class ApplicantController extends Controller
     /**
      * Display a listing of the resource.
      *@param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function index(ApplicantRequest $request)
-    {  
+    {
         $validated = $request->validated();
         $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;
-        
-        $applicants = Applicant::with('job')
+
+        $applicants = Applicant::with('applications', 'applications.job')
                         ->where(function($query) use ($hrJobID ) {
                             ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
                         })
@@ -88,10 +88,9 @@ class ApplicantController extends Controller
      */
     public function edit(Applicant $applicant)
     {
-        $applicant->load(['job', 'job.rounds', 'applicantRounds', 'applicantRounds.applicantReviews']);
+        $applicant->load(['applications', 'applications.job.rounds', 'applicantRounds', 'applicantRounds.applicantReviews']);
 
         return view('hr.applicant.edit')->with([
-            'job' => $applicant->job,
             'applicant' => $applicant,
             'rounds' => Round::all(),
         ]);

@@ -36,7 +36,9 @@
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Applied for</b>
-                            <div><a href="{{ $applicant->job->link }}" target="_blank">{{ $applicant->job->title }}</a></div>
+                            @foreach($applicant->applications as $application)
+                                <div><a href="{{ $application->job->link }}" target="_blank">{{ $application->job->title }}</a></div>
+                            @endforeach
                         </div>
                         <div class="form-group col-md-5">
                             <b>Phone</b>
@@ -118,7 +120,7 @@
                         @if (! $applicantRound->round_status)
                         <div class="card-footer">
                             <applicant-round-action-component
-                            :rounds="{{ json_encode($job->rounds) }}">
+                            :rounds="{{ json_encode($application->job->first()->rounds) }}">
                             </applicant-round-action-component>
                             <button type="button" class="btn btn-outline-danger round-submit" data-status="{{ config('constants.hr.status.rejected.label') }}">Reject</button>
                         </div>
@@ -126,7 +128,7 @@
                         <div class="card-footer">
                             @if ($applicantRound->round_status === config('constants.hr.status.rejected.label'))
                                 <applicant-round-action-component
-                                :rounds="{{ json_encode($job->rounds) }}">
+                                :rounds="{{ json_encode($application->job->first()->rounds) }}">
                                 </applicant-round-action-component>
                             @endif
                             @if (!$applicantRound->mail_sent)
