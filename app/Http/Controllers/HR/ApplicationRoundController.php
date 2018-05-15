@@ -37,16 +37,18 @@ class ApplicationRoundController extends Controller
      * Send email to the applicant for current round
      *
      * @param  ApplicantRoundMailRequest $request
-     * @param  ApplicantRound            $applicantRound
+     * @param  ApplicationRound            $applicationRound
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function sendMail(ApplicantRoundMailRequest $request, ApplicantRound $applicantRound)
+    public function sendMail(ApplicantRoundMailRequest $request, ApplicationRound $applicationRound)
     {
         $validated = $request->validated();
         $mail_body = ContentHelper::editorFormat($validated['mail_body']);
-        $applicant = $applicantRound->applicant;
 
-        $applicantRound->update([
+        $application = $applicationRound->application;
+        $applicant = $application->applicant;
+
+        $applicationRound->update([
             'mail_sent' => true,
             'mail_subject' => $validated['mail_subject'],
             'mail_body' => $mail_body,
@@ -55,13 +57,13 @@ class ApplicationRoundController extends Controller
         ]);
 
         Mail::to($applicant->email, $applicant->name)
-            ->bcc($applicant->job->posted_by)
-            ->send(new RoundReviewed($applicantRound));
+            ->bcc($application->job->posted_by)
+            ->send(new RoundReviewed($applicationRound));
 
         return redirect()->back()->with(
             'status',
             "Mail sent successfully to the <b>$applicant->name</b> at <b>$applicant->email</b>.<br>
-            <span data-toggle='modal' data-target='#round_mail_$applicantRound->id' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
+            <span data-toggle='modal' data-target='#round_mail_$applicationRound->id' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
         );
     }
 }

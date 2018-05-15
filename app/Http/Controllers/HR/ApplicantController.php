@@ -22,10 +22,10 @@ class ApplicantController extends Controller
         $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;
 
         $applicants = Applicant::with('applications', 'applications.job')
-                        // ->where(function($query) use ($hrJobID ) {
-                        //     ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
-                        // })
-                        // ->orderBy('id', 'desc')
+                        ->where(function($query) use ($hrJobID ) {
+                            ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
+                        })
+                        ->orderBy('id', 'desc')
                         ->paginate(config('constants.pagination_size'));
 
 

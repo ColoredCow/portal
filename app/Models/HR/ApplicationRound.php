@@ -26,25 +26,26 @@ class ApplicationRound extends Model
     {
         $this->update($attr);
         $this->_updateOrCreateReviews($reviews);
-        dd('here');
 
         if ($type == 'update') {
             return;
         }
 
+        $application = $this->application;
         $applicant = $this->application->applicant;
         if ($attr['round_status']) {
             $status = config('constants.hr.status');
             $rejectedStatus = $status['rejected']['label'];
             $inProgressStatus = $status['in-progress']['label'];
-            $applicantStatus = ($attr['round_status'] === $rejectedStatus) ? $rejectedStatus : $inProgressStatus;
-            // $applicant->update([ 'status' => $applicantStatus ]);
+            $applicationStatus = ($attr['round_status'] === $rejectedStatus) ? $rejectedStatus : $inProgressStatus;
+            $application->update([ 'status' => $applicationStatus ]);
         }
 
         if ($nextRound) {
             $scheduled_person = User::findByEmail($applicant->applications->first()->job->posted_by);
-            $applicantRound = self::_create([
+            $applicationRound = self::_create([
                 'hr_applicant_id' => $applicant->id,
+                'hr_application_id' => $application->id,
                 'hr_round_id' => $nextRound,
                 'scheduled_date' => Carbon::now()->addDay(),
                 'scheduled_person_id' => $scheduled_person ? $scheduled_person->id : config('constants.hr.defaults.scheduled_person_id'),
