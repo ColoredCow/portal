@@ -16,7 +16,12 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        //
+        // $applications = Application::with('applicant')->paginate(config('constants.pagination_size'));
+        $applications = Application::all();
+
+        return view('hr.application.index')->with([
+            'applications' => $applications,
+        ]);
     }
 
     /**
@@ -74,13 +79,13 @@ class ApplicationController extends Controller
      */
     public function edit(Application $application)
     {
-        $application->load(['job.rounds', 'applicant', 'applicant.applicantRounds', 'applicant.applicantRounds.applicantReviews']);
+        // $application->load(['job.rounds', 'applicant', 'applicant.applicantRounds', 'applicant.applicantRounds.applicantReviews']);
 
-        return view('hr.applicant.edit')->with([
-            'applicant' => $application->applicant,
-            'application' => $application,
-            'rounds' => Round::all(),
-        ]);
+        // return view('hr.applicant.edit')->with([
+        //     'applicant' => $application->applicant,
+        //     'application' => $application,
+        //     'rounds' => Round::all(),
+        // ]);
     }
 
     /**
