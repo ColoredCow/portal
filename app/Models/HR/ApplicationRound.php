@@ -54,7 +54,6 @@ class ApplicationRound extends Model
 
     protected function _updateOrCreateReviews($reviews = [])
     {
-        dd($this->id);
         foreach ($reviews as $review_key => $review_value) {
             $application_reviews = $this->applicationReviews()->updateOrCreate(
                 [
