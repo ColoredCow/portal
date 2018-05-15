@@ -13,7 +13,7 @@ class ApplicationRound extends Model
 {
     protected $fillable = ['hr_applicant_id', 'hr_application_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
 
-    protected $table = 'hr_applicantion_round';
+    protected $table = 'hr_application_round';
 
     public $timestamps = false;
 

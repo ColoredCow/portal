@@ -3,6 +3,7 @@
 namespace App\Models\HR;
 
 use App\Models\HR\Applicant;
+use App\Models\HR\ApplicationRound;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,5 +21,10 @@ class Application extends Model
     public function applicant()
     {
         return $this->belongsTo(Applicant::class, 'hr_applicant_id');
+    }
+
+    public function applicationRounds()
+    {
+        return $this->hasMany(ApplicationRound::class, 'hr_application_id');
     }
 }

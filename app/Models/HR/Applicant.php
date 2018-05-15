@@ -59,9 +59,4 @@ class Applicant extends Model
     {
         return $this->hasMany(Application::class, 'hr_applicant_id');
     }
-
-    public function applicantRounds()
-    {
-    	return $this->hasMany(ApplicantRound::class, 'hr_applicant_id');
-    }
 }
