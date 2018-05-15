@@ -56,4 +56,15 @@ class JobPolicy
     {
         return $user->hasPermissionTo('hr_jobs.delete');
     }
+
+    /**
+     * Determine whether the user can list jobs.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->hasPermissionTo('hr_jobs.view');
+    }
 }

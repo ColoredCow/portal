@@ -23,7 +23,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('list', Job::class);
 
         return view('hr.job.index')->with([
             'jobs' => Job::with('applicants')->orderBy('id', 'desc')->get(),

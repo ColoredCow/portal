@@ -21,7 +21,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('list', Project::class);
 
         return view('project.index')->with([
             'projects' => Project::getList(),

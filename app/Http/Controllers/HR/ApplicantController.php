@@ -26,7 +26,7 @@ class ApplicantController extends Controller
      */
     public function index(ApplicantRequest $request)
     {
-        //
+        $this->authorize('list', Applicant::class);
 
         $validated = $request->validated();
         $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;

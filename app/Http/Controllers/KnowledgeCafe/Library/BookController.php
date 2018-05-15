@@ -22,7 +22,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('list', Book::class);
 
         $books = Book::all()->sortBy('title');
         return view('knowledgecafe.library.books.index', compact('books'));

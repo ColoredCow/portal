@@ -56,4 +56,15 @@ class ProjectPolicy
     {
         return $user->hasPermissionTo('projects.delete');
     }
+
+    /**
+     * Determine whether the user can list projects.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->hasPermissionTo('projects.view');
+    }
 }

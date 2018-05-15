@@ -56,4 +56,15 @@ class BookPolicy
     {
         return $user->hasPermissionTo('library_books.delete');
     }
+
+    /**
+     * Determine whether the user can list books.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->hasPermissionTo('library_books.view');
+    }
 }

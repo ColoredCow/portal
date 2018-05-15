@@ -56,4 +56,15 @@ class WeeklyDosePolicy
     {
         return false;
     }
+
+    /**
+     * Determine whether the user can list weeklydoses.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->hasPermissionTo('weeklydoses.view');
+    }
 }

@@ -56,4 +56,15 @@ class ApplicantPolicy
     {
         return $user->hasPermissionTo('hr_applicants.delete');
     }
+
+    /**
+     * Determine whether the user can list applicants.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->hasPermissionTo('hr_applicants.view');
+    }
 }

@@ -29,7 +29,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('list', Invoice::class);
 
         $request = request();
         if ($request->get('start') && $request->get('end')) {

@@ -56,4 +56,15 @@ class InvoicePolicy
     {
         return $user->hasPermissionTo('finance_invoices.delete');
     }
+
+    /**
+     * Determine whether the user can list invoices.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->hasPermissionTo('finance_invoices.view');
+    }
 }

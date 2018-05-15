@@ -56,4 +56,15 @@ class ClientPolicy
     {
         return $user->hasPermissionTo('clients.delete');
     }
+
+    /**
+     * Determine whether the user can list clients.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function list(User $user)
+    {
+        return $user->hasPermissionTo('clients.view');
+    }
 }
