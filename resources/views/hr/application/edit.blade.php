@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            @include('hr.menu', ['active' => 'applicants'])
+            @include('hr.menu', ['active' => 'applications'])
             <br><br>
         </div>
     </div>
@@ -81,7 +81,7 @@
                     $applicationReviewValue = $applicationReview ? $applicationReview->review_value : '';
                 @endphp
                 <br>
-                <form action="/hr/applicants/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
+                <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
 
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}

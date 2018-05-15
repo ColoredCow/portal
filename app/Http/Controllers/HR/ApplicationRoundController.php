@@ -8,20 +8,20 @@ use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Http\Requests\HR\ApplicantRoundRequest;
 use App\Mail\HR\Applicant\RoundReviewed;
 use App\Models\HR\ApplicantRound;
+use App\Models\HR\ApplicationRound;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-class ApplicantRoundController extends Controller
+class ApplicationRoundController extends Controller
 {
-
     /**
      * Update the specified resource in storage.
      * @param  ApplicantRoundRequest $request
-     * @param  ApplicantRound        $round
+     * @param  ApplicationRound        $round
      * @return \Illuminate\Http\Response
      */
-    public function update(ApplicantRoundRequest $request, ApplicantRound $round)
+    public function update(ApplicantRoundRequest $request, ApplicationRound $round)
     {
         $validated = $request->validated();
         $round->_update([
@@ -30,7 +30,7 @@ class ApplicantRoundController extends Controller
             'conducted_date' => Carbon::now(),
         ], $validated['action_type'], $validated['reviews'], $validated['next_round']);
 
-        return redirect('/hr/applicants/' . $round->applicant->id . '/edit')->with('status', 'Applicant updated successfully!');
+        return redirect('/hr/applications/' . $round->application->id . '/edit')->with('status', 'Application updated successfully!');
     }
 
     /**

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr.menu', ['active' => 'applicants'])
+    @include('hr.menu', ['active' => 'applications'])
     <br><br>
     <h1>Applications</h1>
     <table class="table table-striped table-bordered" id="applicants_table">

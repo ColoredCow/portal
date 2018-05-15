@@ -26,18 +26,19 @@ class ApplicationRound extends Model
     {
         $this->update($attr);
         $this->_updateOrCreateReviews($reviews);
+        dd('here');
 
         if ($type == 'update') {
             return;
         }
 
-        $applicant = $this->applicant;
+        $applicant = $this->application->applicant;
         if ($attr['round_status']) {
             $status = config('constants.hr.status');
             $rejectedStatus = $status['rejected']['label'];
             $inProgressStatus = $status['in-progress']['label'];
             $applicantStatus = ($attr['round_status'] === $rejectedStatus) ? $rejectedStatus : $inProgressStatus;
-            $applicant->update([ 'status' => $applicantStatus ]);
+            // $applicant->update([ 'status' => $applicantStatus ]);
         }
 
         if ($nextRound) {
@@ -53,12 +54,14 @@ class ApplicationRound extends Model
 
     protected function _updateOrCreateReviews($reviews = [])
     {
+        dd($this->id);
         foreach ($reviews as $review_key => $review_value) {
-            $applicant_reviews = $this->applicantReviews()->updateOrCreate(
+            $application_reviews = $this->applicationReviews()->updateOrCreate(
                 [
-                    'hr_applicant_round_id' => $this->id,
+                    'hr_application_round_id' => $this->id,
                 ],
                 [
+                    'hr_applicant_round_id' => $this->id,
                     'review_key' => $review_key,
                     'review_value' => $review_value,
                 ]

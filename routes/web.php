@@ -31,7 +31,7 @@ Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallb
 Route::middleware('auth')->group(function () {
     Route::resource('hr/applicants', 'HR\ApplicantController')->only(['index', 'edit']);
     Route::resource('hr/applications', 'HR\ApplicationController')->only(['index', 'edit']);
-    Route::resource('hr/applicants/rounds', 'HR\ApplicantRoundController')->only(['store', 'update']);
+    Route::resource('hr/applications/rounds', 'HR\ApplicationRoundController')->only(['store', 'update']);
     Route::resource('hr/jobs', 'HR\JobController')->except(['create', 'show', 'destroy']);
     Route::resource('finance/invoices', 'Finance\InvoiceController')->except(['show', 'destroy']);
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
