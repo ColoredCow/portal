@@ -3,41 +3,26 @@
 namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\HR\ApplicantRequest;
-use App\Models\HR\Applicant;
-use App\Models\HR\Job;
+use App\Models\HR\Application;
 use App\Models\HR\Round;
+use Illuminate\Http\Request;
 
-class ApplicantController extends Controller
+class ApplicationController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *@param  \App\Http\Requests\HR\ApplicantRequest  $request
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
-    public function index(ApplicantRequest $request)
+    public function index()
     {
-        $validated = $request->validated();
-        $hrJobID = (isset($validated['hr_job_id'])) ? $validated['hr_job_id'] : null;
-
-        $applicants = Applicant::with('applications', 'applications.job')
-                        // ->where(function($query) use ($hrJobID ) {
-                        //     ($hrJobID) ? $query->where('hr_job_id', $hrJobID) : null;
-                        // })
-                        // ->orderBy('id', 'desc')
-                        ->paginate(config('constants.pagination_size'));
-
-
-        return view('hr.applicant.index')->with([
-            'applicants' => $applicants,
-        ]);
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -47,15 +32,15 @@ class ApplicantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ApplicantRequest $request)
+    public function store(Request $request)
     {
         $validated = $request->validated();
         $job = Job::where('title', $validated['job_title'])->first();
 
-        return Applicant::_create([
+        return Application::_create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'resume' => $validated['resume'],
@@ -73,10 +58,10 @@ class ApplicantController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \App\Models\HR\Application  $application
      * @return \Illuminate\Http\Response
      */
-    public function show(Applicant $applicant)
+    public function show(Application $application)
     {
         //
     }
@@ -84,15 +69,16 @@ class ApplicantController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \App\Models\HR\Application  $application
      * @return \Illuminate\Http\Response
      */
-    public function edit(Applicant $applicant)
+    public function edit(Application $application)
     {
-        $applicant->load(['applications', 'applications.job.rounds', 'applicantRounds', 'applicantRounds.applicantReviews']);
+        $application->load(['job.rounds', 'applicant', 'applicant.applicantRounds', 'applicant.applicantRounds.applicantReviews']);
 
         return view('hr.applicant.edit')->with([
-            'applicant' => $applicant,
+            'applicant' => $application->applicant,
+            'application' => $application,
             'rounds' => Round::all(),
         ]);
     }
@@ -100,11 +86,11 @@ class ApplicantController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @param  \App\Models\HR\Applicant  $applicant
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\HR\Application  $application
+     * @return \Illuminate\Http\Response
      */
-    public function update(ApplicantRequest $request, Applicant $applicant)
+    public function update(Request $request, Application $application)
     {
         //
     }
@@ -112,10 +98,10 @@ class ApplicantController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \App\Models\HR\Application  $application
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Applicant $applicant)
+    public function destroy(Application $application)
     {
         //
     }

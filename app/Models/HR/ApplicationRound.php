@@ -3,17 +3,17 @@
 namespace App\Models\HR;
 
 use App\Models\HR\Applicant;
-use App\Models\HR\ApplicantReview;
+use App\Models\HR\ApplicationReview;
 use App\Models\HR\Round;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicantRound extends Model
+class ApplicationRound extends Model
 {
-    protected $fillable = ['hr_applicant_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
+    protected $fillable = ['hr_applicant_id', 'hr_application_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
 
-    protected $table = 'hr_applicants_rounds';
+    protected $table = 'hr_applicantion_round';
 
     public $timestamps = false;
 
@@ -67,9 +67,9 @@ class ApplicantRound extends Model
         return true;
     }
 
-    public function applicant()
+    public function application()
     {
-    	return $this->belongsTo(Applicant::class, 'hr_applicant_id');
+    	return $this->belongsTo(Application::class, 'hr_application_id');
     }
 
     public function round()
@@ -87,9 +87,9 @@ class ApplicantRound extends Model
     	return $this->belongsTo(User::class, 'conducted_person_id');
     }
 
-    public function applicantReviews()
+    public function applicationReviews()
     {
-        return $this->hasMany(ApplicantReview::class, 'hr_applicant_round_id');
+        return $this->hasMany(ApplicationReview::class, 'hr_application_round_id');
     }
 
     public function mailSender()

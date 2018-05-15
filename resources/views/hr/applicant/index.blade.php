@@ -27,7 +27,7 @@
             </td>
             <td>{{ $applicant->created_at->format(config('constants.display_date_format')) }}</td>
             <td>
-                <span class="d-flex justify-content-start">
+                {{-- <span class="d-flex justify-content-start">
                     @if (in_array($applicant->status, ['in-progress', 'new']))
                         <span class="badge badge-warning badge-pill">{{ $applicant->applicantRounds->last()->round->name }}</span>
                         @if ($applicant->applicantRounds->count() > 1)
@@ -38,7 +38,7 @@
                     @else
                         <span class="{{ config("constants.hr.status.$applicant->status.class") }} badge-pill">{{ config("constants.hr.status.$applicant->status.title") }}</span>
                     @endif
-                </span>
+                </span> --}}
             </td>
         </tr>
         @endforeach
