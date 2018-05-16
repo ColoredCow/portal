@@ -42,13 +42,14 @@ class ApplicationRound extends Model
         }
 
         if ($nextRound) {
-            $scheduled_person = User::findByEmail($applicant->applications->first()->job->posted_by);
+            $nextJobRound = $application->job->rounds->where('id', $nextRound)->first();
+            $scheduledPersonId = $nextJobRound->pivot->hr_round_interviewer_id;
             $applicationRound = self::_create([
                 'hr_applicant_id' => $applicant->id,
                 'hr_application_id' => $application->id,
                 'hr_round_id' => $nextRound,
                 'scheduled_date' => Carbon::now()->addDay(),
-                'scheduled_person_id' => $scheduled_person ? $scheduled_person->id : config('constants.hr.defaults.scheduled_person_id'),
+                'scheduled_person_id' => $scheduledPersonId ?? config('constants.hr.defaults.scheduled_person_id'),
             ]);
         }
     }
