@@ -36,7 +36,7 @@
                         @endcan
                         @can('finance_reports.view')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/finance/reports?show=default') }}">Finance</a>
+                            <a class="nav-link" href="{{ url('/finance/reports?show=monthly') }}">Finance</a>
                         </li>
                         @endcan
                         @can('weeklydoses.view')
