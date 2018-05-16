@@ -23,22 +23,22 @@
             <td>{{ $application->job->title }}</td>
             <td>{{ $application->created_at->format(config('constants.display_date_format')) }}</td>
             <td>
-                {{-- <span class="d-flex justify-content-start">
-                    @if (in_array($applicant->status, ['in-progress', 'new']))
-                        <span class="badge badge-warning badge-pill">{{ $applicant->applicantRounds->last()->round->name }}</span>
-                        @if ($applicant->applicantRounds->count() > 1)
-                            <span class="badge badge-info badge-pill ml-1 px-2">Completed: {{ $applicant->applicantRounds->count() - 1 }}</span>
+                <span class="d-flex justify-content-start">
+                    @if (in_array($application->status, ['in-progress', 'new']))
+                        <span class="badge badge-warning badge-pill">{{ $application->applicationRounds->last()->round->name }}</span>
+                        @if ($application->applicationRounds->count() > 1)
+                            <span class="badge badge-info badge-pill ml-1 px-2">Completed: {{ $application->applicationRounds->count() - 1 }}</span>
                         @else
                             <span class="badge badge-info badge-pill ml-1 px-2">New</span>
                         @endif
                     @else
-                        <span class="{{ config("constants.hr.status.$applicant->status.class") }} badge-pill">{{ config("constants.hr.status.$applicant->status.title") }}</span>
+                        <span class="{{ config("constants.hr.status.$application->status.class") }} badge-pill">{{ config("constants.hr.status.$application->status.title") }}</span>
                     @endif
-                </span> --}}
+                </span>
             </td>
         </tr>
         @endforeach
     </table>
-    {{-- {{ $application->links() }} --}}
+    {{ $applications->links() }}
 </div>
 @endsection

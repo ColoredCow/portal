@@ -16,8 +16,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        // $applications = Application::with('applicant')->paginate(config('constants.pagination_size'));
-        $applications = Application::orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
+        $applications = Application::with('applicant', 'job')->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
 
         return view('hr.application.index')->with([
             'applications' => $applications,
