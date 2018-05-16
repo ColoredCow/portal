@@ -2,25 +2,25 @@
 
 namespace App\Events\HR;
 
-use App\Models\HR\Applicant;
+use App\Models\HR\Application;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ApplicantCreated
+class ApplicationCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $applicant;
+    public $application;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Applicant $applicant)
+    public function __construct(Application $application)
     {
-        $this->applicant = $applicant;
+        $this->application = $application;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Models\HR;
 
-use App\Events\HR\ApplicantCreated;
+use App\Events\HR\ApplicationCreated;
 use App\Events\HR\ApplicantUpdated;
 use App\Models\HR\ApplicantRound;
 use App\Models\HR\Application;
@@ -26,9 +26,12 @@ class Applicant extends Model
         $applicant = self::create($attr);
         $application = Application::create([
             'hr_job_id' => $attr['hr_job_id'],
-            'hr_applicant_id' => $applicant->id
+            'hr_applicant_id' => $applicant->id,
+            'resume' => $attr['resume'],
+            'reason_for_eligibility' => isset($attr['reason_for_eligibility']) ? $attr['reason_for_eligibility'] : null,
+            'status' => config('constants.hr.status.new.label'),
         ]);
-        event(new ApplicantCreated($applicant));
+        event(new ApplicationCreated($application));
         return $applicant;
     }
 
