@@ -50,19 +50,9 @@ class ApplicantController extends Controller
         $validated = $request->validated();
         $job = Job::where('title', $validated['job_title'])->first();
 
-        return Applicant::_create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'resume' => $validated['resume'],
-            'phone' => isset($validated['phone']) ? $validated['phone'] : null,
-            'college' => isset($validated['college']) ? $validated['college'] : null,
-            'graduation_year' => isset($validated['graduation_year']) ? $validated['graduation_year'] : null,
-            'course' => isset($validated['course']) ? $validated['course'] : null,
-            'linkedin' => isset($validated['linkedin']) ? $validated['linkedin'] : null,
-            'reason_for_eligibility' => isset($validated['reason_for_eligibility']) ? $validated['reason_for_eligibility'] : null,
-            'hr_job_id' => $job->id,
-            'status' => config('constants.hr.status.new.label'),
-        ]);
+        $applicant = Applicant::_create($validated);
+
+        return $applicant;
     }
 
     /**

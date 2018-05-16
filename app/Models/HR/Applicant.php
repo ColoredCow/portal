@@ -23,15 +23,25 @@ class Applicant extends Model
      */
     public static function _create($attr)
     {
-        $applicant = self::create($attr);
-        $application = Application::create([
+        $applicant = self::firstOrCreate([
+            'email' => $attr['email'],
+        ], [
+            'name' => $attr['name'],
+            'phone' => isset($attr['phone']) ? $attr['phone'] : null,
+            'college' => isset($attr['college']) ? $attr['college'] : null,
+            'graduation_year' => isset($attr['graduation_year']) ? $attr['graduation_year'] : null,
+            'course' => isset($attr['course']) ? $attr['course'] : null,
+            'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
+        ]);
+
+        $application = Application::_create([
             'hr_job_id' => $attr['hr_job_id'],
             'hr_applicant_id' => $applicant->id,
             'resume' => $attr['resume'],
             'reason_for_eligibility' => isset($attr['reason_for_eligibility']) ? $attr['reason_for_eligibility'] : null,
             'status' => config('constants.hr.status.new.label'),
         ]);
-        event(new ApplicationCreated($application));
+
         return $applicant;
     }
 
@@ -51,11 +61,6 @@ class Applicant extends Model
             'reviews' => $request->input('reviews'),
         ]));
         return $updated;
-    }
-
-    public function getApplicantRound($round_id)
-    {
-        return $this->applicantRounds->where('hr_round_id', $round_id)->first();
     }
 
     public function applications()

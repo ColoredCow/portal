@@ -13,6 +13,19 @@ class Application extends Model
 
     protected $table = 'hr_applications';
 
+    /**
+     * Custom create method that creates an application and fires necessary events
+     *
+     * @param  array $attr  fillables to be stored
+     * @return this
+     */
+    public static function _create($attr)
+    {
+        $application = self::create($attr);
+        event(new ApplicationCreated($application));
+        return $application;
+    }
+
     public function job()
     {
     	return $this->belongsTo(Job::class, 'hr_job_id');

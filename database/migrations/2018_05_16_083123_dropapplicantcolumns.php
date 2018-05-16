@@ -14,12 +14,14 @@ class Dropapplicantcolumns extends Migration
     public function up()
     {
         Schema::table('hr_applicants', function(Blueprint $table) {
+            $table->dropForeign(['hr_job_id']);
             $table->dropColumn([
                 'reason_for_eligibility',
                 'autoresponder_subject',
                 'autoresponder_body',
                 'status',
-                'resume'
+                'resume',
+                'hr_job_id'
             ]);
         });
 
@@ -53,6 +55,8 @@ class Dropapplicantcolumns extends Migration
             $table->text('reason_for_eligibility')->nullable();
             $table->string('autoresponder_subject')->nullable();
             $table->text('autoresponder_body')->nullable();
+            $table->unsignedInteger('hr_job_id')->nullable();
+            $table->foreign('hr_job_id')->references('id')->on('hr_jobs');
         });
     }
 }
