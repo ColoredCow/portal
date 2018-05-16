@@ -281,3 +281,12 @@ input:focus + .slider {
     top: 20%;
     font-size: 12px;
 }
+
+#page_hr_applicant_edit {
+    .card-body,
+    .card-footer {
+        &.collapse {
+            display: none;
+        }
+    }
+}

@@ -87,22 +87,38 @@
                     {{ method_field('PATCH') }}
 
                     <div class="card">
-                        <div class="card-header">
-                            <div class="d-inline float-left">
-                                {{ $applicationRound->round->name }}
-                                <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
-                                    <i class="fa fa-info-circle fa-lg"></i>
-                                </span>
+                        <div class="card-header c-pointer d-flex align-items-center justify-content-between">
+                            <div class="d-flex flex-column">
+                                <div>
+                                    {{ $applicationRound->round->name }}
+                                    <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
+                                        <i class="fa fa-info-circle fa-lg"></i>
+                                    </span>
+                                </div>
+                                @if ($applicationRound->round_status)
+                                    <span>Conducted By: {{ $applicationRound->conductedPerson->name }}</span>
+                                @else
+                                    <span>Scheduled for: {{ $applicationRound->scheduledPerson->name }}</span>
+                                @endif
                             </div>
-                            <div class="d-inline float-right">
+                            <div class="d-flex flex-column align-items-end">
                                 @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
-                                    <div class="text-success"><i class="fa fa-check"></i>{{ config('constants.hr.status.confirmed.title') }}</div>
+                                    <div class="text-success"><i class="fa fa-check"></i>&nbsp;{{ config('constants.hr.status.confirmed.title') }}</div>
                                 @elseif ($applicationRound->round_status == config('constants.hr.status.rejected.label'))
-                                    <div class="text-danger"><i class="fa fa-close"></i>{{ config('constants.hr.status.rejected.title') }}</div>
+                                    <div class="text-danger"><i class="fa fa-close"></i>&nbsp;{{ config('constants.hr.status.rejected.title') }}</div>
+                                @endif
+                                @if ($applicationRound->round_status)
+                                    @if ($applicationRound->conducted_date)
+                                        <span>Conducted on: {{ date(config('constants.display_date_format', strtotime($applicationRound->conducted_date))) }}</span>
+                                    @endif
+                                @else
+                                    @if ($applicationRound->scheduled_date)
+                                    <span>Scheduled on: {{ date(config('constants.display_date_format', strtotime($applicationRound->scheduled_date))) }}</span>
+                                    @endif
                                 @endif
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body {{ !$loop->last ? 'collapse' : '' }}">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="reviews[feedback]">Feedback</label>
@@ -116,14 +132,14 @@
                             @endif
                         </div>
                         @if (! $applicationRound->round_status)
-                        <div class="card-footer">
+                        <div class="card-footer {{ !$loop->last ? 'collapse' : '' }}">
                             <applicant-round-action-component
                             :rounds="{{ json_encode($application->job->first()->rounds) }}">
                             </applicant-round-action-component>
                             <button type="button" class="btn btn-outline-danger round-submit" data-status="{{ config('constants.hr.status.rejected.label') }}">Reject</button>
                         </div>
                         @elseif ($applicationRound->round_status === config('constants.hr.status.rejected.label') || !$applicationRound->mail_sent)
-                        <div class="card-footer">
+                        <div class="card-footer {{ !$loop->last ? 'collapse' : '' }}">
                             @if ($applicationRound->round_status === config('constants.hr.status.rejected.label'))
                                 <applicant-round-action-component
                                 :rounds="{{ json_encode($application->job->first()->rounds) }}">

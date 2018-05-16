@@ -153,6 +153,12 @@ $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', 
     form.submit();
 });
 
+$('#page_hr_applicant_edit .applicant-round-form').on('click', '.card-header', function(){
+    let card = $(this).closest('.card');
+    card.find('.card-body').toggleClass('collapse');
+    card.find('.card-footer').toggleClass('collapse');
+});
+
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-update', function(){
     var form = $(this).closest('.applicant-round-form');
     form.find('[name="action_type"]').val('update');
