@@ -62,7 +62,7 @@ class MigrateApplicantJobReferenceSeeder extends Seeder
             $applicationRound->hr_application_id = $application->id;
             $applicationRound->save();
 
-            $applicationReviews = ApplicationReview::where('hr_applicant_round_id', $applicationRound->id);
+            $applicationReviews = ApplicationReview::where('hr_applicant_round_id', $applicationRound->id)->get();
 
             // link all the applicant's round reviews to the application's round
             foreach ($applicationReviews as $applicationReview) {
