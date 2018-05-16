@@ -155,8 +155,7 @@ $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', 
 
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.card-header', function(){
     let card = $(this).closest('.card');
-    card.find('.card-body').toggleClass('collapse');
-    card.find('.card-footer').toggleClass('collapse');
+    card.find('.card-body, .card-footer').toggleClass('collapse');
 });
 
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-update', function(){
