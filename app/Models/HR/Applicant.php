@@ -31,13 +31,14 @@ class Applicant extends Model
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
         ]);
 
+        $applicationStatus = $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label');
         $job = Job::where('title', $attr['job_title'])->first();
         $application = Application::_create([
             'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,
             'resume' => $attr['resume'],
             'reason_for_eligibility' => isset($attr['reason_for_eligibility']) ? $attr['reason_for_eligibility'] : null,
-            'status' => config('constants.hr.status.new.label'),
+            'status' => $applicationStatus,
         ]);
 
         return $applicant;
