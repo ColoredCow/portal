@@ -26,7 +26,7 @@ class JobController extends Controller
         $this->authorize('list', Job::class);
 
         return view('hr.job.index')->with([
-            'jobs' => Job::with('applicants')->orderBy('id', 'desc')->get(),
+            'jobs' => Job::with('applications', 'applications.applicant')->orderBy('id', 'desc')->get(),
         ]);
     }
 

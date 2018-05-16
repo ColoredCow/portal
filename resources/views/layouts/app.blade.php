@@ -31,7 +31,7 @@
                     <ul class="navbar-nav mr-auto">
                         @can('hr_applicants.view')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/hr/applicants') }}">HR</a>
+                            <a class="nav-link" href="{{ url('/hr/applications') }}">HR</a>
                         </li>
                         @endcan
                         @can('finance_reports.view')

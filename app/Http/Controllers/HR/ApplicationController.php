@@ -3,36 +3,30 @@
 namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\HR\ApplicantRequest;
-use App\Models\HR\Applicant;
-use App\Models\HR\Job;
+use App\Models\HR\Application;
 use App\Models\HR\Round;
+use Illuminate\Http\Request;
 
-class ApplicantController extends Controller
+class ApplicationController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->authorizeResource(Applicant::class, null, [
-            'except' => ['store']
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function index(ApplicantRequest $request)
+    public function index()
     {
-        //
+        $applications = Application::with('applicant', 'job')->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
+
+        return view('hr.application.index')->with([
+            'applications' => $applications,
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -42,15 +36,15 @@ class ApplicantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ApplicantRequest $request)
+    public function store(Request $request)
     {
         $validated = $request->validated();
         $job = Job::where('title', $validated['job_title'])->first();
 
-        return Applicant::_create([
+        return Application::_create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'resume' => $validated['resume'],
@@ -68,10 +62,10 @@ class ApplicantController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \App\Models\HR\Application  $application
      * @return \Illuminate\Http\Response
      */
-    public function show(Applicant $applicant)
+    public function show(Application $application)
     {
         //
     }
@@ -79,22 +73,28 @@ class ApplicantController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
-     * @return void
+     * @param  \App\Models\HR\Application  $application
+     * @return \Illuminate\Http\Response
      */
-    public function edit(Applicant $applicant)
+    public function edit(Application $application)
     {
-        //
+        $application->load(['job.rounds', 'applicant', 'applicant.applications', 'applicationRounds']);
+
+        return view('hr.application.edit')->with([
+            'applicant' => $application->applicant,
+            'application' => $application,
+            'rounds' => Round::all(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @param  \App\Models\HR\Applicant  $applicant
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\HR\Application  $application
+     * @return \Illuminate\Http\Response
      */
-    public function update(ApplicantRequest $request, Applicant $applicant)
+    public function update(Request $request, Application $application)
     {
         //
     }
@@ -102,10 +102,10 @@ class ApplicantController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
-     * @return void
+     * @param  \App\Models\HR\Application  $application
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(Applicant $applicant)
+    public function destroy(Application $application)
     {
         //
     }

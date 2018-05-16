@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            @include('hr.menu', ['active' => 'applicants'])
+            @include('hr.menu', ['active' => 'applications'])
             <br><br>
         </div>
     </div>
@@ -15,13 +15,13 @@
             @include('status', ['errors' => $errors->all()])
         </div>
         <div class="col-md-3">
-            @include('hr.applicant.timeline', ['applicant' => $applicant])
+            @include('hr.application.timeline', ['applicant' => $applicant, 'application' => $application])
         </div>
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
-                    <div class="{{ config("constants.hr.status.$applicant->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$applicant->status.title") }}</div>
+                    <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$application->status.title") }}</div>
                 </div>
                 <div class="card-body">
                     <div class="form-row">
@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Applied for</b>
-                            <div><a href="{{ $applicant->job->link }}" target="_blank">{{ $applicant->job->title }}</a></div>
+                            <div><a href="{{ $application->job->link }}" target="_blank">{{ $application->job->title }}</a></div>
                         </div>
                         <div class="form-group col-md-5">
                             <b>Phone</b>
@@ -75,13 +75,13 @@
                     </div>
                 </div>
             </div>
-            @foreach ($applicant->applicantRounds as $applicantRound)
+            @foreach ($application->applicationRounds as $applicationRound)
                 @php
-                    $applicantReview = $applicantRound->applicantReviews->where('review_key', 'feedback')->first();
-                    $applicantReviewValue = $applicantReview ? $applicantReview->review_value : '';
+                    $applicationReview = $applicationRound->applicationReviews->where('review_key', 'feedback')->first();
+                    $applicationReviewValue = $applicationReview ? $applicationReview->review_value : '';
                 @endphp
                 <br>
-                <form action="/hr/applicants/rounds/{{ $applicantRound->id }}" method="POST" class="applicant-round-form">
+                <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
 
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
@@ -89,15 +89,15 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-inline float-left">
-                                {{ $applicantRound->round->name }}
-                                <span title="{{ $applicantRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicantRound->round->id }}">
+                                {{ $applicationRound->round->name }}
+                                <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
                                     <i class="fa fa-info-circle fa-lg"></i>
                                 </span>
                             </div>
                             <div class="d-inline float-right">
-                                @if ($applicantRound->round_status === config('constants.hr.status.confirmed.label'))
+                                @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
                                     <div class="text-success"><i class="fa fa-check"></i>{{ config('constants.hr.status.confirmed.title') }}</div>
-                                @elseif ($applicantRound->round_status == config('constants.hr.status.rejected.label'))
+                                @elseif ($applicationRound->round_status == config('constants.hr.status.rejected.label'))
                                     <div class="text-danger"><i class="fa fa-close"></i>{{ config('constants.hr.status.rejected.title') }}</div>
                                 @endif
                             </div>
@@ -106,41 +106,41 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="reviews[feedback]">Feedback</label>
-                                    <textarea name="reviews[feedback]" id="reviews[feedback]" rows="6" class="form-control">{{ $applicantReviewValue }}</textarea>
+                                    <textarea name="reviews[feedback]" id="reviews[feedback]" rows="6" class="form-control">{{ $applicationReviewValue }}</textarea>
                                 </div>
                             </div>
-                            @if ($applicantRound->round_status)
+                            @if ($applicationRound->round_status)
                                 <div class="form-row float-right">
                                     <button type="button" class="btn btn-info btn-sm round-update">Update feedback</button>
                                 </div>
                             @endif
                         </div>
-                        @if (! $applicantRound->round_status)
+                        @if (! $applicationRound->round_status)
                         <div class="card-footer">
                             <applicant-round-action-component
-                            :rounds="{{ json_encode($job->rounds) }}">
+                            :rounds="{{ json_encode($application->job->first()->rounds) }}">
                             </applicant-round-action-component>
                             <button type="button" class="btn btn-outline-danger round-submit" data-status="{{ config('constants.hr.status.rejected.label') }}">Reject</button>
                         </div>
-                        @elseif ($applicantRound->round_status === config('constants.hr.status.rejected.label') || !$applicantRound->mail_sent)
+                        @elseif ($applicationRound->round_status === config('constants.hr.status.rejected.label') || !$applicationRound->mail_sent)
                         <div class="card-footer">
-                            @if ($applicantRound->round_status === config('constants.hr.status.rejected.label'))
+                            @if ($applicationRound->round_status === config('constants.hr.status.rejected.label'))
                                 <applicant-round-action-component
-                                :rounds="{{ json_encode($job->rounds) }}">
+                                :rounds="{{ json_encode($application->job->first()->rounds) }}">
                                 </applicant-round-action-component>
                             @endif
-                            @if (!$applicantRound->mail_sent)
-                                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#round_{{ $applicantRound->id }}">Send mail</button>
+                            @if (!$applicationRound->mail_sent)
+                                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
                             @endif
                         </div>
                         @endif
                     </div>
-                    <input type="hidden" name="round_status" value="{{ $applicantRound->round_status }}">
+                    <input type="hidden" name="round_status" value="{{ $applicationRound->round_status }}">
                     <input type="hidden" name="next_round" value="0">
                     <input type="hidden" name="action_type" value="new">
                 </form>
-                @include('hr.round-guide-modal', ['round' => $applicantRound->round])
-                @includeWhen($applicantRound->round_status && !$applicantRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicantRound])
+                @include('hr.round-guide-modal', ['round' => $applicationRound->round])
+                @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])
             @endforeach
         </div>
     </div>

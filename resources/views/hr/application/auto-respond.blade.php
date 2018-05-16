@@ -9,9 +9,9 @@
             </div>
             <div class="modal-body">
                 <strong class="d-block mb-1">Mail subject:</strong>
-                <p class="bg-light p-3">{{ $applicant->autoresponder_subject }}</p>
+                <p class="bg-light p-3">{{ $application->autoresponder_subject }}</p>
                 <strong class="d-block mb-1">Mail body:</strong>
-                <div class="bg-light p-3 mb-3 space-wrap">{!! $applicant->autoresponder_body !!}</div>
+                <div class="bg-light p-3 mb-3 space-wrap">{!! $application->autoresponder_body !!}</div>
             </div>
         </div>
     </div>
