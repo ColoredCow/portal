@@ -10,6 +10,14 @@ use App\Models\HR\Round;
 
 class ApplicantController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Applicant::class, null, [
+            'except' => ['store']
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -95,7 +103,7 @@ class ApplicantController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\HR\Applicant  $applicant
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function destroy(Applicant $applicant)
     {

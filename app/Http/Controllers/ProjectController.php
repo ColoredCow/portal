@@ -8,6 +8,12 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Project::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +21,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', Project::class);
+
         return view('project.index')->with([
             'projects' => Project::getList(),
         ]);

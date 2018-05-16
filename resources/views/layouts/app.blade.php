@@ -26,22 +26,32 @@
                 @endguest
                         {{ config('app.name', 'Employee Portal') }}
                     </a>
+                @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
+                        @can('hr_applicants.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/hr/applications') }}">HR</a>
                         </li>
+                        @endcan
+                        @can('finance_reports.view')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/finance/invoices') }}">Finance</a>
+                            <a class="nav-link" href="{{ url('/finance/reports?show=default') }}">Finance</a>
                         </li>
+                        @endcan
+                        @can('weeklydoses.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/weeklydoses') }}">WeeklyDose</a>
                         </li>
+                        @endcan
+                        @can('settings.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
+                @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -54,11 +64,7 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li><a class="nav-link" href="{{ url('auth/google') }}">{{ __('Login') }}</a></li>
-                            {{-- <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li> --}}
-                        @else
+                        @auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{-- <img src="{{ $user->avatar }}" class="user-avatar">&nbsp; --}}
@@ -77,7 +83,7 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                        @endauth
                     </ul>
                 </div>
             </div>

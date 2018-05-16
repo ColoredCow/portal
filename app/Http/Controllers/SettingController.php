@@ -16,6 +16,8 @@ class SettingController extends Controller
      */
     public function index(String $module)
     {
+        $this->authorize('view', Setting::class);
+
         $settings = Setting::where('module', $module)->get()->keyBy('setting_key');
         return view("settings.$module")->with(['settings' => $settings]);
     }
@@ -29,6 +31,8 @@ class SettingController extends Controller
      */
     public function update(SettingRequest $request, String $module)
     {
+        $this->authorize('update', Setting::class);
+
         $validated = $request->validated();
 
         foreach ($validated['setting_key'] as $key => $value) {

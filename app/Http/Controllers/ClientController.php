@@ -7,6 +7,12 @@ use App\Models\Client;
 
 class ClientController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Client::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +20,8 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', Client::class);
+
         return view('client.index')->with([
             'clients' => Client::select('id', 'name', 'emails', 'phone', 'is_active')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);

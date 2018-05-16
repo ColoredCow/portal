@@ -15,15 +15,12 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
     }
-    return view('welcome');
+    return redirect('login');
 });
 
 Auth::routes();
-Route::redirect('/login', '/auth/google');
 
 Route::get('home', 'HomeController@index')->name('home');
-
-Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
