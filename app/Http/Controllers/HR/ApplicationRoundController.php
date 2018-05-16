@@ -8,20 +8,20 @@ use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Http\Requests\HR\ApplicantRoundRequest;
 use App\Mail\HR\Applicant\RoundReviewed;
 use App\Models\HR\ApplicantRound;
+use App\Models\HR\ApplicationRound;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-class ApplicantRoundController extends Controller
+class ApplicationRoundController extends Controller
 {
-
     /**
      * Update the specified resource in storage.
      * @param  ApplicantRoundRequest $request
-     * @param  ApplicantRound        $round
+     * @param  ApplicationRound        $round
      * @return \Illuminate\Http\Response
      */
-    public function update(ApplicantRoundRequest $request, ApplicantRound $round)
+    public function update(ApplicantRoundRequest $request, ApplicationRound $round)
     {
         $validated = $request->validated();
         $round->_update([
@@ -30,23 +30,25 @@ class ApplicantRoundController extends Controller
             'conducted_date' => Carbon::now(),
         ], $validated['action_type'], $validated['reviews'], $validated['next_round']);
 
-        return redirect('/hr/applicants/' . $round->applicant->id . '/edit')->with('status', 'Applicant updated successfully!');
+        return redirect('/hr/applications/' . $round->application->id . '/edit')->with('status', 'Application updated successfully!');
     }
 
     /**
      * Send email to the applicant for current round
      *
      * @param  ApplicantRoundMailRequest $request
-     * @param  ApplicantRound            $applicantRound
+     * @param  ApplicationRound            $applicationRound
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function sendMail(ApplicantRoundMailRequest $request, ApplicantRound $applicantRound)
+    public function sendMail(ApplicantRoundMailRequest $request, ApplicationRound $applicationRound)
     {
         $validated = $request->validated();
         $mail_body = ContentHelper::editorFormat($validated['mail_body']);
-        $applicant = $applicantRound->applicant;
 
-        $applicantRound->update([
+        $application = $applicationRound->application;
+        $applicant = $application->applicant;
+
+        $applicationRound->update([
             'mail_sent' => true,
             'mail_subject' => $validated['mail_subject'],
             'mail_body' => $mail_body,
@@ -55,13 +57,13 @@ class ApplicantRoundController extends Controller
         ]);
 
         Mail::to($applicant->email, $applicant->name)
-            ->bcc($applicant->job->posted_by)
-            ->send(new RoundReviewed($applicantRound));
+            ->bcc($application->job->posted_by)
+            ->send(new RoundReviewed($applicationRound));
 
         return redirect()->back()->with(
             'status',
             "Mail sent successfully to the <b>$applicant->name</b> at <b>$applicant->email</b>.<br>
-            <span data-toggle='modal' data-target='#round_mail_$applicantRound->id' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
+            <span data-toggle='modal' data-target='#round_mail_$applicationRound->id' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
         );
     }
 }

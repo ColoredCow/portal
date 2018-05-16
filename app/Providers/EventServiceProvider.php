@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\HR\ApplicantCreated' => [
-            'App\Listeners\HR\CreateFirstApplicantRound',
+        'App\Events\HR\ApplicationCreated' => [
+            'App\Listeners\HR\CreateFirstApplicationRound',
             'App\Listeners\HR\AutoRespondApplicant',
         ],
         'App\Events\HR\JobCreated' => [

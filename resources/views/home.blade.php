@@ -6,14 +6,14 @@
     <div class="d-flex justify-content-between row">
         @can('hr_applicants.view')
         <div class="col-md-3 card">
-            <a class="card-body no-transition" href="/hr/applicants/">
+            <a class="card-body no-transition" href="/hr/applications/">
                 <br><h2 class="text-center">HR</h2><br>
             </a>
         </div>
         @endcan
         @can('finance_reports.view')
         <div class="col-md-3 card">
-            <a class="card-body no-transition" href="/finance/reports?show=default">
+            <a class="card-body no-transition" href="/finance/reports?show=monthly">
                 <br><h2 class="text-center">Finance</h2><br>
             </a>
         </div>

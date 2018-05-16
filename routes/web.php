@@ -27,7 +27,8 @@ Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallb
 
 Route::middleware('auth')->group(function () {
     Route::resource('hr/applicants', 'HR\ApplicantController')->only(['index', 'edit']);
-    Route::resource('hr/applicants/rounds', 'HR\ApplicantRoundController')->only(['store', 'update']);
+    Route::resource('hr/applications', 'HR\ApplicationController')->only(['index', 'edit']);
+    Route::resource('hr/applications/rounds', 'HR\ApplicationRoundController')->only(['store', 'update']);
     Route::resource('hr/jobs', 'HR\JobController')->except(['create', 'show', 'destroy']);
     Route::resource('finance/invoices', 'Finance\InvoiceController')->except(['show', 'destroy']);
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
@@ -35,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('finance/invoices/download/{year}/{month}/{file}', 'Finance\InvoiceController@download');
     Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
-    Route::post('hr/applicant-round/{applicantRound}/sendmail', 'HR\ApplicantRoundController@sendMail');
+    Route::post('hr/application-round/{applicationRound}/sendmail', 'HR\ApplicationRoundController@sendMail');
     Route::resource('hr/rounds', 'HR\RoundController');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');

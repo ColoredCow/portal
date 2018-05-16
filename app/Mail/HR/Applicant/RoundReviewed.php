@@ -2,7 +2,7 @@
 
 namespace App\Mail\HR\Applicant;
 
-use App\Models\HR\ApplicantRound;
+use App\Models\HR\ApplicationRound;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -12,20 +12,20 @@ class RoundReviewed extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * The applicantRound instance.
+     * The ApplicationRound instance.
      *
-     * @var ApplicantRound
+     * @var ApplicationRound
      */
-    public $applicantRound;
+    public $applicationRound;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(ApplicantRound $applicantRound)
+    public function __construct(ApplicationRound $applicationRound)
     {
-        $this->applicantRound = $applicantRound;
+        $this->applicationRound = $applicationRound;
     }
 
     /**
@@ -36,9 +36,9 @@ class RoundReviewed extends Mailable
     public function build()
     {
         return $this->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'))
-            ->subject($this->applicantRound->mail_subject)
+            ->subject($this->applicationRound->mail_subject)
             ->view('mail.plain')->with([
-                'body' => $this->applicantRound->mail_body
+                'body' => $this->applicationRound->mail_body
             ]);
     }
 }
