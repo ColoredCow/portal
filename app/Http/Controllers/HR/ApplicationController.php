@@ -112,18 +112,19 @@ class ApplicationController extends Controller
 
     /**
      * get list of applications based on their show status
-     * @return [type] [description]
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getApplicationsList()
     {
         $request = request();
         $applications = Application::with('applicant', 'job');
+        $rejected = config('constants.hr.status.rejected.label');
         switch ($request->get('status')) {
-            case 'rejected':
-                $applications = $applications->where('status', 'rejected');
+            case $rejected:
+                $applications = $applications->where('status', $rejected);
                 break;
             default:
-                $applications = $applications->where('status', '!=', 'rejected');
+                $applications = $applications->where('status', '!=', $rejected);
                 break;
         }
         return $applications->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));

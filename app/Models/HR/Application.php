@@ -32,7 +32,7 @@ class Application extends Model
      */
     public function reject()
     {
-        $this->update(['status' => 'rejected']);
+        $this->update(['status' => config('constants.hr.status.rejected.label')]);
     }
 
     /**
@@ -40,7 +40,7 @@ class Application extends Model
      */
     public function markInProgress()
     {
-        $this->update(['status' => 'in-progress']);
+        $this->update(['status' => config('constants.hr.status.in-progress.label')]);
     }
 
     public function job()
