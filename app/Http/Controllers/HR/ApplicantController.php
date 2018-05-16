@@ -5,8 +5,6 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRequest;
 use App\Models\HR\Applicant;
-use App\Models\HR\Job;
-use App\Models\HR\Round;
 
 class ApplicantController extends Controller
 {
@@ -48,11 +46,7 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        $job = Job::where('title', $validated['job_title'])->first();
-
-        $applicant = Applicant::_create($validated);
-
-        return $applicant;
+        return Applicant::_create($validated);
     }
 
     /**

@@ -2,9 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Events\HR\ApplicationCreated;
-use App\Events\HR\ApplicantUpdated;
-use App\Models\HR\ApplicantRound;
 use App\Models\HR\Application;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
@@ -34,8 +31,9 @@ class Applicant extends Model
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
         ]);
 
+        $job = Job::where('title', $attr['job_title'])->first();
         $application = Application::_create([
-            'hr_job_id' => $attr['hr_job_id'],
+            'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,
             'resume' => $attr['resume'],
             'reason_for_eligibility' => isset($attr['reason_for_eligibility']) ? $attr['reason_for_eligibility'] : null,
@@ -53,14 +51,7 @@ class Applicant extends Model
      */
     public function _update($attr)
     {
-        $updated = $this->update($attr);
-        $request = request();
-        event(new ApplicantUpdated($this, [
-            'round_id' => $request->input('round_id'),
-            'round_status' => $request->input('round_status'),
-            'reviews' => $request->input('reviews'),
-        ]));
-        return $updated;
+        //
     }
 
     public function applications()
