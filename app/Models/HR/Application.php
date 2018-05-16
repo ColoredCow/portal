@@ -27,6 +27,22 @@ class Application extends Model
         return $application;
     }
 
+    /**
+     * Set application status to rejected
+     */
+    public function reject()
+    {
+        $this->update(['status' => 'rejected']);
+    }
+
+    /**
+     * Set application status to in-progress
+     */
+    public function markInProgress()
+    {
+        $this->update(['status' => 'in-progress']);
+    }
+
     public function job()
     {
     	return $this->belongsTo(Job::class, 'hr_job_id');

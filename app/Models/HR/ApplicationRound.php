@@ -2,11 +2,13 @@
 
 namespace App\Models\HR;
 
+use App\Models\HR\Application;
 use App\Models\HR\ApplicationReview;
 use App\Models\HR\Round;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationRound extends Model
 {
@@ -21,35 +23,45 @@ class ApplicationRound extends Model
         return self::create($attr);
     }
 
-    public function _update($attr, $type = 'new', $reviews = [], $nextRound = 0)
+    public function _update($attr)
     {
-        $this->update($attr);
-        $this->_updateOrCreateReviews($reviews);
-
-        if ($type == 'update') {
-            return;
-        }
+        $fillable = [
+            'conducted_person_id' => Auth::id(),
+            'conducted_date' => Carbon::now(),
+        ];
 
         $application = $this->application;
         $applicant = $this->application->applicant;
-        if ($attr['round_status']) {
-            $status = config('constants.hr.status');
-            $rejectedStatus = $status['rejected']['label'];
-            $inProgressStatus = $status['in-progress']['label'];
-            $applicationStatus = ($attr['round_status'] === $rejectedStatus) ? $rejectedStatus : $inProgressStatus;
-            $application->update([ 'status' => $applicationStatus ]);
-        }
 
-        if ($nextRound) {
-            $nextJobRound = $application->job->rounds->where('id', $nextRound)->first();
-            $scheduledPersonId = $nextJobRound->pivot->hr_round_interviewer_id;
-            $applicationRound = self::_create([
-                'hr_application_id' => $application->id,
-                'hr_round_id' => $nextRound,
-                'scheduled_date' => Carbon::now()->addDay(),
-                'scheduled_person_id' => $scheduledPersonId ?? config('constants.hr.defaults.scheduled_person_id'),
-            ]);
+        switch ($attr['action']) {
+            case 'confirm':
+                $fillable['round_status'] = 'confirmed';
+                $application->markInProgress();
+                $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
+                $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id;
+                $applicationRound = self::_create([
+                    'hr_application_id' => $application->id,
+                    'hr_round_id' => $attr['next_round'],
+                    'scheduled_date' => Carbon::now()->addDay(),
+                    'scheduled_person_id' => $scheduledPersonId ?? config('constants.hr.defaults.scheduled_person_id'),
+                ]);
+                break;
+
+            case 'reject':
+                $fillable['round_status'] = 'rejected';
+                foreach ($applicant->applications as $applicantApplication) {
+                    $applicantApplication->reject();
+                }
+                break;
+
+            case 'refer':
+                $fillable['round_status'] = 'rejected';
+                $application->reject();
+                $applicant->applications->where('id', $attr['refer_to'])->first()->markInProgress();
+                break;
         }
+        $this->update($fillable);
+        $this->_updateOrCreateReviews($attr['reviews']);
     }
 
     protected function _updateOrCreateReviews($reviews = [])

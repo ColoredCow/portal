@@ -44,15 +44,9 @@ class Applicant extends Model
         return $applicant;
     }
 
-    /**
-     * Custom update method that updates an applicant and fires specific events
-     *
-     * @param  array $attr       fillables to be updated
-     * @return boolean|object    true if update is successful, error object if update fails
-     */
-    public function _update($attr)
+    public function openApplications()
     {
-        //
+        return $this->applications->where('status', '!=', config('constants.hr.status.rejected.label'));
     }
 
     public function applications()
