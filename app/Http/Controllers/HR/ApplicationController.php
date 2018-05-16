@@ -16,10 +16,9 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = Application::with('applicant', 'job')->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
-
         return view('hr.application.index')->with([
-            'applications' => $applications,
+            'applications' => self::getApplicationsList(),
+            'status' => request()->get('status'),
         ]);
     }
 
@@ -108,5 +107,24 @@ class ApplicationController extends Controller
     public function destroy(Application $application)
     {
         //
+    }
+
+    /**
+     * get list of applications based on their show status
+     * @return [type] [description]
+     */
+    public function getApplicationsList()
+    {
+        $request = request();
+        $applications = Application::with('applicant', 'job');
+        switch ($request->get('status')) {
+            case 'rejected':
+                $applications = $applications->where('status', 'rejected');
+                break;
+            default:
+                $applications = $applications->where('status', '!=', 'rejected');
+                break;
+        }
+        return $applications->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
     }
 }

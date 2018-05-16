@@ -6,6 +6,15 @@
     @include('hr.menu', ['active' => 'applications'])
     <br><br>
     <h1>Applications</h1>
+    <br>
+    <ul class="nav nav-pills mb-2">
+        <li class="nav-item">
+            <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/hr/applications"><i class="fa fa-clipboard"></i>&nbsp;Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-item nav-link {{ $status === 'rejected' ? 'active bg-info text-white' : 'text-info' }}" href="/hr/applications?status=rejected"><i class="fa fa-times-circle"></i>&nbsp;Rejected</a>
+        </li>
+    </ul>
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>

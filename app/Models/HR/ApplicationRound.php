@@ -2,7 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\Applicant;
 use App\Models\HR\ApplicationReview;
 use App\Models\HR\Round;
 use App\User;
@@ -11,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicationRound extends Model
 {
-    protected $fillable = ['hr_applicant_id', 'hr_application_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
+    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
 
     protected $table = 'hr_application_round';
 
@@ -45,7 +44,6 @@ class ApplicationRound extends Model
             $nextJobRound = $application->job->rounds->where('id', $nextRound)->first();
             $scheduledPersonId = $nextJobRound->pivot->hr_round_interviewer_id;
             $applicationRound = self::_create([
-                'hr_applicant_id' => $applicant->id,
                 'hr_application_id' => $application->id,
                 'hr_round_id' => $nextRound,
                 'scheduled_date' => Carbon::now()->addDay(),
@@ -62,7 +60,6 @@ class ApplicationRound extends Model
                     'hr_application_round_id' => $this->id,
                 ],
                 [
-                    'hr_applicant_round_id' => $this->id,
                     'review_key' => $review_key,
                     'review_value' => $review_value,
                 ]
