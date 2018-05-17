@@ -118,7 +118,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div id="collapse_{{ $loop->iteration }}" class="collapse show">
+                        <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $loop->last ? 'show' : '' }}">
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
@@ -134,28 +134,45 @@
                             </div>
                             @if (! $applicationRound->round_status)
                             <div class="card-footer">
-                                <applicant-round-action-component
-                                :rounds="{{ json_encode($application->job->first()->rounds) }}">
-                                </applicant-round-action-component>
-                                <button type="button" class="btn btn-outline-danger round-submit" data-status="{{ config('constants.hr.status.rejected.label') }}">Reject</button>
+                                <div class="d-flex align-items-center">
+                                    <h6 class="m-0">Move to:&nbsp;</h6>
+                                    <select name="next_round" id="next_round" class="form-control w-50">
+                                    @foreach($application->job->rounds as $round)
+                                        <option value="{{ $round->id }}">{{ $round->name }}</option>
+                                    @endforeach
+                                    </select>
+                                    <button type="button" class="btn btn-success ml-2 round-submit" data-action="confirm">GO</button>
+                                    @if ($applicantOpenApplications->count() > 1)
+                                        <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#application_reject_modal">Reject</button>
+                                    @else
+                                        <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject">Reject</button>
+                                    @endif
+                                </div>
+                                @if ($applicantOpenApplications->count() > 1)
+                                    @include('hr.application.rejection-modal', ['currentApplication' => $application, 'allApplications' => $applicantOpenApplications ])
+                                @endif
                             </div>
                             @elseif ($applicationRound->round_status === config('constants.hr.status.rejected.label') || !$applicationRound->mail_sent)
                             <div class="card-footer d-flex">
                                 @if ($applicationRound->round_status === config('constants.hr.status.rejected.label'))
-                                    <applicant-round-action-component
-                                    :rounds="{{ json_encode($application->job->first()->rounds) }}">
-                                    </applicant-round-action-component>
+                                    <div class="d-inline-flex align-items-center w-75">
+                                        <h6 class="m-0">Move to:&nbsp;</h6>
+                                        <select name="next_round" id="next_round" class="form-control w-50">
+                                        @foreach($application->job->rounds as $round)
+                                            <option value="{{ $round->id }}">{{ $round->name }}</option>
+                                        @endforeach
+                                        </select>
+                                        <button type="button" class="btn btn-success ml-2 round-submit" data-action="confirm">GO</button>
+                                    </div>
                                 @endif
                                 @if (!$applicationRound->mail_sent)
-                                    <button type="button" class="btn btn-primary d-block ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
+                                    <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
                                 @endif
                             </div>
-                            @endif
                         </div>
+                        @endif
                     </div>
-                    <input type="hidden" name="round_status" value="{{ $applicationRound->round_status }}">
-                    <input type="hidden" name="next_round" value="0">
-                    <input type="hidden" name="action_type" value="new">
+                    <input type="hidden" name="action" value="updated">
                 </form>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                 @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])

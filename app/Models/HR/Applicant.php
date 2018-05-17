@@ -2,9 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Events\HR\ApplicationCreated;
-use App\Events\HR\ApplicantUpdated;
-use App\Models\HR\ApplicantRound;
 use App\Models\HR\Application;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
@@ -23,39 +20,35 @@ class Applicant extends Model
      */
     public static function _create($attr)
     {
-        $applicant = self::create($attr);
-        $application = Application::create([
-            'hr_job_id' => $attr['hr_job_id'],
+        $applicant = self::firstOrCreate([
+            'email' => $attr['email'],
+        ], [
+            'name' => $attr['name'],
+            'phone' => isset($attr['phone']) ? $attr['phone'] : null,
+            'college' => isset($attr['college']) ? $attr['college'] : null,
+            'graduation_year' => isset($attr['graduation_year']) ? $attr['graduation_year'] : null,
+            'course' => isset($attr['course']) ? $attr['course'] : null,
+            'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
+        ]);
+
+        $job = Job::where('title', $attr['job_title'])->first();
+        $application = Application::_create([
+            'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,
             'resume' => $attr['resume'],
             'reason_for_eligibility' => isset($attr['reason_for_eligibility']) ? $attr['reason_for_eligibility'] : null,
-            'status' => config('constants.hr.status.new.label'),
+            'status' => $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label'),
         ]);
-        event(new ApplicationCreated($application));
+
         return $applicant;
     }
 
     /**
-     * Custom update method that updates an applicant and fires specific events
-     *
-     * @param  array $attr       fillables to be updated
-     * @return boolean|object    true if update is successful, error object if update fails
+     * Get all applications for the applicant which are not rejected
      */
-    public function _update($attr)
+    public function openApplications()
     {
-        $updated = $this->update($attr);
-        $request = request();
-        event(new ApplicantUpdated($this, [
-            'round_id' => $request->input('round_id'),
-            'round_status' => $request->input('round_status'),
-            'reviews' => $request->input('reviews'),
-        ]));
-        return $updated;
-    }
-
-    public function getApplicantRound($round_id)
-    {
-        return $this->applicantRounds->where('hr_round_id', $round_id)->first();
+        return $this->applications()->nonRejected()->get();
     }
 
     public function applications()
