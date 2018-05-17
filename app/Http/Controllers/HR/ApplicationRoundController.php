@@ -24,13 +24,14 @@ class ApplicationRoundController extends Controller
     public function update(ApplicantRoundRequest $request, ApplicationRound $round)
     {
         $validated = $request->validated();
+
         $round->_update([
             'round_status' => $validated['round_status'],
             'conducted_person_id' => Auth::id(),
             'conducted_date' => Carbon::now(),
         ], $validated['action_type'], $validated['reviews'], $validated['next_round']);
 
-        return redirect('/hr/applications/' . $round->application->id . '/edit')->with('status', 'Application updated successfully!');
+        return redirect()->back()->with('status', 'Application updated successfully!');
     }
 
     /**

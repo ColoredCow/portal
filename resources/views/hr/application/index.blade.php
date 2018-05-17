@@ -17,7 +17,7 @@
         @foreach ($applications as $application)
         <tr>
             <td>
-                <a href="/hr/applications/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
+                <a href="/{{ Request::path() }}/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
             </td>
             <td>{{ $application->applicant->email }}</td>
             <td>{{ $application->job->title }}</td>

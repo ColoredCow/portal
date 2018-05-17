@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\HR;
+namespace App\Http\Controllers\HR\Applications;
 
 use App\Http\Controllers\Controller;
 use App\Models\HR\Application;
@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
+    protected $application_type = 'All';
+
     /**
      * Display a listing of the resource.
      *
@@ -16,21 +18,16 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = Application::with('applicant', 'job')->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
+        $application_filter = 'get' . $this->application_type . 'Application';
+        
+        $applications = Application::with('applicant', 'job')
+            ->{$application_filter}()
+            ->orderBy('id', 'desc')
+            ->paginate(config('constants.pagination_size'));
 
         return view('hr.application.index')->with([
             'applications' => $applications,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -60,24 +57,19 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\HR\Application  $application
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Application $application)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\HR\Application  $application
+     * @param  String  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Application $application)
+    public function edit($id)
     {
+        $application = Application::find($id);
+
+        if (!$application) {
+            throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
+        }
+
         $application->load(['job.rounds', 'applicant', 'applicant.applications', 'applicationRounds']);
 
         return view('hr.application.edit')->with([
@@ -85,28 +77,5 @@ class ApplicationController extends Controller
             'application' => $application,
             'rounds' => Round::all(),
         ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\HR\Application  $application
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Application $application)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\HR\Application  $application
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Application $application)
-    {
-        //
     }
 }

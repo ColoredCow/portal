@@ -13,6 +13,33 @@ class Application extends Model
 
     protected $table = 'hr_applications';
 
+    public function scopeFilterApplicationByJobType($query, $type = 'all') {
+        switch ($type) {
+            case 'job':
+                break;
+            case 'internship':
+                break;
+            default:
+        }
+
+        return $query;
+    }
+
+    public function scopeGetAllApplication($query)
+    {
+        return $query->filterApplicationByJobType();
+    }
+
+    public function scopeGetJobApplication($query)
+    {
+        return $query->filterApplicationByJobType('job');
+    }
+
+    public function scopeGetInternshipApplication($query)
+    {
+        return $query->filterApplicationByJobType('internship');
+    }
+
     public function job()
     {
     	return $this->belongsTo(Job::class, 'hr_job_id');

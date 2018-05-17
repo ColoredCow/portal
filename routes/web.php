@@ -26,19 +26,31 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::middleware('auth')->group(function () {
+
     Route::prefix('hr')->namespace('HR')->group(function () {
+
+        Route::prefix('applications')->namespace('Applications')->group(function () {
+            Route::resource('job', 'JobApplicationController')
+                ->only(['index', 'edit'])
+                ->names([ 'index' => 'applications.job.index', 'edit' => 'applications.job.create']);
+            Route::resource('internship', 'InternshipApplicationController')
+                ->only(['index', 'edit'])
+                ->names([ 'index' => 'applications.internship.index', 'edit' => 'applications.internship.create']);
+        });
+        
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
-        Route::resource('applications', 'ApplicationController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
         Route::resource('jobs', 'JobController')->except(['create', 'show', 'destroy']);
         Route::resource('rounds', 'RoundController');
         Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
     });
+
     Route::prefix('finance')->namespace('Finance')->group(function () {
         Route::resource('invoices', 'InvoiceController')->except(['show', 'destroy']);
         Route::get('invoices/download/{year}/{month}/{file}', 'InvoiceController@download');
         Route::get('/reports', 'ReportsController@index');
     });
+
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
     Route::resource('projects', 'ProjectController')->except(['show', 'destroy']);
     Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
