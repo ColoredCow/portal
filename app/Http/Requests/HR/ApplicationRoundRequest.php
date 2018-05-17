@@ -27,7 +27,9 @@ class ApplicationRoundRequest extends FormRequest
             'reviews' => 'nullable',
             'action' => 'required|string',
             'next_round' => 'nullable|string|required_if:action,confirm',
-            'refer_to' => 'nullable|string|required_if:action,refer'
+            'refer_to' => 'nullable|string|required_if:action,refer',
+            'scheduled_date' => 'nullable|date|required_if:action,schedule-update',
+            'scheduled_person_id' => 'nullable|integer|required_if:action,schedule-update',
         ];
     }
 }

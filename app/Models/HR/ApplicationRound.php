@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApplicationRound extends Model
 {
-    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
+    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_date', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
 
     protected $table = 'hr_application_round';
 
@@ -25,6 +25,14 @@ class ApplicationRound extends Model
 
     public function _update($attr)
     {
+        if ($attr['action'] == 'schedule-update')  {
+            $this->update([
+                'scheduled_date' => $attr['scheduled_date'],
+                'scheduled_person_id' => $attr['scheduled_person_id'],
+            ]);
+            return;
+        }
+
         $fillable = [
             'conducted_person_id' => Auth::id(),
             'conducted_date' => Carbon::now(),
