@@ -62,6 +62,7 @@ class Applicant extends Model
      */
     public function timeline()
     {
+        $this->load('applications', 'applications.applicationRounds');
         $timeline = [];
         foreach ($this->applications as $application) {
             $timeline[] = [
