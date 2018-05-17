@@ -4,7 +4,7 @@ namespace App\Http\Requests\HR;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ApplicantRoundRequest extends FormRequest
+class ApplicationRoundRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,9 @@ class ApplicantRoundRequest extends FormRequest
     {
         return [
             'reviews' => 'nullable',
-            'action_type' => 'required|string',
-            'round_status' => 'nullable|string|required_if:action_type,new',
-            'next_round' => 'nullable|string',
+            'action' => 'required|string',
+            'next_round' => 'nullable|string|required_if:action,confirm',
+            'refer_to' => 'nullable|string|required_if:action,refer'
         ];
     }
 }

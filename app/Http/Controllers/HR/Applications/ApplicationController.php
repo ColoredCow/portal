@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\HR\Application;
 use App\Models\HR\Round;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class ApplicationController extends Controller
 {
@@ -26,7 +27,8 @@ class ApplicationController extends Controller
             ->paginate(config('constants.pagination_size'));
 
         return view('hr.application.index')->with([
-            'applications' => $applications,
+            'applications' => Application::filterByStatus(request()->get('status'))->appends(Input::except('page')),
+            'status' => request()->get('status'),
         ]);
     }
 
@@ -70,12 +72,13 @@ class ApplicationController extends Controller
             throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
         }
 
-        $application->load(['job.rounds', 'applicant', 'applicant.applications', 'applicationRounds']);
+        $application->load(['job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round']);
 
         return view('hr.application.edit')->with([
             'applicant' => $application->applicant,
             'application' => $application,
             'rounds' => Round::all(),
+            'applicantOpenApplications' => $application->applicant->openApplications(),
         ]);
     }
 }

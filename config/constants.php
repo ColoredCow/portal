@@ -27,6 +27,11 @@ return [
                 'title' => 'New',
                 'class' => 'badge badge-info'
             ],
+            'on-hold' => [
+                'label' => 'on-hold',
+                'title' => 'On hold',
+                'class' => 'badge badge-secondary'
+            ],
             'rejected' => [
                 'label' => 'rejected',
                 'title' => 'Rejected',
