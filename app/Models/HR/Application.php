@@ -14,33 +14,6 @@ class Application extends Model
 
     protected $table = 'hr_applications';
 
-    public function scopeFilterApplicationByJobType($query, $type = 'all') {
-        switch ($type) {
-            case 'job':
-                break;
-            case 'internship':
-                break;
-            default:
-        }
-
-        return $query;
-    }
-
-    public function scopeGetAllApplication($query)
-    {
-        return $query->filterApplicationByJobType();
-    }
-
-    public function scopeGetJobApplication($query)
-    {
-        return $query->filterApplicationByJobType('job');
-    }
-
-    public function scopeGetInternshipApplication($query)
-    {
-        return $query->filterApplicationByJobType('internship');
-    }
-
     /**
      * Custom create method that creates an application and fires necessary events
      *
@@ -73,18 +46,47 @@ class Application extends Model
     /**
      * get list of applications based on their show status
      */
-    public static function filterByStatus($status)
+    public function scopeFilterByStatus($query, $status)
     {
-        $applications = self::with('applicant', 'job');
         switch ($status) {
             case config('constants.hr.status.rejected.label'):
-                $applications = $applications->rejected();
+                $query->rejected();
                 break;
             default:
-                $applications = $applications->nonRejected();
+                $query->nonRejected();
                 break;
         }
-        return $applications->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
+        return $query->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
+    }
+
+    public function scopeFilterApplicationByJobType($query, $type = 'all')
+    {
+        switch ($type) {
+            case 'job':
+            case 'internship':
+                return $query->whereHas('job', function ($sub_query) use ($type) {
+                    $sub_query->where('type', $type);
+                });
+                break;
+            default:
+        }
+
+        return $query;
+    }
+
+    public function scopeGetAllApplication($query)
+    {
+        return $query->filterApplicationByJobType();
+    }
+
+    public function scopeGetJobApplication($query)
+    {
+        return $query->filterApplicationByJobType('job');
+    }
+
+    public function scopeGetInternshipApplication($query)
+    {
+        return $query->filterApplicationByJobType('internship');
     }
 
     /**
@@ -105,7 +107,7 @@ class Application extends Model
 
     public function job()
     {
-    	return $this->belongsTo(Job::class, 'hr_job_id');
+        return $this->belongsTo(Job::class, 'hr_job_id');
     }
 
     public function applicant()

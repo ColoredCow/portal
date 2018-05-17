@@ -14,7 +14,7 @@ class AddTypeToJob extends Migration
     public function up()
     {
         Schema::table('hr_jobs', function (Blueprint $table) {
-            //
+            $table->string('type')->after('title')->default('job');
         });
     }
 
@@ -26,7 +26,7 @@ class AddTypeToJob extends Migration
     public function down()
     {
         Schema::table('hr_jobs', function (Blueprint $table) {
-            //
+            $table->dropColumn(['type']);
         });
     }
 }

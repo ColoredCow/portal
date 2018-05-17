@@ -82,22 +82,22 @@ class ApplicationRound extends Model
 
     public function application()
     {
-    	return $this->belongsTo(Application::class, 'hr_application_id');
+        return $this->belongsTo(Application::class, 'hr_application_id');
     }
 
     public function round()
     {
-    	return $this->belongsTo(Round::class, 'hr_round_id');
+        return $this->belongsTo(Round::class, 'hr_round_id');
     }
 
     public function scheduledPerson()
     {
-    	return $this->belongsTo(User::class, 'scheduled_person_id');
+        return $this->belongsTo(User::class, 'scheduled_person_id');
     }
 
     public function conductedPerson()
     {
-    	return $this->belongsTo(User::class, 'conducted_person_id');
+        return $this->belongsTo(User::class, 'conducted_person_id');
     }
 
     public function applicationReviews()

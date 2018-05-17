@@ -20,14 +20,14 @@ class ApplicationController extends Controller
     public function index()
     {
         $application_filter = 'get' . $this->application_type . 'Application';
-        
+
         $applications = Application::with('applicant', 'job')
             ->{$application_filter}()
-            ->orderBy('id', 'desc')
-            ->paginate(config('constants.pagination_size'));
+            ->filterByStatus(request()->get('status'))
+            ->appends(Input::except('page'));
 
         return view('hr.application.index')->with([
-            'applications' => Application::filterByStatus(request()->get('status'))->appends(Input::except('page')),
+            'applications' => $applications,
             'status' => request()->get('status'),
         ]);
     }
