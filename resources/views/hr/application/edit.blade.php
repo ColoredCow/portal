@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            @include('hr.menu', ['active' => 'applications'])
+            @include('hr.menu')
             <br><br>
         </div>
     </div>
