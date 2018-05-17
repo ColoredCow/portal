@@ -55,4 +55,30 @@ class Applicant extends Model
     {
         return $this->hasMany(Application::class, 'hr_applicant_id');
     }
+
+    public function timeline()
+    {
+        $timeline = [];
+        foreach ($this->applications as $application) {
+            $timeline[] = [
+                'type' => 'application-created',
+                'application' => $application,
+                'date' => $application->created_at,
+            ];
+            foreach ($application->applicationRounds as $applicationRound) {
+                if ($applicationRound->conducted_date) {
+                    $timeline[] = [
+                        'type' => 'round-conducted',
+                        'applicationRound' => $applicationRound,
+                        'date' => $applicationRound->conducted_date,
+                    ];
+                }
+            }
+        }
+        // sorting timeline based on date of each subarray in the timeline
+        array_multisort(array_map(function ($element) {
+            return $element['date'];
+        }, $timeline), SORT_ASC, $timeline);
+        return $timeline;
+    }
 }

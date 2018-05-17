@@ -15,7 +15,7 @@
             @include('status', ['errors' => $errors->all()])
         </div>
         <div class="col-md-3">
-            @include('hr.application.timeline', ['applicant' => $applicant, 'application' => $application])
+            @include('hr.application.timeline', ['timeline' => $timeline])
         </div>
         <div class="col-md-7">
             <div class="card">
@@ -57,8 +57,8 @@
                         <div class="form-group col-md-5">
                             <b>Resume</b>
                             <div>
-                            @if ($applicant->resume)
-                                <a href="{{ $applicant->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a>
+                            @if ($application->resume)
+                                <a href="{{ $application->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a>
                             @else
                                 –
                             @endif
