@@ -28,6 +28,39 @@ class Application extends Model
     }
 
     /**
+     * get applications where status is rejected
+     */
+    public function scopeRejected($query)
+    {
+        return $query->where('status', config('constants.hr.status.rejected.label'));
+    }
+
+    /**
+     * get applications where status is not rejected
+     */
+    public function scopeNonRejected($query)
+    {
+        return $query->where('status', '!=', config('constants.hr.status.rejected.label'));
+    }
+
+    /**
+     * get list of applications based on their show status
+     */
+    public static function filterByStatus($status)
+    {
+        $applications = self::with('applicant', 'job');
+        switch ($status) {
+            case config('constants.hr.status.rejected.label'):
+                $applications = $applications->rejected();
+                break;
+            default:
+                $applications = $applications->nonRejected();
+                break;
+        }
+        return $applications->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
+    }
+
+    /**
      * Set application status to rejected
      */
     public function reject()

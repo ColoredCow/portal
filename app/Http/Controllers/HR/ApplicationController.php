@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\HR\Application;
 use App\Models\HR\Round;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class ApplicationController extends Controller
 {
@@ -17,7 +18,7 @@ class ApplicationController extends Controller
     public function index()
     {
         return view('hr.application.index')->with([
-            'applications' => self::getApplicationsList(),
+            'applications' => Application::filterByStatus(request()->get('status'))->appends(Input::except('page')),
             'status' => request()->get('status'),
         ]);
     }
@@ -108,25 +109,5 @@ class ApplicationController extends Controller
     public function destroy(Application $application)
     {
         //
-    }
-
-    /**
-     * get list of applications based on their show status
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getApplicationsList()
-    {
-        $request = request();
-        $applications = Application::with('applicant', 'job');
-        $rejected = config('constants.hr.status.rejected.label');
-        switch ($request->get('status')) {
-            case $rejected:
-                $applications = $applications->where('status', $rejected);
-                break;
-            default:
-                $applications = $applications->where('status', '!=', $rejected);
-                break;
-        }
-        return $applications->orderBy('id', 'desc')->paginate(config('constants.pagination_size'));
     }
 }
