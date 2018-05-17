@@ -42,7 +42,7 @@ class ApplicationController extends Controller
     {
         $validated = $request->validated();
         $job = Job::where('title', $validated['job_title'])->first();
-
+        dd();
         return Application::_create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -72,7 +72,7 @@ class ApplicationController extends Controller
             throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
         }
 
-        $application->load(['job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round']);
+        $application->load(['job', 'job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round', 'applicationMeta']);
 
         return view('hr.application.edit')->with([
             'applicant' => $application->applicant,

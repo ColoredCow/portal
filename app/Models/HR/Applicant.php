@@ -3,6 +3,7 @@
 namespace App\Models\HR;
 
 use App\Models\HR\Application;
+use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,6 +40,13 @@ class Applicant extends Model
             'reason_for_eligibility' => isset($attr['reason_for_eligibility']) ? $attr['reason_for_eligibility'] : null,
             'status' => $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label'),
         ]);
+
+        if ($attr['form_data']) {
+            $application_meta = ApplicationMeta::create([
+                'hr_application_id' => $application->id,
+                'form_data' => json_encode($attr['form_data'])
+            ]);
+        }
 
         return $applicant;
     }

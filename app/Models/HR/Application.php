@@ -4,6 +4,7 @@ namespace App\Models\HR;
 
 use App\Events\HR\ApplicationCreated;
 use App\Models\HR\Applicant;
+use App\Models\HR\ApplicationMeta;
 use App\Models\HR\ApplicationRound;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
@@ -118,5 +119,10 @@ class Application extends Model
     public function applicationRounds()
     {
         return $this->hasMany(ApplicationRound::class, 'hr_application_id');
+    }
+
+    public function applicationMeta()
+    {
+        return $this->hasOne(ApplicationMeta::class, 'hr_application_id');
     }
 }
