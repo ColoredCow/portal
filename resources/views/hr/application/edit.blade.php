@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <b>Reason for eligibility</b>
-                            <div>{{ $applicant->reason_for_eligibility ?? '-' }}</div>
+                            <div>{{ $application->reason_for_eligibility ?? '-' }}</div>
                         </div>
                     </div>
                 </div>
