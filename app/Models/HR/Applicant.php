@@ -56,6 +56,10 @@ class Applicant extends Model
         return $this->hasMany(Application::class, 'hr_applicant_id');
     }
 
+    /**
+     * Get the timeline for an applicant
+     * @return array
+     */
     public function timeline()
     {
         $timeline = [];
@@ -75,7 +79,7 @@ class Applicant extends Model
                 }
             }
         }
-        // sorting timeline based on date of each subarray in the timeline
+        // Sort the timeline based on the date value in each subarray in the timeline.
         array_multisort(array_map(function ($element) {
             return $element['date'];
         }, $timeline), SORT_ASC, $timeline);
