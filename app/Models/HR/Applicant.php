@@ -48,7 +48,7 @@ class Applicant extends Model
      */
     public function openApplications()
     {
-        return $this->applications->where('status', '!=', config('constants.hr.status.rejected.label'));
+        return $this->applications()->nonRejected()->get();
     }
 
     public function applications()
