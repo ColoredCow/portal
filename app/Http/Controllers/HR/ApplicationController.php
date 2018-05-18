@@ -79,14 +79,13 @@ class ApplicationController extends Controller
     public function edit(Application $application)
     {
         $application->load(['job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round']);
-        $applicant = $application->applicant;
 
         return view('hr.application.edit')->with([
-            'applicant' => $applicant,
+            'applicant' => $application->applicant,
             'application' => $application,
             'rounds' => Round::all(),
-            'applicantOpenApplications' => $applicant->openApplications(),
-            'timeline' => $applicant->timeline(),
+            'applicantOpenApplications' => $application->applicant->openApplications(),
+            'timeline' => $application->applicant->timeline(),
         ]);
     }
 
