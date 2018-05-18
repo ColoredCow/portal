@@ -58,11 +58,12 @@ class Applicant extends Model
 
     /**
      * Get the timeline for an applicant
+     *
      * @return array
      */
     public function timeline()
     {
-        $this->load('applications', 'applications.applicationRounds');
+        $this->load('applications');
         $timeline = [];
         foreach ($this->applications as $application) {
             $timeline[] = [
@@ -70,15 +71,7 @@ class Applicant extends Model
                 'application' => $application,
                 'date' => $application->created_at,
             ];
-            foreach ($application->applicationRounds as $applicationRound) {
-                if ($applicationRound->conducted_date) {
-                    $timeline[] = [
-                        'type' => 'round-conducted',
-                        'applicationRound' => $applicationRound,
-                        'date' => $applicationRound->conducted_date,
-                    ];
-                }
-            }
+            $timeline = array_merge($timeline, $application->timeline());
         }
         // Sort the timeline based on the date value in each subarray in the timeline.
         array_multisort(array_map(function ($element) {
