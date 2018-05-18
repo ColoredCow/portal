@@ -42,7 +42,7 @@ class ApplicationController extends Controller
     {
         $validated = $request->validated();
         $job = Job::where('title', $validated['job_title'])->first();
-        dd();
+        
         return Application::_create([
             'name' => $validated['name'],
             'email' => $validated['email'],
