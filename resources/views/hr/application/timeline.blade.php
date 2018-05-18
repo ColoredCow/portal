@@ -17,9 +17,10 @@
                     @case('round-conducted')
                         @php
                             $applicationRound = $item['applicationRound'];
+                            $application = $item['application'];
                         @endphp
                         <b><u>{{ date(config('constants.display_date_format'), strtotime($applicationRound->conducted_date)) }}</u></b><br>
-                        {{ $applicationRound->round->name }} for {{ $applicationRound->application->job->title }} conducted by {{ $applicationRound->conductedPerson->name }}<br>
+                        {{ $applicationRound->round->name }} for {{ $application->job->title }} conducted by {{ $applicationRound->conductedPerson->name }}<br>
                         @if ($applicationRound->mail_sent)
                             <span data-toggle="modal" data-target="#round_mail_{{ $applicationRound->id }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
                             @include('hr.round-review-sent-mail-modal', [ 'applicationRound' => $applicationRound ])
