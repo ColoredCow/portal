@@ -57,8 +57,8 @@
                         <div class="form-group col-md-5">
                             <b>Resume</b>
                             <div>
-                            @if ($applicant->resume)
-                                <a href="{{ $applicant->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a>
+                            @if ($application->resume)
+                                <a href="{{ $application->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a>
                             @else
                                 –
                             @endif
@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <b>Reason for eligibility</b>
-                            <div>{{ $applicant->reason_for_eligibility ?? '-' }}</div>
+                            <div>{{ $application->reason_for_eligibility ?? '-' }}</div>
                         </div>
                     </div>
                 </div>
