@@ -25,14 +25,6 @@ class ApplicationRound extends Model
 
     public function _update($attr)
     {
-        if ($attr['action'] == 'schedule-update')  {
-            $this->update([
-                'scheduled_date' => $attr['scheduled_date'],
-                'scheduled_person_id' => $attr['scheduled_person_id'],
-            ]);
-            return;
-        }
-
         $fillable = [
             'conducted_person_id' => Auth::id(),
             'conducted_date' => Carbon::now(),
@@ -42,6 +34,14 @@ class ApplicationRound extends Model
         $applicant = $this->application->applicant;
 
         switch ($attr['action']) {
+            case 'schedule-update':
+                $fillable = [
+                    'scheduled_date' => $attr['scheduled_date'],
+                    'scheduled_person_id' => $attr['scheduled_person_id'],
+                ];
+                $attr['reviews'] = [];
+                break;
+
             case 'confirm':
                 $fillable['round_status'] = 'confirmed';
                 $application->markInProgress();
