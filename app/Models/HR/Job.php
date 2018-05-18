@@ -14,6 +14,16 @@ class Job extends Model
 
     protected $table = 'hr_jobs';
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'hr_job_id');
+    }
+    
+    public function rounds()
+    {
+        return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id');
+    }
+
     /**
      * Custom create method that creates a job and fires specific events
      *
@@ -37,7 +47,7 @@ class Job extends Model
     {
         $updated = $this->update($attr);
 
-        if(isset($attr['rounds'])) {
+        if (isset($attr['rounds'])) {
             $this->rounds()->sync($attr['rounds']);
         }
 
@@ -48,18 +58,23 @@ class Job extends Model
         return $updated;
     }
 
-    public function applications()
-    {
-    	return $this->hasMany(Application::class, 'hr_job_id');
-    }
-
     public function getApplicantsByStatus($status = '')
     {
-    	return $this->applicants->where('status', $status);
+        return $this->applicants->where('status', $status);
     }
 
-    public function rounds()
+    public function scopeFilterByType($query, $type)
     {
-        return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id');
+        return $query->where('type', $type);
+    }
+
+    public function scopeIsJob($query)
+    {
+        return $query->filterByType('job');
+    }
+
+    public function scopeIsInternship($query)
+    {
+        return $query->filterByType('internship');
     }
 }

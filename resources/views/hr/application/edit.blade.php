@@ -154,7 +154,7 @@
                                     </select>
                                     <button type="button" class="btn btn-success ml-2 round-submit" data-action="confirm">GO</button>
                                     @if ($applicantOpenApplications->count() > 1)
-                                        <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#application_reject_modal" data-action="reject">Reject</button>
+                                        <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#application_reject_modal">Reject</button>
                                     @else
                                         <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject">Reject</button>
                                     @endif

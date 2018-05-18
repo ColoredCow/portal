@@ -46,7 +46,7 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        return Applicant::_create($request->all());
+        return Applicant::_create($validated);
     }
 
     /**

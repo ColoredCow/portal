@@ -8,9 +8,9 @@ use App\Models\HR\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
-class ApplicationController extends Controller
+abstract class ApplicationController extends Controller
 {
-    protected $application_type = 'All';
+    abstract function getApplicationType();
 
     /**
      * Display a listing of the resource.
@@ -19,42 +19,20 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $application_filter = 'get' . $this->application_type . 'Application';
+        $filters = [
+            'status' => request()->get('status'),
+            'job-type' => $this->getApplicationType()
+        ];
 
         $applications = Application::with('applicant', 'job')
-            ->{$application_filter}()
-            ->filterByStatus(request()->get('status'))
+            ->applyFilter($filters)
+            ->orderBy('id', 'desc')
+            ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
 
         return view('hr.application.index')->with([
             'applications' => $applications,
             'status' => request()->get('status'),
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $validated = $request->validated();
-        $job = Job::where('title', $validated['job_title'])->first();
-        
-        return Application::_create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'resume' => $validated['resume'],
-            'phone' => isset($validated['phone']) ? $validated['phone'] : null,
-            'college' => isset($validated['college']) ? $validated['college'] : null,
-            'graduation_year' => isset($validated['graduation_year']) ? $validated['graduation_year'] : null,
-            'course' => isset($validated['course']) ? $validated['course'] : null,
-            'linkedin' => isset($validated['linkedin']) ? $validated['linkedin'] : null,
-            'reason_for_eligibility' => isset($validated['reason_for_eligibility']) ? $validated['reason_for_eligibility'] : null,
-            'hr_job_id' => $job->id,
-            'status' => config('constants.hr.status.new.label'),
         ]);
     }
 
