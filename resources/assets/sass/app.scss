@@ -281,3 +281,17 @@ input:focus + .slider {
     top: 20%;
     font-size: 12px;
 }
+
+
+#books_listing {
+
+    .change-category-btn {
+        font-size: 10px;
+        margin-top: 3px;
+        color: red;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+   
+}

@@ -105,4 +105,19 @@ return [
             'hourly' => 'Hourly',
         ],
     ],
+
+    'books' => [
+        'categories' => [
+            'designer' => 'Designer',
+            'human_resource' => 'Human Resource',
+            'product_manager' => 'Product Manager',
+            'project_manager' => 'Project Manager',
+            'software_engineering' => 'Software Engineering',
+            'testing' => 'Testing',
+        ]
+    ]
+    
+
+
+
 ];

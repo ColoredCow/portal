@@ -4,6 +4,7 @@ namespace App\Http\Controllers\KnowledgeCafe\Library;
 
 use App\Http\Controllers\Controller;
 use App\Services\BookServices;
+use Illuminate\Http\Request;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
 
@@ -81,7 +82,9 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        return response()->json([
+            'success' => $book->update($request->all())
+        ]); 
     }
 
     /**
