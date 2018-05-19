@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Models\HR\Application;
 use App\Models\HR\Round;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -79,12 +80,14 @@ class ApplicationController extends Controller
     public function edit(Application $application)
     {
         $application->load(['job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round']);
+        $applicant = $application->applicant;
 
         return view('hr.application.edit')->with([
             'applicant' => $application->applicant,
             'application' => $application,
             'rounds' => Round::all(),
-            'applicantOpenApplications' => $application->applicant->openApplications(),
+            'applicantOpenApplications' => $applicant->openApplications(),
+            'interviewers' => User::interviewers()->get(),
         ]);
     }
 
