@@ -55,4 +55,28 @@ class Applicant extends Model
     {
         return $this->hasMany(Application::class, 'hr_applicant_id');
     }
+
+    /**
+     * Get the timeline for an applicant
+     *
+     * @return array
+     */
+    public function timeline()
+    {
+        $this->load('applications');
+        $timeline = [];
+        foreach ($this->applications as $application) {
+            $timeline[] = [
+                'type' => 'application-created',
+                'application' => $application,
+                'date' => $application->created_at,
+            ];
+            $timeline = array_merge($timeline, $application->timeline());
+        }
+        // Sort the timeline based on the date value in each subarray in the timeline.
+        array_multisort(array_map(function ($element) {
+            return $element['date'];
+        }, $timeline), SORT_ASC, $timeline);
+        return $timeline;
+    }
 }

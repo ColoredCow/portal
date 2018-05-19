@@ -90,4 +90,26 @@ class Application extends Model
     {
         return $this->hasMany(ApplicationRound::class, 'hr_application_id');
     }
+
+    /**
+     * Get the timeline for an application
+     *
+     * @return array
+     */
+    public function timeline()
+    {
+        $this->load('applicationRounds', 'applicationRounds.round');
+        $timeline = [];
+        foreach ($this->applicationRounds as $applicationRound) {
+            if ($applicationRound->conducted_date) {
+                $timeline[] = [
+                    'type' => 'round-conducted',
+                    'application' => $this,
+                    'applicationRound' => $applicationRound,
+                    'date' => $applicationRound->conducted_date,
+                ];
+            }
+        }
+        return $timeline;
+    }
 }

@@ -15,7 +15,7 @@
             @include('status', ['errors' => $errors->all()])
         </div>
         <div class="col-md-3">
-            @include('hr.application.timeline', ['applicant' => $applicant, 'application' => $application])
+            @include('hr.application.timeline', ['timeline' => $timeline])
         </div>
         <div class="col-md-7">
             <div class="card">
@@ -183,8 +183,8 @@
                                     <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
                                 @endif
                             </div>
+                            @endif
                         </div>
-                        @endif
                     </div>
                     <input type="hidden" name="action" value="updated">
                 </form>
