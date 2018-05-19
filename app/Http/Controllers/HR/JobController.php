@@ -78,7 +78,7 @@ class JobController extends Controller
     {
         return view('hr.job.edit')->with([
             'job' => $job,
-            'interviewers' => User::all()
+            'interviewers' => User::interviewers()->get(),
         ]);
     }
 

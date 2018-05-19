@@ -4,6 +4,7 @@ return [
     'date_format' => 'Y-m-d',
     'display_date_format' => 'd/m/Y',
     'full_display_date_format' => 'F d, Y',
+    'display_datetime_format' => 'Y-m-d\TH:i',
     'modules' => [
         'hr',
         'finance',

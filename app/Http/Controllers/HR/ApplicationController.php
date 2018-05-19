@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Models\HR\Application;
 use App\Models\HR\Round;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -86,6 +87,7 @@ class ApplicationController extends Controller
             'rounds' => Round::all(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'timeline' => $application->applicant->timeline(),
+            'interviewers' => User::interviewers()->get(),
         ]);
     }
 
