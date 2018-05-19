@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\HR\ApplicationRoundScheduled;
 
 class ApplicationRound extends Model
 {
@@ -46,13 +47,14 @@ class ApplicationRound extends Model
                 $fillable['round_status'] = 'confirmed';
                 $application->markInProgress();
                 $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id;
+                $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                 $applicationRound = self::_create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
                     'scheduled_date' => Carbon::now()->addDay(),
-                    'scheduled_person_id' => $scheduledPersonId ?? config('constants.hr.defaults.scheduled_person_id'),
+                    'scheduled_person_id' => $scheduledPersonId,
                 ]);
+                User::find($scheduledPersonId)->notify(new ApplicationRoundScheduled($applicationRound));
                 break;
 
             case 'reject':
@@ -70,6 +72,7 @@ class ApplicationRound extends Model
         }
         $this->update($fillable);
         $this->_updateOrCreateReviews($attr['reviews']);
+
     }
 
     protected function _updateOrCreateReviews($reviews = [])
