@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApplicationRound extends Model
 {
-    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_data', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
+    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_date', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
 
     protected $table = 'hr_application_round';
 
@@ -34,6 +34,14 @@ class ApplicationRound extends Model
         $applicant = $this->application->applicant;
 
         switch ($attr['action']) {
+            case 'schedule-update':
+                $fillable = [
+                    'scheduled_date' => $attr['scheduled_date'],
+                    'scheduled_person_id' => $attr['scheduled_person_id'],
+                ];
+                $attr['reviews'] = [];
+                break;
+
             case 'confirm':
                 $fillable['round_status'] = 'confirmed';
                 $application->markInProgress();
@@ -82,22 +90,22 @@ class ApplicationRound extends Model
 
     public function application()
     {
-    	return $this->belongsTo(Application::class, 'hr_application_id');
+        return $this->belongsTo(Application::class, 'hr_application_id');
     }
 
     public function round()
     {
-    	return $this->belongsTo(Round::class, 'hr_round_id');
+        return $this->belongsTo(Round::class, 'hr_round_id');
     }
 
     public function scheduledPerson()
     {
-    	return $this->belongsTo(User::class, 'scheduled_person_id');
+        return $this->belongsTo(User::class, 'scheduled_person_id');
     }
 
     public function conductedPerson()
     {
-    	return $this->belongsTo(User::class, 'conducted_person_id');
+        return $this->belongsTo(User::class, 'conducted_person_id');
     }
 
     public function applicationReviews()

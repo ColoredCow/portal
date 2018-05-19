@@ -27,8 +27,7 @@ class ApplicantRequest extends FormRequest
             'hr_job_id' => 'nullable|exists:hr_jobs,id'
         ];
 
-        if ($this->method() === 'POST')
-        {
+        if ($this->method() === 'POST') {
             $rules = [
                 'name' => 'required|string',
                 'email' => 'required|email',
@@ -39,12 +38,12 @@ class ApplicantRequest extends FormRequest
                 'graduation_year' => 'nullable|numeric',
                 'course' => 'nullable|string',
                 'linkedin' => 'nullable|url',
-                'reason_for_eligibility' => 'nullable|string'
+                'reason_for_eligibility' => 'nullable|string',
+                'form_data' => 'nullable|array'
             ];
         }
 
-        if ($this->method() === 'PATCH')
-        {
+        if ($this->method() === 'PATCH') {
             $rules = [
                 'round_status' => 'nullable|string',
                 'round_id' => 'nullable|integer',
