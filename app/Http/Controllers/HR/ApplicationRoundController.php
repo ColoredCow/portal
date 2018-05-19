@@ -25,7 +25,7 @@ class ApplicationRoundController extends Controller
     public function update(ApplicationRoundRequest $request, ApplicationRound $round)
     {
         $round->_update($request->validated());
-        return redirect('/hr/applications/' . $round->application->id . '/edit')->with('status', 'Application updated successfully!');
+        return redirect()->back()->with('status', 'Application updated successfully!');
     }
 
     /**
