@@ -41,8 +41,11 @@
                         @endforeach
                     </select>
                 </div>
+
+                @can('library_books.update')
                 <button v-show="!book.showCategory" class="btn change-category-btn" @click="setUpdateCategoryMode(index)">Change</button>
                 <button v-show="book.showCategory" class="btn change-category-btn" @click="unsetUpdateCategoryMode(index)">Save</button>
+                @endcan
             </td>
             
             <td> 
