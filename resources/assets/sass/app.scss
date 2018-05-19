@@ -284,11 +284,11 @@ input:focus + .slider {
 
 
 #books_listing {
-
     .change-category-btn {
         font-size: 10px;
         margin-top: 3px;
         color: red;
+        border-color: #4d4d4d;
         &:hover {
             text-decoration: underline;
         }
