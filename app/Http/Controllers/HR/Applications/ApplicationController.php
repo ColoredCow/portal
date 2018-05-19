@@ -7,6 +7,7 @@ use App\Models\HR\Application;
 use App\Models\HR\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use App\User;
 
 abstract class ApplicationController extends Controller
 {
@@ -56,6 +57,8 @@ abstract class ApplicationController extends Controller
             'applicant' => $application->applicant,
             'application' => $application,
             'rounds' => Round::all(),
+            'timeline' => $application->applicant->timeline(),
+            'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
         ]);
     }

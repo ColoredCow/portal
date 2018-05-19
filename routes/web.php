@@ -32,12 +32,12 @@ Route::middleware('auth')->group(function () {
         Route::prefix('applications')->namespace('Applications')->group(function () {
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit'])
-                ->names([ 'index' => 'applications.job.index', 'edit' => 'applications.job.create']);
+                ->names([ 'index' => 'applications.job.index', 'edit' => 'applications.job.edit']);
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
-                ->names([ 'index' => 'applications.internship.index', 'edit' => 'applications.internship.create']);
+                ->names([ 'index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
         });
-        
+
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
         Route::resource('jobs', 'JobController')->except(['create', 'show', 'destroy']);
@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', 'ProjectController')->except(['show', 'destroy']);
     Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
-    
+
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
     Route::post('settings/{module}/update', 'SettingController@update');
