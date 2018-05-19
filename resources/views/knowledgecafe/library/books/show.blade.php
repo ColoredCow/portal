@@ -24,11 +24,13 @@
                         <div class="row">
                             <div class="col-3">
                                 <p>
-                                    <b>ISBN : </b>
+                                    <b> Read : </b>
                                 </p>
                             </div>
                             <div class="col-6">
-                                {{ $book->isbn }}
+                                <p>
+                                    <a class="btn btn-primary"  href="{{ $book->readable_link }}">Read</a>
+                                </p>
                             </div>
                         </div>
 
@@ -39,26 +41,28 @@
                                 </p>
                             </div>
                             <div class="col-6">
-                                <select>
-                                    <option value="Software Engnners"> {{  $book->categories }} </option>
-                                    <option value="Software Engnners"> {{  $book->categories }} </option>
-                                    <option value="Software Engnners"> {{  $book->categories }} </option>
-                                </select>
-                               
+                                {{ $book->categories }}
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-3">
+                                <p>
+                                    <b>ISBN : </b>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                {{ $book->isbn }}
+                            </div>
+                        </div>
 
                     </div>
                 </div>
 
                 <div class="col-6">
                     <div class="row">
-                        
                         <div class="col-6">
-                            <a href="{{ $book->readable_link }}">
-                                <img src=" {{ $book->thumbnail }} " />
-                            </a>
+                            <img src=" {{ $book->thumbnail }} " />
                         </div>
                     </div>
                 </div>
