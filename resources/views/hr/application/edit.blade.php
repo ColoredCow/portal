@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            @include('hr.menu', ['active' => 'applications'])
+            @include('hr.menu')
             <br><br>
         </div>
     </div>
@@ -15,7 +15,7 @@
             @include('status', ['errors' => $errors->all()])
         </div>
         <div class="col-md-3">
-            @include('hr.application.timeline', ['applicant' => $applicant, 'application' => $application])
+            @include('hr.application.timeline', ['timeline' => $timeline])
         </div>
         <div class="col-md-7">
             <div class="card">
@@ -72,6 +72,17 @@
                             <b>Reason for eligibility</b>
                             <div>{{ $application->reason_for_eligibility ?? '-' }}</div>
                         </div>
+                        @if($application->applicationMeta)
+                            @php
+                                $application_meta = $application->applicationMeta ? $application->applicationMeta->form_data : [];
+                            @endphp
+                            @foreach(json_decode($application_meta) as $field => $value)
+                                <div class="form-group col-md-12">
+                                    <b>{{ $field }}</b>
+                                    <div>{{ $value }}</div>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -97,8 +108,6 @@
                                 </div>
                                 @if ($applicationRound->round_status)
                                     <span>Conducted By: {{ $applicationRound->conductedPerson->name }}</span>
-                                @else
-                                    <span>Scheduled for: {{ $applicationRound->scheduledPerson->name }}</span>
                                 @endif
                             </div>
                             <div class="d-flex flex-column align-items-end">
@@ -107,19 +116,35 @@
                                 @elseif ($applicationRound->round_status == config('constants.hr.status.rejected.label'))
                                     <div class="text-danger"><i class="fa fa-close"></i>&nbsp;{{ config('constants.hr.status.rejected.title') }}</div>
                                 @endif
-                                @if ($applicationRound->round_status)
-                                    @if ($applicationRound->conducted_date)
-                                        <span>Conducted on: {{ date(config('constants.display_date_format', strtotime($applicationRound->conducted_date))) }}</span>
-                                    @endif
-                                @else
-                                    @if ($applicationRound->scheduled_date)
-                                    <span>Scheduled on: {{ date(config('constants.display_date_format', strtotime($applicationRound->scheduled_date))) }}</span>
-                                    @endif
+                                @if ($applicationRound->round_status && $applicationRound->conducted_date)
+                                    <span>Conducted on: {{ date(config('constants.display_date_format', strtotime($applicationRound->conducted_date))) }}</span>
                                 @endif
                             </div>
                         </div>
                         <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $loop->last ? 'show' : '' }}">
                             <div class="card-body">
+                                @if (!$applicationRound->round_status)
+                                <div class="form-row">
+                                    <div class="form-group col-md-5">
+                                        <label for="scheduled_date">Scheduled date</label>
+                                        <input type="datetime-local" name="scheduled_date" id="scheduled_date" class="form-control form-control-sm" value="{{ date(config('constants.display_datetime_format'), strtotime($applicationRound->scheduled_date)) }}">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="scheduled_person_id">Scheduled for</label>
+                                        <select name="scheduled_person_id" id="scheduled_person_id" class="form-control form-control-sm" >
+                                            @foreach ($interviewers as $interviewer)
+                                                @php
+                                                    $selected = $applicationRound->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
+                                                @endphp
+                                                <option value="{{ $interviewer->id }}" {{ $selected }}>{{ $interviewer->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2 d-flex align-items-end">
+                                        <button type="button" class="btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="reviews[feedback]">Feedback</label>
@@ -128,7 +153,7 @@
                                 </div>
                                 @if ($applicationRound->round_status)
                                     <div class="form-row d-flex justify-content-end">
-                                        <button type="button" class="btn btn-info btn-sm round-update">Update feedback</button>
+                                        <button type="button" class="btn btn-info btn-sm round-submit" data-action="update">Update feedback</button>
                                     </div>
                                 @endif
                             </div>
@@ -169,8 +194,8 @@
                                     <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
                                 @endif
                             </div>
+                            @endif
                         </div>
-                        @endif
                     </div>
                     <input type="hidden" name="action" value="updated">
                 </form>
