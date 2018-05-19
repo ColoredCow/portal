@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr.menu', ['active' => 'jobs'])
+    @include('hr.menu')
     <br><br>
     <h1>{{ $job->title }}</h1>
     @include('status', ['errors' => $errors->all()])

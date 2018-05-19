@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            @include('hr.menu', ['active' => 'applications'])
+            @include('hr.menu')
             <br><br>
         </div>
     </div>
@@ -72,6 +72,17 @@
                             <b>Reason for eligibility</b>
                             <div>{{ $application->reason_for_eligibility ?? '-' }}</div>
                         </div>
+                        @if($application->applicationMeta)
+                            @php
+                                $application_meta = $application->applicationMeta ? $application->applicationMeta->form_data : [];
+                            @endphp
+                            @foreach(json_decode($application_meta) as $field => $value)
+                                <div class="form-group col-md-12">
+                                    <b>{{ $field }}</b>
+                                    <div>{{ $value }}</div>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
