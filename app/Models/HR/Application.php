@@ -143,4 +143,26 @@ class Application extends Model
     {
         $this->update(['status' => config('constants.hr.status.in-progress.label')]);
     }
+
+    /**
+     * Get the timeline for an application
+     *
+     * @return array
+     */
+    public function timeline()
+    {
+        $this->load('applicationRounds', 'applicationRounds.round');
+        $timeline = [];
+        foreach ($this->applicationRounds as $applicationRound) {
+            if ($applicationRound->conducted_date) {
+                $timeline[] = [
+                    'type' => 'round-conducted',
+                    'application' => $this,
+                    'applicationRound' => $applicationRound,
+                    'date' => $applicationRound->conducted_date,
+                ];
+            }
+        }
+        return $timeline;
+    }
 }
