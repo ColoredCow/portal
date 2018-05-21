@@ -7,7 +7,7 @@
                 {{ method_field('PATCH') }}
 
                 <div class="modal-header">
-                <h5 class="modal-title" id="round_confirm_{{ $applicationRound->id }}">Schedule next round</h5>
+                <h5 class="modal-title" id="round_confirm_{{ $applicationRound->id }}">Schedule @{{ nextRoundName }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
