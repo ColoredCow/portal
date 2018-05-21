@@ -35,7 +35,7 @@ abstract class ApplicationController extends Controller
         return view('hr.application.index')->with([
             'applications' => $applications,
             'status' => request()->get('status'),
-            'open_jobs_count' => Job::count(),
+            'openJobsCount' => Job::count(),
         ]);
     }
 

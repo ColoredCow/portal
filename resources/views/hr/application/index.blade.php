@@ -3,12 +3,12 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr.menu', ['active' => 'applications'])
+    @include('hr.menu')
     <br><br>
     <h1>Applications</h1>
     <br>
-    <div class="row job-application-action-bar">
-        <div class="col-md-5 col-lg-7">
+    <div class="d-flex align-items-center justify-content-between job-application-action-bar">
+        <div class="">
             <ul class="nav nav-pills mb-2">
                 <li class="nav-item">
                     <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/hr/applications"><i class="fa fa-clipboard"></i>&nbsp;Active</a>
@@ -18,9 +18,9 @@
                 </li>
            </ul>
         </div>
-        <div class="col-md-7 col-lg-5">
-            <div class="alert alert-info">
-                <span>There are {{ $open_jobs_count }} open jobs and {{ $applications->total() }} open applications</span>
+        <div class="">
+            <div class="alert alert-info mb-2 p-2">
+                <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $applications->total() }}</b> open applications</span>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         @foreach ($applications as $application)
         <tr>
             <td>
-                <a href="/hr/applications/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
+                <a href="/{{ Request::path() }}/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
             </td>
             <td>{{ $application->applicant->email }}</td>
             <td>{{ $application->job->title }}</td>
