@@ -110,10 +110,10 @@ return [
     'books' => [
         'categories' => [
             'designer' => 'Designer',
-            'human_resource' => 'Human Resource',
-            'product_manager' => 'Product Manager',
-            'project_manager' => 'Project Manager',
-            'software_engineering' => 'Software Engineering',
+            'human-resource' => 'Human Resource',
+            'product-manager' => 'Product Manager',
+            'project-manager' => 'Project Manager',
+            'software-engineering' => 'Software Engineering',
             'testing' => 'Testing',
         ]
     ]
