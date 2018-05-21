@@ -3,18 +3,28 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr.menu')
+    @include('hr.menu', ['active' => 'applications'])
     <br><br>
     <h1>Applications</h1>
     <br>
-    <ul class="nav nav-pills mb-2">
-        <li class="nav-item">
-            <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Active</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Rejected</a>
-        </li>
-    </ul>
+    <div class="row job-application-action-bar">
+        <div class="col-md-5 col-lg-7">
+            <ul class="nav nav-pills mb-2">
+                <li class="nav-item">
+                    <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/hr/applications"><i class="fa fa-clipboard"></i>&nbsp;Active</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/hr/applications?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Rejected</a>
+                </li>
+           </ul>
+        </div>
+        <div class="col-md-7 col-lg-5">
+            <div class="alert alert-info">
+                <span>There are {{ $open_jobs_count }} open jobs and {{ $applications->total() }} open applications</span>
+            </div>
+        </div>
+    </div>
+    
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>
@@ -26,7 +36,7 @@
         @foreach ($applications as $application)
         <tr>
             <td>
-                <a href="/{{ Request::path() }}/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
+                <a href="/hr/applications/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
             </td>
             <td>{{ $application->applicant->email }}</td>
             <td>{{ $application->job->title }}</td>

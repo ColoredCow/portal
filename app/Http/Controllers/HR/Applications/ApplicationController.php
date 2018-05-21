@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\HR\Application;
 use App\Models\HR\Round;
 use Illuminate\Http\Request;
+use App\Models\HR\Job;
 use Illuminate\Support\Facades\Input;
 use App\User;
 
@@ -34,6 +35,7 @@ abstract class ApplicationController extends Controller
         return view('hr.application.index')->with([
             'applications' => $applications,
             'status' => request()->get('status'),
+            'open_jobs_count' => Job::count(),
         ]);
     }
 
