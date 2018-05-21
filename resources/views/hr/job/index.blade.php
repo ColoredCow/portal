@@ -14,7 +14,6 @@
             <th>Total applicants</th>
         </tr>
         @foreach ($jobs as $job)
-       
         <tr>
             <td>
                 <a href="/hr/jobs/{{ $job->id }}/edit">{{ $job->title }}</a>
