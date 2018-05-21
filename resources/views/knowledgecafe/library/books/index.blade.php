@@ -20,21 +20,21 @@
             <th>Cover Page</th>
         </tr>
         <tr v-for="(book, index) in books" >
-            <td> 
+            <td class ="w-25"> 
                 <a :href = "'/knowledgecafe/library/books/' + book.id"> 
                     @{{ book.title }}
                 </a>
             </td>
-             <td> 
+             <td class ="w-25"> 
                 @{{ book.author }} 
             </td>
 
-            <td>
+            <td class ="w-25">
                 <div v-show="!book.showCategory">
                     @{{ book.categories }}
                 </div>
                 <div v-show="book.showCategory">
-                    <select name="categories" v-model="book.categories" v-on:change="updateCategory(index, book.id)">
+                    <select name="categories" v-model="book.categories" v-on:change="updateCategory(index, book.id)" class="form-control form-control-sm">
                         <option value="">Select Category</option>
                         @foreach(config('constants.books.categories') ?:[] as $category) 
                             <option value="{{ $category }}"> {{ $category }}</option>
@@ -43,12 +43,12 @@
                 </div>
 
                 @can('library_books.update')
-                <button v-show="!book.showCategory" class="btn change-category-btn" @click="updateCategoryMode(index, 'edit')">Change</button>
-                <button v-show="book.showCategory" class="btn change-category-btn" @click="updateCategoryMode(index, 'show')">Save</button>
+                <button v-show="!book.showCategory" class="btn btn-info btn-sm mt-1" @click="updateCategoryMode(index, 'edit')">Change</button>
+                <button v-show="book.showCategory" class="btn btn-info btn-sm mt-1" @click="updateCategoryMode(index, 'show')">Save</button>
                 @endcan
             </td>
             
-            <td> 
+            <td class ="w-25"> 
                 <div class="w-25 h-75">
                     <img class="w-100" :src="book.thumbnail" alt="No Image"> 
                 </div>

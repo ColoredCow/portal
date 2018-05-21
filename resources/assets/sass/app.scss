@@ -281,21 +281,3 @@ input:focus + .slider {
     top: 20%;
     font-size: 12px;
 }
-
-.update-schedule {
-    margin-bottom: 2px;
-}
-
-
-#books_listing {
-    .change-category-btn {
-        font-size: 10px;
-        margin-top: 3px;
-        color: red;
-        border-color: #4d4d4d;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-   
-}
