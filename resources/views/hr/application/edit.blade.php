@@ -166,7 +166,7 @@
                                         <option value="{{ $round->id }}">{{ $round->name }}</option>
                                     @endforeach
                                     </select>
-                                    <button type="button" class="btn btn-success ml-2 round-submit" data-action="confirm">GO</button>
+                                    <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#round_confirm_{{ $applicationRound->id }}">Confirm</button>
                                     @if ($applicantOpenApplications->count() > 1)
                                         <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#application_reject_modal">Reject</button>
                                     @else
@@ -187,7 +187,7 @@
                                             <option value="{{ $round->id }}">{{ $round->name }}</option>
                                         @endforeach
                                         </select>
-                                        <button type="button" class="btn btn-success ml-2 round-submit" data-action="confirm">GO</button>
+                                        <button type="button" class="btn btn-success ml-2 round-submit" data-action="confirm">Confirm</button>
                                     </div>
                                 @endif
                                 @if (!$applicationRound->mail_sent)
@@ -198,6 +198,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="action" value="updated">
+                    @includeWhen($applicationRound->round_status != 'confirmed', 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
                 </form>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                 @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])

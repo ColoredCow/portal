@@ -50,8 +50,8 @@ class ApplicationRound extends Model
                 $applicationRound = self::_create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
-                    'scheduled_date' => Carbon::now()->addDay(),
-                    'scheduled_person_id' => $scheduledPersonId ?? config('constants.hr.defaults.scheduled_person_id'),
+                    'scheduled_date' => $attr['next_scheduled_date'],
+                    'scheduled_person_id' => $attr['next_scheduled_person_id'],
                 ]);
                 break;
 
