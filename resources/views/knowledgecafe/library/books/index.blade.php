@@ -21,7 +21,7 @@
         </tr>
         <tr v-for="(book, index) in books" >
             <td> 
-                <a href=""> 
+                <a :href = "'/knowledgecafe/library/books/' + book.id"> 
                     @{{ book.title }}
                 </a>
             </td>
