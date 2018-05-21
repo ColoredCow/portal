@@ -198,7 +198,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="action" value="updated">
-                    @includeWhen($applicationRound->round_status != 'confirmed', 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
+                    @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
                 </form>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                 @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])
