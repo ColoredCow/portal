@@ -9,7 +9,6 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\HR\ApplicationRoundScheduled;
 
 class ApplicationRound extends Model
 {
@@ -54,7 +53,6 @@ class ApplicationRound extends Model
                     'scheduled_date' => Carbon::now()->addDay(),
                     'scheduled_person_id' => $scheduledPersonId,
                 ]);
-                User::find($scheduledPersonId)->notify(new ApplicationRoundScheduled($applicationRound));
                 break;
 
             case 'reject':

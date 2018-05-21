@@ -6,7 +6,6 @@ use App\Events\HR\ApplicationCreated;
 use App\Models\HR\ApplicationRound;
 use App\User;
 use Carbon\Carbon;
-use App\Notifications\HR\ApplicationRoundScheduled;
 
 class CreateFirstApplicationRound
 {
@@ -41,7 +40,5 @@ class CreateFirstApplicationRound
             'scheduled_date' => Carbon::now()->addDay(),
             'scheduled_person_id' => $scheduledPerson->id,
         ]);
-
-        $scheduledPerson->notify(new ApplicationRoundScheduled($applicationRound));
     }
 }
