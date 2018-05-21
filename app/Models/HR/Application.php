@@ -58,13 +58,16 @@ class Application extends Model
      */
     public function scopeApplyFilter($query, array $filters)
     {
-        foreach ($filters as $type => $value) {
+        foreach (array_filter($filters) as $type => $value) {
             switch ($type) {
                 case 'status':
                     $query->filterByStatus($value);
                     break;
                 case 'job-type':
                     $query->filterByJobType($value);
+                    break;
+                case 'job':
+                    $query->filterByJob($value);
                     break;
             }
         }
@@ -108,6 +111,21 @@ class Application extends Model
             $functionName = 'is' . $type;
             $subQuery->{$functionName}();
         });
+
+        return $query;
+    }
+
+    /**
+     * Apply filter on applications based on the applied job
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param String $id
+     *
+     * @return \Illuminate\Database\Eloquent\Builder $query 
+     */
+    public function scopeFilterByJob($query, $id)
+    {
+        $query->where('hr_job_id', $id);
 
         return $query;
     }
