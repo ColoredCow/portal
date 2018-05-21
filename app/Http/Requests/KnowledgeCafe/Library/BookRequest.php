@@ -23,7 +23,7 @@ class BookRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules =  [
             'add_method' => 'filled|string',
             'title' => 'filled|string',
             'author' => 'nullable|string',
@@ -33,6 +33,14 @@ class BookRequest extends FormRequest
             'isbn' => 'filled|string',
             'self_link' => 'nullable|string'
         ]; 
+
+        if ($this->method() === 'PATCH') {
+            $rules = [
+                'categories' => 'filled|string',
+            ];
+        }
+
+        return $rules;
     }
 
 }
