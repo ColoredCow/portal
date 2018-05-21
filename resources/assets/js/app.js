@@ -370,9 +370,9 @@ if (document.getElementById('books_listing')) {
 
         methods: {
             updateCategoryMode : function(index, mode) { 
-                this.$set(this.books[index], 'showCategory', (mode === 'edit'));
+                this.$set(this.books[index], 'showCategories', (mode === 'edit'));
             },
-            
+
             updateCategory: function(index, bookID) {
                 let route = `${this.updateRoute}/${bookID}`;
                 axios.put(route, {categories:this.books[index]['categories']});

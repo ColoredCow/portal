@@ -30,10 +30,10 @@
             </td>
 
             <td class ="w-25">
-                <div v-show="!book.showCategory">
+                <div v-show="!book.showCategories">
                     @{{ book.categories }}
                 </div>
-                <div v-show="book.showCategory">
+                <div v-show="book.showCategories">
                     <select name="categories" v-model="book.categories" v-on:change="updateCategory(index, book.id)" class="form-control form-control-sm">
                         <option value="">Select Category</option>
                         @foreach(config('constants.books.categories') ?:[] as $category) 
@@ -43,8 +43,8 @@
                 </div>
 
                 @can('library_books.update')
-                <button v-show="!book.showCategory" class="btn btn-info btn-sm mt-1" @click="updateCategoryMode(index, 'edit')">Change</button>
-                <button v-show="book.showCategory" class="btn btn-info btn-sm mt-1" @click="updateCategoryMode(index, 'show')">Save</button>
+                <button v-show="!book.showCategories" class="btn btn-info btn-sm mt-1" @click="updateCategoryMode(index, 'edit')">Change</button>
+                <button v-show="book.showCategories" class="btn btn-info btn-sm mt-1" @click="updateCategoryMode(index, 'show')">Save</button>
                 @endcan
             </td>
             
