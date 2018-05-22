@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\HR\ApplicationRound;
 use App\Observers\HR\ApplicationRoundObserver;
 
-class ApplicationRoundModelServiceProvider extends ServiceProvider
+class DatabaseServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
