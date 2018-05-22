@@ -28,7 +28,7 @@ abstract class ApplicationController extends Controller
 
         $applications = Application::with('applicant', 'job')
             ->applyFilter($filters)
-            ->orderBy('id', 'desc')
+            ->latest()
             ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
 
