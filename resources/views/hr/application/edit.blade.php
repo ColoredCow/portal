@@ -67,9 +67,10 @@
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Graduation Year</b>
                             <div>
-                                {{ $applicant->graduation_year ?? '-' }}
+                                {{ $applicant->graduation_year ?? '-' }}&nbsp;
                                 @if (isset($suggestInternship) && $suggestInternship)
-                                    <div class="text-primary c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</div>
+                                    {{-- <div class="text-primary c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</div> --}}
+                                    <span class="badge badge-danger c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</span>
                                     @include('hr.job-to-internship-modal', ['application' => $application])
                                 @endif
                             </div>

@@ -14,7 +14,7 @@
 					{{ method_field('PATCH') }}
 
 					<div class="form-row">
-						<div class="form-group col-md-5">
+						<div class="form-group col-md-6">
 							<label for="hr_job_id">Select internship</label>
 							<select name="hr_job_id" id="hr_job_id" class="form-control">
 								@foreach ($internships as $internship)
