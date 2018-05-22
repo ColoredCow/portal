@@ -292,10 +292,11 @@ input:focus + .slider {
         width: 45vw;
         left: 0;
         top: 0;
-        z-index: 100;    }
-    &>.card-body {
+        z-index: 100;    
+    }
+    >.card-body {
         height: 100%;
-        &>iframe {
+        >iframe {
             height: 100%;
             width: 100%;
         }
