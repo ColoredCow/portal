@@ -360,12 +360,25 @@ if (document.getElementById('show_and_save_book')) {
     });
 }
 
-function saveBookToRecords() {
-    if(!bookData) {
-        alert("Error in saving records");
-    }
-    axios.post('/knowledgecafe/library/books', bookData).then(
-        (response) => {
-            // Save book info to database
-        });
+if (document.getElementById('books_listing')) {
+    const bookForm = new Vue({
+        el: '#books_listing',
+        data: {
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
+            updateRoute:document.getElementById('books_table').dataset.indexRoute  || ''
+        },
+
+        methods: {
+            updateCategoryMode : function(index, mode) { 
+                this.$set(this.books[index], 'showCategories', (mode === 'edit'));
+            },
+
+            updateCategory: function(index, bookID) {
+                let route = `${this.updateRoute}/${bookID}`;
+                axios.put(route, {categories:this.books[index]['categories']});
+            }
+        }
+    });
 }
+
+
