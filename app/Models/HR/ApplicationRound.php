@@ -46,7 +46,7 @@ class ApplicationRound extends Model
                 $fillable['round_status'] = 'confirmed';
                 $application->markInProgress();
                 $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id;
+                $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                 $applicationRound = self::_create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
@@ -70,6 +70,7 @@ class ApplicationRound extends Model
         }
         $this->update($fillable);
         $this->_updateOrCreateReviews($attr['reviews']);
+
     }
 
     protected function _updateOrCreateReviews($reviews = [])
