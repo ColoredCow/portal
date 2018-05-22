@@ -6,6 +6,7 @@ use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Applicant extends Model
 {
@@ -86,5 +87,15 @@ class Applicant extends Model
             return $element['date'];
         }, $timeline), SORT_ASC, $timeline);
         return $timeline;
+    }
+
+    /**
+     * Suggests if applicant can be set for internship if the applicant is not graduating this year
+     *
+     * @return boolean
+     */
+    public function suggestInternship()
+    {
+        return $this->graduation_year > Carbon::now()->year;
     }
 }

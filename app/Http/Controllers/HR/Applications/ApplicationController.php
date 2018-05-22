@@ -8,6 +8,7 @@ use App\Models\HR\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\User;
+use App\Models\HR\Job;
 
 abstract class ApplicationController extends Controller
 {
@@ -54,13 +55,45 @@ abstract class ApplicationController extends Controller
 
         $application->load(['job', 'job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round', 'applicationMeta']);
 
-        return view('hr.application.edit')->with([
+        $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
             'rounds' => Round::all(),
             'timeline' => $application->applicant->timeline(),
             'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
-        ]);
+        ];
+        if ($application->job->type == 'job') {
+            $attr['suggestInternship'] = $application->applicant->suggestInternship();
+            $attr['internships'] = Job::isInternship()->latest()->get();
+        }
+        return view('hr.application.edit')->with($attr);
+    }
+
+    /**
+     * Update the specified resource
+     *
+     * @param Request $request
+     * @param integer $id
+     * @return void
+     */
+    public function update(Request $request, int $id)
+    {
+        $application = Application::find($id);
+
+        if (!$application) {
+            throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
+        }
+
+        switch($request->get('action')) {
+            case 'change-job':
+                $application->update([
+                    'hr_job_id' => $request->get('hr_job_id')
+                ]);
+                return redirect()->route('applications.internship.edit', $id)->with('status', 'Application successfully moved to internship!');
+                break;
+        }
+
+        return redirect()->back();
     }
 }
