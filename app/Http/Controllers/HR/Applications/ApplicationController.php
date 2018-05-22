@@ -5,10 +5,10 @@ namespace App\Http\Controllers\HR\Applications;
 use App\Http\Controllers\Controller;
 use App\Models\HR\Application;
 use App\Models\HR\Round;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Models\HR\Job;
+use App\Http\Requests\HR\ApplicationRequest;
 
 abstract class ApplicationController extends Controller
 {
@@ -73,22 +73,23 @@ abstract class ApplicationController extends Controller
     /**
      * Update the specified resource
      *
-     * @param Request $request
+     * @param ApplicationRequest $request
      * @param integer $id
      * @return void
      */
-    public function update(Request $request, int $id)
+    public function update(ApplicationRequest $request, int $id)
     {
+        $validated = $request->validated();
         $application = Application::find($id);
 
         if (!$application) {
             throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
         }
 
-        switch($request->get('action')) {
+        switch($validated['action']) {
             case 'change-job':
                 $application->update([
-                    'hr_job_id' => $request->get('hr_job_id')
+                    'hr_job_id' => $validated['hr_job_id']
                 ]);
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application successfully moved to internship!');
                 break;
