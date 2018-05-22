@@ -110,6 +110,7 @@ return [
     'books' => [
         'categories' => [
             'designer' => 'Designer',
+            'entrepreneurship' => 'Entrepreneurship',
             'human-resource' => 'Human Resource',
             'product-manager' => 'Product Manager',
             'project-manager' => 'Project Manager',
