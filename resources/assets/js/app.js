@@ -167,12 +167,15 @@ if (document.getElementById('finance_report')) {
 }
 
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
-    var form = $(this).closest('.applicant-round-form');
-    if (!form[0].checkValidity()) {
-        form[0].reportValidity();
-        return false;
+    let form = $(this).closest('.applicant-round-form');
+    let selectedAction = $(this).data('action');
+    if (selectedAction == 'confirm') {
+        if (!form[0].checkValidity()) {
+            form[0].reportValidity();
+            return false;
+        }
     }
-    form.find('[name="action"]').val($(this).data('action'));
+    form.find('[name="action"]').val(selectedAction);
     form.submit();
 });
 
