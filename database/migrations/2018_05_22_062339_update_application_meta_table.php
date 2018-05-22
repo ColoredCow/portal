@@ -26,7 +26,7 @@ class UpdateApplicationMetaTable extends Migration
     public function down()
     {
         Schema::table('hr_application_meta', function (Blueprint $table) {
-            //
+            $table->text('form_data')->change();
         });
     }
 }
