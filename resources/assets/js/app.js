@@ -227,6 +227,11 @@ $('.status-close').on('click', function(){
     wrapper.fadeOut(500);
 });
 
+$("[data-trigger='resume']").click(function() {
+    $('.inline-resume').toggleClass('hidden');
+    $('.inline-resume-slide').toggleClass('offset-md-2 ');
+});
+
 tinymce.init({
     selector: '.richeditor',
     skin: 'lightgray',

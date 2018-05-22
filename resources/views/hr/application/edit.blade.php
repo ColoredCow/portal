@@ -17,7 +17,7 @@
         <div class="col-md-3">
             @include('hr.application.timeline', ['timeline' => $timeline])
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7 inline-resume-slide">
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
@@ -58,7 +58,7 @@
                             <b>Resume</b>
                             <div>
                             @if ($application->resume)
-                                <a href="{{ $application->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a>
+                                @include('hr.application.inline-resume', ['resume' => $application->resume])
                             @else
                                 –
                             @endif
