@@ -292,12 +292,7 @@ input:focus + .slider {
         width: 45vw;
         left: 0;
         top: 0;
-        z-index: 100;
-        @include invisible(visible);
-        &.hidden {
-            @include invisible(hidden);
-        }
-    }
+        z-index: 100;    }
     &>.card-body {
         height: 100%;
         &>iframe {

@@ -28,14 +28,14 @@ if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
         el: '#page_hr_applicant_edit',
         data: {
-            isHidden: true,
+            showResumeFrame: false,
             applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
             selectedNextRound: '',
             nextRoundName: '',
         },
         methods: {
-            toggleResume: function() {
-                this.isHidden = !this.isHidden;
+            toggleResumeFrame: function() {
+                this.showResumeFrame = !this.showResumeFrame;
             },
             updateNextRoundName: function() {
                 for (let index = 0; index < this.applicationJobRounds.length; index++) {
