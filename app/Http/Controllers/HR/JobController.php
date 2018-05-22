@@ -13,7 +13,9 @@ class JobController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Job::class);
+        $this->authorizeResource(Job::class, null, [
+            'except' => ['store']
+        ]);
     }
 
     /**

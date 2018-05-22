@@ -28,12 +28,28 @@ if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
         el: '#page_hr_applicant_edit',
         data: {
-          isHidden: true,
+            isHidden: true,
+            applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
+            selectedNextRound: '',
+            nextRoundName: '',
         },
         methods: {
             toggleResume: function() {
                 this.isHidden = !this.isHidden;
+            },
+            updateNextRoundName: function() {
+                for (let index = 0; index < this.applicationJobRounds.length; index++) {
+                    let applicationRound = this.applicationJobRounds[index];
+                    if (applicationRound.id == this.selectedNextRound) {
+                        this.nextRoundName = applicationRound.name;
+                        break;
+                    }
+                }
             }
+        },
+        mounted() {
+            this.selectedNextRound = this.applicationJobRounds[0].id;
+            this.nextRoundName = this.applicationJobRounds[0].name;
         }
     });
 }
@@ -155,8 +171,15 @@ if (document.getElementById('finance_report')) {
 }
 
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
-    var form = $(this).closest('.applicant-round-form');
-    form.find('[name="action"]').val($(this).data('action'));
+    let form = $(this).closest('.applicant-round-form');
+    let selectedAction = $(this).data('action');
+    if (selectedAction == 'confirm') {
+        if (!form[0].checkValidity()) {
+            form[0].reportValidity();
+            return false;
+        }
+    }
+    form.find('[name="action"]').val(selectedAction);
     form.submit();
 });
 
@@ -368,12 +391,25 @@ if (document.getElementById('show_and_save_book')) {
     });
 }
 
-function saveBookToRecords() {
-    if(!bookData) {
-        alert("Error in saving records");
-    }
-    axios.post('/knowledgecafe/library/books', bookData).then(
-        (response) => {
-            // Save book info to database
-        });
+if (document.getElementById('books_listing')) {
+    const bookForm = new Vue({
+        el: '#books_listing',
+        data: {
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
+            updateRoute:document.getElementById('books_table').dataset.indexRoute  || ''
+        },
+
+        methods: {
+            updateCategoryMode : function(index, mode) {
+                this.$set(this.books[index], 'showCategories', (mode === 'edit'));
+            },
+
+            updateCategory: function(index, bookID) {
+                let route = `${this.updateRoute}/${bookID}`;
+                axios.put(route, {categories:this.books[index]['categories']});
+            }
+        }
+    });
 }
+
+
