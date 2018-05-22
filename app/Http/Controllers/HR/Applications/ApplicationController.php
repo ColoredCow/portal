@@ -21,8 +21,9 @@ abstract class ApplicationController extends Controller
     public function index()
     {
         $filters = [
-            'status' => request()->get('status'),
-            'job-type' => $this->getApplicationType()
+            'status' => request()->get('status') ?: 'non-rejected',
+            'job-type' => $this->getApplicationType(),
+            'job' => request()->get('hr_job_id')
         ];
 
         $applications = Application::with('applicant', 'job')

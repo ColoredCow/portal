@@ -79,9 +79,12 @@ class BookController extends Controller
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
      * @return void
      */
-    public function update(Request $request, Book $book)
+    public function update(BookRequest $request, Book $book)
     {
-        //
+
+        return response()->json([
+            'success' => $book->update($request->validated())
+        ]); 
     }
 
     /**
