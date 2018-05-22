@@ -12,6 +12,11 @@ class Book extends Model
     public static function _create($data) {
         $ISBN = isset ($data['isbn']) ? $data['isbn'] : null;
         return self::firstOrCreate(['isbn' => $ISBN], $data);
-    }  
+    }
+    
+    
+    public function categories() {
+        return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
+    }
 }
 
