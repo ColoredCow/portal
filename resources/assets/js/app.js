@@ -168,6 +168,10 @@ if (document.getElementById('finance_report')) {
 
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
     var form = $(this).closest('.applicant-round-form');
+    if (!form[0].checkValidity()) {
+        form[0].reportValidity();
+        return false;
+    }
     form.find('[name="action"]').val($(this).data('action'));
     form.submit();
 });
@@ -389,7 +393,7 @@ if (document.getElementById('books_listing')) {
         },
 
         methods: {
-            updateCategoryMode : function(index, mode) { 
+            updateCategoryMode : function(index, mode) {
                 this.$set(this.books[index], 'showCategories', (mode === 'edit'));
             },
 

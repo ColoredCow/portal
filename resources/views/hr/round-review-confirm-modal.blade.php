@@ -11,11 +11,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="next_scheduled_date">Scheduled date</label>
-                        <input type="datetime-local" name="next_scheduled_date" id="next_scheduled_date" class="form-control">
+                        <input type="datetime-local" name="next_scheduled_date" id="next_scheduled_date" class="form-control" required="required">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="next_scheduled_person_id">Scheduled for</label>
-                        <select name="next_scheduled_person_id" id="next_scheduled_person_id" class="form-control">
+                        <select name="next_scheduled_person_id" id="next_scheduled_person_id" class="form-control" required="required">
                             @foreach ($interviewers as $interviewer)
                                 <option value="{{ $interviewer->id }}">{{ $interviewer->name }}</option>
                             @endforeach
