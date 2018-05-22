@@ -61,7 +61,6 @@ Route::middleware('auth')->group(function () {
     Route::post('settings/{module}/update', 'SettingController@update');
     Route::get('/knowledgecafe', 'KnowledgeCafe\KnowledgeCafeController@index');
     Route::resource('/knowledgecafe/library/books', 'KnowledgeCafe\Library\BookController')
-                ->only(['index', 'create', 'store', 'show'])
                 ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
 
     Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo')->name('books.fetchInfo');

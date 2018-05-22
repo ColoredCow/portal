@@ -26,7 +26,27 @@ Vue.component('applicant-round-action-component', require('./components/HR/Appli
 
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
-        el: '#page_hr_applicant_edit'
+        el: '#page_hr_applicant_edit',
+        data: {
+            applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
+            selectedNextRound: '',
+            nextRoundName: '',
+        },
+        methods: {
+            updateNextRoundName: function() {
+                for (let index = 0; index < this.applicationJobRounds.length; index++) {
+                    let applicationRound = this.applicationJobRounds[index];
+                    if (applicationRound.id == this.selectedNextRound) {
+                        this.nextRoundName = applicationRound.name;
+                        break;
+                    }
+                }
+            }
+        },
+        mounted() {
+            this.selectedNextRound = this.applicationJobRounds[0].id;
+            this.nextRoundName = this.applicationJobRounds[0].name;
+        }
     });
 }
 
@@ -360,12 +380,25 @@ if (document.getElementById('show_and_save_book')) {
     });
 }
 
-function saveBookToRecords() {
-    if(!bookData) {
-        alert("Error in saving records");
-    }
-    axios.post('/knowledgecafe/library/books', bookData).then(
-        (response) => {
-            // Save book info to database
-        });
+if (document.getElementById('books_listing')) {
+    const bookForm = new Vue({
+        el: '#books_listing',
+        data: {
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
+            updateRoute:document.getElementById('books_table').dataset.indexRoute  || ''
+        },
+
+        methods: {
+            updateCategoryMode : function(index, mode) { 
+                this.$set(this.books[index], 'showCategories', (mode === 'edit'));
+            },
+
+            updateCategory: function(index, bookID) {
+                let route = `${this.updateRoute}/${bookID}`;
+                axios.put(route, {categories:this.books[index]['categories']});
+            }
+        }
+    });
 }
+
+
