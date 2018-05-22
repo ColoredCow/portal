@@ -28,11 +28,15 @@ if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
         el: '#page_hr_applicant_edit',
         data: {
+            showResumeFrame: false,
             applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
             selectedNextRound: '',
             nextRoundName: '',
         },
         methods: {
+            toggleResumeFrame: function() {
+                this.showResumeFrame = !this.showResumeFrame;
+            },
             updateNextRoundName: function() {
                 for (let index = 0; index < this.applicationJobRounds.length; index++) {
                     let applicationRound = this.applicationJobRounds[index];
