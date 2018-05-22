@@ -34,4 +34,17 @@ class ApplicationRoundRequest extends FormRequest
             'next_scheduled_person_id' => 'nullable|integer|required_if:action,confirm',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'next_scheduled_date.required_if' => 'The schedule date for next round is required.',
+            'next_scheduled_person_id.required_if' => 'The interviewer for next round is required.',
+        ];
+    }
 }

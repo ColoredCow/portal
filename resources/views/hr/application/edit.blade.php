@@ -148,6 +148,11 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="reviews[feedback]">Feedback</label>
+                                        @php
+                                            if ($loop->last && sizeOf($errors)) {
+                                                $applicationReviewValue = old('reviews.feedback');
+                                            }
+                                        @endphp
                                         <textarea name="reviews[feedback]" id="reviews[feedback]" rows="6" class="form-control">{{ $applicationReviewValue }}</textarea>
                                     </div>
                                 </div>
