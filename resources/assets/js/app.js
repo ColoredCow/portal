@@ -26,7 +26,27 @@ Vue.component('applicant-round-action-component', require('./components/HR/Appli
 
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
-        el: '#page_hr_applicant_edit'
+        el: '#page_hr_applicant_edit',
+        data: {
+            applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
+            selectedNextRound: '',
+            nextRoundName: '',
+        },
+        methods: {
+            updateNextRoundName: function() {
+                for (let index = 0; index < this.applicationJobRounds.length; index++) {
+                    let applicationRound = this.applicationJobRounds[index];
+                    if (applicationRound.id == this.selectedNextRound) {
+                        this.nextRoundName = applicationRound.name;
+                        break;
+                    }
+                }
+            }
+        },
+        mounted() {
+            this.selectedNextRound = this.applicationJobRounds[0].id;
+            this.nextRoundName = this.applicationJobRounds[0].name;
+        }
     });
 }
 

@@ -26,10 +26,12 @@ class ApplicationRoundRequest extends FormRequest
         return [
             'reviews' => 'nullable',
             'action' => 'required|string',
-            'next_round' => 'nullable|string|required_if:action,confirm',
             'refer_to' => 'nullable|string|required_if:action,refer',
             'scheduled_date' => 'nullable|date|required_if:action,schedule-update',
             'scheduled_person_id' => 'nullable|integer|required_if:action,schedule-update',
+            'next_round' => 'nullable|string|required_if:action,confirm',
+            'next_scheduled_date' => 'nullable|date|required_if:action,confirm',
+            'next_scheduled_person_id' => 'nullable|integer|required_if:action,confirm',
         ];
     }
 }
