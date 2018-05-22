@@ -284,3 +284,10 @@ input:focus + .slider {
 .update-schedule {
     margin-bottom: 2px;
 }
+
+#update_category_modal {
+    .modal-body {
+        height: 34em;
+        overflow-y: scroll;
+    }
+}

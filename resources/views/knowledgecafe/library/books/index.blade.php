@@ -41,7 +41,7 @@
 
                 @can('library_books.update')
                     <div>
-                        <button v-show="!book.showCategories" class="btn btn-info btn-sm mt-1 ml-4" @click="updateCategoryMode(index, 'edit')">Change</button>
+                        <button data-toggle="modal" data-target="#update_category_modal" v-show="!book.showCategories" class="btn btn-info btn-sm mt-1 ml-4" @click="updateCategoryMode(index)">Change</button>
                     </div>  
                 @endcan
             </td>
@@ -54,5 +54,8 @@
         </tr>
 
     </table>
+    @include('knowledgecafe.library.books.update-category-modal')
 </div>
+
+
 @endsection

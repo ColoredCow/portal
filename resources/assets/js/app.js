@@ -392,18 +392,31 @@ if (document.getElementById('books_listing')) {
         el: '#books_listing',
         data: {
             books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
-            updateRoute:document.getElementById('books_table').dataset.indexRoute  || ''
+            updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
+            categoryInputs: [],
         },
 
         methods: {
-            updateCategoryMode : function(index, mode) {
-                this.$set(this.books[index], 'showCategories', (mode === 'edit'));
-            },
+            updateCategoryMode : function(index) {
+                let categories = this.books[index]['categories'];
+                if(!categories) {
+                    return false;
+                }
 
+                this.categoryInputs.map((checkbox) => checkbox.checked = false );
+                categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
+            },
+            
             updateCategory: function(index, bookID) {
                 let route = `${this.updateRoute}/${bookID}`;
                 axios.put(route, {categories:this.books[index]['categories']});
             }
+        },
+
+        mounted: function() {
+            let container = document.querySelector("#update_category_modal");
+            let checkboxesAll = container.querySelectorAll('input[type="checkbox"]');
+            checkboxesAll.forEach((checkbox) => this.categoryInputs[checkbox.value] = checkbox);
         }
     });
 }

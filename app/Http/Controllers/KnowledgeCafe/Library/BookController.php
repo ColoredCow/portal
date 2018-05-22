@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\BookServices;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
+use App\Models\KnowledgeCafe\Library\BookCategory;
 
 class BookController extends Controller
 {
@@ -24,7 +25,8 @@ class BookController extends Controller
     {
         $this->authorize('list', Book::class);
         $books = Book::with('categories')->orderBy('title')->get();
-        return view('knowledgecafe.library.books.index', compact('books'));
+        $categories = BookCategory::all()->sortBy('name');
+        return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
 
     /**
