@@ -1,12 +1,12 @@
-<a href="#" data-trigger="resume"><i class="fa fa-file fa-2x"></i></a>
-<div class="card border-dark inline-resume hidden">
+<span class="c-pointer text-primary" @click="toggleResume()"><i class="fa fa-file fa-2x"></i></span>
+<div class="card border-dark inline-resume" id="sliding_resume" v-bind:class="{ hidden: isHidden }">
     <div class="card-header bg-warning">
         <ul class="nav justify-content-end">
             <li class="nav-item">
-                <b><a class="nav-link" href="{{ $resume }}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Open in a New Tab</a></b>
+                <b><a class="nav-link py-0" href="{{ $resume }}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Open in a New Tab</a></b>
             </li>
             <li class="nav-item">
-                <b><a class="nav-link" href="#" data-trigger="resume">Close</a></b>
+                <b><span class="c-pointer text-primary" href="#" @click="toggleResume()">Close</span></b>
             </li>
         </ul>
     </div>

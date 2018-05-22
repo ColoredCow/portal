@@ -26,7 +26,15 @@ Vue.component('applicant-round-action-component', require('./components/HR/Appli
 
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
-        el: '#page_hr_applicant_edit'
+        el: '#page_hr_applicant_edit',
+        data: {
+          isHidden: true,
+        },
+        methods: {
+            toggleResume: function() {
+                this.isHidden = !this.isHidden;
+            }
+        }
     });
 }
 
@@ -225,11 +233,6 @@ weeklyDoseClipboard.on('success', function(e) {
 $('.status-close').on('click', function(){
     let wrapper = $(this).closest('.alert');
     wrapper.fadeOut(500);
-});
-
-$("[data-trigger='resume']").click(function() {
-    $('.inline-resume').toggleClass('hidden');
-    $('.inline-resume-slide').toggleClass('offset-md-2 ');
 });
 
 tinymce.init({

@@ -17,7 +17,7 @@
         <div class="col-md-3">
             @include('hr.application.timeline', ['timeline' => $timeline])
         </div>
-        <div class="col-md-7 inline-resume-slide">
+        <div class="col-md-7" v-bind:class="{ 'offset-md-2': !isHidden }">
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
