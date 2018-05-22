@@ -75,13 +75,13 @@ abstract class ApplicationController extends Controller
      *
      * @param ApplicationRequest $request
      * @param integer $id
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ApplicationRequest $request, int $id)
     {
         $validated = $request->validated();
-        $application = Application::find($id);
 
+        $application = Application::find($id);
         if (!$application) {
             throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
         }
