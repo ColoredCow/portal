@@ -185,9 +185,12 @@ class Application extends Model
 
         $jobChangeActivities = $this->applicationMeta()->jobChanged()->get();
         foreach ($jobChangeActivities as $activity) {
+            $activityDetails = json_decode($activity->value);
+            $activityDetails->previous_job = Job::find($activityDetails->previous_job)->title;
+            $activityDetails->new_job = Job::find($activityDetails->new_job)->title;
             $timeline[] = [
                 'type' => 'job-changed',
-                'details'=> json_decode($activity->value),
+                'details'=> $activityDetails,
                 'date' => $activity->created_at,
             ];
         }
