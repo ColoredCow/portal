@@ -17,7 +17,7 @@
         <div class="col-md-3">
             @include('hr.application.timeline', ['timeline' => $timeline])
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7" v-bind:class="{ 'offset-md-2': showResumeFrame }">
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
@@ -58,7 +58,7 @@
                             <b>Resume</b>
                             <div>
                             @if ($application->resume)
-                                <a href="{{ $application->resume }}" target="_blank"><i class="fa fa-file fa-2x"></i></a>
+                                @include('hr.application.inline-resume', ['resume' => $application->resume])
                             @else
                                 –
                             @endif
@@ -148,6 +148,11 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="reviews[feedback]">Feedback</label>
+                                        @php
+                                            if ($loop->last && sizeOf($errors)) {
+                                                $applicationReviewValue = old('reviews.feedback');
+                                            }
+                                        @endphp
                                         <textarea name="reviews[feedback]" id="reviews[feedback]" rows="6" class="form-control">{{ $applicationReviewValue }}</textarea>
                                     </div>
                                 </div>
@@ -161,12 +166,10 @@
                             <div class="card-footer">
                                 <div class="d-flex align-items-center">
                                     <h6 class="m-0">Move to:&nbsp;</h6>
-                                    <select name="next_round" id="next_round" class="form-control w-50">
-                                    @foreach($application->job->rounds as $round)
-                                        <option value="{{ $round->id }}">{{ $round->name }}</option>
-                                    @endforeach
+                                    <select name="next_round" id="next_round" class="form-control w-50" v-model="selectedNextRound" @change="updateNextRoundName" data-application-job-rounds="{{ json_encode($application->job->rounds) }}">
+                                        <option v-for="round in applicationJobRounds" :value="round.id" v-text="round.name"></option>
                                     </select>
-                                    <button type="button" class="btn btn-success ml-2 round-submit" data-action="confirm">GO</button>
+                                    <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#round_confirm_{{ $applicationRound->id }}">Confirm</button>
                                     @if ($applicantOpenApplications->count() > 1)
                                         <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#application_reject_modal">Reject</button>
                                     @else
@@ -182,12 +185,10 @@
                                 @if ($applicationRound->round_status === config('constants.hr.status.rejected.label'))
                                     <div class="d-inline-flex align-items-center w-75">
                                         <h6 class="m-0">Move to:&nbsp;</h6>
-                                        <select name="next_round" id="next_round" class="form-control w-50">
-                                        @foreach($application->job->rounds as $round)
-                                            <option value="{{ $round->id }}">{{ $round->name }}</option>
-                                        @endforeach
+                                        <select name="next_round" id="next_round" class="form-control w-50" v-model="selectedNextRound" @change="updateNextRoundName" data-application-job-rounds="{{ json_encode($application->job->rounds) }}">
+                                            <option v-for="round in applicationJobRounds" :value="round.id" v-text="round.name"></option>
                                         </select>
-                                        <button type="button" class="btn btn-success ml-2 round-submit" data-action="confirm">GO</button>
+                                        <button type="button" class="btn btn-success ml-2" data-toggle="modal" data-target="#round_confirm_{{ $applicationRound->id }}">Confirm</button>
                                     </div>
                                 @endif
                                 @if (!$applicationRound->mail_sent)
@@ -198,6 +199,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="action" value="updated">
+                    @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
                 </form>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                 @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])

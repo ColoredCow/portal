@@ -41,7 +41,7 @@ class Applicant extends Model
             'status' => $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label'),
         ]);
 
-        if ($attr['form_data']) {
+        if (isset($attr['form_data'])) {
             $application_meta = ApplicationMeta::create([
                 'hr_application_id' => $application->id,
                 'form_data' => json_encode($attr['form_data'])

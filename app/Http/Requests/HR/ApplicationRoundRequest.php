@@ -26,10 +26,25 @@ class ApplicationRoundRequest extends FormRequest
         return [
             'reviews' => 'nullable',
             'action' => 'required|string',
-            'next_round' => 'nullable|string|required_if:action,confirm',
             'refer_to' => 'nullable|string|required_if:action,refer',
             'scheduled_date' => 'nullable|date|required_if:action,schedule-update',
             'scheduled_person_id' => 'nullable|integer|required_if:action,schedule-update',
+            'next_round' => 'nullable|string|required_if:action,confirm',
+            'next_scheduled_date' => 'nullable|date|required_if:action,confirm',
+            'next_scheduled_person_id' => 'nullable|integer|required_if:action,confirm',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'next_scheduled_date.required_if' => 'The schedule date for next round is required.',
+            'next_scheduled_person_id.required_if' => 'The interviewer for next round is required.',
         ];
     }
 }

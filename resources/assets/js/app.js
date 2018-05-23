@@ -26,7 +26,31 @@ Vue.component('applicant-round-action-component', require('./components/HR/Appli
 
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
-        el: '#page_hr_applicant_edit'
+        el: '#page_hr_applicant_edit',
+        data: {
+            showResumeFrame: false,
+            applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
+            selectedNextRound: '',
+            nextRoundName: '',
+        },
+        methods: {
+            toggleResumeFrame: function() {
+                this.showResumeFrame = !this.showResumeFrame;
+            },
+            updateNextRoundName: function() {
+                for (let index = 0; index < this.applicationJobRounds.length; index++) {
+                    let applicationRound = this.applicationJobRounds[index];
+                    if (applicationRound.id == this.selectedNextRound) {
+                        this.nextRoundName = applicationRound.name;
+                        break;
+                    }
+                }
+            }
+        },
+        mounted() {
+            this.selectedNextRound = this.applicationJobRounds[0].id;
+            this.nextRoundName = this.applicationJobRounds[0].name;
+        }
     });
 }
 
@@ -147,8 +171,15 @@ if (document.getElementById('finance_report')) {
 }
 
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
-    var form = $(this).closest('.applicant-round-form');
-    form.find('[name="action"]').val($(this).data('action'));
+    let form = $(this).closest('.applicant-round-form');
+    let selectedAction = $(this).data('action');
+    if (selectedAction == 'confirm') {
+        if (!form[0].checkValidity()) {
+            form[0].reportValidity();
+            return false;
+        }
+    }
+    form.find('[name="action"]').val(selectedAction);
     form.submit();
 });
 
@@ -360,12 +391,54 @@ if (document.getElementById('show_and_save_book')) {
     });
 }
 
-function saveBookToRecords() {
-    if(!bookData) {
-        alert("Error in saving records");
-    }
-    axios.post('/knowledgecafe/library/books', bookData).then(
-        (response) => {
-            // Save book info to database
-        });
+if (document.getElementById('books_listing')) {
+    const bookForm = new Vue({
+        el: '#books_listing',
+        data: {
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
+            updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
+            categoryInputs: [],
+            currentBookIndex: 0,
+        },
+
+        methods: {
+            updateCategoryMode : function(index) {
+                let categories = this.books[index]['categories'];
+                if(!categories) {
+                    return false;
+                }
+                this.currentBookIndex = index;
+
+                this.categoryInputs.map((checkbox) => checkbox.checked = false );
+                categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
+            },
+            
+            updateCategory: function() {
+                let selectedCategory = [];
+                let bookID = this.books[this.currentBookIndex]['id'];
+
+                this.categoryInputs.forEach(function(checkbox) {
+                    if(checkbox.checked) {
+                        selectedCategory.push({
+                            name:checkbox.dataset.category,
+                            id:checkbox.value
+                        }); 
+                    }
+                });
+
+                this.$set(this.books[this.currentBookIndex], 'categories',  selectedCategory);
+                let route = `${this.updateRoute}/${bookID}`;
+                axios.put(route, {categories: JSON.parse(JSON.stringify(selectedCategory))});
+                document.getElementById('close_update_category_modal').click();
+            }
+        },
+
+        mounted: function() {
+            let categoryInputContainer = document.querySelector("#update_category_modal");
+            let allCategoryInputs = categoryInputContainer.querySelectorAll('input[type="checkbox"]');
+            allCategoryInputs.forEach((checkbox) => this.categoryInputs[checkbox.value] = checkbox);
+        }
+    });
 }
+
+

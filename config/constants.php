@@ -105,5 +105,5 @@ return [
             'fixed_budget' => 'Fixed Budget',
             'hourly' => 'Hourly',
         ],
-    ],
+    ]
 ];
