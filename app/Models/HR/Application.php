@@ -9,6 +9,8 @@ use App\Models\HR\ApplicationRound;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class Application extends Model
 {
@@ -183,15 +185,17 @@ class Application extends Model
             }
         }
 
-        $jobChangeActivities = $this->applicationMeta()->jobChanged()->get();
-        foreach ($jobChangeActivities as $activity) {
-            $activityDetails = json_decode($activity->value);
-            $activityDetails->previous_job = Job::find($activityDetails->previous_job)->title;
-            $activityDetails->new_job = Job::find($activityDetails->new_job)->title;
+        $jobChangeEvents = $this->applicationMeta()->jobChanged()->get();
+        foreach ($jobChangeEvents as $event) {
+            $eventDetails = json_decode($event->value);
+            $eventDetails->previous_job = Job::find($eventDetails->previous_job)->title;
+            $eventDetails->new_job = Job::find($eventDetails->new_job)->title;
+            $eventDetails->user = User::find($eventDetails->user)->name;
+            $event->value = $eventDetails;
             $timeline[] = [
                 'type' => 'job-changed',
-                'details'=> $activityDetails,
-                'date' => $activity->created_at,
+                'jobChangeEvent'=> $event,
+                'date' => $event->created_at,
             ];
         }
         return $timeline;
@@ -209,6 +213,7 @@ class Application extends Model
             'new_job' => $attr['hr_job_id'],
             'job_change_mail_subject' => $attr['job_change_mail_subject'],
             'job_change_mail_body' => $attr['job_change_mail_body'],
+            'user' => Auth::id(),
         ];
 
         $this->update(['hr_job_id' => $attr['hr_job_id']]);
