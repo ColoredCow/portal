@@ -394,6 +394,8 @@ if (document.getElementById('books_listing')) {
             books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
             updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
             categoryInputs: [],
+            currentBookIndex: 0,
+            currentBook:null
         },
 
         methods: {
@@ -402,14 +404,29 @@ if (document.getElementById('books_listing')) {
                 if(!categories) {
                     return false;
                 }
+                this.currentBookIndex = index;
 
                 this.categoryInputs.map((checkbox) => checkbox.checked = false );
                 categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
             },
             
-            updateCategory: function(index, bookID) {
+            updateCategory: function() {
+                let selectedCategory = [];
+                let bookID = this.books[this.currentBookIndex]['id'];
+
+                this.categoryInputs.forEach(function(checkbox) {
+                    if(checkbox.checked) {
+                        selectedCategory.push({
+                            name:checkbox.dataset.category,
+                            id:checkbox.value
+                        }); 
+                    }
+                });
+
+                this.$set(this.books[this.currentBookIndex], 'categories',  selectedCategory);
                 let route = `${this.updateRoute}/${bookID}`;
-                axios.put(route, {categories:this.books[index]['categories']});
+                axios.put(route, {categories: JSON.parse(JSON.stringify(selectedCategory))});
+                document.getElementById('close_update_category_modal').click();
             }
         },
 

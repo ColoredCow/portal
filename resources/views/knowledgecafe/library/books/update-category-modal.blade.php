@@ -14,7 +14,7 @@
                             <li class="list-group-item">
                                 <div class="form-check books_category_item">
                                     <label class="form-check-label">
-                                    <input type="checkbox"  class="form-check-input book_category_input" value="{{ $category->id }}">{{ $category->name }}
+                                    <input type="checkbox" data-category="{{ $category->name }}"  class="form-check-input book_category_input" value="{{ $category->id }}">{{ $category->name }}
                                     </label>
                                 </div> 
                             </li>
@@ -24,8 +24,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="type" class="btn btn-light" data-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" type="submit" class="btn btn-primary">Save</button>
+                <button id="close_update_category_modal" type="type" class="btn btn-light" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button @click="updateCategory" type="button" type="button" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
