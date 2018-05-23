@@ -30,21 +30,19 @@
             </td>
 
             <td class ="w-25">
-                <div v-show="!book.showCategories">
-                    @{{ book.categories }}
-                </div>
-                <div v-show="book.showCategories">
-                    <select name="categories" v-model="book.categories" v-on:change="updateCategory(index, book.id)" class="form-control form-control-sm">
-                        <option value="">Select Category</option>
-                        @foreach(config('constants.books.categories') ?:[] as $category) 
-                            <option value="{{ $category }}"> {{ $category }}</option>
-                        @endforeach
-                    </select>
+                <div>
+                   <ul>
+                       <li v-for="category in book.categories" >
+                           @{{category.name}}
+                       </li>
+                   </ul>
                 </div>
 
+
                 @can('library_books.update')
-                <button v-show="!book.showCategories" class="btn btn-info btn-sm mt-1" @click="updateCategoryMode(index, 'edit')">Change</button>
-                <button v-show="book.showCategories" class="btn btn-info btn-sm mt-1" @click="updateCategoryMode(index, 'show')">Save</button>
+                    <div>
+                        <button data-toggle="modal" data-target="#update_category_modal" v-show="!book.showCategories" class="btn btn-info btn-sm mt-1 ml-4" @click="updateCategoryMode(index)">Change</button>
+                    </div>  
                 @endcan
             </td>
             
@@ -56,5 +54,8 @@
         </tr>
 
     </table>
+    @include('knowledgecafe.library.books.update-category-modal')
 </div>
+
+
 @endsection

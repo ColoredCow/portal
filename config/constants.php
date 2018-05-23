@@ -105,17 +105,5 @@ return [
             'fixed_budget' => 'Fixed Budget',
             'hourly' => 'Hourly',
         ],
-    ],
-
-    'books' => [
-        'categories' => [
-            'designer' => 'Designer',
-            'entrepreneurship' => 'Entrepreneurship',
-            'human-resource' => 'Human Resource',
-            'product-manager' => 'Product Manager',
-            'project-manager' => 'Project Manager',
-            'software-engineering' => 'Software Engineering',
-            'testing' => 'Testing',
-        ]
     ]
 ];
