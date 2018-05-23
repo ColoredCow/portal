@@ -170,7 +170,7 @@ class Application extends Model
      */
     public function timeline()
     {
-        $this->load('applicationRounds', 'applicationRounds.round');
+        $this->load('applicationRounds', 'applicationRounds.round', 'applicationMeta');
         $timeline = [];
         foreach ($this->applicationRounds as $applicationRound) {
             if ($applicationRound->conducted_date) {
@@ -181,6 +181,15 @@ class Application extends Model
                     'date' => $applicationRound->conducted_date,
                 ];
             }
+        }
+
+        $jobChangeActivities = $this->applicationMeta()->jobChanged()->get();
+        foreach ($jobChangeActivities as $activity) {
+            $timeline[] = [
+                'type' => 'job-changed',
+                'details'=> json_decode($activity->value),
+                'date' => $activity->created_at,
+            ];
         }
         return $timeline;
     }

@@ -26,6 +26,19 @@
                             @include('hr.round-review-sent-mail-modal', [ 'applicationRound' => $applicationRound ])
                         @endif
                         @break
+                    @case('job-changed')
+                        @php
+                            $details = $item['details'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b>
+                        <br>
+                        Moved from {{ $details->previous_job }} to {{ $details->new_job }}
+                        <br>
+                        {{-- @if ($applicationRound->mail_sent)
+                            <span data-toggle="modal" data-target="#round_mail_{{ $applicationRound->id }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
+                            @include('hr.round-review-sent-mail-modal', [ 'applicationRound' => $applicationRound ])
+                        @endif --}}
+                        @break
                 @endswitch
             </div>
         </div>
