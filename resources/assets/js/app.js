@@ -399,7 +399,6 @@ if (document.getElementById('books_listing')) {
             updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
-            currentBook:null
         },
 
         methods: {
@@ -435,9 +434,9 @@ if (document.getElementById('books_listing')) {
         },
 
         mounted: function() {
-            let container = document.querySelector("#update_category_modal");
-            let checkboxesAll = container.querySelectorAll('input[type="checkbox"]');
-            checkboxesAll.forEach((checkbox) => this.categoryInputs[checkbox.value] = checkbox);
+            let categoryInputContainer = document.querySelector("#update_category_modal");
+            let allCategoryInputs = categoryInputContainer.querySelectorAll('input[type="checkbox"]');
+            allCategoryInputs.forEach((checkbox) => this.categoryInputs[checkbox.value] = checkbox);
         }
     });
 }
