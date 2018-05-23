@@ -69,7 +69,6 @@
                             <div>
                                 {{ $applicant->graduation_year ?? '-' }}&nbsp;
                                 @if (isset($suggestInternship) && $suggestInternship)
-                                    {{-- <div class="text-primary c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</div> --}}
                                     <span class="badge badge-danger c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</span>
                                     @include('hr.job-to-internship-modal', ['application' => $application])
                                 @endif
@@ -79,17 +78,12 @@
                             <b>Reason for eligibility</b>
                             <div>{{ $application->reason_for_eligibility ?? '-' }}</div>
                         </div>
-                        @if($application->applicationMeta)
-                            @php
-                                $application_meta = $application->applicationMeta ? $application->applicationMeta->form_data : [];
-                            @endphp
-                            @foreach(json_decode($application_meta) as $field => $value)
-                                <div class="form-group col-md-12">
-                                    <b>{{ $field }}</b>
-                                    <div>{{ $value }}</div>
-                                </div>
-                            @endforeach
-                        @endif
+                        @foreach(json_decode($applicationFormDetails->value) as $field => $value)
+                            <div class="form-group col-md-12">
+                                <b>{{ $field }}</b>
+                                <div>{{ $value }}</div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

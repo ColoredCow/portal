@@ -59,10 +59,13 @@ abstract class ApplicationController extends Controller
             'applicant' => $application->applicant,
             'application' => $application,
             'rounds' => Round::all(),
-            'timeline' => $application->applicant->timeline(),
+            // 'timeline' => $application->applicant->timeline(),
+            'timeline' => [],
             'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
+            'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
         ];
+
         if ($application->job->type == 'job') {
             $attr['suggestInternship'] = $application->applicant->suggestInternship();
             $attr['internships'] = Job::isInternship()->latest()->get();
@@ -88,9 +91,9 @@ abstract class ApplicationController extends Controller
 
         switch($validated['action']) {
             case 'change-job':
-                $application->update([
-                    'hr_job_id' => $validated['hr_job_id']
-                ]);
+                $application->changeJob($validated);
+                // send mail
+
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application successfully moved to internship!');
                 break;
         }

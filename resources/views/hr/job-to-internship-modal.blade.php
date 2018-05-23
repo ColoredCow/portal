@@ -17,10 +17,22 @@
 						<div class="form-group col-md-6">
 							<label for="hr_job_id">Select internship</label>
 							<select name="hr_job_id" id="hr_job_id" class="form-control">
-								@foreach ($internships as $internship)
-									<option value="{{ $internship->id }}">{{ $internship->title }}</option>
-								@endforeach
+							@foreach ($internships as $internship)
+								<option value="{{ $internship->id }}">{{ $internship->title }}</option>
+							@endforeach
 							</select>
+						</div>
+					</div>
+					<div class="form-row mt-4">
+						<div class="form-group col-md-12">
+							<label for="change_job_mail_subject">Mail subject:</label>
+							<input type="text" name="change_job_mail_subject" class="form-control" placeholder="Subject" required="required">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="change_job_mail_body">Mail body:</label>
+							<textarea name="change_job_mail_body" class="richeditor form-control" rows="10"></textarea>
 						</div>
 					</div>
 					<div class="form-row mt-2">
