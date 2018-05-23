@@ -26,8 +26,8 @@ class ApplicationRequest extends FormRequest
         return [
             'action' => 'required|string',
             'hr_job_id' => 'nullable|integer|required_if:action,change-job',
-            'change_job_mail_subject' => 'nullable|string|required_if:action,change-job',
-            'change_job_mail_body' => 'nullable|string|required_if:action,change-job',
+            'job_change_mail_subject' => 'nullable|string|required_if:action,change-job',
+            'job_change_mail_body' => 'nullable|string|required_if:action,change-job',
         ];
     }
 }

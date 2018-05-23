@@ -25,14 +25,14 @@
 					</div>
 					<div class="form-row mt-4">
 						<div class="form-group col-md-12">
-							<label for="change_job_mail_subject">Mail subject:</label>
-							<input type="text" name="change_job_mail_subject" class="form-control" placeholder="Subject" required="required">
+							<label for="job_change_mail_subject">Mail subject:</label>
+							<input type="text" name="job_change_mail_subject" class="form-control" placeholder="Subject" required="required">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-12">
-							<label for="change_job_mail_body">Mail body:</label>
-							<textarea name="change_job_mail_body" class="richeditor form-control" rows="10"></textarea>
+							<label for="job_change_mail_body">Mail body:</label>
+							<textarea name="job_change_mail_body" class="richeditor form-control" rows="10"></textarea>
 						</div>
 					</div>
 					<div class="form-row mt-2">

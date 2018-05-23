@@ -45,7 +45,8 @@ class Applicant extends Model
         if (isset($attr['form_data'])) {
             $application_meta = ApplicationMeta::create([
                 'hr_application_id' => $application->id,
-                'form_data' => json_encode($attr['form_data'])
+                'key' => 'form-data',
+                'value' => json_encode($attr['form_data'])
             ]);
         }
 

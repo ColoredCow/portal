@@ -20,4 +20,9 @@ class ApplicationMeta extends Model
     {
         return $query->where('key', 'form-data');
     }
+
+    public static function scopeChangeJob($query)
+    {
+        return $query->where('key', 'change-job');
+    }
 }

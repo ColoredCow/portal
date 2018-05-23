@@ -185,35 +185,25 @@ class Application extends Model
         return $timeline;
     }
 
-    // /**
-    //  * Change the job for an application
-    //  *
-    //  * @return void
-    //  */
-    // public function changeJob($attr)
-    // {
-    //     $changeJob = [
-    //         'date' => Carbon::now()->format(config('constants.date_format')),
-    //         'previous_job' => $this->hr_job_id,
-    //         'new_job' => $attr['hr_job_id'],
-    //         'change_job_mail_subject' => $attr['change_job_mail_subject'],
-    //         'change_job_mail_body' => $attr['change_job_mail_body'],
-    //     ];
+    /**
+     * Change the job for an application
+     *
+     * @return void
+     */
+    public function changeJob($attr)
+    {
+        $meta = [
+            'previous_job' => $this->hr_job_id,
+            'new_job' => $attr['hr_job_id'],
+            'job_change_mail_subject' => $attr['job_change_mail_subject'],
+            'job_change_mail_body' => $attr['job_change_mail_body'],
+        ];
 
-    //     $this->update(['hr_job_id' => $attr['hr_job_id']]);
-
-    //     if (!$this->applicationMeta) {
-    //         ApplicationMeta::create([
-    //             'hr_application_id' => $this->id,
-    //             'form_data' => json_encode([ 'change-job' => $changeJob ])
-    //         ]);
-    //     } else {
-    //         $formData = json_decode($this->applicationMeta->form_data);
-    //         if (!isset($form_data['change-job'])) {
-    //             $form_data['change-job'] = [];
-    //         }
-    //         $form_data['change-job'][] = $changeJob;
-    //         $this->applicationMeta->update(['form_data' => json_encode($form_data)]);
-    //     }
-    // }
+        $this->update(['hr_job_id' => $attr['hr_job_id']]);
+        ApplicationMeta::create([
+            'hr_application_id' => $this->id,
+            'key' => 'change-job',
+            'value' => json_encode($meta),
+        ]);
+    }
 }
