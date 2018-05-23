@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Models\HR\Job;
 use App\Http\Requests\HR\ApplicationRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\HR\Application\JobChanged;
 
 abstract class ApplicationController extends Controller
 {
@@ -90,9 +92,8 @@ abstract class ApplicationController extends Controller
 
         switch($validated['action']) {
             case 'change-job':
-                $application->changeJob($validated);
-                // send mail
-
+                $changeJobMeta = $application->changeJob($validated);
+                Mail::send(new JobChanged($application, $changeJobMeta));
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application successfully moved to internship!');
                 break;
         }

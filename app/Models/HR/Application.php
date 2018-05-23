@@ -188,7 +188,7 @@ class Application extends Model
     /**
      * Change the job for an application
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function changeJob($attr)
     {
@@ -200,7 +200,7 @@ class Application extends Model
         ];
 
         $this->update(['hr_job_id' => $attr['hr_job_id']]);
-        ApplicationMeta::create([
+        return ApplicationMeta::create([
             'hr_application_id' => $this->id,
             'key' => 'change-job',
             'value' => json_encode($meta),
