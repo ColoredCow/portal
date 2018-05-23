@@ -10,8 +10,8 @@ use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\User;
 use App\Helpers\ContentHelper;
+use App\User;
 
 class Application extends Model
 {
@@ -189,15 +189,14 @@ class Application extends Model
         // adding change-job events in the application timeline
         $jobChangeEvents = $this->applicationMeta()->jobChanged()->get();
         foreach ($jobChangeEvents as $event) {
-            $event->load('application', 'application.applicant');
-            $eventDetails = json_decode($event->value);
-            $eventDetails->previous_job = Job::find($eventDetails->previous_job)->title;
-            $eventDetails->new_job = Job::find($eventDetails->new_job)->title;
-            $eventDetails->user = User::find($eventDetails->user)->name;
-            $event->value = $eventDetails;
+            $details = json_decode($event->value);
+            $details->previous_job = Job::find($details->previous_job)->title;
+            $details->new_job = Job::find($details->new_job)->title;
+            $details->user = User::find($details->user)->name;
+            $event->value = $details;
             $timeline[] = [
                 'type' => 'job-changed',
-                'jobChangeEvent'=> $event,
+                'event'=> $event,
                 'date' => $event->created_at,
             ];
         }

@@ -22,38 +22,18 @@
                         <b><u>{{ date(config('constants.display_date_format'), strtotime($applicationRound->conducted_date)) }}</u></b><br>
                         {{ $applicationRound->round->name }} for {{ $application->job->title }} conducted by {{ $applicationRound->conductedPerson->name }}<br>
                         @if ($applicationRound->mail_sent)
-                            @php
-                                $data = [
-                                    'modal-id' => 'round_mail_' . $applicationRound->id,
-                                    'mail-to' => $applicationRound->application->applicant->email,
-                                    'mail-subject' => $applicationRound->mail_subject,
-                                    'mail-body' => $applicationRound->mail_body,
-                                    'mail-sender' => $applicationRound->mailSender->name,
-                                    'mail-date' => $applicationRound->mail_sent_at,
-                                ];
-                            @endphp
-                            <span data-toggle="modal" data-target="#{{ $data['modal-id'] }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
-                            @include('hr.communication-mail-modal', [ 'data' => $data ])
+                            <span data-toggle="modal" data-target="#{{ $applicationRound->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
+                            @include('hr.communication-mail-modal', [ 'data' => $applicationRound->communicationMail ])
                         @endif
                         @break
                     @case('job-changed')
                         @php
-                            $jobChangeEvent = $item['jobChangeEvent'];
+                            $event = $item['event'];
                         @endphp
                         <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
-                        Moved from {{ $jobChangeEvent->value->previous_job }} to {{ $jobChangeEvent->value->new_job }}<br>
-                        @php
-                            $data = [
-                                'modal-id' => 'job_change_' . $jobChangeEvent->id,
-                                'mail-to' => $jobChangeEvent->application->applicant->email,
-                                'mail-subject' => $jobChangeEvent->value->job_change_mail_subject,
-                                'mail-body' => $jobChangeEvent->value->job_change_mail_body,
-                                'mail-sender' => $jobChangeEvent->value->user,
-                                'mail-date' => $jobChangeEvent->created_at,
-                            ];
-                        @endphp
-                        <span data-toggle="modal" data-target="#{{ $data['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
-                        @include('hr.communication-mail-modal', ['data', $data])
+                        Moved from {{ $event->value->previous_job }} to {{ $event->value->new_job }}<br>
+                        <span data-toggle="modal" data-target="#{{ $event->jobChangedCommunicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
+                        @include('hr.communication-mail-modal', ['data' => $event->jobChangedCommunicationMail])
                         @break
                 @endswitch
             </div>

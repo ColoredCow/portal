@@ -118,4 +118,21 @@ class ApplicationRound extends Model
     {
         return $this->belongsTo(User::class, 'mail_sender');
     }
+
+    /**
+     * Get communication mail for this application round
+     *
+     * @return array
+     */
+    public function getCommunicationMailAttribute()
+    {
+        return [
+            'modal-id' => 'round_mail_' . $this->id,
+            'mail-to' => $this->application->applicant->email,
+            'mail-subject' => $this->mail_subject,
+            'mail-body' => $this->mail_body,
+            'mail-sender' => $this->mailSender->name,
+            'mail-date' => $this->mail_sent_at,
+        ];
+    }
 }
