@@ -185,8 +185,10 @@ class Application extends Model
             }
         }
 
+        // adding change-job events in the application timeline
         $jobChangeEvents = $this->applicationMeta()->jobChanged()->get();
         foreach ($jobChangeEvents as $event) {
+            $event->load('application', 'application.applicant');
             $eventDetails = json_decode($event->value);
             $eventDetails->previous_job = Job::find($eventDetails->previous_job)->title;
             $eventDetails->new_job = Job::find($eventDetails->new_job)->title;
