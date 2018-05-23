@@ -63,7 +63,7 @@ abstract class ApplicationController extends Controller
         ];
 
         if ($application->job->type == 'job') {
-            $attr['suggestInternship'] = $application->applicant->suggestInternship();
+            $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
         return view('hr.application.edit')->with($attr);
@@ -80,15 +80,16 @@ abstract class ApplicationController extends Controller
     {
         $validated = $request->validated();
         $application = Application::findOrFail($id);
+        $application->load('applicant');
 
         switch($validated['action']) {
-            case 'change-job':
+            case config('constants.hr.application-meta.keys.change-job'):
                 $changeJobMeta = $application->changeJob($validated);
                 Mail::send(new JobChanged($application, $changeJobMeta));
-                return redirect()->route('applications.internship.edit', $id)->with('status', 'Application successfully moved to internship!');
+                return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');
                 break;
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('No changes were done to the application. Please make sure your are submitting valid data.');
     }
 }

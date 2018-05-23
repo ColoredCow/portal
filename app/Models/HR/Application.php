@@ -173,7 +173,7 @@ class Application extends Model
      */
     public function timeline()
     {
-        $this->load('applicationRounds', 'applicationRounds.round', 'applicationMeta');
+        $this->load('applicationRounds', 'applicationRounds.round');
         $timeline = [];
         foreach ($this->applicationRounds as $applicationRound) {
             if ($applicationRound->conducted_date) {
@@ -222,7 +222,7 @@ class Application extends Model
         $this->update(['hr_job_id' => $attr['hr_job_id']]);
         return ApplicationMeta::create([
             'hr_application_id' => $this->id,
-            'key' => 'change-job',
+            'key' => config('constants.hr.application-meta.keys.change-job'),
             'value' => json_encode($meta),
         ]);
     }

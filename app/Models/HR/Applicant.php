@@ -45,7 +45,7 @@ class Applicant extends Model
         if (isset($attr['form_data'])) {
             $application_meta = ApplicationMeta::create([
                 'hr_application_id' => $application->id,
-                'key' => 'form-data',
+                'key' => config('constants.hr.application-meta.keys.form-data'),
                 'value' => json_encode($attr['form_data'])
             ]);
         }
@@ -91,12 +91,12 @@ class Applicant extends Model
     }
 
     /**
-     * Suggests if applicant can be set for internship if the applicant is not graduating this year
+     * Determines if the applicant has graduated or not
      *
      * @return boolean
      */
-    public function suggestInternship()
+    public function hasGraduated()
     {
-        return $this->graduation_year > Carbon::now()->year;
+        return $this->graduation_year ? $this->graduation_year <= Carbon::now()->year : 'esss';
     }
 }

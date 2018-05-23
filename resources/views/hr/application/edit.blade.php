@@ -66,12 +66,10 @@
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Graduation Year</b>
+
                             <div>
                                 {{ $applicant->graduation_year ?? '-' }}&nbsp;
-                                @if (isset($suggestInternship) && $suggestInternship)
-                                    <span class="badge badge-danger c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</span>
-                                    @include('hr.job-to-internship-modal', ['application' => $application])
-                                @endif
+                                @includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
                             </div>
                         </div>
                         <div class="form-group col-md-12">

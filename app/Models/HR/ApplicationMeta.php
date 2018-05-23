@@ -18,11 +18,11 @@ class ApplicationMeta extends Model
 
     public static function scopeFormData($query)
     {
-        return $query->where('key', 'form-data');
+        return $query->where('key', config('constants.hr.application-meta.keys.form-data'));
     }
 
     public static function scopeJobChanged($query)
     {
-        return $query->where('key', 'change-job');
+        return $query->where('key', config('constants.hr.application-meta.keys.change-job'));
     }
 }

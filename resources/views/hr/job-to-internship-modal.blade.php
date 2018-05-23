@@ -1,3 +1,4 @@
+<span class="badge badge-danger c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</span>
 <div class="modal fade" id="job_to_internship" tabindex="-1" role="dialog" aria-labelledby="job_to_internship" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -37,7 +38,7 @@
 					</div>
 					<div class="form-row mt-2">
 						<div class="form-group col-md-12">
-							<input type="hidden" name="action" value="change-job">
+							<input type="hidden" name="action" value="{{ config('constants.hr.application-meta.keys.change-job') }}">
 							<button type="submit" class="btn btn-success px-4">Confirm</button>
 						</div>
 					</div>
