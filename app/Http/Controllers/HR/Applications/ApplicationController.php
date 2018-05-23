@@ -49,12 +49,7 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
-        $application = Application::find($id);
-
-        if (!$application) {
-            throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
-        }
-
+        $application = self::findApplication($id);
         $application->load(['job', 'job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round', 'applicationMeta']);
 
         $attr = [
@@ -84,11 +79,7 @@ abstract class ApplicationController extends Controller
     public function update(ApplicationRequest $request, int $id)
     {
         $validated = $request->validated();
-
-        $application = Application::find($id);
-        if (!$application) {
-            throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
-        }
+        $application = self::findApplication($id);
 
         switch($validated['action']) {
             case 'change-job':
@@ -99,5 +90,22 @@ abstract class ApplicationController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * Find application by id. If not found, throw an Exception
+     *
+     * @param integer $id
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected static function findApplication(int $id)
+    {
+        $application = Application::find($id);
+
+        if (!$application) {
+            throw new \Illuminate\Database\Eloquent\ModelNotFoundException;
+        }
+
+        return $application;
     }
 }

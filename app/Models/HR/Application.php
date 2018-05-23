@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Helpers\ContentHelper;
 
 class Application extends Model
 {
@@ -214,7 +215,7 @@ class Application extends Model
             'previous_job' => $this->hr_job_id,
             'new_job' => $attr['hr_job_id'],
             'job_change_mail_subject' => $attr['job_change_mail_subject'],
-            'job_change_mail_body' => $attr['job_change_mail_body'],
+            'job_change_mail_body' => ContentHelper::editorFormat($attr['job_change_mail_body']),
             'user' => Auth::id(),
         ];
 
