@@ -8,6 +8,10 @@ use App\Models\HR\ApplicationMeta;
 use App\Models\HR\ApplicationRound;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\Helpers\ContentHelper;
+use App\User;
 
 class Application extends Model
 {
@@ -32,7 +36,7 @@ class Application extends Model
 
     public function applicationMeta()
     {
-        return $this->hasOne(ApplicationMeta::class, 'hr_application_id');
+        return $this->hasMany(ApplicationMeta::class, 'hr_application_id');
     }
 
     /**
@@ -52,9 +56,9 @@ class Application extends Model
      * Apply filters on application
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param Array $filters 
+     * @param Array $filters
      *
-     * @return \Illuminate\Database\Eloquent\Builder $query 
+     * @return \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeApplyFilter($query, array $filters)
     {
@@ -79,9 +83,9 @@ class Application extends Model
      * Apply filter on applications based on their show status
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param String $status 
+     * @param String $status
      *
-     * @return \Illuminate\Database\Eloquent\Builder $query 
+     * @return \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeFilterByStatus($query, $status)
     {
@@ -101,9 +105,9 @@ class Application extends Model
      * Apply filter on applications based on their job type
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param String $type 
+     * @param String $type
      *
-     * @return \Illuminate\Database\Eloquent\Builder $query 
+     * @return \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeFilterByJobType($query, $type)
     {
@@ -121,7 +125,7 @@ class Application extends Model
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param String $id
      *
-     * @return \Illuminate\Database\Eloquent\Builder $query 
+     * @return \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeFilterByJob($query, $id)
     {
@@ -137,7 +141,7 @@ class Application extends Model
     {
         return $query->where('status', config('constants.hr.status.rejected.label'));
     }
-    
+
     /**
      * get applications where status is not rejected
      */
@@ -181,6 +185,44 @@ class Application extends Model
                 ];
             }
         }
+
+        // adding change-job events in the application timeline
+        $jobChangeEvents = $this->applicationMeta()->jobChanged()->get();
+        foreach ($jobChangeEvents as $event) {
+            $details = json_decode($event->value);
+            $details->previous_job = Job::find($details->previous_job)->title;
+            $details->new_job = Job::find($details->new_job)->title;
+            $details->user = User::find($details->user)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => 'job-changed',
+                'event'=> $event,
+                'date' => $event->created_at,
+            ];
+        }
         return $timeline;
+    }
+
+    /**
+     * Change the job for an application
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function changeJob($attr)
+    {
+        $meta = [
+            'previous_job' => $this->hr_job_id,
+            'new_job' => $attr['hr_job_id'],
+            'job_change_mail_subject' => $attr['job_change_mail_subject'],
+            'job_change_mail_body' => ContentHelper::editorFormat($attr['job_change_mail_body']),
+            'user' => Auth::id(),
+        ];
+
+        $this->update(['hr_job_id' => $attr['hr_job_id']]);
+        return ApplicationMeta::create([
+            'hr_application_id' => $this->id,
+            'key' => config('constants.hr.application-meta.keys.change-job'),
+            'value' => json_encode($meta),
+        ]);
     }
 }

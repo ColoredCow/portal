@@ -24,24 +24,15 @@
                         <div class="row">
                             <div class="col-3">
                                 <p>
-                                    <b> Read : </b>
-                                </p>
-                            </div>
-                            <div class="col-6">
-                                <p>
-                                    <a class="btn btn-primary"  href="{{ $book->readable_link }}">Read</a>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-3">
-                                <p>
                                     <b>Category : </b>
                                 </p>
                             </div>
                             <div class="col-6">
-                                {{ $book->categories }}
+                                <ul class="pl-3">
+                                    @foreach(($book->categories) ?: [] as $category)
+                                        <li> {{$category->name}} </li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
 

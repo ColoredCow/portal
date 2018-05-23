@@ -6,6 +6,7 @@ use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Applicant extends Model
 {
@@ -44,7 +45,8 @@ class Applicant extends Model
         if (isset($attr['form_data'])) {
             $application_meta = ApplicationMeta::create([
                 'hr_application_id' => $application->id,
-                'form_data' => json_encode($attr['form_data'])
+                'key' => config('constants.hr.application-meta.keys.form-data'),
+                'value' => json_encode($attr['form_data'])
             ]);
         }
 
@@ -86,5 +88,15 @@ class Applicant extends Model
             return $element['date'];
         }, $timeline), SORT_ASC, $timeline);
         return $timeline;
+    }
+
+    /**
+     * Determines if the applicant has graduated or not
+     *
+     * @return boolean
+     */
+    public function hasGraduated()
+    {
+        return $this->graduation_year ? $this->graduation_year <= Carbon::now()->year : 'esss';
     }
 }
