@@ -11,6 +11,11 @@ class Round extends Model
 
     protected $table = 'hr_rounds';
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'confirmed_mail_template' => 'array',
         'rejected_mail_template' => 'array',
