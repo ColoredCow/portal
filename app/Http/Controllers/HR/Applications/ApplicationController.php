@@ -39,6 +39,7 @@ abstract class ApplicationController extends Controller
             'applications' => $applications,
             'status' => request()->get('status'),
             'openJobsCount' => Job::count(),
+            'openApplicationsCount' => Application::whereIn('status', array('in-progress', 'new'))->get()->count(),
             'applicationType' => $this->getApplicationType(),
         ]);
     }

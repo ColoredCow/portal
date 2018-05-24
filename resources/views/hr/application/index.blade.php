@@ -18,7 +18,7 @@
         </ul>
         @if( $applicationType == 'job' )
         <div class="alert alert-info mb-2 p-2">
-            <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $applications->total() }}</b> open applications</span>
+            <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $openApplicationsCount }}</b> open applications</span>
         </div>
         @endif
     </div>
