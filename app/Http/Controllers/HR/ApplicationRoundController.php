@@ -40,9 +40,7 @@ class ApplicationRoundController extends Controller
         $validated = $request->validated();
         $mail_body = ContentHelper::editorFormat($validated['mail_body']);
 
-        $application = $applicationRound->application;
-        $applicant = $application->applicant;
-
+        $applicationRound->load('application', 'application.job', 'application.applicant');
         $applicationRound->update([
             'mail_sent' => true,
             'mail_subject' => $validated['mail_subject'],
@@ -51,10 +49,9 @@ class ApplicationRoundController extends Controller
             'mail_sent_at' => Carbon::now(),
         ]);
 
-        Mail::to($applicant->email, $applicant->name)
-            ->bcc($application->job->posted_by)
-            ->send(new RoundReviewed($applicationRound));
+        Mail::send(new RoundReviewed($applicationRound));
 
+        $applicant = $applicationRound->application->applicant;
         return redirect()->back()->with(
             'status',
             "Mail sent successfully to the <b>$applicant->name</b> at <b>$applicant->email</b>.<br>
