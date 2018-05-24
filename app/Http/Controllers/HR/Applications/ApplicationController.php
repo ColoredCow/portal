@@ -39,7 +39,7 @@ abstract class ApplicationController extends Controller
             'applications' => $applications,
             'status' => request()->get('status'),
             'openJobsCount' => Job::count(),
-            'getApplicationType' => $this->getApplicationType(),
+            'applicationType' => $this->getApplicationType(),
         ]);
     }
 
