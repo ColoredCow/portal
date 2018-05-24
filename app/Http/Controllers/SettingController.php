@@ -23,6 +23,10 @@ class SettingController extends Controller
         return view("settings.$module")->with([
             'settings' => $settings,
             'rounds' => Round::all(),
+            'roundMailTypes' => [
+                config('constants.hr.status.confirmed'),
+                config('constants.hr.status.rejected')
+            ]
         ]);
     }
 

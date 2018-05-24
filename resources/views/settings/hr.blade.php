@@ -38,11 +38,11 @@
             </div>
         </form>
     </div>
-    <h3 class="mt-4">Email templates for rounds</h3>
+    <h4 class="mt-5">Email templates for rounds</h4>
     @foreach ($rounds as $index => $round)
-        @foreach (['confirmed', 'rejected'] as $type)
+        @foreach ($roundMailTypes as $type)
             @php
-                $column = $type . '_mail_template';
+                $mailTemplate = $type['label'] . '_mail_template';
             @endphp
             <div class="card mt-4">
                 <form action="{{ route('hr.round.update', $round->id) }}" method="POST">
@@ -50,17 +50,17 @@
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
 
-                    <div class="card-header c-pointer" data-toggle="collapse" data-target="#round_template_{{ $type }}_{{ $round->id }}" aria-expanded="true" aria-controls="round_template_{{ $type }}_{{ $round->id }}">
+                    <div class="card-header c-pointer" data-toggle="collapse" data-target="#round_template_{{ $type['label'] }}_{{ $round->id }}" aria-expanded="true" aria-controls="round_template_{{ $type['label'] }}_{{ $round->id }}">
                         {{ $round->name }}
-                        <span class="{{ config("constants.hr.status.$type.class") }}">{{ $type }}</span>
+                        <span class="{{ $type['class'] }}">{{ $type['label'] }}</span>
                     </div>
-                    <div id="round_template_{{ $type }}_{{ $round->id }}" class="collapse">
+                    <div id="round_template_{{ $type['label'] }}_{{ $round->id }}" class="collapse">
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="round_mail_subject">Subject</label>
-                                    <input type="text" name="round_mail_subject" class="form-control" value="{{ $round->{$column}['subject'] }}">
+                                    <input type="text" name="round_mail_subject" class="form-control" value="{{ $mailTemplate->{$column}['subject'] }}">
                                     </div>
                                 </div>
                             </div>
@@ -68,13 +68,13 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="round_mail_body">Mail body:</label>
-                                        <textarea name="round_mail_body" rows="10" class="richeditor form-control" placeholder="Body">{{ $round->{$column}['body'] }}</textarea>
+                                        <textarea name="round_mail_body" rows="10" class="richeditor form-control" placeholder="Body">{{ $round->{$mailTemplate}['body'] }}</textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <input type="hidden" name="type" value="{{ $type }}_mail">
+                            <input type="hidden" name="type" value="{{ $type['label'] }}_mail">
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
