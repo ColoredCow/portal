@@ -29,6 +29,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="col-md-2 px-0 float-right">
+                        <input type="hidden" name="type" value="guidelines">
                         <button type="button" class="btn btn-secondary btn-block btn-guide edit-guide {{ $guide_display }}">Edit</button>
                         <button type="button" class="btn btn-primary btn-block btn-guide save-guide {{ $guide_editor }}">
                             <i class="fa fa-spinner fa-spin d-none item"></i>

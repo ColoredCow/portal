@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ContentHelper;
 use App\Http\Requests\SettingRequest;
 use App\Models\Setting;
+use App\Models\HR\Round;
 
 class SettingController extends Controller
 {
@@ -19,7 +20,10 @@ class SettingController extends Controller
         $this->authorize('view', Setting::class);
 
         $settings = Setting::where('module', $module)->get()->keyBy('setting_key');
-        return view("settings.$module")->with(['settings' => $settings]);
+        return view("settings.$module")->with([
+            'settings' => $settings,
+            'rounds' => Round::all(),
+        ]);
     }
 
     /**
