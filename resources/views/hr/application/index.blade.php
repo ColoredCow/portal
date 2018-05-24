@@ -8,15 +8,15 @@
     <h1>Applications</h1>
     <br>
     <div class="d-flex align-items-center justify-content-between">
-        <ul class="nav nav-pills mb-2">
+         <ul class="nav nav-pills mb-2">
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/hr/applications"><i class="fa fa-clipboard"></i>&nbsp;Active</a>
+                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Active</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/hr/applications?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Rejected</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Rejected</a>
             </li>
-       </ul>
-        @if($GetApplicationType == 'job')
+        </ul>
+        @if( $GetApplicationType == 'job' )
         <div class="alert alert-info mb-2 p-2">
             <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $applications->total() }}</b> open applications</span>
         </div>
