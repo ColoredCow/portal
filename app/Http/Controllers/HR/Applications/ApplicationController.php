@@ -5,8 +5,6 @@ namespace App\Http\Controllers\HR\Applications;
 use App\Http\Controllers\Controller;
 use App\Models\HR\Application;
 use App\Models\HR\Round;
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Models\HR\Job;
@@ -30,7 +28,6 @@ abstract class ApplicationController extends Controller
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id')
         ];
-
 
         $applications = Application::with('applicant', 'job')
             ->applyFilter($filters)
