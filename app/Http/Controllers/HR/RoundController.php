@@ -23,9 +23,9 @@ class RoundController extends Controller
         switch ($validated['type']) {
             case 'confirmed_mail':
             case 'rejected_mail':
-                $field = $validated['type'] . '_template';
+                $mailTemplate = $validated['type'] . '_template';
                 $round->update([
-                    $field => [
+                    $mailTemplate => [
                         'subject' => $validated['round_mail_subject'],
                         'body' => ContentHelper::editorFormat($validated['round_mail_body']),
                     ],
