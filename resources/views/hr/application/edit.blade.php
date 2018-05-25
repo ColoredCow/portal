@@ -89,8 +89,8 @@
             </div>
             @foreach ($application->applicationRounds as $applicationRound)
                 @php
-                    $applicationReview = $applicationRound->applicationReviews->where('review_key', 'feedback')->first();
-                    $applicationReviewValue = $applicationReview ? $applicationReview->review_value : '';
+                    $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
+                    $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
                 @endphp
                 <br>
                 <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
@@ -151,10 +151,10 @@
                                         <label for="reviews[feedback]">Feedback</label>
                                         @php
                                             if ($loop->last && sizeOf($errors)) {
-                                                $applicationReviewValue = old('reviews.feedback');
+                                                $applicationRoundReviewValue = old('reviews.feedback');
                                             }
                                         @endphp
-                                        <textarea name="reviews[feedback]" id="reviews[feedback]" rows="6" class="form-control">{{ $applicationReviewValue }}</textarea>
+                                        <textarea name="reviews[feedback]" id="reviews[feedback]" rows="6" class="form-control">{{ $applicationRoundReviewValue }}</textarea>
                                     </div>
                                 </div>
                                 @if ($applicationRound->round_status)

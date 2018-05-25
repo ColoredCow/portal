@@ -3,7 +3,7 @@
 namespace App\Models\HR;
 
 use App\Models\HR\Application;
-use App\Models\HR\ApplicationReview;
+use App\Models\HR\ApplicationRoundReview;
 use App\Models\HR\Round;
 use App\User;
 use Carbon\Carbon;
@@ -76,7 +76,7 @@ class ApplicationRound extends Model
     protected function _updateOrCreateReviews($reviews = [])
     {
         foreach ($reviews as $review_key => $review_value) {
-            $application_reviews = $this->applicationReviews()->updateOrCreate(
+            $application_reviews = $this->applicationRoundReviews()->updateOrCreate(
                 [
                     'hr_application_round_id' => $this->id,
                 ],
@@ -109,9 +109,9 @@ class ApplicationRound extends Model
         return $this->belongsTo(User::class, 'conducted_person_id');
     }
 
-    public function applicationReviews()
+    public function applicationRoundReviews()
     {
-        return $this->hasMany(ApplicationReview::class, 'hr_application_round_id');
+        return $this->hasMany(ApplicationRoundReview::class, 'hr_application_round_id');
     }
 
     public function mailSender()
