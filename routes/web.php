@@ -65,5 +65,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo')->name('books.fetchInfo');
 
     Route::resource('/knowledgecafe/library/book-categories', 'KnowledgeCafe\Library\BookCategoryController')
+    ->only(['index', 'store', 'update', 'destroy'])
     ->names(['index' => 'books.category.index']);
 });
