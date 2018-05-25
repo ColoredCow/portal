@@ -19,15 +19,10 @@ class SettingController extends Controller
     {
         $this->authorize('view', Setting::class);
 
-        $settings = Setting::where('module', $module)->get()->keyBy('setting_key');
-        return view("settings.$module")->with([
-            'settings' => $settings,
-            'rounds' => Round::all(),
-            'roundMailTypes' => [
-                config('constants.hr.status.confirmed'),
-                config('constants.hr.status.rejected')
-            ]
-        ]);
+        $attr = self::getModuleSettings($module);
+        $attr['settings'] = Setting::where('module', $module)->get()->keyBy('setting_key');
+
+        return view("settings.$module")->with($attr);
     }
 
     /**
@@ -51,5 +46,27 @@ class SettingController extends Controller
         }
 
         return redirect()->back()->with('status', 'Settings saved!');
+    }
+
+    /**
+     * Returns settings based on the requested module
+     *
+     * @param string $module
+     * @return array
+     */
+    protected static function getModuleSettings(String $module)
+    {
+        $attr = [];
+        switch ($module) {
+            case 'hr':
+                $attr['rounds'] = Round::all();
+                $attr['roundMailTypes'] = [
+                    config('constants.hr.status.confirmed'),
+                    config('constants.hr.status.rejected')
+                ];
+                break;
+        }
+
+        return $attr;
     }
 }

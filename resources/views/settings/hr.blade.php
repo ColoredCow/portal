@@ -5,7 +5,7 @@
     <br>
     @include('settings.menu', ['active' => 'hr'])
     <br><br>
-    <h1>Settings</h1>
+    <h1>Mail Templates</h1>
     <br>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
@@ -38,7 +38,7 @@
             </div>
         </form>
     </div>
-    <h4 class="mt-5">Email templates for rounds</h4>
+    <h4 class="mt-5">Mail templates for rounds</h4>
     @foreach ($rounds as $index => $round)
         @foreach ($roundMailTypes as $type)
             @php
@@ -60,7 +60,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="round_mail_subject">Subject</label>
-                                    <input type="text" name="round_mail_subject" class="form-control" value="{{ $mailTemplate->{$column}['subject'] }}">
+                                    <input type="text" name="round_mail_subject" class="form-control" value="{{ $round->{$mailTemplate}['subject'] }}">
                                     </div>
                                 </div>
                             </div>
