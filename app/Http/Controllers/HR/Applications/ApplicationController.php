@@ -55,7 +55,6 @@ abstract class ApplicationController extends Controller
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
-            'rounds' => Round::all(),
             'timeline' => $application->applicant->timeline(),
             'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
