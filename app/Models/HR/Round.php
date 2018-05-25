@@ -8,9 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Round extends Model
 {
-    protected $fillable = ['name', 'guidelines'];
+    protected $fillable = ['name', 'guidelines', 'confirmed_mail_template', 'rejected_mail_template'];
 
     protected $table = 'hr_rounds';
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'confirmed_mail_template' => 'array',
+        'rejected_mail_template' => 'array',
+    ];
 
     public function jobs()
     {

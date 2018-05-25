@@ -3,7 +3,6 @@
 namespace App\Models\HR;
 
 use App\Models\HR\ApplicationRound;
-use App\Models\HR\ApplicationRoundReviewEvaluation;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationRoundReview extends Model
@@ -14,11 +13,6 @@ class ApplicationRoundReview extends Model
 
     public function applicationRound()
     {
-        return $this->belongsTo(ApplicationRound::class, 'hr_application_round_id');
-    }
-
-    public function reviewEvaluations()
-    {
-        return $this->hasMany(ApplicationRoundReviewEvaluation::class, 'round_review_id');
+    	return $this->belongsTo(ApplicationRound::class, 'hr_application_round_id');
     }
 }

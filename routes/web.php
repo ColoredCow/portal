@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
         Route::resource('jobs', 'JobController')->except(['create', 'show', 'destroy']);
-        Route::resource('rounds', 'RoundController');
+        Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
         Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
     });
 
