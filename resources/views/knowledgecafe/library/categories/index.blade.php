@@ -55,7 +55,7 @@
                 </a>
             </div>
 
-            <div class="col-2">
+            <div class="col-2" @click="deleteCategory(index)">
                 <a href="#">
                     <i class="fa fa-times"></i>&nbsp;<u>Delete</u>
                 </a>

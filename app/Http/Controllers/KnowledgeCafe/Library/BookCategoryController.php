@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use App\Http\Controllers\Controller;
-use App\Services\BookServices;
-use \Illuminate\Http\Request;
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class BookCategoryController extends Controller
 {
@@ -30,34 +29,33 @@ class BookCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\View\View
-     * @return void
+     *  @return void
      */
     public function create()
     {
-        
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Request $request
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     *  @return void
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     * @return void
+     *  @return void
      */
-    public function show(BookCategory $book)
+    public function show(BookCategory $bookCategory)
     {
-  
+       
     }
 
     /**
@@ -76,16 +74,14 @@ class BookCategoryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, BookCategory $bookCategory)
     {
         $name = $request->input('name', '');
-
         if(!$name) {
             return response()->json(['success' => false]);
         }
-
         return response()->json(['success' => $bookCategory->update(['name' => $name]) ]);
     }
 
@@ -97,10 +93,10 @@ class BookCategoryController extends Controller
      */
     public function destroy(BookCategory $bookCategory)
     {
-        //
+        return response()->json(['success' => $bookCategory->delete() ]);
     }
 
-    /**
+     /**
      * @param  Array  $categories
      * @return Array
      */
@@ -115,6 +111,4 @@ class BookCategoryController extends Controller
         }
         return $data;
     }
-
 }
-

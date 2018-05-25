@@ -447,7 +447,7 @@ if (document.getElementById('books_category')) {
         data: {
             categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories ) : {},
             categoryNameToChange: [],
-            updateRoute:document.getElementById('category_container').dataset.indexRoute  || '',
+            indexRoute:document.getElementById('category_container').dataset.indexRoute  || '',
         },
 
         methods: {
@@ -459,9 +459,15 @@ if (document.getElementById('books_category')) {
             updateCategoryName : function(index) {
                 this.$set(this.categories[index], 'name',  this.categoryNameToChange[index]);
                 let categoryID = this.categories[index]['id'];
-                let route = `${this.updateRoute}/${categoryID}`;
+                let route = `${this.indexRoute}/${categoryID}`;
                 axios.put(route, {name: this.categories[index]['name']});
                 this.$set(this.categories[index], 'editMode', false);
+            },
+
+            deleteCategory: function(index) {
+                let categoryID = this.categories[index]['id'];
+                let route = `${this.indexRoute}/${categoryID}`;
+                axios.delete(route);
             }
         },
 
