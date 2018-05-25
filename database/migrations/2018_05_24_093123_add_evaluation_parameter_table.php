@@ -19,6 +19,13 @@ class AddEvaluationParameterTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('hr_evaluation_parameter_options', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('evaluation_id')->unsigned();
+            $table->string('value');
+            $table->timestamps();
+        });
+
         Schema::create('hr_round_evaluation', function (Blueprint $table) {
             $table->integer('evaluation_id')->unsigned();
             $table->integer('round_id')->unsigned();
@@ -28,9 +35,14 @@ class AddEvaluationParameterTable extends Migration
             $table->increments('id');
             $table->integer('round_review_id')->unsigned();
             $table->integer('evaluation_id')->unsigned();
+            $table->integer('option_id')->unsigned();
             $table->string('score');
             $table->string('comment')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('hr_evaluation_parameter_options', function (Blueprint $table) {
+            $table->foreign('evaluation_id')->references('id')->on('hr_evaluation_parameters');
         });
 
         Schema::table('hr_round_evaluation', function (Blueprint $table) {
@@ -42,6 +54,7 @@ class AddEvaluationParameterTable extends Migration
         Schema::table('hr_application_round_review_evaluations', function (Blueprint $table) {
             $table->foreign('round_review_id')->references('id')->on('hr_application_round_reviews');
             $table->foreign('evaluation_id')->references('id')->on('hr_evaluation_parameters');
+            $table->foreign('option_id')->references('id')->on('hr_evaluation_parameter_options');
         });
     }
 
@@ -53,11 +66,15 @@ class AddEvaluationParameterTable extends Migration
     public function down()
     {
         Schema::dropIfExists('hr_application_round_review_evaluations', function (Blueprint $table) {
-            $table->dropForeign(['round_review_id', 'evaluation_id']);
+            $table->dropForeign(['round_review_id', 'evaluation_id', 'option_id']);
         });
 
         Schema::dropIfExists('hr_round_evaluation', function (Blueprint $table) {
             $table->dropForeign(['evaluation_id', 'round_id']);
+        });
+
+        Schema::dropIfExists('hr_evaluation_parameter_options', function (Blueprint $table) {
+            $table->dropForeign(['evaluation_id']);
         });
 
         Schema::dropIfExists('hr_evaluation_parameters');
