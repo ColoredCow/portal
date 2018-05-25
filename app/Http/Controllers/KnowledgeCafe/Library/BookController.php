@@ -24,7 +24,7 @@ class BookController extends Controller
     public function index()
     {
         $this->authorize('list', Book::class);
-        $books = Book::with('categories')->orderBy('title')->limit(2)->get();
+        $books = Book::with('categories')->orderBy('title')->get();
         $categories = BookCategory::orderBy('name')->get();
         return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }

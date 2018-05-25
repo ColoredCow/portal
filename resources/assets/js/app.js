@@ -429,9 +429,6 @@ if (document.getElementById('books_listing')) {
                     }
                 });
 
-
-                console.log("selectedCategory", selectedCategory);
-
                 this.$set(this.books[this.currentBookIndex], 'categories',  selectedCategory);
                 let route = `${this.updateRoute}/${bookID}`;
                 axios.put(route, {categories: JSON.parse(JSON.stringify(selectedCategory))});
