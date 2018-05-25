@@ -12,7 +12,7 @@ class BookCategoryController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(BookCategory::class);
+       // $this->authorizeResource(BookCategory::class);
     }
 
     /**

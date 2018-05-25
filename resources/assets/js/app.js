@@ -396,9 +396,12 @@ if (document.getElementById('books_listing')) {
         el: '#books_listing',
         data: {
             books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
+            bookCategories: document.getElementById('books_table').dataset.categories ? JSON.parse(document.getElementById('books_table').dataset.categories) : [],
             updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
+            categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
+            newCategory:''
         },
 
         methods: {
@@ -426,11 +429,30 @@ if (document.getElementById('books_listing')) {
                     }
                 });
 
+
+                console.log("selectedCategory", selectedCategory);
+
                 this.$set(this.books[this.currentBookIndex], 'categories',  selectedCategory);
                 let route = `${this.updateRoute}/${bookID}`;
                 axios.put(route, {categories: JSON.parse(JSON.stringify(selectedCategory))});
                 document.getElementById('close_update_category_modal').click();
-            }
+            },
+
+            addNewCategory: async function() {
+                if(!this.newCategory) {
+                    alert("Please enter category name");
+                    return false;
+                }
+
+                let response = await axios.post(this.categoryIndexRoute, {name: this.newCategory}); 
+                if(response.data && response.data.category) {
+                    await this.bookCategories.push(response.data.category);
+                    this.newCategory = "";
+                    let allCheckboxes = document.querySelectorAll('#update_category_modal input[type="checkbox"]');
+                    let lastCheckbox = allCheckboxes[allCheckboxes.length-1];
+                    this.categoryInputs[lastCheckbox.value] = lastCheckbox;
+                }
+            },
         },
 
         mounted: function() {
