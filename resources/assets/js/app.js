@@ -446,6 +446,23 @@ if (document.getElementById('books_category')) {
         el: '#books_category',
         data: {
             categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories ) : {},
+            categoryNameToChange: [],
+            updateRoute:document.getElementById('category_container').dataset.indexRoute  || '',
+        },
+
+        methods: {
+            showEditMode : function(index) {
+                this.categoryNameToChange[index] = this.categories[index]['name'];
+                this.$set(this.categories[index], 'editMode', true);
+            },
+
+            updateCategoryName : function(index) {
+                this.$set(this.categories[index], 'name',  this.categoryNameToChange[index]);
+                let categoryID = this.categories[index]['id'];
+                let route = `${this.updateRoute}/${categoryID}`;
+                axios.put(route, {name: this.categories[index]['name']});
+                this.$set(this.categories[index], 'editMode', false);
+            }
         },
 
         mounted() {

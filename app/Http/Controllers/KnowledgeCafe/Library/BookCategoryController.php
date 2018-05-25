@@ -4,7 +4,7 @@ namespace App\Http\Controllers\KnowledgeCafe\Library;
 
 use App\Http\Controllers\Controller;
 use App\Services\BookServices;
-use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
+use \Illuminate\Http\Request;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 
 class BookCategoryController extends Controller
@@ -22,27 +22,29 @@ class BookCategoryController extends Controller
      */
     public function index()
     {
-        $categories = BookCategory::orderBy('name')->get();
-        return view('knowledgecafe.library.categories.index', compact('categories'));
+        $categories = BookCategory::with('books')->orderBy('name')->get();
+        return view('knowledgecafe.library.categories.index')
+        ->with('categories', $this->formatCategoryData($categories));
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\View\View
+     * @return void
      */
     public function create()
     {
-        return view('knowledgecafe.library.books.create');
+        
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\BookRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Request $request
+     * @return void
      */
-    public function store(BookRequest $request)
+    public function store(Request $request)
     {
 
     }
@@ -50,10 +52,10 @@ class BookCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     * @return \Illuminate\View\View
+     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
+     * @return void
      */
-    public function show(Book $book)
+    public function show(BookCategory $book)
     {
   
     }
@@ -61,10 +63,10 @@ class BookCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
      * @return void
      */
-    public function edit(Book $book)
+    public function edit(BookCategory $bookCategory)
     {
         //
     }
@@ -73,92 +75,44 @@ class BookCategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
      * @return void
      */
-    public function update(BookRequest $request, Book $book)
+    public function update(Request $request, BookCategory $bookCategory)
     {
-        
+        $name = $request->input('name', '');
+
+        if(!$name) {
+            return response()->json(['success' => false]);
+        }
+
+        return response()->json(['success' => $bookCategory->update(['name' => $name]) ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
+     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
      * @return void
      */
-    public function destroy(Book $book)
+    public function destroy(BookCategory $bookCategory)
     {
         //
     }
 
-
-     /**
-     * Fetch the book info.
-     *
-     * @param  \App\Http\Requests\BookRequest  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function fetchBookInfo(BookRequest $request) {
-        $validated = $request->validated();
-        $method = $validated['add_method'];
-
-        if($method === 'from_image' && $request->hasFile('book_image')) {
-            $file = $request->file('book_image');
-            $ISBN = BookServices::getISBN($file);
-        } else if($method ==='from_isbn') {
-            $ISBN = $validated['isbn'];
-        }
-
-        if(!$ISBN || strlen($ISBN) < 13) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Invalid ISBN : '. $ISBN
-            ]);
-        }
-
-        $book = Book::where('isbn', $ISBN)->first();
-
-        if($book) {
-            return response()->json([
-                'error' => false,
-                'book' => $book
-            ]);
-        }
-
-        $book= BookServices::getBookDetails($ISBN);
-
-        if(!isset($book['items'])) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Invalid ISBN : '. $ISBN
-            ]);
-        }
-
-        $book = $this->formatBookData($book);
-        $book['isbn'] = $ISBN;
-
-        return response()->json([
-            'error' => false,
-            'book' => $book
-        ]);
-    }
-
     /**
-     * @param  Array  $book
+     * @param  Array  $categories
      * @return Array
      */
-    public function formatBookData($book) {
+    public function formatCategoryData($categories) {
         $data = [];
-        $book = $book['items'][0];
-        $info = collect($book['volumeInfo']);
-        $book = collect($book);
-        $data['title'] = $info->get('title');
-        $data['author'] = implode($info->get('authors', []));
-        $data['readable_link'] = $book->get("accessInfo")["webReaderLink"];
-        $data['categories'] = implode($info->get('categories', []));
-        $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
-        $data['self_link'] = $book->get('self_link');
+        foreach($categories as $category) {
+            $data[] = [
+                'id' => $category->id,
+                'name' =>  $category->name,
+                'assign_books_count' => $category->books->count()
+            ];
+        }
         return $data;
     }
 
