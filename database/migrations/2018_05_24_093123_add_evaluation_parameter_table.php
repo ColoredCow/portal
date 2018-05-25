@@ -16,6 +16,7 @@ class AddEvaluationParameterTable extends Migration
         Schema::create('hr_evaluation_parameters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -23,6 +24,7 @@ class AddEvaluationParameterTable extends Migration
             $table->increments('id');
             $table->integer('evaluation_id')->unsigned();
             $table->string('value');
+            $table->softDeletes();
             $table->timestamps();
         });
 
