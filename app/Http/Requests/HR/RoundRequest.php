@@ -25,7 +25,10 @@ class RoundRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string',
-            'guidelines' => 'nullable|string',
+            'type' => 'required|string',
+            'guidelines' => 'nullable|string|required_if:type,guidelines',
+            'round_mail_subject' => 'nullable|string',
+            'round_mail_body' => 'nullable|string',
         ];
     }
 }
