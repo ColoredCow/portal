@@ -309,3 +309,23 @@ input:focus + .slider {
         }
     }
 }
+
+
+#category_container {
+    .row {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+    .category_listing_header {
+        background-color: #f6f8fa;
+        border: 1px solid #e1e4e8;
+        border-radius: 3px 3px 0 0;    
+    }
+
+    .category_header_lable {
+        font-size: 1.2em;
+    }
+
+
+}

@@ -441,4 +441,15 @@ if (document.getElementById('books_listing')) {
     });
 }
 
+if (document.getElementById('books_category')) {
+    const bookForm = new Vue({
+        el: '#books_category',
+        data: {
+            categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories ) : {},
+        },
 
+        mounted() {
+            console.log(this.categories);
+        }
+    });
+}
