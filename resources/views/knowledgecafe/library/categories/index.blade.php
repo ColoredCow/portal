@@ -27,13 +27,13 @@
             </div>
         </div>
 
-        <div class="row py-3 border-bottom">
+        <div class="row py-3 border-bottom" v-if="newCategoryMode == 'add'">
             <div class="col-8">
-                    <span v-if="newCategoryMode === 'add'">
+                    <span>
                         <div class="d-flex justify-content-between">
-                            <input class="form-control mr-3" type="text" v-model="newCategoryName">
-                            <button type="button" class="btn btn-success btn-sm" @click="addNewCategory()" >Add</button>
-                            <button type="button" class="btn btn-success btn-sm" @click="updateNewCategoryMode('cancel')" >Cancel</button>
+                            <input class="form-control mr-3" type="text" v-model="newCategoryName" placeholder="Enter Category Name" autofocus>
+                            <button type="button" class="btn btn-info btn-sm" @click="addNewCategory()" >Add</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-4" @click="updateNewCategoryMode('cancel')" >Cancel</button>
                         </div>
                     </span>
             </div>

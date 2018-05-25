@@ -468,26 +468,40 @@ if (document.getElementById('books_category')) {
             },
 
             deleteCategory: async function(index) {
+                
+                let confirmDelete = confirm ('Are you sure ?');
+
+                if(!confirmDelete) {
+                    return false;
+                }
+
                 let categoryID = this.categories[index]['id'];
                 let route = `${this.indexRoute}/${categoryID}`;
-                let response = axios.delete(route);
-                this.categories.$remove(index);
+                let response = await axios.delete(route);
+                this.categories.splice(index, 1);
             },
 
             updateNewCategoryMode: function(mode) {
                 if(mode != 'add') {
                     this.newCategoryName = "";
                 }
-                this.$set(this.newCategoryMode, mode);
+                this.newCategoryMode = mode;
             },
 
             addNewCategory: async function() {
+                if(!this.newCategoryName) {
+                    alert("Please enter category name");
+                    return false;
+                }
                 let route = `${this.indexRoute}`;
-                let response = await axios.post(route, {name: newCategoryName});
+                let response = await axios.post(route, {name: this.newCategoryName}); 
 
-                console.log("response", response);
+                if(response.data && response.data.category) {
+                    this.categories.unshift(response.data.category);
+                }
 
-              
+                this.newCategoryMode = 'saved';
+
             }
         }
     });
