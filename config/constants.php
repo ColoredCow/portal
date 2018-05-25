@@ -22,6 +22,12 @@ return [
     ],
     'pagination_size' => 10,
     'hr' => [
+        'application-meta' => [
+            'keys' => [
+                'form-data' => 'form-data',
+                'change-job' => 'change-job',
+            ]
+        ],
         'status' => [
             'new' => [
                 'label' => 'new',
