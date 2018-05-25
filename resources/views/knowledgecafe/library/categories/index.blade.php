@@ -8,7 +8,9 @@
 
     <div class="row">
         <div class="col-md-6"><h1>Book Category</h1></div>
-        <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add Category</a></div>
+        <div class="col-md-6">
+            <a href="#" @click="updateNewCategoryMode('add')" class="btn btn-success float-right">Add Category</a>
+        </div>
     </div>
 
     <div id="category_container"
@@ -22,6 +24,18 @@
                     <p class="total-category-count mb-0"> {{ count($categories) }}</span>
                     <p class="lable pl-2 mb-0">Categories</span>
                 </div>
+            </div>
+        </div>
+
+        <div class="row py-3 border-bottom">
+            <div class="col-8">
+                    <span v-if="newCategoryMode === 'add'">
+                        <div class="d-flex justify-content-between">
+                            <input class="form-control mr-3" type="text" v-model="newCategoryName">
+                            <button type="button" class="btn btn-success btn-sm" @click="addNewCategory()" >Add</button>
+                            <button type="button" class="btn btn-success btn-sm" @click="updateNewCategoryMode('cancel')" >Cancel</button>
+                        </div>
+                    </span>
             </div>
         </div>
 

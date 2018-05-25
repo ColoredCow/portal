@@ -448,6 +448,9 @@ if (document.getElementById('books_category')) {
             categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories ) : {},
             categoryNameToChange: [],
             indexRoute:document.getElementById('category_container').dataset.indexRoute  || '',
+            newCategoryName:'',
+            newCategoryMode:'',
+
         },
 
         methods: {
@@ -464,15 +467,28 @@ if (document.getElementById('books_category')) {
                 this.$set(this.categories[index], 'editMode', false);
             },
 
-            deleteCategory: function(index) {
+            deleteCategory: async function(index) {
                 let categoryID = this.categories[index]['id'];
                 let route = `${this.indexRoute}/${categoryID}`;
-                axios.delete(route);
-            }
-        },
+                let response = axios.delete(route);
+                this.categories.$remove(index);
+            },
 
-        mounted() {
-            console.log(this.categories);
+            updateNewCategoryMode: function(mode) {
+                if(mode != 'add') {
+                    this.newCategoryName = "";
+                }
+                this.$set(this.newCategoryMode, mode);
+            },
+
+            addNewCategory: async function() {
+                let route = `${this.indexRoute}`;
+                let response = await axios.post(route, {name: newCategoryName});
+
+                console.log("response", response);
+
+              
+            }
         }
     });
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\KnowledgeCafe\Library;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest;
 
 class BookCategoryController extends Controller
 {
@@ -39,12 +40,12 @@ class BookCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest  $request
      *  @return void
      */
-    public function store(Request $request)
+    public function store(BookCategoryRequest $request)
     {
-        //
+        return response()->json(['category' => BookCategory::firstOrCreate($request->validated())]);
     }
 
     /**
@@ -72,17 +73,13 @@ class BookCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest  $request
      * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BookCategory $bookCategory)
+    public function update(BookCategoryRequest $request, BookCategory $bookCategory)
     {
-        $name = $request->input('name', '');
-        if(!$name) {
-            return response()->json(['success' => false]);
-        }
-        return response()->json(['success' => $bookCategory->update(['name' => $name]) ]);
+        return response()->json(['success' => $bookCategory->update($request->validated()) ]);
     }
 
     /**
