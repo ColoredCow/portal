@@ -27,7 +27,7 @@ class RoundController extends Controller
                 $round->update([
                     $mailTemplate => [
                         'subject' => $validated['round_mail_subject'],
-                        'body' => ContentHelper::editorFormat($validated['round_mail_body']),
+                        'body' => $validated['round_mail_body'] ? ContentHelper::editorFormat($validated['round_mail_body']) : null,
                     ],
                 ]);
                 break;
