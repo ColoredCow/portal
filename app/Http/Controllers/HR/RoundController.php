@@ -5,62 +5,10 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\RoundRequest;
 use App\Models\HR\Round;
+use App\Helpers\ContentHelper;
 
 class RoundController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return void
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return void
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\HR\RoundRequest  $request
-     * @return void
-     */
-    public function store(RoundRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\HR\Round  $round
-     * @return void
-     */
-    public function show(Round $round)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\HR\Round  $round
-     * @return void
-     */
-    public function edit(Round $round)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -71,22 +19,27 @@ class RoundController extends Controller
     public function update(RoundRequest $request, Round $round)
     {
         $validated = $request->validated();
-        $guidelines = preg_replace('/[\r\n]/', '', $validated['guidelines']);
-        $round->update([
-            'guidelines' => $guidelines,
-        ]);
 
-        return $guidelines;
-    }
+        switch ($validated['type']) {
+            case 'confirmed_mail':
+            case 'rejected_mail':
+                $mailTemplate = $validated['type'] . '_template';
+                $round->update([
+                    $mailTemplate => [
+                        'subject' => $validated['round_mail_subject'],
+                        'body' => $validated['round_mail_body'] ? ContentHelper::editorFormat($validated['round_mail_body']) : null,
+                    ],
+                ]);
+                break;
+            case 'guidelines':
+                $guidelines = preg_replace('/[\r\n]/', '', $validated['guidelines']);
+                $round->update([
+                    'guidelines' => $guidelines,
+                ]);
+                return $guidelines;
+                break;
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\HR\Round  $round
-     * @return void
-     */
-    public function destroy(Round $round)
-    {
-        //
+        return redirect()->back()->with('status', 'Round updated successfully!');
     }
 }
