@@ -94,7 +94,7 @@
                 @endphp
                 <br>
                 <div class="card">
-                    <div class="card-header c-pointer d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                         <div class="d-flex flex-column">
                             <div>
                                 {{ $applicationRound->round->name }}
@@ -106,18 +106,20 @@
                                 <span>Conducted By: {{ $applicationRound->conductedPerson->name }}</span>
                             @endif
                         </div>
-                        <div class="d-flex flex-column align-items-end">
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex flex-column align-items-end">
+                                @includeWhen($applicationRound->roundNotConducted, 'hr.round-not-conducted-modal')
 
-                            @includeWhen($applicationRound->roundNotConducted, 'hr.round-not-conducted-modal')
-
-                            @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
-                                <div class="text-success"><i class="fa fa-check"></i>&nbsp;{{ config('constants.hr.status.confirmed.title') }}</div>
-                            @elseif ($applicationRound->round_status == config('constants.hr.status.rejected.label'))
-                                <div class="text-danger"><i class="fa fa-close"></i>&nbsp;{{ config('constants.hr.status.rejected.title') }}</div>
-                            @endif
-                            @if ($applicationRound->round_status && $applicationRound->conducted_date)
-                                <span>Conducted on: {{ date(config('constants.display_date_format', strtotime($applicationRound->conducted_date))) }}</span>
-                            @endif
+                                @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
+                                    <div class="text-success"><i class="fa fa-check"></i>&nbsp;{{ config('constants.hr.status.confirmed.title') }}</div>
+                                @elseif ($applicationRound->round_status == config('constants.hr.status.rejected.label'))
+                                    <div class="text-danger"><i class="fa fa-close"></i>&nbsp;{{ config('constants.hr.status.rejected.title') }}</div>
+                                @endif
+                                @if ($applicationRound->round_status && $applicationRound->conducted_date)
+                                    <span>Conducted on: {{ date(config('constants.display_date_format', strtotime($applicationRound->conducted_date))) }}</span>
+                                @endif
+                            </div>
+                            <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                         </div>
                     </div>
 
