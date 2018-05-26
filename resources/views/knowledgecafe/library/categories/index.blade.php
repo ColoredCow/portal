@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-6"><h1>Book Category</h1></div>
         <div class="col-md-6">
-            <a href="#" @click="updateNewCategoryMode('add')" class="btn btn-success float-right">Add Category</a>
+            <button @click="updateNewCategoryMode('add')" class="btn btn-success float-right">Add Category</button>
         </div>
     </div>
 
@@ -64,15 +64,15 @@
             </div>
 
             <div @click="showEditMode(index)" class="col-2">
-                <a href="#">
+                <button class="btn">
                     <i class="fa fa-pencil"></i>&nbsp;<u>Edit</u>
-                </a>
+                </button>
             </div>
 
             <div class="col-2" @click="deleteCategory(index)">
-                <a href="#">
+                <button class="btn">
                     <i class="fa fa-times"></i>&nbsp;<u>Delete</u>
-                </a>
+                </button>
             </div>
             </div>
         </div>
