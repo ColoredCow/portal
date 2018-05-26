@@ -18,8 +18,9 @@
 						<div class="form-group col-md-6">
 							<label for="round_not_conducted_reason">Select reason</label>
 							<select name="round_not_conducted_reason" id="round_not_conducted_reason" class="form-control">
-								<option value="absent-applicant">Applicant was absent</option>
-								<option value="absent-interviewer">The interviewer was absent</option>
+							@foreach(config('constants.hr.application-meta.reasons-round-not-conducted') as $reason => $reasonTitle)
+								<option value="{{ $reason }}">{{ $reasonTitle }}</option>
+							@endforeach
 							</select>
 						</div>
 					</div>

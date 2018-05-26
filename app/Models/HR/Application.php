@@ -195,7 +195,7 @@ class Application extends Model
             $details->user = User::find($details->user)->name;
             $event->value = $details;
             $timeline[] = [
-                'type' => config('constants.hr.application-meta.keys.job-changed'),
+                'type' => config('constants.hr.application-meta.keys.change-job'),
                 'event'=> $event,
                 'date' => $event->created_at,
             ];

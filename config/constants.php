@@ -27,7 +27,11 @@ return [
                 'form-data' => 'form-data',
                 'change-job' => 'change-job',
                 'round-not-conducted' => 'round-not-conducted'
-            ]
+            ],
+            'reasons-round-not-conducted' => [
+                'absent-applicant' => 'Applicant is absent',
+                'absent-interviewer' => 'Interviewer is absent',
+            ],
         ],
         'status' => [
             'new' => [
