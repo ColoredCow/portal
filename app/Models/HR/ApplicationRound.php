@@ -135,4 +135,19 @@ class ApplicationRound extends Model
             'mail-date' => $this->mail_sent_at,
         ];
     }
+
+    public function getRoundNotConductedAttribute()
+    {
+        if ($this->round_status) {
+            return null;
+        }
+
+        $scheduledDate = Carbon::parse($this->scheduled_date);
+        if ($scheduledDate < Carbon::now()->subHours(2)) {
+            return true;
+        }
+
+        return null;
+
+    }
 }

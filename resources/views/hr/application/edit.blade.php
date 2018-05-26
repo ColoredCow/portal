@@ -108,7 +108,7 @@
                         </div>
                         <div class="d-flex flex-column align-items-end">
 
-                            @includeWhen(true, 'hr.round-not-conducted-modal')
+                            @includeWhen($applicationRound->roundNotConducted, 'hr.round-not-conducted-modal')
 
                             @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
                                 <div class="text-success"><i class="fa fa-check"></i>&nbsp;{{ config('constants.hr.status.confirmed.title') }}</div>

@@ -1,4 +1,4 @@
-<span class="text-danger c-pointer" data-toggle="modal" data-target="#myModal">Interview not conducted</span>
+<span class="text-danger c-pointer" data-toggle="modal" data-target="#myModal"><i class="fa fa-warning fa-lg"></i>&nbsp;Interview not conducted</span>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
