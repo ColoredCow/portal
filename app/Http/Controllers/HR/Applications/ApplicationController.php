@@ -34,14 +34,24 @@ abstract class ApplicationController extends Controller
             ->latest()
             ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
-
-        return view('hr.application.index')->with([
+        
+        $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
-            'openJobsCount' => Job::count(),
-            'openApplicationsCount' => Application::nonRejected()->get()->count(),
-            'applicationType' => $this->getApplicationType(),
-        ]);
+        ];
+
+        if ( $this->getApplicationType() == 'job' ) {
+            $attr['openJobsCount'] = Job::count();
+            $attr['openApplicationsCount'] = Application::applyFilter([
+                'job-type' => 'job',
+                'job' => request()->get('hr_job_id')
+            ])
+            ->nonRejected()
+            ->get()
+            ->count();
+        }
+
+        return view('hr.application.index')->with($attr);
     }
 
     /**
