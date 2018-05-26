@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
 use App\Models\KnowledgeCafe\Library\BookCategory;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest;
 
@@ -22,7 +21,7 @@ class BookCategoryController extends Controller
      */
     public function index()
     {
-        $categories = BookCategory::with('books')->orderBy('name')->get();
+        $categories = BookCategory::withCount('books')->orderBy('name')->get();
         return view('knowledgecafe.library.categories.index')
         ->with('categories', $this->formatCategoryData($categories));
     }
@@ -79,7 +78,9 @@ class BookCategoryController extends Controller
      */
     public function update(BookCategoryRequest $request, BookCategory $bookCategory)
     {
-        return response()->json(['success' => $bookCategory->update($request->validated()) ]);
+        return response()->json(
+            ['isUpdatesSuccessfully' => $bookCategory->update($request->validated()) ]
+        );
     }
 
     /**
@@ -90,7 +91,7 @@ class BookCategoryController extends Controller
      */
     public function destroy(BookCategory $bookCategory)
     {
-        return response()->json(['success' => $bookCategory->delete() ]);
+        return response()->json(['isUpdatesSuccessfully' => $bookCategory->delete() ]);
     }
 
      /**
@@ -103,7 +104,7 @@ class BookCategoryController extends Controller
             $data[] = [
                 'id' => $category->id,
                 'name' =>  $category->name,
-                'assign_books_count' => $category->books->count()
+                'assign_books_count' => $category->books_count
             ];
         }
         return $data;
