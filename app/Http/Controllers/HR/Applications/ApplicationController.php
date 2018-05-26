@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\HR\Application\JobChanged;
 use App\Models\HR\ApplicationMeta;
 use App\Mail\HR\Application\RoundNotConducted;
+use Illuminate\Support\Facades\Auth;
 
 abstract class ApplicationController extends Controller
 {
@@ -89,13 +90,14 @@ abstract class ApplicationController extends Controller
                 Mail::send(new JobChanged($application, $changeJobMeta));
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');
                 break;
-            case 'round-not-conducted':
+            case config('constants.hr.application-meta.keys.round-not-conducted'):
                 $roundNotConductedMeta = ApplicationMeta::create([
                     'hr_application_id' => $application->id,
-                    'key' => 'round-not-conducted',
+                    'key' => $validated['action'],
                     'value' => json_encode([
-                        'application_round_id' => $validated['application_round_id'],
+                        'round' => $validated['application_round_id'],
                         'reason' => $validated['round_not_conducted_reason'],
+                        'user' => Auth::id(),
                         'mail_subject' => $validated['round_not_conducted_mail_subject'],
                         'mail_body' => $validated['round_not_conducted_mail_body'],
                     ]),

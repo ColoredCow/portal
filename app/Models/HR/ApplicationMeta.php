@@ -26,6 +26,11 @@ class ApplicationMeta extends Model
         return $query->where('key', config('constants.hr.application-meta.keys.change-job'));
     }
 
+    public static function scopeRoundNotConducted($query)
+    {
+        return $query->where('key', config('constants.hr.application-meta.keys.round-not-conducted'));
+    }
+
     /**
      * Get details of communication mail if application meta is for change job
      *
@@ -43,6 +48,23 @@ class ApplicationMeta extends Model
             'mail-to' => $this->application->applicant->email,
             'mail-subject' => $this->value->job_change_mail_subject,
             'mail-body' => $this->value->job_change_mail_body,
+            'mail-sender' => $this->value->user,
+            'mail-date' => $this->created_at,
+        ];
+    }
+
+    public function getRoundNotConductedCommunicationMailAttribute()
+    {
+        if ($this->key != config('constants.hr.application-meta.keys.round-not-conducted')) {
+            return false;
+        }
+        $this->load('application', 'application.applicant');
+
+        return [
+            'modal-id' => 'round_not_conducted_' . $this->id,
+            'mail-to' => $this->application->applicant->email,
+            'mail-subject' => $this->value->mail_subject,
+            'mail-body' => $this->value->mail_body,
             'mail-sender' => $this->value->user,
             'mail-date' => $this->created_at,
         ];

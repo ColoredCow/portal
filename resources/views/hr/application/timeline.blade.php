@@ -35,6 +35,16 @@
                         <span data-toggle="modal" data-target="#{{ $event->jobChangedCommunicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
                         @include('hr.communication-mail-modal', ['data' => $event->jobChangedCommunicationMail])
                         @break
+                    @case('round-not-conducted')
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        Round not conducted: {{ $event->value->round }}<br>
+                        Reason: {{ $event->value->reason }}<br>
+                        <span data-toggle="modal" data-target="#{{ $event->roundNotConductedCommunicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
+                        @include('hr.communication-mail-modal', ['data' => $event->roundNotConductedCommunicationMail])
+                        @break
                 @endswitch
             </div>
         </div>
