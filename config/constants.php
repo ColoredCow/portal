@@ -26,6 +26,7 @@ return [
             'keys' => [
                 'form-data' => 'form-data',
                 'change-job' => 'change-job',
+                'round-not-conducted' => 'round-not-conducted'
             ]
         ],
         'status' => [

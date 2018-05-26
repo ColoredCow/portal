@@ -11,6 +11,7 @@ use App\Models\HR\Job;
 use App\Http\Requests\HR\ApplicationRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\HR\Application\JobChanged;
+use App\Models\HR\ApplicationMeta;
 
 abstract class ApplicationController extends Controller
 {
@@ -86,6 +87,20 @@ abstract class ApplicationController extends Controller
                 $changeJobMeta = $application->changeJob($validated);
                 Mail::send(new JobChanged($application, $changeJobMeta));
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');
+                break;
+            case 'round-not-conducted':
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'round-not-conducted',
+                    'value' => json_encode([
+                        'application_round_id' => $validated['application_round_id'],
+                        'mail_subject' => $validated['round_not_conducted_mail_subject'],
+                        'mail_body' => $validated['round_not_conducted_mail_body'],
+                    ]),
+                ]);
+                return redirect()->back()->with('status', 'Application updated successfully!');
+                // send the mail
+                dd('here');
                 break;
         }
 
