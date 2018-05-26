@@ -54,13 +54,12 @@
 
             </div>
 
-            <div v-if = "!category.assign_books_count" class="col-4">
-                <span>No book for this category</span> 
-            </div>
-            
-            <div v-if = "category.assign_books_count" class="col-4">
-                <span> @{{ category.assign_books_count }}</span> 
-                <span> @{{ (category.assign_books_count > 1) ? 'books' : 'book' }} </span>
+            <div  class="col-4">
+                <span v-if = "!category.assign_books_count">No book for this category</span> 
+                <span v-else>
+                    <span> @{{ category.assign_books_count }}</span> 
+                    <span> @{{ (category.assign_books_count > 1) ? 'books' : 'book' }} </span>
+                </span>
             </div>
 
             <div @click="showEditMode(index)" class="col-2">
