@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" id="books_category">
+<div class="container" id="books_category" v-cloak>
     <br>
     @include('knowledgecafe.library.menu', ['active' => 'book_category'])
     <br><br>
@@ -13,9 +13,9 @@
         </div>
     </div>
 
-    <div id="category_container"
+    <div id="category_container" 
         data-categories="{{ json_encode($categories) }}"
-        data-index-route= "{{ route('books.category.index') }}" 
+        data-index-route="{{ route('books.category.index') }}" 
         class ="table-bordered">
 
         <div class="row category_listing_header shadow-sm">
@@ -75,7 +75,6 @@
             </div>
             </div>
         </div>
-
 </div>
 
 

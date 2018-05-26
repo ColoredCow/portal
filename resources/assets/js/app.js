@@ -395,7 +395,7 @@ if (document.getElementById('books_listing')) {
     const bookForm = new Vue({
         el: '#books_listing',
         data: {
-            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books).data : {},
             bookCategories: document.getElementById('books_table').dataset.categories ? JSON.parse(document.getElementById('books_table').dataset.categories) : [],
             updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
             categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
@@ -464,7 +464,7 @@ if (document.getElementById('books_category')) {
     const bookForm = new Vue({
         el: '#books_category',
         data: {
-            categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories ) : {},
+            categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories) : {},
             categoryNameToChange: [],
             indexRoute:document.getElementById('category_container').dataset.indexRoute  || '',
             newCategoryName:'',

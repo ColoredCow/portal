@@ -58,6 +58,7 @@
 
     </table>
     @include('knowledgecafe.library.books.update-category-modal')
+    {{ $books->links() }}
 </div>
 
 
