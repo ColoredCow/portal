@@ -13,34 +13,28 @@
         </div>
     </div>
 
+    <div class="row mt-3 mb-2">
+        <div class="col-12">
+            <h4 class="font-weight-bold"><span>{{ count($categories) }}</span>&nbsp;Categories</h4>
+        </div>
+    </div>
+
     <div id="category_container" 
         data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.category.index') }}" 
         class ="table-bordered">
 
-        <div class="row category_listing_header shadow-sm mx-0">
-            <div class="col-6 category_listing_header_item ">
-                <div class="category_header_lable d-flex mt-2 mb-2 font-weight-normal">
-                    <p class="total-category-count mb-0"> {{ count($categories) }}</span>
-                    <p class="lable pl-2 mb-0">Categories</span>
-                </div>
-            </div>
-        </div>
 
         <div class="row py-3 border-bottom mx-0" v-if="newCategoryMode == 'add'">
-            <div class="col-8">
-                    <span>
-                        <div class="d-flex justify-content-between">
-                            <input class="form-control mr-3" type="text" v-model="newCategoryName" placeholder="Enter Category Name" autofocus>
-                            <button type="button" class="btn btn-info btn-sm" @click="addNewCategory()" >Add</button>
-                            <button type="button" class="btn btn-secondary btn-sm ml-4" @click="updateNewCategoryMode('cancel')" >Cancel</button>
-                        </div>
-                    </span>
+            <div class="col-lg-8 d-flex justify-content-between">
+                <input class="form-control mr-3" type="text" v-model="newCategoryName" placeholder="Enter Category Name" autofocus>
+                <button type="button" class="btn btn-info px-3 mr-2" @click="addNewCategory()" >Add</button>
+                <button type="button" class="btn btn-secondary px-3" @click="updateNewCategoryMode('cancel')" >Cancel</button>
             </div>
         </div>
 
         <div v-for="(category, index) in categories" class="row py-3 border-bottom mx-0">
-            <div class="col-4">
+            <div class="col-lg-4">
                 <span v-if="category.editMode">
                     <div class="d-flex justify-content-between">
                         <input class="form-control mr-3" type="text" v-model="categoryNameToChange[index]">
@@ -54,7 +48,7 @@
 
             </div>
 
-            <div  class="col-4">
+            <div  class="col-lg-4">
                 <span v-if = "!category.assign_books_count">No book for this category</span> 
                 <span v-else>
                     <span> @{{ category.assign_books_count }}</span> 
@@ -62,19 +56,17 @@
                 </span>
             </div>
 
-            <div @click="showEditMode(index)" class="col-2">
+            <div @click="showEditMode(index)" class="col-lg-4 d-flex align-items-center justify-content-end">
                 <button class="btn btn-primary">
                     <i class="fa fa-pencil"></i>&nbsp;Edit
                 </button>
+                <div class="text-danger c-pointer ml-3" @click="deleteCategory(index)">
+                    <i class="fa fa-times"></i>&nbsp;Delete
+                </div>
             </div>
 
-            <div class="col-2 d-flex align-items-center" @click="deleteCategory(index)">
-                    <div class="text-danger c-pointer">
-                        <i class="fa fa-times"></i>&nbsp;Delete
-                    </div>
-            </div>
-            </div>
         </div>
+    </div>
 </div>
 
 
