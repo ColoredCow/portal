@@ -11,6 +11,10 @@ use App\Models\HR\Job;
 use App\Http\Requests\HR\ApplicationRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\HR\Application\JobChanged;
+use App\Models\HR\ApplicationMeta;
+use App\Mail\HR\Application\RoundNotConducted;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 
 abstract class ApplicationController extends Controller
 {
@@ -59,6 +63,9 @@ abstract class ApplicationController extends Controller
             'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
+            'settings' => [
+                'roundNotConducted' => Setting::getRoundNotConductedEmail()
+            ]
         ];
 
         if ($application->job->type == 'job') {
@@ -86,6 +93,21 @@ abstract class ApplicationController extends Controller
                 $changeJobMeta = $application->changeJob($validated);
                 Mail::send(new JobChanged($application, $changeJobMeta));
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');
+                break;
+            case config('constants.hr.application-meta.keys.round-not-conducted'):
+                $roundNotConductedMeta = ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => $validated['action'],
+                    'value' => json_encode([
+                        'round' => $validated['application_round_id'],
+                        'reason' => $validated['round_not_conducted_reason'],
+                        'user' => Auth::id(),
+                        'mail_subject' => $validated['round_not_conducted_mail_subject'],
+                        'mail_body' => $validated['round_not_conducted_mail_body'],
+                    ]),
+                ]);
+                Mail::send(new RoundNotConducted($application, $roundNotConductedMeta));
+                return redirect()->back()->with('status', 'Application updated successfully!');
                 break;
         }
 
