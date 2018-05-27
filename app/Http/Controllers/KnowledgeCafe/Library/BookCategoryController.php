@@ -79,7 +79,7 @@ class BookCategoryController extends Controller
     public function update(BookCategoryRequest $request, BookCategory $bookCategory)
     {
         return response()->json(
-            ['isUpdatesSuccessfully' => $bookCategory->update($request->validated()) ]
+            ['isUpdated' => $bookCategory->update($request->validated()) ]
         );
     }
 
@@ -91,7 +91,7 @@ class BookCategoryController extends Controller
      */
     public function destroy(BookCategory $bookCategory)
     {
-        return response()->json(['isUpdatesSuccessfully' => $bookCategory->delete() ]);
+        return response()->json(['isDeleted' => $bookCategory->delete() ]);
     }
 
      /**

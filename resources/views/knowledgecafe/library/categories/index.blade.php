@@ -18,7 +18,7 @@
         data-index-route="{{ route('books.category.index') }}" 
         class ="table-bordered">
 
-        <div class="row category_listing_header shadow-sm">
+        <div class="row category_listing_header shadow-sm mx-0">
             <div class="col-6 category_listing_header_item ">
                 <div class="category_header_lable d-flex mt-2 mb-2 font-weight-normal">
                     <p class="total-category-count mb-0"> {{ count($categories) }}</span>
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="row py-3 border-bottom" v-if="newCategoryMode == 'add'">
+        <div class="row py-3 border-bottom mx-0" v-if="newCategoryMode == 'add'">
             <div class="col-8">
                     <span>
                         <div class="d-flex justify-content-between">
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div v-for="(category, index) in categories" class="row py-3 border-bottom">
+        <div v-for="(category, index) in categories" class="row py-3 border-bottom mx-0">
             <div class="col-4">
                 <span v-if="category.editMode">
                     <div class="d-flex justify-content-between">
@@ -63,15 +63,15 @@
             </div>
 
             <div @click="showEditMode(index)" class="col-2">
-                <button class="btn">
-                    <i class="fa fa-pencil"></i>&nbsp;<u>Edit</u>
+                <button class="btn btn-primary">
+                    <i class="fa fa-pencil"></i>&nbsp;Edit
                 </button>
             </div>
 
-            <div class="col-2" @click="deleteCategory(index)">
-                <button class="btn">
-                    <i class="fa fa-times"></i>&nbsp;<u>Delete</u>
-                </button>
+            <div class="col-2 d-flex align-items-center" @click="deleteCategory(index)">
+                    <div class="text-danger c-pointer">
+                        <i class="fa fa-times"></i>&nbsp;Delete
+                    </div>
             </div>
             </div>
         </div>

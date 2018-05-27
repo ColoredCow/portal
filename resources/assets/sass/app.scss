@@ -312,14 +312,9 @@ input:focus + .slider {
 
 
 #category_container {
-    .row {
-        margin-right: 0px;
-        margin-left: 0px;
-    }
 
     .category_listing_header {
-        background-color: #f6f8fa;
-        border: 2px solid #e1e4e8;
+        border: 2px solid $secondary;
         border-radius: 3px 3px 0 0;    
     }
 
