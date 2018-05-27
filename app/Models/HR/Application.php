@@ -201,7 +201,7 @@ class Application extends Model
             ];
         }
 
-        // adding change-job events in the application timeline
+        // adding round-not-conducted events in the application timeline
         $jobChangeEvents = $this->applicationMeta()->roundNotConducted()->get();
         foreach ($jobChangeEvents as $event) {
             $details = json_decode($event->value);
