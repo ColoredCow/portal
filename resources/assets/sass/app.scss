@@ -310,16 +310,18 @@ input:focus + .slider {
     }
 }
 
-
 #category_container {
 
     .category_listing_header {
         border: 2px solid $secondary;
         border-radius: 3px 3px 0 0;    
     }
-
+    
     .category_header_lable {
         font-size: 1.2em;
     }
+}
 
+[v-cloak] {
+  display: none;
 }
