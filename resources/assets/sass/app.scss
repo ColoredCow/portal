@@ -312,3 +312,7 @@ input:focus + .slider {
         }
     }
 }
+
+[v-cloak] {
+  display: none;
+}
