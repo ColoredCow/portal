@@ -27,13 +27,13 @@
 					<div class="form-row mt-4">
 						<div class="form-group col-md-12">
 							<label for="round_not_conducted_mail_subject">Mail subject:</label>
-							<input type="text" name="round_not_conducted_mail_subject" class="form-control" placeholder="Subject" required="required">
+							<input type="text" name="round_not_conducted_mail_subject" class="form-control" placeholder="Subject" required="required" value="{{ $settings['roundNotConducted']['subject'] }}">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-12">
 							<label for="round_not_conducted_mail_body">Mail body:</label>
-							<textarea name="round_not_conducted_mail_body" class="richeditor form-control" rows="10"></textarea>
+							<textarea name="round_not_conducted_mail_body" class="richeditor form-control" rows="10">{{ $settings['roundNotConducted']['body'] }}</textarea>
 						</div>
 					</div>
 					<div class="form-row mt-2">

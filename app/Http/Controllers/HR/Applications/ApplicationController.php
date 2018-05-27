@@ -14,6 +14,7 @@ use App\Mail\HR\Application\JobChanged;
 use App\Models\HR\ApplicationMeta;
 use App\Mail\HR\Application\RoundNotConducted;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 
 abstract class ApplicationController extends Controller
 {
@@ -62,6 +63,9 @@ abstract class ApplicationController extends Controller
             'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
+            'settings' => [
+                'roundNotConducted' => Setting::getRoundNotConductedEmail()
+            ]
         ];
 
         if ($application->job->type == 'job') {
