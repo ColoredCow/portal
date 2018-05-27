@@ -93,25 +93,23 @@
                     $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
                 @endphp
                 <br>
-                <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
-
-                    {{ csrf_field() }}
-                    {{ method_field('PATCH') }}
-
-                    <div class="card">
-                        <div class="card-header c-pointer d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}">
-                            <div class="d-flex flex-column">
-                                <div>
-                                    {{ $applicationRound->round->name }}
-                                    <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
-                                        <i class="fa fa-info-circle fa-lg"></i>
-                                    </span>
-                                </div>
-                                @if ($applicationRound->round_status)
-                                    <span>Conducted By: {{ $applicationRound->conductedPerson->name }}</span>
-                                @endif
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <div class="d-flex flex-column">
+                            <div>
+                                {{ $applicationRound->round->name }}
+                                <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
+                                    <i class="fa fa-info-circle fa-lg"></i>
+                                </span>
                             </div>
+                            @if ($applicationRound->round_status)
+                                <span>Conducted By: {{ $applicationRound->conductedPerson->name }}</span>
+                            @endif
+                        </div>
+                        <div class="d-flex align-items-center">
                             <div class="d-flex flex-column align-items-end">
+                                @includeWhen($applicationRound->roundNotConducted, 'hr.round-not-conducted-modal')
+
                                 @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
                                     <div class="text-success"><i class="fa fa-check"></i>&nbsp;{{ config('constants.hr.status.confirmed.title') }}</div>
                                 @elseif ($applicationRound->round_status == config('constants.hr.status.rejected.label'))
@@ -121,7 +119,14 @@
                                     <span>Conducted on: {{ date(config('constants.display_date_format', strtotime($applicationRound->conducted_date))) }}</span>
                                 @endif
                             </div>
+                            <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                         </div>
+                    </div>
+
+                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
+
+                        {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
                         <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $loop->last ? 'show' : '' }}">
                             <div class="card-body">
                                 @if (!$applicationRound->round_status)
@@ -198,10 +203,10 @@
                             </div>
                             @endif
                         </div>
-                    </div>
-                    <input type="hidden" name="action" value="updated">
-                    @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
-                </form>
+                        <input type="hidden" name="action" value="updated">
+                        @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
+                    </form>
+                </div>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                 @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])
             @endforeach
