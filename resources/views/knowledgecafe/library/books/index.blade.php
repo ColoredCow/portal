@@ -6,9 +6,10 @@
     @include('knowledgecafe.library.menu', ['active' => 'books'])
     <br><br>
     <div class="row">
-        <div class="col-md-6"><h1>Books</h1></div>
+        <div class="col-md-6"><h1>Books&nbsp;({{ $books->total() }})</h1></div>
         <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add Book</a></div>
     </div>
+    
 <table class="table table-striped table-bordered" 
         id="books_table"
         data-books="{{ json_encode($books) }}" 
