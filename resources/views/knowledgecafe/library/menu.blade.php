@@ -2,4 +2,8 @@
     <li class="nav-item">
     <a class="nav-item nav-link {{ $active === 'books' ? 'active' : '' }}" href="{{ route('books.index') }}"><i class="fa fa-book"></i>&nbsp;Books</a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-item nav-link {{ $active === 'book_category' ? 'active' : '' }}" href="{{ route('books.category.index') }}"><i class="fa fa-book"></i>&nbsp;Books Category</a>
+    </li>
 </ul>

@@ -12,7 +12,10 @@
 <table class="table table-striped table-bordered" 
         id="books_table"
         data-books="{{ json_encode($books) }}" 
-        data-index-route = "{{ route('books.index') }}">
+        data-categories="{{ json_encode($categories) }}"
+        data-index-route = "{{ route('books.index') }}"
+        
+        data-category-index-route = "{{ route('books.category.index') }}" >
         <tr>
             <th>Name</th>
             <th>Author</th>
@@ -55,6 +58,7 @@
 
     </table>
     @include('knowledgecafe.library.books.update-category-modal')
+    {{ $books->links() }}
 </div>
 
 

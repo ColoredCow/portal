@@ -195,11 +195,26 @@ class Application extends Model
             $details->user = User::find($details->user)->name;
             $event->value = $details;
             $timeline[] = [
-                'type' => 'job-changed',
+                'type' => config('constants.hr.application-meta.keys.change-job'),
                 'event'=> $event,
                 'date' => $event->created_at,
             ];
         }
+
+        // adding round-not-conducted events in the application timeline
+        $jobChangeEvents = $this->applicationMeta()->roundNotConducted()->get();
+        foreach ($jobChangeEvents as $event) {
+            $details = json_decode($event->value);
+            $details->round = ApplicationRound::find($details->round)->round->name;
+            $details->user = User::find($details->user)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.round-not-conducted'),
+                'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
         return $timeline;
     }
 

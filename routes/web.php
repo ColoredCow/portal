@@ -59,9 +59,21 @@ Route::middleware('auth')->group(function () {
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
     Route::post('settings/{module}/update', 'SettingController@update');
-    Route::get('/knowledgecafe', 'KnowledgeCafe\KnowledgeCafeController@index');
-    Route::resource('/knowledgecafe/library/books', 'KnowledgeCafe\Library\BookController')
-                ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
 
-    Route::post('/knowledgecafe/library/book/fetchinfo', 'KnowledgeCafe\Library\BookController@fetchBookInfo')->name('books.fetchInfo');
+    Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
+        Route::get('/', 'KnowledgeCafeController@index');
+        
+        Route::prefix('library')->namespace('Library')->group(function () {
+            Route::resource('books', 'BookController')
+                ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
+                
+            Route::post('book/fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
+
+            Route::resource('book-categories', 'BookCategoryController')
+            ->only(['index', 'store', 'update', 'destroy'])
+            ->names(['index' => 'books.category.index']);
+        });
+        
+    });
+
 });
