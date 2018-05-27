@@ -15,7 +15,7 @@
 
     <div class="row mt-3 mb-2">
         <div class="col-12">
-            <h4 class="font-weight-bold"><span>{{ count($categories) }}</span>&nbsp;Categories</h4>
+            <h4 class="font-weight-bold"><span>@{{ categories.length }}</span>&nbsp;Categories</h4>
         </div>
     </div>
 
