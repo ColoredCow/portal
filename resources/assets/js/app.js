@@ -464,7 +464,7 @@ if (document.getElementById('books_category')) {
     const bookForm = new Vue({
         el: '#books_category',
         data: {
-            categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories) : {},
+            categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories) : [],
             categoryNameToChange: [],
             indexRoute:document.getElementById('category_container').dataset.indexRoute  || '',
             newCategoryName:'',
