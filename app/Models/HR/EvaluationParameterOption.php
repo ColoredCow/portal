@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EvaluationParameterOption extends Model
 {
-	use SoftDeletes;
-
+    use SoftDeletes;
+    
     protected $fillable = ['evaluation_id', 'value'];
 
     protected $table = 'hr_evaluation_parameter_options';
@@ -19,6 +19,6 @@ class EvaluationParameterOption extends Model
 
     public function evaluationParameter()
     {
-    	return $this->belongsTo(EvaluationParameter::class, 'evaluation_id');
+        return $this->belongsTo(EvaluationParameter::class, 'evaluation_id');
     }
 }
