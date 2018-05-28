@@ -93,8 +93,11 @@ class Application extends Model
             case config('constants.hr.status.rejected.label'):
                 $query->rejected();
                 break;
+            case config('constants.hr.status.on-hold.label'):
+                $query->onHold();
+                break;    
             default:
-                $query->nonRejected();
+                $query->openApplication();
                 break;
         }
 
@@ -148,6 +151,22 @@ class Application extends Model
     public function scopeNonRejected($query)
     {
         return $query->where('status', '!=', config('constants.hr.status.rejected.label'));
+    }
+
+    /**
+     * get applications where status is new and in-progress
+     */
+    public function scopeOpenApplication($query)
+    {
+        return $query->whereIn('status', array(config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')));
+    }
+
+    /**
+     * get applications where status is on-hold
+     */
+    public function scopeOnHold($query)
+    {
+        return $query->where('status', config('constants.hr.status.on-hold.label'));
     }
 
     /**

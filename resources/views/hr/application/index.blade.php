@@ -14,6 +14,9 @@
         <li class="nav-item">
             <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Rejected</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-item nav-link {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.on-hold.label') }}"><i class="fa fa-file-text-o"></i>&nbsp;On hold</a>
+        </li>
     </ul>
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
