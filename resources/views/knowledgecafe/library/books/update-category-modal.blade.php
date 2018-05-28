@@ -1,4 +1,9 @@
-<div class="modal fade" id="update_category_modal" tabindex="-1" role="dialog" aria-labelledby="update_category_modal" aria-hidden="true">
+<div class="modal fade" 
+    id="update_category_modal"
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="update_category_modal" 
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,15 +15,25 @@
             <div class="modal-body">
                 <div>
                     <ul class="list-group" >
-                        @foreach($categories as $category)  
-                            <li class="list-group-item">
+                            <li v-for="(category, index) in bookCategories" class="list-group-item">
                                 <div class="form-check books_category_item">
                                     <label class="form-check-label">
-                                    <input type="checkbox" data-category="{{ $category->name }}"  class="form-check-input book_category_input" value="{{ $category->id }}">{{ $category->name }}
+                                    <input type="checkbox" :data-category="category.name"  class="form-check-input book_category_input" :value="category.id"> @{{ category.name }}
                                     </label>
                                 </div> 
                             </li>
-                        @endforeach
+                        
+                            <li class="list-group-item">
+                                <span>
+                                    <div class="d-flex justify-content-between">
+                                        <input class="form-control mr-3" type="text" v-model="newCategory" placeholder="Enter New Category" autofocus>
+                                        <button type="button" class="btn btn-info btn-sm" @click="addNewCategory()">Add New</button>
+                                    </div>
+                                </span>
+                            </li>
+
+
+
                     </ul>
                 </div>
             </div>

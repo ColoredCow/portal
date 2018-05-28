@@ -171,26 +171,29 @@ input[type="file"] {
     z-index: 0;
 }
 
+.icon-pencil {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: $primary;
+        color: white;
+    }
+}
+
 .card-edit {
     position: absolute;
     right: 15px;
     top: 10px;
 
     &.icon-pencil {
-        cursor: pointer;
         top: 7px;
-        padding: 8px;
-        border-radius: 50%;
-        height: 30px;
-        width: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    &.icon-pencil:hover {
-        background-color: $primary;
-        color: white;
     }
 }
 
@@ -299,7 +302,7 @@ input:focus + .slider {
         width: 45vw;
         left: 0;
         top: 0;
-        z-index: 100;    
+        z-index: 100;
     }
     >.card-body {
         height: 100%;
@@ -308,4 +311,8 @@ input:focus + .slider {
             width: 100%;
         }
     }
+}
+
+[v-cloak] {
+  display: none;
 }

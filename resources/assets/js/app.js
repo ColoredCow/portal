@@ -395,10 +395,13 @@ if (document.getElementById('books_listing')) {
     const bookForm = new Vue({
         el: '#books_listing',
         data: {
-            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books).data : {},
+            bookCategories: document.getElementById('books_table').dataset.categories ? JSON.parse(document.getElementById('books_table').dataset.categories) : [],
             updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
+            categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
+            newCategory:''
         },
 
         methods: {
@@ -430,7 +433,23 @@ if (document.getElementById('books_listing')) {
                 let route = `${this.updateRoute}/${bookID}`;
                 axios.put(route, {categories: JSON.parse(JSON.stringify(selectedCategory))});
                 document.getElementById('close_update_category_modal').click();
-            }
+            },
+
+            addNewCategory: async function() {
+                if(!this.newCategory) {
+                    alert("Please enter category name");
+                    return false;
+                }
+
+                let response = await axios.post(this.categoryIndexRoute, {name: this.newCategory}); 
+                if(response.data && response.data.category) {
+                    await this.bookCategories.push(response.data.category);
+                    this.newCategory = "";
+                    let allCheckboxes = document.querySelectorAll('#update_category_modal input[type="checkbox"]');
+                    let lastCheckbox = allCheckboxes[allCheckboxes.length-1];
+                    this.categoryInputs[lastCheckbox.value] = lastCheckbox;
+                }
+            },
         },
 
         mounted: function() {
@@ -441,4 +460,68 @@ if (document.getElementById('books_listing')) {
     });
 }
 
+if (document.getElementById('books_category')) {
+    const bookForm = new Vue({
+        el: '#books_category',
+        data: {
+            categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories) : [],
+            categoryNameToChange: [],
+            indexRoute:document.getElementById('category_container').dataset.indexRoute  || '',
+            newCategoryName:'',
+            newCategoryMode:'',
 
+        },
+
+        methods: {
+            showEditMode : function(index) {
+                this.categoryNameToChange[index] = this.categories[index]['name'];
+                this.$set(this.categories[index], 'editMode', true);
+            },
+
+            updateCategoryName : function(index) {
+                this.$set(this.categories[index], 'name',  this.categoryNameToChange[index]);
+                let categoryID = this.categories[index]['id'];
+                let route = `${this.indexRoute}/${categoryID}`;
+                axios.put(route, {name: this.categories[index]['name']});
+                this.$set(this.categories[index], 'editMode', false);
+            },
+
+            deleteCategory: async function(index) {
+                
+                let confirmDelete = confirm ('Are you sure ?');
+
+                if(!confirmDelete) {
+                    return false;
+                }
+
+                let categoryID = this.categories[index]['id'];
+                let route = `${this.indexRoute}/${categoryID}`;
+                let response = await axios.delete(route);
+                this.categories.splice(index, 1);
+            },
+
+            updateNewCategoryMode: function(mode) {
+                if(mode != 'add') {
+                    this.newCategoryName = "";
+                }
+                this.newCategoryMode = mode;
+            },
+
+            addNewCategory: async function() {
+                if(!this.newCategoryName) {
+                    alert("Please enter category name");
+                    return false;
+                }
+                let route = `${this.indexRoute}`;
+                let response = await axios.post(route, {name: this.newCategoryName}); 
+
+                if(response.data && response.data.category) {
+                    this.categories.unshift(response.data.category);
+                }
+
+                this.newCategoryMode = 'saved';
+
+            }
+        }
+    });
+}
