@@ -46,6 +46,7 @@ class RoundNotConducted extends Mailable
     public function build()
     {
         return $this->to($this->application->applicant->email, $this->application->applicant->name)
+            ->bcc(env('HR_DEFAULT_FROM_EMAIL'))
             ->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'))
             ->subject($this->applicationMeta->mail_subject)
             ->view('mail.plain')->with([
