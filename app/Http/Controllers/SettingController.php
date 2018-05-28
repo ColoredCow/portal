@@ -41,7 +41,7 @@ class SettingController extends Controller
         foreach ($validated['setting_key'] as $key => $value) {
             $setting = Setting::updateOrCreate(
                 ['module' => $module, 'setting_key' => $key],
-                ['setting_value' => ContentHelper::editorFormat($value)]
+                ['setting_value' => $value ? ContentHelper::editorFormat($value) : null]
             );
         }
 

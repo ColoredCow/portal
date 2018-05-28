@@ -6,13 +6,17 @@
     @include('knowledgecafe.library.menu', ['active' => 'books'])
     <br><br>
     <div class="row">
-        <div class="col-md-6"><h1>Books</h1></div>
+        <div class="col-md-6"><h1>Books&nbsp;({{ $books->total() }})</h1></div>
         <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add Book</a></div>
     </div>
+    
 <table class="table table-striped table-bordered" 
         id="books_table"
         data-books="{{ json_encode($books) }}" 
-        data-index-route = "{{ route('books.index') }}">
+        data-categories="{{ json_encode($categories) }}"
+        data-index-route = "{{ route('books.index') }}"
+        
+        data-category-index-route = "{{ route('books.category.index') }}" >
         <tr>
             <th>Name</th>
             <th>Author</th>
@@ -55,6 +59,7 @@
 
     </table>
     @include('knowledgecafe.library.books.update-category-modal')
+    {{ $books->links() }}
 </div>
 
 

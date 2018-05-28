@@ -2,7 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Events\HR\JobCreated;
 use App\Events\HR\JobUpdated;
 use App\Models\HR\Applicant;
 use App\Models\HR\Application;
@@ -18,23 +17,10 @@ class Job extends Model
     {
         return $this->hasMany(Application::class, 'hr_job_id');
     }
-    
+
     public function rounds()
     {
         return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id');
-    }
-
-    /**
-     * Custom create method that creates a job and fires specific events
-     *
-     * @param  array $attr  fillables to be stored
-     * @return this
-     */
-    public static function _create($attr)
-    {
-        $job = self::create($attr);
-        event(new JobCreated($job));
-        return $job;
     }
 
     /**
