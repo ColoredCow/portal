@@ -9,19 +9,20 @@ use App\Models\HR\Applicant;
 use App\Models\HR\Job;
 use App\Models\HR\Round;
 use App\Models\Setting;
+use App\User;
 
 class ApplicationTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * A basic test example.
+     * Case to test the application creation and other related entities.
      *
      * @return void
      */
-    public function testApplicationCreated()
+    public function testApplicationWorkflow()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(User::class)->create();
         $this->assertTrue(isset($user->id));
 
         factory(Setting::class)->create([
