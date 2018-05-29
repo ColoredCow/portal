@@ -4,7 +4,6 @@ use Faker\Generator as Faker;
 use App\Models\HR\Applicant;
 
 $factory->define(Applicant::class, function (Faker $faker) {
-    $types = ['job', 'internship'];
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->email,
@@ -12,6 +11,6 @@ $factory->define(Applicant::class, function (Faker $faker) {
         'college' => $faker->word,
         'graduation_year' => $faker->year,
         'course' => $faker->word,
-        'linkedin' => $faker->unique()->url,
+        'linkedin' => $faker->url,
     ];
 });
