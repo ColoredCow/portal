@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\HR\ApplicationRound;
-use App\Observers\HR\ApplicationRoundObserver;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -15,7 +13,8 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        ApplicationRound::observe(ApplicationRoundObserver::class);
+        \App\Models\HR\ApplicationRound::observe(\App\Observers\HR\ApplicationRoundObserver::class);
+        \App\Models\HR\Job::observe(\App\Observers\HR\JobObserver::class);
     }
 
     /**

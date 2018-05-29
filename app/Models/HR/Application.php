@@ -97,7 +97,7 @@ class Application extends Model
                 $query->onHold();
                 break;    
             default:
-                $query->openApplication();
+                $query->isOpen();
                 break;
         }
 
@@ -156,7 +156,7 @@ class Application extends Model
     /**
      * get applications where status is new and in-progress
      */
-    public function scopeOpenApplication($query)
+    public function scopeIsOpen($query)
     {
         return $query->whereIn('status', array(config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')));
     }
