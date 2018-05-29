@@ -6,14 +6,14 @@ use App\Models\HR\Round;
 $factory->define(Round::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'guidelines' => $faker->paragraph,
+        'guidelines' => $faker->paragraphs(5, true),
         'confirmed_mail_template' => [
-            'subject' => str_random(20),
-            'body' => str_random(80),
+            'subject' => $faker->sentence,
+            'body' => $faker->paragraphs(5, true),
         ],
         'rejected_mail_template' => [
-            'subject' => str_random(20),
-            'body' => str_random(80),
+            'subject' => $faker->sentence,
+            'body' => $faker->paragraphs(5, true),
         ],
     ];
 });
