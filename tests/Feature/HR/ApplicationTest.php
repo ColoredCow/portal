@@ -24,17 +24,13 @@ class ApplicationTest extends TestCase
         $user = factory(\App\User::class)->create();
         $this->assertTrue(isset($user->id));
 
-        Setting::insert([
-            [
-                'module' => 'hr',
-                'setting_key' => 'applicant_create_autoresponder_subject',
-                'setting_value' => 'random stuff for mail subject',
-            ],
-            [
-                'module' => 'hr',
-                'setting_key' => 'applicant_create_autoresponder_body',
-                'setting_value' => 'random stuff for mail body',
-            ]
+        factory(Setting::class)->create([
+            'module' => 'hr',
+            'setting_key' => 'applicant_create_autoresponder_subject',
+        ]);
+        factory(Setting::class)->create([
+            'module' => 'hr',
+            'setting_key' => 'applicant_create_autoresponder_body',
         ]);
 
         $round = factory(Round::class)->create();
