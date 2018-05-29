@@ -17,9 +17,6 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\HR\CreateFirstApplicationRound',
             'App\Listeners\HR\AutoRespondApplicant',
         ],
-        'App\Events\HR\JobCreated' => [
-            'App\Listeners\HR\CreateJobRounds',
-        ],
         'App\Events\HR\JobUpdated' => [
             'App\Listeners\HR\UpdateJobRounds',
         ],
