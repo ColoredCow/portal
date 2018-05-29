@@ -21,36 +21,27 @@ class ApplicationTest extends TestCase
      */
     public function testApplicationCreated()
     {
-        $user = factory(\App\User::class)->create([
-           'name' => 'Taylor Otwell',
-        ]);
+        $user = factory(\App\User::class)->create();
         $this->assertTrue(isset($user->id));
 
-        Setting::create([
-            'module' => 'hr',
-            'setting_key' => 'applicant_create_autoresponder_subject',
-            'setting_value' => 'random stuff for mail subject',
-        ]);
-        Setting::create([
-            'module' => 'hr',
-            'setting_key' => 'applicant_create_autoresponder_body',
-            'setting_value' => 'random stuff for mail body',
+        Setting::insert([
+            [
+                'module' => 'hr',
+                'setting_key' => 'applicant_create_autoresponder_subject',
+                'setting_value' => 'random stuff for mail subject',
+            ],
+            [
+                'module' => 'hr',
+                'setting_key' => 'applicant_create_autoresponder_body',
+                'setting_value' => 'random stuff for mail body',
+            ]
         ]);
 
-        $roundAttr = [
-            'name' => 'Round 1',
-        ];
-        $round = Round::create($roundAttr);
+        $round = factory(Round::class)->create();
         $this->assertTrue(isset($round->id));
 
-        $jobAttr = [
-            'title' => 'Unit Tester',
-            'posted_by' => $user->email,
-            'link' => 'https://github.com/coloredcow/employee-portal'
-        ];
-        $job = Job::_create($jobAttr);
+        $job = factory(Job::class)->create();
         $this->assertTrue(isset($job->id));
-
         $this->assertTrue($job->rounds->count() == 1);
 
         $applicantAttr = [
@@ -66,8 +57,9 @@ class ApplicationTest extends TestCase
                 'data 1' => 'Sample content 1',
                 'data 2' => 'Sample content 2',
             ],
-            'job_title' => 'Unit Tester',
+            'job_title' => $job->title,
         ];
+
         $applicant = Applicant::_create($applicantAttr);
 
         $this->assertTrue(isset($applicant->id));
