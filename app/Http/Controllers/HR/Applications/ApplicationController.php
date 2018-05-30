@@ -38,7 +38,7 @@ abstract class ApplicationController extends Controller
             ->latest()
             ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
-        
+
         $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
@@ -66,6 +66,7 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
+
         $application = Application::findOrFail($id);
         $application->load(['job', 'job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round', 'applicationMeta']);
 
@@ -77,7 +78,7 @@ abstract class ApplicationController extends Controller
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'settings' => [
-                'roundNotConducted' => Setting::getRoundNotConductedEmail()
+                'noShow' => Setting::getNoShowEmail()
             ]
         ];
 
@@ -107,16 +108,16 @@ abstract class ApplicationController extends Controller
                 Mail::send(new JobChanged($application, $changeJobMeta));
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');
                 break;
-            case config('constants.hr.application-meta.keys.round-not-conducted'):
+            case config('constants.hr.application-meta.keys.no-show'):
                 $roundNotConductedMeta = ApplicationMeta::create([
                     'hr_application_id' => $application->id,
                     'key' => $validated['action'],
                     'value' => json_encode([
                         'round' => $validated['application_round_id'],
-                        'reason' => $validated['round_not_conducted_reason'],
+                        'reason' => $validated['no_show_reason'],
                         'user' => Auth::id(),
-                        'mail_subject' => $validated['round_not_conducted_mail_subject'],
-                        'mail_body' => $validated['round_not_conducted_mail_body'],
+                        'mail_subject' => $validated['no_show_mail_subject'],
+                        'mail_body' => $validated['no_show_mail_body'],
                     ]),
                 ]);
                 Mail::send(new RoundNotConducted($application, $roundNotConductedMeta));
