@@ -13,7 +13,7 @@ addons:
 
 before_script:
   - cp .env.travis .env
-  - mysql -e 'create database homestead_test;'
+  - mysql -e 'create database employee_portal_test;'
   - composer self-update
   - composer install --no-interaction
   - php artisan migrate
