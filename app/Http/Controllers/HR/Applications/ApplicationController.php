@@ -50,7 +50,7 @@ abstract class ApplicationController extends Controller
                 'job-type' => 'job',
                 'job' => request()->get('hr_job_id')
             ])
-            ->nonRejected()
+            ->isOpen()
             ->get()
             ->count();
         }

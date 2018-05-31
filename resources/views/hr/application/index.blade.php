@@ -10,10 +10,13 @@
     <div class="d-flex align-items-center justify-content-between">
         <ul class="nav nav-pills mb-2">
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Active</a>
+                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Open</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Rejected</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Closed</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.on-hold.label') }}"><i class="fa fa-file-text-o"></i>&nbsp;On hold</a>
             </li>
         </ul>
         @if( isset($openJobsCount, $openApplicationsCount) )
