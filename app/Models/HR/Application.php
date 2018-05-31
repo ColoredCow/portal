@@ -95,7 +95,10 @@ class Application extends Model
                 break;
             case config('constants.hr.status.on-hold.label'):
                 $query->onHold();
-                break;    
+                break;
+            case config('constants.hr.status.no-show.label'):
+                $query->noShow();
+                break;
             default:
                 $query->isOpen();
                 break;
@@ -159,6 +162,14 @@ class Application extends Model
     public function scopeOnHold($query)
     {
         return $query->where('status', config('constants.hr.status.on-hold.label'));
+    }
+
+    /**
+     * get applications where status is no-show
+     */
+    public function scopeNoShow($query)
+    {
+        return $query->where('status', config('constants.hr.status.no-show.label'));
     }
 
     /**
