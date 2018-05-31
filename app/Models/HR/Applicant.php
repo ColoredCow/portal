@@ -58,7 +58,7 @@ class Applicant extends Model
      */
     public function openApplications()
     {
-        return $this->applications()->IsOpen()->get();
+        return $this->applications()->isOpen()->get();
     }
 
     public function applications()
