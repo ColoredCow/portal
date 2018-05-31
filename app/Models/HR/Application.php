@@ -201,7 +201,7 @@ class Application extends Model
             ];
         }
 
-        // adding round-not-conducted events in the application timeline
+        // adding no-show events in the application timeline
         $noShowEvents = $this->applicationMeta()->noShow()->get();
         foreach ($noShowEvents as $event) {
             $details = json_decode($event->value);
