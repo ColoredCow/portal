@@ -10,7 +10,7 @@
     @include('status', ['errors' => $errors->all()])
     <br>
     @include('settings.hr.applicant-auto-responder')
-    @include('settings.hr.round-not-conducted')
+    @include('settings.hr.no-show')
     <h4 class="mt-5">Mail templates for rounds</h4>
     @foreach ($rounds as $index => $round)
         @foreach ($roundMailTypes as $type)
