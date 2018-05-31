@@ -52,7 +52,7 @@ class JobController extends Controller
     {
         $validated = $request->validated();
 
-        return Job::_create([
+        return Job::create([
             'title' => $validated['title'],
             'posted_by' => $validated['by'],
             'link' => $validated['link'],

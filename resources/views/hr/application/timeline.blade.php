@@ -38,13 +38,13 @@
                         @include('hr.communication-mail-modal', ['data' => $event->communicationMail])
                         @break
 
-                    @case(config('constants.hr.application-meta.keys.round-not-conducted'))
+                    @case(config('constants.hr.application-meta.keys.no-show'))
                         @php
                             $event = $item['event'];
                         @endphp
                         <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
                         Round not conducted: {{ $event->value->round }}<br>
-                        Reason: {{ config('constants.hr.application-meta.reasons-round-not-conducted.' . $event->value->reason) }}<br>
+                        Reason: {{ config('constants.hr.application-meta.reasons-no-show.' . $event->value->reason) }}<br>
                         <span data-toggle="modal" data-target="#{{ $event->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
                         @include('hr.communication-mail-modal', ['data' => $event->communicationMail])
                         @break
