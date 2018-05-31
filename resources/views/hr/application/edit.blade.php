@@ -152,6 +152,9 @@
                                 </div>
                                 @endif
                                 <div class="form-row">
+                                    @include('hr.application.round-evaluation', ['round' => $applicationRound->round])
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="reviews[feedback]">Feedback</label>
                                         @php
