@@ -136,14 +136,14 @@ class ApplicationRound extends Model
         ];
     }
 
-    public function getRoundNotConductedAttribute()
+    public function getNoShowAttribute()
     {
         if ($this->round_status) {
             return null;
         }
 
         $scheduledDate = Carbon::parse($this->scheduled_date);
-        if ($scheduledDate < Carbon::now()->subHours(2)) {
+        if ($scheduledDate < Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))) {
             return true;
         }
 

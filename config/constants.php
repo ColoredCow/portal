@@ -22,13 +22,14 @@ return [
     ],
     'pagination_size' => 10,
     'hr' => [
+        'no-show-hours-limit' => 2,
         'application-meta' => [
             'keys' => [
                 'form-data' => 'form-data',
                 'change-job' => 'change-job',
-                'round-not-conducted' => 'round-not-conducted'
+                'no-show' => 'no-show'
             ],
-            'reasons-round-not-conducted' => [
+            'reasons-no-show' => [
                 'absent-applicant' => 'Applicant is absent',
                 'absent-interviewer' => 'Interviewer is absent',
             ],

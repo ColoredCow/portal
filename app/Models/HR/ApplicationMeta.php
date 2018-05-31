@@ -26,9 +26,9 @@ class ApplicationMeta extends Model
         return $query->where('key', config('constants.hr.application-meta.keys.change-job'));
     }
 
-    public static function scopeRoundNotConducted($query)
+    public static function scopeNoShow($query)
     {
-        return $query->where('key', config('constants.hr.application-meta.keys.round-not-conducted'));
+        return $query->where('key', config('constants.hr.application-meta.keys.no-show'));
     }
 
     /**
@@ -53,7 +53,7 @@ class ApplicationMeta extends Model
                 $attr['mail-body'] = $this->value->job_change_mail_body;
                 break;
 
-            case config('constants.hr.application-meta.keys.round-not-conducted'):
+            case config('constants.hr.application-meta.keys.no-show'):
                 $attr['modal-id'] = 'round_not_conducted_' . $this->id;
                 $attr['mail-subject'] = $this->value->mail_subject;
                 $attr['mail-body'] = $this->value->mail_body;

@@ -212,15 +212,15 @@ class Application extends Model
             ];
         }
 
-        // adding round-not-conducted events in the application timeline
-        $jobChangeEvents = $this->applicationMeta()->roundNotConducted()->get();
-        foreach ($jobChangeEvents as $event) {
+        // adding no-show events in the application timeline
+        $noShowEvents = $this->applicationMeta()->noShow()->get();
+        foreach ($noShowEvents as $event) {
             $details = json_decode($event->value);
             $details->round = ApplicationRound::find($details->round)->round->name;
             $details->user = User::find($details->user)->name;
             $event->value = $details;
             $timeline[] = [
-                'type' => config('constants.hr.application-meta.keys.round-not-conducted'),
+                'type' => config('constants.hr.application-meta.keys.no-show'),
                 'event' => $event,
                 'date' => $event->created_at,
             ];
