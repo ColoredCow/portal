@@ -71,7 +71,24 @@ class ApplicationRound extends Model
         }
         $this->update($fillable);
         $this->_updateOrCreateReviews($attr['reviews']);
+    }
 
+    public function updateOrCreateEvaluation($evaluations)
+    {
+        foreach ($evaluations as $evaluation_id => $evaluation) {
+            if (array_key_exists('option_id', $evaluation)) {
+                $this->evaluation()->updateOrCreate(
+                    [
+                        'application_round_id' => $this->id,
+                        'evaluation_id' => $evaluation['evaluation_id']
+                    ],
+                    [
+                        'option_id' => $evaluation['option_id'],
+                        'comment' => $evaluation['comment'],
+                    ]
+                );
+            }
+        }
     }
 
     protected function _updateOrCreateReviews($reviews = [])
@@ -154,6 +171,5 @@ class ApplicationRound extends Model
         }
 
         return null;
-
     }
 }

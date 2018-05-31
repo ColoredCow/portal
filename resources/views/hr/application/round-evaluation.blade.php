@@ -14,9 +14,10 @@
 			@endphp
 		    <div class="form-check form-check-inline">
 		      <input class="form-check-input" type="radio" name="roundEvaluation[{{ $evaluationParameter->id }}][option_id]" id="inlineRadio1" value="{{ $option->id }}" {{ $roundEvaluationOption ? "checked" : "" }}>
+		      <input type="hidden" name="roundEvaluation[{{ $evaluationParameter->id }}][evaluation_id]" value="{{ $evaluationParameter->id }}">
 		      <label class="form-check-label" for="{{ $evaluationParameter->name }}">{{ $option->value }}</label>
 		    </div>
 	    @endforeach
-	    <input type="text" name="roundEvaluation[{{ $evaluationParameter->id }}][comment]" placeholder="Comment" class="form-control" value="{{ $roundEvaluation ? $roundEvaluation->first()->comment : "" }}">
+	    <input type="text" name="roundEvaluation[{{ $evaluationParameter->id }}][comment]" placeholder="Comment" class="form-control" value="{{ $roundEvaluation ? $roundEvaluation->comment : "" }}">
 	</div>
 @endforeach
