@@ -54,11 +54,11 @@ class Applicant extends Model
     }
 
     /**
-     * Get all applications for the applicant which are not rejected
+     * Get all applications for the applicant which are new and in-progress
      */
     public function openApplications()
     {
-        return $this->applications()->nonRejected()->get();
+        return $this->applications()->IsOpen()->get();
     }
 
     public function applications()

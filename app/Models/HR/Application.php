@@ -146,14 +146,6 @@ class Application extends Model
     }
 
     /**
-     * get applications where status is not rejected
-     */
-    public function scopeNonRejected($query)
-    {
-        return $query->where('status', '!=', config('constants.hr.status.rejected.label'));
-    }
-
-    /**
      * get applications where status is new and in-progress
      */
     public function scopeIsOpen($query)
