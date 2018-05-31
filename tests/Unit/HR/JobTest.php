@@ -15,9 +15,6 @@ class JobTest extends TestCase
      */
     public function testIsJobCreated()
     {
-        $round = factory(Round::class)->create();
-        $this->assertTrue(isset($round->id));
-
         $job = factory(Job::class)->create();
         $this->assertTrue(isset($job->id));
 

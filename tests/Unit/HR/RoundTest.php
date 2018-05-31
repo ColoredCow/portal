@@ -3,8 +3,6 @@
 namespace Tests\Unit\HR;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\HR\Round;
 
 class RoundTest extends TestCase
