@@ -21,8 +21,8 @@ class UpdateEvaluationTables extends Migration
         Schema::rename('hr_application_round_review_evaluations', 'hr_application_round_evaluation');
 
         Schema::table('hr_application_round_evaluation', function (Blueprint $table) {
-            $table->integer('round_id')->unsigned()->after('id');
-            $table->foreign('round_id')->references('id')->on('hr_application_round');
+            $table->integer('application_round_id')->unsigned()->after('id');
+            $table->foreign('application_round_id')->references('id')->on('hr_application_round');
         });
     }
 
@@ -35,8 +35,8 @@ class UpdateEvaluationTables extends Migration
     {
         
         Schema::table('hr_application_round_evaluation', function (Blueprint $table) {
-            $table->dropForeign(['round_id']);
-            $table->dropColumn('round_id');
+            $table->dropForeign(['application_round_id']);
+            $table->dropColumn('application_round_id');
         });
 
         Schema::rename('hr_application_round_evaluation', 'hr_application_round_review_evaluations');

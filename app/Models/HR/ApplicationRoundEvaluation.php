@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicationRoundEvaluation extends Model
 {
-    protected $fillable = ['round_id', 'evaluation_id', 'option_id', 'comment'];
+    protected $fillable = ['application_round_id', 'evaluation_id', 'option_id', 'comment'];
 
     protected $table = 'hr_application_round_evaluation';
 
     public function applicationRound()
     {
-    	return $this->belongsTo(ApplicationRound::class, 'round_id');
+    	return $this->belongsTo(ApplicationRound::class, 'application_round_id');
     }
 
     public function evaluationParameter()

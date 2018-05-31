@@ -115,9 +115,9 @@ class ApplicationRound extends Model
         return $this->hasMany(ApplicationRoundReview::class, 'hr_application_round_id');
     }
 
-    public function applicationRoundEvaluation()
+    public function evaluation()
     {
-        return $this->hasOne(ApplicationRoundEvaluation::class, 'round_id');
+        return $this->hasMany(ApplicationRoundEvaluation::class, 'application_round_id');
     }
 
     public function mailSender()

@@ -152,7 +152,7 @@
                                 </div>
                                 @endif
                                 <div class="form-row">
-                                    @include('hr.application.round-evaluation', ['round' => $applicationRound->round])
+                                    @include('hr.application.round-evaluation', ['round' => $applicationRound->round, 'evaluation' => $applicationRound->evaluation])
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-12">

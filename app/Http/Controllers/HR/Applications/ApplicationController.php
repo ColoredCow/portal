@@ -98,7 +98,6 @@ abstract class ApplicationController extends Controller
      */
     public function update(ApplicationRequest $request, int $id)
     {
-        dd($request->all());
         $validated = $request->validated();
         $application = Application::findOrFail($id);
         $application->load('applicant');
