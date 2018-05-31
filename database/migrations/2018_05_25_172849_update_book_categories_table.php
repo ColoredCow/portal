@@ -25,6 +25,8 @@ class UpdateBookCategoriesTable extends Migration
      */
     public function down()
     {
-        $table->dropColumn(['deleted_at']);
+        Schema::table('book_categories', function(Blueprint $table) {
+            $table->dropColumn(['deleted_at']);
+        });
     }
 }

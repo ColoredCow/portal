@@ -3,6 +3,7 @@
 namespace App\Models\HR;
 
 use App\Models\HR\Application;
+use App\Models\HR\ApplicationRoundEvaluation;
 use App\Models\HR\ApplicationRoundReview;
 use App\Models\HR\Round;
 use App\User;
@@ -112,6 +113,11 @@ class ApplicationRound extends Model
     public function applicationRoundReviews()
     {
         return $this->hasMany(ApplicationRoundReview::class, 'hr_application_round_id');
+    }
+
+    public function applicationRoundEvaluation()
+    {
+        return $this->hasOne(ApplicationRoundEvaluation::class, 'round_id');
     }
 
     public function mailSender()
