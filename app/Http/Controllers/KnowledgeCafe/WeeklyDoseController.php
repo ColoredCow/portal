@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\KnowledgeCafe;
 
-use App\Http\Requests\WeeklyDoseRequest;
-use App\Models\WeeklyDose;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\KnowledgeCafe\WeeklyDoseRequest;
+use App\Models\KnowledgeCafe\WeeklyDose;
 
 class WeeklyDoseController extends Controller
 {
@@ -14,7 +15,9 @@ class WeeklyDoseController extends Controller
      */
     public function index()
     {
+        
         $this->authorize('list', WeeklyDose::class);
+
 
         return view('weeklydose')->with([
             'weeklydoses' => WeeklyDose::latest()->paginate(config('constants.pagination_size')),

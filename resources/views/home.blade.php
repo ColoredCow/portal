@@ -18,13 +18,13 @@
             </a>
         </div>
         @endcan
-        @can('weeklydoses.view')
+<!--         @can('weeklydoses.view')
         <div class="col-md-3 card mx-5 my-3">
             <a class="card-body no-transition" href="/weeklydoses/">
                 <br><h2 class="text-center">WeeklyDose</h2><br>
             </a>
         </div>
-        @endcan
+        @endcan -->
         @can('library_books.view')
         <div class="col-md-3 card mx-5 my-3">
             <a class="card-body no-transition" href="/knowledgecafe">
