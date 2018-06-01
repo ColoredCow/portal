@@ -22,7 +22,7 @@
                 {{ ucfirst($job->type) }}
             </td>
             <td>
-                <a href="{{ $job->link }}" target="_blank">See</a>
+                <a href="{{ $job->link }}" target="_blank" class="btn btn-info" role="button">Preview job</a>
             </td>
             <td>
             @if ($job->applications->count())
