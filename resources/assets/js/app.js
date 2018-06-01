@@ -450,6 +450,20 @@ if (document.getElementById('books_listing')) {
                     this.categoryInputs[lastCheckbox.value] = lastCheckbox;
                 }
             },
+
+            deleteBook: async function(index) {
+                let confirmDelete = confirm ('Are you sure ?');
+
+                if(!confirmDelete) {
+                    return false;
+                }
+
+                let bookID = this.books[index]['id'];
+                let route = `${this.updateRoute}/${bookID}`;
+                let response = await axios.delete(route);
+                this.books.splice(index, 1);
+            }
+
         },
 
         mounted: function() {

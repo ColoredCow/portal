@@ -95,9 +95,9 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        return response()->json(['isDeleted' => $book->delete() ]);
     }
-
+    
 
      /**
      * Fetch the book info.
