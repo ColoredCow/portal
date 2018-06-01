@@ -189,6 +189,14 @@ class Application extends Model
     }
 
     /**
+     * Set the application status to no-show
+     */
+    public function markNoShow()
+    {
+        $this->update(['status' => config('constants.hr.status.no-show.label')]);
+    }
+
+    /**
      * Get the timeline for an application
      *
      * @return array
