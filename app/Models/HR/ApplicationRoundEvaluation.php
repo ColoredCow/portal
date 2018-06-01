@@ -2,19 +2,20 @@
 
 namespace App\Models\HR;
 
+use App\Models\HR\ApplicationRound;
 use App\Models\HR\EvaluationParameter;
 use App\Models\HR\EvaluationParameterOption;
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicationRoundReviewEvaluation extends Model
+class ApplicationRoundEvaluation extends Model
 {
-    protected $fillable = ['round_review_id', 'evaluation_id', 'option_id', 'comment'];
+    protected $fillable = ['application_round_id', 'evaluation_id', 'option_id', 'comment'];
 
-    protected $table = 'hr_application_round_review_evaluations';
+    protected $table = 'hr_application_round_evaluation';
 
-    public function applicationRoundReview()
+    public function applicationRound()
     {
-    	return $this->belongsTo(ApplicationRoundReview::class, 'round_review_id');
+    	return $this->belongsTo(ApplicationRound::class, 'application_round_id');
     }
 
     public function evaluationParameter()
