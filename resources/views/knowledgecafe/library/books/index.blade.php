@@ -22,18 +22,21 @@
             <th>Author</th>
             <th>Categories</th>
             <th>Cover Page</th>
+            @can('library_books.delete')
+            <th></th>
+            @endcan
         </tr>
         <tr v-for="(book, index) in books" >
-            <td class ="w-25"> 
+            <td> 
                 <a :href = "'/knowledgecafe/library/books/' + book.id"> 
-                    @{{ book.title }}
+                   <h5>@{{ book.title }}</h5> 
                 </a>
             </td>
-             <td class ="w-25"> 
+             <td> 
                 @{{ book.author }} 
             </td>
 
-            <td class ="w-25">
+            <td>
                 <div>
                    <ul>
                        <li v-for="category in book.categories" >
@@ -50,11 +53,19 @@
                 @endcan
             </td>
             
-            <td class ="w-25"> 
+            <td> 
                 <div class="w-25 h-75">
-                    <img class="w-100" :src="book.thumbnail" alt="No Image"> 
+                    <a target="_blank" :href="book.readable_link">
+                        <img class="w-100" :src="book.thumbnail" alt="No Image"> 
+                    </a>
+                    
                 </div>
             </td> 
+            @can('library_books.delete')
+            <td>
+                <div @click="deleteBook(index)" class="text-danger c-pointer ml-3"><i class="fa fa-times"></i>&nbsp;Delete</div>
+            </td>
+            @endcan
         </tr>
 
     </table>
