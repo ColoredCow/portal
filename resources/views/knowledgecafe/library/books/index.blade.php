@@ -52,7 +52,10 @@
             
             <td class ="w-25"> 
                 <div class="w-25 h-75">
-                    <img class="w-100" :src="book.thumbnail" alt="No Image"> 
+                    <a target="_blank" :href="book.readable_link">
+                        <img class="w-100" :src="book.thumbnail" alt="No Image"> 
+                    </a>
+                    
                 </div>
             </td> 
         </tr>
