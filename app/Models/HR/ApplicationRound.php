@@ -77,7 +77,7 @@ class ApplicationRound extends Model
     {
         foreach ($evaluations as $evaluation_id => $evaluation) {
             if (array_key_exists('option_id', $evaluation)) {
-                $this->evaluation()->updateOrCreate(
+                $this->evaluations()->updateOrCreate(
                     [
                         'application_round_id' => $this->id,
                         'evaluation_id' => $evaluation['evaluation_id']
@@ -134,7 +134,7 @@ class ApplicationRound extends Model
         return $this->hasMany(ApplicationRoundReview::class, 'hr_application_round_id');
     }
 
-    public function evaluation()
+    public function evaluations()
     {
         return $this->hasMany(ApplicationRoundEvaluation::class, 'application_round_id');
     }
