@@ -24,8 +24,10 @@ class ApplicationRoundController extends Controller
      */
     public function update(ApplicationRoundRequest $request, ApplicationRound $round)
     {
-        $round->updateOrCreateEvaluation($request->validated()['roundEvaluation']);
         $round->_update($request->validated());
+        if (array_key_exists('roundEvaluation', $request->validated())) {
+            $round->updateOrCreateEvaluation($request->validated()['roundEvaluation']);
+        }
         return redirect()->back()->with('status', 'Application updated successfully!');
     }
 

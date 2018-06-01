@@ -1,6 +1,3 @@
-@php
-	$round->load(['evaluationParameters', 'evaluationParameters.options']);
-@endphp
 <h5><b>Round Evaluation Parameters</b></h5>
 @foreach($round->evaluationParameters as $evaluationParameter)
 	<div class="form-group col-md-12">
@@ -10,10 +7,10 @@
 		@endphp
 		@foreach($evaluationParameter->options as $option)
 			@php
-				$roundEvaluationOption = $roundEvaluation ? $roundEvaluation->where('option_id', $option->id)->first() : null	;
+				$roundEvaluationOption = $roundEvaluation ? $roundEvaluation->where('option_id', $option->id)->first() : null;
 			@endphp
 		    <div class="form-check form-check-inline">
-		      <input class="form-check-input" type="radio" name="roundEvaluation[{{ $evaluationParameter->id }}][option_id]" id="inlineRadio1" value="{{ $option->id }}" {{ $roundEvaluationOption ? "checked" : "" }}>
+		      <input class="form-check-input" type="radio" name="roundEvaluation[{{ $evaluationParameter->id }}][option_id]" id="inlineRadio1" value="{{ $option->id }}" {{ sizeof($roundEvaluationOption) > 0 ? "checked" : "" }}>
 		      <input type="hidden" name="roundEvaluation[{{ $evaluationParameter->id }}][evaluation_id]" value="{{ $evaluationParameter->id }}">
 		      <label class="form-check-label" for="{{ $evaluationParameter->name }}">{{ $option->value }}</label>
 		    </div>

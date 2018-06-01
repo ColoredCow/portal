@@ -18,7 +18,7 @@ use App\Models\Setting;
 
 abstract class ApplicationController extends Controller
 {
-    abstract function getApplicationType();
+    abstract public function getApplicationType();
 
     /**
      * Display a listing of the resource.
@@ -44,7 +44,7 @@ abstract class ApplicationController extends Controller
             'status' => request()->get('status'),
         ];
 
-        if ( $this->getApplicationType() == 'job' ) {
+        if ($this->getApplicationType() == 'job') {
             $attr['openJobsCount'] = Job::count();
             $attr['openApplicationsCount'] = Application::applyFilter([
                 'job-type' => 'job',
@@ -66,9 +66,8 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
-
         $application = Application::findOrFail($id);
-        $application->load(['job', 'job.rounds', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.round', 'applicationMeta']);
+        $application->load(['job', 'job.rounds',  'job.rounds.evaluationParameters',  'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluation', 'applicationRounds.round', 'applicationMeta']);
 
         $attr = [
             'applicant' => $application->applicant,
@@ -102,7 +101,7 @@ abstract class ApplicationController extends Controller
         $application = Application::findOrFail($id);
         $application->load('applicant');
 
-        switch($validated['action']) {
+        switch ($validated['action']) {
             case config('constants.hr.application-meta.keys.change-job'):
                 $changeJobMeta = $application->changeJob($validated);
                 Mail::send(new JobChanged($application, $changeJobMeta));
