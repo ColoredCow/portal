@@ -151,9 +151,9 @@
                                     </div>
                                 </div>
                                 @endif
-                                <div class="form-row">
-                                    @include('hr.application.round-evaluation', ['round' => $applicationRound->round, 'evaluation' => $applicationRound->evaluation])
-                                </div>
+
+                                @includeWhen( $applicationRound->round->evaluationParameters->count() > 0 ,'hr.application.round-evaluation', ['round' => $applicationRound->round, 'evaluation' => $applicationRound->evaluation])
+                                
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="reviews[feedback]">Feedback</label>

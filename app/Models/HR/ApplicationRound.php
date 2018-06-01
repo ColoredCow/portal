@@ -73,7 +73,7 @@ class ApplicationRound extends Model
         $this->_updateOrCreateReviews($attr['reviews']);
     }
 
-    public function updateOrCreateEvaluation($evaluations)
+    public function updateOrCreateEvaluation($evaluations = [])
     {
         foreach ($evaluations as $evaluation_id => $evaluation) {
             if (array_key_exists('option_id', $evaluation)) {
@@ -89,6 +89,8 @@ class ApplicationRound extends Model
                 );
             }
         }
+
+        return true;
     }
 
     protected function _updateOrCreateReviews($reviews = [])
