@@ -7,7 +7,7 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Projects</h1></div>
-        <div class="col-md-6"><a href="/projects/create" class="btn btn-success float-right">Create Project</a></div>
+        <div class="col-md-6"><a href="/projects/create" class="btn btn-success float-right">Create </a></div>
     </div>
     <table class="table table-striped table-bordered">
         <tr>
