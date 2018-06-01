@@ -3,11 +3,15 @@
 namespace App\Models\KnowledgeCafe\Library;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'library_books';
     protected $fillable = ['title', 'author', 'categories', 'isbn', 'thumbnail', 'readable_link', 'self_link'];
+    protected $dates = ['deleted_at'];
 
     public static function _create($data) {
         $ISBN = isset ($data['isbn']) ? $data['isbn'] : null;
