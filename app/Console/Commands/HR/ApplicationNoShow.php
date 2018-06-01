@@ -47,9 +47,9 @@ class ApplicationNoShow extends Command
 
         foreach ($applicationRounds as $applicationRound) {
             $application = $applicationRound->application;
-            if ($application->status != 'no-show') {
+            if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
                 $application->update([
-                    'status' => 'no-show'
+                    'status' => config('constants.hr.application-meta.keys.no-show')
                 ]);
                 $roundNotConductedMeta = ApplicationMeta::create([
                     'hr_application_id' => $application->id,
