@@ -42,8 +42,8 @@ class ApplicationMeta extends Model
 
         $attr = [
             'mail-to' => $this->application->applicant->email,
-            'mail-sender' => $this->value->user,
-            'mail-date' => $this->created_at,
+            'mail-sender' => $this->value->user ?? null,
+            'mail-date' => $this->updated_at,
         ];
 
         switch ($this->key) {
@@ -55,8 +55,8 @@ class ApplicationMeta extends Model
 
             case config('constants.hr.application-meta.keys.no-show'):
                 $attr['modal-id'] = 'round_not_conducted_' . $this->id;
-                $attr['mail-subject'] = $this->value->mail_subject;
-                $attr['mail-body'] = $this->value->mail_body;
+                $attr['mail-subject'] = $this->value->mail_subject ?? null;
+                $attr['mail-body'] = $this->value->mail_body ?? null;
                 break;
 
             default:

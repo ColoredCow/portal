@@ -13,7 +13,10 @@
                 <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Open</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.on-hold.label') }}"><i class="fa fa-file-text-o"></i>&nbsp;On hold</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.on-hold.label') }}"><i class="fa fa-file-text-o"></i>&nbsp;{{ config('constants.hr.status.on-hold.title') }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}"><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Closed</a>
@@ -25,7 +28,7 @@
         </div>
         @endif
     </div>
-    
+
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>
             <th>Name</th>
