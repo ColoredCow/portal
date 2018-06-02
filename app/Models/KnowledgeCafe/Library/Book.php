@@ -38,10 +38,5 @@ class Book extends Model
         $category = BookCategory::where('name', $categoryName)->first(); 
         return ($category)  ? $category->books : false;
     }
-
-    public static function getList() {
-        return Book::with(['categories'])
-        ->orderBy('title')->get();
-    }
 }
 

@@ -173,7 +173,8 @@ class BookController extends Controller
 
         $books = (request()->has('cat')) ? 
                 Book::getByCategoryName(request()->input('cat')) : 
-                Book::getList();
+                Book::with(['categories'])->orderBy('title')
+                ->get();
 
         $data = [];
         foreach ($books as $book) {
