@@ -94,9 +94,9 @@ class BookController extends Controller
         }
 
         $categories = array_pluck($validatedData['categories'], 'id');
-        return response()->json([
-            'isUpdated' => $this->categories()->sync($categories)
-        ]); 
+        $isUpdated = $book->categories()->sync($categories);
+        
+        return response()->json(['isUpdated' => $isUpdated]); 
     }
 
     /**
