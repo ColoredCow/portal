@@ -40,10 +40,23 @@
                         </li>
                         @endcan
                         @can('weeklydoses.view')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/weeklydoses') }}">WeeklyDose</a>
-                        </li>
+                         <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    
+                                Knowledge Cafe <span class="caret"></span>
+                                </a>
+
+                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/knowledgecafe/library/books">
+                                        Library
+                                    </a>
+                                    <a class="dropdown-item" href="/weeklydoses/">
+                                        WeeklyDose
+                                    </a>
+                                </div>
+                            </li>
                         @endcan
+
                         @can('settings.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
@@ -71,7 +84,7 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
