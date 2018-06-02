@@ -14,6 +14,16 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
 
-if (mix.inProduction()) {
+
+if (mix.inProduction()||mix.inDevelopment()||mix.inWatch()) {
     mix.version();
 }
+
+
+ // if (mix.inDevelopment()) {
+ // 	mix.version();
+ // } 
+
+// if (mix.inWatch()) {
+//  	mix.version();
+//  } 
