@@ -170,7 +170,17 @@ class BookController extends Controller
 
 
     public function getBookList() {
-        $books = Book::with('categories')->orderBy('title')->get();
+        $category = false;
+        if(request()->has('cat')) {
+            $category = BookCategory::where('name', request()->input('cat'))->first(); 
+        }
+
+        if($category) {
+            $books = $category->books;
+        } else {
+            $books = Book::with('categories')->orderBy('title')->get();
+        }
+
         $data = [];
         foreach ($books as $book) {
            $customBookData = [
