@@ -21,7 +21,6 @@ class ClientController extends Controller
     public function index()
     {
         $this->authorize('list', Client::class);
-
         return view('client.index')->with([
             'clients' => Client::select('id', 'name', 'emails', 'phone', 'is_active')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);

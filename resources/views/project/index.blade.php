@@ -13,7 +13,6 @@
         <tr>
             <th>Name</th>
             <th>Client</th>
-            <!-- <th>Started On</th> -->
             <th>Status</th>
         </tr>
         @foreach ($projects as $project)
@@ -22,13 +21,6 @@
         			<a href="/projects/{{ $project->id }}/edit/">{{ $project->name }}</a>
         		</td>
         		<td>{{ $project->client->name }}</td>
-        		<!-- <td>
-        			@if ($project->started_on)
-        			<span>{{ date(config('constants.display_date_format'), strtotime($project->started_on)) }}</span>
-        			@else
-        			<span>-</span>
-        			@endif
-        		</td> -->
                 <td>
                 @switch ($project->status)
                     @case('active')
