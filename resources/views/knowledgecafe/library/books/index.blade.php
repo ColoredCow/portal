@@ -17,6 +17,16 @@
         </div>
     </div>
 
+    @if(request()->has('search'))
+        <div class="row mt-3 mb-2">
+            <div class="col-6">
+                <a class="text-muted c-pointer" href="{{ route('books.index') }}">
+                    <i class="fa fa-times"></i>&nbsp;Clear current search query, filters, and sorts
+                </a>
+            </div>
+        </div>
+    @endif
+
     <div class="row mt-3 mb-2">
         <div class="col-12">
             <h4 class="font-weight-bold"><span>{{ $books->total() }}</span>&nbsp;Books</h4>
