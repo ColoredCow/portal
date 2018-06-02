@@ -181,7 +181,8 @@ class BookController extends Controller
            ];
            $data['books'][] = $customBookData;
         }
-
+        
+        $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
         return response()->json($data);
     }
 
