@@ -168,5 +168,22 @@ class BookController extends Controller
         return $data;
     }
 
+
+    public function getBookList() {
+        $books = Book::with('categories')->orderBy('title')->get();
+        $data = [];
+        foreach ($books as $book) {
+           $customBookData = [
+                'title' => $book->title,
+                'author' => str_limit($book->author, 20),
+                'categories' => $book->categories()->pluck('name')->toArray(),
+                'thumbnail' =>  $book->thumbnail
+           ];
+           $data['books'][] = $customBookData;
+        }
+
+        return response()->json($data);
+    }
+
 }
 
