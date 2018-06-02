@@ -174,4 +174,19 @@ class ApplicationRound extends Model
 
         return null;
     }
+
+    public static function scheduledForToday()
+    {
+        return $this->with([
+            'application' => function($query) {
+                $query->whereIn('status', ['new', 'in-progress', 'no-show']);
+            },
+            'application.job' => function($query) {
+                $query->where('type', 'job');
+            },
+        ])
+        ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
+        ->orderBy('scheduled_date')
+        ->get()
+    }
 }

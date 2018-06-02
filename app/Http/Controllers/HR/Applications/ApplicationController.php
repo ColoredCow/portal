@@ -14,7 +14,6 @@ use App\Models\HR\Job;
 use App\Models\HR\Round;
 use App\Models\Setting;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
@@ -30,14 +29,7 @@ abstract class ApplicationController extends Controller
      */
     public function index()
     {
-        $applicationRounds = ApplicationRound::with([
-            'application' => function($query) {
-                $query->whereIn('status', ['new', 'in-progress', 'no-show']);
-            },
-            'application.job' => function($query) {
-                $query->where('type', 'job');
-            },
-        ])->whereDate('scheduled_date', '=', Carbon::today()->toDateString())->orderBy('scheduled_date')->get();
+        $applicationRounds = ApplicationRound::scheduledForToday();
 
         $interviewers = [];
         foreach ($applicationRounds as $applicationRound) {
