@@ -24,7 +24,8 @@ class BookController extends Controller
     public function index()
     {
         $this->authorize('list', Book::class);
-        $books = Book::with('categories')->orderBy('title')->paginate(config('constants.pagination_size'));
+        $searchString = (request()->has('search')) ? request()->input('search'): false;
+        $books = Book::getList($searchString);
         $categories = BookCategory::orderBy('name')->get();
         return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
@@ -47,7 +48,9 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-        $stored = Book::_create($request->validated());
+        $validatedData = $request->validated();
+        $ISBN = isset ($validatedData['isbn']) ? $validatedData['isbn'] : null;
+        $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
         return response()->json(['error'=> !$stored]);
     }
 
@@ -78,12 +81,21 @@ class BookController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     * @return void
+     * @return json
      */
     public function update(BookRequest $request, Book $book)
     {
+        $validatedData = $request->validated();
+
+        if (!isset($validatedData['categories'])) {
+            return response()->json([
+                'isUpdated' => false
+            ]); 
+        }
+
+        $categories = array_pluck($validatedData['categories'], 'id');
         return response()->json([
-            'success' => $book->_update($request->validated())
+            'isUpdated' => $this->categories()->sync($categories)
         ]); 
     }
 

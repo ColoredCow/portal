@@ -321,3 +321,9 @@ input:focus + .slider {
     max-height: 40em;
     overflow-y: scroll;
 }
+
+#books_listing {
+    .action_column {
+        width:100px;
+    }
+}

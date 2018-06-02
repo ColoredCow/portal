@@ -6,8 +6,21 @@
     @include('knowledgecafe.library.menu', ['active' => 'books'])
     <br><br>
     <div class="row">
-        <div class="col-md-6"><h1>Books&nbsp;({{ $books->total() }})</h1></div>
+        <div class="col-md-6"><h1>Books</h1></div>
         <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add Book</a></div>
+    </div>
+
+    <div class="row mt-3 mb-2">
+        <div class="col-6 d-flex justify-content-center align-items-center">
+            <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="search all books" v-model="searchKey" >
+            <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-2">
+        <div class="col-12">
+            <h4 class="font-weight-bold"><span>{{ $books->total() }}</span>&nbsp;Books</h4>
+        </div>
     </div>
     
 <table class="table table-striped table-bordered" 
@@ -62,8 +75,8 @@
                 </div>
             </td> 
             @can('library_books.delete')
-            <td>
-                <div @click="deleteBook(index)" class="text-danger c-pointer ml-3"><i class="fa fa-times"></i>&nbsp;Delete</div>
+            <td class="action_column">
+                <div @click="deleteBook(index)" class="text-danger c-pointer"><i class="fa fa-times"></i>&nbsp;Delete</div>
             </td>
             @endcan
         </tr>
