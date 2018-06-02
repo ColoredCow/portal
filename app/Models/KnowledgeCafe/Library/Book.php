@@ -30,5 +30,18 @@ class Book extends Model
     public function categories() {
         return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
     }
+
+    public static function getByCategoryName($categoryName) {
+        if(!$categoryName) {
+            return false;
+        }
+        $category = BookCategory::where('name', $categoryName)->first(); 
+        return ($category)  ? $category->books : false;
+    }
+
+    public static function getList() {
+        return Book::with(['categories'])
+        ->orderBy('title')->get();
+    }
 }
 

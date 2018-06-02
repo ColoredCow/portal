@@ -84,7 +84,7 @@ class BookController extends Controller
     {
         return response()->json([
             'success' => $book->_update($request->validated())
-        ]); 
+        ]);
     }
 
     /**
@@ -97,7 +97,7 @@ class BookController extends Controller
     {
         return response()->json(['isDeleted' => $book->delete() ]);
     }
-    
+
 
      /**
      * Fetch the book info.
@@ -154,7 +154,7 @@ class BookController extends Controller
      * @param  Array  $book
      * @return Array
      */
-    public function formatBookData($book) {
+    public function formatBookData($book){
         $data = [];
         $book = $book['items'][0];
         $info = collect($book['volumeInfo']);
@@ -170,31 +170,20 @@ class BookController extends Controller
 
 
     public function getBookList() {
-        $category = false;
-        if(request()->has('cat')) {
-            $category = BookCategory::where('name', request()->input('cat'))->first(); 
-        }
 
-        if($category) {
-            $books = $category->books;
-        } else {
-            $books = Book::with('categories')->orderBy('title')->get();
-        }
+        $books = (request()->has('cat')) ? 
+                Book::getByCategoryName(request()->input('cat')) : 
+                Book::getList();
 
         $data = [];
         foreach ($books as $book) {
-           $customBookData = [
-                'title' => $book->title,
-                'author' => str_limit($book->author, 20),
-                'categories' => $book->categories()->pluck('name')->toArray(),
-                'thumbnail' =>  $book->thumbnail
-           ];
-           $data['books'][] = $customBookData;
+            $customBookData = $book->toArray();
+            $customBookData['categories'] = $book->categories()->pluck('name')->toArray();
+            $data['books'][] = $customBookData;
         }
+        
+        $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
 
-        $data['categories'] = BookCategory::has('books')
-                              ->pluck('name')->toArray();
-                              
         return response()->json($data);
     }
 
