@@ -187,6 +187,6 @@ class ApplicationRound extends Model
         ])
         ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
         ->orderBy('scheduled_date')
-        ->get()
+        ->get();
     }
 }
