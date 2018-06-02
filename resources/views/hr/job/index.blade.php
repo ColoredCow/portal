@@ -10,7 +10,7 @@
         <tr>
             <th>Job title</th>
             <th>Type</th>
-            <th>Job description</th>
+            
             <th>Total applicants</th>
         </tr>
         @foreach ($jobs as $job)
@@ -21,9 +21,7 @@
             <td>
                 {{ ucfirst($job->type) }}
             </td>
-            <td>
-                <a href="{{ $job->link }}" target="_blank" class="btn btn-info" role="button">Preview job</a>
-            </td>
+            
             <td>
             @if ($job->applications->count())
                 <a href="{{ route('applications.' . $job->type . '.index') }}?hr_job_id={{$job->id }}">{{ $job->applications->count() }}</a>
