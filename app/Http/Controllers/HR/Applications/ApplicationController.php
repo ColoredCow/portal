@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\HR\Applications;
 
 use App\Http\Controllers\Controller;
-use App\Models\HR\Application;
-use App\Models\HR\Round;
-use Illuminate\Support\Facades\Input;
-use App\User;
-use App\Models\HR\Job;
 use App\Http\Requests\HR\ApplicationRequest;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\HR\Application\JobChanged;
-use App\Models\HR\ApplicationMeta;
 use App\Mail\HR\Application\RoundNotConducted;
-use Illuminate\Support\Facades\Auth;
+use App\Mail\HR\InterviewerScheduledRoundsReminder;
+use App\Models\HR\Application;
+use App\Models\HR\ApplicationMeta;
+use App\Models\HR\ApplicationRound;
+use App\Models\HR\Job;
+use App\Models\HR\Round;
 use App\Models\Setting;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 
 abstract class ApplicationController extends Controller
 {
@@ -27,6 +30,40 @@ abstract class ApplicationController extends Controller
      */
     public function index()
     {
+        $applicationRounds = ApplicationRound::with([
+            'application' => function($query) {
+                $query->whereIn('status', ['new', 'in-progress', 'no-show']);
+            },
+            'application.job' => function($query) {
+                $query->where('type', 'job');
+            },
+        ])->whereDate('scheduled_date', '=', Carbon::today()->toDateString())->orderBy('scheduled_date')->get();
+
+        $interviewers = [];
+        foreach ($applicationRounds as $applicationRound) {
+            if ($applicationRound->application && $applicationRound->application->job) {
+                $interviewer = $applicationRound->scheduledPerson;
+                if (!array_key_exists($interviewer->id, $interviewers)) {
+                    $interviewers[$interviewer->id] = [];
+                }
+                $interviewers[$interviewer->id][] = $applicationRound;
+            }
+        }
+
+        foreach ($interviewers as $id => $applicationRounds) {
+            // we already have User instance as $applicationRound->scheduledPerson.
+            // We need to see how the below query for interviewer can be removed.
+            $interviewer = User::find($id);
+            Mail::to($interviewer->email, $interviewer->name)->send(new InterviewerScheduledRoundsReminder($applicationRounds));
+        }
+
+        // send mail to applicants
+        foreach ($applicationRounds as $applicationRound) {
+            $applicant = $applicationRound->application->applicant;
+            // Mail::to($applicant->email, $applicant->name)->sendMail(new )
+        }
+        dd($interviewers);
+
         $filters = [
             'status' => request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
