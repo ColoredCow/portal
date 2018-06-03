@@ -45,17 +45,17 @@ class SendInterviewReminders extends Command
         // Get application rounds for the day grouped by scheduled person
         $applicationRounds = ApplicationRound::scheduledForToday();
 
-        // send reminder emails to every scheduled person
         foreach ($applicationRounds as $scheduledPersonId => $rounds) {
             // We already have User instance as $round->scheduledPerson for each round. There is a scope
             // of optimization by using this instance and removing the User::find query below.
             $interviewer = User::find($scheduledPersonId);
+            // send reminder emails to the scheduled interviewer
             Mail::to($interviewer->email, $interviewer->name)->send(new InterviewerScheduledRoundsReminder($rounds));
-        }
 
-        // send reminder emails to the applicant for each application round
-        foreach ($applicationRounds as $applicationRound) {
-            Mail::send(new ScheduledInterviewReminder($applicationRound));
+            // send reminder emails to the applicant for each application round
+            foreach ($rounds as $applicationRound) {
+                Mail::send(new ScheduledInterviewReminder($applicationRound));
+            }
         }
     }
 }
