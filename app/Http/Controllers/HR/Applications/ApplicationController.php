@@ -4,6 +4,7 @@ namespace App\Http\Controllers\HR\Applications;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicationRequest;
+use App\Mail\HR\Applicant\ScheduledInterviewReminder;
 use App\Mail\HR\Application\JobChanged;
 use App\Mail\HR\Application\RoundNotConducted;
 use App\Mail\HR\InterviewerScheduledRoundsReminder;
@@ -42,17 +43,16 @@ abstract class ApplicationController extends Controller
             }
         }
 
-        foreach ($interviewers as $id => $applicationRounds) {
+        foreach ($interviewers as $id => $interviewerApplicationRounds) {
             // we already have User instance as $applicationRound->scheduledPerson.
             // We need to see how the below query for interviewer can be removed.
             $interviewer = User::find($id);
-            Mail::to($interviewer->email, $interviewer->name)->send(new InterviewerScheduledRoundsReminder($applicationRounds));
+            Mail::to($interviewer->email, $interviewer->name)->send(new InterviewerScheduledRoundsReminder($interviewerApplicationRounds));
         }
 
         // send mail to applicants
         foreach ($applicationRounds as $applicationRound) {
-            $applicant = $applicationRound->application->applicant;
-            // Mail::to($applicant->email, $applicant->name)->sendMail(new )
+            Mail::send(new ScheduledInterviewReminder($applicationRound));
         }
         dd($interviewers);
 

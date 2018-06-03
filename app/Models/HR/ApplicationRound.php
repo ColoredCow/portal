@@ -177,7 +177,7 @@ class ApplicationRound extends Model
 
     public static function scheduledForToday()
     {
-        return $this->with([
+        return self::with([
             'application' => function($query) {
                 $query->whereIn('status', ['new', 'in-progress', 'no-show']);
             },
