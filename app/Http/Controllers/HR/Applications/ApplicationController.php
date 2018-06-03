@@ -4,7 +4,6 @@ namespace App\Http\Controllers\HR\Applications;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicationRequest;
-use App\Mail\HR\Applicant\ScheduledInterviewReminder;
 use App\Mail\HR\Application\JobChanged;
 use App\Mail\HR\Application\RoundNotConducted;
 use App\Models\HR\Application;
