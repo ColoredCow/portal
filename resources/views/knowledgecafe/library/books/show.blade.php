@@ -30,15 +30,17 @@
                         <h4>ISBN :</h4>
                         <span> {{ $book->isbn }} </span>
                     </div>
+
+                    <div class="ml-1 mb-1 mt-2 d-flex justify-content-between">
+                            <button class="btn btn-primary">I have read this book</button>
+                    </div>
+
                 </div>
 
                 <div class="col-4 text-center">
                     <img src=" {{ $book->thumbnail }} " />
                 </div>
 
-                <div class="col-4 text-center">
-                       <button class="btn btn-primary">I have read this book</button>
-                </div>
 
             </div>
 
