@@ -5,7 +5,7 @@
 	<ul>
 	@foreach ($applicationRounds as $applicationRound)
 		<li>
-			<b>{{ date('H:i A', strtotime($applicationRound->scheduled_date)) }} –</b>&nbsp;{{ $applicationRound->round->name }} for {{ $applicationRound->application->applicant->name }}
+			<b>{{ date(config('constants.hr.interview-time-format'), strtotime($applicationRound->scheduled_date)) }} –</b>&nbsp;{{ $applicationRound->round->name }} for {{ $applicationRound->application->applicant->name }}
 			@php
 				$route = 'applications.' . $applicationRound->application->job->type . '.edit';
 			@endphp

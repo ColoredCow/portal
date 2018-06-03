@@ -22,6 +22,7 @@ return [
     ],
     'pagination_size' => 10,
     'hr' => [
+        'interview-time-format' => 'h:i a',
         'no-show-hours-limit' => 2,
         'application-meta' => [
             'keys' => [
