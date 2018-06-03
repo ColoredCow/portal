@@ -30,32 +30,6 @@ abstract class ApplicationController extends Controller
      */
     public function index()
     {
-        $applicationRounds = ApplicationRound::scheduledForToday();
-
-        $interviewers = [];
-        foreach ($applicationRounds as $applicationRound) {
-            if ($applicationRound->application && $applicationRound->application->job) {
-                $interviewer = $applicationRound->scheduledPerson;
-                if (!array_key_exists($interviewer->id, $interviewers)) {
-                    $interviewers[$interviewer->id] = [];
-                }
-                $interviewers[$interviewer->id][] = $applicationRound;
-            }
-        }
-
-        foreach ($interviewers as $id => $interviewerApplicationRounds) {
-            // we already have User instance as $applicationRound->scheduledPerson.
-            // We need to see how the below query for interviewer can be removed.
-            $interviewer = User::find($id);
-            Mail::to($interviewer->email, $interviewer->name)->send(new InterviewerScheduledRoundsReminder($interviewerApplicationRounds));
-        }
-
-        // send mail to applicants
-        foreach ($applicationRounds as $applicationRound) {
-            Mail::send(new ScheduledInterviewReminder($applicationRound));
-        }
-        dd($interviewers);
-
         $filters = [
             'status' => request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
