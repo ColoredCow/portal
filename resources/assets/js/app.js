@@ -539,3 +539,17 @@ if (document.getElementById('books_category')) {
         }
     });
 }
+
+if (document.getElementById('show_book_info')) {
+    const bookForm = new Vue({
+        el: '#show_book_info',
+        data: {
+            book: document.getElementById('show_book_info').dataset.book 
+                        ? JSON.parse(document.getElementById('show_book_info').dataset.book) 
+                        : []
+        },
+
+        methods: {}
+    });
+}
+
