@@ -86,7 +86,7 @@
             </td> 
             @can('library_books.delete')
             <td>
-                <div @click="deleteBook(index)" class="text-danger c-pointer"><i class="fa fa-times"></i>&nbsp;Delete</div>
+                <div @click="deleteBook(index)" class="text-danger c-pointer">Delete</div>
             </td>
             @endcan
         </tr>
