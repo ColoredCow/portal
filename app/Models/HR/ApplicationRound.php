@@ -177,16 +177,15 @@ class ApplicationRound extends Model
 
     public static function scheduledForToday()
     {
-        return self::with([
-            'application' => function($query) {
-                $query->whereIn('status', ['new', 'in-progress', 'no-show']);
-            },
-            'application.job' => function($query) {
-                $query->where('type', 'job');
-            },
-        ])
+        $applicationRounds = self::with(['application', 'application.job'])
+        ->whereHas('application', function($query) {
+            $query->whereIn('status', ['new', 'in-progress', 'no-show']);
+        })
         ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
         ->orderBy('scheduled_date')
         ->get();
+
+        // Using Laravel's collection method groupBy to group scheduled application rounds based on the scheduled person
+        return $applicationRounds->groupBy('scheduled_person_id');
     }
 }
