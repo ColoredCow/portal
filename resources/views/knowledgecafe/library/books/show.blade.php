@@ -33,11 +33,6 @@
                         </div>
                     </div>
 
-                    <div class="ml-1 mb-1 d-flex justify-content-between">
-                        <h4>ISBN :</h4>
-                        <span> {{ $book->isbn }} </span>
-                    </div>
-
                     <div class="ml-1 mb-1 mt-5 d-flex justify-content-between">
                             <button class="btn btn-primary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
                             <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
