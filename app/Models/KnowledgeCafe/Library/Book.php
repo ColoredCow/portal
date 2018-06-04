@@ -4,6 +4,7 @@ namespace App\Models\KnowledgeCafe\Library;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\User;
 
 class Book extends Model
 {
@@ -30,5 +31,17 @@ class Book extends Model
     public function categories() {
         return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
     }
+
+    public function readers() {
+        return $this->belongsToMany(User::class, 'book_readers', 'library_book_id', 'user_id');
+    }
+
+    public function markBook($read) {
+         $result = ($read) ? $this->readers()->attach(auth()->user()) 
+                  : $this->readers()->detach(auth()->user());
+
+        return true;
+    }
+
 }
 

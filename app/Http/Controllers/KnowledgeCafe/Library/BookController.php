@@ -7,6 +7,7 @@ use App\Services\BookServices;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -23,6 +24,7 @@ class BookController extends Controller
      */
     public function index()
     {
+
         $this->authorize('list', Book::class);
         $books = Book::with('categories')->orderBy('title')->paginate(config('constants.pagination_size'));
         $categories = BookCategory::orderBy('name')->get();
@@ -166,6 +168,17 @@ class BookController extends Controller
         $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
         $data['self_link'] = $book->get('self_link');
         return $data;
+    }
+
+
+    public function markBook(Request $request){
+        $bookID = $request->book_id;
+        $read = $request->is_read;
+        $book = Book::find($bookID);
+        $isMarked = ($book) ? $book->markBook($read) : false;
+        return response()->json([
+            'isMarked' =>  $isMarked
+        ]);
     }
 
 }

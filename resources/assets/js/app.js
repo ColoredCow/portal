@@ -546,10 +546,20 @@ if (document.getElementById('show_book_info')) {
         data: {
             book: document.getElementById('show_book_info').dataset.book 
                         ? JSON.parse(document.getElementById('show_book_info').dataset.book) 
-                        : []
-        },
+                        : [],
 
-        methods: {}
+            route:document.getElementById('show_book_info').dataset.markBookRoute 
+                        ? document.getElementById('show_book_info').dataset.markBookRoute
+                        : '',
+            
+            isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
+        },
+        methods: {
+            markBook: function (read) {
+                    axios.post(this.route, {book_id:this.book.id, is_read:read});
+                    this.isRead = read;
+            },
+        }
     });
 }
 
