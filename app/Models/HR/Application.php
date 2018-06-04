@@ -236,9 +236,6 @@ class Application extends Model
         foreach ($noShowEvents as $event) {
             $details = json_decode($event->value);
             $details->round = ApplicationRound::find($details->round)->round->name;
-            if (isset($details->user)) {
-                $details->user = User::find($details->user)->name;
-            }
             $event->value = $details;
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.no-show'),
