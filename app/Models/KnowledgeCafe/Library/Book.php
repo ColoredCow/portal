@@ -35,8 +35,11 @@ class Book extends Model
         if(!$categoryName) {
             return false;
         }
-        $category = BookCategory::where('name', $categoryName)->first(); 
-        return ($category)  ? $category->books : false;
+        
+        return self::whereHas('categories', function ($query){
+            $query->where('name', $categoryName);
+        })->get();
+
     }
 }
 
