@@ -1,4 +1,4 @@
-# Welcome to Employee Portal
+# Welcome to ColoredCow's Employee Portal
 
 Solution for organizations to manage all operations' data. Built over GSuite.
 
