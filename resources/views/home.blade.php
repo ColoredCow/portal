@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="home_page">
     <br>
     <div class="d-flex justify-content-start row flex-wrap">
         @can('hr_applicants.view')
@@ -34,5 +34,6 @@
         @endcan
     </div>
 
+    @include('knowledgecafe.library.books.show_nudge_modal')
 </div>
 @endsection
