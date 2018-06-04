@@ -23,7 +23,7 @@
                     </div>
     
                     <div class="col-4 text-center">
-                        <a href="{{ route('books.index') }}">
+                        <a href="{{ route('books.index', ['search'=> $book->title]) }}">
                             <img src=" {{ $book->thumbnail }} " />
                         </a>
                        
