@@ -26,7 +26,8 @@ class BookController extends Controller
     {
 
         $this->authorize('list', Book::class);
-        $books = Book::with('categories')->orderBy('title')->paginate(config('constants.pagination_size'));
+        $searchString = (request()->has('search')) ? request()->input('search'): false;
+        $books = Book::getList($searchString);
         $categories = BookCategory::orderBy('name')->get();
         return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
@@ -49,7 +50,9 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-        $stored = Book::_create($request->validated());
+        $validatedData = $request->validated();
+        $ISBN = isset ($validatedData['isbn']) ? $validatedData['isbn'] : null;
+        $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
         return response()->json(['error'=> !$stored]);
     }
 
@@ -80,13 +83,19 @@ class BookController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     * @return void
+     * @return json
      */
     public function update(BookRequest $request, Book $book)
     {
-        return response()->json([
-            'success' => $book->_update($request->validated())
-        ]); 
+        $validatedData = $request->validated();
+        if (!isset($validatedData['categories'])) {
+            return response()->json([
+                'isUpdated' => false
+            ]); 
+        }
+        $categories = array_pluck($validatedData['categories'], 'id');
+        $isUpdated = $book->categories()->sync($categories);
+        return response()->json(['isUpdated' => $isUpdated]); 
     }
 
     /**
@@ -99,7 +108,7 @@ class BookController extends Controller
     {
         return response()->json(['isDeleted' => $book->delete() ]);
     }
-    
+
 
      /**
      * Fetch the book info.
@@ -156,7 +165,7 @@ class BookController extends Controller
      * @param  Array  $book
      * @return Array
      */
-    public function formatBookData($book) {
+    public function formatBookData($book){
         $data = [];
         $book = $book['items'][0];
         $info = collect($book['volumeInfo']);
@@ -170,16 +179,33 @@ class BookController extends Controller
         return $data;
     }
 
-
     public function markBook(Request $request){
         $bookID = $request->book_id;
         $read = $request->is_read;
         $book = Book::find($bookID);
         $isMarked = ($book) ? $book->markBook($read) : false;
         return response()->json([
-            'isMarked' =>  $isMarked,
+            'isMarked' => $isMarked,
             'readers' => $book->readers
         ]);
+    }
+
+    public function getBookList() {
+
+        $books = (request()->has('cat')) ? 
+                Book::getByCategoryName(request()->input('cat')) : 
+                Book::with(['categories'])->orderBy('title')
+                ->get();
+
+        $data = [];
+        foreach ($books as $index => $book) {
+            $data['books'][$index] = $book->toArray();
+            $data['books'][$index]['categories'] = $book->categories()->pluck('name')->toArray();
+        }
+        
+        $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
+        return response()->json($data);
+
     }
 
 }

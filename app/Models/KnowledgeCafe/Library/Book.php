@@ -9,27 +9,34 @@ use App\User;
 class Book extends Model
 {
     use SoftDeletes;
-    
+
     protected $table = 'library_books';
     protected $fillable = ['title', 'author', 'categories', 'isbn', 'thumbnail', 'readable_link', 'self_link'];
     protected $dates = ['deleted_at'];
 
-    public static function _create($data) {
-        $ISBN = isset ($data['isbn']) ? $data['isbn'] : null;
-        return self::firstOrCreate(['isbn' => $ISBN], $data);
+    public function categories()
+    {
+        return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
     }
 
-    public function _update($data) {
-        if(isset($data['categories'])) {
-            $categories = array_pluck($data['categories'], 'id');
-            $this->categories()->sync($categories);
-            return true;
-        }
-        return false;
+    public static function getList($filteredString = false)
+    {
+        return self::with('categories')
+                ->orderBy('title')
+                ->where(function ($query) use ($filteredString) {
+                        ($filteredString) ? $query->where('title', 'LIKE', "%$filteredString%") : '';
+                })->paginate(config('constants.pagination_size'));
     }
-    
-    public function categories() {
-        return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
+
+    public static function getByCategoryName($categoryName) {
+        if(!$categoryName) {
+            return false;
+        }
+
+        return self::whereHas('categories', function ($query) use($categoryName) {
+            $query->where('name', $categoryName);
+        })->get();
+
     }
 
     public function readers() {
@@ -49,4 +56,3 @@ class Book extends Model
         })->get()->random();
     }
 }
-

@@ -10,6 +10,30 @@
         @can('library_books.create')
             <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add Book</a></div>
         @endcan
+
+    </div>
+
+    <div class="row mt-3 mb-2">
+        <div class="col-6 d-flex justify-content-center align-items-center">
+            <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="search all books" v-model="searchKey" >
+            <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
+        </div>
+    </div>
+
+    @if(request()->has('search'))
+        <div class="row mt-3 mb-2">
+            <div class="col-6">
+                <a class="text-muted c-pointer" href="{{ route('books.index') }}">
+                    <i class="fa fa-times"></i>&nbsp;Clear current search query, filters, and sorts
+                </a>
+            </div>
+        </div>
+    @endif
+
+    <div class="row mt-3 mb-2">
+        <div class="col-12">
+            <h4 class="font-weight-bold"><span>{{ $books->total() }}</span>&nbsp;Books</h4>
+        </div>
     </div>
     
 <table class="table table-striped table-bordered" 
@@ -65,7 +89,7 @@
             </td> 
             @can('library_books.delete')
             <td>
-                <div @click="deleteBook(index)" class="text-danger c-pointer ml-3"><i class="fa fa-times"></i>&nbsp;Delete</div>
+                <div @click="deleteBook(index)" class="text-danger c-pointer">Delete</div>
             </td>
             @endcan
         </tr>

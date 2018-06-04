@@ -400,7 +400,9 @@ if (document.getElementById('books_listing')) {
             categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
-            newCategory:''
+            newCategory:'',
+            searchKey:document.getElementById('search_input').dataset.value
+            
         },
 
         methods: {
@@ -461,6 +463,10 @@ if (document.getElementById('books_listing')) {
                 let route = `${this.updateRoute}/${bookID}`;
                 let response = await axios.delete(route);
                 this.books.splice(index, 1);
+            },
+
+            searchBooks: function() {
+                window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
             }
 
         },
