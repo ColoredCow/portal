@@ -42,7 +42,7 @@ class SendInterviewReminders extends Command
      */
     public function handle()
     {
-        // Get application rounds for the day grouped by scheduled person
+        // Get application rounds for the day grouped by the interviewer
         $applicationRounds = ApplicationRound::scheduledForToday();
 
         foreach ($applicationRounds as $scheduledPersonId => $rounds) {

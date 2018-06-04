@@ -32,7 +32,7 @@ class InterviewerScheduledRoundsReminder extends Mailable
      */
     public function build()
     {
-        return $this->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'))
+        return $this->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject('Application rounds scheduled for today')
             ->view('mail.hr.interviewer-scheduled-rounds-reminder')->with([
                 'applicationRounds' => $this->applicationRounds,

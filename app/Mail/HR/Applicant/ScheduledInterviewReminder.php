@@ -48,7 +48,7 @@ class ScheduledInterviewReminder extends Mailable
         $body = str_replace('{{interview_time}}', date(config('constants.hr.interview-time-format'), strtotime($this->applicationRound->scheduled_date)), $body);
 
         return $this->to($application->applicant->email, $application->applicant->name)
-            ->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'))
+            ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject($subject)
             ->view('mail.plain')->with([
                 'body' => $body
