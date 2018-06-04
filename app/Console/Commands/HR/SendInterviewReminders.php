@@ -54,7 +54,9 @@ class SendInterviewReminders extends Command
 
             // send reminder emails to the applicant for each application round
             foreach ($rounds as $applicationRound) {
-                Mail::send(new ScheduledInterviewReminder($applicationRound));
+                if ($applicationRound->round->reminder_enabled) {
+                    Mail::send(new ScheduledInterviewReminder($applicationRound));
+                }
             }
         }
     }
