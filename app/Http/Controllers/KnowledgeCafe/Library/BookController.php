@@ -86,16 +86,13 @@ class BookController extends Controller
     public function update(BookRequest $request, Book $book)
     {
         $validatedData = $request->validated();
-
         if (!isset($validatedData['categories'])) {
             return response()->json([
                 'isUpdated' => false
             ]); 
         }
-
         $categories = array_pluck($validatedData['categories'], 'id');
         $isUpdated = $book->categories()->sync($categories);
-        
         return response()->json(['isUpdated' => $isUpdated]); 
     }
 
@@ -109,7 +106,7 @@ class BookController extends Controller
     {
         return response()->json(['isDeleted' => $book->delete() ]);
     }
-    
+
 
      /**
      * Fetch the book info.
@@ -166,7 +163,7 @@ class BookController extends Controller
      * @param  Array  $book
      * @return Array
      */
-    public function formatBookData($book) {
+    public function formatBookData($book){
         $data = [];
         $book = $book['items'][0];
         $info = collect($book['volumeInfo']);
@@ -178,6 +175,24 @@ class BookController extends Controller
         $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
         $data['self_link'] = $book->get('self_link');
         return $data;
+    }
+
+
+    public function getBookList() {
+
+        $books = (request()->has('cat')) ? 
+                Book::getByCategoryName(request()->input('cat')) : 
+                Book::with(['categories'])->orderBy('title')
+                ->get();
+
+        $data = [];
+        foreach ($books as $index => $book) {
+            $data['books'][$index] = $book->toArray();
+            $data['books'][$index]['categories'] = $book->categories()->pluck('name')->toArray();
+        }
+        
+        $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
+        return response()->json($data);
     }
 
 }

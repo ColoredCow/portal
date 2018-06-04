@@ -26,4 +26,15 @@ class Book extends Model
                         ($filteredString) ? $query->where('title', 'LIKE', "%$filteredString%") : '';
                 })->paginate(config('constants.pagination_size'));
     }
+
+    public static function getByCategoryName($categoryName) {
+        if(!$categoryName) {
+            return false;
+        }
+
+        return self::whereHas('categories', function ($query) use($categoryName) {
+            $query->where('name', $categoryName);
+        })->get();
+
+    }
 }
