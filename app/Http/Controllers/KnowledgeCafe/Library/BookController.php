@@ -179,8 +179,8 @@ class BookController extends Controller
         $data = [];
         $i = 0;
         foreach ($books as $book) {
-            $data[$i]['books'] = $book->toArray();
-            $data[$i]['categories'] = $book->categories()->pluck('name')->toArray();
+            $data['books'][$i] = $book->toArray();
+            $data['books'][$i]['categories'] = $book->categories()->pluck('name')->toArray();
             $i++;
         }
         
