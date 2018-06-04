@@ -45,6 +45,11 @@ class ApplicationNoShow extends Command
                             ->where('scheduled_date', '<=', Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
                             ->get();
 
+        $subject = Setting::module('hr')->key('no_show_mail_subject');
+        $subject = $subject ? $subject->setting_value : null;
+        $body = Setting::module('hr')->key('no_show_mail_body');
+        $body = $body ? $body->setting_value : null;
+
         foreach ($applicationRounds as $applicationRound) {
             $application = $applicationRound->application;
             if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
@@ -54,6 +59,8 @@ class ApplicationNoShow extends Command
                     'key' => config('constants.hr.application-meta.keys.no-show'),
                     'value' => json_encode([
                         'round' => $applicationRound->id,
+                        'mail_subject' => $subject,
+                        'mail_body' => $body,
                     ]),
                 ]);
             }
