@@ -177,7 +177,8 @@ class BookController extends Controller
         $book = Book::find($bookID);
         $isMarked = ($book) ? $book->markBook($read) : false;
         return response()->json([
-            'isMarked' =>  $isMarked
+            'isMarked' =>  $isMarked,
+            'readers' => $book->readers
         ]);
     }
 

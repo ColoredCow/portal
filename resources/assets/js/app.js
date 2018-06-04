@@ -556,12 +556,14 @@ if (document.getElementById('show_book_info')) {
                         : []
         },
         methods: {
-            markBook: function (read) {
-                    axios.post(this.route, {book_id:this.book.id, is_read:read});
+            markBook: async function (read) {
+                    let response = await axios.post(this.route, {book_id:this.book.id, is_read:read});
                     this.isRead = read;
+                    if(!response.data) {
+                        return false;
+                    }
+                    this.readers = response.data.readers;
             },
-
-
         },
 
         mounted() {
