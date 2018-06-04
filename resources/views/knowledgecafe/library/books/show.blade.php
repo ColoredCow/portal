@@ -1,9 +1,12 @@
 @extends('layouts.app') 
 @section('content')
 <div class="container" id="show_book_info"  
+  
     data-book="{{ json_encode($book) }}" 
-    data-mark-book-route= {{route('books.markBook')}}
-    data-is-read = {{ $book->readers->contains(auth()->user()) }}
+    data-is-read="{{ $book->readers->contains(auth()->user()) }}"
+    data-mark-book-route= "{{route('books.markBook')}}"
+    data-readers = "{{ json_encode($book->readers) }}"
+
     >
     <div class="card">
         <div class="card-body">
@@ -49,6 +52,22 @@
 
             </div>
 
+            <div class="row" id="readers_section" >
+                <div class="col-6">
+                        <div class="ml-1 mb-1 mt-5">
+                            <h4>People have read this books:</h4>
+                            <div> 
+
+
+                            </div>
+                            <ul class="list-group list-group-flush " >
+                                <li class="list-group-item" v-for="(reader, index)  in readers  ">
+                                    <img src="/images/default_profile.png" alt="">
+                                    <h5> @{{ reader.name }} </h5>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
         </div>
     </div>
 </div>
