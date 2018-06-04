@@ -43,6 +43,7 @@ class ApplicationNoShow extends Command
     {
         $applicationRounds = ApplicationRound::with('application')
                             ->whereNull('round_status')
+                            ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
                             ->where('scheduled_date', '<=', Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
                             ->get();
 
