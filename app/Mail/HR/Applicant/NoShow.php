@@ -2,9 +2,8 @@
 
 namespace App\Mail\HR\Applicant;
 
-use App\Models\Setting;
+use App\Models\HR\ApplicationMeta;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -13,7 +12,11 @@ class NoShow extends Mailable
     use Queueable, SerializesModels;
 
 
-    public $applicationMeta
+    /**
+     * Instance of the ApplicationMeta
+     * @var ApplicationMeta
+     */
+    public $applicationMeta;
 
     /**
      * Create a new message instance.
@@ -33,7 +36,7 @@ class NoShow extends Mailable
     {
         $application = $this->applicationMeta->application;
 
-        $applicationMetaValue = json_decode($applicationMeta->value);
+        $applicationMetaValue = json_decode($this->applicationMeta->value);
         $subject = $applicationMetaValue->mail_subject;
         $body = $applicationMetaValue->mail_body;
 

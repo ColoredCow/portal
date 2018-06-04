@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands\HR;
 
-use Illuminate\Console\Command;
-use Carbon\Carbon;
-use App\Models\HR\ApplicationRound;
 use App\Models\HR\ApplicationMeta;
+use App\Models\HR\ApplicationRound;
+use App\Models\Setting;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class ApplicationNoShow extends Command
 {
@@ -45,16 +46,16 @@ class ApplicationNoShow extends Command
                             ->where('scheduled_date', '<=', Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
                             ->get();
 
-        $subject = Setting::module('hr')->key('no_show_mail_subject');
+        $subject = Setting::module('hr')->key('no_show_mail_subject')->first();
         $subject = $subject ? $subject->setting_value : null;
-        $body = Setting::module('hr')->key('no_show_mail_body');
+        $body = Setting::module('hr')->key('no_show_mail_body')->first();
         $body = $body ? $body->setting_value : null;
 
         foreach ($applicationRounds as $applicationRound) {
             $application = $applicationRound->application;
             if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
                 $application->markNoShow();
-                $roundNotConductedMeta = ApplicationMeta::create([
+                ApplicationMeta::create([
                     'hr_application_id' => $application->id,
                     'key' => config('constants.hr.application-meta.keys.no-show'),
                     'value' => json_encode([
