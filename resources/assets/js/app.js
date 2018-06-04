@@ -298,7 +298,6 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
 });
 
 
-
 /**
  * Knowledge Cafe
  *
@@ -573,7 +572,12 @@ if (document.getElementById('show_book_info')) {
     });
 }
 
+
+
+
 if(document.getElementById('home_page')) {
+    var el = document.getElementById("markBookAsRead");
+    el.addEventListener("click", markBookAsRead, false); 
     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
     $('#show_nudge_modal').modal('show');
     // if(!isModalShown) {
@@ -582,4 +586,11 @@ if(document.getElementById('home_page')) {
     //    // alert("Hello");
         
     // }
+}
+
+function markBookAsRead() {
+    let bookID = document.getElementById('markBookAsRead').dataset.id; 
+    let route = document.getElementById('markBookAsRead').dataset.markBookRoute; 
+    axios.post(route, {book_id:bookID, is_read:true});
+    $('#show_nudge_modal').modal('hide');
 }

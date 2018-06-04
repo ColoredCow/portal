@@ -33,7 +33,6 @@
         </div>
         @endcan
     </div>
-
-    @include('knowledgecafe.library.books.show_nudge_modal')
 </div>
+@include('knowledgecafe.library.books.show_nudge_modal')
 @endsection

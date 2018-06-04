@@ -6,6 +6,7 @@ use Google_Client;
 use Google_Service_Directory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\KnowledgeCafe\Library\Book;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $unreadBook = Book::getRandomUnreadBook();
+        return view('home')->with(['book' => $unreadBook]);
     }
 
     /**
