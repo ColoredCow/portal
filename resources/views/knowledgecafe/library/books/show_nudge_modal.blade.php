@@ -45,22 +45,24 @@
                         <img src=" {{ $book->thumbnail }} " />
                     </div>
                 </div>
-                
-                <div class="row" id="readers_section" >
-                    <div class="col-8">
-                            <div class="ml-1 mb-1 mt-5">
-                                <h4 v-if="readers.length">Read by:</h4>
-                                <div class="d-flex justify-content-start"> 
-                                    @foreach($book->readers as $reader)
-                                        <div class="my-3 mr-3 ml-0 text-center">
-                                            <img src="/images/default_profile.png" alt="">
-                                            <h5> {{ $reader->name }} </h5>
-                                        </div> 
-                                    @endforeach
+
+                @if($book->readers->count())
+                    <div class="row" id="readers_section" >
+                        <div class="col-8">
+                                <div class="ml-1 mb-1 mt-5">
+                                    <h4>Read by:</h4>
+                                    <div class="d-flex justify-content-start"> 
+                                        @foreach($book->readers as $reader)
+                                            <div class="my-3 mr-3 ml-0 text-center">
+                                                <img src="/images/default_profile.png" alt="">
+                                                <h5> {{ $reader->name }} </h5>
+                                            </div> 
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
 
             <div class="modal-footer">

@@ -572,20 +572,14 @@ if (document.getElementById('show_book_info')) {
     });
 }
 
-
-
-
 if(document.getElementById('home_page')) {
     var el = document.getElementById("markBookAsRead");
     el.addEventListener("click", markBookAsRead, false); 
     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
-    $('#show_nudge_modal').modal('show');
-    // if(!isModalShown) {
-    //     sessionStorage.setItem("book_modal_has_shown", "true");
-    //     $('#show_nudge_modal').modal('show');
-    //    // alert("Hello");
-        
-    // }
+    if(!isModalShown) {
+        sessionStorage.setItem("book_modal_has_shown", "true");
+        $('#show_nudge_modal').modal('show');
+    }
 }
 
 function markBookAsRead() {
