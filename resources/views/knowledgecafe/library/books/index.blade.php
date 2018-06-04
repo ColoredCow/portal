@@ -7,7 +7,9 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Books&nbsp;({{ $books->total() }})</h1></div>
-        <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add Book</a></div>
+        @can('library_books.create')
+            <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add Book</a></div>
+        @endcan
     </div>
     
 <table class="table table-striped table-bordered" 
