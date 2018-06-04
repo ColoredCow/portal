@@ -18,16 +18,30 @@
             @endphp
 
             <div class="modal-body">
-                    <h1 class="mt-1 mb-4 mx-2">
-                        {{ $book->title }}
-                    </h1>
-
                     <div class="row">
                         <div class="col-6">
-                            <div class="ml-1 mb-1">
-                                <h4>Written by:</h4>
+
+                            <div class="ml-1 mb-1 mt-2">
+                                <h5 class="font-weight-normal">Title:</h5>
+                                <span> {{ $book->title }} </span>
+                            </div>
+
+                            <div class="ml-1 mb-1 mt-2">
+                                <h5 class="font-weight-normal" >Authors:</h5>
                                 <span> {{ $book->author }} </span>
                             </div>
+
+                            <div class="ml-1 mb-1 mt-2">
+                                <h5 class="font-weight-normal">Categories:</h5>
+                                <div>  
+                                    <ol class="pl-3">
+                                        @foreach(($book->categories) ?: [] as $category)
+                                            <li> {{$category->name}} </li>
+                                        @endforeach
+                                    </ol> 
+                                </div>
+                            </div>
+                                
                         </div>
         
                         <div class="col-4 text-center">
