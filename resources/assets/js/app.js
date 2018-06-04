@@ -580,6 +580,7 @@ if(document.getElementById('home_page')) {
         sessionStorage.setItem("book_modal_has_shown", "true");
         $('#show_nudge_modal').modal('show');
     }
+    $('#show_nudge_modal').modal('show');
 }
 
 function markBookAsRead() {

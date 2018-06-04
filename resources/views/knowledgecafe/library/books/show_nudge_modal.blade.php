@@ -7,8 +7,7 @@
     >
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">New book suggestion for you</h5>
+            <div class="modal-header border-bottom-0">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -17,32 +16,17 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-
                         <div class="ml-1 mb-1 mt-2">
-                            <h5 class="font-weight-normal">Title:</h5>
-                            <span> {{ $book->title }} </span>
-                        </div>
-
-                        <div class="ml-1 mb-1 mt-2">
-                            <h5 class="font-weight-normal" >Authors:</h5>
-                            <span> {{ $book->author }} </span>
-                        </div>
-
-                        <div class="ml-1 mb-1 mt-2">
-                            <h5 class="font-weight-normal">Categories:</h5>
-                            <div>  
-                                <ol class="pl-3">
-                                    @foreach(($book->categories) ?: [] as $category)
-                                        <li> {{$category->name}} </li>
-                                    @endforeach
-                                </ol> 
-                            </div>
-                        </div>
-                            
+                            <h3> {{ $book->title }} </h3>
+                            <h6> {{ $book->author }} </h6>
+                        </div>  
                     </div>
     
                     <div class="col-4 text-center">
-                        <img src=" {{ $book->thumbnail }} " />
+                        <a href="{{ route('books.index') }}">
+                            <img src=" {{ $book->thumbnail }} " />
+                        </a>
+                       
                     </div>
                 </div>
 
@@ -66,11 +50,10 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal" aria-label="Close">Remind me later</button>
                 <button type="button" 
                     data-id="{{$book->id}}" 
                     data-mark-book-route= "{{route('books.markBook')}}"
-                    id="markBookAsRead" class="btn btn-primary">I have read this</button>
+                    id="markBookAsRead" class="btn btn-primary">Yes, I have read this</button>
             </div>
         </div>
     </div>
