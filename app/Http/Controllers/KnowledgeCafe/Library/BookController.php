@@ -177,14 +177,14 @@ class BookController extends Controller
                 ->get();
 
         $data = [];
+        $i = 0;
         foreach ($books as $book) {
-            $customBookData = $book->toArray();
-            $customBookData['categories'] = $book->categories()->pluck('name')->toArray();
-            $data['books'][] = $customBookData;
+            $data[$i]['books'] = $book->toArray();
+            $data[$i]['categories'] = $book->categories()->pluck('name')->toArray();
+            $i++;
         }
         
         $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
-
         return response()->json($data);
     }
 
