@@ -8,16 +8,14 @@ use App\Models\KnowledgeCafe\WeeklyDose;
 
 class WeeklyDoseController extends Controller
 {
-    /**
+    /**md
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        
         $this->authorize('list', WeeklyDose::class);
-
 
         return view('weeklydose')->with([
             'weeklydoses' => WeeklyDose::latest()->paginate(config('constants.pagination_size')),
