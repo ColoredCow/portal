@@ -204,6 +204,10 @@
                         <label for="cheque_cleared_date">Cheque Cleared Date</label>
                         <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_cleared_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_cleared_date'))) : '' }}">
                     </div>
+                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'received'">
+                        <label for="cheque_received_date">Due Date</label>
+                        <input type="date" class="form-control date-field" name="due_date" id="due_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_received_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_received_date'))) : '' }}">
+                    </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
