@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\KnowledgeCafe;
 
-use App\Http\Requests\WeeklyDoseRequest;
-use App\Models\WeeklyDose;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\KnowledgeCafe\WeeklyDoseRequest;
+use App\Models\KnowledgeCafe\WeeklyDose;
 
 class WeeklyDoseController extends Controller
 {
-    /**
+    /**md
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
