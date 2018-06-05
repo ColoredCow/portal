@@ -53,6 +53,6 @@ class Book extends Model
     public static function getRandomUnreadBook() {
         return self::whereDoesntHave('readers', function ($query) {
             $query->where('id', auth()->id());
-        })->get()->random();
+        })->inRandomOrder()->first();
     }
 }
