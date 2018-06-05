@@ -4,6 +4,7 @@ namespace App\Models\KnowledgeCafe\Library;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\User;
 
 class Book extends Model
 {
@@ -36,5 +37,22 @@ class Book extends Model
             $query->where('name', $categoryName);
         })->get();
 
+    }
+
+    public function readers() {
+        return $this->belongsToMany(User::class, 'book_readers', 'library_book_id', 'user_id');
+    }
+
+    public function markBook($read) {
+         $result = ($read) ? $this->readers()->attach(auth()->user()) 
+                  : $this->readers()->detach(auth()->user());
+
+        return true;
+    }
+
+    public static function getRandomUnreadBook() {
+        return self::whereDoesntHave('readers', function ($query) {
+            $query->where('id', auth()->id());
+        })->inRandomOrder()->first();
     }
 }
