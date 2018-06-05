@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateBookCategoriesTable extends Migration
+class UpdateLibraryBooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class UpdateBookCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('book_categories', function(Blueprint $table) {
+        Schema::table('library_books', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class UpdateBookCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('book_categories', function(Blueprint $table) {
+        Schema::table('library_books', function (Blueprint $table) {
             $table->dropColumn(['deleted_at']);
         });
     }

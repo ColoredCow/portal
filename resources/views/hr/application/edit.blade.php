@@ -108,7 +108,7 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <div class="d-flex flex-column align-items-end">
-                                @includeWhen($applicationRound->roundNotConducted, 'hr.round-not-conducted-modal')
+                                @includeWhen($applicationRound->noShow, 'hr.no-show-modal')
 
                                 @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
                                     <div class="text-success"><i class="fa fa-check"></i>&nbsp;{{ config('constants.hr.status.confirmed.title') }}</div>
@@ -151,6 +151,9 @@
                                     </div>
                                 </div>
                                 @endif
+
+                                @includeWhen( $applicationRound->round->evaluationParameters->count() > 0 ,'hr.application.round-evaluation', ['round' => $applicationRound->round, 'evaluation' => $applicationRound->evaluations])
+                                
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="reviews[feedback]">Feedback</label>

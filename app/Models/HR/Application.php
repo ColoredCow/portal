@@ -93,8 +93,14 @@ class Application extends Model
             case config('constants.hr.status.rejected.label'):
                 $query->rejected();
                 break;
+            case config('constants.hr.status.on-hold.label'):
+                $query->onHold();
+                break;
+            case config('constants.hr.status.no-show.label'):
+                $query->noShow();
+                break;
             default:
-                $query->nonRejected();
+                $query->isOpen();
                 break;
         }
 
@@ -143,11 +149,27 @@ class Application extends Model
     }
 
     /**
-     * get applications where status is not rejected
+     * get applications where status is new and in-progress
      */
-    public function scopeNonRejected($query)
+    public function scopeIsOpen($query)
     {
-        return $query->where('status', '!=', config('constants.hr.status.rejected.label'));
+        return $query->whereIn('status', array(config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')));
+    }
+
+    /**
+     * get applications where status is on-hold
+     */
+    public function scopeOnHold($query)
+    {
+        return $query->where('status', config('constants.hr.status.on-hold.label'));
+    }
+
+    /**
+     * get applications where status is no-show
+     */
+    public function scopeNoShow($query)
+    {
+        return $query->where('status', config('constants.hr.status.no-show.label'));
     }
 
     /**
@@ -164,6 +186,14 @@ class Application extends Model
     public function markInProgress()
     {
         $this->update(['status' => config('constants.hr.status.in-progress.label')]);
+    }
+
+    /**
+     * Set the application status to no-show
+     */
+    public function markNoShow()
+    {
+        $this->update(['status' => config('constants.hr.status.no-show.label')]);
     }
 
     /**
@@ -201,15 +231,17 @@ class Application extends Model
             ];
         }
 
-        // adding round-not-conducted events in the application timeline
-        $jobChangeEvents = $this->applicationMeta()->roundNotConducted()->get();
-        foreach ($jobChangeEvents as $event) {
+        // adding no-show events in the application timeline
+        $noShowEvents = $this->applicationMeta()->noShow()->get();
+        foreach ($noShowEvents as $event) {
             $details = json_decode($event->value);
             $details->round = ApplicationRound::find($details->round)->round->name;
-            $details->user = User::find($details->user)->name;
+            if (isset($details->user)) {
+                $details->user = User::find($details->user)->name;
+            }
             $event->value = $details;
             $timeline[] = [
-                'type' => config('constants.hr.application-meta.keys.round-not-conducted'),
+                'type' => config('constants.hr.application-meta.keys.no-show'),
                 'event' => $event,
                 'date' => $event->created_at,
             ];

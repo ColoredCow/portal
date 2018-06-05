@@ -32,6 +32,7 @@ class ApplicationRoundRequest extends FormRequest
             'next_round' => 'nullable|string|required_if:action,confirm',
             'next_scheduled_date' => 'nullable|date|required_if:action,confirm',
             'next_scheduled_person_id' => 'nullable|integer|required_if:action,confirm',
+            'round_evaluation' => 'nullable|array'
         ];
     }
 
