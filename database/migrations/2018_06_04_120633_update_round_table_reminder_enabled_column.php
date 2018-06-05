@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateBookCategoriesTable extends Migration
+class UpdateRoundTableReminderEnabledColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateBookCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('book_categories', function(Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('hr_rounds', function (Blueprint $table) {
+            $table->boolean('reminder_enabled')->default(false)->after('guidelines');
         });
     }
 
@@ -25,8 +25,8 @@ class UpdateBookCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('book_categories', function(Blueprint $table) {
-            $table->dropColumn(['deleted_at']);
+        Schema::table('hr_rounds', function (Blueprint $table) {
+            $table->dropColumn(['reminder_enabled']);
         });
     }
 }

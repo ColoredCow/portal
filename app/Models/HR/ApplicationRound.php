@@ -3,6 +3,7 @@
 namespace App\Models\HR;
 
 use App\Models\HR\Application;
+use App\Models\HR\ApplicationRoundEvaluation;
 use App\Models\HR\ApplicationRoundReview;
 use App\Models\HR\Round;
 use App\User;
@@ -70,7 +71,26 @@ class ApplicationRound extends Model
         }
         $this->update($fillable);
         $this->_updateOrCreateReviews($attr['reviews']);
+    }
 
+    public function updateOrCreateEvaluation($evaluations = [])
+    {
+        foreach ($evaluations as $evaluation_id => $evaluation) {
+            if (array_key_exists('option_id', $evaluation)) {
+                $this->evaluations()->updateOrCreate(
+                    [
+                        'application_round_id' => $this->id,
+                        'evaluation_id' => $evaluation['evaluation_id']
+                    ],
+                    [
+                        'option_id' => $evaluation['option_id'],
+                        'comment' => $evaluation['comment'],
+                    ]
+                );
+            }
+        }
+
+        return true;
     }
 
     protected function _updateOrCreateReviews($reviews = [])
@@ -114,6 +134,11 @@ class ApplicationRound extends Model
         return $this->hasMany(ApplicationRoundReview::class, 'hr_application_round_id');
     }
 
+    public function evaluations()
+    {
+        return $this->hasMany(ApplicationRoundEvaluation::class, 'application_round_id');
+    }
+
     public function mailSender()
     {
         return $this->belongsTo(User::class, 'mail_sender');
@@ -136,18 +161,31 @@ class ApplicationRound extends Model
         ];
     }
 
-    public function getRoundNotConductedAttribute()
+    public function getNoShowAttribute()
     {
         if ($this->round_status) {
             return null;
         }
 
         $scheduledDate = Carbon::parse($this->scheduled_date);
-        if ($scheduledDate < Carbon::now()->subHours(2)) {
+        if ($scheduledDate < Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))) {
             return true;
         }
 
         return null;
+    }
 
+    public static function scheduledForToday()
+    {
+        $applicationRounds = self::with(['application', 'application.job'])
+        ->whereHas('application', function($query) {
+            $query->whereIn('status', ['new', 'in-progress', 'no-show']);
+        })
+        ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
+        ->orderBy('scheduled_date')
+        ->get();
+
+        // Using Laravel's collection method groupBy to group scheduled application rounds based on the scheduled person
+        return $applicationRounds->groupBy('scheduled_person_id');
     }
 }

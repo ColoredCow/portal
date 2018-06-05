@@ -316,3 +316,8 @@ input:focus + .slider {
 [v-cloak] {
   display: none;
 }
+
+.round_evaluation_list {
+    max-height: 40em;
+    overflow-y: scroll;
+}
