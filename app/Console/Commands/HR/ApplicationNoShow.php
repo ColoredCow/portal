@@ -44,8 +44,8 @@ class ApplicationNoShow extends Command
         $applicationRounds = ApplicationRound::with('application', 'application.applicant')
                             ->whereHas('application', function($query){
                                 $query->whereIn('status', [
-                                    config('constants.hr.round.status.new.label'),
-                                    config('constants.hr.round.status.in-progress.label'),
+                                    config('constants.hr.status.new.label'),
+                                    config('constants.hr.status.in-progress.label'),
                                 ]);
                             })
                             ->whereHas('round', function($query){
