@@ -39,7 +39,6 @@
                             <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
                         </li>
                         @endcan
-                        @can('weeklydoses.view')
                         <li class="nav-item">
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -55,7 +54,6 @@
                                 </div>
                             </li>
                         </li>
-                        @endcan
                         @can('settings.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
