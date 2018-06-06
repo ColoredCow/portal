@@ -97,10 +97,7 @@ class Application extends Model
                 $query->onHold();
                 break;
             case config('constants.hr.status.no-show.label'):
-                $query->whereIn('status', [
-                    config('constants.hr.status.no-show.label'),
-                    config('constants.hr.status.no-show-reminded.label'),
-                ]);
+                $query->noShow();
                 break;
             default:
                 $query->isOpen();
@@ -172,7 +169,10 @@ class Application extends Model
      */
     public function scopeNoShow($query)
     {
-        return $query->where('status', config('constants.hr.status.no-show.label'));
+        return $query->whereIn('status', [
+            config('constants.hr.status.no-show.label'),
+            config('constants.hr.status.no-show-reminded.label'),
+        ]);
     }
 
     /**
