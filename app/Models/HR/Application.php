@@ -169,7 +169,10 @@ class Application extends Model
      */
     public function scopeNoShow($query)
     {
-        return $query->where('status', config('constants.hr.status.no-show.label'));
+        return $query->whereIn('status', [
+            config('constants.hr.status.no-show.label'),
+            config('constants.hr.status.no-show-reminded.label'),
+        ]);
     }
 
     /**
@@ -194,6 +197,14 @@ class Application extends Model
     public function markNoShow()
     {
         $this->update(['status' => config('constants.hr.status.no-show.label')]);
+    }
+
+    /**
+     * Set the application status to no-show
+     */
+    public function markNoShowReminded()
+    {
+        $this->update(['status' => config('constants.hr.status.no-show-reminded.label')]);
     }
 
     /**
@@ -231,14 +242,11 @@ class Application extends Model
             ];
         }
 
-        // adding no-show events in the application timeline
+        // adding no-show and no-show-reminded events in the application timeline
         $noShowEvents = $this->applicationMeta()->noShow()->get();
         foreach ($noShowEvents as $event) {
             $details = json_decode($event->value);
             $details->round = ApplicationRound::find($details->round)->round->name;
-            if (isset($details->user)) {
-                $details->user = User::find($details->user)->name;
-            }
             $event->value = $details;
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.no-show'),

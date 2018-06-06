@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands\HR;
 
-use Illuminate\Console\Command;
-use Carbon\Carbon;
-use App\Models\HR\ApplicationRound;
 use App\Models\HR\ApplicationMeta;
+use App\Models\HR\ApplicationRound;
+use App\Models\Setting;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class ApplicationNoShow extends Command
 {
@@ -40,22 +41,39 @@ class ApplicationNoShow extends Command
      */
     public function handle()
     {
-        $applicationRounds = ApplicationRound::with('application')
+        $applicationRounds = ApplicationRound::with('application', 'application.applicant')
+                            ->whereHas('round', function($query){
+                                $query->where('reminder_enabled', true);
+                            })
                             ->whereNull('round_status')
+                            ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
                             ->where('scheduled_date', '<=', Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
                             ->get();
 
-        foreach ($applicationRounds as $applicationRound) {
-            $application = $applicationRound->application;
-            if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
-                $application->markNoShow();
-                $roundNotConductedMeta = ApplicationMeta::create([
-                    'hr_application_id' => $application->id,
-                    'key' => config('constants.hr.application-meta.keys.no-show'),
-                    'value' => json_encode([
-                        'round' => $applicationRound->id,
-                    ]),
-                ]);
+        $subject = Setting::module('hr')->key('no_show_mail_subject')->first();
+        $subject = $subject ? $subject->setting_value : null;
+        $body = Setting::module('hr')->key('no_show_mail_body')->first();
+        $body = $body ? $body->setting_value : null;
+
+        if ($subject && $body) {
+            foreach ($applicationRounds as $applicationRound) {
+                $application = $applicationRound->application;
+
+                // {{applicant_name}} and {{interview_time}} need to present in the mail template in the exact format.
+                // Need to change the overall template variable strcuture after this.
+                $body = str_replace('{{applicant_name}}', ucwords($application->applicant->name), $body);
+                $body = str_replace('{{interview_time}}', date(config('constants.hr.interview-time-format'), strtotime($applicationRound->scheduled_date)), $body);
+                if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
+                    ApplicationMeta::create([
+                        'hr_application_id' => $application->id,
+                        'key' => config('constants.hr.status.no-show.label'),
+                        'value' => json_encode([
+                            'round' => $applicationRound->id,
+                            'mail_subject' => $subject,
+                            'mail_body' => $body,
+                        ]),
+                    ]);
+                }
             }
         }
     }
