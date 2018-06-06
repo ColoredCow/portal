@@ -42,6 +42,12 @@ class ApplicationNoShow extends Command
     public function handle()
     {
         $applicationRounds = ApplicationRound::with('application', 'application.applicant')
+                            ->whereHas('application', function($query){
+                                $query->whereIn('status', [
+                                    config('constants.hr.round.status.new.label'),
+                                    config('constants.hr.round.status.in-progress.label'),
+                                ]);
+                            })
                             ->whereHas('round', function($query){
                                 $query->where('reminder_enabled', true);
                             })
