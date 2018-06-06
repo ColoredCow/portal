@@ -47,7 +47,7 @@ return [
             ],
             'no-show' => [
                 'label' => 'no-show',
-                'title' => 'No show',
+                'title' => 'No show reminded',
                 'class' => 'badge badge-danger'
             ],
             'rejected' => [

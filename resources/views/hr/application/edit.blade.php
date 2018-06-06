@@ -108,7 +108,9 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <div class="d-flex flex-column align-items-end">
-                                <span class="text-danger"><i class="fa fa-warning fa-lg"></i>&nbsp;No show</span>
+                                @if ($applicationRound->noShow)
+                                    <span class="text-danger"><i class="fa fa-warning fa-lg"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}</span>
+                                @endif
 
                                 @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
                                     <div class="text-success"><i class="fa fa-check"></i>&nbsp;{{ config('constants.hr.status.confirmed.title') }}</div>

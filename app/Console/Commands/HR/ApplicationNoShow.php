@@ -55,7 +55,6 @@ class ApplicationNoShow extends Command
         foreach ($applicationRounds as $applicationRound) {
             $application = $applicationRound->application;
             if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
-                $application->markNoShow();
                 ApplicationMeta::create([
                     'hr_application_id' => $application->id,
                     'key' => config('constants.hr.application-meta.keys.no-show'),
