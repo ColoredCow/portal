@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\HR\Applications;
 
 use App\Http\Controllers\Controller;
-use App\Models\HR\Application;
-use App\Models\HR\Round;
-use Illuminate\Support\Facades\Input;
-use App\User;
-use App\Models\HR\Job;
 use App\Http\Requests\HR\ApplicationRequest;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\HR\Application\JobChanged;
-use App\Models\HR\ApplicationMeta;
 use App\Mail\HR\Application\RoundNotConducted;
-use Illuminate\Support\Facades\Auth;
+use App\Models\HR\Application;
+use App\Models\HR\ApplicationMeta;
+use App\Models\HR\Job;
 use App\Models\Setting;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 
 abstract class ApplicationController extends Controller
 {
