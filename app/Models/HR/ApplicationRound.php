@@ -145,7 +145,7 @@ class ApplicationRound extends Model
     }
 
     /**
-     * Get communication mail for this application round
+     * Get communication mail for this application round.
      *
      * @return array
      */
