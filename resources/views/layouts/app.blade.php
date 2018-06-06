@@ -40,20 +40,22 @@
                         </li>
                         @endcan
                         @can('weeklydoses.view')
-                         <li class="nav-item dropdown">
+                        <li class="nav-item">
+                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    
-                                Knowledge Cafe <span class="caret"></span>
+                                    KnowledgeCafe <span class="caret"></span>
                                 </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('books.index') }}">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                     <a class="dropdown-item" href="{{ route('books.index') }}">
                                         Library
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('weeklydoses.index') }}">
-                                        WeeklyDose</a></div></li>
+                                     </a>
+                                     <a class="dropdown-item" href="{{ route('weeklydoses') }}">
+                                        WeeklyDose
+                                     </a>   
+                                </div>
+                            </li>
+                        </li>
                         @endcan
-
                         @can('settings.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
@@ -81,7 +83,7 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
-                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
