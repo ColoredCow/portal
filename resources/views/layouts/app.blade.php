@@ -41,7 +41,20 @@
                         @endcan
                         @can('weeklydoses.view')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/weeklydoses') }}">WeeklyDose</a>
+                            <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    KnowledgeCafe <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                     <a class="dropdown-item" href="{{ route('books.index') }}">
+                                        Library
+                                     </a>
+                                     <a class="dropdown-item" href="{{ route('weeklydoses') }}">
+                                        WeeklyDose
+                                     </a>   
+                                </div>
+                            </li>
                         </li>
                         @endcan
                         @can('settings.view')
