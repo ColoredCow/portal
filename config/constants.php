@@ -22,6 +22,11 @@ return [
     ],
     'pagination_size' => 10,
     'hr' => [
+        'default' => [
+            'email' => env('HR_DEFAULT_FROM_EMAIL', 'employeeportal@example.com'),
+            'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers')
+        ],
+        'interview-time-format' => 'h:i a',
         'no-show-hours-limit' => 2,
         'application-meta' => [
             'keys' => [
@@ -44,6 +49,16 @@ return [
                 'label' => 'on-hold',
                 'title' => 'On hold',
                 'class' => 'badge badge-secondary'
+            ],
+            'no-show' => [
+                'label' => 'no-show',
+                'title' => 'No show',
+                'class' => 'badge badge-danger'
+            ],
+            'no-show-reminded' => [
+                'label' => 'no-show-reminded',
+                'title' => 'No show reminded',
+                'class' => 'badge badge-danger'
             ],
             'rejected' => [
                 'label' => 'rejected',

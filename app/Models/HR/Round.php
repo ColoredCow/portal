@@ -27,7 +27,7 @@ class Round extends Model
         return $this->belongsToMany(Job::class, 'hr_jobs_rounds', 'hr_round_id', 'hr_job_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer');
     }
 
-    public function evaluationParameter()
+    public function evaluationParameters()
     {
         return $this->belongsToMany(EvaluationParameter::class, 'hr_round_evaluation', 'round_id', 'evaluation_id');
     }
