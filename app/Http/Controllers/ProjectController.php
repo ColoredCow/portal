@@ -56,7 +56,7 @@ class ProjectController extends Controller
             'status' => $validated['status'],
             'invoice_email' => $validated['invoice_email'],
         ]);
-        return redirect("/projects/$project->id/edit")->with('status', 'Project created successfully!');
+        return redirect($project->path() . '/edit')->with('status', 'Project created successfully!');
     }
 
     /**
@@ -104,7 +104,7 @@ class ProjectController extends Controller
             'invoice_email' => $validated['invoice_email'],
             'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
         ]);
-        return redirect("/projects/$project->id/edit")->with('status', 'Project updated successfully!');
+        return redirect($project->path() . '/edit')->with('status', 'Project updated successfully!');
     }
 
     /**

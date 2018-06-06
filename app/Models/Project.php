@@ -9,6 +9,9 @@ class Project extends Model
 {
     protected $guarded = [];
 
+    public function path() {
+        return '/projects/' . $this->id;
+    }
     /**
      * Get the client that owns the project.
      */
