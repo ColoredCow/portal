@@ -12,8 +12,10 @@
                 <p class="bg-light p-3">{{ $data['mail-subject'] }}</p>
                 <strong class="d-block mb-1">Mail body:</strong>
                 <div class="bg-light p-3 mb-3 space-wrap">{!! $data['mail-body'] !!}</div>
-                <strong class="d-block mb-1">Mail triggered by:</strong>
-                <p class="bg-light p-3">{{ $data['mail-sender'] }}</p>
+                @if (isset($data['mail-sender']))
+                    <strong class="d-block mb-1">Mail triggered by:</strong>
+                    <p class="bg-light p-3">{{ $data['mail-sender'] }}</p>
+                @endif
                 <strong class="d-block mb-1">Mail sent at:</strong>
                 <p class="bg-light p-3">{{ $data['mail-date'] }}</p>
             </div>
