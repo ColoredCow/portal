@@ -10,7 +10,6 @@
         <tr>
             <th>Job title</th>
             <th>Type</th>
-            
             <th>Total applicants</th>
         </tr>
         @foreach ($jobs as $job)
