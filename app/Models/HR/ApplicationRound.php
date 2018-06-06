@@ -19,11 +19,6 @@ class ApplicationRound extends Model
 
     public $timestamps = false;
 
-    public static function _create($attr)
-    {
-        return self::create($attr);
-    }
-
     public function _update($attr)
     {
         $fillable = [
@@ -48,7 +43,7 @@ class ApplicationRound extends Model
                 $application->markInProgress();
                 $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
                 $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                $applicationRound = self::_create([
+                $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
                     'scheduled_date' => $attr['next_scheduled_date'],
