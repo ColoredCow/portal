@@ -108,7 +108,7 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <div class="d-flex flex-column align-items-end">
-                                @if ($applicationRound->noShow)
+                                @if ($applicationRound->noShow && $applicationRound->round->reminder_enabled)
                                     <span class="text-danger"><i class="fa fa-warning fa-lg"></i>&nbsp;{{ config('constants.hr.status.no-show-reminded.title') }}</span>
                                 @endif
 

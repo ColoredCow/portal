@@ -42,6 +42,9 @@ class ApplicationNoShow extends Command
     public function handle()
     {
         $applicationRounds = ApplicationRound::with('application')
+                            ->whereHas('round', function($query){
+                                $query->where('reminder_enabled', true);
+                            })
                             ->whereNull('round_status')
                             ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
                             ->where('scheduled_date', '<=', Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
