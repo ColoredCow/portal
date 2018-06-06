@@ -28,7 +28,7 @@ class ApplicationMeta extends Model
 
     public static function scopeNoShow($query)
     {
-        return $query->where('key', config('constants.hr.application-meta.keys.no-show'));
+        return $query->where('key', config('constants.hr.status.no-show.label'));
     }
 
     /**

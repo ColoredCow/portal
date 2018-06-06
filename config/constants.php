@@ -47,6 +47,11 @@ return [
             ],
             'no-show' => [
                 'label' => 'no-show',
+                'title' => 'No show',
+                'class' => 'badge badge-danger'
+            ],
+            'no-show-reminded' => [
+                'label' => 'no-show-reminded',
                 'title' => 'No show reminded',
                 'class' => 'badge badge-danger'
             ],

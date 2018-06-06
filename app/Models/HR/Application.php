@@ -97,7 +97,7 @@ class Application extends Model
                 $query->onHold();
                 break;
             case config('constants.hr.status.no-show.label'):
-                $query->noShow();
+                $query->whereIn('status', ['no-show', 'no-show-reminded']);
                 break;
             default:
                 $query->isOpen();
@@ -197,6 +197,14 @@ class Application extends Model
     }
 
     /**
+     * Set the application status to no-show
+     */
+    public function markNoShowReminded()
+    {
+        $this->update(['status' => config('constants.hr.status.no-show-reminded.label')]);
+    }
+
+    /**
      * Get the timeline for an application
      *
      * @return array
@@ -231,7 +239,7 @@ class Application extends Model
             ];
         }
 
-        // adding no-show events in the application timeline
+        // adding no-show and no-show-reminded events in the application timeline
         $noShowEvents = $this->applicationMeta()->noShow()->get();
         foreach ($noShowEvents as $event) {
             $details = json_decode($event->value);

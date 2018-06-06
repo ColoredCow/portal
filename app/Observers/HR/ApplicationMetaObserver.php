@@ -17,11 +17,10 @@ class ApplicationMetaObserver
     {
         $application = $applicationMeta->application;
 
-        // check if applicationmeta key is no-show
         switch ($applicationMeta->key) {
-            case config('constants.hr.application-meta.keys.no-show'):
+            case config('constants.hr.status.no-show.label'):
                 Mail::send(new NoShow($applicationMeta));
-                $application->markNoShow();
+                $application->markNoShowReminded();
                 break;
         }
     }

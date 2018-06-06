@@ -57,7 +57,7 @@ class ApplicationNoShow extends Command
             if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
                 ApplicationMeta::create([
                     'hr_application_id' => $application->id,
-                    'key' => config('constants.hr.application-meta.keys.no-show'),
+                    'key' => config('constants.hr.status.no-show.label'),
                     'value' => json_encode([
                         'round' => $applicationRound->id,
                         'mail_subject' => $subject,
