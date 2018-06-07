@@ -34,5 +34,9 @@
         @endcan
     </div>
 </div>
-@include('knowledgecafe.library.books.show_nudge_modal')
+
+@if(isset($book)) 
+    @include('knowledgecafe.library.books.show_nudge_modal')
+@endif
+
 @endsection
