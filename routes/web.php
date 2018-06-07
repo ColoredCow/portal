@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
                 
             Route::post('book/fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
             Route::post('book/markbook', 'BookController@markBook')->name('books.markBook');
+            Route::post('book/addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
 
             Route::resource('book-categories', 'BookCategoryController')
             ->only(['index', 'store', 'update', 'destroy'])

@@ -44,8 +44,13 @@ class Book extends Model
     }
 
     public function markBook($read) {
-         $result = ($read) ? $this->readers()->attach(auth()->user()) 
-                  : $this->readers()->detach(auth()->user());
+
+        if(!$read) {
+            return $this->readers()->detach(auth()->user());
+        }
+
+        $this->readers()->attach(auth()->user());
+        $this->wishers()->detach(auth()->user());
 
         return true;
     }
@@ -53,6 +58,18 @@ class Book extends Model
     public static function getRandomUnreadBook() {
         return self::whereDoesntHave('readers', function ($query) {
             $query->where('id', auth()->id());
+        })->whereDoesntHave( 'wishers', function ($query) {
+            $query->where('id', auth()->id());
         })->inRandomOrder()->first();
+    }
+
+    public function wishers() {
+        return $this->belongsToMany(User::class, 'book_wishlist', 'library_book_id', 'user_id');
+    }
+
+    public function addToUserWishlist() {
+        $this->wishers()->detach(auth()->user());
+        $this->wishers()->attach(auth()->user());
+        return true;
     }
 }

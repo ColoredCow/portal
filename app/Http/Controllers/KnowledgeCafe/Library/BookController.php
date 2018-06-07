@@ -208,5 +208,14 @@ class BookController extends Controller
 
     }
 
+    public function addToUserWishList(){
+        $bookID = request()->book_id;
+        $book = Book::find($bookID);
+        $isAdded = ($book) ? $book->addToUserWishlist() : false;
+        return response()->json([
+            'isAdded' => $isAdded
+        ]);
+    }
+
 }
 

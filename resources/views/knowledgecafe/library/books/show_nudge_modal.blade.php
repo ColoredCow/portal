@@ -34,7 +34,8 @@
                             <button type="button"
                                 data-dismiss="modal" 
                                 data-id="{{$book->id}}" 
-                                data-mark-book-route= "{{route('books.markBook')}}"
+                                data-route = {{ route('books.addToWishList') }}
+                                id="addBookToWishlist"
                                 class="btn btn-info m-2 w-100 py-3 font-weight-bold">I wish to read it
                             </button>
                     </div>
