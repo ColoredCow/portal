@@ -195,7 +195,7 @@ $(document).ready(() => {
             updateClientProjects(form, client_id);
         }
     }
-
+    $('[data-toggle="tooltip"]').tooltip(); 
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -582,6 +582,7 @@ if(document.getElementById('home_page')) {
     var el = document.getElementById("markBookAsRead");
     el.addEventListener("click", markBookAsRead, false); 
     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
+    $('#show_nudge_modal').modal('show');
     if(!isModalShown) {
         sessionStorage.setItem("book_modal_has_shown", "true");
         $('#show_nudge_modal').modal('show');
