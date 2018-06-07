@@ -118,7 +118,7 @@
                                     <div class="text-danger"><i class="fa fa-close"></i>&nbsp;{{ config('constants.hr.status.rejected.title') }}</div>
                                 @endif
                                 @if ($applicationRound->round_status && $applicationRound->conducted_date)
-                                    <span>Conducted on: {{ date(config('constants.display_date_format', strtotime($applicationRound->conducted_date))) }}</span>
+                                    <span>Conducted on: {{ date(config('constants.display_date_format'), strtotime($applicationRound->conducted_date)) }}</span>
                                 @endif
                             </div>
                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
