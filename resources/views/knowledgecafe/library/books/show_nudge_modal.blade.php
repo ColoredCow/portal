@@ -15,45 +15,30 @@
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-6">
-                        <div class="ml-1 mb-1 mt-2">
-                            <h3> {{ $book->title }} </h3>
-                            <h6> {{ $book->author }} </h6>
-                        </div>  
-                    </div>
-    
-                    <div class="col-4 text-center">
+                    <div class="col-6 text-center">
                         <a href="{{ route('books.index', ['search'=> $book->title]) }}">
-                            <img src=" {{ $book->thumbnail }} " />
+                            <img class="mb-1" src=" {{ $book->thumbnail }} " />
                         </a>
-                       
+                        <p class="mb-1 font-weight-bold" > {{ $book->title }} </p>
+                        <p class="mb-1" > {{ $book->author }} </p>
                     </div>
+
+                    <div class="col-5">
+                            <button type="button" 
+                                data-id="{{$book->id}}" 
+                                data-mark-book-route= "{{route('books.markBook')}}"
+                                id="markBookAsRead" class="btn btn-primary m-2 w-100 py-2">Yes, I have read this
+                            </button>
+                            
+                            <button type="button" 
+                                data-id="{{$book->id}}" 
+                                data-mark-book-route= "{{route('books.markBook')}}"
+                                id="markBookAsRead" class="btn btn-info m-2 w-100 py-2">I wish to read it
+                            </button>
+                    </div>
+
                 </div>
 
-                @if($book->readers->count())
-                    <div class="row" id="readers_section" >
-                        <div class="col-8">
-                                <div class="ml-1 mb-1 mt-5">
-                                    <h4>Read by:</h4>
-                                    <div class="d-flex justify-content-start"> 
-                                        @foreach($book->readers as $reader)
-                                            <div class="my-3 mr-3 ml-0 text-center">
-                                                <img src="/images/default_profile.png" alt="">
-                                                <h5> {{ $reader->name }} </h5>
-                                            </div> 
-                                        @endforeach
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                @endif
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" 
-                    data-id="{{$book->id}}" 
-                    data-mark-book-route= "{{route('books.markBook')}}"
-                    id="markBookAsRead" class="btn btn-primary">Yes, I have read this</button>
             </div>
         </div>
     </div>
