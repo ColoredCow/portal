@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Google_Client;
-use Google_Service_Directory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\KnowledgeCafe\Library\Book;
+use Google_Client;
+use Google_Service_Calendar;
+use Google_Service_Directory;
 
 class HomeController extends Controller
 {
@@ -27,6 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $client = new Google_Client();
+        $client->useApplicationDefaultCredentials();
+        $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
+        $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+        $service = new Google_Service_Calendar($client);
+
+        $eventId = 'uehh5gk7bbq580lj4e4kb2bk3k';
+        $event = $service->events->get('primary', $eventId);
+
+        dd($event->hangoutLink, $event->getSummary());
+
         $unreadBook = Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);
     }
@@ -48,7 +58,7 @@ class HomeController extends Controller
 
         $dir = new Google_Service_Directory($client);
         $googleGroups = $dir->groups->listGroups([
-            'userKey' => $email
+            'userKey' => $email,
         ]);
         $groups = $googleGroups->getGroups();
 
