@@ -68,7 +68,6 @@ class Book extends Model
     }
 
     public function addToUserWishlist() {
-        $this->wishers()->detach(auth()->user());
         $this->wishers()->attach(auth()->user());
         return true;
     }
