@@ -28,12 +28,9 @@ class ApplicationRound extends Model
         switch ($attr['action']) {
             case 'schedule-update':
 
-                // if the application status is no-show or no-show-reminded, and the new schedule date is greater
-                // than the current time, we change the application status to in-progress
-                if (
-                    in_array($application->status, [config('constants.hr.status.no-show.label'), config('constants.hr.status.no-show-reminded.label')])
-                    && Carbon::parse($attr['scheduled_date'])->gt(Carbon::now())
-                ) {
+                // If the application status is no-show or no-show-reminded, and the new schedule date is greater
+                // than the current time, we change the application status to in-progress.
+                if ($application->isNoShow() && Carbon::parse($attr['scheduled_date'])->gt(Carbon::now())) {
                     $application->markInProgress();
                 }
                 $fillable = [
