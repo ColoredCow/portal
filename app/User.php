@@ -47,4 +47,8 @@ class User extends Authenticatable
     {
         return $query->where('provider', 'google');
     }
+
+    public function getAvatarAttribute($value) {
+        return ($value) ? : '/images/default_profile.png';
+    }
 }

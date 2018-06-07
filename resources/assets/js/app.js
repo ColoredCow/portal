@@ -394,14 +394,14 @@ if (document.getElementById('books_listing')) {
     const bookForm = new Vue({
         el: '#books_listing',
         data: {
-            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books).data : {},
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
             bookCategories: document.getElementById('books_table').dataset.categories ? JSON.parse(document.getElementById('books_table').dataset.categories) : [],
             updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
             categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
             newCategory:'',
-            searchKey:document.getElementById('search_input').dataset.value
+            searchKey:document.getElementById('search_input') ? document.getElementById('search_input').dataset.value : '',
             
         },
 
@@ -475,6 +475,7 @@ if (document.getElementById('books_listing')) {
             let categoryInputContainer = document.querySelector("#update_category_modal");
             let allCategoryInputs = categoryInputContainer.querySelectorAll('input[type="checkbox"]');
             allCategoryInputs.forEach((checkbox) => this.categoryInputs[checkbox.value] = checkbox);
+            console.log(this.books);
         }
     });
 }

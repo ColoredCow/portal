@@ -321,3 +321,13 @@ input:focus + .slider {
     max-height: 40em;
     overflow-y: scroll;
 }
+
+#books_listing {
+    .book_card {
+       width: 15rem;
+       // margin: auto;
+       img {
+           height: 16rem;
+       }
+    } 
+}
