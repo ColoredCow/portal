@@ -31,9 +31,9 @@ class ProjectsTest extends FeatureTest
     /** @test */
     public function an_authorised_user_can_create_a_project() {
         $this->anAuthorizedUser();
-        $project = create('App\Models\Project');
-        $this->post('/projects/', $project->toArray());
-        $this->get($project->path() . '/edit')
+        $project = make('App\Models\Project');
+        $response = $this->post('/projects/', $project->toArray());
+        $this->get($response->headers->get('Location'))
             ->assertSee($project->name);
     }
 
