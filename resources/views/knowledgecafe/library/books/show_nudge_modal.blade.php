@@ -16,25 +16,26 @@
             <div class="modal-body ml-5">
                 <div class="row">
                     <div class="col-6">
-                        <a class="shadow p-3 mb-5 bg-white rounded" href="{{ route('books.index', ['search'=> $book->title]) }}">
+                        <a class="" href="{{ route('books.index', ['search'=> $book->title]) }}">
                             <img class="mb-1 mw-100" src=" {{ $book->thumbnail }} " />
                         </a>
-                        <p class="mb-1 font-weight-bold" > {{ $book->title }} </p>
-                        <p class="mb-1" > {{ $book->author }} </p>
+                        <h5 class="mb-1 font-weight-bold" > {{ $book->title }} </h5>
+                        <h6 class="mb-1" > {{ $book->author }} </h6>
                     </div>
 
                     <div class="col-5">
                             <button type="button" 
                                 data-id="{{$book->id}}" 
                                 data-mark-book-route= "{{route('books.markBook')}}"
-                                id="markBookAsRead" class="btn btn-primary m-2 w-100 py-2">Yes, I have read this
+                                id="markBookAsRead" 
+                                class="btn btn-primary m-2 w-100 py-3 font-weight-bold">Yes, I have read this
                             </button>
-                                   
+
                             <button type="button"
                                 data-dismiss="modal" 
                                 data-id="{{$book->id}}" 
                                 data-mark-book-route= "{{route('books.markBook')}}"
-                                class="btn btn-info m-2 w-100 py-2">I wish to read it
+                                class="btn btn-info m-2 w-100 py-3 font-weight-bold">I wish to read it
                             </button>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                                                     data-toggle="tooltip" 
                                                     title="{{ $reader->name }}"  
                                                     class="reader_image"
-                                                    src="/images/default_profile.png"
+                                                    src="{{ $reader->avatar}}"
                                                     alt="{{ $reader->name }}" 
                                                     data-placement="bottom" 
                                                 />

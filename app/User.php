@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'provider', 'provider_id'
+        'name', 'email', 'password', 'provider', 'provider_id', 'avatar'
     ];
 
     /**
@@ -46,5 +46,9 @@ class User extends Authenticatable
     public static function scopeInterviewers($query)
     {
         return $query->where('provider', 'google');
+    }
+
+    public function getAvatarAttribute($value) {
+        return ($value) ? : url('/images/default_profile.png');
     }
 }
