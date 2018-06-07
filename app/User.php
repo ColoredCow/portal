@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\KnowledgeCafe\Library\Book;
 
 class User extends Authenticatable
 {
@@ -51,4 +52,5 @@ class User extends Authenticatable
     public function getAvatarAttribute($value) {
         return ($value) ? : url('/images/default_profile.png');
     }
+
 }
