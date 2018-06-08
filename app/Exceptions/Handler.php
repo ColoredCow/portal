@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Mail\ErrorReport;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -36,7 +37,8 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        parent::report($exception);
+        \Mail::to('admin@example.com')->send(new ErrorReport($exception));
+        return parent::report($exception);
     }
 
     /**

@@ -14,7 +14,6 @@ class KnowledgeCafeController extends Controller
      */
     public function index()
     {
-       return view('knowledgecafe.index');
+        return view('knowledgecafe.index');
     }
-
 }
