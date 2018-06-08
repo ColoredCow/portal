@@ -19,18 +19,22 @@
         data-index-route = "{{ route('books.index') }}"
         data-category-index-route = "{{ route('books.category.index') }}">
 
-        <div v-for = "book in books" class="card m-2 book_card ">
+        <div v-for="book in books" class="card mb-4 mr-4 book_card">
             <a target="_blank" :href="book.readable_link">
                 <img :src="book.thumbnail">
             </a>
             
-            <div class="card-body py-0">
-                <p class="card-title d-inline font-weight-bold">@{{ book.title }}</p>
-                <p class="card-text">@{{ book.author }} </p>
-               
+            <div class="card-body p-1 flex-grow-0">
+                <h5 class="card-title font-weight-bold mb-1">@{{ book.title }}</h5>
+                <p class="text-dark">@{{ book.author }} </p>
             </div>
 
-            <div class="card-body pt-0 pb-5" v-if="book.readers">
+            <div class="card-body p-1 flex-grow-0">
+                <h6 v-for="category in book.categories" class="badge badge-light px-2">@{{ category.name }} </h6>
+            </div>
+
+            <div v-if="book.readers && book.readers.length">
+                <div class="pt-0 pb-5 px-2">
                     <img v-for ="reader in book.readers" 
                         :src="reader.avatar" 
                         :alt="reader.name"
@@ -38,10 +42,11 @@
                         class="reader_image m-1" 
                         data-toggle="tooltip" 
                         data-placement="bottom">
+                </div>
             </div>
 
             <div class="card-body p-0" style="bottom:0px;position:relative">
-                <a href="#" class="card-link btn" style=" position:absolute;bottom:  0px;left: 0;">Change cate...</a>
+                <a href="#" class="card-link btn" style=" position:absolute;bottom:  0px;left: 0;"><i class="fa fa-pencil"></i></a>
                 <a href="#" class="card-link text-danger btn" style="position:absolute;bottom:0px;right: 0;" >Delete</a>
             </div>
         </div>

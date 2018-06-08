@@ -322,16 +322,21 @@ input:focus + .slider {
     overflow-y: scroll;
 }
 
+.flex-grow-0 {
+    flex-grow:0!important;
+}
+
 #books_listing {
     .book_card {
         >a > img {
-            width: 11em;
-            max-height: 14em;
+            width: 15em;
+            height: 20em;
         }
-        
-        .card-body {
-            width: 10em !important;
-        }
+    }
+
+    .reader_image {
+        width:20px !important;
+        height: 20px !important;
     }
 } 
 
