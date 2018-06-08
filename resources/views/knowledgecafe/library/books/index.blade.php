@@ -29,8 +29,13 @@
                 <p class="text-dark" :title="book.author" >@{{ strLimit(book.author, 20) }} </p>
             </div>
 
-            <div class="card-body p-1 flex-grow-0">
-                <h6 v-for="category in book.categories" class="badge badge-light px-2">@{{ category.name }} </h6>
+            <div 
+                :class=" (!book.readers.length) ? 'card-body p-1 flex-grow-0 pb-5' : 'card-body p-1 flex-grow-0'">
+                <h6 
+                    v-for="category in book.categories" 
+                    class="badge badge-light px-2"
+                    >@{{ category.name }} 
+                </h6>
             </div>
 
             <div v-if="book.readers && book.readers.length">
