@@ -35,8 +35,5 @@
     </div>
 </div>
 
-@if(isset($book)) 
-    @include('knowledgecafe.library.books.show_nudge_modal')
-@endif
-
+@includeWhen($book, 'knowledgecafe.library.books.show_nudge_modal')
 @endsection
