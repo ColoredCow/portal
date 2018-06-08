@@ -11,6 +11,7 @@ require('./bootstrap');
 import 'jquery-ui/ui/widgets/datepicker.js';
 import ImageCompressor from 'image-compressor.js';
 
+
 window.Vue = require('vue');
 
 /**
@@ -467,15 +468,17 @@ if (document.getElementById('books_listing')) {
 
             searchBooks: function() {
                 window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
-            }
+            },
 
+            strLimit: function (str, length) {
+                return str.length > length ? str.substring(0, length) + "..." : str;
+            }
         },
 
         mounted: function() {
             let categoryInputContainer = document.querySelector("#update_category_modal");
             let allCategoryInputs = categoryInputContainer.querySelectorAll('input[type="checkbox"]');
             allCategoryInputs.forEach((checkbox) => this.categoryInputs[checkbox.value] = checkbox);
-            console.log(this.books);
         }
     });
 }

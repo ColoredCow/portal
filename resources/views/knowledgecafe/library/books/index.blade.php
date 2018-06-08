@@ -25,8 +25,8 @@
             </a>
             
             <div class="card-body p-1 flex-grow-0">
-                <h5 class="card-title font-weight-bold mb-1">@{{ book.title }}</h5>
-                <p class="text-dark">@{{ book.author }} </p>
+                <h5 class="card-title font-weight-bold mb-1" :title="book.title">@{{ strLimit(book.title, 20) }}</h5>
+                <p class="text-dark" :title="book.author" >@{{ strLimit(book.author, 20) }} </p>
             </div>
 
             <div class="card-body p-1 flex-grow-0">
