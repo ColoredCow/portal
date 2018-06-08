@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Models\HR;
-
-use App\Models\HR\Application;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationMeta extends Model
