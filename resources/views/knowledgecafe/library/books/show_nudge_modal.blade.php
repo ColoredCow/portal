@@ -38,32 +38,26 @@
                                 id="addBookToWishlist"
                                 class="btn btn-info m-2 w-100 py-3 font-weight-bold">I wish to read it
                             </button>
-                    </div>
-                </div>
 
-                @if($book->readers->count())
-                    <div class="row" id="readers_section" >
-                        <div class="col-8">
-                                <div class="mb-1">
+                            @if($book->readers->count())
+                                <div id="readers_section" class="mb-1">
                                     <div class="d-flex justify-content-start"> 
                                         @foreach($book->readers as $reader)
-                                            <div class="my-3 mr-3 ml-0 text-center">
+                                            <div class="my-3 ml-2 text-center">
                                                 <img  
                                                     data-toggle="tooltip" 
-                                                    title="{{ $reader->name }}"  
+                                                    title="{{ $reader->name }}" 
+                                                    data-placement="bottom"  
                                                     class="reader_image"
                                                     src="{{ $reader->avatar}}"
-                                                    alt="{{ $reader->name }}" 
-                                                    data-placement="bottom" 
-                                                />
+                                                    alt="{{ $reader->name }}"/>
                                             </div> 
                                         @endforeach
                                     </div>
                                 </div>
-                        </div>
+                            @endif
                     </div>
-                @endif
-
+                </div>
             </div>
         </div>
     </div>
