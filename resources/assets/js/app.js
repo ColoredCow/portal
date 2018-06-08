@@ -195,7 +195,7 @@ $(document).ready(() => {
             updateClientProjects(form, client_id);
         }
     }
-
+    $('[data-toggle="tooltip"]').tooltip(); 
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -580,7 +580,9 @@ if (document.getElementById('show_book_info')) {
 
 if(document.getElementById('home_page')) {
     var el = document.getElementById("markBookAsRead");
-    el.addEventListener("click", markBookAsRead, false); 
+    el.addEventListener("click", markBookAsRead, false);
+    var wishlistBtn = document.getElementById("addBookToWishlist");
+    wishlistBtn.addEventListener("click", addBookToWishlist, false);
     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
     if(!isModalShown) {
         sessionStorage.setItem("book_modal_has_shown", "true");
@@ -592,5 +594,12 @@ function markBookAsRead() {
     let bookID = document.getElementById('markBookAsRead').dataset.id; 
     let route = document.getElementById('markBookAsRead').dataset.markBookRoute; 
     axios.post(route, {book_id:bookID, is_read:true});
+    $('#show_nudge_modal').modal('hide');
+}
+
+function addBookToWishlist() {
+    let bookID = document.getElementById('addBookToWishlist').dataset.id; 
+    let route =  document.getElementById('addBookToWishlist').dataset.route; 
+    axios.post(route, {book_id:bookID});
     $('#show_nudge_modal').modal('hide');
 }
