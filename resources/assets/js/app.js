@@ -298,7 +298,6 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
 });
 
 
-
 /**
  * Knowledge Cafe
  *
@@ -401,7 +400,9 @@ if (document.getElementById('books_listing')) {
             categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
-            newCategory:''
+            newCategory:'',
+            searchKey:document.getElementById('search_input').dataset.value
+            
         },
 
         methods: {
@@ -450,6 +451,24 @@ if (document.getElementById('books_listing')) {
                     this.categoryInputs[lastCheckbox.value] = lastCheckbox;
                 }
             },
+
+            deleteBook: async function(index) {
+                let confirmDelete = confirm ('Are you sure ?');
+
+                if(!confirmDelete) {
+                    return false;
+                }
+
+                let bookID = this.books[index]['id'];
+                let route = `${this.updateRoute}/${bookID}`;
+                let response = await axios.delete(route);
+                this.books.splice(index, 1);
+            },
+
+            searchBooks: function() {
+                window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
+            }
+
         },
 
         mounted: function() {
@@ -524,4 +543,54 @@ if (document.getElementById('books_category')) {
             }
         }
     });
+}
+
+if (document.getElementById('show_book_info')) {
+    const bookForm = new Vue({
+        el: '#show_book_info',
+        data: {
+            book: document.getElementById('show_book_info').dataset.book 
+                        ? document.getElementById('show_book_info').dataset.book
+                        : [],
+            route:document.getElementById('show_book_info').dataset.markBookRoute 
+                        ? document.getElementById('show_book_info').dataset.markBookRoute
+                        : '',
+            isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
+            readers: document.getElementById('show_book_info').dataset.readers 
+                        ? document.getElementById('show_book_info').dataset.readers
+                        : []
+        },
+        methods: {
+            markBook: async function (read) {
+                    let response = await axios.post(this.route, {book_id:this.book.id, is_read:read});
+                    this.isRead = read;
+                    if(!response.data) {
+                        return false;
+                    }
+                    this.readers = response.data.readers;
+            },
+        },
+
+        mounted() {
+            this.readers = JSON.parse(this.readers);
+            this.book    = JSON.parse(this.book);
+        }
+    });
+}
+
+if(document.getElementById('home_page')) {
+    var el = document.getElementById("markBookAsRead");
+    el.addEventListener("click", markBookAsRead, false); 
+    let isModalShown = sessionStorage.getItem('book_modal_has_shown');
+    if(!isModalShown) {
+        sessionStorage.setItem("book_modal_has_shown", "true");
+        $('#show_nudge_modal').modal('show');
+    }
+}
+
+function markBookAsRead() {
+    let bookID = document.getElementById('markBookAsRead').dataset.id; 
+    let route = document.getElementById('markBookAsRead').dataset.markBookRoute; 
+    axios.post(route, {book_id:bookID, is_read:true});
+    $('#show_nudge_modal').modal('hide');
 }

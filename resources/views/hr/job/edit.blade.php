@@ -67,6 +67,7 @@
 
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{{ $job->link }}" target="_blank" class="btn btn-info" role="button">Preview job</a>
             </div>
         </form>
     </div>

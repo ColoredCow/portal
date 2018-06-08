@@ -11,8 +11,8 @@
 @import '~jquery-ui/themes/base/all.css';
 
 .navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .user-avatar {
@@ -315,4 +315,9 @@ input:focus + .slider {
 
 [v-cloak] {
   display: none;
+}
+
+.round_evaluation_list {
+    max-height: 40em;
+    overflow-y: scroll;
 }
