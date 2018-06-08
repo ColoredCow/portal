@@ -3,10 +3,6 @@
 namespace App\Models\HR;
 
 use App\Events\HR\ApplicationCreated;
-use App\Models\HR\Applicant;
-use App\Models\HR\ApplicationMeta;
-use App\Models\HR\ApplicationRound;
-use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;

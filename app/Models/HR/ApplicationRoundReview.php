@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Models\HR;
-
-use App\Models\HR\ApplicationRound;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationRoundReview extends Model

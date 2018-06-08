@@ -1,10 +1,6 @@
 <?php
 
 namespace App\Models\HR;
-
-use App\Models\HR\Application;
-use App\Models\HR\ApplicationRoundReview;
-use App\Models\HR\Round;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
