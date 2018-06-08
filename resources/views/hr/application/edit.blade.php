@@ -21,7 +21,6 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
-                    @include('hr.application.application-evaluation')
                     <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$application->status.title") }}</div>
                 </div>
                 <div class="card-body">
