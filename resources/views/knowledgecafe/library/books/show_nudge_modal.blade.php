@@ -13,47 +13,51 @@
                 </button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body ml-5">
                 <div class="row">
                     <div class="col-6">
-                        <div class="ml-1 mb-1 mt-2">
-                            <h3> {{ $book->title }} </h3>
-                            <h6> {{ $book->author }} </h6>
-                        </div>  
-                    </div>
-    
-                    <div class="col-4 text-center">
-                        <a href="{{ route('books.index', ['search'=> $book->title]) }}">
-                            <img src=" {{ $book->thumbnail }} " />
+                        <a class="" href="{{ route('books.index', ['search'=> $book->title]) }}">
+                            <img class="mb-1 mw-100" src=" {{ $book->thumbnail }} " />
                         </a>
-                       
+                        <h5 class="mb-1 font-weight-bold" > {{ $book->title }} </h5>
+                        <h6 class="mb-1" > {{ $book->author }} </h6>
                     </div>
-                </div>
 
-                @if($book->readers->count())
-                    <div class="row" id="readers_section" >
-                        <div class="col-8">
-                                <div class="ml-1 mb-1 mt-5">
-                                    <h4>Read by:</h4>
+                    <div class="col-5">
+                            <button type="button" 
+                                data-id="{{$book->id}}" 
+                                data-mark-book-route= "{{route('books.toggleReadStatus')}}"
+                                id="markBookAsRead" 
+                                class="btn btn-primary m-2 w-100 py-3 font-weight-bold">Yes, I have read this
+                            </button>
+
+                            <button type="button"
+                                data-dismiss="modal" 
+                                data-id="{{$book->id}}" 
+                                data-route = {{ route('books.addToWishList') }}
+                                id="addBookToWishlist"
+                                class="btn btn-info m-2 w-100 py-3 font-weight-bold">I wish to read it
+                            </button>
+
+                            @if($book->readers->count())
+                                <div id="readers_section" class="mb-1">
                                     <div class="d-flex justify-content-start"> 
                                         @foreach($book->readers as $reader)
-                                            <div class="my-3 mr-3 ml-0 text-center">
-                                                <img src="/images/default_profile.png" alt="">
-                                                <h5> {{ $reader->name }} </h5>
+                                            <div class="my-3 ml-2 text-center">
+                                                <img  
+                                                    data-toggle="tooltip" 
+                                                    title="{{ $reader->name }}" 
+                                                    data-placement="bottom"  
+                                                    class="reader_image"
+                                                    src="{{ $reader->avatar}}"
+                                                    alt="{{ $reader->name }}"/>
                                             </div> 
                                         @endforeach
                                     </div>
                                 </div>
-                        </div>
+                            @endif
                     </div>
-                @endif
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" 
-                    data-id="{{$book->id}}" 
-                    data-mark-book-route= "{{route('books.markBook')}}"
-                    id="markBookAsRead" class="btn btn-primary">Yes, I have read this</button>
+                </div>
             </div>
         </div>
     </div>
