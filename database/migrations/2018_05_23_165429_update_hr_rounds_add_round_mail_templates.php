@@ -14,8 +14,8 @@ class UpdateHrRoundsAddRoundMailTemplates extends Migration
     public function up()
     {
         Schema::table('hr_rounds', function(Blueprint $table) {
-            $table->text('confirmed_mail_template')->nullable()->after('guidelines');
-            $table->text('rejected_mail_template')->nullable()->after('confirmed_mail_template');
+            $table->json('confirmed_mail_template')->nullable()->after('guidelines');
+            $table->json('rejected_mail_template')->nullable()->after('confirmed_mail_template');
         });
     }
 
