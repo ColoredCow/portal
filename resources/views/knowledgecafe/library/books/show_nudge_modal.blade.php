@@ -26,7 +26,7 @@
                     <div class="col-5">
                             <button type="button" 
                                 data-id="{{$book->id}}" 
-                                data-mark-book-route= "{{route('books.markBook')}}"
+                                data-mark-book-route= "{{route('books.toggleReadStatus')}}"
                                 id="markBookAsRead" 
                                 class="btn btn-primary m-2 w-100 py-3 font-weight-bold">Yes, I have read this
                             </button>
