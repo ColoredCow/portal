@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\HR\ApplicationEvaluation;
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 use Illuminate\Database\Seeder;
 
 class ApplicationEvaluationSeeder extends Seeder

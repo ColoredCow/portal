@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models\HR;
+namespace App\Models\HR\Evaluation;
 
+use App\Models\HR\Application;
 use App\Models\HR\ApplicationRound;
-use App\Models\HR\EvaluationParameter;
-use App\Models\HR\EvaluationParameterOption;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationEvaluation extends Model
@@ -25,11 +24,11 @@ class ApplicationEvaluation extends Model
 
     public function evaluationParameter()
     {
-        return $this->belongsTo(EvaluationParameter::class, 'evaluation_id');
+        return $this->belongsTo(Parameter::class, 'evaluation_id');
     }
 
     public function evaluationOption()
     {
-        return $this->belongsTo(EvaluationParameterOption::class, 'option_id');
+        return $this->belongsTo(ParameterOption::class, 'option_id');
     }
 }

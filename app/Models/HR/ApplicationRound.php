@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
