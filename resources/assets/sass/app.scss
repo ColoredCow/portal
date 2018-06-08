@@ -324,10 +324,18 @@ input:focus + .slider {
 
 #books_listing {
     .book_card {
-       width: 15rem;
-       // margin: auto;
-       img {
-           height: 16rem;
-       }
-    } 
+        >a > img {
+            width: 11em;
+            max-height: 14em;
+        }
+        
+        .card-body {
+            width: 10em !important;
+        }
+    }
+} 
+
+.reader_image {
+    width:40px !important;
+    height: 40px !important;
 }

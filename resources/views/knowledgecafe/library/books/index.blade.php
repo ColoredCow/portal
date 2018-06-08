@@ -21,26 +21,28 @@
 
         <div v-for = "book in books" class="card m-2 book_card ">
             <a target="_blank" :href="book.readable_link">
-                <img class="w-100" :src="book.thumbnail">
+                <img :src="book.thumbnail">
             </a>
             
-            <div class="card-body">
-                <h6 class="card-title d-inline font-weight-bold">@{{ book.title }}</h6>
+            <div class="card-body py-0">
+                <p class="card-title d-inline font-weight-bold">@{{ book.title }}</p>
                 <p class="card-text">@{{ book.author }} </p>
-                <p>
-                    categories:
-                    <span v-for="(category, catIndex) in book.categories" >
-                            @{{ (catIndex) ? category.name + ',' : category.name }}
-                    </span>
-                </p>
+               
+            </div>
 
+            <div class="card-body pt-0 pb-5" v-if="book.readers">
+                    <img v-for ="reader in book.readers" 
+                        :src="reader.avatar" 
+                        :alt="reader.name"
+                        :title="reader.name" 
+                        class="reader_image m-1" 
+                        data-toggle="tooltip" 
+                        data-placement="bottom">
+            </div>
 
-                <div v-if="book.readers" class="d-flex" >
-                    <img v-for ="reader in book.readers" :src="reader.avatar" style="width:40px; height:40px" alt="">
-                </div>
-
-
-
+            <div class="card-body p-0" style="bottom:0px;position:relative">
+                <a href="#" class="card-link btn" style=" position:absolute;bottom:  0px;left: 0;">Change cate...</a>
+                <a href="#" class="card-link text-danger btn" style="position:absolute;bottom:0px;right: 0;" >Delete</a>
             </div>
         </div>
     </div>
