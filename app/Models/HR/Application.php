@@ -33,6 +33,11 @@ class Application extends Model
         return $this->hasMany(ApplicationRound::class, 'hr_application_id');
     }
 
+    public function applicationEvaluations()
+    {
+        return $this->hasMany(ApplicationEvaluation::class);
+    }
+
     public function applicationMeta()
     {
         return $this->hasMany(ApplicationMeta::class, 'hr_application_id');
