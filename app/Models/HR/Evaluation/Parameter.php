@@ -10,7 +10,7 @@ class Parameter extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'segment_id'];
 
     protected $table = 'hr_evaluation_parameters';
 
