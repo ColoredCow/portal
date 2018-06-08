@@ -2,8 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\EvaluationParameter;
-use App\Models\HR\Round;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

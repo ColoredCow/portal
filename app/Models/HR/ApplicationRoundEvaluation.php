@@ -2,9 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\ApplicationRound;
-use App\Models\HR\EvaluationParameter;
-use App\Models\HR\EvaluationParameterOption;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationRoundEvaluation extends Model
