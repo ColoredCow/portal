@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
-    Route::resource('projects', 'ProjectController')->except(['show', 'destroy'])->names([ 'index' => 'client.projects.index']);
+    Route::resource('projects', 'ProjectController')->except(['show', 'destroy'])->names(['index' => 'projects.index']);
     Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     // Route::get('projects', 'ProjectController@getClientProjects');

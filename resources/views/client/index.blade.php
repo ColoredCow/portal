@@ -36,7 +36,7 @@
                 </td>
                 <td>
                 @if ($client->projects->count())
-                   <a href="{{ route('client.projects.index') }}?client_id={{$client->id }}">See Projects</a>
+                   <a href="{{ route('projects.index') }}?client_id={{$client->id }}">See Projects</a>
                 @else
                    {{ $client->projects->count() }}
                 @endif

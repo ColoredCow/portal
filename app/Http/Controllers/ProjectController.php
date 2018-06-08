@@ -21,17 +21,16 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        
         $this->authorize('list', Project::class);
-
-        if(request()->has('client_id')) {
+        if(request()->has('client_id'))
+        {
             $client = Client::find(request()->input('client_id'));
             $projects = $client->projects()->paginate();
         }
-        else {
+        else
+        {
             $projects = Project::getList();
         }
-
         return view('project.index')->with([
             'projects' =>  $projects
         ]);
