@@ -71,6 +71,10 @@ class LoginController extends Controller
         $user = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
+        /**
+         * Update user avatar to keep it update with gmail
+         */
+        $authUser->update(['avatar' => $user->avatar_original]);
         return redirect('home');
     }
 
