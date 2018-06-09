@@ -324,29 +324,28 @@ input:focus+.slider {
 
 #books_listing {
     .book_card {
-        width: 20em;
-        height: 20em;
+        width: 22em;
+        height: 22em;
     }
 
     .reader_image {
-        width:20px !important;
-        height: 20px !important;
+        width:40px !important;
+        height: 40px !important;
     }
 
-    .action_buttons_container {
-        bottom:0px;
-        position:relative;
-        >a {
-            position:absolute;
-            bottom:0px;
-        }
-        .change_category_btn {
-            left: 0;
+    .action_buttons {
+        a {
+            bottom:0;
         }
 
-        .delete_book_btn {
+        a:nth-child(2) {
             right: 0;
         }
+    }
+
+    .category_section {
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 } 
 

@@ -26,7 +26,7 @@
                     <img :src="book.thumbnail" class="w-100 h-100">
                 </a>
                 
-                <div :class=" (!book.readers.length) ? 'card-body p-1 flex-grow-0 pb-5' : 'card-body p-1 flex-grow-0'">
+                <div class="card-body p-1 flex-grow-0 pb-5 w-50 category_section">
                     <span v-for="category in book.categories">
                         <h6 class="badge badge-light px-2">@{{ category.name }} </h6>
                         <br>
@@ -52,22 +52,20 @@
                 </div>
             </div>
 
-            <div class="card-body p-0 action_buttons_container">
+            <div class="card-body p-0 position-relative action_buttons">
                 <a 
                     href="#" 
-                    class="card-link btn change_category_btn"  
+                    class="card-link btn change_category_btn position-absolute"  
                     data-toggle="modal" 
                     data-target="#update_category_modal" 
                     v-show="!book.showCategories" 
-                    class="btn btn-info btn-sm mt-1 ml-4" 
                     @click="updateCategoryMode(index)">
                     <i class="fa fa-pencil"></i>
                 </a>
                 
                 <a 
                     href="#" 
-                    class="card-link text-danger btn delete_book_btn" 
-                    style="position:absolute;bottom:0px;right: 0;" 
+                    class="card-link text-danger btn delete_book_btn position-absolute"
                     @click="deleteBook(index)">Delete</a>
             </div>
 
