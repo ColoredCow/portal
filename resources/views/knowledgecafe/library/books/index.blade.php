@@ -21,7 +21,7 @@
 
         <div v-for="(book, index) in books" class="card mb-4 mr-4 book_card">
             <a target="_blank" :href="book.readable_link">
-                <img :src="book.thumbnail" class="mw-100">
+                <img :src="book.thumbnail">
             </a>
             
             <div class="card-body p-1 flex-grow-0">
