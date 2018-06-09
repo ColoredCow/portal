@@ -338,6 +338,22 @@ input:focus + .slider {
         width:20px !important;
         height: 20px !important;
     }
+
+    .action_buttons_container {
+        bottom:0px;
+        position:relative;
+        >a {
+            position:absolute;
+            bottom:0px;
+        }
+        .change_category_btn {
+            left: 0;
+        }
+
+        .delete_book_btn {
+            right: 0;
+        }
+    }
 } 
 
 .reader_image {

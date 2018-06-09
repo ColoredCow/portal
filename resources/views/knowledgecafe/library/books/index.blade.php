@@ -21,7 +21,7 @@
 
         <div v-for="(book, index) in books" class="card mb-4 mr-4 book_card">
             <a target="_blank" :href="book.readable_link">
-                <img :src="book.thumbnail">
+                <img :src="book.thumbnail" class="mw-100">
             </a>
             
             <div class="card-body p-1 flex-grow-0">
@@ -50,19 +50,23 @@
                 </div>
             </div>
 
-            <div class="card-body p-0" style="bottom:0px;position:relative">
+            <div class="card-body p-0 action_buttons_container">
                 <a 
                     href="#" 
-                    class="card-link btn"  
+                    class="card-link btn change_category_btn"  
                     data-toggle="modal" 
                     data-target="#update_category_modal" 
                     v-show="!book.showCategories" 
                     class="btn btn-info btn-sm mt-1 ml-4" 
-                    @click="updateCategoryMode(index)"
-                    style=" position:absolute;bottom:0px;left: 0;">
+                    @click="updateCategoryMode(index)">
                     <i class="fa fa-pencil"></i>
                 </a>
-                <a href="#" class="card-link text-danger btn" style="position:absolute;bottom:0px;right: 0;" @click="deleteBook(index)">Delete</a>
+                
+                <a 
+                    href="#" 
+                    class="card-link text-danger btn delete_book_btn" 
+                    style="position:absolute;bottom:0px;right: 0;" 
+                    @click="deleteBook(index)">Delete</a>
             </div>
         </div>
     </div>
