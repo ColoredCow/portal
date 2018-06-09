@@ -29,6 +29,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
         el: '#page_hr_applicant_edit',
         data: {
             showResumeFrame: false,
+            showEvaluationFrame: true,
             applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
             selectedNextRound: '',
             nextRoundName: '',
@@ -36,6 +37,9 @@ if (document.getElementById('page_hr_applicant_edit')) {
         methods: {
             toggleResumeFrame: function() {
                 this.showResumeFrame = !this.showResumeFrame;
+            },
+            toggleEvaluationFrame: function() {
+                this.showEvaluationFrame = !this.showEvaluationFrame;
             },
             updateNextRoundName: function() {
                 for (let index = 0; index < this.applicationJobRounds.length; index++) {
