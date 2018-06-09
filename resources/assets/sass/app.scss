@@ -324,10 +324,8 @@ input:focus+.slider {
 
 #books_listing {
     .book_card {
-        >a > img {
-            width: 15em;
-            height: 20em;
-        }
+        width: 20em;
+        height: 20em;
     }
 
     .reader_image {
