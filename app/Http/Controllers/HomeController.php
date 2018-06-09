@@ -28,13 +28,14 @@ class HomeController extends Controller
     {
         $client = new Google_Client();
         $client->useApplicationDefaultCredentials();
-        $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
+        $client->setSubject(config('constants.gsuite.service-account-impersonate'));
         $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
         $service = new Google_Service_Calendar($client);
 
         $eventId = 'uehh5gk7bbq580lj4e4kb2bk3k';
         $event = $service->events->get('primary', $eventId);
 
+        dd($event);
         dd($event->hangoutLink, $event->getSummary());
 
         $unreadBook = Book::getRandomUnreadBook();

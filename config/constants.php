@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'gsuite' => [
+        'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
+    ],
     'date_format' => 'Y-m-d',
     'display_date_format' => 'd/m/Y',
     'full_display_date_format' => 'F d, Y',

@@ -4,10 +4,8 @@ namespace App\Observers\HR;
 
 use App\Models\HR\ApplicationRound;
 use App\Notifications\HR\ApplicationRoundScheduled;
+use App\Services\CalendarService;
 use Carbon\Carbon;
-use Google_Client;
-use Google_Service_Calendar;
-use Google_Service_Calendar_Event;
 
 class ApplicationRoundObserver
 {
@@ -36,14 +34,10 @@ class ApplicationRoundObserver
      */
     public function createCalendarEvent(ApplicationRound $applicationRound)
     {
-        $client = new Google_Client();
-        $client->useApplicationDefaultCredentials();
-        $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
-        $client->setScopes(Google_Service_Calendar::CALENDAR);
-        $service = new Google_Service_Calendar($client);
-
         $applicant = $applicationRound->application->applicant;
-        $event = new Google_Service_Calendar_Event([
+        $calendarService = new CalendarService();
+
+        $eventDetails = [
             'summary' => "Let's talk basics with ColoredCow – $applicant->name",
             'start' => [
                 'dateTime' => Carbon::parse($applicationRound->scheduled_date)->format(config('constants.calendar_datetime_format')),
@@ -55,11 +49,10 @@ class ApplicationRoundObserver
             ],
             'attendees' => [
                 ['email' => $applicationRound->scheduledPerson->email],
+                // ['email' => $applicant->email],
             ],
-        ]);
-
-        $calendarId = 'primary';
-        $event = $service->events->insert($calendarId, $event);
+        ];
+        $event = $calendarService->createEvent($eventDetails);
         dd($event);
     }
 }
