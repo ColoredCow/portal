@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
