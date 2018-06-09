@@ -20,7 +20,7 @@
         data-category-index-route = "{{ route('books.category.index') }}">
 
         <div v-for="(book, index) in books" class="card mb-4 mr-4 book_card">
-
+            
             <div class="d-flex h-50">
                 <a target="_blank" :href="book.readable_link">
                     <img :src="book.thumbnail" class="w-100 h-100">
