@@ -3,9 +3,10 @@
 namespace App\Models\HR;
 
 use App\Events\HR\ApplicationCreated;
+use App\Helpers\ContentHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-
+use App\user;
 class Application extends Model
 {
     protected $guarded = ['id'];

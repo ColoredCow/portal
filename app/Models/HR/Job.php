@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Events\HR\JobUpdated;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
