@@ -8,6 +8,12 @@ use App\Models\KnowledgeCafe\WeeklyDose;
 
 class WeeklyDoseController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View
+     */
+
     public function index()
     {
         $this->authorize('list', WeeklyDose::class);
