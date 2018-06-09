@@ -37,7 +37,7 @@
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Applied for</b>
                             <div><a href="{{ $application->job->link }}" target="_blank">{{ $application->job->title }}</a></div>
-                            <div>@includewhen($application->evaluations, 'hr.application.application-evaluation', ['applicationEvaluations' => $application->evaluations])</div>
+                            <div>@includeWhen($application->evaluations, 'hr.application.application-evaluation', ['applicationEvaluations' => $application->evaluations])</div>
                         </div>
                         <div class="form-group col-md-5">
                             <b>Phone</b>
