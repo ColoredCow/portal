@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Models\HR;
+namespace App\Models\HR\Evaluation;
 
-use App\Models\HR\EvaluationParameter;
-use App\Models\HR\Round;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EvaluationParameterOption extends Model
+class ParameterOption extends Model
 {
     use SoftDeletes;
     
@@ -19,6 +17,6 @@ class EvaluationParameterOption extends Model
 
     public function evaluationParameter()
     {
-        return $this->belongsTo(EvaluationParameter::class, 'evaluation_id');
+        return $this->belongsTo(Parameter::class, 'evaluation_id');
     }
 }

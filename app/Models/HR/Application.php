@@ -7,6 +7,7 @@ use App\Helpers\ContentHelper;
 use App\Models\HR\Applicant;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\ApplicationRound;
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\Models\HR\Job;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +32,11 @@ class Application extends Model
     public function applicationRounds()
     {
         return $this->hasMany(ApplicationRound::class, 'hr_application_id');
+    }
+
+    public function applicationEvaluations()
+    {
+        return $this->hasMany(ApplicationEvaluation::class);
     }
 
     public function applicationMeta()

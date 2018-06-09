@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -78,6 +79,7 @@ class ApplicationRound extends Model
                     [
                         'application_round_id' => $this->id,
                         'evaluation_id' => $evaluation['evaluation_id'],
+                        'application_id' => $this->hr_application_id,
                     ],
                     [
                         'option_id' => $evaluation['option_id'],
@@ -133,7 +135,7 @@ class ApplicationRound extends Model
 
     public function evaluations()
     {
-        return $this->hasMany(ApplicationRoundEvaluation::class, 'application_round_id');
+        return $this->hasMany(ApplicationEvaluation::class, 'application_round_id');
     }
 
     public function mailSender()
