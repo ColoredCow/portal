@@ -182,6 +182,7 @@ class ApplicationRound extends Model
                     config('constants.hr.status.no-show.label'),
                 ]);
             })
+            ->whereNull('round_status')
             ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
             ->orderBy('scheduled_date')
             ->get();
