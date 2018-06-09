@@ -14,7 +14,7 @@ class DueDate extends Migration
     public function up()
     {
        Schema::table('finance_invoices', function (Blueprint $table) {
-        $table->date('due_date');
+        $table->date('due_date')->nullable();
        }); //
     }
 
@@ -25,6 +25,9 @@ class DueDate extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('finance_invoices', function (Blueprint $table) {
+            $table->dropColumn(['due_date']);
+        });
+//
     }
 }
