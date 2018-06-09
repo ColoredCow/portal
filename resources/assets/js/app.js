@@ -29,7 +29,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
         el: '#page_hr_applicant_edit',
         data: {
             showResumeFrame: false,
-            showEvaluationFrame: true,
+            showEvaluationFrame: false,
             applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
             selectedNextRound: '',
             nextRoundName: '',

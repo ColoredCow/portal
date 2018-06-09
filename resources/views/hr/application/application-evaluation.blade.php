@@ -1,24 +1,27 @@
-<div class="d-inline text-danger c-pointer font-weight-bold m-5"  @click="toggleEvaluationFrame()">Evaluation</div>
+<div class="d-inline text-danger c-pointer"  @click="toggleEvaluationFrame()">Application Evaluation</div>
 <div class="card border-dark inline-card inline-evaluation" v-cloak v-show="showEvaluationFrame">
     <div class="card-header bg-warning">
         <ul class="nav justify-content-start">
             <li class="nav-item">
-                <b><span class="c-pointer text-primary" @click="toggleEvaluationFrame()">Close</span></b>
+                <b>Application Evaluation</b>
+            </li>
+            <li class="nav-item mx-2">
+                <b><span class="c-pointer text-danger" @click="toggleEvaluationFrame()">Close</span></b>
             </li>
         </ul>
     </div>
     <div class="card-body">
-        <div class="form-row">
+        <ul class="list-group list-group-flush">
             @foreach($applicationEvaluations as $evaluation)
-                <div class="form-group col-md-10 offset-md-1">
+                <li class="list-group-item">
                     <b>{{ $evaluation->evaluationParameter->name }}</b>
                     <div>
                         {{ $evaluation->evaluationOption->value }}
                         <br>
                         {{ $evaluation->comment }}
                     </div>
-                </div>
+                </li>
             @endforeach
-        </div>
+        </ul>
     </div>
 </div>

@@ -314,6 +314,9 @@ input:focus + .slider {
     }
     &.inline-evaluation {
         right: 0;
+        >.card-body {
+            overflow-y: scroll;
+        }
     }
 }
 
