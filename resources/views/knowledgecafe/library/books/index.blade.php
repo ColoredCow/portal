@@ -19,7 +19,7 @@
         data-index-route = "{{ route('books.index') }}"
         data-category-index-route = "{{ route('books.category.index') }}">
 
-        <div v-for="book in books" class="card mb-4 mr-4 book_card">
+        <div v-for="(book, index) in books" class="card mb-4 mr-4 book_card">
             <a target="_blank" :href="book.readable_link">
                 <img :src="book.thumbnail">
             </a>
@@ -31,11 +31,11 @@
 
             <div 
                 :class=" (!book.readers.length) ? 'card-body p-1 flex-grow-0 pb-5' : 'card-body p-1 flex-grow-0'">
-                <h6 
-                    v-for="category in book.categories" 
-                    class="badge badge-light px-2"
-                    >@{{ category.name }} 
-                </h6>
+                <span v-for="category in book.categories">
+                    <h6 class="badge badge-light px-2">@{{ category.name }} </h6>
+                    <br>
+                </span>
+                
             </div>
 
             <div v-if="book.readers && book.readers.length">
@@ -51,8 +51,18 @@
             </div>
 
             <div class="card-body p-0" style="bottom:0px;position:relative">
-                <a href="#" class="card-link btn" style=" position:absolute;bottom:  0px;left: 0;"><i class="fa fa-pencil"></i></a>
-                <a href="#" class="card-link text-danger btn" style="position:absolute;bottom:0px;right: 0;" >Delete</a>
+                <a 
+                    href="#" 
+                    class="card-link btn"  
+                    data-toggle="modal" 
+                    data-target="#update_category_modal" 
+                    v-show="!book.showCategories" 
+                    class="btn btn-info btn-sm mt-1 ml-4" 
+                    @click="updateCategoryMode(index)"
+                    style=" position:absolute;bottom:0px;left: 0;">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                <a href="#" class="card-link text-danger btn" style="position:absolute;bottom:0px;right: 0;" @click="deleteBook(index)">Delete</a>
             </div>
         </div>
     </div>
