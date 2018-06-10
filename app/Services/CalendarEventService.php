@@ -109,7 +109,7 @@ class CalendarEventService
      *
      * @return array
      */
-    protected static function getCalendarEventDateTime($dateTime, $timeZone)
+    protected static function getCalendarDateTime($dateTime, $timeZone)
     {
         $timeZone = $timeZone ?? config('app.timezone');
         return [
@@ -126,7 +126,7 @@ class CalendarEventService
      *
      * @return array
      */
-    protected static function getEventDateTime($eventDateTime, $withTimeZone)
+    protected static function getDateTime($eventDateTime, $withTimeZone)
     {
         $dateTime['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
         if ($withTimeZone) {
@@ -137,21 +137,21 @@ class CalendarEventService
 
     public function getStartDateTime($withTimeZone = false)
     {
-        return self::getEventDateTime($this->startDateTime);
+        return self::getDateTime($this->startDateTime);
     }
 
     public function setStartDateTime($dateTime, $timeZone = null)
     {
-        $this->startDateTime = self::getCalendarEventDateTime($dateTime, $timeZone);
+        $this->startDateTime = self::getCalendarDateTime($dateTime, $timeZone);
     }
 
     public function getEndDateTime($timeZone = false)
     {
-        return self::getEventDateTime($this->endDateTime);
+        return self::getDateTime($this->endDateTime);
     }
 
     public function setEndDateTime($dateTime, $timeZone = null)
     {
-        $this->endDateTime = self::getCalendarEventDateTime($dateTime, $timeZone);
+        $this->endDateTime = self::getCalendarDateTime($dateTime, $timeZone);
     }
 }
