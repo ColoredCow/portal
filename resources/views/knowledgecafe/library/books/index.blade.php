@@ -26,7 +26,7 @@
                 </a>
                 
                 <div class="card-body px-2 pb-5 w-50">
-                    <a class="card-title font-weight-bold mb-1 h4" :title="book.title">@{{ strLimit(book.title, 100) }}</a>
+                    <a target= "_blank" :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h4" :title="book.title">@{{ strLimit(book.title, 100) }}</a>
                     <p class="text-dark" :title="book.author" >@{{ strLimit(book.author, 20) }} </p>
                 </div>
             </div>
@@ -48,7 +48,7 @@
 
             <div class="card-body p-1 flex-grow-0">
                 <span v-for="category in book.categories">
-                    <h6 class="badge badge-light px-2">@{{ category.name }} </h6>
+                    <h5 class="badge badge-light px-2">@{{ category.name }} </h5>
                 </span> 
             </div>
 
