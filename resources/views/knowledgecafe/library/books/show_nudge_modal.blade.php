@@ -63,6 +63,12 @@
                                     </div>
                                 </div>
                             @endif
+
+                            <div>
+                                <a target="_blank" href= "{{ route('books.disableSuggestion') }}" class="text-info">
+                                   <span>Don't show me this again</span> 
+                                </a>
+                            </div>
                     </div>
                 </div>
             </div>

@@ -56,7 +56,7 @@ class Book extends Model
     }
 
     public static function getRandomUnreadBook() {
-        return self::whereDoesntHave('readers', function ($query) {
+        return self::whereHas('readers', function ($query) {
             $query->where('id', auth()->id());
         })->whereDoesntHave( 'wishers', function ($query) {
             $query->where('id', auth()->id());

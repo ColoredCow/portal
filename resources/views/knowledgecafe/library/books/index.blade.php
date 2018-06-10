@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-6"><h1>Books</h1></div>
         @can('library_books.create')
-            <div class="col-md-6"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add New Book</a></div>
+            <div class="col-md-4"><a href="{{ route('books.create') }}" class="btn btn-success float-right">Add New Book</a></div>
         @endcan
     </div>
 
@@ -23,7 +23,7 @@
             <div class="row mt-3 mb-2">
                 <div class="col-6">
                     <a class="text-muted c-pointer" href="{{ route('books.index') }}">
-                        <i class="fa fa-times"></i>&nbsp;Clear current search query, filters, and sorts
+                        <i class="fa fa-times"></i>&nbsp;Clear current search and filters
                     </a>
                 </div>
             </div>
@@ -36,9 +36,9 @@
         data-category-index-route = "{{ route('books.category.index') }}">
 
         <div v-for="(book, index) in books" class="card mb-4 mr-4 book_card">
-            <div class="d-flex h-50">
+            <div class="d-flex" style="height:20em;">
                 <a target="_blank" :href="book.readable_link">
-                    <img :src="book.thumbnail" class="w-100 h-100">
+                    <img :src="book.thumbnail" class="mh-100">
                 </a>
                 
                 <div class="card-body px-2 pb-5 w-50">
