@@ -7,14 +7,15 @@ use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
 
-class CalendarService
+class CalendarEventService
 {
     protected $attendees = [];
-    protected $eventSummary;
-    protected $eventStart;
-    protected $eventEnd;
-    protected $eventHangoutLink;
+    protected $summary;
+    protected $startDateTime;
+    protected $endDateTime;
+    protected $hangoutLink;
     protected $service;
+    public $id;
 
     public function __construct()
     {
@@ -25,65 +26,62 @@ class CalendarService
         $this->service = new Google_Service_Calendar($client);
     }
 
-    public function createEvent($details, $calendarId = 'primary')
+    public function create($details, $calendarId = 'primary')
     {
-        if (!isset($details['summary'], $details['attendees'], $details['start'])) {
+        if (!isset($details['summary'], $details['attendees'], $details['start'], $details['end'])) {
             throw new Exception('Invalid data for calendar creation');
         }
 
-        $this->setEventSummary($details['summary']);
+        $this->setSummary($details['summary']);
         $this->setAttendees($details['attendees']);
-        $this->setEventStart($details['start']);
-        if (isset($details['end'])) {
-            $this->setEventEnd($details['end']);
-        }
+        $this->setStartDateTime($details['start']);
+        $this->setEndDateTime($details['end']);
 
         $event = new Google_Service_Calendar_Event([
-            'summary' => $this->eventSummary,
+            'summary' => $this->summary,
             'attendees' => $this->attendees,
-            'start' => $this->eventStart,
-            'end' => $this->eventEnd,
+            'start' => $this->startDateTime,
+            'end' => $this->endDateTime,
         ]);
         $event = $this->service->events->insert($calendarId, $event);
-        $this->setEventHangoutLink($event->hangoutLink);
-        dd($event);
+        $this->id = $event->id;
+        $this->setHangoutLink($event->hangoutLink);
     }
 
-    public function getEvent($eventId, $calendarId = 'primary')
+    public function fetch($eventId, $calendarId = 'primary')
     {
         $event = $this->service->events->get($calendarId, $eventId);
-        $this->setEventSummary($event->summary);
+        $this->setSummary($event->summary);
 
         $attendees = [];
         foreach ($event->attendees as $attendee) {
             array_push($attendees, $attendee->email);
         }
         $this->setAttendees($attendees);
-        $this->setEventHangoutLink($event->hangoutLink);
-        $this->setEventStart($event->start->dateTime, $event->start->timeZone);
-        $this->setEventEnd($event->end->dateTime, $event->end->timeZone);
-
-        return $this;
+        $this->setHangoutLink($event->hangoutLink);
+        $this->setStartDateTime($event->start->dateTime, $event->start->timeZone);
+        $this->setEndDateTime($event->end->dateTime, $event->end->timeZone);
+        $this->id = $eventId;
     }
 
-    public function getEventHangoutLink()
+    public function getHangoutLink()
     {
-        return $this->eventHangoutLink;
+        return $this->hangoutLink;
     }
 
-    public function setEventHangoutLink($hangoutLink)
+    public function setHangoutLink($hangoutLink)
     {
-        $this->eventHangoutLink = $hangoutLink;
+        $this->hangoutLink = $hangoutLink;
     }
 
-    public function getEventSummary()
+    public function getSummary()
     {
-        return $this->eventSummary;
+        return $this->summary;
     }
 
-    public function setEventSummary($summary)
+    public function setSummary($summary)
     {
-        $this->eventSummary = $summary;
+        $this->summary = $summary;
     }
 
     public function getAttendees()
@@ -137,23 +135,23 @@ class CalendarService
         return $dateTime;
     }
 
-    public function getEventStart($withTimeZone = false)
+    public function getStartDateTime($withTimeZone = false)
     {
-        return self::getEventDateTime($this->eventStart);
+        return self::getEventDateTime($this->startDateTime);
     }
 
-    public function setEventStart($dateTime, $timeZone = null)
+    public function setStartDateTime($dateTime, $timeZone = null)
     {
-        $this->eventStart = self::getCalendarEventDateTime($dateTime, $timeZone);
+        $this->startDateTime = self::getCalendarEventDateTime($dateTime, $timeZone);
     }
 
-    public function getEventEnd($timeZone = false)
+    public function getEndDateTime($timeZone = false)
     {
-        return self::getEventDateTime($this->eventEnd);
+        return self::getEventDateTime($this->endDateTime);
     }
 
-    public function setEventEnd($dateTime, $timeZone = null)
+    public function setEndDateTime($dateTime, $timeZone = null)
     {
-        $this->eventEnd = self::getCalendarEventDateTime($dateTime, $timeZone);
+        $this->endDateTime = self::getCalendarEventDateTime($dateTime, $timeZone);
     }
 }

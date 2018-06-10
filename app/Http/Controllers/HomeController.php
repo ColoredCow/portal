@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KnowledgeCafe\Library\Book;
-use App\Services\CalendarService;
+use App\Services\CalendarEventService;
 use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Directory;
@@ -27,21 +27,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $calendar = new CalendarService;
-        // $event = $calendarService->createEvent([
+        $event = new CalendarEventService;
+        // $event->create([
         //     'summary' => "Let's talk basics with ColoredCow – Vaibhav Rathore",
         //     'start' => '2018-06-10 12:00:00',
         //     'end' => '2018-06-10 12:30:00',
         //     'attendees' => [
         //         'vaibhav@coloredcow.com',
+        //         // 'vaibhavsinghrathore2011@gmail.com'
         //     ],
         // ]);
+        // dd($event);
 
-        // $eventId = 'uehh5gk7bbq580lj4e4kb2bk3k';
-        // $calendarId = 'primary';
-        // $event = $calendar->getEvent($eventId);
+        $eventId = 'uehh5gk7bbq580lj4e4kb2bk3k';
+        $calendarId = 'primary';
+        $event->fetch($eventId);
 
-        // dd($event->getEventHangoutLink(), $event->getEventSummary());
+        dd($event);
 
         $unreadBook = Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);
