@@ -2,7 +2,8 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\EvaluationParameter;
+use App\Models\HR\Evaluation\Parameter as EvaluationParameter;
+use App\Models\HR\Evaluation\Segment as EvaluationSegment;
 use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,5 +31,10 @@ class Round extends Model
     public function evaluationParameters()
     {
         return $this->belongsToMany(EvaluationParameter::class, 'hr_round_evaluation', 'round_id', 'evaluation_id');
+    }
+
+    public function evaluationSegments()
+    {
+        return $this->belongsToMany(EvaluationSegment::class, 'hr_round_segment', 'round_id', 'segment_id');
     }
 }

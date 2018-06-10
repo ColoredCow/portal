@@ -42,19 +42,19 @@ class ApplicationNoShow extends Command
     public function handle()
     {
         $applicationRounds = ApplicationRound::with('application', 'application.applicant')
-                            ->whereHas('application', function($query){
-                                $query->whereIn('status', [
-                                    config('constants.hr.round.status.new.label'),
-                                    config('constants.hr.round.status.in-progress.label'),
-                                ]);
-                            })
-                            ->whereHas('round', function($query){
-                                $query->where('reminder_enabled', true);
-                            })
-                            ->whereNull('round_status')
-                            ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
-                            ->where('scheduled_date', '<=', Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
-                            ->get();
+            ->whereHas('application', function ($query) {
+                $query->whereIn('status', [
+                    config('constants.hr.status.new.label'),
+                    config('constants.hr.status.in-progress.label'),
+                ]);
+            })
+            ->whereHas('round', function ($query) {
+                $query->where('reminder_enabled', true);
+            })
+            ->whereNull('round_status')
+            ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
+            ->where('scheduled_date', '<=', Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
+            ->get();
 
         $subject = Setting::module('hr')->key('no_show_mail_subject')->first();
         $subject = $subject ? $subject->setting_value : null;
