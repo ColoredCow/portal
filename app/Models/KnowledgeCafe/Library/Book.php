@@ -60,7 +60,8 @@ class Book extends Model
             $query->where('id', auth()->id());
         })->whereDoesntHave( 'wishers', function ($query) {
             $query->where('id', auth()->id());
-        })->inRandomOrder()->first();
+        })->inRandomOrder()
+        ->first();
     }
 
     public function wishers() {
@@ -70,5 +71,9 @@ class Book extends Model
     public function addToUserWishlist() {
         $this->wishers()->attach(auth()->user());
         return true;
+    }
+
+    public function getTotalBooksCountAttribute($value) {
+        return self::count();
     }
 }
