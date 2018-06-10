@@ -5,7 +5,6 @@ namespace App\Observers\HR;
 use App\Models\HR\ApplicationRound;
 use App\Notifications\HR\ApplicationRoundScheduled;
 use App\Services\CalendarService;
-use Carbon\Carbon;
 
 class ApplicationRoundObserver
 {
@@ -35,24 +34,16 @@ class ApplicationRoundObserver
     public function createCalendarEvent(ApplicationRound $applicationRound)
     {
         $applicant = $applicationRound->application->applicant;
-        $calendarService = new CalendarService();
-
-        $eventDetails = [
+        $calendar = new CalendarService();
+        $event = $calendar->createEvent([
             'summary' => "Let's talk basics with ColoredCow – $applicant->name",
-            'start' => [
-                'dateTime' => Carbon::parse($applicationRound->scheduled_date)->format(config('constants.calendar_datetime_format')),
-                'timeZone' => config('app.timezone'),
-            ],
-            'end' => [
-                'dateTime' => Carbon::parse($applicationRound->scheduled_date)->addMinutes(30)->format(config('constants.calendar_datetime_format')),
-                'timeZone' => config('app.timezone'),
-            ],
+            'start' => $applicationRound->scheduled_date,
+            'end' => $applicationRound->scheduled_date + 30,
             'attendees' => [
-                ['email' => $applicationRound->scheduledPerson->email],
-                // ['email' => $applicant->email],
+                'vaibhav@coloredcow.com',
             ],
-        ];
-        $event = $calendarService->createEvent($eventDetails);
+        ]);
+
         dd($event);
     }
 }

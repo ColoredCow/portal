@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\KnowledgeCafe\Library\Book;
 use Google_Client;
-use Google_Service_Calendar;
 use Google_Service_Directory;
 
 class HomeController extends Controller
@@ -26,17 +25,28 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $client = new Google_Client();
-        $client->useApplicationDefaultCredentials();
-        $client->setSubject(config('constants.gsuite.service-account-impersonate'));
-        $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
-        $service = new Google_Service_Calendar($client);
+        // $calendarService = new CalendarService();
+        // $event = $calendarService->createEvent([
+        //     'summary' => "Let's talk basics with ColoredCow – Vaibhav Rathore",
+        //     'start' => '2018-06-10 12:00:00',
+        //     'end' => '2018-06-10 12:30:00',
+        //     'attendees' => [
+        //         'vaibhav@coloredcow.com',
+        //     ],
+        // ]);
 
-        $eventId = 'uehh5gk7bbq580lj4e4kb2bk3k';
-        $event = $service->events->get('primary', $eventId);
+        // $client = new Google_Client();
+        // $client->useApplicationDefaultCredentials();
+        // $client->setSubject(config('constants.gsuite.service-account-impersonate'));
+        // $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+        // $service = new Google_Service_Calendar($client);
 
-        dd($event);
-        dd($event->hangoutLink, $event->getSummary());
+        // $eventId = 'uehh5gk7bbq580lj4e4kb2bk3k';
+        // $calendar = new CalendarService();
+        // $event = $calendar->getEvent($eventId);
+
+        // dd($event);
+        // dd($event->hangoutLink, $event->getSummary());
 
         $unreadBook = Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);

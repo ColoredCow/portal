@@ -5,6 +5,7 @@ return [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
     ],
     'date_format' => 'Y-m-d',
+    'datetime_format' => 'Y-m-d H:i:s',
     'display_date_format' => 'd/m/Y',
     'full_display_date_format' => 'F d, Y',
     'display_datetime_format' => 'Y-m-d\TH:i',
