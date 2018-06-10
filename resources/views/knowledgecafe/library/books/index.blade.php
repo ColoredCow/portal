@@ -42,7 +42,7 @@
                 />
             </div>
 
-            <div v-else class="p-2">
+            <div v-else class="p-2 mt-1">
                 <h6 class="text-muted">Not read by anyone yet</h6>
             </div>
 
