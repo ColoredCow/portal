@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApplicationRound extends Model
 {
-    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_date', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
+    protected $guarded = [];
 
     protected $table = 'hr_application_round';
 
@@ -80,7 +80,7 @@ class ApplicationRound extends Model
                 $this->evaluations()->updateOrCreate(
                     [
                         'application_round_id' => $this->id,
-                        'evaluation_id' => $evaluation['evaluation_id']
+                        'evaluation_id' => $evaluation['evaluation_id'],
                     ],
                     [
                         'option_id' => $evaluation['option_id'],
@@ -178,12 +178,12 @@ class ApplicationRound extends Model
     public static function scheduledForToday()
     {
         $applicationRounds = self::with(['application', 'application.job'])
-        ->whereHas('application', function($query) {
-            $query->whereIn('status', ['new', 'in-progress', 'no-show']);
-        })
-        ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
-        ->orderBy('scheduled_date')
-        ->get();
+            ->whereHas('application', function ($query) {
+                $query->whereIn('status', ['new', 'in-progress', 'no-show']);
+            })
+            ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
+            ->orderBy('scheduled_date')
+            ->get();
 
         // Using Laravel's collection method groupBy to group scheduled application rounds based on the scheduled person
         return $applicationRounds->groupBy('scheduled_person_id');
