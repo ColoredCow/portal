@@ -39,16 +39,17 @@ class CalendarService
         }
 
         $event = new Google_Service_Calendar_Event([
-            'summary' => $this->summary,
+            'summary' => $this->eventSummary,
             'attendees' => $this->attendees,
             'start' => $this->eventStart,
             'end' => $this->eventEnd,
         ]);
         $event = $this->service->events->insert($calendarId, $event);
         $this->setEventHangoutLink($event->hangoutLink);
+        dd($event);
     }
 
-    public static function getEvent($eventId, $calendarId = 'primary')
+    public function getEvent($eventId, $calendarId = 'primary')
     {
         $event = $this->service->events->get($calendarId, $eventId);
         $this->setEventSummary($event->summary);
@@ -57,10 +58,12 @@ class CalendarService
         foreach ($event->attendees as $attendee) {
             array_push($attendees, $attendee->email);
         }
-        $this->setEventAttendees($attendees);
+        $this->setAttendees($attendees);
         $this->setEventHangoutLink($event->hangoutLink);
         $this->setEventStart($event->start->dateTime, $event->start->timeZone);
         $this->setEventEnd($event->end->dateTime, $event->end->timeZone);
+
+        return $this;
     }
 
     public function getEventHangoutLink()
