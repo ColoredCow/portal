@@ -34,7 +34,7 @@ class Application extends Model
         return $this->hasMany(ApplicationRound::class, 'hr_application_id');
     }
 
-    public function applicationEvaluations()
+    public function evaluations()
     {
         return $this->hasMany(ApplicationEvaluation::class);
     }
