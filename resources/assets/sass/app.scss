@@ -324,8 +324,7 @@ input:focus+.slider {
 
 #books_listing {
     .book_card {
-        width: 20em;
-        height: 20em;
+        flex-basis:24%;
     }
 
     .reader_image {
@@ -334,10 +333,7 @@ input:focus+.slider {
     }
 
     .action_buttons {
-        >div {
-            bottom:0;
-            right: 0;
-        }
+        right: 0;
     }
 } 
 

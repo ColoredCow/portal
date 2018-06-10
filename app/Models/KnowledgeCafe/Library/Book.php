@@ -22,10 +22,12 @@ class Book extends Model
     public static function getList($filteredString = false)
     {
         return self::with(['categories', 'readers'])
-                ->orderBy('title')
                 ->where(function ($query) use ($filteredString) {
                         ($filteredString) ? $query->where('title', 'LIKE', "%$filteredString%") : '';
-                })->get();
+                })
+                ->withCount('readers')
+                ->orderBy('readers_count', 'desc')
+                ->get();
     }
 
     public static function getByCategoryName($categoryName) {
