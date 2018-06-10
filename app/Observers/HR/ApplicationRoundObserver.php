@@ -22,7 +22,7 @@ class ApplicationRoundObserver
             $applicationRound->scheduledPerson->notify(new ApplicationRoundScheduled($applicationRound));
         }
 
-        if ($applicationRound->round->reminder_enabled) {
+        if (request()->get('create_calendar_event')) {
             self::createCalendarEvent($applicationRound);
         }
     }
@@ -45,7 +45,6 @@ class ApplicationRoundObserver
             'attendees' => [
                 $applicationRound->scheduledPerson->email,
                 $applicant->email,
-                // 'vaibhav@coloredcow.com',
             ],
         ]);
 

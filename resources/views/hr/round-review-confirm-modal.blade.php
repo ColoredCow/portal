@@ -10,10 +10,24 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="next_scheduled_date">Scheduled date</label>
-                        <input type="datetime-local" name="next_scheduled_date" id="next_scheduled_date" class="form-control" required="required">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="create_calendar_event" name="create_calendar_event" v-model="createCalendarEvent">
+                            <label class="form-check-label" for="create_calendar_event">Create a calendar event</label>
+                        </div>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="next_scheduled_start">Scheduled start date</label>
+                        <input type="datetime-local" name="next_scheduled_start" id="next_scheduled_start" class="form-control" required="required">
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5" v-if="createCalendarEvent">
+                        <label for="next_scheduled_end">Scheduled end date</label>
+                        <input type="datetime-local" name="next_scheduled_end" id="next_scheduled_end" class="form-control" required="required">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
                         <label for="next_scheduled_person_id">Scheduled for</label>
                         <select name="next_scheduled_person_id" id="next_scheduled_person_id" class="form-control" required="required">
                             @foreach ($interviewers as $interviewer)

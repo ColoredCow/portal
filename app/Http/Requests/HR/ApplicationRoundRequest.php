@@ -30,9 +30,11 @@ class ApplicationRoundRequest extends FormRequest
             'scheduled_date' => 'nullable|date|required_if:action,schedule-update',
             'scheduled_person_id' => 'nullable|integer|required_if:action,schedule-update',
             'next_round' => 'nullable|string|required_if:action,confirm',
-            'next_scheduled_date' => 'nullable|date|required_if:action,confirm',
+            'create_calendar_event' => 'nullable|filled',
+            'next_scheduled_start' => 'nullable|date|required_if:action,confirm',
+            'next_scheduled_end' => 'nullable|date|required_with:create_calendar_event',
             'next_scheduled_person_id' => 'nullable|integer|required_if:action,confirm',
-            'round_evaluation' => 'nullable|array'
+            'round_evaluation' => 'nullable|array',
         ];
     }
 
