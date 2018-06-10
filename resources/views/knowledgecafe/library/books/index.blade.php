@@ -20,24 +20,26 @@
         data-category-index-route = "{{ route('books.category.index') }}">
 
         <div v-for="(book, index) in books" class="card mb-4 mr-4 book_card">
-            
             <div class="d-flex h-50">
                 <a target="_blank" :href="book.readable_link">
                     <img :src="book.thumbnail" class="w-100 h-100">
                 </a>
                 
-                <div class="card-body p-1 flex-grow-0 pb-5 w-50 category_section">
-                    <span v-for="category in book.categories">
+                <div class="card-body px-2 pb-5 w-50 category_section">
+                    {{-- <span v-for="category in book.categories">
                         <h6 class="badge badge-light px-2">@{{ category.name }} </h6>
                         <br>
-                    </span> 
+                    </span>  --}}
+                    {{-- <h5 class="card-title font-weight-bold mb-1" :title="book.title">@{{ strLimit(book.title, 20) }}</h5> --}}
+                    <h4 class="card-title font-weight-bold mb-1" :title="book.title">@{{ strLimit(book.title, 100) }}</h4>
+                    <p class="text-dark" :title="book.author" >@{{ strLimit(book.author, 20) }} </p>
                 </div>
-
             </div>
-           
+
             <div class="card-body p-1 flex-grow-0">
-                <h5 class="card-title font-weight-bold mb-1" :title="book.title">@{{ strLimit(book.title, 20) }}</h5>
-                <p class="text-dark" :title="book.author" >@{{ strLimit(book.author, 20) }} </p>
+                <span v-for="category in book.categories">
+                    <h6 class="badge badge-light px-2">@{{ category.name }} </h6>
+                </span> 
             </div>
 
             <div v-if="book.readers && book.readers.length">

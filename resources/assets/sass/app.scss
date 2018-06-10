@@ -329,8 +329,8 @@ input:focus+.slider {
     }
 
     .reader_image {
-        width:40px !important;
-        height: 40px !important;
+        width:30px !important;
+        height: 30px !important;
     }
 
     .action_buttons {
@@ -341,11 +341,6 @@ input:focus+.slider {
         a:nth-child(2) {
             right: 0;
         }
-    }
-
-    .category_section {
-        overflow-y: auto;
-        overflow-x: hidden;
     }
 } 
 

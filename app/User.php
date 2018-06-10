@@ -52,4 +52,8 @@ class User extends Authenticatable
     public function getAvatarAttribute($value) {
         return ($value) ? : url('/images/default_profile.png');
     }
+
+    public function books() {
+        return $this->belongsToMany(User::class, 'book_readers', 'user_id', 'library_book_id');
+    }
 }
