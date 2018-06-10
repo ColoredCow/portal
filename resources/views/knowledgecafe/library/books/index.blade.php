@@ -25,15 +25,25 @@
                     <img :src="book.thumbnail" class="w-100 h-100">
                 </a>
                 
-                <div class="card-body px-2 pb-5 w-50 category_section">
-                    {{-- <span v-for="category in book.categories">
-                        <h6 class="badge badge-light px-2">@{{ category.name }} </h6>
-                        <br>
-                    </span>  --}}
-                    {{-- <h5 class="card-title font-weight-bold mb-1" :title="book.title">@{{ strLimit(book.title, 20) }}</h5> --}}
-                    <h4 class="card-title font-weight-bold mb-1" :title="book.title">@{{ strLimit(book.title, 100) }}</h4>
+                <div class="card-body px-2 pb-5 w-50">
+                    <a class="card-title font-weight-bold mb-1 h4" :title="book.title">@{{ strLimit(book.title, 100) }}</a>
                     <p class="text-dark" :title="book.author" >@{{ strLimit(book.author, 20) }} </p>
                 </div>
+            </div>
+
+            <div v-if="book.readers && book.readers.length" class="p-2">
+                <img v-for ="reader in book.readers" 
+                    :src="reader.avatar" 
+                    :alt="reader.name"
+                    :title="reader.name" 
+                    class="reader_image m-1" 
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                />
+            </div>
+
+            <div v-else class="p-2">
+                <h6 class="text-muted">Not read by anyone yet</h6>
             </div>
 
             <div class="card-body p-1 flex-grow-0">
@@ -42,34 +52,23 @@
                 </span> 
             </div>
 
-            <div v-if="book.readers && book.readers.length">
-                <div class="pt-0 pb-5 px-2">
-                    <img v-for ="reader in book.readers" 
-                        :src="reader.avatar" 
-                        :alt="reader.name"
-                        :title="reader.name" 
-                        class="reader_image m-1" 
-                        data-toggle="tooltip" 
-                        data-placement="bottom">
+            @can('library_books.delete')
+
+            <div class="card-body p-0 position-relative action_buttons">
+                <div class="dropdown position-absolute">
+                    <a href="#" class="m-1 text-dark h4" data-toggle="dropdown">
+                        <i class="fa fa-cog"></i>
+                    </a>
+
+                    <ul class="dropdown-menu ">
+                        <li @click="updateCategoryMode(index)" data-toggle="modal" 
+                        data-target="#update_category_modal" class="dropdown-item">Update Category</li>
+                        <li @click="deleteBook(index)" class="dropdown-item text-danger">Delete</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="card-body p-0 position-relative action_buttons">
-                <a 
-                    href="#" 
-                    class="card-link btn change_category_btn position-absolute"  
-                    data-toggle="modal" 
-                    data-target="#update_category_modal" 
-                    v-show="!book.showCategories" 
-                    @click="updateCategoryMode(index)">
-                    <i class="fa fa-pencil"></i>
-                </a>
-                
-                <a 
-                    href="#" 
-                    class="card-link text-danger btn delete_book_btn position-absolute"
-                    @click="deleteBook(index)">Delete</a>
-            </div>
+            @endif
 
         </div>
     </div>
