@@ -20,6 +20,10 @@
                 v-model="searchKey">
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
+
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
+            <a target="_blank" href="{{ route('books.disableSuggestion') }}">Show me suggestions on the dasboard</a>
+        </div>
     </div>
 
     @if(request()->has('search'))
