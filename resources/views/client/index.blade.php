@@ -14,6 +14,7 @@
             <th>Name</th>
             <th>Phone</th>
             <th>Status</th>
+            <th>Projects</th>
         </tr>
         @foreach ($clients as $client)
         	<tr>
@@ -32,6 +33,13 @@
                         <span class="badge badge-pill badge-danger">inactive</span>
                         @break
                 @endswitch
+                </td>
+                <td>
+                @if ($client->projects->count())
+                   <a href="{{ route('projects.index') }}?client_id={{$client->id }}">See Projects</a>
+                @else
+                   -
+                @endif
                 </td>
         	</tr>
         @endforeach
