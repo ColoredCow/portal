@@ -39,7 +39,7 @@
                             <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
                         </li>
                         @endcan
-                        @if(Auth::user()->can('weeklydoses.view') || Auth::user()->can('library_books.view'))
+                        @if(auth()->user()->can('weeklydoses.view') || Auth::user()->can('library_books.view'))
                         <li class="nav-item">
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -50,7 +50,7 @@
                                      <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
                                      @endcan
                                      @can('weeklydoses.view')
-                                     <a class="dropdown-item" href="{{ route('weeklydoses.index') }}">WeeklyDose</a>
+                                     <a class="dropdown-item" href="{{ route('weeklydoses') }}">WeeklyDose</a>
                                      @endcan
                                 </div>
                             </li>

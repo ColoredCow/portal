@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'books.category.index']);
         });
 
-        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses.index']);
+        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
     });
 
 });
