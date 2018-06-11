@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Finance\Invoice;
 use Illuminate\Database\Eloquent\Model;
 
 class ProjectStageBilling extends Model

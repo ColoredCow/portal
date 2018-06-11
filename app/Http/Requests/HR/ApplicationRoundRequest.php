@@ -48,7 +48,7 @@ class ApplicationRoundRequest extends FormRequest
     {
         return [
             'next_scheduled_start.required_if' => 'The schedule date for next round is required.',
-            'next_scheduled_end.required_with' => 'The end time for the interview is required',
+            'next_scheduled_end.required_with' => 'The end time for the interview is required.',
             'next_scheduled_person_id.required_if' => 'The interviewer for next round is required.',
         ];
     }
