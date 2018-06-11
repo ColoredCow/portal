@@ -53,7 +53,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
     Route::resource('projects', 'ProjectController')->except(['show', 'destroy']);
-    Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
@@ -62,19 +61,21 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
-        
+
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
                 ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
                 
             Route::post('book/fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
-            Route::post('book/markbook', 'BookController@markBook')->name('books.markBook');
+            Route::post('book/markbook', 'BookController@markBook')->name('books.toggleReadStatus');
+            Route::post('book/addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
 
             Route::resource('book-categories', 'BookCategoryController')
             ->only(['index', 'store', 'update', 'destroy'])
             ->names(['index' => 'books.category.index']);
         });
-        
+
+       Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);        
     });
 
 });

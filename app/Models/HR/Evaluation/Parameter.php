@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Models\HR;
+namespace App\Models\HR\Evaluation;
 
+
+use App\Models\HR\Round;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EvaluationParameter extends Model
+class Parameter extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'segment_id'];
 
     protected $table = 'hr_evaluation_parameters';
 
@@ -22,6 +24,6 @@ class EvaluationParameter extends Model
 
     public function options()
     {
-        return $this->hasMany(EvaluationParameterOption::class, 'evaluation_id');
+        return $this->hasMany(ParameterOption::class, 'evaluation_id');
     }
 }

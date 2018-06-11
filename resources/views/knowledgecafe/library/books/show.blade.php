@@ -4,7 +4,7 @@
   
     data-book="{{ json_encode($book) }}" 
     data-is-read="{{ $book->readers->contains(auth()->user()) }}"
-    data-mark-book-route= "{{route('books.markBook')}}"
+    data-mark-book-route= "{{route('books.toggleReadStatus')}}"
     data-readers = "{{ json_encode($book->readers) }}"
 
     >
