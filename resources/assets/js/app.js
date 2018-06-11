@@ -255,7 +255,6 @@ weeklyDoseClipboard.on('success', function(e) {
 });
 
 $('.status-close').on('click', function(){
-    console.log("hellooo");
     let wrapper = $(this).closest('.alert');
     wrapper.fadeOut(500);
 });
