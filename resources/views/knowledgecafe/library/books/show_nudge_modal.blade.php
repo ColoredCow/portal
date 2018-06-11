@@ -65,7 +65,7 @@
                             @endif
 
                             <div>
-                                <a target="_blank" href= "{{ route('books.disableSuggestion') }}" class="text-info">
+                                <a id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}" class="text-info c-pointer">
                                    <span>Don't show me this again</span> 
                                 </a>
                             </div>
