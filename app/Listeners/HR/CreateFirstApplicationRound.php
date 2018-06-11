@@ -34,7 +34,7 @@ class CreateFirstApplicationRound
         $scheduledPerson = User::findByEmail($job->postedBy);
         $scheduledPerson = $scheduledPerson ?? User::find(config('constants.hr.defaults.scheduled_person_id'));
 
-        $applicationRound = ApplicationRound::_create([
+        $applicationRound = ApplicationRound::create([
             'hr_application_id' => $application->id,
             'hr_round_id' => $job->rounds->first()->id,
             'scheduled_date' => Carbon::now()->addDay(),

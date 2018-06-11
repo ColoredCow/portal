@@ -14,13 +14,9 @@ class KnowledgeCafe
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
-    }
 
     public function view(User $user)
     {
-    return $user->hasAnyPermission(['weeklydoses.view', 'library_books.view']);
+        return $user->hasAnyPermission(['weeklydoses.view', 'library_books.view']);
     }
 }

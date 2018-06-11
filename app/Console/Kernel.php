@@ -24,8 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('application:no-show')
+                 ->everyThirtyMinutes();
+        $schedule->command('application:send-interview-reminders')
+                 ->dailyAt('08:00');
     }
 
     /**

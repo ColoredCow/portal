@@ -2,9 +2,7 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\Application;
-use App\Models\HR\ApplicationRoundReview;
-use App\Models\HR\Round;
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -18,11 +16,6 @@ class ApplicationRound extends Model
 
     public $timestamps = false;
 
-    public static function _create($attr)
-    {
-        return self::create($attr);
-    }
-
     public function _update($attr)
     {
         $fillable = [
@@ -35,6 +28,12 @@ class ApplicationRound extends Model
 
         switch ($attr['action']) {
             case 'schedule-update':
+
+                // If the application status is no-show or no-show-reminded, and the new schedule date is greater
+                // than the current time, we change the application status to in-progress.
+                if ($application->isNoShow() && Carbon::parse($attr['scheduled_date'])->gt(Carbon::now())) {
+                    $application->markInProgress();
+                }
                 $fillable = [
                     'scheduled_date' => $attr['scheduled_date'],
                     'scheduled_person_id' => $attr['scheduled_person_id'],
@@ -47,7 +46,7 @@ class ApplicationRound extends Model
                 $application->markInProgress();
                 $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
                 $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                $applicationRound = self::_create([
+                $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
                     'scheduled_date' => $attr['next_scheduled_date'],
@@ -70,7 +69,27 @@ class ApplicationRound extends Model
         }
         $this->update($fillable);
         $this->_updateOrCreateReviews($attr['reviews']);
+    }
 
+    public function updateOrCreateEvaluation($evaluations = [])
+    {
+        foreach ($evaluations as $evaluation_id => $evaluation) {
+            if (array_key_exists('option_id', $evaluation)) {
+                $this->evaluations()->updateOrCreate(
+                    [
+                        'application_round_id' => $this->id,
+                        'evaluation_id' => $evaluation['evaluation_id'],
+                        'application_id' => $this->hr_application_id,
+                    ],
+                    [
+                        'option_id' => $evaluation['option_id'],
+                        'comment' => $evaluation['comment'],
+                    ]
+                );
+            }
+        }
+
+        return true;
     }
 
     protected function _updateOrCreateReviews($reviews = [])
@@ -114,13 +133,18 @@ class ApplicationRound extends Model
         return $this->hasMany(ApplicationRoundReview::class, 'hr_application_round_id');
     }
 
+    public function evaluations()
+    {
+        return $this->hasMany(ApplicationEvaluation::class, 'application_round_id');
+    }
+
     public function mailSender()
     {
         return $this->belongsTo(User::class, 'mail_sender');
     }
 
     /**
-     * Get communication mail for this application round
+     * Get communication mail for this application round.
      *
      * @return array
      */
@@ -148,6 +172,24 @@ class ApplicationRound extends Model
         }
 
         return null;
+    }
 
+    public static function scheduledForToday()
+    {
+        $applicationRounds = self::with(['application', 'application.job'])
+            ->whereHas('application', function ($query) {
+                $query->whereIn('status', [
+                    config('constants.hr.status.new.label'),
+                    config('constants.hr.status.in-progress.label'),
+                    config('constants.hr.status.no-show.label'),
+                ]);
+            })
+            ->whereNull('round_status')
+            ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
+            ->orderBy('scheduled_date')
+            ->get();
+
+        // Using Laravel's collection method groupBy to group scheduled application rounds based on the scheduled person
+        return $applicationRounds->groupBy('scheduled_person_id');
     }
 }

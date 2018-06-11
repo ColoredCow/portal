@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\HR\ApplicationMeta;
+use App\Models\HR\ApplicationRound;
+use App\Models\HR\Job;
+use App\Observers\HR\ApplicationMetaObserver;
+use App\Observers\HR\ApplicationRoundObserver;
+use App\Observers\HR\JobObserver;
 use Illuminate\Support\ServiceProvider;
 
 class DatabaseServiceProvider extends ServiceProvider
@@ -13,8 +19,9 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \App\Models\HR\ApplicationRound::observe(\App\Observers\HR\ApplicationRoundObserver::class);
-        \App\Models\HR\Job::observe(\App\Observers\HR\JobObserver::class);
+        ApplicationRound::observe(ApplicationRoundObserver::class);
+        Job::observe(JobObserver::class);
+        ApplicationMeta::observe(ApplicationMetaObserver::class);
     }
 
     /**
