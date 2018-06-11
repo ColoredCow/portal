@@ -20,13 +20,13 @@
         </div>
         @endcan
 
-        @can('library_books.view')
+        @if(auth()->user()->can('weeklydoses.view') || Auth::user()->can('library_books.view'))
         <div class="col-md-3 card mx-5 my-3">
             <a class="card-body no-transition" href="/knowledgecafe">
                 <br><h2 class="text-center">Knowledge Cafe</h2><br>
             </a>
         </div>
-        @endcan
+        @endif
     </div>
 </div>
 
