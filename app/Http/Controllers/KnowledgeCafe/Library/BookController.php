@@ -224,5 +224,10 @@ class BookController extends Controller
         return redirect()->back()->with('status', 'Book suggestions has been disabled.');
     }
 
+    public function enableSuggestion() {
+        session(['disable_book_suggestion' => false]);
+        return redirect()->back()->with('status', 'Book suggestions has been enabled.');
+    }
+
 }
 

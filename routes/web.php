@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
             Route::post('book/markbook', 'BookController@markBook')->name('books.toggleReadStatus');
             Route::post('book/addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
             Route::get('book/disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
+            Route::get('book/enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
             Route::resource('book-categories', 'BookCategoryController')
             ->only(['index', 'store', 'update', 'destroy'])
             ->names(['index' => 'books.category.index']);

@@ -1,5 +1,6 @@
 @extends('layouts.app') @section('content')
 <div id="books_listing" class="container">
+    @include('status', ['errors' => $errors->all()])
     <br> @include('knowledgecafe.library.menu', ['active' => 'books'])
     <br>
     <br>
@@ -21,9 +22,11 @@
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
 
-        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
-            <a target="_blank" href="{{ route('books.disableSuggestion') }}">Show me suggestions on the dasboard</a>
-        </div>
+        @if(session('disable_book_suggestion'))
+            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
+                <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dasboard</a>
+            </div>
+        @endif
     </div>
 
     @if(request()->has('search'))
@@ -65,9 +68,7 @@
                             </ul>
                         </div>
                     </div>
-    
-                    @endif
-
+                    @endcan
                 </div>
 
                 <div v-if="book.readers && book.readers.length" class="pl-0 py-3">

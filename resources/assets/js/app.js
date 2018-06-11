@@ -255,6 +255,7 @@ weeklyDoseClipboard.on('success', function(e) {
 });
 
 $('.status-close').on('click', function(){
+    console.log("hellooo");
     let wrapper = $(this).closest('.alert');
     wrapper.fadeOut(500);
 });
@@ -590,7 +591,6 @@ if(document.getElementById('home_page')) {
     var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
     disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
-    $('#show_nudge_modal').modal('show');
     if(!isModalShown) {
         sessionStorage.setItem("book_modal_has_shown", "true");
         $('#show_nudge_modal').modal('show');
