@@ -46,7 +46,7 @@
             <div v-for="(book, index) in books" class="card book_card col-lg-4 col-md-5 col-sm-4 col-xs-12 mr-2 mb-2 p-2">
                 <div class="d-flex" >
                     <a target="_blank" :href="book.readable_link">
-                        <img :src="book.thumbnail" style="max-height:10em;">
+                        <img :src="book.thumbnail" class="cover_image" >
                     </a>
 
                     <div class="pl-2 pr-4">
