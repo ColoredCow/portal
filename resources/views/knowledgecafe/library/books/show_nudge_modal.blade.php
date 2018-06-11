@@ -1,9 +1,3 @@
-@php
-
-
-@endphp
-
-
 <div class="modal fade" 
     id="show_nudge_modal"
     tabindex="-1" 
@@ -14,7 +8,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
-                <h6 class="modal-title">you have read <b>{{ auth()->user()->books()->count() }}</b> books out of {{ $book->totalBooksCount }}</h6>
+                <h6 class="modal-title">you have read <b>{{ auth()->user()->totalReadBooks() }}</b> books out of {{ $book->totalBooksCount }}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

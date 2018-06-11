@@ -319,28 +319,26 @@ input:focus+.slider {
 }
 
 .flex-grow-0 {
-    flex-grow:0!important;
+    flex-grow: 0 !important;
 }
 
 #books_listing {
-
     .reader_image {
-        width:30px !important;
+        width: 30px !important;
         height: 30px !important;
     }
-
     .action_buttons {
         right: 0;
     }
-} 
+}
 
 .reader_image {
-    width:40px !important;
+    width: 40px !important;
     height: 40px !important;
 }
 
 @media (min-width: 1600px) {
     .book_card {
-        flex-basis:24%;
+        flex-basis: 24%;
     }
 }
