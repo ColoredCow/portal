@@ -2,7 +2,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="round_confirm_{{ $applicationRound->id }}">Schedule @{{ nextRoundName }}</h5>
+                <div class="d-block">
+                    <h5 class="modal-title" id="round_confirm_{{ $applicationRound->id }}">Schedule @{{ nextRoundName }}</h5>
+                    <h6 class="text-secondary">{{ $applicationRound->application->applicant->name }} &mdash; {{ $applicationRound->application->applicant->email }}</h6>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -24,6 +27,12 @@
                     <div class="form-group offset-md-1 col-md-5" v-if="createCalendarEvent">
                         <label for="next_scheduled_end">Scheduled end date</label>
                         <input type="datetime-local" name="next_scheduled_end" id="next_scheduled_end" class="form-control" required="required">
+                    </div>
+                </div>
+                <div class="form-row" v-if="createCalendarEvent">
+                    <div class="form-group col-md-12">
+                        <label for="summary_calendar_event">Summary for calendar event</label>
+                        <input type="text" name="summary_calendar_event" id="summary_calendar_event" class="form-control" required="required">
                     </div>
                 </div>
                 <div class="form-row">
