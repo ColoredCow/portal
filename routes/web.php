@@ -52,7 +52,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
-
     Route::resource('projects', 'ProjectController')->except(['show', 'destroy'])->names(['index' => 'projects.index']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
@@ -75,7 +74,7 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'books.category.index']);
         });
 
-        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
+        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
     });
 
 });
