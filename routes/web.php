@@ -52,11 +52,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
-    Route::resource('projects', 'ProjectController')->except(['show', 'destroy'])->names(['index' => 'projects.index']);
-    Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
-    Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
-    // Route::get('projects', 'ProjectController@getClientProjects');
 
+    Route::resource('projects', 'ProjectController')->except(['show', 'destroy'])->names(['index' => 'projects.index']);
+    Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
     Route::post('settings/{module}/update', 'SettingController@update');
@@ -69,12 +67,15 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
 
             Route::post('book/fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
+            Route::post('book/markbook', 'BookController@markBook')->name('books.toggleReadStatus');
+            Route::post('book/addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
 
             Route::resource('book-categories', 'BookCategoryController')
                 ->only(['index', 'store', 'update', 'destroy'])
                 ->names(['index' => 'books.category.index']);
         });
 
+        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
     });
 
 });

@@ -29,6 +29,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
         el: '#page_hr_applicant_edit',
         data: {
             showResumeFrame: false,
+            showEvaluationFrame: false,
             applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
             selectedNextRound: '',
             nextRoundName: '',
@@ -36,6 +37,9 @@ if (document.getElementById('page_hr_applicant_edit')) {
         methods: {
             toggleResumeFrame: function() {
                 this.showResumeFrame = !this.showResumeFrame;
+            },
+            toggleEvaluationFrame: function() {
+                this.showEvaluationFrame = !this.showEvaluationFrame;
             },
             updateNextRoundName: function() {
                 for (let index = 0; index < this.applicationJobRounds.length; index++) {
@@ -195,7 +199,7 @@ $(document).ready(() => {
             updateClientProjects(form, client_id);
         }
     }
-
+    $('[data-toggle="tooltip"]').tooltip(); 
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -296,7 +300,6 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
         },
     });
 });
-
 
 
 /**
@@ -401,7 +404,9 @@ if (document.getElementById('books_listing')) {
             categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
-            newCategory:''
+            newCategory:'',
+            searchKey:document.getElementById('search_input').dataset.value
+            
         },
 
         methods: {
@@ -450,6 +455,24 @@ if (document.getElementById('books_listing')) {
                     this.categoryInputs[lastCheckbox.value] = lastCheckbox;
                 }
             },
+
+            deleteBook: async function(index) {
+                let confirmDelete = confirm ('Are you sure ?');
+
+                if(!confirmDelete) {
+                    return false;
+                }
+
+                let bookID = this.books[index]['id'];
+                let route = `${this.updateRoute}/${bookID}`;
+                let response = await axios.delete(route);
+                this.books.splice(index, 1);
+            },
+
+            searchBooks: function() {
+                window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
+            }
+
         },
 
         mounted: function() {
@@ -524,4 +547,63 @@ if (document.getElementById('books_category')) {
             }
         }
     });
+}
+
+if (document.getElementById('show_book_info')) {
+    const bookForm = new Vue({
+        el: '#show_book_info',
+        data: {
+            book: document.getElementById('show_book_info').dataset.book 
+                        ? document.getElementById('show_book_info').dataset.book
+                        : [],
+            route:document.getElementById('show_book_info').dataset.markBookRoute 
+                        ? document.getElementById('show_book_info').dataset.markBookRoute
+                        : '',
+            isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
+            readers: document.getElementById('show_book_info').dataset.readers 
+                        ? document.getElementById('show_book_info').dataset.readers
+                        : []
+        },
+        methods: {
+            markBook: async function (read) {
+                    let response = await axios.post(this.route, {book_id:this.book.id, is_read:read});
+                    this.isRead = read;
+                    if(!response.data) {
+                        return false;
+                    }
+                    this.readers = response.data.readers;
+            },
+        },
+
+        mounted() {
+            this.readers = JSON.parse(this.readers);
+            this.book    = JSON.parse(this.book);
+        }
+    });
+}
+
+if(document.getElementById('home_page')) {
+    var el = document.getElementById("markBookAsRead");
+    el.addEventListener("click", markBookAsRead, false);
+    var wishlistBtn = document.getElementById("addBookToWishlist");
+    wishlistBtn.addEventListener("click", addBookToWishlist, false);
+    let isModalShown = sessionStorage.getItem('book_modal_has_shown');
+    if(!isModalShown) {
+        sessionStorage.setItem("book_modal_has_shown", "true");
+        $('#show_nudge_modal').modal('show');
+    }
+}
+
+function markBookAsRead() {
+    let bookID = document.getElementById('markBookAsRead').dataset.id; 
+    let route = document.getElementById('markBookAsRead').dataset.markBookRoute; 
+    axios.post(route, {book_id:bookID, is_read:true});
+    $('#show_nudge_modal').modal('hide');
+}
+
+function addBookToWishlist() {
+    let bookID = document.getElementById('addBookToWishlist').dataset.id; 
+    let route =  document.getElementById('addBookToWishlist').dataset.route; 
+    axios.post(route, {book_id:bookID});
+    $('#show_nudge_modal').modal('hide');
 }

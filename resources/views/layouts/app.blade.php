@@ -39,11 +39,6 @@
                             <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
                         </li>
                         @endcan
-                        @can('weeklydoses.view')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/weeklydoses') }}">WeeklyDose</a>
-                        </li>
-                        @endcan
                         @can('settings.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>

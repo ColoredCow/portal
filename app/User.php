@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\KnowledgeCafe\Library\Book;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'provider', 'provider_id'
+        'name', 'email', 'password', 'provider', 'provider_id', 'avatar'
     ];
 
     /**
@@ -47,4 +48,9 @@ class User extends Authenticatable
     {
         return $query->where('provider', 'google');
     }
+
+    public function getAvatarAttribute($value) {
+        return ($value) ? : url('/images/default_profile.png');
+    }
+
 }
