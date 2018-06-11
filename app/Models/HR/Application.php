@@ -9,28 +9,34 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class Application extends Model {
+class Application extends Model
+{
     protected $guarded = ['id'];
 
     protected $table = 'hr_applications';
 
-    public function job() {
+    public function job()
+    {
         return $this->belongsTo(Job::class, 'hr_job_id');
     }
 
-    public function applicant() {
+    public function applicant()
+    {
         return $this->belongsTo(Applicant::class, 'hr_applicant_id');
     }
 
-    public function applicationRounds() {
+    public function applicationRounds()
+    {
         return $this->hasMany(ApplicationRound::class, 'hr_application_id');
     }
 
-    public function evaluations() {
+    public function evaluations()
+    {
         return $this->hasMany(ApplicationEvaluation::class);
     }
 
-    public function applicationMeta() {
+    public function applicationMeta()
+    {
         return $this->hasMany(ApplicationMeta::class, 'hr_application_id');
     }
 
@@ -40,7 +46,8 @@ class Application extends Model {
      * @param  array $attr  fillables to be stored
      * @return this
      */
-    public static function _create($attr) {
+    public static function _create($attr)
+    {
         $application = self::create($attr);
         event(new ApplicationCreated($application));
         return $application;
@@ -54,7 +61,8 @@ class Application extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeApplyFilter($query, array $filters) {
+    public function scopeApplyFilter($query, array $filters)
+    {
         foreach (array_filter($filters) as $type => $value) {
             switch ($type) {
             case 'status':
@@ -80,7 +88,8 @@ class Application extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeFilterByStatus($query, $status) {
+    public function scopeFilterByStatus($query, $status)
+    {
         switch ($status) {
         case config('constants.hr.status.rejected.label'):
             $query->rejected();
@@ -107,7 +116,8 @@ class Application extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeFilterByJobType($query, $type) {
+    public function scopeFilterByJobType($query, $type)
+    {
         $query->whereHas('job', function ($subQuery) use ($type) {
             $functionName = 'is' . $type;
             $subQuery->{$functionName}();
@@ -124,7 +134,8 @@ class Application extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeFilterByJob($query, $id) {
+    public function scopeFilterByJob($query, $id)
+    {
         $query->where('hr_job_id', $id);
 
         return $query;
@@ -133,28 +144,32 @@ class Application extends Model {
     /**
      * get applications where status is rejected
      */
-    public function scopeRejected($query) {
+    public function scopeRejected($query)
+    {
         return $query->where('status', config('constants.hr.status.rejected.label'));
     }
 
     /**
      * get applications where status is new and in-progress
      */
-    public function scopeIsOpen($query) {
+    public function scopeIsOpen($query)
+    {
         return $query->whereIn('status', array(config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')));
     }
 
     /**
      * get applications where status is on-hold
      */
-    public function scopeOnHold($query) {
+    public function scopeOnHold($query)
+    {
         return $query->where('status', config('constants.hr.status.on-hold.label'));
     }
 
     /**
      * get applications where status is no-show
      */
-    public function scopeNoShow($query) {
+    public function scopeNoShow($query)
+    {
         return $query->whereIn('status', [
             config('constants.hr.status.no-show.label'),
             config('constants.hr.status.no-show-reminded.label'),
@@ -164,28 +179,32 @@ class Application extends Model {
     /**
      * Set application status to rejected
      */
-    public function reject() {
+    public function reject()
+    {
         $this->update(['status' => config('constants.hr.status.rejected.label')]);
     }
 
     /**
      * Set application status to in-progress
      */
-    public function markInProgress() {
+    public function markInProgress()
+    {
         $this->update(['status' => config('constants.hr.status.in-progress.label')]);
     }
 
     /**
      * Set the application status to no-show
      */
-    public function markNoShow() {
+    public function markNoShow()
+    {
         $this->update(['status' => config('constants.hr.status.no-show.label')]);
     }
 
     /**
      * Set the application status to no-show
      */
-    public function markNoShowReminded() {
+    public function markNoShowReminded()
+    {
         $this->update(['status' => config('constants.hr.status.no-show-reminded.label')]);
     }
 
@@ -194,7 +213,8 @@ class Application extends Model {
      *
      * @return array
      */
-    public function timeline() {
+    public function timeline()
+    {
         $this->load('applicationRounds', 'applicationRounds.round');
         $timeline = [];
         foreach ($this->applicationRounds as $applicationRound) {
@@ -244,7 +264,8 @@ class Application extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function changeJob($attr) {
+    public function changeJob($attr)
+    {
         $meta = [
             'previous_job' => $this->hr_job_id,
             'new_job' => $attr['hr_job_id'],
@@ -266,7 +287,8 @@ class Application extends Model {
      *
      * @return boolean
      */
-    public function isNoShow() {
+    public function isNoShow()
+    {
         return in_array($this->status, [
             config('constants.hr.status.no-show.label'),
             config('constants.hr.status.no-show-reminded.label'),
