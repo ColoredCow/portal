@@ -323,10 +323,6 @@ input:focus+.slider {
 }
 
 #books_listing {
-    .book_card {
-        width: 20em;
-        height: 20em;
-    }
 
     .reader_image {
         width:30px !important;
@@ -334,14 +330,17 @@ input:focus+.slider {
     }
 
     .action_buttons {
-        >div {
-            bottom:0;
-            right: 0;
-        }
+        right: 0;
     }
 } 
 
 .reader_image {
     width:40px !important;
     height: 40px !important;
+}
+
+@media (min-width: 1600px) {
+    .book_card {
+        flex-basis:24%;
+    }
 }

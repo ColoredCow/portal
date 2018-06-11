@@ -63,6 +63,12 @@
                                     </div>
                                 </div>
                             @endif
+
+                            <div>
+                                <a id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}" class="text-info c-pointer">
+                                   <span>Don't show me this again</span> 
+                                </a>
+                            </div>
                     </div>
                 </div>
             </div>

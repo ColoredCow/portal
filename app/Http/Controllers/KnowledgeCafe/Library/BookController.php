@@ -28,6 +28,8 @@ class BookController extends Controller
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search'): false;
         $books = Book::getList($searchString);
+
+        //dd($books);
         $categories = BookCategory::orderBy('name')->get();
         return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
@@ -215,6 +217,16 @@ class BookController extends Controller
         return response()->json([
             'isAdded' => $isAdded
         ]);
+    }
+
+    public function disableSuggestion() {
+        session(['disable_book_suggestion' => true]);
+        return redirect()->back()->with('status', 'Book suggestions has been disabled.');
+    }
+
+    public function enableSuggestion() {
+        session(['disable_book_suggestion' => false]);
+        return redirect()->back()->with('status', 'Book suggestions has been enabled.');
     }
 
 }
