@@ -3,15 +3,15 @@
 namespace App\Models\HR;
 
 use App\Events\HR\ApplicationCreated;
+use App\Helpers\ContentHelper;
 use App\Models\HR\Applicant;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\ApplicationRound;
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\Models\HR\Job;
-use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use App\Helpers\ContentHelper;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Application extends Model
 {
@@ -32,6 +32,11 @@ class Application extends Model
     public function applicationRounds()
     {
         return $this->hasMany(ApplicationRound::class, 'hr_application_id');
+    }
+
+    public function evaluations()
+    {
+        return $this->hasMany(ApplicationEvaluation::class);
     }
 
     public function applicationMeta()
@@ -237,7 +242,7 @@ class Application extends Model
             $event->value = $details;
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.change-job'),
-                'event'=> $event,
+                'event' => $event,
                 'date' => $event->created_at,
             ];
         }
@@ -278,6 +283,19 @@ class Application extends Model
             'hr_application_id' => $this->id,
             'key' => config('constants.hr.application-meta.keys.change-job'),
             'value' => json_encode($meta),
+        ]);
+    }
+
+    /**
+     * Check if the current Application instance has status either no-show or no-show-reminded.
+     *
+     * @return boolean
+     */
+    public function isNoShow()
+    {
+        return in_array($this->status, [
+            config('constants.hr.status.no-show.label'),
+            config('constants.hr.status.no-show-reminded.label'),
         ]);
     }
 }
