@@ -1,5 +1,5 @@
 <span class="c-pointer text-primary" @click="toggleResumeFrame()"><i class="fa fa-file fa-2x"></i></span>
-<div class="card border-dark inline-resume" id="sliding_resume" v-cloak v-show="showResumeFrame">
+<div class="card border-dark inline-card inline-resume" id="sliding_resume" v-cloak v-show="showResumeFrame">
     <div class="card-header bg-warning">
         <ul class="nav justify-content-end">
             <li class="nav-item">

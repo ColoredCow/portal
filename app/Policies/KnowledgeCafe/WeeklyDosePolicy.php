@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Policies;
+namespace App\Policies\KnowledgeCafe;
 
 use App\User;
-use App\Models\WeeklyDose;
+use App\Models\KnowledgeCafe\WeeklyDose;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class WeeklyDosePolicy
