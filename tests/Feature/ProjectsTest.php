@@ -10,7 +10,7 @@ class ProjectsTest extends FeatureTest
     /** @test */
     public function an_authorised_user_can_see_projects() {
         $this->anAuthorizedUser();
-        $this->get('/projects')
+        $this->get(route('projects'))
             ->assertStatus(200);
     }
 
@@ -19,12 +19,12 @@ class ProjectsTest extends FeatureTest
         $this->withoutExceptionHandling()
             ->expectException('Illuminate\Auth\Access\AuthorizationException');
         $this->signIn();
-        $this->get('/projects');
+        $this->get(route('projects'));
     }
 
     /** @test */
     public function a_guest_cant_see_projects() {
-        $this->get('/projects')
+        $this->get(route('projects'))
             ->assertRedirect('login');
     }
 
@@ -32,7 +32,7 @@ class ProjectsTest extends FeatureTest
     public function an_authorised_user_can_create_a_project() {
         $this->anAuthorizedUser();
         $project = make('App\Models\Project');
-        $response = $this->post('/projects/', $project->toArray());
+        $response = $this->post(route('projects.store'), $project->toArray());
         $this->get($response->headers->get('Location'))
             ->assertSee($project->name);
     }
@@ -41,11 +41,11 @@ class ProjectsTest extends FeatureTest
     public function an_authorised_user_can_update_a_project() {
         $this->anAuthorizedUser();
         $project = create('App\Models\Project');
-        $this->get($project->path() . '/edit')
+        $this->get(route('projects.edit', $project->id))
             ->assertSee($project->name);
         $newProject = make('App\Models\Project');
-        $this->patch($project->path(), $newProject->toArray());
-        $this->get($project->path() . '/edit')
+        $this->patch(route('projects.update', $project->id), $newProject->toArray());
+        $this->get(route('projects.edit', $project->id))
             ->assertSee($newProject->name);
     }
 

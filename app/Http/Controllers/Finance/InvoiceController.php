@@ -107,7 +107,7 @@ class InvoiceController extends Controller
         if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
             $projectStageBilling = $invoice->projectStageBillings->first();
             $project = $projectStageBilling->projectStage->project;
-            return redirect("/projects/$project->id/edit")->with('status', 'Billing invoice created successfully');
+            return redirect(route('projects.edit', $project->id))->with('status', 'Billing invoice created successfully');
         }
 
         return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');

@@ -7,14 +7,14 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Edit Project</h1></div>
-        <div class="col-md-6"><a href="/projects/create" class="btn btn-success float-right">Create Project</a></div>
+        <div class="col-md-6"><a href="{{ route('projects.create') }}" class="btn btn-success float-right">Create Project</a></div>
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <form action="/projects/{{ $project->id }}" method="POST">
+        <form action="{{ route('projects.update', $project->id) }}" method="POST">
 
             {{ csrf_field() }}
-            {{ method_field('PATCH') }}
+            {{ method_field('PUT') }}
 
             <div class="card-header">
                 <span>Project Details</span>
