@@ -2,11 +2,10 @@
 
 namespace App\Notifications\HR;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\HR\ApplicationRound;
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ApplicationRoundScheduled extends Notification
 {
@@ -49,9 +48,9 @@ class ApplicationRoundScheduled extends Notification
         $application = $this->applicationRound->application;
         $job = $application->job;
         return (new MailMessage)
-                    ->subject( config('app.name') . ': New application round scheduled')
-                    ->line('You have been assigned an application round.')
-                    ->action('View this application', route("applications.$job->type.edit", $application->id));
+            ->subject(config('app.name') . ': New application round scheduled')
+            ->line('You have been assigned an application round.')
+            ->action('View this application', route("applications.$job->type.edit", $application->id));
     }
 
     /**

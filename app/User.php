@@ -49,8 +49,18 @@ class User extends Authenticatable
         return $query->where('provider', 'google');
     }
 
-    public function getAvatarAttribute($value) {
-        return ($value) ? : url('/images/default_profile.png');
+    public function getAvatarAttribute($value)
+    {
+        return ($value) ?: url('/images/default_profile.png');
     }
 
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'book_readers', 'user_id', 'library_book_id');
+    }
+
+    public function totalReadBooks()
+    {
+        return $this->books()->count();
+    }
 }

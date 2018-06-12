@@ -4,11 +4,7 @@ namespace App\Models\HR;
 
 use App\Events\HR\ApplicationCreated;
 use App\Helpers\ContentHelper;
-use App\Models\HR\Applicant;
-use App\Models\HR\ApplicationMeta;
-use App\Models\HR\ApplicationRound;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
-use App\Models\HR\Job;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -69,15 +65,15 @@ class Application extends Model
     {
         foreach (array_filter($filters) as $type => $value) {
             switch ($type) {
-                case 'status':
-                    $query->filterByStatus($value);
-                    break;
-                case 'job-type':
-                    $query->filterByJobType($value);
-                    break;
-                case 'job':
-                    $query->filterByJob($value);
-                    break;
+            case 'status':
+                $query->filterByStatus($value);
+                break;
+            case 'job-type':
+                $query->filterByJobType($value);
+                break;
+            case 'job':
+                $query->filterByJob($value);
+                break;
             }
         }
 
@@ -95,18 +91,18 @@ class Application extends Model
     public function scopeFilterByStatus($query, $status)
     {
         switch ($status) {
-            case config('constants.hr.status.rejected.label'):
-                $query->rejected();
-                break;
-            case config('constants.hr.status.on-hold.label'):
-                $query->onHold();
-                break;
-            case config('constants.hr.status.no-show.label'):
-                $query->noShow();
-                break;
-            default:
-                $query->isOpen();
-                break;
+        case config('constants.hr.status.rejected.label'):
+            $query->rejected();
+            break;
+        case config('constants.hr.status.on-hold.label'):
+            $query->onHold();
+            break;
+        case config('constants.hr.status.no-show.label'):
+            $query->noShow();
+            break;
+        default:
+            $query->isOpen();
+            break;
         }
 
         return $query;
