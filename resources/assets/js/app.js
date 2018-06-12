@@ -11,7 +11,6 @@ require('./bootstrap');
 import 'jquery-ui/ui/widgets/datepicker.js';
 import ImageCompressor from 'image-compressor.js';
 
-
 window.Vue = require('vue');
 
 /**
