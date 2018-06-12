@@ -2,8 +2,8 @@
 
 namespace App\Observers\HR;
 
+use App\Jobs\HR\SendApplicationRoundScheduled;
 use App\Models\HR\ApplicationRound;
-use App\Notifications\HR\ApplicationRoundScheduled;
 use App\Services\CalendarEventService;
 
 class ApplicationRoundObserver
@@ -18,7 +18,7 @@ class ApplicationRoundObserver
     {
         $applicationRound->load('application', 'scheduledPerson');
         if ($applicationRound->application->status != config('constants.hr.status.on-hold.label')) {
-            $applicationRound->scheduledPerson->notify(new ApplicationRoundScheduled($applicationRound));
+            SendApplicationRoundScheduled::dispatch($applicationRound);
         }
 
         if (request()->get('create_calendar_event')) {
