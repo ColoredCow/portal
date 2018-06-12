@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApplicationRound extends Model
 {
-    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_date', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
+    protected $guarded = [];
 
     protected $table = 'hr_application_round';
 
@@ -49,7 +49,8 @@ class ApplicationRound extends Model
                 $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
-                    'scheduled_date' => $attr['next_scheduled_date'],
+                    'scheduled_date' => $attr['next_scheduled_start'],
+                    'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'],
                 ]);
                 break;
