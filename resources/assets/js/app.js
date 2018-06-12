@@ -52,6 +52,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
                         $('#round_confirm').modal('show');
                         break;
                     case 'send-for-approval':
+                        $('#send_for_approval').modal('show');
                         break;
                 }
             }
@@ -183,7 +184,7 @@ if (document.getElementById('finance_report')) {
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
-    if (selectedAction == 'confirm') {
+    if (selectedAction == 'confirm' || selectedAction == 'send-for-approval') {
         if (!form[0].checkValidity()) {
             form[0].reportValidity();
             return false;

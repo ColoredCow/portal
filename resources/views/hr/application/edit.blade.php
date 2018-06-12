@@ -215,6 +215,7 @@
                         <input type="hidden" name="action" value="updated">
                         <input type="hidden" name="next_round" value="">
                         @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
+                        @includeWhen(is_null($applicationRound->round_status), 'hr.application.send-for-approval-modal')
                     </form>
                 </div>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
