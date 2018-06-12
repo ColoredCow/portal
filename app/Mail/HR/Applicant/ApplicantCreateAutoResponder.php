@@ -42,7 +42,7 @@ class ApplicantCreateAutoResponder extends Mailable
      */
     public function build()
     {
-        return $this->from(env('constants.hr.default.email'), env('constants.hr.default.name'))
+        return $this->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject($this->subject)
             ->view('mail.plain')->with([
             'body' => $this->body,
