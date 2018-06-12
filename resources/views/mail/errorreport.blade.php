@@ -1,4 +1,6 @@
 @component('mail::message')
+Hi,<br>
+An error while handling a request. Here are the details:
 
 - User: {{ $user->name }} ({{ $user->email }})
 - Time: {{ $timeOfException }}
