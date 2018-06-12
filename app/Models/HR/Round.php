@@ -4,7 +4,6 @@ namespace App\Models\HR;
 
 use App\Models\HR\Evaluation\Parameter as EvaluationParameter;
 use App\Models\HR\Evaluation\Segment as EvaluationSegment;
-use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 
 class Round extends Model

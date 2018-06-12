@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KnowledgeCafe\Library\Book;
 use Google_Client;
 use Google_Service_Directory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\KnowledgeCafe\Library\Book;
 
 class HomeController extends Controller
 {
@@ -27,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $unreadBook = Book::getRandomUnreadBook();
+        $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);
     }
 
@@ -48,7 +46,7 @@ class HomeController extends Controller
 
         $dir = new Google_Service_Directory($client);
         $googleGroups = $dir->groups->listGroups([
-            'userKey' => $email
+            'userKey' => $email,
         ]);
         $groups = $googleGroups->getGroups();
 
