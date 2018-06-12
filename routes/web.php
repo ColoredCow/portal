@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -50,10 +50,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
-    Route::resource('projects', 'ProjectController')->except(['show', 'destroy']);
-    Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index']);
+    Route::resource('projects', 'ProjectController')->except(['show', 'destroy'])->names(['index' => 'projects.index']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
-
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
     Route::post('settings/{module}/update', 'SettingController@update');
@@ -64,7 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
                 ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
-
+                
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
@@ -73,9 +71,13 @@ Route::middleware('auth')->group(function () {
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
             });
 
+
             Route::resource('book-categories', 'BookCategoryController')
-            ->only(['index', 'store', 'update', 'destroy'])
-            ->names(['index' => 'books.category.index']);
+                ->only(['index', 'store', 'update', 'destroy'])
+                ->names(['index' => 'books.category.index']);
         });
+
+        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
+
     });
 });
