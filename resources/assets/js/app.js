@@ -30,9 +30,11 @@ if (document.getElementById('page_hr_applicant_edit')) {
         data: {
             showResumeFrame: false,
             showEvaluationFrame: false,
-            applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
+            applicationJobRounds: JSON.parse(document.getElementById('action_type').dataset.applicationJobRounds) || {},
             selectedNextRound: '',
             nextRoundName: '',
+            selectedAction: '',
+            nextRound: '',
         },
         methods: {
             toggleResumeFrame: function() {
@@ -41,18 +43,22 @@ if (document.getElementById('page_hr_applicant_edit')) {
             toggleEvaluationFrame: function() {
                 this.showEvaluationFrame = !this.showEvaluationFrame;
             },
-            updateNextRoundName: function() {
-                for (let index = 0; index < this.applicationJobRounds.length; index++) {
-                    let applicationRound = this.applicationJobRounds[index];
-                    if (applicationRound.id == this.selectedNextRound) {
-                        this.nextRoundName = applicationRound.name;
+            takeAction: function() {
+                switch (this.selectedAction) {
+                    case 'round':
+                        let selectedRound = document.querySelector('#action_type option:checked');
+                        this.selectedNextRound = selectedRound.dataset.nextRoundId;
+                        this.nextRoundName = selectedRound.innerText;
+                        $('#round_confirm').modal('show');
                         break;
-                    }
+                    case 'send-for-approval':
+                        break;
                 }
             }
         },
         mounted() {
             this.selectedNextRound = this.applicationJobRounds[0].id;
+            this.selectedAction = 'round';
             this.nextRoundName = this.applicationJobRounds[0].name;
         }
     });
@@ -199,7 +205,7 @@ $(document).ready(() => {
             updateClientProjects(form, client_id);
         }
     }
-    $('[data-toggle="tooltip"]').tooltip(); 
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -406,7 +412,7 @@ if (document.getElementById('books_listing')) {
             currentBookIndex: 0,
             newCategory:'',
             searchKey:document.getElementById('search_input') ? document.getElementById('search_input').dataset.value : '',
-            
+
         },
 
         methods: {
@@ -420,7 +426,7 @@ if (document.getElementById('books_listing')) {
                 this.categoryInputs.map((checkbox) => checkbox.checked = false );
                 categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
             },
-            
+
             updateCategory: function() {
                 let selectedCategory = [];
                 let bookID = this.books[this.currentBookIndex]['id'];
@@ -430,7 +436,7 @@ if (document.getElementById('books_listing')) {
                         selectedCategory.push({
                             name:checkbox.dataset.category,
                             id:checkbox.value
-                        }); 
+                        });
                     }
                 });
 
@@ -446,7 +452,7 @@ if (document.getElementById('books_listing')) {
                     return false;
                 }
 
-                let response = await axios.post(this.categoryIndexRoute, {name: this.newCategory}); 
+                let response = await axios.post(this.categoryIndexRoute, {name: this.newCategory});
                 if(response.data && response.data.category) {
                     await this.bookCategories.push(response.data.category);
                     this.newCategory = "";
@@ -513,7 +519,7 @@ if (document.getElementById('books_category')) {
             },
 
             deleteCategory: async function(index) {
-                
+
                 let confirmDelete = confirm ('Are you sure ?');
 
                 if(!confirmDelete) {
@@ -539,7 +545,7 @@ if (document.getElementById('books_category')) {
                     return false;
                 }
                 let route = `${this.indexRoute}`;
-                let response = await axios.post(route, {name: this.newCategoryName}); 
+                let response = await axios.post(route, {name: this.newCategoryName});
 
                 if(response.data && response.data.category) {
                     this.categories.unshift(response.data.category);
@@ -556,14 +562,14 @@ if (document.getElementById('show_book_info')) {
     const bookForm = new Vue({
         el: '#show_book_info',
         data: {
-            book: document.getElementById('show_book_info').dataset.book 
+            book: document.getElementById('show_book_info').dataset.book
                         ? document.getElementById('show_book_info').dataset.book
                         : [],
-            route:document.getElementById('show_book_info').dataset.markBookRoute 
+            route:document.getElementById('show_book_info').dataset.markBookRoute
                         ? document.getElementById('show_book_info').dataset.markBookRoute
                         : '',
             isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
-            readers: document.getElementById('show_book_info').dataset.readers 
+            readers: document.getElementById('show_book_info').dataset.readers
                         ? document.getElementById('show_book_info').dataset.readers
                         : []
         },
@@ -600,15 +606,15 @@ if(document.getElementById('home_page')) {
 }
 
 function markBookAsRead() {
-    let bookID = document.getElementById('markBookAsRead').dataset.id; 
-    let route = document.getElementById('markBookAsRead').dataset.markBookRoute; 
+    let bookID = document.getElementById('markBookAsRead').dataset.id;
+    let route = document.getElementById('markBookAsRead').dataset.markBookRoute;
     axios.post(route, {book_id:bookID, is_read:true});
     $('#show_nudge_modal').modal('hide');
 }
 
 function addBookToWishlist() {
-    let bookID = document.getElementById('addBookToWishlist').dataset.id; 
-    let route =  document.getElementById('addBookToWishlist').dataset.route; 
+    let bookID = document.getElementById('addBookToWishlist').dataset.id;
+    let route =  document.getElementById('addBookToWishlist').dataset.route;
     axios.post(route, {book_id:bookID});
     $('#show_nudge_modal').modal('hide');
 }
