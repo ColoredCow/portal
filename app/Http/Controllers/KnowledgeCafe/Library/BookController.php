@@ -208,5 +208,24 @@ class BookController extends Controller
 
     }
 
+    public function addToUserWishList(){
+        $bookID = request()->book_id;
+        $book = Book::find($bookID);
+        $isAdded = ($book) ? $book->addToUserWishlist() : false;
+        return response()->json([
+            'isAdded' => $isAdded
+        ]);
+    }
+
+    public function disableSuggestion() {
+        session(['disable_book_suggestion' => true]);
+        return redirect()->back()->with('status', 'Book suggestions has been disabled.');
+    }
+
+    public function enableSuggestion() {
+        session(['disable_book_suggestion' => false]);
+        return redirect()->back()->with('status', 'Book suggestions has been enabled.');
+    }
+
 }
 

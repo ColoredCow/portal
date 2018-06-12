@@ -1,15 +1,10 @@
-
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
 // Variables
 @import "variables";
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-
 @import '~jquery-ui/themes/base/all.css';
-
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -47,7 +42,8 @@
 }
 
 input[type="file"] {
-    &:focus, &:active {
+    &:focus,
+    &:active {
         outline: none;
     }
 }
@@ -72,7 +68,6 @@ input[type="file"] {
 .space-wrap {
     white-space: pre-wrap;
 }
-
 
 .modal-toggler {
     cursor: pointer;
@@ -152,7 +147,6 @@ input[type="file"] {
             left: -8px;
         }
     }
-
     .content {
         padding: 10px;
         background-color: white;
@@ -180,7 +174,6 @@ input[type="file"] {
     display: flex;
     align-items: center;
     justify-content: center;
-
     &:hover {
         background-color: $primary;
         color: white;
@@ -191,7 +184,6 @@ input[type="file"] {
     position: absolute;
     right: 15px;
     top: 10px;
-
     &.icon-pencil {
         top: 7px;
     }
@@ -246,6 +238,7 @@ input[type="file"] {
         transition: .4s;
     }
 }
+
 .slider.inactive {
     background-color: $danger;
     .off {
@@ -261,7 +254,6 @@ input[type="file"] {
 
 .slider.active {
     background-color: $success;
-
     &:before {
         transform: translateX(60px);
     }
@@ -275,19 +267,22 @@ input[type="file"] {
         background-color: $info;
     }
 }
-input:focus + .slider {
+
+input:focus+.slider {
     box-shadow: 0 0 1px $secondary;
 }
-.on, .off {
+
+.on,
+.off {
     color: white;
     position: absolute;
     top: 20%;
     font-size: 12px;
 }
+
 .update-schedule {
     margin-bottom: 2px;
 }
-
 
 #update_category_modal {
     .modal-body {
@@ -295,29 +290,64 @@ input:focus + .slider {
         overflow-y: scroll;
     }
 }
-.inline-resume {
-    &.card {
-        position: fixed;
-        height: 100vh;
-        width: 45vw;
-        left: 0;
-        top: 0;
-        z-index: 100;
-    }
+
+.inline-card {
+    position: fixed;
+    height: 100vh;
+    width: 45vw;
+    top: 0;
+    z-index: 100;
     >.card-body {
         height: 100%;
-        >iframe {
+    }
+    &.inline-resume {
+        left: 0;
+        >.card-body>iframe {
             height: 100%;
             width: 100%;
+        }
+    }
+    &.inline-evaluation {
+        right: 0;
+        >.card-body {
+            overflow-y: scroll;
         }
     }
 }
 
 [v-cloak] {
-  display: none;
+    display: none;
 }
 
 .round_evaluation_list {
     max-height: 40em;
     overflow-y: scroll;
+}
+
+.flex-grow-0 {
+    flex-grow: 0 !important;
+}
+
+#books_listing {
+    .reader_image {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .action_buttons {
+        right: 0;
+    }
+    .cover_image {
+        max-height: 10em;
+    }
+}
+
+.reader_image {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+@media (min-width: 1600px) {
+    .book_card {
+        flex-basis: 24%;
+    }
 }
