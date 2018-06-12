@@ -53,7 +53,7 @@
                             <h4 v-if="readers.length">Read by:</h4>
                             <div class="d-flex justify-content-start"> 
                                 <div v-for="(reader, index)  in readers " class="my-3 mr-3 ml-0 text-center">
-                                    <img src="/images/default_profile.png" alt="">
+                                    <img :src="reader.avatar" alt="">
                                     <h5> @{{ reader.name }} </h5>
                                 </div> 
                             </div>
