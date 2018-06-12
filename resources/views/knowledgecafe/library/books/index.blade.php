@@ -1,4 +1,5 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app') 
+@section('content')
 <div id="books_listing" class="container">
     @include('status', ['errors' => $errors->all()])
     <br> @include('knowledgecafe.library.menu', ['active' => 'books'])

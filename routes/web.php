@@ -26,16 +26,14 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::middleware('auth')->group(function () {
-
     Route::prefix('hr')->namespace('HR')->group(function () {
-
         Route::prefix('applications')->namespace('Applications')->group(function () {
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update'])
-                ->names([ 'index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update' ]);
+                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update']);
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
-                ->names([ 'index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
+                ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
         });
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
@@ -62,21 +60,22 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
-        
+
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
-                ->names([ 'index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
-                
-            Route::post('book/fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
-            Route::post('book/markbook', 'BookController@markBook')->name('books.toggleReadStatus');
-            Route::post('book/addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
-            Route::get('book/disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
-            Route::get('book/enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
+                ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
+
+            Route::prefix('book')->group(function () {
+                Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
+                Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
+                Route::post('addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
+                Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
+                Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
+            });
+
             Route::resource('book-categories', 'BookCategoryController')
             ->only(['index', 'store', 'update', 'destroy'])
             ->names(['index' => 'books.category.index']);
         });
-        
     });
-
 });
