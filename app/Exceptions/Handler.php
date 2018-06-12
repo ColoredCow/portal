@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Mail\ErrorReport;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
 
 class Handler extends ExceptionHandler
 {
@@ -14,7 +15,11 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Validation\ValidationException::class,
     ];
 
     /**
@@ -32,12 +37,20 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception  $exeception
      * @return void
      */
     public function report(Exception $exception)
     {
-        \Mail::to('admin@example.com')->send(new ErrorReport($exception));
+        date_default_timezone_set('Asia/Kolkata');
+        $timeOfException = date('l, j-F-Y, h:i:s A');
+        foreach ($this->dontReport as $dontReport) {
+            if (($exception instanceof $dontReport)) {
+                return;
+            }
+        }
+        $user = Auth::user();
+        \Mail::to(config('mail.admin'))->send(new ErrorReport($exception, $user, $timeOfException));
         return parent::report($exception);
     }
 

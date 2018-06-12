@@ -2,16 +2,18 @@
 
 namespace App\Mail;
 
+use App\User;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ErrorReport extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $user;
+    public $timeOfException;
     public $exception;
 
     /**
@@ -19,9 +21,11 @@ class ErrorReport extends Mailable
      *
      * @return void
      */
-    public function __construct(Exception $exception)
+    public function __construct(Exception $exception, User $user, string $timeOfException)
     {
         $this->exception = $exception;
+        $this->user = $user;
+        $this->timeOfException = $timeOfException;
     }
 
     /**
@@ -31,6 +35,8 @@ class ErrorReport extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.errorreport');
+        return $this->from(config('mail.from.address'))
+            ->subject('[ERROR REPORT] ' . $this->exception->getMessage())
+            ->markdown('mail.errorreport');
     }
 }
