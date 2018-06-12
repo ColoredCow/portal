@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container" id="home_page">
+    @include('status', ['errors' => $errors->all()])
     <br>
     <div class="d-flex justify-content-start row flex-wrap">
         @can('hr_applicants.view')
@@ -31,4 +33,5 @@
 </div>
 
 @includeWhen($book, 'knowledgecafe.library.books.show_nudge_modal')
+
 @endsection
