@@ -399,15 +399,14 @@ if (document.getElementById('books_listing')) {
     const bookForm = new Vue({
         el: '#books_listing',
         data: {
-            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books).data : {},
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
             bookCategories: document.getElementById('books_table').dataset.categories ? JSON.parse(document.getElementById('books_table').dataset.categories) : [],
             updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
             categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
             newCategory:'',
-            searchKey:document.getElementById('search_input').dataset.value
-
+            searchKey: document.getElementById('search_input') ? document.getElementById('search_input').dataset.value : '',
         },
 
         methods: {
@@ -472,8 +471,11 @@ if (document.getElementById('books_listing')) {
 
             searchBooks: function() {
                 window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
-            }
+            },
 
+            strLimit: function (str, length) {
+                return str.length > length ? str.substring(0, length) + "..." : str;
+            }
         },
 
         mounted: function() {
@@ -588,6 +590,8 @@ if(document.getElementById('home_page')) {
     el.addEventListener("click", markBookAsRead, false);
     var wishlistBtn = document.getElementById("addBookToWishlist");
     wishlistBtn.addEventListener("click", addBookToWishlist, false);
+    var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
+    disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
     if(!isModalShown) {
         sessionStorage.setItem("book_modal_has_shown", "true");
@@ -607,4 +611,9 @@ function addBookToWishlist() {
     let route =  document.getElementById('addBookToWishlist').dataset.route;
     axios.post(route, {book_id:bookID});
     $('#show_nudge_modal').modal('hide');
+}
+
+function disableBookSuggestions() {
+    $('#show_nudge_modal').modal('hide');
+    window.location.href = document.getElementById('disableBookSuggestion').dataset.href;
 }
