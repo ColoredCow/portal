@@ -6,7 +6,7 @@
     <br>
     <br>
     <div class="row">
-        <div class="col-6">
+        <div class="col-3">
             <h1>Books</h1>
         </div>
         @can('library_books.create')
@@ -43,8 +43,8 @@
     <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}">
 
-        <div class="row pl-2">
-            <div v-for="(book, index) in books" class="card book_card col-lg-4 col-md-5 col-sm-4 col-xs-12 mr-2 mb-2 p-2">
+        <div class="row pl-2 w-100">
+            <div v-for="(book, index) in books" class="card book_card col-lg-3 col-md-5 col-sm-4 col-xs-12 mr-3 mb-3 p-2">
                 <div class="d-flex" >
                     <a target="_blank" :href="book.readable_link">
                         <img :src="book.thumbnail" class="cover_image" >
@@ -79,7 +79,7 @@
 
                 <div :class="(book.readers && book.readers.length) ? 'pl-0 pt-1' : 'pl-0 pt-1 mt-3'">
                     <span v-for="(category, index) in book.categories">
-                        <h2 v-if="index < 3" class="badge badge-info p-2 mr-1">@{{ category.name }} </h2>
+                        <h2 v-if="index < 3" class="badge badge-secondary px-2 py-1 mr-1">@{{ category.name }} </h2>
                     </span>
                 </div>
             </div>
