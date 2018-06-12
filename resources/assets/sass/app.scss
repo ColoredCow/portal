@@ -326,10 +326,31 @@ input:focus+.slider {
 =======
 }
 
-#show_nudge_modal {
+.flex-grow-0 {
+    flex-grow: 0 !important;
+}
+
+#books_listing {
     .reader_image {
-        width: 50px;
-        height: 50px;
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .action_buttons {
+        right: 0;
+    }
+    .cover_image {
+        max-height: 10em;
+    }
+}
+
+.reader_image {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+@media (min-width: 1600px) {
+    .book_card {
+        flex-basis: 24%;
     }
 >>>>>>> d4a02eb8b00848f25a91ab93c7d7e7d32212c385
 }

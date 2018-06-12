@@ -21,9 +21,8 @@ class ClientController extends Controller
     public function index()
     {
         $this->authorize('list', Client::class);
-
         return view('client.index')->with([
-            'clients' => Client::select('id', 'name', 'emails', 'phone', 'is_active')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
+            'clients' => Client::select('id', 'name', 'emails', 'phone', 'is_active')->with('projects')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);
     }
 
@@ -53,7 +52,7 @@ class ClientController extends Controller
             'country' => $validated['country'],
             'is_active' => isset($validated['is_active']) ? true : false,
             'address' => $validated['address'],
-            'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null
+            'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
 
         return redirect("/clients/$client->id/edit")->with('status', 'Client created succesfully!');
@@ -100,7 +99,7 @@ class ClientController extends Controller
             'country' => $validated['country'],
             'is_active' => isset($validated['is_active']) ? true : false,
             'address' => $validated['address'],
-            'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null
+            'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
         return redirect("/clients/$client->id/edit")->with('status', 'Client updated succesfully!');
     }
