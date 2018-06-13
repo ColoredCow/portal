@@ -51,6 +51,7 @@ class InvoiceRequest extends FormRequest
             'due_amount' => 'nullable|numeric',
             'currency_due_amount' => 'nullable|string',
             'due_date' => 'required',
+
         ];
 
         if ($this->method() === 'POST') {

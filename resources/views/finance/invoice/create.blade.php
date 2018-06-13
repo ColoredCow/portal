@@ -77,9 +77,9 @@
                 </div>
                 <br>
                 <div class="form-row">
-                 <div class="form-group col-md-3">
+                <div class="form-group col-md-3">
                         <label for="due_date" class="field-required">Due date</label>
-                        <input type="text" class="form-control date-field" name="due_date" id="due_date" placeholder="dd/mm/yyyy" value="{{ old('due_date') }}">
+                        <input type="text" class="form-control date-field" name="due_date" id="sent_on" placeholder="dd/mm/yyyy" required="required"  value="{{ old('due_date') }}">
                     </div>
                     </div>
 

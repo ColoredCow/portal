@@ -191,6 +191,7 @@ class InvoiceController extends Controller
             'due_amount' => $validated['due_amount'],
             'currency_due_amount' => $validated['currency_due_amount'],
             'due_date' => DateHelper::formatDateToSave($validated['due_date']),
+
         ]);
 
         $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
