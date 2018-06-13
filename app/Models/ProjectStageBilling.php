@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Finance\Invoice;
 use Illuminate\Database\Eloquent\Model;
 
 class ProjectStageBilling extends Model
@@ -21,6 +22,6 @@ class ProjectStageBilling extends Model
      */
     public function invoice()
     {
-    	return $this->belongsTo(Invoice::class, 'finance_invoice_id');
+        return $this->belongsTo(Invoice::class, 'finance_invoice_id');
     }
 }
