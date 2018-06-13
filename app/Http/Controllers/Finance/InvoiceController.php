@@ -42,7 +42,7 @@ class InvoiceController extends Controller
             ];
         } else {
             $attr = [
-                'invoices' => Invoice::getList()
+                'invoices' => Invoice::getList(),
             ];
         }
 
@@ -99,7 +99,8 @@ class InvoiceController extends Controller
             'due_amount' => $validated['due_amount'],
             'currency_due_amount' => $validated['currency_due_amount'],
             'file_path' => $path,
-            'due_date' => isset($validated['due_date']) ? DateHelper::formatDateToSave($validated['due_date']) : null
+            'due_date' => DateHelper::formatDateToSave($validated['due_date']),
+
         ]);
 
         foreach ($validated['billings'] as $billing) {
@@ -189,19 +190,18 @@ class InvoiceController extends Controller
             'currency_tds' => $validated['currency_tds'],
             'due_amount' => $validated['due_amount'],
             'currency_due_amount' => $validated['currency_due_amount'],
+            'due_date' => DateHelper::formatDateToSave($validated['due_date']),
         ]);
 
         $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
         foreach ($invoiceBillings as $billingId => $invoiceBilling) {
-            if (!array_key_exists($billingId, $validated['billings']))
-            {
-                $invoiceBillings[$billingId]->finance_invoice_id = NULL;
+            if (!array_key_exists($billingId, $validated['billings'])) {
+                $invoiceBillings[$billingId]->finance_invoice_id = null;
                 $invoiceBillings[$billingId]->update();
             }
         }
         foreach ($validated['billings'] as $billing) {
-            if (!array_key_exists($billing, $invoiceBillings))
-            {
+            if (!array_key_exists($billing, $invoiceBillings)) {
                 ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
             }
         }
@@ -230,7 +230,7 @@ class InvoiceController extends Controller
     {
         $fileName = $file->getClientOriginalName();
 
-        if($fileName) {
+        if ($fileName) {
             return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
         }
 
@@ -250,19 +250,19 @@ class InvoiceController extends Controller
     public function download($year, $month, $file, $inline = true)
     {
         $headers = [
-            'content-type'=>'application/pdf'
+            'content-type' => 'application/pdf',
         ];
 
         $file_path = FileHelper::getFilePath($year, $month, $file);
 
-        if(!$file_path) {
+        if (!$file_path) {
             return false;
         }
 
-        if($inline) {
+        if ($inline) {
             return Response::make(Storage::get($file_path), 200, $headers);
         }
 
-        return  Storage::download($file_path);
+        return Storage::download($file_path);
     }
 }

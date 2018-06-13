@@ -50,6 +50,7 @@ class InvoiceRequest extends FormRequest
             'request_from_billing' => 'nullable|boolean',
             'due_amount' => 'nullable|numeric',
             'currency_due_amount' => 'nullable|string',
+            'due_date' => 'required',
         ];
 
         if ($this->method() === 'POST') {
@@ -75,7 +76,7 @@ class InvoiceRequest extends FormRequest
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',
             'project_invoice_id.integer' => 'Invoice ID should be a valid number',
             'invoice_file.required' => 'An invoice needs to be uploaded',
-            'billings.required' => 'At least one billing is required'
+            'billings.required' => 'At least one billing is required',
         ];
     }
 }
