@@ -200,9 +200,10 @@ class BookController extends Controller
         $data = [];
         foreach ($books as $index => $book) {
             $data['books'][$index] = $book->toArray();
+            $data['books'][$index]['thumbnail'] = $book-getThumbnailBySize('medium');
             $data['books'][$index]['categories'] = $book->categories()->pluck('name')->toArray();
         }
-        
+
         $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
         return response()->json($data);
 
