@@ -6,7 +6,7 @@
     <br>
     <br>
     <div class="row">
-        <div class="col-3">
+        <div class="col-6">
             <h1>Books</h1>
         </div>
         @can('library_books.create')
@@ -43,15 +43,15 @@
     <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}">
 
-        <div class="row pl-2 w-100">
-            <div v-for="(book, index) in books" class="card book_card col-lg-3 col-md-5 col-sm-4 col-xs-12 mr-3 mb-3 p-2">
+        <div class="d-flex flex-wrap w-100">
+            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2">
                 <div class="d-flex" >
                     <a target="_blank" :href="book.readable_link">
                         <img :src="book.thumbnail" class="cover_image" >
                     </a>
 
-                    <div class="pl-2 pr-4">
-                        <a target="_blank" :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h5" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
+                    <div class="pl-2 pr-3">
+                        <a target="_blank" :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                     </div>
 

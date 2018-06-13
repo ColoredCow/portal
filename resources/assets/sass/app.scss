@@ -328,6 +328,11 @@ input:focus+.slider {
     flex-grow: 0 !important;
 }
 
+.reader_image {
+    width: 40px !important;
+    height: 40px !important;
+}
+
 #books_listing {
     .reader_image {
         width: 30px !important;
@@ -339,9 +344,44 @@ input:focus+.slider {
     .cover_image {
         max-height: 10em;
     }
+
+    .book_card {
+        width: 24%;
+        flex-grow: 1;
+    }
 }
 
-.reader_image {
-    width: 40px !important;
-    height: 40px !important;
+
+@media screen and (min-width: 600px) {
+    #books_listing {
+        .book_card {
+            width: 100%;
+        }
+    }
 }
+
+@media screen and (max-width: 768px) {
+    #books_listing {
+        .book_card {
+            width: 49%;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    #books_listing {
+        .book_card {
+            width: 30%;
+        }
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    #books_listing {
+        .book_card {
+            width: 20%;
+        }
+    }
+}
+
+
