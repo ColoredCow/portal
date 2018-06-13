@@ -200,7 +200,7 @@ class BookController extends Controller
         $data = [];
         foreach ($books as $index => $book) {
             $data['books'][$index] = $book->toArray();
-            $data['books'][$index]['thumbnail'] = $book-getThumbnailBySize('medium');
+            $data['books'][$index]['thumbnail'] = $book->getThumbnailBySize('medium');
             $data['books'][$index]['categories'] = $book->categories()->pluck('name')->toArray();
         }
 
