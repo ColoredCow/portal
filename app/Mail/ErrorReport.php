@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Mail;
 
 use App\User;
@@ -11,11 +10,9 @@ use Illuminate\Queue\SerializesModels;
 class ErrorReport extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $user;
     public $timeOfException;
     public $exception;
-
     /**
      * Create a new message instance.
      *
@@ -27,7 +24,6 @@ class ErrorReport extends Mailable
         $this->user = $user;
         $this->timeOfException = $timeOfException;
     }
-
     /**
      * Build the message.
      *
@@ -37,6 +33,6 @@ class ErrorReport extends Mailable
     {
         return $this->from(config('mail.from.address'))
             ->subject('[ERROR REPORT] ' . $this->exception->getMessage())
-            ->markdown('mail.errorreport');
+            ->markdown('mail.error-report');
     }
 }
