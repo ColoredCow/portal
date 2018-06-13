@@ -48,13 +48,13 @@
             </div>
 
             <div class="row" id="readers_section" >
-                <div class="col-6">
-                        <div class="ml-1 mb-1 mt-5">
+                <div class="col-12">
+                        <div class="ml-1 mb-1 mt-5 w-100">
                             <h4 v-if="readers.length">Read by:</h4>
                             <div class="d-flex justify-content-start"> 
-                                <div v-for="(reader, index)  in readers " class="my-3 mr-3 ml-0 text-center">
-                                    <img src="/images/default_profile.png" alt="">
-                                    <h5> @{{ reader.name }} </h5>
+                                <div v-for="(reader, index)  in readers " class="mt-2 mr-2 text-center">
+                                    <img :src="reader.avatar" alt="" class="reader_image">
+                                    <h6 class="pt-2"> @{{ reader.name }} </h6>
                                 </div> 
                             </div>
                         </div>
