@@ -32,6 +32,7 @@ class ErrorReport extends Mailable
     public function build()
     {
         return $this->from(config('mail.from.address'))
+            ->to(config('mail.error_mail'))
             ->subject('[ERROR REPORT] ' . $this->exception->getMessage())
             ->markdown('mail.error-report');
     }

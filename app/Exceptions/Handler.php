@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
             }
         }
         $user = Auth::user();
-        \Mail::to(config('mail.error_mail'))->send(new ErrorReport($exception, $user, $timeOfException));
+        \Mail::send(new ErrorReport($exception, $user, $timeOfException));
         return parent::report($exception);
     }
     /**
