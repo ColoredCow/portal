@@ -66,6 +66,11 @@ class ApplicationRound extends Model
                 $application->reject();
                 $applicant->applications->where('id', $attr['refer_to'])->first()->markInProgress();
                 break;
+
+            case 'send-for-approval':
+                $fillable['round_status'] = 'confirmed';
+                $application->sendForApproval($attr['send_for_approval_person']);
+                break;
         }
         $this->update($fillable);
         $this->_updateOrCreateReviews($attr['reviews']);

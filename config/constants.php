@@ -8,23 +8,23 @@ return [
     'modules' => [
         'hr',
         'finance',
-        'weeklydose'
+        'weeklydose',
     ],
     'countries' => [
         'india' => [
             'title' => 'India',
-            'currency' => 'INR'
+            'currency' => 'INR',
         ],
         'united-states' => [
             'title' => 'United States',
-            'currency' => 'USD'
+            'currency' => 'USD',
         ],
     ],
     'pagination_size' => 10,
     'hr' => [
         'default' => [
             'email' => env('HR_DEFAULT_FROM_EMAIL', 'employeeportal@example.com'),
-            'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers')
+            'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers'),
         ],
         'interview-time-format' => 'h:i a',
         'no-show-hours-limit' => 2,
@@ -32,7 +32,7 @@ return [
             'keys' => [
                 'form-data' => 'form-data',
                 'change-job' => 'change-job',
-                'no-show' => 'no-show'
+                'no-show' => 'no-show',
             ],
             'reasons-no-show' => [
                 'absent-applicant' => 'Applicant is absent',
@@ -43,47 +43,52 @@ return [
             'new' => [
                 'label' => 'new',
                 'title' => 'New',
-                'class' => 'badge badge-info'
+                'class' => 'badge badge-info',
             ],
             'on-hold' => [
                 'label' => 'on-hold',
                 'title' => 'On hold',
-                'class' => 'badge badge-secondary'
+                'class' => 'badge badge-secondary',
             ],
             'no-show' => [
                 'label' => 'no-show',
                 'title' => 'No show',
-                'class' => 'badge badge-danger'
+                'class' => 'badge badge-danger',
             ],
             'no-show-reminded' => [
                 'label' => 'no-show-reminded',
                 'title' => 'No show reminded',
-                'class' => 'badge badge-danger'
+                'class' => 'badge badge-danger',
             ],
             'rejected' => [
                 'label' => 'rejected',
                 'title' => 'Rejected',
-                'class' => 'badge badge-danger'
+                'class' => 'badge badge-danger',
             ],
             'in-progress' => [
                 'label' => 'in-progress',
                 'title' => 'In progress',
-                'class' => 'badge badge-warning'
+                'class' => 'badge badge-warning',
+            ],
+            'sent-for-approval' => [
+                'label' => 'sent-for-approval',
+                'title' => 'Pending',
+                'class' => 'badge badge-info',
             ],
             'confirmed' => [
                 'label' => 'confirmed',
                 'title' => 'Accepted in this round',
-                'class' => 'badge badge-success'
+                'class' => 'badge badge-success',
             ],
             'completed' => [
                 'label' => 'completed',
                 'title' => 'Cleared all rounds',
-                'class' => 'badge badge-success'
+                'class' => 'badge badge-success',
             ],
             'onboarded' => [
                 'label' => 'onboarded',
                 'title' => 'Onboarded team',
-                'class' => 'badge badge-success'
+                'class' => 'badge badge-success',
             ],
         ],
         'defaults' => [
@@ -132,5 +137,5 @@ return [
             'fixed_budget' => 'Fixed Budget',
             'hourly' => 'Hourly',
         ],
-    ]
+    ],
 ];
