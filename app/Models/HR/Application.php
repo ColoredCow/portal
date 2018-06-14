@@ -40,6 +40,11 @@ class Application extends Model
         return $this->hasMany(ApplicationMeta::class, 'hr_application_id');
     }
 
+    public function pendingApprovalFrom()
+    {
+        return $this->belongsTo(User::class, 'pending_approval_from');
+    }
+
     /**
      * Custom create method that creates an application and fires necessary events
      *
@@ -318,5 +323,15 @@ class Application extends Model
             config('constants.hr.status.no-show.label'),
             config('constants.hr.status.no-show-reminded.label'),
         ]);
+    }
+
+    public function isSentForApproval()
+    {
+        return $this->status == config('constants.hr.status.sent-for-approval.label');
+    }
+
+    public function isRejected()
+    {
+        return $this->status == config('constants.hr.status.rejected.label');
     }
 }
