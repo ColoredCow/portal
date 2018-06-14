@@ -200,9 +200,10 @@ class BookController extends Controller
         $data = [];
         foreach ($books as $index => $book) {
             $data['books'][$index] = $book->toArray();
+            $data['books'][$index]['thumbnail'] = $book->getThumbnailBySize('medium');
             $data['books'][$index]['categories'] = $book->categories()->pluck('name')->toArray();
         }
-        
+
         $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
         return response()->json($data);
 
@@ -215,6 +216,16 @@ class BookController extends Controller
         return response()->json([
             'isAdded' => $isAdded
         ]);
+    }
+
+    public function disableSuggestion() {
+        session(['disable_book_suggestion' => true]);
+        return redirect()->back()->with('status', 'Book suggestions has been disabled.');
+    }
+
+    public function enableSuggestion() {
+        session(['disable_book_suggestion' => false]);
+        return redirect()->back()->with('status', 'Book suggestions has been enabled.');
     }
 
 }

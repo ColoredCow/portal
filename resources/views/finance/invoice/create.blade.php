@@ -212,7 +212,11 @@
                         <label for="cheque_cleared_date">Cheque Cleared Date</label>
                         <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_cleared_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_cleared_date'))) : '' }}">
                     </div>
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> d8c0142e62de31e20919c0478e9853f8b6a69a50
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">

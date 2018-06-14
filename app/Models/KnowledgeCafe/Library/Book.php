@@ -21,11 +21,13 @@ class Book extends Model
 
     public static function getList($filteredString = false)
     {
-        return self::with('categories')
-                ->orderBy('title')
+        return self::with(['categories', 'readers'])
                 ->where(function ($query) use ($filteredString) {
                         ($filteredString) ? $query->where('title', 'LIKE', "%$filteredString%") : '';
-                })->paginate(config('constants.pagination_size'));
+                })
+                ->withCount('readers')
+                ->orderBy('readers_count', 'desc')
+                ->get();
     }
 
     public static function getByCategoryName($categoryName) {
@@ -60,7 +62,8 @@ class Book extends Model
             $query->where('id', auth()->id());
         })->whereDoesntHave( 'wishers', function ($query) {
             $query->where('id', auth()->id());
-        })->inRandomOrder()->first();
+        })->inRandomOrder()
+        ->first();
     }
 
     public function wishers() {
@@ -70,5 +73,25 @@ class Book extends Model
     public function addToUserWishlist() {
         $this->wishers()->attach(auth()->user());
         return true;
+    }
+
+    public function getTotalBooksCountAttribute($value) {
+        return self::count();
+    }
+
+    public function getThumbnailBySize($size = 'normal') {
+
+        switch($size) {
+            case 'medium': 
+                return str_replace_first('zoom=1', 'zoom=2', $this->thumbnail);
+            break;
+
+            case 'large':
+                return str_replace_first('zoom=1', 'zoom=3', $this->thumbnail);
+            break;
+
+            default:
+                return $this->thumbnail;
+        }
     }
 }

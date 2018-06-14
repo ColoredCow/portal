@@ -100,7 +100,6 @@ class InvoiceController extends Controller
             'currency_due_amount' => $validated['currency_due_amount'],
             'file_path' => $path,
             'due_date' => DateHelper::formatDateToSave($validated['due_date']),
-
         ]);
 
         foreach ($validated['billings'] as $billing) {

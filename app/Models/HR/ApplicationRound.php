@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApplicationRound extends Model
 {
-    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_date', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
+    protected $guarded = [];
 
     protected $table = 'hr_application_round';
 
@@ -48,7 +49,8 @@ class ApplicationRound extends Model
                 $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
-                    'scheduled_date' => $attr['next_scheduled_date'],
+                    'scheduled_date' => $attr['next_scheduled_start'],
+                    'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'],
                 ]);
                 break;
@@ -78,6 +80,7 @@ class ApplicationRound extends Model
                     [
                         'application_round_id' => $this->id,
                         'evaluation_id' => $evaluation['evaluation_id'],
+                        'application_id' => $this->hr_application_id,
                     ],
                     [
                         'option_id' => $evaluation['option_id'],
@@ -133,7 +136,7 @@ class ApplicationRound extends Model
 
     public function evaluations()
     {
-        return $this->hasMany(ApplicationRoundEvaluation::class, 'application_round_id');
+        return $this->hasMany(ApplicationEvaluation::class, 'application_round_id');
     }
 
     public function mailSender()
@@ -182,6 +185,7 @@ class ApplicationRound extends Model
                     config('constants.hr.status.no-show.label'),
                 ]);
             })
+            ->whereNull('round_status')
             ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
             ->orderBy('scheduled_date')
             ->get();

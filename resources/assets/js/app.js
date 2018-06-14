@@ -29,13 +29,18 @@ if (document.getElementById('page_hr_applicant_edit')) {
         el: '#page_hr_applicant_edit',
         data: {
             showResumeFrame: false,
+            showEvaluationFrame: false,
             applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
             selectedNextRound: '',
             nextRoundName: '',
+            createCalendarEvent: true,
         },
         methods: {
             toggleResumeFrame: function() {
                 this.showResumeFrame = !this.showResumeFrame;
+            },
+            toggleEvaluationFrame: function() {
+                this.showEvaluationFrame = !this.showEvaluationFrame;
             },
             updateNextRoundName: function() {
                 for (let index = 0; index < this.applicationJobRounds.length; index++) {
@@ -195,7 +200,7 @@ $(document).ready(() => {
             updateClientProjects(form, client_id);
         }
     }
-    $('[data-toggle="tooltip"]').tooltip(); 
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -394,15 +399,14 @@ if (document.getElementById('books_listing')) {
     const bookForm = new Vue({
         el: '#books_listing',
         data: {
-            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books).data : {},
+            books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
             bookCategories: document.getElementById('books_table').dataset.categories ? JSON.parse(document.getElementById('books_table').dataset.categories) : [],
             updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
             categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
             categoryInputs: [],
             currentBookIndex: 0,
             newCategory:'',
-            searchKey:document.getElementById('search_input').dataset.value
-            
+            searchKey: document.getElementById('search_input') ? document.getElementById('search_input').dataset.value : '',
         },
 
         methods: {
@@ -416,7 +420,7 @@ if (document.getElementById('books_listing')) {
                 this.categoryInputs.map((checkbox) => checkbox.checked = false );
                 categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
             },
-            
+
             updateCategory: function() {
                 let selectedCategory = [];
                 let bookID = this.books[this.currentBookIndex]['id'];
@@ -426,7 +430,7 @@ if (document.getElementById('books_listing')) {
                         selectedCategory.push({
                             name:checkbox.dataset.category,
                             id:checkbox.value
-                        }); 
+                        });
                     }
                 });
 
@@ -442,7 +446,7 @@ if (document.getElementById('books_listing')) {
                     return false;
                 }
 
-                let response = await axios.post(this.categoryIndexRoute, {name: this.newCategory}); 
+                let response = await axios.post(this.categoryIndexRoute, {name: this.newCategory});
                 if(response.data && response.data.category) {
                     await this.bookCategories.push(response.data.category);
                     this.newCategory = "";
@@ -467,8 +471,11 @@ if (document.getElementById('books_listing')) {
 
             searchBooks: function() {
                 window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
-            }
+            },
 
+            strLimit: function (str, length) {
+                return str.length > length ? str.substring(0, length) + "..." : str;
+            }
         },
 
         mounted: function() {
@@ -506,7 +513,7 @@ if (document.getElementById('books_category')) {
             },
 
             deleteCategory: async function(index) {
-                
+
                 let confirmDelete = confirm ('Are you sure ?');
 
                 if(!confirmDelete) {
@@ -532,7 +539,7 @@ if (document.getElementById('books_category')) {
                     return false;
                 }
                 let route = `${this.indexRoute}`;
-                let response = await axios.post(route, {name: this.newCategoryName}); 
+                let response = await axios.post(route, {name: this.newCategoryName});
 
                 if(response.data && response.data.category) {
                     this.categories.unshift(response.data.category);
@@ -549,14 +556,14 @@ if (document.getElementById('show_book_info')) {
     const bookForm = new Vue({
         el: '#show_book_info',
         data: {
-            book: document.getElementById('show_book_info').dataset.book 
+            book: document.getElementById('show_book_info').dataset.book
                         ? document.getElementById('show_book_info').dataset.book
                         : [],
-            route:document.getElementById('show_book_info').dataset.markBookRoute 
+            route:document.getElementById('show_book_info').dataset.markBookRoute
                         ? document.getElementById('show_book_info').dataset.markBookRoute
                         : '',
             isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
-            readers: document.getElementById('show_book_info').dataset.readers 
+            readers: document.getElementById('show_book_info').dataset.readers
                         ? document.getElementById('show_book_info').dataset.readers
                         : []
         },
@@ -583,6 +590,8 @@ if(document.getElementById('home_page')) {
     el.addEventListener("click", markBookAsRead, false);
     var wishlistBtn = document.getElementById("addBookToWishlist");
     wishlistBtn.addEventListener("click", addBookToWishlist, false);
+    var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
+    disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
     if(!isModalShown) {
         sessionStorage.setItem("book_modal_has_shown", "true");
@@ -591,15 +600,20 @@ if(document.getElementById('home_page')) {
 }
 
 function markBookAsRead() {
-    let bookID = document.getElementById('markBookAsRead').dataset.id; 
-    let route = document.getElementById('markBookAsRead').dataset.markBookRoute; 
+    let bookID = document.getElementById('markBookAsRead').dataset.id;
+    let route = document.getElementById('markBookAsRead').dataset.markBookRoute;
     axios.post(route, {book_id:bookID, is_read:true});
     $('#show_nudge_modal').modal('hide');
 }
 
 function addBookToWishlist() {
-    let bookID = document.getElementById('addBookToWishlist').dataset.id; 
-    let route =  document.getElementById('addBookToWishlist').dataset.route; 
+    let bookID = document.getElementById('addBookToWishlist').dataset.id;
+    let route =  document.getElementById('addBookToWishlist').dataset.route;
     axios.post(route, {book_id:bookID});
     $('#show_nudge_modal').modal('hide');
+}
+
+function disableBookSuggestions() {
+    $('#show_nudge_modal').modal('hide');
+    window.location.href = document.getElementById('disableBookSuggestion').dataset.href;
 }
