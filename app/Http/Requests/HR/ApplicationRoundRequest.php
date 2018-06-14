@@ -30,7 +30,10 @@ class ApplicationRoundRequest extends FormRequest
             'scheduled_date' => 'nullable|date|required_if:action,schedule-update',
             'scheduled_person_id' => 'nullable|integer|required_if:action,schedule-update',
             'next_round' => 'nullable|string|required_if:action,confirm',
-            'next_scheduled_date' => 'nullable|date|required_if:action,confirm',
+            'create_calendar_event' => 'nullable|filled',
+            'summary_calendar_event' => 'nullable|string|required_with:create_calendar_event',
+            'next_scheduled_start' => 'nullable|date|required_if:action,confirm',
+            'next_scheduled_end' => 'nullable|date|required_with:create_calendar_event',
             'next_scheduled_person_id' => 'nullable|integer|required_if:action,confirm',
             'round_evaluation' => 'nullable|array',
             'send_for_approval_person' => 'nullable|integer|required_if:action,send-for-approval',
@@ -45,7 +48,8 @@ class ApplicationRoundRequest extends FormRequest
     public function messages()
     {
         return [
-            'next_scheduled_date.required_if' => 'The schedule date for next round is required.',
+            'next_scheduled_start.required_if' => 'The schedule date for next round is required.',
+            'next_scheduled_end.required_with' => 'The end time for the interview is required.',
             'next_scheduled_person_id.required_if' => 'The interviewer for next round is required.',
         ];
     }

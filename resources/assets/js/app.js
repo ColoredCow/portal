@@ -35,6 +35,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
             nextRoundName: '',
             selectedAction: '',
             nextRound: '',
+            createCalendarEvent: true,
         },
         methods: {
             toggleResumeFrame: function() {
@@ -412,8 +413,7 @@ if (document.getElementById('books_listing')) {
             categoryInputs: [],
             currentBookIndex: 0,
             newCategory:'',
-            searchKey:document.getElementById('search_input') ? document.getElementById('search_input').dataset.value : '',
-
+            searchKey: document.getElementById('search_input') ? document.getElementById('search_input').dataset.value : '',
         },
 
         methods: {

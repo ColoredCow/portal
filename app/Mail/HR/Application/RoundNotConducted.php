@@ -2,12 +2,11 @@
 
 namespace App\Mail\HR\Application;
 
+use App\Models\HR\Application;
+use App\Models\HR\ApplicationMeta;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Models\HR\ApplicationMeta;
-use App\Models\HR\Application;
 
 class RoundNotConducted extends Mailable
 {
@@ -46,11 +45,11 @@ class RoundNotConducted extends Mailable
     public function build()
     {
         return $this->to($this->application->applicant->email, $this->application->applicant->name)
-            ->bcc(env('HR_DEFAULT_FROM_EMAIL'))
-            ->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'))
+            ->bcc(config('constants.hr.default.name'))
+            ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject($this->applicationMeta->mail_subject)
             ->view('mail.plain')->with([
-                'body' => $this->applicationMeta->mail_body
-            ]);
+            'body' => $this->applicationMeta->mail_body,
+        ]);
     }
 }
