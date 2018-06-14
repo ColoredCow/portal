@@ -78,4 +78,20 @@ class Book extends Model
     public function getTotalBooksCountAttribute($value) {
         return self::count();
     }
+
+    public function getThumbnailBySize($size = 'normal') {
+
+        switch($size) {
+            case 'medium': 
+                return str_replace_first('zoom=1', 'zoom=2', $this->thumbnail);
+            break;
+
+            case 'large':
+                return str_replace_first('zoom=1', 'zoom=3', $this->thumbnail);
+            break;
+
+            default:
+                return $this->thumbnail;
+        }
+    }
 }
