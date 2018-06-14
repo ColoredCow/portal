@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Handler extends ExceptionHandler
 {
@@ -42,12 +43,29 @@ class Handler extends ExceptionHandler
     {
         $timeOfException = Carbon::now()->format(config('constants.display_datetime_format'));
         foreach ($this->dontReport as $dontReport) {
-            if (($exception instanceof $dontReport)) {
+            if ($exception instanceof $dontReport) {
                 return;
             }
         }
-        $user = Auth::user();
-        \Mail::send(new ErrorReport($exception, $user, $timeOfException));
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $userDetails = [
+                "name" => $user->name,
+                "email" => $user->email,
+            ];
+        } else {
+            $userDetails = [
+                "name" => 'Guest',
+                "email" => '',
+            ];
+        }
+
+        try {
+            Mail::send(new ErrorReport($exception, $userDetails, $timeOfException));
+        } catch (Exception $e) {
+            parent::report($e);
+        }
         return parent::report($exception);
     }
     /**
