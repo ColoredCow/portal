@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicationRequest;
 use App\Mail\HR\Application\JobChanged;
 use App\Mail\HR\Application\RoundNotConducted;
+use App\Models\HR\Applicant;
 use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Job;
@@ -26,32 +27,62 @@ abstract class ApplicationController extends Controller
      */
     public function index()
     {
-        $filters = [
-            'status' => request()->get('status') ?: 'non-rejected',
-            'job-type' => $this->getApplicationType(),
-            'job' => request()->get('hr_job_id')
-        ];
 
-        $applications = Application::with('applicant', 'job')
-            ->applyFilter($filters)
-            ->latest()
-            ->paginate(config('constants.pagination_size'))
-            ->appends(Input::except('page'));
+        if (request()->has('search')) {
+            $filters =
+                [
+                'status' => request()->get('status') ?: 'non-rejected',
+                'job-type' => $this->getApplicationType(),
+                'job' => request()->get('hr_job_id'),
+            ];
+            $search = request()->get('search');
+            $applications = Application::with(['applicant', 'job'])
+                ->whereHas('applicant', function ($query) use ($search) {
+                    ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
+                })
+                ->applyFilter($filters)
+                ->latest()
+                ->paginate(config('constants.pagination_size'))
+                ->appends(Input::except('page'));
 
-        $attr = [
-            'applications' => $applications,
-            'status' => request()->get('status'),
-        ];
+            $attr =
+                [
+
+                'applications' => $applications,
+                'status' => request()->get('status'),
+            ];
+
+        } else {
+
+            $filters =
+                [
+                'status' => request()->get('status') ?: 'non-rejected',
+                'job-type' => $this->getApplicationType(),
+                'job' => request()->get('hr_job_id'),
+            ];
+            $applications = Application::with('applicant', 'job')
+                ->applyFilter($filters)
+                ->latest()
+                ->paginate(config('constants.pagination_size'))
+                ->appends(Input::except('page'));
+
+            $attr =
+                [
+                'applications' => $applications,
+                'status' => request()->get('status'),
+            ];
+
+        }
 
         if ($this->getApplicationType() == 'job') {
             $attr['openJobsCount'] = Job::count();
             $attr['openApplicationsCount'] = Application::applyFilter([
                 'job-type' => 'job',
-                'job' => request()->get('hr_job_id')
+                'job' => request()->get('hr_job_id'),
             ])
-            ->isOpen()
-            ->get()
-            ->count();
+                ->isOpen()
+                ->get()
+                ->count();
         }
 
         return view('hr.application.index')->with($attr);
@@ -66,8 +97,8 @@ abstract class ApplicationController extends Controller
     public function edit($id)
     {
         $application = Application::findOrFail($id);
-        
-        $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds',  'job.rounds.evaluationParameters',  'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
+
+        $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
         $attr = [
             'applicant' => $application->applicant,
@@ -77,8 +108,8 @@ abstract class ApplicationController extends Controller
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'settings' => [
-                'noShow' => Setting::getNoShowEmail()
-            ]
+                'noShow' => Setting::getNoShowEmail(),
+            ],
         ];
 
         if ($application->job->type == 'job') {
