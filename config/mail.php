@@ -120,6 +120,6 @@ return [
         ],
     ],
 
-    'error_mail' => env('ERROR_EMAIL'),
+    'error_address' => env('MAIL_ERROR_ADDRESS'),
 
 ];
