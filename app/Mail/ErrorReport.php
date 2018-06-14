@@ -18,7 +18,7 @@ class ErrorReport extends Mailable
      *
      * @return void
      */
-    public function __construct(Exception $exception, User $user, string $timeOfException)
+    public function __construct(Exception $exception, $user, string $timeOfException)
     {
         $this->exception = $exception;
         $this->user = $user;
@@ -32,7 +32,7 @@ class ErrorReport extends Mailable
     public function build()
     {
         return $this->from(config('mail.from.address'))
-            ->to(config('mail.error_mail'))
+            ->to(config('mail.error_address'))
             ->subject('[ERROR REPORT] ' . $this->exception->getMessage())
             ->markdown('mail.error-report');
     }
