@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicationRequest;
 use App\Mail\HR\Application\JobChanged;
 use App\Mail\HR\Application\RoundNotConducted;
-use App\Models\HR\Applicant;
 use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Job;
@@ -27,14 +26,13 @@ abstract class ApplicationController extends Controller
      */
     public function index()
     {
-
+        $filters =
+            [
+            'status' => request()->get('status') ?: 'non-rejected',
+            'job-type' => $this->getApplicationType(),
+            'job' => request()->get('hr_job_id'),
+        ];
         if (request()->has('search')) {
-            $filters =
-                [
-                'status' => request()->get('status') ?: 'non-rejected',
-                'job-type' => $this->getApplicationType(),
-                'job' => request()->get('hr_job_id'),
-            ];
             $search = request()->get('search');
             $applications = Application::with(['applicant', 'job'])
                 ->whereHas('applicant', function ($query) use ($search) {
@@ -47,19 +45,11 @@ abstract class ApplicationController extends Controller
 
             $attr =
                 [
-
                 'applications' => $applications,
                 'status' => request()->get('status'),
             ];
 
         } else {
-
-            $filters =
-                [
-                'status' => request()->get('status') ?: 'non-rejected',
-                'job-type' => $this->getApplicationType(),
-                'job' => request()->get('hr_job_id'),
-            ];
             $applications = Application::with('applicant', 'job')
                 ->applyFilter($filters)
                 ->latest()

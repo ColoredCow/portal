@@ -35,7 +35,6 @@
     </div>
     @endif
     <br>
-
     <div class="d-flex align-items-center justify-content-between">
         <ul class="nav nav-pills mb-2">
             <li class="nav-item">
