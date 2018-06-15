@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Auth\GuzzleHttp\Client;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+
+// use App\Http\Controllers\Auth\GuzzleHttp\Client;
 
 class LoginController extends Controller
 {
@@ -19,7 +22,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -92,11 +95,27 @@ class LoginController extends Controller
             return $authUser;
         }
         return User::create([
-            'name'     => $user->name,
-            'email'    => $user->email,
+            'name' => $user->name,
+            'email' => $user->email,
             'provider' => $provider,
-            'provider_id' => $user->id
+            'provider_id' => $user->id,
         ]);
+    }
+
+    public function GetToken()
+    {
+        $guzzle = new \GuzzleHttp\Client;
+
+        $response = $guzzle->post('http://localhost/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'client_credentials',
+                'client_id' => '6',
+                'client_secret' => '9KqRYoOTN1Sq7cH1zCe5IBP5TUBHHg4yOvoiwgkI',
+                'scope' => '',
+            ],
+        ]);
+
+        return json_decode((string) $response->getBody(), true)['access_token'];
     }
 
 }

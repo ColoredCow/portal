@@ -2,14 +2,14 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use App\Models\KnowledgeCafe\Library\Book;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'provider', 'provider_id', 'avatar'
+        'name', 'email', 'password', 'provider', 'provider_id', 'avatar',
     ];
 
     /**
@@ -52,11 +52,14 @@ class User extends Authenticatable
     public function getAvatarAttribute($value)
     {
         return ($value) ?: url('/images/default_profile.png');
+<<<<<<< Updated upstream
     }
 
     public function books()
     {
         return $this->belongsToMany(Book::class, 'book_readers', 'user_id', 'library_book_id');
+=======
+>>>>>>> Stashed changes
     }
 
     public function totalReadBooks()

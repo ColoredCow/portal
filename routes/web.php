@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('get/token', 'Auth\LoginController@GetToken');
+
 Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
@@ -62,7 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
                 ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
-                
+
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
@@ -70,7 +72,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
             });
-
 
             Route::resource('book-categories', 'BookCategoryController')
                 ->only(['index', 'store', 'update', 'destroy'])

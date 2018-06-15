@@ -12,6 +12,7 @@
         "google/apiclient": "^2.2",
         "jordikroon/google-vision": "^1.7",
         "laravel/framework": "5.6.*",
+        "laravel/passport": "^6.0",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "^1.0",
         "spatie/laravel-permission": "^2.12"
