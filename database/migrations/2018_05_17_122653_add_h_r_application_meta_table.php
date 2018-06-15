@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddHRApplicationMetaTable extends Migration
 {
@@ -16,6 +16,7 @@ class AddHRApplicationMetaTable extends Migration
         Schema::create('hr_application_meta', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('hr_application_id');
+            $table->text('reason_for_eligibility')->nullable();
             $table->text('form_data');
             $table->timestamps();
         });
