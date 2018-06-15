@@ -75,6 +75,11 @@ return [
                 'title' => 'In progress',
                 'class' => 'badge badge-warning',
             ],
+            'sent-for-approval' => [
+                'label' => 'sent-for-approval',
+                'title' => 'Pending',
+                'class' => 'badge badge-info',
+            ],
             'confirmed' => [
                 'label' => 'confirmed',
                 'title' => 'Accepted in this round',
