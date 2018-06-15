@@ -59,10 +59,9 @@
                             @endif
 
                                     <a class="m-2 w-100 py-3 font-weight-bold" id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}">
-
                                         <label>
-                                             <input type="checkbox">Don't show me this again
-                                         </label>
+                                            <input type="checkbox">Don't show me this again
+                                        </label>
                                     </a>
                     </div>
                 </div>
