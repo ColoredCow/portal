@@ -2,9 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\Application;
-use App\Models\HR\ApplicationMeta;
-use App\Models\HR\Job;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 

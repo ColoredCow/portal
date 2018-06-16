@@ -11,24 +11,24 @@ use Vision\Vision;
 class BookServices
 {
 
-     /**
-      * Fetch book details from $isbn
+    /**
+     * Fetch book details from $isbn
 
-      * @param String $isbn
-      * @return @mixed
-      */
+     * @param String $isbn
+     * @return @mixed
+     */
 
     public static function getBookDetails($isbn)
     {
         $client = new Client();
         $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbn, [
-            'timeout' => 5.0
+            'timeout' => 5.0,
         ]);
         $book = json_decode($res->getBody(), true);
 
         if (!isset($book['items'])) {
             $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn, [
-                'timeout' => 5.0
+                'timeout' => 5.0,
             ]);
 
             $book = json_decode($res->getBody(), true);
@@ -47,10 +47,10 @@ class BookServices
      * @param File $file
      * @return String
      */
-    public static function getISBN($file) {
-
+    public static function getISBN($file)
+    {
         $apiKey = env('GOOGLE_VISION_API_KEY');
-        $vision = new Vision( $apiKey, [new Feature(Feature::TEXT_DETECTION, 100)]);
+        $vision = new Vision($apiKey, [new Feature(Feature::TEXT_DETECTION, 100)]);
         $response = $vision->request(new LocalImage($file->path()));
         $faces = $response->getTextAnnotations();
         $description = '';

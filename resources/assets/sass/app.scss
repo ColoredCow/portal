@@ -324,9 +324,87 @@ input:focus+.slider {
     overflow-y: scroll;
 }
 
-#show_nudge_modal {
+.flex-grow-0 {
+    flex-grow: 0 !important;
+}
+
+.reader_image {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+#books_listing {
     .reader_image {
-        width: 50px;
-        height: 50px;
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .action_buttons {
+        right: 0;
+    }
+    .cover_image {
+        max-height: 10em;
+    }
+    .book_card {
+        width: 24%;
+    }
+}
+
+/* 
+  ##Device = Desktops
+*/
+
+@media (min-width: 1281px) {
+    #books_listing {
+        .book_card {
+            width: 24%;
+        }
+    }
+}
+
+/* 
+##Device = Laptops, Desktops
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    #books_listing {
+        .book_card {
+            width: 25%;
+        }
+    }
+}
+
+/* 
+##Device = Tablets, Ipads (portrait)
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    #books_listing {
+        .book_card {
+            width: 25%;
+        }
+    }
+}
+
+/* 
+##Device = Low Resolution Tablets, Mobiles (Landscape)
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+    #books_listing {
+        .book_card {
+            width: 100%;
+        }
+    }
+}
+
+/* 
+##Device = Most of the Smartphones Mobiles (Portrait)
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+    #books_listing {
+        .book_card {
+            width: 100%;
+        }
     }
 }

@@ -8,14 +8,16 @@ class ProjectsTest extends FeatureTest
 {
 
     /** @test */
-    public function an_authorised_user_can_see_projects() {
+    public function an_authorised_user_can_see_projects()
+    {
         $this->anAuthorizedUser();
         $this->get(route('projects'))
             ->assertStatus(200);
     }
 
     /** @test */
-    public function an_unauthorised_user_cant_see_projects() {
+    public function an_unauthorised_user_cant_see_projects()
+    {
         $this->withoutExceptionHandling()
             ->expectException('Illuminate\Auth\Access\AuthorizationException');
         $this->signIn();
@@ -23,13 +25,15 @@ class ProjectsTest extends FeatureTest
     }
 
     /** @test */
-    public function a_guest_cant_see_projects() {
+    public function a_guest_cant_see_projects()
+    {
         $this->get(route('projects'))
             ->assertRedirect('login');
     }
 
     /** @test */
-    public function an_authorised_user_can_create_a_project() {
+    public function an_authorised_user_can_create_a_project()
+    {
         $this->anAuthorizedUser();
         $project = make('App\Models\Project');
         $response = $this->post(route('projects.store'), $project->toArray());
@@ -38,7 +42,8 @@ class ProjectsTest extends FeatureTest
     }
 
     /** @test */
-    public function an_authorised_user_can_update_a_project() {
+    public function an_authorised_user_can_update_a_project()
+    {
         $this->anAuthorizedUser();
         $project = create('App\Models\Project');
         $this->get(route('projects.edit', $project->id))
@@ -49,7 +54,11 @@ class ProjectsTest extends FeatureTest
             ->assertSee($newProject->name);
     }
 
-    public function anAuthorizedUser() {
-        $this->signIn(create(User::class)->assignRole('super-admin'));
+    public function anAuthorizedUser()
+    {
+        $user = factory(User::class)->create();
+        $user->assignRole('super-admin');
+        $this->signIn($user);
+        // $this->signIn(create(User::class)->assignRole('super-admin'));
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApplicationRound extends Model
 {
-    protected $fillable = ['hr_application_id', 'hr_round_id', 'scheduled_date', 'scheduled_person_id', 'conducted_date', 'conducted_person_id', 'round_status', 'mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at'];
+    protected $guarded = [];
 
     protected $table = 'hr_application_round';
 
@@ -49,7 +49,8 @@ class ApplicationRound extends Model
                 $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
-                    'scheduled_date' => $attr['next_scheduled_date'],
+                    'scheduled_date' => $attr['next_scheduled_start'],
+                    'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'],
                 ]);
                 break;
@@ -65,6 +66,11 @@ class ApplicationRound extends Model
                 $fillable['round_status'] = 'rejected';
                 $application->reject();
                 $applicant->applications->where('id', $attr['refer_to'])->first()->markInProgress();
+                break;
+
+            case 'send-for-approval':
+                $fillable['round_status'] = 'confirmed';
+                $application->sendForApproval($attr['send_for_approval_person']);
                 break;
         }
         $this->update($fillable);
@@ -191,5 +197,27 @@ class ApplicationRound extends Model
 
         // Using Laravel's collection method groupBy to group scheduled application rounds based on the scheduled person
         return $applicationRounds->groupBy('scheduled_person_id');
+    }
+
+    public function isRejected()
+    {
+        return $this->round_status == config('constants.hr.status.rejected.label');
+    }
+
+    public function isConfirmed()
+    {
+        return $this->round_status = config('constants.hr.status.confirmed.label');
+    }
+
+    /**
+     * Defines whether to show actions dropdown for an application round. An action can only be taken
+     * if the application round status is null or rejected. Also, returns true if the application
+     * round is confirmed but the application is sent/waiting for approval.
+     *
+     * @return boolean
+     */
+    public function getShowActionsAttribute()
+    {
+        return is_null($this->round_status) || $this->isRejected() || ($this->isConfirmed() && $this->application->isSentForApproval());
     }
 }
