@@ -23,7 +23,7 @@ class ApplicationRoundRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'reviews' => 'nullable',
             'action' => 'required|string',
             'refer_to' => 'nullable|string|required_if:action,refer',
@@ -31,13 +31,20 @@ class ApplicationRoundRequest extends FormRequest
             'scheduled_person_id' => 'nullable|integer|required_if:action,schedule-update',
             'next_round' => 'nullable|string|required_if:action,confirm',
             'create_calendar_event' => 'nullable|filled',
-            'summary_calendar_event' => 'nullable|string|required_with:create_calendar_event',
+            'summary_calendar_event' => 'nullable|string',
             'next_scheduled_start' => 'nullable|date|required_if:action,confirm',
-            'next_scheduled_end' => 'nullable|date|required_with:create_calendar_event',
+            'next_scheduled_end' => 'nullable|date',
             'next_scheduled_person_id' => 'nullable|integer|required_if:action,confirm',
             'round_evaluation' => 'nullable|array',
             'send_for_approval_person' => 'nullable|integer|required_if:action,send-for-approval',
         ];
+
+        if (request()->input('action') == 'confirm' && request()->input('create_calendar_event') == 'on') {
+            $rules['summary_calendar_event'] = 'nullable|string|required_with:create_calendar_event';
+            $rules['next_scheduled_end'] = 'nullable|date|required_with:create_calendar_event';
+        }
+
+        return $rules;
     }
 
     /**

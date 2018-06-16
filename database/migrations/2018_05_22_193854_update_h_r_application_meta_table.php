@@ -13,7 +13,7 @@ class UpdateHRApplicationMetaTable extends Migration
      */
     public function up()
     {
-        Schema::table('hr_application_meta', function(Blueprint $table) {
+        Schema::table('hr_application_meta', function (Blueprint $table) {
             $table->renameColumn('form_data', 'value');
             $table->string('key')->default('form-data')->after('hr_application_id');
         });

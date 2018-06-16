@@ -27,5 +27,4 @@ class BookCategoryRequest extends FormRequest
             'name' => 'filled|string',
         ];
     }
-
 }
