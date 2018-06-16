@@ -9,7 +9,8 @@ abstract class FeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         $this->setUpRolesAndPermissions();
     }
