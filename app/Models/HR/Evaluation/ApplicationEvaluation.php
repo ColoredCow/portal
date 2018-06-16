@@ -14,7 +14,7 @@ class ApplicationEvaluation extends Model
 
     public function applicationRound()
     {
-    	return $this->belongsTo(ApplicationRound::class, 'application_round_id');
+        return $this->belongsTo(ApplicationRound::class, 'application_round_id');
     }
 
     public function application()

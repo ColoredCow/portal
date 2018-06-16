@@ -13,7 +13,7 @@ class ApplicationMeta extends Model
 
     public function application()
     {
-    	return $this->belongsTo(Application::class, 'hr_application_id');
+        return $this->belongsTo(Application::class, 'hr_application_id');
     }
 
     public static function scopeFormData($query)
@@ -47,7 +47,7 @@ class ApplicationMeta extends Model
         ];
 
         switch ($this->key) {
-            case config('constants.hr.application-meta.keys.change-job') :
+            case config('constants.hr.application-meta.keys.change-job'):
                 $attr['modal-id'] = 'job_change_' . $this->id;
                 $attr['mail-subject'] = $this->value->job_change_mail_subject;
                 $attr['mail-body'] = $this->value->job_change_mail_body;

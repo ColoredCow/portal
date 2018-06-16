@@ -68,6 +68,5 @@ class ApplicationTest extends TestCase
 
         $this->assertTrue(isset($application->applicationRounds));
         $this->assertFalse($application->applicationRounds->count() > 1);
-
     }
 }

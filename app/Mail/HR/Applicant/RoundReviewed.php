@@ -39,11 +39,11 @@ class RoundReviewed extends Mailable
 
         return $this->to($application->applicant->email, $application->applicant->name)
             ->bcc($application->job->posted_by)
-            ->bcc(env('HR_DEFAULT_FROM_EMAIL'))
-            ->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'))
+            ->bcc(config('constants.hr.default.email'))
+            ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject($this->applicationRound->mail_subject)
             ->view('mail.plain')->with([
-                'body' => $this->applicationRound->mail_body
-            ]);
+            'body' => $this->applicationRound->mail_body,
+        ]);
     }
 }

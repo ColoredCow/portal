@@ -18,7 +18,7 @@ class CreateTableBookWishlist extends Migration
             $table->integer('library_book_id')->unsigned();
         });
 
-        Schema::table('book_wishlist', function(Blueprint $table) {
+        Schema::table('book_wishlist', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('library_book_id')->references('id')->on('library_books');
             $table->primary(['user_id', 'library_book_id']);
