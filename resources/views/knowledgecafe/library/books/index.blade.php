@@ -16,7 +16,7 @@
         @endcan
     </div>
 
-    <div class="row mt-3 mb-2">
+    <div class="row mt-3 mb-2 px-2">
         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
             <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="search all books"
                 v-model="searchKey">
@@ -43,15 +43,15 @@
     <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}">
 
-        <div class="row pl-2">
-            <div v-for="(book, index) in books" class="card book_card col-lg-4 col-md-5 col-sm-4 col-xs-12 mr-2 mb-2 p-2">
+        <div class="d-flex flex-wrap w-100">
+            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2">
                 <div class="d-flex" >
                     <a target="_blank" :href="book.readable_link">
                         <img :src="book.thumbnail" class="cover_image" >
                     </a>
 
-                    <div class="pl-2 pr-4">
-                        <a target="_blank" :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h5" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
+                    <div class="pl-2 pr-3">
+                        <a target="_blank" :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                     </div>
 
@@ -79,7 +79,7 @@
 
                 <div :class="(book.readers && book.readers.length) ? 'pl-0 pt-1' : 'pl-0 pt-1 mt-3'">
                     <span v-for="(category, index) in book.categories">
-                        <h2 v-if="index < 3" class="badge badge-info p-2 mr-1">@{{ category.name }} </h2>
+                        <h2 v-if="index < 3" class="badge badge-secondary px-2 py-1 mr-1">@{{ category.name }} </h2>
                     </span>
                 </div>
             </div>

@@ -39,7 +39,7 @@
                             <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
                         </li>
                         @endcan
-                        @if(auth()->user()->can('weeklydoses.view') || Auth::user()->can('library_books.view'))
+                        @if(auth()->user()->can('weeklydoses.view') || auth()->user()->can('library_books.view'))
                         <li class="nav-item">
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

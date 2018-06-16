@@ -34,5 +34,4 @@ class BookRequest extends FormRequest
             'self_link' => 'nullable|string'
         ];
     }
-
 }
