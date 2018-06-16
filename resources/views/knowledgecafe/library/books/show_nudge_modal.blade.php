@@ -1,8 +1,8 @@
-<div class="modal fade" 
+<div class="modal fade"
     id="show_nudge_modal"
-    tabindex="-1" 
-    role="dialog" 
-    aria-labelledby="show_nudge_modal" 
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="show_nudge_modal"
     aria-hidden="true"
     >
     <div class="modal-dialog">
@@ -25,16 +25,16 @@
                     </div>
 
                     <div class="col-5">
-                            <button type="button" 
-                                data-id="{{$book->id}}" 
+                            <button type="button"
+                                data-id="{{$book->id}}"
                                 data-mark-book-route= "{{route('books.toggleReadStatus')}}"
-                                id="markBookAsRead" 
+                                id="markBookAsRead"
                                 class="btn btn-primary m-2 w-100 py-3 font-weight-bold">Yes, I have read this
                             </button>
 
                             <button type="button"
-                                data-dismiss="modal" 
-                                data-id="{{$book->id}}" 
+                                data-dismiss="modal"
+                                data-id="{{$book->id}}"
                                 data-route = {{ route('books.addToWishList') }}
                                 id="addBookToWishlist"
                                 class="btn btn-info m-2 w-100 py-3 font-weight-bold">I wish to read it
@@ -42,27 +42,27 @@
 
                             @if($book->readers->count())
                                 <div id="readers_section" class="mb-1">
-                                    <div class="d-flex justify-content-start"> 
+                                    <div class="d-flex justify-content-start">
                                         @foreach($book->readers as $reader)
                                             <div class="my-3 ml-2 text-center">
-                                                <img  
-                                                    data-toggle="tooltip" 
-                                                    title="{{ $reader->name }}" 
-                                                    data-placement="bottom"  
+                                                <img
+                                                    data-toggle="tooltip"
+                                                    title="{{ $reader->name }}"
+                                                    data-placement="bottom"
                                                     class="reader_image"
                                                     src="{{ $reader->avatar}}"
                                                     alt="{{ $reader->name }}"/>
-                                            </div> 
+                                            </div>
                                         @endforeach
                                     </div>
                                 </div>
                             @endif
 
-                            <div>
-                                <a id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}" class="text-info c-pointer">
-                                   <span>Don't show me this again</span> 
-                                </a>
-                            </div>
+                                    <a class="m-2 w-100 py-3 font-weight-bold mt-4" id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}">
+                                        <label>
+                                            <input type="checkbox" class="m-1">Don't show me this again
+                                        </label>
+                                    </a>
                     </div>
                 </div>
             </div>

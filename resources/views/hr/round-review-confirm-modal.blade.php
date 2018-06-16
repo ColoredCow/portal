@@ -1,9 +1,9 @@
-<div class="modal fade" id="round_confirm_{{ $applicationRound->id }}" tabindex="-1" role="dialog" aria-labelledby="round_confirm_{{ $applicationRound->id }}" aria-hidden="true">
+<div class="modal fade" id="round_confirm" tabindex="-1" role="dialog" aria-labelledby="round_confirm" aria-hidden="true" v-if="selectedAction == 'round'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="d-block">
-                    <h5 class="modal-title" id="round_confirm_{{ $applicationRound->id }}">Schedule @{{ nextRoundName }}</h5>
+                    <h5 class="modal-title" id="round_confirm">@{{ this.nextRoundName }}</h5>
                     <h6 class="text-secondary">{{ $applicationRound->application->applicant->name }} &mdash; {{ $applicationRound->application->applicant->email }}</h6>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -47,6 +47,7 @@
                 </div>
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">
+                        <input type="hidden" name="next_round" id="next_round" :value="selectedNextRound">
                         <button type="button" class="btn btn-success px-4 round-submit" data-action="confirm">Confirm</button>
                     </div>
                 </div>

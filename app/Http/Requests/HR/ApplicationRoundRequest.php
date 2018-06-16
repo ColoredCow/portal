@@ -36,6 +36,7 @@ class ApplicationRoundRequest extends FormRequest
             'next_scheduled_end' => 'nullable|date',
             'next_scheduled_person_id' => 'nullable|integer|required_if:action,confirm',
             'round_evaluation' => 'nullable|array',
+            'send_for_approval_person' => 'nullable|integer|required_if:action,send-for-approval',
         ];
 
         if (request()->input('action') == 'confirm' && request()->input('create_calendar_event') == 'on') {
