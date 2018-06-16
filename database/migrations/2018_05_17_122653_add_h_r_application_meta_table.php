@@ -16,7 +16,6 @@ class AddHRApplicationMetaTable extends Migration
         Schema::create('hr_application_meta', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('hr_application_id');
-            $table->text('reason_for_eligibility')->nullable();
             $table->text('form_data');
             $table->timestamps();
         });

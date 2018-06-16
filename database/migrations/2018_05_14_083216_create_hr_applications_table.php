@@ -19,6 +19,7 @@ class CreateHrApplicationsTable extends Migration
             $table->unsignedInteger('hr_job_id');
             $table->string('status')->nullable();
             $table->string('resume')->nullable();
+            $table->text('reason_for_eligibility')->nullable();
             $table->string('autoresponder_subject')->nullable();
             $table->text('autoresponder_body')->nullable();
             $table->timestamps();
