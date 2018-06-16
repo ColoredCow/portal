@@ -22,10 +22,11 @@ class Job extends Model
     }
 
     /**
-     * Custom update method that updates a job and fires specific events
+     * Custom update method that updates a job and fires specific events.
      *
-     * @param  array $attr      fillables to be updated
-     * @return boolean|mixed    true if update is successful, error object if update fails
+     * @param array $attr fillables to be updated
+     *
+     * @return bool|mixed true if update is successful, error object if update fails
      */
     public function _update($attr)
     {
@@ -39,6 +40,7 @@ class Job extends Model
         event(new JobUpdated($this, [
             'rounds' => $request->input('rounds'),
         ]));
+
         return $updated;
     }
 

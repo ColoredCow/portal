@@ -24,8 +24,8 @@ class WeeklyDoseRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string',
-            'url' => 'required|url',
+            'description'    => 'required|string',
+            'url'            => 'required|url',
             'recommended_by' => 'required|string',
         ];
     }

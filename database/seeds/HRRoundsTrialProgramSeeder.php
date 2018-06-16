@@ -3,7 +3,6 @@
 use App\Models\HR\Job;
 use App\Models\HR\Round;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 
 class HRRoundsTrialProgramSeeder extends Seeder
 {
@@ -14,7 +13,7 @@ class HRRoundsTrialProgramSeeder extends Seeder
      */
     public function run()
     {
-        $round = Round::create([ 'name' => 'Trial Program' ]);
+        $round = Round::create(['name' => 'Trial Program']);
 
         $jobs = Job::all();
         foreach ($jobs as $job) {

@@ -24,12 +24,12 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'client_id' => 'required|integer',
+            'name'              => 'required|string',
+            'client_id'         => 'required|integer',
             'client_project_id' => 'required|integer',
-            'status' => 'required|string',
-            'invoice_email' => 'nullable|email',
-            'gst_applicable' => 'nullable',
+            'status'            => 'required|string',
+            'invoice_email'     => 'nullable|email',
+            'gst_applicable'    => 'nullable',
         ];
     }
 
@@ -42,8 +42,8 @@ class ProjectRequest extends FormRequest
     {
         return [
             'client_project_id.required' => 'Project ID is required',
-            'client_project_id.integer' => 'Project ID should be a valid number',
-            'invoice_email.email' => 'Email for invoice should a valid email address',
+            'client_project_id.integer'  => 'Project ID should be a valid number',
+            'invoice_email.email'        => 'Email for invoice should a valid email address',
         ];
     }
 }

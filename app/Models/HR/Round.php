@@ -19,7 +19,7 @@ class Round extends Model
      */
     protected $casts = [
         'confirmed_mail_template' => 'array',
-        'rejected_mail_template' => 'array',
+        'rejected_mail_template'  => 'array',
     ];
 
     public function jobs()

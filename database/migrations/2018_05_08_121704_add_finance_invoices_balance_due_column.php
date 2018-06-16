@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddFinanceInvoicesBalanceDueColumn extends Migration
 {
@@ -27,7 +27,7 @@ class AddFinanceInvoicesBalanceDueColumn extends Migration
     public function down()
     {
         Schema::table('finance_invoices', function (Blueprint $table) {
-            $table->dropColumn([ 'due_amount', 'currency_due_amount' ]);
+            $table->dropColumn(['due_amount', 'currency_due_amount']);
         });
     }
 }

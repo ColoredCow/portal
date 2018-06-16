@@ -20,7 +20,7 @@ class ApplicationRound extends Model
     {
         $fillable = [
             'conducted_person_id' => Auth::id(),
-            'conducted_date' => Carbon::now(),
+            'conducted_date'      => Carbon::now(),
         ];
 
         $application = $this->application;
@@ -35,7 +35,7 @@ class ApplicationRound extends Model
                     $application->markInProgress();
                 }
                 $fillable = [
-                    'scheduled_date' => $attr['scheduled_date'],
+                    'scheduled_date'      => $attr['scheduled_date'],
                     'scheduled_person_id' => $attr['scheduled_person_id'],
                 ];
                 $attr['reviews'] = [];
@@ -47,10 +47,10 @@ class ApplicationRound extends Model
                 $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
                 $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                 $applicationRound = self::create([
-                    'hr_application_id' => $application->id,
-                    'hr_round_id' => $attr['next_round'],
-                    'scheduled_date' => $attr['next_scheduled_start'],
-                    'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                    'hr_application_id'   => $application->id,
+                    'hr_round_id'         => $attr['next_round'],
+                    'scheduled_date'      => $attr['next_scheduled_start'],
+                    'scheduled_end'       => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'],
                 ]);
                 break;
@@ -84,12 +84,12 @@ class ApplicationRound extends Model
                 $this->evaluations()->updateOrCreate(
                     [
                         'application_round_id' => $this->id,
-                        'evaluation_id' => $evaluation['evaluation_id'],
-                        'application_id' => $this->hr_application_id,
+                        'evaluation_id'        => $evaluation['evaluation_id'],
+                        'application_id'       => $this->hr_application_id,
                     ],
                     [
                         'option_id' => $evaluation['option_id'],
-                        'comment' => $evaluation['comment'],
+                        'comment'   => $evaluation['comment'],
                     ]
                 );
             }
@@ -106,11 +106,12 @@ class ApplicationRound extends Model
                     'hr_application_round_id' => $this->id,
                 ],
                 [
-                    'review_key' => $review_key,
+                    'review_key'   => $review_key,
                     'review_value' => $review_value,
                 ]
             );
         }
+
         return true;
     }
 
@@ -157,27 +158,25 @@ class ApplicationRound extends Model
     public function getCommunicationMailAttribute()
     {
         return [
-            'modal-id' => 'round_mail_' . $this->id,
-            'mail-to' => $this->application->applicant->email,
+            'modal-id'     => 'round_mail_'.$this->id,
+            'mail-to'      => $this->application->applicant->email,
             'mail-subject' => $this->mail_subject,
-            'mail-body' => $this->mail_body,
-            'mail-sender' => $this->mailSender->name,
-            'mail-date' => $this->mail_sent_at,
+            'mail-body'    => $this->mail_body,
+            'mail-sender'  => $this->mailSender->name,
+            'mail-date'    => $this->mail_sent_at,
         ];
     }
 
     public function getNoShowAttribute()
     {
         if ($this->round_status) {
-            return null;
+            return;
         }
 
         $scheduledDate = Carbon::parse($this->scheduled_date);
         if ($scheduledDate < Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))) {
             return true;
         }
-
-        return null;
     }
 
     public static function scheduledForToday()
@@ -214,7 +213,7 @@ class ApplicationRound extends Model
      * if the application round status is null or rejected. Also, returns true if the application
      * round is confirmed but the application is sent/waiting for approval.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShowActionsAttribute()
     {

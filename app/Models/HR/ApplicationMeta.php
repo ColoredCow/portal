@@ -2,7 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\Application;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationMeta extends Model
@@ -13,7 +12,7 @@ class ApplicationMeta extends Model
 
     public function application()
     {
-    	return $this->belongsTo(Application::class, 'hr_application_id');
+        return $this->belongsTo(Application::class, 'hr_application_id');
     }
 
     public static function scopeFormData($query)
@@ -32,7 +31,7 @@ class ApplicationMeta extends Model
     }
 
     /**
-     * Get details of communication mail if application meta is for change job
+     * Get details of communication mail if application meta is for change job.
      *
      * @return mixed
      */
@@ -41,20 +40,20 @@ class ApplicationMeta extends Model
         $this->load('application', 'application.applicant');
 
         $attr = [
-            'mail-to' => $this->application->applicant->email,
+            'mail-to'     => $this->application->applicant->email,
             'mail-sender' => $this->value->user ?? null,
-            'mail-date' => $this->updated_at,
+            'mail-date'   => $this->updated_at,
         ];
 
         switch ($this->key) {
-            case config('constants.hr.application-meta.keys.change-job') :
-                $attr['modal-id'] = 'job_change_' . $this->id;
+            case config('constants.hr.application-meta.keys.change-job'):
+                $attr['modal-id'] = 'job_change_'.$this->id;
                 $attr['mail-subject'] = $this->value->job_change_mail_subject;
                 $attr['mail-body'] = $this->value->job_change_mail_body;
                 break;
 
             case config('constants.hr.application-meta.keys.no-show'):
-                $attr['modal-id'] = 'round_not_conducted_' . $this->id;
+                $attr['modal-id'] = 'round_not_conducted_'.$this->id;
                 $attr['mail-subject'] = $this->value->mail_subject ?? null;
                 $attr['mail-body'] = $this->value->mail_body ?? null;
                 break;

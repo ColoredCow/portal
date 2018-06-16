@@ -14,12 +14,14 @@ class ScheduledInterviewReminder extends Mailable
 
     /**
      * Instance of the application round for which the applicant needs to be reminded.
+     *
      * @var ApplicationRound
      */
     public $applicationRound;
 
     /**
      * Create a new message instance.
+     *
      * @param ApplicationRound $applicationRound
      */
     public function __construct(ApplicationRound $applicationRound)
@@ -51,7 +53,7 @@ class ScheduledInterviewReminder extends Mailable
             ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject($subject)
             ->view('mail.plain')->with([
-                'body' => $body
+                'body' => $body,
             ]);
     }
 }

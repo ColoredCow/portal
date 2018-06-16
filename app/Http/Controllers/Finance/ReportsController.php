@@ -11,19 +11,20 @@ use Illuminate\Http\Request;
 class ReportsController extends Controller
 {
     /**
-     * Display the financial reports
+     * Display the financial reports.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $this->authorize('view', ReportsController::class);
+        $this->authorize('view', self::class);
 
         return view('finance.reports.index')->with(self::getReportAttributes());
     }
 
     /**
-     * Get a complete list attributes and their values to be displayed on the reports page
+     * Get a complete list attributes and their values to be displayed on the reports page.
+     *
      * @return array
      */
     public static function getReportAttributes()
@@ -38,7 +39,7 @@ class ReportsController extends Controller
         switch ($request->get('type')) {
             case 'monthly':
                 if ($request->get('month') && $request->get('year')) {
-                    $date = $request->get('year') . '-' . $request->get('month') . '-01';
+                    $date = $request->get('year').'-'.$request->get('month').'-01';
                     $startDate = new Carbon($date);
                     $endDate = $startDate->copy()->endOfMonth();
                 } else {
@@ -55,7 +56,7 @@ class ReportsController extends Controller
                 if ($request->get('start') && $request->get('end')) {
                     $startDate = $request->get('start');
                     $endDate = $request->get('end');
-                    $showingResultsFor = (new Carbon($startDate))->format(config('constants.full_display_date_format')) . ' - ' . (new Carbon($endDate))->format(config('constants.full_display_date_format'));
+                    $showingResultsFor = (new Carbon($startDate))->format(config('constants.full_display_date_format')).' - '.(new Carbon($endDate))->format(config('constants.full_display_date_format'));
                 }
                 break;
         }
@@ -80,9 +81,11 @@ class ReportsController extends Controller
     }
 
     /**
-     * Get financial calcucations based on sent and paid invoices to be shown in the reports
-     * @param  \Illuminate\Database\Eloquent\Collection $sentInvoices
-     * @param  \Illuminate\Database\Eloquent\Collection $paidInvoices
+     * Get financial calcucations based on sent and paid invoices to be shown in the reports.
+     *
+     * @param \Illuminate\Database\Eloquent\Collection $sentInvoices
+     * @param \Illuminate\Database\Eloquent\Collection $paidInvoices
+     *
      * @return array
      */
     public static function getCumulativeAmounts($sentInvoices, $paidInvoices)
@@ -92,7 +95,7 @@ class ReportsController extends Controller
             $report['sentAmount'][$currency] = 0;
             $report['paidAmount'][$currency] = [
                 'converted' => 0,
-                'default' => 0
+                'default'   => 0,
             ];
             $report['transactionCharge'][$currency] = 0;
             $report['transactionTax'][$currency] = 0;
@@ -132,11 +135,12 @@ class ReportsController extends Controller
     }
 
     /**
-     * arrange invoices based on their start and end date
+     * arrange invoices based on their start and end date.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection $invoices
-     * @param  string $start    Start date
-     * @param  string $end      End date
+     * @param \Illuminate\Database\Eloquent\Collection $invoices
+     * @param string                                   $start    Start date
+     * @param string                                   $end      End date
+     *
      * @return array
      */
     public static function arrangeInvoices($invoices, $start = null, $end = null)
@@ -167,6 +171,7 @@ class ReportsController extends Controller
                 }
             }
         }
+
         return $arrangedInvoices;
     }
 }

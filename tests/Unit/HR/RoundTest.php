@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\HR;
 
-use Tests\TestCase;
 use App\Models\HR\Round;
+use Tests\TestCase;
 
 class RoundTest extends TestCase
 {
     /**
-     * Test for round creation
+     * Test for round creation.
      *
      * @return void
      */

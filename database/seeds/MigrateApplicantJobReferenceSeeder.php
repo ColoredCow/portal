@@ -2,7 +2,6 @@
 
 use App\Models\HR\Applicant;
 use App\Models\HR\Application;
-use App\Models\HR\ApplicationReview;
 use App\Models\HR\ApplicationRound;
 use Illuminate\Database\Seeder;
 
@@ -42,15 +41,15 @@ class MigrateApplicantJobReferenceSeeder extends Seeder
     {
         // prepare attributes
         $attr = [
-            'hr_job_id' => $applicant->hr_job_id,
-            'hr_applicant_id' => $originalApplicant ? $originalApplicant->id : $applicant->id,
-            'status' => $applicant->status,
-            'resume' => $applicant->resume,
+            'hr_job_id'              => $applicant->hr_job_id,
+            'hr_applicant_id'        => $originalApplicant ? $originalApplicant->id : $applicant->id,
+            'status'                 => $applicant->status,
+            'resume'                 => $applicant->resume,
             'reason_for_eligibility' => $applicant->reason_for_eligibility,
-            'autoresponder_subject' => $applicant->autoresponder_subject,
-            'autoresponder_body' => $applicant->autoresponder_body,
-            'created_at' => $applicant->created_at,
-            'updated_at' => $applicant->updated_at,
+            'autoresponder_subject'  => $applicant->autoresponder_subject,
+            'autoresponder_body'     => $applicant->autoresponder_body,
+            'created_at'             => $applicant->created_at,
+            'updated_at'             => $applicant->updated_at,
         ];
         // create application
         $application = Application::create($attr);

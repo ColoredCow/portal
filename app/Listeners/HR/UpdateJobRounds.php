@@ -19,12 +19,15 @@ class UpdateJobRounds
     /**
      * Handle the event.
      *
-     * @param  JobUpdated  $event
+     * @param JobUpdated $event
+     *
      * @return void
      */
     public function handle(JobUpdated $event)
     {
-        if (! array_key_exists('rounds', $event->attr)) return;
+        if (!array_key_exists('rounds', $event->attr)) {
+            return;
+        }
 
         $event->job->rounds()->sync($event->attr['rounds'], false);
     }

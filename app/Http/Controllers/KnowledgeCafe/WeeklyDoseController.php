@@ -13,7 +13,6 @@ class WeeklyDoseController extends Controller
      *
      * @return \Illuminate\View\View
      */
-
     public function index()
     {
         $this->authorize('list', WeeklyDose::class);
@@ -36,7 +35,8 @@ class WeeklyDoseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\WeeklyDoseRequest  $request
+     * @param \App\Http\Requests\WeeklyDoseRequest $request
+     *
      * @return \App\Models\WeeklyDose
      */
     public function store(WeeklyDoseRequest $request)
@@ -44,8 +44,8 @@ class WeeklyDoseController extends Controller
         $validated = $request->validated();
 
         return WeeklyDose::create([
-            'description' => $validated['description'],
-            'url' => $validated['url'],
+            'description'    => $validated['description'],
+            'url'            => $validated['url'],
             'recommended_by' => $validated['recommended_by'],
         ]);
     }
@@ -53,7 +53,8 @@ class WeeklyDoseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Social\WeeklyDose  $weeklyDose
+     * @param \App\Models\Social\WeeklyDose $weeklyDose
+     *
      * @return void
      */
     public function show(WeeklyDose $weeklyDose)
@@ -64,7 +65,8 @@ class WeeklyDoseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Social\WeeklyDose  $weeklyDose
+     * @param \App\Models\Social\WeeklyDose $weeklyDose
+     *
      * @return void
      */
     public function edit(WeeklyDose $weeklyDose)
@@ -75,8 +77,9 @@ class WeeklyDoseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\WeeklyDoseRequest  $request
-     * @param  \App\Models\Social\WeeklyDose  $weeklyDose
+     * @param \App\Http\Requests\WeeklyDoseRequest $request
+     * @param \App\Models\Social\WeeklyDose        $weeklyDose
+     *
      * @return void
      */
     public function update(WeeklyDoseRequest $request, WeeklyDose $weeklyDose)
@@ -87,7 +90,8 @@ class WeeklyDoseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Social\WeeklyDose  $weeklyDose
+     * @param \App\Models\Social\WeeklyDose $weeklyDose
+     *
      * @return void
      */
     public function destroy(WeeklyDose $weeklyDose)

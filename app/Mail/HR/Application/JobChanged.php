@@ -13,14 +13,14 @@ class JobChanged extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Application instance for which job has changed
+     * Application instance for which job has changed.
      *
      * @var Application
      */
     public $application;
 
     /**
-     * Application meta that tracks the job change details
+     * Application meta that tracks the job change details.
      *
      * @var ApplicationMeta
      */
@@ -29,7 +29,7 @@ class JobChanged extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param Application $application
+     * @param Application     $application
      * @param ApplicationMeta $changeJobMeta
      */
     public function __construct(Application $application, ApplicationMeta $changeJobMeta)

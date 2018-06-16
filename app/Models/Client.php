@@ -17,7 +17,7 @@ class Client extends Model
     }
 
     /**
-     * Retrive id and name of clients with active flag true
+     * Retrive id and name of clients with active flag true.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */

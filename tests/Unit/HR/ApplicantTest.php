@@ -2,13 +2,13 @@
 
 namespace Tests\Unit\HR;
 
-use Tests\TestCase;
 use App\Models\HR\Applicant;
+use Tests\TestCase;
 
 class ApplicantTest extends TestCase
 {
     /**
-     * Test case to check creation of an applicant
+     * Test case to check creation of an applicant.
      *
      * @return void
      */

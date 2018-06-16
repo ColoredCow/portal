@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Mail;
 class ApplicationMetaObserver
 {
     /**
-     * Listen to the ApplicationMeta create event
-     * @param  ApplicationMeta $applicationMeta
+     * Listen to the ApplicationMeta create event.
+     *
+     * @param ApplicationMeta $applicationMeta
+     *
      * @return void
      */
     public function created(ApplicationMeta $applicationMeta)

@@ -23,25 +23,24 @@ class JobRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() === 'POST')
-        {
+        if ($this->method() === 'POST') {
             $rules = [
                 'title' => 'required|string',
-                'by' => 'required|string',
-                'link' => 'required|url',
+                'by'    => 'required|string',
+                'link'  => 'required|url',
             ];
         }
 
-        if ($this->method() === 'PATCH')
-        {
+        if ($this->method() === 'PATCH') {
             $rules = [
-                'facebook_post' => 'nullable|url',
+                'facebook_post'  => 'nullable|url',
                 'instagram_post' => 'nullable|url',
-                'twitter_post' => 'nullable|url',
-                'linkedin_post' => 'nullable|url',
-                'rounds' => 'nullable',
+                'twitter_post'   => 'nullable|url',
+                'linkedin_post'  => 'nullable|url',
+                'rounds'         => 'nullable',
             ];
         }
+
         return $rules;
     }
 }

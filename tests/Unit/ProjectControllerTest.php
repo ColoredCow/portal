@@ -7,7 +7,7 @@ use Tests\TestCase;
 class ProjectControllerTest extends TestCase
 {
     /**
-     * Test case for ProjectController@store
+     * Test case for ProjectController@store.
      *
      * @return void
      */
@@ -17,7 +17,7 @@ class ProjectControllerTest extends TestCase
     }
 
     /**
-     * Test case for ProjectController@update
+     * Test case for ProjectController@update.
      *
      * @return void
      */

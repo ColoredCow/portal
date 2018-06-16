@@ -25,7 +25,7 @@ class ApplicantRoundMailRequest extends FormRequest
     {
         return [
             'mail_subject' => 'required|string',
-            'mail_body' => 'required|string',
+            'mail_body'    => 'required|string',
         ];
     }
 }

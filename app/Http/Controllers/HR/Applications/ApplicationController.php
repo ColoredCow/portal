@@ -27,9 +27,9 @@ abstract class ApplicationController extends Controller
     public function index()
     {
         $filters = [
-            'status' => request()->get('status') ?: 'non-rejected',
+            'status'   => request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
-            'job' => request()->get('hr_job_id')
+            'job'      => request()->get('hr_job_id'),
         ];
 
         $applications = Application::with('applicant', 'job')
@@ -40,14 +40,14 @@ abstract class ApplicationController extends Controller
 
         $attr = [
             'applications' => $applications,
-            'status' => request()->get('status'),
+            'status'       => request()->get('status'),
         ];
 
         if ($this->getApplicationType() == 'job') {
             $attr['openJobsCount'] = Job::count();
             $attr['openApplicationsCount'] = Application::applyFilter([
                 'job-type' => 'job',
-                'job' => request()->get('hr_job_id')
+                'job'      => request()->get('hr_job_id'),
             ])
             ->isOpen()
             ->get()
@@ -60,39 +60,42 @@ abstract class ApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  String  $id
+     * @param string $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $application = Application::findOrFail($id);
-        
+
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds',  'job.rounds.evaluationParameters',  'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
         $attr = [
-            'applicant' => $application->applicant,
-            'application' => $application,
-            'timeline' => $application->applicant->timeline(),
-            'interviewers' => User::interviewers()->get(),
+            'applicant'                 => $application->applicant,
+            'application'               => $application,
+            'timeline'                  => $application->applicant->timeline(),
+            'interviewers'              => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
-            'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
-            'settings' => [
-                'noShow' => Setting::getNoShowEmail()
-            ]
+            'applicationFormDetails'    => $application->applicationMeta()->formData()->first(),
+            'settings'                  => [
+                'noShow' => Setting::getNoShowEmail(),
+            ],
         ];
 
         if ($application->job->type == 'job') {
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
+
         return view('hr.application.edit')->with($attr);
     }
 
     /**
-     * Update the specified resource
+     * Update the specified resource.
      *
      * @param ApplicationRequest $request
-     * @param integer $id
+     * @param int                $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ApplicationRequest $request, int $id)
@@ -105,21 +108,23 @@ abstract class ApplicationController extends Controller
             case config('constants.hr.application-meta.keys.change-job'):
                 $changeJobMeta = $application->changeJob($validated);
                 Mail::send(new JobChanged($application, $changeJobMeta));
+
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');
                 break;
             case config('constants.hr.application-meta.keys.no-show'):
                 $roundNotConductedMeta = ApplicationMeta::create([
                     'hr_application_id' => $application->id,
-                    'key' => $validated['action'],
-                    'value' => json_encode([
-                        'round' => $validated['application_round_id'],
-                        'reason' => $validated['no_show_reason'],
-                        'user' => Auth::id(),
+                    'key'               => $validated['action'],
+                    'value'             => json_encode([
+                        'round'        => $validated['application_round_id'],
+                        'reason'       => $validated['no_show_reason'],
+                        'user'         => Auth::id(),
                         'mail_subject' => $validated['no_show_mail_subject'],
-                        'mail_body' => $validated['no_show_mail_body'],
+                        'mail_body'    => $validated['no_show_mail_body'],
                     ]),
                 ]);
                 Mail::send(new RoundNotConducted($application, $roundNotConductedMeta));
+
                 return redirect()->back()->with('status', 'Application updated successfully!');
                 break;
         }

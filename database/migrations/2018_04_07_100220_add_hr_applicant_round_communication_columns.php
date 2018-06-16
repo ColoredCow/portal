@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddHrApplicantRoundCommunicationColumns extends Migration
 {
@@ -31,7 +31,7 @@ class AddHrApplicantRoundCommunicationColumns extends Migration
     public function down()
     {
         Schema::table('hr_applicants_rounds', function (Blueprint $table) {
-            $table->dropForeign([ 'mail_sender' ]);
+            $table->dropForeign(['mail_sender']);
             $table->dropColumn(['mail_sent', 'mail_subject', 'mail_body', 'mail_sender', 'mail_sent_at']);
         });
     }

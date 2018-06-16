@@ -32,38 +32,38 @@ class ProjectStageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectStageRequest  $request
+     * @param \App\Http\Requests\ProjectStageRequest $request
+     *
      * @return void
      */
     public function store(ProjectStageRequest $request)
     {
         $validated = $request->validated();
         $stage = ProjectStage::create([
-            'project_id' => $validated['project_id'],
-            'name' => $validated['name'],
-            'cost' => $validated['cost'],
-            'type' => $validated['type'],
-            'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
-            'end_date' => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
-            'currency_cost' => $validated['currency_cost'],
+            'project_id'       => $validated['project_id'],
+            'name'             => $validated['name'],
+            'cost'             => $validated['cost'],
+            'type'             => $validated['type'],
+            'start_date'       => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
+            'end_date'         => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
+            'currency_cost'    => $validated['currency_cost'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] ? true : false,
         ]);
 
-        if (isset($validated['new_billing']))
-        {
+        if (isset($validated['new_billing'])) {
             foreach ($validated['new_billing'] as $percentage) {
                 if (!$percentage) {
                     continue;
                 }
                 ProjectStageBilling::create([
                     'project_stage_id' => $stage->id,
-                    'percentage' => $percentage,
+                    'percentage'       => $percentage,
                 ]);
             }
         } else {
             ProjectStageBilling::create([
                 'project_stage_id' => $stage->id,
-                'percentage' => 100,
+                'percentage'       => 100,
             ]);
         }
 
@@ -73,7 +73,8 @@ class ProjectStageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProjectStage  $stage
+     * @param \App\Models\ProjectStage $stage
+     *
      * @return void
      */
     public function show(ProjectStage $stage)
@@ -84,7 +85,8 @@ class ProjectStageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProjectStage  $stage
+     * @param \App\Models\ProjectStage $stage
+     *
      * @return void
      */
     public function edit(ProjectStage $stage)
@@ -95,25 +97,25 @@ class ProjectStageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectStageRequest  $request
-     * @param  \App\Models\ProjectStage  $stage
+     * @param \App\Http\Requests\ProjectStageRequest $request
+     * @param \App\Models\ProjectStage               $stage
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(ProjectStageRequest $request, ProjectStage $stage)
     {
         $validated = $request->validated();
         $updated = $stage->update([
-            'name' => $validated['name'],
-            'type' => $validated['type'],
-            'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
-            'end_date' => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
-            'cost' => $validated['cost'],
-            'currency_cost' => $validated['currency_cost'],
+            'name'             => $validated['name'],
+            'type'             => $validated['type'],
+            'start_date'       => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
+            'end_date'         => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
+            'cost'             => $validated['cost'],
+            'currency_cost'    => $validated['currency_cost'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] ? true : false,
         ]);
 
-        if (isset($validated['billing']))
-        {
+        if (isset($validated['billing'])) {
             foreach ($validated['billing'] as $billing) {
                 foreach ($billing as $billing_id => $percentage) {
                     if (!$percentage) {
@@ -126,15 +128,14 @@ class ProjectStageController extends Controller
                 }
             }
         }
-        if (isset($validated['new_billing']))
-        {
+        if (isset($validated['new_billing'])) {
             foreach ($validated['new_billing'] as $percentage) {
                 if (!$percentage) {
                     continue;
                 }
                 ProjectStageBilling::create([
                     'project_stage_id' => $stage->id,
-                    'percentage' => $percentage,
+                    'percentage'       => $percentage,
                 ]);
             }
         }
@@ -145,7 +146,8 @@ class ProjectStageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProjectStage  $stage
+     * @param \App\Models\ProjectStage $stage
+     *
      * @return void
      */
     public function destroy(ProjectStage $stage)

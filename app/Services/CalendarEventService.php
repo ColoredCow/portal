@@ -38,10 +38,10 @@ class CalendarEventService
         $this->setEndDateTime($details['end']);
 
         $event = new Google_Service_Calendar_Event([
-            'summary' => $this->summary,
+            'summary'   => $this->summary,
             'attendees' => $this->attendees,
-            'start' => $this->startDateTime,
-            'end' => $this->endDateTime,
+            'start'     => $this->startDateTime,
+            'end'       => $this->endDateTime,
         ]);
         $event = $this->service->events->insert($calendarId, $event);
         $this->id = $event->id;
@@ -90,6 +90,7 @@ class CalendarEventService
         foreach ($this->attendees as $attendee) {
             array_push($attendees, $attendee['email']);
         }
+
         return $attendees;
     }
 
@@ -103,15 +104,17 @@ class CalendarEventService
     }
 
     /**
-     * Returns an array that is expected by the Google Calendar API
-     * @param  string $dateTime
-     * @param  string $timeZone
+     * Returns an array that is expected by the Google Calendar API.
+     *
+     * @param string $dateTime
+     * @param string $timeZone
      *
      * @return array
      */
     protected static function getCalendarDateTime($dateTime, $timeZone)
     {
         $timeZone = $timeZone ?? config('app.timezone');
+
         return [
             'dateTime' => Carbon::parse($dateTime)->format(config('constants.calendar_datetime_format')),
             'timeZone' => $timeZone,
@@ -119,10 +122,10 @@ class CalendarEventService
     }
 
     /**
-     * Returns an array with formats expected by Employee Portal modules
+     * Returns an array with formats expected by Employee Portal modules.
      *
-     * @param  string $eventDateTime
-     * @param  boolean $withTimeZone    defines whether to return the calendar event timeZone or not
+     * @param string $eventDateTime
+     * @param bool   $withTimeZone  defines whether to return the calendar event timeZone or not
      *
      * @return array
      */
@@ -132,6 +135,7 @@ class CalendarEventService
         if ($withTimeZone) {
             $start['timeZone'] = $eventDateTime['timeZone'];
         }
+
         return $dateTime;
     }
 

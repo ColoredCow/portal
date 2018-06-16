@@ -13,32 +13,32 @@ class HRRoundsTableSeeder extends Seeder
     public function run()
     {
         DB::table('hr_rounds')->insert([
-            'name' => 'Resume Screening',
+            'name'       => 'Resume Screening',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('hr_rounds')->insert([
-            'name' => 'Telephonic Interview',
+            'name'       => 'Telephonic Interview',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('hr_rounds')->insert([
-            'name' => 'Basic Technical Round',
+            'name'       => 'Basic Technical Round',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('hr_rounds')->insert([
-            'name' => 'Detailed Technical Round',
+            'name'       => 'Detailed Technical Round',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('hr_rounds')->insert([
-            'name' => 'Team Interaction Round',
+            'name'       => 'Team Interaction Round',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('hr_rounds')->insert([
-            'name' => 'HR Round',
+            'name'       => 'HR Round',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

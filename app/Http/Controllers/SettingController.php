@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ContentHelper;
 use App\Http\Requests\SettingRequest;
-use App\Models\Setting;
 use App\Models\HR\Round;
+use App\Models\Setting;
 
 class SettingController extends Controller
 {
     /**
-     * List all settings for this module
-     * @param  String $module
+     * List all settings for this module.
+     *
+     * @param string $module
      *
      * @return \Illuminate\View\View
      */
@@ -26,9 +27,10 @@ class SettingController extends Controller
     }
 
     /**
-     * Update the settings in the request
-     * @param  SettingRequest $request
-     * @param  String         $module
+     * Update the settings in the request.
+     *
+     * @param SettingRequest $request
+     * @param string         $module
      *
      * @return \Illuminate\Http\Response
      */
@@ -49,9 +51,10 @@ class SettingController extends Controller
     }
 
     /**
-     * Returns settings based on the requested module
+     * Returns settings based on the requested module.
      *
      * @param string $module
+     *
      * @return array
      */
     protected static function getModuleSettings(String $module)
@@ -62,7 +65,7 @@ class SettingController extends Controller
                 $attr['rounds'] = Round::all();
                 $attr['roundMailTypes'] = [
                     config('constants.hr.status.confirmed'),
-                    config('constants.hr.status.rejected')
+                    config('constants.hr.status.rejected'),
                 ];
                 break;
         }

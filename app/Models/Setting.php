@@ -12,17 +12,17 @@ class Setting extends Model
     {
         return [
             'subject' => self::where('setting_key', 'no_show_mail_subject')->first()->setting_value ?? null,
-            'body' => self::where('setting_key', 'no_show_mail_body')->first()->setting_value ?? null
+            'body'    => self::where('setting_key', 'no_show_mail_body')->first()->setting_value ?? null,
         ];
     }
 
     public static function scopeKey($query, $key)
     {
-    	return $query->where('setting_key', $key);
+        return $query->where('setting_key', $key);
     }
 
     public static function scopeModule($query, $module)
     {
-    	return $query->where('module', $module);
+        return $query->where('module', $module);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateHrApplicantReviewsTable extends Migration
 {
@@ -21,7 +21,7 @@ class CreateHrApplicantReviewsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('hr_applicant_reviews', function(Blueprint $table) {
+        Schema::table('hr_applicant_reviews', function (Blueprint $table) {
             $table->foreign('hr_applicant_round_id')->references('id')->on('hr_applicants_rounds');
         });
     }

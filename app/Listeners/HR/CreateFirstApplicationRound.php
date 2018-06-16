@@ -22,7 +22,8 @@ class CreateFirstApplicationRound
     /**
      * Handle the event.
      *
-     * @param  ApplicationCreated  $event
+     * @param ApplicationCreated $event
+     *
      * @return void
      */
     public function handle(ApplicationCreated $event)
@@ -35,9 +36,9 @@ class CreateFirstApplicationRound
         $scheduledPerson = $scheduledPerson ?? User::find(config('constants.hr.defaults.scheduled_person_id'));
 
         $applicationRound = ApplicationRound::create([
-            'hr_application_id' => $application->id,
-            'hr_round_id' => $job->rounds->first()->id,
-            'scheduled_date' => Carbon::now()->addDay(),
+            'hr_application_id'   => $application->id,
+            'hr_round_id'         => $job->rounds->first()->id,
+            'scheduled_date'      => Carbon::now()->addDay(),
             'scheduled_person_id' => $scheduledPerson->id,
         ]);
     }

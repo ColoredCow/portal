@@ -2,15 +2,14 @@
 
 namespace App\Helpers;
 
-use Carbon\Carbon;
-
 class ContentHelper
 {
     /**
      * Replaces all occurences of \r\n in the requested text.
      * Primarily keeps the content formatted in the mails.
      *
-     * @param  string $content
+     * @param string $content
+     *
      * @return string
      */
     public static function editorFormat(String $content)
