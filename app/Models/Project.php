@@ -23,9 +23,9 @@ class Project extends Model
      */
     public static function getList()
     {
-    	return self::with([ 'client' => function($query) {
-	            $query->select('id', 'name');
-	        }])
+        return self::with([ 'client' => function ($query) {
+            $query->select('id', 'name');
+        }])
             ->orderBy('id', 'desc')
             ->paginate(config('constants.pagination_size'));
     }

@@ -49,8 +49,7 @@ class ProjectStageController extends Controller
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] ? true : false,
         ]);
 
-        if (isset($validated['new_billing']))
-        {
+        if (isset($validated['new_billing'])) {
             foreach ($validated['new_billing'] as $percentage) {
                 if (!$percentage) {
                     continue;
@@ -112,8 +111,7 @@ class ProjectStageController extends Controller
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] ? true : false,
         ]);
 
-        if (isset($validated['billing']))
-        {
+        if (isset($validated['billing'])) {
             foreach ($validated['billing'] as $billing) {
                 foreach ($billing as $billing_id => $percentage) {
                     if (!$percentage) {
@@ -126,8 +124,7 @@ class ProjectStageController extends Controller
                 }
             }
         }
-        if (isset($validated['new_billing']))
-        {
+        if (isset($validated['new_billing'])) {
             foreach ($validated['new_billing'] as $percentage) {
                 if (!$percentage) {
                     continue;
