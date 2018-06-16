@@ -3,7 +3,6 @@
 namespace App\Events\HR;
 
 use App\Models\HR\Job;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;

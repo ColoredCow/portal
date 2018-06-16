@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use App\Models\KnowledgeCafe\Library\BookCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest;
+use App\Models\KnowledgeCafe\Library\BookCategory;
 
 class BookCategoryController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(BookCategory::class);
@@ -22,6 +21,7 @@ class BookCategoryController extends Controller
     public function index()
     {
         $categories = BookCategory::withCount('books')->orderBy('name')->get();
+
         return view('knowledgecafe.library.categories.index')
         ->with('categories', $this->formatCategoryData($categories));
     }
@@ -39,7 +39,8 @@ class BookCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest  $request
+     * @param App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest $request
+     *
      *  @return void
      */
     public function store(BookCategoryRequest $request)
@@ -50,18 +51,19 @@ class BookCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
+     * @param \App\Models\KnowledgeCafe\Library\BookCategory $bookCategory
+     *
      *  @return void
      */
     public function show(BookCategory $bookCategory)
     {
-       
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
+     * @param \App\Models\KnowledgeCafe\Library\BookCategory $bookCategory
+     *
      * @return void
      */
     public function edit(BookCategory $bookCategory)
@@ -72,41 +74,46 @@ class BookCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest  $request
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
+     * @param App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest $request
+     * @param \App\Models\KnowledgeCafe\Library\BookCategory              $bookCategory
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(BookCategoryRequest $request, BookCategory $bookCategory)
     {
         return response()->json(
-            ['isUpdated' => $bookCategory->update($request->validated()) ]
+            ['isUpdated' => $bookCategory->update($request->validated())]
         );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
+     * @param \App\Models\KnowledgeCafe\Library\BookCategory $bookCategory
+     *
      * @return void
      */
     public function destroy(BookCategory $bookCategory)
     {
-        return response()->json(['isDeleted' => $bookCategory->delete() ]);
+        return response()->json(['isDeleted' => $bookCategory->delete()]);
     }
 
-     /**
-     * @param  Array  $categories
-     * @return Array
+    /**
+     * @param array $categories
+     *
+     * @return array
      */
-    public function formatCategoryData($categories) {
+    public function formatCategoryData($categories)
+    {
         $data = [];
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
             $data[] = [
-                'id' => $category->id,
-                'name' =>  $category->name,
-                'assign_books_count' => $category->books_count
+                'id'                 => $category->id,
+                'name'               => $category->name,
+                'assign_books_count' => $category->books_count,
             ];
         }
+
         return $data;
     }
 }

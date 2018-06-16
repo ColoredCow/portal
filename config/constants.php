@@ -4,43 +4,43 @@ return [
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
     ],
-    'date_format' => 'Y-m-d',
-    'datetime_format' => 'Y-m-d H:i:s',
-    'display_date_format' => 'd/m/Y',
+    'date_format'              => 'Y-m-d',
+    'datetime_format'          => 'Y-m-d H:i:s',
+    'display_date_format'      => 'd/m/Y',
     'full_display_date_format' => 'F d, Y',
-    'display_datetime_format' => 'Y-m-d\TH:i',
+    'display_datetime_format'  => 'Y-m-d\TH:i',
     'calendar_datetime_format' => 'Y-m-d\TH:i:s',
-    'modules' => [
+    'modules'                  => [
         'hr',
         'finance',
         'weeklydose',
     ],
     'countries' => [
         'india' => [
-            'title' => 'India',
+            'title'    => 'India',
             'currency' => 'INR',
         ],
         'united-states' => [
-            'title' => 'United States',
+            'title'    => 'United States',
             'currency' => 'USD',
         ],
     ],
     'pagination_size' => 10,
-    'hr' => [
+    'hr'              => [
         'default' => [
             'email' => env('HR_DEFAULT_FROM_EMAIL', 'employeeportal@example.com'),
-            'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers'),
+            'name'  => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers'),
         ],
         'interview-time-format' => 'h:i a',
-        'no-show-hours-limit' => 2,
-        'application-meta' => [
+        'no-show-hours-limit'   => 2,
+        'application-meta'      => [
             'keys' => [
-                'form-data' => 'form-data',
+                'form-data'  => 'form-data',
                 'change-job' => 'change-job',
-                'no-show' => 'no-show',
+                'no-show'    => 'no-show',
             ],
             'reasons-no-show' => [
-                'absent-applicant' => 'Applicant is absent',
+                'absent-applicant'   => 'Applicant is absent',
                 'absent-interviewer' => 'Interviewer is absent',
             ],
         ],
@@ -104,10 +104,10 @@ return [
         'invoice' => [
             'status' => [
                 'unpaid' => 'Unpaid',
-                'paid' => 'Paid',
+                'paid'   => 'Paid',
             ],
         ],
-        'gst' => '18',
+        'gst'     => '18',
         'reports' => [
             'list-previous-months' => 6,
         ],
@@ -115,32 +115,32 @@ return [
     ],
     'currency' => [
         'INR' => [
-            'name' => 'Indian Rupees',
+            'name'   => 'Indian Rupees',
             'symbol' => '₹',
         ],
         'USD' => [
-            'name' => 'US Dollars',
+            'name'   => 'US Dollars',
             'symbol' => '$',
         ],
     ],
     'payment_types' => [
-        'cheque' => 'Cheque',
-        'cash' => 'Cash',
+        'cheque'        => 'Cheque',
+        'cash'          => 'Cash',
         'wire-transfer' => 'Wire Transfer',
     ],
     'cheque_status' => [
         'received' => 'Received',
-        'cleared' => 'Cleared',
-        'bounced' => 'Bounced',
+        'cleared'  => 'Cleared',
+        'bounced'  => 'Bounced',
     ],
     'project' => [
         'status' => [
-            'active' => 'Active',
+            'active'   => 'Active',
             'inactive' => 'Inactive',
         ],
         'type' => [
             'fixed_budget' => 'Fixed Budget',
-            'hourly' => 'Hourly',
+            'hourly'       => 'Hourly',
         ],
     ],
 ];

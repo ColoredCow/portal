@@ -18,7 +18,7 @@ class ProjectStageBilling extends Model
     }
 
     /**
-     * Get the invoice that has the billing
+     * Get the invoice that has the billing.
      */
     public function invoice()
     {

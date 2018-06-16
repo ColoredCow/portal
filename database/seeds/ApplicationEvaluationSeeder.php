@@ -15,8 +15,8 @@ class ApplicationEvaluationSeeder extends Seeder
         $ApplicationEvaluations = ApplicationEvaluation::with('applicationRound')->get();
 
         foreach ($ApplicationEvaluations as $applicationEvaluation) {
-        	$applicationEvaluation->application_id = $applicationEvaluation->applicationRound->hr_application_id;
-        	$applicationEvaluation->save();
+            $applicationEvaluation->application_id = $applicationEvaluation->applicationRound->hr_application_id;
+            $applicationEvaluation->save();
         }
     }
 }

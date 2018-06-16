@@ -71,19 +71,22 @@ class LoginController extends Controller
         $user = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        /**
+        /*
          * Update user avatar to keep it update with gmail
          */
         $authUser->update(['avatar' => $user->avatar_original]);
+
         return redirect('home');
     }
 
     /**
      * If a user has registered before using social auth, return the user
      * else, create a new user object.
+     *
      * @param  $user Socialite user object
      * @param $provider Social auth provider
-     * @return  User
+     *
+     * @return User
      */
     public function findOrCreateUser($user, $provider)
     {
@@ -91,12 +94,12 @@ class LoginController extends Controller
         if ($authUser) {
             return $authUser;
         }
+
         return User::create([
-            'name'     => $user->name,
-            'email'    => $user->email,
-            'provider' => $provider,
-            'provider_id' => $user->id
+            'name'        => $user->name,
+            'email'       => $user->email,
+            'provider'    => $provider,
+            'provider_id' => $user->id,
         ]);
     }
-
 }

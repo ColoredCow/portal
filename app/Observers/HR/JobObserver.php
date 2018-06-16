@@ -10,7 +10,8 @@ class JobObserver
     /**
      * Listen to the Job create event.
      *
-     * @param  \App\Models\HR\Job  $job
+     * @param \App\Models\HR\Job $job
+     *
      * @return void
      */
     public function created(Job $job)

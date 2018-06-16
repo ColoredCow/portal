@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateHrApplicantsRoundsTable extends Migration
 {
@@ -24,7 +24,7 @@ class CreateHrApplicantsRoundsTable extends Migration
             $table->string('round_status')->nullable();
         });
 
-        Schema::table('hr_applicants_rounds', function(Blueprint $table) {
+        Schema::table('hr_applicants_rounds', function (Blueprint $table) {
             $table->foreign('hr_applicant_id')->references('id')->on('hr_applicants');
             $table->foreign('hr_round_id')->references('id')->on('hr_rounds');
             $table->foreign('scheduled_person_id')->references('id')->on('users');

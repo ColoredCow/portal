@@ -8,7 +8,6 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(Project::class);
@@ -28,6 +27,7 @@ class ProjectController extends Controller
         } else {
             $projects = Project::getList();
         }
+
         return view('project.index')->with([
             'projects' => $projects,
         ]);
@@ -48,26 +48,29 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @param \App\Http\Requests\ProjectRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProjectRequest $request)
     {
         $validated = $request->validated();
         $project = Project::create([
-            'name' => $validated['name'],
-            'client_id' => $validated['client_id'],
+            'name'              => $validated['name'],
+            'client_id'         => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
-            'status' => $validated['status'],
-            'invoice_email' => $validated['invoice_email'],
+            'status'            => $validated['status'],
+            'invoice_email'     => $validated['invoice_email'],
         ]);
+
         return redirect("/projects/$project->id/edit")->with('status', 'Project created successfully!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param \App\Models\Project $project
+     *
      * @return void
      */
     public function show(Project $project)
@@ -78,7 +81,8 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param \App\Models\Project $project
+     *
      * @return \Illuminate\View\View
      */
     public function edit(Project $project)
@@ -94,28 +98,31 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\ProjectRequest  $request
-     * @param  \App\Models\Project  $project
+     * @param \App\Http\Requests\ProjectRequest $request
+     * @param \App\Models\Project               $project
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProjectRequest $request, Project $project)
     {
         $validated = $request->validated();
         $updated = $project->update([
-            'name' => $validated['name'],
-            'client_id' => $validated['client_id'],
+            'name'              => $validated['name'],
+            'client_id'         => $validated['client_id'],
             'client_project_id' => $validated['client_project_id'],
-            'status' => $validated['status'],
-            'invoice_email' => $validated['invoice_email'],
-            'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
+            'status'            => $validated['status'],
+            'invoice_email'     => $validated['invoice_email'],
+            'gst_applicable'    => isset($validated['gst_applicable']) ? true : false,
         ]);
+
         return redirect("/projects/$project->id/edit")->with('status', 'Project updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Project  $project
+     * @param \App\Models\Project $project
+     *
      * @return void
      */
     public function destroy(Project $project)

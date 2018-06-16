@@ -22,7 +22,8 @@ class AutoRespondApplicant
     /**
      * Handle the event.
      *
-     * @param  ApplicantCreated  $event
+     * @param ApplicantCreated $event
+     *
      * @return void
      */
     public function handle(ApplicationCreated $event)
@@ -37,7 +38,7 @@ class AutoRespondApplicant
 
         $application->update([
             'autoresponder_subject' => $subject->setting_value,
-            'autoresponder_body' => $body->setting_value,
+            'autoresponder_body'    => $body->setting_value,
         ]);
     }
 }

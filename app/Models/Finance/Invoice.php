@@ -20,21 +20,22 @@ class Invoice extends Model
     }
 
     /**
-     * Get details to list invoices
+     * Get details to list invoices.
      *
      * @return self
      */
     public static function getList()
     {
-    	return self::orderBy('sent_on', 'desc')
+        return self::orderBy('sent_on', 'desc')
             ->paginate(config('constants.pagination_size'));
     }
 
     /**
-     * Get invoices that were sent in the date range
+     * Get invoices that were sent in the date range.
      *
-     * @param  string $startDate
-     * @param  string $endDate
+     * @param string $startDate
+     * @param string $endDate
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function filterBySentDate($start, $end, $paginated = false)
@@ -47,21 +48,23 @@ class Invoice extends Model
     }
 
     /**
-     * Get invoices that were sent or paid in the date range
-     * @param  string  $start
-     * @param  string  $end
-     * @param  boolean $paginated
+     * Get invoices that were sent or paid in the date range.
+     *
+     * @param string $start
+     * @param string $end
+     * @param bool   $paginated
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function filterByDates($start, $end, $paginated = false)
     {
         $invoices = self::where(function ($query) use ($start, $end) {
-                $query->where('sent_on', '>=', $start)
+            $query->where('sent_on', '>=', $start)
                       ->where('sent_on', '<=', $end);
-            })->orWhere(function ($query) use ($start, $end) {
-                $query->where('paid_on', '>=', $start)
+        })->orWhere(function ($query) use ($start, $end) {
+            $query->where('paid_on', '>=', $start)
                       ->where('paid_on', '<=', $end);
-            })->orderBy('sent_on', 'desc')
+        })->orderBy('sent_on', 'desc')
             ->orderBy('paid_on', 'desc');
 
         $invoices->with('projectStageBillings.projectStage.project.client');
@@ -71,6 +74,7 @@ class Invoice extends Model
 
     /**
      * Accessor to get invoice's client. This is called automatically when retrieving an invoice instance.
+     *
      * @return \App\Models\Client
      */
     public function getClientAttribute()

@@ -13,14 +13,14 @@ class ApplicantCreateAutoResponder extends Mailable
     /**
      * The mail subject.
      *
-     * @var String
+     * @var string
      */
     public $subject;
 
     /**
      * The mail body.
      *
-     * @var String
+     * @var string
      */
     public $body;
 

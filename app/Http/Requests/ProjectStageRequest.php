@@ -24,16 +24,16 @@ class ProjectStageRequest extends FormRequest
     public function rules()
     {
         return [
-            'project_id' => 'nullable|integer',
-            'name' => 'required|string',
-            'cost' => 'required|numeric',
-            'currency_cost' => 'nullable|string|size:3',
+            'project_id'       => 'nullable|integer',
+            'name'             => 'required|string',
+            'cost'             => 'required|numeric',
+            'currency_cost'    => 'nullable|string|size:3',
             'cost_include_gst' => 'nullable',
-            'billing' => 'nullable',
-            'new_billing' => 'nullable',
-            'type' => 'required|string',
-            'start_date' => 'nullable',
-            'end_date' => 'nullable',
+            'billing'          => 'nullable',
+            'new_billing'      => 'nullable',
+            'type'             => 'required|string',
+            'start_date'       => 'nullable',
+            'end_date'         => 'nullable',
         ];
     }
 }

@@ -15,6 +15,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
     }
+
     return redirect('login');
 });
 
@@ -62,7 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
                 ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
-                
+
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
@@ -71,13 +72,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
             });
 
-
             Route::resource('book-categories', 'BookCategoryController')
                 ->only(['index', 'store', 'update', 'destroy'])
                 ->names(['index' => 'books.category.index']);
         });
 
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
-
     });
 });

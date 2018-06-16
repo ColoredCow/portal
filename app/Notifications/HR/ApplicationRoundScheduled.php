@@ -29,7 +29,8 @@ class ApplicationRoundScheduled extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -40,15 +41,17 @@ class ApplicationRoundScheduled extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         $application = $this->applicationRound->application;
         $job = $application->job;
-        return (new MailMessage)
-            ->subject(config('app.name') . ': New application round scheduled')
+
+        return (new MailMessage())
+            ->subject(config('app.name').': New application round scheduled')
             ->line('You have been assigned an application round.')
             ->action('View this application', route("applications.$job->type.edit", $application->id));
     }
@@ -56,7 +59,8 @@ class ApplicationRoundScheduled extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function toArray($notifiable)

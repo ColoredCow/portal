@@ -2,8 +2,8 @@
 
 namespace App\Policies\KnowledgeCafe;
 
-use App\User;
 use App\Models\KnowledgeCafe\WeeklyDose;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class WeeklyDosePolicy
@@ -13,8 +13,9 @@ class WeeklyDosePolicy
     /**
      * Determine whether the user can view the weekly dose.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\WeeklyDose  $weeklyDose
+     * @param \App\User              $user
+     * @param \App\Models\WeeklyDose $weeklyDose
+     *
      * @return mixed
      */
     public function view(User $user, WeeklyDose $weeklyDose)
@@ -25,8 +26,9 @@ class WeeklyDosePolicy
     /**
      * Determine whether the user can create weekly doses.
      *
-     * @param  \App\User  $user
-     * @return boolean
+     * @param \App\User $user
+     *
+     * @return bool
      */
     public function create(User $user)
     {
@@ -36,9 +38,10 @@ class WeeklyDosePolicy
     /**
      * Determine whether the user can update the weekly dose.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\WeeklyDose  $weeklyDose
-     * @return boolean
+     * @param \App\User              $user
+     * @param \App\Models\WeeklyDose $weeklyDose
+     *
+     * @return bool
      */
     public function update(User $user, WeeklyDose $weeklyDose)
     {
@@ -48,9 +51,10 @@ class WeeklyDosePolicy
     /**
      * Determine whether the user can delete the weekly dose.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\WeeklyDose  $weeklyDose
-     * @return boolean
+     * @param \App\User              $user
+     * @param \App\Models\WeeklyDose $weeklyDose
+     *
+     * @return bool
      */
     public function delete(User $user, WeeklyDose $weeklyDose)
     {
@@ -60,7 +64,8 @@ class WeeklyDosePolicy
     /**
      * Determine whether the user can list weeklydoses.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
+     *
      * @return mixed
      */
     public function list(User $user)

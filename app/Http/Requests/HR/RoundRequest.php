@@ -24,11 +24,11 @@ class RoundRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string',
-            'type' => 'required|string',
-            'guidelines' => 'nullable|string|required_if:type,guidelines',
+            'name'               => 'nullable|string',
+            'type'               => 'required|string',
+            'guidelines'         => 'nullable|string|required_if:type,guidelines',
             'round_mail_subject' => 'nullable|string',
-            'round_mail_body' => 'nullable|string',
+            'round_mail_body'    => 'nullable|string',
         ];
     }
 }

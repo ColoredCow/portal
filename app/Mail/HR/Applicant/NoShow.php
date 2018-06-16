@@ -11,15 +11,16 @@ class NoShow extends Mailable
 {
     use Queueable, SerializesModels;
 
-
     /**
-     * Instance of the ApplicationMeta
+     * Instance of the ApplicationMeta.
+     *
      * @var ApplicationMeta
      */
     public $applicationMeta;
 
     /**
      * Create a new message instance.
+     *
      * @param ApplicationMeta $applicationMeta [description]
      */
     public function __construct(ApplicationMeta $applicationMeta)
@@ -44,7 +45,7 @@ class NoShow extends Mailable
             ->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'))
             ->subject($subject)
             ->view('mail.plain')->with([
-                'body' => $body
+                'body' => $body,
             ]);
     }
 }

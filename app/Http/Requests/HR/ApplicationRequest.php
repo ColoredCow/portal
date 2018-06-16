@@ -24,14 +24,14 @@ class ApplicationRequest extends FormRequest
     public function rules()
     {
         return [
-            'action' => 'required|string',
-            'hr_job_id' => 'nullable|integer|required_if:action,' . config('constants.hr.application-meta.keys.change-job'),
-            'job_change_mail_subject' => 'nullable|string|required_if:action,' . config('constants.hr.application-meta.keys.change-job'),
-            'job_change_mail_body' => 'nullable|string|required_if:action,' . config('constants.hr.application-meta.keys.change-job'),
-            'application_round_id' => 'nullable|integer|required_if:action,' . config('constants.hr.application-meta.keys.no-show'),
-            'no_show_reason' => 'nullable|string|required_if:action,' . config('constants.hr.application-meta.keys.no-show'),
-            'no_show_mail_subject' => 'nullable|string|required_if:action,' . config('constants.hr.application-meta.keys.no-show'),
-            'no_show_mail_body' => 'nullable|string|required_if:action,' . config('constants.hr.application-meta.keys.no-show'),
+            'action'                  => 'required|string',
+            'hr_job_id'               => 'nullable|integer|required_if:action,'.config('constants.hr.application-meta.keys.change-job'),
+            'job_change_mail_subject' => 'nullable|string|required_if:action,'.config('constants.hr.application-meta.keys.change-job'),
+            'job_change_mail_body'    => 'nullable|string|required_if:action,'.config('constants.hr.application-meta.keys.change-job'),
+            'application_round_id'    => 'nullable|integer|required_if:action,'.config('constants.hr.application-meta.keys.no-show'),
+            'no_show_reason'          => 'nullable|string|required_if:action,'.config('constants.hr.application-meta.keys.no-show'),
+            'no_show_mail_subject'    => 'nullable|string|required_if:action,'.config('constants.hr.application-meta.keys.no-show'),
+            'no_show_mail_body'       => 'nullable|string|required_if:action,'.config('constants.hr.application-meta.keys.no-show'),
         ];
     }
 }

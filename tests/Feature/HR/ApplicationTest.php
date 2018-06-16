@@ -2,14 +2,13 @@
 
 namespace Tests\Feature\HR;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\HR\Applicant;
 use App\Models\HR\Job;
 use App\Models\HR\Round;
 use App\Models\Setting;
 use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ApplicationTest extends TestCase
 {
@@ -26,11 +25,11 @@ class ApplicationTest extends TestCase
         $this->assertTrue(isset($user->id));
 
         factory(Setting::class)->create([
-            'module' => 'hr',
+            'module'      => 'hr',
             'setting_key' => 'applicant_create_autoresponder_subject',
         ]);
         factory(Setting::class)->create([
-            'module' => 'hr',
+            'module'      => 'hr',
             'setting_key' => 'applicant_create_autoresponder_body',
         ]);
 
@@ -42,15 +41,15 @@ class ApplicationTest extends TestCase
         $this->assertTrue($job->rounds->count() == 1);
 
         $applicantAttr = [
-            'name' => 'Taylor Otwell',
-            'email' => 'vaibhav@coloredcow.com',
-            'phone' => '123321',
-            'college' => 'Sample college',
+            'name'            => 'Taylor Otwell',
+            'email'           => 'vaibhav@coloredcow.com',
+            'phone'           => '123321',
+            'college'         => 'Sample college',
             'graduation_year' => '2018',
-            'course' => 'Test Course',
-            'linkedin' => 'https://github.com/coloredcow/employee-portal',
-            'resume' => 'https://github.com/coloredcow/employee-portal',
-            'form_data' => [
+            'course'          => 'Test Course',
+            'linkedin'        => 'https://github.com/coloredcow/employee-portal',
+            'resume'          => 'https://github.com/coloredcow/employee-portal',
+            'form_data'       => [
                 'data 1' => 'Sample content 1',
                 'data 2' => 'Sample content 2',
             ],
@@ -68,6 +67,5 @@ class ApplicationTest extends TestCase
 
         $this->assertTrue(isset($application->applicationRounds));
         $this->assertFalse($application->applicationRounds->count() > 1);
-
     }
 }

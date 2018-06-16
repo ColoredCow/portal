@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class Dropapplicantcolumns extends Migration
 {
@@ -13,7 +13,7 @@ class Dropapplicantcolumns extends Migration
      */
     public function up()
     {
-        Schema::table('hr_applicants', function(Blueprint $table) {
+        Schema::table('hr_applicants', function (Blueprint $table) {
             $table->dropForeign(['hr_job_id']);
             $table->dropColumn([
                 'reason_for_eligibility',
@@ -21,15 +21,15 @@ class Dropapplicantcolumns extends Migration
                 'autoresponder_body',
                 'status',
                 'resume',
-                'hr_job_id'
+                'hr_job_id',
             ]);
         });
 
-        Schema::table('hr_application_reviews', function(Blueprint $table) {
+        Schema::table('hr_application_reviews', function (Blueprint $table) {
             $table->dropColumn(['hr_applicant_round_id']);
         });
 
-        Schema::table('hr_application_round', function(Blueprint $table) {
+        Schema::table('hr_application_round', function (Blueprint $table) {
             $table->dropColumn(['hr_applicant_id']);
         });
     }
@@ -41,15 +41,15 @@ class Dropapplicantcolumns extends Migration
      */
     public function down()
     {
-        Schema::table('hr_application_round', function(Blueprint $table) {
+        Schema::table('hr_application_round', function (Blueprint $table) {
             $table->unsignedInteger('hr_applicant_id')->nullable();
         });
 
-        Schema::table('hr_application_reviews', function(Blueprint $table) {
+        Schema::table('hr_application_reviews', function (Blueprint $table) {
             $table->unsignedInteger('hr_applicant_round_id')->nullable();
         });
 
-        Schema::table('hr_applicants', function(Blueprint $table) {
+        Schema::table('hr_applicants', function (Blueprint $table) {
             $table->string('status')->nullable();
             $table->string('resume')->nullable();
             $table->text('reason_for_eligibility')->nullable();

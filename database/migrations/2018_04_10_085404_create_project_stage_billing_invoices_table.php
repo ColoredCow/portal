@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProjectStageBillingInvoicesTable extends Migration
 {
@@ -18,7 +18,7 @@ class CreateProjectStageBillingInvoicesTable extends Migration
             $table->unsignedInteger('finance_invoice_id');
         });
 
-        Schema::table('project_stage_billing_invoices', function(Blueprint $table) {
+        Schema::table('project_stage_billing_invoices', function (Blueprint $table) {
             $table->foreign('project_stage_billing_id')->references('id')->on('project_stage_billings');
             $table->foreign('finance_invoice_id')->references('id')->on('finance_invoices');
         });

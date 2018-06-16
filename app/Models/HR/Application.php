@@ -46,23 +46,25 @@ class Application extends Model
     }
 
     /**
-     * Custom create method that creates an application and fires necessary events
+     * Custom create method that creates an application and fires necessary events.
      *
-     * @param  array $attr  fillables to be stored
+     * @param array $attr fillables to be stored
+     *
      * @return this
      */
     public static function _create($attr)
     {
         $application = self::create($attr);
         event(new ApplicationCreated($application));
+
         return $application;
     }
 
     /**
-     * Apply filters on application
+     * Apply filters on application.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param Array $filters
+     * @param array                                 $filters
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
@@ -86,10 +88,10 @@ class Application extends Model
     }
 
     /**
-     * Apply filter on applications based on their show status
+     * Apply filter on applications based on their show status.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param String $status
+     * @param string                                $status
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
@@ -117,17 +119,17 @@ class Application extends Model
     }
 
     /**
-     * Apply filter on applications based on their job type
+     * Apply filter on applications based on their job type.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param String $type
+     * @param string                                $type
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeFilterByJobType($query, $type)
     {
         $query->whereHas('job', function ($subQuery) use ($type) {
-            $functionName = 'is' . $type;
+            $functionName = 'is'.$type;
             $subQuery->{$functionName}();
         });
 
@@ -135,10 +137,10 @@ class Application extends Model
     }
 
     /**
-     * Apply filter on applications based on the applied job
+     * Apply filter on applications based on the applied job.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param String $id
+     * @param string                                $id
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
@@ -150,7 +152,7 @@ class Application extends Model
     }
 
     /**
-     * get applications where status is rejected
+     * get applications where status is rejected.
      */
     public function scopeRejected($query)
     {
@@ -158,15 +160,15 @@ class Application extends Model
     }
 
     /**
-     * get applications where status is new and in-progress
+     * get applications where status is new and in-progress.
      */
     public function scopeIsOpen($query)
     {
-        return $query->whereIn('status', array(config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')));
+        return $query->whereIn('status', [config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')]);
     }
 
     /**
-     * get applications where status is on-hold
+     * get applications where status is on-hold.
      */
     public function scopeOnHold($query)
     {
@@ -174,7 +176,7 @@ class Application extends Model
     }
 
     /**
-     * get applications where status is no-show
+     * get applications where status is no-show.
      */
     public function scopeNoShow($query)
     {
@@ -185,7 +187,7 @@ class Application extends Model
     }
 
     /**
-     * Get applications where status is sent-for-approval
+     * Get applications where status is sent-for-approval.
      */
     public function scopeSentForApproval($query)
     {
@@ -193,7 +195,7 @@ class Application extends Model
     }
 
     /**
-     * Set application status to rejected
+     * Set application status to rejected.
      */
     public function reject()
     {
@@ -201,7 +203,7 @@ class Application extends Model
     }
 
     /**
-     * Set application status to in-progress
+     * Set application status to in-progress.
      */
     public function markInProgress()
     {
@@ -209,21 +211,22 @@ class Application extends Model
     }
 
     /**
-     * Set the application status to sent-for-approval and also set the requested user as pending approval from
+     * Set the application status to sent-for-approval and also set the requested user as pending approval from.
      *
-     * @param  integer $userId
+     * @param int $userId
+     *
      * @return void
      */
     public function sendForApproval($userId)
     {
         $this->update([
-            'status' => config('constants.hr.status.sent-for-approval.label'),
+            'status'                => config('constants.hr.status.sent-for-approval.label'),
             'pending_approval_from' => $userId,
         ]);
     }
 
     /**
-     * Set the application status to no-show
+     * Set the application status to no-show.
      */
     public function markNoShow()
     {
@@ -231,7 +234,7 @@ class Application extends Model
     }
 
     /**
-     * Set the application status to no-show
+     * Set the application status to no-show.
      */
     public function markNoShowReminded()
     {
@@ -239,7 +242,7 @@ class Application extends Model
     }
 
     /**
-     * Get the timeline for an application
+     * Get the timeline for an application.
      *
      * @return array
      */
@@ -250,10 +253,10 @@ class Application extends Model
         foreach ($this->applicationRounds as $applicationRound) {
             if ($applicationRound->conducted_date) {
                 $timeline[] = [
-                    'type' => 'round-conducted',
-                    'application' => $this,
+                    'type'             => 'round-conducted',
+                    'application'      => $this,
                     'applicationRound' => $applicationRound,
-                    'date' => $applicationRound->conducted_date,
+                    'date'             => $applicationRound->conducted_date,
                 ];
             }
         }
@@ -267,9 +270,9 @@ class Application extends Model
             $details->user = User::find($details->user)->name;
             $event->value = $details;
             $timeline[] = [
-                'type' => config('constants.hr.application-meta.keys.change-job'),
+                'type'  => config('constants.hr.application-meta.keys.change-job'),
                 'event' => $event,
-                'date' => $event->created_at,
+                'date'  => $event->created_at,
             ];
         }
 
@@ -280,9 +283,9 @@ class Application extends Model
             $details->round = ApplicationRound::find($details->round)->round->name;
             $event->value = $details;
             $timeline[] = [
-                'type' => config('constants.hr.application-meta.keys.no-show'),
+                'type'  => config('constants.hr.application-meta.keys.no-show'),
                 'event' => $event,
-                'date' => $event->created_at,
+                'date'  => $event->created_at,
             ];
         }
 
@@ -290,32 +293,33 @@ class Application extends Model
     }
 
     /**
-     * Change the job for an application
+     * Change the job for an application.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function changeJob($attr)
     {
         $meta = [
-            'previous_job' => $this->hr_job_id,
-            'new_job' => $attr['hr_job_id'],
+            'previous_job'            => $this->hr_job_id,
+            'new_job'                 => $attr['hr_job_id'],
             'job_change_mail_subject' => $attr['job_change_mail_subject'],
-            'job_change_mail_body' => ContentHelper::editorFormat($attr['job_change_mail_body']),
-            'user' => Auth::id(),
+            'job_change_mail_body'    => ContentHelper::editorFormat($attr['job_change_mail_body']),
+            'user'                    => Auth::id(),
         ];
 
         $this->update(['hr_job_id' => $attr['hr_job_id']]);
+
         return ApplicationMeta::create([
             'hr_application_id' => $this->id,
-            'key' => config('constants.hr.application-meta.keys.change-job'),
-            'value' => json_encode($meta),
+            'key'               => config('constants.hr.application-meta.keys.change-job'),
+            'value'             => json_encode($meta),
         ]);
     }
 
     /**
      * Check if the current Application instance has status either no-show or no-show-reminded.
      *
-     * @return boolean
+     * @return bool
      */
     public function isNoShow()
     {

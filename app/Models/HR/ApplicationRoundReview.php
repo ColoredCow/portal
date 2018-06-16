@@ -12,6 +12,6 @@ class ApplicationRoundReview extends Model
 
     public function applicationRound()
     {
-    	return $this->belongsTo(ApplicationRound::class, 'hr_application_round_id');
+        return $this->belongsTo(ApplicationRound::class, 'hr_application_round_id');
     }
 }
