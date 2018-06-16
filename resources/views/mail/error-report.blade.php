@@ -3,7 +3,7 @@ Hi,<br>
 An error while handling a request. Here are the details:
 
 
-- User: {{ $user['name'] }} ({{ $user['email'] }})
+- User: {{ $userDetails['name'] }} ({{ $userDetails['email'] }})
 - Time: {{ $timeOfException }}
 - Error message: {{ $exception->getMessage() }}
 - File: {{ $exception->getFile() }}

@@ -48,21 +48,8 @@ class Handler extends ExceptionHandler
             }
         }
 
-        if (Auth::check()) {
-            $user = Auth::user();
-            $userDetails = [
-                "name" => $user->name,
-                "email" => $user->email,
-            ];
-        } else {
-            $userDetails = [
-                "name" => 'Guest',
-                "email" => '',
-            ];
-        }
-
         try {
-            Mail::send(new ErrorReport($exception, $userDetails, $timeOfException));
+            Mail::send(new ErrorReport($exception, $timeOfException));
         } catch (Exception $e) {
             parent::report($e);
         }

@@ -6,11 +6,12 @@ use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class ErrorReport extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user;
+    public $userDetails;
     public $timeOfException;
     public $exception;
     /**
@@ -18,10 +19,22 @@ class ErrorReport extends Mailable
      *
      * @return void
      */
-    public function __construct(Exception $exception, $user, string $timeOfException)
+    public function __construct(Exception $exception, string $timeOfException)
     {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $userDetails = [
+                "name" => $user->name,
+                "email" => $user->email,
+            ];
+        } else {
+            $userDetails = [
+                "name" => 'System Generated',
+                "email" => '',
+            ];
+        }
         $this->exception = $exception;
-        $this->user = $user;
+        $this->userDetails = $userDetails;
         $this->timeOfException = $timeOfException;
     }
     /**
