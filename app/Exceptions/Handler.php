@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof HttpException) {
             $statusCode = $exception->getStatusCode();
-            return response()->view('errors.custom', ['statusCode' => $statusCode], 500);
+            return response()->view('errors.custom', ['statusCode' => $statusCode]);
         }
         return parent::render($request, $exception);
     }
