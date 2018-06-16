@@ -12,8 +12,8 @@ class ProjectsTest extends FeatureTest
         //$this->assertTrue(true);
         $this->anAuthorizedUser();
         $this->assertTrue(true);
-        // $this->get(route('projects'))
-        //     ->assertStatus(200);
+        $this->get(route('projects'))
+            ->assertStatus(200);
     }
 
     // /** @test */
