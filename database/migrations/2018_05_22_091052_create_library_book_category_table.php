@@ -18,12 +18,11 @@ class CreateLibraryBookCategoryTable extends Migration
             $table->integer('library_book_id')->unsigned();
         });
 
-        Schema::table('library_book_category', function(Blueprint $table) {
+        Schema::table('library_book_category', function (Blueprint $table) {
             $table->foreign('book_category_id')->references('id')->on('book_categories');
             $table->foreign('library_book_id')->references('id')->on('library_books');
             $table->primary(['book_category_id', 'library_book_id']);
         });
-
     }
 
     /**

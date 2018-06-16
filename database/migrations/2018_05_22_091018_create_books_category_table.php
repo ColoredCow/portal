@@ -6,11 +6,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateBooksCategoryTable extends Migration
 {
-     /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    /**
+    * Run the migrations.
+    *
+    * @return void
+    */
     public function up()
     {
         Schema::create('book_categories', function (Blueprint $table) {

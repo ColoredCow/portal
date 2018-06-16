@@ -165,7 +165,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
         ];
 
         $evaluationParametersOptions = [
-        	[
+            [
                 'value' => 'Positive',
             ],
             [
@@ -183,7 +183,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
         $evaluationParameters = EvaluationParameter::all();
 
         foreach ($evaluationParameters as $evaluationParameter) {
-        	$evaluationParameter->options()->createMany($evaluationParametersOptions);
+            $evaluationParameter->options()->createMany($evaluationParametersOptions);
         }
     }
 }

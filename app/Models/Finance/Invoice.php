@@ -26,7 +26,7 @@ class Invoice extends Model
      */
     public static function getList()
     {
-    	return self::orderBy('sent_on', 'desc')
+        return self::orderBy('sent_on', 'desc')
             ->paginate(config('constants.pagination_size'));
     }
 
@@ -56,12 +56,12 @@ class Invoice extends Model
     public static function filterByDates($start, $end, $paginated = false)
     {
         $invoices = self::where(function ($query) use ($start, $end) {
-                $query->where('sent_on', '>=', $start)
+            $query->where('sent_on', '>=', $start)
                       ->where('sent_on', '<=', $end);
-            })->orWhere(function ($query) use ($start, $end) {
-                $query->where('paid_on', '>=', $start)
+        })->orWhere(function ($query) use ($start, $end) {
+            $query->where('paid_on', '>=', $start)
                       ->where('paid_on', '<=', $end);
-            })->orderBy('sent_on', 'desc')
+        })->orderBy('sent_on', 'desc')
             ->orderBy('paid_on', 'desc');
 
         $invoices->with('projectStageBillings.projectStage.project.client');
