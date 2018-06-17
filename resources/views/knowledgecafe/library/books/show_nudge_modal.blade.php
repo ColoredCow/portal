@@ -8,13 +8,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
-                <h6 class="modal-title">you have read <b>{{ auth()->user()->totalReadBooks() }}</b> books out of {{ $book->totalBooksCount }}</h6>
+                <h6 class="modal-title">
+                    <span>You have read</span>    
+                    <span>{{ auth()->user()->totalReadBooks() }}</span> 
+                    <span>books out of</span>     
+                    <span>{{ $book->totalBooksCount }}</span>
+                </h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
-            <div class="modal-body ml-5">
+            <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
                         <a class="" href="{{ route('books.index', ['search'=> $book->title]) }}">
@@ -24,12 +29,12 @@
                         <h6 class="mb-1" > {{ $book->author }} </h6>
                     </div>
 
-                    <div class="col-5">
+                    <div class="col-6">
                             <button type="button"
                                 data-id="{{$book->id}}"
                                 data-mark-book-route= "{{route('books.toggleReadStatus')}}"
                                 id="markBookAsRead"
-                                class="btn btn-primary m-2 w-100 py-3 font-weight-bold">Yes, I have read this
+                                class="btn btn-primary w-100 py-3 font-weight-bold">Yes, I have read this
                             </button>
 
                             <button type="button"
@@ -37,14 +42,14 @@
                                 data-id="{{$book->id}}"
                                 data-route = {{ route('books.addToWishList') }}
                                 id="addBookToWishlist"
-                                class="btn btn-info m-2 w-100 py-3 font-weight-bold">I wish to read it
+                                class="btn btn-info w-100 py-3 font-weight-bold mt-3">I wish to read it
                             </button>
 
                             @if($book->readers->count())
-                                <div id="readers_section" class="mb-1">
+                                <div id="readers_section" class="mt-3">
                                     <div class="d-flex justify-content-start">
                                         @foreach($book->readers as $reader)
-                                            <div class="my-3 ml-2 text-center">
+                                            <div class="text-center">
                                                 <img
                                                     data-toggle="tooltip"
                                                     title="{{ $reader->name }}"
@@ -58,11 +63,14 @@
                                 </div>
                             @endif
 
-                                    <a class="m-2 w-100 py-3 font-weight-bold mt-4" id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}">
-                                        <label>
-                                            <input type="checkbox" class="m-1">Don't show me this again
-                                        </label>
-                                    </a>
+                            <div class="mt-3">
+                                <a class="w-100 font-weight-bold" id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}">
+                                    <label class="c-pointer">
+                                        <input type="checkbox" class="mr-1">Don't show me this again
+                                    </label>
+                                </a>
+                            </div>
+
                     </div>
                 </div>
             </div>
