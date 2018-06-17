@@ -8,7 +8,6 @@ use App\Models\HR\Applicant;
 
 class ApplicantController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(Applicant::class, null, [

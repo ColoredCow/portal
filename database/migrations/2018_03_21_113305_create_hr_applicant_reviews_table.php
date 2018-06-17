@@ -21,7 +21,7 @@ class CreateHrApplicantReviewsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('hr_applicant_reviews', function(Blueprint $table) {
+        Schema::table('hr_applicant_reviews', function (Blueprint $table) {
             $table->foreign('hr_applicant_round_id')->references('id')->on('hr_applicants_rounds');
         });
     }

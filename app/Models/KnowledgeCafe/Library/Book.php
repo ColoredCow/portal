@@ -21,31 +21,34 @@ class Book extends Model
 
     public static function getList($filteredString = false)
     {
-        return self::with('categories')
-                ->orderBy('title')
+        return self::with(['categories', 'readers'])
                 ->where(function ($query) use ($filteredString) {
-                        ($filteredString) ? $query->where('title', 'LIKE', "%$filteredString%") : '';
-                })->paginate(config('constants.pagination_size'));
+                    ($filteredString) ? $query->where('title', 'LIKE', "%$filteredString%") : '';
+                })
+                ->withCount('readers')
+                ->orderBy('readers_count', 'desc')
+                ->get();
     }
 
-    public static function getByCategoryName($categoryName) {
-        if(!$categoryName) {
+    public static function getByCategoryName($categoryName)
+    {
+        if (!$categoryName) {
             return false;
         }
 
-        return self::whereHas('categories', function ($query) use($categoryName) {
+        return self::whereHas('categories', function ($query) use ($categoryName) {
             $query->where('name', $categoryName);
         })->get();
-
     }
 
-    public function readers() {
+    public function readers()
+    {
         return $this->belongsToMany(User::class, 'book_readers', 'library_book_id', 'user_id');
     }
 
-    public function markBook($read) {
-
-        if(!$read) {
+    public function markBook($read)
+    {
+        if (!$read) {
             return $this->readers()->detach(auth()->user());
         }
 
@@ -55,20 +58,45 @@ class Book extends Model
         return true;
     }
 
-    public static function getRandomUnreadBook() {
+    public static function getRandomUnreadBook()
+    {
         return self::whereDoesntHave('readers', function ($query) {
             $query->where('id', auth()->id());
-        })->whereDoesntHave( 'wishers', function ($query) {
+        })->whereDoesntHave('wishers', function ($query) {
             $query->where('id', auth()->id());
-        })->inRandomOrder()->first();
+        })->inRandomOrder()
+        ->first();
     }
 
-    public function wishers() {
+    public function wishers()
+    {
         return $this->belongsToMany(User::class, 'book_wishlist', 'library_book_id', 'user_id');
     }
 
-    public function addToUserWishlist() {
+    public function addToUserWishlist()
+    {
         $this->wishers()->attach(auth()->user());
         return true;
+    }
+
+    public function getTotalBooksCountAttribute($value)
+    {
+        return self::count();
+    }
+
+    public function getThumbnailBySize($size = 'normal')
+    {
+        switch ($size) {
+            case 'medium':
+                return str_replace_first('zoom=1', 'zoom=2', $this->thumbnail);
+            break;
+
+            case 'large':
+                return str_replace_first('zoom=1', 'zoom=3', $this->thumbnail);
+            break;
+
+            default:
+                return $this->thumbnail;
+        }
     }
 }

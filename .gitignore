@@ -17,5 +17,5 @@ yarn-error.log
 /public/build
 /public/css
 /public/js
-/public/images
+/public/images/vendor
 .DS_Store

@@ -46,6 +46,10 @@
                         <label for="sent_on" class="field-required">Sent on</label>
                         <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required"  value="{{ old('sent_on') }}">
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="due_date" class="field-required">Due date</label>
+                        <input type="date" class="form-control date-field" name="due_date" id="due_date" placeholder="dd/mm/yyyy" value="{{ old('due_date') }}">
+                    </div>
                     <div class="form-group offset-md-1 col-md-3">
                         <label for="sent_amount" class="field-required">Invoice amount</label>
                         <div class="input-group">
@@ -204,6 +208,7 @@
                         <label for="cheque_cleared_date">Cheque Cleared Date</label>
                         <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_cleared_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_cleared_date'))) : '' }}">
                     </div>
+                     
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
