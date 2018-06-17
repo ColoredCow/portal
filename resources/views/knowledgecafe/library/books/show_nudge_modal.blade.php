@@ -49,7 +49,7 @@
                                 <div id="readers_section" class="mt-3">
                                     <div class="d-flex justify-content-start">
                                         @foreach($book->readers as $reader)
-                                            <div class="text-center">
+                                            <div class="text-center mr-2">
                                                 <img
                                                     data-toggle="tooltip"
                                                     title="{{ $reader->name }}"
