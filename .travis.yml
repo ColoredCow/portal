@@ -21,4 +21,5 @@ before_script:
 script:
   - php artisan key:generate
   - composer dump-autoload
+  - npm run production
   - vendor/bin/phpunit
