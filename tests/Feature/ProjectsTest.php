@@ -11,6 +11,7 @@ class ProjectsTest extends FeatureTest
     {
         //$this->assertTrue(true);
         $this->anAuthorizedUser();
+        dd(public_path('/mix-manifest.json'));
         $response = $this->get('/projects');
         $response->dump();
     }
