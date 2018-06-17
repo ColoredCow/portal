@@ -8,6 +8,7 @@ use App\Mail\HR\Application\JobChanged;
 use App\Mail\HR\Application\RoundNotConducted;
 use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
+use App\Models\HR\Evaluation\Parameter;
 use App\Models\HR\Job;
 use App\Models\Setting;
 use App\User;
@@ -67,10 +68,11 @@ abstract class ApplicationController extends Controller
     {
         $application = Application::findOrFail($id);
         
-        $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds',  'job.rounds.evaluationParameters',  'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
+        $application->load(['job', 'job.rounds',  'job.rounds.evaluationParameters',  'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
         $attr = [
             'applicant' => $application->applicant,
+            'evaluations' => self::evaluation($id),
             'application' => $application,
             'timeline' => $application->applicant->timeline(),
             'interviewers' => User::interviewers()->get(),
@@ -86,6 +88,48 @@ abstract class ApplicationController extends Controller
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
         return view('hr.application.edit')->with($attr);
+    }
+
+
+    public function evaluation($id)
+    {
+        $parameter_list = Parameter::parameterList();
+
+        $application = Application::find($id)->load(['evaluations', 'evaluations.evaluationOption']);
+
+        $application_evaluation = $application->evaluations;
+
+        $evaluation_data = array();
+
+        foreach ($parameter_list as $segment_id => $segment) {
+            $segment_evaluation_array = array();
+            foreach ($segment as $evaluation_parameter) {
+                $segment_evaluation_array['name'] = $evaluation_parameter['segment']['name'];
+                $segment_evaluation_array['id'] = $segment_id;
+                
+                $parameter_array = array();
+                $parameter_array['name'] = $evaluation_parameter['name'];
+
+                $filled_evaluation = $application_evaluation->where('evaluation_id', $evaluation_parameter['id']);
+                if ($filled_evaluation->isNotEmpty()) {
+                    $filled_evaluation = $filled_evaluation->first()->toArray();
+                    $parameter_array['filled'] = true;
+                    $parameter_array['evaluation_comment'] = $filled_evaluation['comment'] ?: '-';
+                    $parameter_array['evaluation_option'] = $filled_evaluation['evaluation_option']['value'] ?: '-';
+                } else {
+                    $parameter_array['filled'] = false;
+                    foreach ($evaluation_parameter['options'] as $option) {
+                        $parameter_array['options'][] = $option['value'];
+                    }
+                }
+
+                $segment_evaluation_array['parameters'][] = $parameter_array;
+
+            }
+            $evaluation_data[] = $segment_evaluation_array;
+        }
+
+        return $evaluation_data;
     }
 
     /**

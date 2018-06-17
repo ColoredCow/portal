@@ -34,6 +34,6 @@ class Round extends Model
 
     public function evaluationSegments()
     {
-        return $this->belongsToMany(EvaluationSegment::class, 'hr_round_segment', 'round_id', 'segment_id');
+        return $this->hasMany(EvaluationSegment::class, 'round_id');
     }
 }
