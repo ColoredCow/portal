@@ -50,17 +50,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
+    Route::resource('projects', 'ProjectController')
+    ->except(['show', 'destroy'])
+    ->names([ 'index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
     
-    Route::resource('projects', 'ProjectController', [
-        'names' => [
-            'index' => 'projects',
-            'create' => 'projects.create',
-            'edit' => 'projects.edit',
-            'store' => 'projects.store',
-            'update' => 'projects.update',
-        ]
-    ])->except(['show', 'destroy']);
-
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');

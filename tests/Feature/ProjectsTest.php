@@ -10,7 +10,7 @@ class ProjectsTest extends FeatureTest
     public function an_authorised_user_can_see_projects()
     {
         $this->anAuthorizedUser();
-        $this->get(route('projects'))
+        $this->get('/projects')
             ->assertStatus(200);
     }
 
@@ -47,7 +47,7 @@ class ProjectsTest extends FeatureTest
         $project = create('App\Models\Project');
         $this->get(route('projects.edit', $project->id))
             ->assertSee($project->name);
-        $newProject = make('App\Models\Project');
+        $newProject = create('App\Models\Project');
         $this->patch(route('projects.update', $project->id), $newProject->toArray());
         $this->get(route('projects.edit', $project->id))
             ->assertSee($newProject->name);
