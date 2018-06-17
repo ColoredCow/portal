@@ -40,18 +40,18 @@ class ProjectsTest extends FeatureTest
             ->assertSee($project->name);
     }
 
-    /** @test */
-    public function an_authorised_user_can_update_a_project()
-    {
-        $this->anAuthorizedUser();
-        $project = create('App\Models\Project');
-        $this->get(route('projects.edit', $project->id))
-            ->assertSee($project->name);
-        $newProject = make('App\Models\Project');
-        $this->patch(route('projects.update', $project->id), $newProject->toArray());
-        $this->get(route('projects.edit', $project->id))
-            ->assertSee($newProject->name);
-    }
+    // /** @test */
+    // public function an_authorised_user_can_update_a_project()
+    // {
+    //     $this->anAuthorizedUser();
+    //     $project = create('App\Models\Project');
+    //     $this->get(route('projects.edit', $project->id))
+    //         ->assertSee($project->name);
+    //     $newProject = make('App\Models\Project');
+    //     $this->patch(route('projects.update', $project->id), $newProject->toArray());
+    //     $this->get(route('projects.edit', $project->id))
+    //         ->assertSee($newProject->name);
+    // }
 
     public function anAuthorizedUser()
     {
