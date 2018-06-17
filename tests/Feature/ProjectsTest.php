@@ -9,11 +9,9 @@ class ProjectsTest extends FeatureTest
     /** @test */
     public function an_authorised_user_can_see_projects()
     {
-        //$this->assertTrue(true);
         $this->anAuthorizedUser();
-        dd(public_path('/mix-manifest.json'));
-        $response = $this->get('/projects');
-        $response->dump();
+        $this->get('/projects')
+            ->assertStatus(200);
     }
 
     // /** @test */
