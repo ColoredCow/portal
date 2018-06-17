@@ -12,8 +12,7 @@ class ProjectsTest extends FeatureTest
         //$this->assertTrue(true);
         $this->anAuthorizedUser();
         $response = $this->get('/projects');
-
-        dd(get_class($response->dump()));
+        $response->dump();
     }
 
     // /** @test */
