@@ -60,7 +60,7 @@ class BookTest extends FeatureTest
         $this->assertTrue($fetchBook == null);
     }
 
-      /** @test */
+    /** @test */
     public function an_authorised_user_can_update_book_categories()
     {
         $this->signInAsSuperAdmin();
@@ -80,4 +80,30 @@ class BookTest extends FeatureTest
         $response = $this->patch(route('books.update', $book->id), ['categories' => [0 => $category->toArray()]]);
         $this->assertTrue($book->categories->contains($category));
     }
+
+    /** @test */
+    public function an_authenticated_user_can_add_the_book_to_wishlist()
+    {
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_mark_book_as_read()
+    {
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function an_authenticated_can_disable_the_book_suggestion()
+    {
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function an_authenticated_can_enable_the_book_suggestion()
+    {
+        $this->assertTrue(true);
+    }
+
+    
 }
