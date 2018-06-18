@@ -23,13 +23,13 @@ class BookTest extends FeatureTest
             ->assertStatus(200);
     }
 
-     /** @test */
-     public function an_un_authorised_user_cant_see_books()
-     {
-         $this->expectException(AuthorizationException::class);
-         $this->signIn();
-         $this->get(route('books.index'));
-     }
+    /** @test */
+    public function an_un_authorised_user_cant_see_books()
+    {
+        $this->expectException(AuthorizationException::class);
+        $this->signIn();
+        $this->get(route('books.index'));
+    }
 
     /** @test */
     public function an_authorised_user_can_create_books()
