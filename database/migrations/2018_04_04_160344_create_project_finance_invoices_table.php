@@ -18,7 +18,7 @@ class CreateProjectFinanceInvoicesTable extends Migration
             $table->unsignedInteger('finance_invoice_id');
         });
 
-        Schema::table('project_finance_invoices', function(Blueprint $table) {
+        Schema::table('project_finance_invoices', function (Blueprint $table) {
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('finance_invoice_id')->references('id')->on('finance_invoices');
         });
