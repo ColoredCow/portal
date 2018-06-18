@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(Book::class);
@@ -24,7 +23,6 @@ class BookController extends Controller
      */
     public function index()
     {
-
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search'): false;
         $books = Book::getList($searchString);
@@ -51,7 +49,7 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
         $validatedData = $request->validated();
-        $ISBN = isset ($validatedData['isbn']) ? $validatedData['isbn'] : null;
+        $ISBN = isset($validatedData['isbn']) ? $validatedData['isbn'] : null;
         $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
         return response()->json(['error'=> !$stored]);
     }
@@ -91,11 +89,11 @@ class BookController extends Controller
         if (!isset($validatedData['categories'])) {
             return response()->json([
                 'isUpdated' => false
-            ]); 
+            ]);
         }
         $categories = array_pluck($validatedData['categories'], 'id');
         $isUpdated = $book->categories()->sync($categories);
-        return response()->json(['isUpdated' => $isUpdated]); 
+        return response()->json(['isUpdated' => $isUpdated]);
     }
 
     /**
@@ -110,24 +108,25 @@ class BookController extends Controller
     }
 
 
-     /**
-     * Fetch the book info.
-     *
-     * @param  \App\Http\Requests\BookRequest  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function fetchBookInfo(BookRequest $request) {
+    /**
+    * Fetch the book info.
+    *
+    * @param  \App\Http\Requests\BookRequest  $request
+    * @return \Illuminate\Http\JsonResponse
+    */
+    public function fetchBookInfo(BookRequest $request)
+    {
         $validated = $request->validated();
         $method = $validated['add_method'];
 
-        if($method === 'from_image' && $request->hasFile('book_image')) {
+        if ($method === 'from_image' && $request->hasFile('book_image')) {
             $file = $request->file('book_image');
             $ISBN = BookServices::getISBN($file);
-        } else if($method ==='from_isbn') {
+        } elseif ($method ==='from_isbn') {
             $ISBN = $validated['isbn'];
         }
 
-        if(!$ISBN || strlen($ISBN) < 13) {
+        if (!$ISBN || strlen($ISBN) < 13) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : '. $ISBN
@@ -136,7 +135,7 @@ class BookController extends Controller
 
         $book = Book::where('isbn', $ISBN)->first();
 
-        if($book) {
+        if ($book) {
             return response()->json([
                 'error' => false,
                 'book' => $book
@@ -145,7 +144,7 @@ class BookController extends Controller
 
         $book= BookServices::getBookDetails($ISBN);
 
-        if(!isset($book['items'])) {
+        if (!isset($book['items'])) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : '. $ISBN
@@ -165,7 +164,8 @@ class BookController extends Controller
      * @param  Array  $book
      * @return Array
      */
-    public function formatBookData($book){
+    public function formatBookData($book)
+    {
         $data = [];
         $book = $book['items'][0];
         $info = collect($book['volumeInfo']);
@@ -179,7 +179,8 @@ class BookController extends Controller
         return $data;
     }
 
-    public function markBook(Request $request){
+    public function markBook(Request $request)
+    {
         $bookID = $request->book_id;
         $read = $request->is_read;
         $book = Book::find($bookID);
@@ -190,25 +191,26 @@ class BookController extends Controller
         ]);
     }
 
-    public function getBookList() {
-
-        $books = (request()->has('cat')) ? 
-                Book::getByCategoryName(request()->input('cat')) : 
+    public function getBookList()
+    {
+        $books = (request()->has('cat')) ?
+                Book::getByCategoryName(request()->input('cat')) :
                 Book::with(['categories'])->orderBy('title')
                 ->get();
 
         $data = [];
         foreach ($books as $index => $book) {
             $data['books'][$index] = $book->toArray();
+            $data['books'][$index]['thumbnail'] = $book->getThumbnailBySize();
             $data['books'][$index]['categories'] = $book->categories()->pluck('name')->toArray();
         }
-        
+
         $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
         return response()->json($data);
-
     }
 
-    public function addToUserWishList(){
+    public function addToUserWishList()
+    {
         $bookID = request()->book_id;
         $book = Book::find($bookID);
         $isAdded = ($book) ? $book->addToUserWishlist() : false;
@@ -217,15 +219,15 @@ class BookController extends Controller
         ]);
     }
 
-    public function disableSuggestion() {
+    public function disableSuggestion()
+    {
         session(['disable_book_suggestion' => true]);
         return redirect()->back()->with('status', 'Book suggestions has been disabled.');
     }
 
-    public function enableSuggestion() {
+    public function enableSuggestion()
+    {
         session(['disable_book_suggestion' => false]);
         return redirect()->back()->with('status', 'Book suggestions has been enabled.');
     }
-
 }
-

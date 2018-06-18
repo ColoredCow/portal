@@ -1,9 +1,12 @@
 <?php
-
 namespace App\Exceptions;
 
+use App\Mail\ErrorReport;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Handler extends ExceptionHandler
 {
@@ -13,9 +16,12 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Validation\ValidationException::class,
     ];
-
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
@@ -25,7 +31,6 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
-
     /**
      * Report or log an exception.
      *
@@ -36,9 +41,20 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        parent::report($exception);
-    }
+        $timeOfException = Carbon::now()->format(config('constants.display_datetime_format'));
+        foreach ($this->dontReport as $dontReport) {
+            if ($exception instanceof $dontReport) {
+                return;
+            }
+        }
 
+        try {
+            Mail::send(new ErrorReport($exception, $timeOfException));
+        } catch (Exception $e) {
+            parent::report($e);
+        }
+        return parent::report($exception);
+    }
     /**
      * Render an exception into an HTTP response.
      *

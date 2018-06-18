@@ -33,7 +33,6 @@ class UpdateEvaluationTables extends Migration
      */
     public function down()
     {
-        
         Schema::table('hr_application_round_evaluation', function (Blueprint $table) {
             $table->dropForeign(['application_round_id']);
             $table->dropColumn('application_round_id');
@@ -46,6 +45,5 @@ class UpdateEvaluationTables extends Migration
             $table->string('score');
             $table->foreign('round_review_id')->references('id')->on('hr_application_round_reviews');
         });
-        
     }
 }
