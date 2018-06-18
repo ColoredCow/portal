@@ -86,7 +86,8 @@ class BookController extends Controller
      */
     public function update(BookRequest $request, Book $book)
     {
-        $this->authorize('update', Book::class);
+        $this->authorize('update', $book);
+        
         $validatedData = $request->validated();
         if (!isset($validatedData['categories'])) {
             return response()->json([

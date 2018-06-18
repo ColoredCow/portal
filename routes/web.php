@@ -63,7 +63,10 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
-                ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store', 'destroy' => 'books.delete']);
+                ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 
+                        'store' => 'books.store', 
+                        'destroy' => 'books.delete', 
+                        'update' => 'books.update']);
 
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
