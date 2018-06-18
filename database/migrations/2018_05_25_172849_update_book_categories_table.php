@@ -13,7 +13,7 @@ class UpdateBookCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('book_categories', function(Blueprint $table) {
+        Schema::table('book_categories', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class UpdateBookCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('book_categories', function(Blueprint $table) {
+        Schema::table('book_categories', function (Blueprint $table) {
             $table->dropColumn(['deleted_at']);
         });
     }

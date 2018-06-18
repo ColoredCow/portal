@@ -30,9 +30,11 @@ if (document.getElementById('page_hr_applicant_edit')) {
         data: {
             showResumeFrame: false,
             showEvaluationFrame: false,
-            applicationJobRounds: JSON.parse(document.getElementById('next_round').dataset.applicationJobRounds) || {},
+            applicationJobRounds: JSON.parse(document.getElementById('action_type').dataset.applicationJobRounds) || {},
             selectedNextRound: '',
             nextRoundName: '',
+            selectedAction: '',
+            nextRound: '',
             createCalendarEvent: true,
         },
         methods: {
@@ -42,18 +44,23 @@ if (document.getElementById('page_hr_applicant_edit')) {
             toggleEvaluationFrame: function() {
                 this.showEvaluationFrame = !this.showEvaluationFrame;
             },
-            updateNextRoundName: function() {
-                for (let index = 0; index < this.applicationJobRounds.length; index++) {
-                    let applicationRound = this.applicationJobRounds[index];
-                    if (applicationRound.id == this.selectedNextRound) {
-                        this.nextRoundName = applicationRound.name;
+            takeAction: function() {
+                switch (this.selectedAction) {
+                    case 'round':
+                        let selectedRound = document.querySelector('#action_type option:checked');
+                        this.selectedNextRound = selectedRound.dataset.nextRoundId;
+                        this.nextRoundName = selectedRound.innerText;
+                        $('#round_confirm').modal('show');
                         break;
-                    }
+                    case 'send-for-approval':
+                        $('#send_for_approval').modal('show');
+                        break;
                 }
             }
         },
         mounted() {
             this.selectedNextRound = this.applicationJobRounds[0].id;
+            this.selectedAction = 'round';
             this.nextRoundName = this.applicationJobRounds[0].name;
         }
     });
@@ -178,7 +185,7 @@ if (document.getElementById('finance_report')) {
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
-    if (selectedAction == 'confirm') {
+    if (selectedAction == 'confirm' || selectedAction == 'send-for-approval') {
         if (!form[0].checkValidity()) {
             form[0].reportValidity();
             return false;

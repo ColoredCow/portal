@@ -28,7 +28,7 @@ class UpdateClientEmailsColumn extends Migration
      */
     public function down()
     {
-         Schema::table('clients', function (Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
             $table->renameColumn('emails', 'email');
         });
         Schema::table('clients', function (Blueprint $table) {
