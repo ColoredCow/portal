@@ -10,16 +10,18 @@
             <h1>Applications</h1>
         </div>
         <div class="col-md-9">
-            <form class="form-inline" method="GET" action="/{{ Request::path() }}">
-            @if(request('status')=='on-hold')
-                <input type="hidden" name="status" class="form-control" id="search" value="{{ config('constants.hr.status.on-hold.label') }}">
-            @elseif(request('status')=='rejected')
-                <input type="hidden" name="status" class="form-control" id="search" value="{{ config('constants.hr.status.rejected.label') }}">
-            @elseif(request('status')=='no-show')
-                <input type="hidden" name="status" class="form-control" id="search" value="{{ config('constants.hr.status.no-show.label') }}">
-            @endif
+        <form class="form-inline" method="GET" action="/{{ Request::path() }}">
+            <input type="hidden" name="status" class="form-control" id="search" value=
+                @switch(request('status'))
+                    @case('on-hold')
+                        {{ config('constants.hr.status.on-hold.label') }}
+                    @case('rejected')
+                        {{ config('constants.hr.status.rejected.label') }}
+                    @case('no-show')
+                        {{ config('constants.hr.status.no-show.label') }}
+                    @endswitch>
                <div class="form-group">
-                   <input type="text" name="search" class="form-control" id="search" placeholder="search applicants">
+                   <input type="text" name="search" class="form-control" id="search" placeholder="Search Applicants">
                </div>
                <button class="btn btn-info ml-2">Search</button>
             </form>
