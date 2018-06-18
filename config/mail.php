@@ -14,7 +14,7 @@ return [
     | Supported: "smtp", "sendmail", "mailgun", "mandrill", "ses",
     |            "sparkpost", "log", "array"
     |
-    */
+     */
 
     'driver' => env('MAIL_DRIVER', 'smtp'),
 
@@ -27,7 +27,7 @@ return [
     | applications. A default option is provided that is compatible with
     | the Mailgun mail service which will provide reliable deliveries.
     |
-    */
+     */
 
     'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
 
@@ -40,7 +40,7 @@ return [
     | users of the application. Like the host we have set this value to
     | stay compatible with the Mailgun e-mail application by default.
     |
-    */
+     */
 
     'port' => env('MAIL_PORT', 587),
 
@@ -53,7 +53,7 @@ return [
     | the same address. Here, you may specify a name and address that is
     | used globally for all e-mails that are sent by your application.
     |
-    */
+     */
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'contact@coloredcow.com'),
@@ -69,7 +69,7 @@ return [
     | the application send e-mail messages. A sensible default using the
     | transport layer security protocol should provide great security.
     |
-    */
+     */
 
     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
@@ -82,7 +82,7 @@ return [
     | set it here. This will get used to authenticate with your server on
     | connection. You may also set the "password" value below this one.
     |
-    */
+     */
 
     'username' => env('MAIL_USERNAME'),
 
@@ -97,7 +97,7 @@ return [
     | the path to where Sendmail lives on this server. A default path has
     | been provided here, which will work well on most of your systems.
     |
-    */
+     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
@@ -110,7 +110,7 @@ return [
     | theme and component paths here, allowing you to customize the design
     | of the emails. Or, you may simply stick with the Laravel defaults!
     |
-    */
+     */
 
     'markdown' => [
         'theme' => 'default',
@@ -119,5 +119,7 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
+
+    'error_address' => env('MAIL_ERROR_ADDRESS'),
 
 ];
