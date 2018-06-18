@@ -32,20 +32,7 @@
     @if(request()->has('search'))
     <div class="row mt-3 mb-2">
         <div class="col-6">
-        <form class="form-inline" method="GET" action="/{{ Request::path() }}">
-            <input type="hidden" name="status" class="form-control" id="search" value=
-                @switch(request('status'))
-                    @case('on-hold')
-                        {{ config('constants.hr.status.on-hold.label') }}
-                    @case('rejected')
-                        {{ config('constants.hr.status.rejected.label') }}
-                    @case('sent-for-approval')
-                        {{ config('constants.hr.status.sent-for-approval.title') }}
-                    @case('no-show')
-                        {{ config('constants.hr.status.no-show.label') }}
-                    @endswitch>
-               <button  class="btn btn-link"><i class="fa fa-times"></i>&nbsp;Clear current search and filters</button>
-            </form>
+           <a href="/{{ Request::path() }}?status={{request('status')}}"><i class="fa fa-times"></i>&nbsp;Clear current search and filters</button>
         </div>
     </div>
     @endif
