@@ -20,6 +20,4 @@ abstract class FeatureTest extends TestCase
     {
         $this->signIn(create(User::class)->assignRole('super-admin'));
     }
-
-
 }
