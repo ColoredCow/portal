@@ -48,6 +48,7 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
+        $this->authorize('create', Book::class);
         $validatedData = $request->validated();
         $ISBN = isset($validatedData['isbn']) ? $validatedData['isbn'] : null;
         $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
@@ -85,6 +86,7 @@ class BookController extends Controller
      */
     public function update(BookRequest $request, Book $book)
     {
+        $this->authorize('update', Book::class);
         $validatedData = $request->validated();
         if (!isset($validatedData['categories'])) {
             return response()->json([
