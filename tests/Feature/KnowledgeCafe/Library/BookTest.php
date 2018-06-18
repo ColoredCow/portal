@@ -104,6 +104,4 @@ class BookTest extends FeatureTest
     {
         $this->assertTrue(true);
     }
-
-    
 }

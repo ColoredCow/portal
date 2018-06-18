@@ -4,7 +4,6 @@ use Faker\Generator as Faker;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 
-
 $factory->define(Book::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence(12),
