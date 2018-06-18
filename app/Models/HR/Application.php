@@ -134,6 +134,15 @@ class Application extends Model
         return $query;
     }
 
+    public function scopeByName($query, $search)
+    {
+        $query->whereHas('applicant', function ($query) use ($search) {
+            ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
+        });
+
+        return $query;
+    }
+
     /**
      * Apply filter on applications based on the applied job
      *

@@ -31,37 +31,19 @@ abstract class ApplicationController extends Controller
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
         ];
-        if (request()->has('search')) {
-            $search = request()->get('search');
-            $applications = Application::with(['applicant', 'job'])
-                ->whereHas('applicant', function ($query) use ($search) {
-                    ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
-                })
-                ->applyFilter($filters)
-                ->latest()
-                ->paginate(config('constants.pagination_size'))
-                ->appends(Input::except('page'));
+        $search = request()->get('search');
+        $applications = Application::with(['applicant', 'job'])
+            ->applyFilter($filters)
+            ->byName($search)
+            ->latest()
+            ->paginate(config('constants.pagination_size'))
+            ->appends(Input::except('page'));
 
-            $attr =
-                [
-                'applications' => $applications,
-                'status' => request()->get('status'),
-            ];
-
-        } else {
-            $applications = Application::with('applicant', 'job')
-                ->applyFilter($filters)
-                ->latest()
-                ->paginate(config('constants.pagination_size'))
-                ->appends(Input::except('page'));
-
-            $attr =
-                [
-                'applications' => $applications,
-                'status' => request()->get('status'),
-            ];
-
-        }
+        $attr =
+            [
+            'applications' => $applications,
+            'status' => request()->get('status'),
+        ];
 
         if ($this->getApplicationType() == 'job') {
             $attr['openJobsCount'] = Job::count();

@@ -17,11 +17,13 @@
                         {{ config('constants.hr.status.on-hold.label') }}
                     @case('rejected')
                         {{ config('constants.hr.status.rejected.label') }}
+                    @case('sent-for-approval')
+                        {{ config('constants.hr.status.sent-for-approval.title') }}
                     @case('no-show')
                         {{ config('constants.hr.status.no-show.label') }}
                     @endswitch>
                <div class="form-group">
-                   <input type="text" name="search" class="form-control" id="search" placeholder="Search Applicants">
+                   <input type="text" name="search" class="form-control" id="search" placeholder="Search applicants">
                </div>
                <button class="btn btn-info ml-2">Search</button>
             </form>
@@ -30,9 +32,20 @@
     @if(request()->has('search'))
     <div class="row mt-3 mb-2">
         <div class="col-6">
-            <a class="text-muted c-pointer" href="/{{ Request::path() }}">
-                <i class="fa fa-times"></i>&nbsp;Clear current search and filters
-            </a>
+        <form class="form-inline" method="GET" action="/{{ Request::path() }}">
+            <input type="hidden" name="status" class="form-control" id="search" value=
+                @switch(request('status'))
+                    @case('on-hold')
+                        {{ config('constants.hr.status.on-hold.label') }}
+                    @case('rejected')
+                        {{ config('constants.hr.status.rejected.label') }}
+                    @case('sent-for-approval')
+                        {{ config('constants.hr.status.sent-for-approval.title') }}
+                    @case('no-show')
+                        {{ config('constants.hr.status.no-show.label') }}
+                    @endswitch>
+               <button  class="btn btn-link"><i class="fa fa-times"></i>&nbsp;Clear current search and filters</button>
+            </form>
         </div>
     </div>
     @endif
