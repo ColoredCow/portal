@@ -8,12 +8,11 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class BookTest extends FeatureTest
 {
-
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         $this->withoutExceptionHandling();
     }
-
 
     /** @test */
     public function an_authorised_user_can_see_books()
@@ -50,15 +49,22 @@ class BookTest extends FeatureTest
         $response = $this->post(route('books.store'), $book->toArray());
     }
 
+    /** @test */
+    public function an_authorised_user_can_delete_book()
+    {
+        $this->signInAsSuperAdmin();
+        $book = create(Book::class);
+        $response = $this->delete(route('books.delete', $book->id ));
+        $fetchBook = Book::find($book->id);
+        $this->assertTrue($fetchBook == null);
+    }
 
-     /** @test */
-     public function an_authorised_user_can_update_book()
-     {
-         $this->expectException(AuthorizationException::class);
-         $this->signIn();
-         $book = make(Book::class);
-         $response = $this->post(route('books.store'), $book->toArray());
-     }
-
-
+      /** @test */
+    public function an_authorised_user_cant_delete_book()
+    {
+        $this->expectException(AuthorizationException::class);
+        $this->signIn();
+        $book = create(Book::class);
+        $response = $this->delete(route('books.delete', $book->id ));
+    }
 }

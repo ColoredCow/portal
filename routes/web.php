@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
     Route::resource('projects', 'ProjectController')
     ->except(['show', 'destroy'])
-    ->names([ 'index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
+    ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
@@ -63,8 +63,8 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
-                ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
-                
+                ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store', 'destroy' => 'books.delete']);
+
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
@@ -72,7 +72,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
             });
-
 
             Route::resource('book-categories', 'BookCategoryController')
                 ->only(['index', 'store', 'update', 'destroy'])
