@@ -8,7 +8,6 @@
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-    font-size:1.1vw;
 }
 
 .user-avatar {
@@ -292,12 +291,12 @@ input:focus+.slider {
     }
 }
 
-.navbar-brand {
-    font-size:1.1vw;  
+.nav-font {
+    font-size: 1.1vw;  
     }
 
 .text-center {
-    font-size:2.1vw;  
+    font-size: 2.1vw;  
     }
 
 .inline-card {
