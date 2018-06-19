@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Google_Client;
 use Google_Service_Directory;
 
-class GuiteUserService
+class GSuiteUserService
 {
     const USERLIMIT = 20;
     protected $name;

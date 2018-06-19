@@ -26,7 +26,6 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::middleware('auth')->group(function () {
-
     Route::prefix('profile')->group(function () {
         Route::get('gsuite-sync', 'UserController@syncWithGSuite')->name('profile.gsuite-sync');
     });

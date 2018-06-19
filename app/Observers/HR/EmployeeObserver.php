@@ -3,7 +3,7 @@
 namespace App\Observers\HR;
 
 use App\Models\HR\Employee;
-use App\Services\GuiteUserService;
+use App\Services\GSuiteUserService;
 
 class EmployeeObserver
 {
@@ -15,9 +15,9 @@ class EmployeeObserver
      */
     public function created(Employee $employee)
     {
-        $gsuiteUser = new GuiteUserService;
+        $gsuiteUser = new GSuiteUserService;
         $gsuiteUser->fetch($employee->user->email);
-        $user->employee->update([
+        $employee->update([
             'name' => $gsuiteUser->getName(),
             'joined_on' => $gsuiteUser->getJoinedOn(),
             'designation' => $gsuiteUser->getDesignation(),

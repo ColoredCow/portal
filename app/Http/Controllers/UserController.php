@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GuiteUserService;
+use App\Services\GSuiteUserService;
 use App\User;
 
 class UserController extends Controller
@@ -10,7 +10,7 @@ class UserController extends Controller
     public function syncWithGSuite()
     {
         $user = auth()->user();
-        $gsuiteUser = new GuiteUserService;
+        $gsuiteUser = new GSuiteUserService();
         $gsuiteUser->fetch($user->email);
 
         $user->employee->update([
