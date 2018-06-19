@@ -11,7 +11,6 @@
             </a>
         </div>
         @endcan
-
         @can('weeklydoses.view')
         <div class="col-md-3 col-sm-4 card m-3">
             <a class="card-body no-transition" href="/knowledgecafe/weeklydoses/">
