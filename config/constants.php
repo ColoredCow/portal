@@ -133,6 +133,14 @@ return [
         'cleared' => 'Cleared',
         'bounced' => 'Bounced',
     ],
+    'dd/mm/yyyy' => [
+        'sent_on' => 'Sent on',
+        'due_date' => 'Due date',
+        'paid_on' => 'Paid on',
+        'cheque_bounced_date' => 'Cheque Bounced date',
+        'cheque_cleared_date' => 'Cheque Cleared date',
+        'cheque_recieved_date' => 'Cheque Received date',
+    ],
     'project' => [
         'status' => [
             'active' => 'Active',
