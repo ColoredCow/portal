@@ -204,6 +204,7 @@
                         <input type="hidden" name="next_round" value="">
                         @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
                         @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
+                        @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                     </form>
                 </div>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])

@@ -22,7 +22,7 @@
                 <a class="nav-item nav-link {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}"><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}"><i class="fa fa-times-circle"></i>&nbsp;Closed</a>
+                <a class="nav-item nav-link {{ $status === 'closed' ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status=closed"><i class="fa fa-times-circle"></i>&nbsp;Closed</a>
             </li>
         </ul>
         @if( isset($openJobsCount, $openApplicationsCount) )
