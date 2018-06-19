@@ -37,7 +37,6 @@
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Applied for</b>
                             <div><a href="{{ $application->job->link }}" target="_blank">{{ $application->job->title }}</a></div>
-                            <div>@includeWhen($application->evaluations, 'hr.application.application-evaluation', ['applicationEvaluations' => $application->evaluations])</div>
                         </div>
                         <div class="form-group col-md-5">
                             <b>Phone</b>
@@ -154,12 +153,13 @@
                                     </div>
                                 </div>
                                 @endif
-
-                                @includeWhen( $applicationRound->round->evaluationParameters->count() > 0 ,'hr.application.round-evaluation', ['round' => $applicationRound->round, 'evaluation' => $applicationRound->evaluations])
-
+                                <div class="form-row">
+                                     <div class="form-group col-md-12">
+                                        <button class="btn btn-warning btn-sm text-white" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+                                    </div>
+                                </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="reviews[feedback]">Feedback</label>
                                         @php
                                             if ($loop->last && sizeOf($errors)) {
                                                 $applicationRoundReviewValue = old('reviews.feedback');
@@ -209,6 +209,7 @@
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                 @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])
             @endforeach
+            @include('hr.application.application-evaluation')
         </div>
     </div>
 </div>
