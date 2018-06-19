@@ -3,6 +3,7 @@
 return [
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
+        'client-hd' => env('GOOGLE_CLIENT_HD', ''),
     ],
     'date_format' => 'Y-m-d',
     'datetime_format' => 'Y-m-d H:i:s',
