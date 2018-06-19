@@ -8,6 +8,7 @@ use Google_Service_Directory;
 
 class GuiteUserService
 {
+    const USERLIMIT = 20;
     protected $name;
     protected $joinedOn;
     protected $designation;
@@ -26,15 +27,15 @@ class GuiteUserService
 
     public function fetch($email)
     {
-        $gsuiteUser = $this->service->users->get($email);
-        $userOrganizations = $gsuiteUser->getOrganizations();
+        $user = $this->service->users->get($email);
+        $userOrganizations = $user->getOrganizations();
 
         $designation = null;
         if (!is_null($userOrganizations)) {
             $designation = $userOrganizations[0]['title'];
         }
-        $this->setName($gsuiteUser->getName()->fullName);
-        $this->setJoinedOn(Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')));
+        $this->setName($user->getName()->fullName);
+        $this->setJoinedOn(Carbon::parse($user->getCreationTime())->format(config('constants.date_format')));
         $this->setDesignation($designation);
     }
 
