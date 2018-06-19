@@ -8,7 +8,6 @@ use App\Models\HR\Evaluation\Segment;
 
 class EvaluationController extends Controller
 {
-
     public function show($applicationRoundID)
     {
         $applicationRound = ApplicationRound::find($applicationRoundID)->load('application.applicant');
