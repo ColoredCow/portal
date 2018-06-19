@@ -8,6 +8,7 @@
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    font-size:1.1vw;
 }
 
 .user-avatar {
@@ -291,6 +292,16 @@ input:focus+.slider {
     }
 }
 
+.navbar-brand {
+    font-size:1.1vw;
+    
+    }
+
+.text-center {
+    font-size:2.1vw;
+    
+    }
+
 .inline-card {
     position: fixed;
     height: 100vh;
@@ -299,6 +310,7 @@ input:focus+.slider {
     z-index: 100;
     >.card-body {
         height: 100%;
+
     }
     &.inline-resume {
         left: 0;
