@@ -13,11 +13,10 @@
             @include('status', ['errors' => $errors->all()])
         </div>
         <div class="col-md-12">
-            <h1 class="mb-2">{{ $employee->name }}</h1>
+            <h1>Reports</h1>
         </div>
         <div class="col-md-12">
-            <img src="/images/employee-details.png" alt="employee details" style="width: 82%;">
-            {{-- <img src="/images/employee-details-min.png" alt="employee details"> --}}
+            <img src="/images/employee-reports-min.png" alt="employee reports" class="w-100">
         </div>
     </div>
     <div class="row">

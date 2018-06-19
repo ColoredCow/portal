@@ -21,6 +21,5 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         return view('hr.employees.show', compact('employee'));
-        // dd($employee);
     }
 }

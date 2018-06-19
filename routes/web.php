@@ -38,12 +38,13 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
         });
 
-        Route::resource('employees', 'Employees\EmployeeController')
-            ->only(['index', 'show'])
-            ->names([
-                'index' => 'employees',
-                'show' => 'employees.show',
-            ]);
+        Route::prefix('employees')->namespace('Employees')->group(function () {
+            Route::get('/', 'EmployeeController@index')->name('employees');
+            Route::get('/{employee}', 'EmployeeController@show')->name('employees.show');
+        });
+        // A better version of employee-reports would be employees/reports. The
+        // route below can be merged with employees grouped route above.
+        Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
