@@ -8,7 +8,7 @@
     <h1>Create Project</h1>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <form action="/projects" method="POST" id="form_project">
+        <form action="{{ route('projects.store') }}" method="POST" id="form_project">
 
             {{ csrf_field() }}
 

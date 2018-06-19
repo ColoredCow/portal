@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FileHelper
 {
-	/**
+    /**
      * Retrieve file path based upon year and month
      *
      * @param  string $year  year directory of the file
@@ -19,7 +19,7 @@ class FileHelper
     {
         $filePath =  $year . '/' . $month . '/' . $file;
 
-        if(!Storage::exists($filePath)) {
+        if (!Storage::exists($filePath)) {
             return false;
         }
 
