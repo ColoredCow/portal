@@ -25,6 +25,8 @@ class RemoveBookCategoryColumn extends Migration
      */
     public function down()
     {
-        $table->addColumn('categories');
+        Schema::table('library_books', function (Blueprint $table) {
+            $table->string('categories');
+        });
     }
 }
