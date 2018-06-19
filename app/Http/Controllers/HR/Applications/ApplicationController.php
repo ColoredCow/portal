@@ -30,11 +30,10 @@ abstract class ApplicationController extends Controller
             'status' => request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
+            'name' => request()->get('search'),
         ];
-        $search = request()->get('search');
         $applications = Application::with(['applicant', 'job'])
             ->applyFilter($filters)
-            ->byName($search)
             ->latest()
             ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
