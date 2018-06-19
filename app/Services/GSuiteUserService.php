@@ -67,8 +67,7 @@ class GSuiteUserService
             ]);
         }
 
-        try
-        {
+        try {
             $gsuiteUser = $this->service->users->insert($user);
             $this->setName($gsuiteUser->getName()->fullName);
             $this->setJoinedOn(Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')));
