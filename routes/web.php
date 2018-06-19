@@ -39,8 +39,11 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::resource('employees', 'Employees\EmployeeController')
-            ->only(['index'])
-            ->names(['index' => 'employees']);
+            ->only(['index', 'show'])
+            ->names([
+                'index' => 'employees',
+                'show' => 'employees.show',
+            ]);
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
