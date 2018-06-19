@@ -17,7 +17,7 @@
         @can('finance_reports.view')
         <div class="col-md-3 col-sm-4 card m-3">
             <a class="card-body no-transition" href="/finance/reports?type=monthly">
-                <br><h2 class="text-center" >Finance</h2><br>
+                <br><h2 class="text-center">Finance</h2><br>
             </a>
         </div>
         @endcan
