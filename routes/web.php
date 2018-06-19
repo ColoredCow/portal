@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
+            Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {

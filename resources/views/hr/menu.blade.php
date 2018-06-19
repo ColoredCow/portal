@@ -11,4 +11,7 @@
     <li class="nav-item">
         <a class="nav-item nav-link {{ Request::is('hr/recruitment/reports*') ? 'active' : '' }}" href="{{ route('recruitment.reports') }}"><i class="fa fa-pie-chart"></i>&nbsp;Reports</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-item nav-link {{ Request::is('hr/recruitment/campaigns*') ? 'active' : '' }}" href="{{ route('recruitment.campaigns') }}"><i class="fa fa-envelope"></i>&nbsp;Campaigns</a>
+    </li>
 </ul>
