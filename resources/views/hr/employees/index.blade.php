@@ -11,7 +11,6 @@
             <th>Name</th>
             <th>Designation</th>
             <th>Joined on</th>
-            <th>Projects</th>
         </tr>
         @foreach ($employees as $employee)
         <tr>
@@ -34,7 +33,6 @@
                 -
             @endif
             </td>
-            <td>Employee Portal</td>
         </tr>
         @endforeach
     </table>
