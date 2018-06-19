@@ -19,7 +19,11 @@
                 <a href="#">{{ $employee->name }}</a>
             </td>
             <td>{{ $employee->designation }}</td>
-            <td>{{ date('d M, Y', strtotime($employee->joined_on)) }}</td>
+            <td>
+                <span>{{$employee->joined_on->format('d M, Y') }}</span>
+                <span style="font-size: 10px;">&nbsp;&#9679;&nbsp;</span>
+                <span>{{$employee->employmentDuration }}</span>
+            </td>
             <td>Employee Portal</td>
         </tr>
         @endforeach
