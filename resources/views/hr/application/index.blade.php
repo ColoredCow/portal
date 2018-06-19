@@ -32,7 +32,9 @@
     @if(request()->has('search'))
     <div class="row mt-3 mb-2">
         <div class="col-6">
-           <a href="/{{ Request::path() }}?status={{request('status')}}"><i class="fa fa-times"></i>&nbsp;Clear current search and filters</button>
+            <a class="text-muted c-pointer" href="/{{ Request::path() }}?status={{request('status')}}">
+                <i class="fa fa-times"></i>&nbsp;Clear current search and filters
+            </a>
         </div>
     </div>
     @endif
