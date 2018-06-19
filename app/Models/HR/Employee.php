@@ -13,4 +13,9 @@ class Employee extends Model
     {
         return $this->hasOne(User::class, 'user_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->whereNotNull('user_id');
+    }
 }

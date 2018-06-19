@@ -10,19 +10,36 @@
         <tr>
             <th>Name</th>
             <th>Designation</th>
-            <th>Joined</th>
+            <th>Joined on</th>
             <th>Projects</th>
         </tr>
-        @foreach ($team as $member)
+        @foreach ($employees as $employee)
         <tr>
             <td>
-                <a href="#">{{ $member->name }}</a>
+                <a href="#">{{ $employee->name }}</a>
             </td>
-            <td>Software Developer</td>
-            <td>{{ date('d/m/Y') }}</td>
+            <td>{{ $employee->designation }}</td>
+            <td>{{ date('d M, Y', strtotime($employee->joined_on)) }}</td>
             <td>Employee Portal</td>
         </tr>
         @endforeach
     </table>
+    <ul class="pagination" role="navigation">
+        <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
+            <span class="page-link" aria-hidden="true">‹</span>
+        </li>
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">1</span>
+        </li>
+        <li class="page-item">
+            <span class="page-link bg-light">2</span>
+        </li>
+        <li class="page-item">
+            <span class="page-link bg-light">3</span>
+        </li>
+        <li class="page-item bg-light">
+            <span class="page-link" rel="next" aria-label="Next »">›</span>
+        </li>
+    </ul>
 </div>
 @endsection

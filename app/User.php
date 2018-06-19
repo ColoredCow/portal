@@ -64,12 +64,11 @@ class User extends Authenticatable
         return $this->books()->count();
     }
 
-    public function scopeEmployees($query)
+    public function getIsActiveEmployeeAttribute()
     {
         // The employees will have a GSuite ID. That means the provider will be google.
         // Also, to make sure there's no false entry, we'll also check if the email
         // contains the gsuite client hd parameter.
-        return $query->where('provider', 'google')
-            ->where('email', 'like', '%' . config('constants.gsuite.client-hd'));
+        return $this->provider == 'google' && strpos($this->email, config('constants.gsuite.client-hd')) !== false;
     }
 }

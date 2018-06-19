@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\HR\Employees;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\HR\Employee;
 
 class EmployeeController extends Controller
 {
@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $team = User::employees()->orderBy('name')->get();
-        return view('hr.employees.index', compact('team'));
+        $employees = Employee::active()->orderBy('name')->get();
+        return view('hr.employees.index', compact('employees'));
     }
 }
