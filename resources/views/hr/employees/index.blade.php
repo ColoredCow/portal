@@ -18,11 +18,21 @@
             <td>
                 <a href="{{ route('employees.show', $employee->id) }}">{{ $employee->name }}</a>
             </td>
-            <td>{{ $employee->designation }}</td>
             <td>
+                @if ($employee->designation)
+                    {{ $employee->designation }}
+                @else
+                    -
+                @endif
+            </td>
+            <td>
+            @if ($employee->joined_on)
                 <span>{{$employee->joined_on->format('d M, Y') }}</span>
                 <span style="font-size: 10px;">&nbsp;&#9679;&nbsp;</span>
                 <span>{{$employee->employmentDuration }}</span>
+            @else
+                -
+            @endif
             </td>
             <td>Employee Portal</td>
         </tr>
