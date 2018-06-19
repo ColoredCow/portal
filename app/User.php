@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\HR\Employee;
 use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -70,5 +71,10 @@ class User extends Authenticatable
         // Also, to make sure there's no false entry, we'll also check if the email
         // contains the gsuite client hd parameter.
         return $this->provider == 'google' && strpos($this->email, config('constants.gsuite.client-hd')) !== false;
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'user_id');
     }
 }
