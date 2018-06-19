@@ -29,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::prefix('hr')->namespace('HR')->group(function () {
         Route::get('/', 'HRController@index');
 
+        Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
+            Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
+        });
+
         Route::prefix('applications')->namespace('Applications')->group(function () {
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update'])
