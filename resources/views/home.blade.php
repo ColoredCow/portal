@@ -6,13 +6,11 @@
     @include('status', ['errors' => $errors->all()])
     <br>
     <div class="d-flex justify-content-start row flex-wrap">
-        @can('hr_applicants.view')
         <div class="col-md-3 card mx-5 my-3">
             <a class="card-body no-transition" href="/hr">
                 <br><h2 class="text-center">HR</h2><br>
             </a>
         </div>
-        @endcan
 
         @can('finance_reports.view')
         <div class="col-md-3 card mx-5 my-3">
