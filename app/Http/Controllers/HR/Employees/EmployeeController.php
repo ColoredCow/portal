@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\HR\Team;
+namespace App\Http\Controllers\HR\Employees;
 
 use App\Http\Controllers\Controller;
 use App\User;
 
-class TeamController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $team = User::team()->get();
-        return view('hr.team.index', compact('team'));
+        $team = User::employees()->orderBy('name')->get();
+        return view('hr.employees.index', compact('team'));
     }
 }

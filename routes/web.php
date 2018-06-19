@@ -38,9 +38,9 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
         });
 
-        Route::resource('team', 'Team\TeamController')
+        Route::resource('employees', 'Employees\EmployeeController')
             ->only(['index'])
-            ->names(['index' => 'team']);
+            ->names(['index' => 'employees']);
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);

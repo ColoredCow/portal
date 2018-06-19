@@ -64,9 +64,9 @@ class User extends Authenticatable
         return $this->books()->count();
     }
 
-    public function scopeTeam($query)
+    public function scopeEmployees($query)
     {
-        // The team members will have a GSuite ID. That means the provider will be google.
+        // The employees will have a GSuite ID. That means the provider will be google.
         // Also, to make sure there's no false entry, we'll also check if the email
         // contains the gsuite client hd parameter.
         return $query->where('provider', 'google')
