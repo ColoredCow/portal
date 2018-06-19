@@ -21,8 +21,28 @@ class Parameter extends Model
         return $this->belongsToMany(Round::class, 'hr_round_evaluation', 'evaluation_id', 'round_id');
     }
 
+    public function segment()
+    {
+        return $this->belongsTo(Segment::class);
+    }
+
     public function options()
     {
         return $this->hasMany(ParameterOption::class, 'evaluation_id');
+    }
+
+    public function applicationEvaluation()
+    {
+        return $this->hasOne(ApplicationEvaluation::class, 'evaluation_id');
+    }
+
+    public static function parameterList()
+    {
+        return self::query()
+            ->has('segment')
+            ->with(['segment', 'segment.round', 'options'])
+            ->get()
+            ->groupBy('segment_id')
+            ->toArray();
     }
 }

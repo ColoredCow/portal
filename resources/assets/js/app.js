@@ -25,6 +25,7 @@ Vue.component('invoice-project-component', require('./components/InvoiceProjectC
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
 
 if (document.getElementById('page_hr_applicant_edit')) {
+
     const applicantEdit = new Vue({
         el: '#page_hr_applicant_edit',
         data: {
@@ -43,6 +44,16 @@ if (document.getElementById('page_hr_applicant_edit')) {
             },
             toggleEvaluationFrame: function() {
                 this.showEvaluationFrame = !this.showEvaluationFrame;
+            },
+            getApplicationEvaluation: function(applicationRoundID) {
+                if(!this.showEvaluationFrame) {
+                    axios.get('/hr/applications/evaluation/' + applicationRoundID).then(function(response) {
+                        $('#page_hr_applicant_edit #application_evaluation_body').html(response.data);
+                    }).catch(function (error) {
+                        alert('Error fetching applicaiton evaluation!');
+                    });
+                }
+                this.toggleEvaluationFrame();
             },
             takeAction: function() {
                 switch (this.selectedAction) {
@@ -182,7 +193,7 @@ if (document.getElementById('finance_report')) {
     });
 }
 
-$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function(){
+$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function() {
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
     if (selectedAction == 'confirm' || selectedAction == 'send-for-approval') {

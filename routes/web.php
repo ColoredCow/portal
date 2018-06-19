@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {
+            Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update']);
