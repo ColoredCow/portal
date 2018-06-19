@@ -40,6 +40,11 @@ class Application extends Model
         return $this->hasMany(ApplicationMeta::class, 'hr_application_id');
     }
 
+    public function pendingApprovalFrom()
+    {
+        return $this->belongsTo(User::class, 'pending_approval_from');
+    }
+
     /**
      * Custom create method that creates an application and fires necessary events
      *
@@ -65,15 +70,15 @@ class Application extends Model
     {
         foreach (array_filter($filters) as $type => $value) {
             switch ($type) {
-            case 'status':
-                $query->filterByStatus($value);
-                break;
-            case 'job-type':
-                $query->filterByJobType($value);
-                break;
-            case 'job':
-                $query->filterByJob($value);
-                break;
+                case 'status':
+                    $query->filterByStatus($value);
+                    break;
+                case 'job-type':
+                    $query->filterByJobType($value);
+                    break;
+                case 'job':
+                    $query->filterByJob($value);
+                    break;
             }
         }
 
@@ -91,18 +96,21 @@ class Application extends Model
     public function scopeFilterByStatus($query, $status)
     {
         switch ($status) {
-        case config('constants.hr.status.rejected.label'):
-            $query->rejected();
-            break;
-        case config('constants.hr.status.on-hold.label'):
-            $query->onHold();
-            break;
-        case config('constants.hr.status.no-show.label'):
-            $query->noShow();
-            break;
-        default:
-            $query->isOpen();
-            break;
+            case config('constants.hr.status.rejected.label'):
+                $query->rejected();
+                break;
+            case config('constants.hr.status.on-hold.label'):
+                $query->onHold();
+                break;
+            case config('constants.hr.status.no-show.label'):
+                $query->noShow();
+                break;
+            case config('constants.hr.status.sent-for-approval.label'):
+                $query->sentForApproval();
+                break;
+            default:
+                $query->isOpen();
+                break;
         }
 
         return $query;
@@ -177,6 +185,14 @@ class Application extends Model
     }
 
     /**
+     * Get applications where status is sent-for-approval
+     */
+    public function scopeSentForApproval($query)
+    {
+        return $query->where('status', config('constants.hr.status.sent-for-approval.label'));
+    }
+
+    /**
      * Set application status to rejected
      */
     public function reject()
@@ -190,6 +206,20 @@ class Application extends Model
     public function markInProgress()
     {
         $this->update(['status' => config('constants.hr.status.in-progress.label')]);
+    }
+
+    /**
+     * Set the application status to sent-for-approval and also set the requested user as pending approval from
+     *
+     * @param  integer $userId
+     * @return void
+     */
+    public function sendForApproval($userId)
+    {
+        $this->update([
+            'status' => config('constants.hr.status.sent-for-approval.label'),
+            'pending_approval_from' => $userId,
+        ]);
     }
 
     /**
@@ -293,5 +323,15 @@ class Application extends Model
             config('constants.hr.status.no-show.label'),
             config('constants.hr.status.no-show-reminded.label'),
         ]);
+    }
+
+    public function isSentForApproval()
+    {
+        return $this->status == config('constants.hr.status.sent-for-approval.label');
+    }
+
+    public function isRejected()
+    {
+        return $this->status == config('constants.hr.status.rejected.label');
     }
 }

@@ -6,7 +6,7 @@
     @endcan
     @can('projects.view')
     <li class="nav-item">
-        <a class="nav-item nav-link {{ $active === 'projects' ? 'active' : '' }}" href="/projects"><i class="fa fa-desktop"></i>&nbsp;Projects</a>
+        <a class="nav-item nav-link {{ $active === 'projects' ? 'active' : '' }}" href="{{ route('projects') }}"><i class="fa fa-desktop"></i>&nbsp;Projects</a>
     </li>
     @endcan
     @can('finance_invoices.view')
