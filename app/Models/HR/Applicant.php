@@ -2,8 +2,8 @@
 
 namespace App\Models\HR;
 
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Applicant extends Model
 {
@@ -35,7 +35,6 @@ class Applicant extends Model
             'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,
             'resume' => $attr['resume'],
-            'reason_for_eligibility' => isset($attr['reason_for_eligibility']) ? $attr['reason_for_eligibility'] : null,
             'status' => $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label'),
         ]);
 
@@ -43,7 +42,7 @@ class Applicant extends Model
             $application_meta = ApplicationMeta::create([
                 'hr_application_id' => $application->id,
                 'key' => config('constants.hr.application-meta.keys.form-data'),
-                'value' => json_encode($attr['form_data'])
+                'value' => json_encode($attr['form_data']),
             ]);
         }
 
