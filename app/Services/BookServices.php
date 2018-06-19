@@ -49,7 +49,6 @@ class BookServices
      */
     public static function getISBN($file)
     {
-
         $apiKey = env('GOOGLE_VISION_API_KEY');
         $vision = new Vision($apiKey, [new Feature(Feature::TEXT_DETECTION, 100)]);
         $response = $vision->request(new LocalImage($file->path()));

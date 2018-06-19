@@ -18,11 +18,11 @@ class Setting extends Model
 
     public static function scopeKey($query, $key)
     {
-    	return $query->where('setting_key', $key);
+        return $query->where('setting_key', $key);
     }
 
     public static function scopeModule($query, $module)
     {
-    	return $query->where('module', $module);
+        return $query->where('module', $module);
     }
 }

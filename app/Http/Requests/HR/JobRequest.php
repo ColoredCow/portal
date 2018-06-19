@@ -23,8 +23,7 @@ class JobRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() === 'POST')
-        {
+        if ($this->method() === 'POST') {
             $rules = [
                 'title' => 'required|string',
                 'by' => 'required|string',
@@ -32,8 +31,7 @@ class JobRequest extends FormRequest
             ];
         }
 
-        if ($this->method() === 'PATCH')
-        {
+        if ($this->method() === 'PATCH') {
             $rules = [
                 'facebook_post' => 'nullable|url',
                 'instagram_post' => 'nullable|url',
