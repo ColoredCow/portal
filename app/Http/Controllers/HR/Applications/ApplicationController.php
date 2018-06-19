@@ -38,8 +38,7 @@ abstract class ApplicationController extends Controller
             ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
 
-        $attr =
-            [
+        $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
