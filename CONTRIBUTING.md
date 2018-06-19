@@ -32,11 +32,11 @@ When contributing to this repository, please first discuss the change you wish t
 
 
 ### Some key points
-1.Laravel follows the [PSR-2](https://www.php-fig.org/psr/psr-2/) coding standard and the [PSR-4](https://www.php-fig.org/psr/psr-4/) autoloading standard.
+1.This project is build on Laravel. So we follows the [PSR-2](https://www.php-fig.org/psr/psr-2/) coding standard and the [PSR-4](https://www.php-fig.org/psr/psr-4/) autoloading standard.
 
-2.[StyleCI](https://styleci.io/) provides checks for both your open and closed source repositories. By analyzing every push or pull request made on your codebase, StyleCI ensures that your code is always written against the standards you want it to be.
+2.[StyleCI](https://styleci.io/) it checks for style errors on git repository commits and pull requests.
 
-3.Unit testing for feature , for more information [Testing](https://laravel.com/docs/5.6/testing).
+3.Unit testing for feature, write test cases for every feature. For more information [Testing](https://laravel.com/docs/5.6/testing).
 
 4.Avoid the bug reports. **"Bug Reports"** may also be sent in the form of a pull request containing a failing test.
 
