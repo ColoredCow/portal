@@ -196,6 +196,7 @@ if (document.getElementById('finance_report')) {
 }
 
 $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function() {
+    let button = $(this);
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
     if (selectedAction == 'confirm' || selectedAction == 'send-for-approval' || selectedAction == 'onboard') {
@@ -205,6 +206,7 @@ $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', 
         }
     }
     form.find('[name="action"]').val(selectedAction);
+    button.prop('disabled', 'disabled').addClass('disabled');
     form.submit();
 });
 
