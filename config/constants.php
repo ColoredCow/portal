@@ -86,14 +86,14 @@ return [
                 'title' => 'Accepted in this round',
                 'class' => 'badge badge-success',
             ],
-            'completed' => [
-                'label' => 'completed',
-                'title' => 'Cleared all rounds',
+            'approved' => [
+                'label' => 'approved',
+                'title' => 'Approved',
                 'class' => 'badge badge-success',
             ],
             'onboarded' => [
                 'label' => 'onboarded',
-                'title' => 'Onboarded team',
+                'title' => 'Onboarded',
                 'class' => 'badge badge-success',
             ],
         ],
