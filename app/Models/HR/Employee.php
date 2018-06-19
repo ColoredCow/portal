@@ -27,8 +27,8 @@ class Employee extends Model
         if (is_null($this->user_id)) {
             return null;
         } else {
-            return $this->joined_on->diffForHumans(Carbon::now(), true, true);
+            $now = Carbon::now();
+            return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, true);
         }
-        return $duration;
     }
 }

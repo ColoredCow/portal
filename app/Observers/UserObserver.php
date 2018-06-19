@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\HR\Employee;
 use App\User;
+use Carbon\Carbon;
 
 class UserObserver
 {
@@ -15,11 +16,10 @@ class UserObserver
      */
     public function created(User $user)
     {
-        if ($user->isActiveEmployee) {
-            Employee::create([
-                'user_id' => $user->id,
-                'name' => $user->name,
-            ]);
-        }
+        Employee::create([
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'joined_on' => Carbon::today(),
+        ]);
     }
 }
