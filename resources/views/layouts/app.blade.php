@@ -29,11 +29,17 @@
                 @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        @can('hr_applicants.view')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/hr/applications/job') }}">HR</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown_hr" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    HR <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_hr">
+                                    <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
+                                     <a class="dropdown-item" href="{{ route('team') }}">Team management</a>
+                                </div>
+                            </li>
                         </li>
-                        @endcan
                         @can('finance_reports.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
