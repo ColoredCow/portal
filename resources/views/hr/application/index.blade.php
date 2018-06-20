@@ -4,13 +4,13 @@
 <div class="container">
     <br>
     @include('hr.menu')
-    <br><br>
+    <br>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-8">
             <h1>Applications</h1>
         </div>
-        <div class="col-md-9">
-        <form class="form-inline" method="GET" action="/{{ Request::path() }}">
+        <div class="col-md-4">
+        <form class="form-inline offset-3" method="GET" action="/{{ Request::path() }}">
             <input type="hidden" name="status" class="form-control" id="search" value=
                 @switch(request('status'))
                     @case('on-hold')
@@ -18,12 +18,13 @@
                     @case('rejected')
                         {{ config('constants.hr.status.rejected.label') }}
                     @case('sent-for-approval')
-                        {{ config('constants.hr.status.sent-for-approval.title') }}
+                        {{ config('constants.hr.status.sent-for-approval.label') }}
                     @case('no-show')
                         {{ config('constants.hr.status.no-show.label') }}
                     @endswitch>
                <div class="form-group">
-                   <input type="text" name="search" class="form-control" id="search" placeholder="Search applicants">
+                   <input type="text" name="search" class="form-control" id="search" placeholder="Search Applicants" value=@if(request()->has('search')){{request()->get('search')}}
+                   @endif>
                </div>
                <button class="btn btn-info ml-2">Search</button>
             </form>
@@ -42,19 +43,19 @@
     <div class="d-flex align-items-center justify-content-between">
         <ul class="nav nav-pills mb-2">
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Open</a>
+                <a class="nav-item nav-link {{ $status ? 'text-info' : 'active bg-info text-white' }}" href="/{{ Request::path() }}/"><i class="fa fa-clipboard"></i>&nbsp;Open @if(request()->has('search')) ({{$openApplicationsCount}} )@endif</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.sent-for-approval.label') }}"><i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.sent-for-approval.label') }}"><i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }} @if(request()->has('search')) ( {{$pendingApplicationsCount}} ) @endif</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.on-hold.label') }}"><i class="fa fa-file-text-o"></i>&nbsp;{{ config('constants.hr.status.on-hold.title') }}</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.on-hold.label') }}"><i class="fa fa-file-text-o"></i>&nbsp;{{ config('constants.hr.status.on-hold.title') }} @if(request()->has('search')) ( {{$onHoldApplicationsCount}} )@endif</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}"><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}</a>
+                <a class="nav-item nav-link {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}"><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }} @if(request()->has('search')) ( {{$noShowApplicationsCount}} )@endif</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link {{ $status === 'closed' ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status=closed"><i class="fa fa-times-circle"></i>&nbsp;Closed</a>
+                <a class="nav-item nav-link {{ $status === 'closed' ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status=closed"><i class="fa fa-times-circle"></i>&nbsp;Closed @if(request()->has('search')) ({{$rejectedApplicationsCount}} )@endif</a>
             </li>
         </ul>
         @if( isset($openJobsCount, $openApplicationsCount) )

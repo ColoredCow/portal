@@ -43,16 +43,47 @@ abstract class ApplicationController extends Controller
             'status' => request()->get('status'),
         ];
 
-        if ($this->getApplicationType() == 'job') {
-            $attr['openJobsCount'] = Job::count();
-            $attr['openApplicationsCount'] = Application::applyFilter([
-                'job-type' => 'job',
-                'job' => request()->get('hr_job_id'),
-            ])
-                ->isOpen()
-                ->get()
-                ->count();
-        }
+        $attr['openJobsCount'] = Job::count();
+        $attr['onHoldApplicationsCount'] = Application::applyFilter([
+            'name' => request()->get('search'),
+            'job-type' => $this->getApplicationType(),
+            'job' => request()->get('hr_job_id'),
+        ])
+            ->where('status', 'on-hold')
+            ->get()
+            ->count();
+        $attr['noShowApplicationsCount'] = Application::applyFilter([
+            'name' => request()->get('search'),
+            'job-type' => $this->getApplicationType(),
+            'job' => request()->get('hr_job_id'),
+        ])
+            ->where('status', 'no-show')
+            ->get()
+            ->count();
+        $attr['rejectedApplicationsCount'] = Application::applyFilter([
+            'name' => request()->get('search'),
+            'job-type' => $this->getApplicationType(),
+            'job' => request()->get('hr_job_id'),
+        ])
+            ->where('status', 'rejected')
+            ->get()
+            ->count();
+        $attr['pendingApplicationsCount'] = Application::applyFilter([
+            'name' => request()->get('search'),
+            'job-type' => $this->getApplicationType(),
+            'job' => request()->get('hr_job_id'),
+        ])
+            ->where('status', 'sent-for-approval')
+            ->get()
+            ->count();
+        $attr['openApplicationsCount'] = Application::applyFilter([
+            'job-type' => 'job',
+            'job' => request()->get('hr_job_id'),
+            'name' => request()->get('search'),
+        ])
+            ->isOpen()
+            ->get()
+            ->count();
 
         return view('hr.application.index')->with($attr);
     }
