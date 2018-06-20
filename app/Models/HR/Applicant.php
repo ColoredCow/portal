@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Services\GSuiteUserService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -94,5 +95,22 @@ class Applicant extends Model
     public function hasGraduated()
     {
         return $this->graduation_year ? $this->graduation_year <= Carbon::now()->year : 'esss';
+    }
+
+    public function onboard($email, $password, $params = array())
+    {
+        $gsuiteUser = new GSuiteUserService;
+        $gsuiteUser->create($this->splitName(), $email, $password, $params);
+    }
+
+    public function splitName()
+    {
+        $name = trim($this->name);
+        $lastName = (strpos($name, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
+        $firstName = trim(preg_replace('#' . $lastName . '#', '', $name));
+        return [
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+        ];
     }
 }
