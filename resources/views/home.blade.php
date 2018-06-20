@@ -5,14 +5,13 @@
 <div class="container" id="home_page">
     @include('status', ['errors' => $errors->all()])
     <br>
-    <div class="d-flex justify-content-center row flex-wrap text-center ">
-        @can('hr_applicants.view')
-        <div class="col-md-3 col-sm-4 card m-3">
-            <a class="card-body no-transition" href="/hr/applications/job">
+
+    <div class="d-flex justify-content-start row flex-wrap">
+        <div class="col-md-3 card mx-5 my-3">
+            <a class="card-body no-transition" href="/hr">
                 <br><h2 class="text-center">HR</h2><br>
             </a>
         </div>
-        @endcan
 
         @can('finance_reports.view')
         <div class="col-md-3 col-sm-4 card m-3">
