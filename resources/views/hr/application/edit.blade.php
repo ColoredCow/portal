@@ -174,7 +174,7 @@
                                     </div>
                                 @endif
                             </div>
-                            @if (!$applicationRound->mail_sent)
+                            @if ($applicationRound->mail_sent && $loop->last && $application->isRejected())
                             <div class="card-footer">
                                 <div class="d-flex align-items-center">
                                 @if ($applicationRound->showActions)
