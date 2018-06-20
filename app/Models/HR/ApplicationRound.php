@@ -67,6 +67,22 @@ class ApplicationRound extends Model
                 $application->reject();
                 $applicant->applications->where('id', $attr['refer_to'])->first()->markInProgress();
                 break;
+
+            case 'send-for-approval':
+                $fillable['round_status'] = 'confirmed';
+                $application->sendForApproval($attr['send_for_approval_person']);
+                break;
+
+            case 'onboard':
+                $fillable['round_status'] = 'confirmed';
+                $application->approve();
+                // The below env call needs to be changed to config after the default
+                // credentials bug in the Google API services is resolved.
+                $email = $attr['onboard_email'] . '@' . env('GOOGLE_CLIENT_HD');
+                $applicant->onboard($email, $attr['onboard_password'], [
+                    'designation' => $attr['designation'],
+                ]);
+                break;
         }
         $this->update($fillable);
         $this->_updateOrCreateReviews($attr['reviews']);
@@ -192,5 +208,27 @@ class ApplicationRound extends Model
 
         // Using Laravel's collection method groupBy to group scheduled application rounds based on the scheduled person
         return $applicationRounds->groupBy('scheduled_person_id');
+    }
+
+    public function isRejected()
+    {
+        return $this->round_status == config('constants.hr.status.rejected.label');
+    }
+
+    public function isConfirmed()
+    {
+        return $this->round_status = config('constants.hr.status.confirmed.label');
+    }
+
+    /**
+     * Defines whether to show actions dropdown for an application round. An action can only be taken
+     * if the application round status is null or rejected. Also, returns true if the application
+     * round is confirmed but the application is sent/waiting for approval.
+     *
+     * @return boolean
+     */
+    public function getShowActionsAttribute()
+    {
+        return is_null($this->round_status) || $this->isRejected() || ($this->isConfirmed() && $this->application->isSentForApproval());
     }
 }

@@ -8,7 +8,6 @@ use App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest;
 
 class BookCategoryController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(BookCategory::class);
@@ -55,7 +54,6 @@ class BookCategoryController extends Controller
      */
     public function show(BookCategory $bookCategory)
     {
-       
     }
 
     /**
@@ -94,13 +92,14 @@ class BookCategoryController extends Controller
         return response()->json(['isDeleted' => $bookCategory->delete() ]);
     }
 
-     /**
-     * @param  Array  $categories
-     * @return Array
-     */
-    public function formatCategoryData($categories) {
+    /**
+    * @param  Array  $categories
+    * @return Array
+    */
+    public function formatCategoryData($categories)
+    {
         $data = [];
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
             $data[] = [
                 'id' => $category->id,
                 'name' =>  $category->name,

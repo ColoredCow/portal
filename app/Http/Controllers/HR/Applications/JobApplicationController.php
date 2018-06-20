@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class JobApplicationController extends ApplicationController
 {
-    public function getApplicationType() {
-    	return 'job';
+    public function getApplicationType()
+    {
+        return 'job';
     }
 }

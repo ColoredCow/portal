@@ -25,7 +25,7 @@ class CreateFinanceInvoicesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('finance_invoices', function(Blueprint $table) {
+        Schema::table('finance_invoices', function (Blueprint $table) {
             $table->foreign('project_id')->references('id')->on('projects');
         });
     }

@@ -22,10 +22,9 @@ class CreateHrApplicantsTable extends Migration
             $table->string('status')->nullable();
             $table->string('resume')->nullable();
             $table->timestamps();
-
         });
 
-        Schema::table('hr_applicants', function(Blueprint $table) {
+        Schema::table('hr_applicants', function (Blueprint $table) {
             $table->foreign('hr_job_id')->references('id')->on('hr_jobs');
         });
     }

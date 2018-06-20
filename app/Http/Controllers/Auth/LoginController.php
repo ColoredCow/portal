@@ -52,7 +52,7 @@ class LoginController extends Controller
     {
         switch ($provider) {
             case 'google':
-                return Socialite::driver($provider)->with(['hd' => env('GOOGLE_CLIENT_HD')])->redirect();
+                return Socialite::driver($provider)->with(['hd' => config('constants.gsuite.client-hd')])->redirect();
                 break;
 
             default:
@@ -119,5 +119,4 @@ class LoginController extends Controller
 
         return json_decode((string) $response->getBody(), true)['access_token'];
     }
-
 }
