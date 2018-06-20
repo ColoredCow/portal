@@ -6,10 +6,10 @@ use App\Http\Controllers\Auth\GuzzleHttp\Client;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Facades\Socialite;
-
-// use App\Http\Controllers\Auth\GuzzleHttp\Client;
 
 class LoginController extends Controller
 {
@@ -100,17 +100,19 @@ class LoginController extends Controller
             'provider' => $provider,
             'provider_id' => $user->id,
         ]);
+
     }
 
-    public function GetToken()
+    public function GetToken(Request $request)
     {
+        $query = User::select('id')->where('email', $request->user)->get()->first();
+        $client = DB::table('oauth_clients')->where('user_id', $query->id)->get();
         $guzzle = new \GuzzleHttp\Client;
-
-        $response = $guzzle->post('http://localhost/oauth/token', [
+        $response = $guzzle->post(url('/oauth/token'), [
             'form_params' => [
                 'grant_type' => 'client_credentials',
-                'client_id' => '6',
-                'client_secret' => '9KqRYoOTN1Sq7cH1zCe5IBP5TUBHHg4yOvoiwgkI',
+                'client_id' => $client->first()->id,
+                'client_secret' => $client->first()->secret,
                 'scope' => '',
             ],
         ]);
