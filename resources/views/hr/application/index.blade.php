@@ -5,7 +5,39 @@
     <br>
     @include('hr.menu')
     <br><br>
-    <h1>Applications</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <h1>Applications</h1>
+        </div>
+        <div class="col-md-9">
+        <form class="form-inline" method="GET" action="/{{ Request::path() }}">
+            <input type="hidden" name="status" class="form-control" id="search" value=
+                @switch(request('status'))
+                    @case('on-hold')
+                        {{ config('constants.hr.status.on-hold.label') }}
+                    @case('rejected')
+                        {{ config('constants.hr.status.rejected.label') }}
+                    @case('sent-for-approval')
+                        {{ config('constants.hr.status.sent-for-approval.title') }}
+                    @case('no-show')
+                        {{ config('constants.hr.status.no-show.label') }}
+                    @endswitch>
+               <div class="form-group">
+                   <input type="text" name="search" class="form-control" id="search" placeholder="Search applicants">
+               </div>
+               <button class="btn btn-info ml-2">Search</button>
+            </form>
+        </div>
+    </div>
+    @if(request()->has('search'))
+    <div class="row mt-3 mb-2">
+        <div class="col-6">
+            <a class="text-muted c-pointer" href="/{{ Request::path() }}?status={{request('status')}}">
+                <i class="fa fa-times"></i>&nbsp;Clear current search and filters
+            </a>
+        </div>
+    </div>
+    @endif
     <br>
     <div class="d-flex align-items-center justify-content-between">
         <ul class="nav nav-pills mb-2">
