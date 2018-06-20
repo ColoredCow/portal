@@ -82,6 +82,13 @@
                 </div>
                 <br>
                 <div class="form-row">
+                <div class="form-group col-md-3">
+                        <label for="due_date" class="field-required">Due date</label>
+                        <input type="text" class="form-control date-field" name="due_date" id="due_date" placeholder="dd/mm/yyyy" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->due_date)) }}">
+                    </div>
+                    </div>
+
+                <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="name" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" required="required" v-model="status" data-status="{{ $invoice->status }}">

@@ -41,7 +41,7 @@ class InvoiceController extends Controller
             ];
         } else {
             $attr = [
-                'invoices' => Invoice::getList()
+                'invoices' => Invoice::getList(),
             ];
         }
 
@@ -98,7 +98,7 @@ class InvoiceController extends Controller
             'due_amount' => $validated['due_amount'],
             'currency_due_amount' => $validated['currency_due_amount'],
             'file_path' => $path,
-            'due_date' => isset($validated['due_date']) ? DateHelper::formatDateToSave($validated['due_date']) : null
+            'due_date' => DateHelper::formatDateToSave($validated['due_date']),
         ]);
 
         foreach ($validated['billings'] as $billing) {
@@ -188,6 +188,8 @@ class InvoiceController extends Controller
             'currency_tds' => $validated['currency_tds'],
             'due_amount' => $validated['due_amount'],
             'currency_due_amount' => $validated['currency_due_amount'],
+            'due_date' => DateHelper::formatDateToSave($validated['due_date']),
+
         ]);
 
         $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
@@ -246,7 +248,7 @@ class InvoiceController extends Controller
     public function download($year, $month, $file, $inline = true)
     {
         $headers = [
-            'content-type'=>'application/pdf'
+            'content-type' => 'application/pdf',
         ];
 
         $file_path = FileHelper::getFilePath($year, $month, $file);
@@ -259,6 +261,6 @@ class InvoiceController extends Controller
             return Response::make(Storage::get($file_path), 200, $headers);
         }
 
-        return  Storage::download($file_path);
+        return Storage::download($file_path);
     }
 }
