@@ -8,6 +8,7 @@ use App\Mail\HR\Application\JobChanged;
 use App\Mail\HR\Application\RoundNotConducted;
 use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
+use App\Models\HR\Evaluation\Parameter;
 use App\Models\HR\Job;
 use App\Models\Setting;
 use App\User;
@@ -67,7 +68,7 @@ abstract class ApplicationController extends Controller
     {
         $application = Application::findOrFail($id);
         
-        $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds',  'job.rounds.evaluationParameters',  'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
+        $application->load(['job', 'job.rounds',  'job.rounds.evaluationParameters',  'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
         $attr = [
             'applicant' => $application->applicant,
