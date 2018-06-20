@@ -124,7 +124,6 @@
                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                         </div>
                     </div>
-
                     <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
 
                         {{ csrf_field() }}
@@ -174,9 +173,11 @@
                                     </div>
                                 @endif
                             </div>
+
                             @if (!$applicationRound->mail_sent)
                             <div class="card-footer">
                                 <div class="d-flex align-items-center">
+
                                 @if ($applicationRound->showActions)
                                     <select name="action_type" id="action_type" class="form-control w-50" v-model="selectedAction" data-application-job-rounds="{{ json_encode($application->job->rounds) }}">
                                         <option v-for="round in applicationJobRounds" value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
@@ -185,6 +186,7 @@
                                     </select>
                                     <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
                                 @endif
+
                                 @if ($loop->last && !$application->isRejected())
                                     @if ($applicantOpenApplications->count() > 1)
                                         <button type="button" class="btn btn-outline-danger ml-2" data-toggle="modal" data-target="#application_reject_modal">Reject</button>
@@ -193,11 +195,24 @@
                                         <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject">Reject</button>
                                     @endif
                                 @endif
-                                @if (!is_null($applicationRound->round_status) && !$applicationRound->mail_sent)
+                                @if (!is_null($applicationRound->round_status))
                                     <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
                                 @endif
                                 </div>
                             </div>
+                            @else
+                            @if ($application->isRejected())
+                            <div class="card-footer">
+                                <div class="d-flex align-items-center">
+                                    <select name="action_type" id="action_type" class="form-control w-50" v-model="selectedAction" data-application-job-rounds="{{ json_encode($application->job->rounds) }}">
+                                        <option v-for="round in applicationJobRounds" value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
+                                        <option value="send-for-approval">Send for approval</option>
+                                        <option value="approve">Approve</option>
+                                    </select>
+                                    <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
+                                </div>
+                            </div>
+                            @endif
                             @endif
                         </div>
                         <input type="hidden" name="action" value="updated">
