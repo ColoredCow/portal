@@ -19,7 +19,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -49,7 +49,7 @@ class LoginController extends Controller
     {
         switch ($provider) {
             case 'google':
-                return Socialite::driver($provider)->with(['hd' => env('GOOGLE_CLIENT_HD')])->redirect();
+                return Socialite::driver($provider)->with(['hd' => config('constants.gsuite.client-hd')])->redirect();
                 break;
 
             default:
@@ -92,10 +92,10 @@ class LoginController extends Controller
             return $authUser;
         }
         return User::create([
-            'name'     => $user->name,
-            'email'    => $user->email,
+            'name' => $user->name,
+            'email' => $user->email,
             'provider' => $provider,
-            'provider_id' => $user->id
+            'provider_id' => $user->id,
         ]);
     }
 }

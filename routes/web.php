@@ -26,8 +26,20 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::middleware('auth')->group(function () {
+    Route::prefix('profile')->group(function () {
+        Route::get('gsuite-sync', 'UserController@syncWithGSuite')->name('profile.gsuite-sync');
+    });
+
     Route::prefix('hr')->namespace('HR')->group(function () {
+        Route::get('/', 'HRController@index');
+
+        Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
+            Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
+            Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
+        });
+
         Route::prefix('applications')->namespace('Applications')->group(function () {
+            Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update']);
@@ -35,6 +47,14 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
         });
+
+        Route::prefix('employees')->namespace('Employees')->group(function () {
+            Route::get('/', 'EmployeeController@index')->name('employees');
+            Route::get('/{employee}', 'EmployeeController@show')->name('employees.show');
+        });
+        // A better version of employee-reports would be employees/reports. The
+        // route below can be merged with employees grouped route above.
+        Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
@@ -51,8 +71,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
     Route::resource('projects', 'ProjectController')
-    ->except(['show', 'destroy'])
-    ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
+        ->except(['show', 'destroy'])
+        ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
@@ -67,7 +87,7 @@ Route::middleware('auth')->group(function () {
                         'store' => 'books.store',
                         'destroy' => 'books.delete',
                         'update' => 'books.update']);
-
+                        
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
