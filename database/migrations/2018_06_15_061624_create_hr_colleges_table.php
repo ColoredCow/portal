@@ -14,7 +14,7 @@ class CreateHrCollegesTable extends Migration
     public function up()
     {
         Schema::create('hr_colleges', function (Blueprint $table) {
-            $table->increments('id')->unsigned();;
+            $table->increments('id')->unsigned();
             $table->string('college_name');
             $table->string('tpo_email')->nullable();
             $table->text('address')->nullable();
