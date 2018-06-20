@@ -2,8 +2,9 @@
 
 namespace App\Models\HR;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Services\GSuiteUserService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Applicant extends Model
 {
@@ -43,7 +44,7 @@ class Applicant extends Model
             $application_meta = ApplicationMeta::create([
                 'hr_application_id' => $application->id,
                 'key' => config('constants.hr.application-meta.keys.form-data'),
-                'value' => json_encode($attr['form_data'])
+                'value' => json_encode($attr['form_data']),
             ]);
         }
 
@@ -95,5 +96,22 @@ class Applicant extends Model
     public function hasGraduated()
     {
         return $this->graduation_year ? $this->graduation_year <= Carbon::now()->year : 'esss';
+    }
+
+    public function onboard($email, $password, $params = array())
+    {
+        $gsuiteUser = new GSuiteUserService;
+        $gsuiteUser->create($this->splitName(), $email, $password, $params);
+    }
+
+    public function splitName()
+    {
+        $name = trim($this->name);
+        $lastName = (strpos($name, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
+        $firstName = trim(preg_replace('#' . $lastName . '#', '', $name));
+        return [
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+        ];
     }
 }
