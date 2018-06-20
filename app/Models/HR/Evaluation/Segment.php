@@ -10,18 +10,18 @@ class Segment extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'round_id'];
 
     protected $table = 'hr_evaluation_segments';
 
     protected $dates = ['deleted_at'];
 
-    public function rounds()
+    public function round()
     {
-        return $this->belongsToMany(Round::class, 'hr_round_segment', 'segment_id', 'round_id');
+        return $this->belongsTo(Round::class);
     }
 
-    public function parameter()
+    public function parameters()
     {
         return $this->hasMany(Parameter::class, 'segment_id');
     }

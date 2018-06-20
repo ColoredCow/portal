@@ -3,6 +3,7 @@
 return [
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
+        'client-hd' => env('GOOGLE_CLIENT_HD', ''),
     ],
     'date_format' => 'Y-m-d',
     'datetime_format' => 'Y-m-d H:i:s',
@@ -85,14 +86,14 @@ return [
                 'title' => 'Accepted in this round',
                 'class' => 'badge badge-success',
             ],
-            'completed' => [
-                'label' => 'completed',
-                'title' => 'Cleared all rounds',
+            'approved' => [
+                'label' => 'approved',
+                'title' => 'Approved',
                 'class' => 'badge badge-success',
             ],
             'onboarded' => [
                 'label' => 'onboarded',
-                'title' => 'Onboarded team',
+                'title' => 'Onboarded',
                 'class' => 'badge badge-success',
             ],
         ],
