@@ -2,46 +2,24 @@
 
 When contributing to this repository, please first discuss the change you wish to make via an issue before making a change.
 
-1.Before contributing keep this thing in your mind that synchronize your develop from base.
-        
-        $ git pull  base develop
-        
+1. Fork this repository. Read about [how to fork a repository](https://help.github.com/articles/fork-a-repo/).
 
-2.For every issue or contributing in repository create a new branch.
+2. For every contribution, create a new branch. A branch name must follow the format `issueID-issue-info`.
 
-        $ git branch <branch name>
-        -branch name should be something like this  < 221_create_new_column> ,221 is issue no.
+        > git branch 497-billing-calculation
 
-3.Try to frequently commit the changes.
+3. Make brief and clear commit messages.
         
-        $ git commit -m <"appropriate message">
-     
-4.After commit push your commits to the  origin. 
-        
-        $ git push --set-upstream origin <branch name> 
-       -it will push the contents from local feature branch to remote feature branch.
-
+        > git commit -m "fixed the user interface for application listing"
   
-5.It's your responsibility to **self review and self test** your commits because it may conflict with base and cause errors.
+3. Once the development is complete, create a pull request from your forked repository to `coloredcow:develop`.
 
-6.Always  done your pull request(PR) to the base  from your origin and for this repository base is **coloredcow/employee-portal**.
+4. While creating the pull request, put a clean and short description of the functionality changes you have done.
 
-7.After pull request write a  **description about your issue and what you have done in the code.**
+5. Make sure there are no conflicts in the pull request. Before creating a PR, make sure you **perform a self-review and do a detailed testing** of the functionality you built.
 
-8.Atlast please leave a *feedback* and request for *review* the code.
+6. Make sure the [TravisCI](https://travis-ci.org/ColoredCow/employee-portal/builds) and [StyleCI](https://github.styleci.io/repos/125008594) builds are passing. Any failing PRs won't get accepted.
 
+7. When a reviewer leaves the review feedback, make sure you communicate clearly on those points. Comment your doubts/opinions on the discussion thread.
 
-### Some key points
-1.This project is build on Laravel. So we follows the [PSR-2](https://www.php-fig.org/psr/psr-2/) coding standard and the [PSR-4](https://www.php-fig.org/psr/psr-4/) autoloading standard.
-
-2.[StyleCI](https://styleci.io/) it checks for style errors on git repository commits and pull requests.
-
-3.Unit testing for feature, write test cases for every feature. For more information [Testing](https://laravel.com/docs/5.6/testing).
-
-4.Avoid the bug reports. **"Bug Reports"** may also be sent in the form of a pull request containing a failing test.
-
-
-
-
-
-
+8. Once you complete the feedback, comment and mention the reviewer to perform a code review again.
