@@ -79,6 +79,9 @@ class Application extends Model
                 case 'job':
                     $query->filterByJob($value);
                     break;
+                case 'name':
+                    $query->filterByName($value);
+                    break;
             }
         }
 
@@ -132,6 +135,15 @@ class Application extends Model
         $query->whereHas('job', function ($subQuery) use ($type) {
             $functionName = 'is' . $type;
             $subQuery->{$functionName}();
+        });
+
+        return $query;
+    }
+
+    public function scopeFilterByName($query, $search)
+    {
+        $query->whereHas('applicant', function ($query) use ($search) {
+            ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
         });
 
         return $query;
