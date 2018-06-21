@@ -6,11 +6,10 @@
     @include('hr.volunteers.menu')
     <br><br>
     <div class="row">
-        <div class="col-md-3">
-            <h1>Applications</h1>
+        <div class="col-md-6">
+            <h1>Volunteering Applications</h1>
         </div>
-        <div class="col-md-9">
-        <form class="form-inline" method="GET" action="/{{ Request::path() }}">
+        <form class="offset-md-2 col-md-4 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
             <input type="hidden" name="status" class="form-control" id="search" value=
                 @switch(request('status'))
                     @case('on-hold')
@@ -22,12 +21,9 @@
                     @case('no-show')
                         {{ config('constants.hr.status.no-show.label') }}
                     @endswitch>
-               <div class="form-group">
-                   <input type="text" name="search" class="form-control" id="search" placeholder="Search applicants">
-               </div>
-               <button class="btn btn-info ml-2">Search</button>
-            </form>
-        </div>
+           <input type="text" name="search" class="form-control" id="search" placeholder="Search volunteers">
+           <button class="btn btn-info ml-2">Search</button>
+        </form>
     </div>
     @if(request()->has('search'))
     <div class="row mt-3 mb-2">
