@@ -100,7 +100,6 @@ class LoginController extends Controller
             'provider' => $provider,
             'provider_id' => $user->id,
         ]);
-
     }
 
     public function GetToken(Request $request)
