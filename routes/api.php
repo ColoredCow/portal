@@ -14,13 +14,12 @@ use Illuminate\Http\Request;
  */
 
 Route::get('/user', function (Request $request) {
-})->middleware('client')->group(function () {
-    Route::resource('hr/jobs', 'HR\JobController')->only(['store']);
-    Route::resource('hr/applicants', 'HR\ApplicantController')->only(['store']);
-    Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
-        Route::prefix('library')->namespace('Library')->group(function () {
-            Route::get('book/getList', 'BookController@getBookList');
-        });
-        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['store']);
+})->middleware('client');
+Route::resource('hr/jobs', 'HR\JobController')->only(['store']);
+Route::resource('hr/applicants', 'HR\ApplicantController')->only(['store']);
+Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
+    Route::prefix('library')->namespace('Library')->group(function () {
+        Route::get('book/getList', 'BookController@getBookList');
     });
+    Route::resource('weeklydoses', 'WeeklyDoseController')->only(['store']);
 });
