@@ -101,7 +101,6 @@ class LoginController extends Controller
             'provider_id' => $user->id,
         ]);
     }
-
     public function GetToken(Request $request)
     {
         $query = User::select('id')->where('email', $request->user)->get()->first();
@@ -115,7 +114,6 @@ class LoginController extends Controller
                 'scope' => '',
             ],
         ]);
-
         return json_decode((string) $response->getBody(), true)['access_token'];
     }
 }
