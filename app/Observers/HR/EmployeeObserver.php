@@ -15,15 +15,16 @@ class EmployeeObserver
      */
     public function created(Employee $employee)
     {
-        if (!app()->environment('testing')) {
-            $gsuiteUser = new GSuiteUserService;
-            $gsuiteUser->fetch($employee->user->email);
-            $employee->update([
-                'name' => $gsuiteUser->getName(),
-                'joined_on' => $gsuiteUser->getJoinedOn(),
-                'designation' => $gsuiteUser->getDesignation(),
-            ]);
+        if (app()->environment('testing')) {
+            return;
         }
+        $gsuiteUser = new GSuiteUserService;
+        $gsuiteUser->fetch($employee->user->email);
+        $employee->update([
+            'name' => $gsuiteUser->getName(),
+            'joined_on' => $gsuiteUser->getJoinedOn(),
+            'designation' => $gsuiteUser->getDesignation(),
+        ]);
     }
 
     /**
