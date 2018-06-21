@@ -5,7 +5,6 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\JobRequest;
 use App\Models\HR\Job;
-use App\Models\HR\Round;
 use App\User;
 
 class JobController extends Controller
@@ -13,7 +12,7 @@ class JobController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Job::class, null, [
-            'except' => ['store']
+            'except' => ['store'],
         ]);
     }
 
@@ -55,6 +54,7 @@ class JobController extends Controller
             'title' => $validated['title'],
             'posted_by' => $validated['by'],
             'link' => $validated['link'],
+            'type' => $validated['type'],
         ]);
     }
 

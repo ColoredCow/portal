@@ -61,4 +61,9 @@ class Job extends Model
     {
         return $query->filterByType('internship');
     }
+
+    public function scopeIsVolunteer($query)
+    {
+        return $query->filterByType('volunteer');
+    }
 }

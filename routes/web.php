@@ -38,6 +38,11 @@ Route::middleware('auth')->group(function () {
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
         });
 
+        Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
+            Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
+            Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');
+        });
+
         Route::prefix('applications')->namespace('Applications')->group(function () {
             Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
             Route::resource('job', 'JobApplicationController')
@@ -46,6 +51,9 @@ Route::middleware('auth')->group(function () {
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
+            Route::resource('volunteers', 'VolunteerApplicationController')
+                ->only(['index'])
+                ->names(['index' => 'applications.volunteers']);
         });
 
         Route::prefix('employees')->namespace('Employees')->group(function () {
