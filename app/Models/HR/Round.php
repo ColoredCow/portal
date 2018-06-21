@@ -2,8 +2,8 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\EvaluationParameter;
-use App\Models\HR\Job;
+use App\Models\HR\Evaluation\Parameter as EvaluationParameter;
+use App\Models\HR\Evaluation\Segment as EvaluationSegment;
 use Illuminate\Database\Eloquent\Model;
 
 class Round extends Model
@@ -27,8 +27,13 @@ class Round extends Model
         return $this->belongsToMany(Job::class, 'hr_jobs_rounds', 'hr_round_id', 'hr_job_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer');
     }
 
-    public function evaluationParameter()
+    public function evaluationParameters()
     {
         return $this->belongsToMany(EvaluationParameter::class, 'hr_round_evaluation', 'round_id', 'evaluation_id');
+    }
+
+    public function evaluationSegments()
+    {
+        return $this->hasMany(EvaluationSegment::class, 'round_id');
     }
 }

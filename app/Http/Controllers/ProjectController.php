@@ -8,7 +8,6 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(Project::class);
@@ -22,9 +21,14 @@ class ProjectController extends Controller
     public function index()
     {
         $this->authorize('list', Project::class);
-
+        if (request()->has('client_id')) {
+            $client = Client::find(request()->input('client_id'));
+            $projects = $client->projects()->paginate();
+        } else {
+            $projects = Project::getList();
+        }
         return view('project.index')->with([
-            'projects' => Project::getList(),
+            'projects' => $projects,
         ]);
     }
 
@@ -56,7 +60,7 @@ class ProjectController extends Controller
             'status' => $validated['status'],
             'invoice_email' => $validated['invoice_email'],
         ]);
-        return redirect("/projects/$project->id/edit")->with('status', 'Project created successfully!');
+        return redirect(route('projects.edit', $project->id))->with('status', 'Project created successfully!');
     }
 
     /**
@@ -104,7 +108,7 @@ class ProjectController extends Controller
             'invoice_email' => $validated['invoice_email'],
             'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
         ]);
-        return redirect("/projects/$project->id/edit")->with('status', 'Project updated successfully!');
+        return redirect(route('projects.edit', $project->id))->with('status', 'Project updated successfully!');
     }
 
     /**

@@ -3,15 +3,11 @@
 namespace App\Models\HR;
 
 use App\Events\HR\ApplicationCreated;
-use App\Models\HR\Applicant;
-use App\Models\HR\ApplicationMeta;
-use App\Models\HR\ApplicationRound;
-use App\Models\HR\Job;
-use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use App\Helpers\ContentHelper;
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Application extends Model
 {
@@ -34,9 +30,19 @@ class Application extends Model
         return $this->hasMany(ApplicationRound::class, 'hr_application_id');
     }
 
+    public function evaluations()
+    {
+        return $this->hasMany(ApplicationEvaluation::class);
+    }
+
     public function applicationMeta()
     {
         return $this->hasMany(ApplicationMeta::class, 'hr_application_id');
+    }
+
+    public function pendingApprovalFrom()
+    {
+        return $this->belongsTo(User::class, 'pending_approval_from');
     }
 
     /**
@@ -73,6 +79,9 @@ class Application extends Model
                 case 'job':
                     $query->filterByJob($value);
                     break;
+                case 'name':
+                    $query->filterByName($value);
+                    break;
             }
         }
 
@@ -93,9 +102,18 @@ class Application extends Model
             case config('constants.hr.status.rejected.label'):
                 $query->rejected();
                 break;
+            case 'closed':
+                $query->closed();
+                break;
             case config('constants.hr.status.on-hold.label'):
                 $query->onHold();
-                break;    
+                break;
+            case config('constants.hr.status.no-show.label'):
+                $query->noShow();
+                break;
+            case config('constants.hr.status.sent-for-approval.label'):
+                $query->sentForApproval();
+                break;
             default:
                 $query->isOpen();
                 break;
@@ -122,6 +140,15 @@ class Application extends Model
         return $query;
     }
 
+    public function scopeFilterByName($query, $search)
+    {
+        $query->whereHas('applicant', function ($query) use ($search) {
+            ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
+        });
+
+        return $query;
+    }
+
     /**
      * Apply filter on applications based on the applied job
      *
@@ -138,11 +165,22 @@ class Application extends Model
     }
 
     /**
-     * get applications where status is rejected
+     * Get applications where status is rejected.
      */
     public function scopeRejected($query)
     {
         return $query->where('status', config('constants.hr.status.rejected.label'));
+    }
+
+    /**
+     * Get closed applications.
+     */
+    public function scopeClosed($query)
+    {
+        return $query->whereIn('status', [
+            config('constants.hr.status.rejected.label'),
+            config('constants.hr.status.approved.label'),
+        ]);
     }
 
     /**
@@ -162,6 +200,25 @@ class Application extends Model
     }
 
     /**
+     * get applications where status is no-show
+     */
+    public function scopeNoShow($query)
+    {
+        return $query->whereIn('status', [
+            config('constants.hr.status.no-show.label'),
+            config('constants.hr.status.no-show-reminded.label'),
+        ]);
+    }
+
+    /**
+     * Get applications where status is sent-for-approval
+     */
+    public function scopeSentForApproval($query)
+    {
+        return $query->where('status', config('constants.hr.status.sent-for-approval.label'));
+    }
+
+    /**
      * Set application status to rejected
      */
     public function reject()
@@ -170,11 +227,49 @@ class Application extends Model
     }
 
     /**
+     * Set application status to approved
+     */
+    public function approve()
+    {
+        $this->update(['status' => config('constants.hr.status.approved.label')]);
+    }
+
+    /**
      * Set application status to in-progress
      */
     public function markInProgress()
     {
         $this->update(['status' => config('constants.hr.status.in-progress.label')]);
+    }
+
+    /**
+     * Set the application status to sent-for-approval and also set the requested user as pending approval from
+     *
+     * @param  integer $userId
+     * @return void
+     */
+    public function sendForApproval($userId)
+    {
+        $this->update([
+            'status' => config('constants.hr.status.sent-for-approval.label'),
+            'pending_approval_from' => $userId,
+        ]);
+    }
+
+    /**
+     * Set the application status to no-show
+     */
+    public function markNoShow()
+    {
+        $this->update(['status' => config('constants.hr.status.no-show.label')]);
+    }
+
+    /**
+     * Set the application status to no-show
+     */
+    public function markNoShowReminded()
+    {
+        $this->update(['status' => config('constants.hr.status.no-show-reminded.label')]);
     }
 
     /**
@@ -207,17 +302,16 @@ class Application extends Model
             $event->value = $details;
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.change-job'),
-                'event'=> $event,
+                'event' => $event,
                 'date' => $event->created_at,
             ];
         }
 
-        // adding no-show events in the application timeline
+        // adding no-show and no-show-reminded events in the application timeline
         $noShowEvents = $this->applicationMeta()->noShow()->get();
         foreach ($noShowEvents as $event) {
             $details = json_decode($event->value);
             $details->round = ApplicationRound::find($details->round)->round->name;
-            $details->user = User::find($details->user)->name;
             $event->value = $details;
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.no-show'),
@@ -250,5 +344,28 @@ class Application extends Model
             'key' => config('constants.hr.application-meta.keys.change-job'),
             'value' => json_encode($meta),
         ]);
+    }
+
+    /**
+     * Check if the current Application instance has status either no-show or no-show-reminded.
+     *
+     * @return boolean
+     */
+    public function isNoShow()
+    {
+        return in_array($this->status, [
+            config('constants.hr.status.no-show.label'),
+            config('constants.hr.status.no-show-reminded.label'),
+        ]);
+    }
+
+    public function isSentForApproval()
+    {
+        return $this->status == config('constants.hr.status.sent-for-approval.label');
+    }
+
+    public function isRejected()
+    {
+        return $this->status == config('constants.hr.status.rejected.label');
     }
 }

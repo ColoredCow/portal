@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class InternshipApplicationController extends ApplicationController
 {
-    public function getApplicationType() {
-    	return 'internship';
+    public function getApplicationType()
+    {
+        return 'internship';
     }
 }

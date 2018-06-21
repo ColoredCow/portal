@@ -24,7 +24,7 @@ class CreateProjectsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('projects', function(Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->foreign('client_id')->references('id')->on('clients');
         });
     }

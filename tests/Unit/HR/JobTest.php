@@ -17,6 +17,5 @@ class JobTest extends TestCase
     {
         $job = factory(Job::class)->create();
         $this->assertTrue(isset($job->id));
-
     }
 }

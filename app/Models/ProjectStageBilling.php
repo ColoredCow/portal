@@ -22,6 +22,6 @@ class ProjectStageBilling extends Model
      */
     public function invoice()
     {
-    	return $this->belongsTo(Invoice::class, 'finance_invoice_id');
+        return $this->belongsTo(Invoice::class, 'finance_invoice_id');
     }
 }

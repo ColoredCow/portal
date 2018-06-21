@@ -7,28 +7,20 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Projects</h1></div>
-        <div class="col-md-6"><a href="/projects/create" class="btn btn-success float-right">Create Project</a></div>
+        <div class="col-md-6"><a href="{{ route('projects.create') }}" class="btn btn-success float-right">Create Project</a></div>
     </div>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Name</th>
             <th>Client</th>
-            <th>Started On</th>
             <th>Status</th>
         </tr>
         @foreach ($projects as $project)
         	<tr>
         		<td>
-        			<a href="/projects/{{ $project->id }}/edit/">{{ $project->name }}</a>
+        			<a href="{{ route('projects.edit', $project->id) }}">{{ $project->name }}</a>
         		</td>
         		<td>{{ $project->client->name }}</td>
-        		<td>
-        			@if ($project->started_on)
-        			<span>{{ date(config('constants.display_date_format'), strtotime($project->started_on)) }}</span>
-        			@else
-        			<span>-</span>
-        			@endif
-        		</td>
                 <td>
                 @switch ($project->status)
                     @case('active')

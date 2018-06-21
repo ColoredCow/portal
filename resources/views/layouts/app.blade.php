@@ -17,33 +17,51 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel nav-font" >
             <div class="container">
                 @guest
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand nav-font" href="{{ url('/') }}">
                 @else
-                    <a class="navbar-brand" href="{{ url('/home') }}">
+                    <a class="navbar-brand nav-font" href="{{ url('/home') }}">
                 @endguest
                         {{ config('app.name', 'Employee Portal') }}
                     </a>
                 @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        @can('hr_applicants.view')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/hr/applications/job') }}">HR</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown_hr" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    HR <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_hr">
+                                    <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
+                                     <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
+                                </div>
+                            </li>
                         </li>
-                        @endcan
                         @can('finance_reports.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
                         </li>
                         @endcan
-                        @can('weeklydoses.view')
+                        @if(auth()->user()->can('weeklydoses.view') || auth()->user()->can('library_books.view'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/weeklydoses') }}">WeeklyDose</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    KnowledgeCafe <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                     @can('library_books.view')
+                                     <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
+                                     @endcan
+                                     @can('weeklydoses.view')
+                                     <a class="dropdown-item" href="{{ route('weeklydoses') }}">WeeklyDose</a>
+                                     @endcan
+                                </div>
+                            </li>
                         </li>
-                        @endcan
+                        @endif
                         @can('settings.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
@@ -72,6 +90,7 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -2,11 +2,11 @@
 
 namespace App\Mail\HR\Application;
 
+use App\Models\HR\Application;
+use App\Models\HR\ApplicationMeta;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\HR\Application;
-use App\Models\HR\ApplicationMeta;
 
 class JobChanged extends Mailable
 {
@@ -46,10 +46,10 @@ class JobChanged extends Mailable
     public function build()
     {
         return $this->to($this->application->applicant->email, $this->application->applicant->name)
-            ->from(env('HR_DEFAULT_FROM_EMAIL'), env('HR_DEFAULT_FROM_NAME'))
+            ->from(config('constants.hr.default.name'), config('constants.hr.default.name'))
             ->subject($this->changeJobMeta->job_change_mail_subject)
             ->view('mail.plain')->with([
-                'body' => $this->changeJobMeta->job_change_mail_body
-            ]);
+            'body' => $this->changeJobMeta->job_change_mail_body,
+        ]);
     }
 }
