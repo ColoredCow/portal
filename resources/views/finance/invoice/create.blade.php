@@ -79,7 +79,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="due_date">Due date</label>
-                        <input type="text" class="form-control date-field" name="due_date" id="due_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" required="required"  value="{{ old('due_date') }}">
+                        <input type="text" class="form-control date-field" name="due_date" id="due_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}"  value="{{ old('due_date') }}">
                     </div>
                 </div>
                 <br>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="form-group col-md-3" v-show="status == 'paid'">
                         <label for="paid_on">Paid on</label>
-                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="{{ config('constants.finance.date.inputplaceholder') }}" value="{{ old('paid_on') }}">
+                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ old('paid_on') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3" v-show="status == 'paid'">
                         <label for="paid_amount">Received amount</label>

@@ -84,9 +84,15 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="due_date">Due date</label>
-                        <input type="text" class="form-control date-field" name="due_date" id="due_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->due_date)) }}">
+                        @php
+                            $due_date = $invoice->due_date ? date(config('constants.display_date_format'), strtotime($invoice->due_date)) : $invoice->due_date;
+                        @endphp
+                        <input type="text" class="form-control date-field" name="due_date" id="paid_on" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ $due_date }}">
                     </div>
                 </div>
+
+
+
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-2">
@@ -102,7 +108,7 @@
                         @php
                             $paid_on = $invoice->paid_on ? date(config('constants.display_date_format'), strtotime($invoice->paid_on)) : $invoice->paid_on;
                         @endphp
-                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ $paid_on }}">
+                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="{{config('constants.finance.date_format.inputplaceholder')}}" value="{{ $paid_on }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3" v-show="status == 'paid'">
                         <label for="paid_amount">Received amount</label>

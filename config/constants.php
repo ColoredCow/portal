@@ -136,9 +136,7 @@ return [
     ],
 
     'date_format' => [
-        'inputplaceholder' => [
-            'dd/mm/yyyy' => 'Y-m-d',
-        ],
+        'inputplaceholder' => 'dd/mm/yyyy',
     ],
     'project' => [
         'status' => [
