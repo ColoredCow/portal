@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\JobRequest;
 use App\Models\HR\Job;
 use App\User;
+use Illuminate\Support\Facades\Input;
 
 class JobController extends Controller
 {
@@ -25,8 +26,15 @@ class JobController extends Controller
     {
         $this->authorize('list', Job::class);
 
+        $jobs = Job::with('applications', 'applications.applicant')
+            ->latest()
+            ->appends(Input::except('page'));
+
+        request()->is('*recruitment/opportunities*') ? $jobs->typeRecruitment() : $jobs->typeVolunteer();
+        $jobs->paginate(config('constants.pagination_size'));
+
         return view('hr.job.index')->with([
-            'jobs' => Job::with('applications', 'applications.applicant')->orderBy('id', 'desc')->get(),
+            'jobs' => $jobs,
         ]);
     }
 

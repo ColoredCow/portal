@@ -36,11 +36,25 @@ Route::middleware('auth')->group(function () {
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
+            Route::resource('opportunities', 'RecruitmentOpportunityController')
+                ->only(['index', 'store', 'update'])
+                ->names([
+                    'index' => 'recruitment.opportunities',
+                    'store' => 'recruitment.opportunities.store',
+                    'update' => 'recruitment.opportunities.update',
+                ]);
         });
 
         Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');
+            Route::resource('opportunities', 'VolunteerOpportunityController')
+                ->only(['index', 'store', 'update'])
+                ->names([
+                    'index' => 'volunteer.opportunities',
+                    'store' => 'volunteer.opportunities.store',
+                    'update' => 'volunteer.opportunities.update',
+                ]);
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {
@@ -51,9 +65,12 @@ Route::middleware('auth')->group(function () {
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
-            Route::resource('volunteers', 'VolunteerApplicationController')
-                ->only(['index'])
-                ->names(['index' => 'applications.volunteers']);
+            Route::resource('volunteer', 'VolunteerApplicationController')
+                ->only(['index', 'edit'])
+                ->names([
+                    'index' => 'applications.volunteer.index',
+                    'edit' => 'applications.volunteer.edit',
+                ]);
         });
 
         Route::prefix('employees')->namespace('Employees')->group(function () {
@@ -66,7 +83,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
-        Route::resource('jobs', 'JobController')->except(['create', 'show', 'destroy']);
+
         Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
         Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
     });

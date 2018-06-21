@@ -15,8 +15,8 @@
             </a>
         </div>
         <div class="col-md-3 card mx-5 my-3">
-            <a class="card-body no-transition" href="{{ route('applications.volunteers') }}">
-                <br><h2 class="text-center">Volunteership</h2><br>
+            <a class="card-body no-transition" href="{{ route('applications.volunteer.index') }}">
+                <br><h2 class="text-center">Volunteer</h2><br>
             </a>
         </div>
     </div>
