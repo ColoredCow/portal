@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <br>
-    <div class="d-flex justify-content-start row flex-wrap">
+    <div class="d-flex justify-content-center row flex-wrap">
         @can('library_books.view')
         <div class="col-md-3 card m-3">
             <a class="card-body no-transition" href="/knowledgecafe/library/books">

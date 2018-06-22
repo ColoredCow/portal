@@ -6,7 +6,7 @@
     @include('status', ['errors' => $errors->all()])
     <br>
 
-    <div class="d-flex justify-content-start row flex-wrap">
+    <div class="d-flex justify-content-center row flex-wrap">
         <div class="col-md-3 card m-3">
             <a class="card-body no-transition" href="/hr">
                 <br><h2 class="text-center text-view-port">HR</h2><br>
