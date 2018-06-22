@@ -11,6 +11,7 @@ return [
     'full_display_date_format' => 'F d, Y',
     'display_datetime_format' => 'Y-m-d\TH:i',
     'calendar_datetime_format' => 'Y-m-d\TH:i:s',
+    'input_date_format' => 'dd/mm/yyyy',
     'modules' => [
         'hr',
         'finance',
