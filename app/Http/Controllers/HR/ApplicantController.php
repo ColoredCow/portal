@@ -11,7 +11,7 @@ class ApplicantController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Applicant::class, null, [
-            'except' => ['store']
+            'except' => ['store'],
         ]);
     }
 

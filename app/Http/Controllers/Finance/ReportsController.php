@@ -46,8 +46,8 @@ class ReportsController extends Controller
                     $endDate = new Carbon('today');
                 }
                 $showingResultsFor = $startDate->format('F Y');
-                $startDate = $startDate->format(config('constants.date_format'));
-                $endDate = $endDate->format(config('constants.date_format'));
+                $startDate = $startDate->format(config('constants.input_date_format'));
+                $endDate = $endDate->format(config('constants.input_date_format'));
                 $attr['monthsList'] = DateHelper::getPreviousMonths(config('constants.finance.reports.list-previous-months'));
                 break;
 
