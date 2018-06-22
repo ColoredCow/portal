@@ -22,16 +22,16 @@ class BookTest extends TestCase
     }
 
     /** @test */
-     public function it_has_readers()
-     {
-         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->book->readers);
-     }
+    public function it_has_readers()
+    {
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->book->readers);
+    }
 
     /** @test */
-     public function it_has_wishers()
-     {
-         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->book->wishers);
-     }
+    public function it_has_wishers()
+    {
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->book->wishers);
+    }
 
     /** @test */
     public function it_can_mark_book_as_read_for_authenticated_user()
