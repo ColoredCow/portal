@@ -216,7 +216,7 @@ class BookController extends Controller
     {
         $bookID = request()->book_id;
         $book = Book::find($bookID);
-        $isAdded = ($book) ? $book->addToUserWishlist() : false;
+        $isAdded = ($book) ? $book->addToWishlist() : false;
         return response()->json([
             'isAdded' => $isAdded
         ]);

@@ -84,24 +84,18 @@ class BookTest extends FeatureTest
     /** @test */
     public function an_authenticated_user_can_add_the_book_to_wishlist()
     {
-        $this->assertTrue(true);
+        $this->signIn();
+        $book = create(Book::class);
+        $this->post(route('books.addToWishList'), ['book_id' => $book->id]);
+        $this->assertTrue($book->wishers->contains(auth()->user()));
     }
 
     /** @test */
     public function an_authenticated_user_can_mark_book_as_read()
     {
-        $this->assertTrue(true);
-    }
-
-    /** @test */
-    public function an_authenticated_can_disable_the_book_suggestion()
-    {
-        $this->assertTrue(true);
-    }
-
-    /** @test */
-    public function an_authenticated_can_enable_the_book_suggestion()
-    {
-        $this->assertTrue(true);
+        $this->signIn();
+        $book = create(Book::class);
+        $this->post(route('books.toggleReadStatus'), ['book_id' => $book->id, 'is_read' => true]);
+        $this->assertTrue($book->readers->contains(auth()->user()));
     }
 }

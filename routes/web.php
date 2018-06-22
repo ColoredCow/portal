@@ -80,7 +80,6 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
-
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
                 ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show',
@@ -100,7 +99,6 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'store', 'update', 'destroy'])
                 ->names(['index' => 'books.category.index']);
         });
-
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
     });
 });
