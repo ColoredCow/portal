@@ -38,38 +38,18 @@ abstract class ApplicationController extends Controller
             ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
 
-        $countFilters = [
-            'job-type' => $this->getApplicationType(),
-            'job' => request()->get('hr_job_id'),
-            'name' => request()->get('search'),
-        ];
+        $countFilters = array_except($filters, ['status']);
         $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
-
-        $attr['openJobsCount'] = Job::count();
-        $attr['onHoldApplicationsCount'] = Application::applyFilter($countFilters)
-            ->where('status', 'on-hold')
-            ->get()
-            ->count();
-        $attr['noShowApplicationsCount'] = Application::applyFilter($countFilters)
-            ->where('status', 'no-show')
-            ->get()
-            ->count();
-        $attr['rejectedApplicationsCount'] = Application::applyFilter($countFilters)
-            ->where('status', 'rejected')
-            ->get()
-            ->count();
-        $attr['pendingApplicationsCount'] = Application::applyFilter($countFilters)
-            ->where('status', 'sent-for-approval')
-            ->get()
-            ->count();
-        $attr['openApplicationsCount'] = Application::applyFilter($countFilters)
-            ->isOpen()
-            ->get()
-            ->count();
-
+        $strings = array_pluck(config('constants.hr.status'), 'label');
+        foreach ($strings as $string) {
+            $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
+                ->where('status', $string)
+                ->get()
+                ->count();
+        }
         return view('hr.application.index')->with($attr);
     }
 
@@ -101,7 +81,6 @@ abstract class ApplicationController extends Controller
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
-        $attr['type'] = $application->job->type;
         return view('hr.application.edit')->with($attr);
     }
 
