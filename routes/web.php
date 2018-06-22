@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('get/token', 'Auth\LoginController@GetToken');
 Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
