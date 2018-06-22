@@ -6,6 +6,7 @@ use Tests\Feature\FeatureTest;
 use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class BookFeatureTest extends FeatureTest
 {
@@ -20,7 +21,7 @@ class BookFeatureTest extends FeatureTest
     {
         $this->signInAsSuperAdmin();
         $this->get(route('books.index'))
-            ->assertStatus(200);
+            ->assertStatus(SymfonyResponse::HTTP_OK);
     }
 
     /** @test */
