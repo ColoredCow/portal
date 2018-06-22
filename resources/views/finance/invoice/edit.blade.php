@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="sent_on" class="field-required">Sent on</label>
-                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}">
+                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="{{ config('constants.input_date_format') }}" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3">
                         <label for="sent_amount" class="field-required">Invoice amount</label>
@@ -87,7 +87,7 @@
                         @php
                             $due_date = $invoice->due_date ? date(config('constants.display_date_format'), strtotime($invoice->due_date)) : $invoice->due_date;
                         @endphp
-                        <input type="text" class="form-control date-field" name="due_date" id="paid_on" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ $due_date }}">
+                        <input type="text" class="form-control date-field" name="due_date" id="paid_on" placeholder="{{ config('constants.input_date_format') }}" value="{{ $due_date }}">
                     </div>
                 </div>
 
@@ -108,7 +108,7 @@
                         @php
                             $paid_on = $invoice->paid_on ? date(config('constants.display_date_format'), strtotime($invoice->paid_on)) : $invoice->paid_on;
                         @endphp
-                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="{{config('constants.finance.date_format.inputplaceholder')}}" value="{{ $paid_on }}">
+                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="{{config('constants.invoice_date_format')}}" value="{{ $paid_on }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3" v-show="status == 'paid'">
                         <label for="paid_amount">Received amount</label>
@@ -220,15 +220,15 @@
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'received'">
                         <label for="cheque_received_date">Cheque Received Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ $invoice->cheque_received_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_received_date)) : '' }}">
+                        <input type="text" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="{{ config('constants.invoice_date_format') }}" value="{{ $invoice->cheque_received_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_received_date)) : '' }}">
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'cleared'">
                         <label for="cheque_cleared_date">Cheque Cleared Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ $invoice->cheque_cleared_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_cleared_date)) : '' }}">
+                        <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="{{ config('constants.invoice_date_format') }}" value="{{ $invoice->cheque_cleared_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_cleared_date)) : '' }}">
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
+                        <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                     </div>
                 </div>
                 <br>
