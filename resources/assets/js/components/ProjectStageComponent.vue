@@ -281,7 +281,14 @@
             },
             gstAmount: function() {
                 if (this.clientCountryGstApplicable) {
-                    return parseFloat((this.configs.gst/100)*this.inputStageCost).toFixed(2);
+                    let gst = 0;
+                    let configGst = parseFloat(this.configs.gst);
+                    if (this.inputStageCostIncludeGst) {
+                        gst = (configGst/(100 + configGst)) * this.inputStageCost;
+                    } else {
+                        gst = (configGst/100) * this.inputStageCost;
+                    }
+                    return parseFloat(gst).toFixed(2);
                 }
                 return 0;
             },

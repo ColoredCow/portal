@@ -37,6 +37,7 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_hr">
                                     <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
                                      <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
+                                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
                                 </div>
                             </li>
                         </li>

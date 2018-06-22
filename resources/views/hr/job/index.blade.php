@@ -3,7 +3,8 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr.menu')
+    @includeWhen($type == 'volunteer', 'hr.volunteers.menu')
+    @includeWhen($type == 'recruitment', 'hr.menu')
     <br><br>
     <h1>Jobs</h1>
     <table class="table table-striped table-bordered">
@@ -20,7 +21,7 @@
             <td>
                 {{ ucfirst($job->type) }}
             </td>
-            
+
             <td>
             @if ($job->applications->count())
                 <a href="{{ route('applications.' . $job->type . '.index') }}?hr_job_id={{$job->id }}">{{ $job->applications->count() }}</a>
@@ -31,5 +32,6 @@
         </tr>
         @endforeach
     </table>
+    {{ $jobs->links() }}
 </div>
 @endsection
