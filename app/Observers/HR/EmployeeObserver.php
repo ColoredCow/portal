@@ -15,6 +15,9 @@ class EmployeeObserver
      */
     public function created(Employee $employee)
     {
+        if (app()->environment('testing')) {
+            return;
+        }
         $gsuiteUser = new GSuiteUserService;
         $gsuiteUser->fetch($employee->user->email);
         $employee->update([
