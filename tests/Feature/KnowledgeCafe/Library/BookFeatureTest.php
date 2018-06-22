@@ -7,7 +7,7 @@ use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 
-class BookTest extends FeatureTest
+class BookFeatureTest extends FeatureTest
 {
     public function setUp()
     {
