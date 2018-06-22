@@ -125,5 +125,8 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
+
     });
+
+    Route::get('crm', 'CRM\CRMController@index')->name('crm');
 });
