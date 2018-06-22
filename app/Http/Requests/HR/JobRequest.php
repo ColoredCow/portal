@@ -28,6 +28,7 @@ class JobRequest extends FormRequest
                 'title' => 'required|string',
                 'by' => 'required|string',
                 'link' => 'required|url',
+                'type' => 'required|string|in:job,internship,volunteer',
             ];
         }
 

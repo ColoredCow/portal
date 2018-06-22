@@ -134,6 +134,10 @@ return [
         'cleared' => 'Cleared',
         'bounced' => 'Bounced',
     ],
+
+    'date_format' => [
+        'inputplaceholder' => 'dd/mm/yyyy',
+    ],
     'project' => [
         'status' => [
             'active' => 'Active',

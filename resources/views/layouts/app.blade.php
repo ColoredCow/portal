@@ -23,17 +23,19 @@
                     @endguest
                     {{ config('app.name', 'Employee Portal') }}
                     </a>
-                    @auth
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            @can('hr_applicants.view')
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/hr/applications/job') }}">HR</a>
-                            </li>
-                            @endcan
-                            @can('finance_reports.view')
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
+                @auth
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown_hr" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    HR <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_hr">
+                                    <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
+                                     <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
+                                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
+                                </div>
                             </li>
                             @endcan
                             @if(auth()->user()->can('weeklydoses.view') || auth()->user()->can('library_books.view'))
