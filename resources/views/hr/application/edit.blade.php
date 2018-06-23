@@ -174,7 +174,19 @@
                                     </div>
                                 @endif
                             </div>
-                            @if ($applicationRound->mail_sent && $loop->last && $application->isRejected())
+                            @php
+                                $showFooter = false;
+                                if ($loop->last) {
+                                    if ($applicationRound->application->status == config('constants.hr.status.sent-for-approval.label')) {
+                                        $showFooter = true;
+                                    } elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
+                                        $showFooter = true;
+                                    }
+                                } elseif (!$applicationRound->mail_sent) {
+                                    $showFooter = true;
+                                }
+                            @endphp
+                            @if ($showFooter)
                             <div class="card-footer">
                                 <div class="d-flex align-items-center">
                                 @if ($applicationRound->showActions)
