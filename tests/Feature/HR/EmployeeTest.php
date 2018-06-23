@@ -27,7 +27,7 @@ class EmployeeTest extends FeatureTest
     }
 
     /** @test */
-    public function an_authorized_user_see_employee_list()
+    public function an_authorized_user_can_see_employee_list()
     {
         $this->anAuthorizedUser();
         $this->get(route('employees'))

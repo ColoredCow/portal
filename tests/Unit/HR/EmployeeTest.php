@@ -3,23 +3,21 @@
 namespace Tests\Unit\HR;
 
 use App\Models\HR\Employee;
-use App\User;
-use Tests\TestCase;
+use Tests\Unit\UnitTest;
 
-class EmployeeTest extends TestCase
+class EmployeeTest extends UnitTest
 {
-    /** @test */
-    public function an_employee_is_created()
+    protected $employee;
+
+    public function setUp()
     {
-        $employee = create(Employee::class);
-        $this->assertTrue(isset($employee->id));
+        parent::setUp();
+        $this->employee = create(Employee::class);
     }
 
     /** @test */
-    public function employee_gets_created_for_a_new_user()
+    public function it_is_created()
     {
-        $user = create(User::class);
-        $this->assertTrue(isset($user->employee, $user->employee->id));
-        $this->assertTrue($user->name == $user->employee->name);
+        $this->assertTrue(isset($this->employee->id));
     }
 }
