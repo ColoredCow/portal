@@ -6,7 +6,8 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            @include('hr.menu')
+            @includeWhen($type == 'volunteer', 'hr.volunteers.menu')
+            @includeWhen($type == 'recruitment', 'hr.menu')
             <br><br>
         </div>
     </div>

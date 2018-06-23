@@ -11,7 +11,7 @@ class Book extends Model
     use SoftDeletes;
 
     protected $table = 'library_books';
-    protected $fillable = ['title', 'author', 'categories', 'isbn', 'thumbnail', 'readable_link', 'self_link'];
+    protected $fillable = ['title', 'author', 'isbn', 'thumbnail', 'readable_link', 'self_link'];
     protected $dates = ['deleted_at'];
 
     public function categories()
