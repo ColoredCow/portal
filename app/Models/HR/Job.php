@@ -61,4 +61,22 @@ class Job extends Model
     {
         return $query->filterByType('internship');
     }
+
+    public function scopeIsVolunteer($query)
+    {
+        return $query->filterByType('volunteer');
+    }
+
+    public function scopeTypeVolunteer($query)
+    {
+        return $query->where('type', 'volunteer');
+    }
+
+    public function scopeTypeRecruitment($query)
+    {
+        return $query->whereIn('type', [
+            'job',
+            'internship',
+        ]);
+    }
 }

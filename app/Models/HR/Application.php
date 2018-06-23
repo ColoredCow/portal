@@ -79,6 +79,9 @@ class Application extends Model
                 case 'job':
                     $query->filterByJob($value);
                     break;
+                case 'name':
+                    $query->filterByName($value);
+                    break;
             }
         }
 
@@ -98,6 +101,9 @@ class Application extends Model
         switch ($status) {
             case config('constants.hr.status.rejected.label'):
                 $query->rejected();
+                break;
+            case 'closed':
+                $query->closed();
                 break;
             case config('constants.hr.status.on-hold.label'):
                 $query->onHold();
@@ -134,6 +140,15 @@ class Application extends Model
         return $query;
     }
 
+    public function scopeFilterByName($query, $search)
+    {
+        $query->whereHas('applicant', function ($query) use ($search) {
+            ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
+        });
+
+        return $query;
+    }
+
     /**
      * Apply filter on applications based on the applied job
      *
@@ -150,11 +165,22 @@ class Application extends Model
     }
 
     /**
-     * get applications where status is rejected
+     * Get applications where status is rejected.
      */
     public function scopeRejected($query)
     {
         return $query->where('status', config('constants.hr.status.rejected.label'));
+    }
+
+    /**
+     * Get closed applications.
+     */
+    public function scopeClosed($query)
+    {
+        return $query->whereIn('status', [
+            config('constants.hr.status.rejected.label'),
+            config('constants.hr.status.approved.label'),
+        ]);
     }
 
     /**
@@ -198,6 +224,14 @@ class Application extends Model
     public function reject()
     {
         $this->update(['status' => config('constants.hr.status.rejected.label')]);
+    }
+
+    /**
+     * Set application status to approved
+     */
+    public function approve()
+    {
+        $this->update(['status' => config('constants.hr.status.approved.label')]);
     }
 
     /**
