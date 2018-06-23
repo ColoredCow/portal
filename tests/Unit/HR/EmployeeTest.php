@@ -3,10 +3,13 @@
 namespace Tests\Unit\HR;
 
 use App\Models\HR\Employee;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Unit\UnitTest;
 
 class EmployeeTest extends UnitTest
 {
+    use RefreshDatabase;
+
     protected $employee;
 
     public function setUp()
