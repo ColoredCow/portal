@@ -2,8 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 abstract class FeatureTest extends TestCase
 {
@@ -13,5 +14,10 @@ abstract class FeatureTest extends TestCase
     {
         parent::setUp();
         $this->setUpRolesAndPermissions();
+    }
+
+    public function anAuthorizedUser($role = 'super-admin')
+    {
+        $this->signIn(create(User::class)->assignRole($role));
     }
 }
