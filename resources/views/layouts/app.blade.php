@@ -17,12 +17,12 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel nav-font" >
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" >
             <div class="container">
                 @guest
-                    <a class="navbar-brand nav-font" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}">
                 @else
-                    <a class="navbar-brand nav-font" href="{{ url('/home') }}">
+                    <a class="navbar-brand" href="{{ url('/home') }}">
                 @endguest
                         {{ config('app.name', 'Employee Portal') }}
                     </a>
