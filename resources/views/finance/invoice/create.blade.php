@@ -44,12 +44,9 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="sent_on" class="field-required">Sent on</label>
-                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="dd/mm/yyyy" required="required"  value="{{ old('sent_on') }}">
+                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" required="required"  value="{{ old('sent_on') }}">
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="due_date" class="field-required">Due date</label>
-                        <input type="date" class="form-control date-field" name="due_date" id="due_date" placeholder="dd/mm/yyyy" value="{{ old('due_date') }}">
-                    </div>
+
                     <div class="form-group offset-md-1 col-md-3">
                         <label for="sent_amount" class="field-required">Invoice amount</label>
                         <div class="input-group">
@@ -80,6 +77,13 @@
                 </div>
                 <br>
                 <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="due_date">Due date</label>
+                        <input type="text" class="form-control date-field" name="due_date" id="due_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}"  value="{{ old('due_date') }}">
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="status" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" required="required" v-model="status" data-status="{{ old('status') ?? 'unpaid' }}">
@@ -90,7 +94,7 @@
                     </div>
                     <div class="form-group col-md-3" v-show="status == 'paid'">
                         <label for="paid_on">Paid on</label>
-                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy" value="{{ old('paid_on') }}">
+                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ old('paid_on') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3" v-show="status == 'paid'">
                         <label for="paid_amount">Received amount</label>
@@ -202,16 +206,15 @@
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'received'">
                         <label for="cheque_received_date">Cheque Received Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_received_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_received_date'))) : '' }}">
+                        <input type="text" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ old('cheque_received_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_received_date'))) : '' }}">
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'cleared'">
                         <label for="cheque_cleared_date">Cheque Cleared Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_cleared_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_cleared_date'))) : '' }}">
+                        <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ old('cheque_cleared_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_cleared_date'))) : '' }}">
                     </div>
-                     
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
+                        <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.date_format.inputplaceholder') }}" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
                     </div>
                 </div>
                 <br>
