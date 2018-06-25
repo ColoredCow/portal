@@ -98,7 +98,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', 'ProjectController')
         ->except(['show', 'destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
-
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
@@ -106,10 +105,16 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
-
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
-                ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
+                ->names([
+                    'index' => 'books.index',
+                    'create' => 'books.create',
+                    'show' => 'books.show',
+                    'store' => 'books.store',
+                    'destroy' => 'books.delete',
+                    'update' => 'books.update'
+                ]);
 
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
@@ -123,7 +128,6 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'store', 'update', 'destroy'])
                 ->names(['index' => 'books.category.index']);
         });
-
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
     });
 
