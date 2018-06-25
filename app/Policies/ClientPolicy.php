@@ -57,20 +57,19 @@ class ClientPolicy
         return $user->hasPermissionTo('clients.delete');
     }
 
-    public function getProjects(User $user, Client $client)
-    {
-        return $user->hasPermissionTo('clients.getProjects');
-    }
-
     /**
      * Determine whether the user can list clients.
      *
      * @param  \App\User  $user
      * @return mixed
      */
-
-    public function list(User $user) 
+    public function list(User $user)
     {
         return $user->hasPermissionTo('clients.view');
+    }
+
+    public function getProjects(User $user, Client $client)
+    {
+        return $user->hasPermissionTo('clients.getProjects');
     }
 }
