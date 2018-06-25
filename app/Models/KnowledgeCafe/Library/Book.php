@@ -46,16 +46,20 @@ class Book extends Model
         return $this->belongsToMany(User::class, 'book_readers', 'library_book_id', 'user_id');
     }
 
-    public function markBook($read)
-    {
-        if (!$read) {
-            return $this->readers()->detach(auth()->user());
-        }
-
+    public function markAsRead() {
         $this->readers()->attach(auth()->user());
         $this->wishers()->detach(auth()->user());
-
         return true;
+    }
+
+    public function markAsUnRead() {
+        $this->readers()->detach(auth()->user());
+        return true;
+    }
+
+    public function markBook($read)
+    {
+        return ($read) ? $this->markAsRead() : $this->markAsUnRead();
     }
 
     public static function getRandomUnreadBook()

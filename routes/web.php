@@ -82,11 +82,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
-                ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show',
-                        'store' => 'books.store',
-                        'destroy' => 'books.delete',
-                        'update' => 'books.update']);
-                        
+                ->names([
+                    'index' => 'books.index',
+                    'create' => 'books.create',
+                    'show' => 'books.show',
+                    'store' => 'books.store',
+                    'destroy' => 'books.delete',
+                    'update' => 'books.update'
+                ]);
+
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');

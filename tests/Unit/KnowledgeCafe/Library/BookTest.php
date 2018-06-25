@@ -37,7 +37,7 @@ class BookTest extends TestCase
     public function it_can_mark_book_as_read_for_authenticated_user()
     {
         $this->signIn();
-        $this->book->markBook(true);
+        $this->book->markAsRead();
         $this->assertTrue($this->book->readers->contains(auth()->user()));
     }
 

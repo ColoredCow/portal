@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 use Symfony\Component\HttpFoundation\Response;
 
-class BookFeatureTest extends FeatureTest
+class BookTest extends FeatureTest
 {
     public function setUp()
     {
@@ -17,7 +17,7 @@ class BookFeatureTest extends FeatureTest
     }
 
     /** @test */
-    public function an_authorised_user_can_see_books()
+    public function an_authorized_user_can_see_books()
     {
         $this->signInAsSuperAdmin();
         $this->get(route('books.index'))
@@ -25,7 +25,7 @@ class BookFeatureTest extends FeatureTest
     }
 
     /** @test */
-    public function an_un_authorised_user_cant_see_books()
+    public function an_unauthorized_user_cant_see_books()
     {
         $this->expectException(AuthorizationException::class);
         $this->signIn();
@@ -33,7 +33,7 @@ class BookFeatureTest extends FeatureTest
     }
 
     /** @test */
-    public function an_authorised_user_can_create_books()
+    public function an_authorized_user_can_create_books()
     {
         $this->signInAsSuperAdmin();
         $book = make(Book::class);
@@ -43,7 +43,7 @@ class BookFeatureTest extends FeatureTest
     }
 
     /** @test */
-    public function an_un_authorised_user_cant_create_books()
+    public function an_unauthorized_user_cant_create_books()
     {
         $this->expectException(AuthorizationException::class);
         $this->signIn();
@@ -52,17 +52,17 @@ class BookFeatureTest extends FeatureTest
     }
 
     /** @test */
-    public function an_authorised_user_can_delete_book()
+    public function an_authorized_user_can_delete_book()
     {
         $this->signInAsSuperAdmin();
         $book = create(Book::class);
         $response = $this->delete(route('books.delete', $book->id));
         $fetchBook = Book::find($book->id);
-        $this->assertTrue($fetchBook == null);
+        $this->assertNull($fetchBook);
     }
 
     /** @test */
-    public function an_authorised_user_can_update_book_categories()
+    public function an_authorized_user_can_update_book_categories()
     {
         $this->signInAsSuperAdmin();
         $book = create(Book::class);
@@ -72,7 +72,7 @@ class BookFeatureTest extends FeatureTest
     }
 
     /** @test */
-    public function an_un_authorised_user_cant_update_book_categories()
+    public function an_unauthorized_user_cant_update_book_categories()
     {
         $this->expectException(AuthorizationException::class);
         $this->signIn();
@@ -83,7 +83,7 @@ class BookFeatureTest extends FeatureTest
     }
 
     /** @test */
-    public function an_authenticated_user_can_add_the_book_to_wishlist()
+    public function an_user_can_add_the_book_to_wishlist()
     {
         $this->signIn();
         $book = create(Book::class);
@@ -92,7 +92,7 @@ class BookFeatureTest extends FeatureTest
     }
 
     /** @test */
-    public function an_authenticated_user_can_mark_book_as_read()
+    public function an_user_can_mark_book_as_read()
     {
         $this->signIn();
         $book = create(Book::class);
