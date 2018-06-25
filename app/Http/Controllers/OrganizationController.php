@@ -24,7 +24,12 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        //
+        // for demo : create a DB emp_org_coloredcow and emp_portal_master and make a GET Request to /organization
+        Organization::create([
+            'slug' => 'coloredcow',
+            'name' => 'ColoredCow',
+            'contact_email' => 'email@coloredcow.com',
+        ]);
     }
 
     /**
@@ -35,7 +40,7 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

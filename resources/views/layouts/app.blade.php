@@ -17,12 +17,12 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel nav-font" >
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" >
             <div class="container">
                 @guest
-                    <a class="navbar-brand nav-font" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}">
                 @else
-                    <a class="navbar-brand nav-font" href="{{ url('/home') }}">
+                    <a class="navbar-brand" href="{{ url('/home') }}">
                 @endguest
                         {{ config('app.name', 'Employee Portal') }}
                     </a>
@@ -49,10 +49,10 @@
                         @if(auth()->user()->can('weeklydoses.view') || auth()->user()->can('library_books.view'))
                         <li class="nav-item">
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown_kc" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     KnowledgeCafe <span class="caret"></span>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_kc">
                                      @can('library_books.view')
                                      <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
                                      @endcan
@@ -63,6 +63,17 @@
                             </li>
                         </li>
                         @endif
+                        <li class="nav-item">
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown_crm" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    CRM <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_crm">
+                                     <a class="dropdown-item" href="#">Talent</a>
+                                     <a class="dropdown-item" href="#">Client</a>
+                                </div>
+                            </li>
+                        </li>
                         @can('settings.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
