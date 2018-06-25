@@ -127,3 +127,6 @@ Route::middleware('auth')->group(function () {
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
     });
 });
+
+Route::get('onboard', 'Onboarding\OnboardController@index');
+Route::resource('organizations', 'OrganizationController')->only(['store'])->names(['store' => 'organizations.store']);
