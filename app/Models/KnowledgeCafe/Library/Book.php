@@ -46,13 +46,15 @@ class Book extends Model
         return $this->belongsToMany(User::class, 'book_readers', 'library_book_id', 'user_id');
     }
 
-    public function markAsRead() {
+    public function markAsRead()
+    {
         $this->readers()->attach(auth()->user());
         $this->wishers()->detach(auth()->user());
         return true;
     }
 
-    public function markAsUnRead() {
+    public function markAsUnRead()
+    {
         $this->readers()->detach(auth()->user());
         return true;
     }
