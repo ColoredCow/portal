@@ -6,15 +6,15 @@
     @include('status', ['errors' => $errors->all()])
     <br>
 
-    <div class="d-flex justify-content-start row flex-wrap">
-        <div class="col-md-3 card mx-5 my-3">
+    <div class="d-flex justify-content-between row flex-wrap">
+        <div class="card col-md-3 m-3 px-2">
             <a class="card-body no-transition" href="/hr">
                 <br><h2 class="text-center">HR</h2><br>
             </a>
         </div>
 
         @can('finance_reports.view')
-        <div class="col-md-3 col-sm-4 card m-3">
+        <div class="card col-md-3 m-3 px-2">
             <a class="card-body no-transition" href="/finance/reports?type=monthly">
                 <br><h2 class="text-center">Finance</h2><br>
             </a>
@@ -22,12 +22,18 @@
         @endcan
 
         @if(auth()->user()->can('weeklydoses.view') || auth()->user()->can('library_books.view'))
-        <div class="col-md-3 col-sm-4 card m-3">
+        <div class="card col-md-3 m-3 px-2">
             <a class="card-body no-transition" href="/knowledgecafe">
-                <br><h2 class="text-center">Knowledge Cafe</h2><br>
+                <br><h2 class="text-center">KnowledgeCafe</h2><br>
             </a>
         </div>
         @endif
+
+        <div class="card col-md-3 m-3 px-2">
+            <a class="card-body no-transition" href="{{ route('crm') }}">
+                <br><h2 class="text-center">CRM</h2><br>
+            </a>
+        </div>
     </div>
 </div>
 
