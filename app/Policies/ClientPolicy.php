@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
 use App\Models\Client;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ClientPolicy
@@ -63,8 +63,12 @@ class ClientPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function list(User $user)
-    {
+    function list(User $user) {
         return $user->hasPermissionTo('clients.view');
+    }
+
+    public function getProjects(User $user, Client $client)
+    {
+        return $user->hasPermissionTo('clients.getProjects');
     }
 }

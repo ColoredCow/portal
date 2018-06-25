@@ -61,7 +61,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update'])
-                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update']);
+                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update'])->middleware('can:hr_jobs.view');
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
@@ -81,7 +81,7 @@ Route::middleware('auth')->group(function () {
         // route below can be merged with employees grouped route above.
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
 
-        Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
+        Route::resource('applicants', 'ApplicantController')->only(['index', 'edit'])->middleware('can:hr_applicants.view');
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
 
         Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
@@ -89,19 +89,26 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
-        Route::resource('invoices', 'InvoiceController')->except(['show', 'destroy']);
+        Route::resource('invoices', 'InvoiceController')->except(['show', 'destroy'])->middleware('can:finance_invoices.view');
         Route::get('invoices/download/{year}/{month}/{file}', 'InvoiceController@download');
         Route::get('/reports', 'ReportsController@index');
     });
 
-    Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
+    Route::resource('clients', 'ClientController')->except(['show', 'destroy'])->middleware('can:clients.view');
     Route::resource('projects', 'ProjectController')
         ->except(['show', 'destroy'])
-        ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
-    Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
+        ->names([
+            'index' => 'projects.index',
+            'create' => 'projects.create',
+            'edit' => 'projects.edit',
+            'store' => 'projects.store',
+            'update' => 'projects.update'])
+        ->middleware('can:projects.view');
+
+    Route::get('clients/{client}/get-projects', 'ClientController@getProjects')->middleware('can:clients.getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
-    Route::get('settings/{module}', 'SettingController@index');
-    Route::post('settings/{module}/update', 'SettingController@update');
+    Route::get('settings/{module}', 'SettingController@index')->middleware('can:settings.view');
+    Route::post('settings/{module}/update', 'SettingController@update')->middleware('can:settings.update');
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
@@ -113,8 +120,8 @@ Route::middleware('auth')->group(function () {
                     'show' => 'books.show',
                     'store' => 'books.store',
                     'destroy' => 'books.delete',
-                    'update' => 'books.update'
-                ]);
+                    'update' => 'books.update',
+                ])->middleware('can:library_books.view');
 
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
@@ -126,9 +133,9 @@ Route::middleware('auth')->group(function () {
 
             Route::resource('book-categories', 'BookCategoryController')
                 ->only(['index', 'store', 'update', 'destroy'])
-                ->names(['index' => 'books.category.index']);
+                ->names(['index' => 'books.category.index'])->middleware('can:library_book_category.view');
         });
-        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
+        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses'])->middleware('can:weeklydoses.view');
     });
 
     Route::get('crm', 'CRM\CRMController@index')->name('crm');

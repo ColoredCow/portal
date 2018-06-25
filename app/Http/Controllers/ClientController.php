@@ -122,6 +122,7 @@ class ClientController extends Controller
      */
     public function getProjects(Client $client)
     {
+        $this->authorize($client);
         return $client->projects;
     }
 }
