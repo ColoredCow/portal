@@ -4,9 +4,9 @@ namespace Tests\Unit\HR;
 
 use App\Models\HR\Employee;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Unit\UnitTest;
+use Tests\TestCase;
 
-class EmployeeTest extends UnitTest
+class EmployeeTest extends TestCase
 {
     use RefreshDatabase;
 
