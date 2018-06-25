@@ -40,7 +40,6 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        
     }
 
     /**

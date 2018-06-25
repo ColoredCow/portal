@@ -13,12 +13,13 @@ class Organization extends Model
     protected $connection = 'master';
     protected $guarded = [];
 
-    public static function generateSlug($name) {
+    public static function generateSlug($name)
+    {
         return substr(camel_case($name), 0, 8);
     }
 
-    public function configurations() {
+    public function configurations()
+    {
         return $this->hasMany(Configuration::class);
     }
-    
 }

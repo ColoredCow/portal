@@ -40,7 +40,7 @@ class MigrateAllCommand extends Command
     {
         $this->call('migrate', array('--database' => 'master', '--path' => 'database/migrations/master/'));
         $tenants = Configuration::where('key', 'database');
-        foreach($tenants as $tenant){
+        foreach ($tenants as $tenant) {
             $this->call('migrate', array('--database' => $tenant['value'], '--path' => 'database/migrations/'));
         }
     }
