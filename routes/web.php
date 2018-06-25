@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'HRController@index');
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
-            Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
+            Route::get('reports', 'ReportsController@index')->name('recruitment.reports')->middleware('can:finance_reports.view');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
                 ->only(['index', 'store', 'update'])
