@@ -13,13 +13,14 @@ class TenantService
     {
         $this->setCurrentDomain();
 
-        if($this->domain) {
+        if ($this->domain) {
             $this->setOrganization();
         }
     }
 
-    public function setUpForDomain($domain) {
-        if(!$domain) {
+    public function setUpForDomain($domain)
+    {
+        if (!$domain) {
             return false;
         }
 
@@ -30,7 +31,7 @@ class TenantService
 
     public function setCurrentDomain($domain = null)
     {
-        if($domain) {
+        if ($domain) {
             $this->domain = $domain;
             return $domain;
         }

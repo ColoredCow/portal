@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Facades\Tenant;
 use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -77,15 +77,13 @@ class LoginController extends Controller
             return redirect()->route('organizations.create');
         }
 
-        // need to check now if the domain is already registered within the organizations table.
-        // If yes, redirect to the user workspace.
         $organizationUrl = Tenant::getUrl($domain);
-        session()->flash('status', 'Welcome to '. Tenant::organization()->name);
+        session()->flash('status', 'Welcome to ' . Tenant::organization()->name);
 
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         $authUser->update(['avatar' => $user->avatar_original]);
-        
+
         return redirect()->to($organizationUrl . '/home');
     }
 

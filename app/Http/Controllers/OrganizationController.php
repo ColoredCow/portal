@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Tenant;
 use App\Helpers\FileHelper;
 use App\Http\Requests\OrganizationRequest;
 use App\Models\Organization;
@@ -55,7 +56,8 @@ class OrganizationController extends Controller
             'value' => $path,
         ]);
 
-        dd('successful onboarding');
+        $organizationUrl = Tenant::getUrl($validated['slug']);
+        return redirect()->to($organizationUrl . '/home');
     }
 
     /**
