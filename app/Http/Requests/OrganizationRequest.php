@@ -27,7 +27,7 @@ class OrganizationRequest extends FormRequest
             'name' => 'required|string',
             'admin_email' => 'required|email',
             'gsuite_sa_client_id' => 'required|string',
-            'gsuite_dwd_private_key' => 'required|file|mimes:json',
+            'gsuite_dwd_private_key' => 'required|file',
             'slug' => 'required|string',
         ];
     }
@@ -46,7 +46,6 @@ class OrganizationRequest extends FormRequest
             'gsuite_sa_client_id.required' => 'Service account client ID is required',
             'gsuite_dwd_private_key.required' => 'Service account private key is required',
             'gsuite_dwd_private_key.file' => 'Service account private key must be a valid file',
-            'gsuite_dwd_private_key.mimes' => 'Service account private key must be a valid JSON file',
             'slug.required' => 'Workspace name is required',
         ];
     }

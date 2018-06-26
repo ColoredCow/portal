@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FileHelper;
 use App\Http\Requests\OrganizationRequest;
 use App\Models\Organization;
+use Illuminate\Http\UploadedFile;
 
 class OrganizationController extends Controller
 {
@@ -35,56 +37,41 @@ class OrganizationController extends Controller
      */
     public function store(OrganizationRequest $request)
     {
-        // for demo : create a DB emp_org_coloredcow and emp_portal_master and make a GET Request to /organization
-        Organization::create([
+        $validated = $request->validated();
+        $organization = Organization::create([
             'slug' => $validated['slug'],
             'name' => $validated['name'],
             'contact_email' => $validated['admin_email'],
         ]);
+
+        $organization->configurations()->create([
+            'key' => 'service_account_client_id',
+            'value' => $validated['gsuite_sa_client_id'],
+        ]);
+
+        $path = self::upload($validated['gsuite_dwd_private_key']);
+        $organization->configurations()->create([
+            'key' => 'service_account_private_key_file',
+            'value' => $path,
+        ]);
+
+        dd('successful onboarding');
     }
 
     /**
-     * Display the specified resource.
+     * Upload private key file.
      *
-     * @param  \App\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\UploadedFile  $privateKeyFile
+     * @return string    path of the uploaded file
      */
-    public function show(Organization $organization)
+    protected static function upload(UploadedFile $privateKeyFile)
     {
-        //
-    }
+        $fileName = $privateKeyFile->getClientOriginalName();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Organization $organization)
-    {
-        //
-    }
+        if ($fileName) {
+            return $privateKeyFile->storeAs(FileHelper::getGSuiteCredentialsDirectory(), $fileName);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\OrganizationRequest  $request
-     * @param  \App\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
-     */
-    public function update(OrganizationRequest $request, Organization $organization)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Organization $organization)
-    {
-        //
+        return $privateKeyFile->store(FileHelper::getGSuiteCredentialsDirectory());
     }
 }

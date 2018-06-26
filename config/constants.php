@@ -1,9 +1,16 @@
 <?php
 
 return [
+    'tenants' => [
+        'prefixes' => [
+            'connection' => env('PREFIX_TENANTS_CONNECTION', 'org_'),
+            'db' => env('PREFIX_TENANTS_DB', 'emp_org_'),
+        ],
+    ],
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
+        'keys-dir' => env('GSUITE_KEYS_DIRECTORY', 'gsuite'),
     ],
     'date_format' => 'Y-m-d',
     'datetime_format' => 'Y-m-d H:i:s',

@@ -17,7 +17,7 @@ class FileHelper
      */
     public static function getFilePath($year, $month, $file)
     {
-        $filePath =  $year . '/' . $month . '/' . $file;
+        $filePath = $year . '/' . $month . '/' . $file;
 
         if (!Storage::exists($filePath)) {
             return false;
@@ -35,5 +35,15 @@ class FileHelper
     {
         $now = Carbon::now();
         return $now->format('Y') . '/' . $now->format('m');
+    }
+
+    /**
+     * Retrieve storage directory to store secure information
+     *
+     * @return string
+     */
+    public static function getGSuiteCredentialsDirectory()
+    {
+        return config('constants.gsuite.keys-dir');
     }
 }

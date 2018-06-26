@@ -27,7 +27,7 @@ trait CreatesTenant
 
     public function generateConnectionName()
     {
-        return "org_{$this->slug}";
+        return config('constants.tenants.prefixes.connection') . $this->slug;
     }
 
     public function getConnectionNameAttribute()
@@ -38,7 +38,7 @@ trait CreatesTenant
 
     public function generateDatabaseName()
     {
-        return "emp_org_{$this->slug}";
+        return config('constants.tenants.prefixes.db') . $this->slug;
     }
 
     # Do we want to create the organization database programatically? @rudresh @vaibhav @pankaj
