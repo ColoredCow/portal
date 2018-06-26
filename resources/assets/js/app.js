@@ -24,6 +24,28 @@ Vue.component('project-stage-billing-component', require('./components/ProjectSt
 Vue.component('invoice-project-component', require('./components/InvoiceProjectComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
 
+if (document.getElementById('page_onboard_organization')) {
+    const applicantEdit = new Vue({
+        el: '#page_onboard_organization',
+        data: {
+            step: 5,
+            totalSteps: document.getElementsByClassName('step-onboarding').length,
+        },
+        methods: {
+            showNextStep: function() {
+                this.step++;
+            },
+            showPreviousStep: function() {
+                this.step--;
+            },
+        },
+        mounted() {
+            console.log(this.step);
+            console.log(this.totalSteps);
+        },
+    });
+}
+
 if (document.getElementById('page_hr_applicant_edit')) {
 
     const applicantEdit = new Vue({
