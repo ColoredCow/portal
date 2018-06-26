@@ -26,9 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        \Tenant::setUpDBConnection();
 
-        dd(Tenant::configuration('database'));
-   
+        dd(\Auth::user());
+        //
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);
     }

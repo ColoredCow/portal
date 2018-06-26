@@ -15,7 +15,7 @@ class TenantService
 
         if($this->domain) {
             $this->setOrganization();
-         //   $this->setUpDBConnection();
+            $this->setUpDBConnection();
         }
     }
 
@@ -44,12 +44,18 @@ class TenantService
         $this->setCurrentDomain($domain);
         $this->setOrganization();
         $this->updateSession($domain);
+        $this->setUpDBConnection();
+        
     }
 
     public function setUpDBConnection() {
-        $connection = config('database.connections.default');
-        $connection['database'] = $this->configuration('database');
-        config(['database.connections.' . $this->generateConnectionName() => $connection]);
+         $connection = config('database.connections.default');
+         $connection['database'] = $this->configuration('database');
+         $name = "pankaj";
+         config(['database.connections.'.$name  => $connection]);
+         \Config::set('database.default', 'pankaj');
+
+        // config(['database.connections.' . $this->generateConnectionName() => $connection]);
     }
 
     public function setOrganization()
