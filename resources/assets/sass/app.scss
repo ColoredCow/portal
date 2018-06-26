@@ -408,3 +408,13 @@ input:focus+.slider {
         }
     }
 }
+
+.image-card {
+    border: 6px solid #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,.1);
+    box-sizing: border-box;
+
+    img {
+        @extend .w-100;
+    }
+}

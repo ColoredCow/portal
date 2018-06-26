@@ -33,8 +33,19 @@
             <section class="step-onboarding" v-show="step == 2">
                 <h3 class="mt-3 mb-4"><strong>Step 2:&nbsp;</strong>Setup G Suite API credentials</h3>
                 <ul>
-                    <li class="mb-2"><strong>Create a new project</strong> from your Google Developer Console<br><a href="https://console.developers.google.com/projectcreate" target="_blank">Create a new project</a></li>
-                    <li class="mb-2">Next, <strong>create a service account</strong> for the project that you just created. While creating the service account, <strong>make sure you check the private key and domain-wide delegation options</strong>. Download the private key. We'll need it in the next step.<br><a href="https://console.developers.google.com/iam-admin/serviceaccounts" target="_blank">Create a service account</a></li>
+                    <li class="mb-2">
+                        <strong><a href="https://console.developers.google.com/projectcreate" target="_blank">Create a new project</a></strong> from your Google Developer Console.<br>
+                        <figure class="image-card mt-2">
+                            <img src="/images/onboarding/new-project.png">
+                        </figure>
+                    </li>
+                    <li class="mb-2">
+                        <strong><a href="https://console.developers.google.com/iam-admin/serviceaccounts" target="_blank">Create a service account</a>
+                        </strong> for the project that you just created. While creating the service account, <strong>make sure you check the private key and domain-wide delegation options</strong>. Download the private key. We'll need it in the next step.
+                        <figure class="image-card mt-2">
+                            <img src="/images/onboarding/create-service-account.png">
+                        </figure>
+                    </li>
                 </ul>
             </section>
             <section class="step-onboarding" v-show="step == 3">
@@ -45,13 +56,12 @@
                 </div>
                 <div class="form-group">
                     <label class="font-weight-bold" for="gsuite_dwd_private_key">Service Account Private Key (downloaded in the previous step)</label>
-
                     <input type="file" name="gsuite_dwd_private_key" id="gsuite_dwd_private_key" class="form-control-file" accept=".json" required="required">
                     <small class="form-text text-muted">We'll never share these credentials with anyone else.</small>
                 </div>
             </section>
             <section class="step-onboarding" v-show="step == 4">
-                <h3 class="mt-3 mb-4"><strong>Step 4:&nbsp;</strong>Enable APIs</h3>
+                <h3 class="mt-3 mb-4"><strong>Step 4:&nbsp;</strong>Enable Google APIs</h3>
                 <div class="form-group">
                     <p>Enable the following Google APIs for your project so that Employee Portal can make requests and access your organizational data.</p>
                     <ul>
@@ -61,13 +71,30 @@
                 </div>
             </section>
             <section class="step-onboarding" v-show="step == 5">
-                <h3 class="mt-3 mb-4"><strong>Step 5:&nbsp;</strong>Enable domain-wide delegation from your G Suite admin</h3>
+                <h3 class="mt-3 mb-4"><strong>Step 5:&nbsp;</strong>Enable G Suite API reference</h3>
+                <div class="form-group">
+                    <ul>
+                        <li><a href="https://admin.google.com">Go to your G Suite domain's admin console</a></li>
+                        <li>Select <strong>Security</strong> from the list of controls. If you don't see <strong>Security</strong> listed, select <strong>More controls</strong> from the gray bar at the bottom of the page, then select <strong>Security</strong> from the list of controls.</li>
+                        <li>Select <strong>API reference</strong> from the list of options.</li>
+                        <li>Click the <strong>Enable API access</strong> checkbox.</li>
+                        <figure class="image-card mt-2">
+                            <img src="/images/onboarding/enable-api-access.png">
+                        </figure>
+                    </ul>
+                </div>
+            </section>
+            <section class="step-onboarding" v-show="step == 6">
+                <h3 class="mt-3 mb-4"><strong>Step 6:&nbsp;</strong>Enable domain-wide delegation for your G Suite admin</h3>
                 <div class="form-group">
                     <p class="mb-1">This will help us to access your following organizational G Suite details without troubling your team members for their consent.</p>
                     <ul>
                         <li><a href="https://admin.google.com">Go to your G Suite domain's admin console</a></li>
                         <li>Select <strong>Security</strong> from the list of controls. If you don't see <strong>Security</strong> listed, select <strong>More controls</strong> from the gray bar at the bottom of the page, then select <strong>Security</strong> from the list of controls.</li>
                         <li>Select <strong>Advanced settings</strong> from the list of options.</li>
+                        <figure class="image-card mt-2">
+                            <img src="/images/onboarding/gsuite-advanced-settings.png">
+                        </figure>
                         <li>Select <strong>Manage API client access</strong> in the <strong>Authentication</strong> section.</li>
                         <li>In the <strong>Client name</strong> field enter the service account's <strong>Client ID</strong>.</li>
                         <li>Copy the following text and paste them in the <strong>One or More API Scopes</strong> field:</li>
@@ -77,12 +104,15 @@
                                 <i class="fa fa-copy"></i>
                             </button>
                         </div>
+                        <figure class="image-card mt-2">
+                            <img src="/images/onboarding/manage-api-client-access.png">
+                        </figure>
                         <li>Click the <strong>Authorize</strong> button.</li>
                     </ul>
                 </div>
             </section>
-            <section class="step-onboarding" v-show="step == 6">
-                <h3 class="mt-3 mb-4"><strong>Step 6:&nbsp;</strong>Set up your workspace</h3>
+            <section class="step-onboarding" v-show="step == 7">
+                <h3 class="mt-3 mb-4"><strong>Step 7:&nbsp;</strong>Set up your workspace</h3>
                 <div class="form-group">
                     <label class="font-weight-bold" for="slug">Your workspace name</label>
                     <div class="input-group mb-3">
