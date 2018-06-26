@@ -39,10 +39,6 @@ if (document.getElementById('page_onboard_organization')) {
                 this.step--;
             },
         },
-        mounted() {
-            console.log(this.step);
-            console.log(this.totalSteps);
-        },
     });
 }
 
