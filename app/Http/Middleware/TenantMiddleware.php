@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Facades\Domain;
+use App\Facades\Tenant;
 
-class DomainAuthenticationMiddleware
+class TenantMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class DomainAuthenticationMiddleware
      */
     public function handle($request, Closure $next)
     {
-       if(!Domain::check()) {
-            return redirect()->to(Domain::getFullUrl());
+       if(!Tenant::check()) {
+            return redirect()->to(Tenant::getFullUrl());
        }
        
        return $next($request);

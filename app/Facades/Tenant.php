@@ -3,9 +3,9 @@
 namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use App\Services\DomainService;
+use App\Services\TenantService;
 
-class Domain extends Facade
+class Tenant extends Facade
 {
     /**
      * Replace the bound instance with a fake.
@@ -24,6 +24,6 @@ class Domain extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return DomainService::class;
+        return TenantService::class;
     }
 }

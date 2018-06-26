@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Services\DomainService;
 use Illuminate\Support\ServiceProvider;
+use App\Services\TenantService;
 
-class DomainServiceProvider extends ServiceProvider
+class TenantServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -14,8 +14,8 @@ class DomainServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton(DomainService::class, function ($app) {
-            return new DomainService;
+        $this->app->singleton(TenantService::class, function ($app) {
+            return new TenantService;
         });
     }
     /**

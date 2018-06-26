@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Facades\Domain;
-use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Facades\Tenant;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -70,24 +70,23 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->user();
-        $domain = Domain::resolveName($user->user['domain']);
-        // cc.ep.com
-        Domain::updateSession($domain);
+        $domain = Tenant::resolveName($user->user['domain']);
+        Tenant::setUpForDomain($domain);
 
-        if (!Domain::getOrganization()) {
+        if (!Tenant::organization()) {
             return redirect()->route('organizations.create');
         }
 
-        $organizationUrl = Domain::getUrl($domain);
         // need to check now if the domain is already registered within the organizations table.
         // If yes, redirect to the user workspace.
+        $organizationUrl = Tenant::getUrl($domain);
+        session()->flash('status', 'Welcome to '. Tenant::organization()->name);
+
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         $authUser->update(['avatar' => $user->avatar_original]);
+        
         return redirect()->to($organizationUrl . '/home');
-
-        // If not, we redirect the user to the onboarding page.
-
     }
 
     /**

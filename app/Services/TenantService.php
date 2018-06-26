@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Organization;
 
-class DomainService
+class TenantService
 {
     public $domain;
     protected $organization;
@@ -12,10 +12,29 @@ class DomainService
     public function __construct()
     {
         $this->setCurrentDomain();
+
+        if($this->domain) {
+            $this->setOrganization();
+        }
     }
 
-    public function setCurrentDomain()
+    public function setUpForDomain($domain) {
+        if(!$domain) {
+            return false;
+        }
+
+        $this->setCurrentDomain($domain);
+        $this->setOrganization();
+        $this->updateSession($domain);
+    }
+
+    public function setCurrentDomain($domain = null)
     {
+        if($domain) {
+            $this->domain = $domain;
+            return $domain;
+        }
+
         $currentHost = request()->getHost();
         $subDomains = explode('.', $currentHost);
         if (count($subDomains) < 3) {
@@ -24,7 +43,6 @@ class DomainService
         }
 
         $this->domain = head($subDomains);
-        $this->setOrganization();
     }
 
     public function setOrganization()
@@ -32,7 +50,7 @@ class DomainService
         $this->organization = Organization::findBySlug($this->domain);
     }
 
-    public function getOrganization()
+    public function organization()
     {
         if ($this->organization) {
             $this->setOrganization();
