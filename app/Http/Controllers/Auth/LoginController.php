@@ -81,11 +81,11 @@ class LoginController extends Controller
         // If yes, redirect to the user workspace.
         $organizationUrl = Tenant::getUrl($domain);
         session()->flash('status', 'Welcome to '. Tenant::organization()->name);
-
+        
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         $authUser->update(['avatar' => $user->avatar_original]);
-        
+
         return redirect()->to($organizationUrl . '/home');
     }
 
