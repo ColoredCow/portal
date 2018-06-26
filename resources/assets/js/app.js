@@ -256,7 +256,7 @@ function getProjectList(projects) {
     return html;
 }
 
-$('#copy_weeklydose_service_url').tooltip({
+$('.btn-tooltip').tooltip({
   trigger: 'click',
   placement: 'bottom'
 });
@@ -274,8 +274,13 @@ function hideTooltip(btn) {
 }
 
 var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
-
 weeklyDoseClipboard.on('success', function(e) {
+  setTooltip(e.trigger, 'Copied!');
+  hideTooltip(e.trigger);
+});
+
+var onboardDWDClipboard = new ClipboardJS('#copy_domain_wide_delegation_scopes');
+onboardDWDClipboard.on('success', function(e) {
   setTooltip(e.trigger, 'Copied!');
   hideTooltip(e.trigger);
 });

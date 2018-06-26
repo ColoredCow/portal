@@ -135,4 +135,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('onboard', 'Onboarding\OnboardController@index');
-Route::resource('organizations', 'OrganizationController')->only(['store'])->names(['store' => 'organizations.store']);
+Route::resource('organizations', 'OrganizationController')
+    ->only(['create', 'store'])
+    ->names([
+        'create' => 'organizations.create',
+        'store' => 'organizations.store',
+    ]);

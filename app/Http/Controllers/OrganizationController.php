@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrganizationRequest;
 use App\Models\Organization;
-use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
 {
@@ -24,23 +24,25 @@ class OrganizationController extends Controller
      */
     public function create()
     {
+        return view('organizations.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\OrganizationRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(OrganizationRequest $request)
+    {
+        $validated = $request->validated();
+        dd($validated);
         // for demo : create a DB emp_org_coloredcow and emp_portal_master and make a GET Request to /organization
         Organization::create([
             'slug' => 'coloredcow',
             'name' => 'ColoredCow',
             'contact_email' => 'email@coloredcow.com',
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        dd($request->all());
     }
 
     /**
@@ -68,11 +70,11 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\OrganizationRequest  $request
      * @param  \App\Models\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Organization $organization)
+    public function update(OrganizationRequest $request, Organization $organization)
     {
         //
     }
