@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Services\DomainService;
+use Illuminate\Support\ServiceProvider;
 
 class DomainServiceProvider extends ServiceProvider
 {
@@ -25,6 +25,6 @@ class DomainServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
+
     }
 }

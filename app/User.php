@@ -80,11 +80,13 @@ class User extends Authenticatable
         return $this->hasOne(Employee::class, 'user_id');
     }
 
-    public function setDomain($domain) {
+    public function setDomain($domain)
+    {
         $this->domain = $domain;
     }
 
-    public function getDomainAttribute() {
-        return  $this->domain . ' fff';
+    public function getDomainAttribute()
+    {
+        return $this->domain . ' fff';
     }
 }
