@@ -26,7 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        session(['status' => 'Welcome to '. Domain::organization()->name]);
+        if(Domain::organization()) {
+            session(['status' => 'Welcome to '. Domain::organization()->name]);
+        }
+   
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);
     }

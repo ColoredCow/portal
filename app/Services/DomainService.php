@@ -18,8 +18,7 @@ class DomainService
     {
         $currentHost = request()->getHost();
         $subDomains = explode('.', $currentHost);
-
-        if ($subDomains < 3) {
+        if (count($subDomains) < 3) {
             $this->domain = null;
             return false;
         }
@@ -33,13 +32,60 @@ class DomainService
         $this->dbRow = Organization::findBySlug($this->domain);
     }
 
-    public function organization() {
-
+    public function organization()
+    {
         return  $this->dbRow;
     }
-    
+
     public function __toString()
     {
         return $this->domain;
     }
+
+    public function configuration($key = '')
+    {
+        // ToDO: add array support
+        if ($key) {
+            return $this->dbRow->configurations()
+                    ->where('key', $key)
+                    ->pluck('value');
+        }
+
+        return $this->dbRow->configurations;
+    }
+
+    public static function resolveName($email)
+    {
+        return head(explode('.', $email));
+    }
+
+    public static function getUrl($domain = '')
+    {
+
+        return request()->getScheme() . '://' . $domain . '.' . request()->getHost();
+    }
+
+    public function getCurrentDomain() {
+        return $this->domain;
+    }
+
+    public function updateSession($domain) {
+        session(['domain' => $domain]);
+    }
+
+    public function check() {
+        $currentDomain = session('domain');
+        $currentUrl = request()->url();
+        return str_is('*'. $currentDomain . '.*',  $currentUrl);
+    }
+
+    public function getFullUrl() {
+        $currentDomain = session('domain');
+        $domainUrl = self::getUrl($currentDomain);
+        $path = request()->path();
+        $queryString = request()->getQueryString();
+        $path = ($queryString) ? $path.'?' . $queryString : $path;
+        return $domainUrl. '/' . $path;
+    }
+
 }

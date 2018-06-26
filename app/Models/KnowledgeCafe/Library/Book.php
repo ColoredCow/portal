@@ -105,4 +105,13 @@ class Book extends Model
                 return $this->thumbnail;
         }
     }
+
+
+    public function ngo() {
+        return $this->hasOne(Ngo::class);
+    }
+
+    public function path() {
+        return 'ngo/' . $this->ngo->id . '/project/' . $this->id;
+    }
 }
