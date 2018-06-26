@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KnowledgeCafe\Library\Book;
 use Google_Client;
 use Google_Service_Directory;
+use App\Facades\Domain;
 
 class HomeController extends Controller
 {
@@ -25,6 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        session(['status' => 'Welcome to '. Domain::organization()->name]);
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);
     }

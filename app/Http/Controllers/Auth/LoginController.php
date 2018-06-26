@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use App\Helpers\DomainHelper;
 
 class LoginController extends Controller
 {
@@ -69,13 +70,22 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->user();
+        $domain = DomainHelper::resolveName($user->user['domain']);
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
+
         /**
          * Update user avatar to keep it update with gmail
          */
+
         $authUser->update(['avatar' => $user->avatar_original]);
-        return redirect('home');
+        $organizationUrl = DomainHelper::getDomainUrl($domain);
+        session(['domain' => $domain]);
+
+
+
+
+        return redirect()->to($organizationUrl);
     }
 
     /**

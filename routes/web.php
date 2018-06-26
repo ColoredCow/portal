@@ -25,7 +25,8 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' =>  'auth'], function () {
+
     Route::prefix('profile')->group(function () {
         Route::get('gsuite-sync', 'UserController@syncWithGSuite')->name('profile.gsuite-sync');
     });
@@ -132,6 +133,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('organization/', 'OrganizationController@create');
     Route::get('crm', 'CRM\CRMController@index')->name('crm');
+
 });
 
 Route::get('onboard', 'Onboarding\OnboardController@index');

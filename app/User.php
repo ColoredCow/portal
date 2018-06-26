@@ -30,6 +30,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $domain = '';
+
     public static function findByEmail($email)
     {
         return self::where('email', $email)->first();
@@ -76,5 +78,13 @@ class User extends Authenticatable
     public function employee()
     {
         return $this->hasOne(Employee::class, 'user_id');
+    }
+
+    public function setDomain($domain) {
+        $this->domain = $domain;
+    }
+
+    public function getDomainAttribute() {
+        return  $this->domain . ' fff';
     }
 }
