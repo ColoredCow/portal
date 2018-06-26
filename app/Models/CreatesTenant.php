@@ -10,6 +10,7 @@ trait CreatesTenant
     protected static function bootCreatesTenant()
     {
         static::created(function ($model) {
+            $model->initSchema();
             $model->createConnection();
             $model->migrateSchema();
             $model->seedSchema();
@@ -19,17 +20,23 @@ trait CreatesTenant
     public function createConnection()
     {
         $connection = config('database.connections.default');
-        $connection['database'] = $this->database_name;
-        config(['database.connections.' . $this->connection_name => $connection]);
-        $this->configurations()->create(['key' => 'database', 'value' => $this->database_name]);
+        $connection['database'] = $this->generateDatabaseName();
+        config(['database.connections.' . $this->generateConnectionName() => $connection]);
+        $this->configurations()->create(['key' => 'database', 'value' => $this->generateConnectionName()]);
     }
 
-    public function getConnectionNameAttribute()
+    public function generateConnectionName()
     {
         return "org_{$this->slug}";
     }
 
-    public function getDatabaseNameAttribute()
+    public function getConnectionNameAttribute()
+    {
+        $config = $this->configurations()->where('key', 'database')->first();
+        return $config->value;
+    }
+
+    public function generateDatabaseName()
     {
         return "emp_org_{$this->slug}";
     }
@@ -37,7 +44,7 @@ trait CreatesTenant
     # Do we want to create the organization database programatically? @rudresh @vaibhav @pankaj
     public function initSchema()
     {
-        DB::raw("CREATE DATABASE {$this->database_name}");
+        DB::statement(DB::raw("CREATE DATABASE " . $this->generateDatabaseName()));
     }
 
     public function migrateSchema()

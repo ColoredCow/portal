@@ -23,7 +23,8 @@ class Organization extends Model
         return $this->hasMany(Configuration::class);
     }
 
-    public static function findBySlug($slug) {
+    public static function findBySlug($slug)
+    {
         return self::where('slug', $slug)->first();
     }
 }
