@@ -74,16 +74,11 @@ class TenantService
             $configuration = $this->organization->configurations()
                 ->where('key', $key)->first();
             return (empty($configuration)) ? '' : $configuration->value;
-
         }
-
         if (is_array($key)) {
-            $configuration = $this->organization->configurations()
+            return $this->organization->configurations()
                 ->whereIn('key', $key)->get();
-
-            return (empty($configuration)) ? '' : $configuration->toArray();
         }
-
         return $this->organization->configurations;
     }
 
