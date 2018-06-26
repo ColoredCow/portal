@@ -2,14 +2,20 @@
 
 namespace App\Helpers;
 
-class OrganizationHelper
+class DomainHelper
 {
    
-    public static function resolveDomainName($email) {
+    public static function resolveName($email) {
         return head(explode('.', $email));
     }
 
     public static function getDomainUrl($domain = '') {
         return request()->getScheme(). '://' . $domain . '.' . request()->getHost() . '/home';
     }
+
+    public function getCurrentDomain() {
+        
+    }
+
+
 }
