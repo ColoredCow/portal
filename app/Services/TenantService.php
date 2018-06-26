@@ -13,15 +13,26 @@ class TenantService
     {
         $this->setCurrentDomain();
 
-        if($this->domain) {
+        if ($this->domain) {
             $this->setOrganization();
             $this->setUpDBConnection();
         }
     }
 
+    public function setUpForDomain($domain)
+    {
+        if (!$domain) {
+            return false;
+        }
+
+        $this->setCurrentDomain($domain);
+        $this->setOrganization();
+        $this->updateSession($domain);
+    }
+
     public function setCurrentDomain($domain = null)
     {
-        if($domain) {
+        if ($domain) {
             $this->domain = $domain;
             return $domain;
         }
@@ -75,16 +86,14 @@ class TenantService
     {
         // ToDO: add array support
         if (is_string($key)) {
-            $configuration =  $this->organization->configurations()
-                                ->where('key', $key)->first();
-            return (empty($configuration))  ? '' : $configuration->value;
+            $configuration = $this->organization->configurations()
+                ->where('key', $key)->first();
+            return (empty($configuration)) ? '' : $configuration->value;
         }
-
-        if(is_array($key)) {
-            return  $this->organization->configurations()
-            ->whereIn('key', $key)->get();
+        if (is_array($key)) {
+            return $this->organization->configurations()
+                ->whereIn('key', $key)->get();
         }
-
         return $this->organization->configurations;
     }
 
