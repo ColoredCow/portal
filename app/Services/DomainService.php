@@ -7,7 +7,7 @@ use App\Models\Organization;
 class DomainService
 {
     public $domain;
-    protected $dbRow;
+    protected $organization;
 
     public function __construct()
     {
@@ -24,17 +24,20 @@ class DomainService
         }
 
         $this->domain = head($subDomains);
-        $this->setDBRow();
+        $this->setOrganization();
     }
 
-    public function setDBRow()
+    public function setOrganization()
     {
-        $this->dbRow = Organization::findBySlug($this->domain);
+        $this->organization = Organization::findBySlug($this->domain);
     }
 
-    public function organization()
+    public function getOrganization()
     {
-        return $this->dbRow;
+        if ($this->organization) {
+            $this->setOrganization();
+        }
+        return $this->organization;
     }
 
     public function __toString()
@@ -46,12 +49,12 @@ class DomainService
     {
         // ToDO: add array support
         if ($key) {
-            return $this->dbRow->configurations()
+            return $this->organization->configurations()
                 ->where('key', $key)
                 ->pluck('value');
         }
 
-        return $this->dbRow->configurations;
+        return $this->organization->configurations;
     }
 
     public static function resolveName($email)
@@ -61,7 +64,6 @@ class DomainService
 
     public static function getUrl($domain = '')
     {
-
         return request()->getScheme() . '://' . $domain . '.' . request()->getHost();
     }
 
@@ -79,7 +81,7 @@ class DomainService
     {
         $currentDomain = session('domain');
         $currentUrl = request()->url();
-        return str_is('*' . $currentDomain . '.*', $currentUrl);
+        return str_is("*$currentDomain.*", $currentUrl);
     }
 
     public function getFullUrl()

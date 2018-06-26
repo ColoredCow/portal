@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Facades\Domain;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use App\Facades\Domain;
 
 class LoginController extends Controller
 {
@@ -50,7 +50,7 @@ class LoginController extends Controller
     {
         switch ($provider) {
             case 'google':
-                return Socialite::driver($provider)->with(['hd' => config('constants.gsuite.client-hd')])->redirect();
+                return Socialite::driver($provider)->redirect();
                 break;
 
             default:
@@ -71,13 +71,23 @@ class LoginController extends Controller
     {
         $user = Socialite::driver($provider)->user();
         $domain = Domain::resolveName($user->user['domain']);
+        // cc.ep.com
+        Domain::updateSession($domain);
+
+        if (!Domain::getOrganization()) {
+            return redirect()->route('organizations.create');
+        }
+
+        $organizationUrl = Domain::getUrl($domain);
+        // need to check now if the domain is already registered within the organizations table.
+        // If yes, redirect to the user workspace.
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-
         $authUser->update(['avatar' => $user->avatar_original]);
-        $organizationUrl = Domain::getUrl($domain);
-        Domain::updateSession($domain);
-        return redirect()->to($organizationUrl.'/home');
+        return redirect()->to($organizationUrl . '/home');
+
+        // If not, we redirect the user to the onboarding page.
+
     }
 
     /**
