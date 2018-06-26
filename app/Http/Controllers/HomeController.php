@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Tenant;
 use App\Models\KnowledgeCafe\Library\Book;
 use Google_Client;
 use Google_Service_Directory;
-use App\Facades\Tenant;
 
 class HomeController extends Controller
 {
@@ -28,7 +28,6 @@ class HomeController extends Controller
     {
         \Tenant::setUpDBConnection();
 
-        dd(\Auth::user());
         //
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);

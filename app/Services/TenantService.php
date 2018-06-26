@@ -19,17 +19,6 @@ class TenantService
         }
     }
 
-    public function setUpForDomain($domain)
-    {
-        if (!$domain) {
-            return false;
-        }
-
-        $this->setCurrentDomain($domain);
-        $this->setOrganization();
-        $this->updateSession($domain);
-    }
-
     public function setCurrentDomain($domain = null)
     {
         if ($domain) {
@@ -47,8 +36,9 @@ class TenantService
         $this->domain = head($subDomains);
     }
 
-    public function setUpForDomain($domain) {
-        if(!$domain) {
+    public function setUpForDomain($domain)
+    {
+        if (!$domain) {
             return false;
         }
 
@@ -56,17 +46,18 @@ class TenantService
         $this->setOrganization();
         $this->updateSession($domain);
         $this->setUpDBConnection();
-        
+
     }
 
-    public function setUpDBConnection() {
-         $connection = config('database.connections.default');
-         $connection['database'] = $this->configuration('database');
-         $name = "pankaj";
-         config(['database.connections.'.$name  => $connection]);
-         \Config::set('database.default', 'pankaj');
-
-        // config(['database.connections.' . $this->generateConnectionName() => $connection]);
+    public function setUpDBConnection()
+    {
+        if (!$this->organization) {
+            return false;
+        }
+        $connection = config('database.connections.default');
+        $connection['database'] = $this->organization->connection_name;
+        config(['database.connections.' . $this->organization->connection_name => $connection]);
+        \Config::set('database.default', $this->organization->connection_name);
     }
 
     public function setOrganization()
@@ -84,7 +75,9 @@ class TenantService
 
     public function configuration($key = '')
     {
-        // ToDO: add array support
+        if (!$this->organization) {
+            return false;
+        }
         if (is_string($key)) {
             $configuration = $this->organization->configurations()
                 ->where('key', $key)->first();
