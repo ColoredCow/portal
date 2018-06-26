@@ -33,11 +33,11 @@ class DomainService
         $this->dbRow = Organization::findBySlug($this->domain);
     }
 
-    public function organization() {
-
-        return  $this->dbRow;
+    public function organization()
+    {
+        return $this->dbRow;
     }
-    
+
     public function __toString()
     {
         return $this->domain;

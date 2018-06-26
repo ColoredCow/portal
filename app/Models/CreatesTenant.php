@@ -1,10 +1,9 @@
-<?php 
+<?php
 
 namespace App\Models;
 
-use App\Models\Configuration;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 trait CreatesTenant
 {
@@ -22,9 +21,9 @@ trait CreatesTenant
         $connection = config('database.connections.default');
         $connection['database'] = $this->database_name;
         config(['database.connections.' . $this->connection_name => $connection]);
-        $this->configurations()->create(['key' => "database", 'value' => $this->database_name]);
+        $this->configurations()->create(['key' => 'database', 'value' => $this->database_name]);
     }
-    
+
     public function getConnectionNameAttribute()
     {
         return "org_{$this->slug}";

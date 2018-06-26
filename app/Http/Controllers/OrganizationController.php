@@ -35,13 +35,11 @@ class OrganizationController extends Controller
      */
     public function store(OrganizationRequest $request)
     {
-        $validated = $request->validated();
-        dd($validated);
         // for demo : create a DB emp_org_coloredcow and emp_portal_master and make a GET Request to /organization
         Organization::create([
-            'slug' => 'coloredcow',
-            'name' => 'ColoredCow',
-            'contact_email' => 'email@coloredcow.com',
+            'slug' => $validated['slug'],
+            'name' => $validated['name'],
+            'contact_email' => $validated['admin_email'],
         ]);
     }
 
