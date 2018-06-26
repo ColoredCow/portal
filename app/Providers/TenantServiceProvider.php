@@ -14,9 +14,7 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton(TenantService::class, function ($app) {
-            return new TenantService;
-        });
+        \Tenant::setUpDBConnection();
     }
     /**
      * Register services.
@@ -25,6 +23,8 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->app->singleton(TenantService::class, function ($app) {
+            return new TenantService;
+        });
     }
 }
