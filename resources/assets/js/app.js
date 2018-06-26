@@ -28,7 +28,7 @@ if (document.getElementById('page_onboard_organization')) {
     const applicantEdit = new Vue({
         el: '#page_onboard_organization',
         data: {
-            step: 5,
+            step: 1,
             totalSteps: document.getElementsByClassName('step-onboarding').length,
         },
         methods: {
