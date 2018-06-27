@@ -18,6 +18,8 @@ abstract class FeatureTest extends TestCase
     {
         parent::setUp();
         session(['active_master_connection' => 'master_test']);
+
+        dd();
         //$organization = factory(Organization::class)->create();
 
         

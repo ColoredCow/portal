@@ -13,7 +13,7 @@ class BookTest extends FeatureTest
     public function setUp()
     {
         parent::setUp();
-       // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
     }
 
 
