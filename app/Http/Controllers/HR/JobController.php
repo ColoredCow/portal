@@ -5,15 +5,15 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\JobRequest;
 use App\Models\HR\Job;
-use App\Models\HR\Round;
 use App\User;
+use Illuminate\Support\Facades\Input;
 
 class JobController extends Controller
 {
     public function __construct()
     {
         $this->authorizeResource(Job::class, null, [
-            'except' => ['store']
+            'except' => ['store'],
         ]);
     }
 
@@ -26,8 +26,15 @@ class JobController extends Controller
     {
         $this->authorize('list', Job::class);
 
+        $jobs = Job::with('applications', 'applications.applicant')
+            ->latest()
+            ->appends(Input::except('page'));
+
+        request()->is('*recruitment/opportunities*') ? $jobs->typeRecruitment() : $jobs->typeVolunteer();
+        $jobs->paginate(config('constants.pagination_size'));
+
         return view('hr.job.index')->with([
-            'jobs' => Job::with('applications', 'applications.applicant')->orderBy('id', 'desc')->get(),
+            'jobs' => $jobs,
         ]);
     }
 
@@ -55,6 +62,7 @@ class JobController extends Controller
             'title' => $validated['title'],
             'posted_by' => $validated['by'],
             'link' => $validated['link'],
+            'type' => $validated['type'],
         ]);
     }
 

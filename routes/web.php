@@ -36,6 +36,25 @@ Route::middleware('auth')->group(function () {
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
+            Route::resource('opportunities', 'RecruitmentOpportunityController')
+                ->only(['index', 'store', 'update'])
+                ->names([
+                    'index' => 'recruitment.opportunities',
+                    'store' => 'recruitment.opportunities.store',
+                    'update' => 'recruitment.opportunities.update',
+                ]);
+        });
+
+        Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
+            Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
+            Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');
+            Route::resource('opportunities', 'VolunteerOpportunityController')
+                ->only(['index', 'store', 'update'])
+                ->names([
+                    'index' => 'volunteer.opportunities',
+                    'store' => 'volunteer.opportunities.store',
+                    'update' => 'volunteer.opportunities.update',
+                ]);
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {
@@ -46,6 +65,12 @@ Route::middleware('auth')->group(function () {
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
+            Route::resource('volunteer', 'VolunteerApplicationController')
+                ->only(['index', 'edit'])
+                ->names([
+                    'index' => 'applications.volunteer.index',
+                    'edit' => 'applications.volunteer.edit',
+                ]);
         });
 
         Route::prefix('employees')->namespace('Employees')->group(function () {
@@ -58,7 +83,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
-        Route::resource('jobs', 'JobController')->except(['create', 'show', 'destroy']);
+
         Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
         Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
     });
@@ -73,7 +98,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', 'ProjectController')
         ->except(['show', 'destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
-
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
     Route::get('settings/{module}', 'SettingController@index');
@@ -81,10 +105,16 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
-
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
-                ->names(['index' => 'books.index', 'create' => 'books.create', 'show' => 'books.show', 'store' => 'books.store']);
+                ->names([
+                    'index' => 'books.index',
+                    'create' => 'books.create',
+                    'show' => 'books.show',
+                    'store' => 'books.store',
+                    'destroy' => 'books.delete',
+                    'update' => 'books.update'
+                ]);
 
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
@@ -98,7 +128,8 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'store', 'update', 'destroy'])
                 ->names(['index' => 'books.category.index']);
         });
-
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
     });
+
+    Route::get('crm', 'CRM\CRMController@index')->name('crm');
 });

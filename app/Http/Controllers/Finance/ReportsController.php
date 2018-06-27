@@ -92,7 +92,7 @@ class ReportsController extends Controller
             $report['sentAmount'][$currency] = 0;
             $report['paidAmount'][$currency] = [
                 'converted' => 0,
-                'default' => 0
+                'default' => 0,
             ];
             $report['transactionCharge'][$currency] = 0;
             $report['transactionTax'][$currency] = 0;
