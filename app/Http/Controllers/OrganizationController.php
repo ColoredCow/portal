@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Tenant;
 use App\Helpers\FileHelper;
 use App\Http\Requests\OrganizationRequest;
 use App\Models\Organization;
@@ -39,15 +40,11 @@ class OrganizationController extends Controller
     public function store(OrganizationRequest $request)
     {
         $validated = $request->validated();
+        $user = session('user', null);
         $organization = Organization::create([
-            'slug' => $validated['slug'],
+            'slug' => Tenant::resolveName($user->user['domain']),
             'name' => $validated['name'],
             'contact_email' => $validated['admin_email'],
-        ]);
-
-        $organization->configurations()->create([
-            'key' => 'service_account_client_id',
-            'value' => $validated['gsuite_sa_client_id'],
         ]);
 
         $path = self::upload($validated['gsuite_dwd_private_key']);
@@ -56,7 +53,7 @@ class OrganizationController extends Controller
             'value' => $path,
         ]);
 
-        return redirect()->to(LoginService::login());
+        return LoginService::login();
     }
 
     /**
