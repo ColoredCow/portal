@@ -953,12 +953,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ColoredCow/google-auth-library-php.git",
-                "reference": "750dd8096c2ae0a045edd1e79dcb954a7fae0b2a"
+                "reference": "e33c686398a0aa4ce00238b7e4302b3ceafa5793"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ColoredCow/google-auth-library-php/zipball/750dd8096c2ae0a045edd1e79dcb954a7fae0b2a",
-                "reference": "750dd8096c2ae0a045edd1e79dcb954a7fae0b2a",
+                "url": "https://api.github.com/repos/ColoredCow/google-auth-library-php/zipball/e33c686398a0aa4ce00238b7e4302b3ceafa5793",
+                "reference": "e33c686398a0aa4ce00238b7e4302b3ceafa5793",
                 "shasum": ""
             },
             "require": {
@@ -995,7 +995,7 @@
             "support": {
                 "source": "https://github.com/ColoredCow/google-auth-library-php/tree/master"
             },
-            "time": "2018-06-27T07:37:57+00:00"
+            "time": "2018-06-27T11:57:28+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
