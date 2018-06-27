@@ -17,13 +17,7 @@ abstract class FeatureTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        session(['active_master_connection' => 'master_test']);
-
-        dd();
-        //$organization = factory(Organization::class)->create();
-
-        
-        //$this->setupTenant();
+       // $this->setupTenant();
        // $this->setUpRolesAndPermissions();
     }
 
@@ -39,10 +33,5 @@ abstract class FeatureTest extends TestCase
         session()->put('active_connection', 'master_test');
         return $this;
     }
-
-
-
-
-
 
 }

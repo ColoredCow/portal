@@ -54,6 +54,13 @@ class TenantService
         if (!$this->organization) {
             return false;
         }
+
+        $connectionName = $this->organization->connection_name;
+
+        if(app()->environment('testing')) {
+            $connectionName = 'emp_org_tenant_test';
+        }
+
         $connection = config('database.connections.default');
         $connection['database'] = $this->organization->connection_name;
         config(['database.connections.' . $this->organization->connection_name => $connection]);

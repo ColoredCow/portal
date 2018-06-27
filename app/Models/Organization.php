@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
-    use CreatesTenant;
+    use CreatesTenant, IsMasterModel;
 
-    protected $connection = 'master';
     protected $guarded = [];
+
 
     public static function generateSlug($name)
     {

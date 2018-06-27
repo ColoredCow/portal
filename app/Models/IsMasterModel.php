@@ -4,9 +4,13 @@ namespace App\Models;
 
 trait IsMasterModel
 {
-    public function __construct()
+    public function __construct(array $attributes = array())
     {
-        parent::__construct();
-        $this->connection = session('active_master_connection', 'master');
+        parent::__construct($attributes);
+        $this->connection = 'master';
+        
+        if(app()->environment('testing')) {
+            $this->connection = 'master_test';
+        }
     }
 }
