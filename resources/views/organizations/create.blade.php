@@ -74,7 +74,7 @@
                 <h3 class="mt-3 mb-4"><strong>Step 5:&nbsp;</strong>Enable G Suite API reference</h3>
                 <div class="form-group">
                     <ul>
-                        <li><a href="https://admin.google.com">Go to your G Suite domain's admin console</a></li>
+                        <li><strong><a href="https://admin.google.com" target="_blank">Go to your G Suite domain's admin console</a></strong></li>
                         <li>Select <strong>Security</strong> from the list of controls. If you don't see <strong>Security</strong> listed, select <strong>More controls</strong> from the gray bar at the bottom of the page, then select <strong>Security</strong> from the list of controls.</li>
                         <li>Select <strong>API reference</strong> from the list of options.</li>
                         <li>Click the <strong>Enable API access</strong> checkbox.</li>
@@ -89,7 +89,7 @@
                 <div class="form-group">
                     <p class="mb-1">This will help us to access your following organizational G Suite details without troubling your team members for their consent.</p>
                     <ul>
-                        <li><a href="https://admin.google.com">Go to your G Suite domain's admin console</a></li>
+                        <li><strong><a href="https://admin.google.com" target="_blank">Go to your G Suite domain's admin console</a></strong></li>
                         <li>Select <strong>Security</strong> from the list of controls. If you don't see <strong>Security</strong> listed, select <strong>More controls</strong> from the gray bar at the bottom of the page, then select <strong>Security</strong> from the list of controls.</li>
                         <li>Select <strong>Advanced settings</strong> from the list of options.</li>
                         <figure class="image-card mt-2">

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Tenant;
 use App\Helpers\FileHelper;
 use App\Http\Requests\OrganizationRequest;
 use App\Models\Organization;
+use App\Services\LoginService;
 use Illuminate\Http\UploadedFile;
 
 class OrganizationController extends Controller
@@ -56,8 +56,7 @@ class OrganizationController extends Controller
             'value' => $path,
         ]);
 
-        $organizationUrl = Tenant::getUrl($validated['slug']);
-        return redirect()->to($organizationUrl . '/home');
+        return redirect()->to(LoginService::login());
     }
 
     /**
