@@ -107,7 +107,7 @@ class TenantService
 
     public function updateSession($domain)
     {
-        session(['domain' => $domain]);
+        session(['domain' => $domain , 'active_connection' => $this->organization()->connection_name]);
     }
 
     public function check()

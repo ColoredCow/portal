@@ -77,8 +77,8 @@ class LoginController extends Controller
             return redirect()->route('organizations.create');
         }
 
-        session(['active_connection' => Tenant::organization()->connection_name]);
 
+        Tenant::updateSession($domain);
         $organizationUrl = Tenant::getUrl($domain);
         session()->flash('status', 'Welcome to ' . Tenant::organization()->name);
         $authUser = $this->findOrCreateUser($user, $provider);
