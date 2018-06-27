@@ -163,6 +163,7 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\DatabaseServiceProvider::class,
+        App\Providers\TenantServiceProvider::class,
 
     ],
 
