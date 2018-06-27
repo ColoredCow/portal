@@ -27,4 +27,15 @@ class Organization extends Model
     {
         return self::where('slug', $slug)->first();
     }
+
+    /**
+     * Returns the absolute path of the private key file for GSuite domain wide delegation access.
+     *
+     * @return string
+     */
+    public function getPrivateKeyFilePath()
+    {
+        $filePath = $this->configurations->where('key', 'service_account_private_key_file')->first()->value;
+        return storage_path("/app/$filePath");
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\Tenant;
 use Carbon\Carbon;
 use Google_Client;
 use Google_Service_Calendar;
@@ -21,7 +22,7 @@ class CalendarEventService
     {
         $client = new Google_Client();
         $client->useApplicationDefaultCredentials();
-        $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
+        $client->setSubject(Tenant::organization()->contact_email);
         $client->setScopes(Google_Service_Calendar::CALENDAR);
         $this->service = new Google_Service_Calendar($client);
     }
