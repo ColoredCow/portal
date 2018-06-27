@@ -31,6 +31,11 @@ if (document.getElementById('page_onboard_organization')) {
             step: 1,
             totalSteps: document.getElementsByClassName('step-onboarding').length,
         },
+        computed: {
+            progress: function() {
+                return 100*(this.step/this.totalSteps);
+            }
+        },
         methods: {
             showNextStep: function() {
                 this.step++;
@@ -38,6 +43,9 @@ if (document.getElementById('page_onboard_organization')) {
             showPreviousStep: function() {
                 this.step--;
             },
+            isStep(step) {
+                return this.step == step;
+            }
         },
     });
 }
