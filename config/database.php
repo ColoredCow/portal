@@ -72,16 +72,25 @@ return [
         'master_test' => [
             'driver' => 'mysql',
             'host' => env('DB_MASTER_HOST', '127.0.0.1'),
-            'port' => env('DB_MASTER_PORT', '3306'),
             'database' => 'emp_portal_master_test',
             'username' => env('DB_MASTER_USERNAME', 'root'),
             'password' => env('DB_MASTER_PASSWORD', ''),
-            'unix_socket' => env('DB_MASTER_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'strict' => true,
-            'engine' => null,
+            'strict' => false,
+        ],
+
+        'tenant_test' => [
+            'driver' => 'mysql',
+            'host' => env('DB_MASTER_HOST', '127.0.0.1'),
+            'database' => 'emp_org_tenant_test',
+            'username' => env('DB_MASTER_USERNAME', 'root'),
+            'password' => env('DB_MASTER_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
         ],
 
         'default' => [

@@ -7,28 +7,22 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
+use Tests\isTenantTest;
+use App\Models\Organization;
 
 abstract class FeatureTest extends TestCase
 {
-    use RefreshDatabase;
-
-    public function __construct()
-    {
-        parent::__construct();
-        if(!$this->app) {
-            $this->app = $this->createApplication();
-        }
-    
-        $config = $this->app->make('config');
-        $config->set('database.default', 'master_test');
-        $this->connectionsToTransact = ['master_test'];
-    }
+    use RefreshDatabase, isTenantTest;
 
     public function setUp()
     {
         parent::setUp();
-        $this->setupTenant();
-       //$this->setUpRolesAndPermissions();
+        session(['active_master_connection' => 'master_test']);
+        //$organization = factory(Organization::class)->create();
+
+        
+        //$this->setupTenant();
+       // $this->setUpRolesAndPermissions();
     }
 
     public function signInAsSuperAdmin()
@@ -41,7 +35,12 @@ abstract class FeatureTest extends TestCase
         $config->set('database.default', 'master_test');
         $this->connectionsToTransact = ['master_test'];
         session()->put('active_connection', 'master_test');
-        $this->artisan('db:seed');
         return $this;
     }
+
+
+
+
+
+
 }

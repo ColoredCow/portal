@@ -12,7 +12,7 @@ class MigrateAllCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'migrate:all';
+    protected $signature = 'migrate:all {--database=master}';
 
     /**
      * The console command description.
@@ -38,7 +38,7 @@ class MigrateAllCommand extends Command
      */
     public function handle()
     {
-        $this->call('migrate', array('--database' => 'master', '--path' => 'database/migrations/master/'));
+        $this->call('migrate', array('--database' => $this->option('database'), '--path' => 'database/migrations/master/'));
         $tenants = Configuration::where('key', 'database');
         foreach ($tenants as $tenant) {
             $this->call('migrate', array('--database' => $tenant['value'], '--path' => 'database/migrations/'));
