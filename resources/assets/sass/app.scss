@@ -421,4 +421,17 @@ input:focus+.slider {
 
 .card-form {
     box-shadow: rgba(0,0,0,0.4) 0px 1px 4px;
+
+    .text-main {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+    .text-supporting {
+        font-size: 1rem;
+        font-weight: 300;
+    }
+
+    .custom-control-label {
+        line-height: 1.9;
+    }
 }

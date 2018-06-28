@@ -4,7 +4,7 @@
 <div class="container" id="page_onboard_organization">
     <br>
     <div class="offset-md-3 col-md-6">
-        <h1 class="form-row">Create your organization</h1>
+        <h1 class="form-row" id="page_header">Create your organization</h1>
         <br>
         <form action="{{ route('organizations.store') }}" method="POST" enctype="multipart/form-data" id="onboard_organization">
             {{ csrf_field() }}
@@ -173,11 +173,26 @@
                     <div class="actions-block d-flex justify-content-between">
                         <button type="button" class="btn btn-secondary" v-if="step > 1" @click="showPreviousStep()">&larr; Previous step</button>
                         <button type="button" class="btn btn-primary" :class="{disabled : !isStepValid}" v-if="step < totalSteps" @click="showNextStep()">Next step &rarr;</button>
-                        <button type="button" class="btn btn-success" v-if="step == totalSteps" @click="createOrganization()">Complete</button>
+                        <button type="button" class="btn btn-success" :class="{disabled : !isStepValid}" v-if="step == totalSteps" @click="createOrganization()">Complete</button>
                     </div>
                 </div>
             </div>
         </form>
+        <div class="card card-form form-response d-none" id="registering">
+            <div class="card-body text-center py-5">
+                <img src="/images/onboarding/loader.svg" class="mx-auto mb-3">
+                <p class="text-main">Creating your workspace</p>
+                <p class="text-secondary text-supporting">This should take a few seconds</p>
+            </div>
+        </div>
+        <div class="card card-form form-response d-none" id="registration_complete">
+            <div class="card-body text-center py-5">
+                <img src="/images/onboarding/loader.svg" class="mx-auto mb-3">
+                <p class="text-main">Redirecting to your workspace</p>
+                <p class="mb-0 text-secondary text-supporting">You can directly access your workspace at</p>
+                <p style="font-size: 1.4rem;"><strong>coloredcow.ep.coloredcow.com</strong></p>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

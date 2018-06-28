@@ -42,10 +42,9 @@ if (document.getElementById('page_onboard_organization')) {
         },
         computed: {
             progress: function() {
-                return 100*(this.step/this.totalSteps);
+                return 100 * (this.step/this.totalSteps);
             },
             isStepValid() {
-                let isValid = false;
                 switch(this.step) {
                     case 1:
                         return !! this.adminEmail && !! this.orgName;
@@ -78,13 +77,27 @@ if (document.getElementById('page_onboard_organization')) {
                 return this.step == step;
             },
             createOrganization() {
+                let form = document.getElementById('onboard_organization');
+                let pageHeader = document.getElementById('page_header');
+                let registeringBlock = document.getElementById('registering');
+                let registerCompleteBlock = document.getElementById('registration_complete');
+
+                form.classList.add('d-none');
+                pageHeader.classList.add('d-none');
+                registeringBlock.classList.remove('d-none');
+
                 let formData = new FormData();
                 formData.append('name', this.orgName);
                 formData.append('admin_email', this.adminEmail);
                 formData.append('gsuite_dwd_private_key', this.privateKey);
                 let config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
                 axios.post('/organizations', formData, config).then(response => {
-                    window.location.href = response.data;
+                    registeringBlock.classList.add('d-none');
+                    registerCompleteBlock.classList.remove('d-none');
+                    setTimeout(() => {
+                        window.location.href = response.data;
+                    }, 5000);
                 });
             }
         },
