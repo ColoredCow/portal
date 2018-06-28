@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOrganisationConfigsTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateOrganisationConfigsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('organization_id');
             $table->string('key', 50);
-            $table->string('value', 50);
+            $table->string('value');
             $table->timestamps();
         });
     }

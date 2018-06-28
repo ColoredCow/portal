@@ -90,7 +90,7 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="enable_calendar_api" id="enable_calendar_api" required="required" v-model="enableCalendarAPI">
                                         <label class="custom-control-label" for="enable_calendar_api">
-                                            I have enabled the <strong><a href="https://console.developers.google.com/apis/api/admin.googleapis.com/overview" target="_blank">Calendar API from Google Developer Console</a></strong>.
+                                            I have enabled the <strong><a href="https://console.developers.google.com/apis/api/calendar-json.googleapis.com/overview" target="_blank">Calendar API from Google Developer Console</a></strong>.
                                         </label>
                                     </div>
                                 </li>
