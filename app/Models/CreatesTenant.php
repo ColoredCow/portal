@@ -55,7 +55,7 @@ trait CreatesTenant
 
     public function migrateSchema()
     {
-        Artisan::call('migrate', array('--database' => $this->connection_name, '--path' => 'database/migrations/'));
+        Artisan::call('migrate', array('--force' => true, '--database' => $this->connection_name, '--path' => 'database/migrations/'));
     }
 
     public function seedSchema()
