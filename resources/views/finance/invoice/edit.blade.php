@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="sent_on" class="field-required">Sent on</label>
-                        <input type="text" class="form-control date-field" name="sent_on" id="sent_on" placeholder="{{ config('constants.finance.input_date_format') }}" required="required" value="{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}">
+                        <input type="date" class="form-control" name="sent_on" id="sent_on" placeholder="{{ config('constants.finance.input_date_format') }}" required="required" value="{{ $invoice->sent_on }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3">
                         <label for="sent_amount" class="field-required">Invoice amount</label>
@@ -84,10 +84,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="due_date">Due date</label>
-                        @php
-                            $due_date = $invoice->due_date ? date(config('constants.display_date_format'), strtotime($invoice->due_date)) : $invoice->due_date;
-                        @endphp
-                        <input type="text" class="form-control date-field" name="due_date" id="paid_on" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $due_date }}">
+                        <input type="date" class="form-control" name="due_date" id="due_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->due_date }}">
                     </div>
                 </div>
 
@@ -105,10 +102,7 @@
                     </div>
                     <div class="form-group col-md-3" v-show="status == 'paid'">
                         <label for="paid_on">Paid on</label>
-                        @php
-                            $paid_on = $invoice->paid_on ? date(config('constants.display_date_format'), strtotime($invoice->paid_on)) : $invoice->paid_on;
-                        @endphp
-                        <input type="text" class="form-control date-field" name="paid_on" id="paid_on" placeholder="{{config('constants.finance.input_date_format')}}" value="{{ $paid_on }}">
+                        <input type="date" class="form-control" name="paid_on" id="paid_on" placeholder="{{config('constants.finance.input_date_format')}}" value="{{ $invoice->paid_on }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3" v-show="status == 'paid'">
                         <label for="paid_amount">Received amount</label>
