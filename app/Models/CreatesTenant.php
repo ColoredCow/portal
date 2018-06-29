@@ -38,13 +38,18 @@ trait CreatesTenant
 
     public function generateDatabaseName()
     {
+        if(app()->environment('testing')) {
+            return 'emp_org_tenant_test';
+        }
+
         return config('constants.tenants.prefixes.db') . $this->slug;
+        
     }
 
     # Do we want to create the organization database programatically? @rudresh @vaibhav @pankaj
     public function initSchema()
     {
-        DB::statement(DB::raw("CREATE DATABASE " . $this->generateDatabaseName()));
+        DB::statement(DB::raw("CREATE DATABASE IF NOT EXISTS " . $this->generateDatabaseName()));
     }
 
     public function migrateSchema()
@@ -54,6 +59,6 @@ trait CreatesTenant
 
     public function seedSchema()
     {
-        Artisan::call('db:seed');
+        Artisan::call('db:seed', ['--database' => $this->connection_name]);
     }
 }
