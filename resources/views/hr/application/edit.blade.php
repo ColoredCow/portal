@@ -21,8 +21,17 @@
         <div class="col-md-7" v-bind:class="{ 'offset-md-2': showResumeFrame }">
             <div class="card">
                 <div class="card-header">
+
                     <div class="d-inline float-left">Applicant Details</div>
-                    <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$application->status.title") }}</div>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customMail">Send mail</button>
+                        @include('hr.custom-mail-modal', ['application' => $application])
+                        <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight">
+                            {{ config("constants.hr.status.$application->status.title") }}
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="card-body">
                     <div class="form-row">
@@ -78,6 +87,7 @@
                             <div>{{ $application->reason_for_eligibility ?? '-' }}</div>
                         </div>
                         @if (isset($applicationFormDetails->value))
+                            <hr>
                             @foreach(json_decode($applicationFormDetails->value) as $field => $value)
                                 <div class="form-group col-md-12">
                                     <b>{{ $field }}</b>
@@ -196,7 +206,7 @@
                                         <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject">Reject</button>
                                     @endif
                                 @endif
-                                @if (!is_null($applicationRound->round_status))
+                                @if (!is_null($applicationRound->round_status)  && !$applicationRound->mail_sent))
                                     <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
                                 @endif
                                 </div>

@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
                     'index' => 'applications.volunteer.index',
                     'edit' => 'applications.volunteer.edit',
                 ]);
+            Route::post('{application}/sendmail', 'JobApplicationController@sendMail');
         });
 
         Route::prefix('employees')->namespace('Employees')->group(function () {
@@ -113,7 +114,7 @@ Route::middleware('auth')->group(function () {
                     'show' => 'books.show',
                     'store' => 'books.store',
                     'destroy' => 'books.delete',
-                    'update' => 'books.update'
+                    'update' => 'books.update',
                 ]);
 
             Route::prefix('book')->group(function () {
