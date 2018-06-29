@@ -108,7 +108,7 @@ if (document.getElementById('form_invoice')) {
             status: document.getElementById('status').dataset.status || '',
             countries: document.getElementById('client_id').dataset.countries || [],
             tdsAmount: document.getElementById('tds').dataset.tds || '',
-            transactionCharge: document.getElementById('transaction_charge').dataset.tds || '',
+            transactionCharge: document.getElementById('transaction_charge').dataset.transactionCharge || '',
         },
         computed: {
             convertedAmount: function() {

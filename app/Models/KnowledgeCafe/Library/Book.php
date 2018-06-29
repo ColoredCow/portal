@@ -46,16 +46,22 @@ class Book extends Model
         return $this->belongsToMany(User::class, 'book_readers', 'library_book_id', 'user_id');
     }
 
-    public function markBook($read)
+    public function markAsRead()
     {
-        if (!$read) {
-            return $this->readers()->detach(auth()->user());
-        }
-
         $this->readers()->attach(auth()->user());
         $this->wishers()->detach(auth()->user());
-
         return true;
+    }
+
+    public function markAsUnRead()
+    {
+        $this->readers()->detach(auth()->user());
+        return true;
+    }
+
+    public function markBook($read)
+    {
+        return ($read) ? $this->markAsRead() : $this->markAsUnRead();
     }
 
     public static function getRandomUnreadBook()
@@ -73,7 +79,7 @@ class Book extends Model
         return $this->belongsToMany(User::class, 'book_wishlist', 'library_book_id', 'user_id');
     }
 
-    public function addToUserWishlist()
+    public function addToWishlist()
     {
         $this->wishers()->attach(auth()->user());
         return true;
