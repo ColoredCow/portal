@@ -16,11 +16,9 @@ Route::get('/', function () {
         return redirect('home');
     }
     return redirect('login');
-});
+})->middleware('tenant');
 
 Auth::routes();
-
-
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');

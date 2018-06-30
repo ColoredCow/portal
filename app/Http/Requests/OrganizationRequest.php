@@ -26,9 +26,9 @@ class OrganizationRequest extends FormRequest
         return [
             'name' => 'required|string',
             'admin_email' => 'required|email',
-            'gsuite_sa_client_id' => 'required|string',
+            // 'gsuite_sa_client_id' => 'required|string',
             'gsuite_dwd_private_key' => 'required|file',
-            'slug' => 'required|string',
+            // 'slug' => 'required|string',
         ];
     }
 
@@ -43,10 +43,10 @@ class OrganizationRequest extends FormRequest
             'name.required' => 'Organization name is required',
             'admin_email.required' => 'Admin email is required',
             'admin_email.email' => 'Admin email should be a valid email address',
-            'gsuite_sa_client_id.required' => 'Service account client ID is required',
+            // 'gsuite_sa_client_id.required' => 'Service account client ID is required',
             'gsuite_dwd_private_key.required' => 'Service account private key is required',
             'gsuite_dwd_private_key.file' => 'Service account private key must be a valid file',
-            'slug.required' => 'Workspace name is required',
+            // 'slug.required' => 'Workspace name is required',
         ];
     }
 }

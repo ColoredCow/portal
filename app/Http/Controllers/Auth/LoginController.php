@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Facades\Tenant;
 use App\Http\Controllers\Controller;
+use App\Services\LoginService;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -70,42 +71,18 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->user();
+
+        session([
+            'provider' => $provider,
+            'user' => $user,
+        ]);
+
         $domain = Tenant::resolveName($user->user['domain']);
         Tenant::setUpForDomain($domain);
 
         if (!Tenant::organization()) {
             return redirect()->route('organizations.create');
         }
-
-
-        Tenant::updateSession($domain);
-        $organizationUrl = Tenant::getUrl($domain);
-        session()->flash('status', 'Welcome to ' . Tenant::organization()->name);
-        $authUser = $this->findOrCreateUser($user, $provider);
-
-        Auth::login($authUser, true);
-        $authUser->update(['avatar' => $user->avatar_original]);
-        return redirect()->to($organizationUrl . '/home');
-    }
-
-    /**
-     * If a user has registered before using social auth, return the user
-     * else, create a new user object.
-     * @param  $user Socialite user object
-     * @param $provider Social auth provider
-     * @return  User
-     */
-    public function findOrCreateUser($user, $provider)
-    {
-        $authUser = User::where('provider_id', $user->id)->first();
-        if ($authUser) {
-            return $authUser;
-        }
-        return User::create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'provider' => $provider,
-            'provider_id' => $user->id,
-        ]);
+        return redirect()->to(LoginService::login());
     }
 }

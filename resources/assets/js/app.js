@@ -29,15 +29,77 @@ if (document.getElementById('page_onboard_organization')) {
         el: '#page_onboard_organization',
         data: {
             step: 1,
+            orgName: '',
+            adminEmail: '',
+            newProject: '',
+            serviceAccount: '',
+            privateKey: '',
+            enableAdminSDK: '',
+            enableCalendarAPI: '',
+            enableAPIAccess: '',
+            addedAPIScopes: '',
             totalSteps: document.getElementsByClassName('step-onboarding').length,
         },
+        computed: {
+            progress: function() {
+                return 100 * (this.step/this.totalSteps);
+            },
+            isStepValid() {
+                switch(this.step) {
+                    case 1:
+                        return !! this.adminEmail && !! this.orgName;
+                    case 2:
+                        return !! this.serviceAccount && !! this.newProject;
+                    case 3:
+                        return !! this.privateKey;
+                    case 4:
+                        return !! this.enableAdminSDK && !! this.enableCalendarAPI;
+                    case 5:
+                        return !! this.enableAPIAccess;
+                    case 6:
+                        return !! this.addedAPIScopes;
+                }
+            }
+        },
         methods: {
+            processFile(event) {
+                this.privateKey = event.target.files[0];
+            },
             showNextStep: function() {
-                this.step++;
+                if(this.isStepValid) {
+                    this.step++;
+                }
             },
             showPreviousStep: function() {
                 this.step--;
             },
+            isStep(step) {
+                return this.step == step;
+            },
+            createOrganization() {
+                let form = document.getElementById('onboard_organization');
+                let pageHeader = document.getElementById('page_header');
+                let registeringBlock = document.getElementById('registering');
+                let registerCompleteBlock = document.getElementById('registration_complete');
+
+                form.classList.add('d-none');
+                pageHeader.classList.add('d-none');
+                registeringBlock.classList.remove('d-none');
+
+                let formData = new FormData();
+                formData.append('name', this.orgName);
+                formData.append('admin_email', this.adminEmail);
+                formData.append('gsuite_dwd_private_key', this.privateKey);
+                let config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+                axios.post('/organizations', formData, config).then(response => {
+                    registeringBlock.classList.add('d-none');
+                    registerCompleteBlock.classList.remove('d-none');
+                    setTimeout(() => {
+                        window.location.href = response.data;
+                    }, 5000);
+                });
+            }
         },
     });
 }

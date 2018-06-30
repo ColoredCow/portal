@@ -62,7 +62,7 @@ class TenantService
         }
 
         $connection = config('database.connections.default');
-        $connection['database'] = $this->organization->connection_name;
+        $connection['database'] = $this->organization->database_name;
         config(['database.connections.' . $this->organization->connection_name => $connection]);
         \Config::set('database.default', $this->organization->connection_name);
     }

@@ -22,7 +22,8 @@ trait CreatesTenant
         $connection = config('database.connections.default');
         $connection['database'] = $this->generateDatabaseName();
         config(['database.connections.' . $this->generateConnectionName() => $connection]);
-        $this->configurations()->create(['key' => 'database', 'value' => $this->generateConnectionName()]);
+        $this->configurations()->create(['key' => 'connection', 'value' => $this->generateConnectionName()]);
+        $this->configurations()->create(['key' => 'database', 'value' => $this->generateDatabaseName()]);
     }
 
     public function generateConnectionName()
@@ -32,8 +33,7 @@ trait CreatesTenant
 
     public function getConnectionNameAttribute()
     {
-        $config = $this->configurations()->where('key', 'database')->first();
-        return $config->value;
+        return $this->configurations()->where('key', 'connection')->first()->value;
     }
 
     public function generateDatabaseName()
@@ -46,7 +46,11 @@ trait CreatesTenant
         
     }
 
-    # Do we want to create the organization database programatically? @rudresh @vaibhav @pankaj
+    public function getDatabaseNameAttribute()
+    {
+        return $this->configurations()->where('key', 'database')->first()->value;
+    }
+
     public function initSchema()
     {
         DB::statement(DB::raw("CREATE DATABASE IF NOT EXISTS " . $this->generateDatabaseName()));
@@ -54,7 +58,7 @@ trait CreatesTenant
 
     public function migrateSchema()
     {
-        Artisan::call('migrate', array('--database' => $this->connection_name, '--path' => 'database/migrations/'));
+        Artisan::call('migrate', array('--force' => true, '--database' => $this->connection_name, '--path' => 'database/migrations/'));
     }
 
     public function seedSchema()

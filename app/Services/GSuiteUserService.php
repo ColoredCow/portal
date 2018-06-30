@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\Tenant;
 use Carbon\Carbon;
 use Google_Client;
 use Google_IO_Exception;
@@ -21,7 +22,7 @@ class GSuiteUserService
     {
         $client = new Google_Client();
         $client->useApplicationDefaultCredentials();
-        $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
+        $client->setSubject(Tenant::organization()->contact_email);
         $client->addScope([
             Google_Service_Directory::ADMIN_DIRECTORY_USER,
             Google_Service_Directory::ADMIN_DIRECTORY_USER_READONLY,
