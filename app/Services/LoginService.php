@@ -53,6 +53,7 @@ class LoginService
             'email' => $user->email,
             'provider' => $provider,
             'provider_id' => $user->id,
+            'avatar' => '',
         ]);
     }
 }
