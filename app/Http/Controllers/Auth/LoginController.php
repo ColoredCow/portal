@@ -77,6 +77,10 @@ class LoginController extends Controller
             'user' => $user,
         ]);
 
+        if(!isset($user->user['domain'])) {
+            return LoginService::loginFailed(config('constants.failed_login_reasons.invalid_domain'));
+        }
+
         $domain = Tenant::resolveName($user->user['domain']);
         Tenant::setUpForDomain($domain);
 
