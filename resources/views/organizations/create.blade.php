@@ -134,7 +134,7 @@
                                 <li>Select <strong>Manage API client access</strong> in the <strong>Authentication</strong> section.</li>
                                 <li>In the <strong>Client name</strong> field enter the service account's <strong>Client ID</strong>.</li>
                                 <li>Copy the following text and paste them in the <strong>One or More API Scopes</strong> field:</li>
-                                <div class="card card-block flex-row align-items-start mt-2 mb-4 p-2 bg-light" id="domain_wide_delegation_scopes">
+                                <div class="card card-block flex-row align-items-start mt-2 mb-4 p-2 bg-light clipboard-block" id="domain_wide_delegation_scopes">
                                     <p class="text-wrap mb-0">https://www.googleapis.com/auth/calendar, https://www.googleapis.com/auth/calendar.readonly, https://www.googleapis.com/auth/admin.directory.user, https://www.googleapis.com/auth/admin.directory.user.readonly</p>
                                     <button type="button" class="btn btn-secondary btn-clipboard" id="copy_domain_wide_delegation_scopes" data-clipboard-target="#domain_wide_delegation_scopes" data-original-title="Copy to clipboard">
                                         <i class="fa fa-copy"></i>
