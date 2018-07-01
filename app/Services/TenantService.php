@@ -55,14 +55,14 @@ class TenantService
             return false;
         }
 
-        $connectionName = $this->organization->connection_name;
+        $databaseName =  $this->organization->database_name;
 
         if(app()->environment('testing')) {
-            $connectionName = 'emp_org_tenant_test';
+            $databaseName = 'emp_org_tenant_test';
         }
 
         $connection = config('database.connections.default');
-        $connection['database'] = $this->organization->database_name;
+        $connection['database'] = $databaseName;
         config(['database.connections.' . $this->organization->connection_name => $connection]);
         \Config::set('database.default', $this->organization->connection_name);
     }
@@ -114,7 +114,10 @@ class TenantService
 
     public function updateSession($domain)
     {
-        session(['domain' => $domain , 'active_connection' => $this->organization()->connection_name]);
+      //  session()->put('domain', $domain);
+       // session()->put('active_connection', $this->organization()->connection_name);
+        
+        //session(['domain' => $domain , 'active_connection' => $this->organization()->connection_name]);
     }
 
     public function check()

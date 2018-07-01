@@ -16,18 +16,17 @@ class BookTest extends FeatureTest
         $this->withoutExceptionHandling();
     }
 
-
     /** @test */
-    public function example_Testass() {
+    public function example_Test() {
         $this->assertTrue(true);
     }
 
     /** @test */
     public function an_authorized_user_can_see_books()
     {
-       // $this->signInAsSuperAdmin();
-        // $this->get(route('books.index'))
-        //     ->assertStatus(Response::HTTP_OK);
+        $this->signInAsSuperAdmin();
+        $this->get(route('books.index'))
+            ->assertStatus(Response::HTTP_OK);
     }
 
     /** @test */

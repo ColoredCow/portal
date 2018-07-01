@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Tests\isTenantTest;
 use App\Models\Organization;
+use Illuminate\Support\Facades\DB;
 
 abstract class FeatureTest extends TestCase
 {
@@ -17,31 +18,14 @@ abstract class FeatureTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        //create a organization
-
-        $organization = create(Organization::class);
-
-        dd($organization);
-
-        // setup tenant database connection
-        // call user function
-
-
-        //$this->setupTenant();
-       // $this->setUpRolesAndPermissions();
+        $organization = Organization::first();
+        \Tenant::setUpForDomain($organization->slug);
+        $this->setUpRolesAndPermissions();
     }
 
     public function signInAsSuperAdmin()
     {
         $this->signIn(create(User::class)->assignRole('super-admin'));
-    }
-
-    public function setupTenant() {
-        $config = $this->app->make('config');
-        $config->set('database.default', 'master_test');
-        $this->connectionsToTransact = ['master_test'];
-        session()->put('active_connection', 'master_test');
-        return $this;
     }
 
 }

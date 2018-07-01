@@ -15,12 +15,6 @@ trait isTenantTest
     }
 
     public function setupDatabase() {
-        if(!$this->app) {
-            $this->app = $this->createApplication();
-        }
-        $this->artisan('migrate:all', ['--database' => 'master_test']);
-        $config = $this->app->make('config');
-        $config->set('database.default', 'tenant_test');
         $this->connectionsToTransact = ['tenant_test'];
     }
 }

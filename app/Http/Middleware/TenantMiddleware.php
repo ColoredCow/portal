@@ -16,9 +16,9 @@ class TenantMiddleware
      */
     public function handle($request, Closure $next)
     {
-       if(!Tenant::check()) {
-            return redirect()->to(Tenant::getFullUrl());
-       }
+    //    if(!Tenant::check()) {
+    //         return redirect()->to(Tenant::getFullUrl());
+    //    }
        
        return $next($request);
     }
