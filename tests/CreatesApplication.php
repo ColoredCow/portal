@@ -4,6 +4,7 @@ namespace Tests;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Console\Kernel;
+use Tests\isTenantTest;
 
 trait CreatesApplication
 {
@@ -20,6 +21,18 @@ trait CreatesApplication
 
         Hash::driver('bcrypt')->setRounds(4);
 
+        $this->checkForTenantTest($app);
+
         return $app;
+    }
+
+
+    protected function checkForTenantTest($app) {
+        $uses = array_flip(class_uses_recursive(static::class));
+
+        if(isset($uses[isTenantTest::class])) {
+             $this->refreshTenantDataBase($app);
+        }
+        
     }
 }

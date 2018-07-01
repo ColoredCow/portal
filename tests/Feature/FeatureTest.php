@@ -18,8 +18,7 @@ abstract class FeatureTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $organization = Organization::first();
-        \Tenant::setUpForDomain($organization->slug);
+        $this->setupTenantDatabase();
         $this->setUpRolesAndPermissions();
     }
 
