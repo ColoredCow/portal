@@ -87,6 +87,7 @@
                 .content.right {
                     padding-left: 60px;
                     width: 50%;
+                    text-align: left;
                     padding-bottom: 0;
                 }
                 .cc-logo {
