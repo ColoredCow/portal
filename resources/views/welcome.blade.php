@@ -39,44 +39,91 @@
             }
             .bottom-right {
                 position: absolute;
-                right: 15px;
                 bottom: 15px;
+                display: block;
+                width: 100%;
+                text-align: center;
             }
             .title {
-                font-size: 84px;
-                padding-left: 150px;
+                font-size: 60px;
             }
             .content.left {
-				background-color: #f5f8fa;
+                background-color: #f5f8fa;
+                text-align: center;
+                width: 100%;
             }
             .content.right {
-				padding-left: 60px;
+                text-align: center;
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-bottom: 30px;
             }
             .cc-logo {
-            	height: 60px;
+                height: 45px;
+            }
+            .primary-container {
+                flex-wrap: wrap;
+            }
+
+            .primary-container {
+                height: 100%;
+            }
+            .content {
+                height: 50%;
+            }
+
+            @media only screen and (min-width: 992px) {
+                .title {
+                    font-size: 72px;
+                    padding-left: 90px;
+                    text-align: left;
+                }
+                .content {
+                    height: 100%;
+                }
+                .content.left {
+                    width: 50%;
+                }
+                .content.right {
+                    padding-left: 60px;
+                    width: 50%;
+                    padding-bottom: 0;
+                }
+                .cc-logo {
+                    height: 60px;
+                }
+                .bottom-right {
+                    right: 30px;
+                    bottom: 30px;
+                    text-align: right;
+                }
+            }
+            @media only screen and (min-width: 1400px) {
+                .title {
+                    font-size: 84px;
+                    padding-left: 150px;
+                }
             }
         </style>
     </head>
     <body>
-    	<main class="h-100">
-    		<div class="flex-center h-100">
-	    		<div class="content left flex-center w-50 h-100">
-					<div class="title w-100">Employee Portal</div>
-	    		</div>
-	    		<div class="content right d-flex justify-content-center w-50 flex-column h-100">
-					<p>Solution for organizations to manage all operations' data.<br>Built over GSuite.</p>
-					<div>
-						<a href="{{ url('auth/google') }}" class="btn btn-outline-primary d-inline">Sign in with Google</a>
-					</div>
-	    		</div>
-    		</div>
-    	</main>
-    	<footer>
-    		<div class="container-fluid">
-				<a href="https://coloredcow.com" target="_blank" class="bottom-right">
-					<img src="{{ asset('cc-logo.png') }}" alt="ColoredCow" class="cc-logo">
-				</a>
-    		</div>
-    	</footer>
+        <main class="h-100">
+            <div class="primary-container flex-center">
+                <div class="content left flex-center">
+                    <div class="title w-100">Employee Portal</div>
+                </div>
+                <div class="content right d-flex justify-content-center flex-column">
+                    <p>Solution for organizations to manage all operations' data.<br>Built over GSuite.</p>
+                    <div>
+                        <a href="{{ url('auth/google') }}" class="btn btn-outline-primary d-inline">Sign in with Google</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <a href="https://coloredcow.com" target="_blank" class="bottom-right">
+                <img src="{{ asset('cc-logo.png') }}" alt="ColoredCow" class="cc-logo">
+            </a>
+        </footer>
     </body>
 </html>
