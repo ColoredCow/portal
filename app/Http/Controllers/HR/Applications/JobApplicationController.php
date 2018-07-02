@@ -39,8 +39,6 @@ class JobApplicationController extends ApplicationController
                 'key' => config('constants.hr.application-meta.keys.form-data'),
                 'value' => json_encode($mail),
             ]);
-        } else {
-
         }
 
         Mail::send(new CustomMail($application, $mail));
