@@ -49,7 +49,7 @@
                 @endif><i class="fa fa-clipboard"></i>&nbsp;
                 Open
                 @if(request()->has('search'))
-                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
+                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1 {{ $status ? 'text-white' : 'active bg-white text-info' }}" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
                     {{$newApplicationsCount}}
                     </span>
                 @endif
@@ -63,7 +63,7 @@
                     /{{ Request::path() }}?status={{ config('constants.hr.status.sent-for-approval.label') }}
                 @endif><i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}
                 @if(request()->has('search'))
-                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
+                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-white text-info' : 'text-white' }}" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$sentForApprovalApplicationsCount}}
                     </span>
                 @endif
@@ -78,7 +78,7 @@
                 @endif><i class="fa fa-file-text-o"></i>&nbsp;
                     {{ config('constants.hr.status.on-hold.title') }}
                 @if(request()->has('search'))
-                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
+                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1 {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-white text-info' : 'text-white' }}" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$onHoldApplicationsCount}}
                     </span>
                 @endif
@@ -91,7 +91,7 @@
                 @else
                     /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}
                 @endif><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }} @if(request()->has('search'))
-                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
+                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'text-white' }}" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$noShowApplicationsCount}}
                     </span>
                 @endif
@@ -106,7 +106,7 @@
                 @endif><i class="fa fa-times-circle"></i>&nbsp;
                     Closed
                 @if(request()->has('search'))
-                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
+                    <span class="ml-2 d-inline-block bg-info text-white px-2 py-1 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-white text-info' : 'text-white' }}" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$rejectedApplicationsCount}}
                     </span>
                 @endif
