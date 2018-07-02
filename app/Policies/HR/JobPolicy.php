@@ -2,8 +2,8 @@
 
 namespace App\Policies\HR;
 
-use App\User;
 use App\Models\HR\Job;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class JobPolicy
@@ -19,7 +19,7 @@ class JobPolicy
      */
     public function view(User $user, Job $job)
     {
-        return $user->hasPermissionTo('hr_jobs.view');
+        return $user->hasAnyPermission(['hr_recruitment_jobs.view', 'hr_volunteers_jobs.view']);
     }
 
     /**
@@ -30,7 +30,7 @@ class JobPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('hr_jobs.create');
+        return $user->hasAnyPermission(['hr_recruitment_jobs.create', 'hr_volunteers_jobs.create']);
     }
 
     /**
@@ -42,7 +42,7 @@ class JobPolicy
      */
     public function update(User $user, Job $job)
     {
-        return $user->hasPermissionTo('hr_jobs.update');
+        return $user->hasAnyPermission(['hr_recruitment_jobs.update', 'hr_volunteers_jobs.update']);
     }
 
     /**
@@ -54,7 +54,7 @@ class JobPolicy
      */
     public function delete(User $user, Job $job)
     {
-        return $user->hasPermissionTo('hr_jobs.delete');
+        return $user->hasAnyPermission(['hr_recruitment_jobs.delete', 'hr_volunteers_jobs.delete']);
     }
 
     /**
@@ -65,6 +65,6 @@ class JobPolicy
      */
     public function list(User $user)
     {
-        return $user->hasPermissionTo('hr_jobs.view');
+        return $user->hasAnyPermission(['hr_recruitment_jobs.view', 'hr_volunteers_jobs.view']);
     }
 }

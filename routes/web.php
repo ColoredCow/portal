@@ -61,16 +61,19 @@ Route::middleware('auth')->group(function () {
             Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update'])
-                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update'])->middleware('can:hr_jobs.view');
+                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update'])
+                ->middleware('can:hr_recruitment_jobs.view');
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
-                ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
+                ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit'])
+                ->middleware('can:hr_recruitment_jobs.view');
             Route::resource('volunteer', 'VolunteerApplicationController')
                 ->only(['index', 'edit'])
                 ->names([
                     'index' => 'applications.volunteer.index',
                     'edit' => 'applications.volunteer.edit',
-                ]);
+                ])
+                ->middleware('can:hr_volunteers_jobs.view');
         });
 
         Route::prefix('employees')->namespace('Employees')->group(function () {
@@ -133,9 +136,12 @@ Route::middleware('auth')->group(function () {
 
             Route::resource('book-categories', 'BookCategoryController')
                 ->only(['index', 'store', 'update', 'destroy'])
-                ->names(['index' => 'books.category.index'])->middleware('can:library_book_category.view');
+                ->names(['index' => 'books.category.index'])
+                ->middleware('can:library_book_category.view');
         });
-        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses'])->middleware('can:weeklydoses.view');
+        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])
+            ->names(['index' => 'weeklydoses'])
+            ->middleware('can:weeklydoses.view');
     });
 
     Route::get('crm', 'CRM\CRMController@index')->name('crm');
