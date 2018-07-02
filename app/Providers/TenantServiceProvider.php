@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Services\TenantService;
+use Illuminate\Support\ServiceProvider;
 
 class TenantServiceProvider extends ServiceProvider
 {

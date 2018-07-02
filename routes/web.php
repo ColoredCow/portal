@@ -11,12 +11,7 @@
 |
  */
 
-Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect('home');
-    }
-    return redirect('login');
-})->middleware('tenant');
+Route::middleware('tenant')->get('/', 'WelcomeController@index');
 
 Auth::routes();
 
