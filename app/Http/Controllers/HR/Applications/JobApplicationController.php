@@ -22,8 +22,8 @@ class JobApplicationController extends ApplicationController
         $validated = $mailRequest->validated();
 
         $mail = [
-            'Mail' => ContentHelper::editorFormat($validated['mail_subject']),
-            'Message' => ContentHelper::editorFormat($validated['mail_body']),
+            'mail' => ContentHelper::editorFormat($validated['mail_subject']),
+            'message' => ContentHelper::editorFormat($validated['mail_body']),
         ];
 
         $application_meta = ApplicationMeta::where('hr_application_id', $application->id)
@@ -40,7 +40,7 @@ class JobApplicationController extends ApplicationController
                 'value' => json_encode($mail),
             ]);
         } else {
-            dd(json_decode($application_meta->value));
+
         }
 
         Mail::send(new CustomMail($application, $mail));
