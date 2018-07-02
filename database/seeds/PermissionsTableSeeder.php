@@ -30,20 +30,61 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'projects.update']);
         Permission::create(['name' => 'projects.delete']);
 
-        Permission::create(['name' => 'hr_applicants.create']);
-        Permission::create(['name' => 'hr_applicants.view']);
-        Permission::create(['name' => 'hr_applicants.update']);
-        Permission::create(['name' => 'hr_applicants.delete']);
-
-        Permission::create(['name' => 'hr_jobs.create']);
-        Permission::create(['name' => 'hr_jobs.view']);
-        Permission::create(['name' => 'hr_jobs.update']);
-        Permission::create(['name' => 'hr_jobs.delete']);
-
         Permission::create(['name' => 'settings.create']);
         Permission::create(['name' => 'settings.view']);
         Permission::create(['name' => 'settings.update']);
         Permission::create(['name' => 'settings.delete']);
+
+        Permission::create(['name' => 'hr_recruitment_applicants.create']);
+        Permission::create(['name' => 'hr_recruitment_applicants.view']);
+        Permission::create(['name' => 'hr_recruitment_applicants.update']);
+        Permission::create(['name' => 'hr_recruitment_applicants.delete']);
+
+        Permission::create(['name' => 'hr_recruitment_applications.create']);
+        Permission::create(['name' => 'hr_recruitment_applications.view']);
+        Permission::create(['name' => 'hr_recruitment_applications.update']);
+        Permission::create(['name' => 'hr_recruitment_applications.delete']);
+
+        Permission::create(['name' => 'hr_recruitment_jobs.create']);
+        Permission::create(['name' => 'hr_recruitment_jobs.view']);
+        Permission::create(['name' => 'hr_recruitment_jobs.update']);
+        Permission::create(['name' => 'hr_recruitment_jobs.delete']);
+
+        Permission::create(['name' => 'hr_recruitment_reports.view']);
+
+        Permission::create(['name' => 'hr_recruitment_campaigns.create']);
+        Permission::create(['name' => 'hr_recruitment_campaigns.view']);
+        Permission::create(['name' => 'hr_recruitment_campaigns.update']);
+        Permission::create(['name' => 'hr_recruitment_campaigns.delete']);
+
+        Permission::create(['name' => 'hr_employees.create']);
+        Permission::create(['name' => 'hr_employees.view']);
+        Permission::create(['name' => 'hr_employees.update']);
+        Permission::create(['name' => 'hr_employees.delete']);
+
+        Permission::create(['name' => 'hr_employees_reports.view']);
+
+        Permission::create(['name' => 'hr_volunteers_applications.create']);
+        Permission::create(['name' => 'hr_volunteers_applications.view']);
+        Permission::create(['name' => 'hr_volunteers_applications.update']);
+        Permission::create(['name' => 'hr_volunteers_applications.delete']);
+
+        Permission::create(['name' => 'hr_volunteers_reports.view']);
+
+        Permission::create(['name' => 'hr_volunteers_campaigns.create']);
+        Permission::create(['name' => 'hr_volunteers_campaigns.view']);
+        Permission::create(['name' => 'hr_volunteers_campaigns.update']);
+        Permission::create(['name' => 'hr_volunteers_campaigns.delete']);
+
+        Permission::create(['name' => 'crm_talent.create']);
+        Permission::create(['name' => 'crm_talent.view']);
+        Permission::create(['name' => 'crm_talent.update']);
+        Permission::create(['name' => 'crm_talent.delete']);
+
+        Permission::create(['name' => 'crm_client.create']);
+        Permission::create(['name' => 'crm_client.view']);
+        Permission::create(['name' => 'crm_client.update']);
+        Permission::create(['name' => 'crm_client.delete']);
 
         Permission::create(['name' => 'weeklydoses.view']);
 
@@ -51,5 +92,10 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'library_books.view']);
         Permission::create(['name' => 'library_books.update']);
         Permission::create(['name' => 'library_books.delete']);
+
+        Permission::create(['name' => 'library_book_category.create']);
+        Permission::create(['name' => 'library_book_category.view']);
+        Permission::create(['name' => 'library_book_category.update']);
+        Permission::create(['name' => 'library_book_category.delete']);
     }
 }
