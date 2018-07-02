@@ -2,9 +2,9 @@
 
 namespace App\Models\KnowledgeCafe\Library;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\User;
 
 class Book extends Model
 {
@@ -22,12 +22,12 @@ class Book extends Model
     public static function getList($filteredString = false)
     {
         return self::with(['categories', 'readers'])
-                ->where(function ($query) use ($filteredString) {
-                    ($filteredString) ? $query->where('title', 'LIKE', "%$filteredString%") : '';
-                })
-                ->withCount('readers')
-                ->orderBy('readers_count', 'desc')
-                ->get();
+            ->where(function ($query) use ($filteredString) {
+                ($filteredString) ? $query->where('title', 'LIKE', "%$filteredString%") : '';
+            })
+            ->withCount('readers')
+            ->orderBy('readers_count', 'desc')
+            ->get();
     }
 
     public static function getByCategoryName($categoryName)
@@ -71,7 +71,7 @@ class Book extends Model
         })->whereDoesntHave('wishers', function ($query) {
             $query->where('id', auth()->id());
         })->inRandomOrder()
-        ->first();
+            ->first();
     }
 
     public function wishers()
@@ -95,23 +95,24 @@ class Book extends Model
         switch ($size) {
             case 'medium':
                 return str_replace_first('zoom=1', 'zoom=2', $this->thumbnail);
-            break;
+                break;
 
             case 'large':
                 return str_replace_first('zoom=1', 'zoom=3', $this->thumbnail);
-            break;
+                break;
 
             default:
                 return $this->thumbnail;
         }
     }
 
-
-    public function ngo() {
+    public function ngo()
+    {
         return $this->hasOne(Ngo::class);
     }
 
-    public function path() {
+    public function path()
+    {
         return 'ngo/' . $this->ngo->id . '/project/' . $this->id;
     }
 }

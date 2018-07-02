@@ -46,7 +46,6 @@ class TenantService
         $this->setOrganization();
         $this->updateSession($domain);
         $this->setUpDBConnection();
-
     }
 
     public function setUpDBConnection()
@@ -131,5 +130,4 @@ class TenantService
     {
         return $this->domain;
     }
-
 }
