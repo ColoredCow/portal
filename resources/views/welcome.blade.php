@@ -39,8 +39,8 @@
             }
             .bottom-right {
                 position: absolute;
-                right: 30px;
-                bottom: 30px;
+                right: 15px;
+                bottom: 15px;
             }
             .title {
                 font-size: 84px;
