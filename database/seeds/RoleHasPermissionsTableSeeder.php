@@ -16,8 +16,12 @@ class RoleHasPermissionsTableSeeder extends Seeder
         $superAdmin = Role::where(['name' => 'super-admin'])->first();
         $superAdmin->syncPermissions(Permission::all());
 
-        $admin = Role::where(['name' => 'admin'])->first();
-        $admin->syncPermissions(Permission::all());
+        $employee = Role::where(['name' => 'employee'])->first();
+        $employee->syncPermissions(Permission::whereIn('name', [
+            'hr_employees.view',
+            'library_books.view',
+            'weeklydoses.view',
+        ])->get());
 
         $accountant = Role::where(['name' => 'accountant'])->first();
         $accountant->givePermissionTo('finance_reports.view');

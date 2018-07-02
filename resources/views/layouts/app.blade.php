@@ -17,48 +17,69 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel nav-font" >
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" >
             <div class="container">
                 @guest
-                    <a class="navbar-brand nav-font" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}">
                 @else
-                    <a class="navbar-brand nav-font" href="{{ url('/home') }}">
+                    <a class="navbar-brand" href="{{ url('/home') }}">
                 @endguest
                         {{ config('app.name', 'Employee Portal') }}
                     </a>
                 @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
+                        @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
                         <li class="nav-item">
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown_hr" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     HR <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_hr">
+                                @can('hr_recruitment_applications.view')
                                     <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
-                                     <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
-                                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
+                                @endcan
+                                @can('hr_employees.view')
+                                    <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
+                                @endcan
+                                @can('hr_volunteers_applications.view')
+                                    <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
+                                @endcan
                                 </div>
                             </li>
                         </li>
+                        @endif
                         @can('finance_reports.view')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
                         </li>
                         @endcan
-                        @if(auth()->user()->can('weeklydoses.view') || auth()->user()->can('library_books.view'))
+                        @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
                         <li class="nav-item">
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown_kc" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     KnowledgeCafe <span class="caret"></span>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_kc">
                                      @can('library_books.view')
                                      <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
                                      @endcan
                                      @can('weeklydoses.view')
                                      <a class="dropdown-item" href="{{ route('weeklydoses') }}">WeeklyDose</a>
                                      @endcan
+                                </div>
+                            </li>
+                        </li>
+                        @endif
+                        @if(auth()->user()->hasAnyPermission(['crm_talent.view', 'crm_client.view']))
+                        <li class="nav-item">
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown_crm" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    CRM <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown_crm">
+                                     <a class="dropdown-item" href="#">Talent</a>
+                                     <a class="dropdown-item" href="#">Client</a>
                                 </div>
                             </li>
                         </li>
