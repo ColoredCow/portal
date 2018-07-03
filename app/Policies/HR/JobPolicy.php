@@ -75,7 +75,8 @@ class JobPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    function list(User $user) {
+    public function list(User $user)
+    {
         if (request()->is('hr/volunteers*')) {
             return $user->hasPermissionTo('hr_volunteers_jobs.view');
         }
