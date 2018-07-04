@@ -11,7 +11,9 @@
 |
  */
 
-Route::middleware('tenant')->get('/', 'WelcomeController@index');
+Route::middleware('tenant', 'guest')->get('/', function () {
+    return view('welcome');
+});
 
 Auth::routes();
 
