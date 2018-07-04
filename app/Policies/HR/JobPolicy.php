@@ -19,7 +19,10 @@ class JobPolicy
      */
     public function view(User $user, Job $job)
     {
-        return $user->hasAnyPermission(['hr_recruitment_jobs.view', 'hr_volunteers_jobs.view']);
+        if ($job->type == 'volunteer') {
+            return $user->hasPermissionTo('hr_volunteers_jobs.view');
+        }
+        return $user->hasPermissionTo('hr_recruitment_jobs.view');
     }
 
     /**
@@ -30,7 +33,10 @@ class JobPolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyPermission(['hr_recruitment_jobs.create', 'hr_volunteers_jobs.create']);
+        if (request()->is('hr/volunteers*')) {
+            return $user->hasPermissionTo('hr_volunteers_jobs.create');
+        }
+        return $user->hasPermissionTo('hr_recruitment_jobs.create');
     }
 
     /**
@@ -42,7 +48,10 @@ class JobPolicy
      */
     public function update(User $user, Job $job)
     {
-        return $user->hasAnyPermission(['hr_recruitment_jobs.update', 'hr_volunteers_jobs.update']);
+        if ($job->type == 'volunteer') {
+            return $user->hasPermissionTo('hr_volunteers_jobs.update');
+        }
+        return $user->hasPermissionTo('hr_recruitment_jobs.update');
     }
 
     /**
@@ -54,7 +63,10 @@ class JobPolicy
      */
     public function delete(User $user, Job $job)
     {
-        return $user->hasAnyPermission(['hr_recruitment_jobs.delete', 'hr_volunteers_jobs.delete']);
+        if ($job->type == 'volunteer') {
+            return $user->hasPermissionTo('hr_volunteers_jobs.delete');
+        }
+        return $user->hasPermissionTo('hr_recruitment_jobs.delete');
     }
 
     /**
@@ -63,8 +75,10 @@ class JobPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function list(User $user)
-    {
-        return $user->hasAnyPermission(['hr_recruitment_jobs.view', 'hr_volunteers_jobs.view']);
+    function list(User $user) {
+        if (request()->is('hr/volunteers*')) {
+            return $user->hasPermissionTo('hr_volunteers_jobs.view');
+        }
+        return $user->hasPermissionTo('hr_recruitment_jobs.view');
     }
 }

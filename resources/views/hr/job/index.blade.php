@@ -16,7 +16,11 @@
         @foreach ($jobs as $job)
         <tr>
             <td>
-                <a href="/hr/jobs/{{ $job->id }}/edit">{{ $job->title }}</a>
+                @if ($type == 'volunteer')
+                    <a href="{{ route('volunteer.opportunities.edit', $job->id) }}">{{ $job->title }}</a>
+                @else
+                    <a href="{{ route('recruitment.opportunities.edit', $job->id) }}">{{ $job->title }}</a>
+                @endif
             </td>
             <td>
                 {{ ucfirst($job->type) }}
