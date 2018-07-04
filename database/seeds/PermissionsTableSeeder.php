@@ -69,11 +69,6 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'hr_volunteers_applications.update']);
         Permission::create(['name' => 'hr_volunteers_applications.delete']);
 
-        Permission::create(['name' => 'hr_volunteers_jobs.create']);
-        Permission::create(['name' => 'hr_volunteers_jobs.view']);
-        Permission::create(['name' => 'hr_volunteers_jobs.update']);
-        Permission::create(['name' => 'hr_volunteers_jobs.delete']);
-
         Permission::create(['name' => 'hr_volunteers_reports.view']);
 
         Permission::create(['name' => 'hr_volunteers_campaigns.create']);
