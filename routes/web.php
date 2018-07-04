@@ -101,7 +101,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', 'ProjectController')
         ->except(['show', 'destroy'])
         ->names([
-            'index' => 'projects.index',
+            'index' => 'projects',
             'create' => 'projects.create',
             'edit' => 'projects.edit',
             'store' => 'projects.store',
