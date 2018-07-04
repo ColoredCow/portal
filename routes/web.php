@@ -79,8 +79,6 @@ Route::middleware('auth')->group(function () {
                 'index' => 'employees',
                 'show' => 'employees.show',
             ]);
-        // A better version of employee-reports would be employees/reports. The
-        // route below can be merged with employees grouped route above.
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
@@ -115,7 +113,7 @@ Route::middleware('auth')->group(function () {
                     'show' => 'books.show',
                     'store' => 'books.store',
                     'destroy' => 'books.delete',
-                    'update' => 'books.update'
+                    'update' => 'books.update',
                 ]);
 
             Route::prefix('book')->group(function () {
