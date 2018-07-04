@@ -48,14 +48,13 @@
                 font-size: 60px;
             }
             .content.left {
-                background-color: #f5f8fa;
+                background-size: cover;
+                background-repeat: no-repeat;
                 text-align: center;
                 width: 100%;
             }
             .content.right {
                 text-align: center;
-                padding-left: 30px;
-                padding-right: 30px;
                 padding-bottom: 30px;
             }
             .cc-logo {
@@ -75,18 +74,16 @@
             @media only screen and (min-width: 992px) {
                 .title {
                     font-size: 72px;
-                    padding-left: 90px;
                     text-align: left;
                 }
                 .content {
                     height: 100%;
                 }
                 .content.left {
-                    width: 50%;
+                    width: 60%;
                 }
                 .content.right {
-                    padding-left: 60px;
-                    width: 50%;
+                    width: 40%;
                     text-align: left;
                     padding-bottom: 0;
                 }
@@ -101,8 +98,24 @@
             }
             @media only screen and (min-width: 1400px) {
                 .title {
-                    font-size: 84px;
-                    padding-left: 150px;
+                    font-size: 36px;
+                    line-height: 42px;
+                }
+
+                .content.left .content-block {
+                    max-width: 450px;
+                }
+                .content.right .content-block {
+                    max-width: 300px;
+                }
+                .subtitle {
+                    font-size: 25px;
+                    line-height: 29px;
+                }
+                .features {
+                    list-style: none;
+                    font-size: 25px;
+                    line-height: 29px;
                 }
             }
         </style>
@@ -110,13 +123,26 @@
     <body>
         <main class="h-100">
             <div class="primary-container flex-center">
-                <div class="content left flex-center">
-                    <div class="title w-100">Employee Portal</div>
+                <div class="content left flex-center flex-column" style="background-image: url('{{ asset('images/background-min.png') }}');">
+                    <div class="content-block text-white text-left">
+                        <h2 class="title w-100">Never again be troubled by processes and data all over the place.</h2>
+                        <h3 class="subtitle">All your organization processes and data at one central source.</h3>
+                        <ul class="features px-0">
+                            <li>Finance</li>
+                            <li>Hiring and HR</li>
+                            <li>Employee data</li>
+                            <li>Team management</li>
+                            <li>Project details</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="content right d-flex justify-content-center flex-column">
-                    <p>Solution for organizations to manage all operations' data.<br>Built over GSuite.</p>
-                    <div>
-                        <a href="{{ url('auth/google') }}" class="btn btn-outline-primary d-inline">Sign in with Google</a>
+                <div class="content right flex-center flex-column">
+                    <div class="content-block">
+                        <h2 class="subtitle font-weight-bold text-dark">For all organisations,<br>big or small</h2>
+                        <p class="text-dark">An effortless way to make your organization efficient, with data driven decision making</p>
+                        <a href="{{ url('auth/google') }}" class="btn btn-primary">One click sign up with Google</a>
+                        <small class="d-block mt-1 mb-3 pl-2 font-weight-light">to start using the portal...</small>
+                        <a href="#" class="btn btn-outline-primary">Sign in with Google</a>
                     </div>
                 </div>
             </div>
