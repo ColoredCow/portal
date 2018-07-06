@@ -8,6 +8,7 @@ use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Mail\HR\Application\CustomMail;
 use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class JobApplicationController extends ApplicationController
@@ -21,29 +22,21 @@ class JobApplicationController extends ApplicationController
     {
         $validated = $mailRequest->validated();
 
-        $mail = [
-            'mail' => ContentHelper::editorFormat($validated['mail_subject']),
-            'message' => ContentHelper::editorFormat($validated['mail_body']),
+        $mailDetails = [
+            'action' => 'action name',
+            'mail_subject' => ContentHelper::editorFormat($validated['mail_subject']),
+            'mail_body' => ContentHelper::editorFormat($validated['mail_body']),
+            'mail_triggered_by' => Auth::user()->email,
         ];
 
-        $application_meta = ApplicationMeta::where('hr_application_id', $application->id)
-            ->where('key', config('constants.hr.application-meta.keys.form-data'))
-            ->get()
-            ->first();
+        ApplicationMeta::create([
+            'hr_application_id' => $application->id,
+            'key' => config('constants.hr.application-meta.keys.custom-mail'),
+            'value' => json_encode($mailDetails),
+        ]);
 
-        if (!$application_meta) {
-            // no previous form-data entry for this application
-            // create a new entry
-            ApplicationMeta::create([
-                'hr_application_id' => $application->id,
-                'key' => config('constants.hr.application-meta.keys.form-data'),
-                'value' => json_encode($mail),
-            ]);
-        }
+        Mail::send(new CustomMail($application, $mailDetails['mail_subject'], $mailDetails['mail_body']));
 
-        Mail::send(new CustomMail($application, $mail));
-
-        $applicant = $application->applicant;
         return redirect()->back();
 
         // ->with(

@@ -11,17 +11,19 @@ class CustomMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $application;
-    public $mail;
+    public $mailSubject;
+    public $mailBody;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Application $application, $mail)
+    public function __construct(Application $application, $mailSubject, $mailBody)
     {
         $this->application = $application;
-        $this->mail = $mail;
+        $this->mailSubject = $mailSubject;
+        $this->mailBody = $mailBody;
     }
 
     /**
@@ -35,9 +37,9 @@ class CustomMail extends Mailable
             ->bcc($this->application->job->posted_by)
             ->bcc(config('constants.hr.default.email'))
             ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
-            ->subject($this->mail['mail'])
+            ->subject($this->mailSubject)
             ->view('mail.plain')->with([
-            'body' => $this->mail['message'],
+            'body' => $this->mailBody,
         ]);
     }
 }
