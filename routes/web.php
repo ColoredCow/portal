@@ -37,11 +37,12 @@ Route::middleware('auth')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
-                ->only(['index', 'store', 'update'])
+                ->only(['index', 'store', 'update', 'edit'])
                 ->names([
                     'index' => 'recruitment.opportunities',
                     'store' => 'recruitment.opportunities.store',
                     'update' => 'recruitment.opportunities.update',
+                    'edit' => 'recruitment.opportunities.edit',
                 ]);
         });
 
@@ -49,11 +50,12 @@ Route::middleware('auth')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');
             Route::resource('opportunities', 'VolunteerOpportunityController')
-                ->only(['index', 'store', 'update'])
+                ->only(['index', 'store', 'update', 'edit'])
                 ->names([
                     'index' => 'volunteer.opportunities',
                     'store' => 'volunteer.opportunities.store',
                     'update' => 'volunteer.opportunities.update',
+                    'edit' => 'volunteer.opportunities.edit',
                 ]);
         });
 
