@@ -26,7 +26,10 @@ class JobController extends Controller
     {
         $this->authorize('list', Job::class);
 
-        $jobs = Job::with('applications', 'applications.applicant')
+        $jobs = Job::with([
+            'applications' => function ($query) {
+                $query->isOpen()->get();
+            }])
             ->latest()
             ->appends(Input::except('page'));
 

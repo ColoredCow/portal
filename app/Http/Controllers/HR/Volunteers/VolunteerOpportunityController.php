@@ -22,7 +22,10 @@ class VolunteerOpportunityController extends JobController
     {
         $this->authorize('list', Job::class);
 
-        $jobs = Job::with('applications', 'applications.applicant')
+        $jobs = Job::with([
+            'applications' => function ($query) {
+                $query->isOpen()->get();
+            }])
             ->typeVolunteer()
             ->latest()
             ->paginate(config('constants.pagination_size'))
