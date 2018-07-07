@@ -7,7 +7,6 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -65,10 +64,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof HttpException) {
-            $statusCode = $exception->getStatusCode();
-            return response()->view('errors.custom', ['statusCode' => $statusCode]);
-        }
         return parent::render($request, $exception);
     }
 }
