@@ -81,7 +81,7 @@ class ReportsController extends Controller
         foreach (config('constants.currency') as $currency => $currencyMeta) {
             $attr['totalReceivables'][$currency] = 0;
         }
-        foreach ($unpaidInvoices as $key => $unpaidInvoice) {
+        foreach ($unpaidInvoices as $unpaidInvoice) {
             $attr['totalReceivables'][$unpaidInvoice->currency_sent_amount] += $unpaidInvoice->sent_amount;
         }
 
