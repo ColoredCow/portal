@@ -26,7 +26,7 @@ class JobApplicationController extends ApplicationController
             'action' => 'action name',
             'mail_subject' => ContentHelper::editorFormat($validated['mail_subject']),
             'mail_body' => ContentHelper::editorFormat($validated['mail_body']),
-            'mail_triggered_by' => Auth::user()->email,
+            'mail_triggered_by' => Auth::id(),
         ];
 
         ApplicationMeta::create([
