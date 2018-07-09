@@ -209,12 +209,12 @@
                         <input type="text" class="form-control date-field" name="cheque_received_date" required="required" id="cheque_received_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_received_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_received_date'))) : '' }}">
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'cleared'">
-                        <label for="cheque_cleared_date">Cheque Cleared Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_cleared_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_cleared_date'))) : '' }}">
+                        <label for="cheque_cleared_date" class="field-required">Cheque Cleared Date</label>
+                        <input type="text" class="form-control date-field" required="required" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_cleared_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_cleared_date'))) : '' }}">
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
-                        <label for="cheque_bounced_date">Cheque Bounced Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
+                        <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
+                        <input type="text" class="form-control date-field" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
                     </div>
                 </div>
                 <br>
