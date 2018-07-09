@@ -14,12 +14,16 @@
                 <div class="modal-body">
                     <h6 class="mb-4">Sending to: {{ $application->applicant->email }} </h6>
                     <div class="form-group">
+                        <label for="mail_action">Action:</label>
+                        <input type="text" class="form-control" id="mail_action" name="mail_action" required="required" placeholder="Action" value="">
+                    </div>
+                    <div class="form-group">
                         <label for="subject">Mail subject:</label>
-                        <input type="text" class="form-control" name="mail_subject" required="required" placeholder="Subject" value="">
+                        <input type="text" class="form-control" id="subject" name="mail_subject" required="required" placeholder="Subject" value="">
                     </div>
                     <div class="form-group">
                         <label for="mail_content">Mail body:</label>
-                        <textarea name="mail_body" id="mail_body" rows="10" class="richeditor form-control" placeholder="Body">
+                        <textarea name="mail_body" id="mail_content" rows="10" class="richeditor form-control" placeholder="Body">
 
                         </textarea>
                     </div>

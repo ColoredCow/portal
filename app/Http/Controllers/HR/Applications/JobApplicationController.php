@@ -4,7 +4,7 @@ namespace App\Http\Controllers\HR\Applications;
 
 use App\Helpers\ContentHelper;
 use App\Http\Controllers\HR\Applications\ApplicationController;
-use App\Http\Requests\HR\ApplicantRoundMailRequest;
+use App\Http\Requests\HR\CustomMailRequest;
 use App\Mail\HR\Application\CustomMail;
 use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
@@ -18,12 +18,12 @@ class JobApplicationController extends ApplicationController
         return 'job';
     }
 
-    public function sendMail(ApplicantRoundMailRequest $mailRequest, Application $application)
+    public function sendMail(CustomMailRequest $mailRequest, Application $application)
     {
         $validated = $mailRequest->validated();
 
         $mailDetails = [
-            'action' => 'action name',
+            'action' => ContentHelper::editorFormat($validated['mail_action']),
             'mail_subject' => ContentHelper::editorFormat($validated['mail_subject']),
             'mail_body' => ContentHelper::editorFormat($validated['mail_body']),
             'mail_triggered_by' => Auth::id(),
