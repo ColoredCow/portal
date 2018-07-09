@@ -2,4 +2,4 @@
 
 @section('error_title', '403')
 
-@section('error_message', 'Forbidden! The user might not have necessary permissions for the resource.')
+@section('error_message', config('constants.http_response_messages.403'))

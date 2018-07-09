@@ -2,4 +2,4 @@
 
 @section('error_title', '503')
 
-@section('error_message', 'Be right back.')
+@section('error_message', config('constants.http_response_messages.503'))
