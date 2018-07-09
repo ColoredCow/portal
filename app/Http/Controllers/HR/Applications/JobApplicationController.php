@@ -37,12 +37,9 @@ class JobApplicationController extends ApplicationController
 
         Mail::send(new CustomMail($application, $mailDetails['mail_subject'], $mailDetails['mail_body']));
 
-        return redirect()->back();
+        $status = "Mail sent successfully to <b>" . $application->applicant->name . "</b> at <b>" . $application->applicant->email . "</b>.<br>";
 
-        // ->with(
-        //     'status',
-        //     "Mail sent successfully to the <b>$applicant->name</b> at <b>$applicant->email</b>.<br>
-        //     <span data-toggle='modal' data-target='#round_mail_$applicationRound->id' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
-        // )
+        return redirect()->back()
+            ->with('status', $status);
     }
 }
