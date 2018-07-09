@@ -50,7 +50,7 @@
                 Open
                 @if(request()->has('search'))
                     <span class="ml-2 d-inline-block bg-info text-white px-2 py-1 {{ $status ? 'text-white' : 'active bg-white text-info' }}" style="   border-radius: 20px;font-size: 12px;font-weight: 700;">
-                    {{$newApplicationsCount}}
+                    {{$newApplicationsCount + $inProgressApplicationsCount }}
                     </span>
                 @endif
                 </a>
