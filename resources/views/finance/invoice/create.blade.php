@@ -93,14 +93,14 @@
                         </select>
                     </div>
                     <div class="form-group col-md-3" v-show="status == 'paid'">
-                        <label for="paid_on">Paid on</label>
-                        <input type="date" class="form-control" name="paid_on" id="paid_on" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('paid_on') }}">
+                        <label for="paid_on" class="field-required">Paid on</label>
+                        <input type="date" class="form-control" required="required" name="paid_on" id="paid_on" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('paid_on') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3" v-show="status == 'paid'">
-                        <label for="paid_amount">Received amount</label>
+                        <label for="paid_amount" class="field-required">Received amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" v-model="activeClientCurrency" data-paid-amount-currency="{{ old('currency_paid_amount') }}">
+                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" required="required" v-model="activeClientCurrency" data-paid-amount-currency="{{ old('currency_paid_amount') }}">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
                                     <option value="{{ $currency }}">{{ $currency }}</option>
                                 @endforeach
@@ -184,8 +184,8 @@
                 <br>
                 <div class="form-row" v-show="status == 'paid'">
                     <div class="form-group col-md-5">
-                        <label for="payment_type">Payment type</label>
-                        <select name="payment_type" id="payment_type" class="form-control" v-model="paymentType" data-payment-type="{{ old('payment_type') }}">
+                        <label for="payment_type" class="field-required">Payment type</label>
+                        <select name="payment_type" id="payment_type" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ old('payment_type') }}">
                             <option value="">Select payment type</option>
                             @foreach (config('constants.payment_types') as $payment_type => $display_name)
                                 @php
@@ -196,8 +196,8 @@
                         </select>
                     </div>
                     <div class="form-group offset-md-1 col-md-3 cheque-status" v-show="paymentType == 'cheque'">
-                        <label for="cheque_status">Cheque status</label>
-                        <select name="cheque_status" id="cheque_status" class="form-control" v-model="chequeStatus" data-cheque-status="{{ old('cheque_status') }}">
+                        <label for="cheque_status" class="field-required">Cheque status</label>
+                        <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ old('cheque_status') }}">
                             <option value="">Select cheque status</option>
                             @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
                                 <option value="{{ $cheque_status }}">{{ $display_name }}</option>
@@ -205,8 +205,8 @@
                         </select>
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'received'">
-                        <label for="cheque_received_date">Cheque Received Date</label>
-                        <input type="text" class="form-control date-field" name="cheque_received_date" id="cheque_received_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_received_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_received_date'))) : '' }}">
+                        <label for="cheque_received_date" class="field-required">Cheque Received Date</label>
+                        <input type="text" class="form-control date-field" name="cheque_received_date" required="required" id="cheque_received_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_received_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_received_date'))) : '' }}">
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'cleared'">
                         <label for="cheque_cleared_date">Cheque Cleared Date</label>
