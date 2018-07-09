@@ -10,7 +10,8 @@
             <a class="card-body no-transition" href="/knowledgecafe/library/books">
                 <br><h2 class="text-center">Library</h2><br>
             </a>
-        </div></div>
+        </div>
+    </div>
         @endcan
         @can('weeklydoses.view')
             <div class="col-md-4">
@@ -18,7 +19,8 @@
             <a class="card-body no-transition" href="/knowledgecafe/weeklydoses/">
             	<br><h2 class="text-center">Weekly Dose</h2><br>
             </a>
-        </div></div>
+        </div>
+    </div>
         @endcan
     </div>
 </div>

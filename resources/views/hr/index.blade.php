@@ -10,7 +10,8 @@
             <a class="card-body no-transition" href="{{ route('applications.job.index') }}">
                 <br><h2 class="text-center">Recruitment</h2><br>
             </a>
-        </div></div>
+        </div>
+    </div>
         @endcan
         @can('hr_employees.view')
                 <div class="col-md-4">
@@ -18,7 +19,8 @@
             <a class="card-body no-transition" href="{{ route('employees') }}">
             	<br><h2 class="text-center">Employees</h2><br>
             </a>
-        </div></div>
+        </div>
+    </div>
 
         @endcan
         @can('hr_volunteers_applications.view')
@@ -27,7 +29,8 @@
             <a class="card-body no-transition" href="{{ route('applications.volunteer.index') }}">
                 <br><h2 class="text-center">Volunteer</h2><br>
             </a>
-        </div></div>
+        </div>
+    </div>
         @endcan
     </div>
 </div>
