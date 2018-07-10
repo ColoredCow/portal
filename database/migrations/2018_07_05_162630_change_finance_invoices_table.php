@@ -28,11 +28,9 @@ class ChangeFinanceInvoicesTable extends Migration
     public function down()
     {
         Schema::table('finance_invoices', function (Blueprint $table) {
-            $table->dropColumn([
-                'currency_transaction_charge',
-                'currency_transaction_tax',
-                'currency_due_amount',
-            ]);
+            $table->string('currency_transaction_charge')->nullable(false)->change();
+            $table->string('currency_transaction_tax')->nullable(false)->change();
+            $table->string('currency_due_amount')->nullable(false)->change();
         });
     }
 }
