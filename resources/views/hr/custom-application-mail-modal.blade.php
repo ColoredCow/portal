@@ -2,9 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="/hr/applications/{{ $application->id }}/sendmail" method="POST">
-
-                {{ csrf_field() }}
-
+                @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="">Send mail</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
