@@ -23,8 +23,8 @@
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
                     <div class="float-right">
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customMail">Send mail</button>
-                        @include('hr.custom-mail-modal', ['application' => $application])
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customApplicationMail">Send mail</button>
+                        @include('hr.custom-application-mail-modal', ['application' => $application])
                         <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight">
                             {{ config("constants.hr.status.$application->status.title") }}
                         </div>

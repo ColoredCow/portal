@@ -4,8 +4,8 @@ namespace App\Http\Controllers\HR\Applications;
 
 use App\Helpers\ContentHelper;
 use App\Http\Controllers\HR\Applications\ApplicationController;
-use App\Http\Requests\HR\CustomMailRequest;
-use App\Mail\HR\Application\CustomMail;
+use App\Http\Requests\HR\CustomApplicationMailRequest;
+use App\Mail\HR\Application\CustomApplicationMail;
 use App\Models\HR\Application;
 use App\Models\HR\ApplicationMeta;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,7 @@ class JobApplicationController extends ApplicationController
         return 'job';
     }
 
-    public function sendMail(CustomMailRequest $mailRequest, Application $application)
+    public function sendMail(CustomApplicationMailRequest $mailRequest, Application $application)
     {
         $validated = $mailRequest->validated();
 
@@ -35,7 +35,7 @@ class JobApplicationController extends ApplicationController
             'value' => json_encode($mailDetails),
         ]);
 
-        Mail::send(new CustomMail($application, $mailDetails['mail_subject'], $mailDetails['mail_body']));
+        Mail::send(new CustomApplicationMail($application, $mailDetails['mail_subject'], $mailDetails['mail_body']));
 
         $status = "Mail sent successfully to <b>" . $application->applicant->name . "</b> at <b>" . $application->applicant->email . "</b>.<br>";
 

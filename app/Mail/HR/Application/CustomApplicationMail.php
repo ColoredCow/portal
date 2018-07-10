@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CustomMail extends Mailable
+class CustomApplicationMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $application;

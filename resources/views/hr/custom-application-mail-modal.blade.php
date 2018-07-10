@@ -1,4 +1,4 @@
-<div class="modal fade hr_round_review" id="customMail" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div class="modal fade hr_round_review" id="customApplicationMail" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="/hr/applications/{{ $application->id }}/sendmail" method="POST">
