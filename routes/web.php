@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function () {
                     'index' => 'applications.volunteer.index',
                     'edit' => 'applications.volunteer.edit',
                 ]);
-            Route::post('{application}/sendmail', 'JobApplicationController@sendMail');
+            Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail');
         });
 
         Route::prefix('employees')->namespace('Employees')->group(function () {

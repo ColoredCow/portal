@@ -130,7 +130,7 @@ abstract class ApplicationController extends Controller
 
         return redirect()->back()->with('No changes were done to the application. Please make sure your are submitting valid data.');
     }
-    public function sendMail(CustomApplicationMailRequest $mailRequest, Application $application)
+    public function sendApplicationMail(CustomApplicationMailRequest $mailRequest, Application $application)
     {
         $validated = $mailRequest->validated();
 
