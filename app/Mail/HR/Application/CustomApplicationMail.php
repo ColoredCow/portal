@@ -21,7 +21,7 @@ class CustomApplicationMail extends Mailable
      */
     public function __construct(Application $application, $mailSubject, $mailBody)
     {
-        $this->application = $application;
+        $this->application = $application->with(['applicant', 'job'])->get();
         $this->mailSubject = $mailSubject;
         $this->mailBody = $mailBody;
     }
