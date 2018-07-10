@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Services\LoginService;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -77,7 +76,7 @@ class LoginController extends Controller
             'user' => $user,
         ]);
 
-        if(!isset($user->user['domain'])) {
+        if (!isset($user->user['domain'])) {
             return LoginService::loginFailed(config('constants.failed_login_reasons.invalid_domain'));
         }
 

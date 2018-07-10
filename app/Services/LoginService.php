@@ -57,11 +57,11 @@ class LoginService
         ]);
     }
 
-    public static function loginFailed($reason) {
-
-        if($reason === config('constants.failed_login_reasons.invalid_domain')) {
+    public static function loginFailed($reason)
+    {
+        if ($reason === config('constants.failed_login_reasons.invalid_domain')) {
             return redirect('/login')->withErrors(['Failed']);
         }
         return redirect('/login');
-    }   
+    }
 }
