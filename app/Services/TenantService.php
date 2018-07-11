@@ -54,9 +54,9 @@ class TenantService
             return false;
         }
 
-        $databaseName =  $this->organization->database_name;
+        $databaseName = $this->organization->database_name;
         $connectionName = $this->organization->connection_name;
-        
+
         $connection = config('database.connections.default');
         $connection['database'] = $databaseName;
         config(['database.connections.' . $connectionName => $connection]);
@@ -110,9 +110,9 @@ class TenantService
 
     public function updateSession($domain)
     {
-      //  session()->put('domain', $domain);
+        //  session()->put('domain', $domain);
        // session()->put('active_connection', $this->organization()->connection_name);
-        
+
         //session(['domain' => $domain , 'active_connection' => $this->organization()->connection_name]);
     }
 

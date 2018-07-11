@@ -38,12 +38,11 @@ trait CreatesTenant
 
     public function generateDatabaseName()
     {
-        if(app()->environment('testing')) {
+        if (app()->environment('testing')) {
             return 'emp_org_tenant_test';
         }
 
         return config('constants.tenants.prefixes.db') . $this->slug;
-        
     }
 
     public function getDatabaseNameAttribute()
@@ -53,12 +52,12 @@ trait CreatesTenant
 
     public function initSchema()
     {
-        DB::statement(DB::raw("CREATE DATABASE IF NOT EXISTS " . $this->generateDatabaseName()));
+        DB::statement(DB::raw('CREATE DATABASE IF NOT EXISTS ' . $this->generateDatabaseName()));
     }
 
     public function migrateSchema()
     {
-        Artisan::call('migrate', array('--force' => true, '--database' => $this->connection_name, '--path' => 'database/migrations/'));
+        Artisan::call('migrate', ['--force' => true, '--database' => $this->connection_name, '--path' => 'database/migrations/']);
     }
 
     public function seedSchema()

@@ -12,7 +12,6 @@ class TestSeeder extends Seeder
      */
     public function run()
     {
-
         //
         DB::connection('master_test')->table('organizations')->truncate();
         DB::connection('master_test')->table('configurations')->truncate();
@@ -23,7 +22,7 @@ class TestSeeder extends Seeder
                 'slug' => 'coloredcow-test',
                 'name' => 'ColoredCow test',
                 'contact_email' => 'test@coloredcow.com'
-            ],  
+            ],
         ]);
 
         DB::table('configurations')->insert([
@@ -32,14 +31,14 @@ class TestSeeder extends Seeder
                 'organization_id' => 1,
                 'key' => 'connection',
                 'value' => 'tenant_test'
-            ],  
+            ],
 
             [
                 'id' => 2,
                 'organization_id' => 1,
                 'key' => 'database',
                 'value' => 'emp_org_tenant_test'
-            ], 
+            ],
         ]);
     }
 }

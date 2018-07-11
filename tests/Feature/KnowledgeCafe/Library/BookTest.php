@@ -17,7 +17,8 @@ class BookTest extends FeatureTest
     }
 
     /** @test */
-    public function example_Test() {
+    public function example_Test()
+    {
         $this->assertTrue(true);
     }
 
