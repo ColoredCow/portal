@@ -79,13 +79,13 @@ abstract class ApplicationController extends Controller
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
+            'type' => $application->job->type == 'volunteer' ? 'volunteer' : 'recruitment',
         ];
 
         if ($application->job->type == 'job') {
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
-        $attr['type'] = $application->job->type;
         return view('hr.application.edit')->with($attr);
     }
 
