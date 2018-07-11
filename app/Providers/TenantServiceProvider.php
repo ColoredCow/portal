@@ -15,6 +15,11 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        if(!$this->app->environment('testing')) {
+            \Tenant::setUpDBConnection();
+        }
+
         if (Schema::hasTable('organizations')) {
             \Tenant::setUpDBConnection();
         }
