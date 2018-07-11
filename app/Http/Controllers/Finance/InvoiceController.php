@@ -71,6 +71,7 @@ class InvoiceController extends Controller
     public function store(InvoiceRequest $request)
     {
         $validated = $request->validated();
+
         $path = self::upload($validated['invoice_file']);
         $invoice = Invoice::create([
             'project_invoice_id' => $validated['project_invoice_id'],
@@ -82,23 +83,24 @@ class InvoiceController extends Controller
             'paid_on' => isset($validated['paid_on']) ? DateHelper::formatDateToSave($validated['paid_on']) : null,
             'paid_amount' => isset($validated['paid_amount']),
             'payment_type' => isset($validated['payment_type']),
-            'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : '',
+            'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : null,
             'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
             'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
             'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
             'currency_paid_amount' => isset($validated['currency_paid_amount']),
-            'conversion_rate' => $validated['conversion_rate'],
-            'transaction_charge' => $validated['transaction_charge'],
-            'currency_transaction_charge' => $validated['currency_transaction_charge'],
-            'transaction_tax' => $validated['transaction_tax'],
-            'currency_transaction_tax' => $validated['currency_transaction_tax'],
+            'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
+            'transaction_charge' => isset($validated['transaction_charge']) ? $validated['transaction_charge'] : null,
+            'currency_transaction_charge' => isset($validated['currency_transaction_charge']) ? $validated['currency_transaction_charge'] : null,
+            'transaction_tax' => isset($validated['transaction_tax']) ? $validated['transaction_tax'] : null,
+            'currency_transaction_tax' => isset($validated['currency_transaction_tax']) ? $validated['currency_transaction_tax'] : null,
+
             'comments' => $validated['comments'],
             'tds' => isset($validated['tds']) ? $validated['tds'] : null,
             'currency_tds' => $validated['currency_tds'],
-            'due_amount' => $validated['due_amount'],
-            'currency_due_amount' => $validated['currency_due_amount'],
+            'due_amount' => isset($validated['due_amount']) ? $validated['due_amount'] : null,
+            'currency_due_amount' => isset($validated['currency_due_amount']) ? $validated['currency_due_amount'] : null,
             'file_path' => $path,
-            'due_date' => $validated['due_date'] ? DateHelper::formatDateToSave($validated['due_date']) : null,
+            'due_date' => isset($validated['due_date']) ? DateHelper::formatDateToSave($validated['due_date']) : null,
         ]);
 
         foreach ($validated['billings'] as $billing) {
@@ -178,7 +180,7 @@ class InvoiceController extends Controller
             'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
             'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
             'currency_paid_amount' => $validated['currency_paid_amount'],
-            'conversion_rate' => $validated['conversion_rate'],
+            'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
             'transaction_charge' => $validated['transaction_charge'],
             'currency_transaction_charge' => $validated['currency_transaction_charge'],
             'transaction_tax' => $validated['transaction_tax'],
