@@ -23,7 +23,7 @@ class Applicant extends Model
         $applicant = self::firstOrCreate([
             'email' => $attr['email'],
         ], [
-            'name' => $attr['name'],
+            'name' => $attr['first_name'] . ' ' . $attr['last_name'],
             'phone' => isset($attr['phone']) ? $attr['phone'] : null,
             'college' => isset($attr['college']) ? $attr['college'] : null,
             'graduation_year' => isset($attr['graduation_year']) ? $attr['graduation_year'] : null,
