@@ -153,8 +153,8 @@ return [
         ],
     ],
 
-    'failed_login_reasons' => [
-        'invalid_domain' => 'Invalid Domain'
+    'failed-login-reasons' => [
+        'invalid-domain' => 'Invalid Domain'
     ]
 
 ];
