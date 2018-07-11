@@ -38,10 +38,6 @@ trait CreatesTenant
 
     public function generateDatabaseName()
     {
-        if (app()->environment('testing')) {
-            return 'emp_org_tenant_test';
-        }
-
         return config('constants.tenants.prefixes.db') . $this->slug;
     }
 
