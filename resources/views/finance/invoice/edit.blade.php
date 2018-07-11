@@ -100,11 +100,11 @@
                         @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-md-3" v-show="status == 'paid'">
+                    <div class="form-group col-md-3" v-if="status == 'paid'">
                         <label for="paid_on" class="field-required">Paid on</label>
                         <input type="date" required="required" class="form-control" name="paid_on" id="paid_on" placeholder="{{config('constants.finance.input_date_format')}}" value="{{ $invoice->paid_on }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-3" v-show="status == 'paid'">
+                    <div class="form-group offset-md-1 col-md-3" v-if="status == 'paid'">
                         <label for="paid_amount" class="field-required">Received amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -190,7 +190,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-row" v-show="status == 'paid'">
+                <div class="form-row" v-if="status == 'paid'">
                     <div class="form-group col-md-5">
                         <label for="payment_type" class="field-required">Payment type</label>
                         <select name="payment_type" id="payment_type" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ $invoice->payment_type }}">
@@ -203,7 +203,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group offset-md-1 col-md-3 cheque-status" v-show="paymentType == 'cheque'">
+                    <div class="form-group offset-md-1 col-md-3 cheque-status" v-if="paymentType == 'cheque'">
                         <label for="cheque_status" class="field-required">Cheque status</label>
                         <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
                             <option value="">Select cheque status</option>
@@ -212,15 +212,15 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'received'">
+                    <div class="form-group col-md-2" v-if="paymentType == 'cheque' && chequeStatus == 'received'">
                         <label for="cheque_received_date" class="field-required">Cheque Received Date</label>
                         <input type="text" class="form-control date-field" required="required" name="cheque_received_date" id="cheque_received_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_received_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_received_date)) : '' }}">
                     </div>
-                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'cleared'">
+                    <div class="form-group col-md-2" v-if="paymentType == 'cheque' && chequeStatus == 'cleared'">
                         <label for="cheque_cleared_date" class="field-required">Cheque Cleared Date</label>
                         <input type="text" class="form-control date-field" required="required" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_cleared_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_cleared_date)) : '' }}">
                     </div>
-                    <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
+                    <div class="form-group col-md-2" v-if="paymentType == 'cheque' && chequeStatus == 'bounced'">
                         <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                     </div>
