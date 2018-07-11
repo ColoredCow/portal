@@ -14,12 +14,12 @@ class TenantServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {  
-        if(Schema::hasTable('organizations')){
+    {
+        if (Schema::hasTable('organizations')) {
             \Tenant::setUpDBConnection();
         }
-        
     }
+
     /**
      * Register services.
      *
