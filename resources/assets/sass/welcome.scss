@@ -1,0 +1,124 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+// Variables
+@import "variables";
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~jquery-ui/themes/base/all.css';
+
+html, body {
+    @extend .bg-white;
+    color: #636b6f;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    height: 100vh;
+    margin: 0;
+    font-size: 18px;
+}
+
+main {
+    min-height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.bottom-right {
+    position: absolute;
+    bottom: 15px;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.title {
+    font-size: 25px;
+    line-height: 1.5;
+}
+.subtitle,
+.features {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.content {
+    &.left {
+        background-image: url('/images/background-min.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        text-align: center;
+        width: 100%;
+        height: 550px;
+    }
+    &.right {
+        text-align: left;
+        padding-bottom: 90px;
+        padding-top: 30px;
+    }
+    .content-block {
+        width: 300px;
+    }
+}
+.cc-logo {
+    height: 45px;
+}
+.features {
+    list-style: none;
+}
+@media only screen and (min-width: 768px) {
+    .content {
+        .content-block {
+            width: 500px;
+            margin-top: 45px;
+        }
+    }
+}
+@media only screen and (min-width: 992px) {
+    .main-wrapper {
+        height: 100vh !important;
+    }
+    .content {
+        height: 100% !important;
+        &.left {
+            width: 60%;
+        }
+        &.right {
+            padding-bottom: 0;
+            width: 40%;
+            padding-top: 0;
+        }
+        .content-block {
+            width: 300px;
+            margin-top: 0;
+        }
+    }
+    .cc-logo {
+        height: 60px;
+    }
+    .bottom-right {
+        text-align: right;
+        right: 15px;
+        bottom: 15px;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .title {
+        font-size: 36px;
+        line-height: 42px;
+    }
+    .content.left .content-block {
+        width: 450px;
+    }
+    .content.right .content-block {
+        width: 300px;
+    }
+    .subtitle {
+        font-size: 25px;
+        line-height: 29px;
+    }
+    .features {
+        font-size: 25px;
+        line-height: 29px;
+    }
+}

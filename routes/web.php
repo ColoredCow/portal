@@ -11,12 +11,9 @@
 |
  */
 
-Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect('home');
-    }
-    return redirect('login');
-})->middleware('tenant');
+Route::middleware('tenant', 'guest')->get('/', function () {
+    return view('welcome');
+});
 
 Auth::routes();
 
@@ -24,7 +21,6 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::group(['middleware' => ['auth', 'tenant']], function () {
-
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('logout', 'Auth\LoginController@logout');
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App\Facades\Tenant;
+use Closure;
 
 class TenantMiddleware
 {
@@ -16,10 +16,9 @@ class TenantMiddleware
      */
     public function handle($request, Closure $next)
     {
-    //    if(!Tenant::check()) {
-    //         return redirect()->to(Tenant::getFullUrl());
-    //    }
-       
-       return $next($request);
+        if (!Tenant::check()) {
+            return redirect()->to(Tenant::getFullUrl());
+        }
+        return $next($request);
     }
 }
