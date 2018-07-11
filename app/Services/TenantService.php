@@ -110,10 +110,8 @@ class TenantService
 
     public function updateSession($domain)
     {
-        //  session()->put('domain', $domain);
-       // session()->put('active_connection', $this->organization()->connection_name);
-
-        //session(['domain' => $domain , 'active_connection' => $this->organization()->connection_name]);
+        session()->put('domain', $domain);
+        session()->put('active_connection', $this->organization()->connection_name);
     }
 
     public function check()
