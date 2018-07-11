@@ -15,8 +15,7 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-        if(!$this->app->environment('testing')) {
+        if (!$this->app->environment('testing')) {
             \Tenant::setUpDBConnection();
         }
 
