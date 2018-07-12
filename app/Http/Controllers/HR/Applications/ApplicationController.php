@@ -38,22 +38,18 @@ abstract class ApplicationController extends Controller
             ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
 
+        $countFilters = array_except($filters, ['status']);
         $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
-
-        if ($this->getApplicationType() == 'job') {
-            $attr['openJobsCount'] = Job::count();
-            $attr['openApplicationsCount'] = Application::applyFilter([
-                'job-type' => 'job',
-                'job' => request()->get('hr_job_id'),
-            ])
-                ->isOpen()
+        $strings = array_pluck(config('constants.hr.status'), 'label');
+        foreach ($strings as $string) {
+            $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
+                ->where('status', $string)
                 ->get()
                 ->count();
         }
-
         return view('hr.application.index')->with($attr);
     }
 
@@ -69,6 +65,7 @@ abstract class ApplicationController extends Controller
 
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
+        $job = $application->job;
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -79,13 +76,13 @@ abstract class ApplicationController extends Controller
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
+            'type' => config("constants.hr.opportunities.$job->type.type"),
         ];
 
-        if ($application->job->type == 'job') {
+        if ($job->type == 'job') {
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
-        $attr['type'] = $application->job->type;
         return view('hr.application.edit')->with($attr);
     }
 
