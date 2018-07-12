@@ -65,6 +65,7 @@ abstract class ApplicationController extends Controller
 
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
+        $job = $application->job;
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -75,9 +76,10 @@ abstract class ApplicationController extends Controller
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
+            'type' => config("constants.hr.opportunities.$job->type.type"),
         ];
 
-        if ($application->job->type == 'job') {
+        if ($job->type == 'job') {
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }

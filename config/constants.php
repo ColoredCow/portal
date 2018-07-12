@@ -37,6 +37,20 @@ return [
     ],
     'pagination_size' => 10,
     'hr' => [
+        'opportunities' => [
+            'job' => [
+                'title' => 'Job',
+                'type' => 'recruitment',
+            ],
+            'internship' => [
+                'title' => 'Internship',
+                'type' => 'recruitment',
+            ],
+            'volunteer' => [
+                'title' => 'Volunteer',
+                'type' => 'volunteer',
+            ],
+        ],
         'default' => [
             'email' => env('HR_DEFAULT_FROM_EMAIL', 'employeeportal@example.com'),
             'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers'),
