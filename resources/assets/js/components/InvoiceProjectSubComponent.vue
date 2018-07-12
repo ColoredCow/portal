@@ -12,10 +12,16 @@
                 <option v-for="stage in stages" :value="stage.id" :selected="stageId == stage.id">{{ stage.name }}</option>
             </select>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-2" v-if="editMode">
             <label for="billings[]">Billing%</label>
             <select name="billings[]" class="form-control">
-                <option v-for="billing in billings" :value="billing.id" :selected="billingId == billing.id">{{ billing.percentage }}</option>
+                <option v-for="billing in billings" :value="billing.id" v-if="billing.finance_invoice_id" :selected="billingId == billing.id">{{ billing.percentage }}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2" v-if="!editMode">
+            <label for="billings[]">Billing%</label>
+            <select name="billings[]" class="form-control">
+                <option v-for="billing in billings" :value="billing.id" v-if="!billing.finance_invoice_id" :selected="billingId == billing.id">{{ billing.percentage }}</option>
             </select>
         </div>
         <div class="col-md-1">
@@ -27,7 +33,7 @@
 
 <script>
     export default {
-        props: ['index', 'item', 'client'],
+        props: ['index', 'item', 'client', 'editMode'],
         data() {
             return {
                 billingId: this.item.hasOwnProperty('id') ? this.item.id : [],
@@ -42,6 +48,12 @@
                     if (project.id == this.projectId) {
                         return project.stages;
                     }
+                }
+            },
+            billingState: function(event){
+                let hasBilling = true;
+                if(!billing.finance_invoice_id){
+                    hasBilling = false;
                 }
             },
             billings: function(event) {

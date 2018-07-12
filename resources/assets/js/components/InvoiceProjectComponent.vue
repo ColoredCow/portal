@@ -5,6 +5,7 @@
             :index="index"
             :item="item"
             :client="client"
+            :editMode="editMode"
             @remove="removeItem(index)">
             </invoice-project-sub-component>
         </div>
@@ -16,10 +17,11 @@
     import InvoiceProjectSubComponent from './InvoiceProjectSubComponent.vue';
 
     export default {
-        props: ['billings', 'client'],
+        props: ['billings', 'client', 'invoice'],
         data() {
             return {
-                items: this.billings ? this.billings : []
+                editMode: Object.keys(this.invoice).length ? true : false,
+                items: this.billings ? this.billings : [],
             }
         },
         components: {
