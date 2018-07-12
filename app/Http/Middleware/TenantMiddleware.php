@@ -16,6 +16,10 @@ class TenantMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if (app()->environment('testing')) {
+            return $next($request);
+        }
+
         if (!Tenant::check()) {
             return redirect()->to(Tenant::getFullUrl());
         }

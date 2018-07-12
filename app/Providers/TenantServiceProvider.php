@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\TenantService;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class TenantServiceProvider extends ServiceProvider
 {
@@ -14,8 +15,15 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \Tenant::setUpDBConnection();
+        if (!$this->app->environment('testing')) {
+            \Tenant::setUpDBConnection();
+        }
+
+        if (Schema::hasTable('organizations')) {
+            \Tenant::setUpDBConnection();
+        }
     }
+
     /**
      * Register services.
      *

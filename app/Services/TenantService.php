@@ -53,10 +53,14 @@ class TenantService
         if (!$this->organization) {
             return false;
         }
+
+        $databaseName = $this->organization->database_name;
+        $connectionName = $this->organization->connection_name;
+
         $connection = config('database.connections.default');
-        $connection['database'] = $this->organization->database_name;
-        config(['database.connections.' . $this->organization->connection_name => $connection]);
-        \Config::set('database.default', $this->organization->connection_name);
+        $connection['database'] = $databaseName;
+        config(['database.connections.' . $connectionName => $connection]);
+        \Config::set('database.default', $connectionName);
     }
 
     public function setOrganization()
@@ -106,7 +110,8 @@ class TenantService
 
     public function updateSession($domain)
     {
-        session(['domain' => $domain]);
+        session()->put('domain', $domain);
+        session()->put('active_connection', $this->organization()->connection_name);
     }
 
     public function check()

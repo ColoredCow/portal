@@ -69,6 +69,30 @@ return [
             'engine' => null,
         ],
 
+        'master_test' => [
+            'driver' => 'mysql',
+            'host' => env('DB_MASTER_HOST', '127.0.0.1'),
+            'database' => 'emp_portal_master_test',
+            'username' => env('DB_MASTER_USERNAME', 'root'),
+            'password' => env('DB_MASTER_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
+        'tenant_test' => [
+            'driver' => 'mysql',
+            'host' => env('DB_MASTER_HOST', '127.0.0.1'),
+            'database' => 'emp_org_tenant_test',
+            'username' => env('DB_MASTER_USERNAME', 'root'),
+            'password' => env('DB_MASTER_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
         'default' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),

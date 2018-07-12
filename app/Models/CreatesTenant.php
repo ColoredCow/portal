@@ -48,18 +48,16 @@ trait CreatesTenant
 
     public function initSchema()
     {
-        DB::statement(DB::raw("CREATE DATABASE " . $this->generateDatabaseName()));
-        // Add code to create new db user and store the user credentials in the configurations table.
-        // This info should be then updated in db configuration in the createConnection() method.
+        DB::statement(DB::raw('CREATE DATABASE IF NOT EXISTS ' . $this->generateDatabaseName()));
     }
 
     public function migrateSchema()
     {
-        Artisan::call('migrate', array('--force' => true, '--database' => $this->connection_name, '--path' => 'database/migrations/'));
+        Artisan::call('migrate', ['--force' => true, '--database' => $this->connection_name, '--path' => 'database/migrations/']);
     }
 
     public function seedSchema()
     {
-        Artisan::call('db:seed');
+        Artisan::call('db:seed', ['--database' => $this->connection_name]);
     }
 }
