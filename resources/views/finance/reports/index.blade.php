@@ -64,7 +64,7 @@
                     @foreach ($report['receivable'] as $currency => $receivable)
                         <h5 id="sent_amount_{{ $currency }}" data-sent-amount="{{ $receivable }}"><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $receivable }}</h5>
                     @endforeach
-                    <h5>Total Receivable</h5>
+                    <h4 class="mt-3">Total Receivable</h4>
                     @foreach ($totalReceivables as $currency => $totalReceivable)
                         <h5 id="sent_amount_{{ $currency }}" data-sent-amount="{{ $totalReceivable }}"><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $totalReceivable }}</h5>
                     @endforeach
