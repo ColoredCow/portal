@@ -56,4 +56,12 @@ class LoginService
             'avatar' => '',
         ]);
     }
+
+    public static function loginFailed($reason)
+    {
+        if ($reason === config('constants.failed-login-reasons.invalid-domain')) {
+            return redirect('/login')->withErrors(['Failed']);
+        }
+        return redirect('/login');
+    }
 }
