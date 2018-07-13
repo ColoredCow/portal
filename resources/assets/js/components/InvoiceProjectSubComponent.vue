@@ -12,10 +12,16 @@
                 <option v-for="stage in stages" :value="stage.id" :selected="stageId == stage.id">{{ stage.name }}</option>
             </select>
         </div>
-        <div class="form-group col-md-2" v-if="editMode">
+        <div class="form-group col-md-2" v-if="editMode && index == 0">
             <label for="billings[]">Billing%</label>
             <select name="billings[]" class="form-control">
                 <option v-for="billing in billings" :value="billing.id" v-if="billing.finance_invoice_id" :selected="billingId == billing.id">{{ billing.percentage }}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2" v-if="editMode && index != 0">
+            <label for="billings[]">Billing%</label>
+            <select name="billings[]" class="form-control">
+                <option v-for="billing in billings" :value="billing.id" v-if="!billing.finance_invoice_id" :selected="billingId == billing.id">{{ billing.percentage }}</option>
             </select>
         </div>
         <div class="form-group col-md-2" v-if="!editMode">
