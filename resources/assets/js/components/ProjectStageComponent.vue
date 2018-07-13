@@ -176,11 +176,11 @@
                                 <br>
                                 <h4 class="my-4"><u>Payment Details</u></h4>
                                 <div class="form-row">
-                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'col-md-5']" v-if="status == 'paid'">
+                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'col-md-5']" v-if="isPaid">
                                         <label for="paid_on" class="field-required">Paid on</label>
                                         <input type="date" class="form-control" required="required" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
                                     </div>
-                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'offset-md-1 col-md-5']" v-if="status == 'paid'">
+                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'offset-md-1 col-md-5']" v-if="isPaid">
                                         <label for="paid_amount" class="field-required">Received amount</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -205,7 +205,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="form-row" v-if="status == 'paid'">
+                                <div class="form-row" v-if="isPaid">
                                     <div class="form-group col-md-4">
                                         <label for="payment_type" class="field-required">Payment type</label>
                                         <select name="payment_type" id="payment_type" class="form-control" v-model="selectedPaymentType" required="required">
@@ -264,13 +264,16 @@
                 clientCountryGstApplicable: this.client.country == 'india' ? true : false,
                 selectedPaymentType: '',
                 selectedChequeStatus: '',
-                status:'',
+                status:'unpaid',
             }
         },
         components: {
             'project-stage-billing-component': ProjectStageBillingComponent,
         },
         computed: {
+            isPaid : function(){
+                return (this.status == 'paid' ? true : false);
+            },
             stageCurrencySymbol : function() {
                 return this.configs.currencies[this.inputStageCurrency].symbol;
             },
