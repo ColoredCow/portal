@@ -152,4 +152,9 @@ return [
             'hourly' => 'Hourly',
         ],
     ],
+
+    'failed-login-reasons' => [
+        'invalid-domain' => 'Invalid Domain'
+    ]
+
 ];
