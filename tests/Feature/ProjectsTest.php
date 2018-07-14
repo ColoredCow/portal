@@ -2,15 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\User;
-
 class ProjectsTest extends FeatureTest
 {
     /** @test */
     public function an_authorised_user_can_see_projects()
     {
         $this->anAuthorizedUser();
-        $this->get('/projects')
+        $this->get(route('projects'))
             ->assertStatus(200);
     }
 
@@ -51,10 +49,5 @@ class ProjectsTest extends FeatureTest
         $this->patch(route('projects.update', $project->id), $newProject->toArray());
         $this->get(route('projects.edit', $project->id))
             ->assertSee($newProject->name);
-    }
-
-    public function anAuthorizedUser()
-    {
-        $this->signIn(create(User::class)->assignRole('super-admin'));
     }
 }
