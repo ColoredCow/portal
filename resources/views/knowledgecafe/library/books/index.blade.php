@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 @section('content')
 <div id="books_listing" class="container">
     @include('status', ['errors' => $errors->all()])
@@ -17,14 +17,14 @@
     </div>
 
     <div class="row mt-3 mb-2 px-2">
-        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 d-flex justify-content-center align-items-center">
             <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="search all books"
                 v-model="searchKey">
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
 
         @if(session('disable_book_suggestion'))
-            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
+            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-4">
                 <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dasboard</a>
             </div>
         @endif
@@ -43,8 +43,8 @@
     <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}">
 
-        <div class="d-flex flex-wrap w-100">
-            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2">
+        <div class="d-flex flex-wrap justify-content-between w-100">
+            <div v-for="(book, index) in books" class="card book_card mb-3 p-2">
                 <div class="d-flex" >
                     <a target="_blank" :href="book.readable_link">
                         <img :src="book.thumbnail" class="cover_image" >
@@ -62,7 +62,7 @@
                             <a href="#" class="m-1 mr-2 text-muted h4" data-toggle="dropdown">
                                 <i class="fa fa-cog"></i>
                             </a>
-    
+
                             <ul class="dropdown-menu ">
                                 <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item">Update Category</li>
                                 <li @click="deleteBook(index)" class="dropdown-item text-danger">Delete</li>
