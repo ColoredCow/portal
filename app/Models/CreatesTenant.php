@@ -33,7 +33,7 @@ trait CreatesTenant
 
     public function getConnectionNameAttribute()
     {
-        return $this->configurations()->where('key', 'connection')->first()->value;
+        return optional($this->configurations()->where('key', 'connection')->first())->value;
     }
 
     public function generateDatabaseName()
@@ -43,7 +43,7 @@ trait CreatesTenant
 
     public function getDatabaseNameAttribute()
     {
-        return $this->configurations()->where('key', 'database')->first()->value;
+        return optional($this->configurations()->where('key', 'database')->first())->value;
     }
 
     public function initSchema()

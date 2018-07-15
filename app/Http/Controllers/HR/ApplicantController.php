@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRequest;
 use App\Models\HR\Applicant;
+use App\Models\HR\Job;
 
 class ApplicantController extends Controller
 {
@@ -33,7 +34,8 @@ class ApplicantController extends Controller
      */
     public function create()
     {
-        //
+        $jobs = Job::getVolunteerProjects();
+        return view('hr.application.volunteer.create', compact('jobs'));
     }
 
     /**

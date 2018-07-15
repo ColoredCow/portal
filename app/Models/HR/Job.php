@@ -79,4 +79,11 @@ class Job extends Model
             'internship',
         ]);
     }
+
+    public static function getVolunteerProjects() {
+        return self::query()
+            ->typeVolunteer()
+            ->latest()
+            ->get();
+    }
 }

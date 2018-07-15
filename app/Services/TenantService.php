@@ -12,7 +12,6 @@ class TenantService
     public function __construct()
     {
         $this->setCurrentDomain();
-
         if ($this->domain) {
             $this->setOrganization();
             $this->setUpDBConnection();
@@ -48,7 +47,7 @@ class TenantService
         $this->setUpDBConnection();
     }
 
-    public function setUpDBConnection()
+    public function setUpDBConnection($skipDefault = false)
     {
         if (!$this->organization) {
             return false;
@@ -59,8 +58,15 @@ class TenantService
 
         $connection = config('database.connections.default');
         $connection['database'] = $databaseName;
-        config(['database.connections.' . $connectionName => $connection]);
-        \Config::set('database.default', $connectionName);
+
+        if(!isset(config('database.connections')[$connectionName])) {
+            config(['database.connections.' . $connectionName => $connection]);
+        }
+
+        if(!$skipDefault) {
+            \Config::set('database.default', $connectionName);
+        }
+       
     }
 
     public function setOrganization()
@@ -131,8 +137,17 @@ class TenantService
         return $domainUrl . '/' . $path;
     }
 
+    public function initializeDatabaseForAllOrganization() {
+        $organizations = Organization::all();
+        foreach($organizations as $organization) {
+            $this->organization = $organization;
+            $this->setUpDBConnection(true);
+        }
+    }
+
     public function __toString()
     {
         return $this->domain;
     }
+    
 }

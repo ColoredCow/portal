@@ -53,12 +53,17 @@
                 <a class="nav-item nav-link {{ $status === 'closed' ? 'active bg-info text-white' : 'text-info' }}" href="/{{ Request::path() }}?status=closed"><i class="fa fa-times-circle"></i>&nbsp;Closed</a>
             </li>
         </ul>
-        @if( isset($openJobsCount, $openApplicationsCount) )
-        <div class="alert alert-info mb-2 p-2">
+
+        <div class="mb-2 p-1">
+            <a href="{{ route('applicant.create') }}" class="btn btn-success float-right">Add Application</a>
+        </div>
+    </div>
+
+    @if( isset($openJobsCount, $openApplicationsCount) )
+        <div class="d-inline-block alert alert-info mb-2 p-2">
             <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $openApplicationsCount }}</b> open applications</span>
         </div>
-        @endif
-    </div>
+    @endif
 
     <table class="table table-striped table-bordered" id="applicants_table">
         <tr>

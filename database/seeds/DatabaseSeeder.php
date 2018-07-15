@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(VolunteersModuleSeeder::class);
         $this->call(HRRoundsTableSeeder::class);
         $this->call(SettingsSeeder::class);
+        $this->call(HrApplicantCreatePermissionSeeder::class);
     }
 }
