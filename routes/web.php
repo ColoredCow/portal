@@ -81,7 +81,7 @@ Route::group(['middleware' => ['auth', 'tenant']], function () {
         // route below can be merged with employees grouped route above.
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
 
-        Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
+        Route::resource('applicants', 'ApplicantController')->only(['index', 'edit', 'store']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
 
         Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);

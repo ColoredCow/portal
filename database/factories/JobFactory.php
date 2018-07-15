@@ -12,3 +12,4 @@ $factory->define(Job::class, function (Faker $faker) {
         'link' => $faker->url,
     ];
 });
+

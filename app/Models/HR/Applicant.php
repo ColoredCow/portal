@@ -32,6 +32,7 @@ class Applicant extends Model
         ]);
 
         $job = Job::where('title', $attr['job_title'])->first();
+        
         $application = Application::_create([
             'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,

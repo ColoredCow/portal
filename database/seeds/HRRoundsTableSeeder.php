@@ -12,6 +12,7 @@ class HRRoundsTableSeeder extends Seeder
      */
     public function run()
     {
+
         DB::table('hr_rounds')->insert([
             'name' => 'Resume Screening',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
