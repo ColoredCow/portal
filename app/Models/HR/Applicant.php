@@ -31,8 +31,13 @@ class Applicant extends Model
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
         ]);
 
-        $job = Job::where('title', $attr['job_title'])->first();
+   
         
+        $job = Job::where('title', $attr['job_title'])
+                ->where(function ($query) use($attr) {
+                    (!isset($attr['job-type'])) ?: $query->where('type', $attr['job-type']);
+                })->first();
+       
         $application = Application::_create([
             'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,

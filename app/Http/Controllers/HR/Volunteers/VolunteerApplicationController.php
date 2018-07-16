@@ -51,6 +51,7 @@ class VolunteerApplicationController extends ApplicationController
     public function store(Request $request)
     {
         $validated = $request->validated();
+        $validated['job-type'] = $this->getApplicationType();
         $volunteerApplicant = VolunteerApplicant::_create($validated);
         return ($this->isApi()) ? $volunteerApplicant : 
                 redirect()->route('volunteer.applications.index');

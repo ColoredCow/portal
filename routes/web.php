@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth', 'tenant']], function () {
         });
 
         Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
+            Route::get('/', 'VolunteerApplicationController@index');
             Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');
             Route::resource('opportunities', 'VolunteerOpportunityController')
