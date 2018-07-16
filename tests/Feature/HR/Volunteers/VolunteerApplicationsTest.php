@@ -12,7 +12,6 @@ use App\Models\HR\Applicant;
 
 class VolunteerApplicationsTest extends FeatureTest
 {
-    
     /** @test */
     public function a_user_can_create_a_volunteer_application() {
         $this->withoutExceptionHandling();

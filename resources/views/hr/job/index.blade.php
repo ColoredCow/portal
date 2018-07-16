@@ -28,7 +28,11 @@
 
             <td>
             @if ($job->applications->count())
-                <a href="{{ route('applications.' . $job->type . '.index') }}?hr_job_id={{$job->id }}">{{ $job->applications->count() }}</a>
+                @if($job->type === 'volunteer') 
+                    <a href="{{ route($job->type . '.applications'. '.index') }}?hr_job_id={{$job->id }}">{{ $job->applications->count() }}</a>
+                @else
+                    <a href="{{ route('applications.' . $job->type . '.index') }}?hr_job_id={{$job->id }}">{{ $job->applications->count() }}</a>
+                @endif
             @else
                 {{ $job->applications->count() }}
             @endif

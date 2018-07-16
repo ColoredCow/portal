@@ -35,7 +35,7 @@ class Organization extends Model
      */
     public function getPrivateKeyFilePath()
     {
-        $filePath = $this->configurations->where('key', 'service_account_private_key_file')->first()->value;
+        $filePath = optional($this->configurations->where('key', 'service_account_private_key_file')->first())->value;
         return storage_path("/app/$filePath");
     }
 }
