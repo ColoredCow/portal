@@ -43,7 +43,7 @@
                                     <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
                                 @endcan
                                 @can('hr_volunteers_applications.view')
-                                    <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
+                                    <a class="dropdown-item" href="{{ route('volunteer.applications.index') }}">Volunteers</a>
                                 @endcan
                                 </div>
                             </li>

@@ -34,6 +34,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        \View::composer('*', function($view){
+             $requestRouteName = optional($this->app['request']->route())->getName();
+             $view->with('requestRoute', $requestRouteName);
+        });
     }
 }

@@ -18,7 +18,7 @@ class VolunteerApplicationsTest extends FeatureTest
         $this->withoutExceptionHandling();
         $this->signIn();
         $data = $this->getVolunteerApplicationData();
-        $this->post('hr/applicants', $data)
+        $this->post(route('volunteer.applications.store'), $data)
             ->assertSee($data['name']);
     }
 

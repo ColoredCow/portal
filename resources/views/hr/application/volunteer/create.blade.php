@@ -8,7 +8,7 @@
     @include('status', ['errors' => $errors->all()])
 
     <div class="card">
-        <form action="" method="POST" id="volunteer_form">
+        <form action="{{route('volunteer.applications.store')}}" method="POST" id="volunteer_form">
             {{ csrf_field() }}
             <div class="card-body">
                 <div class="form-row">
@@ -32,8 +32,37 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="phone" class="field-required">Email</label>
+                        <label for="email" class="field-required">Email</label>
                         <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ old('email') }}" required="required">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="phone" class="field-required">Phone</label>
+                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" value="{{ old('phone') }}" required="required">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="phone" class="field-required">Linkedin</label>
+                        <input type="text" class="form-control" name="linkedin" id="linkedin" placeholder="Linkedin" value="{{ old('linkedin') }}" required="required">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="phone" class="field-required">Resume</label>
+                        <input type="text" class="form-control" name="resume" id="resume" placeholder="Resume" value="{{ old('resume') }}" required="required">
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="phone" class="field-required">Why do you want to volunteer?</label>
+                        <textarea type="text" class="form-control" name="form_data['Why do you want to volunteer?']" placeholder="Why do you want to volunteer?"  required="required"><textarea>
                     </div>
                 </div>
             </div>

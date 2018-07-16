@@ -21,7 +21,6 @@ class VolunteerOpportunityController extends JobController
     public function index()
     {
         $this->authorize('list', Job::class);
-
         $jobs = Job::with([
             'applications' => function ($query) {
                 $query->isOpen()->get();

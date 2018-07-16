@@ -55,6 +55,14 @@ Route::group(['middleware' => ['auth', 'tenant']], function () {
                     'update' => 'volunteer.opportunities.update',
                     'edit' => 'volunteer.opportunities.edit',
                 ]);
+                
+            Route::resource('applications', 'VolunteerApplicationController') 
+            ->only(['index', 'edit', 'store'])
+            ->names([
+                'index' => 'volunteer.applications.index',
+                'edit' => 'applications.volunteer.edit',
+                'store' => 'volunteer.applications.store'
+            ]);
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {
@@ -65,18 +73,13 @@ Route::group(['middleware' => ['auth', 'tenant']], function () {
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
-            Route::resource('volunteer', 'VolunteerApplicationController')
-                ->only(['index', 'edit'])
-                ->names([
-                    'index' => 'applications.volunteer.index',
-                    'edit' => 'applications.volunteer.edit',
-                ]);
         });
 
         Route::prefix('employees')->namespace('Employees')->group(function () {
             Route::get('/', 'EmployeeController@index')->name('employees');
             Route::get('/{employee}', 'EmployeeController@show')->name('employees.show');
         });
+
         // A better version of employee-reports would be employees/reports. The
         // route below can be merged with employees grouped route above.
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
@@ -88,6 +91,7 @@ Route::group(['middleware' => ['auth', 'tenant']], function () {
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
 
         Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
+        
         Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
     });
 

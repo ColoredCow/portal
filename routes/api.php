@@ -18,6 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::resource('hr/jobs', 'HR\JobController')->only(['store']);
 Route::resource('hr/applicants', 'HR\ApplicantController')->only(['store']);
+
+// we will use this route for creating volunteers applications
+Route::resource('hr/volunteers/applications', 'HR\Volunteers\VolunteerApplicationController')
+        ->only(['store']);
 Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
     Route::prefix('library')->namespace('Library')->group(function () {
         Route::get('book/getList', 'BookController@getBookList');
