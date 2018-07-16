@@ -38,7 +38,7 @@ class VolunteerApplicationController extends ApplicationController
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
-
+        
         return view('hr.application.volunteer.index')->with($attr);
     }
 

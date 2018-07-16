@@ -18,16 +18,16 @@ class VolunteerApplicationsTest extends FeatureTest
         $this->withoutExceptionHandling();
         $this->signIn();
         $data = $this->getVolunteerApplicationData();
-        $this->post(route('volunteer.applications.store'), $data)
+        $this->post(route('volunteer.applications.store'), $data);
+        $this->get(route('volunteer.applications.index'))
             ->assertSee($data['name']);
     }
 
 
     public function getVolunteerApplicationData($overrides = []) {
         $faker = \Faker\Factory::create();
-
         $job = create(Job::class, ['type' => config('constants.hr.opportunities.volunteer.type')]);
-        $applicant = create(Applicant::class);
+        $applicant = make(Applicant::class);
         $data =  $applicant->toArray();
         $data['job_title'] = $job->title;
         $data['place'] = $faker->state;
