@@ -3,12 +3,20 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr.menu')
+    @php
+        $menu = 'hr.menu';
+        $formAction = route('recruitment.opportunities.update', $job->id);
+        if ($job->type == 'volunteer') {
+            $menu = 'hr.volunteers.menu';
+            $formAction = route('volunteer.opportunities.update', $job->id);
+        }
+    @endphp
+    @include($menu)
     <br><br>
     <h1>{{ $job->title }}</h1>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <form action="/hr/jobs/{{$job->id}}" method="POST">
+        <form action="{{ $formAction }}" method="POST">
 
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -26,12 +34,12 @@
                         <div class="form-group col-md-5 {{ $key%2 ? 'offset-md-1' : '' }}">
                             <label for="rounds[{{ $round->id }}][hr_round_interviewer_id]">{{ $round->name }}</label>
                                 <select
-                                    class="form-control"  
-                                    name="rounds[{{ $round->id }}][hr_round_interviewer_id]" 
+                                    class="form-control"
+                                    name="rounds[{{ $round->id }}][hr_round_interviewer_id]"
                                     id="round_{{ $round->id }}"
                                     value="{{ $round->pivot->hr_round_interviewer_id }}">
                                     <option value="">Select interviewer </option>
-                                    @foreach($interviewers as $interviewer ) 
+                                    @foreach($interviewers as $interviewer )
                                         @php
                                             $selected = $round->pivot->hr_round_interviewer_id == $interviewer->id ? 'selected="selected"' : '';
                                         @endphp
@@ -43,7 +51,7 @@
                     </div>
                 @endif
                 <br>
-                
+
                 <h3>Social Media Links</h3>
                 <div class="form-row">
                         <div class="form-group col-md-5">
