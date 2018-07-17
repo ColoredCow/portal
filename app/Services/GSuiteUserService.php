@@ -13,9 +13,9 @@ use Google_Service_Exception;
 class GSuiteUserService
 {
     const USERLIMIT = 20;
-    protected $name;
-    protected $joinedOn;
-    protected $designation;
+    protected $name = array();
+    protected $joinedOn = array();
+    protected $designation = array();
 
     public function __construct()
     {
@@ -31,16 +31,24 @@ class GSuiteUserService
 
     public function fetch($email)
     {
-        $user = $this->service->users->get($email);
-        $userOrganizations = $user->getOrganizations();
+        $user[] = $this->service->users->get($email);
 
-        $designation = null;
-        if (!is_null($userOrganizations)) {
-            $designation = $userOrganizations[0]['title'];
+        if ($user[0]->isAdmin == 'true') {
+            $user = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
         }
-        $this->setName($user->getName()->fullName);
-        $this->setJoinedOn(Carbon::parse($user->getCreationTime())->format(config('constants.date_format')));
-        $this->setDesignation($designation);
+
+        foreach ($user as $i => $user[]) {
+            $userOrganizations = $user[$i]->getOrganizations();
+            $designation = null;
+            if (!is_null($userOrganizations)) {
+                $designation[$i] = $userOrganizations[0]['title'];
+            }
+            $this->setName($user[$i]->getName()->fullName);
+            $this->setJoinedOn(Carbon::parse($user[$i]->getCreationTime())->format(config('constants.date_format')));
+            $this->setDesignation($designation[$i]);
+
+        }
+
     }
 
     public function create($name, $email, $password, $params = array())
@@ -83,7 +91,7 @@ class GSuiteUserService
 
     public function setJoinedOn($joinedOn)
     {
-        $this->joinedOn = $joinedOn;
+        $this->joinedOn[] = $joinedOn;
     }
 
     public function getJoinedOn()
@@ -93,7 +101,7 @@ class GSuiteUserService
 
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name[] = $name;
     }
 
     public function getName()
@@ -103,7 +111,7 @@ class GSuiteUserService
 
     public function setDesignation($designation)
     {
-        $this->designation = $designation;
+        $this->designation[] = $designation;
     }
 
     public function getDesignation()
