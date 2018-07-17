@@ -5,6 +5,14 @@ return [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
     ],
+    'http_response_messages' => [
+        '403' => 'Forbidden! You don\'t have necessary permissions to access this area. Please contact your administrator.',
+        '404' => 'Sorry, the page you are looking for could not be found.',
+        '419' => 'The page has expired due to inactivity. Please refresh and try again.',
+        '429' => 'Too many requests! Please try again.',
+        '500' => 'Whoops, looks like something went wrong. Please try again.',
+        '503' => 'The server is currently unable to handle the request. Please check after some time.',
+    ],
     'date_format' => 'Y-m-d',
     'datetime_format' => 'Y-m-d H:i:s',
     'display_date_format' => 'd/m/Y',
@@ -29,6 +37,20 @@ return [
     ],
     'pagination_size' => 10,
     'hr' => [
+        'opportunities' => [
+            'job' => [
+                'title' => 'Job',
+                'type' => 'recruitment',
+            ],
+            'internship' => [
+                'title' => 'Internship',
+                'type' => 'recruitment',
+            ],
+            'volunteer' => [
+                'title' => 'Volunteer',
+                'type' => 'volunteer',
+            ],
+        ],
         'default' => [
             'email' => env('HR_DEFAULT_FROM_EMAIL', 'employeeportal@example.com'),
             'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers'),

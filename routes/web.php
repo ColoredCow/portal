@@ -78,12 +78,12 @@ Route::middleware('auth')->group(function () {
                 ->middleware('can:hr_volunteers_jobs.view');
         });
 
-        Route::prefix('employees')->namespace('Employees')->group(function () {
-            Route::get('/', 'EmployeeController@index')->name('employees');
-            Route::get('/{employee}', 'EmployeeController@show')->name('employees.show');
-        });
-        // A better version of employee-reports would be employees/reports. The
-        // route below can be merged with employees grouped route above.
+        Route::resource('employees', 'Employees\EmployeeController')
+            ->only(['index', 'show'])
+            ->names([
+                'index' => 'employees',
+                'show' => 'employees.show',
+            ]);
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit'])->middleware('can:hr_applicants.view');
