@@ -46,9 +46,7 @@ class GSuiteUserService
             $this->setName($user[$i]->getName()->fullName);
             $this->setJoinedOn(Carbon::parse($user[$i]->getCreationTime())->format(config('constants.date_format')));
             $this->setDesignation($designation[$i]);
-
         }
-
     }
 
     public function create($name, $email, $password, $params = array())
