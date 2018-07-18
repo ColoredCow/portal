@@ -35,7 +35,6 @@ class GSuiteUserService
         $user = $this->service->users->get($email);
 
         if ($user->isAdmin == 'true') {
-
             $users = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
             $email = $users[0]->primaryEmail;
             $this->setPrimaryEmail($email);
@@ -91,7 +90,6 @@ class GSuiteUserService
         $email = $users[$j]->primaryEmail;
         $this->setPrimaryEmail($email);
         $this->setGsuiteUserDetails($user);
-
     }
 
     public function setGsuiteUserDetails($user)
