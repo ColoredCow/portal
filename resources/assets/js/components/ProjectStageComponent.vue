@@ -256,7 +256,7 @@
         data() {
             return {
                 editMode: Object.keys(this.stage).length ? false : true,
-                inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : 0,
+                inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : '',
                 inputStageCurrency: this.stage.hasOwnProperty('currency_cost') ? this.stage.currency_cost : this.configs.countries[this.client.country].currency,
                 inputStageCostIncludeGst: this.stage.hasOwnProperty('cost_include_gst') ? this.stage.cost_include_gst : false,
                 stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
