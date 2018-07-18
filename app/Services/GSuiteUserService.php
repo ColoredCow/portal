@@ -142,5 +142,4 @@ class GSuiteUserService
     {
         return $this->email;
     }
-
 }
