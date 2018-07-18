@@ -13,9 +13,10 @@ use Google_Service_Exception;
 class GSuiteUserService
 {
     const USERLIMIT = 20;
-    protected $name = array();
-    protected $joinedOn = array();
-    protected $designation = array();
+    protected $name;
+    protected $joinedOn;
+    protected $designation;
+    protected $email;
 
     public function __construct()
     {
@@ -31,22 +32,17 @@ class GSuiteUserService
 
     public function fetch($email)
     {
-        $user[] = $this->service->users->get($email);
+        $user = $this->service->users->get($email);
 
-        if ($user[0]->isAdmin == 'true') {
-            $user = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
+        if ($user->isAdmin == 'true') {
+
+            $users = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
+            $email = $users[0]->primaryEmail;
+            $this->setPrimaryEmail($email);
+            return $users;
         }
 
-        foreach ($user as $i => $user[]) {
-            $userOrganizations = $user[$i]->getOrganizations();
-            $designation = null;
-            if (!is_null($userOrganizations)) {
-                $designation[$i] = $userOrganizations[0]['title'];
-            }
-            $this->setName($user[$i]->getName()->fullName);
-            $this->setJoinedOn(Carbon::parse($user[$i]->getCreationTime())->format(config('constants.date_format')));
-            $this->setDesignation($designation[$i]);
-        }
+        $this->setGsuiteUserDetails($user);
     }
 
     public function create($name, $email, $password, $params = array())
@@ -87,9 +83,32 @@ class GSuiteUserService
         }
     }
 
+    public function fetchAdmin($email, $j)
+    {
+        $user = $this->service->users->get($email);
+        $users = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
+        //email is used to fetch next user in the list
+        $email = $users[$j]->primaryEmail;
+        $this->setPrimaryEmail($email);
+        $this->setGsuiteUserDetails($user);
+
+    }
+
+    public function setGsuiteUserDetails($user)
+    {
+        $userOrganizations = $user->getOrganizations();
+        $designation = null;
+        if (!is_null($userOrganizations)) {
+            $designation = $userOrganizations[0]['title'];
+        }
+        $this->setName($user->getName()->fullName);
+        $this->setJoinedOn(Carbon::parse($user->getCreationTime())->format(config('constants.date_format')));
+        $this->setDesignation($designation);
+    }
+
     public function setJoinedOn($joinedOn)
     {
-        $this->joinedOn[] = $joinedOn;
+        $this->joinedOn = $joinedOn;
     }
 
     public function getJoinedOn()
@@ -99,7 +118,7 @@ class GSuiteUserService
 
     public function setName($name)
     {
-        $this->name[] = $name;
+        $this->name = $name;
     }
 
     public function getName()
@@ -109,11 +128,21 @@ class GSuiteUserService
 
     public function setDesignation($designation)
     {
-        $this->designation[] = $designation;
+        $this->designation = $designation;
     }
 
     public function getDesignation()
     {
         return $this->designation;
     }
+    public function setPrimaryEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function getPrimaryEmail()
+    {
+        return $this->email;
+    }
+
 }
