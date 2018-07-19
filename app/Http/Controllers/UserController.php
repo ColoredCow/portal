@@ -10,7 +10,7 @@ class UserController extends Controller
     public function syncWithGSuite()
     {
         $currentUser = auth()->user();
-        if (!$currentUser->isSuperAdmin()) {
+        if ($currentUser->isSuperAdmin()) {
             $allUserList = User::all();
             $this->adminSyncWithGsuite($allUserList, $currentUser);
         } else {

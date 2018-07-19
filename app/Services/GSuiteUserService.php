@@ -76,8 +76,11 @@ class GSuiteUserService
 
     public function fetchAdmin($email, $j)
     {
+        //to get the current domain
+        $route = url()->current();
+        $url = rtrim(ltrim($route, 'https://'), '/profile/gsuite-sync');
         $user = $this->service->users->get($email);
-        $users = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
+        $users = $this->service->users->listusers(['domain' => $url])->users;
         //email is used to fetch next user in the list which pass in the fetchAdmin from user control
         $email = $users[$j]->primaryEmail;
         $this->setPrimaryEmail($email);
