@@ -26,7 +26,7 @@ class UserController extends Controller
         //$j used as counter to pass in the function
         $j = 0;
         $gsuiteUser = new GSuiteUserService();
-        $gsuiteUser->fetchAdmin('vaibhav@coloredcow.in', $j);
+        $gsuiteUser->fetchAdmin($currentUser->email, $j);
 
         foreach ($allUserList as $user) {
             $j = $j + 1;
