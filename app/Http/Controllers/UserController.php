@@ -7,9 +7,11 @@ use App\User;
 
 class UserController extends Controller
 {
-    public function syncWithGSuite()
+    public function syncWithGSuite($user = 'a')
     {
-        $user = auth()->user();
+        if ($user == 'a') {
+            $user = auth()->user();
+        }
         $gsuiteUser = new GSuiteUserService();
         $gsuiteUser->fetch($user->email);
         $this->updateGsuiteUser($user, $gsuiteUser);
@@ -18,14 +20,11 @@ class UserController extends Controller
 
     public function adminSyncWithGsuite()
     {
-        $users = User::all();
-        $j = 0;
-        $gsuiteUser = new GSuiteUserService();
-
-        foreach ($users as $user) {
-            $j = $j + 1;
-            $gsuiteUser->fetchAdmin($user->email, $j);
-            $this->updateGsuiteUser($user, $gsuiteUser);
+        if (auth()->user()->isSuperAdmin()) {
+            $users = User::all();
+            foreach ($users as $user) {
+                self::syncWithGSuite($user);
+            }
         }
         return redirect()->back();
     }

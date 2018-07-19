@@ -16,7 +16,6 @@ class GSuiteUserService
     protected $name;
     protected $joinedOn;
     protected $designation;
-    protected $email;
 
     public function __construct()
     {
@@ -74,19 +73,6 @@ class GSuiteUserService
         }
     }
 
-    public function fetchAdmin($email, $j)
-    {
-        //to get the current domain
-        $route = url()->current();
-        $url = rtrim(ltrim($route, 'https://'), '/profile/gsuite-sync');
-        $user = $this->service->users->get($email);
-        $users = $this->service->users->listusers(['domain' => $url])->users;
-        //email is used to fetch next user in the list which pass in the fetchAdmin from user control
-        $email = $users[$j]->primaryEmail;
-        $this->setPrimaryEmail($email);
-        $this->setGsuiteUserDetails($user);
-    }
-
     public function setGsuiteUserDetails($user)
     {
         $userOrganizations = $user->getOrganizations();
@@ -127,14 +113,5 @@ class GSuiteUserService
     public function getDesignation()
     {
         return $this->designation;
-    }
-    public function setPrimaryEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function getPrimaryEmail()
-    {
-        return $this->email;
     }
 }
