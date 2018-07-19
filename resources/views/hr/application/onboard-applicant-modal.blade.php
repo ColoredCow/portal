@@ -10,9 +10,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div>
-
-            </div>
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -30,8 +27,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-
-                    <div class="form-group col-md-6">
+                <div class="form-group col-md-6">
                         <label for="offer_letter" class="field-required">Offer letter</label>
                         <input type="file" id="offer_letter" name="offer_letter" required="required">
                     </div>
