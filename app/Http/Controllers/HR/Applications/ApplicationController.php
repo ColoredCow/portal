@@ -11,6 +11,7 @@ use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Job;
 use App\Models\Setting;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
@@ -51,6 +52,7 @@ abstract class ApplicationController extends Controller
                 ->count();
         }
         return view('hr.application.index')->with($attr);
+
     }
 
     /**
@@ -59,9 +61,30 @@ abstract class ApplicationController extends Controller
      * @param  String  $id
      * @return \Illuminate\Http\Response
      */
+    // public function store(ApplicationRequest $request)
+    // {
+    //     $validated = $request->validated();
+    //     $path = self::upload($validated['offer_letter']);
+    //     'offer_letter' = $path;
+
+    // }
+    protected static function upload(UploadedFile $file)
+    {
+        $fileName = $file->getClientOriginalName();
+
+        if ($fileName) {
+            return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
+        }
+
+        return $file->store(FileHelper::getCurrentStorageDirectory());
+    }
+
     public function edit($id)
     {
+        //$validated = validated();
         $application = Application::findOrFail($id);
+
+        $path = self::upload('offer_letter');
 
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
@@ -86,13 +109,15 @@ abstract class ApplicationController extends Controller
         return view('hr.application.edit')->with($attr);
     }
 
-    /**
+    /**ubl
      * Update the specified resource
      *
      * @param ApplicationRequest $request
      * @param integer $id
      * @return \Illuminate\Http\RedirectResponse
+
      */
+
     public function update(ApplicationRequest $request, int $id)
     {
         $validated = $request->validated();
@@ -100,6 +125,7 @@ abstract class ApplicationController extends Controller
         $application->load('applicant');
 
         switch ($validated['action']) {
+
             case config('constants.hr.application-meta.keys.change-job'):
                 $changeJobMeta = $application->changeJob($validated);
                 Mail::send(new JobChanged($application, $changeJobMeta));

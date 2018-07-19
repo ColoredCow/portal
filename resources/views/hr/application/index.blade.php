@@ -20,6 +20,8 @@
                         {{ config('constants.hr.status.sent-for-approval.label') }}
                     @case('no-show')
                         {{ config('constants.hr.status.no-show.label') }}
+                    @case('approve')
+                        {{ config('constants.hr.status.approved.label') }}
                     @endswitch>
 
         <input type="text" name="search" class="form-control" id="search" placeholder="Search Applicants" value=@if(request()->has('search')){{request()->get('search')}}
@@ -72,9 +74,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}" href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{request()->has('search')? "&search=".request('search'):"" }}><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }} @if(request()->has('search'))
-                    <span class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'text-white' }}" style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+                    <span class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'text-white' }}" id ="activity" style="border-radius: 20px;font-size: 12px;font-weight: 700; ">
                         {{$noShowApplicationsCount}}
                     </span>
+                    <div>
+                        No show activity
+                    </div>
                 @endif
                 </a>
             </li>
@@ -84,6 +89,16 @@
                 @if(request()->has('search'))
                     <span class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-white text-info' : 'text-white' }}" style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$rejectedApplicationsCount}}
+                    </span>
+                @endif
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.approved.label') ? 'active bg-info text-white' : 'text-info' }}" href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{request()->has('search')? "&search=".request('search'):"" }}><i class="fa fa-check-square"></i>&nbsp;
+                    Approved
+                @if(request()->has('search'))
+                    <span class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.approved.label') ? 'active bg-white text-info' : 'text-white' }}" style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+                        {{$approvedApplicationsCount}}
                     </span>
                 @endif
                 </a>

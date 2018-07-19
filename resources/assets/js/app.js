@@ -67,6 +67,9 @@ if (document.getElementById('page_hr_applicant_edit')) {
                         $('#send_for_approval').modal('show');
                         break;
                     case 'approve':
+                        $('#approve_applicant').modal('show');
+                        break;
+                     case 'onboard':
                         $('#onboard_applicant').modal('show');
                 }
             }
@@ -199,7 +202,7 @@ $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', 
     let button = $(this);
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
-    if (selectedAction == 'confirm' || selectedAction == 'send-for-approval' || selectedAction == 'onboard') {
+    if (selectedAction == 'confirm' || selectedAction == 'send-for-approval' || selectedAction == 'onboard' || selectedAction == 'approve') {
         if (!form[0].checkValidity()) {
             form[0].reportValidity();
             return false;

@@ -114,6 +114,9 @@ class Application extends Model
             case config('constants.hr.status.sent-for-approval.label'):
                 $query->sentForApproval();
                 break;
+            case config('constants.hr.status.approved.label'):
+                $query->approved();
+                break;
             default:
                 $query->isOpen();
                 break;
@@ -177,10 +180,12 @@ class Application extends Model
      */
     public function scopeClosed($query)
     {
-        return $query->whereIn('status', [
-            config('constants.hr.status.rejected.label'),
-            config('constants.hr.status.approved.label'),
-        ]);
+        return $query->where('status', config('constants.hr.status.rejected.label'));
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', config('constants.hr.status.approved.label'));
     }
 
     /**

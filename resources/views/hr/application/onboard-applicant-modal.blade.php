@@ -1,4 +1,4 @@
-<div class="modal fade" id="onboard_applicant" tabindex="-1" role="dialog" aria-labelledby="onboard_applicant" aria-hidden="true" v-if="selectedAction == 'approve'">
+<div class="modal fade" id="approve_applicant" tabindex="-1" role="dialog" aria-labelledby="approve_applicant" aria-hidden="true" v-if="selectedAction == 'approve'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,6 +9,9 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+            <div>
+
             </div>
             <div class="modal-body">
                 <div class="form-row">
@@ -27,14 +30,15 @@
                     </div>
                 </div>
                 <div class="form-row">
+
                     <div class="form-group col-md-6">
-                        <label for="designation">Designation</label>
-                        <input type="text" class="form-control" name="designation" id="designation" required="required">
+                        <label for="offer_letter" class="field-required">Offer letter</label>
+                        <input type="file" id="offer_letter" name="offer_letter" required="required">
                     </div>
                 </div>
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">
-                        <button type="button" class="btn btn-success px-4 round-submit" data-action="onboard">Confirm</button>
+                        <button type="button" class="btn btn-success px-4 round-submit" data-action="approve">Confirm</button>
                     </div>
                 </div>
             </div>

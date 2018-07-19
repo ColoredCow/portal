@@ -73,6 +73,11 @@ class ApplicationRound extends Model
                 $application->sendForApproval($attr['send_for_approval_person']);
                 break;
 
+            case 'approve':
+                $fillable['round_status'] = 'approved';
+                $application->approve();
+                break;
+
             case 'onboard':
                 $fillable['round_status'] = 'confirmed';
                 $application->approve();
