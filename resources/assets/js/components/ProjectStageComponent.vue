@@ -302,7 +302,7 @@
         methods: {
             addBilling() {
                 this.stageBillings.push({
-                    'percentage': '',
+                    'percentage': null,
                     'isNew' : true
                 });
             },
