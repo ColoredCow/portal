@@ -74,7 +74,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}" href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{request()->has('search')? "&search=".request('search'):"" }}><i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }} @if(request()->has('search'))
-                    <span class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'text-white' }}" style="border-radius: 20px;font-size: 12px;font-weight: 700; ">
+                    <span class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'text-white' }}" style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$noShowApplicationsCount}}
                     </span>
                 @endif

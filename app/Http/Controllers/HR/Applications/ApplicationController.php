@@ -121,6 +121,7 @@ abstract class ApplicationController extends Controller
                 return redirect()->back()->with('status', 'Application updated successfully!');
                 break;
         }
+
         return redirect()->back()->with('No changes were done to the application. Please make sure your are submitting valid data.');
     }
 }
