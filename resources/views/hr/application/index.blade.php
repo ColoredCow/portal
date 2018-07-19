@@ -77,9 +77,6 @@
                     <span class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'text-white' }}" id ="activity" style="border-radius: 20px;font-size: 12px;font-weight: 700; ">
                         {{$noShowApplicationsCount}}
                     </span>
-                    <div>
-                        No show activity
-                    </div>
                 @endif
                 </a>
             </li>
