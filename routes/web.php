@@ -28,6 +28,7 @@ Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallb
 Route::middleware('auth')->group(function () {
     Route::prefix('profile')->group(function () {
         Route::get('gsuite-sync', 'UserController@syncWithGSuite')->name('profile.gsuite-sync');
+        Route::get('gsuite-sync-all', 'UserController@adminSyncWithGsuite')->name('profile.gsuite-sync-all');
     });
 
     Route::prefix('hr')->namespace('HR')->group(function () {

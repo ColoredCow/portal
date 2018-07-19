@@ -9,30 +9,25 @@ class UserController extends Controller
 {
     public function syncWithGSuite()
     {
-        $currentUser = auth()->user();
-        if ($currentUser->isSuperAdmin()) {
-            $allUserList = User::all();
-            $this->adminSyncWithGsuite($allUserList, $currentUser);
-        } else {
-            $gsuiteUser = new GSuiteUserService();
-            $gsuiteUser->fetch($currentUser->email);
-            $this->updateGsuiteUser($currentUser, $gsuiteUser);
-        }
+        $user = auth()->user();
+        $gsuiteUser = new GSuiteUserService();
+        $gsuiteUser->fetch($currentUser->email);
+        $this->updateGsuiteUser($user, $gsuiteUser);
         return redirect()->back();
     }
 
-    public function adminSyncWithGsuite($allUserList, $currentUser)
+    public function adminSyncWithGsuite()
     {
-        //$j used as counter to pass in the function
+        $users = User::all();
         $j = 0;
         $gsuiteUser = new GSuiteUserService();
-        $gsuiteUser->fetchAdmin($currentUser->email, $j);
 
-        foreach ($allUserList as $user) {
+        foreach ($users as $user) {
             $j = $j + 1;
-            $gsuiteUser->fetchAdmin($gsuiteUser->getPrimaryEmail(), $j);
+            $gsuiteUser->fetchAdmin($user->email, $j);
             $this->updateGsuiteUser($user, $gsuiteUser);
         }
+        return redirect()->back();
     }
 
     public function updateGsuiteUser($currentUser, $gsuiteUser)
