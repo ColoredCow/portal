@@ -226,6 +226,10 @@ $(document).ready(() => {
         }
     }
     $('[data-toggle="tooltip"]').tooltip();
+    $('.status-close').on('click', function(){
+        let wrapper = $(this).closest('.alert');
+        wrapper.fadeOut(500);
+    });
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -281,11 +285,6 @@ var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
 weeklyDoseClipboard.on('success', function(e) {
   setTooltip(e.trigger, 'Copied!');
   hideTooltip(e.trigger);
-});
-
-$('.status-close').on('click', function(){
-    let wrapper = $(this).closest('.alert');
-    wrapper.fadeOut(500);
 });
 
 tinymce.init({
