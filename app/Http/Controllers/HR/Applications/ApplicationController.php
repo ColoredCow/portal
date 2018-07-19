@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\HR\Applications;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicationRequest;
 use App\Mail\HR\Application\JobChanged;
@@ -12,9 +14,11 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+
 abstract class ApplicationController extends Controller
 {
     abstract public function getApplicationType();
+
     /**
      * Display a listing of the resource.
      *
@@ -33,6 +37,7 @@ abstract class ApplicationController extends Controller
             ->latest()
             ->paginate(config('constants.pagination_size'))
             ->appends(Input::except('page'));
+
         $countFilters = array_except($filters, ['status']);
         $attr = [
             'applications' => $applications,
@@ -47,6 +52,7 @@ abstract class ApplicationController extends Controller
         }
         return view('hr.application.index')->with($attr);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -56,7 +62,9 @@ abstract class ApplicationController extends Controller
     public function edit($id)
     {
         $application = Application::findOrFail($id);
+
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
+
         $job = $application->job;
         $attr = [
             'applicant' => $application->applicant,
@@ -70,12 +78,14 @@ abstract class ApplicationController extends Controller
             ],
             'type' => config("constants.hr.opportunities.$job->type.type"),
         ];
+
         if ($job->type == 'job') {
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
         return view('hr.application.edit')->with($attr);
     }
+
     /**
      * Update the specified resource
      *
@@ -88,8 +98,9 @@ abstract class ApplicationController extends Controller
         $validated = $request->validated();
         $application = Application::findOrFail($id);
         $application->load('applicant');
+
         switch ($validated['action']) {
-            case config('constants.hr.application-meta.keys.change-job')
+            case config('constants.hr.application-meta.keys.change-job'):
                 $changeJobMeta = $application->changeJob($validated);
                 Mail::send(new JobChanged($application, $changeJobMeta));
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');

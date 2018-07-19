@@ -73,7 +73,6 @@ Route::middleware('auth')->group(function () {
                     'index' => 'applications.volunteer.index',
                     'edit' => 'applications.volunteer.edit',
                 ]);
-
         });
 
         Route::resource('employees', 'Employees\EmployeeController')

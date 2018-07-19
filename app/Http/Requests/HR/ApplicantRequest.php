@@ -24,7 +24,7 @@ class ApplicantRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'hr_job_id' => 'nullable|exists:hr_jobs,id'
+            'hr_job_id' => 'nullable|exists:hr_jobs,id',
         ];
 
         if ($this->method() === 'POST') {
@@ -39,7 +39,7 @@ class ApplicantRequest extends FormRequest
                 'course' => 'nullable|string',
                 'linkedin' => 'nullable|url',
                 'reason_for_eligibility' => 'nullable|string',
-                'form_data' => 'nullable|array'
+                'form_data' => 'nullable|array',
             ];
         }
 
