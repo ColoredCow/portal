@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $gsuiteUser = new GSuiteUserService();
-        $gsuiteUser->fetch($currentUser->email);
+        $gsuiteUser->fetch($user->email);
         $this->updateGsuiteUser($user, $gsuiteUser);
         return redirect()->back();
     }
