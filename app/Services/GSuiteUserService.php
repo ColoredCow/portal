@@ -33,14 +33,6 @@ class GSuiteUserService
     public function fetch($email)
     {
         $user = $this->service->users->get($email);
-
-        if ($user->isAdmin == 'true') {
-            $users = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
-            $email = $users[0]->primaryEmail;
-            $this->setPrimaryEmail($email);
-            return $users;
-        }
-
         $this->setGsuiteUserDetails($user);
     }
 
@@ -86,7 +78,7 @@ class GSuiteUserService
     {
         $user = $this->service->users->get($email);
         $users = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
-        //email is used to fetch next user in the list
+        //email is used to fetch next user in the list which pass in the fetchAdmin from user control
         $email = $users[$j]->primaryEmail;
         $this->setPrimaryEmail($email);
         $this->setGsuiteUserDetails($user);

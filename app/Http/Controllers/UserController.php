@@ -9,35 +9,35 @@ class UserController extends Controller
 {
     public function syncWithGSuite()
     {
-        $user = auth()->user();
-        if ($user->isSuperAdmin()) {
-            $users = User::all();
-            $this->adminSyncWithGsuite($users, $user);
+        $currentUser = auth()->user();
+        if (!$currentUser->isSuperAdmin()) {
+            $allUserList = User::all();
+            $this->adminSyncWithGsuite($allUserList, $currentUser);
         } else {
             $gsuiteUser = new GSuiteUserService();
-            $gsuiteUser->fetch($user->email);
-            $this->updateGsuiteUser($user, $gsuiteUser);
+            $gsuiteUser->fetch($currentUser->email);
+            $this->updateGsuiteUser($currentUser, $gsuiteUser);
         }
         return redirect()->back();
     }
 
-    public function adminSyncWithGsuite($users, $user)
+    public function adminSyncWithGsuite($allUserList, $currentUser)
     {
         //$j used as counter to pass in the function
         $j = 0;
         $gsuiteUser = new GSuiteUserService();
-        $gsuiteUser->fetch($user->email);
+        $gsuiteUser->fetchAdmin('vaibhav@coloredcow.in', $j);
 
-        foreach ($users as $user) {
+        foreach ($allUserList as $user) {
             $j = $j + 1;
             $gsuiteUser->fetchAdmin($gsuiteUser->getPrimaryEmail(), $j);
             $this->updateGsuiteUser($user, $gsuiteUser);
         }
     }
 
-    public function updateGsuiteUser($user, $gsuiteUser)
+    public function updateGsuiteUser($currentUser, $gsuiteUser)
     {
-        $user->employee->update([
+        $currentUser->employee->update([
             'name' => $gsuiteUser->getName(),
             'joined_on' => $gsuiteUser->getJoinedOn(),
             'designation' => $gsuiteUser->getDesignation(),
