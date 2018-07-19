@@ -5,7 +5,7 @@
             :index="index"
             :item="item"
             :client="client"
-            :editMode="editMode"
+            :invoice="invoice"
             @remove="removeItem(index)">
             </invoice-project-sub-component>
         </div>
@@ -20,7 +20,6 @@
         props: ['billings', 'client', 'invoice'],
         data() {
             return {
-                editMode: Object.keys(this.invoice).length ? true : false,
                 items: this.billings ? this.billings : [],
             }
         },
