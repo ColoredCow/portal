@@ -25,8 +25,9 @@ class UserController extends Controller
             foreach ($users as $user) {
                 self::syncWithGSuite($user);
             }
+            return redirect()->back();
         }
-        return redirect()->back();
+        abort(403);
     }
 
     public function updateGsuiteUser($currentUser, $gsuiteUser)
