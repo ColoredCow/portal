@@ -57,10 +57,10 @@ class Invoice extends Model
     {
         $invoices = self::where(function ($query) use ($start, $end) {
             $query->where('sent_on', '>=', $start)
-                      ->where('sent_on', '<=', $end);
+                ->where('sent_on', '<=', $end);
         })->orWhere(function ($query) use ($start, $end) {
             $query->where('paid_on', '>=', $start)
-                      ->where('paid_on', '<=', $end);
+                ->where('paid_on', '<=', $end);
         })->orderBy('sent_on', 'desc')
             ->orderBy('paid_on', 'desc');
 
@@ -76,5 +76,14 @@ class Invoice extends Model
     public function getClientAttribute()
     {
         return optional($this->projectStageBillings()->first()->projectStage->project)->client;
+    }
+
+    public static function filterByEndDates($end, $paginated = false)
+    {
+        $invoices = self::with('projectStageBillings.projectStage.project.client')
+            ->whereDate('sent_on', '<=', $end)
+            ->orderBy('sent_on', 'desc');
+
+        return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
     }
 }

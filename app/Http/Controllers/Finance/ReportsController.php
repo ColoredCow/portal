@@ -75,9 +75,7 @@ class ReportsController extends Controller
         $attr['paidInvoices'] = $arrangedInvoices['paid'];
 
         $attr['report'] = self::getCumulativeAmounts($arrangedInvoices['sent'], $arrangedInvoices['paid']);
-        $invoices = Invoice::where('status', 'unpaid')->orWhere(function ($query) use ($endDate) {
-            $query->where('sent_on', '<=', $endDate);
-        })->get();
+        $invoices = Invoice::filterByEndDates($endDate);
         foreach (config('constants.currency') as $currency => $currencyMeta) {
             $attr['totalReceivables'][$currency] = 0;
         }
