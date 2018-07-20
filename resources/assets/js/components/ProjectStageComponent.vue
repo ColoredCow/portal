@@ -184,11 +184,11 @@
                                         <label for="paid_amount" class="field-required">Received amount</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary" required="required">
+                                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary">
                                                     <option :value="inputStageCurrency">{{ inputStageCurrency }}</option>
                                                 </select>
                                             </div>
-                                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0">
+                                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4" v-show="clientCountryGstApplicable">
