@@ -37,13 +37,13 @@
         props: ['billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency', 'clientCountryGstApplicable'],
         computed: {
             billingCostWithoutGst: function() {
-                return parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst).toFixed(2);
+                return this.stageCostWithoutGst  !== 'NaN' ? parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst).toFixed(2) : parseFloat(0).toFixed(2);
             },
             billingGstAmount: function() {
                 return parseFloat((this.billing.percentage/100)*this.gstAmount).toFixed(2);
             },
             billingCostWithGst: function() {
-                return parseFloat((this.billing.percentage/100)*this.stageCostWithGst).toFixed(2);
+                return this.stageCostWithGst !=='NaN' ? parseFloat((this.billing.percentage/100)*this.stageCostWithGst).toFixed(2) : parseFloat(0).toFixed(2);
             }
         },
         methods: {
