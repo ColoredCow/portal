@@ -7,9 +7,9 @@ use App\User;
 
 class UserController extends Controller
 {
-    public function syncWithGSuite($user = 'a')
+    public function syncWithGSuite($user = null)
     {
-        if ($user == 'a') {
+        if ($user == null) {
             $user = auth()->user();
         }
         $gsuiteUser = new GSuiteUserService();
