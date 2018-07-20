@@ -42,7 +42,6 @@
         props: ['index', 'item', 'client', 'invoice'],
         data() {
             return {
-
                 editMode: typeof this.invoice !== typeof undefined ? true : false,
                 billingId: this.item.hasOwnProperty('id') ? this.item.id : [],
                 stageId: this.item.hasOwnProperty('project_stage') ? this.item.project_stage.id : [],

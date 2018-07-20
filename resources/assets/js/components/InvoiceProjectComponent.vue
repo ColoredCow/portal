@@ -20,7 +20,7 @@
         props: ['billings', 'client', 'invoice'],
         data() {
             return {
-                items: this.billings ? this.billings : [],
+                items: typeof this.billings !== typeof undefined ? this.billings : [],
             }
         },
         components: {
