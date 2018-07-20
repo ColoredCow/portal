@@ -62,6 +62,7 @@ return [
                 'form-data' => 'form-data',
                 'change-job' => 'change-job',
                 'no-show' => 'no-show',
+                'custom-mail' => 'custom-mail',
             ],
             'reasons-no-show' => [
                 'absent-applicant' => 'Applicant is absent',
