@@ -26,12 +26,6 @@
                         <input type="password" class="form-control" name="onboard_password" id="onboard_password" required="required" autocomplete="off">
                     </div>
                 </div>
-                <div class="form-row">
-                <div class="form-group col-md-6">
-                        <label for="offer_letter" class="field-required">Offer letter</label>
-                        <input type="file" id="offer_letter" name="offer_letter" required="required">
-                    </div>
-                </div>
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">
                         <button type="button" class="btn btn-success px-4 round-submit" data-action="approve">Confirm</button>
