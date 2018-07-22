@@ -108,7 +108,6 @@ Route::middleware('auth')->group(function () {
         Route::get('permissions/{module}', 'PermissionController@index')->name('permissions.module.index');
         Route::put('permissions/{module}/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
         Route::get('hr', 'HRController@index')->name('settings.hr');
-
     });
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
