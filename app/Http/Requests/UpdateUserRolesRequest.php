@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SettingRequest extends FormRequest
+class UpdateUserRolesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SettingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'setting_key' => 'required|array',
+            'roles' => 'nullable',
+            'userID' => 'required|integer',
         ];
     }
 }

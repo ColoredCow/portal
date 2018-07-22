@@ -21,4 +21,17 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function update(UpdateUserRolesRequest $request, User $user)
+    {
+        $validatedData = $request->validated();
+        if (!isset($validatedData['roles'])) {
+            return response()->json([
+                'isUpdated' => false,
+            ]);
+        }
+        $roles = array_pluck($validatedData['roles'], 'id');
+        $isUpdated = $user->roles()->sync($roles);
+        return response()->json(['isUpdated' => $isUpdated]);
+    }
 }

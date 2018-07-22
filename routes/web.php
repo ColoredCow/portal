@@ -102,8 +102,14 @@ Route::middleware('auth')->group(function () {
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
-    Route::get('settings/{module}', 'SettingController@index');
-    Route::post('settings/{module}/update', 'SettingController@update');
+
+    Route::prefix('settings')->namespace('Settings')->group(function () {
+        Route::get('/', 'SettingController@index');
+        Route::get('permissions/{module}', 'PermissionController@index')->name('permissions.module.index');
+        Route::put('permissions/{module}/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
+        Route::get('hr', 'HRController@index')->name('settings.hr');
+
+    });
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
