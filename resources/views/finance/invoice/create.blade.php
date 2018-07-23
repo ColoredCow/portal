@@ -198,7 +198,6 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-3 cheque-status" v-show="paymentType == 'cheque'">
                         <label for="cheque_status">Cheque status</label>
-
                         <select name="cheque_status" id="cheque_status" class="form-control" v-model="chequeStatus" data-cheque-status="{{ old('cheque_status') }}">
                             <option value="">Select cheque status</option>
                             @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
@@ -215,7 +214,6 @@
                         <input type="text" class="form-control date-field" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_cleared_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_cleared_date'))) : '' }}">
                     </div>
                     <div class="form-group col-md-2" v-show="paymentType == 'cheque' && chequeStatus == 'bounced'">
-
                         <label for="cheque_bounced_date">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
                         <br>
