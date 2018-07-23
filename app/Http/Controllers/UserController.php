@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRolesRequest;
 use App\Services\GSuiteUserService;
 use App\User;
 

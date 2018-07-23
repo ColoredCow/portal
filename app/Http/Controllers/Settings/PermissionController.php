@@ -12,6 +12,7 @@ class PermissionController extends Controller
 {
     public function index(String $module)
     {
+        $attr = [];
         if ($module === 'users') {
             $attr['users'] = User::with('roles')->get();
             $attr['roles'] = Role::all();

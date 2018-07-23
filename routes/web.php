@@ -106,6 +106,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index');
+        Route::get('permissions', function () {
+            return redirect(route('permissions.module.index', ['module' => 'users']));
+        })->name('settings.permissions');
         Route::get('permissions/{module}', 'PermissionController@index')->name('permissions.module.index');
         Route::put('permissions/{module}/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
         Route::get('hr', 'HRController@index')->name('settings.hr');
