@@ -110,7 +110,8 @@ Route::middleware('auth')->group(function () {
             return redirect(route('permissions.module.index', ['module' => 'users']));
         })->name('settings.permissions');
         Route::get('permissions/{module}', 'PermissionController@index')->name('permissions.module.index');
-        Route::put('permissions/{module}/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
+        Route::put('permissions/users/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
+        Route::put('permissions/roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.update');
         Route::get('hr', 'HRController@index')->name('settings.hr');
     });
 

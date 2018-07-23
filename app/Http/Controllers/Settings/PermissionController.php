@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateRolePermissionsRequest;
 use App\Http\Requests\UpdateUserRolesRequest;
 use App\User;
 use Spatie\Permission\Models\Permission;
@@ -32,14 +33,23 @@ class PermissionController extends Controller
             ]);
         }
         $user = User::find($validatedData['userID']);
-
-        $roles = $user->getRoleNames();
-        foreach ($roles as $role) {
-            $user->removeRole($role);
-        }
-
-        $roles = array_pluck($validatedData['roles'], 'name');
-        $isUpdated = $user->assignRole($roles);
+        $roles = array_pluck($validatedData['roles'], 'id');
+        $isUpdated = $user->syncRoles($roles);
         return response()->json(['isUpdated' => $isUpdated]);
     }
+
+    public function updateRolePermissions(UpdateRolePermissionsRequest $request)
+    {
+        $validatedData = $request->validated();
+        if (!isset($validatedData['permissions'])) {
+            return response()->json([
+                'isUpdated' => false,
+            ]);
+        }
+        $role = Role::find($validatedData['roleID']);
+        $permissions = array_pluck($validatedData['permissions'], 'id');
+        $isUpdated = $role->syncPermissions($permissions);
+        return response()->json(['isUpdated' => $isUpdated]);
+    }
+
 }

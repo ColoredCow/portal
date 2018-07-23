@@ -640,16 +640,17 @@ function disableBookSuggestions() {
 }
 
 if (document.getElementById('roles_permission_table')) {
-    var roleForm = new Vue({
+    var rolePermissions = new Vue({
         el: '#roles_permission_table',
         data: {
             roles: document.getElementById('roles_permission_table').dataset.roles ? JSON.parse(document.getElementById('roles_permission_table').dataset.roles) : [],
             permissions: document.getElementById('roles_permission_table').dataset.permissions ? JSON.parse(document.getElementById('roles_permission_table').dataset.permissions) : [],
+            updateRoute: document.getElementById('roles_permission_table').dataset.updateRoute  || '',
             currentRoleIndex: 0,
             permissionInputs: [],
         },
         methods: {
-            updatePermissionMode: function(index) {
+            updatePermissionModal: function(index) {
                 let permissions = this.roles[index].permissions;
                 this.currentRoleIndex = index;
                 this.permissionInputs.map((checkbox) => checkbox.checked = false);
@@ -668,22 +669,25 @@ if (document.getElementById('roles_permission_table')) {
                     }
                 });
 
-                this.$set(this.books[this.currentRoleIndex], 'permissions',  selectedPermissions);
+                this.$set(this.roles[this.currentRoleIndex], 'permissions',  selectedPermissions);
                 let route = `${this.updateRoute}/${roleID}`;
-                axios.put(route, {permissions: JSON.parse(JSON.stringify(selectedPermissions))});
-                document.getElementById('close_update_permissions_modal').click();
+                axios.put(route, {
+                    permissions: JSON.parse(JSON.stringify(selectedPermissions)),
+                    roleID: roleID
+                });
+                document.getElementById('update_role_permissions_modal').click();
             },
         },
         mounted: function() {
-            let permissionInputContainer = document.querySelector("#update_permission_modal");
-            let allpermissionInputs = permissionInputContainer.querySelectorAll('input[type="checkbox"]');
-            allpermissionInputs.forEach((checkbox) => this.permissionInputs[checkbox.value] = checkbox);
+            let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
+            let allPermissionInputs = permissionInputContainer.querySelectorAll('input[type="checkbox"]');
+            allPermissionInputs.forEach((checkbox) => this.permissionInputs[checkbox.value] = checkbox);
         }
     });
 }
 
 if (document.getElementById('user_roles_table')) {
-    new Vue({
+    var userRoles = new Vue({
         el: '#user_roles_table',
         data: {
             users: document.getElementById('user_roles_table').dataset.users ? JSON.parse(document.getElementById('user_roles_table').dataset.users) : '',

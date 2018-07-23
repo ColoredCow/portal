@@ -15,6 +15,7 @@
 	id="roles_permission_table"
 	data-roles="{{ json_encode($roles) }}"
 	data-permissions="{{ json_encode($permissions) }}"
+	data-update-route="{{ route('permissions.module.index', ['module' => 'roles']) }}"
 	>
 		<h4>Manage Permissions for Roles</h4>
 		<table class="table table-bordered">
@@ -29,9 +30,9 @@
 				<td>@{{ role.id }}</td>
 				<td>@{{ role.name }}</td>
 				<td>
-					<button v-if="role.permissions.length === 0" class="btn btn-sm btn-outline-danger">No Permission Granted</button>
-					<button v-else class="btn btn-sm btn-outline-primary" @click="updatePermissionMode(index)" data-toggle="modal" data-target="#update_permission_modal">View permissions</button>
-					@include('settings.permissions.update-permissions-modal')
+					<button v-if="role.permissions.length === 0" class="btn btn-sm btn-outline-danger" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">No Permission Granted</button>
+					<button v-else class="btn btn-sm btn-outline-primary" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">View permissions</button>
+					@include('settings.permissions.update-role-permissions-modal')
 				</td>
 			</tr>
 		</table>

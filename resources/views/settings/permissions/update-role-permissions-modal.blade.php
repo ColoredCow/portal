@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" id="update_permission_modal">
+<div class="modal" tabindex="-1" role="dialog" id="update_role_permissions_modal">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
