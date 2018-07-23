@@ -45,6 +45,7 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
+        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
         return Applicant::_create($validated);
     }
 
