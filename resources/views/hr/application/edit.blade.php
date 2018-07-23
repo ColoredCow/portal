@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10">
             @include('status', ['errors' => $errors->all()])
         </div>
         <div class="col-md-3">
@@ -22,7 +22,15 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
-                    <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$application->status.title") }}</div>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customApplicationMail">Send mail</button>
+                        @include('hr.custom-application-mail-modal', ['application' => $application])
+                        <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight">
+                            {{ config("constants.hr.status.$application->status.title") }}
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="card-body">
                     <div class="form-row">
@@ -125,7 +133,6 @@
                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                         </div>
                     </div>
-
                     <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
 
                         {{ csrf_field() }}
