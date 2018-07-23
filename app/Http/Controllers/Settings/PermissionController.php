@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateRolePermissionsRequest;
-use App\Http\Requests\UpdateUserRolesRequest;
+use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
+use App\Http\Requests\Setting\UpdateUserRolesRequest;
 use App\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -51,5 +51,4 @@ class PermissionController extends Controller
         $isUpdated = $role->syncPermissions($permissions);
         return response()->json(['isUpdated' => $isUpdated]);
     }
-
 }
