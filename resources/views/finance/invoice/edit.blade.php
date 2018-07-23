@@ -203,6 +203,7 @@
                             @endforeach
                         </select>
                     </div>
+                    
                     <div class="form-group offset-md-1 col-md-3 cheque-status" v-show="paymentType == 'cheque'">
                         <label for="cheque_status">Cheque status</label>
                         <select name="cheque_status" id="cheque_status" class="form-control" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
@@ -225,7 +226,7 @@
                         <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                     </div>
                 </div>
-                <br>
+                
                 <div class="form-row">
                     <div class="form-group col-md-5">
                     @if ($invoice->file_path)
