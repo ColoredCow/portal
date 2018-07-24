@@ -10,9 +10,7 @@ class UserController extends Controller
 {
     public function syncWithGSuite($user = null)
     {
-        if ($user == null) {
-            $user = auth()->user();
-        }
+        $user = auth()->user();
         $gsuiteUser = new GSuiteUserService();
         $gsuiteUser->fetch($user->email);
         $gsuiteUser = $gsuiteUser->getUsers();
@@ -24,9 +22,8 @@ class UserController extends Controller
     {
         if (auth()->user()->isSuperAdmin()) {
             $users = User::all();
-            $user = auth()->user();
             $gsuiteUser = new GSuiteUserService();
-            $gsuiteUser->usersFetchByAdmin($user->email);
+            $gsuiteUser->usersFetchByAdmin($users[0]->email);
             $gsuiteUsers = $gsuiteUser->getUsers();
 
             foreach ($gsuiteUsers as $key => $gsuiteUser) {
