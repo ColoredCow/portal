@@ -37,6 +37,20 @@ return [
     ],
     'pagination_size' => 10,
     'hr' => [
+        'opportunities' => [
+            'job' => [
+                'title' => 'Job',
+                'type' => 'recruitment',
+            ],
+            'internship' => [
+                'title' => 'Internship',
+                'type' => 'recruitment',
+            ],
+            'volunteer' => [
+                'title' => 'Volunteer',
+                'type' => 'volunteer',
+            ],
+        ],
         'default' => [
             'email' => env('HR_DEFAULT_FROM_EMAIL', 'employeeportal@example.com'),
             'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers'),
@@ -48,6 +62,7 @@ return [
                 'form-data' => 'form-data',
                 'change-job' => 'change-job',
                 'no-show' => 'no-show',
+                'custom-mail' => 'custom-mail',
             ],
             'reasons-no-show' => [
                 'absent-applicant' => 'Applicant is absent',
