@@ -37,7 +37,10 @@ class GSuiteUserService
     }
     public function usersFetchByAdmin($email)
     {
-        $users = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
+        //to get ther domain of the organization
+        $route = url()->current();
+        $url = rtrim(ltrim($route, 'https://'), '/profile/gsuite-sync');
+        $users = $this->service->users->listusers(['domain' => $url])->users;
         $this->setUsers($users);
     }
 
