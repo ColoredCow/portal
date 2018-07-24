@@ -12,17 +12,10 @@
         <form class="offset-md-2 col-md-4 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
             <input type="hidden" name="status" class="form-control" id="search" value=
                 @switch(request('status'))
-                    @case('on-hold')
-                        config("constants.hr.status. {request('status')}.lable")
-                    @case('rejected')
-                        config("constants.hr.status. {request('status')}.lable")
-                    @case('sent-for-approval')
-                        config("constants.hr.status. {request('status')}.lable")
-                    @case('no-show')
-                        config("constants.hr.status. {request('status')}.lable")
-                    @case('approve')
-                        config("constants.hr.status. {request('status')}.lable")
-                    @endswitch>
+                @case('status')
+                   config("constants.hr.status. {request('status')}.lable")
+                @endswitch>
+
 
         <input type="text" name="search" class="form-control" id="search" placeholder="Search Applicants" value=@if(request()->has('search')){{request()->get('search')}}
                    @endif>

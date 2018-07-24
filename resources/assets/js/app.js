@@ -203,7 +203,7 @@ $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', 
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
     const actions = [ 'confirm', 'send-form-approval', 'onboard', 'approve' ];
-      if(actions.indexOf(selectedAction) >= 0) {
+      if(actions.includes(selectedAction)) {
        if (!form[0].checkValidity()) {
             form[0].reportValidity();
             return false;
