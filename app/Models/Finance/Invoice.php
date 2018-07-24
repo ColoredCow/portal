@@ -78,12 +78,15 @@ class Invoice extends Model
         return optional($this->projectStageBillings()->first()->projectStage->project)->client;
     }
 
-    public static function filterByEndDates($end, $paginated = false)
+    public static function filterByEndDate($date, $paginated = false)
     {
-        $invoices = self::with('projectStageBillings.projectStage.project.client')
-            ->whereDate('sent_on', '<=', $end)
-            ->orderBy('sent_on', 'desc');
+        $unpaidInvoices = self::where(function ($query) use ($date) {
+            $query->where('sent_on', '<=', $date)
+                ->where('status', 'unpaid');
+        })->orderBy('sent_on', 'desc');
 
-        return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
+        $unpaidInvoices->with('projectStageBillings.projectStage.project.client');
+
+        return $paginated ? $unpaidInvoices->paginate(config('constants.pagination_size')) : $unpaidInvoices->get();
     }
 }
