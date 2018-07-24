@@ -97,7 +97,6 @@ class GSuiteUserService
     public function getName()
     {
         return $this->name;
-
     }
 
     public function setDesignation($designation)
