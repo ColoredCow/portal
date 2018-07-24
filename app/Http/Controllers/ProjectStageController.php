@@ -66,7 +66,9 @@ class ProjectStageController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('status', 'Stage created successfully!');
+        return response()->json([
+            'status' => 'Stage created successfully!',
+        ]);
     }
 
     /**
@@ -100,7 +102,6 @@ class ProjectStageController extends Controller
      */
     public function update(ProjectStageRequest $request, ProjectStage $stage)
     {
-        dd(1);
         $validated = $request->validated();
         $updated = $stage->update([
             'name' => $validated['name'],
@@ -137,7 +138,9 @@ class ProjectStageController extends Controller
             }
         }
 
-        return redirect()->back()->with('status', 'Stage updated successfully!');
+        return response()->json([
+            'status' => 'Stage updated successfully!',
+        ]);
     }
 
     /**

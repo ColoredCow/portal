@@ -297,16 +297,11 @@
                 return parseFloat(this.inputStageCost).toFixed(2);
             },
         },
-        mounted: function(){
-
-                let route = this.stage.id ? '/project/stages/' + this.stage.id : '/project/stages';
-                console.log(route);
-
-        },
         methods: {
-            storeStages(){
+            async storeStages(){
                  let route = this.stage.id ? '/project/stages/' + this.stage.id : '/project/stages';
-                 axios.put(route, {name:this.stage.name,
+                 this.editMode=false;
+                let response = await axios.patch(route, {name:this.stage.name,
                  cost:this.inputStageCost,
                  currency_cost:this.inputStageCurrency,
                  cost_include_gst:this.inputStageCostIncludeGst,
@@ -314,12 +309,8 @@
                  end_date:this.stage.end_date,
                  type:this.stage.type,
                  project_id:this.projectId,
-                  }).then(function (response) {
-                        console.log(response.statusText);
-                      })
-                      .catch(function (error) {
-                        console.log(error);
-                      });
+                  });
+                alert(response.data.status);
             },
             addBilling() {
                 this.stageBillings.push({
