@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
-    public function syncWithGSuite($user = null)
+    public function syncWithGSuite()
     {
         $user = auth()->user();
         $gsuiteUser = new GSuiteUserService();
