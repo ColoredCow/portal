@@ -19,7 +19,7 @@
             @foreach($invoices as $invoice)
             <tr>
                 <td>
-                    <a href="/finance/invoices/{{ $invoice->id }}/edit" target="_blank">
+                    <a href="{{ route('invoices.edit') }}" target="_blank">
                         @foreach ($invoice->projectStageBillings as $billing)
                             {{ $loop->first ? '' : '|' }}
                             {{ $billing->projectStage->project->name }}
@@ -35,7 +35,7 @@
                     @endswitch
                     {{ $invoice->status }}</span>
                     <span>
-                        <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-lg text-primary btn-file ml-2"></i></a>
+                        <a href="{{ route('invoices.download', ['file' => ''])}}"><i class="fa fa-file fa-lg text-primary btn-file ml-2"></i></a>
                     </span>
                     <div>{{ $invoice->client->name }}</div>
                     @if ($invoice->client->country == 'india' && $invoice->client->gst_num)

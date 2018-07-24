@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('hr')->namespace('HR')->group(function () {
-        Route::get('/', 'HRController@index');
+        Route::get('/', 'HRController@index')->name('hr');
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
@@ -92,22 +92,27 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
-        Route::resource('invoices', 'InvoiceController')->except(['show', 'destroy']);
-        Route::get('invoices/download/{year}/{month}/{file}', 'InvoiceController@download');
-        Route::get('/reports', 'ReportsController@index');
+        Route::resource('invoices', 'InvoiceController')
+        ->except(['show', 'destroy'])
+        ->names(['index' => 'invoices', 'create' => 'invoices.create', 'edit' => 'invoices.edit']);
+        Route::get('invoices/download/{year}/{month}/{file}', 'InvoiceController@download')->name('invoices.download');
+        Route::get('/reports/{type}/{year}/{month}', 'ReportsController@index')->name('reports');
+        Route::get('/reports', 'ReportsController@index')->name('reports');
     });
 
-    Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
+    Route::resource('clients', 'ClientController')
+    ->except(['show', 'destroy'])
+    ->names(['index' => 'clients', 'create' => 'clients.create', 'edit' => 'clients.edit']);
     Route::resource('projects', 'ProjectController')
         ->except(['show', 'destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
     Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
-    Route::get('settings/{module}', 'SettingController@index');
+    Route::get('settings/{module}', 'SettingController@index')->name('settings');
     Route::post('settings/{module}/update', 'SettingController@update');
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
-        Route::get('/', 'KnowledgeCafeController@index');
+        Route::get('/', 'KnowledgeCafeController@index')->name('knowledgecafe');
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
                 ->names([
