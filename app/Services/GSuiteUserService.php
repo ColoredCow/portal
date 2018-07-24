@@ -16,6 +16,7 @@ class GSuiteUserService
     protected $name;
     protected $joinedOn;
     protected $designation;
+    protected $user;
 
     public function __construct()
     {
@@ -32,7 +33,12 @@ class GSuiteUserService
     public function fetch($email)
     {
         $user = $this->service->users->get($email);
-        $this->setGsuiteUserDetails($user);
+        $this->setUsers($user);
+    }
+    public function usersFetchByAdmin($email)
+    {
+        $users = $this->service->users->listusers(['domain' => 'coloredcow.in'])->users;
+        $this->setUsers($users);
     }
 
     public function create($name, $email, $password, $params = array())
@@ -73,18 +79,6 @@ class GSuiteUserService
         }
     }
 
-    public function setGsuiteUserDetails($user)
-    {
-        $userOrganizations = $user->getOrganizations();
-        $designation = null;
-        if (!is_null($userOrganizations)) {
-            $designation = $userOrganizations[0]['title'];
-        }
-        $this->setName($user->getName()->fullName);
-        $this->setJoinedOn(Carbon::parse($user->getCreationTime())->format(config('constants.date_format')));
-        $this->setDesignation($designation);
-    }
-
     public function setJoinedOn($joinedOn)
     {
         $this->joinedOn = $joinedOn;
@@ -103,6 +97,7 @@ class GSuiteUserService
     public function getName()
     {
         return $this->name;
+
     }
 
     public function setDesignation($designation)
@@ -113,5 +108,14 @@ class GSuiteUserService
     public function getDesignation()
     {
         return $this->designation;
+    }
+    public function setUsers($users)
+    {
+        $this->user = $users;
+    }
+
+    public function getUsers()
+    {
+        return $this->user;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\GSuiteUserService;
 use App\User;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -14,6 +15,7 @@ class UserController extends Controller
         }
         $gsuiteUser = new GSuiteUserService();
         $gsuiteUser->fetch($user->email);
+        $gsuiteUser = $gsuiteUser->getUsers();
         $this->updateGsuiteUser($user, $gsuiteUser);
         return redirect()->back();
     }
@@ -22,8 +24,13 @@ class UserController extends Controller
     {
         if (auth()->user()->isSuperAdmin()) {
             $users = User::all();
-            foreach ($users as $user) {
-                self::syncWithGSuite($user);
+            $user = auth()->user();
+            $gsuiteUser = new GSuiteUserService();
+            $gsuiteUser->usersFetchByAdmin($user->email);
+            $gsuiteUsers = $gsuiteUser->getUsers();
+
+            foreach ($gsuiteUsers as $key => $gsuiteUser) {
+                $this->updateGsuiteUser($users[$key], $gsuiteUser);
             }
             return redirect()->back();
         }
@@ -33,9 +40,9 @@ class UserController extends Controller
     public function updateGsuiteUser($currentUser, $gsuiteUser)
     {
         $currentUser->employee->update([
-            'name' => $gsuiteUser->getName(),
-            'joined_on' => $gsuiteUser->getJoinedOn(),
-            'designation' => $gsuiteUser->getDesignation(),
+            'name' => $gsuiteUser->getName()->fullName,
+            'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
+            'designation' => $gsuiteUser->getOrganizations()[0]['title'],
         ]);
     }
 }
