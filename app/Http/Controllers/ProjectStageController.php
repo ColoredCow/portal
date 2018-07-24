@@ -100,6 +100,7 @@ class ProjectStageController extends Controller
      */
     public function update(ProjectStageRequest $request, ProjectStage $stage)
     {
+        dd(1);
         $validated = $request->validated();
         $updated = $stage->update([
             'name' => $validated['name'],
@@ -118,9 +119,9 @@ class ProjectStageController extends Controller
                         continue;
                     }
                     ProjectStageBilling::where('id', $billing_id)
-                    ->update([
-                        'percentage' => $percentage,
-                    ]);
+                        ->update([
+                            'percentage' => $percentage,
+                        ]);
                 }
             }
         }
