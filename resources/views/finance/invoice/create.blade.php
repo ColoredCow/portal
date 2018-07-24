@@ -217,7 +217,6 @@
                         <input type="text" class="form-control date-field" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
                     </div>
                 </div>
-                <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="invoice_file" class="field-required">Upload Invoice</label>
