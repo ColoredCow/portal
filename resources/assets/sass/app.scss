@@ -345,7 +345,7 @@ input:focus+.slider {
         max-height: 10em;
     }
     .book_card {
-        width: 24%;
+        width: 25%;
     }
 }
 
@@ -356,7 +356,7 @@ input:focus+.slider {
 @media (min-width: 1281px) {
     #books_listing {
         .book_card {
-            width: 24%;
+            width: 25%;
         }
     }
 }
@@ -380,7 +380,7 @@ input:focus+.slider {
 @media (min-width: 768px) and (max-width: 1024px) {
     #books_listing {
         .book_card {
-            width: 49%;
+            width: 50%;
             word-break: break-word;
         }
     }
