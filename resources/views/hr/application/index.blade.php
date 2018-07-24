@@ -13,15 +13,15 @@
             <input type="hidden" name="status" class="form-control" id="search" value=
                 @switch(request('status'))
                     @case('on-hold')
-                        {{ config('constants.hr.status.on-hold.label') }}
+                        config("constants.hr.status. {request('status')}.lable")
                     @case('rejected')
-                        {{ config('constants.hr.status.rejected.label') }}
+                        config("constants.hr.status. {request('status')}.lable")
                     @case('sent-for-approval')
-                        {{ config('constants.hr.status.sent-for-approval.label') }}
+                        config("constants.hr.status. {request('status')}.lable")
                     @case('no-show')
-                        {{ config('constants.hr.status.no-show.label') }}
+                        config("constants.hr.status. {request('status')}.lable")
                     @case('approve')
-                        {{ config('constants.hr.status.approved.label') }}
+                        config("constants.hr.status. {request('status')}.lable")
                     @endswitch>
 
         <input type="text" name="search" class="form-control" id="search" placeholder="Search Applicants" value=@if(request()->has('search')){{request()->get('search')}}
