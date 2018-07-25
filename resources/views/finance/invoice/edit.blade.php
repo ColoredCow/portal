@@ -7,7 +7,7 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Edit Invoice</h1></div>
-        <div class="col-md-6"><a href="/finance/invoices/create" class="btn btn-success float-right">Create Invoice</a></div>
+        <div class="col-md-6"><a href="{{ route('invoices.create') }}" class="btn btn-success float-right">Create Invoice</a></div>
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
@@ -34,14 +34,11 @@
                         </select>
                     </div>
                 </div>
-                <br>
                 <invoice-project-component
                 :billings="{{ json_encode($invoice_billings) }}"
                 :client="{{ json_encode($invoice_client) }}">
                 </invoice-project-component>
-                <br>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-2">
                         <label for="project_invoice_id" class="field-required">Invoice ID</label>
                         <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required" value="{{ $invoice->project_invoice_id }}">
@@ -80,15 +77,13 @@
                     </div>
                 @endif
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-3">
                         <label for="due_date">Due date</label>
                         <input type="date" class="form-control" name="due_date" id="due_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->due_date }}">
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-2">
                         <label for="name" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" required="required" v-model="status" data-status="{{ $invoice->status }}">
@@ -131,8 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row" v-show="status == 'paid'">
+                <div class="form-row mb-4" v-show="status == 'paid'">
                     <div class="form-group col-md-3">
                         <label for="bank_charges">Bank charges on fund transfer</label>
                         <div class="input-group">
@@ -186,8 +180,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row" v-if="status == 'paid'">
+                <div class="form-row mb-2" v-if="status == 'paid'">
                     <div class="form-group col-md-5">
                         <label for="payment_type" class="field-required">Payment type</label>
                         <select name="payment_type" id="payment_type" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ $invoice->payment_type }}">
@@ -199,17 +192,14 @@
                                 <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
                             @endforeach
                         </select>
-<<<<<<< HEAD
                     </div> 
                     <div class="form-group offset-md-1 col-md-3 cheque-status" v-show="paymentType == 'cheque'">
                         <label for="cheque_status">Cheque status</label>
                         <select name="cheque_status" id="cheque_status" class="form-control" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
-=======
                     </div>
                     <div class="form-group offset-md-1 col-md-3 cheque-status" v-if="paymentType == 'cheque'">
                         <label for="cheque_status" class="field-required">Cheque status</label>
                         <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
->>>>>>> 1376be7cc40b9cc23d77ba6a69f77bede60ea2ef
                             <option value="">Select cheque status</option>
                             @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
                                 <option value="{{ $cheque_status }}">{{ $display_name }}</option>
@@ -229,12 +219,12 @@
                         <input type="text" class="form-control date-field" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                     </div>
                 </div>     
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-5">
                     @if ($invoice->file_path)
                         <label class="font-weight-bold">Invoice File</label>
                         <div>
-                            <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
+                            <a href="{{ route('download', ['year' => 'year', 'month' => 'month', 'file' => 'file']) }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
                         </div>
                     @else
                         <label for="invoice_file" class="field-required">Upload Invoice</label>
@@ -242,14 +232,12 @@
                     @endif
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-5">
                         <label for="comments">Comments</label>
                         <textarea name="comments" id="comments" rows="5" class="form-control">{{ $invoice->comments }}</textarea>
                     </div>
                 </div>
-                <br>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
