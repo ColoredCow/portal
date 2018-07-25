@@ -18,9 +18,9 @@ class BookTest extends FeatureTest
     }
 
     /** @test */
-    public function an_authorized_user_can_see_books()
+    public function a_user_can_see_books()
     {
-        $this->signInAsSuperAdmin();
+        $this->signIn();
         $this->get(route('books.index'))
             ->assertStatus(Response::HTTP_OK);
     }
