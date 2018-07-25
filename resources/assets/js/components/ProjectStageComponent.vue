@@ -275,9 +275,9 @@
             },
             stageCostWithGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return this.inputStageCost ==='' ? parseFloat(0).toFixed(2)  : parseFloat(this.inputStageCost).toFixed(2);
+                    return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : parseFloat(this.inputStageCost).toFixed(2);
                 }
-                return this.inputStageCost === '' ? parseFloat(0).toFixed(2)  : (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2);
+                return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2);
             },
             gstAmount: function() {
                 if (this.clientCountryGstApplicable) {
@@ -294,9 +294,9 @@
             },
             stageCostWithoutGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return this.inputStageCost ==='' ? parseFloat(0).toFixed(2) : (this.inputStageCost - this.gstAmount).toFixed(2);
+                    return this.inputStageCost ==='' || this.inputStageCost == null ? parseFloat(0).toFixed(2) : (this.inputStageCost - this.gstAmount).toFixed(2);
                 }
-                return this.inputStageCost === '' ? parseFloat(0).toFixed(2) : parseFloat(this.inputStageCost).toFixed(2);
+                return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2) : parseFloat(this.inputStageCost).toFixed(2);
             },
         },
         methods: {
