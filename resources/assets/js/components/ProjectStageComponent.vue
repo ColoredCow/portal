@@ -250,7 +250,7 @@
     import ProjectStageBillingComponent from './ProjectStageBillingComponent.vue';
 
     export default {
-        props: ['stage', 'csrfToken', 'projectId', 'configs', 'client'],
+        props: ['stage', 'csrfToken', 'projectId', 'configs', 'client', 'stageRoute'],
         data() {
             return {
                 editMode: Object.keys(this.stage).length ? false : true,
@@ -309,8 +309,16 @@
                  end_date:this.stage.end_date,
                  type:this.stageType,
                  project_id:this.projectId,
-                  })
-                 let response = this.stage.id ? await axios.put('/project/stages/' + this.stage.id, formData) : await axios.post('/project/stages', formData);
+                  });
+
+                 let methodName = 'post';
+                 let url = this.stageRoute;
+                 if(this.stage.id){
+                    methodName = 'put';
+                    url = this.stageRoute +'/' + this.stage.id, formData;
+                 };
+
+                 let response = await axios({method: methodName, url: url, data:formData});
                  alert(response.data.status);
             },
             addBilling() {
