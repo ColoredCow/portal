@@ -36,7 +36,7 @@
                             </button>
                             <div class="dropdown-menu">
                                 @foreach ($monthsList as $month)
-                                <a class="dropdown-item" href="/finance/reports?type=monthly&year={{ $month['year'] }}&month={{ $month['id'] }}">{{ $month['name'] }}&nbsp;{{ $month['year'] }}</a>
+                                <a class="dropdown-item" href="{{ route('reports', ['type' => 'monthly', 'year' => 'year', 'month' => 'month']) }}">{{ $month['name'] }}&nbsp;{{ $month['year'] }}</a>
                                 @endforeach
                             </div>
                         </div>
