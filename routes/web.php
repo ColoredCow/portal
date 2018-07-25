@@ -114,7 +114,10 @@ Route::middleware('auth')->group(function () {
             Route::put('users/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
             Route::put('roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.update');
         });
-        Route::get('hr', 'HRController@index')->name('settings.hr');
+        Route::prefix('hr')->group(function () {
+            Route::get('/', 'HRController@index')->name('settings.hr');
+            Route::post('update', 'HRController@update');
+        });
     });
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
