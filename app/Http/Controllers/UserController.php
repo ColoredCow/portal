@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Setting\UpdateUserRolesRequest;
 use App\Services\GSuiteUserService;
 use App\User;
 
@@ -21,18 +20,5 @@ class UserController extends Controller
         ]);
 
         return redirect()->back();
-    }
-
-    public function update(UpdateUserRolesRequest $request, User $user)
-    {
-        $validatedData = $request->validated();
-        if (!isset($validatedData['roles'])) {
-            return response()->json([
-                'isUpdated' => false,
-            ]);
-        }
-        $roles = array_pluck($validatedData['roles'], 'id');
-        $isUpdated = $user->roles()->sync($roles);
-        return response()->json(['isUpdated' => $isUpdated]);
     }
 }

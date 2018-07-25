@@ -14,14 +14,17 @@ class PermissionController extends Controller
     public function index(String $module)
     {
         $attr = [];
-        if ($module === 'users') {
-            $attr['users'] = User::with('roles')->get();
-            $attr['roles'] = Role::all();
-            return view('settings.permissions.users')->with($attr);
+        switch ($module) {
+            case 'users':
+                $attr['users'] = User::with('roles')->get();
+                $attr['roles'] = Role::all();
+                break;
+            default:
+                $attr['roles'] = Role::with('permissions')->get();
+                $attr['permissions'] = Permission::all();
+                break;
         }
-        $attr['roles'] = Role::with('permissions')->get();
-        $attr['permissions'] = Permission::all();
-        return view('settings.permissions.roles')->with($attr);
+        return view('settings.permissions.' . $module)->with($attr);
     }
 
     public function updateUserRoles(UpdateUserRolesRequest $request)
