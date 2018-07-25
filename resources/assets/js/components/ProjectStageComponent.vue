@@ -55,7 +55,7 @@
                         <div class="col-md-6">
                             <div class="form-row">
                                 <div class="form-group col-md-8">
-                                    <label for="name">Type</label>
+                                    <label for="name" class="field-required">Type</label>
                                     <select name="type" id="type" class="form-control" required="required" v-model="stageType">
                                         <option v-for="(displayName, type) in configs.projectTypes" :value="type">
                                             {{ displayName }}
@@ -299,18 +299,19 @@
         },
         methods: {
             async storeStages(){
-                 let route = this.stage.id ? '/project/stages/' + this.stage.id : '/project/stages';
                  this.editMode=false;
-                let response = await axios.patch(route, {name:this.stage.name,
+                 let formData = ({
+                 name:this.stage.name,
                  cost:this.inputStageCost,
                  currency_cost:this.inputStageCurrency,
                  cost_include_gst:this.inputStageCostIncludeGst,
                  start_date:this.stage.start_date,
                  end_date:this.stage.end_date,
-                 type:this.stage.type,
+                 type:this.stageType,
                  project_id:this.projectId,
-                  });
-                alert(response.data.status);
+                  })
+                 let response = this.stage.id ? await axios.put('/project/stages/' + this.stage.id, formData) : await axios.post('/project/stages', formData);
+                 alert(response.data.status);
             },
             addBilling() {
                 this.stageBillings.push({
