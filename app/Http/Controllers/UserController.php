@@ -10,11 +10,11 @@ class UserController extends Controller
 {
     public function syncWithGSuite()
     {
-        $user = auth()->user();
+        $users[] = auth()->user();
         $gsuiteUser = new GSuiteUserService();
-        $gsuiteUser->fetch($user->email);
-        $gsuiteUser = $gsuiteUser->getUsers();
-        $this->updateGsuiteUser($user, $gsuiteUser);
+        $gsuiteUser->fetch($users[0]->email);
+        $gsuiteUsers = $gsuiteUser->getUsers();
+        $this->updateGsuiteUser($users, $gsuiteUsers);
         return redirect()->back();
     }
 
@@ -25,21 +25,20 @@ class UserController extends Controller
             $gsuiteUser = new GSuiteUserService();
             $gsuiteUser->usersFetchByAdmin($users[0]->email);
             $gsuiteUsers = $gsuiteUser->getUsers();
-
-            foreach ($gsuiteUsers as $key => $gsuiteUser) {
-                $this->updateGsuiteUser($users[$key], $gsuiteUser);
-            }
+            $this->updateGsuiteUser($users, $gsuiteUsers);
             return redirect()->back();
         }
         abort(403);
     }
 
-    public function updateGsuiteUser($currentUser, $gsuiteUser)
+    public function updateGsuiteUser($currentUser, $gsuiteUsers)
     {
-        $currentUser->employee->update([
-            'name' => $gsuiteUser->getName()->fullName,
-            'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
-            'designation' => $gsuiteUser->getOrganizations()[0]['title'],
-        ]);
+        foreach ($gsuiteUsers as $key => $gsuiteUser) {
+            $currentUser[$key]->employee->update([
+                'name' => $gsuiteUser->getName()->fullName,
+                'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
+                'designation' => $gsuiteUser->getOrganizations()[0]['title'],
+            ]);
+        }
     }
 }

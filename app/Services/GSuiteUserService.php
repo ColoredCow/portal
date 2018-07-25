@@ -32,7 +32,7 @@ class GSuiteUserService
 
     public function fetch($email)
     {
-        $user = $this->service->users->get($email);
+        $user[] = $this->service->users->get($email);
         $this->setUsers($user);
     }
     public function usersFetchByAdmin($email)
