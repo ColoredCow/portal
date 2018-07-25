@@ -48,8 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-2">
                     <div class="form-group col-md-5">
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" value="{{ $client->phone }}">
@@ -68,8 +67,7 @@
                         <input type="text" class="form-control" name="gst_num" id="gst_num" placeholder="GST Number" value="{{ $client->gst_num }}">
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-2">
                     <div class="form-group col-md-12">
                         <label for="address">Address</label>
                         <textarea name="address" id="address" rows="5" class="form-control" placeholder="Address">{{ $client->address }}</textarea>
