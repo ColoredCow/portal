@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-class ProjectsTest extends FeatureTest
+class ProjectTest extends FeatureTest
 {
     /** @test */
     public function an_authorised_user_can_see_projects()
     {
-        $this->anAuthorizedUser();
+        $this->signInAsSuperAdmin();
         $this->get(route('projects'))
             ->assertStatus(200);
     }
@@ -31,7 +31,7 @@ class ProjectsTest extends FeatureTest
     /** @test */
     public function an_authorised_user_can_create_a_project()
     {
-        $this->anAuthorizedUser();
+        $this->signInAsSuperAdmin();
         $project = make('App\Models\Project');
         $response = $this->post(route('projects.store'), $project->toArray());
         $this->get($response->headers->get('Location'))
@@ -41,7 +41,7 @@ class ProjectsTest extends FeatureTest
     /** @test */
     public function an_authorised_user_can_update_a_project()
     {
-        $this->anAuthorizedUser();
+        $this->signInAsSuperAdmin();
         $project = create('App\Models\Project');
         $this->get(route('projects.edit', $project->id))
             ->assertSee($project->name);

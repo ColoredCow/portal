@@ -2,11 +2,12 @@
 
 namespace Tests\Feature\KnowledgeCafe\Library;
 
-use Tests\Feature\FeatureTest;
 use App\Models\KnowledgeCafe\Library\Book;
-use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Feature\FeatureTest;
 
 class BookTest extends FeatureTest
 {
@@ -25,10 +26,9 @@ class BookTest extends FeatureTest
     }
 
     /** @test */
-    public function an_unauthorized_user_cant_see_books()
+    public function a_guest_cant_see_books()
     {
-        $this->expectException(AuthorizationException::class);
-        $this->signIn();
+        $this->expectException(AuthenticationException::class);
         $this->get(route('books.index'));
     }
 
@@ -83,7 +83,7 @@ class BookTest extends FeatureTest
     }
 
     /** @test */
-    public function an_user_can_add_the_book_to_wishlist()
+    public function a_user_can_add_the_book_to_wishlist()
     {
         $this->signIn();
         $book = create(Book::class);
@@ -92,7 +92,7 @@ class BookTest extends FeatureTest
     }
 
     /** @test */
-    public function an_user_can_mark_book_as_read()
+    public function a_user_can_mark_book_as_read()
     {
         $this->signIn();
         $book = create(Book::class);
