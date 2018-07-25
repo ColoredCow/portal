@@ -315,7 +315,7 @@
                  let url = this.stageRoute;
                  if(this.stage.id){
                     methodName = 'put';
-                    url = this.stageRoute +'/' + this.stage.id, formData;
+                    url = this.stageRoute +'/' + this.stage.id;
                  };
 
                  let response = await axios({method: methodName, url: url, data:formData});
