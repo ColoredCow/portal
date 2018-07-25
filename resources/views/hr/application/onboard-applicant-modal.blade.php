@@ -1,9 +1,9 @@
-<div class="modal fade" id="approve_applicant" tabindex="-1" role="dialog" aria-labelledby="approve_applicant" aria-hidden="true" v-if="selectedAction == 'approve'">
+<div class="modal fade" id="onboard_applicant" tabindex="-1" role="dialog" aria-labelledby="onboard_applicant" aria-hidden="true" v-if="selectedAction == 'onboard'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="d-block">
-                    <h5 class="modal-title">Approve</h5>
+                    <h5 class="modal-title">Onboard</h5>
                     <h6 class="text-secondary">{{ $applicant->name }} &mdash; {{ $applicant->email }}</h6>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -26,9 +26,15 @@
                         <input type="password" class="form-control" name="onboard_password" id="onboard_password" required="required" autocomplete="off">
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="designation">Designation</label>
+                        <input type="text" class="form-control" name="designation" id="designation" required="required">
+                    </div>
+                </div>
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">
-                        <button type="button" class="btn btn-success px-4 round-submit" data-action="approve">Confirm</button>
+                        <button type="button" class="btn btn-success px-4 round-submit" data-action="onboard">Confirm</button>
                     </div>
                 </div>
             </div>

@@ -117,6 +117,9 @@ class Application extends Model
             case config('constants.hr.status.approved.label'):
                 $query->approved();
                 break;
+            case config('constants.hr.status.onboarded.label'):
+                $query->onboarded();
+                break;
             default:
                 $query->isOpen();
                 break;
@@ -188,6 +191,11 @@ class Application extends Model
         return $query->where('status', config('constants.hr.status.approved.label'));
     }
 
+    public function scopeOnboarded($query)
+    {
+        return $query->where('status', config('constants.hr.status.onboarded.label'));
+    }
+
     /**
      * get applications where status is new and in-progress
      */
@@ -237,6 +245,11 @@ class Application extends Model
     public function approve()
     {
         $this->update(['status' => config('constants.hr.status.approved.label')]);
+    }
+
+    public function onboarded()
+    {
+        $this->update(['status' => config('constants.hr.status.onboarded.label')]);
     }
 
     /**

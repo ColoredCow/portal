@@ -89,6 +89,16 @@
                 @endif
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.onboarded.label') ? 'active bg-info text-white' : 'text-info' }}" href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{request()->has('search')? "&search=".request('search'):"" }}><i class="fa fa-certificate"></i>&nbsp;
+                    Onboard
+                @if(request()->has('search'))
+                    <span class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.onbaorded.label') ? 'active bg-white text-info' : 'text-white' }}" style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+                        {{$onboardedApplicationsCount}}
+                    </span>
+                @endif
+                </a>
+            </li>
         </ul>
         @if( isset($openJobsCount, $openApplicationsCount) )
         <div class="alert alert-info mb-2 p-2">
