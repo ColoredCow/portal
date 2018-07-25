@@ -16,7 +16,6 @@
                    config("constants.hr.status. {request('status')}.lable")
                 @endswitch>
 
-
         <input type="text" name="search" class="form-control" id="search" placeholder="Search Applicants" value=@if(request()->has('search')){{request()->get('search')}}
                    @endif>
 
