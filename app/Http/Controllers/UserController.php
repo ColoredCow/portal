@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetch(auth()->user()->email);
-        $this->updateGsuiteUsers($gsuiteUserService->getUsers());
+        $this->updateEmployeeDetailsFromGSuite($gsuiteUserService->getUsers());
         return redirect()->back();
     }
 
@@ -24,21 +24,22 @@ class UserController extends Controller
 
         $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetchAll();
-        $this->updateGsuiteUsers($gsuiteUserService->getUsers());
+        $this->updateEmployeeDetailsFromGSuite($gsuiteUserService->getUsers());
         return redirect()->back();
     }
 
-    public function updateGsuiteUsers(array $gsuiteUsers)
+    public function updateEmployeeDetailsFromGSuite(array $gsuiteUsers)
     {
         foreach ($gsuiteUsers as $key => $gsuiteUser) {
-            $user = User::with('employee')->where('email', $gsuiteUser->getPrimaryEmail())->first();
-            if (!is_null($user)) {
-                $user->employee->update([
-                    'name' => $gsuiteUser->getName()->fullName,
-                    'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
-                    'designation' => $gsuiteUser->getOrganizations()[0]['title'],
-                ]);
+            $user = User::with('employee')->findByEmail($gsuiteUser->getPrimaryEmail())->first();
+            if (is_null($user)) {
+                continue;
             }
+            $user->employee->update([
+                'name' => $gsuiteUser->getName()->fullName,
+                'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
+                'designation' => $gsuiteUser->getOrganizations()[0]['title'],
+            ]);
         }
     }
 }
