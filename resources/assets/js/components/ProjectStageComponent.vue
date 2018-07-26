@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="card mt-4">
-            <form :action="stage.id ? '/project/stages/' + stage.id : '/project/stages'" method="POST">
                 <input v-if="stage.id" type="hidden" name="_method" value="PATCH">
                 <input type="hidden" name="_token" :value="csrfToken">
                 <input type="hidden" name="project_id" :value="projectId">
@@ -14,7 +13,7 @@
                         </div>
                     </div>
                     <div class="card-edit icon-pencil" @click="editMode = !editMode" v-show="!editMode"><i class="fa fa-pencil"></i></div>
-                    <button type="submit" class="btn btn-primary card-edit" v-show="editMode">{{ stage.id ? 'Update' : 'Create' }}</button>
+                    <button class="btn btn-primary card-edit" @click="storeStages" v-show="editMode">{{ stage.id ? 'Update' : 'Create' }}</button>
                 </div>
                 <div class="card-body" v-show="editMode">
                     <div class="row">
@@ -56,7 +55,7 @@
                         <div class="col-md-6">
                             <div class="form-row">
                                 <div class="form-group col-md-8">
-                                    <label for="name">Type</label>
+                                    <label for="name" class="field-required">Type</label>
                                     <select name="type" id="type" class="form-control" required="required" v-model="stageType">
                                         <option v-for="(displayName, type) in configs.projectTypes" :value="type">
                                             {{ displayName }}
@@ -104,7 +103,6 @@
                     </table>
                 <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
                 </div>
-            </form>
 
             <div id="new_billing_invoice_modal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -252,11 +250,11 @@
     import ProjectStageBillingComponent from './ProjectStageBillingComponent.vue';
 
     export default {
-        props: ['stage', 'csrfToken', 'projectId', 'configs', 'client'],
+        props: ['stage', 'csrfToken', 'projectId', 'configs', 'client', 'stageRoute'],
         data() {
             return {
                 editMode: Object.keys(this.stage).length ? false : true,
-                inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : 0,
+                inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : null,
                 inputStageCurrency: this.stage.hasOwnProperty('currency_cost') ? this.stage.currency_cost : this.configs.countries[this.client.country].currency,
                 inputStageCostIncludeGst: this.stage.hasOwnProperty('cost_include_gst') ? this.stage.cost_include_gst : false,
                 stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
@@ -279,9 +277,9 @@
             },
             stageCostWithGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return parseFloat(this.inputStageCost).toFixed(2) || 0;
+                    return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : parseFloat(this.inputStageCost).toFixed(2);
                 }
-                return (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2) || 0;
+                return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2);
             },
             gstAmount: function() {
                 if (this.clientCountryGstApplicable) {
@@ -298,15 +296,38 @@
             },
             stageCostWithoutGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return (this.inputStageCost - this.gstAmount).toFixed(2);
+                    return this.inputStageCost ==='' || this.inputStageCost == null ? parseFloat(0).toFixed(2) : (this.inputStageCost - this.gstAmount).toFixed(2);
                 }
-                return parseFloat(this.inputStageCost).toFixed(2);
+                return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2) : parseFloat(this.inputStageCost).toFixed(2);
             },
         },
         methods: {
+            async storeStages(){
+                 this.editMode=false;
+                 let formData = ({
+                 name:this.stage.name,
+                 cost:this.inputStageCost,
+                 currency_cost:this.inputStageCurrency,
+                 cost_include_gst:this.inputStageCostIncludeGst,
+                 start_date:this.stage.start_date,
+                 end_date:this.stage.end_date,
+                 type:this.stageType,
+                 project_id:this.projectId,
+                  });
+
+                 let methodName = 'post';
+                 let url = this.stageRoute;
+                 if(this.stage.id){
+                    methodName = 'put';
+                    url = this.stageRoute +'/' + this.stage.id;
+                 };
+
+                 let response = await axios({method: methodName, url: url, data:formData});
+                 alert(response.data.status);
+            },
             addBilling() {
                 this.stageBillings.push({
-                    'percentage': 0,
+                    'percentage': null,
                     'isNew' : true
                 });
             },

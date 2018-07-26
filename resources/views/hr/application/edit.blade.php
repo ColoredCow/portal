@@ -202,6 +202,7 @@
                                         <option v-for="round in applicationJobRounds" value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
                                         <option value="send-for-approval">Send for approval</option>
                                         <option value="approve">Approve</option>
+                                        <option value="onboard">Onboard</option>
                                     </select>
                                     <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
                                 @endif
