@@ -73,9 +73,14 @@ class ApplicationRound extends Model
                 $application->sendForApproval($attr['send_for_approval_person']);
                 break;
 
+            case 'approve':
+                $fillable['round_status'] = 'approved';
+                $application->approve();
+                break;
+
             case 'onboard':
                 $fillable['round_status'] = 'confirmed';
-                $application->approve();
+                $application->onboarded();
                 // The below env call needs to be changed to config after the default
                 // credentials bug in the Google API services is resolved.
                 $email = $attr['onboard_email'] . '@' . env('GOOGLE_CLIENT_HD');

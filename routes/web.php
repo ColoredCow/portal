@@ -28,6 +28,7 @@ Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallb
 Route::middleware('auth')->group(function () {
     Route::prefix('profile')->group(function () {
         Route::get('gsuite-sync', 'UserController@syncWithGSuite')->name('profile.gsuite-sync');
+        Route::get('gsuite-sync-all', 'UserController@syncAllWithGSuite')->name('profile.gsuite-sync-all');
     });
 
     Route::prefix('hr')->namespace('HR')->group(function () {
@@ -102,12 +103,11 @@ Route::middleware('auth')->group(function () {
         ->except(['show', 'destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
-    Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
         Route::prefix('permissions')->group(function () {
-            Route::get('', function () {
+            Route::get('/', function () {
                 return redirect(route('permissions.module.index', ['module' => 'users']));
             })->name('settings.permissions');
             Route::get('{module}', 'PermissionController@index')->name('permissions.module.index');
@@ -119,6 +119,10 @@ Route::middleware('auth')->group(function () {
             Route::post('update', 'HRController@update');
         });
     });
+
+    Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update'])
+        ->names(['store' => 'project.stage',
+            'update' => 'project.stage.update']);
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index');
