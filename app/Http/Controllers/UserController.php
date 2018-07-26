@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function updateEmployeeDetailsFromGSuite(array $gsuiteUsers)
     {
-        foreach ($gsuiteUsers as $key => $gsuiteUser) {
+        foreach ($gsuiteUsers as $gsuiteUser) {
             $user = User::with('employee')->findByEmail($gsuiteUser->getPrimaryEmail())->first();
             if (is_null($user)) {
                 continue;
