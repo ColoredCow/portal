@@ -9,10 +9,10 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function signIn($role = 'employee')
+    protected function signIn($role = null)
     {
         $user = create(User::class);
-        $user->assignRole($role);
+        is_null($role) ?: $user->assignRole($role);
         $this->be($user);
         return $this;
     }

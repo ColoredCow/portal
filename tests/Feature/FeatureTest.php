@@ -19,4 +19,9 @@ abstract class FeatureTest extends TestCase
     {
         $this->signIn('super-admin');
     }
+
+    public function signInAsEmployee()
+    {
+        $this->signIn('employee');
+    }
 }
