@@ -1,9 +1,9 @@
-<div class="modal fade" id="onboard_applicant" tabindex="-1" role="dialog" aria-labelledby="onboard_applicant" aria-hidden="true" v-if="selectedAction == 'approve'">
+<div class="modal fade" id="onboard_applicant" tabindex="-1" role="dialog" aria-labelledby="onboard_applicant" aria-hidden="true" v-if="selectedAction == 'onboard'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="d-block">
-                    <h5 class="modal-title">Approve</h5>
+                    <h5 class="modal-title">Onboard</h5>
                     <h6 class="text-secondary">{{ $applicant->name }} &mdash; {{ $applicant->email }}</h6>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

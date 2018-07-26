@@ -114,6 +114,12 @@ class Application extends Model
             case config('constants.hr.status.sent-for-approval.label'):
                 $query->sentForApproval();
                 break;
+            case config('constants.hr.status.approved.label'):
+                $query->approved();
+                break;
+            case config('constants.hr.status.onboarded.label'):
+                $query->onboarded();
+                break;
             default:
                 $query->isOpen();
                 break;
@@ -177,10 +183,17 @@ class Application extends Model
      */
     public function scopeClosed($query)
     {
-        return $query->whereIn('status', [
-            config('constants.hr.status.rejected.label'),
-            config('constants.hr.status.approved.label'),
-        ]);
+        return $query->where('status', config('constants.hr.status.rejected.label'));
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', config('constants.hr.status.approved.label'));
+    }
+
+    public function scopeOnboarded($query)
+    {
+        return $query->where('status', config('constants.hr.status.onboarded.label'));
     }
 
     /**
@@ -232,6 +245,11 @@ class Application extends Model
     public function approve()
     {
         $this->update(['status' => config('constants.hr.status.approved.label')]);
+    }
+
+    public function onboarded()
+    {
+        $this->update(['status' => config('constants.hr.status.onboarded.label')]);
     }
 
     /**
