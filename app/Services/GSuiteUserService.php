@@ -38,8 +38,7 @@ class GSuiteUserService
     public function fetchAll()
     {
         $optParams = [
-            'customer' => 'my_customer',
-            'pageToken' => null,
+            'domain' => config('constants.gsuite.client-hd'),
         ];
         $users = $this->service->users->listUsers($optParams)->getUsers();
         $this->setUsers($users);
