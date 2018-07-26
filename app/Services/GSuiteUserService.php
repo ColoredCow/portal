@@ -16,7 +16,7 @@ class GSuiteUserService
     protected $name;
     protected $joinedOn;
     protected $designation;
-    protected $user;
+    protected $users;
 
     public function __construct()
     {
@@ -32,15 +32,16 @@ class GSuiteUserService
 
     public function fetch($email)
     {
-        $user[] = $this->service->users->get($email);
-        $this->setUsers($user);
+        $this->setUsers([$this->service->users->get($email)]);
     }
-    public function usersFetchByAdmin($email)
+
+    public function fetchAll()
     {
-        //to get ther domain of the organization
-        $route = url()->current();
-        $url = rtrim(ltrim($route, 'https://'), '/profile/gsuite-sync');
-        $users = $this->service->users->listusers(['domain' => $url])->users;
+        $optParams = array(
+            'customer' => 'my_customer',
+            'pageToken' => null,
+        );
+        $users = $this->service->users->listUsers($optParams)->getUsers();
         $this->setUsers($users);
     }
 
@@ -111,13 +112,14 @@ class GSuiteUserService
     {
         return $this->designation;
     }
+
     public function setUsers($users)
     {
-        $this->user = $users;
+        $this->users = $users;
     }
 
     public function getUsers()
     {
-        return $this->user;
+        return $this->users;
     }
 }

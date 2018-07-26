@@ -114,7 +114,7 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>
                                     @if(auth()->user()->isSuperAdmin())
-                                    <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all profile</a>
+                                    <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all users</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
