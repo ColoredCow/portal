@@ -26,7 +26,7 @@ class RoundReviewed extends Mailable
     public function __construct(ApplicationRound $applicationRound)
     {
         $this->applicationRound = $applicationRound;
-        $this->mailBody = $this->applicationRound->mail_body;
+        // $this->mailBody = $this->applicationRound->mail_body;
     }
 
     /**
@@ -43,8 +43,6 @@ class RoundReviewed extends Mailable
             ->bcc(config('constants.hr.default.email'))
             ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject($this->applicationRound->mail_subject)
-            ->view('mail.hr.calendar-link', ['applications' => $this->applicationRound])->with([
-            'body' => $this->mailBody,
-        ]);
+            ->view('mail.hr.calendar-link', ['applications' => $this->applicationRound]);
     }
 }

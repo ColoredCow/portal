@@ -1,5 +1,5 @@
 <div>
-{!! $body !!}
+{!! $applications->mail_body !!}
     <div>
     <ul>
         @if($applications->calendar_event != Null)
