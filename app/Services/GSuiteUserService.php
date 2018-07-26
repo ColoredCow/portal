@@ -37,10 +37,10 @@ class GSuiteUserService
 
     public function fetchAll()
     {
-        $optParams = array(
+        $optParams = [
             'customer' => 'my_customer',
             'pageToken' => null,
-        );
+        ];
         $users = $this->service->users->listUsers($optParams)->getUsers();
         $this->setUsers($users);
     }
@@ -113,7 +113,7 @@ class GSuiteUserService
         return $this->designation;
     }
 
-    public function setUsers($users)
+    public function setUsers(array $users)
     {
         $this->users = $users;
     }
