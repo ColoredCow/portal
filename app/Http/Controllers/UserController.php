@@ -10,6 +10,8 @@ class UserController extends Controller
 {
     public function syncWithGSuite()
     {
+        $this->authorize('syncWithGSuite', self::class);
+
         $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetch(auth()->user()->email);
         $this->updateEmployeeDetailsFromGSuite($gsuiteUserService->getUsers());
@@ -18,9 +20,7 @@ class UserController extends Controller
 
     public function syncAllWithGSuite()
     {
-        if (!auth()->user()->isSuperAdmin()) {
-            abort(403);
-        }
+        $this->authorize('syncAllWithGSuite', self::class);
 
         $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetchAll();

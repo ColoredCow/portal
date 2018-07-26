@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\KnowledgeCafe\Library\BookCategory' => 'App\Policies\KnowledgeCafe\Library\BookCategoryPolicy',
         'App\Models\Setting' => 'App\Policies\SettingPolicy',
         'App\Http\Controllers\Finance\ReportsController' => 'App\Policies\Finance\ReportPolicy',
+        'App\Http\Controllers\UserController' => 'App\Policies\UserPolicy',
 
     ];
 
