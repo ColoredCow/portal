@@ -256,7 +256,7 @@
         data() {
             return {
                 editMode: Object.keys(this.stage).length ? false : true,
-                inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : 0,
+                inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : null,
                 inputStageCurrency: this.stage.hasOwnProperty('currency_cost') ? this.stage.currency_cost : this.configs.countries[this.client.country].currency,
                 inputStageCostIncludeGst: this.stage.hasOwnProperty('cost_include_gst') ? this.stage.cost_include_gst : false,
                 stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
@@ -279,9 +279,9 @@
             },
             stageCostWithGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return parseFloat(this.inputStageCost).toFixed(2) || 0;
+                    return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : parseFloat(this.inputStageCost).toFixed(2);
                 }
-                return (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2) || 0;
+                return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2);
             },
             gstAmount: function() {
                 if (this.clientCountryGstApplicable) {
@@ -298,15 +298,15 @@
             },
             stageCostWithoutGst: function() {
                 if (this.inputStageCostIncludeGst) {
-                    return (this.inputStageCost - this.gstAmount).toFixed(2);
+                    return this.inputStageCost ==='' || this.inputStageCost == null ? parseFloat(0).toFixed(2) : (this.inputStageCost - this.gstAmount).toFixed(2);
                 }
-                return parseFloat(this.inputStageCost).toFixed(2);
+                return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2) : parseFloat(this.inputStageCost).toFixed(2);
             },
         },
         methods: {
             addBilling() {
                 this.stageBillings.push({
-                    'percentage': 0,
+                    'percentage': null,
                     'isNew' : true
                 });
             },
