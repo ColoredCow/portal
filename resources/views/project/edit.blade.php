@@ -85,6 +85,7 @@
             :client="{{ json_encode($project->client) }}"
             :csrf-token="{{ json_encode(csrf_token()) }}"
             :project-id="{{ $project->id }}"
+            :stage-route="{{json_encode( route('project.stage'))}}"
             ref="projectStage">
             </project-stage-component>
         @endforeach
@@ -92,6 +93,7 @@
     <project-stage-component
     v-show="newStage"
     :stage="[]"
+    :stage-route="{{json_encode( route('project.stage'))}}"
     :csrf-token="{{ json_encode(csrf_token()) }}"
     :project-id="{{ $project->id }}"
     :client="{{ json_encode($project->client) }}"

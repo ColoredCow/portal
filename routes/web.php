@@ -102,7 +102,9 @@ Route::middleware('auth')->group(function () {
         ->except(['show', 'destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
-    Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update']);
+    Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update'])
+        ->names(['store' => 'project.stage',
+            'update' => 'project.stage.update']);
     Route::get('settings/{module}', 'SettingController@index');
     Route::post('settings/{module}/update', 'SettingController@update');
 
