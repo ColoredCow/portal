@@ -3,8 +3,6 @@
 @section('content')
 <div class="container">
     <br>
-    @include('settings.menu', ['active' => 'hr'])
-    <br><br>
     <h1>Mail Templates</h1>
     <br>
     @include('status', ['errors' => $errors->all()])
