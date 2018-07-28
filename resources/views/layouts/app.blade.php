@@ -86,7 +86,7 @@
                         @endif
                         @can('settings.view')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/settings/hr') }}">Settings</a>
+                            <a class="nav-link" href="{{ route('settings.index') }}">Settings</a>
                         </li>
                         @endcan
                     </ul>
@@ -112,7 +112,12 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>
+                                    @if(auth()->user()->provider == 'google')
+                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync') }}">Sync my profile</a>
+                                    @endif
+                                    @if(auth()->user()->isSuperAdmin())
+                                        <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all users</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
