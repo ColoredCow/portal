@@ -99,4 +99,25 @@ class BookTest extends FeatureTest
         $this->post(route('books.toggleReadStatus'), ['book_id' => $book->id, 'is_read' => true]);
         $this->assertTrue($book->readers->contains(auth()->user()));
     }
+
+    /** @test */
+    public function a_book_can_have_multiple_copies()
+    {
+        $book_copies = rand(1, 10);
+        $this->signInAsSuperAdmin();
+        $this->post(route('books.store'), ['title' => 'Test Book', 'number_of_copies' => $book_copies]);
+        $book = Book::whereTitle('Test Book')->first();
+        $this->assertTrue($book->number_of_copies == $book_copies);
+    }
+
+    /** @test */
+    public function an_authorized_user_can_update_number_of_copies()
+    {
+        $updated_book_copies = rand(1, 10);
+        $this->signInAsSuperAdmin();
+        $book = create(Book::class, ['title' => 'Test Book']);
+        $this->put(route('books.update', ['book' => $book->id]), ['number_of_copies' => $updated_book_copies]);
+        $book = Book::whereTitle('Test Book')->first();
+        $this->assertTrue($book->number_of_copies == $updated_book_copies);
+    }
 }
