@@ -63,6 +63,30 @@ class CalendarEventService
         $this->setEndDateTime($event->end->dateTime, $event->end->timeZone);
         $this->id = $eventId;
     }
+    public function update($eventId, $applicationRound, $calendarId = 'primary')
+    {
+        $event = $this->service->events->get($calendarId, $eventId);
+
+        $this->setStartDateTime($applicationRound->scheduled_date, $event->start->timeZone);
+        $getUtcTime = $this->getStartDateTime($event->start->timeZone);
+        $this->startDateTime['dateTime'] = Carbon::parse($getUtcTime['dateTime'])->format(config('constants.calendar_datetime_format'));
+
+        $this->setEndDateTime($applicationRound->scheduled_date, $event->start->timeZone);
+        $getUtcTime = $this->getEndDateTime($event->start->timeZone);
+        $this->endDateTime['dateTime'] = Carbon::parse($getUtcTime['dateTime'])->format(config('constants.calendar_datetime_format'));
+
+        $eventDate = new Google_Service_Calendar_Event([
+            'start' => $this->startDateTime,
+            'end' => $this->endDateTime,
+        ]);
+
+        $event->setStart($eventDate->start);
+        $event->setEnd($eventDate->end);
+
+        $updatedEvent = $this->service->events->update('primary', $event->getId(), $event);
+        dd($updatedEvent);
+
+    }
 
     public function getHangoutLink()
     {
@@ -137,7 +161,7 @@ class CalendarEventService
 
     public function getStartDateTime($withTimeZone = false)
     {
-        return self::getDateTime($this->startDateTime);
+        return self::getDateTime($this->startDateTime, $withTimeZone);
     }
 
     public function setStartDateTime($dateTime, $timeZone = null)
@@ -147,7 +171,7 @@ class CalendarEventService
 
     public function getEndDateTime($timeZone = false)
     {
-        return self::getDateTime($this->endDateTime);
+        return self::getDateTime($this->endDateTime, $timeZone);
     }
 
     public function setEndDateTime($dateTime, $timeZone = null)
