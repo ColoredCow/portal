@@ -23,7 +23,6 @@ class ApplicationRoundObserver
 
         if (request()->get('create_calendar_event')) {
             self::createCalendarEvent($applicationRound);
-
         }
     }
 
