@@ -60,15 +60,7 @@ class ApplicationRoundObserver
     public function scheduleUpdate(ApplicationRound $applicationRound)
     {
         $applicant = $applicationRound->application->applicant;
-        // dd($applicationRound);
-        // dd($applicationRound->calendar_event);
-        // dd($applicationRound);
         $event = new CalendarEventService;
-        // dd($event);
         $event->update($applicationRound->calendar_event, $applicationRound);
-        dd($event);
-        // $event = Event::find($applicationRound->calendar_event);
-        $event->start = $applicationRound->scheduled_date;
-        $event->save();
     }
 }

@@ -66,7 +66,6 @@ class CalendarEventService
     public function update($eventId, $applicationRound, $calendarId = 'primary')
     {
         $event = $this->service->events->get($calendarId, $eventId);
-
         $this->setStartDateTime($applicationRound->scheduled_date, $event->start->timeZone);
         $getUtcTime = $this->getStartDateTime($event->start->timeZone);
         $this->startDateTime['dateTime'] = Carbon::parse($getUtcTime['dateTime'])->format(config('constants.calendar_datetime_format'));
@@ -84,8 +83,7 @@ class CalendarEventService
         $event->setEnd($eventDate->end);
 
         $updatedEvent = $this->service->events->update('primary', $event->getId(), $event);
-        dd($updatedEvent);
-
+        $event->save();
     }
 
     public function getHangoutLink()
