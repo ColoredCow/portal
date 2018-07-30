@@ -66,13 +66,14 @@ class CalendarEventService
     public function update($eventId, $applicationRound, $calendarId = 'primary')
     {
         $event = $this->service->events->get($calendarId, $eventId);
-        $this->setStartDateTime($applicationRound->scheduled_date, $event->start->timeZone);
-        $getUtcTime = $this->getStartDateTime($event->start->timeZone);
-        $this->startDateTime['dateTime'] = Carbon::parse($getUtcTime['dateTime'])->format(config('constants.calendar_datetime_format'));
 
-        $this->setEndDateTime($applicationRound->scheduled_date, $event->start->timeZone);
-        $getUtcTime = $this->getEndDateTime($event->start->timeZone);
-        $this->endDateTime['dateTime'] = Carbon::parse($getUtcTime['dateTime'])->format(config('constants.calendar_datetime_format'));
+        $this->setStartDateTime($applicationRound->scheduled_date, $event->start->timeZone);
+        $startTime = $this->getStartDateTime($event->start->timeZone);
+        $this->startDateTime['dateTime'] = Carbon::parse($startTime['dateTime'])->format(config('constants.calendar_datetime_format'));
+
+        $cenvertedTime = date('Y-m-d H:i:s', strtotime('+30 minutes', strtotime(date($applicationRound->scheduled_date))));
+        $this->endDateTime = $this->startDateTime;
+        $this->endDateTime['dateTime'] = Carbon::parse($cenvertedTime)->format(config('constants.calendar_datetime_format'));
 
         $eventDate = new Google_Service_Calendar_Event([
             'start' => $this->startDateTime,
