@@ -58,7 +58,8 @@
                                 </a>
                                 <ul class="dropdown-menu ">
                                     <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item">Update Category</li>
-                                    <li @click="deleteBook(index)" class="dropdown-item text-danger">Delete</li>
+                                    <li @click="updateCopiesCount(index)" class="dropdown-item">Copies Available</li>
+                                    <li @click="deleteBook(index)" data-toggle="modal" data-target="#update_copies_count_modal" class="dropdown-item text-danger">Delete</li>
                                 </ul>
                             </div>
                         </div>
