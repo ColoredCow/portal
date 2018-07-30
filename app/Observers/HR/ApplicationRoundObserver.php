@@ -56,8 +56,8 @@ class ApplicationRoundObserver
         if (request()->action == "schedule-update") {
             self::updateCalendarEventSchedule($applicationRound);
         }
-
     }
+
     public function updateCalendarEventSchedule(ApplicationRound $applicationRound)
     {
         $applicant = $applicationRound->application->applicant;
