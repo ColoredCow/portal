@@ -109,15 +109,4 @@ class BookTest extends FeatureTest
         $book = Book::whereTitle('Test Book')->first();
         $this->assertTrue($book->number_of_copies == $book_copies);
     }
-
-    /** @test */
-    public function an_authorized_user_can_update_number_of_copies()
-    {
-        $updated_book_copies = rand(1, 10);
-        $this->signInAsSuperAdmin();
-        $book = create(Book::class, ['title' => 'Test Book']);
-        $this->put(route('books.update', ['book' => $book->id]), ['number_of_copies' => $updated_book_copies]);
-        $book = Book::whereTitle('Test Book')->first();
-        $this->assertTrue($book->number_of_copies == $updated_book_copies);
-    }
 }
