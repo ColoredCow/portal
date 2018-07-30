@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -340,6 +339,7 @@ if (document.getElementById('show_and_save_book')) {
             addMethod: 'from_image',
             showInfo: false,
             book: {},
+            number_of_copies: 1,
             routes: {
                 index: document.getElementById('show_book').dataset.indexRoute || '',
                 fetch: document.getElementById('book_form').dataset.actionRoute || '',
@@ -403,7 +403,7 @@ if (document.getElementById('show_and_save_book')) {
                     alert("Error in saving records");
                 }
                 this.buttons.disableSaveButton = true;
-
+                this.book.number_of_copies = this.number_of_copies;
                 axios.post(this.routes.store, this.book ).then (
                 (response) => {
                     this.buttons.disableSaveButton = false;
@@ -441,11 +441,10 @@ if (document.getElementById('books_listing')) {
                     return false;
                 }
                 this.currentBookIndex = index;
-
                 this.categoryInputs.map((checkbox) => checkbox.checked = false );
                 categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
             },
-
+            
             updateCategory: function() {
                 let selectedCategory = [];
                 let bookID = this.books[this.currentBookIndex]['id'];

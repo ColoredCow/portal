@@ -45,7 +45,7 @@
                             </p>
                         </div>
                         <div class="col-6">
-                            <input type="number" size="2" v-model="number_of_copies" id="number_of_copies" placeholder="Number of copies">
+                            <input type="number" v-model="number_of_copies" id="number_of_copies" placeholder="Number of copies">
                         </div>
                     </div>
                 </div>
