@@ -224,7 +224,7 @@
                     @if ($invoice->file_path)
                         <label class="font-weight-bold">Invoice File</label>
                         <div>
-                            <a href="{{ route('download', ['year' => 'year', 'month' => 'month', 'file' => 'file']) }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
+                            <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
                         </div>
                     @else
                         <label for="invoice_file" class="field-required">Upload Invoice</label>
