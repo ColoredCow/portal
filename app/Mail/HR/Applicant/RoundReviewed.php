@@ -26,7 +26,6 @@ class RoundReviewed extends Mailable
     public function __construct(ApplicationRound $applicationRound)
     {
         $this->applicationRound = $applicationRound;
-        // $this->mailBody = $this->applicationRound->mail_body;
     }
 
     /**
@@ -37,7 +36,6 @@ class RoundReviewed extends Mailable
     public function build()
     {
         $application = $this->applicationRound->application;
-
         return $this->to($application->applicant->email, $application->applicant->name)
             ->bcc($application->job->posted_by)
             ->bcc(config('constants.hr.default.email'))
