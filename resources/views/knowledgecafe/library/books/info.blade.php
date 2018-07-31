@@ -38,14 +38,12 @@
                             @{{ book.categories }}
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <p>
-                                <label for="number_of_copies"><b>Copies available</b></label>
-                            </p>
+                    <div class="row d-flex align-items-center">
+                        <div class="col-3 pr-0 font-weight-bold">
+                            <label for="number_of_copies" class="mb-0">Copies available:</label>
                         </div>
                         <div class="col-6">
-                            <input type="number" v-model="number_of_copies" id="number_of_copies" placeholder="Number of copies">
+                            <input type="number" v-model="number_of_copies" class="form-control" id="number_of_copies" placeholder="Number of copies">
                         </div>
                     </div>
                 </div>
