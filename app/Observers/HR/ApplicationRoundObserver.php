@@ -20,6 +20,7 @@ class ApplicationRoundObserver
         if ($applicationRound->application->status != config('constants.hr.status.on-hold.label')) {
             SendApplicationRoundScheduled::dispatch($applicationRound);
         }
+
         if (request()->get('create_calendar_event')) {
             self::createCalendarEvent($applicationRound);
         }
