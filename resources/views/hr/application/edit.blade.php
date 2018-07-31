@@ -81,10 +81,6 @@
                                 @includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
                             </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <b>Reason for eligibility</b>
-                            <div>{{ $application->reason_for_eligibility ?? '-' }}</div>
-                        </div>
                         @if (isset($applicationFormDetails->value))
                             @foreach(json_decode($applicationFormDetails->value) as $field => $value)
                                 <div class="form-group col-md-12">

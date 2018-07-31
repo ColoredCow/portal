@@ -39,7 +39,6 @@ class ApplicantRequest extends FormRequest
                 'graduation_year' => 'nullable|numeric',
                 'course' => 'nullable|string',
                 'linkedin' => 'nullable|url',
-                'reason_for_eligibility' => 'nullable|string',
                 'form_data' => 'nullable|array',
             ];
         }
