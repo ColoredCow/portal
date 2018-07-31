@@ -23,7 +23,7 @@ class BookRequest extends FormRequest
      */
     public function rules()
     {
-        return  [
+        return [
             'add_method' => 'filled|string',
             'title' => 'filled|string',
             'author' => 'nullable|string',
@@ -31,7 +31,8 @@ class BookRequest extends FormRequest
             'categories' => 'nullable',
             'thumbnail' => 'filled|string',
             'isbn' => 'filled|string',
-            'self_link' => 'nullable|string'
+            'self_link' => 'nullable|string',
+            'number_of_copies' => 'nullable|integer|gte:1',
         ];
     }
 }
