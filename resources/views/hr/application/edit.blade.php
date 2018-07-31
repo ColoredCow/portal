@@ -6,12 +6,13 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            @include('hr.menu')
+            @includeWhen($type == 'volunteer', 'hr.volunteers.menu')
+            @includeWhen($type == 'recruitment', 'hr.menu')
             <br><br>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10">
             @include('status', ['errors' => $errors->all()])
         </div>
         <div class="col-md-3">
@@ -21,7 +22,15 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-inline float-left">Applicant Details</div>
-                    <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase float-right card-status-highlight">{{ config("constants.hr.status.$application->status.title") }}</div>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customApplicationMail">Send mail</button>
+                        @include('hr.custom-application-mail-modal', ['application' => $application])
+                        <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight">
+                            {{ config("constants.hr.status.$application->status.title") }}
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="card-body">
                     <div class="form-row">
@@ -120,7 +129,6 @@
                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                         </div>
                     </div>
-
                     <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
 
                         {{ csrf_field() }}
@@ -170,7 +178,19 @@
                                     </div>
                                 @endif
                             </div>
-                            @if (!$applicationRound->mail_sent)
+                            @php
+                                $showFooter = false;
+                                if ($loop->last) {
+                                    if ($applicationRound->application->status == config('constants.hr.status.sent-for-approval.label')) {
+                                        $showFooter = true;
+                                    } elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
+                                        $showFooter = true;
+                                    }
+                                } elseif (!$applicationRound->mail_sent) {
+                                    $showFooter = true;
+                                }
+                            @endphp
+                            @if ($showFooter)
                             <div class="card-footer">
                                 <div class="d-flex align-items-center">
                                 @if ($applicationRound->showActions)
@@ -178,6 +198,7 @@
                                         <option v-for="round in applicationJobRounds" value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
                                         <option value="send-for-approval">Send for approval</option>
                                         <option value="approve">Approve</option>
+                                        <option value="onboard">Onboard</option>
                                     </select>
                                     <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
                                 @endif

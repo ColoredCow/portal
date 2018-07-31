@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\HR;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SettingRequest extends FormRequest
+class CustomApplicationMailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'setting_key' => 'required|array',
+            'mail_action' => 'required|string',
+            'mail_subject' => 'required|string',
+            'mail_body' => 'required|string',
         ];
     }
 }

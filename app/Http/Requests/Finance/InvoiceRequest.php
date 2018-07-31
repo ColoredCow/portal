@@ -29,18 +29,18 @@ class InvoiceRequest extends FormRequest
             'sent_on' => 'required',
             'sent_amount' => 'required|numeric',
             'currency_sent_amount' => 'required|string|size:3',
-            'paid_on' => 'nullable',
-            'paid_amount' => 'nullable|numeric',
-            'payment_type' => 'nullable|string',
+            'paid_on' => 'nullable|required_if:status,paid',
+            'paid_amount' => 'nullable|numeric|required_if:status,paid',
+            'payment_type' => 'nullable|string|required_if:status,paid',
             'cheque_status' => 'nullable|string|required_if:payment_type,cheque',
-            'cheque_received_date' => 'nullable|string',
-            'cheque_cleared_date' => 'nullable|string',
-            'cheque_bounced_date' => 'nullable|string',
+            'cheque_received_date' => 'nullable|string|required_if:cheque_status,received',
+            'cheque_cleared_date' => 'nullable|string|required_if:cheque_status,cleared',
+            'cheque_bounced_date' => 'nullable|string|required_if:cheque_status,bounced',
             'currency_paid_amount' => 'nullable|string|size:3',
             'comments' => 'nullable|string',
             'tds' => 'nullable|numeric',
             'currency_tds' => 'nullable|string|size:3',
-            'conversion_rate' => 'nullable|numeric',
+            'conversion_rate' => 'nullable',
             'transaction_charge' => 'nullable|numeric',
             'currency_transaction_charge' => 'nullable|string',
             'transaction_tax' => 'nullable|numeric',
@@ -50,6 +50,7 @@ class InvoiceRequest extends FormRequest
             'request_from_billing' => 'nullable|boolean',
             'due_amount' => 'nullable|numeric',
             'currency_due_amount' => 'nullable|string',
+            'due_date' => 'nullable|string',
         ];
 
         if ($this->method() === 'POST') {
@@ -75,7 +76,7 @@ class InvoiceRequest extends FormRequest
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',
             'project_invoice_id.integer' => 'Invoice ID should be a valid number',
             'invoice_file.required' => 'An invoice needs to be uploaded',
-            'billings.required' => 'At least one billing is required'
+            'billings.required' => 'At least one billing is required',
         ];
     }
 }

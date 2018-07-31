@@ -67,6 +67,9 @@ if (document.getElementById('page_hr_applicant_edit')) {
                         $('#send_for_approval').modal('show');
                         break;
                     case 'approve':
+                        $('#approve_applicant').modal('show');
+                        break;
+                     case 'onboard':
                         $('#onboard_applicant').modal('show');
                 }
             }
@@ -108,7 +111,7 @@ if (document.getElementById('form_invoice')) {
             status: document.getElementById('status').dataset.status || '',
             countries: document.getElementById('client_id').dataset.countries || [],
             tdsAmount: document.getElementById('tds').dataset.tds || '',
-            transactionCharge: document.getElementById('transaction_charge').dataset.tds || '',
+            transactionCharge: document.getElementById('transaction_charge').dataset.transactionCharge || '',
         },
         computed: {
             convertedAmount: function() {
@@ -199,8 +202,9 @@ $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', 
     let button = $(this);
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
-    if (selectedAction == 'confirm' || selectedAction == 'send-for-approval' || selectedAction == 'onboard') {
-        if (!form[0].checkValidity()) {
+    const actions = [ 'confirm', 'send-form-approval', 'onboard', 'approve' ];
+      if(actions.includes(selectedAction)) {
+       if (!form[0].checkValidity()) {
             form[0].reportValidity();
             return false;
         }
@@ -223,6 +227,10 @@ $(document).ready(() => {
         }
     }
     $('[data-toggle="tooltip"]').tooltip();
+    $('.status-close').on('click', function(){
+        let wrapper = $(this).closest('.alert');
+        wrapper.fadeOut(500);
+    });
 });
 
 $('#form_invoice').on('change', '#client_id', function(){
@@ -278,11 +286,6 @@ var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
 weeklyDoseClipboard.on('success', function(e) {
   setTooltip(e.trigger, 'Copied!');
   hideTooltip(e.trigger);
-});
-
-$('.status-close').on('click', function(){
-    let wrapper = $(this).closest('.alert');
-    wrapper.fadeOut(500);
 });
 
 tinymce.init({
@@ -638,4 +641,104 @@ function addBookToWishlist() {
 function disableBookSuggestions() {
     $('#show_nudge_modal').modal('hide');
     window.location.href = document.getElementById('disableBookSuggestion').dataset.href;
+}
+
+if (document.getElementById('roles_permission_table')) {
+    var rolePermissions = new Vue({
+        el: '#roles_permission_table',
+        data: {
+            roles: document.getElementById('roles_permission_table').dataset.roles ? JSON.parse(document.getElementById('roles_permission_table').dataset.roles) : [],
+            permissions: document.getElementById('roles_permission_table').dataset.permissions ? JSON.parse(document.getElementById('roles_permission_table').dataset.permissions) : [],
+            updateRoute: document.getElementById('roles_permission_table').dataset.updateRoute  || '',
+            currentRoleIndex: 0,
+            permissionInputs: [],
+        },
+        methods: {
+            updatePermissionModal: function(index) {
+                let permissions = this.roles[index].permissions;
+                this.currentRoleIndex = index;
+                this.permissionInputs.map((checkbox) => checkbox.checked = false);
+                permissions.forEach((permission) => this.permissionInputs[permission.id].checked =  true );
+            },
+            updatePermissions: function() {
+                let selectedPermissions = [];
+                let roleID = this.roles[this.currentRoleIndex]['id'];
+
+                this.permissionInputs.forEach(function(checkbox) {
+                    if(checkbox.checked) {
+                        selectedPermissions.push({
+                            name:checkbox.dataset.permission,
+                            id:checkbox.value
+                        });
+                    }
+                });
+
+                this.$set(this.roles[this.currentRoleIndex], 'permissions',  selectedPermissions);
+                let route = `${this.updateRoute}/${roleID}`;
+                axios.put(route, {
+                    permissions: JSON.parse(JSON.stringify(selectedPermissions)),
+                    roleID: roleID
+                });
+                document.getElementById('update_role_permissions_modal').click();
+            },
+        },
+        mounted: function() {
+            let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
+            let allPermissionInputs = permissionInputContainer.querySelectorAll('input[type="checkbox"]');
+            allPermissionInputs.forEach((checkbox) => this.permissionInputs[checkbox.value] = checkbox);
+        }
+    });
+}
+
+if (document.getElementById('user_roles_table')) {
+    var userRoles = new Vue({
+        el: '#user_roles_table',
+        data: {
+            users: document.getElementById('user_roles_table').dataset.users ? JSON.parse(document.getElementById('user_roles_table').dataset.users) : '',
+            roles: document.getElementById('user_roles_table').dataset.roles ? JSON.parse(document.getElementById('user_roles_table').dataset.roles) : '',
+            updateRoute:document.getElementById('user_roles_table').dataset.updateRoute  || '',
+            currentUserIndex: 0,
+            roleInputs: [],
+
+
+        },
+        methods: {
+            updateUserRolesModal: function(index) {
+                let roles = this.users[index]['roles'];
+                if(!roles) {
+                    return false;
+                }
+                this.currentUserIndex = index;
+                this.roleInputs.map((checkbox) => checkbox.checked = false);
+                roles.forEach((role) => this.roleInputs[role.id].checked =  true);
+            },
+
+            updateRoles: function() {
+                let selectedRoles = [];
+                let userID = this.users[this.currentUserIndex].id;
+
+                this.roleInputs.forEach(function(checkbox) {
+                    if(checkbox.checked) {
+                        selectedRoles.push({
+                            name:checkbox.dataset.role,
+                            id:checkbox.value
+                        });
+                    }
+                });
+
+                this.$set(this.users[this.currentUserIndex], 'roles',  selectedRoles);
+                let route = `${this.updateRoute}/${userID}`;
+                axios.put(route, {
+                    roles: JSON.parse(JSON.stringify(selectedRoles)),
+                    userID: userID
+                });
+                document.getElementById('close_update_user_roles_modal').click();
+            }
+        },
+        mounted: function() {
+            let roleInputContainer = document.querySelector("#update_user_roles_modal");
+            let allRoleInputs = roleInputContainer.querySelectorAll('input[type="checkbox"]');
+            allRoleInputs.forEach((checkbox) => this.roleInputs[checkbox.value] = checkbox);
+        }
+    });
 }
