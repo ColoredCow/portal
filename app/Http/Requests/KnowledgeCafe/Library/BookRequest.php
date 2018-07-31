@@ -32,7 +32,7 @@ class BookRequest extends FormRequest
             'thumbnail' => 'filled|string',
             'isbn' => 'filled|string',
             'self_link' => 'nullable|string',
-            'number_of_copies' => 'nullable|integer|gte:0',
+            'number_of_copies' => 'nullable|integer|gte:1',
         ];
     }
 }
