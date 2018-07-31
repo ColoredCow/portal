@@ -147,18 +147,15 @@ class CalendarEventService
      */
     protected static function getDateTime($eventDateTime, $withTimeZone)
     {
-        dd($eventDateTime['dateTime']);
         $dateTime['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
         if ($withTimeZone) {
             $start['timeZone'] = $eventDateTime['timeZone'];
         }
-        // echo "string";
         return $dateTime;
     }
 
     public function getStartDateTime($withTimeZone = false)
     {
-        // dd($withTimeZone);
         return self::getDateTime($this->startDateTime, $withTimeZone);
     }
 
