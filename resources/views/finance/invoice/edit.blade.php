@@ -7,7 +7,7 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Edit Invoice</h1></div>
-        <div class="col-md-6"><a href="{{ route('invoices.create') }}" class="btn btn-success float-right">Create Invoice</a></div>
+        <div class="col-md-6"><a href="/finance/invoices/create" class="btn btn-success float-right">Create Invoice</a></div>
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
