@@ -193,10 +193,6 @@
                             @endforeach
                         </select>
                     </div> 
-                    <div class="form-group offset-md-1 col-md-3 cheque-status" v-show="paymentType == 'cheque'">
-                        <label for="cheque_status">Cheque status</label>
-                        <select name="cheque_status" id="cheque_status" class="form-control" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
-                    </div>
                     <div class="form-group offset-md-1 col-md-3 cheque-status" v-if="paymentType == 'cheque'">
                         <label for="cheque_status" class="field-required">Cheque status</label>
                         <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
