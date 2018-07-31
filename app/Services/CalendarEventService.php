@@ -68,21 +68,17 @@ class CalendarEventService
         $event = $this->service->events->get($calendarId, $eventId);
 
         $this->setStartDateTime($applicationRound->scheduled_date, $event->start->timeZone);
-        $startTime = $this->getStartDateTime($event->start->timeZone);
-        $this->startDateTime['dateTime'] = Carbon::parse($startTime['dateTime'])->format(config('constants.calendar_datetime_format'));
 
-        $cenvertedTime = date('Y-m-d H:i:s', strtotime('+30 minutes', strtotime(date($applicationRound->scheduled_date))));
+        $endDateTime = date('Y-m-d H:i:s', strtotime('+30 minutes', strtotime(date($applicationRound->scheduled_date))));
         $this->endDateTime = $this->startDateTime;
-        $this->endDateTime['dateTime'] = Carbon::parse($cenvertedTime)->format(config('constants.calendar_datetime_format'));
+        $this->endDateTime['dateTime'] = Carbon::parse($endDateTime)->format(config('constants.calendar_datetime_format'));
 
         $eventDate = new Google_Service_Calendar_Event([
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
         ]);
-
         $event->setStart($eventDate->start);
         $event->setEnd($eventDate->end);
-
         $updatedEvent = $this->service->events->update('primary', $event->getId(), $event);
         $event->save();
     }
@@ -151,15 +147,18 @@ class CalendarEventService
      */
     protected static function getDateTime($eventDateTime, $withTimeZone)
     {
+        dd($eventDateTime['dateTime']);
         $dateTime['dateTime'] = Carbon::parse($eventDateTime['dateTime'])->format(config('constants.datetime_format'));
         if ($withTimeZone) {
             $start['timeZone'] = $eventDateTime['timeZone'];
         }
+        // echo "string";
         return $dateTime;
     }
 
     public function getStartDateTime($withTimeZone = false)
     {
+        // dd($withTimeZone);
         return self::getDateTime($this->startDateTime, $withTimeZone);
     }
 
