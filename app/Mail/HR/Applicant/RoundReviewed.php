@@ -42,6 +42,6 @@ class RoundReviewed extends Mailable
             ->bcc(config('constants.hr.default.email'))
             ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject($this->applicationRound->mail_subject)
-            ->view('mail.hr.calendar-link', ['applications' => $this->applicationRound]);
+            ->view('mail.hr.calendar-link', ['applicationRound' => $this->applicationRound]);
     }
 }
