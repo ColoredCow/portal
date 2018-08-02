@@ -16,7 +16,7 @@
                 <span>Invoices Details</span>
             </div>
             <div class="card-body">
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-5">
                         <label for="client_id" class="field-required">Client</label>
                         <select name="client_id" id="client_id" class="form-control" required="required" v-model="selectedClient" data-clients="{{ $clients }}" @change="updateActiveClient" data-countries="{{ json_encode(config('constants.countries')) }}">
@@ -30,14 +30,11 @@
                         </select>
                     </div>
                 </div>
-                <br>
                 <invoice-project-component
                 :billings="{{ json_encode([]) }}"
                 :client="activeClient">
                 </invoice-project-component>
-                <br>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-2">
                         <label for="project_invoice_id" class="field-required">Invoice ID</label>
                         <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required" value="{{ old('project_invoice_id') }}">
@@ -46,7 +43,6 @@
                         <label for="sent_on" class="field-required">Sent on</label>
                         <input type="date" class="form-control" name="sent_on" id="sent_on" placeholder="{{ config('constants.finance.input_date_format') }}" required="required"  value="{{ old('sent_on') }}">
                     </div>
-
                     <div class="form-group offset-md-1 col-md-3">
                         <label for="sent_amount" class="field-required">Invoice amount</label>
                         <div class="input-group">
@@ -75,15 +71,13 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-3">
                         <label for="due_date">Due date</label>
                         <input type="date" class="form-control" name="due_date" id="due_date" placeholder="{{ config('constants.finance.input_date_format') }}"  value="{{ old('due_date') }}">
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-2">
                         <label for="status" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" required="required" v-model="status" data-status="{{ old('status') ?? 'unpaid' }}">
@@ -105,7 +99,7 @@
                                     <option value="{{ $currency }}">{{ $currency }}</option>
                                 @endforeach
                                 </select>
-                            </div>
+                           </div>
                             <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" v-model="paidAmount" data-paid-amount="{{ old('paid_amount') }}">
                         </div>
                     </div>
@@ -126,8 +120,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row" v-show="status == 'paid'">
+                <div class="form-row mb-4" v-show="status == 'paid'">
                     <div class="form-group col-md-3">
                         <label for="bank_charges">Bank charges on fund transfer</label>
                         <div class="input-group">
@@ -181,8 +174,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row" v-if="status == 'paid'">
+                <div class="form-row mb-2" v-if="status == 'paid'">
                     <div class="form-group col-md-5">
                         <label for="payment_type" class="field-required">Payment type</label>
                         <select name="payment_type" id="payment_type" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ old('payment_type') }}">
@@ -217,21 +209,18 @@
                         <input type="text" class="form-control date-field" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ old('cheque_bounced_date') ? date(config('constants.display_date_format'), strtotime(old('cheque_bounced_date'))) : '' }}">
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-5">
                         <label for="invoice_file" class="field-required">Upload Invoice</label>
                         <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-5">
                         <label for="comments">Comments</label>
                         <textarea name="comments" id="comments" rows="5" class="form-control">{{ old('comments') }}</textarea>
                     </div>
                 </div>
-                <br>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Create</button>

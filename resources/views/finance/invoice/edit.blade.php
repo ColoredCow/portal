@@ -34,14 +34,11 @@
                         </select>
                     </div>
                 </div>
-                <br>
                 <invoice-project-component
                 :billings="{{ json_encode($invoice_billings) }}"
                 :client="{{ json_encode($invoice_client) }}">
                 </invoice-project-component>
-                <br>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-2">
                         <label for="project_invoice_id" class="field-required">Invoice ID</label>
                         <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required" value="{{ $invoice->project_invoice_id }}">
@@ -80,18 +77,13 @@
                     </div>
                 @endif
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-3">
                         <label for="due_date">Due date</label>
                         <input type="date" class="form-control" name="due_date" id="due_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->due_date }}">
                     </div>
                 </div>
-
-
-
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-2">
                         <label for="name" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" required="required" v-model="status" data-status="{{ $invoice->status }}">
@@ -134,8 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row" v-show="status == 'paid'">
+                <div class="form-row mb-4" v-show="status == 'paid'">
                     <div class="form-group col-md-3">
                         <label for="bank_charges">Bank charges on fund transfer</label>
                         <div class="input-group">
@@ -189,8 +180,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="form-row" v-if="status == 'paid'">
+                <div class="form-row mb-2" v-if="status == 'paid'">
                     <div class="form-group col-md-5">
                         <label for="payment_type" class="field-required">Payment type</label>
                         <select name="payment_type" id="payment_type" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ $invoice->payment_type }}">
@@ -202,7 +192,7 @@
                                 <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> 
                     <div class="form-group offset-md-1 col-md-3 cheque-status" v-if="paymentType == 'cheque'">
                         <label for="cheque_status" class="field-required">Cheque status</label>
                         <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
@@ -224,9 +214,8 @@
                         <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                     </div>
-                </div>
-                <br>
-                <div class="form-row">
+                </div>     
+                <div class="form-row mb-4">
                     <div class="form-group col-md-5">
                     @if ($invoice->file_path)
                         <label class="font-weight-bold">Invoice File</label>
@@ -239,14 +228,12 @@
                     @endif
                     </div>
                 </div>
-                <br>
-                <div class="form-row">
+                <div class="form-row mb-4">
                     <div class="form-group col-md-5">
                         <label for="comments">Comments</label>
                         <textarea name="comments" id="comments" rows="5" class="form-control">{{ $invoice->comments }}</textarea>
                     </div>
                 </div>
-                <br>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
