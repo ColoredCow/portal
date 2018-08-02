@@ -5,6 +5,7 @@ namespace App\Observers\HR;
 use App\Jobs\HR\SendApplicationRoundScheduled;
 use App\Models\HR\ApplicationRound;
 use App\Services\CalendarEventService;
+use Carbon\Carbon;
 
 class ApplicationRoundObserver
 {
@@ -61,10 +62,11 @@ class ApplicationRoundObserver
 
     public function updateCalendarEventSchedule(ApplicationRound $applicationRound)
     {
-        $endDate = date(config('constants.datetime_format'), strtotime('+30 minutes', strtotime(date($applicationRound->scheduled_date))));
+        $endDate = Carbon::parse($applicationRound->scheduled_date)->addminutes('30');
         $startEndDate = array(
             'startDate' => $applicationRound->scheduled_date,
-            'endDate' => $endDate);
+            'endDate' => $endDate,
+        );
         $event = new CalendarEventService;
         $event->update($applicationRound->calendar_event, $startEndDate);
     }
