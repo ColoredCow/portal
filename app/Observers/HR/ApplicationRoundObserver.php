@@ -61,8 +61,9 @@ class ApplicationRoundObserver
 
     public function updateCalendarEventSchedule(ApplicationRound $applicationRound)
     {
-        $endDate = date('Y-m-dTH:i:s', strtotime('+30 minutes', strtotime(date($applicationRound->scheduled_date))));
-        $startEndDate = array('startDate' => $applicationRound->scheduled_date,
+        $endDate = date(config('constants.datetime_format'), strtotime('+30 minutes', strtotime(date($applicationRound->scheduled_date))));
+        $startEndDate = array(
+            'startDate' => $applicationRound->scheduled_date,
             'endDate' => $endDate);
         $event = new CalendarEventService;
         $event->update($applicationRound->calendar_event, $startEndDate);

@@ -67,7 +67,7 @@ class CalendarEventService
     {
         $event = $this->service->events->get($calendarId, $eventId);
         $this->setStartDateTime($startEndDate['startDate'], $event->start->timeZone);
-        $this->setEndDateTime($startEndDate['endDate'], $event->start->timeZone);
+        $this->setEndDateTime($startEndDate['endDate'], $event->end->timeZone);
         $eventDate = new Google_Service_Calendar_Event([
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
