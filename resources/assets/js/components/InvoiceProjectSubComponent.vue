@@ -1,5 +1,5 @@
 <template>
-    <div class="form-row row mt-3 d-flex align-items-center">
+    <div class="form-row row mb-3 d-flex align-items-center">
         <div class="form-group col-md-3">
             <label for="projects[]">Project</label>
             <select name="projects[]" class="form-control" v-model="projectId" v-on:change="updateStages">

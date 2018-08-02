@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mb-4">
         <div v-for="(item, index) in items">
             <invoice-project-sub-component
             :index="index"
@@ -8,7 +8,7 @@
             @remove="removeItem(index)">
             </invoice-project-sub-component>
         </div>
-        <button type="button" class="btn btn-info btn-sm mt-3" v-on:click="addProject">Add Project</button>
+        <button type="button" class="btn btn-info btn-sm" v-on:click="addProject">Add Project</button>
     </div>
 </template>
 
