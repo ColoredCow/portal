@@ -36,6 +36,7 @@ class CalendarEventService
         $this->setAttendees($details['attendees']);
         $this->setStartDateTime($details['start']);
         $this->setEndDateTime($details['end']);
+        $this->sendNotifications=true;
 
         $event = new Google_Service_Calendar_Event([
             'summary' => $this->summary,
@@ -43,7 +44,8 @@ class CalendarEventService
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
         ]);
-        $event = $this->service->events->insert($calendarId, $event);
+        $sendNotifications = array('sendNotifications' => true);
+        $event = $this->service->events->insert($calendarId, $event, $sendNotifications);
         $this->id = $event->id;
         $this->setHangoutLink($event->hangoutLink);
     }
