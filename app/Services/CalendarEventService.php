@@ -36,7 +36,7 @@ class CalendarEventService
         $this->setAttendees($details['attendees']);
         $this->setStartDateTime($details['start']);
         $this->setEndDateTime($details['end']);
-        $this->sendNotifications=true;
+        // $this->sendNotifications=true;
 
         $event = new Google_Service_Calendar_Event([
             'summary' => $this->summary,
