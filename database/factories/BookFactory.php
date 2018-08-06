@@ -1,8 +1,8 @@
 <?php
 
-use Faker\Generator as Faker;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookCategory;
+use Faker\Generator as Faker;
 
 $factory->define(Book::class, function (Faker $faker) {
     return [
@@ -11,11 +11,12 @@ $factory->define(Book::class, function (Faker $faker) {
         'isbn' => $faker->ean13,
         'thumbnail' => $faker->imageUrl(),
         'readable_link' => $faker->url,
+        'number_of_copies' => $faker->numberBetween(1, 10),
     ];
 });
 
 $factory->define(BookCategory::class, function (Faker $faker) {
     return [
-        'name' => $faker->sentence(10)
+        'name' => $faker->sentence(10),
     ];
 });
