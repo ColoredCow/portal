@@ -499,7 +499,18 @@ if (document.getElementById('books_listing')) {
 
             strLimit: function (str, length) {
                 return str.length > length ? str.substring(0, length) + "..." : str;
-            }
+            },
+
+            updateCopiesCount: function(index) {
+                var new_count = parseInt(prompt('Number of copies of this book', this.books[index].number_of_copies));
+                if (new_count && isFinite(new_count)) {
+                    this.books[index].number_of_copies = new_count;
+                    axios.put(
+                        this.updateRoute + '/' + this.books[index].id, 
+                        {'number_of_copies' : new_count},
+                    );
+                }
+            },
         },
 
         mounted: function() {

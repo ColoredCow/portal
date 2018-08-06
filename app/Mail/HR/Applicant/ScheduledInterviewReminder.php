@@ -42,16 +42,14 @@ class ScheduledInterviewReminder extends Mailable
         $subject = $subject ? $subject->setting_value : '';
         $body = $body ? $body->setting_value : '';
 
-        // {{applicant_name}} and {{interview_time}} need to present in the mail template in the exact format.
-        // Need to change the overall template variable strcuture after this.
-        $body = str_replace('{{applicant_name}}', ucwords($application->applicant->name), $body);
-        $body = str_replace('{{interview_time}}', date(config('constants.hr.interview-time-format'), strtotime($this->applicationRound->scheduled_date)), $body);
+        $body = str_replace('|*applicant_name*|', ucwords($application->applicant->name), $body);
+        $body = str_replace('|*interview_time*|', date(config('constants.hr.interview-time-format'), strtotime($this->applicationRound->scheduled_date)), $body);
 
         return $this->to($application->applicant->email, $application->applicant->name)
             ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))
             ->subject($subject)
             ->view('mail.plain')->with([
-                'body' => $body
-            ]);
+            'body' => $body,
+        ]);
     }
 }
