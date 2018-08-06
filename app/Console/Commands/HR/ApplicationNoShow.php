@@ -65,8 +65,6 @@ class ApplicationNoShow extends Command
             foreach ($applicationRounds as $applicationRound) {
                 $application = $applicationRound->application;
 
-                // {{applicant_name}} and {{interview_time}} need to present in the mail template in the exact format.
-                // Need to change the overall template variable strcuture after this.
                 $body = str_replace('|*applicant_name*|', ucwords($application->applicant->name), $body);
                 $body = str_replace('|*interview_time*|', date(config('constants.hr.interview-time-format'), strtotime($applicationRound->scheduled_date)), $body);
                 if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
