@@ -43,7 +43,10 @@ class CalendarEventService
             'start' => $this->startDateTime,
             'end' => $this->endDateTime,
         ]);
-        $event = $this->service->events->insert($calendarId, $event);
+        $optprm = [
+            'sendNotifications' => true
+        ];
+        $event = $this->service->events->insert($calendarId, $event, $optprm);
         $this->id = $event->id;
         $this->setHangoutLink($event->hangoutLink);
     }
