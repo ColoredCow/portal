@@ -79,9 +79,9 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\KnowledgeCafe\Library\BookRequest  $request
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     * @return json
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(BookRequest $request, Book $book)
     {
