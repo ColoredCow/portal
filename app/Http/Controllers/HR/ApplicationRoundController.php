@@ -41,7 +41,9 @@ class ApplicationRoundController extends Controller
     public function sendMail(ApplicantRoundMailRequest $request, ApplicationRound $applicationRound)
     {
         $validated = $request->validated();
+        $applicant = $applicationRound->application->applicant;
         $mail_body = ContentHelper::editorFormat($validated['mail_body']);
+        $mail_body = str_replace('|*applicant_name*|', ucwords($applicant->name), $mail_body);
 
         $applicationRound->load('application', 'application.job', 'application.applicant');
         $applicationRound->update([
@@ -54,7 +56,6 @@ class ApplicationRoundController extends Controller
 
         Mail::send(new RoundReviewed($applicationRound));
 
-        $applicant = $applicationRound->application->applicant;
         return redirect()->back()->with(
             'status',
             "Mail sent successfully to the <b>$applicant->name</b> at <b>$applicant->email</b>.<br>
