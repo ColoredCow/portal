@@ -52,7 +52,7 @@ return [
             ],
         ],
 
-        'template-variable' => [
+        'template-variables' => [
             'applicant-name' => '|*applicant_name*|',
             'interview-time' => '|*interview_time*|',
             'job-title' => '|*job_title*|',
