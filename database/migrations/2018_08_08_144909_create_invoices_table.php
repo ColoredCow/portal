@@ -13,10 +13,6 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        $currencies = [
-            'india' => config('constants.countries.india.currency'),
-        ];
-
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_invoice_id');
@@ -30,7 +26,7 @@ class CreateInvoicesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('invoice_amounts', function (Blueprint $table) use ($currencies) {
+        Schema::create('invoice_amounts', function (Blueprint $table) {
             // the following fields we're capturing right now will go to this table with their currencies
             // sent amount.
             // paid amount.
@@ -44,7 +40,7 @@ class CreateInvoicesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('invoice_id');
             $table->string('type');
-            $table->string('currency', 3)->default($currencies['india']);
+            $table->string('currency', 3)->default(config('constants.countries.india.currency'));
             $table->decimal('amount', 10, 2);
             $table->timestamps();
 
