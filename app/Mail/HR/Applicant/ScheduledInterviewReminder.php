@@ -35,6 +35,7 @@ class ScheduledInterviewReminder extends Mailable
     public function build()
     {
         $application = $this->applicationRound->application;
+        $job = $application->job;
 
         $subject = Setting::where('module', 'hr')->where('setting_key', 'applicant_interview_reminder_subject')->first();
         $body = Setting::where('module', 'hr')->where('setting_key', 'applicant_interview_reminder_body')->first();
@@ -42,8 +43,9 @@ class ScheduledInterviewReminder extends Mailable
         $subject = $subject ? $subject->setting_value : '';
         $body = $body ? $body->setting_value : '';
 
-        $body = str_replace('|*applicant_name*|', ucwords($application->applicant->name), $body);
-        $body = str_replace('|*interview_time*|', date(config('constants.hr.interview-time-format'), strtotime($this->applicationRound->scheduled_date)), $body);
+        $body = str_replace(config('constants.hr.template-variable.applicant-name'), ucwords($application->applicant->name), $body);
+        $body = str_replace(config('constants.hr.template-variable.interview-time'), date(config('constants.hr.interview-time-format'), strtotime($this->applicationRound->scheduled_date)), $body);
+        $body = str_replace(config('constants.hr.template-variable.job-title'), ucwords($job->title), $body);
 
         return $this->to($application->applicant->email, $application->applicant->name)
             ->from(config('constants.hr.default.email'), config('constants.hr.default.name'))

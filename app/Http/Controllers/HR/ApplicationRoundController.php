@@ -42,8 +42,11 @@ class ApplicationRoundController extends Controller
     {
         $validated = $request->validated();
         $applicant = $applicationRound->application->applicant;
+        $job = $applicationRound->application->job;
+
         $mail_body = ContentHelper::editorFormat($validated['mail_body']);
-        $mail_body = str_replace('|*applicant_name*|', ucwords($applicant->name), $mail_body);
+        $mail_body = str_replace(config('constants.hr.template-variable.applicant-name'), ucwords($applicant->name), $mail_body);
+        $mail_body = str_replace(config('constants.hr.template-variable.job-title'), ucwords($job->title), $mail_body);
 
         $applicationRound->load('application', 'application.job', 'application.applicant');
         $applicationRound->update([

@@ -64,9 +64,12 @@ class ApplicationNoShow extends Command
         if ($subject && $body) {
             foreach ($applicationRounds as $applicationRound) {
                 $application = $applicationRound->application;
+                $job = $application->job;
 
-                $body = str_replace('|*applicant_name*|', ucwords($application->applicant->name), $body);
-                $body = str_replace('|*interview_time*|', date(config('constants.hr.interview-time-format'), strtotime($applicationRound->scheduled_date)), $body);
+                $body = str_replace(config('constants.hr.template-variable.applicant-name'), ucwords($application->applicant->name), $body);
+                $body = str_replace(config('constants.hr.template-variable.interview-time'), date(config('constants.hr.interview-time-format'), strtotime($applicationRound->scheduled_date)), $body);
+                $body = str_replace(config('constants.hr.template-variable.job-title'), ucwords($job->title), $body);
+
                 if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
                     ApplicationMeta::create([
                         'hr_application_id' => $application->id,
