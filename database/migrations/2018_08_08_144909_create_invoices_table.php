@@ -19,29 +19,34 @@ class CreateInvoicesTable extends Migration
             $table->string('status')->default('unpaid');
             $table->date('sent_on');
             $table->date('paid_on')->nullable();
-            $table->string('payment_type')->default('wire-transfer');
+            $table->unsignedInteger('payment_type_id');
             $table->date('due_date');
             $table->text('comments')->nullable();
             $table->string('file_path')->nullable(); // string or text?
             $table->timestamps();
+
+            $table->foreign('payment_type_id')
+                ->references('id')->on('payment_types')
+                ->onDelete('cascade');
         });
 
-        Schema::create('invoice_amounts', function (Blueprint $table) {
-            // the following fields we're capturing right now will go to this table with their currencies
-            // sent amount.
-            // paid amount.
-            // due amount.
-            // gst.
-            // tds.
-            // bank charges on fund transfer.
-            // bank service tax on fund transfer.
-            // conversion rate. does it makes sense here?
-
+        Schema::create('payment_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('invoice_id');
-            $table->string('type');
-            $table->string('currency', 3)->default(config('constants.countries.india.currency'));
-            $table->decimal('amount', 10, 2);
+            $table->string('slug')->default('wire-transfer'); // can be wire-transfer, cheque, cash etc.
+            $table->string('name')->default('Wire Transfer');
+            $table->timestamps();
+        });
+
+        Schema::create('invoice_meta', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('invoice_id')->index();
+            $table->decimal('billed_amount', 10, 2);
+            $table->decimal('received_amount', 10, 2)->nullable();
+            $table->decimal('gst', 10, 2)->nullable();
+            $table->decimal('tds', 10, 2)->nullable();
+            $table->decimal('bank_charges_fund_transfer', 10, 2)->nullable();
+            $table->decimal('bank_service_tax_forex', 10, 2)->nullable();
+            $table->decimal('conversion_rate', 10, 2)->nullable();
             $table->timestamps();
 
             $table->foreign('invoice_id')
@@ -49,15 +54,13 @@ class CreateInvoicesTable extends Migration
                 ->onDelete('cascade');
         });
 
-        Schema::create('invoice_cheques', function (Blueprint $table) {
+        Schema::create('cheques', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoice_id');
-
             $table->string('status');
-            $table->date('received_date')->nullable();
-            $table->date('cleared_date')->nullable();
-            $table->date('bounced_date')->nullable();
-
+            $table->date('received_on')->nullable();
+            $table->date('cleared_on')->nullable();
+            $table->date('bounced_on')->nullable();
             $table->timestamps();
 
             $table->foreign('invoice_id')
@@ -73,8 +76,9 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_cheques');
-        Schema::dropIfExists('invoice_amounts');
+        Schema::dropIfExists('cheques');
+        Schema::dropIfExists('invoice_meta');
+        Schema::dropIfExists('payment_types');
         Schema::dropIfExists('invoices');
     }
 }
