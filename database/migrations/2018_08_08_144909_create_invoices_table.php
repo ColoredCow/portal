@@ -13,6 +13,13 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
+        Schema::create('payment_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('slug')->default('wire-transfer'); // can be wire-transfer, cheque, cash etc.
+            $table->string('name')->default('Wire Transfer');
+            $table->timestamps();
+        });
+
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_invoice_id');
@@ -28,13 +35,6 @@ class CreateInvoicesTable extends Migration
             $table->foreign('payment_type_id')
                 ->references('id')->on('payment_types')
                 ->onDelete('cascade');
-        });
-
-        Schema::create('payment_types', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('slug')->default('wire-transfer'); // can be wire-transfer, cheque, cash etc.
-            $table->string('name')->default('Wire Transfer');
-            $table->timestamps();
         });
 
         Schema::create('invoice_meta', function (Blueprint $table) {
@@ -78,7 +78,7 @@ class CreateInvoicesTable extends Migration
     {
         Schema::dropIfExists('cheques');
         Schema::dropIfExists('invoice_meta');
-        Schema::dropIfExists('payment_types');
         Schema::dropIfExists('invoices');
+        Schema::dropIfExists('payment_types');
     }
 }
