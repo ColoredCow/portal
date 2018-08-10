@@ -13,6 +13,5 @@
 		<p>{!! session('status') !!}</p>
 		<span class="status-close"><b>&times;</b></span>
 	</div>
-	<br>
 @endif
 
