@@ -13,59 +13,60 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_types', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('slug')->default('wire-transfer'); // can be wire-transfer, cheque, cash etc.
-            $table->string('name')->default('Wire Transfer');
-            $table->timestamps();
-        });
-
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_invoice_id');
-            $table->string('status')->default('unpaid');
+            $table->string('status')->default('unpaid'); // Create a model event to update this value when a new payment is created for this invoice.
+            $table->string('currency', 3);
+            $table->decimal('amount', 10, 2);
             $table->date('sent_on');
-            $table->date('paid_on')->nullable();
-            $table->unsignedInteger('payment_type_id');
-            $table->date('due_date');
+            $table->date('due_on'); // Calculation at the time of creating invoice. Maybe 15 days after. Should be configurable from application.
+            $table->decimal('gst', 10, 2)->nullable()->comment('Currency is always Indian Rupees for this field.');
             $table->text('comments')->nullable();
-            $table->string('file_path')->nullable(); // string or text?
+            $table->string('file_path');
             $table->timestamps();
-
-            $table->foreign('payment_type_id')
-                ->references('id')->on('payment_types')
-                ->onDelete('cascade');
+            $table->softDeletes();
         });
 
-        Schema::create('invoice_meta', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoice_id')->index();
-            $table->decimal('billed_amount', 10, 2);
-            $table->decimal('received_amount', 10, 2)->nullable();
-            $table->decimal('gst', 10, 2)->nullable();
-            $table->decimal('tds', 10, 2)->nullable();
-            $table->decimal('bank_charges_fund_transfer', 10, 2)->nullable();
-            $table->decimal('bank_service_tax_forex', 10, 2)->nullable();
+            $table->date('paid_on'); // add default to current timestamp
+            $table->string('currency', 3);
+            $table->decimal('amount', 10, 2);
+            $table->decimal('bank_charges', 10, 2)->nullable()->comment('Has same currency as amount'); // not applicable for local transactions.
+            $table->decimal('bank_service_tax_forex', 10, 2)->nullable()->comment('Currency is always Indian Rupees for this field.');
+            $table->decimal('tds', 10, 2)->nullable()->comment('Currency is always Indian Rupees for this field.');
             $table->decimal('conversion_rate', 10, 2)->nullable();
+
+            $table->unsignedInteger('mode_id');
+            $table->string('mode_type'); // polymorphic relation
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('invoice_id')
-                ->references('id')->on('invoices')
-                ->onDelete('cascade');
+                ->references('id')->on('invoices');
         });
 
         Schema::create('cheques', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('invoice_id');
             $table->string('status');
-            $table->date('received_on')->nullable();
-            $table->date('cleared_on')->nullable();
-            $table->date('bounced_on')->nullable();
+            $table->date('received_on')->nullable(); // check when is this added.
+            $table->date('cleared_on')->nullable(); // check when is this added. until cleared, it shouldn't be added to the income.
+            $table->date('bounced_on')->nullable(); // what will happen if a check is bounced? complimentary to cleared.
             $table->timestamps();
+        });
 
-            $table->foreign('invoice_id')
-                ->references('id')->on('invoices')
-                ->onDelete('cascade');
+        Schema::create('wire_transfers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('via')->default('bank'); // bank, paypal, western-union etc.
+            $table->timestamps();
+        });
+
+        // does not have any attributes right now
+        Schema::create('cash', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
         });
     }
 
@@ -76,9 +77,10 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('cash');
+        Schema::dropIfExists('wire_transfers');
         Schema::dropIfExists('cheques');
-        Schema::dropIfExists('invoice_meta');
+        Schema::dropIfExists('payments');
         Schema::dropIfExists('invoices');
-        Schema::dropIfExists('payment_types');
     }
 }
