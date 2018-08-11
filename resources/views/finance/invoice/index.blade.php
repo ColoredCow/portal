@@ -7,7 +7,7 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Invoices</h1></div>
-        <div class="col-md-6"><a href="/finance/invoices/create" class="btn btn-success float-right">Create Invoice</a></div>
+        <div class="col-md-6"><a href="{{ route('invoices.create') }}" class="btn btn-success float-right">Create Invoice</a></div>
     </div>
     <form action="/finance/invoices" method="GET" class="form-inline mt-4 mb-4 d-flex justify-content-end">
         <div class="form-group">
@@ -29,7 +29,7 @@
         </tr>
         @foreach ($invoices as $invoice)
         <tr>
-            <td><a href="/finance/invoices/{{ $invoice->id }}/edit">
+            <td><a href="{{ route('invoices.edit', ['invoice' => $invoice]) }}">
                 @foreach ($invoice->projectStageBillings as $billing)
                     {{ $loop->first ? '' : '|' }}
                     {{ $billing->projectStage->project->name }}
