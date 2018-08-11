@@ -29,7 +29,7 @@
         </tr>
         @foreach ($invoices as $invoice)
         <tr>
-            <td><a href="{{ route('invoices.edit', ['invoice' => $invoice]) }}">
+            <td><a href="{{ route('invoices.edit', $invoice) }}">
                 @foreach ($invoice->projectStageBillings as $billing)
                     {{ $loop->first ? '' : '|' }}
                     {{ $billing->projectStage->project->name }}

@@ -17,13 +17,13 @@
             <th>Projects</th>
         </tr>
         @foreach ($clients as $client)
-        	<tr>
-        		<td>
-        			<a href="{{ route('clients.edit', ['client' => $client]) }}">{{ $client->name }}</a>
-        		</td>
-        		<td>
-        			<span>{{ $client->phone ?? '-' }}</span>
-        		</td>
+            <tr>
+                <td>
+                    <a href="{{ route('clients.edit', $client) }}">{{ $client->name }}</a>
+                </td>
+                <td>
+                    <span>{{ $client->phone ?? '-' }}</span>
+                </td>
                 <td>
                 @switch ($client->is_active)
                     @case(true)
@@ -41,7 +41,7 @@
                    -
                 @endif
                 </td>
-        	</tr>
+            </tr>
         @endforeach
     </table>
     {{ $clients->links() }}

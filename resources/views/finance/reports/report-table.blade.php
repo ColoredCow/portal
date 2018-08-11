@@ -19,7 +19,7 @@
             @foreach($invoices as $invoice)
             <tr>
                 <td>
-                    <a href="{{ route('invoices.edit', ['invoice' => $invoice]) }}" target="_blank">
+                    <a href="{{ route('invoices.edit', $invoice) }}" target="_blank">
                         @foreach ($invoice->projectStageBillings as $billing)
                             {{ $loop->first ? '' : '|' }}
                             {{ $billing->projectStage->project->name }}
