@@ -31,10 +31,10 @@ class CreateInvoicesTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoice_id')->index();
-            $table->date('paid_on'); // add default to current timestamp
+            $table->timestamp('paid_at')->useCurrent(); // making this timestamp to set the default value.
             $table->string('currency', 3);
             $table->decimal('amount', 10, 2);
-            $table->decimal('bank_charges', 10, 2)->nullable()->comment('Has same currency as amount'); // not applicable for local transactions.
+            $table->decimal('bank_charges', 10, 2)->nullable()->comment('Has same currency as amount. Applicable to foreign transactions only.');
             $table->decimal('bank_service_tax_forex', 10, 2)->nullable()->comment('Currency is always Indian Rupees for this field.');
             $table->decimal('tds', 10, 2)->nullable()->comment('Currency is always Indian Rupees for this field.');
             $table->decimal('conversion_rate', 10, 2)->nullable();
@@ -50,10 +50,10 @@ class CreateInvoicesTable extends Migration
 
         Schema::create('cheques', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('status');
-            $table->date('received_on')->nullable(); // check when is this added.
-            $table->date('cleared_on')->nullable(); // check when is this added. until cleared, it shouldn't be added to the income.
-            $table->date('bounced_on')->nullable(); // what will happen if a check is bounced? complimentary to cleared.
+            $table->string('status'); // received, cleared, bounced.
+            $table->date('received_on');
+            $table->date('cleared_on')->nullable();
+            $table->date('bounced_on')->nullable();
             $table->timestamps();
         });
 
