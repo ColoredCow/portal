@@ -27,14 +27,14 @@
             <a :href="'/finance/invoices/' + billing.invoice.id + '/edit'" target="_blank" class="ml-2">More details</a>
         </td>
         <td v-else>
-            <span class="modal-toggler-text text-primary" data-toggle="modal" data-target="#new_billing_invoice_modal" @click="addNewInvoice">Create invoice</span>
+            <span class="modal-toggler-text text-primary" data-toggle="modal" :data-target="'#new_billing_invoice_modal_' + stage.id" @click="addNewInvoice">Create invoice</span>
         </td>
     </tr>
 </template>
 
 <script>
     export default {
-        props: ['billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency', 'clientCountryGstApplicable'],
+        props: ['stage', 'billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency', 'clientCountryGstApplicable'],
         computed: {
             billingCostWithoutGst: function() {
                 return this.stageCostWithoutGst  == 0 ? parseFloat(0).toFixed(2) : parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst).toFixed(2);

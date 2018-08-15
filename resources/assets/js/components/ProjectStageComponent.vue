@@ -89,6 +89,7 @@
                         <tbody>
                             <project-stage-billing-component
                             v-for="(billing, index) in stageBillings"
+                            :stage="stage"
                             :billing="billing"
                             :stage-cost-without-gst="stageCostWithoutGst"
                             :gst-amount="gstAmount"
@@ -104,7 +105,7 @@
                 <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
                 </div>
 
-            <div id="new_billing_invoice_modal" class="modal fade" role="dialog">
+            <div :id="'new_billing_invoice_modal_' + stage.id" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_new_invoice_billing">
@@ -302,28 +303,40 @@
             },
         },
         methods: {
-            async storeStages(){
-                 this.editMode=false;
-                 let formData = ({
-                 name:this.stage.name,
-                 cost:this.inputStageCost,
-                 currency_cost:this.inputStageCurrency,
-                 cost_include_gst:this.inputStageCostIncludeGst,
-                 start_date:this.stage.start_date,
-                 end_date:this.stage.end_date,
-                 type:this.stageType,
-                 project_id:this.projectId,
-                  });
+            async storeStages() {
+                let newBillings = [];
+                let billings = [];
+                for (let index in this.stageBillings) {
+                    let billing = this.stageBillings[index];
+                    if (billing.isNew) {
+                        newBillings.push(billing.percentage);
+                    } else {
+                        billings.push({[billing.id] : billing.percentage});
+                    }
+                }
+                let formData = ({
+                    name: this.stage.name,
+                    cost: this.inputStageCost,
+                    currency_cost: this.inputStageCurrency,
+                    cost_include_gst: this.inputStageCostIncludeGst,
+                    start_date: this.stage.start_date,
+                    end_date: this.stage.end_date,
+                    type: this.stageType,
+                    project_id: this.projectId,
+                    billing: billings,
+                    new_billing: newBillings,
+                });
 
-                 let methodName = 'post';
-                 let url = this.stageRoute;
-                 if(this.stage.id){
+                let methodName = 'post';
+                let url = this.stageRoute;
+
+                if(this.stage.id){
                     methodName = 'put';
                     url = this.stageRoute +'/' + this.stage.id;
-                 };
+                };
 
-                 let response = await axios({method: methodName, url: url, data:formData});
-                 alert(response.data.status);
+                let response = await axios({method: methodName, url: url, data:formData});
+                alert(response.data.status);
             },
             addBilling() {
                 this.stageBillings.push({
