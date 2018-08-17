@@ -20,7 +20,7 @@
                         <div class="col-md-6">
                             <div class="form-row">
                                 <div class="form-group col-md-8">
-                                    <label for="sent_amount" class="field-required">Cost</label>
+                                    <label for="cost" class="field-required">Cost</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <select name="currency_cost" id="currency_cost" class="btn btn-secondary" required="required" v-model="inputStageCurrency">
@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-row" v-show="clientCountryGstApplicable">
                                 <div class="form-group col-md-8 d-flex align-items-center">
-                                    <label for="sent_amount" class="mb-0">Stage cost include GST?&nbsp;</label>
+                                    <label for="cost_include_gst" class="mb-0">Stage cost include GST?&nbsp;</label>
                                     <label class="switch mb-0">
                                         <input type="checkbox" id="cost_include_gst" name="cost_include_gst" value="1" v-model="inputStageCostIncludeGst">
                                         <div class="slider secondary-slider round" @click="toggleInputStageCostIncludeGst" :class="[inputStageCostIncludeGst ? 'active' : 'inactive']" >
@@ -105,7 +105,7 @@
                 <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
                 </div>
 
-            <div :id="'new_billing_invoice_modal_' + stage.id" class="modal fade" role="dialog">
+            <div id="new_billing_invoice_modal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form action="/finance/invoices" method="POST" enctype="multipart/form-data" id="form_new_invoice_billing">
