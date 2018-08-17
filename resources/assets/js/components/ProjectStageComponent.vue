@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="card mt-4">
+            <form :action="stage.id ? '/project/stages/' + stage.id : '/project/stages'" method="POST">
                 <input v-if="stage.id" type="hidden" name="_method" value="PATCH">
                 <input type="hidden" name="_token" :value="csrfToken">
                 <input type="hidden" name="project_id" :value="projectId">
@@ -13,7 +14,7 @@
                         </div>
                     </div>
                     <div class="card-edit icon-pencil" @click="editMode = !editMode" v-show="!editMode"><i class="fa fa-pencil"></i></div>
-                    <button class="btn btn-primary card-edit" @click="storeStages" v-show="editMode">{{ stage.id ? 'Update' : 'Create' }}</button>
+                    <button class="btn btn-primary card-edit" type="submit" v-show="editMode">{{ stage.id ? 'Update' : 'Create' }}</button>
                 </div>
                 <div class="card-body" v-show="editMode">
                     <div class="row">
@@ -102,9 +103,9 @@
                             </project-stage-billing-component>
                         </tbody>
                     </table>
-                <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
+                    <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
                 </div>
-
+            </form>
             <div id="new_billing_invoice_modal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">

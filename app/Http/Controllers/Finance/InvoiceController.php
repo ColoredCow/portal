@@ -103,13 +103,12 @@ class InvoiceController extends Controller
         foreach ($validated['billings'] as $billing) {
             ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
         }
-        if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
-            $projectStageBilling = $invoice->projectStageBillings->first();
-            $project = $projectStageBilling->projectStage->project;
-            return redirect(route('projects.edit', $project->id))->with('status', 'Billing invoice created successfully');
-        }
 
-        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
+        $status = 'Invoice created successfully!';
+        if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
+            $status = 'Billing invoice created successfully!';
+        }
+        return redirect()->back()->with('status', $status);
     }
 
     /**
