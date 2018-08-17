@@ -34,7 +34,7 @@
 
 <script>
     export default {
-        props: ['stage', 'billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency', 'clientCountryGstApplicable'],
+        props: ['billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency', 'clientCountryGstApplicable'],
         computed: {
             billingCostWithoutGst: function() {
                 return this.stageCostWithoutGst  == 0 ? parseFloat(0).toFixed(2) : parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst).toFixed(2);
