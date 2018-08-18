@@ -71,6 +71,11 @@ class ApplicationRound extends Model
             case 'send-for-approval':
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
+
+                $file = $attr['offer_letter'];
+                $fileName = str_replace(' ', '-', $applicant->name) . '-' . Carbon::now()->format('Ymd') . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('offer-letters', $fileName);
+                $application->saveOfferLetter($path);
                 break;
 
             case 'approve':

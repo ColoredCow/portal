@@ -3,20 +3,18 @@
 namespace App\Http\Controllers\HR;
 
 use App\Helpers\ContentHelper;
-use App\Models\HR\Application;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Http\Requests\HR\ApplicationRoundRequest;
 use App\Mail\HR\Applicant\RoundReviewed;
 use App\Models\HR\ApplicantRound;
+use App\Models\HR\Application;
 use App\Models\HR\ApplicationRound;
 use Carbon\Carbon;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Helpers\FileHelper;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationRoundController extends Controller
 {
@@ -29,23 +27,10 @@ class ApplicationRoundController extends Controller
     public function update(ApplicationRoundRequest $request, ApplicationRound $round)
     {
         $round->_update($request->validated());
-        $path = self::upload($request->file('offer_letter'));
-        
         if (array_key_exists('round_evaluation', $request->validated())) {
             $round->updateOrCreateEvaluation($request->validated()['round_evaluation']);
         }
         return redirect()->back()->with('status', 'Application updated successfully!');
-    }
-
-     protected static function upload($file)
-    {
-        $fileName = $file->getClientOriginalName();
-
-        if ($fileName) {
-            return $file->storeAs('offer_letters', $fileName);
-        }
-
-        return $file->store('offer_letters');
     }
 
     /**

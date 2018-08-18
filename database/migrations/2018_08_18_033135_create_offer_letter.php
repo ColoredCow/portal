@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOfferLetter extends Migration
 {
@@ -16,7 +16,7 @@ class CreateOfferLetter extends Migration
         Schema::table('hr_applications', function (Blueprint $table) {
             $table->string('offer_letter')->nullable()->after('pending_approval_from');
         });
-        
+
     }
 
     /**
@@ -27,7 +27,7 @@ class CreateOfferLetter extends Migration
     public function down()
     {
         Schema::table('hr_applications', function (Blueprint $table) {
-            $table->dropColumn('offer_letter')->nullable();
+            $table->dropColumn('offer_letter');
         });
     }
 }
