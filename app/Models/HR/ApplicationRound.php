@@ -71,6 +71,15 @@ class ApplicationRound extends Model
             case 'send-for-approval':
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
+
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'sent-for-approval',
+                    'value' => json_encode([
+                        'conducted_person_id' => $this->conducted_person_id,
+                        'supervisor_id' => $attr['send_for_approval_person'],
+                    ]),
+                ]);
                 break;
 
             case 'approve':

@@ -20,12 +20,7 @@
                             $application = $item['application'];
                         @endphp
                         <b><u>{{ date(config('constants.display_date_format'), strtotime($applicationRound->conducted_date)) }}</u></b><br>
-                        
-                        @if ($application->status == config('constants.hr.status.sent-for-approval.label') && $loop->last)
-                            {{ $applicationRound->conductedPerson->name }} sent the application for approval to {{ $application->pendingApprovalFrom->name }}<br>
-                        @else
                             {{ $applicationRound->round->name }} for {{ $application->job->title }} conducted by {{ $applicationRound->conductedPerson->name }}<br>
-                        @endif
                             @if ($applicationRound->mail_sent)
                                 <span data-toggle="modal" data-target="#{{ $applicationRound->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
                                 @include('hr.communication-mail-modal', [ 'data' => $applicationRound->communicationMail ])
@@ -50,6 +45,14 @@
                             <span data-toggle="modal" data-target="#{{ $event->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
                             @include('hr.communication-mail-modal', ['data' => $event->communicationMail])
                         @endif
+                        @break
+
+                    @case(config('constants.hr.application-meta.keys.sent-for-approval'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->conductedPerson }} requested approval from {{ $event->value->supervisor }}
                         @break
                 @endswitch
             </div>
