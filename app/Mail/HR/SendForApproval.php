@@ -16,7 +16,7 @@ class SendForApproval extends Mailable
      *
      * @return void
      */
-    public function __construct($supervisor,$application)
+    public function __construct($supervisor, $application)
     {
         $this->supervisor = $supervisor;
         $this->application = $application;
