@@ -73,7 +73,9 @@ class ApplicationRound extends Model
             case 'send-for-approval':
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
-                Mail::send(new SendForApproval());
+                $supervisor = User::find(4); //this need to current supervisor
+                $application = Application::find(1); //this need to be current applicant 
+                Mail::send(new SendForApproval($supervisor,$application));
                 break;
 
             case 'approve':

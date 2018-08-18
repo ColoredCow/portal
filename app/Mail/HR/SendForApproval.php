@@ -16,8 +16,10 @@ class SendForApproval extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($supervisor,$application)
     {
+        $this->supervisor = $supervisor;
+        $this->application = $application;
     }
 
     /**
@@ -27,9 +29,11 @@ class SendForApproval extends Mailable
      */
     public function build()
     {
-        return $this->to('vikasmrnv@gmail.com')
-            ->bcc(config('constants.hr.default.email'))
+        return $this->to($this->supervisor['email'])
             ->subject('Requested For Approval')
-            ->view('mail.hr.send-for-approval');
+            ->view('mail.hr.send-for-approval')->with([
+                'application' => $this->application,
+                'supervisor' => $this->supervisor,
+            ]);
     }
 }
