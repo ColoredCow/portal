@@ -16,7 +16,6 @@ class CreateOfferLetter extends Migration
         Schema::table('hr_applications', function (Blueprint $table) {
             $table->string('offer_letter')->nullable()->after('pending_approval_from');
         });
-
     }
 
     /**
