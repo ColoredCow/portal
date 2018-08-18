@@ -7,6 +7,8 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\HR\SendForApproval;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationRound extends Model
 {
@@ -71,6 +73,7 @@ class ApplicationRound extends Model
             case 'send-for-approval':
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
+                Mail::send(new SendForApproval());
                 break;
 
             case 'approve':
