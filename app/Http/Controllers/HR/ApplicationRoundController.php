@@ -8,13 +8,11 @@ use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Http\Requests\HR\ApplicationRoundRequest;
 use App\Mail\HR\Applicant\RoundReviewed;
 use App\Models\HR\ApplicantRound;
-use App\Models\HR\Application;
 use App\Models\HR\ApplicationRound;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class ApplicationRoundController extends Controller
 {
