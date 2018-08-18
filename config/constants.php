@@ -109,7 +109,7 @@ return [
             ],
             'sent-for-approval' => [
                 'label' => 'sent-for-approval',
-                'title' => 'Pending',
+                'title' => 'Sent-For-Approval',
                 'class' => 'badge badge-info',
             ],
             'confirmed' => [

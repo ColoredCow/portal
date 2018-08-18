@@ -10,7 +10,13 @@
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="send_for_approval_person">Select supervisor</label>
+                        <label for="offer_letter" class="field-required">Offer letter</label>
+                        <input id="offer_letter" type="file" name="offer_letter" required="required">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="send_for_approval_person" class="field-required">Select supervisor</label>
                         <select name="send_for_approval_person" id="send_for_approval_person" class="form-control" required="required">
                             @foreach ($interviewers as $interviewer)
                                 <option value="{{ $interviewer->id }}">{{ $interviewer->name }}</option>
