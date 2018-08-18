@@ -131,6 +131,7 @@ return [
         'defaults' => [
             'scheduled_person_id' => 1,
         ],
+        'offer-letters-dir' => 'offer-letters',
     ],
     'finance' => [
         'invoice' => [
