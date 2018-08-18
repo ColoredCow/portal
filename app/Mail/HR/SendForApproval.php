@@ -18,7 +18,6 @@ class SendForApproval extends Mailable
      */
     public function __construct()
     {
-       
     }
 
     /**
