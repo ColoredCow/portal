@@ -18,6 +18,7 @@ class SendForApproval extends Mailable
      */
     public function __construct()
     {
+       
         
     }
 
@@ -27,8 +28,7 @@ class SendForApproval extends Mailable
      * @return $this
      */
     public function build()
-    {
-     
+    {  
         return $this->to('vikasmrnv@gmail.com' )
             ->bcc(config('constants.hr.default.email'))
             ->subject('Requested For Approval')
