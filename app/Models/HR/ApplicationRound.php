@@ -75,7 +75,7 @@ class ApplicationRound extends Model
                 $application->sendForApproval($attr['send_for_approval_person']);
                 $supervisor = User::find(4); //this need to current supervisor
                 $application = Application::find(1); //this need to be current applicant 
-                Mail::send(new SendForApproval($supervisor,$application));
+                Mail::send(new SendForApproval($supervisor, $application));
                 break;
 
             case 'approve':
