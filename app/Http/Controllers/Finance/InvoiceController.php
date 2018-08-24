@@ -73,7 +73,7 @@ class InvoiceController extends Controller
         $validated = $request->validated();
 
         $path = self::upload($validated['invoice_file']);
-        $invoice = Invoice::create([
+        $args = [
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
@@ -87,32 +87,28 @@ class InvoiceController extends Controller
             'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
             'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
             'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
-            'currency_paid_amount' => isset($validated['currency_paid_amount']) ? $validated['currency_paid_amount'] : null,
             'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
             'transaction_charge' => isset($validated['transaction_charge']) ? $validated['transaction_charge'] : null,
-            'currency_transaction_charge' => isset($validated['currency_transaction_charge']) ? $validated['currency_transaction_charge'] : null,
             'transaction_tax' => isset($validated['transaction_tax']) ? $validated['transaction_tax'] : null,
-            'currency_transaction_tax' => isset($validated['currency_transaction_tax']) ? $validated['currency_transaction_tax'] : null,
-
             'comments' => $validated['comments'],
             'tds' => isset($validated['tds']) ? $validated['tds'] : null,
-            'currency_tds' => $validated['currency_tds'],
             'due_amount' => isset($validated['due_amount']) ? $validated['due_amount'] : null,
-            'currency_due_amount' => isset($validated['currency_due_amount']) ? $validated['currency_due_amount'] : null,
             'file_path' => $path,
             'due_date' => isset($validated['due_date']) ? DateHelper::formatDateToSave($validated['due_date']) : null,
-        ]);
+        ];
+        $args = array_merge($args, $this->setRequestCurrencies($validated));
+
+        $invoice = Invoice::create($args);
 
         foreach ($validated['billings'] as $billing) {
             ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
         }
-        if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
-            $projectStageBilling = $invoice->projectStageBillings->first();
-            $project = $projectStageBilling->projectStage->project;
-            return redirect(route('projects.edit', $project->id))->with('status', 'Billing invoice created successfully');
-        }
 
-        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
+        $status = 'Invoice created successfully!';
+        if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
+            $status = 'Billing invoice created successfully!';
+        }
+        return redirect()->back()->with('status', $status);
     }
 
     /**
@@ -165,7 +161,7 @@ class InvoiceController extends Controller
     {
         $validated = $request->validated();
 
-        $updated = $invoice->update([
+        $args = [
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
@@ -179,19 +175,17 @@ class InvoiceController extends Controller
             'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
             'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
             'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
-            'currency_paid_amount' => isset($validated['currency_paid_amount']) ? $validated['currency_paid_amount'] : null,
             'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
             'transaction_charge' => $validated['transaction_charge'],
-            'currency_transaction_charge' => $validated['currency_transaction_charge'],
             'transaction_tax' => $validated['transaction_tax'],
-            'currency_transaction_tax' => $validated['currency_transaction_tax'],
             'comments' => $validated['comments'],
             'tds' => isset($validated['tds']) ? $validated['tds'] : null,
-            'currency_tds' => $validated['currency_tds'],
             'due_amount' => $validated['due_amount'],
-            'currency_due_amount' => $validated['currency_due_amount'],
             'due_date' => $validated['due_date'] ? DateHelper::formatDateToSave($validated['due_date']) : null,
-        ]);
+        ];
+        $args = array_merge($args, $this->setRequestCurrencies($validated));
+
+        $updated = $invoice->update($args);
 
         $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
         foreach ($invoiceBillings as $billingId => $invoiceBilling) {
@@ -207,6 +201,18 @@ class InvoiceController extends Controller
         }
 
         return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice updated successfully!');
+    }
+
+    protected function setRequestCurrencies(array $validated)
+    {
+        $args = [];
+        $currencies = ['currency_tds', 'currency_due_amount', 'currency_transaction_charge', 'currency_transaction_tax', 'currency_paid_amount'];
+        foreach ($currencies as $currency) {
+            if (isset($validated[$currency])) {
+                $args[$currency] = $validated[$currency];
+            }
+        }
+        return $args;
     }
 
     /**
