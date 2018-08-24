@@ -66,9 +66,7 @@ class ProjectStageController extends Controller
             ]);
         }
 
-        return response()->json([
-            'status' => 'Stage created successfully!',
-        ]);
+        return redirect()->back()->with('status', 'Stage created successfully!');
     }
 
     /**
@@ -138,9 +136,7 @@ class ProjectStageController extends Controller
             }
         }
 
-        return response()->json([
-            'status' => 'Stage updated successfully!',
-        ]);
+        return redirect()->back()->with('status', 'Stage updated successfully!');
     }
 
     /**
