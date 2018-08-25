@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container" id="page_hr_applicant_edit">
     <div class="row">
         <div class="col-md-12">

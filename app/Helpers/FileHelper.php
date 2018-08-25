@@ -46,4 +46,15 @@ class FileHelper
         $originalExtension = $file->getClientOriginalExtension();
         return "$dashedApplicantName-$timestamp.$originalExtension";
     }
+
+    public static function getOfferLettFilePath($fileName, $file)
+    {
+        $filePath = $fileName . '/' . $file;
+
+        if (!Storage::exists($filePath)) {
+            return false;
+        }
+
+        return $filePath;
+    }
 }

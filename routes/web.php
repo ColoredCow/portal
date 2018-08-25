@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
                     'edit' => 'applications.volunteer.edit',
                 ]);
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail');
+            Route::get('download/{filename}/{path}', 'JobApplicationController@download');
         });
 
         Route::resource('employees', 'Employees\EmployeeController')
