@@ -129,7 +129,7 @@
                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                         </div>
                     </div>
-                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
+                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
 
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
@@ -223,7 +223,7 @@
                         </div>
                         <input type="hidden" name="action" value="updated">
                         <input type="hidden" name="next_round" value="">
-                        @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
+                        @includeWhen($applicationRound->showActions, 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
                         @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                         @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                         @includeWhen($loop->last, 'hr.application.approve-applicant-modal')

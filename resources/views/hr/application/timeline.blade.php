@@ -14,20 +14,18 @@
                             @include('hr.application.auto-respond', ['applicant' => $application->applicant, 'application' => $application])
                         @endif
                         @break
-
                     @case('round-conducted')
                         @php
                             $applicationRound = $item['applicationRound'];
                             $application = $item['application'];
                         @endphp
                         <b><u>{{ date(config('constants.display_date_format'), strtotime($applicationRound->conducted_date)) }}</u></b><br>
-                        {{ $applicationRound->round->name }} for {{ $application->job->title }} conducted by {{ $applicationRound->conductedPerson->name }}<br>
-                        @if ($applicationRound->mail_sent)
-                            <span data-toggle="modal" data-target="#{{ $applicationRound->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
-                            @include('hr.communication-mail-modal', [ 'data' => $applicationRound->communicationMail ])
-                        @endif
+                            {{ $applicationRound->round->name }} for {{ $application->job->title }} conducted by {{ $applicationRound->conductedPerson->name }}<br>
+                            @if ($applicationRound->mail_sent)
+                                <span data-toggle="modal" data-target="#{{ $applicationRound->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
+                                @include('hr.communication-mail-modal', [ 'data' => $applicationRound->communicationMail ])
+                            @endif
                         @break
-
                     @case(config('constants.hr.application-meta.keys.change-job'))
                         @php
                             $event = $item['event'];
@@ -37,7 +35,6 @@
                         <span data-toggle="modal" data-target="#{{ $event->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
                         @include('hr.communication-mail-modal', ['data' => $event->communicationMail])
                         @break
-
                     @case(config('constants.hr.status.no-show.label'))
                         @php
                             $event = $item['event'];
@@ -48,6 +45,14 @@
                             <span data-toggle="modal" data-target="#{{ $event->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
                             @include('hr.communication-mail-modal', ['data' => $event->communicationMail])
                         @endif
+                        @break
+
+                    @case(config('constants.hr.application-meta.keys.sent-for-approval'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->conductedPerson }} requested approval from {{ $event->value->supervisor }}
                         @break
                 @endswitch
             </div>
