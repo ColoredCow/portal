@@ -73,12 +73,33 @@ class ApplicationRound extends Model
             case 'send-for-approval':
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
-                Mail::send(new SendForApproval());
+                $file = $attr['offer_letter'];
+                $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
+                $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
+                $application->saveOfferLetter($path);
+
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'sent-for-approval',
+                    'value' => json_encode([
+                        'conducted_person_id' => $fillable['conducted_person_id'],
+                        'supervisor_id' => $attr['send_for_approval_person'],
+                    ]),
+                ]);
+
+                $supervisor = User::find($attr['send_for_approval_person']);
+                Mail::send(new SendForApproval($supervisor, $application));
                 break;
 
             case 'approve':
                 $fillable['round_status'] = 'approved';
                 $application->approve();
+                $mail_Data =[
+                    'subject' => 'subject';
+                    'body' => 'body';
+                ];
+
+                Mail::send(new SendOfferLetter($application, $mail_Data));
                 break;
 
             case 'onboard':
