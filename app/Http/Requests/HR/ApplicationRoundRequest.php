@@ -40,6 +40,8 @@ class ApplicationRoundRequest extends FormRequest
             'designation' => 'nullable|string|required_if:action,onboard',
             'onboard_email' => 'nullable|string|required_if:action,onboard',
             'onboard_password' => 'nullable|string|required_if:action,onboard',
+            'subject' => 'nullable',
+            'body' => 'required|string',
         ];
 
         if (request()->input('action') == 'confirm' && request()->input('create_calendar_event') == 'on') {
@@ -47,7 +49,7 @@ class ApplicationRoundRequest extends FormRequest
             $rules['next_scheduled_end'] = 'nullable|date|required_with:create_calendar_event';
         }
 
-        if (request()->input('action') == 'send-for-approval') {
+        if (request()->input('action') == 'send-for-approval' || request()->input('action') == 'approve') {
             $rules['offer_letter'] = 'required|file';
         }
 

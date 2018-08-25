@@ -96,6 +96,10 @@ class ApplicationRound extends Model
             case 'approve':
                 $fillable['round_status'] = 'approved';
                 $application->approve();
+                $file = $attr['offer_letter'];
+                $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
+                $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
+                $application->saveOfferLetter($path);
                 break;
 
             case 'onboard':
