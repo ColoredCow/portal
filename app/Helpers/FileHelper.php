@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Models\HR\Applicant;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class FileHelper
@@ -17,7 +19,7 @@ class FileHelper
      */
     public static function getFilePath($year, $month, $file)
     {
-        $filePath =  $year . '/' . $month . '/' . $file;
+        $filePath = $year . '/' . $month . '/' . $file;
 
         if (!Storage::exists($filePath)) {
             return false;
@@ -35,5 +37,13 @@ class FileHelper
     {
         $now = Carbon::now();
         return $now->format('Y') . '/' . $now->format('m');
+    }
+
+    public static function getOfferLetterFileName(UploadedFile $file, Applicant $applicant)
+    {
+        $dashedApplicantName = str_replace(' ', '-', $applicant->name);
+        $timestamp = Carbon::now()->format('Ymd');
+        $originalExtension = $file->getClientOriginalExtension();
+        return "$dashedApplicantName-$timestamp.$originalExtension";
     }
 }
