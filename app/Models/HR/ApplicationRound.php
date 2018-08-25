@@ -80,6 +80,15 @@ class ApplicationRound extends Model
                 $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
                 $application->saveOfferLetter($path);
 
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'sent-for-approval',
+                    'value' => json_encode([
+                        'conducted_person_id' => $fillable['conducted_person_id'],
+                        'supervisor_id' => $attr['send_for_approval_person'],
+                    ]),
+                ]);
+
                 $supervisor = User::find($attr['send_for_approval_person']);
                 Mail::send(new SendForApproval($supervisor, $application));
                 break;

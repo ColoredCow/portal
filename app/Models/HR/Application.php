@@ -338,6 +338,19 @@ class Application extends Model
             ];
         }
 
+        $sentForApprovals = $this->applicationMeta()->sentForApproval()->get();
+        foreach ($sentForApprovals as $event) {
+            $details = json_decode($event->value);
+            $details->conductedPerson = User::find($details->conducted_person_id)->name;
+            $details->supervisor = User::find($details->supervisor_id)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.sent-for-approval'),
+                'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
         return $timeline;
     }
 
