@@ -76,6 +76,7 @@ abstract class ApplicationController extends Controller
             'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
+            'offer_letter' => $application->offer_letter,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -151,5 +152,26 @@ abstract class ApplicationController extends Controller
 
         return redirect()->back()
             ->with('status', $status);
+    }
+
+    public function download($fileName, $file, $inline = true)
+    {
+        $headers = [
+            'content-type' => 'application/pdf',
+        ];
+
+        $file_path = FileHelper::getOfferLettFilePath($fileName, $file);
+
+        $file_path = $path;
+
+        if (!$file_path) {
+            return false;
+        }
+
+        if ($inline) {
+            return Response::make(Storage::get($file_path), 200, $headers);
+        }
+
+        return Storage::download($file_path);
     }
 }
