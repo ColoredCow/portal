@@ -76,6 +76,12 @@ class ApplicationRound extends Model
             case 'approve':
                 $fillable['round_status'] = 'approved';
                 $application->approve();
+                $mail_Data =[
+                    'subject' => 'subject';
+                    'body' => 'body';
+                ];
+
+                Mail::send(new SendOfferLetter($application, $mail_Data));
                 break;
 
             case 'onboard':
