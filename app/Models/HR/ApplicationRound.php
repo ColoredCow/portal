@@ -80,7 +80,6 @@ class ApplicationRound extends Model
                     'subject' => 'subject';
                     'body' => 'body';
                 ];
-
                 Mail::send(new SendOfferLetter($application, $mail_Data));
                 break;
 
