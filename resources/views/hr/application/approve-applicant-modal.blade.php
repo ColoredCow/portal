@@ -20,7 +20,7 @@
                     </div>
                     @else
                         <div class="form-group col-md-12">
-                            <label for="offer_letter" class="field-required">Offer letter</label>
+                            <label for="offer_letter" class="field-required">Offer letter</label><br>
                             <input id="offer_letter" type="file" name="offer_letter" required="required">
                         </div>
                     @endif

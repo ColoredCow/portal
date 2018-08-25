@@ -2,11 +2,10 @@
 
 namespace App\Mail\HR;
 
+use App\Models\HR\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Models\HR\Application;
 
 class SendOfferLetter extends Mailable
 {
@@ -41,6 +40,7 @@ class SendOfferLetter extends Mailable
             ->view('mail.plain')
             ->with([
                 'body' => $this->body,
-            ]);
+            ])
+            ->attach(storage_path('app/' . $this->application->offer_letter));
     }
 }

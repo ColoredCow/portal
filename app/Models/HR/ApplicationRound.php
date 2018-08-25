@@ -4,6 +4,7 @@ namespace App\Models\HR;
 
 use App\Helpers\FileHelper;
 use App\Mail\HR\SendForApproval;
+use App\Mail\HR\SendOfferLetter;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
@@ -99,12 +100,13 @@ class ApplicationRound extends Model
 
                 $subject = $attr['subject'];
                 $body = $attr['body'];
-                Mail::send(new SendOfferLetter($application, $subject, $body));
 
                 $file = $attr['offer_letter'];
                 $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
                 $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
                 $application->saveOfferLetter($path);
+
+                Mail::send(new SendOfferLetter($application, $subject, $body));
                 break;
 
             case 'onboard':
