@@ -21,11 +21,11 @@ class SendOfferLetter extends Mailable
      *
      * @return void
      */
-    public function __construct(Application $application, $mail_data)
+    public function __construct(Application $application, $subject, $body)
     {
         $this->application = $application;
-        $this->subject = $mail_data['subject'];
-        $this->body = $mail_data['body'];
+        $this->subject = $subject;
+        $this->body = $body;
     }
 
     /**
