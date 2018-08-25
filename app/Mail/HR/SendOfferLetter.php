@@ -13,8 +13,8 @@ class SendOfferLetter extends Mailable
     use Queueable, SerializesModels;
 
     public $application;
-    public $subject;
     public $body;
+    public $subject;
 
     /**
      * Create a new message instance.
