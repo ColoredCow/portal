@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Helpers\FileHelper;
 use App\Mail\HR\SendForApproval;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
@@ -73,6 +74,21 @@ class ApplicationRound extends Model
             case 'send-for-approval':
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
+
+                $file = $attr['offer_letter'];
+                $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
+                $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
+                $application->saveOfferLetter($path);
+
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'sent-for-approval',
+                    'value' => json_encode([
+                        'conducted_person_id' => $fillable['conducted_person_id'],
+                        'supervisor_id' => $attr['send_for_approval_person'],
+                    ]),
+                ]);
+
                 $supervisor = User::find($attr['send_for_approval_person']);
                 Mail::send(new SendForApproval($supervisor, $application));
                 break;
