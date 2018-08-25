@@ -17,6 +17,8 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 abstract class ApplicationController extends Controller
 {
@@ -154,24 +156,20 @@ abstract class ApplicationController extends Controller
             ->with('status', $status);
     }
 
-    public function download($fileName, $file, $inline = true)
+    public function downloadOfferLetter(Application $application)
     {
-        $headers = [
-            'content-type' => 'application/pdf',
-        ];
+        $inline = true;
 
-        $file_path = FileHelper::getOfferLettFilePath($fileName, $file);
-
-        $file_path = $path;
-
-        if (!$file_path) {
+        if (!Storage::exists($application->offer_letter)) {
             return false;
         }
 
         if ($inline) {
-            return Response::make(Storage::get($file_path), 200, $headers);
+            return Response::make(Storage::get($application->offer_letter), 200, [
+                'content-type' => 'application/pdf',
+            ]);
         }
 
-        return Storage::download($file_path);
+        return Storage::download($application->offer_letter);
     }
 }
