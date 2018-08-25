@@ -1,4 +1,4 @@
-<div class="modal fade" id="approve_applicant" tabindex="-1" role="dialog" aria-labelledby="approve_applicant" aria-hidden="true">
+<div class="modal fade" id="approve_applicant" tabindex="-1" role="dialog" aria-labelledby="approve_applicant" aria-hidden="true" v-if="selectedAction == 'approve'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
