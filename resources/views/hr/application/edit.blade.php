@@ -183,7 +183,11 @@
                                 if ($loop->last) {
                                     if ($applicationRound->application->status == config('constants.hr.status.sent-for-approval.label')) {
                                         $showFooter = true;
-                                    } elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
+                                    }
+                                     if ($applicationRound->application->status== config('constants.hr.status.approved.label')) {
+                                        $showFooter = true;
+                                    }
+                                     elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
                                         $showFooter = true;
                                     }
                                 } elseif (!$applicationRound->mail_sent) {
@@ -222,6 +226,7 @@
                         @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
                         @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                         @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
+                        @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
                     </form>
                 </div>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
