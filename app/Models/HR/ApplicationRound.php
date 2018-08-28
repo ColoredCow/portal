@@ -101,11 +101,12 @@ class ApplicationRound extends Model
                 $subject = $attr['subject'];
                 $body = $attr['body'];
 
-                $file = $attr['offer_letter'];
-                $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
-                $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
-                $application->saveOfferLetter($path);
-
+                if (array_key_exists('offer_letter', $attr)) {
+                    $file = $attr['offer_letter'];
+                    $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
+                    $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
+                    $application->saveOfferLetter($path);
+                }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
                 break;
 
