@@ -90,7 +90,7 @@ abstract class ApplicationController extends Controller
         if ($job->type == 'job') {
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
-        } 
+        }  
         return view('hr.application.edit')->with($attr);
     }
 
