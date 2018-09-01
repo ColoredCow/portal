@@ -183,7 +183,7 @@
                                     if ($applicationRound->application->status == config('constants.hr.status.sent-for-approval.label')) {
                                         $showFooter = true;
                                     }
-                                     if ($applicationRound->application->status== config('constants.hr.status.approved.label')) {
+                                     elseif ($applicationRound->application->status== config('constants.hr.status.approved.label')) {
                                         $showFooter = true;
                                     }
                                      elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
