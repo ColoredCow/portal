@@ -54,6 +54,27 @@
                         <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
                         {{ $event->value->conductedPerson }} requested approval from {{ $event->value->supervisor }}
                         @break
+                    @case(config('constants.hr.application-meta.keys.approved'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->approvedBy }} approved this application
+                        @break
+                    @case(config('constants.hr.application-meta.keys.approved'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->approvedBy }} approved this application
+                        @break
+                    @case(config('constants.hr.application-meta.keys.onboarded'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->onboardedBy }} onboarded the applicant
+                        @break
                 @endswitch
             </div>
         </div>

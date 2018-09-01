@@ -351,6 +351,30 @@ class Application extends Model
             ];
         }
 
+        $approval = $this->applicationMeta()->approved()->get();
+        foreach ($approval as $event) {
+            $details = json_decode($event->value);
+            $details->approvedBy = User::find($details->approved_by)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.approved'),
+                'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
+        $onboard = $this->applicationMeta()->onboarded()->get();
+        foreach ($onboard as $event) {
+            $details = json_decode($event->value);
+            $details->onboardedBy = User::find($details->onboarded_by)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.onboarded'),
+                'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
         return $timeline;
     }
 
