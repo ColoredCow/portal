@@ -82,4 +82,26 @@ class User extends Authenticatable
     {
         return $query->where('email', $email);
     }
+
+    public static function _create($attr, $applicant = null)
+    {
+        $name = isset($attr['name']) ? $attr['name'] : null;
+        $email = isset($attr['email']) ? $attr['email'] : $attr['onboard_email'] . '@' . env('GOOGLE_CLIENT_HD');
+
+        if($applicant != null) {
+            $name = $applicant->name;
+        }
+         
+        if(!$name){
+            return;
+         }
+
+        $user = self::create([
+            'email' => $email,
+            'name' => $name,
+            'password' => isset($attr['password']) ? $attr['password'] : null,
+            'provider' => isset($attr['provider']) ? $attr['provider'] : 'google',
+            'provider_id' => isset($attr['provider_id']) ? $attr['provider_id'] : null,
+        ]);
+    }
 }
