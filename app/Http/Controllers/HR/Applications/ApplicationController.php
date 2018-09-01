@@ -66,11 +66,13 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
+
         $application = Application::findOrFail($id);
 
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
         $job = $application->job;
+        $approveMailTemplete = Setting::getApprovedEmail();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -79,6 +81,7 @@ abstract class ApplicationController extends Controller
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'offer_letter' => $application->offer_letter,
+            'approveMailTemplete' => $approveMailTemplete ,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -88,7 +91,7 @@ abstract class ApplicationController extends Controller
         if ($job->type == 'job') {
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
-        }
+        } 
         return view('hr.application.edit')->with($attr);
     }
 

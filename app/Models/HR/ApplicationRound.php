@@ -100,7 +100,15 @@ class ApplicationRound extends Model
 
                 $subject = $attr['subject'];
                 $body = $attr['body'];
-
+                
+                 ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'approve',
+                    'value' => json_encode([
+                        'subject' => $subject,
+                        'body' => $body,
+                    ]),
+                ]);
                 if (array_key_exists('offer_letter', $attr)) {
                     $file = $attr['offer_letter'];
                     $fileName = FileHelper::getOfferLetterFileName($file, $applicant);

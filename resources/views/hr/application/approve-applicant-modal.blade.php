@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="approve_applicant" tabindex="-1" role="dialog" aria-labelledby="approve_applicant" aria-hidden="true" v-if="selectedAction == 'approve'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -27,14 +28,14 @@
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
-                        <label for="designation" class="field-required">Subject</label>
-                        <input type="text" class="form-control" name="subject" id="subject" required="required">
+                        <label for="subject" class="field-required">Subject</label>
+                        <input type="text" class="form-control" name="subject" value="{{$approveMailTemplete['subject']}}" id="subject" required="required">
                     </div>
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
-                        <label for="comments" class="field-required">Body</label>
-                        <textarea name="body" id="comments" rows="5" class="form-control" required="required">{{ old('body') }}</textarea>
+                        <label for="body" class="field-required">Body</label>
+                        <textarea name="body" id="body" rows="5" class="form-control" required="required">{{$approveMailTemplete['body']}}</textarea>
                     </div>
                 </div>
                 <div class="form-row">
