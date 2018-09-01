@@ -5,6 +5,7 @@ namespace App\Models\HR;
 use App\Helpers\FileHelper;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
+use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
@@ -97,7 +98,6 @@ class ApplicationRound extends Model
             case 'approve':
                 $fillable['round_status'] = 'approved';
                 $application->approve();
-
                 $subject = $attr['subject'];
                 $body = $attr['body'];
 
