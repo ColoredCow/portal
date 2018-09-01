@@ -395,6 +395,12 @@ class Application extends Model
         return $this->status == config('constants.hr.status.sent-for-approval.label');
     }
 
+    public function isApproved()
+    {
+        return $this->status == config('constants.hr.status.approved.label');
+    }
+
+
     public function isRejected()
     {
         return $this->status == config('constants.hr.status.rejected.label');

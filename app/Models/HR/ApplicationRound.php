@@ -266,6 +266,6 @@ class ApplicationRound extends Model
      */
     public function getShowActionsAttribute()
     {
-        return is_null($this->round_status) || $this->isRejected() || ($this->isConfirmed() && $this->application->isSentForApproval());
+        return is_null($this->round_status) || $this->isRejected() || ($this->isConfirmed() && $this->application->isSentForApproval() || $this->application->isApproved()) ;
     }
 }
