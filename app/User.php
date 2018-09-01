@@ -88,13 +88,13 @@ class User extends Authenticatable
         $name = isset($attr['name']) ? $attr['name'] : null;
         $email = isset($attr['email']) ? $attr['email'] : $attr['onboard_email'] . '@' . env('GOOGLE_CLIENT_HD');
 
-        if($applicant != null) {
+        if ($applicant != null) {
             $name = $applicant->name;
         }
          
-        if(!$name){
+        if (!$name) {
             return;
-         }
+        }
 
         $user = self::create([
             'email' => $email,
