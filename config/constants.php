@@ -71,6 +71,7 @@ return [
                 'no-show' => 'no-show',
                 'custom-mail' => 'custom-mail',
                 'approved' => 'approved',
+                'onboarded' => 'onboarded',
             ],
             'reasons-no-show' => [
                 'absent-applicant' => 'Applicant is absent',

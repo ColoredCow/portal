@@ -363,6 +363,18 @@ class Application extends Model
             ];
         }
 
+        $onboard = $this->applicationMeta()->onboarded()->get();
+        foreach ($onboard as $event) {
+            $details = json_decode($event->value);
+            $details->onboardedBy = User::find($details->onboarded_by)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.onboarded'),
+                'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
         return $timeline;
     }
 
