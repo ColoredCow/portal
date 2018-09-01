@@ -17,6 +17,8 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 abstract class ApplicationController extends Controller
 {
@@ -76,6 +78,7 @@ abstract class ApplicationController extends Controller
             'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
+            'offer_letter' => $application->offer_letter,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -151,5 +154,22 @@ abstract class ApplicationController extends Controller
 
         return redirect()->back()
             ->with('status', $status);
+    }
+
+    public function downloadOfferLetter(Application $application)
+    {
+        $inline = true;
+
+        if (!Storage::exists($application->offer_letter)) {
+            return false;
+        }
+
+        if ($inline) {
+            return Response::make(Storage::get($application->offer_letter), 200, [
+                'content-type' => 'application/pdf',
+            ]);
+        }
+
+        return Storage::download($application->offer_letter);
     }
 }

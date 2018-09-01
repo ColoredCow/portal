@@ -51,6 +51,12 @@ class ApplicationRoundRequest extends FormRequest
             $rules['offer_letter'] = 'required|file';
         }
 
+        if (request()->input('action') == 'approve') {
+            $rules['offer_letter'] = 'nullable|file';
+            $rules['subject'] = 'required|string';
+            $rules['body'] = 'required|string';
+        }
+
         return $rules;
     }
 
