@@ -66,7 +66,6 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
-
         $application = Application::findOrFail($id);
 
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
