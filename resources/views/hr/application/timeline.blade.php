@@ -24,7 +24,7 @@
                         @if ($applicationRound->mail_sent)
                             <span data-toggle="modal" data-target="#{{ $applicationRound->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
                             @include('hr.communication-mail-modal', [ 'data' => $applicationRound->communicationMail ])
-                            @endif
+                        @endif
                         @break
                     @case(config('constants.hr.application-meta.keys.change-job'))
                         @php
