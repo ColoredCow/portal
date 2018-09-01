@@ -119,6 +119,7 @@ class ApplicationRound extends Model
                 $applicant->onboard($email, $attr['onboard_password'], [
                     'designation' => $attr['designation'],
                 ]);
+                $user = User::_create($attr, $applicant);
                 break;
         }
         $this->update($fillable);
