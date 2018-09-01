@@ -154,6 +154,7 @@ if (document.getElementById('form_invoice')) {
                     if (client.id == this.selectedClient) {
                         this.activeClient = client;
                         this.activeClientCurrency = JSON.parse(this.countries)[client.country].currency;
+                        console.log(client.country);
                         break;
                     }
                 }
