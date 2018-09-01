@@ -109,7 +109,7 @@ return [
             ],
             'sent-for-approval' => [
                 'label' => 'sent-for-approval',
-                'title' => 'Pending',
+                'title' => 'Sent for Approval',
                 'class' => 'badge badge-info',
             ],
             'confirmed' => [
@@ -131,6 +131,7 @@ return [
         'defaults' => [
             'scheduled_person_id' => 1,
         ],
+        'offer-letters-dir' => 'offer-letters',
     ],
     'finance' => [
         'invoice' => [

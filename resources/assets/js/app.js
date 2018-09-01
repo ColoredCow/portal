@@ -1,4 +1,4 @@
-F/**
+/**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
@@ -22,6 +22,21 @@ Vue.component('project-stage-component', require('./components/ProjectStageCompo
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('invoice-project-component', require('./components/InvoiceProjectComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
+
+$(document).ready(() => {
+    if ($('.form-create-invoice').length) {
+        let form = $('.form-create-invoice');
+        let client_id = form.find('#client_id').val();
+        if (client_id) {
+            updateClientProjects(form, client_id);
+        }
+    }
+    $('[data-toggle="tooltip"]').tooltip();
+    $('.status-close').on('click', function(){
+        let wrapper = $(this).closest('.alert');
+        wrapper.fadeOut(500);
+    });
+});
 
 if (document.getElementById('page_hr_applicant_edit')) {
 
@@ -201,7 +216,7 @@ $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', 
     let button = $(this);
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
-    const actions = [ 'confirm', 'send-form-approval', 'onboard', 'approve' ];
+    const actions = [ 'confirm', 'send-for-approval', 'onboard', 'approve' ];
       if(actions.includes(selectedAction)) {
        if (!form[0].checkValidity()) {
             form[0].reportValidity();
@@ -217,20 +232,6 @@ $('.date-field').datepicker({
     dateFormat: "dd/mm/yy"
 });
 
-$(document).ready(() => {
-    if ($('.form-create-invoice').length) {
-        let form = $('.form-create-invoice');
-        let client_id = form.find('#client_id').val();
-        if (client_id) {
-            updateClientProjects(form, client_id);
-        }
-    }
-    $('[data-toggle="tooltip"]').tooltip();
-    $('.status-close').on('click', function(){
-        let wrapper = $(this).closest('.alert');
-        wrapper.fadeOut(500);
-    });
-});
 
 $('#form_invoice').on('change', '#client_id', function(){
     let form = $(this).closest('form');
@@ -444,7 +445,7 @@ if (document.getElementById('books_listing')) {
                 this.categoryInputs.map((checkbox) => checkbox.checked = false );
                 categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
             },
-            
+
             updateCategory: function() {
                 let selectedCategory = [];
                 let bookID = this.books[this.currentBookIndex]['id'];
@@ -506,7 +507,7 @@ if (document.getElementById('books_listing')) {
                 if (new_count && isFinite(new_count)) {
                     this.books[index].number_of_copies = new_count;
                     axios.put(
-                        this.updateRoute + '/' + this.books[index].id, 
+                        this.updateRoute + '/' + this.books[index].id,
                         {'number_of_copies' : new_count},
                     );
                 }
