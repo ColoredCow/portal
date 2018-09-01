@@ -70,6 +70,7 @@ return [
                 'change-job' => 'change-job',
                 'no-show' => 'no-show',
                 'custom-mail' => 'custom-mail',
+                'approved' => 'approved',
             ],
             'reasons-no-show' => [
                 'absent-applicant' => 'Applicant is absent',

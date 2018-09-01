@@ -98,6 +98,14 @@ class ApplicationRound extends Model
                 $fillable['round_status'] = 'approved';
                 $application->approve();
 
+                $appMeta = ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'approved',
+                    'value' => json_encode([
+                        'approved_by' => $fillable['conducted_person_id'],
+                    ]),
+                ]);
+
                 $subject = $attr['subject'];
                 $body = $attr['body'];
 
