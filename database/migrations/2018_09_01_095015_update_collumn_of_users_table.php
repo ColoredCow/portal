@@ -25,6 +25,6 @@ class UpdateCollumnOfUsersTable extends Migration
      */
     public function down()
     {
-       //
+        //
     }
 }
