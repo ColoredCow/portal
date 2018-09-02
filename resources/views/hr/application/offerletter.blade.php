@@ -6,10 +6,8 @@
   </head>
   <body>
     <h2>ColoredCow</h2>
-    <h3 class="text-center"> Offer Letter</h3>
-    <hr>
-    
-    
+    <h3 class="text-center">Offer Letter</h3>
+    <hr>    
     <p class="text-justify">
       Dear : {{$applicant->name}},<br>
             {{$applicant->email}}<br><br>

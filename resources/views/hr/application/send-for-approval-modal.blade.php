@@ -9,9 +9,16 @@
             </div>
             <div class="modal-body">
                 <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label for="offer_letter" class="field-required">Offer letter</label>
-                        <input id="offer_letter" type="file" name="offer_letter" required="required">
+                    <div class="form-group col-md-12">
+                        @if ($application->offer_letter)
+                            <div class="col-md-12">
+                                <a target="_blank" href="{{ route("applications.{$application->job->type}.offer-letter", $application) }}" class="d-flex align-items-center">
+                                    <i class="fa fa-file fa-2x text-primary btn-file"></i>&nbsp;See offer letter
+                                </a>
+                            </div>
+                        @else
+                            <a href="{{ route('applications.generateOfferLetter', $application->id) }}" class="btn btn-secondary px-4">Generate Offer Letter</a>
+                        @endif
                     </div>
                 </div>
                 <div class="form-row">

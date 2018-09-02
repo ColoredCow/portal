@@ -19,16 +19,8 @@
                         </a>
                     </div>
                     @else
-                        <div class="form-group col-md-12">
-                            <label for="offer_letter" class="field-required">Offer letter</label><br>
-                            <input id="offer_letter" type="file" name="offer_letter" required="required">
-                        </div>
+                        <a href="{{ route('applications.generateOfferLetter', $application->id) }}" class="btn btn-secondary px-4">Generate Offer Letter</a>
                     @endif
-                </div>
-                <div class="form-row mt-4">
-                    <div class="form-group col-md-12">
-                        <a href="generate-pdf" class="btn btn-warning px-4">Generate Offer Letter</a>
-                    </div>
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">

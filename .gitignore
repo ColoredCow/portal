@@ -18,4 +18,4 @@ yarn-error.log
 /public/css
 /public/js
 /public/images/vendor
-.DS_Store
+/public/offer-letters

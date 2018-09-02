@@ -76,11 +76,6 @@ class ApplicationRound extends Model
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
 
-                $file = $attr['offer_letter'];
-                $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
-                $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
-                $application->saveOfferLetter($path);
-
                 ApplicationMeta::create([
                     'hr_application_id' => $application->id,
                     'key' => 'sent-for-approval',
