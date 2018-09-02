@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="approve_applicant" tabindex="-1" role="dialog" aria-labelledby="approve_applicant" aria-hidden="true" v-if="selectedAction == 'approve'">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -25,6 +24,11 @@
                             <input id="offer_letter" type="file" name="offer_letter" required="required">
                         </div>
                     @endif
+                </div>
+                <div class="form-row mt-4">
+                    <div class="form-group col-md-12">
+                        <a href="generate-pdf" class="btn btn-warning px-4">Generate Offer Letter</a>
+                    </div>
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">

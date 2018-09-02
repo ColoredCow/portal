@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use PDF;
 
 abstract class ApplicationController extends Controller
 {
@@ -95,6 +96,16 @@ abstract class ApplicationController extends Controller
         return view('hr.application.edit')->with($attr);
     }
 
+    public function generateOfferLetter($id) {
+        $data = [
+            'foo' => 'bar'
+        ];
+        $application = Application::findOrFail($id);
+        $job = $application->job;
+        $applicant = $application->applicant;
+        $pdf = PDF::loadView('hr.application.offerletter', compact('applicant', 'job'));
+        return $pdf->stream('offerletter.pdf');
+    }
     /**
      * Update the specified resource
      *
