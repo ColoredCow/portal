@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Client;
 use App\Models\Finance\Invoice;
+use App\Models\Finance\Payment;
+use App\Models\Finance\PaymentModes\Cash;
+use App\Models\Finance\PaymentModes\Cheque;
+use App\Models\Finance\PaymentModes\WireTransfer;
 use App\Models\ProjectStageBilling;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Input;
@@ -73,45 +77,75 @@ class InvoiceController extends Controller
         $validated = $request->validated();
 
         $path = self::upload($validated['invoice_file']);
+
         $invoice = Invoice::create([
             'project_invoice_id' => $validated['project_invoice_id'],
             'status' => $validated['status'],
+            'currency' => $validated['invoice_currency'],
+            'amount' => $validated['invoice_amount'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
-            'sent_amount' => $validated['sent_amount'],
-            'currency_sent_amount' => $validated['currency_sent_amount'],
+            'due_on' => isset($validated['due_on']) ? DateHelper::formatDateToSave($validated['due_on']) : null,
             'gst' => isset($validated['gst']) ? $validated['gst'] : null,
-            'paid_on' => isset($validated['paid_on']) ? DateHelper::formatDateToSave($validated['paid_on']) : null,
-            'paid_amount' => isset($validated['paid_amount']) ? $validated['paid_amount'] : null,
-            'payment_type' => isset($validated['payment_type']) ? $validated['payment_type'] : null,
-            'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : null,
-            'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
-            'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
-            'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
-            'currency_paid_amount' => isset($validated['currency_paid_amount']) ? $validated['currency_paid_amount'] : null,
-            'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
-            'transaction_charge' => isset($validated['transaction_charge']) ? $validated['transaction_charge'] : null,
-            'currency_transaction_charge' => isset($validated['currency_transaction_charge']) ? $validated['currency_transaction_charge'] : null,
-            'transaction_tax' => isset($validated['transaction_tax']) ? $validated['transaction_tax'] : null,
-            'currency_transaction_tax' => isset($validated['currency_transaction_tax']) ? $validated['currency_transaction_tax'] : null,
-
             'comments' => $validated['comments'],
-            'tds' => isset($validated['tds']) ? $validated['tds'] : null,
-            'currency_tds' => $validated['currency_tds'],
-            'due_amount' => isset($validated['due_amount']) ? $validated['due_amount'] : null,
-            'currency_due_amount' => isset($validated['currency_due_amount']) ? $validated['currency_due_amount'] : null,
             'file_path' => $path,
-            'due_date' => isset($validated['due_date']) ? DateHelper::formatDateToSave($validated['due_date']) : null,
+        ]);
+
+        $modes = config('constants.finance.payment.modes');
+        switch ($validated['payment_mode']) {
+            case 'cash':
+                $mode = Cash::create();
+                break;
+
+            case 'wire-transfer':
+                $wireTransfer = [];
+                if (isset($validated['wire_transfer_via'])) {
+                    $wireTransfer['via'] = $validated['wire_transfer_via'];
+                }
+                $mode = WireTransfer::create($wireTransfer);
+                break;
+
+            case 'cheque':
+                $cheque = ['status' => $validated['cheque_status']];
+                switch ($validated['cheque_status']) {
+                    case 'received':
+                        $dateField = 'received_on';
+                        break;
+
+                    case 'cleared':
+                        $dateField = 'cleared_on';
+                        break;
+
+                    case 'bounced':
+                        $dateField = 'bounced_on';
+                        break;
+                }
+                $cheque[$dateField] = DateHelper::formatDateToSave($validated["cheque_$dateField"]);
+                $mode = Cheque::create($cheque);
+                break;
+        }
+
+        $payment = Payment::create([
+            'invoice_id' => $invoice->id,
+            'paid_at' => $validated['paid_at'],
+            'currency' => $validated['payment_currency'],
+            'amount' => $validated['payment_amount'],
+            'bank_charges' => $validated['bank_charges'],
+            'bank_service_tax_forex' => $validated['bank_service_tax_forex'],
+            'tds' => $validated['tds'],
+            'conversion_rate' => $validated['conversion_rate'],
+            'mode_id' => $mode->id,
+            'mode_type' => $modes[$validated['payment_mode']],
         ]);
 
         foreach ($validated['billings'] as $billing) {
-            ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
+            ProjectStageBilling::where('id', $billing)->update(['invoice_id' => $invoice->id]);
         }
+
         if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
             $projectStageBilling = $invoice->projectStageBillings->first();
             $project = $projectStageBilling->projectStage->project;
             return redirect(route('projects.edit', $project->id))->with('status', 'Billing invoice created successfully');
         }
-
         return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
     }
 
@@ -146,11 +180,16 @@ class InvoiceController extends Controller
             $billings[] = $billing;
         }
 
+        $invoice->load('payments');
+        $payment = $invoice->payments->first();
+        $paymentMode = $payment->mode_type::find($payment->mode_id);
+
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
             'clients' => Client::select('id', 'name')->get(),
             'invoice_client' => $client,
             'invoice_billings' => $billings,
+            'payment_mode' => $paymentMode,
         ]);
     }
 
@@ -165,32 +204,30 @@ class InvoiceController extends Controller
     {
         $validated = $request->validated();
 
-        $updated = $invoice->update([
+        $invoiceUpdated = $invoice->update([
             'project_invoice_id' => $validated['project_invoice_id'],
-            'status' => $validated['status'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
-            'sent_amount' => $validated['sent_amount'],
-            'currency_sent_amount' => $validated['currency_sent_amount'],
+            'amount' => $validated['invoice_amount'],
+            'currency' => $validated['invoice_currency'],
             'gst' => isset($validated['gst']) ? $validated['gst'] : null,
-            'paid_on' => isset($validated['paid_on']) ? DateHelper::formatDateToSave($validated['paid_on']) : null,
-            'paid_amount' => isset($validated['paid_amount']) ? $validated['paid_amount'] : null,
-            'payment_type' => isset($validated['payment_type']) ? $validated['payment_type'] : null,
-            'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : '',
-            'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
-            'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
-            'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
-            'currency_paid_amount' => isset($validated['currency_paid_amount']) ? $validated['currency_paid_amount'] : null,
-            'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
-            'transaction_charge' => $validated['transaction_charge'],
-            'currency_transaction_charge' => $validated['currency_transaction_charge'],
-            'transaction_tax' => $validated['transaction_tax'],
-            'currency_transaction_tax' => $validated['currency_transaction_tax'],
             'comments' => $validated['comments'],
+            'due_on' => $validated['due_on'] ? DateHelper::formatDateToSave($validated['due_on']) : null,
+        ]);
+
+        // need to change the below for multiple payments.
+        $invoice->payments->first()->update([
+            'paid_at' => isset($validated['paid_at']) ? DateHelper::formatDateToSave($validated['paid_at']) : null,
+            'amount' => isset($validated['payment_amount']) ? $validated['payment_amount'] : null,
+            'currency' => isset($validated['payment_currency']) ? $validated['payment_currency'] : null,
+            'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
+            'bank_charges' => isset($validated['bank_charges']) ? $validated['bank_charges'] : null,
+            'bank_service_tax_forex' => isset($validated['bank_service_tax_forex']) ? $validated['bank_service_tax_forex'] : null,
             'tds' => isset($validated['tds']) ? $validated['tds'] : null,
-            'currency_tds' => $validated['currency_tds'],
-            'due_amount' => $validated['due_amount'],
-            'currency_due_amount' => $validated['currency_due_amount'],
-            'due_date' => $validated['due_date'] ? DateHelper::formatDateToSave($validated['due_date']) : null,
+            // 'mode' => isset($validated['mode']) ? $validated['mode'] : null,
+            // 'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : '',
+            // 'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
+            // 'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
+            // 'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
         ]);
 
         $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
@@ -202,7 +239,7 @@ class InvoiceController extends Controller
         }
         foreach ($validated['billings'] as $billing) {
             if (!array_key_exists($billing, $invoiceBillings)) {
-                ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
+                ProjectStageBilling::where('id', $billing)->update(['invoice_id' => $invoice->id]);
             }
         }
 

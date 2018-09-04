@@ -148,7 +148,7 @@ return [
             'symbol' => '$',
         ],
     ],
-    'payment_types' => [
+    'payment_modes' => [
         'cheque' => 'Cheque',
         'cash' => 'Cash',
         'wire-transfer' => 'Wire Transfer',

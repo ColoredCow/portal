@@ -24,33 +24,37 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         $rules = [
+            // invoice fields
             'project_invoice_id' => 'required|integer|min:1',
-            'status' => 'required|string',
-            'sent_on' => 'required',
-            'sent_amount' => 'required|numeric',
-            'currency_sent_amount' => 'required|string|size:3',
-            'paid_on' => 'nullable|required_if:status,paid',
-            'paid_amount' => 'nullable|numeric|required_if:status,paid',
-            'payment_type' => 'nullable|string|required_if:status,paid',
-            'cheque_status' => 'nullable|string|required_if:payment_type,cheque',
-            'cheque_received_date' => 'nullable|string|required_if:cheque_status,received',
-            'cheque_cleared_date' => 'nullable|string|required_if:cheque_status,cleared',
-            'cheque_bounced_date' => 'nullable|string|required_if:cheque_status,bounced',
-            'currency_paid_amount' => 'nullable|string|size:3',
-            'comments' => 'nullable|string',
-            'tds' => 'nullable|numeric',
-            'currency_tds' => 'nullable|string|size:3',
-            'conversion_rate' => 'nullable',
-            'transaction_charge' => 'nullable|numeric',
-            'currency_transaction_charge' => 'nullable|string',
-            'transaction_tax' => 'nullable|numeric',
-            'currency_transaction_tax' => 'nullable|string',
-            'billings' => 'required',
+            // 'status' => 'required|string',
+            'invoice_currency' => 'required|string',
+            'invoice_amount' => 'required|numeric',
+            'sent_on' => 'required|string', // change type to date
+            'due_on' => 'nullable|string', // change type to date
             'gst' => 'nullable|numeric',
+            'comments' => 'nullable|string',
+
+            // payment fields
+            'paid_at' => 'nullable|required_if:status,paid', // add date type
+            'payment_amount' => 'nullable|numeric|required_if:status,paid',
+            'payment_currency' => 'required|string',
+            'tds' => 'nullable|numeric',
+            'conversion_rate' => 'nullable|numeric',
+            'bank_charges' => 'nullable|numeric',
+            'bank_service_tax_forex' => 'nullable|numeric',
+
+            'payment_mode' => 'nullable|string',
+
+            'wire_transfer_via' => 'nullable|string',
+
+            'cheque_status' => 'nullable|string|required_if:payment_mode,cheque',
+            'cheque_received_on' => 'nullable|string|required_if:cheque_status,received',
+            'cheque_cleared_on' => 'nullable|string|required_if:cheque_status,cleared',
+            'cheque_bounced_on' => 'nullable|string|required_if:cheque_status,bounced',
+
+            'billings' => 'required',
+
             'request_from_billing' => 'nullable|boolean',
-            'due_amount' => 'nullable|numeric',
-            'currency_due_amount' => 'nullable|string',
-            'due_date' => 'nullable|string',
         ];
 
         if ($this->method() === 'POST') {
@@ -68,10 +72,9 @@ class InvoiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'project_ids.required' => 'At least one project is required',
             'sent_on.required' => 'Invoice sent date is required',
-            'sent_amount.numeric' => 'Invoice amount must be a valid decimal',
-            'paid_amount.numeric' => 'Received amount must be a valid decimal',
+            'invoice_amount.numeric' => 'Invoice amount must be a valid decimal',
+            'payment_amount.numeric' => 'Received amount must be a valid decimal',
             'project_invoice_id.required' => 'Invoice ID is required',
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',
             'project_invoice_id.integer' => 'Invoice ID should be a valid number',

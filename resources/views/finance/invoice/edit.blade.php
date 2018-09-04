@@ -35,10 +35,10 @@
                     </div>
                 </div>
                 <invoice-project-component
-                :billings="{{ json_encode($invoice_billings) }}"
-                :client="{{ json_encode($invoice_client) }}">
+                    :billings="{{ json_encode($invoice_billings) }}"
+                    :client="{{ json_encode($invoice_client) }}">
                 </invoice-project-component>
-                <div class="form-row mb-4">
+                <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="project_invoice_id" class="field-required">Invoice ID</label>
                         <input type="text" class="form-control" name="project_invoice_id" id="project_invoice_id" placeholder="Invoice ID" required="required" value="{{ $invoice->project_invoice_id }}">
@@ -48,23 +48,23 @@
                         <input type="date" class="form-control" name="sent_on" id="sent_on" placeholder="{{ config('constants.finance.input_date_format') }}" required="required" value="{{ $invoice->sent_on }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-3">
-                        <label for="sent_amount" class="field-required">Invoice amount</label>
+                        <label for="invoice_amount" class="field-required">Invoice amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_sent_amount" id="currency_sent_amount" class="btn btn-secondary" required="required">
+                                <select name="invoice_currency" id="invoice_currency" class="btn btn-secondary" required="required">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
                                     @php
-                                        $selected = $currency === $invoice->currency_sent_amount ? 'selected="selected"' : '';
+                                        $selected = $currency === $invoice->currency ? 'selected="selected"' : '';
                                     @endphp
                                     <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" v-model="sentAmount" data-sent-amount="{{ $invoice->sent_amount }}">
+                            <input type="number" class="form-control" name="invoice_amount" id="invoice_amount" placeholder="Invoice Amount" required="required" step=".01" min="0" v-model="sentAmount" data-sent-amount="{{ $invoice->amount }}">
                         </div>
                     </div>
-                @if ($invoice_client->country == 'india')
-                    <div class="form-group col-md-2">
+                    @if ($invoice_client->country == 'india')
+                    <div class="form-group col-md-3">
                         <label for="gst">GST</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -75,38 +75,38 @@
                             <input type="number" class="form-control" name="gst" id="gst" placeholder="GST" step=".01" min="0" value="{{ $invoice->gst }}">
                         </div>
                     </div>
-                @endif
+                    @endif
                 </div>
-                <div class="form-row mb-4">
+                <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="due_date">Due date</label>
-                        <input type="date" class="form-control" name="due_date" id="due_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->due_date }}">
+                        <label for="due_on">Due date</label>
+                        <input type="date" class="form-control" name="due_on" id="due_on" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->due_on }}">
                     </div>
                 </div>
-                <div class="form-row mb-4">
-                    <div class="form-group col-md-2">
+                <div class="form-row">
+                    {{-- <div class="form-group col-md-2">
                         <label for="name" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" required="required" v-model="status" data-status="{{ $invoice->status }}">
                         @foreach (config('constants.finance.invoice.status') as $status => $display_name)
                             <option value="{{ $status }}">{{ $display_name }}</option>
                         @endforeach
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-3" v-if="status == 'paid'">
-                        <label for="paid_on" class="field-required">Paid on</label>
-                        <input type="date" required="required" class="form-control" name="paid_on" id="paid_on" placeholder="{{config('constants.finance.input_date_format')}}" value="{{ $invoice->paid_on }}">
+                        <label for="paid_at" class="field-required">Paid on</label>
+                        <input type="date" required="required" class="form-control" name="paid_at" id="paid_at" placeholder="{{config('constants.finance.input_date_format')}}" value="{{ $invoice->payments->first()->paid_at }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-3" v-if="status == 'paid'">
-                        <label for="paid_amount" class="field-required">Received amount</label>
+                    <div class="form-group offset-md-1 col-md-3">
+                        <label for="payment_amount" class="field-required">Payment amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_paid_amount" required="required" id="currency_paid_amount" class="btn btn-secondary" v-model="activeClientCurrency" data-paid-amount-currency="{{ $invoice->currency_paid_amount }}">
+                                <select name="payment_currency" required="required" id="payment_currency" class="btn btn-secondary" v-model="activeClientCurrency" data-paid-amount-currency="{{ $invoice->payments->first()->currency }}">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
                                     <option value="{{ $currency }}">{{ $currency }}</option>
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" v-model="paidAmount" data-paid-amount="{{ $invoice->paid_amount }}">
+                            <input type="number" class="form-control" name="payment_amount" id="payment_amount" placeholder="Payment amount" step=".01" min="0" v-model="paidAmount" data-paid-amount="{{ $invoice->payments->first()->amount }}">
                         </div>
                     </div>
                     <div class="form-group col-md-2" v-show="status == 'paid' && activeClient.hasOwnProperty('country') && activeClient.country == 'india'">
@@ -114,86 +114,63 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
-                                @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    @php
-                                        $selected = $currency === $invoice->currency_tds ? 'selected="selected"' : '';
-                                    @endphp
-                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
-                                @endforeach
+                                    <option>INR</option>
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS" step=".01" min="0" v-model="tdsAmount" data-tds="{{ $invoice->tds }}">
+                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS" step=".01" min="0" v-model="tdsAmount" data-tds="{{ $invoice->payments->first()->tds }}">
                         </div>
                     </div>
                 </div>
-                <div class="form-row mb-4" v-show="status == 'paid'">
+                <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="bank_charges">Bank charges on fund transfer</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_transaction_charge" id="currency_transaction_charge" class="btn btn-secondary" required="required" v-model="currencyTransactionCharge" data-currency-transaction-charge="{{ $invoice->currency_transaction_charge }}">
+                                <select name="payment_currency" id="payment_currency" class="btn btn-secondary" required="required" data-currency-transaction-charge="{{ $invoice->payments->first()->currency }}">
                                 @foreach (config('constants.currency') as $currency => $currencyMeta)
                                     <option value="{{ $currency }}">{{ $currency }}</option>
                                 @endforeach
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="transaction_charge" id="transaction_charge" placeholder="amount" step=".01" min="0" v-model="transactionCharge" data-transaction-charge="{{ $invoice->transaction_charge }}">
+                            <input type="number" class="form-control" name="bank_charges" id="bank_charges" placeholder="amount" step=".01" min="0" v-model="transactionCharge" data-transaction-charge="{{ $invoice->payments->first()->bank_charges }}">
                         </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="bank_taxes">ST on fund transfer</label>
+                        <label for="bank_service_tax_forex">ST on fund transfer</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="currency_transaction_tax" id="currency_transaction_tax" class="btn btn-secondary" required="required">
-                                @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    @php
-                                        $selected = $currency === $invoice->currency_transaction_tax ? 'selected="selected"' : '';
-                                    @endphp
-                                    <option value="{{ $currency }}" {{ $selected }}>{{ $currency }}</option>
-                                @endforeach
+                                <select class="btn btn-secondary">
+                                    <option>INR</option>
                                 </select>
                             </div>
-                            <input type="number" class="form-control" name="transaction_tax" id="transaction_tax" placeholder="amount" step=".01" min="0" value="{{ $invoice->transaction_tax }}">
+                            <input type="number" class="form-control" name="bank_service_tax_forex" id="bank_service_tax_forex" placeholder="amount" step=".01" min="0" value="{{ $invoice->payments->first()->bank_service_tax_forex }}">
                         </div>
                     </div>
                     <div class="form-group offset-md-1 col-md-3" v-show="activeClientCurrency != 'INR'">
                         <label for="conversion_rate">Conversion rate</label>
                         <div class="d-flex flex-column">
-                            <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ $invoice->conversion_rate }}">
+                            <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ $invoice->payments->first()->conversion_rate }}">
                             <div class="mt-3 mb-0">
-                                <p class="m-0">Received amount after conversion&nbsp;&nbsp;</p>
+                                <p class="m-0">Payment amount after conversion&nbsp;&nbsp;</p>
                                 <h4 class="m-0">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group" :class="[activeClientCurrency == 'INR' ? 'offset-md-1 col-md-3' : 'col-md-2']">
-                        <label for="due_amount">Balance left</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select name="currency_due_amount" id="currency_due_amount" class="btn btn-secondary" required="required" v-model="currencyDueAmount" data-currency-due-amount="{{ $invoice->currency_due_amount }}">
-                                @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    <option value="{{ $currency }}">{{ $currency }}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <input type="number" class="form-control" name="due_amount" id="due_amount" placeholder="balance left" step=".01" min="0" v-model="suggestedDueAmount" data-due-amount="{{ $invoice->due_amount }}">
                         </div>
                     </div>
                 </div>
                 <div class="form-row mb-2" v-if="status == 'paid'">
                     <div class="form-group col-md-5">
-                        <label for="payment_type" class="field-required">Payment type</label>
-                        <select name="payment_type" id="payment_type" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ $invoice->payment_type }}">
-                            <option value="">Select payment type</option>
-                            @foreach (config('constants.payment_types') as $payment_type => $display_name)
+                        <label for="payment_mode" class="field-required">Payment mode</label>
+                        <select name="payment_mode" id="payment_mode" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ $invoice->payment_mode }}">
+                            <option value="">Select payment mode</option>
+                            @foreach (config('constants.payment_modes') as $payment_mode => $display_name)
                                 @php
-                                    $selected = $invoice->payment_type == $payment_type ? 'selected="selected"' : '';
+                                    $selected = $invoice->payment_mode == $payment_mode ? 'selected="selected"' : '';
                                 @endphp
-                                <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
+                                <option value="{{ $payment_mode }}" {{ $selected }}>{{ $display_name }}</option>
                             @endforeach
                         </select>
-                    </div> 
-                    <div class="form-group offset-md-1 col-md-3 cheque-status" v-if="paymentType == 'cheque'">
+                    </div>
+                    {{-- <div class="form-group offset-md-1 col-md-3 cheque-status" v-if="paymentType == 'cheque'">
                         <label for="cheque_status" class="field-required">Cheque status</label>
                         <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
                             <option value="">Select cheque status</option>
@@ -201,8 +178,8 @@
                                 <option value="{{ $cheque_status }}">{{ $display_name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="form-group col-md-2" v-if="paymentType == 'cheque' && chequeStatus == 'received'">
+                    </div> --}}
+                    {{-- <div class="form-group col-md-2" v-if="paymentType == 'cheque' && chequeStatus == 'received'">
                         <label for="cheque_received_date" class="field-required">Cheque Received Date</label>
                         <input type="text" class="form-control date-field" required="required" name="cheque_received_date" id="cheque_received_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_received_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_received_date)) : '' }}">
                     </div>
@@ -213,9 +190,9 @@
                     <div class="form-group col-md-2" v-if="paymentType == 'cheque' && chequeStatus == 'bounced'">
                         <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
-                    </div>
-                </div>     
-                <div class="form-row mb-4">
+                    </div> --}}
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-5">
                     @if ($invoice->file_path)
                         <label class="font-weight-bold">Invoice File</label>

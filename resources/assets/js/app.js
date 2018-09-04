@@ -99,18 +99,18 @@ if (document.getElementById('form_invoice')) {
     const invoiceForm = new Vue({
         el: '#form_invoice',
         data: {
-            paymentType: document.getElementById('payment_type').dataset.paymentType || '',
-            chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null,
+            paymentType: document.getElementById('payment_mode').dataset.paymentType || '',
+            chequeStatus: document.getElementById('cheque_status') ? document.getElementById('cheque_status').dataset.chequeStatus : null,
             selectedClient: '',
             activeClient: document.getElementById('client_id').dataset.activeClient ? JSON.parse(document.getElementById('client_id').dataset.activeClient) : [],
-            activeClientCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR',
-            paidAmount: document.getElementById('paid_amount').dataset.paidAmount || '',
-            sentAmount: document.getElementById('sent_amount').dataset.sentAmount || '',
-            conversionRate: document.getElementById('conversion_rate').dataset.conversionRate || '',
-            status: document.getElementById('status').dataset.status || '',
+            activeClientCurrency: document.getElementById('payment_currency').dataset.paidAmountCurrency || 'INR',
+            paidAmount: document.getElementById('payment_amount').dataset.paidAmount || '',
+            sentAmount: document.getElementById('invoice_amount').dataset.sentAmount || '',
+            conversionRate: document.getElementById('conversion_rate') ? document.getElementById('conversion_rate').dataset.conversionRate : '',
+            status: document.getElementById('status') ? document.getElementById('status').dataset.status : '',
             countries: document.getElementById('client_id').dataset.countries || [],
             tdsAmount: document.getElementById('tds').dataset.tds || '',
-            transactionCharge: document.getElementById('transaction_charge').dataset.transactionCharge || '',
+            transactionCharge: document.getElementById('bank_charges') ? document.getElementById('bank_charges').dataset.transactionCharge : '',
         },
         computed: {
             convertedAmount: function() {
@@ -123,12 +123,15 @@ if (document.getElementById('form_invoice')) {
                 }
                 return this.sentAmount - this.paidAmount - this.tdsAmount - this.transactionCharge;
             },
-            currencyTransactionCharge: function() {
-                return document.getElementById('currency_transaction_charge').dataset.currencyTransactionCharge || this.activeClientCurrency || 'USD';
-            },
-            currencyDueAmount: function() {
-                return document.getElementById('currency_due_amount').dataset.currencyDueAmount || this.activeClientCurrency || 'USD';
-            }
+            // currencyTransactionCharge: function() {
+                // return document.getElementById('currency_transaction_charge').dataset.currencyTransactionCharge || this.activeClientCurrency || 'USD';
+            // },
+            // currencyDueAmount: function() {
+                // return document.getElementById('currency_due_amount').dataset.currencyDueAmount || this.activeClientCurrency || 'USD';
+            // }
+        },
+        mounted() {
+            console.log(this.paidAmount);
         },
         methods : {
             updateActiveClient: function() {
@@ -444,7 +447,7 @@ if (document.getElementById('books_listing')) {
                 this.categoryInputs.map((checkbox) => checkbox.checked = false );
                 categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
             },
-            
+
             updateCategory: function() {
                 let selectedCategory = [];
                 let bookID = this.books[this.currentBookIndex]['id'];
@@ -506,7 +509,7 @@ if (document.getElementById('books_listing')) {
                 if (new_count && isFinite(new_count)) {
                     this.books[index].number_of_copies = new_count;
                     axios.put(
-                        this.updateRoute + '/' + this.books[index].id, 
+                        this.updateRoute + '/' + this.books[index].id,
                         {'number_of_copies' : new_count},
                     );
                 }

@@ -2,13 +2,12 @@
 
 namespace App\Models\Finance;
 
+use App\Models\Finance\Payment;
 use App\Models\ProjectStageBilling;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    protected $table = 'finance_invoices';
-
     protected $guarded = [];
 
     /**
@@ -16,7 +15,12 @@ class Invoice extends Model
      */
     public function projectStageBillings()
     {
-        return $this->hasMany(ProjectStageBilling::class, 'finance_invoice_id');
+        return $this->hasMany(ProjectStageBilling::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 
     /**
@@ -57,10 +61,10 @@ class Invoice extends Model
     {
         $invoices = self::where(function ($query) use ($start, $end) {
             $query->where('sent_on', '>=', $start)
-                      ->where('sent_on', '<=', $end);
+                ->where('sent_on', '<=', $end);
         })->orWhere(function ($query) use ($start, $end) {
             $query->where('paid_on', '>=', $start)
-                      ->where('paid_on', '<=', $end);
+                ->where('paid_on', '<=', $end);
         })->orderBy('sent_on', 'desc')
             ->orderBy('paid_on', 'desc');
 
