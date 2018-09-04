@@ -84,19 +84,11 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    {{-- <div class="form-group col-md-2">
-                        <label for="name" class="field-required">Status</label>
-                        <select name="status" id="status" class="form-control" required="required" v-model="status" data-status="{{ $invoice->status }}">
-                        @foreach (config('constants.finance.invoice.status') as $status => $display_name)
-                            <option value="{{ $status }}">{{ $display_name }}</option>
-                        @endforeach
-                        </select>
-                    </div> --}}
-                    <div class="form-group col-md-3" v-if="status == 'paid'">
+                    <div class="form-group col-md-3">
                         <label for="paid_at" class="field-required">Paid on</label>
                         <input type="date" required="required" class="form-control" name="paid_at" id="paid_at" placeholder="{{config('constants.finance.input_date_format')}}" value="{{ $invoice->payments->first()->paid_at }}">
                     </div>
-                    <div class="form-group offset-md-1 col-md-3">
+                    <div class="form-group offset-md-3 col-md-3">
                         <label for="payment_amount" class="field-required">Payment amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
