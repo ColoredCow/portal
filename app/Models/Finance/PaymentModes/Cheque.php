@@ -13,4 +13,9 @@ class Cheque extends Model
     {
         return $this->morphOne(Payment::class, 'mode');
     }
+
+    public function getTypeAttribute()
+    {
+    	return 'cheque';
+    }
 }

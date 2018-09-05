@@ -102,12 +102,13 @@ if (document.getElementById('form_invoice')) {
             paymentType: document.getElementById('payment_mode').dataset.paymentType || '',
             chequeStatus: document.getElementById('cheque_status') ? document.getElementById('cheque_status').dataset.chequeStatus : null,
             selectedClient: '',
+            status: document.getElementById('status').dataset.invoicePayments > 0 ? 'paid' : 'unpaid',
             activeClient: document.getElementById('client_id').dataset.activeClient ? JSON.parse(document.getElementById('client_id').dataset.activeClient) : [],
-            activeClientCurrency: document.getElementById('payment_currency').dataset.paidAmountCurrency || 'INR',
+            paymentCurrency: document.getElementById('payment_currency').dataset.paymentCurrency || 'INR',
             paidAmount: document.getElementById('payment_amount').dataset.paidAmount || '',
             sentAmount: document.getElementById('invoice_amount').dataset.sentAmount || '',
+            invoiceCurrency: document.getElementById('invoice_currency').dataset.invoiceCurrency || '',
             conversionRate: document.getElementById('conversion_rate') ? document.getElementById('conversion_rate').dataset.conversionRate : '',
-            status: document.getElementById('status') ? document.getElementById('status').dataset.status : '',
             countries: document.getElementById('client_id').dataset.countries || [],
             tdsAmount: document.getElementById('tds').dataset.tds || '',
             transactionCharge: document.getElementById('bank_charges') ? document.getElementById('bank_charges').dataset.transactionCharge : '',
@@ -124,14 +125,17 @@ if (document.getElementById('form_invoice')) {
                 return this.sentAmount - this.paidAmount - this.tdsAmount - this.transactionCharge;
             },
             // currencyTransactionCharge: function() {
-                // return document.getElementById('currency_transaction_charge').dataset.currencyTransactionCharge || this.activeClientCurrency || 'USD';
+                // return document.getElementById('currency_transaction_charge').dataset.currencyTransactionCharge || this.paymentCurrency || 'USD';
             // },
             // currencyDueAmount: function() {
-                // return document.getElementById('currency_due_amount').dataset.currencyDueAmount || this.activeClientCurrency || 'USD';
+                // return document.getElementById('currency_due_amount').dataset.currencyDueAmount || this.paymentCurrency || 'USD';
             // }
         },
         mounted() {
             console.log(this.paidAmount);
+            console.log(this.paymentType);
+            console.log(this.paymentCurrency);
+            console.log(document.getElementById('status').dataset.invoicePayments);
         },
         methods : {
             updateActiveClient: function() {
@@ -141,7 +145,7 @@ if (document.getElementById('form_invoice')) {
                     let client = clients[index];
                     if (client.id == this.selectedClient) {
                         this.activeClient = client;
-                        this.activeClientCurrency = JSON.parse(this.countries)[client.country].currency;
+                        this.paymentCurrency = JSON.parse(this.countries)[client.country].currency;
                         break;
                     }
                 }

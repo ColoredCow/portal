@@ -26,7 +26,7 @@ class InvoiceRequest extends FormRequest
         $rules = [
             // invoice fields
             'project_invoice_id' => 'required|integer|min:1',
-            // 'status' => 'required|string',
+            'status' => 'required|string',
             'invoice_currency' => 'required|string',
             'invoice_amount' => 'required|numeric',
             'sent_on' => 'required|string', // change type to date
@@ -37,7 +37,7 @@ class InvoiceRequest extends FormRequest
             // payment fields
             'paid_at' => 'nullable|required_if:status,paid', // add date type
             'payment_amount' => 'nullable|numeric|required_if:status,paid',
-            'payment_currency' => 'required|string',
+            'payment_currency' => 'nullable|string|required_if:status,paid',
             'tds' => 'nullable|numeric',
             'conversion_rate' => 'nullable|numeric',
             'bank_charges' => 'nullable|numeric',
