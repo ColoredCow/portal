@@ -97,7 +97,8 @@ abstract class ApplicationController extends Controller
         return view('hr.application.edit')->with($attr);
     }
 
-    public function generateOfferLetter($id) {
+    public function generateOfferLetter($id)
+    {
         $application = Application::findOrFail($id);
         $job = $application->job;
         $applicant = $application->applicant;
