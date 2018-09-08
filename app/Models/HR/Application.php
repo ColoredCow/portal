@@ -338,8 +338,8 @@ class Application extends Model
             ];
         }
 
-        $sentForApprovals = $this->applicationMeta()->sentForApproval()->get();
-        foreach ($sentForApprovals as $event) {
+        $sentForApprovalEvents = $this->applicationMeta()->sentForApproval()->get();
+        foreach ($sentForApprovalEvents as $event) {
             $details = json_decode($event->value);
             $details->conductedPerson = User::find($details->conducted_person_id)->name;
             $details->supervisor = User::find($details->supervisor_id)->name;
@@ -351,8 +351,8 @@ class Application extends Model
             ];
         }
 
-        $approval = $this->applicationMeta()->approved()->get();
-        foreach ($approval as $event) {
+        $approvedEvents = $this->applicationMeta()->approved()->get();
+        foreach ($approvedEvents as $event) {
             $details = json_decode($event->value);
             $details->approvedBy = User::find($details->approved_by)->name;
             $event->value = $details;
@@ -363,8 +363,8 @@ class Application extends Model
             ];
         }
 
-        $onboard = $this->applicationMeta()->onboarded()->get();
-        foreach ($onboard as $event) {
+        $onboardEvents = $this->applicationMeta()->onboarded()->get();
+        foreach ($onboardEvents as $event) {
             $details = json_decode($event->value);
             $details->onboardedBy = User::find($details->onboarded_by)->name;
             $event->value = $details;
@@ -423,7 +423,6 @@ class Application extends Model
     {
         return $this->status == config('constants.hr.status.approved.label');
     }
-
 
     public function isRejected()
     {
