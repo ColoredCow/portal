@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-            Route::get('{id}/generate-offer-letter', 'JobApplicationController@generateOfferLetter')->name('applications.generateOfferLetter');
+            Route::get('{application}/getOfferLetter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
 
 
 
