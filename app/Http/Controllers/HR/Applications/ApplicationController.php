@@ -73,7 +73,7 @@ abstract class ApplicationController extends Controller
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
         $job = $application->job;
-        $approveMailTemplete = Setting::getApprovedEmail();
+        $approveMailTemplate = Setting::getApplicationApprovedEmail();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -82,7 +82,7 @@ abstract class ApplicationController extends Controller
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'offer_letter' => $application->offer_letter,
-            'approveMailTemplete' => $approveMailTemplete,
+            'approveMailTemplate' => $approveMailTemplate,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
