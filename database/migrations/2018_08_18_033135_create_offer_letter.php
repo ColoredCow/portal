@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOfferLetter extends Migration
+class CreateOfferLetterColumn extends Migration
 {
     /**
      * Run the migrations.

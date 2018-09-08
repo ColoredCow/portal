@@ -3,7 +3,7 @@
 
 		@csrf
 
-		<div class="card-header c-pointer" data-toggle="collapse" data-target="#approved_email_template" aria-expanded="true" aria-controls="approved_email_template">Approve email to Applicant</div>
+		<div class="card-header c-pointer" data-toggle="collapse" data-target="#approved_email_template" aria-expanded="true" aria-controls="approved_email_template">Approved email to Applicant</div>
 		<div id="approved_email_template" class="collapse">
 			<div class="card-body">
 				<div class="form-row">
