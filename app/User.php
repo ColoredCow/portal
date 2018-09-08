@@ -81,5 +81,5 @@ class User extends Authenticatable
     public function scopeFindByEmail($query, $email)
     {
         return $query->where('email', $email);
-    }    
+    }
 }
