@@ -136,6 +136,7 @@ class ApplicationRound extends Model
                     'password' => Hash::make($attr['onboard_password']),
                     'provider' => 'google',
                     'provider_id' => '',
+                    'avatar' => '',
                 ]);
                 break;
         }
