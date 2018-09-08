@@ -81,7 +81,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
                         $('#send_for_approval').modal('show');
                         break;
                     case 'approve':
-                        $('#approve_applicant').modal('show');
+                        $('#approve_application').modal('show');
                         break;
                      case 'onboard':
                         $('#onboard_applicant').modal('show');
