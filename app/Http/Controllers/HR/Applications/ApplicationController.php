@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\HR\Applications;
 
 use App\Helpers\ContentHelper;
+use App\Helpers\FileHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicationRequest;
 use App\Http\Requests\HR\CustomApplicationMailRequest;
@@ -17,6 +18,8 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 abstract class ApplicationController extends Controller
 {
@@ -69,6 +72,7 @@ abstract class ApplicationController extends Controller
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
         $job = $application->job;
+        $approveMailTemplate = Setting::getApplicationApprovedEmail();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -76,6 +80,8 @@ abstract class ApplicationController extends Controller
             'interviewers' => User::interviewers()->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
+            'offer_letter' => $application->offer_letter,
+            'approveMailTemplate' => $approveMailTemplate,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -87,6 +93,12 @@ abstract class ApplicationController extends Controller
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
         return view('hr.application.edit')->with($attr);
+    }
+
+    public static function getOfferLetter(Application $application)
+    {
+        FileHelper::generateOfferLetter($application);
+        return redirect(route('applications.job.edit', $application->id));
     }
 
     /**
@@ -151,5 +163,15 @@ abstract class ApplicationController extends Controller
 
         return redirect()->back()
             ->with('status', $status);
+    }
+
+    public function viewOfferLetter(Application $application)
+    {
+        if (!Storage::exists($application->offer_letter)) {
+            return false;
+        }
+        return Response::make(Storage::get($application->offer_letter), 200, [
+            'content-type' => 'application/pdf',
+        ]);
     }
 }

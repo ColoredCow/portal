@@ -31,6 +31,21 @@ class ApplicationMeta extends Model
         return $query->where('key', config('constants.hr.status.no-show.label'));
     }
 
+    public static function scopeSentForApproval($query)
+    {
+        return $query->where('key', config('constants.hr.status.sent-for-approval.label'));
+    }
+
+    public static function scopeApproved($query)
+    {
+        return $query->where('key', config('constants.hr.status.approved.label'));
+    }
+
+    public static function scopeOnboarded($query)
+    {
+        return $query->where('key', config('constants.hr.status.onboarded.label'));
+    }
+
     /**
      * Get details of communication mail if application meta is for change job
      *

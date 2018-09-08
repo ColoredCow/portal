@@ -3,12 +3,15 @@
 namespace App\Models\HR;
 
 use App\Mail\HR\SendForApproval;
+use App\Mail\HR\SendOfferLetter;
+use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class ApplicationRound extends Model
 {
@@ -73,6 +76,16 @@ class ApplicationRound extends Model
             case 'send-for-approval':
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
+
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'sent-for-approval',
+                    'value' => json_encode([
+                        'conducted_person_id' => $fillable['conducted_person_id'],
+                        'supervisor_id' => $attr['send_for_approval_person'],
+                    ]),
+                ]);
+
                 $supervisor = User::find($attr['send_for_approval_person']);
                 Mail::send(new SendForApproval($supervisor, $application));
                 break;
@@ -80,16 +93,49 @@ class ApplicationRound extends Model
             case 'approve':
                 $fillable['round_status'] = 'approved';
                 $application->approve();
+
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'approved',
+                    'value' => json_encode([
+                        'approved_by' => $fillable['conducted_person_id'],
+                    ]),
+                ]);
+
+                $subject = $attr['subject'];
+                $body = $attr['body'];
+
+                if (!$application->offer_letter) {
+                    $application->offer_letter = FileHelper::generateOfferLetter($application);
+                }
+                Mail::send(new SendOfferLetter($application, $subject, $body));
                 break;
 
             case 'onboard':
                 $fillable['round_status'] = 'confirmed';
                 $application->onboarded();
+
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'onboarded',
+                    'value' => json_encode([
+                        'onboarded_by' => $fillable['conducted_person_id'],
+                    ]),
+                ]);
+
                 // The below env call needs to be changed to config after the default
                 // credentials bug in the Google API services is resolved.
                 $email = $attr['onboard_email'] . '@' . env('GOOGLE_CLIENT_HD');
                 $applicant->onboard($email, $attr['onboard_password'], [
                     'designation' => $attr['designation'],
+                ]);
+
+                User::create([
+                    'email' => $email,
+                    'name' => $applicant->name,
+                    'password' => Hash::make($attr['onboard_password']),
+                    'provider' => 'google',
+                    'provider_id' => '',
                 ]);
                 break;
         }
@@ -229,6 +275,11 @@ class ApplicationRound extends Model
         return $this->round_status = config('constants.hr.status.confirmed.label');
     }
 
+    public function isOnboarded()
+    {
+        return $this->status == config('constants.hr.status.onboarded.label');
+    }
+
     /**
      * Defines whether to show actions dropdown for an application round. An action can only be taken
      * if the application round status is null or rejected. Also, returns true if the application
@@ -238,6 +289,6 @@ class ApplicationRound extends Model
      */
     public function getShowActionsAttribute()
     {
-        return is_null($this->round_status) || $this->isRejected() || ($this->isConfirmed() && $this->application->isSentForApproval());
+        return is_null($this->round_status) || $this->isRejected() || (!$this->isOnboarded());
     }
 }
