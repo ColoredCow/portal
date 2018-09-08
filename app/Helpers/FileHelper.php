@@ -5,9 +5,8 @@ namespace App\Helpers;
 use App\Models\HR\Applicant;
 use App\Models\HR\Application;
 use Carbon\Carbon;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use niklasravnsborg\LaravelPdf\Pdf;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class FileHelper
 {
@@ -41,7 +40,7 @@ class FileHelper
         return $now->format('Y') . '/' . $now->format('m');
     }
 
-    public static function getOfferLetterFileName(Pdf $file, Applicant $applicant)
+    public static function getOfferLetterFileName($file, Applicant $applicant)
     {
         $dashedApplicantName = str_replace(' ', '-', $applicant->name);
         $timestamp = Carbon::now()->format('Ymd');
@@ -53,7 +52,7 @@ class FileHelper
         $job = $application->job;
         $applicant = $application->applicant;
         $pdf = PDF::loadView('hr.application.offerletter', compact('applicant', 'job'));
-        $fileName = $this->getOfferLetterFileName($pdf, $applicant);
+        $fileName = self::getOfferLetterFileName($pdf, $applicant);
         $full_path = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
         $pdf->save($full_path);
         $application->saveOfferLetter(config('constants.hr.offer-letters-dir') . '/' . $fileName);
