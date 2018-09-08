@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class ApplicationRound extends Model
 {
@@ -128,7 +129,14 @@ class ApplicationRound extends Model
                 $applicant->onboard($email, $attr['onboard_password'], [
                     'designation' => $attr['designation'],
                 ]);
-                $user = User::_create($attr, $applicant);
+
+                User::create([
+                    'email' => $email,
+                    'name' => $applicant->name,
+                    'password' => Hash::make($attr['onboard_password']),
+                    'provider' => 'google',
+                    'provider_id' => '',
+                ]);
                 break;
         }
         $this->update($fillable);
