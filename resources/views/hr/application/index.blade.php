@@ -42,7 +42,6 @@
                 </a>
             </li>
 
-            </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}" href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{request()->has('search')? "&search=".request('search'):"" }}><i class="fa fa-file-text-o"></i>&nbsp;
                     {{ config('constants.hr.status.on-hold.title') }}
@@ -80,6 +79,7 @@
                     </span>
                 @endif
                 </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.approved.label') ? 'active bg-info text-white' : 'text-info' }}" href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{request()->has('search')? "&search=".request('search'):"" }}><i class="fa fa-check-square"></i>&nbsp;
                     Approved

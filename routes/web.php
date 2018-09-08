@@ -63,9 +63,9 @@ Route::middleware('auth')->group(function () {
         Route::prefix('applications')->namespace('Applications')->group(function () {
             Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
 
-            Route::get('job/{application}/offer-letter', 'JobApplicationController@downloadOfferLetter')->name('applications.job.offer-letter');
-            Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@downloadOfferLetter')->name('applications.internship.offer-letter');
-            Route::get('volunteer/{application}/offer-letter', 'VolunteerApplicationController@downloadOfferLetter')->name('applications.volunteer.offer-letter');
+            Route::get('job/{application}/offer-letter', 'JobApplicationController@viewOfferLetter')->name('applications.job.offer-letter');
+            Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
+            Route::get('volunteer/{application}/offer-letter', 'VolunteerApplicationController@viewOfferLetter')->name('applications.volunteer.offer-letter');
 
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update'])
