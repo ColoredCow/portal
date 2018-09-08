@@ -96,21 +96,12 @@ abstract class ApplicationController extends Controller
         return view('hr.application.edit')->with($attr);
     }
 
-    public static function generateOfferLetter($id, $redirect = true)
+    public static function getOfferLetter(Application $application)
     {
-        $application = Application::findOrFail($id);
-        $job = $application->job;
-        $applicant = $application->applicant;
-        $pdf = PDF::loadView('hr.application.offerletter', compact('applicant', 'job'));
-        $fileName = FileHelper::getOfferLetterFileName($pdf, $applicant);
-        $full_path = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
-        $pdf->save($full_path);
-        $application->saveOfferLetter(config('constants.hr.offer-letters-dir') . '/' . $fileName);
-        if ($redirect) {
-            return redirect(route('applications.job.edit', $application->id));
-        }
-        return $application->offer_letter;
+        FileHelper::generateOfferLetter($application);
+        return redirect(route('applications.job.edit', $application->id));
     }
+
     /**
      * Update the specified resource
      *

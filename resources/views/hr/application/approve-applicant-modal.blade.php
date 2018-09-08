@@ -19,7 +19,7 @@
                         </a>
                     </div>
                     @else
-                        <a href="{{ route('applications.generateOfferLetter', $application->id) }}" class="btn btn-secondary px-4">Generate Offer Letter</a>
+                        <a href="{{ route('applications.getOfferLetter', $application) }}" class="btn btn-secondary px-4">Generate Offer Letter</a>
                     @endif
                 </div>
                 <div class="form-row mt-4">

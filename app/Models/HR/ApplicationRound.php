@@ -2,7 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Http\Controllers\HR\Applications\ApplicationController;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
 use App\Models\HR\ApplicationMeta;
@@ -106,7 +105,7 @@ class ApplicationRound extends Model
                 $body = $attr['body'];
 
                 if (!$application->offer_letter) {
-                    $application->offer_letter = ApplicationController::generateOfferLetter($application->id, $redirect = false);
+                    $application->offer_letter = FileHelper::generateOfferLetter($application);
                 }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
                 break;
