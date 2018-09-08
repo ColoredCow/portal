@@ -51,7 +51,7 @@ class FileHelper
     {
         $job = $application->job;
         $applicant = $application->applicant;
-        $pdf = PDF::loadView('hr.application.offerletter', compact('applicant', 'job'));
+        $pdf = PDF::loadView('hr.application.offer-letter', compact('applicant', 'job'));
         $fileName = self::getOfferLetterFileName($pdf, $applicant);
         $full_path = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
         $pdf->save($full_path);
