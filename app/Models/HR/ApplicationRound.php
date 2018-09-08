@@ -91,20 +91,19 @@ class ApplicationRound extends Model
                 break;
 
             case 'approve':
-
                 $fillable['round_status'] = 'approved';
                 $application->approve();
-                $subject = $attr['subject'];
-                $body = $attr['body'];
 
                 ApplicationMeta::create([
                     'hr_application_id' => $application->id,
-                    'key' => 'approve',
+                    'key' => 'approved',
                     'value' => json_encode([
-                        'subject' => $subject,
-                        'body' => $body,
+                        'approved_by' => $fillable['conducted_person_id'],
                     ]),
                 ]);
+
+                $subject = $attr['subject'];
+                $body = $attr['body'];
 
                 if (!$application->offer_letter) {
                     $application->offer_letter = ApplicationController::generateOfferLetter($application->id, $redirect = false);
@@ -115,6 +114,15 @@ class ApplicationRound extends Model
             case 'onboard':
                 $fillable['round_status'] = 'confirmed';
                 $application->onboarded();
+
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'onboarded',
+                    'value' => json_encode([
+                        'onboarded_by' => $fillable['conducted_person_id'],
+                    ]),
+                ]);
+
                 // The below env call needs to be changed to config after the default
                 // credentials bug in the Google API services is resolved.
                 $email = $attr['onboard_email'] . '@' . env('GOOGLE_CLIENT_HD');
