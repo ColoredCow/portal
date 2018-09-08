@@ -126,7 +126,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('hr')->group(function () {
             Route::get('/', 'HRController@index')->name('settings.hr');
-            Route::post('update', 'HRController@update');
+            Route::post('update', 'HRController@update')->name('setting.hr.update');
         });
     });
 

@@ -1,7 +1,7 @@
 <div class="card mt-4">
-	<form action="{{ url('/settings/hr/update') }}" method="POST">
+	<form action="{{ route('setting.hr.update') }}" method="POST">
 
-		{{ csrf_field() }}
+		@csrf
 
 		<div class="card-header c-pointer" data-toggle="collapse" data-target="#approved_email_template" aria-expanded="true" aria-controls="approved_email_template">Approve email to Applicant</div>
 		<div id="approved_email_template" class="collapse">
