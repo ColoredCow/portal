@@ -133,7 +133,7 @@ class ApplicationRound extends Model
                 User::create([
                     'email' => $email,
                     'name' => $applicant->name,
-                    'password' => bcrypt($attr['onboard_password']),
+                    'password' => Hash::make($attr['onboard_password']),
                     'provider' => 'google',
                 ]);
                 break;
