@@ -25,13 +25,13 @@
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
                         <label for="subject" class="field-required">Subject</label>
-                        <input type="text" class="form-control" name="subject" value="{{$approveMailTemplete['subject']}}" id="subject" required="required">
+                        <input type="text" class="form-control" name="subject" value="{{$approveMailTemplate['subject']}}" id="subject" required="required">
                     </div>
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
                         <label for="body" class="field-required">Body</label>
-                        <textarea name="body" id="body" rows="5" class="form-control" required="required">{{$approveMailTemplete['body']}}</textarea>
+                        <textarea name="body" id="body" rows="5" class="form-control" required="required">{{$approveMailTemplate['body']}}</textarea>
                     </div>
                 </div>
                 <div class="form-row">
