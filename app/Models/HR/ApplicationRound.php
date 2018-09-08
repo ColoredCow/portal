@@ -267,6 +267,7 @@ class ApplicationRound extends Model
     {
         return $this->round_status = config('constants.hr.status.confirmed.label');
     }
+
     public function isOnboarded()
     {
         return $this->status == config('constants.hr.status.onboarded.label');
@@ -281,6 +282,6 @@ class ApplicationRound extends Model
      */
     public function getShowActionsAttribute()
     {
-        return is_null($this->round_status) || $this->isRejected() || (!$this->isOnboarded()) ;
+        return is_null($this->round_status) || $this->isRejected() || (!$this->isOnboarded());
     }
 }
