@@ -81,7 +81,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
                         $('#send_for_approval').modal('show');
                         break;
                     case 'approve':
-                        $('#approve_applicant').modal('show');
+                        $('#approve_application').modal('show');
                         break;
                      case 'onboard':
                         $('#onboard_applicant').modal('show');
@@ -154,6 +154,7 @@ if (document.getElementById('form_invoice')) {
                     if (client.id == this.selectedClient) {
                         this.activeClient = client;
                         this.activeClientCurrency = JSON.parse(this.countries)[client.country].currency;
+                        console.log(client.country);
                         break;
                     }
                 }

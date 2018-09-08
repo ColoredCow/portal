@@ -10,6 +10,7 @@
     @include('settings.hr.applicant-auto-responder')
     @include('settings.hr.applicant-interview-reminder')
     @include('settings.hr.no-show')
+    @include('settings.hr.approved')
     <h4 class="mt-5">Mail templates for rounds</h4>
     @foreach ($rounds as $index => $round)
         @foreach ($roundMailTypes as $type)

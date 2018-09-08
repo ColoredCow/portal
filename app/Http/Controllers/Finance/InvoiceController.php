@@ -107,8 +107,9 @@ class InvoiceController extends Controller
         $status = 'Invoice created successfully!';
         if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
             $status = 'Billing invoice created successfully!';
+            return redirect()->back()->with('status', $status);
         }
-        return redirect()->back()->with('status', $status);
+        return redirect(route('invoices.edit', $invoice->id))->with('status', $status);
     }
 
     /**

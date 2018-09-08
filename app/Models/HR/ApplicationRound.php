@@ -2,9 +2,10 @@
 
 namespace App\Models\HR;
 
-use App\Helpers\FileHelper;
+use App\Http\Controllers\HR\Applications\ApplicationController;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
+use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
@@ -76,11 +77,6 @@ class ApplicationRound extends Model
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
 
-                $file = $attr['offer_letter'];
-                $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
-                $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
-                $application->saveOfferLetter($path);
-
                 ApplicationMeta::create([
                     'hr_application_id' => $application->id,
                     'key' => 'sent-for-approval',
@@ -98,14 +94,19 @@ class ApplicationRound extends Model
                 $fillable['round_status'] = 'approved';
                 $application->approve();
 
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'approved',
+                    'value' => json_encode([
+                        'approved_by' => $fillable['conducted_person_id'],
+                    ]),
+                ]);
+
                 $subject = $attr['subject'];
                 $body = $attr['body'];
 
-                if (array_key_exists('offer_letter', $attr)) {
-                    $file = $attr['offer_letter'];
-                    $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
-                    $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
-                    $application->saveOfferLetter($path);
+                if (!$application->offer_letter) {
+                    $application->offer_letter = ApplicationController::generateOfferLetter($application->id, $redirect = false);
                 }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
                 break;
@@ -113,12 +114,22 @@ class ApplicationRound extends Model
             case 'onboard':
                 $fillable['round_status'] = 'confirmed';
                 $application->onboarded();
+
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'onboarded',
+                    'value' => json_encode([
+                        'onboarded_by' => $fillable['conducted_person_id'],
+                    ]),
+                ]);
+
                 // The below env call needs to be changed to config after the default
                 // credentials bug in the Google API services is resolved.
                 $email = $attr['onboard_email'] . '@' . env('GOOGLE_CLIENT_HD');
                 $applicant->onboard($email, $attr['onboard_password'], [
                     'designation' => $attr['designation'],
                 ]);
+                $user = User::_create($attr, $applicant);
                 break;
         }
         $this->update($fillable);

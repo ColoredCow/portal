@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\HR\Applications;
 
 use App\Helpers\ContentHelper;
+use App\Helpers\FileHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicationRequest;
 use App\Http\Requests\HR\CustomApplicationMailRequest;
@@ -17,8 +18,9 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 abstract class ApplicationController extends Controller
 {
@@ -66,11 +68,13 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
+
         $application = Application::findOrFail($id);
 
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
 
         $job = $application->job;
+        $approveMailTemplete = Setting::getApprovedEmail();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -79,6 +83,7 @@ abstract class ApplicationController extends Controller
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'offer_letter' => $application->offer_letter,
+            'approveMailTemplete' => $approveMailTemplete,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -92,6 +97,21 @@ abstract class ApplicationController extends Controller
         return view('hr.application.edit')->with($attr);
     }
 
+    public static function generateOfferLetter($id, $redirect = true)
+    {
+        $application = Application::findOrFail($id);
+        $job = $application->job;
+        $applicant = $application->applicant;
+        $pdf = PDF::loadView('hr.application.offerletter', compact('applicant', 'job'));
+        $fileName = FileHelper::getOfferLetterFileName($pdf, $applicant);
+        $full_path = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
+        $pdf->save($full_path);
+        $application->saveOfferLetter(config('constants.hr.offer-letters-dir') . '/' . $fileName);
+        if ($redirect) {
+            return redirect(route('applications.job.edit', $application->id));
+        }
+        return $application->offer_letter;
+    }
     /**
      * Update the specified resource
      *

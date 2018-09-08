@@ -24,7 +24,7 @@
                         @if ($applicationRound->mail_sent)
                             <span data-toggle="modal" data-target="#{{ $applicationRound->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
                             @include('hr.communication-mail-modal', [ 'data' => $applicationRound->communicationMail ])
-                            @endif
+                        @endif
                         @break
                     @case(config('constants.hr.application-meta.keys.change-job'))
                         @php
@@ -53,6 +53,27 @@
                         @endphp
                         <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
                         {{ $event->value->conductedPerson }} requested approval from {{ $event->value->supervisor }}
+                        @break
+                    @case(config('constants.hr.application-meta.keys.approved'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->approvedBy }} approved this application
+                        @break
+                    @case(config('constants.hr.application-meta.keys.approved'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->approvedBy }} approved this application
+                        @break
+                    @case(config('constants.hr.application-meta.keys.onboarded'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->onboardedBy }} onboarded the applicant
                         @break
                 @endswitch
             </div>
