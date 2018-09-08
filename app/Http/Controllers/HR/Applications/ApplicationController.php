@@ -83,7 +83,7 @@ abstract class ApplicationController extends Controller
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'offer_letter' => $application->offer_letter,
-            'approveMailTemplete' => $approveMailTemplete ,
+            'approveMailTemplete' => $approveMailTemplete,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -97,17 +97,20 @@ abstract class ApplicationController extends Controller
         return view('hr.application.edit')->with($attr);
     }
 
-    public function generateOfferLetter($id)
+    public static function generateOfferLetter($id, $redirect = true)
     {
         $application = Application::findOrFail($id);
         $job = $application->job;
         $applicant = $application->applicant;
         $pdf = PDF::loadView('hr.application.offerletter', compact('applicant', 'job'));
         $fileName = FileHelper::getOfferLetterFileName($pdf, $applicant);
-        $full_path = storage_path('app/'.config('constants.hr.offer-letters-dir').'/'.$fileName);
+        $full_path = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
         $pdf->save($full_path);
-        $application->saveOfferLetter(config('constants.hr.offer-letters-dir').'/'.$fileName);
-        return redirect(route('applications.job.edit', $application->id));
+        $application->saveOfferLetter(config('constants.hr.offer-letters-dir') . '/' . $fileName);
+        if ($redirect) {
+            return redirect(route('applications.job.edit', $application->id));
+        }
+        return $application->offer_letter;
     }
     /**
      * Update the specified resource

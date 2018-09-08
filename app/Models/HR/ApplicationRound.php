@@ -2,7 +2,7 @@
 
 namespace App\Models\HR;
 
-use App\Helpers\FileHelper;
+use App\Http\Controllers\HR\Applications\ApplicationController;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
 use App\Models\HR\ApplicationMeta;
@@ -91,12 +91,13 @@ class ApplicationRound extends Model
                 break;
 
             case 'approve':
+
                 $fillable['round_status'] = 'approved';
                 $application->approve();
                 $subject = $attr['subject'];
                 $body = $attr['body'];
-                
-                 ApplicationMeta::create([
+
+                ApplicationMeta::create([
                     'hr_application_id' => $application->id,
                     'key' => 'approve',
                     'value' => json_encode([
@@ -104,11 +105,9 @@ class ApplicationRound extends Model
                         'body' => $body,
                     ]),
                 ]);
-                if (array_key_exists('offer_letter', $attr)) {
-                    $file = $attr['offer_letter'];
-                    $fileName = FileHelper::getOfferLetterFileName($file, $applicant);
-                    $path = $file->storeAs(config('constants.hr.offer-letters-dir'), $fileName);
-                    $application->saveOfferLetter($path);
+
+                if (!$application->offer_letter) {
+                    $application->offer_letter = ApplicationController::generateOfferLetter($application->id, $redirect = false);
                 }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
                 break;
@@ -270,6 +269,6 @@ class ApplicationRound extends Model
      */
     public function getShowActionsAttribute()
     {
-        return is_null($this->round_status) || $this->isRejected() || ($this->isConfirmed() && $this->application->isSentForApproval() || $this->application->isApproved()) ;
+        return is_null($this->round_status) || $this->isRejected() || ($this->isConfirmed() && $this->application->isSentForApproval() || $this->application->isApproved());
     }
 }
