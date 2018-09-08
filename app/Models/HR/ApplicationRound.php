@@ -2,7 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Http\Controllers\HR\Applications\ApplicationController;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
 use App\Models\HR\ApplicationMeta;
@@ -107,7 +106,7 @@ class ApplicationRound extends Model
                 $body = $attr['body'];
 
                 if (!$application->offer_letter) {
-                    $application->offer_letter = ApplicationController::generateOfferLetter($application->id, $redirect = false);
+                    $application->offer_letter = FileHelper::generateOfferLetter($application);
                 }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
                 break;
@@ -275,6 +274,7 @@ class ApplicationRound extends Model
     {
         return $this->round_status = config('constants.hr.status.confirmed.label');
     }
+
     public function isOnboarded()
     {
         return $this->status == config('constants.hr.status.onboarded.label');
@@ -289,6 +289,6 @@ class ApplicationRound extends Model
      */
     public function getShowActionsAttribute()
     {
-        return is_null($this->round_status) || $this->isRejected() || (!$this->isOnboarded()) ;
+        return is_null($this->round_status) || $this->isRejected() || (!$this->isOnboarded());
     }
 }
