@@ -40,7 +40,7 @@ class FileHelper
         return $now->format('Y') . '/' . $now->format('m');
     }
 
-    public static function getOfferLetterFileName($file, Applicant $applicant)
+    public static function getOfferLetterFileName(Pdf $file, Applicant $applicant)
     {
         $dashedApplicantName = str_replace(' ', '-', $applicant->name);
         $timestamp = Carbon::now()->format('Ymd');
@@ -51,10 +51,10 @@ class FileHelper
     {
         $job = $application->job;
         $applicant = $application->applicant;
-        $pdf = PDF::loadView('hr.application.offer-letter', compact('applicant', 'job'));
+        $pdf = Pdf::loadView('hr.application.offer-letter', compact('applicant', 'job'));
         $fileName = self::getOfferLetterFileName($pdf, $applicant);
-        $full_path = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
-        $pdf->save($full_path);
+        $fullPath = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
+        $pdf->save($fullPath);
         $application->saveOfferLetter(config('constants.hr.offer-letters-dir') . '/' . $fileName);
         return $application->offer_letter;
     }
