@@ -267,6 +267,10 @@ class ApplicationRound extends Model
     {
         return $this->round_status = config('constants.hr.status.confirmed.label');
     }
+    public function isOnboarded()
+    {
+        return $this->status == config('constants.hr.status.onboarded.label');
+    }
 
     /**
      * Defines whether to show actions dropdown for an application round. An action can only be taken
@@ -277,6 +281,6 @@ class ApplicationRound extends Model
      */
     public function getShowActionsAttribute()
     {
-        return is_null($this->round_status) || $this->isRejected() || ($this->isConfirmed() && $this->application->isSentForApproval() || $this->application->isApproved());
+        return is_null($this->round_status) || $this->isRejected() || (!$this->isOnboarded()) ;
     }
 }
