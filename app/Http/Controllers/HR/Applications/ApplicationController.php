@@ -175,7 +175,7 @@ abstract class ApplicationController extends Controller
             ->with('status', $status);
     }
 
-    public function downloadOfferLetter(Application $application)
+    public function viewOfferLetter(Application $application)
     {
         if (!Storage::exists($application->offer_letter)) {
             return false;
