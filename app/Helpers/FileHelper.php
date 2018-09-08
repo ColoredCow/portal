@@ -7,6 +7,7 @@ use App\Models\HR\Application;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use niklasravnsborg\LaravelPdf\Pdf as PdfFile;
 
 class FileHelper
 {
@@ -40,7 +41,7 @@ class FileHelper
         return $now->format('Y') . '/' . $now->format('m');
     }
 
-    public static function getOfferLetterFileName(Pdf $file, Applicant $applicant)
+    public static function getOfferLetterFileName(PdfFile $file, Applicant $applicant)
     {
         $dashedApplicantName = str_replace(' ', '-', $applicant->name);
         $timestamp = Carbon::now()->format('Ymd');
