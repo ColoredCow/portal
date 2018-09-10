@@ -97,8 +97,12 @@ abstract class ApplicationController extends Controller
 
     public static function getOfferLetter(Application $application)
     {
-        FileHelper::generateOfferLetter($application);
-        return redirect(route('applications.job.edit', $application->id));
+        $result = FileHelper::generateOfferLetter($application);
+        if ($result) {
+            return response()->json([
+                'status' => 'Offer Letter Generated Successfully',
+            ]);
+        }
     }
 
     /**

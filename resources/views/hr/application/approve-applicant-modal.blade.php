@@ -11,16 +11,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-row">
-                    @if ($application->offer_letter)
-                    <div class="col-md-12">
-                        <a target="_blank" href="{{ route("applications.{$application->job->type}.offer-letter", $application) }}" class="d-flex align-items-center">
+                <input type="hidden" name="showbtn" id="showbtn" v-model="showbtn" value={{!$application->offer_letter ? true : false}}>
+                    <div class="form-group">
+                        <a target="_blank" v-if="showbtn == false" href="{{ route("applications.{$application->job->type}.offer-letter", $application) }}" class="d-flex align-items-center">
                             <i class="fa fa-file fa-2x text-primary btn-file"></i>&nbsp;See offer letter
                         </a>
                     </div>
-                    @else
-                        <a href="{{ route('applications.getOfferLetter', $application) }}" class="btn btn-secondary px-4">Generate Offer Letter</a>
-                    @endif
+                    <div class="form-group" v-if="showbtn == true">
+                        <button v-on:click="generateOfferLetter({{$application->id}})" type="button" class="btn btn-primary">Generate Offer Letter</button>
+                    </div>
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">

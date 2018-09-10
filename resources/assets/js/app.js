@@ -51,6 +51,8 @@ if (document.getElementById('page_hr_applicant_edit')) {
             selectedAction: '',
             nextRound: '',
             createCalendarEvent: true,
+            offerLetterUrl: '',
+            showbtn:document.getElementById('showbtn').value,
         },
         methods: {
             toggleResumeFrame: function() {
@@ -68,6 +70,16 @@ if (document.getElementById('page_hr_applicant_edit')) {
                     });
                 }
                 this.toggleEvaluationFrame();
+            },
+            async generateOfferLetter($application) {
+                console.log($application);
+                let methodName = 'get';
+                let url = '/hr/applications/'+$application+'/get-offer-letter';
+                alert(url, this.showbtn);
+                let response = await axios({method: methodName, url: url}).then(function(response){
+                    console.log(showbtn);
+                    this.showbtn = false;
+                });
             },
             takeAction: function() {
                 switch (this.selectedAction) {
