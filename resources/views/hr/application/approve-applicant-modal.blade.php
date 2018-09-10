@@ -19,7 +19,6 @@
                     </div>
                     <div class="form-group" v-if="showbtn == true">
                         <button v-on:click="generateOfferLetter({{$application->id}})" type="button" class="btn btn-primary">Generate Offer Letter</button>
-                    </div>
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
@@ -36,7 +35,6 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                          <button type="button" class="btn btn-success px-4 round-submit" data-action="approve">Confirm</button>
-                        </div>
                     </div>
                 </div>
             </div>
