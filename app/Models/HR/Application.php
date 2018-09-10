@@ -347,7 +347,7 @@ class Application extends Model
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.sent-for-approval'),
                 'event' => $event,
-                'date' => $event->created_at,
+                'date' => $event->created_at->addSecond(),
             ];
         }
 
@@ -359,7 +359,7 @@ class Application extends Model
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.approved'),
                 'event' => $event,
-                'date' => $event->created_at,
+                'date' => $event->created_at->addSecond(),
             ];
         }
 
@@ -371,7 +371,7 @@ class Application extends Model
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.onboarded'),
                 'event' => $event,
-                'date' => $event->created_at,
+                'date' => $event->created_at->addSecond(),
             ];
         }
 
