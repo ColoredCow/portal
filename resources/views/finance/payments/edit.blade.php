@@ -5,7 +5,7 @@
     <br>
     @include('finance.menu', ['active' => 'payments'])
     <br><br>
-    <h1>Update Payment</h1>
+    <h1>Edit Payment</h1>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
         <form action="{{ route('payments.update', $payment) }}" method="POST" id="form_payment" class="form-invoice form-create-invoice">

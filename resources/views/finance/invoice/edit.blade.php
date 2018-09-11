@@ -79,117 +79,6 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    {{-- <div class="form-group col-md-2">
-                        <label for="status" class="field-required">Status</label>
-                        <select name="status" id="status" class="form-control" v-model="status" data-invoice-payments="{{ $invoice->payments->count() }}">
-                            <option value="unpaid">Unpaid</option>
-                            <option value="partial">Partially Paid</option>
-                            <option value="paid">Fully Paid</option>
-                        </select>
-                    </div> --}}
-                    {{-- <div class="form-group col-md-3" v-if="status == 'paid'">
-                        <label for="paid_at" class="field-required">Paid on</label>
-                        <input type="date" required="required" class="form-control" name="paid_at" id="paid_at" placeholder="{{config('constants.finance.input_date_format')}}" value="{{ $payment ? $payment->paid_at : '' }}">
-                    </div> --}}
-                    {{-- <div class="form-group offset-md-1 col-md-3" v-if="status == 'paid'">
-                        <label for="payment_amount" class="field-required">Payment amount</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select name="payment_currency" required="required" id="payment_currency" class="btn btn-secondary" v-model="paymentCurrency" data-payment-currency="{{ $payment->currency }}">
-                                @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    <option value="{{ $currency }}">{{ $currency }}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <input type="number" class="form-control" name="payment_amount" id="payment_amount" placeholder="Payment amount" step=".01" min="0" v-model="paidAmount" data-paid-amount="{{ $payment->amount }}">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-2" v-if="status == 'paid'">
-                        <label for="tds">TDS deducted</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
-                                    <option>INR</option>
-                                </select>
-                            </div>
-                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS" step=".01" min="0" v-model="tdsAmount" data-tds="{{ $payment->tds }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row" v-if="status == 'paid'">
-                    <div class="form-group col-md-3">
-                        <label for="bank_charges">Bank charges on fund transfer</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select name="payment_currency" id="payment_currency" class="btn btn-secondary" required="required" data-currency-transaction-charge="{{ $payment->currency }}">
-                                @foreach (config('constants.currency') as $currency => $currencyMeta)
-                                    <option value="{{ $currency }}">{{ $currency }}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <input type="number" class="form-control" name="bank_charges" id="bank_charges" placeholder="amount" step=".01" min="0" v-model="transactionCharge" data-transaction-charge="{{ $payment->bank_charges }}">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="bank_service_tax_forex">ST on fund transfer</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select class="btn btn-secondary">
-                                    <option>INR</option>
-                                </select>
-                            </div>
-                            <input type="number" class="form-control" name="bank_service_tax_forex" id="bank_service_tax_forex" placeholder="amount" step=".01" min="0" value="{{ $payment->bank_service_tax_forex }}">
-                        </div>
-                    </div>
-                    <div class="form-group offset-md-1 col-md-3" v-if="paymentCurrency != 'INR'">
-                        <label for="conversion_rate">Conversion rate</label>
-                        <div class="d-flex flex-column">
-                            <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate" data-conversion-rate="{{ $payment->conversion_rate }}">
-                            <div class="mt-3 mb-0">
-                                <p class="m-0">Payment amount after conversion&nbsp;&nbsp;</p>
-                                <h4 class="m-0">{{ config('constants.currency.INR.symbol') }}&nbsp;@{{ convertedAmount }}</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                {{-- <div class="form-row mb-2" v-if="status == 'paid'"> --}}
-                    {{-- <div class="form-group col-md-5">
-                        <label for="payment_mode" class="field-required">Payment mode</label>
-                        <select name="payment_mode" id="payment_mode" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ $paymentModeModel->type }}">
-                            <option value="">Select payment mode</option>
-                            @foreach (config('constants.payment_modes') as $payment_mode => $display_name)
-                                @php
-                                    $selected = $invoice->payment_mode == $payment_mode ? 'selected="selected"' : '';
-                                @endphp
-                                <option value="{{ $payment_mode }}" {{ $selected }}>{{ $display_name }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-                    {{-- @if ($paymentModeModel->type == 'cheque')
-                        <div class="form-group offset-md-1 col-md-3 cheque-status">
-                            <label for="cheque_status" class="field-required">Cheque status</label>
-                            <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ $paymentModeModel->status }}">
-                                <option value="">Select cheque status</option>
-                                @foreach (config('constants.cheque_status') as $cheque_status => $display_name)
-                                    <option value="{{ $cheque_status }}">{{ $display_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2" v-if="chequeStatus == 'received'">
-                            <label for="cheque_received_date" class="field-required">Cheque Received Date</label>
-                            <input type="date" class="form-control" required="required" name="cheque_received_date" id="cheque_received_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_received_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_received_date)) : '' }}">
-                        </div>
-                        <div class="form-group col-md-2" v-if="chequeStatus == 'cleared'">
-                            <label for="cheque_cleared_date" class="field-required">Cheque Cleared Date</label>
-                            <input type="date" class="form-control" required="required" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_cleared_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_cleared_date)) : '' }}">
-                        </div>
-                        <div class="form-group col-md-2" v-if="chequeStatus == 'bounced'">
-                            <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
-                            <input type="date" class="form-control" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
-                        </div>
-                    @endif --}}
-                </div>
-                <div class="form-row">
                     <div class="form-group col-md-5">
                     @if ($invoice->file_path)
                         <label class="font-weight-bold">Invoice File</label>
@@ -214,6 +103,6 @@
             </div>
         </form>
     </div>
-    {{-- <button type="button" class="btn btn-secondary mt-3 px-3" v-on:click="addPayment()" v-if="!newPayment">Add payment</button> --}}
+    <a href="#" class="btn btn-secondary mt-3 px-3">Add payment</a>
 </div>
 @endsection

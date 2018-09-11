@@ -10,7 +10,15 @@ class Invoice extends Model
 {
     protected $guarded = [];
 
-    protected $appends = ['project', 'projectStage' ,'projectStageBilling'];
+    protected $dates = [
+        'sent_on',
+        'due_on',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected $appends = ['project', 'sentOnDisplay'];
 
     /**
      * Get the project_stage_billings associated with the invoice.
@@ -95,18 +103,13 @@ class Invoice extends Model
         return $this->projectStageBillings()->first()->projectStage->project;
     }
 
-    public function getProjectStageAttribute()
-    {
-        return $this->projectStageBillings()->first()->projectStage;
-    }
-
-    public function getProjectStageBillingAttribute()
-    {
-        return $this->projectStageBillings()->first();
-    }
-
     public static function getUnpaidInvoices()
     {
         return self::has('payments', '=', 0)->get();
+    }
+
+    public function getSentOnDisplayAttribute()
+    {
+        return $this->sent_on->format('d/m/Y');
     }
 }

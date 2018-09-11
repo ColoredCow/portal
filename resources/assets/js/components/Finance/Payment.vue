@@ -8,9 +8,11 @@
                 <div class="form-group col-md-5">
                     <label for="invoice_id" class="field-required">Invoice</label>
                     <select name="invoice_id" id="invoice_id" class="form-control" required="required" v-model="invoiceId" @change="updatePaymentFields()" :disabled="!this.isNew">
-                        <option v-if="!this.isNew" :value="invoiceId">{{payment.invoice.project.name}} – {{payment.invoice.projectStage.name}} – {{payment.invoice.projectStageBilling.percentage + '%'}}</option>
+                        <option v-if="!this.isNew" :value="invoiceId">
+                            {{payment.invoice.project.name}} – {{payment.invoice.sentOnDisplay}}
+                        </option>
                         <option v-else v-for="invoice in unpaidInvoices" :value="invoice.id">
-                            {{invoice.project.name}} – {{invoice.projectStage.name}} – {{invoice.projectStageBilling.percentage + '%'}}
+                            {{invoice.project.name}} – {{invoice.sentOnDisplay}}
                         </option>
                     </select>
                 </div>
@@ -60,7 +62,7 @@
                         <input type="number" class="form-control" name="bank_charges" id="bank_charges" placeholder="amount" step=".01" min="0" v-model="bankCharges">
                     </div>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-2" v-if="currency != 'INR'">
                     <label for="bank_service_tax_forex">Bank Service Tax on Forex</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -163,7 +165,6 @@
             }
         },
         mounted() {
-            console.log(this.payment);
             if (!this.payment) {
                 this.conversionRate = 65;
                 this.paidAt = this.formatDate(new Date());

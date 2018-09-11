@@ -91,6 +91,7 @@ class PaymentController extends Controller
     public function edit(Payment $payment)
     {
         $payment->load('invoice');
+
         return view('finance.payments.edit')->with([
             'payment' => $payment,
             'unpaidInvoices' => Invoice::getUnpaidInvoices(),
