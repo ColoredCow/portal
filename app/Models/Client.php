@@ -8,6 +8,8 @@ class Client extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['currency'];
+
     /**
      * Get the projects for the client.
      */
@@ -24,5 +26,10 @@ class Client extends Model
     public static function getActiveClients()
     {
         return self::where('is_active', true)->get();
+    }
+
+    public function getCurrencyAttribute()
+    {
+        return config("constants.countries.$this->country.currency");
     }
 }

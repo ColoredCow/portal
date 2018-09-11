@@ -76,9 +76,8 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create([
             'project_invoice_id' => $validated['project_invoice_id'],
-            'status' => $validated['status'],
-            'currency' => $validated['invoice_currency'],
-            'amount' => $validated['invoice_amount'],
+            'currency' => $validated['currency'],
+            'amount' => $validated['amount'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
             'due_on' => isset($validated['due_on']) ? DateHelper::formatDateToSave($validated['due_on']) : null,
             'gst' => isset($validated['gst']) ? $validated['gst'] : null,

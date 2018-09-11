@@ -31,8 +31,10 @@
             },
             removeItem(index) {
                 this.items.splice(index, 1);
-                console.log(this.items);
             }
+        },
+        mounted() {
+            console.log(this.client);
         }
     }
 </script>

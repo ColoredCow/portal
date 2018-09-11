@@ -26,31 +26,12 @@ class InvoiceRequest extends FormRequest
         $rules = [
             // invoice fields
             'project_invoice_id' => 'required|integer|min:1',
-            'status' => 'required|string',
-            'invoice_currency' => 'required|string',
-            'invoice_amount' => 'required|numeric',
+            'currency' => 'required|string',
+            'amount' => 'required|numeric',
             'sent_on' => 'required|string', // change type to date
             'due_on' => 'nullable|string', // change type to date
             'gst' => 'nullable|numeric',
             'comments' => 'nullable|string',
-
-            // payment fields
-            'paid_at' => 'nullable|required_if:status,paid', // add date type
-            'payment_amount' => 'nullable|numeric|required_if:status,paid',
-            'payment_currency' => 'nullable|string|required_if:status,paid',
-            'tds' => 'nullable|numeric',
-            'conversion_rate' => 'nullable|numeric',
-            'bank_charges' => 'nullable|numeric',
-            'bank_service_tax_forex' => 'nullable|numeric',
-
-            'payment_mode' => 'nullable|string',
-
-            'wire_transfer_via' => 'nullable|string',
-
-            'cheque_status' => 'nullable|string|required_if:payment_mode,cheque',
-            'cheque_received_on' => 'nullable|string|required_if:cheque_status,received',
-            'cheque_cleared_on' => 'nullable|string|required_if:cheque_status,cleared',
-            'cheque_bounced_on' => 'nullable|string|required_if:cheque_status,bounced',
 
             'billings' => 'required',
 
