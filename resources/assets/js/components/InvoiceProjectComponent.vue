@@ -34,7 +34,7 @@
             }
         },
         mounted() {
-            console.log(this.client);
+            console.log(this.items);
         }
     }
 </script>

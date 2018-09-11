@@ -116,21 +116,15 @@ class InvoiceController extends Controller
             $billings[] = $billing;
         }
 
+        $clients = Client::getActiveClients();
+        $clients->load('projects', 'projects.stages', 'projects.stages.billings');
+
         $attr = [
             'invoice' => $invoice,
-            'clients' => Client::select('id', 'name')->get(),
+            'clients' => $clients,
             'invoice_client' => $client,
             'invoice_billings' => $billings,
         ];
-
-        $invoice->load('payments');
-        if ($invoice->payments->count()) {
-            $payment = $invoice->payments->first();
-            $paymentModeModel = $payment->mode_type::find($payment->mode_id);
-
-            $attr['payment'] = $payment;
-            $attr['paymentModeModel'] = $paymentModeModel;
-        }
 
         return view('finance.invoice.edit')->with($attr);
     }
@@ -149,8 +143,8 @@ class InvoiceController extends Controller
         $invoiceUpdated = $invoice->update([
             'project_invoice_id' => $validated['project_invoice_id'],
             'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
-            'amount' => $validated['invoice_amount'],
-            'currency' => $validated['invoice_currency'],
+            'amount' => $validated['amount'],
+            'currency' => $validated['currency'],
             'gst' => isset($validated['gst']) ? $validated['gst'] : null,
             'comments' => $validated['comments'],
             'due_on' => $validated['due_on'] ? DateHelper::formatDateToSave($validated['due_on']) : null,

@@ -11,7 +11,7 @@
     @endcan
     @can('finance_invoices.view')
     <li class="nav-item">
-        <a class="nav-item nav-link {{ $active === 'invoices' ? 'active' : '' }}" href="{{ route('invoices') }}"><i class="fa fa-file"></i>&nbsp;Invoices</a>
+        <a class="nav-item nav-link {{ $active === 'invoices' ? 'active' : '' }}" href="{{ route('invoices') }}"><i class="fa fa-copy"></i>&nbsp;Invoices</a>
     </li>
     @endcan
     {{-- @can('finance.payments.view') --}}

@@ -7,13 +7,14 @@
             <div class="form-row mb-4">
                 <div class="form-group col-md-5">
                     <label for="client_id" class="field-required">Client</label>
-                    <select name="client_id" id="client_id" class="form-control" required="required" v-model="clientId">
+                    <select name="client_id" id="client_id" class="form-control" required="required" v-model="clientId" @change="updateClientDetails()" :disabled="this.invoice">
                         <option v-for="activeClient in clients" :value="activeClient.id" v-text="activeClient.name"></option>
                     </select>
                 </div>
             </div>
             <invoice-project-component
-                :client="client">
+                :client="client"
+                :billings="billings">
             </invoice-project-component>
             <div class="form-row mb-4">
                 <div class="form-group col-md-2">
@@ -53,7 +54,13 @@
                 </div>
             </div>
             <div class="form-row mb-4">
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-5" v-if="file">
+                    <label class="font-weight-bold">Invoice File</label>
+                    <div>
+                        <a target="_blank" :href="'/finance/invoices/download/' + file"><i class="fa fa-file fa-3x text-primary btn-file"></i></a>
+                    </div>
+                </div>
+                <div class="form-group col-md-5" v-else>
                     <label for="invoice_file" class="field-required">Upload Invoice</label>
                     <div><input id="invoice_file" name="invoice_file" type="file" required="required"></div>
                 </div>
@@ -74,35 +81,47 @@
         components: {
             'invoice-project-component': InvoiceProjectComponent
         },
-        computed: {
-            client() {
-                for (var item = 0; item < this.clients.length; item++) {
-                    let client = this.clients[item];
-                    if (client.id == this.clientId) {
-                        return client;
-                    }
-                }
-            },
-            currency() {
-                return this.invoice ? this.invoice.currency : this.client.currency
-            }
-        },
         data() {
             return {
+                client: this.clients[0],
                 clientId: this.clients[0].id,
-                billingId: 'billing-1',
                 projectInvoiceId: this.invoice ? this.invoice.project_invoice_id : null,
-                sentOn: this.invoice ? this.invoice.sent_on : null,
+                sentOn: this.invoice ? this.getDateFromTimestamp(this.invoice.sent_on) : null,
                 amount: this.invoice ? this.invoice.amount : null,
                 gst: this.invoice ? this.invoice.gst : null,
                 comments: this.invoice ? this.invoice.comments : null,
                 invoiceFile: null,
-                dueOn: this.invoice ? this.invoice.due_on : null,
+                dueOn: this.invoice ? this.getDateFromTimestamp(this.invoice.due_on) : null,
+                billings: this.invoice ? this.invoice.project_stage_billings : [],
+                file: this.invoice ? this.invoice.file_path : null,
+                currency: this.invoice ? this.invoice.currency : this.clients[0].currency,
             }
+        },
+        methods: {
+            updateClientDetails() {
+                for (var item = 0; item < this.clients.length; item++) {
+                    let client = this.clients[item];
+                    if (client.id == this.clientId) {
+                        this.client = client;
+                        this.currency = client.currency;
+                    }
+                }
+            },
+            getDateFromTimestamp(timestamp) {
+                var d = new Date(timestamp),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                return [year, month, day].join('-');
+            },
         },
         mounted() {
             console.log(this.client);
-            console.log(this.currency);
+            console.log(this.invoice);
         }
     }
 </script>
