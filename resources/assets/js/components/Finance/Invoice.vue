@@ -12,10 +12,13 @@
                     </select>
                 </div>
             </div>
-            <invoice-project-component
-                :client="client"
-                :billings="billings">
-            </invoice-project-component>
+
+            <div v-for="billing in billings">
+                <invoice-project-component :client="client">
+                </invoice-project-component>
+            </div>
+            <button type="button" class="btn btn-info btn-sm mb-4" v-on:click="addProject">Add Project</button>
+
             <div class="form-row mb-4">
                 <div class="form-group col-md-2">
                     <label for="project_invoice_id" class="field-required">Invoice ID</label>
@@ -76,6 +79,7 @@
 </template>
 <script>
     import InvoiceProjectComponent from '../InvoiceProjectComponent.vue';
+
     export default {
         props: ['clients', 'invoice'],
         components: {
@@ -118,10 +122,9 @@
 
                 return [year, month, day].join('-');
             },
-        },
-        mounted() {
-            console.log(this.client);
-            console.log(this.invoice);
+            addProject() {
+                this.billings.push({});
+            }
         }
     }
 </script>

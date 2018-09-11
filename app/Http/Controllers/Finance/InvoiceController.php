@@ -55,10 +55,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $clients = Client::getActiveClients();
-        $clients->load('projects', 'projects.stages', 'projects.stages.billings');
         return view('finance.invoice.create')->with([
-            'clients' => $clients,
+            'clients' => Client::where('is_active', true)->with(['projects', 'projects.stages', 'projects.stages.billings'])->get(),
         ]);
     }
 
@@ -116,7 +114,7 @@ class InvoiceController extends Controller
             $billings[] = $billing;
         }
 
-        $clients = Client::getActiveClients();
+        $clients = Client::getInvoicableClients();
         $clients->load('projects', 'projects.stages', 'projects.stages.billings');
 
         $attr = [

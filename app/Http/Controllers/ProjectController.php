@@ -40,7 +40,7 @@ class ProjectController extends Controller
     public function create()
     {
         return view('project.create')->with([
-            'clients' => Client::getActiveClients(),
+            'clients' => Client::where('is_active', true)->get(),
         ]);
     }
 

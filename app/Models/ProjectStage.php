@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ProjectStageBilling;
 use Illuminate\Database\Eloquent\Model;
 
 class ProjectStage extends Model

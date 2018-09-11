@@ -23,9 +23,38 @@ class Client extends Model
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function getActiveClients()
+    public static function getInvoicableClients()
     {
-        return self::where('is_active', true)->get();
+        return self::where('is_active', true)
+        // ->whereHas(
+        //     'projects.stages.billings', function ($query) {
+        //         $query->whereNull('invoice_id');
+        //     }
+        // )
+            ->whereHas('projects', function ($query) {
+                $query->whereHas('stages', function ($query) {
+                    $query->whereHas('billings', function ($query) {
+                        $query->whereNull('invoice_id');
+                    });
+                });
+            })
+            ->with([
+                'projects' => function ($query) {
+                    $query->whereHas('stages', function ($query) {
+                        $query->whereHas('billings', function ($query) {
+                            $query->whereNull('invoice_id');
+                        });
+                    });
+                },
+                // 'projects.stages' => function ($query) {
+                //     $query->whereHas('billings', function ($query) {
+                //         $query->whereNull('invoice_id');
+                //     });
+                // },
+                // 'projects.stages.billings' => function ($query) {
+                //     $query->whereNull('invoice_id');
+                // },
+            ])->get();
     }
 
     public function getCurrencyAttribute()
