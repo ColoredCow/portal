@@ -10,6 +10,8 @@ class Invoice extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['project', 'projectStage' ,'projectStageBilling'];
+
     /**
      * Get the project_stage_billings associated with the invoice.
      */
@@ -75,10 +77,36 @@ class Invoice extends Model
 
     /**
      * Accessor to get invoice's client. This is called automatically when retrieving an invoice instance.
+     *
      * @return \App\Models\Client
      */
     public function getClientAttribute()
     {
         return optional($this->projectStageBillings()->first()->projectStage->project)->client;
+    }
+
+    /**
+     * Accessor to get invoice's project. This is called automatically when retrieving an invoice instance.
+     *
+     * @return \App\Models\Project
+     */
+    public function getProjectAttribute()
+    {
+        return $this->projectStageBillings()->first()->projectStage->project;
+    }
+
+    public function getProjectStageAttribute()
+    {
+        return $this->projectStageBillings()->first()->projectStage;
+    }
+
+    public function getProjectStageBillingAttribute()
+    {
+        return $this->projectStageBillings()->first();
+    }
+
+    public static function getUnpaidInvoices()
+    {
+        return self::has('payments', '=', 0)->get();
     }
 }

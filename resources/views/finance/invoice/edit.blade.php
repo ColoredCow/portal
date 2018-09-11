@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="form_invoice">
     <br>
     @include('finance.menu', ['active' => 'invoices'])
     <br><br>
@@ -11,13 +11,13 @@
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_invoice" class="form-invoice">
+        <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" class="form-invoice">
 
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
 
             <div class="card-header">
-                <span>Invoices Details</span>
+                <h5>Invoice Details</h5>
             </div>
             <div class="card-body">
                 <div class="form-row">
@@ -79,19 +79,19 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-2">
+                    {{-- <div class="form-group col-md-2">
                         <label for="status" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" v-model="status" data-invoice-payments="{{ $invoice->payments->count() }}">
                             <option value="unpaid">Unpaid</option>
                             <option value="partial">Partially Paid</option>
                             <option value="paid">Fully Paid</option>
                         </select>
-                    </div>
-                    <div class="form-group col-md-3" v-if="status == 'paid'">
+                    </div> --}}
+                    {{-- <div class="form-group col-md-3" v-if="status == 'paid'">
                         <label for="paid_at" class="field-required">Paid on</label>
                         <input type="date" required="required" class="form-control" name="paid_at" id="paid_at" placeholder="{{config('constants.finance.input_date_format')}}" value="{{ $payment ? $payment->paid_at : '' }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-3" v-if="status == 'paid'">
+                    </div> --}}
+                    {{-- <div class="form-group offset-md-1 col-md-3" v-if="status == 'paid'">
                         <label for="payment_amount" class="field-required">Payment amount</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -151,9 +151,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-row mb-2" v-if="status == 'paid'">
-                    <div class="form-group col-md-5">
+                </div> --}}
+                {{-- <div class="form-row mb-2" v-if="status == 'paid'"> --}}
+                    {{-- <div class="form-group col-md-5">
                         <label for="payment_mode" class="field-required">Payment mode</label>
                         <select name="payment_mode" id="payment_mode" class="form-control" required="required" v-model="paymentType" data-payment-type="{{ $paymentModeModel->type }}">
                             <option value="">Select payment mode</option>
@@ -164,8 +164,8 @@
                                 <option value="{{ $payment_mode }}" {{ $selected }}>{{ $display_name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    @if ($paymentModeModel->type == 'cheque')
+                    </div> --}}
+                    {{-- @if ($paymentModeModel->type == 'cheque')
                         <div class="form-group offset-md-1 col-md-3 cheque-status">
                             <label for="cheque_status" class="field-required">Cheque status</label>
                             <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ $paymentModeModel->status }}">
@@ -187,7 +187,7 @@
                             <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
                             <input type="date" class="form-control" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                         </div>
-                    @endif
+                    @endif --}}
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-5">
@@ -214,5 +214,6 @@
             </div>
         </form>
     </div>
+    {{-- <button type="button" class="btn btn-secondary mt-3 px-3" v-on:click="addPayment()" v-if="!newPayment">Add payment</button> --}}
 </div>
 @endsection

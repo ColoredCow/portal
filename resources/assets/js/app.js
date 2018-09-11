@@ -99,19 +99,20 @@ if (document.getElementById('form_invoice')) {
     const invoiceForm = new Vue({
         el: '#form_invoice',
         data: {
-            paymentType: document.getElementById('payment_mode').dataset.paymentType || '',
-            chequeStatus: document.getElementById('cheque_status') ? document.getElementById('cheque_status').dataset.chequeStatus : null,
+            // paymentType: document.getElementById('payment_mode').dataset.paymentType || '',
+            // chequeStatus: document.getElementById('cheque_status') ? document.getElementById('cheque_status').dataset.chequeStatus : null,
             selectedClient: '',
-            status: document.getElementById('status').dataset.invoicePayments > 0 ? 'paid' : 'unpaid',
+            // status: document.getElementById('status').dataset.invoicePayments > 0 ? 'paid' : 'unpaid',
             activeClient: document.getElementById('client_id').dataset.activeClient ? JSON.parse(document.getElementById('client_id').dataset.activeClient) : [],
-            paymentCurrency: document.getElementById('payment_currency').dataset.paymentCurrency || 'INR',
-            paidAmount: document.getElementById('payment_amount').dataset.paidAmount || '',
+            // paymentCurrency: document.getElementById('payment_currency').dataset.paymentCurrency || 'INR',
+            // paidAmount: document.getElementById('payment_amount').dataset.paidAmount || '',
             sentAmount: document.getElementById('invoice_amount').dataset.sentAmount || '',
             invoiceCurrency: document.getElementById('invoice_currency').dataset.invoiceCurrency || '',
-            conversionRate: document.getElementById('conversion_rate') ? document.getElementById('conversion_rate').dataset.conversionRate : '',
+            // conversionRate: document.getElementById('conversion_rate') ? document.getElementById('conversion_rate').dataset.conversionRate : '',
             countries: document.getElementById('client_id').dataset.countries || [],
-            tdsAmount: document.getElementById('tds').dataset.tds || '',
-            transactionCharge: document.getElementById('bank_charges') ? document.getElementById('bank_charges').dataset.transactionCharge : '',
+            // tdsAmount: document.getElementById('tds').dataset.tds || '',
+            // transactionCharge: document.getElementById('bank_charges') ? document.getElementById('bank_charges').dataset.transactionCharge : '',
+            newPayment: false,
         },
         computed: {
             convertedAmount: function() {
@@ -132,10 +133,10 @@ if (document.getElementById('form_invoice')) {
             // }
         },
         mounted() {
-            console.log(this.paidAmount);
-            console.log(this.paymentType);
-            console.log(this.paymentCurrency);
-            console.log(document.getElementById('status').dataset.invoicePayments);
+            // console.log(this.paidAmount);
+            // console.log(this.paymentType);
+            // console.log(this.paymentCurrency);
+            // console.log(document.getElementById('status').dataset.invoicePayments);
         },
         methods : {
             updateActiveClient: function() {
@@ -149,6 +150,9 @@ if (document.getElementById('form_invoice')) {
                         break;
                     }
                 }
+            },
+            addPayment: function() {
+                this.newPayment = true;
             }
         }
     });
@@ -759,3 +763,5 @@ if (document.getElementById('user_roles_table')) {
         }
     });
 }
+
+require('./finance/payment');

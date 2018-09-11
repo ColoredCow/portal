@@ -94,6 +94,13 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
         Route::resource('invoices', 'InvoiceController')->except(['show', 'destroy']);
+        Route::resource('payments', 'PaymentController')->except(['show', 'destroy'])->names([
+            'index' => 'payments',
+            'create' => 'payments.create',
+            'store' => 'payments.store',
+            'edit' => 'payments.edit',
+            'update' => 'payments.update',
+        ]);
         Route::get('invoices/download/{year}/{month}/{file}', 'InvoiceController@download');
         Route::get('/reports', 'ReportsController@index');
     });
