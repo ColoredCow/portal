@@ -7,7 +7,7 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Edit Invoice</h1></div>
-        <div class="col-md-6"><a href="/finance/invoices/create" class="btn btn-success float-right">Create Invoice</a></div>
+        <div class="col-md-6"><a href="{{ route('invoices.create') }}" class="btn btn-success float-right">Create Invoice</a></div>
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
@@ -192,7 +192,7 @@
                                 <option value="{{ $payment_type }}" {{ $selected }}>{{ $display_name }}</option>
                             @endforeach
                         </select>
-                    </div> 
+                    </div>
                     <div class="form-group offset-md-1 col-md-3 cheque-status" v-if="paymentType == 'cheque'">
                         <label for="cheque_status" class="field-required">Cheque status</label>
                         <select name="cheque_status" id="cheque_status" class="form-control" required="required" v-model="chequeStatus" data-cheque-status="{{ $invoice->cheque_status }}">
@@ -214,7 +214,7 @@
                         <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
                         <input type="text" class="form-control date-field" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="{{ config('constants.finance.input_date_format') }}" value="{{ $invoice->cheque_bounced_date ? date(config('constants.display_date_format'), strtotime($invoice->cheque_bounced_date)) : '' }}">
                     </div>
-                </div>     
+                </div>
                 <div class="form-row mb-4">
                     <div class="form-group col-md-5">
                     @if ($invoice->file_path)

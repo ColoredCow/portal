@@ -139,6 +139,7 @@ if (document.getElementById('form_invoice')) {
                     if (client.id == this.selectedClient) {
                         this.activeClient = client;
                         this.activeClientCurrency = JSON.parse(this.countries)[client.country].currency;
+                        console.log(client.country);
                         break;
                     }
                 }
@@ -444,7 +445,7 @@ if (document.getElementById('books_listing')) {
                 this.categoryInputs.map((checkbox) => checkbox.checked = false );
                 categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
             },
-            
+
             updateCategory: function() {
                 let selectedCategory = [];
                 let bookID = this.books[this.currentBookIndex]['id'];
@@ -506,7 +507,7 @@ if (document.getElementById('books_listing')) {
                 if (new_count && isFinite(new_count)) {
                     this.books[index].number_of_copies = new_count;
                     axios.put(
-                        this.updateRoute + '/' + this.books[index].id, 
+                        this.updateRoute + '/' + this.books[index].id,
                         {'number_of_copies' : new_count},
                     );
                 }

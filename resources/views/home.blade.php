@@ -10,7 +10,7 @@
         @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
-                <a class="card-body no-transition" href="/hr">
+                <a class="card-body no-transition" href="{{ route('hr') }}">
                     <br><h2 class="text-center">HR</h2><br>
                 </a>
             </div>
@@ -30,7 +30,7 @@
         @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
         <div class="col-md-4">
             <div class= "card h-75 mx-4 mt-3 mb-5">
-                <a class="card-body no-transition" href="/knowledgecafe">
+                <a class="card-body no-transition" href="{{ route('knowledgecafe') }}">
                     <br><h2 class="text-center">KnowledgeCafe</h2><br>
                 </a>
             </div>
