@@ -7,7 +7,7 @@
         @can('library_books.view')
          <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
-                <a class="card-body no-transition" href="/knowledgecafe/library/books">
+                <a class="card-body no-transition" href="{{ route('books.index') }}">
                     <br><h2 class="text-center">Library</h2><br>
                 </a>
             </div>
@@ -16,7 +16,7 @@
         @can('weeklydoses.view')
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
-                <a class="card-body no-transition" href="/knowledgecafe/weeklydoses/">
+                <a class="card-body no-transition" href="{{ route('weeklydoses') }}">
             	   <br><h2 class="text-center">Weekly Dose</h2><br>
                 </a>
             </div>

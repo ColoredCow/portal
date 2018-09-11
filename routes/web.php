@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('hr')->namespace('HR')->group(function () {
-        Route::get('/', 'HRController@index');
+        Route::get('/', 'HRController@index')->name('hr');
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
@@ -93,19 +93,31 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
-        Route::resource('invoices', 'InvoiceController')->except(['show', 'destroy']);
-        Route::resource('payments', 'PaymentController')->except(['show', 'destroy'])->names([
-            'index' => 'payments',
-            'create' => 'payments.create',
-            'store' => 'payments.store',
-            'edit' => 'payments.edit',
-            'update' => 'payments.update',
-        ]);
+        Route::resource('invoices', 'InvoiceController')
+            ->except(['show', 'destroy'])
+            ->names([
+                'index' => 'invoices',
+                'create' => 'invoices.create',
+                'edit' => 'invoices.edit',
+                'store' => 'invoices.store',
+                'update' => 'invoices.update',
+            ]);
+        Route::resource('payments', 'PaymentController')
+            ->except(['show', 'destroy'])
+            ->names([
+                'index' => 'payments',
+                'create' => 'payments.create',
+                'store' => 'payments.store',
+                'edit' => 'payments.edit',
+                'update' => 'payments.update',
+            ]);
         Route::get('invoices/download/{year}/{month}/{file}', 'InvoiceController@download');
         Route::get('/reports', 'ReportsController@index');
     });
 
-    Route::resource('clients', 'ClientController')->except(['show', 'destroy']);
+    Route::resource('clients', 'ClientController')
+        ->except(['show', 'destroy'])
+        ->names(['index' => 'clients', 'create' => 'clients.create', 'edit' => 'clients.edit', 'store' => 'clients.store', 'update' => 'clients.update']);
     Route::resource('projects', 'ProjectController')
         ->except(['show', 'destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
@@ -132,7 +144,7 @@ Route::middleware('auth')->group(function () {
             'update' => 'project.stage.update']);
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
-        Route::get('/', 'KnowledgeCafeController@index');
+        Route::get('/', 'KnowledgeCafeController@index')->name('knowledgecafe');
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
                 ->names([

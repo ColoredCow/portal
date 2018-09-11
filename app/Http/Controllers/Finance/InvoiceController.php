@@ -8,10 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Finance\InvoiceRequest;
 use App\Models\Client;
 use App\Models\Finance\Invoice;
-use App\Models\Finance\Payment;
-use App\Models\Finance\PaymentModes\Cash;
-use App\Models\Finance\PaymentModes\Cheque;
-use App\Models\Finance\PaymentModes\WireTransfer;
 use App\Models\ProjectStageBilling;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Input;
@@ -90,76 +86,15 @@ class InvoiceController extends Controller
             'file_path' => $path,
         ]);
 
-        if ($validated['status'] == 'paid') {
-            $modes = config('constants.finance.payments.modes');
-            switch ($validated['payment_mode']) {
-                case 'cash':
-                    $mode = Cash::create();
-                    break;
-
-                case 'wire-transfer':
-                    $wireTransfer = [];
-                    if (isset($validated['wire_transfer_via'])) {
-                        $wireTransfer['via'] = $validated['wire_transfer_via'];
-                    }
-                    $mode = WireTransfer::create($wireTransfer);
-                    break;
-
-                case 'cheque':
-                    $cheque = ['status' => $validated['cheque_status']];
-                    switch ($validated['cheque_status']) {
-                        case 'received':
-                            $dateField = 'received_on';
-                            break;
-
-                        case 'cleared':
-                            $dateField = 'cleared_on';
-                            break;
-
-                        case 'bounced':
-                            $dateField = 'bounced_on';
-                            break;
-                    }
-                    $cheque[$dateField] = DateHelper::formatDateToSave($validated["cheque_$dateField"]);
-                    $mode = Cheque::create($cheque);
-                    break;
-            }
-
-            $payment = Payment::create([
-                'invoice_id' => $invoice->id,
-                'paid_at' => $validated['paid_at'],
-                'currency' => $validated['payment_currency'],
-                'amount' => $validated['payment_amount'],
-                'bank_charges' => $validated['bank_charges'],
-                'bank_service_tax_forex' => $validated['bank_service_tax_forex'],
-                'tds' => $validated['tds'],
-                'conversion_rate' => $validated['conversion_rate'],
-                'mode_id' => $mode->id,
-                'mode_type' => $modes[$validated['payment_mode']],
-            ]);
-        }
-
         foreach ($validated['billings'] as $billing) {
             ProjectStageBilling::where('id', $billing)->update(['invoice_id' => $invoice->id]);
         }
 
         if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
-            $projectStageBilling = $invoice->projectStageBillings->first();
-            $project = $projectStageBilling->projectStage->project;
-            return redirect(route('projects.edit', $project->id))->with('status', 'Billing invoice created successfully');
+            $status = 'Billing invoice created successfully!';
+            return redirect()->back()->with('status', $status);
         }
-        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice created successfully!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Finance\Invoice  $invoice
-     * @return void
-     */
-    public function show(Invoice $invoice)
-    {
-        //
+        return redirect()->route('invoices.edit', $invoice)->with('status', 'Invoice created successfully!');
     }
 
     /**
@@ -222,24 +157,6 @@ class InvoiceController extends Controller
             'due_on' => $validated['due_on'] ? DateHelper::formatDateToSave($validated['due_on']) : null,
         ]);
 
-        if ($validated['status'] == 'paid') {
-            // need to change the below for multiple payments.
-            $invoice->payments->first()->update([
-                'paid_at' => isset($validated['paid_at']) ? DateHelper::formatDateToSave($validated['paid_at']) : null,
-                'amount' => isset($validated['payment_amount']) ? $validated['payment_amount'] : null,
-                'currency' => isset($validated['payment_currency']) ? $validated['payment_currency'] : null,
-                'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
-                'bank_charges' => isset($validated['bank_charges']) ? $validated['bank_charges'] : null,
-                'bank_service_tax_forex' => isset($validated['bank_service_tax_forex']) ? $validated['bank_service_tax_forex'] : null,
-                'tds' => isset($validated['tds']) ? $validated['tds'] : null,
-                // 'mode' => isset($validated['mode']) ? $validated['mode'] : null,
-                // 'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : '',
-                // 'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
-                // 'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
-                // 'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
-            ]);
-        }
-
         $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
         foreach ($invoiceBillings as $billingId => $invoiceBilling) {
             if (!array_key_exists($billingId, $validated['billings'])) {
@@ -253,18 +170,7 @@ class InvoiceController extends Controller
             }
         }
 
-        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice updated successfully!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Finance\Invoice  $invoice
-     * @return void
-     */
-    public function destroy(Invoice $invoice)
-    {
-        //
+        return redirect()->route('invoices.edit', $invoice)->with('status', 'Invoice updated successfully!');
     }
 
     /**

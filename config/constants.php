@@ -51,6 +51,13 @@ return [
                 'type' => 'volunteer',
             ],
         ],
+
+        'template-variables' => [
+            'applicant-name' => '|*applicant_name*|',
+            'interview-time' => '|*interview_time*|',
+            'job-title' => '|*job_title*|',
+        ],
+
         'default' => [
             'email' => env('HR_DEFAULT_FROM_EMAIL', 'employeeportal@example.com'),
             'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers'),

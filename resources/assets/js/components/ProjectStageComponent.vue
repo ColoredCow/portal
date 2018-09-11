@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="card mt-4">
+            <form :action="stage.id ? '/project/stages/' + stage.id : '/project/stages'" method="POST">
                 <input v-if="stage.id" type="hidden" name="_method" value="PATCH">
                 <input type="hidden" name="_token" :value="csrfToken">
                 <input type="hidden" name="project_id" :value="projectId">
@@ -13,14 +14,14 @@
                         </div>
                     </div>
                     <div class="card-edit icon-pencil" @click="editMode = !editMode" v-show="!editMode"><i class="fa fa-pencil"></i></div>
-                    <button class="btn btn-primary card-edit" @click="storeStages" v-show="editMode">{{ stage.id ? 'Update' : 'Create' }}</button>
+                    <button class="btn btn-primary card-edit" type="submit" v-show="editMode">{{ stage.id ? 'Update' : 'Create' }}</button>
                 </div>
                 <div class="card-body" v-show="editMode">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-row">
                                 <div class="form-group col-md-8">
-                                    <label for="sent_amount" class="field-required">Cost</label>
+                                    <label for="cost" class="field-required">Cost</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <select name="currency_cost" id="currency_cost" class="btn btn-secondary" required="required" v-model="inputStageCurrency">
@@ -35,7 +36,7 @@
                             </div>
                             <div class="form-row" v-show="clientCountryGstApplicable">
                                 <div class="form-group col-md-8 d-flex align-items-center">
-                                    <label for="sent_amount" class="mb-0">Stage cost include GST?&nbsp;</label>
+                                    <label for="cost_include_gst" class="mb-0">Stage cost include GST?&nbsp;</label>
                                     <label class="switch mb-0">
                                         <input type="checkbox" id="cost_include_gst" name="cost_include_gst" value="1" v-model="inputStageCostIncludeGst">
                                         <div class="slider secondary-slider round" @click="toggleInputStageCostIncludeGst" :class="[inputStageCostIncludeGst ? 'active' : 'inactive']" >
@@ -89,6 +90,7 @@
                         <tbody>
                             <project-stage-billing-component
                             v-for="(billing, index) in stageBillings"
+                            :stage="stage"
                             :billing="billing"
                             :stage-cost-without-gst="stageCostWithoutGst"
                             :gst-amount="gstAmount"
@@ -101,9 +103,9 @@
                             </project-stage-billing-component>
                         </tbody>
                     </table>
-                <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
+                    <button type="button" class="mt-3 btn btn-info btn-sm" v-on:click="addBilling"><i class="fa fa-plus"></i>&nbsp;Add billing</button>
                 </div>
-
+            </form>
             <div id="new_billing_invoice_modal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -145,7 +147,7 @@
                                             <input type="number" class="form-control" name="sent_amount" id="sent_amount" placeholder="Invoice Amount" required="required" step=".01" min="0">
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4" v-show="clientCountryGstApplicable">
+                                    <div class="form-group col-md-4" v-if="clientCountryGstApplicable">
                                         <label for="gst">GST amount</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -172,66 +174,68 @@
                                     </div>
                                 </div>
                                 <br>
-                                <h4 class="my-4"><u>Payment Details</u></h4>
-                                <div class="form-row">
-                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'col-md-5']" v-if="isPaid">
-                                        <label for="paid_on" class="field-required">Paid on</label>
-                                        <input type="date" class="form-control" required="required" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
-                                    </div>
-                                    <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'offset-md-1 col-md-5']" v-if="isPaid">
-                                        <label for="paid_amount" class="field-required">Received amount</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary">
-                                                    <option :value="inputStageCurrency">{{ inputStageCurrency }}</option>
-                                                </select>
+                                <div v-if="isPaid">
+                                    <h4 class="my-4"><u>Payment Details</u></h4>
+                                    <div class="form-row">
+                                        <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'col-md-5']">
+                                            <label for="paid_on" class="field-required">Paid on</label>
+                                            <input type="date" class="form-control" required="required" name="paid_on" id="paid_on" placeholder="dd/mm/yyyy">
+                                        </div>
+                                        <div class="form-group" :class="[clientCountryGstApplicable ? 'col-md-4' : 'offset-md-1 col-md-5']">
+                                            <label for="paid_amount" class="field-required">Received amount</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <select name="currency_paid_amount" id="currency_paid_amount" class="btn btn-secondary">
+                                                        <option :value="inputStageCurrency">{{ inputStageCurrency }}</option>
+                                                    </select>
+                                                </div>
+                                                <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" required="required">
                                             </div>
-                                            <input type="number" class="form-control" name="paid_amount" id="paid_amount" placeholder="Received Amount" step=".01" min="0" required="required">
+                                        </div>
+                                        <div class="form-group col-md-4" v-if="clientCountryGstApplicable">
+                                            <label for="tds">TDS amount</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    {{ configs.currency }}
+                                                    <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
+                                                        <option value="INR">INR</option>
+                                                    </select>
+                                                </div>
+                                                <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4" v-show="clientCountryGstApplicable">
-                                        <label for="tds">TDS amount</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                {{ configs.currency }}
-                                                <select name="currency_tds" id="currency_tds" class="btn btn-secondary" required="required">
-                                                    <option value="INR">INR</option>
-                                                </select>
-                                            </div>
-                                            <input type="number" class="form-control" name="tds" id="tds" placeholder="TDS Amount" step=".01" min="0">
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="payment_type" class="field-required">Payment type</label>
+                                            <select name="payment_type" id="payment_type" class="form-control" v-model="selectedPaymentType" required="required">
+                                                <option value="">Select payment type</option>
+                                                <option v-for="(title, label) in configs.paymentTypes" :value="label">{{ title }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4 cheque-status" v-if="selectedPaymentType == 'cheque'">
+                                            <label for="cheque_status" class="field-required">Cheque status</label>
+                                            <select name="cheque_status" id="cheque_status" class="form-control" v-model="selectedChequeStatus" required="required">
+                                                <option value="">Select cheque status</option>
+                                                <option v-for="(title, label) in configs.chequeStatus" :value="label">{{ title }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4" v-if="selectedPaymentType == 'cheque' && selectedChequeStatus == 'received'">
+                                            <label for="cheque_received_date" class="field-required">Cheque Received Date</label>
+                                            <input type="date" class="form-control" required="required" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy">
+                                        </div>
+                                        <div class="form-group col-md-4" v-if="selectedPaymentType == 'cheque' && selectedChequeStatus == 'cleared'">
+                                            <label for="cheque_cleared_date" class="field-required">Cheque Cleared Date</label>
+                                            <input type="date" class="form-control" required="required" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy">
+                                        </div>
+                                        <div class="form-group col-md-4" v-if="selectedPaymentType == 'cheque' && selectedChequeStatus == 'bounced'">
+                                            <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
+                                            <input type="date" class="form-control" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy">
                                         </div>
                                     </div>
+                                    <br>
                                 </div>
-                                <br>
-                                <div class="form-row" v-if="isPaid">
-                                    <div class="form-group col-md-4">
-                                        <label for="payment_type" class="field-required">Payment type</label>
-                                        <select name="payment_type" id="payment_type" class="form-control" v-model="selectedPaymentType" required="required">
-                                            <option value="">Select payment type</option>
-                                            <option v-for="(title, label) in configs.paymentTypes" :value="label">{{ title }}</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4 cheque-status" v-if="selectedPaymentType == 'cheque'">
-                                        <label for="cheque_status" class="field-required">Cheque status</label>
-                                        <select name="cheque_status" id="cheque_status" class="form-control" v-model="selectedChequeStatus" required="required">
-                                            <option value="">Select cheque status</option>
-                                            <option v-for="(title, label) in configs.chequeStatus" :value="label">{{ title }}</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4" v-if="selectedPaymentType == 'cheque' && selectedChequeStatus == 'received'">
-                                        <label for="cheque_received_date" class="field-required">Cheque Received Date</label>
-                                        <input type="date" class="form-control" required="required" name="cheque_received_date" id="cheque_received_date" placeholder="dd/mm/yyyy">
-                                    </div>
-                                    <div class="form-group col-md-4" v-if="selectedPaymentType == 'cheque' && selectedChequeStatus == 'cleared'">
-                                        <label for="cheque_cleared_date" class="field-required">Cheque Cleared Date</label>
-                                        <input type="date" class="form-control" required="required" name="cheque_cleared_date" id="cheque_cleared_date" placeholder="dd/mm/yyyy">
-                                    </div>
-                                    <div class="form-group col-md-4" v-if="selectedPaymentType == 'cheque' && selectedChequeStatus == 'bounced'">
-                                        <label for="cheque_bounced_date" class="field-required">Cheque Bounced Date</label>
-                                        <input type="date" class="form-control" required="required" name="cheque_bounced_date" id="cheque_bounced_date" placeholder="dd/mm/yyyy">
-                                    </div>
-                                </div>
-                                <br>
                             </div>
                             <div class="modal-footer">
                                 <input type="submit" value="Create" class="btn btn-primary">
@@ -302,28 +306,40 @@
             },
         },
         methods: {
-            async storeStages(){
-                 this.editMode=false;
-                 let formData = ({
-                 name:this.stage.name,
-                 cost:this.inputStageCost,
-                 currency_cost:this.inputStageCurrency,
-                 cost_include_gst:this.inputStageCostIncludeGst,
-                 start_date:this.stage.start_date,
-                 end_date:this.stage.end_date,
-                 type:this.stageType,
-                 project_id:this.projectId,
-                  });
+            async storeStages() {
+                let newBillings = [];
+                let billings = [];
+                for (let index in this.stageBillings) {
+                    let billing = this.stageBillings[index];
+                    if (billing.isNew) {
+                        newBillings.push(billing.percentage);
+                    } else {
+                        billings.push({[billing.id] : billing.percentage});
+                    }
+                }
+                let formData = ({
+                    name: this.stage.name,
+                    cost: this.inputStageCost,
+                    currency_cost: this.inputStageCurrency,
+                    cost_include_gst: this.inputStageCostIncludeGst,
+                    start_date: this.stage.start_date,
+                    end_date: this.stage.end_date,
+                    type: this.stageType,
+                    project_id: this.projectId,
+                    billing: billings,
+                    new_billing: newBillings,
+                });
 
-                 let methodName = 'post';
-                 let url = this.stageRoute;
-                 if(this.stage.id){
+                let methodName = 'post';
+                let url = this.stageRoute;
+
+                if(this.stage.id){
                     methodName = 'put';
                     url = this.stageRoute +'/' + this.stage.id;
-                 };
+                };
 
-                 let response = await axios({method: methodName, url: url, data:formData});
-                 alert(response.data.status);
+                let response = await axios({method: methodName, url: url, data:formData});
+                alert(response.data.status);
             },
             addBilling() {
                 this.stageBillings.push({
