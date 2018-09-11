@@ -24,7 +24,6 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            // invoice fields
             'project_invoice_id' => 'required|integer|min:1',
             'currency' => 'required|string',
             'amount' => 'required|numeric',
@@ -32,16 +31,12 @@ class InvoiceRequest extends FormRequest
             'due_on' => 'nullable|string', // change type to date
             'gst' => 'nullable|numeric',
             'comments' => 'nullable|string',
-
             'billings' => 'required',
-
             'request_from_billing' => 'nullable|boolean',
         ];
-
         if ($this->method() === 'POST') {
             $rules['invoice_file'] = 'required|file';
         }
-
         return $rules;
     }
 
@@ -53,13 +48,12 @@ class InvoiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'sent_on.required' => 'Invoice sent date is required',
-            'invoice_amount.numeric' => 'Invoice amount must be a valid decimal',
-            'payment_amount.numeric' => 'Received amount must be a valid decimal',
+            'sent_on.required' => 'Sent date is required',
+            'amount.numeric' => 'Amount must be a valid decimal',
             'project_invoice_id.required' => 'Invoice ID is required',
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',
             'project_invoice_id.integer' => 'Invoice ID should be a valid number',
-            'invoice_file.required' => 'An invoice needs to be uploaded',
+            'invoice_file.required' => 'An invoice file needs to be uploaded',
             'billings.required' => 'At least one billing is required',
         ];
     }

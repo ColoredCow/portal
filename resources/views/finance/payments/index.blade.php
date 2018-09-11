@@ -9,7 +9,7 @@
         <div class="col-md-6"><h1>Payments</h1></div>
         <div class="col-md-6"><a href="{{route('payments.create')}}" class="btn btn-success float-right">Create Payment</a></div>
     </div>
-    <form action="{{route('payments')}}" method="GET" class="form-inline mt-4 mb-4 d-flex justify-content-end">
+    {{-- <form action="{{route('payments')}}" method="GET" class="form-inline mt-4 mb-4 d-flex justify-content-end">
         <div class="form-group">
             <input type="date" name="start" id="start" placeholder="dd/mm/yyyy" class="form-control form-control-sm" value="{{ $startDate ?? '' }}">
         </div>
@@ -19,7 +19,7 @@
         <div class="form-group ml-2">
             <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
         </div>
-    </form>
+    </form> --}}
     <table class="table table-striped table-bordered">
         <tr>
             <th>Project</th>
@@ -35,10 +35,10 @@
                     </a>
                 </td>
                 <td>
-                    {{$payment->invoice->sent_on->format('d/m/Y')}}
+                    {{$payment->invoice->sent_on->format(config('constants.display_date_format'))}}
                 </td>
                 <td>
-                    {{$payment->paid_at->format('d/m/Y')}}
+                    {{$payment->paid_at->format(config('constants.display_date_format'))}}
                 </td>
                 <td>
                     {{$payment->currency}} {{$payment->amount}}

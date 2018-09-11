@@ -125,6 +125,9 @@
             addProject() {
                 this.billings.push({});
             }
+        },
+        mounted() {
+            console.log(this.invoice);
         }
     }
 </script>

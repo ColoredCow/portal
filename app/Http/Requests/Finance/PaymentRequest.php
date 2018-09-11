@@ -25,7 +25,6 @@ class PaymentRequest extends FormRequest
     {
         return [
             'invoice_id' => 'required|numeric',
-
             'paid_at' => 'required|date',
             'amount' => 'required|numeric',
             'currency' => 'required|string',
@@ -33,11 +32,8 @@ class PaymentRequest extends FormRequest
             'conversion_rate' => 'nullable|string',
             'bank_charges' => 'nullable|string',
             'bank_service_tax_forex' => 'nullable|string',
-
             'mode' => 'required|string',
-
             // 'wire_transfer_via' => 'nullable|string|required_if:mode,wire-transfer',
-
             'cheque_status' => 'nullable|string|required_if:mode,cheque',
             'cheque_received_on' => 'nullable|string|required_if:cheque_status,received',
             'cheque_cleared_on' => 'nullable|string|required_if:cheque_status,cleared',

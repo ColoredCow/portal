@@ -355,9 +355,6 @@
             toggleInputStageCostIncludeGst() {
                 this.inputStageCostIncludeGst = !this.inputStageCostIncludeGst;
             }
-        },
-        mounted() {
-            console.log(this.stageBillings);
         }
     }
 </script>

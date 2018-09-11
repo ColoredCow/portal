@@ -16,11 +16,10 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_invoice_id');
-            $table->string('status')->default('unpaid'); // Create a model event to update this value when a new payment is created for this invoice.
             $table->string('currency', 3);
             $table->decimal('amount', 10, 2);
             $table->date('sent_on');
-            $table->date('due_on'); // Calculation at the time of creating invoice. Maybe 15 days after. Should be configurable from application.
+            $table->date('due_on');
             $table->decimal('gst', 10, 2)->nullable()->comment('Currency is always Indian Rupees for this field.');
             $table->text('comments')->nullable();
             $table->string('file_path');
@@ -31,7 +30,7 @@ class CreateInvoicesTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoice_id')->index();
-            $table->timestamp('paid_at')->useCurrent(); // making this timestamp to set the default value.
+            $table->timestamp('paid_at')->useCurrent();
             $table->string('currency', 3);
             $table->decimal('amount', 10, 2);
             $table->decimal('bank_charges', 10, 2)->nullable()->comment('Has same currency as amount. Applicable to foreign transactions only.');
@@ -40,7 +39,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('conversion_rate', 10, 2)->nullable();
 
             $table->unsignedInteger('mode_id');
-            $table->string('mode_type'); // polymorphic relation
+            $table->string('mode_type');
             $table->timestamps();
             $table->softDeletes();
 
@@ -50,7 +49,7 @@ class CreateInvoicesTable extends Migration
 
         Schema::create('cheques', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('status'); // received, cleared, bounced.
+            $table->string('status');
             $table->date('received_on');
             $table->date('cleared_on')->nullable();
             $table->date('bounced_on')->nullable();
@@ -59,11 +58,10 @@ class CreateInvoicesTable extends Migration
 
         Schema::create('wire_transfers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('via')->default('bank'); // bank, paypal, western-union etc.
+            $table->string('via')->default('bank');
             $table->timestamps();
         });
 
-        // does not have any attributes right now
         Schema::create('cash', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();

@@ -2,7 +2,6 @@
 
 namespace App\Models\Finance;
 
-use App\Models\Finance\Payment;
 use App\Models\ProjectStageBilling;
 use Illuminate\Database\Eloquent\Model;
 
@@ -103,9 +102,9 @@ class Invoice extends Model
         return $this->projectStageBillings()->first()->projectStage->project;
     }
 
-    public static function getUnpaidInvoices()
+    public function scopeUnpaid($query)
     {
-        return self::has('payments', '=', 0)->get();
+        return $query->doesntHave('payments');
     }
 
     public function getStatusAttribute()

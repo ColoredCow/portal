@@ -33,7 +33,7 @@ class PaymentController extends Controller
     public function create()
     {
         return view('finance.payments.create')->with([
-            'unpaidInvoices' => Invoice::getUnpaidInvoices(),
+            'unpaidInvoices' => Invoice::unpaid()->get(),
         ]);
     }
 
@@ -66,7 +66,7 @@ class PaymentController extends Controller
 
         return view('finance.payments.edit')->with([
             'payment' => $payment,
-            'unpaidInvoices' => Invoice::getUnpaidInvoices(),
+            'unpaidInvoices' => Invoice::unpaid()->get(),
         ]);
     }
 
@@ -147,12 +147,16 @@ class PaymentController extends Controller
 
         $model = config('constants.finance.payments.modes.' . $validated['mode']);
 
+        // If the payment has not been created yet, create and
+        // return the mode so that the payment can be created.
         if (is_null($payment)) {
             return $model::create($attr);
         }
 
         $payment->load('mode');
 
+        // If the new payment mode is same as the previous one, update the mode.
+        // Else, delete the previous mode and create a new one.
         if ($payment->mode->type == $validated['mode']) {
             $payment->mode->update($attr);
             return $payment->mode;
