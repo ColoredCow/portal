@@ -107,4 +107,9 @@ class Invoice extends Model
     {
         return self::has('payments', '=', 0)->get();
     }
+
+    public function getStatusAttribute()
+    {
+        return $this->payments->count() ? 'paid' : 'unpaid';
+    }
 }
