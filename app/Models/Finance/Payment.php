@@ -10,10 +10,10 @@ class Payment extends Model
     protected $guarded = [];
 
     protected $dates = [
-    	'paid_at',
-    	'created_at',
-    	'updated_at',
-    	'deleted_at',
+        'paid_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function invoice()
