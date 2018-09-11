@@ -123,9 +123,6 @@
                 bankServiceTaxForex: !this.isNew ? this.payment.bank_service_tax_forex : null,
                 conversionRate: !this.isNew ? this.payment.conversion_rate : null,
                 mode: !this.isNew ? this.payment.mode.type : 'wire-transfer',
-                chequeBouncedOn: null,
-                chequeClearedOn: null,
-                chequeReceivedOn: null,
                 invoiceId: !this.isNew ? this.payment.invoice.id : this.unpaidInvoices[0].id,
                 chequeStatus: !this.isNew && this.payment.mode.type == 'cheque' ? this.payment.mode.status : 'received',
                 chequeReceivedOn: !this.isNew && this.payment.mode.type == 'cheque' ? this.payment.mode.received_on : null,
@@ -135,7 +132,7 @@
         },
         methods: {
             updatePaymentFields() {
-                for (var index = 0; index < this.unpaidInvoices.length; index++) {
+                for (let index in this.unpaidInvoices) {
                     let unpaidInvoice = this.unpaidInvoices[index];
                     if (unpaidInvoice.id == this.invoiceId) {
                         this.amount = unpaidInvoice.amount;
@@ -145,24 +142,30 @@
             },
             formatDate(date) {
                 var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
+                month = (d.getMonth() + 1).toString(),
+                day = d.getDate().toString(),
                 year = d.getFullYear();
 
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day = '0' + day;
-
+                if (month.length < 2) {
+                    month = '0' + month;
+                }
+                if (day.length < 2) {
+                    day = '0' + day;
+                }
                 return [year, month, day].join('-');
             },
             formatDisplayDate(date) {
                 var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
+                month = (d.getMonth() + 1).toString(),
+                day = d.getDate().toString(),
                 year = d.getFullYear();
 
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day = '0' + day;
-
+                if (month.length < 2) {
+                    month = '0' + month
+                };
+                if (day.length < 2) {
+                    day = '0' + day
+                };
                 return [day, month, year].join('/');
             }
         },
