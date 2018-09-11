@@ -22,16 +22,20 @@
     </form>
     <table class="table table-striped table-bordered">
         <tr>
-            <th>Invoice</th>
-            <th>Paid on</th>
+            <th>Project</th>
+            <th>Invoice sent on</th>
+            <th>Payment on</th>
             <th>Amount</th>
         </tr>
         @foreach ($payments as $payment)
             <tr>
                 <td>
                     <a href="{{route('payments.edit', $payment)}}">
-                        {{$payment->invoice->project->name}} – {{$payment->invoice->sentOnDisplay}}
+                        {{$payment->invoice->project->name}}
                     </a>
+                </td>
+                <td>
+                    {{$payment->invoice->sent_on->format('d/m/Y')}}
                 </td>
                 <td>
                     {{$payment->paid_at->format('d/m/Y')}}

@@ -7,12 +7,12 @@
             <div class="form-row">
                 <div class="form-group col-md-5">
                     <label for="invoice_id" class="field-required">Invoice</label>
-                    <select name="invoice_id" id="invoice_id" class="form-control" required="required" v-model="invoiceId" @change="updatePaymentFields()" :disabled="!this.isNew">
+                    <select name="invoice_id" id="invoice_id" class="form-control" required="required" v-model="invoiceId" @change="updatePaymentFields()">
                         <option v-if="!this.isNew" :value="invoiceId">
-                            {{payment.invoice.project.name}} – {{payment.invoice.sentOnDisplay}}
+                            {{payment.invoice.project.name}} – {{formatDisplayDate(payment.invoice.sent_on)}}
                         </option>
                         <option v-else v-for="invoice in unpaidInvoices" :value="invoice.id">
-                            {{invoice.project.name}} – {{invoice.sentOnDisplay}}
+                            {{invoice.project.name}} – {{formatDisplayDate(invoice.sent_on)}}
                         </option>
                     </select>
                 </div>
@@ -83,23 +83,23 @@
                 </div>
                 <div class="form-group col-md-3" v-if="mode == 'cheque'">
                     <label for="cheque_status">Cheque status</label>
-                    <select name="mode" id="mode" class="form-control" v-model="chequeStatus">
+                    <select name="cheque_status" id="cheque_status" class="form-control" v-model="chequeStatus">
                         <option value="received">Received</option>
                         <option value="cleared">Cleared</option>
                         <option value="bounced">Bounced</option>
                     </select>
                 </div>
-                <div class="form-group col-md-3" v-if="mode == 'cheque' && chequeStatus == 'received'" v-model="chequeReceivedOn">
+                <div class="form-group col-md-3" v-if="mode == 'cheque' && chequeStatus == 'received'">
                     <label for="cheque_received_on">Received on</label>
-                    <input type="date" name="cheque_received_on" id="cheque_received_on" class="form-control">
+                    <input type="date" name="cheque_received_on" id="cheque_received_on" class="form-control" v-model="chequeReceivedOn">
                 </div>
-                <div class="form-group col-md-3" v-if="mode == 'cheque' && chequeStatus == 'cleared'" v-model="chequeClearedOn">
+                <div class="form-group col-md-3" v-if="mode == 'cheque' && chequeStatus == 'cleared'">
                     <label for="cheque_cleared_on">Cleared on</label>
-                    <input type="date" name="cheque_cleared_on" id="cheque_cleared_on" class="form-control">
+                    <input type="date" name="cheque_cleared_on" id="cheque_cleared_on" class="form-control" v-model="chequeClearedOn">
                 </div>
-                <div class="form-group col-md-3" v-if="mode == 'cheque' && chequeStatus == 'bounced'" v-model="chequeBouncedOn">
+                <div class="form-group col-md-3" v-if="mode == 'cheque' && chequeStatus == 'bounced'">
                     <label for="cheque_bounced_on">Bounced on</label>
-                    <input type="date" name="cheque_bounced_on" id="cheque_bounced_on" class="form-control">
+                    <input type="date" name="cheque_bounced_on" id="cheque_bounced_on" class="form-control" v-model="chequeBouncedOn">
                 </div>
             </div>
         </div>
@@ -122,13 +122,15 @@
                 bankCharges: !this.isNew ? this.payment.bank_charges : null,
                 bankServiceTaxForex: !this.isNew ? this.payment.bank_service_tax_forex : null,
                 conversionRate: !this.isNew ? this.payment.conversion_rate : null,
-                mode: 'cheque',
-                // chequeStatus: !this.isNew && this.payment.mode == 'cheque' ? this.payment.,
-                chequeStatus: 'received',
+                mode: !this.isNew ? this.payment.mode.type : 'wire-transfer',
                 chequeBouncedOn: null,
                 chequeClearedOn: null,
                 chequeReceivedOn: null,
                 invoiceId: !this.isNew ? this.payment.invoice.id : this.unpaidInvoices[0].id,
+                chequeStatus: !this.isNew && this.payment.mode.type == 'cheque' ? this.payment.mode.status : 'received',
+                chequeReceivedOn: !this.isNew && this.payment.mode.type == 'cheque' ? this.payment.mode.received_on : null,
+                chequeClearedOn: !this.isNew && this.payment.mode.type == 'cheque' ? this.payment.mode.cleared_on : null,
+                chequeBouncedOn: !this.isNew && this.payment.mode.type == 'cheque' ? this.payment.mode.bounced_on : null,
             }
         },
         methods: {

@@ -9,6 +9,8 @@ class WireTransfer extends Model
 {
     protected $fillable = ['via'];
 
+    protected $appends = ['type'];
+
     public function payment()
     {
         return $this->morphOne(Payment::class, 'mode');
@@ -16,6 +18,6 @@ class WireTransfer extends Model
 
     public function getTypeAttribute()
     {
-    	return 'wire-transfer';
+        return 'wire-transfer';
     }
 }

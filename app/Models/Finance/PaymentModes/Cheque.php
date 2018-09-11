@@ -9,6 +9,8 @@ class Cheque extends Model
 {
     protected $fillable = ['status', 'received_on', 'cleared_on', 'bounced_on'];
 
+    protected $appends = ['type'];
+
     public function payment()
     {
         return $this->morphOne(Payment::class, 'mode');
@@ -16,6 +18,6 @@ class Cheque extends Model
 
     public function getTypeAttribute()
     {
-    	return 'cheque';
+        return 'cheque';
     }
 }

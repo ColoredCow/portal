@@ -18,7 +18,7 @@ class Invoice extends Model
         'deleted_at',
     ];
 
-    protected $appends = ['project', 'sentOnDisplay'];
+    protected $appends = ['project'];
 
     /**
      * Get the project_stage_billings associated with the invoice.
@@ -106,10 +106,5 @@ class Invoice extends Model
     public static function getUnpaidInvoices()
     {
         return self::has('payments', '=', 0)->get();
-    }
-
-    public function getSentOnDisplayAttribute()
-    {
-        return $this->sent_on->format('d/m/Y');
     }
 }

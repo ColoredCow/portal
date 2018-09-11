@@ -13,6 +13,11 @@ use App\Models\Finance\PaymentModes\WireTransfer;
 
 class PaymentController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         return view('finance.payments.index')->with([
@@ -20,6 +25,11 @@ class PaymentController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         return view('finance.payments.create')->with([
@@ -35,62 +45,24 @@ class PaymentController extends Controller
      */
     public function store(PaymentRequest $request)
     {
-    	$validated = $request->validated();
+        $validated = $request->validated();
 
-        $modes = config('constants.finance.payments.modes');
-        switch ($validated['mode']) {
-        	default:
-            case 'cash':
-                $mode = Cash::create();
-                break;
+        $mode = self::handleMode($validated);
+        $args = self::prepareAttributes($validated, $mode);
+        $payment = Payment::create($args);
 
-            case 'wire-transfer':
-                $wireTransfer = [];
-                if (isset($validated['wire_transfer_via'])) {
-                    $wireTransfer['via'] = $validated['wire_transfer_via'];
-                }
-                $mode = WireTransfer::create($wireTransfer);
-                break;
-
-            case 'cheque':
-                $cheque = ['status' => $validated['cheque_status']];
-                switch ($validated['cheque_status']) {
-                    case 'received':
-                        $dateField = 'received_on';
-                        break;
-
-                    case 'cleared':
-                        $dateField = 'cleared_on';
-                        break;
-
-                    case 'bounced':
-                        $dateField = 'bounced_on';
-                        break;
-                }
-                $cheque[$dateField] = DateHelper::formatDateToSave($validated["cheque_$dateField"]);
-                $mode = Cheque::create($cheque);
-                break;
-        }
-
-        $payment = Payment::create([
-        	'invoice_id' => $validated['invoice_id'],
-        	'paid_at' => $validated['paid_at'],
-        	'currency' => $validated['currency'],
-        	'amount' => $validated['amount'],
-        	'bank_charges' => $validated['bank_charges'],
-        	'bank_service_tax_forex' => $validated['bank_service_tax_forex'],
-        	'tds' => $validated['tds'],
-        	'conversion_rate' => $validated['conversion_rate'],
-        	'mode_id' => $mode->id,
-        	'mode_type' => $modes[$mode->type],
-        ]);
-
-        return $payment;
+        return redirect()->route('payments.edit', $payment)->with('status', 'Payment created succesfully!');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Finance\Payment  $payment
+     * @return \Illuminate\View\View
+     */
     public function edit(Payment $payment)
     {
-        $payment->load('invoice');
+        $payment->load('invoice', 'mode');
 
         return view('finance.payments.edit')->with([
             'payment' => $payment,
@@ -98,51 +70,95 @@ class PaymentController extends Controller
         ]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\Finance\PaymentRequest  $request
+     * @param  \App\Models\Finance\Payment  $payment
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(PaymentRequest $request, Payment $payment)
     {
         $validated = $request->validated();
 
+        $mode = self::handleMode($validated, $payment);
+        $args = self::prepareAttributes($validated, $mode);
+        $payment->update($args);
+
+        return redirect()->back()->with('status', 'Payment updated succesfully!');
+    }
+
+    /**
+     * Prepare attributes to store or update the resource.
+     *
+     * @param  array  $validated
+     * @param  mixed $mode      WireTransfer, Cash or Cheque
+     * @return array
+     */
+    protected static function prepareAttributes(array $validated, $mode)
+    {
         $modes = config('constants.finance.payments.modes');
-        switch ($validated['mode']) {
-            default:
-                break;
-
-            case 'cheque':
-                // delete previous payment mode if it was not cheque.
-                // create a new cheque in that case.
-
-                $cheque = ['status' => $validated['cheque_status']];
-                switch ($validated['cheque_status']) {
-                    case 'received':
-                        $dateField = 'received_on';
-                        break;
-
-                    case 'cleared':
-                        $dateField = 'cleared_on';
-                        break;
-
-                    case 'bounced':
-                        $dateField = 'bounced_on';
-                        break;
-                }
-                $cheque[$dateField] = DateHelper::formatDateToSave($validated["cheque_$dateField"]);
-                $payment->mode->update($cheque);
-                break;
-        }
-
-        $payment = $payment->update([
+        $args = [
             'invoice_id' => $validated['invoice_id'],
             'paid_at' => $validated['paid_at'],
             'currency' => $validated['currency'],
             'amount' => $validated['amount'],
-            'bank_charges' => $validated['bank_charges'],
-            'bank_service_tax_forex' => $validated['bank_service_tax_forex'],
-            'tds' => $validated['tds'],
-            'conversion_rate' => $validated['conversion_rate'],
             'mode_id' => $mode->id,
             'mode_type' => $modes[$mode->type],
-        ]);
+        ];
+        $countryTransactionDetails = [];
+        if ($validated['currency'] != 'INR') {
+            $countryTransactionDetails = [
+                'bank_charges' => $validated['bank_charges'],
+                'conversion_rate' => $validated['conversion_rate'],
+                'bank_service_tax_forex' => $validated['bank_service_tax_forex'],
+            ];
+        } else {
+            $countryTransactionDetails = [
+                'tds' => $validated['tds'],
+            ];
+        }
+        return array_merge($args, $countryTransactionDetails);
+    }
 
-        return $payment;
+    /**
+     * Handles the payment mode of the resource.
+     *
+     * @param  array  $validated
+     * @param  mixed $payment   Cash, WireTransfer or Cheque
+     * @return mixed            Cash, WireTransfer or Cheque
+     */
+    protected static function handleMode(array $validated, $payment = null)
+    {
+        $attr = [];
+        switch ($validated['mode']) {
+            case 'wire-transfer':
+                if (isset($validated['wire_transfer_via'])) {
+                    $attr['via'] = $validated['wire_transfer_via'];
+                }
+                break;
+
+            case 'cheque':
+                $attr['status'] = $validated['cheque_status'];
+                $dateField = $validated['cheque_status'] . '_on';
+                $attr[$dateField] = DateHelper::formatDateToSave($validated["cheque_$dateField"]);
+                break;
+        }
+
+        $model = config('constants.finance.payments.modes.' . $validated['mode']);
+
+        if (is_null($payment)) {
+            return $model::create($attr);
+        }
+
+        $payment->load('mode');
+
+        if ($payment->mode->type == $validated['mode']) {
+            $payment->mode->update($attr);
+            return $payment->mode;
+        } else {
+            $payment->mode->delete();
+            return $model::create($attr);
+        }
     }
 }
