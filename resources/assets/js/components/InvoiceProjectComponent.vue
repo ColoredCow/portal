@@ -15,7 +15,7 @@
         <div class="form-group col-md-2">
             <label>Billing%</label>
             <select name="billings[]" class="form-control" v-model="billingId">
-                <option v-for="billing in activeStage.billings" :value="billing.id">{{ billing.percentage }}</option>
+                <option v-for="stageBilling in activeStage.billings" :value="stageBilling.id">{{ stageBilling.percentage }}</option>
             </select>
         </div>
         <!-- <div class="col-md-1">
@@ -27,7 +27,7 @@
 
 <script>
     export default {
-        props: ['client'],
+        props: ['client', 'billing'],
         computed: {
             projects() {
                 let projects = [];
@@ -39,6 +39,9 @@
                         let billings = [];
                         for (let k in stage.billings) {
                             let billing = stage.billings[k];
+                            if (this.billing && this.billing.id == billing.id) {
+                                billings.push(billing);
+                            }
                             if (!billing.invoice_id) {
                                 billings.push(billing);
                                 this.projectId = this.projectId || project.id;
@@ -69,7 +72,7 @@
             return {
                 projectId: null,
                 stageId: null,
-                billingId: null,
+                billingId: this.billing ? this.billing.id : null,
                 activeProject: this.projects,
                 activeStage: this.projects,
             }
@@ -84,6 +87,7 @@
                         break;
                     }
                 }
+                this.updateActiveStage();
             },
             updateActiveStage() {
                 for (let index in this.activeProject.stages) {

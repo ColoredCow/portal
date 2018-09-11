@@ -27,8 +27,8 @@ class InvoiceRequest extends FormRequest
             'project_invoice_id' => 'required|integer|min:1',
             'currency' => 'required|string',
             'amount' => 'required|numeric',
-            'sent_on' => 'required|string', // change type to date
-            'due_on' => 'nullable|string', // change type to date
+            'sent_on' => 'required|date',
+            'due_on' => 'required|date',
             'gst' => 'nullable|numeric',
             'comments' => 'nullable|string',
             'billings' => 'required',
@@ -49,6 +49,7 @@ class InvoiceRequest extends FormRequest
     {
         return [
             'sent_on.required' => 'Sent date is required',
+            'due_on.required' => 'Due date is required',
             'amount.numeric' => 'Amount must be a valid decimal',
             'project_invoice_id.required' => 'Invoice ID is required',
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',

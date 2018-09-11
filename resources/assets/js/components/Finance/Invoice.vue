@@ -14,7 +14,7 @@
             </div>
 
             <div v-for="billing in billings">
-                <invoice-project-component :client="client">
+                <invoice-project-component :client="client" :billing="billing">
                 </invoice-project-component>
             </div>
             <button type="button" class="btn btn-info btn-sm mb-4" v-on:click="addProject">Add Project</button>
@@ -52,8 +52,8 @@
             </div>
             <div class="form-row mb-4">
                 <div class="form-group col-md-3">
-                    <label for="due_on">Due date</label>
-                    <input type="date" class="form-control" name="due_on" id="due_on" v-model="dueOn">
+                    <label for="due_on" class="field-required">Due date</label>
+                    <input type="date" class="form-control" name="due_on" id="due_on" v-model="dueOn" required="required">
                 </div>
             </div>
             <div class="form-row mb-4">
@@ -128,9 +128,6 @@
             addProject() {
                 this.billings.push({});
             }
-        },
-        mounted() {
-            console.log(this.invoice);
         }
     }
 </script>

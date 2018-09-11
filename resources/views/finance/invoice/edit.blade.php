@@ -21,6 +21,5 @@
             </div>
         </form>
     </div>
-    <a href="#" class="btn btn-secondary mt-3 px-3">Add payment</a>
 </div>
 @endsection
