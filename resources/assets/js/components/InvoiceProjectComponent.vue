@@ -2,13 +2,13 @@
     <div class="form-row row d-flex align-items-center">
         <div class="form-group col-md-3">
             <label>Project</label>
-            <select class="form-control" v-model="projectId" v-on:change="updateActiveProject">
-                <option v-for="project in client.projects" :value="project.id">{{ project.name }}</option>
+            <select class="form-control" v-model="projectId" v-on:change="updateActiveProject()">
+                <option v-for="project in projects" :value="project.id">{{ project.name }}</option>
             </select>
         </div>
         <div class="form-group col-md-3">
             <label>Stage</label>
-            <select class="form-control" v-model="stageId" v-on:change="updateActiveStage">
+            <select class="form-control" v-model="stageId" v-on:change="updateActiveStage()">
                 <option v-for="stage in activeProject.stages" :value="stage.id">{{ stage.name }}</option>
             </select>
         </div>
@@ -32,45 +32,50 @@
             client(newClient, oldClient) {
                 this.projectId = newClient.projects[0].id;
                 this.stageId = newClient.projects[0].stages[0].id;
+                this.projects = newClient.projects;
                 this.updateActiveProject();
-                this.updateActiveStage();
             }
         },
         data() {
             return {
-                projectId: this.client.projects[0].id,
-                stageId: this.client.projects[0].stages[0].id,
-                billingId: this.billing ? this.billing.id : null,
+                projects: this.client.projects,
+                projectId: this.billing && this.billing.hasOwnProperty('project_stage') ? this.billing.project_stage.project.id : this.client.projects[0].id,
+                stageId: this.billing && this.billing.hasOwnProperty('project_stage') ? this.billing.project_stage.id : this.client.projects[0].stages[0].id,
+                billingId: this.billing && this.billing.hasOwnProperty('id') ? this.billing.id : this.client.projects[0].stages[0].billings[0].id,
                 activeProject: this.client.projects[0],
                 activeStage: this.client.projects[0].stages[0],
             }
         },
         methods: {
-            updateActiveProject() {
-                for (let index in this.client.projects) {
-                    let project = this.client.projects[index];
+            updateActiveProject(firstTime = false) {
+                for (let index in this.projects) {
+                    let project = this.projects[index];
                     if (project.id == this.projectId) {
                         this.activeProject = project;
-                        this.stageId = this.activeProject.stages[0].id;
+                        if (!firstTime) {
+                            this.stageId = this.activeProject.stages[0].id;
+                        }
+                        this.updateActiveStage(firstTime);
                         break;
                     }
                 }
-                this.updateActiveStage();
             },
-            updateActiveStage() {
+            updateActiveStage(firstTime = false) {
                 for (let index in this.activeProject.stages) {
                     let stage = this.activeProject.stages[index];
                     if (stage.id == this.stageId) {
                         this.activeStage = stage;
-                        this.billingId = this.activeStage.billings[0].id;
+                        if (!firstTime) {
+                            this.billingId = this.activeStage.billings[0].id;
+                        }
                         break;
                     }
                 }
             },
         },
         mounted() {
-            this.updateActiveProject();
-            this.updateActiveStage();
+            let firstTime = this.billing ? true : false;
+            this.updateActiveProject(firstTime);
         }
     }
 </script>

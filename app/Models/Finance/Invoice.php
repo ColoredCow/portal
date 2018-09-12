@@ -17,7 +17,7 @@ class Invoice extends Model
         'deleted_at',
     ];
 
-    protected $appends = ['project'];
+    protected $appends = ['project', 'client'];
 
     /**
      * Get the project_stage_billings associated with the invoice.

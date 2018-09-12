@@ -87,10 +87,11 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        $invoice->load('projectStageBillings');
+        $clients = Client::getInvoicableClients(collect($invoice->projectStageBillings)->pluck('id')->toArray());
+        $invoice->load('projectStageBillings', 'projectStageBillings.projectStage', 'projectStageBillings.projectStage.project');
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
-            'clients' => Client::getInvoicableClients(),
+            'clients' => $clients,
         ]);
     }
 

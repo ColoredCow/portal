@@ -88,7 +88,7 @@
         data() {
             return {
                 client: this.clients[0],
-                clientId: this.clients[0].id,
+                clientId: this.invoice ? this.invoice.client.id : this.clients[0].id,
                 projectInvoiceId: this.invoice ? this.invoice.project_invoice_id : null,
                 sentOn: this.invoice ? this.getDateFromTimestamp(this.invoice.sent_on) : null,
                 amount: this.invoice ? this.invoice.amount : null,
@@ -108,6 +108,7 @@
                     if (client.id == this.clientId) {
                         this.client = client;
                         this.currency = client.currency;
+                        break;
                     }
                 }
             },
@@ -131,6 +132,9 @@
             removeProject(index) {
                 this.billings.splice(index, 1);
             }
+        },
+        mounted() {
+            this.updateClientDetails();
         }
     }
 </script>
