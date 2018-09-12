@@ -13,8 +13,8 @@
                 </div>
             </div>
 
-            <div v-for="billing in billings">
-                <invoice-project-component :client="client" :billing="billing">
+            <div v-for="(billing, index) in billings">
+                <invoice-project-component :client="client" :billing="billing" v-bind:key="index" v-on:remove="removeProject(index)">
                 </invoice-project-component>
             </div>
             <button type="button" class="btn btn-info btn-sm mb-4" v-on:click="addProject">Add Project</button>
@@ -127,6 +127,9 @@
             },
             addProject() {
                 this.billings.push({});
+            },
+            removeProject(index) {
+                this.billings.splice(index, 1);
             }
         }
     }

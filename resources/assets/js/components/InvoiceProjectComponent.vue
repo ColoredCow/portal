@@ -18,9 +18,9 @@
                 <option v-for="stageBilling in activeStage.billings" :value="stageBilling.id">{{ stageBilling.percentage }}</option>
             </select>
         </div>
-        <!-- <div class="col-md-1">
-            <span class="c-pointer text-danger"><u>Remove</u></span>
-        </div> -->
+        <div class="col-md-1">
+            <span class="c-pointer text-danger" v-on:click="$emit('remove')"><u>Remove</u></span>
+        </div>
     </div>
 </template>
 
