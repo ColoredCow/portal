@@ -28,6 +28,12 @@ class Client extends Model
         return config("constants.countries.$this->country.currency");
     }
 
+    /**
+     * Returns the clients with relations that can be invoiced.
+     *
+     * @param  array  $billings    Billings for which client should be added in the response.
+     * @return self
+     */
     public static function getInvoicableClients(array $billings = [])
     {
         return self::active()
@@ -43,19 +49,16 @@ class Client extends Model
                     $query->whereHas('stages', function ($query) use ($billings) {
                         $query->whereHas('billings', function ($query) use ($billings) {
                             $query->doesntHave('invoice')->orWhereIn('id', $billings);
-                            // $query->doesntHave('invoice');
                         });
                     });
                 },
                 'projects.stages' => function ($query) use ($billings) {
                     $query->whereHas('billings', function ($query) use ($billings) {
                         $query->doesntHave('invoice')->orWhereIn('id', $billings);
-                        // $query->doesntHave('invoice');
                     });
                 },
                 'projects.stages.billings' => function ($query) use ($billings) {
                     $query->doesntHave('invoice')->orWhereIn('id', $billings);
-                    // $query->doesntHave('invoice');
                 },
             ])
             ->get();
