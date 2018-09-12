@@ -13,9 +13,9 @@
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label>Billing%</label>
+            <label>Billing</label>
             <select name="billings[]" class="form-control" v-model="billingId">
-                <option v-for="stageBilling in activeStage.billings" :value="stageBilling.id">{{ stageBilling.percentage }}</option>
+                <option v-for="stageBilling in activeStage.billings" :value="stageBilling.id">{{ stageBilling.percentage + '%' }} –  {{ client.currency }} {{ stageBilling.amount }}</option>
             </select>
         </div>
         <div class="col-md-1">

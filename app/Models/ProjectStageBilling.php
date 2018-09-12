@@ -9,6 +9,8 @@ class ProjectStageBilling extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['amount'];
+
     /**
      * Get the projectStage that has the billing.
      */
@@ -23,5 +25,10 @@ class ProjectStageBilling extends Model
     public function invoice()
     {
         return $this->belongsTo(Invoice::class);
+    }
+
+    public function getAmountAttribute()
+    {
+        return ($this->percentage * $this->projectStage->cost) / 100;
     }
 }
