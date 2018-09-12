@@ -27,4 +27,34 @@ class Client extends Model
     {
         return config("constants.countries.$this->country.currency");
     }
+
+    public static function getInvoicableClients()
+    {
+        return self::active()
+            ->whereHas('projects', function ($query) {
+                $query->whereHas('stages', function ($query) {
+                    $query->whereHas('billings', function ($query) {
+                        $query->whereNull('invoice_id');
+                    });
+                });
+            })
+            ->with([
+                'projects' => function ($query) {
+                    $query->whereHas('stages', function ($query) {
+                        $query->whereHas('billings', function ($query) {
+                            $query->doesntHave('invoice');
+                        });
+                    });
+                },
+                'projects.stages' => function ($query) {
+                    $query->whereHas('billings', function ($query) {
+                        $query->doesntHave('invoice');
+                    });
+                },
+                'projects.stages.billings' => function ($query) {
+                    $query->doesntHave('invoice');
+                },
+            ])
+            ->get();
+    }
 }
