@@ -49,9 +49,9 @@
                             </li>
                         </li>
                         @endif
-                        @can('finance_reports.view')
+                        @can('finance_invoices.view')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/finance/reports?type=monthly') }}">Finance</a>
+                            <a class="nav-link" href="{{ route('invoices') }}">Finance</a>
                         </li>
                         @endcan
                         @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
