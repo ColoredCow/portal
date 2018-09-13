@@ -18,11 +18,11 @@
         <a class="nav-item nav-link {{ $active === 'payments' ? 'active' : '' }}" href="{{ route('payments') }}"><i class="fa fa-credit-card"></i>&nbsp;Payments</a>
     </li>
     @can('finance_reports.view')
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a href="/finance/reports?type=monthly" class="nav-item nav-link {{ $active === 'reports' ? 'active' : '' }}">
             <i class="fa fa-line-chart"></i>&nbsp;Reports
         </a>
         </a>
-    </li>
+    </li> --}}
     @endcan
 </ul>
