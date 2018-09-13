@@ -43,7 +43,7 @@ class MigrateFinanceInvoiceToInvoice extends Seeder
             'updated_at' => $invoice->updated_at,
         ];
         if (is_null($invoice->due_date)) {
-            $invoiceAttr['due_on'] = Carbon::parse($invoice->due_date)->addDays('10')->format('Y-m-d');
+            $invoiceAttr['due_on'] = Carbon::parse($invoice->sent_on)->addDays('10')->format('Y-m-d');
         } else {
             $invoiceAttr['due_on'] = $invoice->due_date;
         }
