@@ -125,10 +125,10 @@ class PaymentController extends Controller
      * Handles the payment mode of the resource.
      *
      * @param  array  $validated
-     * @param  mixed $payment   Cash, WireTransfer or Cheque
+     * @param  Payment $payment
      * @return mixed            Cash, WireTransfer or Cheque
      */
-    protected static function handleMode(array $validated, $payment = null)
+    protected static function handleMode(array $validated, Payment $payment = null)
     {
         $attr = [];
         switch ($validated['mode']) {
