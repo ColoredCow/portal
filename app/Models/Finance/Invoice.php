@@ -7,16 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    protected $table = 'finance_invoices';
-
     protected $guarded = [];
+
+    protected $dates = [
+        'sent_on',
+        'due_on',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected $appends = ['project', 'client'];
 
     /**
      * Get the project_stage_billings associated with the invoice.
      */
     public function projectStageBillings()
     {
-        return $this->hasMany(ProjectStageBilling::class, 'finance_invoice_id');
+        return $this->hasMany(ProjectStageBilling::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 
     /**
@@ -57,10 +70,10 @@ class Invoice extends Model
     {
         $invoices = self::where(function ($query) use ($start, $end) {
             $query->where('sent_on', '>=', $start)
-                      ->where('sent_on', '<=', $end);
+                ->where('sent_on', '<=', $end);
         })->orWhere(function ($query) use ($start, $end) {
             $query->where('paid_on', '>=', $start)
-                      ->where('paid_on', '<=', $end);
+                ->where('paid_on', '<=', $end);
         })->orderBy('sent_on', 'desc')
             ->orderBy('paid_on', 'desc');
 
@@ -71,10 +84,31 @@ class Invoice extends Model
 
     /**
      * Accessor to get invoice's client. This is called automatically when retrieving an invoice instance.
+     *
      * @return \App\Models\Client
      */
     public function getClientAttribute()
     {
         return optional($this->projectStageBillings()->first()->projectStage->project)->client;
+    }
+
+    /**
+     * Accessor to get invoice's project. This is called automatically when retrieving an invoice instance.
+     *
+     * @return \App\Models\Project
+     */
+    public function getProjectAttribute()
+    {
+        return $this->projectStageBillings()->first()->projectStage->project;
+    }
+
+    public function scopeUnpaid($query)
+    {
+        return $query->doesntHave('payments');
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->payments->count() ? 'paid' : 'unpaid';
     }
 }

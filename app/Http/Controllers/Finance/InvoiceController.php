@@ -55,10 +55,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $clients = Client::getActiveClients();
-        $clients->load('projects', 'projects.stages', 'projects.stages.billings');
         return view('finance.invoice.create')->with([
-            'clients' => $clients,
+            'clients' => Client::getInvoicableClients(),
         ]);
     }
 
@@ -71,56 +69,14 @@ class InvoiceController extends Controller
     public function store(InvoiceRequest $request)
     {
         $validated = $request->validated();
-
-        $path = self::upload($validated['invoice_file']);
-        $args = [
-            'project_invoice_id' => $validated['project_invoice_id'],
-            'status' => $validated['status'],
-            'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
-            'sent_amount' => $validated['sent_amount'],
-            'currency_sent_amount' => $validated['currency_sent_amount'],
-            'gst' => isset($validated['gst']) ? $validated['gst'] : null,
-            'paid_on' => isset($validated['paid_on']) ? DateHelper::formatDateToSave($validated['paid_on']) : null,
-            'paid_amount' => isset($validated['paid_amount']) ? $validated['paid_amount'] : null,
-            'payment_type' => isset($validated['payment_type']) ? $validated['payment_type'] : null,
-            'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : null,
-            'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
-            'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
-            'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
-            'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
-            'transaction_charge' => isset($validated['transaction_charge']) ? $validated['transaction_charge'] : null,
-            'transaction_tax' => isset($validated['transaction_tax']) ? $validated['transaction_tax'] : null,
-            'comments' => $validated['comments'],
-            'tds' => isset($validated['tds']) ? $validated['tds'] : null,
-            'due_amount' => isset($validated['due_amount']) ? $validated['due_amount'] : null,
-            'file_path' => $path,
-            'due_date' => isset($validated['due_date']) ? DateHelper::formatDateToSave($validated['due_date']) : null,
-        ];
-        $args = array_merge($args, $this->setRequestCurrencies($validated));
-
+        $args = self::prepareAttributes($validated, true);
         $invoice = Invoice::create($args);
+        self::handleBillings($validated['billings'], $invoice);
 
-        foreach ($validated['billings'] as $billing) {
-            ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
-        }
-
-        $status = 'Invoice created successfully!';
         if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
-            $status = 'Billing invoice created successfully!';
-            return redirect()->back()->with('status', $status);
+            return redirect()->back()->with('status', 'Billing invoice created successfully!');
         }
-        return redirect(route('invoices.edit', $invoice->id))->with('status', $status);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Finance\Invoice  $invoice
-     * @return void
-     */
-    public function show(Invoice $invoice)
-    {
-        //
+        return redirect()->route('invoices.edit', $invoice)->with('status', 'Invoice created successfully!');
     }
 
     /**
@@ -131,23 +87,11 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        $projectStageBillings = $invoice->projectStageBillings;
-
-        $projectStageBilling = $projectStageBillings->first();
-        $client = $projectStageBilling->projectStage->project->client;
-        $client->load('projects', 'projects.stages', 'projects.stages.billings');
-
-        $billings = [];
-        foreach ($projectStageBillings as $key => $billing) {
-            $billing->load('projectStage', 'projectStage.project');
-            $billings[] = $billing;
-        }
-
+        $clients = Client::getInvoicableClients(collect($invoice->projectStageBillings)->pluck('id')->toArray());
+        $invoice->load('projectStageBillings', 'projectStageBillings.projectStage', 'projectStageBillings.projectStage.project');
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
-            'clients' => Client::select('id', 'name')->get(),
-            'invoice_client' => $client,
-            'invoice_billings' => $billings,
+            'clients' => $clients,
         ]);
     }
 
@@ -161,74 +105,14 @@ class InvoiceController extends Controller
     public function update(InvoiceRequest $request, Invoice $invoice)
     {
         $validated = $request->validated();
-
-        $args = [
-            'project_invoice_id' => $validated['project_invoice_id'],
-            'status' => $validated['status'],
-            'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
-            'sent_amount' => $validated['sent_amount'],
-            'currency_sent_amount' => $validated['currency_sent_amount'],
-            'gst' => isset($validated['gst']) ? $validated['gst'] : null,
-            'paid_on' => isset($validated['paid_on']) ? DateHelper::formatDateToSave($validated['paid_on']) : null,
-            'paid_amount' => isset($validated['paid_amount']) ? $validated['paid_amount'] : null,
-            'payment_type' => isset($validated['payment_type']) ? $validated['payment_type'] : null,
-            'cheque_status' => isset($validated['cheque_status']) ? $validated['cheque_status'] : '',
-            'cheque_received_date' => isset($validated['cheque_received_date']) ? DateHelper::formatDateToSave($validated['cheque_received_date']) : null,
-            'cheque_bounced_date' => isset($validated['cheque_bounced_date']) ? DateHelper::formatDateToSave($validated['cheque_bounced_date']) : null,
-            'cheque_cleared_date' => isset($validated['cheque_cleared_date']) ? DateHelper::formatDateToSave($validated['cheque_cleared_date']) : null,
-            'conversion_rate' => isset($validated['conversion_rate']) ? $validated['conversion_rate'] : null,
-            'transaction_charge' => $validated['transaction_charge'],
-            'transaction_tax' => $validated['transaction_tax'],
-            'comments' => $validated['comments'],
-            'tds' => isset($validated['tds']) ? $validated['tds'] : null,
-            'due_amount' => $validated['due_amount'],
-            'due_date' => $validated['due_date'] ? DateHelper::formatDateToSave($validated['due_date']) : null,
-        ];
-        $args = array_merge($args, $this->setRequestCurrencies($validated));
-
-        $updated = $invoice->update($args);
-
-        $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
-        foreach ($invoiceBillings as $billingId => $invoiceBilling) {
-            if (!array_key_exists($billingId, $validated['billings'])) {
-                $invoiceBillings[$billingId]->finance_invoice_id = null;
-                $invoiceBillings[$billingId]->update();
-            }
-        }
-        foreach ($validated['billings'] as $billing) {
-            if (!array_key_exists($billing, $invoiceBillings)) {
-                ProjectStageBilling::where('id', $billing)->update(['finance_invoice_id' => $invoice->id]);
-            }
-        }
-
-        return redirect("/finance/invoices/$invoice->id/edit")->with('status', 'Invoice updated successfully!');
-    }
-
-    protected function setRequestCurrencies(array $validated)
-    {
-        $args = [];
-        $currencies = ['currency_tds', 'currency_due_amount', 'currency_transaction_charge', 'currency_transaction_tax', 'currency_paid_amount'];
-        foreach ($currencies as $currency) {
-            if (isset($validated[$currency])) {
-                $args[$currency] = $validated[$currency];
-            }
-        }
-        return $args;
+        $args = self::prepareAttributes($validated);
+        $invoice->update($args);
+        self::handleBillings($validated['billings'], $invoice);
+        return redirect()->route('invoices.edit', $invoice)->with('status', 'Invoice updated successfully!');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Finance\Invoice  $invoice
-     * @return void
-     */
-    public function destroy(Invoice $invoice)
-    {
-        //
-    }
-
-    /**
-     * Upload invoice file.
+     * Upload the invoice file.
      *
      * @param  \Illuminate\Http\UploadedFile  $file
      * @return string    path of the uploaded file
@@ -236,39 +120,96 @@ class InvoiceController extends Controller
     protected static function upload(UploadedFile $file)
     {
         $fileName = $file->getClientOriginalName();
-
         if ($fileName) {
             return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
         }
-
         return $file->store(FileHelper::getCurrentStorageDirectory());
     }
 
     /**
-     * Download invoice file.
+     * Download the invoice file.
      *
      * @param  string $year  uploaded year of the invoice file
      * @param  string $month uploaded month of the invoice file
      * @param  string $file  invoice file name
-     * @param  boolean $inline download/view invoice file
+     * @param  bool|boolean $inline download/view invoice file
      * @return mixed
      */
-    public function download($year, $month, $file, $inline = true)
+    public function download(string $year, string $month, string $file, bool $inline = true)
     {
-        $headers = [
-            'content-type' => 'application/pdf',
-        ];
-
-        $file_path = FileHelper::getFilePath($year, $month, $file);
-
-        if (!$file_path) {
+        $filePath = FileHelper::getFilePath($year, $month, $file);
+        if (!$filePath) {
             return false;
         }
-
         if ($inline) {
-            return Response::make(Storage::get($file_path), 200, $headers);
+            $headers = [
+                'content-type' => 'application/pdf',
+            ];
+            return Response::make(Storage::get($filePath), 200, $headers);
+        }
+        return Storage::download($filePath);
+    }
+
+    /**
+     * Prepare attributes to store or update the resource.
+     *
+     * @param  array        $validated
+     * @param  bool|boolean $uploadFile
+     * @return array
+     */
+    protected static function prepareAttributes(array $validated, bool $uploadFile = false)
+    {
+        $args = [
+            'project_invoice_id' => $validated['project_invoice_id'],
+            'currency' => $validated['currency'],
+            'amount' => $validated['amount'],
+            'sent_on' => DateHelper::formatDateToSave($validated['sent_on']),
+            'comments' => $validated['comments'],
+        ];
+        if ($uploadFile) {
+            $args['file_path'] = self::upload($validated['invoice_file']);
+        }
+        if (isset($validated['gst'])) {
+            $args['gst'] = $validated['gst'];
+        }
+        if (isset($validated['due_on'])) {
+            $args['due_on'] = DateHelper::formatDateToSave($validated['due_on']);
+        }
+        return $args;
+    }
+
+    /**
+     * Handles billings for the resource.
+     *
+     * @param  array   $billings
+     * @param  Invoice $invoice
+     * @return void
+     */
+    protected static function handleBillings(array $billings, Invoice $invoice)
+    {
+        // If this is a newly generated invoice, we just add the billings.
+        if ($invoice->wasRecentlyCreated) {
+            foreach ($billings as $billing) {
+                ProjectStageBilling::where('id', $billing)->update(['invoice_id' => $invoice->id]);
+            }
+            return;
         }
 
-        return Storage::download($file_path);
+        // If this is an existing invoice, some billings may have been removed from it by the user.
+        // Before updating the new billings, we need to detach the billings that were removed.
+        $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
+        foreach ($invoiceBillings as $id => $billing) {
+            if (!array_key_exists($id, $billings)) {
+                $billing->update(['invoice_id' => null]);
+            }
+        }
+
+        foreach ($billings as $billing) {
+            // There may be some billings which are not removed. Hence we can reduce database
+            // calls by checking if they're already present in the existing billings.
+            if (!array_key_exists($billing, $invoiceBillings)) {
+                ProjectStageBilling::where('id', $billing)->update(['invoice_id' => $invoice->id]);
+            }
+        }
     }
 }

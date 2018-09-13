@@ -25,38 +25,18 @@ class InvoiceRequest extends FormRequest
     {
         $rules = [
             'project_invoice_id' => 'required|integer|min:1',
-            'status' => 'required|string',
-            'sent_on' => 'required',
-            'sent_amount' => 'required|numeric',
-            'currency_sent_amount' => 'required|string|size:3',
-            'paid_on' => 'nullable|required_if:status,paid',
-            'paid_amount' => 'nullable|numeric|required_if:status,paid',
-            'payment_type' => 'nullable|string|required_if:status,paid',
-            'cheque_status' => 'nullable|string|required_if:payment_type,cheque',
-            'cheque_received_date' => 'nullable|string|required_if:cheque_status,received',
-            'cheque_cleared_date' => 'nullable|string|required_if:cheque_status,cleared',
-            'cheque_bounced_date' => 'nullable|string|required_if:cheque_status,bounced',
-            'currency_paid_amount' => 'nullable|string|size:3',
-            'comments' => 'nullable|string',
-            'tds' => 'nullable|numeric',
-            'currency_tds' => 'nullable|string|size:3',
-            'conversion_rate' => 'nullable',
-            'transaction_charge' => 'nullable|numeric',
-            'currency_transaction_charge' => 'nullable|string',
-            'transaction_tax' => 'nullable|numeric',
-            'currency_transaction_tax' => 'nullable|string',
-            'billings' => 'required',
+            'currency' => 'required|string',
+            'amount' => 'required|numeric',
+            'sent_on' => 'required|date',
+            'due_on' => 'required|date',
             'gst' => 'nullable|numeric',
+            'comments' => 'nullable|string',
+            'billings' => 'required',
             'request_from_billing' => 'nullable|boolean',
-            'due_amount' => 'nullable|numeric',
-            'currency_due_amount' => 'nullable|string',
-            'due_date' => 'nullable|string',
         ];
-
         if ($this->method() === 'POST') {
             $rules['invoice_file'] = 'required|file';
         }
-
         return $rules;
     }
 
@@ -68,14 +48,13 @@ class InvoiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'project_ids.required' => 'At least one project is required',
-            'sent_on.required' => 'Invoice sent date is required',
-            'sent_amount.numeric' => 'Invoice amount must be a valid decimal',
-            'paid_amount.numeric' => 'Received amount must be a valid decimal',
+            'sent_on.required' => 'Sent date is required',
+            'due_on.required' => 'Due date is required',
+            'amount.numeric' => 'Amount must be a valid decimal',
             'project_invoice_id.required' => 'Invoice ID is required',
             'project_invoice_id.min' => 'Invoice ID must be greater than 0',
             'project_invoice_id.integer' => 'Invoice ID should be a valid number',
-            'invoice_file.required' => 'An invoice needs to be uploaded',
+            'invoice_file.required' => 'An invoice file needs to be uploaded',
             'billings.required' => 'At least one billing is required',
         ];
     }

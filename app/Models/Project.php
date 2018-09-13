@@ -23,7 +23,7 @@ class Project extends Model
      */
     public static function getList()
     {
-        return self::with([ 'client' => function ($query) {
+        return self::with(['client' => function ($query) {
             $query->select('id', 'name');
         }])
             ->orderBy('id', 'desc')
