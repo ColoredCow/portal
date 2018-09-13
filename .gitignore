@@ -19,3 +19,5 @@ yarn-error.log
 /public/js
 /public/images/vendor
 .DS_Store
+
+/storage/debugbar

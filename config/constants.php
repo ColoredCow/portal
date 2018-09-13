@@ -144,6 +144,13 @@ return [
             'list-previous-months' => 6,
         ],
         'conversion-rate-usd-to-inr' => 65,
+        'payments' => [
+            'modes' => [
+                'cash' => 'App\Models\Finance\PaymentModes\Cash',
+                'wire-transfer' => 'App\Models\Finance\PaymentModes\WireTransfer',
+                'cheque' => 'App\Models\Finance\PaymentModes\Cheque',
+            ],
+        ],
     ],
     'currency' => [
         'INR' => [
@@ -155,7 +162,7 @@ return [
             'symbol' => '$',
         ],
     ],
-    'payment_types' => [
+    'payment_modes' => [
         'cheque' => 'Cheque',
         'cash' => 'Cash',
         'wire-transfer' => 'Wire Transfer',

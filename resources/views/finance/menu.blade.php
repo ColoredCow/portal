@@ -11,15 +11,18 @@
     @endcan
     @can('finance_invoices.view')
     <li class="nav-item">
-        <a class="nav-item nav-link {{ $active === 'invoices' ? 'active' : '' }}" href="{{ route('invoices') }}"><i class="fa fa-folder-open"></i>&nbsp;Invoices</a>
+        <a class="nav-item nav-link {{ $active === 'invoices' ? 'active' : '' }}" href="{{ route('invoices') }}"><i class="fa fa-copy"></i>&nbsp;Invoices</a>
     </li>
     @endcan
-    @can('finance_reports.view')
     <li class="nav-item">
+        <a class="nav-item nav-link {{ $active === 'payments' ? 'active' : '' }}" href="{{ route('payments') }}"><i class="fa fa-credit-card"></i>&nbsp;Payments</a>
+    </li>
+    @can('finance_reports.view')
+    {{-- <li class="nav-item">
         <a href="/finance/reports?type=monthly" class="nav-item nav-link {{ $active === 'reports' ? 'active' : '' }}">
             <i class="fa fa-line-chart"></i>&nbsp;Reports
         </a>
         </a>
-    </li>
+    </li> --}}
     @endcan
 </ul>
