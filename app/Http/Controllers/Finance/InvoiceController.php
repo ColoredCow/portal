@@ -132,10 +132,10 @@ class InvoiceController extends Controller
      * @param  string $year  uploaded year of the invoice file
      * @param  string $month uploaded month of the invoice file
      * @param  string $file  invoice file name
-     * @param  boolean $inline download/view invoice file
+     * @param  bool|boolean $inline download/view invoice file
      * @return mixed
      */
-    public function download($year, $month, $file, $inline = true)
+    public function download(string $year, string $month, string $file, bool $inline = true)
     {
         $filePath = FileHelper::getFilePath($year, $month, $file);
         if (!$filePath) {
