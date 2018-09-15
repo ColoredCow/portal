@@ -349,8 +349,10 @@ input:focus+.slider {
     .cover_image {
         max-height: 10em;
     }
-    .book_card {
-        width: 24%;
+    .books_grid {
+        display: grid;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
     }
 }
 
@@ -360,8 +362,8 @@ input:focus+.slider {
 
 @media (min-width: 1281px) {
     #books_listing {
-        .book_card {
-            width: 24%;
+        .books_grid {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
         }
     }
 }
@@ -372,8 +374,8 @@ input:focus+.slider {
 
 @media (min-width: 1025px) and (max-width: 1280px) {
     #books_listing {
-        .book_card {
-            width: 25%;
+        .books_grid {
+            grid-template-columns: 1fr 1fr 1fr;
         }
     }
 }
@@ -384,9 +386,8 @@ input:focus+.slider {
 
 @media (min-width: 768px) and (max-width: 1024px) {
     #books_listing {
-        .book_card {
-            width: 49%;
-            word-break: break-word;
+        .books_grid {
+            grid-template-columns: 1fr 1fr 1fr;
         }
     }
 }
@@ -397,8 +398,8 @@ input:focus+.slider {
 
 @media (min-width: 481px) and (max-width: 767px) {
     #books_listing {
-        .book_card {
-            width: 100%;
+        .books_grid {
+            grid-template-columns: 1fr 1fr;
         }
     }
 }
@@ -409,8 +410,10 @@ input:focus+.slider {
 
 @media (min-width: 320px) and (max-width: 480px) {
     #books_listing {
-        .book_card {
-            width: 100%;
+        .books_grid {
+            grid-template-columns: 1fr;
+            grid-column-gap: 0px;
+            grid-row-gap: 5px;
         }
     }
 }

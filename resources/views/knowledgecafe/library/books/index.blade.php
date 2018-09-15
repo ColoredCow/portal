@@ -16,21 +16,21 @@
             </div>
         @endcan
     </div>
-    <div class="row mt-3 mb-2 px-2">
-        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mt-3 mb-2">
+        <div class="d-flex justify-content-end align-items-center">
             <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="search all books"
                 v-model="searchKey">
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
         @if(session('disable_book_suggestion'))
-            <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
+            <div class="mt-2 mt-sm-0 text-right">
                 <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dasboard</a>
             </div>
         @endif
     </div>
     @if(request()->has('search'))
         <div class="row mt-3 mb-2">
-            <div class="col-6">
+            <div class="col-sm-6">
                 <a class="text-muted c-pointer" href="{{ route('books.index') }}">
                     <i class="fa fa-times"></i>&nbsp;Clear current search and filters
                 </a>
@@ -39,8 +39,8 @@
     @endif
     <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}">
-        <div class="d-flex flex-wrap w-100">
-            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2">
+        <div class="books_grid w-100">
+            <div v-for="(book, index) in books" class="card book_card p-2">
                 <div class="d-flex" >
                     <a target="_blank" :href="book.readable_link">
                         <img :src="book.thumbnail" class="cover_image" >
