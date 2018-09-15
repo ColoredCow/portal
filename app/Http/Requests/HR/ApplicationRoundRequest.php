@@ -50,6 +50,7 @@ class ApplicationRoundRequest extends FormRequest
         if (request()->input('action') == 'approve') {
             $rules['subject'] = 'required|string';
             $rules['body'] = 'required|string';
+            $rules['offer_letter_body'] = 'required|string';
         }
 
         return $rules;

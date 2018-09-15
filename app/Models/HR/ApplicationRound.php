@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Helpers\FileHelper;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
 use App\Models\HR\ApplicationMeta;
@@ -10,8 +11,8 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationRound extends Model
 {
@@ -104,9 +105,10 @@ class ApplicationRound extends Model
 
                 $subject = $attr['subject'];
                 $body = $attr['body'];
+                $offer_letter_body = $attr['offer_letter_body'];
 
                 if (!$application->offer_letter) {
-                    $application->offer_letter = FileHelper::generateOfferLetter($application);
+                    $application->offer_letter = FileHelper::generateOfferLetter($application, $offer_letter_body);
                 }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
                 break;

@@ -48,11 +48,11 @@ class FileHelper
         return "$dashedApplicantName-$timestamp.pdf";
     }
 
-    public static function generateOfferLetter(Application $application)
+    public static function generateOfferLetter(Application $application, $offer_letter_body)
     {
         $job = $application->job;
         $applicant = $application->applicant;
-        $pdf = Pdf::loadView('hr.application.offer-letter', compact('applicant', 'job'));
+        $pdf = Pdf::loadView('hr.application.offer-letter', compact('applicant', 'job', 'offer_letter_body'));
         $fileName = self::getOfferLetterFileName($pdf, $applicant);
         $fullPath = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
         $pdf->save($fullPath);

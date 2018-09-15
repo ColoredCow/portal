@@ -73,6 +73,7 @@ abstract class ApplicationController extends Controller
 
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
+        $offerLetterTemplate = Setting::getOfferLetterTemplate();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -82,6 +83,7 @@ abstract class ApplicationController extends Controller
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'offer_letter' => $application->offer_letter,
             'approveMailTemplate' => $approveMailTemplate,
+            'offerLetterTemplate' => $offerLetterTemplate,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],

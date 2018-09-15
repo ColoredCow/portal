@@ -13,8 +13,8 @@
             <div class="modal-body">
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
-                        <label for="body" class="field-required">Edit Offer Letter</label>
-                        <textarea name="body" id="body" rows="1" class="form-control richeditor" required="required">{{$approveMailTemplate['body']}}</textarea>
+                        <label for="offer_letter_body" class="field-required">Edit Offer Letter</label>
+                        <textarea name="offer_letter_body" id="offer_letter_body" rows="1" class="form-control richeditor" required="required">{{$offerLetterTemplate['body']}}</textarea>
                     </div>
                 </div>
                 <div class="form-row mt-4">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
-                        <label for="body" class="field-required">Body</label>
+                        <label for="body" class="field-required">Mail body</label>
                         <textarea name="body" id="body" rows="1" class="form-control richeditor" required="required">{{$approveMailTemplate['body']}}</textarea>
                     </div>
                 </div>
