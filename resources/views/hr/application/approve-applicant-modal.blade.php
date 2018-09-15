@@ -19,9 +19,10 @@
                 </div>
                  <div class="form-row">
                     <div class="col-md-12">
-                        <a target="_blank" href="{{ route("applications.{$application->job->type}.offer-letter", $application) }}" class="d-flex align-items-center">
+                        <a target="_blank" href="/" v-on:click="generateOfferLetterPreview({{$application->id}})" class="d-flex align-items-center" >Preview</a>
+                        <!-- <a target="_blank" href="{{ route("applications.{$application->job->type}.offer-letter", $application) }}" class="d-flex align-items-center">
                         Preview
-                        </a>
+                        </a> -->
                     </div>
                 </div>
                 <div class="form-row mt-4">

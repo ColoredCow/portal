@@ -15,6 +15,7 @@ use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Job;
 use App\Models\Setting;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
@@ -97,10 +98,13 @@ abstract class ApplicationController extends Controller
         return view('hr.application.edit')->with($attr);
     }
 
-    public static function getOfferLetter(Application $application)
+    public static function getOfferLetter(Application $application, Request $request)
     {
-        FileHelper::generateOfferLetter($application);
-        return redirect(route('applications.job.edit', $application->id));
+        $offer_letter_body = $request->offer_letter_body;
+        $pdf = FileHelper::generateOfferLetter($application, $offer_letter_body, true);
+          return response()->json([
+            'pdf' => $pdf,
+        ]);
     }
 
     /**

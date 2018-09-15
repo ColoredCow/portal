@@ -69,6 +69,20 @@ if (document.getElementById('page_hr_applicant_edit')) {
                 }
                 this.toggleEvaluationFrame();
             },
+            generateOfferLetterPreview: function(application) {
+                let offerLetterBody = document.getElementById('offer_letter_body').value;
+                let methodName = 'post';
+                let url = '/hr/applications/'+application+'/'+'get-offer-letter';
+                console.log(url);
+                let response = axios({
+                	method: methodName,
+                	url: url,
+                	data: {
+                		offer_letter_body: offerLetterBody
+                	}                    
+                });
+                console.log(response);
+            },
             takeAction: function() {
                 switch (this.selectedAction) {
                     case 'round':
@@ -325,7 +339,12 @@ $('.hr_round_guide').on('click', '.save-guide', function(){
                 container.find('.btn-guide, .guide-container').toggleClass('d-none');
             }
         },
-    });
+    }).then(
+            (response) => {
+            this.buttons.disableSubmitButton = false;
+            let data = response.data;
+            console.log(data);
+        })
 });
 
 
