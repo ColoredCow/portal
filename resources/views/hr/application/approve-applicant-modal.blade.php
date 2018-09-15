@@ -17,6 +17,13 @@
                         <textarea name="offer_letter_body" id="offer_letter_body" rows="1" class="form-control richeditor" required="required">{{$offerLetterTemplate['body']}}</textarea>
                     </div>
                 </div>
+                 <div class="form-row">
+                    <div class="col-md-12">
+                        <a target="_blank" href="{{ route("applications.{$application->job->type}.offer-letter", $application) }}" class="d-flex align-items-center">
+                        Preview
+                        </a>
+                    </div>
+                </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
                         <label for="subject" class="field-required">Subject</label>

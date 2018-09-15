@@ -9,11 +9,9 @@
     <h3 class="text-center">Offer Letter</h3>
     <hr>    
     <p class="text-justify">
-      Dear : {{$applicant->name}},<br>
+    Dear :  {{$applicant->name}},<br>
             {{$applicant->email}}<br><br>
-            {{$offer_letter_body}}<br><br>
-
-      Sincerely,
+            {!! $offer_letter_body !!}<br><br>
 
     </p>
     
