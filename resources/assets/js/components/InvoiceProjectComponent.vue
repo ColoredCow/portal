@@ -30,10 +30,11 @@
         props: ['client', 'billing'],
         watch: {
             client(newClient, oldClient) {
-                this.projectId = newClient.projects[0].id;
-                this.stageId = newClient.projects[0].stages[0].id;
+                this.projectId = this.billing && this.billing.hasOwnProperty('project_stage') ? this.billing.project_stage.project.id : newClient.projects[0].id;
+                this.stageId = this.billing && this.billing.hasOwnProperty('project_stage') ? this.billing.project_stage.id : newClient.projects[0].stages[0].id;
                 this.projects = newClient.projects;
-                this.updateActiveProject();
+                let firstTime = this.billing ? true : false;
+                this.updateActiveProject(firstTime);
             }
         },
         data() {
