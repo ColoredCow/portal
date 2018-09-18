@@ -7,91 +7,114 @@
                     <th>Sent on</th>
                     <th>Invoiced amount</th>
                     <th>GST</th>
-                    <th>Received on</th>
-                    <th>Received amount</th>
-                    <th>TDS deducted</th>
-                    <th>Bank charges</th>
-                    <th>ST on Fund Transfer</th>
-                    <th>Balance left</th>
+                    @if ($type == 'received')
+                        <th>Received on</th>
+                        <th>Received amount</th>
+                        <th>TDS deducted</th>
+                        <th>Bank charges</th>
+                        <th>ST on Forex</th>
+                        {{-- <th>Balance left</th> --}}
+                    @endif
                 </tr>
             </thead>
             <tbody>
-            @foreach($invoices as $invoice)
-            <tr>
-                <td>
-                    <a href="{{ route('invoices.edit', $invoice) }}" target="_blank">
-                        @foreach ($invoice->projectStageBillings as $billing)
-                            {{ $loop->first ? '' : '|' }}
-                            {{ $billing->projectStage->project->name }}
+                @foreach($invoices as $invoice)
+                    @if ($type == 'received')
+                        @foreach($invoice->payments as $payment)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('invoices.edit', $invoice) }}" target="_blank">
+                                        @foreach ($invoice->projectStageBillings as $billing)
+                                            {{ $loop->first ? '' : '|' }}
+                                            {{ $billing->projectStage->project->name }}
+                                        @endforeach
+                                    </a>
+                                    <span class="badge badge-pill badge-success">paid</span>
+                                    <span>
+                                        <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-lg text-primary btn-file ml-2"></i></a>
+                                    </span>
+                                    <div>{{ $invoice->client->name }}</div>
+                                    @if ($invoice->client->country == 'india' && $invoice->client->gst_num)
+                                        <div><b>GST:&nbsp;</b>{{ $invoice->client->gst_num }}</div>
+                                    @endif
+                                </td>
+                                <td>{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}</td>
+                                <td>{{ config('constants.currency.' . $invoice->currency . '.symbol') }}&nbsp;{{ $invoice->amount }}</td>
+                                @if ($invoice->currency == 'INR' && $invoice->gst)
+                                    <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->gst }}</td>
+                                @else
+                                    <td>–</td>
+                                @endif
+                                <td>{{ date(config('constants.display_date_format'), strtotime($payment->paid_at)) }}</td>
+                                <td>
+                                    @php
+                                        if ($payment->currency != 'INR') {
+                                            $conversionRate = $invoice->conversion_rate ?? 1;
+                                            $paidAmount = $payment->amount * $conversionRate;
+                                        } else {
+                                            $paidAmount = $payment->amount;
+                                        }
+                                    @endphp
+                                    {{ config("constants.currency.INR.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
+                                </td>
+                                @if ($payment->currency == 'INR' && $payment->tds)
+                                    <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $payment->tds }}</td>
+                                @else
+                                    <td>–</td>
+                                @endif
+                                @if ($payment->bank_charges)
+                                    <td>{{ config("constants.currency.$payment->currency.symbol") }}&nbsp;{{ $payment->bank_charges }}</td>
+                                @else
+                                    <td>–</td>
+                                @endif
+                                @if ($payment->bank_service_tax_forex)
+                                    <td>{{ config("constants.currency.INR.symbol") }}&nbsp;{{ $payment->bank_service_tax_forex }}</td>
+                                @else
+                                    <td>–</td>
+                                @endif
+                                {{-- @if ($invoice->due_amount)
+                                    <td>{{ config("constants.currency.$invoice->currency_due_amount.symbol") }}&nbsp;{{ $invoice->due_amount }}</td>
+                                @else
+                                    <td>–</td>
+                                @endif --}}
+                            </tr>
                         @endforeach
-                    </a>
-                    @switch ($invoice->status)
-                        @case('paid')
-                            <span class="badge badge-pill badge-success">
-                            @break
-                        @case('unpaid')
-                            <span class="badge badge-pill badge-danger">
-                            @break
-                    @endswitch
-                    {{ $invoice->status }}</span>
-                    <span>
-                        <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-lg text-primary btn-file ml-2"></i></a>
-                    </span>
-                    <div>{{ $invoice->client->name }}</div>
-                    @if ($invoice->client->country == 'india' && $invoice->client->gst_num)
-                        <div><b>GST:&nbsp;</b>{{ $invoice->client->gst_num }}</div>
-                    @endif
-                </td>
-                <td>{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}</td>
-                <td>{{ config('constants.currency.' . $invoice->currency_sent_amount . '.symbol') }}&nbsp;{{ $invoice->sent_amount }}</td>
-                @if ($invoice->currency_sent_amount == 'INR' && $invoice->gst)
-                    <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->gst }}</td>
-                @else
-                    <td>-</td>
-                @endif
-                @if ($invoice->status == 'paid')
-                    <td>{{ date(config('constants.display_date_format'), strtotime($invoice->paid_on)) }}</td>
-                    <td>
-                        @php
-                            if ($invoice->currency_paid_amount != 'INR') {
-                                $conversionRate = $invoice->conversion_rate ?? 1;
-                                $paidAmount = $invoice->paid_amount * $conversionRate;
-                            } else {
-                                $paidAmount = $invoice->paid_amount;
-                            }
-                        @endphp
-                        {{ config("constants.currency.INR.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
-                    </td>
-                    @if ($invoice->currency_sent_amount == 'INR' && $invoice->tds)
-                        <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->tds }}</td>
                     @else
-                        <td>-</td>
+                        <tr>
+                            <td>
+                                <a href="{{ route('invoices.edit', $invoice) }}" target="_blank">
+                                    @foreach ($invoice->projectStageBillings as $billing)
+                                        {{ $loop->first ? '' : '|' }}
+                                        {{ $billing->projectStage->project->name }}
+                                    @endforeach
+                                </a>
+                                @switch ($invoice->status)
+                                    @case('paid')
+                                        <span class="badge badge-pill badge-success">
+                                        @break
+                                    @case('unpaid')
+                                        <span class="badge badge-pill badge-danger">
+                                        @break
+                                @endswitch
+                                {{ $invoice->status }}</span>
+                                <span>
+                                    <a href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-lg text-primary btn-file ml-2"></i></a>
+                                </span>
+                                <div>{{ $invoice->client->name }}</div>
+                                @if ($invoice->client->country == 'india' && $invoice->client->gst_num)
+                                    <div><b>GST:&nbsp;</b>{{ $invoice->client->gst_num }}</div>
+                                @endif
+                            </td>
+                            <td>{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}</td>
+                            <td>{{ config('constants.currency.' . $invoice->currency . '.symbol') }}&nbsp;{{ $invoice->amount }}</td>
+                            @if ($invoice->currency == 'INR' && $invoice->gst)
+                                <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->gst }}</td>
+                            @else
+                                <td>–</td>
+                            @endif
+                        </tr>
                     @endif
-                    @if ($invoice->transaction_charge)
-                        <td>{{ config("constants.currency.$invoice->currency_transaction_charge.symbol") }}&nbsp;{{ $invoice->transaction_charge }}</td>
-                    @else
-                        <td>-</td>
-                    @endif
-                    @if ($invoice->transaction_tax)
-                        <td>{{ config("constants.currency.$invoice->currency_transaction_tax.symbol") }}&nbsp;{{ $invoice->transaction_tax }}</td>
-                    @else
-                        <td>-</td>
-                    @endif
-                    @if ($invoice->due_amount)
-                        <td>{{ config("constants.currency.$invoice->currency_due_amount.symbol") }}&nbsp;{{ $invoice->due_amount }}</td>
-                    @else
-                        <td>-</td>
-                    @endif
-                @else
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                @endif
-            </tr>
-        @endforeach
+                @endforeach
             </tbody>
         </table>
     </div>

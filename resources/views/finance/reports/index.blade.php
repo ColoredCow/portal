@@ -24,8 +24,9 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <div class="col-md-3">Total invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($sentInvoices) }}</div>
-                <div class="col-md-3">Total invoices received:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($paidInvoices) }}</div>
+                <div class="col-md-2">Invoices sent:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($sentInvoices) }}</div>
+                <div class="col-md-2">Invoices received:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($paidInvoices) }}</div>
+                <div class="col-md-2">Payments:&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ sizeof($report['totalPayments']) }}</div>
                 @if ($showingResultsFor)
                     <div class="col-md-6 text-right">
                         Showing results for&nbsp;&nbsp;<h3 class="d-inline mb-0">{{ $showingResultsFor }}</h3>
@@ -94,21 +95,19 @@
             </div>
             <div class="row mt-5">
                 <div class="col-md-4">
-                    <h4>Bank charges on Fund Transfer</h4>
-                    @foreach ($report['transactionCharge'] as $currency => $amount)
+                    <h4>Bank charges</h4>
+                    @foreach ($report['bankCharges'] as $currency => $amount)
                         <h5><b>{{ $currency }} : </b> {{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
                     @endforeach
                 </div>
                 <div class="col-md-4">
-                    <h4>Service Tax on Fund Transfer</h4>
-                    @foreach ($report['transactionTax'] as $currency => $amount)
-                        <h5><b>{{ $currency }} : </b> {{ config("constants.currency.$currency.symbol") }}&nbsp;{{ $amount }}</h5>
-                    @endforeach
+                    <h4>Service Tax on Forex</h4>
+                    <h5><b>{{ $currency }} : </b> {{ config("constants.currency.INR.symbol") }}&nbsp;{{$report['bankServiceTaxForex']}}</h5>
                 </div>
             </div>
             <ul class="nav nav-tabs mt-5">
                 <li class="nav-item">
-                    <span class="c-pointer nav-link" :class="[showReportTable == 'received' ? 'active' : '']"  @click="showReportTable = 'received'">Received Invoices</span>
+                    <span class="c-pointer nav-link" :class="[showReportTable == 'received' ? 'active' : '']"  @click="showReportTable = 'received'">Received payments</span>
                 </li>
                 <li class="nav-item">
                     <span class="c-pointer nav-link" :class="[showReportTable == 'sent' ? 'active' : '']" @click="showReportTable = 'sent'">Sent Invoices</span>
