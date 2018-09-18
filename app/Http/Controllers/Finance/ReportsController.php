@@ -48,27 +48,25 @@ class ReportsController extends Controller
                     $startDate = Carbon::now()->startOfMonth();
                     $endDate = Carbon::today();
                 }
-                $showingResultsFor = $startDate->format('F Y');
-                $startDate = $startDate->format(config('constants.date_format'));
-                $endDate = $endDate->format(config('constants.date_format'));
+                $showingResultsFor = $startDate->format('M Y');
                 $attr['monthsList'] = DateHelper::getPreviousMonths(config('constants.finance.reports.list-previous-months'));
                 break;
 
-                // case 'dates':
-                //     if ($request->get('start') && $request->get('end')) {
-                //         $startDate = $request->get('start');
-                //         $endDate = $request->get('end');
-                //         $showingResultsFor = (new Carbon($startDate))->format(config('constants.full_display_date_format')) . ' - ' . (new Carbon($endDate))->format(config('constants.full_display_date_format'));
-                //     }
-                //     break;
+            case 'dates':
+                if ($request->get('start') && $request->get('end')) {
+                    $startDate = new Carbon($request->get('start'));
+                    $endDate = new Carbon($request->get('end'));
+                    $showingResultsFor = $startDate->format(config('constants.full_display_date_format')) . ' - ' . $endDate->format(config('constants.full_display_date_format'));
+                }
+                break;
         }
 
         $attr['showingResultsFor'] = $showingResultsFor;
 
         if ($startDate && $endDate) {
             $invoices = Invoice::filterByDates($startDate, $endDate);
-            $attr['startDate'] = $startDate;
-            $attr['endDate'] = $endDate;
+            $attr['startDate'] = $startDate->format(config('constants.date_format'));
+            $attr['endDate'] = $endDate->format(config('constants.date_format'));
         } else {
             $invoices = Invoice::all();
         }
@@ -146,40 +144,25 @@ class ReportsController extends Controller
      * arrange invoices based on their start and end date
      *
      * @param  \Illuminate\Database\Eloquent\Collection $invoices
-     * @param  string $start    Start date
-     * @param  string $end      End date
+     * @param  Carbon $start    Start date
+     * @param  Carbon $end      End date
      * @return array
      */
-    public static function arrangeInvoices($invoices, $start = null, $end = null)
+    public static function arrangeInvoices($invoices, Carbon $start, Carbon $end)
     {
         $arrangedInvoices = [
             'sent' => [],
             'paid' => [],
         ];
-        if ($start && $end) {
-            foreach ($invoices as $invoice) {
-                if ($start <= $invoice->sent_on && $invoice->sent_on <= $end) {
-                    $arrangedInvoices['sent'][] = $invoice;
-                }
-
-                if ($invoice->payments->count()) {
-                    foreach ($invoice->payments as $payment) {
-                        if ($start <= $payment->paid_at && $payment->paid_at <= $end) {
-                            $arrangedInvoices['paid'][] = $invoice;
-                            break;
-                        }
-                    }
-                }
-            }
-        } else {
-            foreach ($invoices as $invoice) {
+        foreach ($invoices as $invoice) {
+            if ($start <= $invoice->sent_on && $invoice->sent_on <= $end) {
                 $arrangedInvoices['sent'][] = $invoice;
-                if ($invoice->payments->count()) {
-                    foreach ($invoice->payments as $payment) {
-                        if ($start <= $payment->paid_at && $payment->paid_at <= $end) {
-                            $arrangedInvoices['paid'][] = $invoice;
-                            break;
-                        }
+            }
+            if ($invoice->payments->count()) {
+                foreach ($invoice->payments as $payment) {
+                    if ($start <= $payment->paid_at && $payment->paid_at <= $end) {
+                        $arrangedInvoices['paid'][] = $invoice;
+                        break;
                     }
                 }
             }

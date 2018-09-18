@@ -21,7 +21,7 @@ class PaymentController extends Controller
     public function index()
     {
         return view('finance.payments.index')->with([
-            'payments' => Payment::paginate(config('constants.pagination_size')),
+            'payments' => Payment::latest()->paginate(config('constants.pagination_size')),
         ]);
     }
 
