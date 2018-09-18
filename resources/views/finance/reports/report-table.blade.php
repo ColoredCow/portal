@@ -10,7 +10,7 @@
                     @if ($type == 'received')
                         <th>Received on</th>
                         <th>Received amount</th>
-                        <th>TDS deducted</th>
+                        <th>TDS</th>
                         <th>Bank charges</th>
                         <th>ST on Forex</th>
                         {{-- <th>Balance left</th> --}}
@@ -55,7 +55,7 @@
                                             $paidAmount = $payment->amount;
                                         }
                                     @endphp
-                                    {{ config("constants.currency.INR.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
+                                    {{ config("constants.currency.$payment->currency.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
                                 </td>
                                 @if ($payment->currency == 'INR' && $payment->tds)
                                     <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $payment->tds }}</td>

@@ -45,8 +45,8 @@ class ReportsController extends Controller
                     $startDate = new Carbon($date);
                     $endDate = $startDate->copy()->endOfMonth();
                 } else {
-                    $startDate = new Carbon('first day of this month');
-                    $endDate = new Carbon('today');
+                    $startDate = Carbon::now()->startOfMonth();
+                    $endDate = Carbon::today();
                 }
                 $showingResultsFor = $startDate->format('F Y');
                 $startDate = $startDate->format(config('constants.date_format'));
@@ -66,8 +66,6 @@ class ReportsController extends Controller
         $attr['showingResultsFor'] = $showingResultsFor;
 
         if ($startDate && $endDate) {
-            $startDate = Carbon::now()->startOfMonth();
-            $endDate = Carbon::today();
             $invoices = Invoice::filterByDates($startDate, $endDate);
             $attr['startDate'] = $startDate;
             $attr['endDate'] = $endDate;
@@ -115,10 +113,9 @@ class ReportsController extends Controller
         foreach ($sentInvoices as $invoice) {
             $report['gst'] += $invoice->gst;
             $report['sentAmount'][$invoice->currency] += $invoice->amount;
-            $report['receivable'][$invoice->currency] += $invoice->amount;
 
             if (!$invoice->payments->count()) {
-                $report['totalReceivables'][$invoice->currency] += $invoice->amount;
+                $report['receivable'][$invoice->currency] += $invoice->amount;
             }
         }
 
