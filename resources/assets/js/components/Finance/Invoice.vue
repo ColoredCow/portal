@@ -95,10 +95,22 @@
                 gst: this.invoice ? this.invoice.gst : null,
                 comments: this.invoice ? this.invoice.comments : null,
                 invoiceFile: null,
-                dueOn: this.invoice ? this.getDateFromTimestamp(this.invoice.due_on) : null,
                 billings: this.invoice ? this.invoice.project_stage_billings : [],
                 file: this.invoice ? this.invoice.file_path : null,
                 currency: this.invoice ? this.invoice.currency : this.clients[0].currency,
+            }
+        },
+        computed: {
+            dueOn() {
+                if (this.invoice) {
+                    return this.getDateFromTimestamp(this.invoice.due_on);
+                }
+                if (!this.sentOn) {
+                    return null;
+                }
+                let sentOn = new Date(this.sentOn);
+                sentOn.setDate(sentOn.getDate() + 10);
+                return this.getDateFromTimestamp(sentOn);
             }
         },
         methods: {
