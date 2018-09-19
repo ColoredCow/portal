@@ -69,15 +69,12 @@ class Invoice extends Model
     public static function filterByDates($start, $end, $paginated = false)
     {
         $invoices = self::where(function ($query) use ($start, $end) {
-            $query->where('sent_on', '>=', $start)
-                ->where('sent_on', '<=', $end);
-        })->orWhere(function ($query) use ($start, $end) {
-            $query->where('paid_on', '>=', $start)
-                ->where('paid_on', '<=', $end);
-        })->orderBy('sent_on', 'desc')
-            ->orderBy('paid_on', 'desc');
-
-        $invoices->with('projectStageBillings.projectStage.project.client');
+            $query->where('sent_on', '>=', $start)->where('sent_on', '<=', $end);
+        })->orWhereHas('payments', function ($query) use ($start, $end) {
+            $query->where('paid_at', '>=', $start)->where('paid_at', '<=', $end);
+        })->with(['payments' => function ($query) use ($start, $end) {
+            $query->where('paid_at', '>=', $start)->where('paid_at', '<=', $end);
+        }])->orderBy('sent_on', 'desc');
 
         return $paginated ? $invoices->paginate(config('constants.pagination_size')) : $invoices->get();
     }
