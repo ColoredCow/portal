@@ -18,10 +18,7 @@ class ReportsController extends Controller
     public function index()
     {
         $this->authorize('view', ReportsController::class);
-
-        $reportData = self::getReportAttributes();
-
-        return view('finance.reports.index')->with($reportData);
+        return view('finance.reports.index')->with(self::getReportAttributes());
     }
 
     /**
@@ -148,22 +145,31 @@ class ReportsController extends Controller
      * @param  Carbon $end      End date
      * @return array
      */
-    public static function arrangeInvoices($invoices, Carbon $start, Carbon $end)
+    public static function arrangeInvoices($invoices, Carbon $start = null, Carbon $end = null)
     {
         $arrangedInvoices = [
             'sent' => [],
             'paid' => [],
         ];
-        foreach ($invoices as $invoice) {
-            if ($start <= $invoice->sent_on && $invoice->sent_on <= $end) {
-                $arrangedInvoices['sent'][] = $invoice;
-            }
-            if ($invoice->payments->count()) {
-                foreach ($invoice->payments as $payment) {
-                    if ($start <= $payment->paid_at && $payment->paid_at <= $end) {
-                        $arrangedInvoices['paid'][] = $invoice;
-                        break;
+        if ($start && $end) {
+            foreach ($invoices as $invoice) {
+                if ($start <= $invoice->sent_on && $invoice->sent_on <= $end) {
+                    $arrangedInvoices['sent'][] = $invoice;
+                }
+                if ($invoice->payments->count()) {
+                    foreach ($invoice->payments as $payment) {
+                        if ($start <= $payment->paid_at && $payment->paid_at <= $end) {
+                            $arrangedInvoices['paid'][] = $invoice;
+                            break;
+                        }
                     }
+                }
+            }
+        } else {
+            foreach ($invoices as $invoice) {
+                $arrangedInvoices['sent'][] = $invoice;
+                if ($invoice->payments->count()) {
+                    $arrangedInvoices['paid'][] = $invoice;
                 }
             }
         }

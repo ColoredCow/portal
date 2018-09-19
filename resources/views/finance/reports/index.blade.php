@@ -158,12 +158,8 @@
                                 <td>{{ date(config('constants.display_date_format'), strtotime($payment->paid_at)) }}</td>
                                 <td>
                                     @php
-                                        if ($payment->currency != 'INR') {
-                                            $conversionRate = $invoice->conversion_rate ?? 1;
-                                            $paidAmount = $payment->amount * $conversionRate;
-                                        } else {
-                                            $paidAmount = $payment->amount;
-                                        }
+                                        $type = $payment->currency != 'INR' ? 'converted' : 'default';
+                                        $paidAmount = $report['paidAmount'][$payment->currency][$type];
                                     @endphp
                                     {{ config("constants.currency.$payment->currency.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
                                 </td>
@@ -226,8 +222,8 @@
                                     <div><b>GST:&nbsp;</b>{{ $invoice->client->gst_num }}</div>
                                 @endif
                             </td>
-                            <td>{{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}</td>
-                            <td>{{ config('constants.currency.' . $invoice->currency . '.symbol') }}&nbsp;{{ $invoice->amount }}</td>
+                            <td>{{ $invoice->sent_on->format(config('constants.display_date_format')) }}</td>
+                            <td>{{ config("constants.currency.$invoice->currency.symbol") }}&nbsp;{{ $invoice->amount }}</td>
                             @if ($invoice->currency == 'INR' && $invoice->gst)
                                 <td>{{ config('constants.currency.INR.symbol') }}&nbsp;{{ $invoice->gst }}</td>
                             @else
