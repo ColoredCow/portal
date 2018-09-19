@@ -16,7 +16,7 @@ return [
     'date_format' => 'Y-m-d',
     'datetime_format' => 'Y-m-d H:i:s',
     'display_date_format' => 'd/m/Y',
-    'full_display_date_format' => 'F d, Y',
+    'full_display_date_format' => 'M d, Y',
     'display_datetime_format' => 'Y-m-d\TH:i',
     'calendar_datetime_format' => 'Y-m-d\TH:i:s',
     'input_date_format' => 'dd/mm/yyyy',

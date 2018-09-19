@@ -10,26 +10,6 @@ use App\Models\ProjectStageBilling;
 class ProjectStageController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return void
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return void
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\ProjectStageRequest  $request
@@ -45,7 +25,7 @@ class ProjectStageController extends Controller
             'type' => $validated['type'],
             'start_date' => isset($validated['start_date']) ? DateHelper::formatDateToSave($validated['start_date']) : null,
             'end_date' => isset($validated['end_date']) ? DateHelper::formatDateToSave($validated['end_date']) : null,
-            'currency_cost' => $validated['currency_cost'],
+            'currency_cost' => $validated['currency'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] ? true : false,
         ]);
 
@@ -70,28 +50,6 @@ class ProjectStageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProjectStage  $stage
-     * @return void
-     */
-    public function show(ProjectStage $stage)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProjectStage  $stage
-     * @return void
-     */
-    public function edit(ProjectStage $stage)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\ProjectStageRequest  $request
@@ -107,7 +65,7 @@ class ProjectStageController extends Controller
             'start_date' => $validated['start_date'] ? DateHelper::formatDateToSave($validated['start_date']) : null,
             'end_date' => $validated['end_date'] ? DateHelper::formatDateToSave($validated['end_date']) : null,
             'cost' => $validated['cost'],
-            'currency_cost' => $validated['currency_cost'],
+            'currency_cost' => $validated['currency'],
             'cost_include_gst' => isset($validated['cost_include_gst']) && $validated['cost_include_gst'] ? true : false,
         ]);
 
@@ -137,16 +95,5 @@ class ProjectStageController extends Controller
         }
 
         return redirect()->back()->with('status', 'Stage updated successfully!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ProjectStage  $stage
-     * @return void
-     */
-    public function destroy(ProjectStage $stage)
-    {
-        //
     }
 }
