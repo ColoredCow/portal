@@ -52,8 +52,8 @@
             <div class="row">
                 <div class="col-md-4">
                     <h4>Invoiced amount</h4>
-                    @foreach ($report['sentAmount'] as $currency => $sentAmount)
-                        <h5 id="sent_amount_{{ $currency }}" data-sent-amount="{{ $sentAmount }}"><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
+                    @foreach ($report['totalSentAmount'] as $currency => $totalSentAmount)
+                        <h5 id="sent_amount_{{ $currency }}" data-sent-amount="{{ $totalSentAmount }}"><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $totalSentAmount }}</h5>
                         @if($currency == 'USD')
                             <h6>Est rate USD to INR:&nbsp;<input type="number" class="form-control form-control-sm d-inline w-25" placeholder="rate" v-model="conversionRateUSD" id="conversion_rate_usd" min="0" step="0.01" data-conversion-rate-usd="{{ config('constants.finance.conversion-rate-usd-to-inr') }}"></h6>
                             <h6>Est amount USD to INR:&nbsp;{{ config('constants.currency.INR.symbol') }}&nbsp;<span>@{{ convertedUSDSentAmount }}</span></h6>
@@ -158,8 +158,11 @@
                                 <td>{{ date(config('constants.display_date_format'), strtotime($payment->paid_at)) }}</td>
                                 <td>
                                     @php
-                                        $type = $payment->currency != 'INR' ? 'converted' : 'default';
-                                        $paidAmount = $report['paidAmount'][$payment->currency][$type];
+                                        $paidAmount = $payment->amount;
+                                        if ($payment->currency != 'INR') {
+                                            $conversionRate = $payment->conversion_rate ?? 1;
+                                            $paidAmount = $payment->amount * $conversionRate;
+                                        }
                                     @endphp
                                     {{ config("constants.currency.$payment->currency.symbol") }}&nbsp;{{ number_format((float)$paidAmount, 2, '.', '') }}
                                 </td>

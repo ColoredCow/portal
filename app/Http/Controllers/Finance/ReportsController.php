@@ -94,11 +94,7 @@ class ReportsController extends Controller
             'bankServiceTaxForex' => 0,
         ];
         foreach (config('constants.currency') as $currency => $currencyMeta) {
-            $report['sentAmount'][$currency] = 0;
-            $report['paidAmount'][$currency] = [
-                'converted' => 0,
-                'default' => 0,
-            ];
+            $report['totalSentAmount'][$currency] = 0;
             $report['bankCharges'][$currency] = 0;
             $report['dueAmount'][$currency] = 0;
             $report['receivable'][$currency] = 0;
@@ -107,7 +103,7 @@ class ReportsController extends Controller
 
         foreach ($sentInvoices as $invoice) {
             $report['gst'] += $invoice->gst;
-            $report['sentAmount'][$invoice->currency] += $invoice->amount;
+            $report['totalSentAmount'][$invoice->currency] += $invoice->amount;
 
             if (!$invoice->payments->count()) {
                 $report['receivable'][$invoice->currency] += $invoice->amount;
@@ -117,16 +113,7 @@ class ReportsController extends Controller
         foreach ($paidInvoices as $invoice) {
             $report['totalPayments'] += $invoice->payments->count();
             foreach ($invoice->payments as $payment) {
-                $paidAmount = $payment->amount;
-                $report['paidAmount'][$payment->currency]['default'] += $paidAmount;
-
-                if ($payment->currency != 'INR') {
-                    $conversionRate = $payment->conversion_rate ?? 1;
-                    $paidAmount = $payment->amount * $conversionRate;
-                    $report['paidAmount'][$payment->currency]['converted'] += $paidAmount;
-                }
-
-                $report['totalPaidAmount'] += $paidAmount;
+                $report['totalPaidAmount'] += $payment->amount;
                 $report['tds'] += $payment->tds;
 
                 $report['bankCharges'][$payment->currency] += $payment->bank_charges;
