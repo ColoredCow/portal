@@ -70,18 +70,9 @@ if (document.getElementById('page_hr_applicant_edit')) {
                 this.toggleEvaluationFrame();
             },
             generateOfferLetterPreview: function(application) {
-                let offerLetterBody = document.getElementById('offer_letter_body').value;
-                let methodName = 'post';
                 let url = '/hr/applications/'+application+'/'+'get-offer-letter';
                 console.log(url);
-                let response = axios({
-                	method: methodName,
-                	url: url,
-                	data: {
-                		offer_letter_body: offerLetterBody
-                	}                    
-                });
-                console.log(response);
+                var window = window.open(url, 'Offer_Letter_PDF', [windowFeatures]);
             },
             takeAction: function() {
                 switch (this.selectedAction) {

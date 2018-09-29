@@ -62,16 +62,6 @@
                             <b>Course</b>
                             <div>{{ $applicant->course ?? '-' }}</div>
                         </div>
-                        <div class="form-group col-md-5">
-                            <b>Resume</b>
-                            <div>
-                            @if ($application->resume)
-                                @include('hr.application.inline-resume', ['resume' => $application->resume])
-                            @else
-                                –
-                            @endif
-                            </div>
-                        </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <b>Graduation Year</b>
 
