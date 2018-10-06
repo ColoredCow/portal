@@ -189,7 +189,8 @@
                                     elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
                                         $showFooter = true;
                                     }
-                                } elseif (!$applicationRound->mail_sent) {
+                                }
+                                elseif (!$applicationRound->mail_sent) {
                                     $showFooter = true;
                                 }
                             @endphp
