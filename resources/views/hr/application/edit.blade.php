@@ -180,10 +180,7 @@
                             @php
                                 $showFooter = false;
                                 if ($loop->last) {
-                                    if ($applicationRound->application->status == config('constants.hr.status.sent-for-approval.label')) {
-                                        $showFooter = true;
-                                    }
-                                    elseif ($applicationRound->application->status== config('constants.hr.status.approved.label')) {
+                                    if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), config('constants.hr.status.approved.label')])) {
                                         $showFooter = true;
                                     }
                                     elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
