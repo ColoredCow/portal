@@ -56,7 +56,10 @@ class FileHelper
         $fileName = self::getOfferLetterFileName($pdf, $applicant);
         $fullPath = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
         $pdf->save($fullPath);
-        $application->saveOfferLetter(config('constants.hr.offer-letters-dir') . '/' . $fileName);
+        $filePath = config('constants.hr.offer-letters-dir') . '/' . $fileName;
+        $application->update([
+            'offer_letter' => $filePath,
+        ]);
         return $application->offer_letter;
     }
 }
