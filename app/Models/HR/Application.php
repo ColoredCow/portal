@@ -428,11 +428,4 @@ class Application extends Model
     {
         return $this->status == config('constants.hr.status.rejected.label');
     }
-
-    public function saveOfferLetter(string $filePath)
-    {
-        $this->update([
-            'offer_letter' => $filePath,
-        ]);
-    }
 }

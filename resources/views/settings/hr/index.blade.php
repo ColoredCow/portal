@@ -11,6 +11,7 @@
     @include('settings.hr.applicant-interview-reminder')
     @include('settings.hr.no-show')
     @include('settings.hr.approve')
+    @include('settings.hr.offer-letter')
     <h4 class="mt-5">Mail templates for rounds</h4>
     @foreach ($rounds as $index => $round)
         @foreach ($roundMailTypes as $type)

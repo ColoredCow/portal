@@ -15,6 +15,7 @@ use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Job;
 use App\Models\Setting;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
@@ -73,6 +74,7 @@ abstract class ApplicationController extends Controller
 
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
+        $offerLetterTemplate = Setting::getOfferLetterTemplate();
         $attr = [
             'applicant' => $application->applicant,
             'application' => $application,
@@ -82,6 +84,7 @@ abstract class ApplicationController extends Controller
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'offer_letter' => $application->offer_letter,
             'approveMailTemplate' => $approveMailTemplate,
+            'offerLetterTemplate' => $offerLetterTemplate,
             'settings' => [
                 'noShow' => Setting::getNoShowEmail(),
             ],
@@ -95,10 +98,13 @@ abstract class ApplicationController extends Controller
         return view('hr.application.edit')->with($attr);
     }
 
-    public static function getOfferLetter(Application $application)
+    public static function getOfferLetter(Application $application, Request $request)
     {
-        FileHelper::generateOfferLetter($application);
-        return redirect(route('applications.job.edit', $application->id));
+        $offerLetterTemplate = Setting::getOfferLetterTemplate();
+        $pdf = FileHelper::generateOfferLetter($application, $offerLetterTemplate['body'], true);
+          return response()->json([
+            'pdf' => $pdf,
+        ]);
     }
 
     /**
