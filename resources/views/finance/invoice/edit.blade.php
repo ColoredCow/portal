@@ -14,6 +14,7 @@
         <form action="{{route('invoices.update', $invoice)}}" method="POST" enctype="multipart/form-data" class="form-invoice">
             @csrf
             @method('PATCH')
+
             <invoice :clients="{{json_encode($clients)}}" :invoice="{{json_encode($invoice)}}"></invoice>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
