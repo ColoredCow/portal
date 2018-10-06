@@ -102,7 +102,7 @@ abstract class ApplicationController extends Controller
     {
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
         $pdf = FileHelper::generateOfferLetter($application, $offerLetterTemplate['body'], true);
-          return response()->json([
+        return response()->json([
             'pdf' => $pdf,
         ]);
     }
