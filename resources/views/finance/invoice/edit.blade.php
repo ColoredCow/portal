@@ -14,6 +14,7 @@
         <form action="/finance/invoices/{{ $invoice->id }}" method="POST" enctype="multipart/form-data" id="form_invoice" class="form-invoice">
 
             {{ csrf_field() }}
+
             {{ method_field('PATCH') }}
 
             <div class="card-header">
