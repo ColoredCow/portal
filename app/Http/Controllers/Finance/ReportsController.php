@@ -18,7 +18,6 @@ class ReportsController extends Controller
     public function index()
     {
         $this->authorize('view', ReportsController::class);
-
         return view('finance.reports.index')->with(self::getReportAttributes());
     }
 
@@ -36,26 +35,25 @@ class ReportsController extends Controller
         $attr = [];
 
         switch ($request->get('type')) {
+            default:
             case 'monthly':
                 if ($request->get('month') && $request->get('year')) {
                     $date = $request->get('year') . '-' . $request->get('month') . '-01';
                     $startDate = new Carbon($date);
                     $endDate = $startDate->copy()->endOfMonth();
                 } else {
-                    $startDate = new Carbon('first day of this month');
-                    $endDate = new Carbon('today');
+                    $startDate = Carbon::now()->startOfMonth();
+                    $endDate = Carbon::today();
                 }
-                $showingResultsFor = $startDate->format('F Y');
-                $startDate = $startDate->format(config('constants.date_format'));
-                $endDate = $endDate->format(config('constants.date_format'));
+                $showingResultsFor = $startDate->format('M Y');
                 $attr['monthsList'] = DateHelper::getPreviousMonths(config('constants.finance.reports.list-previous-months'));
                 break;
 
             case 'dates':
                 if ($request->get('start') && $request->get('end')) {
-                    $startDate = $request->get('start');
-                    $endDate = $request->get('end');
-                    $showingResultsFor = (new Carbon($startDate))->format(config('constants.full_display_date_format')) . ' - ' . (new Carbon($endDate))->format(config('constants.full_display_date_format'));
+                    $startDate = new Carbon($request->get('start'));
+                    $endDate = new Carbon($request->get('end'));
+                    $showingResultsFor = $startDate->format(config('constants.full_display_date_format')) . ' - ' . $endDate->format(config('constants.full_display_date_format'));
                 }
                 break;
         }
@@ -64,26 +62,18 @@ class ReportsController extends Controller
 
         if ($startDate && $endDate) {
             $invoices = Invoice::filterByDates($startDate, $endDate);
-            $attr['startDate'] = $startDate;
-            $attr['endDate'] = $endDate;
+            $attr['startDate'] = $startDate->format(config('constants.date_format'));
+            $attr['endDate'] = $endDate->format(config('constants.date_format'));
         } else {
             $invoices = Invoice::all();
         }
 
         $arrangedInvoices = self::arrangeInvoices($invoices, $startDate, $endDate);
+
         $attr['sentInvoices'] = $arrangedInvoices['sent'];
         $attr['paidInvoices'] = $arrangedInvoices['paid'];
 
         $attr['report'] = self::getCumulativeAmounts($arrangedInvoices['sent'], $arrangedInvoices['paid']);
-        $unpaidInvoices = Invoice::where('status', 'unpaid')->orWhere(function ($query) use ($endDate) {
-            $query->where('sent_on', '<=', $endDate);
-        })->get();
-        foreach (config('constants.currency') as $currency => $currencyMeta) {
-            $attr['totalReceivables'][$currency] = 0;
-        }
-        foreach ($unpaidInvoices as $unpaidInvoice) {
-            $attr['totalReceivables'][$unpaidInvoice->currency_sent_amount] += $unpaidInvoice->sent_amount;
-        }
 
         return $attr;
     }
@@ -96,47 +86,54 @@ class ReportsController extends Controller
      */
     public static function getCumulativeAmounts($sentInvoices, $paidInvoices)
     {
-        $report = [];
+        $report = [
+            'gst' => 0,
+            'tds' => 0,
+            'totalPaidAmount' => 0,
+            'totalPayments' => 0,
+            'bankServiceTaxForex' => 0,
+        ];
         foreach (config('constants.currency') as $currency => $currencyMeta) {
             $report['sentAmount'][$currency] = 0;
             $report['paidAmount'][$currency] = [
                 'converted' => 0,
                 'default' => 0,
             ];
-            $report['transactionCharge'][$currency] = 0;
-            $report['transactionTax'][$currency] = 0;
+            $report['bankCharges'][$currency] = 0;
             $report['dueAmount'][$currency] = 0;
             $report['receivable'][$currency] = 0;
+            $report['totalReceivables'][$currency] = 0;
         }
 
-        $report['gst'] = 0;
         foreach ($sentInvoices as $invoice) {
             $report['gst'] += $invoice->gst;
-            $report['sentAmount'][$invoice->currency_sent_amount] += $invoice->sent_amount;
+            $report['sentAmount'][$invoice->currency] += $invoice->amount;
 
-            if ($invoice->status != 'paid') {
-                $report['receivable'][$invoice->currency_sent_amount] += $invoice->sent_amount;
+            if (!$invoice->payments->count()) {
+                $report['receivable'][$invoice->currency] += $invoice->amount;
             }
         }
 
-        $report['tds'] = 0;
-        $report['totalPaidAmount'] = 0;
         foreach ($paidInvoices as $invoice) {
-            $paidAmount = $invoice->paid_amount;
-            $report['paidAmount'][$invoice->currency_paid_amount]['default'] += $paidAmount;
-            if ($invoice->currency_paid_amount != 'INR') {
-                $conversionRate = $invoice->conversion_rate ?? 1;
-                $paidAmount = $invoice->paid_amount * $conversionRate;
-                $report['paidAmount'][$invoice->currency_paid_amount]['converted'] += $paidAmount;
+            $report['totalPayments'] += $invoice->payments->count();
+            foreach ($invoice->payments as $payment) {
+                $paidAmount = $payment->amount;
+                $report['paidAmount'][$payment->currency]['default'] += $paidAmount;
+
+                if ($payment->currency != 'INR') {
+                    $conversionRate = $payment->conversion_rate ?? 1;
+                    $paidAmount = $payment->amount * $conversionRate;
+                    $report['paidAmount'][$payment->currency]['converted'] += $paidAmount;
+                }
+
+                $report['totalPaidAmount'] += $paidAmount;
+                $report['tds'] += $payment->tds;
+
+                $report['bankCharges'][$payment->currency] += $payment->bank_charges;
+                $report['bankServiceTaxForex'] += $payment->bank_service_tax_forex;
+                // $report['dueAmount'][$invoice->currency_due_amount] += $invoice->due_amount;
             }
-            $report['totalPaidAmount'] += $paidAmount;
-
-            $report['tds'] += $invoice->tds;
-            $report['transactionCharge'][$invoice->currency_transaction_charge] += $invoice->transaction_charge;
-            $report['transactionTax'][$invoice->currency_transaction_tax] += $invoice->transaction_tax;
-            $report['dueAmount'][$invoice->currency_due_amount] += $invoice->due_amount;
         }
-
         return $report;
     }
 
@@ -144,11 +141,11 @@ class ReportsController extends Controller
      * arrange invoices based on their start and end date
      *
      * @param  \Illuminate\Database\Eloquent\Collection $invoices
-     * @param  string $start    Start date
-     * @param  string $end      End date
+     * @param  Carbon $start    Start date
+     * @param  Carbon $end      End date
      * @return array
      */
-    public static function arrangeInvoices($invoices, $start = null, $end = null)
+    public static function arrangeInvoices($invoices, Carbon $start = null, Carbon $end = null)
     {
         $arrangedInvoices = [
             'sent' => [],
@@ -156,22 +153,22 @@ class ReportsController extends Controller
         ];
         if ($start && $end) {
             foreach ($invoices as $invoice) {
-                $sent = $start <= $invoice->sent_on && $invoice->sent_on <= $end ? true : false;
-                $paid = $invoice->status == 'paid' && $start <= $invoice->paid_on && $invoice->paid_on <= $end ? true : false;
-
-                if ($sent) {
+                if ($start <= $invoice->sent_on && $invoice->sent_on <= $end) {
                     $arrangedInvoices['sent'][] = $invoice;
                 }
-                if ($paid) {
-                    $arrangedInvoices['paid'][] = $invoice;
+                if ($invoice->payments->count()) {
+                    foreach ($invoice->payments as $payment) {
+                        if ($start <= $payment->paid_at && $payment->paid_at <= $end) {
+                            $arrangedInvoices['paid'][] = $invoice;
+                            break;
+                        }
+                    }
                 }
             }
         } else {
             foreach ($invoices as $invoice) {
                 $arrangedInvoices['sent'][] = $invoice;
-                $paid = $invoice->status == 'paid' ? true : false;
-
-                if ($paid) {
+                if ($invoice->payments->count()) {
                     $arrangedInvoices['paid'][] = $invoice;
                 }
             }
