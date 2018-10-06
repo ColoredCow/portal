@@ -16,7 +16,7 @@ return [
     'date_format' => 'Y-m-d',
     'datetime_format' => 'Y-m-d H:i:s',
     'display_date_format' => 'd/m/Y',
-    'full_display_date_format' => 'F d, Y',
+    'full_display_date_format' => 'M d, Y',
     'display_datetime_format' => 'Y-m-d\TH:i',
     'calendar_datetime_format' => 'Y-m-d\TH:i:s',
     'input_date_format' => 'dd/mm/yyyy',
@@ -147,6 +147,13 @@ return [
             'list-previous-months' => 6,
         ],
         'conversion-rate-usd-to-inr' => 65,
+        'payments' => [
+            'modes' => [
+                'cash' => 'App\Models\Finance\PaymentModes\Cash',
+                'wire-transfer' => 'App\Models\Finance\PaymentModes\WireTransfer',
+                'cheque' => 'App\Models\Finance\PaymentModes\Cheque',
+            ],
+        ],
     ],
     'currency' => [
         'INR' => [
@@ -158,7 +165,7 @@ return [
             'symbol' => '$',
         ],
     ],
-    'payment_types' => [
+    'payment_modes' => [
         'cheque' => 'Cheque',
         'cash' => 'Cash',
         'wire-transfer' => 'Wire Transfer',

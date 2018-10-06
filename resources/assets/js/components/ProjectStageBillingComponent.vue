@@ -1,10 +1,10 @@
 <template>
     <tr>
+        <td>{{index + 1}}.</td>
         <td class="form-group mt-3">
             <div class="d-flex align-items-center">
-                <div for="billing" class="d-inline mr-2">{{ index+1 }}. <strong>Billing:</strong></div>
                 <div class="input-group w-50">
-                    <input type="number" class="form-control input-billing" v-model="billing.percentage" step="0.01" min="0" :name="billing.isNew ? 'new_billing[]' : 'billing[][' + billing.id + ']'" :disabled="billing.finance_invoice_id">
+                    <input type="number" class="form-control input-billing" v-model="billing.percentage" step="0.01" min="0" :name="billing.isNew ? 'new_billing[]' : 'billing[][' + billing.id + ']'" :disabled="billing.invoice_id">
                     <div class="input-group-append">
                         <span class="input-group-text">%</span>
                     </div>
@@ -14,13 +14,13 @@
         <td>
             {{ currency }}&nbsp;{{ billingCostWithoutGst }}
         </td>
-        <td v-show="clientCountryGstApplicable">
+        <td v-if="clientCountryGstApplicable">
             {{ currency }}&nbsp;{{ billingGstAmount }}
         </td>
-        <td v-show="clientCountryGstApplicable">
+        <td v-if="clientCountryGstApplicable">
             {{ currency }}&nbsp;{{ billingCostWithGst }}
         </td>
-        <td v-if="billing.finance_invoice_id">
+        <td v-if="billing.invoice_id">
             <a target="_blank" :href="'/finance/invoices/download/' + billing.invoice.file_path">
                 <i class="fa fa-file fa-2x text-primary btn-file"></i>
             </a>

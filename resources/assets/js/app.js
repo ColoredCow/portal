@@ -20,7 +20,6 @@ window.Vue = require('vue');
 
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
-Vue.component('invoice-project-component', require('./components/InvoiceProjectComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
 
 $(document).ready(() => {
@@ -39,7 +38,6 @@ $(document).ready(() => {
 });
 
 if (document.getElementById('page_hr_applicant_edit')) {
-
     const applicantEdit = new Vue({
         el: '#page_hr_applicant_edit',
         data: {
@@ -105,59 +103,6 @@ if (document.getElementById('project_container')) {
         methods: {
             createProjectStage: function() {
                 this.$refs.projectStage.create();
-            }
-        }
-    });
-}
-
-if (document.getElementById('form_invoice')) {
-    const invoiceForm = new Vue({
-        el: '#form_invoice',
-        data: {
-            paymentType: document.getElementById('payment_type').dataset.paymentType || '',
-            chequeStatus: document.getElementById('cheque_status').dataset.chequeStatus || null,
-            selectedClient: '',
-            activeClient: document.getElementById('client_id').dataset.activeClient ? JSON.parse(document.getElementById('client_id').dataset.activeClient) : [],
-            activeClientCurrency: document.getElementById('currency_paid_amount').dataset.paidAmountCurrency || 'INR',
-            paidAmount: document.getElementById('paid_amount').dataset.paidAmount || '',
-            sentAmount: document.getElementById('sent_amount').dataset.sentAmount || '',
-            conversionRate: document.getElementById('conversion_rate').dataset.conversionRate || '',
-            status: document.getElementById('status').dataset.status || '',
-            countries: document.getElementById('client_id').dataset.countries || [],
-            tdsAmount: document.getElementById('tds').dataset.tds || '',
-            transactionCharge: document.getElementById('transaction_charge').dataset.transactionCharge || '',
-        },
-        computed: {
-            convertedAmount: function() {
-                return (this.paidAmount * this.conversionRate).toFixed(2);
-            },
-            suggestedDueAmount: function() {
-                let dueAmount = document.getElementById('due_amount').dataset.dueAmount;
-                if (dueAmount) {
-                    return dueAmount;
-                }
-                return this.sentAmount - this.paidAmount - this.tdsAmount - this.transactionCharge;
-            },
-            currencyTransactionCharge: function() {
-                return document.getElementById('currency_transaction_charge').dataset.currencyTransactionCharge || this.activeClientCurrency || 'USD';
-            },
-            currencyDueAmount: function() {
-                return document.getElementById('currency_due_amount').dataset.currencyDueAmount || this.activeClientCurrency || 'USD';
-            }
-        },
-        methods : {
-            updateActiveClient: function() {
-                let clients = JSON.parse(document.getElementById('client_id').dataset.clients);
-                let selected = this.selectedClient;
-                for (var index = 0; index < clients.length; index++) {
-                    let client = clients[index];
-                    if (client.id == this.selectedClient) {
-                        this.activeClient = client;
-                        this.activeClientCurrency = JSON.parse(this.countries)[client.country].currency;
-                        console.log(client.country);
-                        break;
-                    }
-                }
             }
         }
     });
@@ -754,3 +699,6 @@ if (document.getElementById('user_roles_table')) {
         }
     });
 }
+
+require('./finance/invoice');
+require('./finance/payment');

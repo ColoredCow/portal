@@ -8,6 +8,8 @@ class Client extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['currency'];
+
     /**
      * Get the projects for the client.
      */
@@ -16,13 +18,49 @@ class Client extends Model
         return $this->hasMany(Project::class);
     }
 
-    /**
-     * Retrive id and name of clients with active flag true
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public static function getActiveClients()
+    public function scopeActive($query)
     {
-        return self::where('is_active', true)->get();
+        return $query->where('is_active', true);
+    }
+
+    public function getCurrencyAttribute()
+    {
+        return config("constants.countries.$this->country.currency");
+    }
+
+    /**
+     * Returns the clients with relations that can be invoiced.
+     *
+     * @param  array  $billings    Billings for which client should be added in the response.
+     * @return self
+     */
+    public static function getInvoicableClients(array $billings = [])
+    {
+        return self::active()
+            ->whereHas('projects', function ($query) use ($billings) {
+                $query->whereHas('stages', function ($query) use ($billings) {
+                    $query->whereHas('billings', function ($query) use ($billings) {
+                        $query->doesntHave('invoice')->orWhereIn('id', $billings);
+                    });
+                });
+            })
+            ->with([
+                'projects' => function ($query) use ($billings) {
+                    $query->whereHas('stages', function ($query) use ($billings) {
+                        $query->whereHas('billings', function ($query) use ($billings) {
+                            $query->doesntHave('invoice')->orWhereIn('id', $billings);
+                        });
+                    });
+                },
+                'projects.stages' => function ($query) use ($billings) {
+                    $query->whereHas('billings', function ($query) use ($billings) {
+                        $query->doesntHave('invoice')->orWhereIn('id', $billings);
+                    });
+                },
+                'projects.stages.billings' => function ($query) use ($billings) {
+                    $query->doesntHave('invoice')->orWhereIn('id', $billings);
+                },
+            ])
+            ->get();
     }
 }
