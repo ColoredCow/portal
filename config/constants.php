@@ -70,6 +70,8 @@ return [
                 'change-job' => 'change-job',
                 'no-show' => 'no-show',
                 'custom-mail' => 'custom-mail',
+                'approved' => 'approved',
+                'onboarded' => 'onboarded',
             ],
             'reasons-no-show' => [
                 'absent-applicant' => 'Applicant is absent',
@@ -109,7 +111,7 @@ return [
             ],
             'sent-for-approval' => [
                 'label' => 'sent-for-approval',
-                'title' => 'Pending',
+                'title' => 'Sent for Approval',
                 'class' => 'badge badge-info',
             ],
             'confirmed' => [
@@ -131,6 +133,7 @@ return [
         'defaults' => [
             'scheduled_person_id' => 1,
         ],
+        'offer-letters-dir' => 'offer-letters',
     ],
     'finance' => [
         'invoice' => [

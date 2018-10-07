@@ -14,7 +14,6 @@
                             @include('hr.application.auto-respond', ['applicant' => $application->applicant, 'application' => $application])
                         @endif
                         @break
-
                     @case('round-conducted')
                         @php
                             $applicationRound = $item['applicationRound'];
@@ -27,7 +26,6 @@
                             @include('hr.communication-mail-modal', [ 'data' => $applicationRound->communicationMail ])
                         @endif
                         @break
-
                     @case(config('constants.hr.application-meta.keys.change-job'))
                         @php
                             $event = $item['event'];
@@ -37,7 +35,6 @@
                         <span data-toggle="modal" data-target="#{{ $event->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
                         @include('hr.communication-mail-modal', ['data' => $event->communicationMail])
                         @break
-
                     @case(config('constants.hr.status.no-show.label'))
                         @php
                             $event = $item['event'];
@@ -48,6 +45,28 @@
                             <span data-toggle="modal" data-target="#{{ $event->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.rejected.class") }} modal-toggler">Communication mail</span><br>
                             @include('hr.communication-mail-modal', ['data' => $event->communicationMail])
                         @endif
+                        @break
+
+                    @case(config('constants.hr.application-meta.keys.sent-for-approval'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->conductedPerson }} requested approval from {{ $event->value->supervisor }}
+                        @break
+                    @case(config('constants.hr.application-meta.keys.approved'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->approvedBy }} approved this application
+                        @break
+                    @case(config('constants.hr.application-meta.keys.onboarded'))
+                        @php
+                            $event = $item['event'];
+                        @endphp
+                        <b><u>{{ date(config('constants.display_date_format'), strtotime($item['date'])) }}</u></b><br>
+                        {{ $event->value->onboardedBy }} onboarded the applicant
                         @break
                 @endswitch
             </div>

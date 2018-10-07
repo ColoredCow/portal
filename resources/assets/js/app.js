@@ -22,6 +22,21 @@ Vue.component('project-stage-component', require('./components/ProjectStageCompo
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
 
+$(document).ready(() => {
+    if ($('.form-create-invoice').length) {
+        let form = $('.form-create-invoice');
+        let client_id = form.find('#client_id').val();
+        if (client_id) {
+            updateClientProjects(form, client_id);
+        }
+    }
+    $('[data-toggle="tooltip"]').tooltip();
+    $('.status-close').on('click', function(){
+        let wrapper = $(this).closest('.alert');
+        wrapper.fadeOut(500);
+    });
+});
+
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
         el: '#page_hr_applicant_edit',
@@ -64,7 +79,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
                         $('#send_for_approval').modal('show');
                         break;
                     case 'approve':
-                        $('#approve_applicant').modal('show');
+                        $('#approve_application').modal('show');
                         break;
                      case 'onboard':
                         $('#onboard_applicant').modal('show');
@@ -92,8 +107,6 @@ if (document.getElementById('project_container')) {
         }
     });
 }
-
-
 
 if (document.getElementById('client_form')) {
     const clientForm = new Vue({
@@ -149,7 +162,7 @@ $('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', 
     let button = $(this);
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
-    const actions = [ 'confirm', 'send-form-approval', 'onboard', 'approve' ];
+    const actions = [ 'confirm', 'send-for-approval', 'onboard', 'approve' ];
       if(actions.includes(selectedAction)) {
        if (!form[0].checkValidity()) {
             form[0].reportValidity();
@@ -165,20 +178,6 @@ $('.date-field').datepicker({
     dateFormat: "dd/mm/yy"
 });
 
-$(document).ready(() => {
-    if ($('.form-create-invoice').length) {
-        let form = $('.form-create-invoice');
-        let client_id = form.find('#client_id').val();
-        if (client_id) {
-            updateClientProjects(form, client_id);
-        }
-    }
-    $('[data-toggle="tooltip"]').tooltip();
-    $('.status-close').on('click', function(){
-        let wrapper = $(this).closest('.alert');
-        wrapper.fadeOut(500);
-    });
-});
 
 $('#form_invoice').on('change', '#client_id', function(){
     let form = $(this).closest('form');
