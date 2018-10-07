@@ -47,6 +47,11 @@ class ApplicationRoundRequest extends FormRequest
             $rules['next_scheduled_end'] = 'nullable|date|required_with:create_calendar_event';
         }
 
+        if (request()->input('action') == 'approve') {
+            $rules['subject'] = 'required|string';
+            $rules['body'] = 'required|string';
+        }
+
         return $rules;
     }
 

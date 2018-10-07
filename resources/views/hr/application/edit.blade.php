@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container" id="page_hr_applicant_edit">
     <div class="row">
         <div class="col-md-12">
@@ -129,7 +128,7 @@
                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                         </div>
                     </div>
-                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" class="applicant-round-form">
+                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
 
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
@@ -181,12 +180,14 @@
                             @php
                                 $showFooter = false;
                                 if ($loop->last) {
-                                    if ($applicationRound->application->status == config('constants.hr.status.sent-for-approval.label')) {
-                                        $showFooter = true;
-                                    } elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
+                                    if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), config('constants.hr.status.approved.label')])) {
                                         $showFooter = true;
                                     }
-                                } elseif (!$applicationRound->mail_sent) {
+                                    elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
+                                        $showFooter = true;
+                                    }
+                                }
+                                elseif (!$applicationRound->mail_sent) {
                                     $showFooter = true;
                                 }
                             @endphp
@@ -219,9 +220,10 @@
                         </div>
                         <input type="hidden" name="action" value="updated">
                         <input type="hidden" name="next_round" value="">
-                        @includeWhen($applicationRound->round_status != config('constants.hr.status.confirmed.label'), 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
+                        @includeWhen($applicationRound->showActions, 'hr.round-review-confirm-modal', ['applicationRound' => $applicationRound])
                         @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                         @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
+                        @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
                     </form>
                 </div>
                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])

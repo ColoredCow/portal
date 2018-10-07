@@ -338,6 +338,43 @@ class Application extends Model
             ];
         }
 
+        $sentForApprovalEvents = $this->applicationMeta()->sentForApproval()->get();
+        foreach ($sentForApprovalEvents as $event) {
+            $details = json_decode($event->value);
+            $details->conductedPerson = User::find($details->conducted_person_id)->name;
+            $details->supervisor = User::find($details->supervisor_id)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.sent-for-approval'),
+                'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
+        $approvedEvents = $this->applicationMeta()->approved()->get();
+        foreach ($approvedEvents as $event) {
+            $details = json_decode($event->value);
+            $details->approvedBy = User::find($details->approved_by)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.approved'),
+                'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
+        $onboardEvents = $this->applicationMeta()->onboarded()->get();
+        foreach ($onboardEvents as $event) {
+            $details = json_decode($event->value);
+            $details->onboardedBy = User::find($details->onboarded_by)->name;
+            $event->value = $details;
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.onboarded'),
+                'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
         return $timeline;
     }
 
@@ -380,6 +417,11 @@ class Application extends Model
     public function isSentForApproval()
     {
         return $this->status == config('constants.hr.status.sent-for-approval.label');
+    }
+
+    public function isApproved()
+    {
+        return $this->status == config('constants.hr.status.approved.label');
     }
 
     public function isRejected()
