@@ -29,7 +29,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="designation">Designation</label>
-                        <input type="text" class="form-control" name="designation" id="designation" required="required">
+                        <input type="text" class="form-control" name="designation" id="designation" value="{{ $application->job->title }}" required="required">
                     </div>
                 </div>
                 <div class="form-row mt-2">
