@@ -4,6 +4,7 @@ namespace App\Observers\HR;
 
 use App\Models\HR\Employee;
 use App\Services\GSuiteUserService;
+use App\User;
 
 class EmployeeObserver
 {
@@ -18,13 +19,21 @@ class EmployeeObserver
         if (app()->environment('testing')) {
             return;
         }
-        $gsuiteUser = new GSuiteUserService;
-        $gsuiteUser->fetch($employee->user->email);
-        $employee->update([
-            'name' => $gsuiteUser->getName(),
-            'joined_on' => $gsuiteUser->getJoinedOn(),
-            'designation' => $gsuiteUser->getDesignation(),
-        ]);
+
+        $gsuiteUserService = new GSuiteUserService;
+        $gsuiteUserService->fetch($employee->user->email);
+
+        foreach ($gsuiteUserService->getUsers() as $gsuiteUser) {
+            $user = User::with('employee')->findByEmail($gsuiteUser->getPrimaryEmail())->first();
+            if (is_null($user)) {
+                continue;
+            }
+            $employee->update([
+                'name' => $gsuiteUser->getName()->fullName,
+                'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
+                'designation' => $gsuiteUser->getOrganizations()[0]['title'],
+            ]);
+        }
     }
 
     /**
