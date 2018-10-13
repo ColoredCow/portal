@@ -4,6 +4,7 @@ namespace App\Observers\HR;
 
 use App\Models\HR\Employee;
 use App\Services\GSuiteUserService;
+use App\User;
 
 class EmployeeObserver
 {
