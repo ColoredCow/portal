@@ -17,19 +17,20 @@ class EmployeeObserver {
             return;
         }
 
-    $gsuiteUserService = new GSuiteUserService;
-    $gsuiteUserService->fetch($employee->user->email);
+        $gsuiteUserService = new GSuiteUserService;
+        $gsuiteUserService->fetch($employee->user->email);
 
-    foreach ($gsuiteUserService->getUsers() as $gsuiteUser) {
-        $user = User::with('employee')->findByEmail($gsuiteUser->getPrimaryEmail())->first();
-        if (is_null($user)) {
-            continue;
+        foreach ($gsuiteUserService->getUsers() as $gsuiteUser) {
+            $user = User::with('employee')->findByEmail($gsuiteUser->getPrimaryEmail())->first();
+            if (is_null($user)) {
+                continue;
+            }
+            $employee->update([
+                'name' => $gsuiteUser->getName()->fullName,
+                'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
+                'designation' => $gsuiteUser->getOrganizations()[0]['title'],
+            ]);
         }
-        $employee->update([
-            'name' => $gsuiteUser->getName()->fullName,
-            'joined_on' => Carbon::parse($gsuiteUser->getCreationTime())->format(config('constants.date_format')),
-            'designation' => $gsuiteUser->getOrganizations()[0]['title'],
-        ]);
     }
 
     /**
@@ -38,8 +39,7 @@ class EmployeeObserver {
      * @param  \App\Models\HR\Employee  $employee
      * @return void
      */
-    public function updated(Employee $employee)
-    {
+    public function updated(Employee $employee) {
         if ($employee->user->name != $employee->name) {
             $employee->user->update([
                 'name' => $employee->name,
