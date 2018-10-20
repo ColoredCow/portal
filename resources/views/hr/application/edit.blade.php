@@ -196,12 +196,12 @@
                                 <div class="d-flex align-items-center">
                                 @if ($applicationRound->showActions)
                                     <select name="action_type" id="action_type" class="form-control w-50" v-model="selectedAction" data-application-job-rounds="{{ json_encode($application->job->rounds) }}">
-                                        <option v-for="round in applicationJobRounds" value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
-                                        <option value="send-for-approval">Send for approval</option>
-                                        @if ($applicationRound->round_status != config('constants.hr.status.onboarded.label') || $applicationRound->round_status != config('constants.hr.status.rejected.label'))
+                                    @if ($applicationRound->round_status != config('constants.hr.status.approved.label'))
+                                            <option v-for="round in applicationJobRounds" value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
+                                            <option value="send-for-approval">Send for approval</option>
                                             <option value="approve">Approve</option>
-                                            <option value="onboard">Onboard</option>
-                                        @endif
+                                    @endif
+                                        <option value="onboard">Onboard</option>
                                     </select>
                                     <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
                                 @endif
