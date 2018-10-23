@@ -124,9 +124,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', 'ClientController')
         ->except(['show', 'destroy'])
         ->names(['index' => 'clients', 'create' => 'clients.create', 'edit' => 'clients.edit', 'store' => 'clients.store', 'update' => 'clients.update']);
+
     Route::resource('projects', 'ProjectController')
-        ->except(['show', 'destroy'])
-        ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
+        ->except(['destroy'])
+        ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
+    Route::post('projects/{id}/add-employee', 'ProjectController@addEmployeeToProject');
+        
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 
     Route::prefix('settings')->namespace('Settings')->group(function () {

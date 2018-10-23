@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Client;
+use App\Models\HR\Employee;
 use App\Models\Project;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -71,7 +73,13 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        $project->load('stages', 'stages.billings', 'stages.billings.invoice');
+
+        return view('project.show')->with([
+            'project' => $project,
+            'clients' => Client::select('id', 'name')->get(),
+            'employees' => Employee::select('id', 'name')->get(),
+        ]);
     }
 
     /**
@@ -120,5 +128,17 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+
+    /**
+     * Add Employees to this Project.
+     *
+     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addEmployeeToProject(Request $request)
+    {
+        dd('api called', $request->all());
     }
 }
