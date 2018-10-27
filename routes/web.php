@@ -154,7 +154,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('library')->namespace('Library')->group(function () {
             Route::resource('books', 'BookController')
                 ->names([
-                    'index' => 'books.index',
+                    'index' => 'books',
                     'create' => 'books.create',
                     'show' => 'books.show',
                     'store' => 'books.store',

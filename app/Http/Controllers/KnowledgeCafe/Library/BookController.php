@@ -27,7 +27,7 @@ class BookController extends Controller
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $books = Book::getList($searchString);
         $categories = BookCategory::orderBy('name')->get();
-        return view('knowledgecafe.library.books.index', compact('books', 'categories'));
+        return view('knowledgecafe.library.books', compact('books', 'categories'));
     }
 
     /**
