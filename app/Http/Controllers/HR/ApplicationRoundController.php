@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\HR;
 
-use App\Helpers\ContentHelper;
+use App\User;
+use Carbon\Carbon;
 use App\Helpers\FileHelper;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\HR\ApplicantRoundMailRequest;
-use App\Http\Requests\HR\ApplicationRoundRequest;
-use App\Mail\HR\Applicant\RoundReviewed;
+use Illuminate\Http\Request;
+use App\Helpers\ContentHelper;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
 use App\Models\HR\ApplicantRound;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\ApplicationRound;
-use App\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Mail\HR\Applicant\RoundReviewed;
+use App\Http\Requests\HR\ApplicationRoundRequest;
+use App\Http\Requests\HR\ApplicantRoundMailRequest;
 
 class ApplicationRoundController extends Controller
 {
