@@ -21,7 +21,7 @@
 
     <div id="category_container" 
         data-categories="{{ json_encode($categories) }}"
-        data-index-route="{{ route('books.category.index') }}" 
+        data-index-route="{{ route('books.category') }}"
         class ="table-bordered">
 
 
