@@ -38,7 +38,7 @@ class ApplicationRound extends Model
         return true;
     }
 
-    protected function _updateOrCreateReviews($reviews = [])
+    public function _updateOrCreateReviews($reviews = [])
     {
         foreach ($reviews as $review_key => $review_value) {
             $application_reviews = $this->applicationRoundReviews()->updateOrCreate(
