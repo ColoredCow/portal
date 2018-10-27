@@ -3,16 +3,11 @@
 namespace App\Models\HR;
 
 use App\Helpers\FileHelper;
-use App\Mail\HR\SendForApproval;
-use App\Mail\HR\SendOfferLetter;
-use App\Models\HR\ApplicationMeta;
+use App\Models\HR\Application;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
 class ApplicationRound extends Model
 {
@@ -21,128 +16,6 @@ class ApplicationRound extends Model
     protected $table = 'hr_application_round';
 
     public $timestamps = false;
-
-    public function _update($attr)
-    {
-        $fillable = [
-            'conducted_person_id' => Auth::id(),
-            'conducted_date' => Carbon::now(),
-        ];
-
-        $application = $this->application;
-        $applicant = $this->application->applicant;
-
-        switch ($attr['action']) {
-            case 'schedule-update':
-
-                // If the application status is no-show or no-show-reminded, and the new schedule date is greater
-                // than the current time, we change the application status to in-progress.
-                if ($application->isNoShow() && Carbon::parse($attr['scheduled_date'])->gt(Carbon::now())) {
-                    $application->markInProgress();
-                }
-                $fillable = [
-                    'scheduled_date' => $attr['scheduled_date'],
-                    'scheduled_person_id' => $attr['scheduled_person_id'],
-                ];
-                $attr['reviews'] = [];
-                break;
-
-            case 'confirm':
-                $fillable['round_status'] = 'confirmed';
-                $application->markInProgress();
-                $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                $applicationRound = self::create([
-                    'hr_application_id' => $application->id,
-                    'hr_round_id' => $attr['next_round'],
-                    'scheduled_date' => $attr['next_scheduled_start'],
-                    'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
-                    'scheduled_person_id' => $attr['next_scheduled_person_id'],
-                ]);
-                break;
-
-            case 'reject':
-                $fillable['round_status'] = 'rejected';
-                foreach ($applicant->applications as $applicantApplication) {
-                    $applicantApplication->reject();
-                }
-                break;
-
-            case 'refer':
-                $fillable['round_status'] = 'rejected';
-                $application->reject();
-                $applicant->applications->where('id', $attr['refer_to'])->first()->markInProgress();
-                break;
-
-            case 'send-for-approval':
-                $fillable['round_status'] = 'confirmed';
-                $application->sendForApproval($attr['send_for_approval_person']);
-
-                ApplicationMeta::create([
-                    'hr_application_id' => $application->id,
-                    'key' => 'sent-for-approval',
-                    'value' => json_encode([
-                        'conducted_person_id' => $fillable['conducted_person_id'],
-                        'supervisor_id' => $attr['send_for_approval_person'],
-                    ]),
-                ]);
-
-                $supervisor = User::find($attr['send_for_approval_person']);
-                Mail::send(new SendForApproval($supervisor, $application));
-                break;
-
-            case 'approve':
-                $fillable['round_status'] = 'approved';
-                $application->approve();
-
-                ApplicationMeta::create([
-                    'hr_application_id' => $application->id,
-                    'key' => 'approved',
-                    'value' => json_encode([
-                        'approved_by' => $fillable['conducted_person_id'],
-                    ]),
-                ]);
-
-                $subject = $attr['subject'];
-                $body = $attr['body'];
-
-                if (!$application->offer_letter) {
-                    $application->offer_letter = FileHelper::generateOfferLetter($application);
-                }
-                Mail::send(new SendOfferLetter($application, $subject, $body));
-                break;
-
-            case 'onboard':
-                $fillable['round_status'] = 'confirmed';
-                $application->onboarded();
-
-                ApplicationMeta::create([
-                    'hr_application_id' => $application->id,
-                    'key' => 'onboarded',
-                    'value' => json_encode([
-                        'onboarded_by' => $fillable['conducted_person_id'],
-                    ]),
-                ]);
-
-                // The below env call needs to be changed to config after the default
-                // credentials bug in the Google API services is resolved.
-                $email = $attr['onboard_email'] . '@' . env('GOOGLE_CLIENT_HD');
-                $applicant->onboard($email, $attr['onboard_password'], [
-                    'designation' => $attr['designation'],
-                ]);
-
-                User::create([
-                    'email' => $email,
-                    'name' => $applicant->name,
-                    'password' => Hash::make($attr['onboard_password']),
-                    'provider' => 'google',
-                    'provider_id' => '',
-                ]);
-                break;
-        }
-        $this->update($fillable);
-        $this->_updateOrCreateReviews($attr['reviews']);
-    }
 
     public function updateOrCreateEvaluation($evaluations = [])
     {
@@ -291,5 +164,33 @@ class ApplicationRound extends Model
     public function getShowActionsAttribute()
     {
         return is_null($this->round_status) || $this->isRejected() || (!$this->isOnboarded());
+    }
+
+    public function updateSchedule($attr, Application $application)
+    {
+        // If the application status is no-show or no-show-reminded, and the new schedule date is greater
+        // than the current time, we change the application status to in-progress.
+        if ($application->isNoShow() && Carbon::parse($attr['scheduled_date'])->gt(Carbon::now())) {
+            $application->markInProgress();
+        }
+        $this->update([
+            'scheduled_date' => $attr['scheduled_date'],
+            'scheduled_person_id' => $attr['scheduled_person_id'],
+        ]);
+    }
+
+    public function comfirm()
+    {
+        $this->update(['round_status' => 'confirmed']);
+    }
+
+    public function reject()
+    {
+        $this->update(['round_status' => 'rejected']);
+    }
+
+    public function approve()
+    {
+        $this->update(['round_status' => 'approved']);
     }
 }
