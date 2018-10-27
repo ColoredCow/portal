@@ -172,7 +172,7 @@ Route::middleware('auth')->group(function () {
 
             Route::resource('book-categories', 'BookCategoryController')
                 ->only(['index', 'store', 'update', 'destroy'])
-                ->names(['index' => 'books.category.index']);
+                ->names(['index' => 'books.category']);
         });
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
     });
