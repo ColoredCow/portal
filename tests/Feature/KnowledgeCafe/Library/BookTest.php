@@ -21,7 +21,7 @@ class BookTest extends FeatureTest
     public function an_authorized_user_can_see_books()
     {
         $this->signInAsEmployee();
-        $this->get(route('books.index'))
+        $this->get(route('books'))
             ->assertStatus(Response::HTTP_OK);
     }
 
@@ -29,7 +29,7 @@ class BookTest extends FeatureTest
     public function a_guest_cant_see_books()
     {
         $this->expectException(AuthenticationException::class);
-        $this->get(route('books.index'));
+        $this->get(route('books'));
     }
 
     /** @test */
@@ -38,7 +38,7 @@ class BookTest extends FeatureTest
         $this->signInAsSuperAdmin();
         $book = make(Book::class);
         $response = $this->post(route('books.store'), $book->toArray());
-        $this->get(route('books.index'))
+        $this->get(route('books'))
             ->assertSee($book->title);
     }
 
