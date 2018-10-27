@@ -62,7 +62,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_kc">
                                      @can('library_books.view')
-                                     <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
+                                     <a class="dropdown-item" href="{{ route('books') }}">Library</a>
                                      @endcan
                                      @can('weeklydoses.view')
                                      <a class="dropdown-item" href="{{ route('weeklydoses') }}">WeeklyDose</a>

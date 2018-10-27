@@ -22,7 +22,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-                        <a class="" href="{{ route('books.index', ['search'=> $book->title]) }}">
+                        <a class="" href="{{ route('books', ['search'=> $book->title]) }}">
                             <img class="mb-1 mw-100" src=" {{ $book->thumbnail }} " />
                         </a>
                         <h5 class="mb-1 font-weight-bold" > {{ $book->title }} </h5>

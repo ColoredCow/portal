@@ -52,7 +52,7 @@
             </div>
         </span>
 
-        <span id="show_book" v-show="showInfo" data-store-route = "{{ route('books.store') }}" data-index-route = "{{ route('books.index') }}" >
+        <span id="show_book" v-show="showInfo" data-store-route = "{{ route('books.store') }}" data-index-route = "{{ route('books') }}" >
             @include('knowledgecafe.library.books.info')
         </span>
         

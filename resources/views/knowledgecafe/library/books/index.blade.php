@@ -31,14 +31,14 @@
     @if(request()->has('search'))
         <div class="row mt-3 mb-2">
             <div class="col-6">
-                <a class="text-muted c-pointer" href="{{ route('books.index') }}">
+                <a class="text-muted c-pointer" href="{{ route('books') }}">
                     <i class="fa fa-times"></i>&nbsp;Clear current search and filters
                 </a>
             </div>
         </div>
     @endif
     <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}"
-        data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}">
+        data-index-route="{{ route('books') }}" data-category-index-route="{{ route('books.category.index') }}">
         <div class="d-flex flex-wrap w-100">
             <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2">
                 <div class="d-flex" >
