@@ -129,6 +129,7 @@ Route::middleware('auth')->group(function () {
         ->except(['destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
     Route::post('projects/{id}/add-employee', 'ProjectController@addEmployeeToProject');
+    Route::post('projects/{id}/remove-employee', 'ProjectController@removeEmployeeFromProject');
         
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 

@@ -73,7 +73,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project->load('stages', 'stages.billings', 'stages.billings.invoice');
+        $project->load('stages', 'stages.billings', 'stages.billings.invoice', 'employees');
 
         return view('project.show')->with([
             'project' => $project,
@@ -134,11 +134,33 @@ class ProjectController extends Controller
     /**
      * Add Employees to this Project.
      *
+     * @param  $projectId
      * @param  \App\Http\Requests\ProjectRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function addEmployeeToProject(Request $request)
+    public function addEmployeeToProject($projectId, Request $request)
     {
-        dd('api called', $request->all());
+        $project = Project::find($projectId);
+
+        $project->employees()->attach($request->get('employeeId'), ['contribution_type' => $request->get('contribution')]);
+
+        return redirect(route('projects.show', ['id' => $project->id]))->with('status', 'Employee added to Project successfully!');
+    }
+
+
+    /**
+     * Remove Employees from this Project.
+     *
+     * @param  $projectId
+     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function removeEmployeeFromProject($projectId, Request $request)
+    {
+        $project = Project::find($projectId);
+
+        $project->employees()->detach($request->get('employeeId'));
+
+        return redirect(route('projects.show', ['id' => $project->id]))->with('status', 'Employee removed from Project successfully!');
     }
 }

@@ -4,38 +4,32 @@
     <div class="card-body">
       <div class="project-info container">
         <div class="head-section row">
-          <h3 class="col-sm-12">Project Dashboard</h3>
-          <br>
-          <h5 class="col-sm-12">{{project.name}}</h5>
+          <h3 class="col-sm-12"><strong>{{project.name}}</strong></h3>
         </div>
 
         <div class="info-section row">
           <div class="current-cycle-info col-sm-6">
-            <label for=""><strong>Current Cycle</strong></label>
-            {{'123123'}}
+            <label for=""><strong>Current Cycle:</strong></label>
+            {{"29/10/2018 to 02/10/2018"}}
             <br>
-            <label for=""><strong>Estimated Effort</strong></label>
-            {{'123123'}}
+            <label for=""><strong>Estimated Effort:</strong></label>
+            {{"40"}}
             <br>
-            <label for=""><strong>Last Updated</strong></label>
-            {{'123123'}}
+            <label for=""><strong>Last Updated:</strong></label>
+            {{"30/10/2018"}}
           </div>
           <div class="employee-info col-sm-6">
             <div class="row list-section">
-              <div class="col-sm-6">
+              <div class="offset-sm-4 col-sm-4 list-section">
                 <p><strong>Employees</strong></p>
                 <ul class="unstyled-list">
-                  <li>Tushar</li>
-                  <li>Vaibhav</li>
-                  <li>Pankaj</li>
+                  <li v-for="employee in project.employees">{{employee.name}}</li>
                 </ul>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-4 list-section">
                 <p><strong>Contribution</strong></p>
                 <ul class="unstyled-list">
-                  <li>40</li>
-                  <li>20</li>
-                  <li>20</li>
+                  <li v-for="employee in project.employees">0</li>
                 </ul>
               </div>
             </div>
@@ -44,27 +38,30 @@
       </div>
       <hr>
       <div class="project-actions row">
-        <div class="col-sm-3 project-action">
-          <p><strong>Project Type</strong></p>
-        </div>
-        <div class="col-sm-3 project-action">
-          <p><strong>Billing Frequency</strong></p>
-        </div>
-        <div class="col-sm-3 project-action">
-          <p>
-            <strong>Employees</strong>
-            <span @click="showAddEmployeeForm">
-              <i class="btn btn-default fa fa-plus"></i>
-            </span>
-          </p>
-          <ul class="unstyled-list">
-            <li v-for="employee in employees">
-              {{employee.name}}
-            </li>
-          </ul>
-        </div>
-        <div class="col-sm-3 project-action">
-          <p><strong>Contribution</strong></p>
+        <div class="col-sm-12 project-action">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>
+                  Employee
+                  <span @click="showAddEmployeeForm">
+                    <i class="btn btn-default fa fa-plus"></i>
+                  </span>
+                </th>
+                <th>Contribution</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody v-if="project">
+              <tr v-for="employee in project.employees">
+                <td>
+                  {{employee.name}}
+                </td>
+                <td>{{employee.pivot.contribution_type}}</td>
+                <td><i class="btn btn-default fa fa-close" @click="removeEmployee(employee.id)"></i></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -83,13 +80,13 @@
               <div class="modal-body card-body">
                 <form>
                   <label for="employee">Select Employee</label>
-                  <select class="form-control" name="employee" v-model="selectedEmployee">
+                  <select required class="form-control" name="employee" v-model="selectedEmployee">
                     <option disabled value="">Please select one</option>
                     <option v-for="employee in employees" :value="employee.id">{{employee.name}}</option>
                   </select>
 
                   <label for="contribution">Contribution</label>
-                  <select class="form-control" name="contribution" v-model="contributionType">
+                  <select required class="form-control" name="contribution" v-model="contributionType">
                     <option disabled value="">Please select one</option>
                     <option value="weekly">Weekly</option>
                     <option value="hourly">Hourly</option>
@@ -122,6 +119,12 @@
       }
     },
 
+    computed: {
+      availableEmployees() {
+
+      }
+    },
+
     methods: {
       showAddEmployeeForm() {
         this.loadAddEmployeeForm = true;
@@ -138,10 +141,25 @@
           employeeId: this.selectedEmployee,
           contribution: this.contributionType
         }
-        console.log('pay', payload);
 
         axios.post('/projects/'+this.project.id+'/add-employee', payload)
           .then((response) => {
+            window.location.reload(); //since we are not using vue-router
+            this.destroyFormModal();
+        })
+        .catch(error => {
+          console.log('err', error);
+        });
+      },
+
+      removeEmployee(employeeId) {
+        let payload = {
+          employeeId: employeeId,
+        }
+
+        axios.post('/projects/'+this.project.id+'/remove-employee', payload)
+          .then((response) => {
+            window.location.reload(); //since we are not using vue-router
             console.log('asdasd');
         })
         .catch(error => {
@@ -163,9 +181,14 @@
 
   .unstyled-list {
     list-style: none;
+    padding: 0
   }
 
   .btn-default {
     padding: 1px;
+  }
+
+  .list-section {
+    text-align: center;
   }
 </style>

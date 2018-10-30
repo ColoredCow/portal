@@ -4,6 +4,7 @@
 <div class="container" id="project_container">
     <br>
     @include('finance.menu', ['active' => 'projects'])
+    @include('status', ['errors' => $errors->all()])
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>View Project</h1></div>
