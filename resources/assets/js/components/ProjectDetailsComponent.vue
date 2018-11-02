@@ -119,12 +119,6 @@
       }
     },
 
-    computed: {
-      availableEmployees() {
-
-      }
-    },
-
     methods: {
       showAddEmployeeForm() {
         this.loadAddEmployeeForm = true;
