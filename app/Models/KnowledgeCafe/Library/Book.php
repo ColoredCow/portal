@@ -23,13 +23,13 @@ class Book extends Model
     {
         return self::with(['categories', 'readers'])
             ->where(function ($query) use ($filteredString) {
-                    if($filteredString) {
-                        $query->where('title', 'LIKE', "%$filteredString%")
+                if ($filteredString) {
+                    $query->where('title', 'LIKE', "%$filteredString%")
                             ->orWhere('author', 'LIKE', "%$filteredString%")
                             ->orWhere('isbn', 'LIKE', "%$filteredString%");
-                    }
+                }
 
-                ($filteredString) ?  : '';
+                ($filteredString) ?: '';
             })
             ->withCount('readers')
             ->orderBy('readers_count', 'desc')
