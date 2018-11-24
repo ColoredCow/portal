@@ -123,14 +123,6 @@ class ApplicationRoundController extends Controller
                 $applicant->onboard($email, $attr['onboard_password'], [
                     'designation' => $attr['designation'],
                 ]);
-
-                User::create([
-                    'email' => $email,
-                    'name' => $applicant->name,
-                    'password' => Hash::make($attr['onboard_password']),
-                    'provider' => 'google',
-                    'provider_id' => '',
-                ]);
                 break;
         }
         $round->update([
