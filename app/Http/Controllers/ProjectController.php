@@ -133,18 +133,16 @@ class ProjectController extends Controller
 
     /**
      * Add Employees to this Project.
-     *
+ *
      * @param  $projectId
      * @param  \App\Http\Requests\ProjectRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function addEmployeeToProject($projectId, Request $request)
+    public function addEmployee(Project $project, Request $request)
     {
-        $project = Project::find($projectId);
-
         $project->employees()->attach($request->get('employeeId'), ['contribution_type' => $request->get('contribution')]);
 
-        return redirect(route('projects.show', ['id' => $project->id]))->with('status', 'Employee added to Project successfully!');
+        return redirect(route('projects.show', $project))->with('status', 'Employee added to the project successfully!');
     }
 
 
@@ -155,13 +153,11 @@ class ProjectController extends Controller
      * @param  \App\Http\Requests\ProjectRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function removeEmployeeFromProject($projectId, Request $request)
+    public function removeEmployee(Project $project, Request $request)
     {
-        $project = Project::find($projectId);
-
         $project->employees()->detach($request->get('employeeId'));
 
-        return redirect(route('projects.show', ['id' => $project->id]))->with('status', 'Employee removed from Project successfully!');
+        return redirect(route('projects.show', $project))->with('status', 'Employee removed from the project successfully!');
     }
 
     /**

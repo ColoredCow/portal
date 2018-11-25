@@ -128,8 +128,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', 'ProjectController')
         ->except(['destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
-    Route::post('projects/{id}/add-employee', 'ProjectController@addEmployeeToProject');
-    Route::post('projects/{id}/remove-employee', 'ProjectController@removeEmployeeFromProject');
+    Route::post('projects/{project}/add-employee', 'ProjectController@addEmployee');
+    Route::post('projects/{project}/remove-employee', 'ProjectController@removeEmployee');
     Route::get('employee/{employeeId}/projects/', 'ProjectController@showEmployeeProjects')->name('employees.projects');
     Route::get('my-projects/{employeeId}', 'ProjectController@showEmployeeProjects')->name('projects.my-projects');
         
