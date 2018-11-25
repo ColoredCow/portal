@@ -163,4 +163,16 @@ class ProjectController extends Controller
 
         return redirect(route('projects.show', ['id' => $project->id]))->with('status', 'Employee removed from Project successfully!');
     }
+
+    /**
+     * Display the project details of an Employee
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showEmployeeProjects($employeeId)
+    {
+        $employee = Employee::with('projects')->find($employeeId);
+
+        return view('hr.employees.projects', compact('employee'));
+    }
 }

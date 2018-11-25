@@ -130,6 +130,8 @@ Route::middleware('auth')->group(function () {
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
     Route::post('projects/{id}/add-employee', 'ProjectController@addEmployeeToProject');
     Route::post('projects/{id}/remove-employee', 'ProjectController@removeEmployeeFromProject');
+    Route::get('employee/{employeeId}/projects/', 'ProjectController@showEmployeeProjects')->name('employees.projects');
+    Route::get('my-projects/{employeeId}', 'ProjectController@showEmployeeProjects')->name('projects.my-projects');
         
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 
