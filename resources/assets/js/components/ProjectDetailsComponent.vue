@@ -114,7 +114,7 @@
     props: ['project', 'clients', 'employees'],
 
     data() {
-        return {
+      return {
         loadAddEmployeeForm: false,
         selectedEmployee: null,
         contributionType: null,
