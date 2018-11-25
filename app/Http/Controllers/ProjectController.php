@@ -165,9 +165,9 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showEmployeeProjects($employeeId)
+    public function showEmployeeProjects(Employee $employee)
     {
-        $employee = Employee::with('projects')->find($employeeId);
+        $employee->load('projects');
 
         return view('hr.employees.projects', compact('employee'));
     }
