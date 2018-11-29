@@ -40,7 +40,6 @@
 		        </tr>
                 @endforeach
 		    </table>
-			<!-- <employee-projects></employee-projects> -->
         </div>
 </div>
 

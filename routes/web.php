@@ -89,7 +89,10 @@ Route::middleware('auth')->group(function () {
                 'index' => 'employees',
                 'show' => 'employees.show',
             ]);
+        Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
+
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
+
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
@@ -130,8 +133,7 @@ Route::middleware('auth')->group(function () {
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
     Route::post('projects/{project}/add-employee', 'ProjectController@addEmployee');
     Route::post('projects/{project}/remove-employee', 'ProjectController@removeEmployee');
-    Route::get('employee/{employee}/projects/', 'ProjectController@showEmployeeProjects')->name('employees.projects');
-    Route::get('my-projects/{employee}', 'ProjectController@showEmployeeProjects')->name('projects.my-projects');
+    Route::get('my-projects/{employee}', 'hr\Employees\EmployeeController@showProjects')->name('projects.my-projects');
         
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 

@@ -134,7 +134,7 @@ class ProjectController extends Controller
     /**
      * Add Employees to this Project.
  *
-     * @param  $projectId
+     * @param  \App\Models\Project  $project
      * @param  \App\Http\Requests\ProjectRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -149,7 +149,7 @@ class ProjectController extends Controller
     /**
      * Remove Employees from this Project.
      *
-     * @param  $projectId
+     * @param  \App\Models\Project  $project
      * @param  \App\Http\Requests\ProjectRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -158,17 +158,5 @@ class ProjectController extends Controller
         $project->employees()->detach($request->get('employeeId'));
 
         return redirect(route('projects.show', $project))->with('status', 'Employee removed from the project successfully!');
-    }
-
-    /**
-     * Display the project details of an Employee
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showEmployeeProjects(Employee $employee)
-    {
-        $employee->load('projects');
-
-        return view('hr.employees.projects', compact('employee'));
     }
 }

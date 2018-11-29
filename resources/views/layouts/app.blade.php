@@ -56,7 +56,7 @@
                         @endcan
                         @can('projects.view')
                             <?php /* employee table record not getting created when assigning the role of employee. So enabled this check. */ ?>
-                            @if(auth()->user()->employee)
+                            @if(auth()->user()->hasRole('employee'))
                                 <li class="nav-item">
                                     <a class="nav-link" href='{{"/my-projects/".auth()->user()->employee->id}}'>My Projects</a>
                                 </li>

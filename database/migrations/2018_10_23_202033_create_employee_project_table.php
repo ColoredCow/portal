@@ -33,8 +33,6 @@ class CreateEmployeeProjectTable extends Migration
      */
     public function down()
     {
-        Schema::table('employee_project', function (Blueprint $table) {
-            Schema::dropIfExists('employee_project');
-        });
+        Schema::dropIfExists('employee_project');
     }
 }
