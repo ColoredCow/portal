@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\HR\Applicant;
 use App\Models\HR\Application;
+use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
@@ -48,8 +49,9 @@ class FileHelper
         return "$dashedApplicantName-$timestamp.pdf";
     }
 
-    public static function generateOfferLetter(Application $application, $offer_letter_body, $offerLetterPreview = false)
+    public static function generateOfferLetter(Application $application, $offerLetterPreview = false)
     {
+        $offer_letter_body = Setting::getOfferLetterTemplate()['body'];
         $job = $application->job;
         $applicant = $application->applicant;
         $pdf = Pdf::loadView('hr.application.offer-letter', compact('applicant', 'job', 'offer_letter_body'));
