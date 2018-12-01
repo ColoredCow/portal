@@ -50,9 +50,17 @@
                         </li>
                         @endif
                         @can('finance_invoices.view')
-                        <li class="nav-item">
-                            <a class="nav-link" href="/finance/reports?type=monthly">Finance</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/finance/reports?type=monthly">Finance</a>
+                            </li>
+                        @endcan
+                        @can('projects.view')
+                            <?php /* employee table record not getting created when assigning the role of employee. So enabled this check. */ ?>
+                            @if(auth()->user()->hasRole('employee'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href='{{"/my-projects/".auth()->user()->employee->id}}'>My Projects</a>
+                                </li>
+                            @endif
                         @endcan
                         @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
                         <li class="nav-item">

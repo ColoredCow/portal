@@ -11,7 +11,9 @@
             <th>Name</th>
             <th>Designation</th>
             <th>Joined on</th>
+            <th>Projects</th>
         </tr>
+
         @foreach ($employees as $employee)
         <tr>
             <td>
@@ -32,6 +34,9 @@
             @else
                 -
             @endif
+            </td>
+            <td>
+                <a href="{{ route('employees.projects', ['employeeId' => $employee->id]) }}">{{ "View Projects" }}</a>
             </td>
         </tr>
         @endforeach

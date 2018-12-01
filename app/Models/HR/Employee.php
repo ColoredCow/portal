@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Models\Project;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -30,5 +31,13 @@ class Employee extends Model
             $now = Carbon::now();
             return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, true);
         }
+    }
+
+    /**
+    * Get the projects for the employees.
+    */
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)->withPivot('contribution_type');
     }
 }

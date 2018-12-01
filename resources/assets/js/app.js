@@ -21,6 +21,7 @@ window.Vue = require('vue');
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
+Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue'));
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
@@ -104,6 +105,16 @@ if (document.getElementById('project_container')) {
             createProjectStage: function() {
                 this.$refs.projectStage.create();
             }
+        }
+    });
+}
+
+if (document.getElementById('employee_projects')) {
+    const employeeProjects = new Vue({
+        el: '#employee_projects',
+        data: {
+        },
+        methods: {
         }
     });
 }

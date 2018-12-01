@@ -14,11 +14,12 @@
             <th>Name</th>
             <th>Client</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
         @foreach ($projects as $project)
         	<tr>
         		<td>
-        			<a href="{{ route('projects.edit', $project->id) }}">{{ $project->name }}</a>
+        			<a href="{{ route('projects.show', $project->id) }}">{{ $project->name }}</a>
         		</td>
         		<td>{{ $project->client->name }}</td>
                 <td>
@@ -31,6 +32,9 @@
                         @break
                 @endswitch
                 {{ $project->status }}</span>
+                </td>
+                <td>
+                    <a href="{{ route('projects.edit', $project->id) }}">Edit</a>
                 </td>
         	</tr>
         @endforeach
