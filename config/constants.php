@@ -6,8 +6,8 @@ return [
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
     ],
     'google' => [
-        'vision-api-key' => env('GOOGLE_VISION_API_KEY')
-    ]
+        'vision-api-key' => env('GOOGLE_VISION_API_KEY'),
+    ],
     'http_response_messages' => [
         '403' => 'Forbidden! You don\'t have necessary permissions to access this area. Please contact your administrator.',
         '404' => 'Sorry, the page you are looking for could not be found.',
