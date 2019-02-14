@@ -22,7 +22,7 @@ class GSuiteUserService
     {
         $client = new Google_Client();
         $client->useApplicationDefaultCredentials();
-        $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
+        $client->setSubject(config('constants.gsuite.service-account-impersonate'));
         $client->addScope([
             Google_Service_Directory::ADMIN_DIRECTORY_USER,
             Google_Service_Directory::ADMIN_DIRECTORY_USER_READONLY,
