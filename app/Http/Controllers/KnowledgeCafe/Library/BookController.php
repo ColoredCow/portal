@@ -65,7 +65,6 @@ class BookController extends Controller
         return view('knowledgecafe.library.books.show', compact('book'));
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -164,7 +163,7 @@ class BookController extends Controller
         $book = collect($book);
         $data['title'] = $info->get('title');
         $data['author'] = implode($info->get('authors', []));
-        $data['readable_link'] = $book->get("accessInfo")["webReaderLink"];
+        $data['readable_link'] = $book->get('accessInfo')['webReaderLink'];
         $data['categories'] = implode($info->get('categories', []));
         $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
         $data['self_link'] = $book->get('self_link');
@@ -183,7 +182,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function markAsBorrowed(Book $book) 
+    public function markAsBorrowed(Book $book)
     {
         $book->markAsBorrowed();
         return response()->json([
@@ -192,7 +191,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function putBackToLibrary(Book $book) 
+    public function putBackToLibrary(Book $book)
     {
         $book->putBackToLibrary();
         return response()->json([
@@ -200,7 +199,6 @@ class BookController extends Controller
             'borrowers' => $book->borrowers,
         ]);
     }
-
 
     public function getBookList()
     {
