@@ -565,6 +565,9 @@ if (document.getElementById('show_book_info')) {
             isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed ? true: false,
             readers: document.getElementById('show_book_info').dataset.readers
                         ? document.getElementById('show_book_info').dataset.readers
+                        : [],
+            borrowers: document.getElementById('show_book_info').dataset.borrowers
+                        ? document.getElementById('show_book_info').dataset.borrowers
                         : []
         },
         methods: {
@@ -578,18 +581,21 @@ if (document.getElementById('show_book_info')) {
             },
 
             borrowTheBook: async function() {
-                await axios.get(this.borrowBookRoute);
+                let response = await axios.get(this.borrowBookRoute);
                 this.isBorrowed = true;
+                this.borrowers = response.data.borrowers;
             },
 
             putTheBookBackToLibrary: async function() {
-                await axios.get(this.putBackBookRoute);
+                let response = await axios.get(this.putBackBookRoute);
                 this.isBorrowed = false;
+                this.borrowers = response.data.borrowers;
             }
         },
 
         mounted() {
             this.readers = JSON.parse(this.readers);
+            this.borrowers = JSON.parse(this.borrowers);
             this.book    = JSON.parse(this.book);
         }
     });

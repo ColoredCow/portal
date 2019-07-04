@@ -8,11 +8,11 @@
     data-mark-book-route= "{{ route('books.toggleReadStatus') }}" 
     data-borrow-book-route= "{{ route('books.markAsBorrowed', $book->id) }}" 
     data-put-back-book-route= "{{ route('books.putBack', $book->id) }}" 
-    data-readers = "{{ json_encode($book->readers) }}">
+    data-readers = "{{ json_encode($book->readers) }}"
+    data-borrowers = "{{ json_encode($book->borrowers) }}">
 
     <div class="card">
         <div class="card-body">
-
             <h1 class="mt-1 mb-4 mx-2">
                 {{ $book->title }}
             </h1>
@@ -41,8 +41,8 @@
                     </div>
 
                     <div class="ml-1 mb-1 mt-5 d-flex justify-content-between">
-                        <button class="btn btn-primary p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
-                        <button class="btn btn-primary p-2" @click="putTheBookBackToLibrary()" v-else>Put back</button>
+                        <button class="btn btn-info p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
+                        <button class="btn btn-success p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
                     </div>
 
                 </div>
@@ -50,8 +50,6 @@
                 <div class="col-4 text-center">
                     <img src=" {{ $book->thumbnail }} " />
                 </div>
-
-
             </div>
 
             <div class="row" id="readers_section" >
@@ -67,6 +65,22 @@
                         </div>
                 </div>
             </div>
+
+            <div class="row" id="readers_section" >
+                <div class="col-12">
+                        <div class="ml-1 mb-1 mt-5 w-100">
+                            <h4 v-if="borrowers.length">Borrowed by:</h4>
+                            <div class="d-flex justify-content-start"> 
+                                <div v-for="(borrower, index)  in borrowers " class="mt-2 mr-2 text-center">
+                                    <img :src="borrower.avatar" alt="" class="reader_image">
+                                    <h6 class="pt-2"> @{{ borrower.name }} </h6>
+                                </div> 
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 @endsection
