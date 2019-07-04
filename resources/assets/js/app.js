@@ -21,7 +21,6 @@ window.Vue = require('vue');
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
-Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue'));
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
