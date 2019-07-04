@@ -89,7 +89,10 @@ Route::middleware('auth')->group(function () {
                 'index' => 'employees',
                 'show' => 'employees.show',
             ]);
+        Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
+
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
+
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
@@ -124,9 +127,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', 'ClientController')
         ->except(['show', 'destroy'])
         ->names(['index' => 'clients', 'create' => 'clients.create', 'edit' => 'clients.edit', 'store' => 'clients.store', 'update' => 'clients.update']);
+
     Route::resource('projects', 'ProjectController')
-        ->except(['show', 'destroy'])
-        ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update']);
+        ->except(['destroy'])
+        ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
+    Route::post('projects/{project}/add-employee', 'ProjectController@addEmployee');
+    Route::post('projects/{project}/remove-employee', 'ProjectController@removeEmployee');
+    Route::get('my-projects/{employee}', 'hr\Employees\EmployeeController@showProjects')->name('projects.my-projects');
+        
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
@@ -168,6 +176,8 @@ Route::middleware('auth')->group(function () {
                 Route::post('addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
                 Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
+                Route::get('mark-as-borrowed/{book}', 'BookController@markAsBorrowed')->name('books.markAsBorrowed');
+                Route::get('put-back-to-library/{book}', 'BookController@putBackToLibrary')->name('books.putBack');
             });
 
             Route::resource('book-categories', 'BookCategoryController')
