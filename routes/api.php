@@ -24,3 +24,10 @@ Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
     });
     Route::resource('weeklydoses', 'WeeklyDoseController')->only(['store']);
 });
+
+
+Route::post('save-issue', 'HomeController@saveData');
+
+// Route::post('save-issue', function() {
+//     return "Hello";
+// });

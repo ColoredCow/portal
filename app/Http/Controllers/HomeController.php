@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\KnowledgeCafe\Library\Book;
 use Google_Client;
 use Google_Service_Directory;
+use GrahamCampbell\GitHub\Facades\GitHub;
+use Github\Client;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -25,6 +28,44 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $query = 'query($owner:String!,$name:String!,$milestoneNumber:Int!) {
+            repository(owner:$owner,name:$name) {
+              milestone(number:$milestoneNumber) {
+                issues(last:100) {
+                  edges {
+                    node {
+                      title
+                      bodyText
+                      author {
+                        login
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }';
+
+        $variables = [
+            'owner' => 'pankaj-ag',
+            'name' => 'laravel-CCDA',
+            'milestoneNumber' => 1
+        ];
+
+        $client = app()->make(Client::class) ;  //GitHub::issues()->show('coloredcow', 'caped-app');
+
+        $issues = $client->api('issue')->all('pankaj-ag', 'laravel-CCDA');
+        dd($issues);
+        $orgInfo = $client->api('graphql')->execute($query, $variables);
+
+        $tasks = $orgInfo['data']['repository']['milestone']['issues']['edges'] ?? [];
+
+        dd($orgInfo);
+
+        $milestones = collect($client->api('issue')->all('coloredcow', 'caped-app'));
+
+        dd($milestones);
+
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
         return view('home')->with(['book' => $unreadBook]);
     }
@@ -57,5 +98,10 @@ class HomeController extends Controller
             }
         }
         return $userGroups;
+    }
+
+    public function saveData(Request $request)
+    {
+        return GithubTask::create(['user_name' => $request->input('user')]);
     }
 }
