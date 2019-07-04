@@ -18,8 +18,9 @@
     </div>
     <div class="row mt-3 mb-2 px-2">
         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
-            <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="search all books"
-                v-model="searchKey">
+            <input type="text" data-value="{{ request()->input('search') }}" 
+            class="form-control" id="search_input" placeholder="search all books"
+            v-model="searchKey">
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
         @if(session('disable_book_suggestion'))
@@ -37,16 +38,20 @@
             </div>
         </div>
     @endif
-    <div class="d-flex justify-content-start flex-wrap" id="books_table" data-books="{{ json_encode($books) }}" data-categories="{{ json_encode($categories) }}"
-        data-index-route="{{ route('books.index') }}" data-category-index-route="{{ route('books.category.index') }}">
+    <div class="d-flex justify-content-start flex-wrap" id="books_table" 
+        data-books="{{ json_encode($books) }}" 
+        data-categories="{{ json_encode($categories) }}"
+        data-index-route="{{ route('books.index') }}" 
+        data-category-index-route="{{ route('books.category.index') }}">
         <div class="d-flex flex-wrap w-100">
-            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2">
+            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
+
                 <div class="d-flex" >
-                    <a target="_blank" :href="book.readable_link">
+                    <a  :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
                     </a>
                     <div class="pl-2 pr-3">
-                        <a target="_blank" :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
+                        <a  :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                         <h3><span class="badge badge-primary position-absolute copies-count" v-if="book.number_of_copies > 1" :title="book.number_of_copies + ' copies'" >@{{ book.number_of_copies }}</span></h3>
                     </div>
@@ -65,14 +70,28 @@
                         </div>
                     @endcan
                 </div>
-                <div v-if="book.readers && book.readers.length" class="pl-0 py-3">
+
+                <div v-if="book.readers && book.readers.length">
+                    <p  class="mb-0 mt-1">Read by</p>
+                    <div  class="pl-0 pt-2 pb-3">
                         <img v-for="reader in book.readers" :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 " data-toggle="tooltip" data-placement="bottom">
+                    </div>
                 </div>
+
+                <div v-if="book.borrowers && book.borrowers.length">
+                    <p  class="mb-0 mt-1">Borrowed by</p>
+                    <div  class="pl-0 pt-2 pb-3">
+                        <img v-for="borrower in book.borrowers" :src="borrower.avatar" :alt="borrower.name" :title="borrower.name" class="reader_image mr-2 " data-toggle="tooltip" data-placement="bottom">
+                    </div>
+                </div>
+
                 <div :class="(book.readers && book.readers.length) ? 'pl-0 pt-1' : 'pl-0 pt-1 mt-3'">
                     <span v-for="(category, index) in book.categories">
                         <h2 v-if="index < 3" class="badge badge-secondary px-2 py-1 mr-1">@{{ category.name }} </h2>
                     </span>
                 </div>
+
+
             </div>
         </div>
     </div>

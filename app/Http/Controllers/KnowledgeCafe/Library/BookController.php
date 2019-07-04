@@ -66,17 +66,6 @@ class BookController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     * @return void
-     */
-    public function edit(Book $book)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\KnowledgeCafe\Library\BookRequest  $request
@@ -174,7 +163,7 @@ class BookController extends Controller
         $book = collect($book);
         $data['title'] = $info->get('title');
         $data['author'] = implode($info->get('authors', []));
-        $data['readable_link'] = $book->get("accessInfo")["webReaderLink"];
+        $data['readable_link'] = $book->get('accessInfo')['webReaderLink'];
         $data['categories'] = implode($info->get('categories', []));
         $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
         $data['self_link'] = $book->get('self_link');
@@ -190,6 +179,24 @@ class BookController extends Controller
         return response()->json([
             'isMarked' => $isMarked,
             'readers' => $book->readers,
+        ]);
+    }
+
+    public function markAsBorrowed(Book $book)
+    {
+        $book->markAsBorrowed();
+        return response()->json([
+            'isBorrowed' => true,
+            'borrowers' => $book->borrowers,
+        ]);
+    }
+
+    public function putBackToLibrary(Book $book)
+    {
+        $book->putBackToLibrary();
+        return response()->json([
+            'isBorrowed' => true,
+            'borrowers' => $book->borrowers,
         ]);
     }
 
