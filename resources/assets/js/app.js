@@ -555,9 +555,19 @@ if (document.getElementById('show_book_info')) {
             route:document.getElementById('show_book_info').dataset.markBookRoute
                         ? document.getElementById('show_book_info').dataset.markBookRoute
                         : '',
+            borrowBookRoute:document.getElementById('show_book_info').dataset.borrowBookRoute
+                        ? document.getElementById('show_book_info').dataset.borrowBookRoute
+                        : '',
+            putBackBookRoute:document.getElementById('show_book_info').dataset.putBackBookRoute
+                        ? document.getElementById('show_book_info').dataset.putBackBookRoute
+                        : '',
             isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
+            isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed ? true: false,
             readers: document.getElementById('show_book_info').dataset.readers
                         ? document.getElementById('show_book_info').dataset.readers
+                        : [],
+            borrowers: document.getElementById('show_book_info').dataset.borrowers
+                        ? document.getElementById('show_book_info').dataset.borrowers
                         : []
         },
         methods: {
@@ -569,10 +579,23 @@ if (document.getElementById('show_book_info')) {
                     }
                     this.readers = response.data.readers;
             },
+
+            borrowTheBook: async function() {
+                let response = await axios.get(this.borrowBookRoute);
+                this.isBorrowed = true;
+                this.borrowers = response.data.borrowers;
+            },
+
+            putTheBookBackToLibrary: async function() {
+                let response = await axios.get(this.putBackBookRoute);
+                this.isBorrowed = false;
+                this.borrowers = response.data.borrowers;
+            }
         },
 
         mounted() {
             this.readers = JSON.parse(this.readers);
+            this.borrowers = JSON.parse(this.borrowers);
             this.book    = JSON.parse(this.book);
         }
     });

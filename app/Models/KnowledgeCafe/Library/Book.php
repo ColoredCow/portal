@@ -21,7 +21,7 @@ class Book extends Model
 
     public static function getList($filteredString = false)
     {
-        return self::with(['categories', 'readers'])
+        return self::with(['categories', 'readers', 'borrowers'])
             ->where(function ($query) use ($filteredString) {
                 if ($filteredString) {
                     $query->where('title', 'LIKE', "%$filteredString%")
@@ -110,5 +110,20 @@ class Book extends Model
             default:
                 return $this->thumbnail;
         }
+    }
+
+    public function borrowers()
+    {
+        return $this->belongsToMany(User::class, 'book_borrower', 'library_book_id', 'user_id');
+    }
+
+    public function markAsBorrowed()
+    {
+        $this->borrowers()->attach(auth()->user());
+    }
+
+    public function putBackToLibrary()
+    {
+        $this->borrowers()->detach(auth()->user());
     }
 }

@@ -176,6 +176,8 @@ Route::middleware('auth')->group(function () {
                 Route::post('addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
                 Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
+                Route::get('mark-as-borrowed/{book}', 'BookController@markAsBorrowed')->name('books.markAsBorrowed');
+                Route::get('put-back-to-library/{book}', 'BookController@putBackToLibrary')->name('books.putBack');
             });
 
             Route::resource('book-categories', 'BookCategoryController')
