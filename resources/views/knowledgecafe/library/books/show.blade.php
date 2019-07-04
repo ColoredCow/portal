@@ -1,13 +1,15 @@
 @extends('layouts.app') 
 @section('content')
-<div class="container" id="show_book_info"  
-  
-    data-book="{{ json_encode($book) }}" 
+<div class="container" 
+    id="show_book_info"   
+    data-book="{{ json_encode($book) }}"  
     data-is-read="{{ $book->readers->contains(auth()->user()) }}"
-    data-mark-book-route= "{{route('books.toggleReadStatus')}}"
-    data-readers = "{{ json_encode($book->readers) }}"
+    data-is-borrowed="{{ $book->borrowers->contains(auth()->user()) }}"
+    data-mark-book-route= "{{ route('books.toggleReadStatus') }}" 
+    data-borrow-book-route= "{{ route('books.markAsBorrowed', $book->id) }}" 
+    data-put-back-book-route= "{{ route('books.putBack', $book->id) }}" 
+    data-readers = "{{ json_encode($book->readers) }}">
 
-    >
     <div class="card">
         <div class="card-body">
 
@@ -34,8 +36,13 @@
                     </div>
 
                     <div class="ml-1 mb-1 mt-5 d-flex justify-content-between">
-                            <button class="btn btn-primary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
-                            <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
+                        <button class="btn btn-primary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
+                        <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
+                    </div>
+
+                    <div class="ml-1 mb-1 mt-5 d-flex justify-content-between">
+                        <button class="btn btn-primary p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
+                        <button class="btn btn-primary p-2" @click="putTheBookBackToLibrary()" v-else>Put back</button>
                     </div>
 
                 </div>

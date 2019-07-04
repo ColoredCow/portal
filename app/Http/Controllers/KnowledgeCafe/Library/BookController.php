@@ -65,16 +65,6 @@ class BookController extends Controller
         return view('knowledgecafe.library.books.show', compact('book'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     * @return void
-     */
-    public function edit(Book $book)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -192,6 +182,15 @@ class BookController extends Controller
             'readers' => $book->readers,
         ]);
     }
+
+    public function markAsBorrowed(Book $book) {
+        return $book->markAsBorrowed();
+    }
+
+    public function putBackToLibrary(Book $book) {
+        return $book->putBackToLibrary();
+    }
+
 
     public function getBookList()
     {

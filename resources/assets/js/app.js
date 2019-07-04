@@ -555,7 +555,14 @@ if (document.getElementById('show_book_info')) {
             route:document.getElementById('show_book_info').dataset.markBookRoute
                         ? document.getElementById('show_book_info').dataset.markBookRoute
                         : '',
+            borrowBookRoute:document.getElementById('show_book_info').dataset.borrowBookRoute
+                        ? document.getElementById('show_book_info').dataset.borrowBookRoute
+                        : '',
+            putBackBookRoute:document.getElementById('show_book_info').dataset.putBackBookRoute
+                        ? document.getElementById('show_book_info').dataset.putBackBookRoute
+                        : '',
             isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
+            isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed ? true: false,
             readers: document.getElementById('show_book_info').dataset.readers
                         ? document.getElementById('show_book_info').dataset.readers
                         : []
@@ -569,6 +576,16 @@ if (document.getElementById('show_book_info')) {
                     }
                     this.readers = response.data.readers;
             },
+
+            borrowTheBook: async function() {
+                await axios.get(this.borrowBookRoute);
+                this.isBorrowed = true;
+            },
+
+            putTheBookBackToLibrary: async function() {
+                await axios.get(this.putBackBookRoute);
+                this.isBorrowed = false;
+            }
         },
 
         mounted() {
