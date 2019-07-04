@@ -11,7 +11,7 @@
     data-readers = "{{ json_encode($book->readers) }}"
     data-borrowers = "{{ json_encode($book->borrowers) }}">
 
-    <div class="card">
+    <div class="card mx-5">
         <div class="card-body">
             <h1 class="mt-1 mb-4 mx-2">
                 {{ $book->title }}
