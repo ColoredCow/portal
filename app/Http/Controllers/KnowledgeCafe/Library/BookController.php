@@ -183,7 +183,8 @@ class BookController extends Controller
         ]);
     }
 
-    public function markAsBorrowed(Book $book) {
+    public function markAsBorrowed(Book $book) 
+    {
         $book->markAsBorrowed();
         return response()->json([
             'isBorrowed' => true,
@@ -191,7 +192,8 @@ class BookController extends Controller
         ]);
     }
 
-    public function putBackToLibrary(Book $book) {
+    public function putBackToLibrary(Book $book) 
+    {
         $book->putBackToLibrary();
         return response()->json([
             'isBorrowed' => true,

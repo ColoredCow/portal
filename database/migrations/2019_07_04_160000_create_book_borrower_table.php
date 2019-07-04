@@ -20,11 +20,6 @@ class CreateBookBorrowerTable extends Migration
             $table->foreign('library_book_id')->references('id')->on('library_books');
             $table->timestamps();
         });
-
-      
-   
-      
-        
     }
 
     /**

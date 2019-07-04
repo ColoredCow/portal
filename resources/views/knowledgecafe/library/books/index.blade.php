@@ -44,14 +44,14 @@
         data-index-route="{{ route('books.index') }}" 
         data-category-index-route="{{ route('books.category.index') }}">
         <div class="d-flex flex-wrap w-100">
-            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mx-lg-4">
+            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
 
                 <div class="d-flex" >
-                    <a target="_blank" :href="book.readable_link">
+                    <a  :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
                     </a>
                     <div class="pl-2 pr-3">
-                        <a target="_blank" :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
+                        <a  :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                         <h3><span class="badge badge-primary position-absolute copies-count" v-if="book.number_of_copies > 1" :title="book.number_of_copies + ' copies'" >@{{ book.number_of_copies }}</span></h3>
                     </div>

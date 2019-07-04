@@ -112,15 +112,18 @@ class Book extends Model
         }
     }
 
-    public function borrowers() {
+    public function borrowers() 
+    {
         return $this->belongsToMany(User::class, 'book_borrower', 'library_book_id', 'user_id');
     }
 
-    public function markAsBorrowed() {
+    public function markAsBorrowed() 
+    {
         $this->borrowers()->attach(auth()->user());
     }
 
-    public function putBackToLibrary() {
+    public function putBackToLibrary() 
+    {
         $this->borrowers()->detach(auth()->user());
     }
 }
