@@ -5,6 +5,7 @@ namespace App\Models\KnowledgeCafe\Library;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Comment;
 
 class Book extends Model
 {
@@ -125,5 +126,11 @@ class Book extends Model
     public function putBackToLibrary()
     {
         $this->borrowers()->detach(auth()->user());
+    }
+
+
+    public function comments()
+    {
+        return $this->belongsToMany(Comment::class, 'book_comment', 'library_book_id', 'comment_id');
     }
 }

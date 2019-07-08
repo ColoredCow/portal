@@ -9,6 +9,7 @@ require('./bootstrap');
 
 import 'jquery-ui/ui/widgets/datepicker.js';
 import ImageCompressor from 'image-compressor.js';
+var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
 
 window.Vue = require('vue');
 
@@ -21,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
+Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue'));
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
@@ -188,7 +190,6 @@ $('.date-field').datepicker({
     dateFormat: "dd/mm/yy"
 });
 
-
 $('#form_invoice').on('change', '#client_id', function(){
     let form = $(this).closest('form');
     let client_id = $(this).val();
@@ -197,6 +198,11 @@ $('#form_invoice').on('change', '#client_id', function(){
         return false;
     }
     updateClientProjects(form, client_id);
+});
+
+$('#copy_weeklydose_service_url').tooltip({
+    trigger: 'click',
+    placement: 'bottom'
 });
 
 function updateClientProjects(form, client_id) {
@@ -220,11 +226,6 @@ function getProjectList(projects) {
     return html;
 }
 
-$('#copy_weeklydose_service_url').tooltip({
-  trigger: 'click',
-  placement: 'bottom'
-});
-
 function setTooltip(btn, message) {
 	$(btn).tooltip('hide')
 		.attr('data-original-title', message)
@@ -237,7 +238,6 @@ function hideTooltip(btn) {
 	}, 1000);
 }
 
-var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
 
 weeklyDoseClipboard.on('success', function(e) {
   setTooltip(e.trigger, 'Copied!');
