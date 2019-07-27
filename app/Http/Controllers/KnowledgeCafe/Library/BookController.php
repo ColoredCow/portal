@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
+use Illuminate\Http\Request;
+use App\Services\BookServices;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookCategory;
-use App\Services\BookServices;
-use Illuminate\Http\Request;
+use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 
 class BookController extends Controller
 {
@@ -238,5 +238,17 @@ class BookController extends Controller
     {
         session(['disable_book_suggestion' => false]);
         return redirect()->back()->with('status', 'Book suggestions has been enabled.');
+    }
+
+    public function addToBookAMonth(Book $book)
+    {
+        $book->addToBookAMonth();
+        return response()->json(['isBookAMonth' => true]);
+    }
+
+    public function removeFromBookAMonth(Book $book)
+    {
+        $book->removeFromBookAMonth();
+        return response()->json(['isBookAMonth' => false]);
     }
 }

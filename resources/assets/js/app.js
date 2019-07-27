@@ -557,11 +557,18 @@ if (document.getElementById('show_book_info')) {
             borrowBookRoute:document.getElementById('show_book_info').dataset.borrowBookRoute
                         ? document.getElementById('show_book_info').dataset.borrowBookRoute
                         : '',
+            bookAMonthStoreRoute:document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
+                        ? document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
+                        : '',
+            bookAMonthDestroyRoute:document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute
+                        ? document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute
+                        : '',
             putBackBookRoute:document.getElementById('show_book_info').dataset.putBackBookRoute
                         ? document.getElementById('show_book_info').dataset.putBackBookRoute
                         : '',
             isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
             isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed ? true: false,
+            isBookAMonth: document.getElementById('show_book_info').dataset.isBookAMonth ? true: false,
             readers: document.getElementById('show_book_info').dataset.readers
                         ? document.getElementById('show_book_info').dataset.readers
                         : [],
@@ -577,6 +584,22 @@ if (document.getElementById('show_book_info')) {
                         return false;
                     }
                     this.readers = response.data.readers;
+            },
+
+            addToBookAMonth: async function (action) {
+                let response = await axios.post(this.bookAMonthStoreRoute);
+                this.isBookAMonth = true;
+                if(!response.data) {
+                    return false;
+                }
+            },
+
+            removeFromBookAMonth: async function (action) {
+                let response = await axios.post(this.bookAMonthDestroyRoute);
+                this.isBookAMonth = false;
+                if (!response.data) {
+                    return false;
+                }
             },
 
             borrowTheBook: async function() {
