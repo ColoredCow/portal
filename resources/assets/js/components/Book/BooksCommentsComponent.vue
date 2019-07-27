@@ -2,7 +2,7 @@
     <div>
         <div class="card mx-5">
             <div class="card-body">
-                <h6 class="my-2">Want to Share your thoughts? {{ book_id }}</h6>
+                <h6 class="my-2">Want to share your thoughts? {{ book_id }}</h6>
                 <textarea v-model="new_comment" class="form-control" rows="5" placeholder="start writing ..."></textarea>
                 <button class="btn btn-info float-right mt-3 text-right" @click="addNewComment()">Comment</button>
             </div>

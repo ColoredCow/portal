@@ -178,7 +178,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
                 Route::get('mark-as-borrowed/{book}', 'BookController@markAsBorrowed')->name('books.markAsBorrowed');
                 Route::get('put-back-to-library/{book}', 'BookController@putBackToLibrary')->name('books.putBack');
-                Route::post('add-new-comment/{book}', 'BookController@addNewComment')->name('books.putBack');
+                Route::post('add-new-comment/{book}', 'BookController@addNewComment')->name('books.addNewComment');
                 Route::post('{book}/comment', 'BookCommentController@store')->name('book-comment.store');
             });
 
