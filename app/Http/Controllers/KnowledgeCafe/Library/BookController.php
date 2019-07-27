@@ -240,15 +240,15 @@ class BookController extends Controller
         return redirect()->back()->with('status', 'Book suggestions has been enabled.');
     }
 
-    public function addToBookAMonth(Book $book)
+    public function selectBookForCurrentMonth(Book $book)
     {
-        $book->addToBookAMonth();
+        $book->selectBookForCurrentMonth();
         return response()->json(['isBookAMonth' => true]);
     }
 
-    public function removeFromBookAMonth(Book $book)
+    public function unselectBookFromCurrentMonth(Book $book)
     {
-        $book->removeFromBookAMonth();
+        $book->unselectBookFromCurrentMonth();
         return response()->json(['isBookAMonth' => false]);
     }
 }

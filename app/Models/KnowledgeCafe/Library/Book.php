@@ -130,7 +130,7 @@ class Book extends Model
         $this->borrowers()->detach(auth()->user());
     }
 
-    public function addToBookAMonth()
+    public function selectBookForCurrentMonth()
     {
         return BookAMonth::create([
             'user_id' => auth()->user()->id,
@@ -139,7 +139,7 @@ class Book extends Model
         ]);
     }
 
-    public function removeFromBookAMonth()
+    public function unselectBookFromCurrentMonth()
     {
         $startOfYear = today()->startOfYear();
         $endOfYear = today()->endOfYear();

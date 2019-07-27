@@ -176,9 +176,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
                 Route::get('mark-as-borrowed/{book}', 'BookController@markAsBorrowed')->name('books.markAsBorrowed');
-                Route::post('add-to-bam/{book}', 'BookController@addToBookAMonth')->name('books.addToBam');
+                Route::post('add-to-bam/{book}', 'BookController@selectBookForCurrentMonth')->name('books.addToBam');
                 Route::get('put-back-to-library/{book}', 'BookController@putBackToLibrary')->name('books.putBack');
-                Route::post('remove-from-bam/{book}', 'BookController@removeFromBookAMonth')->name('books.removeFromBam');
+                Route::post('remove-from-bam/{book}', 'BookController@unselectBookFromCurrentMonth')->name('books.removeFromBam');
                 Route::post('add-new-comment/{book}', 'BookController@addNewComment')->name('books.addNewComment');
                 Route::post('{book}/comment', 'BookCommentController@store')->name('book-comment.store');
             });
