@@ -17,7 +17,6 @@ class CreateUserBookAMonthsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('library_book_id')->unsigned();
-            $table->enum('month', array_keys(config('constants.months')));
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('library_book_id')->references('id')->on('library_books');

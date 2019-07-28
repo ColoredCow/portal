@@ -3,7 +3,6 @@
 namespace App\Models\KnowledgeCafe\Library;
 
 use App\User;
-use Carbon\Carbon;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -135,7 +134,6 @@ class Book extends Model
         return BookAMonth::create([
             'user_id' => auth()->user()->id,
             'library_book_id' => $this->id,
-            'month' => Carbon::now()->format('n'),
         ]);
     }
 
@@ -146,7 +144,6 @@ class Book extends Model
         return BookAMonth::where([
             'user_id' => auth()->user()->id,
             'library_book_id' => $this->id,
-            'month' => Carbon::now()->format('n'),
         ])->whereBetween('created_at', [$startOfYear, $endOfYear])->first()->delete();
     }
 

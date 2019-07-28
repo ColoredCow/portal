@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\BookServices;
 use App\Http\Controllers\Controller;
 use App\Models\KnowledgeCafe\Library\Book;
+use App\Models\KnowledgeCafe\Library\BookAMonth;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 
@@ -250,5 +252,21 @@ class BookController extends Controller
     {
         $book->unselectBookFromCurrentMonth();
         return response()->json(['isBookAMonth' => false]);
+    }
+
+    public function bookAMonthIndex()
+    {
+        $booksCollection = BookAMonth::all()
+            ->groupBy(function ($item) {
+                return Carbon::parse($item->created_at)->format('Y');
+            }, 'desc')
+            ->transform(function ($item) {
+                return $item->groupBy(function ($item) {
+                    return Carbon::parse($item->created_at)->format('n');
+                }, 'desc');
+            });
+
+        return view('knowledgecafe.library.books.book-a-month')
+            ->with('booksCollection', $booksCollection);
     }
 }
