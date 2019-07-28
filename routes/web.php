@@ -186,6 +186,8 @@ Route::middleware('auth')->group(function () {
             Route::resource('book-categories', 'BookCategoryController')
                 ->only(['index', 'store', 'update', 'destroy'])
                 ->names(['index' => 'books.category.index']);
+
+            Route::get('book-a-month', 'BookController@bookAMonthIndex')->name('book.book-a-month.index');
         });
         Route::resource('weeklydoses', 'WeeklyDoseController')->only(['index'])->names(['index' => 'weeklydoses']);
     });

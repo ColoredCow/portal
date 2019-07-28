@@ -4,7 +4,7 @@
     data-book="{{ json_encode($book) }}"
     data-is-read="{{ $book->readers->contains(auth()->user()) }}"
     data-is-borrowed="{{ $book->borrowers->contains(auth()->user()) }}"
-    data-is-book-a-month="{{ $book->bookAMonths->contains(auth()->user()) }}"
+    data-is-book-a-month="{{ $isBookAMonth }}"
     data-mark-book-route= "{{ route('books.toggleReadStatus') }}"
     data-borrow-book-route= "{{ route('books.markAsBorrowed', $book->id) }}"
     data-put-back-book-route= "{{ route('books.putBack', $book->id) }}"
