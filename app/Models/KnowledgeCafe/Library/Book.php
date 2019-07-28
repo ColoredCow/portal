@@ -3,8 +3,10 @@
 namespace App\Models\KnowledgeCafe\Library;
 
 use App\User;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\KnowledgeCafe\Library\BookAMonth;
 
 class Book extends Model
 {
@@ -25,8 +27,8 @@ class Book extends Model
             ->where(function ($query) use ($filteredString) {
                 if ($filteredString) {
                     $query->where('title', 'LIKE', "%$filteredString%")
-                            ->orWhere('author', 'LIKE', "%$filteredString%")
-                            ->orWhere('isbn', 'LIKE', "%$filteredString%");
+                        ->orWhere('author', 'LIKE', "%$filteredString%")
+                        ->orWhere('isbn', 'LIKE', "%$filteredString%");
                 }
 
                 ($filteredString) ?: '';
@@ -125,5 +127,33 @@ class Book extends Model
     public function putBackToLibrary()
     {
         $this->borrowers()->detach(auth()->user());
+    }
+
+    public function selectBookForCurrentMonth()
+    {
+        return BookAMonth::create([
+            'user_id' => auth()->user()->id,
+            'library_book_id' => $this->id,
+        ]);
+    }
+
+    public function unselectBookFromCurrentMonth()
+    {
+        $startOfYear = today()->startOfYear();
+        $endOfYear = today()->endOfYear();
+        return BookAMonth::where([
+            'user_id' => auth()->user()->id,
+            'library_book_id' => $this->id,
+        ])->whereBetween('created_at', [$startOfYear, $endOfYear])->first()->delete();
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany(Comment::class, 'book_comment', 'library_book_id', 'comment_id');
+    }
+
+    public function bookAMonths()
+    {
+        return $this->hasMany(BookAMonth::class, 'library_book_id');
     }
 }

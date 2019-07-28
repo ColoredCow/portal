@@ -1,86 +1,91 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 @section('content')
-<div class="container" 
-    id="show_book_info"   
-    data-book="{{ json_encode($book) }}"  
+<div class="container" id="show_book_info"
+    data-book="{{ json_encode($book) }}"
     data-is-read="{{ $book->readers->contains(auth()->user()) }}"
     data-is-borrowed="{{ $book->borrowers->contains(auth()->user()) }}"
-    data-mark-book-route= "{{ route('books.toggleReadStatus') }}" 
-    data-borrow-book-route= "{{ route('books.markAsBorrowed', $book->id) }}" 
-    data-put-back-book-route= "{{ route('books.putBack', $book->id) }}" 
+    data-is-book-a-month="{{ $isBookAMonth }}"
+    data-mark-book-route= "{{ route('books.toggleReadStatus') }}"
+    data-borrow-book-route= "{{ route('books.markAsBorrowed', $book->id) }}"
+    data-put-back-book-route= "{{ route('books.putBack', $book->id) }}"
     data-readers = "{{ json_encode($book->readers) }}"
-    data-borrowers = "{{ json_encode($book->borrowers) }}">
+    data-book-a-month-store-route="{{ route('books.addToBam', $book->id) }}"
+    data-book-a-month-destroy-route="{{ route('books.removeFromBam', $book->id) }}"
+    data-borrowers = "{{ json_encode($book->borrowers) }}"
+>
 
-    <div class="card mx-5">
-        <div class="card-body">
-            <h1 class="mt-1 mb-4 mx-2">
-                {{ $book->title }}
-            </h1>
-
-            <div class="row">
-                <div class="col-4">
-                    <div class="ml-1 mb-1 d-flex justify-content-between">
+<div class="card mx-5">
+    <div class="card-body">
+        <h1 class="mt-1 mb-4 mx-2">{{ $book->title }}</h1>
+        <div class="row">
+            <div class="col-md-8 col-xl-9 d-flex">
+                <div class="w-25 d-flex justify-content-center align-items-center">
+                    <img src="{{ $book->thumbnail }}" alt="{{ $book->title }}" class="max-w-100 h-auto">
+                </div>
+                <div class="pl-1 pl-xl-3 d-flex flex-column w-75">
+                    <div class="ml-1 mb-1 d-flex">
                         <h4>Authors:</h4>
-                        <span> {{ $book->author }} </span>
+                        <span class="pl-5">{{ $book->author }}</span>
                     </div>
-
-                    <div class="ml-1 mb-1 d-flex justify-content-between">
-                        <h4>Category:</h4>
-                        <div>  
-                            <ul class="pl-3">
-                                @foreach(($book->categories) ?: [] as $category)
-                                    <li> {{$category->name}} </li>
+                    @if (! empty($book->categories))
+                    <div class="ml-1 mb-1 d-flex">
+                        <h4>Categories:</h4>
+                        <div class="pl-3">
+                            <ul class="pl-3 list-style-type-none">
+                                @foreach($book->categories as $category)
+                                <li>{{$category->name}}</li>
                                 @endforeach
-                            </ul> 
+                            </ul>
                         </div>
                     </div>
-
-                    <div class="ml-1 mb-1 mt-5 d-flex justify-content-between">
-                        <button class="btn btn-primary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
-                        <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
-                    </div>
-
-                    <div class="ml-1 mb-1 mt-5 d-flex justify-content-between">
-                        <button class="btn btn-info p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
-                        <button class="btn btn-success p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
-                    </div>
-
-                </div>
-
-                <div class="col-4 text-center">
-                    <img src=" {{ $book->thumbnail }} " />
-                </div>
-            </div>
-
-            <div class="row" id="readers_section" >
-                <div class="col-12">
-                        <div class="ml-1 mb-1 mt-5 w-100">
-                            <h4 v-if="readers.length">Read by:</h4>
-                            <div class="d-flex justify-content-start"> 
-                                <div v-for="(reader, index)  in readers " class="mt-2 mr-2 text-center">
-                                    <img :src="reader.avatar" alt="" class="reader_image">
-                                    <h6 class="pt-2"> @{{ reader.name }} </h6>
-                                </div> 
+                    @endif
+                    <div>
+                        <div class="row mx-0" id="readers_section" >
+                            <div class="ml-1 mb-1 mt-2 w-100 d-flex align-items-center">
+                                <p class="font-weight-bold mb-0 text-nowrap mr-2" v-if="borrowers.length">Borrowed by:</p>
+                                <div class="d-flex justify-content-start flex-wrap">
+                                    <div v-for="(borrower, index)  in borrowers " class="mr-2 text-center">
+                                        <img :src="borrower.avatar" alt="" class="reader_image" data-toggle="tooltip" data-placement="top" :title="borrower.name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ml-1 mb-1 mt-2 w-100 d-flex align-items-center">
+                                <p class="font-weight-bold mb-0 text-nowrap mr-2" v-if="readers.length">Read by:</p>
+                                <div class="d-flex justify-content-start flex-wrap">
+                                    <div v-for="(reader, index)  in readers " class="mr-2 text-center">
+                                        <img :src="reader.avatar" alt="" class="reader_image" data-toggle="tooltip" data-placement="bottom" :title="reader.name">
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="row" id="readers_section" >
-                <div class="col-12">
-                        <div class="ml-1 mb-1 mt-5 w-100">
-                            <h4 v-if="borrowers.length">Borrowed by:</h4>
-                            <div class="d-flex justify-content-start"> 
-                                <div v-for="(borrower, index)  in borrowers " class="mt-2 mr-2 text-center">
-                                    <img :src="borrower.avatar" alt="" class="reader_image">
-                                    <h6 class="pt-2"> @{{ borrower.name }} </h6>
-                                </div> 
-                            </div>
-                        </div>
-                </div>
+            <div class="col-md-4 col-xl-3">
+                <span class="d-block mb-1">
+                    <button class="btn btn-info p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
+                    <button class="btn btn-success p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
+                </span>
+                <span class="d-block mb-1">
+                    <button class="btn btn-primary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
+                    <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
+                </span>
+                <span class="d-block mb-1">
+                    <button type="button" class="btn btn-primary font-italic" @click="addToBookAMonth()" v-if="!isBookAMonth">Pick as Book A Month</button>
+                    <button type="button" class="btn btn-danger font-italic" @click="removeFromBookAMonth()" v-else>Unpick as Book A Month</button>
+                </span>
             </div>
-
         </div>
     </div>
+
+    <div class="mt-3">
+        <books-comments-component
+        new_comment_route = "{!! route('book-comment.store', $book->id) !!}"
+        :book = "{{ json_encode($book) }}"
+
+        />
+    </div>
 </div>
+
+
 @endsection

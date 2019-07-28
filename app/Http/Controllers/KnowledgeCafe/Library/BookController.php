@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
-use App\Models\KnowledgeCafe\Library\Book;
-use App\Models\KnowledgeCafe\Library\BookCategory;
-use App\Services\BookServices;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\BookServices;
+use App\Http\Controllers\Controller;
+use App\Models\KnowledgeCafe\Library\Book;
+use App\Models\KnowledgeCafe\Library\BookAMonth;
+use App\Models\KnowledgeCafe\Library\BookCategory;
+use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 
 class BookController extends Controller
 {
@@ -62,7 +64,13 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return view('knowledgecafe.library.books.show', compact('book'));
+        $isBookAMonth = $book->bookAMonths()
+            ->inCurrentYear()
+            ->inCurrentMonth()
+            ->where('user_id', auth()->user()->id)
+            ->get()
+            ->isNotEmpty();
+        return view('knowledgecafe.library.books.show', compact('book', 'isBookAMonth'));
     }
 
     /**
@@ -238,5 +246,32 @@ class BookController extends Controller
     {
         session(['disable_book_suggestion' => false]);
         return redirect()->back()->with('status', 'Book suggestions has been enabled.');
+    }
+
+    public function selectBookForCurrentMonth(Book $book)
+    {
+        $book->selectBookForCurrentMonth();
+        return response()->json(['isBookAMonth' => true]);
+    }
+
+    public function unselectBookFromCurrentMonth(Book $book)
+    {
+        $book->unselectBookFromCurrentMonth();
+        return response()->json(['isBookAMonth' => false]);
+    }
+
+    public function bookAMonthIndex()
+    {
+        $booksCollection = BookAMonth::all()
+            ->groupBy(function ($item) {
+                return Carbon::parse($item->created_at)->format('Y');
+            }, 'desc')
+            ->transform(function ($item) {
+                return $item->groupBy(function ($item) {
+                    return Carbon::parse($item->created_at)->format('n');
+                }, 'desc');
+            });
+
+        return view('knowledgecafe.library.books.book-a-month')->with('booksCollection', $booksCollection);
     }
 }

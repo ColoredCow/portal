@@ -334,8 +334,8 @@ input:focus+.slider {
 }
 
 .reader_image {
-    width: 40px !important;
-    height: 40px !important;
+    width: 30px !important;
+    height: 30px !important;
 }
 
 #books_listing {
@@ -414,3 +414,5 @@ input:focus+.slider {
         }
     }
 }
+
+@import 'utilities';
