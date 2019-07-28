@@ -27,7 +27,23 @@
                             <div class="card-body">
                                 <ol>
                                     @foreach ($monthlyBooks as $userBookAMonth)
-                                        <li><strong>{{ $userBookAMonth->user->name }}</strong> has picked <a href="{{ route('books.show', $userBookAMonth->book) }}">{{ $userBookAMonth->book->title }}</a>.</li>
+                                        <li class="mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <p class="mb-0">
+                                                    @if ($userBookAMonth->user->id === auth()->user()->id)
+                                                        <strong>You</strong> have picked
+                                                    @else
+                                                        <strong>{{ $userBookAMonth->user->name }}</strong> has picked
+                                                    @endif
+                                                    <a href="{{ route('books.show', $userBookAMonth->book) }}">{{ $userBookAMonth->book->title }}</a>.
+                                                </p>
+                                                @if($userBookAMonth->book->readers->contains($userBookAMonth->user))
+                                                    <span class="ml-auto badge badge-success font-size-100">Completed</span>
+                                                @else
+                                                    <span class="ml-auto badge badge-warning font-size-100">Reading</span>
+                                                @endif
+                                            </div>
+                                        </li>
                                     @endforeach
                                 </ol>
                             </div>
