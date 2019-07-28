@@ -64,7 +64,13 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return view('knowledgecafe.library.books.show', compact('book'));
+        $isBookAMonth = !$book->bookAMonths()
+            ->inCurrentYear()
+            ->inCurrentMonth()
+            ->where('user_id', auth()->user()->id)
+            ->get()
+            ->isEmpty();
+        return view('knowledgecafe.library.books.show', compact('book', 'isBookAMonth'));
     }
 
     /**

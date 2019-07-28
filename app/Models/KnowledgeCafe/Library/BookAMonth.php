@@ -3,6 +3,7 @@
 namespace App\Models\KnowledgeCafe\Library;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class BookAMonth extends Model
@@ -17,5 +18,21 @@ class BookAMonth extends Model
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function scopeInCurrentYear($query)
+    {
+        return $query->whereBetween('created_at', [
+            Carbon::now()->startOfYear(),
+            Carbon::now()->endOfYear(),
+        ]);
+    }
+
+    public function scopeInCurrentMonth($query)
+    {
+        return $query->whereBetween('created_at', [
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth(),
+        ]);
     }
 }

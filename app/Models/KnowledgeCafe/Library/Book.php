@@ -154,6 +154,6 @@ class Book extends Model
 
     public function bookAMonths()
     {
-        return $this->belongsToMany(User::class, 'book_a_months', 'library_book_id', 'user_id');
+        return $this->hasMany(BookAMonth::class, 'library_book_id');
     }
 }
