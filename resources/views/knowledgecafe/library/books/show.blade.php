@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-md-8 col-xl-9 d-flex">
                 <div class="w-25 d-flex justify-content-center align-items-center">
-                    <img src="{{ $book->thumbnail }}" alt="{{ $book->title }}" class="max-w-100 h-auto">
+                    <img src="{{ $book->thumbnail }}" alt="{{ $book->title }}" class="img-fluid">
                 </div>
                 <div class="pl-1 pl-xl-3 d-flex flex-column w-75">
                     <div class="ml-1 mb-1 d-flex">
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <div class="mt-3">
+    <div class="mt-3 d-none">
         <books-comments-component
         new_comment_route = "{!! route('book-comment.store', $book->id) !!}"
         :book = "{{ json_encode($book) }}"
