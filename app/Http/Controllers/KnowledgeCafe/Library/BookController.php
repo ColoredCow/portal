@@ -272,7 +272,6 @@ class BookController extends Controller
                 }, 'desc');
             });
 
-        return view('knowledgecafe.library.books.book-a-month')
-            ->with('booksCollection', $booksCollection);
+        return view('knowledgecafe.library.books.book-a-month')->with('booksCollection', $booksCollection);
     }
 }
