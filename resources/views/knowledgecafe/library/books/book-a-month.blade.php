@@ -7,7 +7,7 @@
     <br><br>
 
     <div class="row mb-2">
-        <div class="col-md-6"><h1>Book A Month</h1></div>
+        <div class="col-md-6"><h1>A book a month</h1></div>
     </div>
 
     <div class="container px-md-0">
