@@ -78,11 +78,14 @@
         </div>
     </div>
 
+    <h4 class="pl-5 mt-3">Reader's thoughts</h4>
+
     <div class="mt-3 ">
         <books-comments-component
         new_comment_route = "{!! route('book-comment.store', $book->id) !!}"
         :book = "{{ json_encode($book) }}"
         :book_comments = "{{ json_encode($book->comments) }}"
+        :user = "{{ auth()->user() }}"
         />
     </div>
 </div>

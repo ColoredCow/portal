@@ -23,6 +23,7 @@ Vue.component('project-stage-component', require('./components/ProjectStageCompo
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
 Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue'));
+Vue.component('comment', require('./components/CommentItem.vue'));
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {

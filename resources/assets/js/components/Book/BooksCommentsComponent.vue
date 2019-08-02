@@ -1,13 +1,11 @@
 <template>
     <div>
-        <div class="card mx-5">
-
-            <div class="card-body" v-for="(comment, index) in all_comments" v-bind:key="index">
-                <h6 class="my-2">{{ comment.user.name }} share on {{ comment.created_at }} : </h6>
-                <textarea disabled readonly v-model="comment.comment"  class="form-control"> </textarea>
+        <div class="mx-5">
+            <div class="my-3" v-for="(comment, index) in all_comments" v-bind:key="index">
+                <comment :comment="comment" :editable="false" ></comment>
             </div>
 
-            <div class="card-body">
+            <div class="card-body d-none">
                 <h6 class="my-2">Want to share your thoughts?</h6>
                 <textarea v-model="new_comment" class="form-control" rows="5" placeholder="start writing ..."></textarea>
                 <button class="btn btn-info float-right mt-3 text-right" @click="addNewComment()">Comment</button>
