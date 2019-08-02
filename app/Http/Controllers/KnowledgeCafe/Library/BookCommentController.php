@@ -13,15 +13,13 @@ class BookCommentController extends Controller
     {
         $comment = Comment::create([
             'user_id' => auth()->id(),
-            'comment' => $request->comment,
+            'body' => $request->comment,
+            'commentable_id' => $book->id,
+            'commentable_type' => Book::class
         ]);
         $book->comments()->save($comment);
         return response()->json($book->comments->last());
     }
 
-    public function destroy(Book $book, Comment $comment)
-    {
-        $book->comments()->detach($comment->id);
-        return response()->json(['success' => $comment->delete()]);
-    }
+    
 }

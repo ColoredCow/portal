@@ -18,7 +18,7 @@
         <div class="card-body pt-3">
             <div>
                 <div v-if="state == 'edit'">
-                    <textarea v-model="comment.comment" class="form-control"> </textarea>
+                    <textarea v-model="comment.body" class="form-control"> </textarea>
                     <span class="float-right">
                         <button class="btn btn-sm btn-success mt-2 mx-3" @click="updateComment()">Save</button>
                         <button class="btn btn-sm btn-secondary mt-2" @click="disableEditMode()">Cancel</button>
@@ -26,7 +26,7 @@
 
                 </div>
                 <div v-else>
-                    <p>{{ comment.comment }}</p>
+                    <p>{{ comment.body }}</p>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
             },
 
             async updateComment(){
-                let response = await axios.put(`/comments/${this.comment.id}`, {comment:this.comment.comment});
+                let response = await axios.put(`/comments/${this.comment.id}`, {comment:this.comment.body});
                 this.disableEditMode();
             },
 
@@ -61,7 +61,9 @@
                 if(!confirm('Are you sure ?')) {
                     return false
                 }
-                this.$emit('deleteComment', { index:this.book_index, comment:this.comment} );
+
+                let response = await axios.delete(`/comments/${this.comment.id}`);
+                this.$emit('onDeleteComment', { index:this.book_index, comment:this.comment} );
             }
         }
     }

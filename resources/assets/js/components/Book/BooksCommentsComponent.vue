@@ -3,7 +3,7 @@
         <div class="mx-5">
             <div class="mb-3" v-for="(comment, index) in all_comments" v-bind:key="index">
                 <comment 
-                    @deleteComment="deleteComment" 
+                    @onDeleteComment="onDeleteComment" 
                     :book_index="index" 
                     :comment="comment" 
                     :editable="user.id == comment.user_id" ></comment>
@@ -42,10 +42,7 @@
                 this.all_comments.push(response.data);
            },
 
-           async deleteComment(data) {
-
-               console.log(`${this.new_comment_route}/${data.comment.id}`);
-                let response = await axios.delete(`${this.new_comment_route}/${data.comment.id}`);
+           async onDeleteComment(data) {
                 this.all_comments.splice(data.index, 1);   
            },
         }
