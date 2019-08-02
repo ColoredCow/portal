@@ -20,6 +20,4 @@ class BookCommentController extends Controller
         $book->comments()->save($comment);
         return response()->json($book->comments->last());
     }
-
-    
 }

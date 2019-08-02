@@ -28,9 +28,8 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-
-    public function destroy( Comment $comment)
-    { 
+    public function destroy(Comment $comment)
+    {
         return response()->json(['success' => $comment->delete()]);
     }
 }
