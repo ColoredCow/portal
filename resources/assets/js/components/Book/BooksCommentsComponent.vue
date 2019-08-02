@@ -2,7 +2,7 @@
     <div>
         <div class="mx-5">
             <div class="mb-5" v-for="(comment, index) in all_comments" v-bind:key="index">
-                <comment :comment="comment" :editable="false" ></comment>
+                <comment @deleteComment="deleteComment" :book_index="index" :comment="comment" :editable="false" ></comment>
             </div>
 
             <div class="mb-3">
@@ -36,7 +36,14 @@
                 let response = await axios.post(this.new_comment_route, {comment:this.new_comment});
                 this.new_comment = '';
                 this.all_comments.push(response.data);
-           }
+           },
+
+           async deleteComment(data) {
+
+               console.log(`${this.new_comment_route}/${data.comment.id}`);
+                let response = await axios.delete(`${this.new_comment_route}/${data.comment.id}`);
+                this.all_comments.splice(data.index, 1);   
+           },
         }
     }
 </script>

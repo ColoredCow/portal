@@ -29,8 +29,5 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
-    {
-        //
-    }
+
 }

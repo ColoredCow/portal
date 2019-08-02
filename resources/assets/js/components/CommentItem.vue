@@ -9,7 +9,7 @@
          
                 <div class="d-flex justify-content-between">
                     <p class="c-pointer mx-3 text-muted " @click="enableEditMode()"><i class="fa fa-lg fa-pencil-square-o"></i></p>
-                    <p class="c-pointer mx-3 text-danger " @click="enableEditMode()"><i class="fa fa-lg fa-trash-o"></i></p>
+                    <p class="c-pointer mx-3 text-danger " @click="deleteComment()"><i class="fa fa-lg fa-trash-o"></i></p>
                 </div>
             </div>
 
@@ -22,7 +22,7 @@
                     <textarea v-model="comment.comment" class="form-control"> </textarea>
                     <span class="float-right">
                         <button class="btn btn-sm btn-success mt-2 mx-3" @click="updateComment()">Save</button>
-                        <button class="btn btn-sm btn-secondary mt-2" @click="updateComment()">Cancel</button>
+                        <button class="btn btn-sm btn-secondary mt-2" @click="disableEditMode()">Cancel</button>
                     </span>
 
                 </div>
@@ -36,7 +36,7 @@
 
 <script>
     export default {
-        props: ['comment', 'editable'],
+        props: ['comment', 'editable', 'book_index'],
         data() {
             return {
                 state:'view'
@@ -56,6 +56,13 @@
             async updateComment(){
                 let response = await axios.put(`/comments/${this.comment.id}`, {comment:this.comment.comment});
                 this.disableEditMode();
+            },
+
+            async deleteComment() {
+                if(!confirm('Are you sure ?')) {
+                    return false
+                }
+                this.$emit('deleteComment', { index:this.book_index, comment:this.comment} );
             }
         }
     }

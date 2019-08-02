@@ -19,4 +19,10 @@ class BookCommentController extends Controller
         $book->comments()->save($comment);
         return response()->json($book->comments->last());
     }
+
+    public function destroy(Book $book, Comment $comment)
+    {
+       $book->comments()->detach($comment->id);
+       return response()->json(['success' => $comment->delete()]);
+    }
 }
