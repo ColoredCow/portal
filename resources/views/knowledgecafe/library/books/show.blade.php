@@ -80,7 +80,7 @@
 
     <h4 class="font-italic pl-5 mt-3 text-underline">Reader's thoughts</h4>
 
-    <div class="mt-3 ">
+    <div class="mt-3 w-75">
         <books-comments-component
         new_comment_route = "{!! route('book-comment.store', $book->id) !!}"
         :book = "{{ json_encode($book) }}"
