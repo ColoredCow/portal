@@ -78,11 +78,11 @@
         </div>
     </div>
 
-    <div class="mt-3 d-none">
+    <div class="mt-3 ">
         <books-comments-component
         new_comment_route = "{!! route('book-comment.store', $book->id) !!}"
         :book = "{{ json_encode($book) }}"
-
+        :book_comments = "{{ json_encode($book->comments) }}"
         />
     </div>
 </div>

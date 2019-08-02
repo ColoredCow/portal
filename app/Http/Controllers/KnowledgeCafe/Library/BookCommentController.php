@@ -6,6 +6,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KnowledgeCafe\Library\Book;
+use function GuzzleHttp\json_encode;
 
 class BookCommentController extends Controller
 {
@@ -15,8 +16,7 @@ class BookCommentController extends Controller
             'user_id' => auth()->id(),
             'comment' => $request->comment,
         ]);
-
         $book->comments()->save($comment);
-        return response()->json();
+        return response()->json($book->comments->last());
     }
 }
