@@ -35,7 +35,7 @@
 
 <script>
     export default {
-        props: ['comment', 'editable', 'book_index'],
+        props: ['comment', 'editable', 'bookIndex'],
         data() {
             return {
                 state:'view'
@@ -63,7 +63,7 @@
                 }
 
                 let response = await axios.delete(`/comments/${this.comment.id}`);
-                this.$emit('onDeleteComment', { index:this.book_index, comment:this.comment} );
+                this.$emit('onDeleteComment', { index:this.bookIndex, comment:this.comment} );
             }
         }
     }

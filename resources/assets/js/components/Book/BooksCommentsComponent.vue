@@ -4,7 +4,7 @@
             <div class="mb-3" v-for="(comment, index) in all_comments" v-bind:key="index">
                 <comment 
                     @onDeleteComment="onDeleteComment" 
-                    :book_index="index" 
+                    :book-index="index" 
                     :comment="comment" 
                     :editable="user.id == comment.user_id" ></comment>
             </div>
@@ -22,7 +22,7 @@
 
 <script>
     export default {
-        props: ['book', 'new_comment_route', 'book_comments', 'user'],
+        props: ['book', 'newCommentRoute', 'bookComments', 'user'],
         data() {
             return {
                book_id:1,
@@ -32,12 +32,12 @@
         },
 
         mounted() {
-            this.all_comments = this.book_comments;
+            this.all_comments = this.bookComments;
         },
 
         methods: {
            async addNewComment() {
-                let response = await axios.post(this.new_comment_route, {comment:this.new_comment});
+                let response = await axios.post(this.newCommentRoute, {comment:this.new_comment});
                 this.new_comment = '';
                 this.all_comments.push(response.data);
            },
