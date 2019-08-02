@@ -181,7 +181,6 @@ Route::middleware('auth')->group(function () {
                 Route::post('remove-from-bam/{book}', 'BookController@unselectBookFromCurrentMonth')->name('books.removeFromBam');
                 Route::post('add-new-comment/{book}', 'BookController@addNewComment')->name('books.addNewComment');
                 Route::post('{book}/comment', 'BookCommentController@store')->name('book-comment.store');
-                Route::delete('{book}/comment/{comment}', 'BookCommentController@destroy')->name('book-comment.destroy');
             });
 
             Route::resource('book-categories', 'BookCategoryController')

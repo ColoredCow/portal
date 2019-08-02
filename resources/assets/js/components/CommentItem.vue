@@ -41,8 +41,7 @@
                 state:'view'
             }
         },
-        mounted() {
-        },
+        
         methods: {
             enableEditMode() {
                 this.state = 'edit';

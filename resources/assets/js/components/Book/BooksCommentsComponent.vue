@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="mx-5">
-            <div class="mb-3" v-for="(comment, index) in all_comments" v-bind:key="index">
+            <div class="mb-3" v-for="(comment, index) in comments" v-bind:key="index">
                 <comment 
                     @onDeleteComment="onDeleteComment" 
                     :book-index="index" 
@@ -26,24 +26,26 @@
         data() {
             return {
                book_id:1,
-               all_comments:[],
+               comments:[],
                new_comment:''
             }
         },
 
+
+
         mounted() {
-            this.all_comments = this.bookComments;
+            this.comments = this.bookComments;
         },
 
         methods: {
            async addNewComment() {
                 let response = await axios.post(this.newCommentRoute, {comment:this.new_comment});
                 this.new_comment = '';
-                this.all_comments.push(response.data);
+                this.comments.push(response.data);
            },
 
            async onDeleteComment(data) {
-                this.all_comments.splice(data.index, 1);   
+                this.comments.splice(data.index, 1);   
            },
         }
     }
