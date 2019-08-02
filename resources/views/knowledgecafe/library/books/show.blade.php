@@ -82,7 +82,7 @@
 
     <div class="mt-3 w-75">
         <books-comments-component
-        :new-comment-route = "{!! route('book-comment.store', $book->id) !!}"
+        :new-comment-route = "{{ json_encode(route('book-comment.store', $book->id)) }}"
         :book = "{{ json_encode($book) }}"
         :book-comments = "{{ json_encode($book->comments) }}"
         :user = "{{ auth()->user() }}"

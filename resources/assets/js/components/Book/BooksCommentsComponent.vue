@@ -11,7 +11,7 @@
 
             <div class="mb-3">
                 <h6 class="my-2">Want to share your thoughts?</h6>
-                <textarea v-model="new_comment" class="form-control" rows="3" placeholder="Start writing ..."></textarea>
+                <textarea v-model="newComment" class="form-control" rows="3" placeholder="Start writing ..."></textarea>
                 <button class="btn btn-info float-right my-3 text-right" @click="addNewComment()">Comment</button>
             </div>
         </div>
@@ -27,11 +27,9 @@
             return {
                book_id:1,
                comments:[],
-               new_comment:''
+               newComment:''
             }
         },
-
-
 
         mounted() {
             this.comments = this.bookComments;
@@ -39,8 +37,8 @@
 
         methods: {
            async addNewComment() {
-                let response = await axios.post(this.newCommentRoute, {comment:this.new_comment});
-                this.new_comment = '';
+                let response = await axios.post(this.newCommentRoute, {comment:this.newComment});
+                this.newComment = '';
                 this.comments.push(response.data);
            },
 
