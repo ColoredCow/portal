@@ -7,7 +7,6 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
-
     /**
      * Update the specified resource in storage.
      *
@@ -17,7 +16,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        $comment->update([ 'comment' => $request->comment]);
+        $comment->update(['comment' => $request->comment]);
         return response([
             'status' => 'Comment updated successfully'
         ]);
@@ -29,5 +28,4 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-
 }

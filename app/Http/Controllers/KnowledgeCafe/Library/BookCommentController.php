@@ -6,7 +6,6 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KnowledgeCafe\Library\Book;
-use function GuzzleHttp\json_encode;
 
 class BookCommentController extends Controller
 {
@@ -22,7 +21,7 @@ class BookCommentController extends Controller
 
     public function destroy(Book $book, Comment $comment)
     {
-       $book->comments()->detach($comment->id);
-       return response()->json(['success' => $comment->delete()]);
+        $book->comments()->detach($comment->id);
+        return response()->json(['success' => $comment->delete()]);
     }
 }
