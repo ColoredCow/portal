@@ -8,8 +8,8 @@
                 </div>
          
                 <div class="d-flex justify-content-between">
-                    <p class="c-pointer mx-3 " @click="enableEditMode()">Edit</p>
-                    <p class="c-pointer">Delete</p>
+                    <p class="c-pointer mx-3 text-muted " @click="enableEditMode()"><i class="fa fa-lg fa-pencil-square-o"></i></p>
+                    <p class="c-pointer mx-3 text-danger " @click="enableEditMode()"><i class="fa fa-lg fa-trash-o"></i></p>
                 </div>
             </div>
 
