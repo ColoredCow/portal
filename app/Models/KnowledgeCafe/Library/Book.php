@@ -149,7 +149,7 @@ class Book extends Model
 
     public function comments()
     {
-        return $this->belongsToMany(Comment::class, 'book_comment', 'library_book_id', 'comment_id');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     public function bookAMonths()

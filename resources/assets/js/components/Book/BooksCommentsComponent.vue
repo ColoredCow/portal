@@ -1,10 +1,18 @@
 <template>
     <div>
-        <div class="card mx-5">
-            <div class="card-body">
-                <h6 class="my-2">Want to share your thoughts? {{ book_id }}</h6>
-                <textarea v-model="new_comment" class="form-control" rows="5" placeholder="start writing ..."></textarea>
-                <button class="btn btn-info float-right mt-3 text-right" @click="addNewComment()">Comment</button>
+        <div class="mx-5">
+            <div class="mb-3" v-for="(comment, index) in comments" v-bind:key="index">
+                <comment 
+                    @onDeleteComment="onDeleteComment" 
+                    :book-index="index" 
+                    :comment="comment" 
+                    :editable="user.id == comment.user_id" ></comment>
+            </div>
+
+            <div class="mb-3">
+                <h6 class="my-2">Want to share your thoughts?</h6>
+                <textarea v-model="newComment" class="form-control" rows="3" placeholder="Start writing ..."></textarea>
+                <button class="btn btn-info float-right my-3 text-right" @click="addNewComment()">Comment</button>
             </div>
         </div>
     </div>
@@ -14,22 +22,29 @@
 
 <script>
     export default {
-        props: ['book', 'new_comment_route', 'comments'],
+        props: ['book', 'newCommentRoute', 'bookComments', 'user'],
         data() {
             return {
                book_id:1,
-               new_comment:''
-               
+               comments:[],
+               newComment:''
             }
         },
+
+        mounted() {
+            this.comments = this.bookComments;
+        },
+
         methods: {
            async addNewComment() {
-                let response = await axios.post(this.new_comment_route, {comment:this.new_comment});
-                this.comments.push({
-                    user_id:response.user_id,
-                    comment:response.comment
-                });
-           }
+                let response = await axios.post(this.newCommentRoute, {comment:this.newComment});
+                this.newComment = '';
+                this.comments.push(response.data);
+           },
+
+           async onDeleteComment(data) {
+                this.comments.splice(data.index, 1);   
+           },
         }
     }
 </script>

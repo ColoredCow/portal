@@ -71,18 +71,21 @@
                     <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
                 </span>
                 <span class="d-block mb-1">
-                    <button type="button" class="btn btn-primary font-italic" @click="addToBookAMonth()" v-if="!isBookAMonth">Pick as Book A Month</button>
-                    <button type="button" class="btn btn-danger font-italic" @click="removeFromBookAMonth()" v-else>Unpick as Book A Month</button>
+                    <button type="button" class="btn btn-primary font-italic" @click="addToBookAMonth()" v-if="!isBookAMonth">Pick as Book of the Month</button>
+                    <button type="button" class="btn btn-danger font-italic" @click="removeFromBookAMonth()" v-else>Unpick as Pick as Book of the Month</button>
                 </span>
             </div>
         </div>
     </div>
 
-    <div class="mt-3 d-none">
-        <books-comments-component
-        new_comment_route = "{!! route('book-comment.store', $book->id) !!}"
-        :book = "{{ json_encode($book) }}"
+    <h4 class="font-italic pl-5 mt-3 text-underline">Reader's thoughts</h4>
 
+    <div class="mt-3 w-75">
+        <books-comments-component
+        :new-comment-route = "{{ json_encode(route('book-comment.store', $book->id)) }}"
+        :book = "{{ json_encode($book) }}"
+        :book-comments = "{{ json_encode($book->comments) }}"
+        :user = "{{ auth()->user() }}"
         />
     </div>
 </div>
