@@ -20,7 +20,11 @@
             <div>
                 <div v-if="state == 'edit'">
                     <textarea v-model="comment.comment" class="form-control"> </textarea>
-                    <button class="btn btn-sm btn-info float-right">Save</button>
+                    <span class="float-right">
+                        <button class="btn btn-sm btn-success mt-2 mx-3" @click="updateComment()">Save</button>
+                        <button class="btn btn-sm btn-secondary mt-2" @click="updateComment()">Cancel</button>
+                    </span>
+
                 </div>
                 <div v-else>
                     <p>{{ comment.comment }}</p>
@@ -44,6 +48,15 @@
             enableEditMode() {
                 this.state = 'edit';
             },
+
+            disableEditMode() {
+                this.state = 'view';
+            },
+
+            async updateComment(){
+                let response = await axios.put(`/comments/${this.comment.id}`, {comment:this.comment.comment});
+                this.disableEditMode();
+            }
         }
     }
 </script>

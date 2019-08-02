@@ -5,10 +5,10 @@
                 <comment :comment="comment" :editable="false" ></comment>
             </div>
 
-            <div class="card-body d-none">
+            <div class="mt-5 mb-3">
                 <h6 class="my-2">Want to share your thoughts?</h6>
-                <textarea v-model="new_comment" class="form-control" rows="5" placeholder="start writing ..."></textarea>
-                <button class="btn btn-info float-right mt-3 text-right" @click="addNewComment()">Comment</button>
+                <textarea v-model="new_comment" class="form-control" rows="5" placeholder="Start writing ..."></textarea>
+                <button class="btn btn-info float-right my-3 text-right" @click="addNewComment()">Comment</button>
             </div>
         </div>
     </div>
