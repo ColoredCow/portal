@@ -1,13 +1,17 @@
 <template>
     <div>
         <div class="mx-5">
-            <div class="mb-5" v-for="(comment, index) in all_comments" v-bind:key="index">
-                <comment @deleteComment="deleteComment" :book_index="index" :comment="comment" :editable="false" ></comment>
+            <div class="mb-3" v-for="(comment, index) in all_comments" v-bind:key="index">
+                <comment 
+                    @deleteComment="deleteComment" 
+                    :book_index="index" 
+                    :comment="comment" 
+                    :editable="user.id == comment.user_id" ></comment>
             </div>
 
             <div class="mb-3">
                 <h6 class="my-2">Want to share your thoughts?</h6>
-                <textarea v-model="new_comment" class="form-control" rows="5" placeholder="Start writing ..."></textarea>
+                <textarea v-model="new_comment" class="form-control" rows="3" placeholder="Start writing ..."></textarea>
                 <button class="btn btn-info float-right my-3 text-right" @click="addNewComment()">Comment</button>
             </div>
         </div>
@@ -18,7 +22,7 @@
 
 <script>
     export default {
-        props: ['book', 'new_comment_route', 'book_comments'],
+        props: ['book', 'new_comment_route', 'book_comments', 'user'],
         data() {
             return {
                book_id:1,
