@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="mx-5">
-            <div class="my-3" v-for="(comment, index) in all_comments" v-bind:key="index">
+            <div class="mb-5" v-for="(comment, index) in all_comments" v-bind:key="index">
                 <comment :comment="comment" :editable="false" ></comment>
             </div>
 
-            <div class="mt-5 mb-3">
+            <div class="mb-3">
                 <h6 class="my-2">Want to share your thoughts?</h6>
                 <textarea v-model="new_comment" class="form-control" rows="5" placeholder="Start writing ..."></textarea>
                 <button class="btn btn-info float-right my-3 text-right" @click="addNewComment()">Comment</button>

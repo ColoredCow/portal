@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <h4 class="pl-5 mt-3">Reader's thoughts</h4>
+    <h4 class="font-italic pl-5 mt-3 text-underline">Reader's thoughts</h4>
 
     <div class="mt-3 ">
         <books-comments-component
