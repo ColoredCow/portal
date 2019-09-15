@@ -181,6 +181,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('remove-from-bam/{book}', 'BookController@unselectBookFromCurrentMonth')->name('books.removeFromBam');
                 Route::post('add-new-comment/{book}', 'BookController@addNewComment')->name('books.addNewComment');
                 Route::post('{book}/comment', 'BookCommentController@store')->name('book-comment.store');
+                Route::get('/kindle', 'BookController@kindleBooks')->name('book.kindle');
             });
 
             Route::resource('book-categories', 'BookCategoryController')

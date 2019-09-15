@@ -35,6 +35,14 @@
                             </div>
                         </div>
 
+                        <div class="form-row">
+                            <div class="form-group col-md-5 mt-4">
+                                <input  type="checkbox"  name="on_kindle" id="on_kindle"  value="1" >
+                                <label class="c-pointer" for="on_kindle">This book is on kindle</label>
+
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="card-footer">

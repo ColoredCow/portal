@@ -21,21 +21,30 @@ class Book extends Model
         return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
     }
 
-    public static function getList($filteredString = false)
+    public static function getList($filteredString = false, $kindle = false)
     {
-        return self::with(['categories', 'readers', 'borrowers'])
+        $query = self::with(['categories', 'readers', 'borrowers']);
+        $query = (!$kindle) ? $query->excludeKindle() : $query->kindle();
+        return $query 
             ->where(function ($query) use ($filteredString) {
                 if ($filteredString) {
                     $query->where('title', 'LIKE', "%$filteredString%")
                         ->orWhere('author', 'LIKE', "%$filteredString%")
                         ->orWhere('isbn', 'LIKE', "%$filteredString%");
                 }
-
-                ($filteredString) ?: '';
             })
             ->withCount('readers')
             ->orderBy('readers_count', 'desc')
             ->get();
+    }
+
+
+    public function scopeKindle($query) {
+        return $query->where('on_kindle', true);
+    }
+
+    public function scopeExcludeKindle($query) {
+        return $query->where('on_kindle', false);
     }
 
     public static function getByCategoryName($categoryName)

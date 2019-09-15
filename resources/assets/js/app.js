@@ -294,7 +294,7 @@ if (document.getElementById('show_and_save_book')) {
     const bookForm = new Vue({
         el: '#show_and_save_book',
         data: {
-            addMethod: 'from_image',
+            addMethod: 'from_isbn',
             showInfo: false,
             book: {},
             number_of_copies: 1,

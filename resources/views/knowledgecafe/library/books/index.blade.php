@@ -3,7 +3,8 @@
 <div id="books_listing" class="container">
     @include('status', ['errors' => $errors->all()])
     <br>
-    @include('knowledgecafe.library.menu', ['active' => 'books'])
+
+    @include('knowledgecafe.library.menu', ['active' =>  (request()->is('*kindle*')) ? 'book_kindle' : 'books'])
     <br>
     <br>
     <div class="row">

@@ -32,6 +32,15 @@ class BookController extends Controller
         return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
 
+    public function kindleBooks() {
+        $this->authorize('list', Book::class);
+        $searchString = (request()->has('search')) ? request()->input('search') : false;
+        $books = Book::getList($searchString, true);
+        $categories = BookCategory::orderBy('name')->get();
+        return view('knowledgecafe.library.books.index', compact('books', 'categories'));
+    }
+    
+
     /**
      * Show the form for creating a new resource.
      *
