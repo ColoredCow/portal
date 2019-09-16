@@ -38,6 +38,12 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div>
+                        @if($book->on_kindle)
+                            <p class="text-info" v-if="book.on_kindle == 1" :title="book.author">On Kindle</p>
+                        @endif
+                    </div>
                     @endif
                     <div>
                         <div class="row mx-0" id="readers_section" >

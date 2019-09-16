@@ -294,7 +294,7 @@ if (document.getElementById('show_and_save_book')) {
     const bookForm = new Vue({
         el: '#show_and_save_book',
         data: {
-            addMethod: 'from_image',
+            addMethod: 'from_isbn',
             showInfo: false,
             book: {},
             number_of_copies: 1,
@@ -324,7 +324,6 @@ if (document.getElementById('show_and_save_book')) {
 
             submitBookForm: function() {
                 let formData = new FormData(document.getElementById('book_form'));
-
                 if(this.compressedFile) {
                     formData.append('book_image', compressedFile, compressedFile.name);
                 }
@@ -362,6 +361,7 @@ if (document.getElementById('show_and_save_book')) {
                 }
                 this.buttons.disableSaveButton = true;
                 this.book.number_of_copies = this.number_of_copies;
+                this.book['on_kindle'] = document.getElementById('on_kindle').value;
                 axios.post(this.routes.store, this.book ).then (
                 (response) => {
                     this.buttons.disableSaveButton = false;
@@ -456,6 +456,9 @@ if (document.getElementById('books_listing')) {
             },
 
             strLimit: function (str, length) {
+                if(!str) {
+                    return '';
+                }
                 return str.length > length ? str.substring(0, length) + "..." : str;
             },
 

@@ -3,7 +3,8 @@
 <div id="books_listing" class="container">
     @include('status', ['errors' => $errors->all()])
     <br>
-    @include('knowledgecafe.library.menu', ['active' => 'books'])
+
+    @include('knowledgecafe.library.menu', ['active' =>  'books'])
     <br>
     <br>
     <div class="row">
@@ -53,6 +54,9 @@
                     <div class="pl-2 pr-3">
                         <a  :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
+                        
+                        <p class="text-info" v-if="book.on_kindle == 1" :title="book.author">On Kindle</p>
+
                         <h3><span class="badge badge-primary position-absolute copies-count" v-if="book.number_of_copies > 1" :title="book.number_of_copies + ' copies'" >@{{ book.number_of_copies }}</span></h3>
                     </div>
                     @can('library_books.delete')
@@ -90,8 +94,6 @@
                         <h2 v-if="index < 3" class="badge badge-secondary px-2 py-1 mr-1">@{{ category.name }} </h2>
                     </span>
                 </div>
-
-
             </div>
         </div>
     </div>
