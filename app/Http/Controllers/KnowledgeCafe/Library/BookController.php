@@ -31,7 +31,6 @@ class BookController extends Controller
         $categories = BookCategory::orderBy('name')->get();
         return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
-    
 
     /**
      * Show the form for creating a new resource.

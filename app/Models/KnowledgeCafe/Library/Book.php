@@ -6,7 +6,6 @@ use App\User;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\KnowledgeCafe\Library\BookAMonth;
 
 class Book extends Model
 {
@@ -24,7 +23,7 @@ class Book extends Model
     public static function getList($filteredString = false)
     {
         $query = self::with(['categories', 'readers', 'borrowers']);
-        return $query 
+        return $query
             ->where(function ($query) use ($filteredString) {
                 if ($filteredString) {
                     $query->where('title', 'LIKE', "%$filteredString%")
@@ -37,12 +36,13 @@ class Book extends Model
             ->get();
     }
 
-
-    public function scopeKindle($query) {
+    public function scopeKindle($query)
+    {
         return $query->where('on_kindle', true);
     }
 
-    public function scopeExcludeKindle($query) {
+    public function scopeExcludeKindle($query)
+    {
         return $query->where('on_kindle', false);
     }
 
