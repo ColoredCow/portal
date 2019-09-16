@@ -41,7 +41,7 @@ class Book extends Model
         return $query->where('on_kindle', true);
     }
 
-    public function scopeExcludeKindle($query)
+    public function scopeNotOnKindle($query)
     {
         return $query->where('on_kindle', false);
     }
