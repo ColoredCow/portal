@@ -13,7 +13,7 @@ class Book extends Model
     use SoftDeletes;
 
     protected $table = 'library_books';
-    protected $fillable = ['title', 'author', 'isbn', 'thumbnail', 'readable_link', 'self_link', 'number_of_copies'];
+    protected $fillable = ['title', 'author', 'isbn', 'thumbnail', 'readable_link', 'self_link', 'number_of_copies', 'on_kindle'];
     protected $dates = ['deleted_at'];
 
     public function categories()
@@ -21,10 +21,9 @@ class Book extends Model
         return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
     }
 
-    public static function getList($filteredString = false, $kindle = false)
+    public static function getList($filteredString = false)
     {
         $query = self::with(['categories', 'readers', 'borrowers']);
-        $query = (!$kindle) ? $query->excludeKindle() : $query->kindle();
         return $query 
             ->where(function ($query) use ($filteredString) {
                 if ($filteredString) {

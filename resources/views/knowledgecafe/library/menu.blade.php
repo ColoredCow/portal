@@ -12,8 +12,4 @@
     <li class="nav-item">
         <a class="nav-item nav-link {{ $active === 'book_a_month' ? 'active' : '' }}" href="{{ route('book.book-a-month.index') }}"><i class="fa fa-book"></i>&nbsp;A Book A Month</a>
     </li>
-
-    <li class="nav-item">
-        <a class="nav-item nav-link {{ $active === 'book_kindle' ? 'active' : '' }}" href="{{ route('book.kindle') }}"><i class="fa fa-book"></i>&nbsp;Kindle</a>
-    </li>
 </ul>
