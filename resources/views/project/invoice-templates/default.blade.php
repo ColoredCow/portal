@@ -271,7 +271,7 @@
 
             </div>
 
-            <div class="row mt-4">
+            <div class="row mt-5">
                 <div class="col-12 text-center text-muted">
                     <p>This is a system generated invoice and need not to be signed.</p>
                 </div>
