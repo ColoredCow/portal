@@ -246,20 +246,33 @@
                 </div>
             </div>
 
-            <div class="mb-4">
-                <a href="https://google.com">For more details of this invoice you can visit this sheet.</a>
-                <br>
-                Thank you for your business. It’s a pleasure to work with you on your project.
+            <div class="position-relative">
+
+                <div class="mb-4">
+                    <a href="https://docs.google.com/spreadsheets/d/1PGupUwooZcmj75l64LrtOTB3gmFarjQ2IPB3F0f6Eqw/edit#gid=1956576418">For more details of this invoice you can visit this sheet.</a>
+                    <br>
+                    Thank you for your business. It’s a pleasure to work with you on your project.
+                </div>
+
+                <div>
+                    Sincerely,<br>
+                    Prateek Narang <br>
+                    prateek.narang@coloredcow.com <br>
+                    ColoredCow <br>
+                </div>
+
+                <div style="width: 100px;top: 40px;left: 149px;" class="position-absolute">
+                    @if($isPdf)
+                    <img class="image-responsive w-100" src="{{ public_path('images/coloredcow-stamp.png') }}"
+                        alt="">
+                    @else
+                    <img class="image-responsive w-100" src="{{ 'images/coloredcow-stamp.png'}}" alt="">
+                    @endif
+                </div>
+
             </div>
 
-
-
-            <div>
-                Sincerely,<br>
-                Prateek Narang <br>
-                prateek.narang@coloredcow.com <br>
-                ColoredCow <br>
-            </div>
+            
 
         </div>
     </div>
