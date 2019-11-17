@@ -84,9 +84,8 @@
 
             <div class="row mb-3">
                 <div class="col-6">
-                    <span class="font-weight-bold" style="font-size:15px;">illuma(001) Total Amount Due</span><br>
-                    <span class="font-weight-bold" style="font-size:15px;">Account ID : illuma Care
-                        Connections(012)</span><br>
+                    <span class="font-weight-bold" style="font-size:15px;">illuma(001)</span><br>
+                    <span class="font-weight-bold" style="font-size:15px;">Account ID : {{ $project->name }}(012)</span><br>
                     <span class="font-weight-bold" style="font-size:15px;">Category : Web app development</span>
                 </div>
                 <div class="col-6 text-right">
