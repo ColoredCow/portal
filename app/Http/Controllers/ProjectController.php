@@ -127,7 +127,7 @@ class ProjectController extends Controller
     public function generateInvoice(Request $request, Project $project)
     {
         $pdf = App::make('snappy.pdf.wrapper');
-        $pdf->loadView('project.invoice-templates.default', ['isPdf' => true]);
+        $pdf->loadView('project.invoice-templates.default', ['isPdf' => true, 'project' => $project]);
         return $pdf->inline();
     }
 }
