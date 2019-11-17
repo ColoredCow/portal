@@ -15,12 +15,11 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @endif
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div id="app">
-        <div class="py-4" style="background-color: #fff">
+        <div class="py-4" style="background-color: #fff; color:#000">
             <div class="text-center" style="font-size:30px;">
                 <p>INVOICE</p>
             </div>
@@ -272,6 +271,11 @@
 
             </div>
 
+            <div class="row mt-5">
+                <div class="col-12 text-center text-muted">
+                    <p>This is a system generated invoice and need not to be signed.</p>
+                </div>
+            </div>
             
 
         </div>
