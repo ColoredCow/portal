@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use App\Models\Project;
-use App\Models\HR\Employee;
-use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
+use App\Models\Client;
+use App\Models\HR\Employee;
+use App\Models\Project;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -130,9 +130,10 @@ class ProjectController extends Controller
         //
     }
 
+
     /**
      * Add Employees to this Project.
-     *
+ *
      * @param  \App\Models\Project  $project
      * @param  \App\Http\Requests\ProjectRequest  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -143,6 +144,7 @@ class ProjectController extends Controller
 
         return redirect(route('projects.show', $project))->with('status', 'Employee added to the project successfully!');
     }
+
 
     /**
      * Remove Employees from this Project.
