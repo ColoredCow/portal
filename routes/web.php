@@ -13,7 +13,7 @@
 
 
 Route::get('/show', function() {
-    return view('project.invoice-templates.default');
+    return view('project.invoice-templates.default', ['isPdf' => false]);
 });
 
 

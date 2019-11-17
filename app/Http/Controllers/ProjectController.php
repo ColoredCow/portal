@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use App\Http\Requests\ProjectRequest;
 
 class ProjectController extends Controller
@@ -124,7 +125,9 @@ class ProjectController extends Controller
     }
 
     public function generateInvoice(Request $request, Project $project) {
-        dd("jji");
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('project.invoice-templates.default', ['isPdf' => true]);
+        return $pdf->inline();
     }
 
 }
