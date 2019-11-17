@@ -37,7 +37,6 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-     
         $this->middleware('guest')->except('logout');
     }
 
@@ -48,7 +47,6 @@ class LoginController extends Controller
      */
     public function redirectToProvider($provider)
     {
-        
         switch ($provider) {
             case 'google':
                 return Socialite::driver($provider)->with(['hd' => config('constants.gsuite.client-hd')])->redirect();
