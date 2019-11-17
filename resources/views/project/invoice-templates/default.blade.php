@@ -21,10 +21,10 @@
     <div id="app">
         <div class="py-4" style="background-color: #fff; color:#000">
             <div class="text-center" style="font-size:30px;">
-                <p>INVOICE</p>
+                <p class="font-weight-bold">INVOICE</p>
             </div>
 
-            <div class="row mb-4">
+            <div class="row mb-3">
                 <div class="col-6">
                     <div class="w-75">
                         @if($isPdf)
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="row mb-4">
+            <div class="row mb-3">
                 <div class="col-6">
                     <span class="font-weight-bold" style="font-size:15px;">Bill To</span>
                     <p>
@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="row mb-4">
+            <div class="row mb-3">
                 <div class="col-6">
                     <span class="font-weight-bold" style="font-size:15px;">illuma(001) Total Amount Due</span><br>
                     <span class="font-weight-bold" style="font-size:15px;">Account ID : illuma Care
@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-3">
                 <div class="row ">
                     <div class="col-4 pr-0">
                         <div style="background-color: #000; margin-right: 1px;">
@@ -173,7 +173,7 @@
             </div>
 
 
-            <div class="row mb-5">
+            <div class="row mb-4">
                 <div class="offset-4 col-8">
                     <div class="row">
                         <div class="col-10"> Total</div>
@@ -204,7 +204,7 @@
                 </div>
             </div>
 
-            <div class="row mb-4">
+            <div class="row mb-3">
                 <div class="col-6">
 
                     <span class="font-weight-bold" style="font-size:15px;">Transaction Details</span>
@@ -271,7 +271,7 @@
 
             </div>
 
-            <div class="row mt-5">
+            <div class="row mt-4">
                 <div class="col-12 text-center text-muted">
                     <p>This is a system generated invoice and need not to be signed.</p>
                 </div>
