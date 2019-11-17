@@ -12,11 +12,6 @@
  */
 
 
-Route::get('/show', function() {
-    return view('project.invoice-templates.default', ['isPdf' => false]);
-});
-
-
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
