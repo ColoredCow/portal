@@ -174,7 +174,7 @@
             </div>
 
 
-            <div class="row mb-4">
+            <div class="row mb-5">
                 <div class="offset-4 col-8">
                     <div class="row">
                         <div class="col-10"> Total</div>
@@ -205,21 +205,54 @@
                 </div>
             </div>
 
-
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col-6">
-                    Transaction Details <br>
-                    Transaction Method : Wire Transfer <br>
-                    Bank Name : Citibank N.A. Delhi, India<br>
-                    Swift Code: CITIINBX<br>
+
+                    <span class="font-weight-bold" style="font-size:15px;">Transaction Details</span>
+                    <div class="row">
+                        <div class="col-6">Transaction Method:</div>
+                        <div class="col-6">Wire Transfer</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">Bank Name :</div>
+                        <div class="col-6">Citibank N.A. Delhi, India</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">Swift Code:</div>
+                        <div class="col-6">CITIINBX</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">Bank/IFCI Code :</div>
+                        <div class="col-6">CITI0000002</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">Account Number :</div>
+                        <div class="col-6">0047570228</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">A/C Holder Name :</div>
+                        <div class="col-6">ColoredCow Consulting</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">Phone :</div>
+                        <div class="col-6">91-9818571035</div>
+                    </div>
                 </div>
             </div>
 
-            <div>
+            <div class="mb-4">
                 <a href="https://google.com">For more details of this invoice you can visit this sheet.</a>
                 <br>
                 Thank you for your business. It’s a pleasure to work with you on your project.
             </div>
+
+
 
             <div>
                 Sincerely,<br>
