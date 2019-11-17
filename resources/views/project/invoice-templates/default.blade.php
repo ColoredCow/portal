@@ -24,7 +24,7 @@
                 <p class="font-weight-bold">INVOICE</p>
             </div>
 
-            <div class="row mb-3">
+            <div class="row mb-5">
                 <div class="col-6">
                     <div class="w-75">
                         @if($isPdf)
@@ -171,7 +171,6 @@
                 </div>
                 <hr class="my-1">
             </div>
-
 
             <div class="row mb-4">
                 <div class="offset-4 col-8">
