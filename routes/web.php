@@ -11,6 +11,12 @@
 |
  */
 
+
+Route::get('/show', function() {
+    return view('project.invoice-templates.default');
+});
+
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
@@ -132,6 +138,9 @@ Route::middleware('auth')->group(function () {
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
     Route::post('projects/{project}/add-employee', 'ProjectController@addEmployee');
     Route::post('projects/{project}/remove-employee', 'ProjectController@removeEmployee');
+    
+    Route::get('project/{project}/generate-invoice', 'ProjectController@generateInvoice')->name('project.generate-invoice');
+
     Route::get('my-projects/{employee}', 'hr\Employees\EmployeeController@showProjects')->name('projects.my-projects');
 
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
@@ -194,4 +203,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('crm', 'CRM\CRMController@index')->name('crm');
     Route::resource('comments', 'CommentController')->only(['update', 'destroy']);
+
+
 });
