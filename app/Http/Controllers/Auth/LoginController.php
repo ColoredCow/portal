@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -37,6 +37,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+     
         $this->middleware('guest')->except('logout');
     }
 
@@ -47,6 +48,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider($provider)
     {
+        
         switch ($provider) {
             case 'google':
                 return Socialite::driver($provider)->with(['hd' => config('constants.gsuite.client-hd')])->redirect();

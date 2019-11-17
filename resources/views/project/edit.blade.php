@@ -7,12 +7,16 @@
     <br><br>
     <div class="row">
         <div class="col-md-6"><h1>Edit Project</h1></div>
-        <div class="col-md-6"><a href="{{ route('projects.create') }}" class="btn btn-success float-right">Create Project</a></div>
+        <div class="col-md-6">
+            <div class="">
+                <a href="{{ route('projects.create') }}" class="btn btn-success float-right">Create new Project</a>
+                <a href="{{ route('project.generate-invoice', $project) }}" class="btn btn-info float-right mr-3">Generate Invoice</a>
+            </div>
+        </div>
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
         <form action="{{ route('projects.update', $project->id) }}" method="POST">
-
             {{ csrf_field() }}
             {{ method_field('PUT') }}
 
@@ -91,23 +95,28 @@
         @endforeach
     @endif
     <project-stage-component
-    v-show="newStage"
-    :stage="[]"
-    :stage-route="{{json_encode( route('project.stage'))}}"
-    :csrf-token="{{ json_encode(csrf_token()) }}"
-    :project-id="{{ $project->id }}"
-    :client="{{ json_encode($project->client) }}"
-    :configs="{{ json_encode([
-        'currencies' => config('constants.currency'),
-        'projectTypes' => config('constants.project.type'),
-        'gst' => config('constants.finance.gst'),
-        'invoiceStatus' => config('constants.finance.invoice.status'),
-        'chequeStatus' => config('constants.cheque_status'),
-        'paymentTypes' => config('constants.payment_types'),
-        'countries' => config('constants.countries'),
-    ]) }}"
+        v-show="newStage"
+        :stage="[]"
+        :stage-route="{{json_encode( route('project.stage'))}}"
+        :csrf-token="{{ json_encode(csrf_token()) }}"
+        :project-id="{{ $project->id }}"
+        :client="{{ json_encode($project->client) }}"
+        :configs="{{ json_encode([
+            'currencies' => config('constants.currency'),
+            'projectTypes' => config('constants.project.type'),
+            'gst' => config('constants.finance.gst'),
+            'invoiceStatus' => config('constants.finance.invoice.status'),
+            'chequeStatus' => config('constants.cheque_status'),
+            'paymentTypes' => config('constants.payment_types'),
+            'countries' => config('constants.countries'),
+        ]) }}"
     ></project-stage-component>
 
-    <button class="btn btn-secondary float-right my-5" type="button" id="project_new_stage" v-show="!newStage" v-on:click="newStage = !newStage">Add new stage</button>
+    <button class="btn btn-secondary float-right my-5" 
+        type="button" 
+        id="project_new_stage" 
+        v-show="!newStage" 
+        v-on:click="newStage = !newStage">Add new stage
+    </button>
 </div>
 @endsection
