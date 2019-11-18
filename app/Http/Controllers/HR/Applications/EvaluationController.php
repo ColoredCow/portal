@@ -99,7 +99,7 @@ class EvaluationController extends Controller
 
         $parameterDetails = self::getParameterGeneralInfo($parameter);
 
-        if (count($parameter->applicationEvaluation)) {
+        if ($parameter->applicationEvaluation) {
             $parameterDetails['evaluation'] = true;
             $parameterDetails['evaluation_detail'] = self::getEvaluationDetails($parameter->applicationEvaluation);
         } else {
