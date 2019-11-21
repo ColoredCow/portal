@@ -21,7 +21,7 @@ class CalendarEventService
     {
         $client = new Google_Client();
         $client->useApplicationDefaultCredentials();
-        $client->setSubject(env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'));
+        $client->setSubject(config('constants.gsuite.service-account-impersonate'));
         $client->setScopes(Google_Service_Calendar::CALENDAR);
         $this->service = new Google_Service_Calendar($client);
     }

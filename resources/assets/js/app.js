@@ -9,6 +9,7 @@ require('./bootstrap');
 
 import 'jquery-ui/ui/widgets/datepicker.js';
 import ImageCompressor from 'image-compressor.js';
+var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
 
 window.Vue = require('vue');
 
@@ -22,6 +23,8 @@ Vue.component('project-stage-component', require('./components/ProjectStageCompo
 Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
 Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue'));
+Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue'));
+Vue.component('comment', require('./components/CommentItem.vue'));
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
@@ -189,7 +192,6 @@ $('.date-field').datepicker({
     dateFormat: "dd/mm/yy"
 });
 
-
 $('#form_invoice').on('change', '#client_id', function(){
     let form = $(this).closest('form');
     let client_id = $(this).val();
@@ -198,6 +200,11 @@ $('#form_invoice').on('change', '#client_id', function(){
         return false;
     }
     updateClientProjects(form, client_id);
+});
+
+$('#copy_weeklydose_service_url').tooltip({
+    trigger: 'click',
+    placement: 'bottom'
 });
 
 function updateClientProjects(form, client_id) {
@@ -221,11 +228,6 @@ function getProjectList(projects) {
     return html;
 }
 
-$('#copy_weeklydose_service_url').tooltip({
-  trigger: 'click',
-  placement: 'bottom'
-});
-
 function setTooltip(btn, message) {
 	$(btn).tooltip('hide')
 		.attr('data-original-title', message)
@@ -238,7 +240,6 @@ function hideTooltip(btn) {
 	}, 1000);
 }
 
-var weeklyDoseClipboard = new ClipboardJS('#copy_weeklydose_service_url');
 
 weeklyDoseClipboard.on('success', function(e) {
   setTooltip(e.trigger, 'Copied!');
@@ -294,7 +295,7 @@ if (document.getElementById('show_and_save_book')) {
     const bookForm = new Vue({
         el: '#show_and_save_book',
         data: {
-            addMethod: 'from_image',
+            addMethod: 'from_isbn',
             showInfo: false,
             book: {},
             number_of_copies: 1,
@@ -324,7 +325,6 @@ if (document.getElementById('show_and_save_book')) {
 
             submitBookForm: function() {
                 let formData = new FormData(document.getElementById('book_form'));
-
                 if(this.compressedFile) {
                     formData.append('book_image', compressedFile, compressedFile.name);
                 }
@@ -362,6 +362,7 @@ if (document.getElementById('show_and_save_book')) {
                 }
                 this.buttons.disableSaveButton = true;
                 this.book.number_of_copies = this.number_of_copies;
+                this.book['on_kindle'] = document.getElementById('on_kindle').value;
                 axios.post(this.routes.store, this.book ).then (
                 (response) => {
                     this.buttons.disableSaveButton = false;
@@ -456,6 +457,9 @@ if (document.getElementById('books_listing')) {
             },
 
             strLimit: function (str, length) {
+                if(!str) {
+                    return '';
+                }
                 return str.length > length ? str.substring(0, length) + "..." : str;
             },
 
@@ -558,11 +562,18 @@ if (document.getElementById('show_book_info')) {
             borrowBookRoute:document.getElementById('show_book_info').dataset.borrowBookRoute
                         ? document.getElementById('show_book_info').dataset.borrowBookRoute
                         : '',
+            bookAMonthStoreRoute:document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
+                        ? document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
+                        : '',
+            bookAMonthDestroyRoute:document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute
+                        ? document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute
+                        : '',
             putBackBookRoute:document.getElementById('show_book_info').dataset.putBackBookRoute
                         ? document.getElementById('show_book_info').dataset.putBackBookRoute
                         : '',
             isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
             isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed ? true: false,
+            isBookAMonth: document.getElementById('show_book_info').dataset.isBookAMonth ? true: false,
             readers: document.getElementById('show_book_info').dataset.readers
                         ? document.getElementById('show_book_info').dataset.readers
                         : [],
@@ -578,6 +589,22 @@ if (document.getElementById('show_book_info')) {
                         return false;
                     }
                     this.readers = response.data.readers;
+            },
+
+            addToBookAMonth: async function (action) {
+                let response = await axios.post(this.bookAMonthStoreRoute);
+                this.isBookAMonth = true;
+                if(!response.data) {
+                    return false;
+                }
+            },
+
+            removeFromBookAMonth: async function (action) {
+                let response = await axios.post(this.bookAMonthDestroyRoute);
+                this.isBookAMonth = false;
+                if (!response.data) {
+                    return false;
+                }
             },
 
             borrowTheBook: async function() {

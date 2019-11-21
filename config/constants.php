@@ -5,6 +5,9 @@ return [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
     ],
+    'google' => [
+        'vision-api-key' => env('GOOGLE_VISION_API_KEY'),
+    ],
     'http_response_messages' => [
         '403' => 'Forbidden! You don\'t have necessary permissions to access this area. Please contact your administrator.',
         '404' => 'Sorry, the page you are looking for could not be found.',
@@ -184,5 +187,19 @@ return [
             'fixed_budget' => 'Fixed Budget',
             'hourly' => 'Hourly',
         ],
+    ],
+    'months' => [
+        1 => 'January',
+        2 => 'February',
+        3 => 'March',
+        4 => 'April',
+        5 => 'May',
+        6 => 'June',
+        7 => 'July',
+        8 => 'August',
+        9 => 'September',
+        10 => 'October',
+        11 => 'November',
+        12 => 'December',
     ],
 ];
