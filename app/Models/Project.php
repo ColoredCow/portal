@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\HR\Employee;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -36,5 +37,13 @@ class Project extends Model
     public function stages()
     {
         return $this->hasMany(ProjectStage::class);
+    }
+
+    /**
+     * Get the employees for the project.
+     */
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class)->withPivot('contribution_type');
     }
 }

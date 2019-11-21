@@ -22,4 +22,17 @@ class EmployeeController extends Controller
     {
         return view('hr.employees.show', compact('employee'));
     }
+
+    /**
+     * Display the project details of an Employee
+     *
+     * @param  \App\Models\Employee $employee
+     * @return \Illuminate\Http\Response
+     */
+    public function showProjects(Employee $employee)
+    {
+        $employee->load('projects');
+
+        return view('hr.employees.projects', compact('employee'));
+    }
 }

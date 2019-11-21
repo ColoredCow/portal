@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="container" id="show_book_info"
     data-book="{{ json_encode($book) }}"
     data-is-read="{{ $book->readers->contains(auth()->user()) }}"
