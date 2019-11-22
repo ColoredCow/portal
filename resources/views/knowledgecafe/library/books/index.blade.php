@@ -94,6 +94,8 @@
                         <h2 v-if="index < 3" class="badge badge-secondary px-2 py-1 mr-1">@{{ category.name }} </h2>
                     </span>
                 </div>
+
+
             </div>
         </div>
     </div>

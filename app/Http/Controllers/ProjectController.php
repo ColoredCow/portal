@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\HR\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\ProjectRequest;
@@ -73,7 +74,13 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        $project->load('stages', 'stages.billings', 'stages.billings.invoice', 'employees');
+
+        return view('project.show')->with([
+            'project' => $project,
+            'clients' => Client::select('id', 'name')->get(),
+            'employees' => Employee::select('id', 'name')->get(),
+        ]);
     }
 
     /**
@@ -129,5 +136,33 @@ class ProjectController extends Controller
         $pdf = App::make('snappy.pdf.wrapper');
         $pdf->loadView('project.invoice-templates.default', ['isPdf' => true, 'project' => $project]);
         return $pdf->inline();
+    }
+
+    /**
+     * Add Employees to this Project.
+ *
+     * @param  \App\Models\Project  $project
+     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addEmployee(Project $project, Request $request)
+    {
+        $project->employees()->attach($request->get('employeeId'), ['contribution_type' => $request->get('contribution')]);
+
+        return redirect(route('projects.show', $project))->with('status', 'Employee added to the project successfully!');
+    }
+
+    /**
+     * Remove Employees from this Project.
+     *
+     * @param  \App\Models\Project  $project
+     * @param  \App\Http\Requests\ProjectRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function removeEmployee(Project $project, Request $request)
+    {
+        $project->employees()->detach($request->get('employeeId'));
+
+        return redirect(route('projects.show', $project))->with('status', 'Employee removed from the project successfully!');
     }
 }

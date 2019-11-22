@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
 
+
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
 
@@ -136,7 +137,6 @@ Route::middleware('auth')->group(function () {
     Route::get('project/{project}/generate-invoice', 'ProjectController@generateInvoice')->name('project.generate-invoice');
 
     Route::get('my-projects/{employee}', 'hr\Employees\EmployeeController@showProjects')->name('projects.my-projects');
-
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
@@ -179,6 +179,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('disablesuggestion', 'BookController@disableSuggestion')->name('books.disableSuggestion');
                 Route::get('enablesuggestion', 'BookController@enableSuggestion')->name('books.enableSuggestion');
                 Route::get('mark-as-borrowed/{book}', 'BookController@markAsBorrowed')->name('books.markAsBorrowed');
+                Route::get('put-back-to-library/{book}', 'BookController@putBackToLibrary')->name('books.putBack');
                 Route::post('add-to-bam/{book}', 'BookController@selectBookForCurrentMonth')->name('books.addToBam');
                 Route::get('put-back-to-library/{book}', 'BookController@putBackToLibrary')->name('books.putBack');
                 Route::post('remove-from-bam/{book}', 'BookController@unselectBookFromCurrentMonth')->name('books.removeFromBam');
