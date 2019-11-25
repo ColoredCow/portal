@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\HR;
 
+use App\User;
+use App\Models\HR\Job;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\JobRequest;
-use App\Models\HR\Job;
-use App\User;
-use Illuminate\Support\Facades\Input;
 
 class JobController extends Controller
 {
@@ -31,7 +30,7 @@ class JobController extends Controller
                 $query->isOpen()->get();
             }])
             ->latest()
-            ->appends(Input::except('page'));
+            ->appends(Request::except('page'));
 
         request()->is('*recruitment/opportunities*') ? $jobs->typeRecruitment() : $jobs->typeVolunteer();
         $jobs->paginate(config('constants.pagination_size'));
