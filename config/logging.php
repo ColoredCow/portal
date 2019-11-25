@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -32,7 +31,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily'],
         ],
 
         'single' => [
@@ -66,5 +65,4 @@ return [
             'level' => 'debug',
         ],
     ],
-
 ];
