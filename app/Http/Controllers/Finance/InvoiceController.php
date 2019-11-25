@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Finance;
 
+use App\Models\Client;
 use App\Helpers\DateHelper;
 use App\Helpers\FileHelper;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Finance\InvoiceRequest;
-use App\Models\Client;
 use App\Models\Finance\Invoice;
-use App\Models\ProjectStageBilling;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
+use App\Models\ProjectStageBilling;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
+use App\Http\Requests\Finance\InvoiceRequest;
 
 class InvoiceController extends Controller
 {
@@ -35,7 +35,7 @@ class InvoiceController extends Controller
             $startDate = $request->get('start');
             $endDate = $request->get('end');
             $attr = [
-                'invoices' => Invoice::filterBySentDate($startDate, $endDate, true)->appends(Input::except('page')),
+                'invoices' => Invoice::filterBySentDate($startDate, $endDate, true)->appends(Request::except('page')),
                 'startDate' => $startDate,
                 'endDate' => $endDate,
             ];

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\HR\Volunteers;
 
-use App\Http\Controllers\HR\JobController;
 use App\Models\HR\Job;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\HR\JobController;
 
 class VolunteerOpportunityController extends JobController
 {
@@ -29,7 +29,7 @@ class VolunteerOpportunityController extends JobController
             ->typeVolunteer()
             ->latest()
             ->paginate(config('constants.pagination_size'))
-            ->appends(Input::except('page'));
+            ->appends(Request::except('page'));
 
         return view('hr.job.index')->with([
             'jobs' => $jobs,

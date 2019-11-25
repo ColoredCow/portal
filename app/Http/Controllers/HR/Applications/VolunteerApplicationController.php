@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
-use App\Http\Controllers\HR\Applications\ApplicationController;
 use App\Models\HR\Application;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 class VolunteerApplicationController extends ApplicationController
 {
@@ -30,7 +29,7 @@ class VolunteerApplicationController extends ApplicationController
             ->applyFilter($filters)
             ->latest()
             ->paginate(config('constants.pagination_size'))
-            ->appends(Input::except('page'));
+            ->appends(Request::except('page'));
 
         $attr = [
             'applications' => $applications,
