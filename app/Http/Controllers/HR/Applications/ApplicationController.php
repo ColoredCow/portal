@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
-use App\Helpers\ContentHelper;
-use App\Helpers\FileHelper;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\HR\ApplicationRequest;
-use App\Http\Requests\HR\CustomApplicationMailRequest;
-use App\Mail\HR\Application\CustomApplicationMail;
-use App\Mail\HR\Application\JobChanged;
-use App\Mail\HR\Application\RoundNotConducted;
-use App\Models\HR\Application;
-use App\Models\HR\ApplicationMeta;
+use App\User;
 use App\Models\HR\Job;
 use App\Models\Setting;
-use App\User;
-use Illuminate\Http\Request;
+use App\Helpers\FileHelper;
+use App\Helpers\ContentHelper;
+use App\Models\HR\Application;
+use App\Models\HR\ApplicationMeta;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Response;
+use App\Mail\HR\Application\JobChanged;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
+use App\Http\Requests\HR\ApplicationRequest;
+use App\Mail\HR\Application\RoundNotConducted;
+use App\Mail\HR\Application\CustomApplicationMail;
+use App\Http\Requests\HR\CustomApplicationMailRequest;
 
 abstract class ApplicationController extends Controller
 {
@@ -43,7 +42,7 @@ abstract class ApplicationController extends Controller
             ->applyFilter($filters)
             ->latest()
             ->paginate(config('constants.pagination_size'))
-            ->appends(Input::except('page'));
+            ->appends(Request::except('page'));
 
         $countFilters = array_except($filters, ['status']);
         $attr = [
@@ -165,7 +164,7 @@ abstract class ApplicationController extends Controller
 
         Mail::send(new CustomApplicationMail($application, $mailDetails['mail_subject'], $mailDetails['mail_body']));
 
-        $status = "Mail sent successfully to <b>" . $application->applicant->name . "</b> at <b>" . $application->applicant->email . "</b>.<br>";
+        $status = 'Mail sent successfully to <b>' . $application->applicant->name . '</b> at <b>' . $application->applicant->email . '</b>.<br>';
 
         return redirect()->back()
             ->with('status', $status);
