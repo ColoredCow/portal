@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProjectRequest;
 use App\Models\Client;
-use App\Models\HR\Employee;
 use App\Models\Project;
+use App\Models\HR\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use App\Http\Requests\ProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -130,6 +131,12 @@ class ProjectController extends Controller
         //
     }
 
+    public function generateInvoice(Request $request, Project $project)
+    {
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('project.invoice-templates.default', ['isPdf' => true, 'project' => $project]);
+        return $pdf->inline();
+    }
 
     /**
      * Add Employees to this Project.
@@ -144,7 +151,6 @@ class ProjectController extends Controller
 
         return redirect(route('projects.show', $project))->with('status', 'Employee added to the project successfully!');
     }
-
 
     /**
      * Remove Employees from this Project.
