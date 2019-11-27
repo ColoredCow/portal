@@ -36,15 +36,21 @@
                                     </tr>
                                     <tr>
                                         <td>Modules</td>
-                                        <td>Status</td>
                                         <td>
-                                            <select class="form-control" id="exampleFormControlSelect1">
+                                            <select class="form-control">
+                                                @foreach(config('constants.project.timesheet.module.status') as $statusSlug => $statusTitle)
+                                                    <option value="{{ $statusSlug }}">{{ $statusTitle }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control">
                                                 @foreach(config('constants.project.timesheet.module.subtasks') as $subtaskSlug => $subtaskTitle)
                                                     <option value="{{ $subtaskSlug }}">{{ $subtaskTitle }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td><input type="number" name="" class="form-control"></td>
+                                        <td><input type="number" name="" class="form-control" readonly="readonly"></td>
                                         <td><input type="number" name="" class="form-control"></td>
                                         <td><input type="number" name="" class="form-control"></td>
                                         <td><input type="number" name="" class="form-control"></td>

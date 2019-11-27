@@ -200,6 +200,12 @@ return [
                     'setup' => 'Setup',
                     'discussions' => 'Discussions',
                 ],
+                'status' => [
+                    'pending' => 'Pending',
+                    'in-progress' => 'In Progress',
+                    'in-hold' => 'On Hold',
+                    'completed' => 'Completed',
+                ],
             ],
         ],
     ],
