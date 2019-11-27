@@ -14,12 +14,13 @@
     </div>
     @include('status', ['errors' => $errors->all()])
     <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between">
             <span>Project Details</span>
+            <a href="{{ route('project.timesheet', $project) }}" class="btn btn-info c-pointer">TimeSheets</a>
         </div>
 
         <project-details-component
-            :project="{{$project}}"
+            :project="{{ $project }}"
             :clients="{{$clients}}"
             :employees="{{$employees}}"
         ></project-details-component>

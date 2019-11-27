@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\HR\Employee;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Project\ProjectTimesheet;
 
 class Project extends Model
 {
@@ -45,5 +46,13 @@ class Project extends Model
     public function employees()
     {
         return $this->belongsToMany(Employee::class)->withPivot('contribution_type');
+    }
+
+    /**
+     * Get all project timesheets.
+     */
+    public function timesheets()
+    {
+        return $this->hasMany(ProjectTimesheet::class);
     }
 }
