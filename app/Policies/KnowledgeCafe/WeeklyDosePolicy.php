@@ -67,4 +67,9 @@ class WeeklyDosePolicy
     {
         return $user->hasPermissionTo('weeklydoses.view');
     }
+
+    public function viewAny(User $user)
+    {
+        return $user->hasPermissionTo('weeklydoses.view');
+    }
 }
