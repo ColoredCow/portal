@@ -187,6 +187,21 @@ return [
             'fixed_budget' => 'Fixed Budget',
             'hourly' => 'Hourly',
         ],
+        'timesheet' => [
+            'module' => [
+                'subtasks' => [
+                    'research' => 'Research',
+                    'requirements' => 'Requirements',
+                    'design' => 'Design',
+                    'development' => 'Development',
+                    'review' => 'Review',
+                    'qa' => 'QA',
+                    'devops' => 'DevOps',
+                    'setup' => 'Setup',
+                    'discussions' => 'Discussions',
+                ],
+            ],
+        ],
     ],
     'months' => [
         1 => 'January',

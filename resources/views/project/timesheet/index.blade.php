@@ -14,8 +14,8 @@
                     <div class="card">
                         <div class="card-header" id="timesheet_{{ $timesheet->id }}">
                             <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ $timesheet->id }}" aria-expanded="true" aria-controls="collapse_{{ $timesheet->id }}">
-                                    {{ $project->name }}: {{ $timesheet->start_date }} - {{ $timesheet->end_date }}
+                                <button class="btn btn-link text-dark" type="button" data-toggle="collapse" data-target="#collapse_{{ $timesheet->id }}" aria-expanded="true" aria-controls="collapse_{{ $timesheet->id }}">
+                                    {{ $project->name }}: <strong>{{ $timesheet->start_date->format('d-M-Y') }}</strong> - <strong>{{ $timesheet->end_date->format('d-M-Y') }}</strong>
                                 </button>
                             </h2>
                         </div>
@@ -27,10 +27,34 @@
                                         <th>Modules</th>
                                         <th>Status</th>
                                         <th>Subtask</th>
+                                        <th>Total</th>
+                                        <th>Mon, 25 Nov</th>
+                                        <th>Tue, 26 Nov</th>
+                                        <th>Wed, 27 Nov</th>
+                                        <th>Thu, 28 Nov</th>
+                                        <th>Fri, 29 Nov</th>
                                     </tr>
-                                   {{-- @foreach($timesheet->efforts as $effort)
+                                    <tr>
+                                        <td>Modules</td>
+                                        <td>Status</td>
+                                        <td>
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                                @foreach(config('constants.project.timesheet.module.subtasks') as $subtaskSlug => $subtaskTitle)
+                                                    <option value="{{ $subtaskSlug }}">{{ $subtaskTitle }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td><input type="number" name="" class="form-control"></td>
+                                        <td><input type="number" name="" class="form-control"></td>
+                                        <td><input type="number" name="" class="form-control"></td>
+                                        <td><input type="number" name="" class="form-control"></td>
+                                        <td><input type="number" name="" class="form-control"></td>
+                                        <td><input type="number" name="" class="form-control"></td>
+                                    </tr>
+                                    {{-- @foreach($timesheet->efforts as $effort)
                                    @endforeach --}}
                                 </table>
+                                <button class="btn btn-primary">Add effort</button>
                             </div>
                         </div>
                     </div>
