@@ -1,47 +1,42 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <br>
     @include('finance.menu', ['active' => 'projects'])
     <br><br>
     <div class="row">
-        <div class="col-md-6"><h1>TimeSheets</h1></div>
-        <div class="col-md-6"><a href="{{ route('project.timesheet.create', $project) }}" class="btn btn-success float-right">Setup new timesheet</a></div>
+        <div class="col-md-6 pl-0"><h1>Time sheets</h1></div>
+        <div class="col-md-6 pr-0"><a href="{{ route('project.timesheet.create', $project) }}" class="btn btn-success float-right">Setup new timesheet</a></div>
+
+        @if (! empty($timesheets))
+            <div class="accordion w-100" id="accordionExample">
+                @foreach($timesheets as $timesheet)
+                    <div class="card">
+                        <div class="card-header" id="timesheet_{{ $timesheet->id }}">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ $timesheet->id }}" aria-expanded="true" aria-controls="collapse_{{ $timesheet->id }}">
+                                    {{ $project->name }}: {{ $timesheet->start_date }} - {{ $timesheet->end_date }}
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapse_{{ $timesheet->id }}" class="collapse {{ $loop->index ? '' : 'show' }}" aria-labelledby="timesheet_{{ $timesheet->id }}" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Modules</th>
+                                        <th>Status</th>
+                                        <th>Subtask</th>
+                                    </tr>
+                                   {{-- @foreach($timesheet->efforts as $effort)
+                                   @endforeach --}}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
-
-    <table class="table table-striped table-bordered">
-        <tr>
-            <th>Cycle</th>
-            <th>Estimated effort</th>
-            <th>Current Effort</th>
-            <th>Action</th>
-        </tr>
-
-
-        @foreach ($project ?[]:[] as $project)
-        	<tr>
-        		<td>
-        			<a href="{{ route('projects.show', $project->id) }}">{{ $project->name }}</a>
-        		</td>
-        		<td>{{ $project->client->name }}</td>
-                <td>
-                @switch ($project->status)
-                    @case('active')
-                        <span class="badge badge-pill badge-success">
-                        @break
-                    @case('inactive')
-                        <span class="badge badge-pill badge-danger">
-                        @break
-                @endswitch
-                {{ $project->status }}</span>
-                </td>
-                <td>
-                    <a href="{{ route('projects.edit', $project->id) }}">Edit</a>
-                </td>
-        	</tr>
-        @endforeach
-    </table>
-
 </div>
 @endsection
