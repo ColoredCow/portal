@@ -19,11 +19,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="name" class="field-required">Start date</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Start date" required="required" value="{{ old('name') }}">
+                        <input type="text" class="form-control date-field" autocomplete="off" name="start_date" id="start_date" placeholder="Start date" required="required" value="{{ date('01/m/Y') }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="client_id" class="field-required">End Date</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="End Date" required="required" value="{{ old('name') }}">
+                        <input type="text" class="form-control date-field" autocomplete="off" name="end_date" id="end_date" placeholder="End Date" required="required" value="{{ date('t/m/Y') }}">
                     </div>
                 </div>
 
@@ -32,7 +32,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="client_project_id" >Estimated hours</label>
-                        <input type="number" class="form-control" name="client_project_id" id="client_project_id" placeholder="Estimated hours" value="{{ old('client_project_id') }}">
+                        <input type="number" class="form-control" name="estimated_hours" id="estimated_hours" placeholder="Estimated hours" value="{{ old('client_project_id') }}">
                     </div>
                 </div>
             </div>

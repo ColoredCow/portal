@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Project;
 
 use App\Models\Project;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Project\ProjectTimesheet;
 
 class ProjectTimeSheetController extends Controller
 {
@@ -14,9 +16,9 @@ class ProjectTimeSheetController extends Controller
      */
     public function index(Project $project)
     {
-    
         return view('project.timesheet.index')->with([
             'project' => $project,
+            'timesheets' => $project->timesheets
         ]);
     }
 
@@ -33,5 +35,15 @@ class ProjectTimeSheetController extends Controller
         ]);
     }
 
-    
+
+     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function store(Project $project, Request $request)
+    {
+        $project->timesheets()->create($request->all());
+        return redirect()->route('project.timesheet', $project);
+    }
 }

@@ -763,3 +763,4 @@ if (document.getElementById('user_roles_table')) {
 
 require('./finance/invoice');
 require('./finance/payment');
+require('./project/timesheet');
