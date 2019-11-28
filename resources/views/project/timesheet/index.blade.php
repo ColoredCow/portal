@@ -9,13 +9,18 @@
         <div class="col-md-6 pr-0"><a href="{{ route('project.timesheet.create', $project) }}" class="btn btn-success float-right">Setup new timesheet</a></div>
 
         @if (! empty($timesheets))
-            <div class="accordion w-100" id="accordionExample">
+            <div id="project-timesheets-container" class="w-100">
                 @foreach($timesheets as $timesheet)
-                    <timesheet-component
-                        :timesheet="{{ $timesheet }}"
-                        :project="{{ $project }}"
-                        :subtasks="{{ json_encode(config('constants.project.timesheet.module.subtasks')) }}"
-                        ></timesheet-component>
+                    <a href="{{ route('project.timesheet.show', [
+                        'project' => $project,
+                        'timesheet' => $timesheet
+                    ]) }}" class="mb-3 d-block">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>{{ $timesheet->start_date->format('d-M-Y')  }} - {{ $timesheet->end_date->format('d-M-Y') }}</h4>
+                            </div>
+                        </div>
+                    </a>
                 @endforeach
             </div>
         @endif

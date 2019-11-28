@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Project;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Project\ProjectTimesheet;
 
 class ProjectTimeSheetController extends Controller
 {
@@ -42,5 +43,13 @@ class ProjectTimeSheetController extends Controller
     {
         $project->timesheets()->create($request->all());
         return redirect()->route('project.timesheet', $project);
+    }
+
+    public function show(Project $project, ProjectTimesheet $timesheet)
+    {
+        return view('project.timesheet.show')->with([
+            'project' => $project,
+            'timesheet' => $timesheet,
+        ]);
     }
 }

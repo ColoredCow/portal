@@ -161,6 +161,7 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('project/{project}/timesheet', 'project\ProjectTimeSheetController@index')->name('project.timesheet');
+    Route::get('project/{project}/timesheet/{timesheet}', 'project\ProjectTimeSheetController@show')->name('project.timesheet.show');
     Route::get('project/{project}/timesheet/create', 'project\ProjectTimeSheetController@create')->name('project.timesheet.create');
     Route::post('project/{project}/timesheet', 'project\ProjectTimeSheetController@store')->name('project.timesheet.store');
 

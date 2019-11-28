@@ -113,9 +113,9 @@ if (document.getElementById('project_container')) {
     });
 }
 
-if (document.getElementById('project_timesheets_container')) {
+if (document.getElementById('project_timesheet_container')) {
     const projectContainer = new Vue({
-        el: '#project_timesheets_container',
+        el: '#project_timesheet_container',
         data: {
             newStage: false
         },
