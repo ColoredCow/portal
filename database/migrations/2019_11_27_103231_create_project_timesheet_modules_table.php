@@ -21,7 +21,7 @@ class CreateProjectTimesheetModulesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('project_timesheet_modules', function ($table) {
+        Schema::table('project_timesheet_modules', function (Blueprint $table) {
             $table->foreign('project_timesheets_id')->references('id')->on('project_timesheets');
         });
     }

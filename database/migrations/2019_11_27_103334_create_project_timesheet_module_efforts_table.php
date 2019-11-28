@@ -16,13 +16,13 @@ class CreateProjectTimesheetModuleEffortsTable extends Migration
         Schema::create('project_timesheet_module_efforts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('module_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('user_id');
             $table->string('subtask');
             $table->dateTime('spent_at');
             $table->timestamps();
         });
 
-        Schema::table('project_timesheet_modules', function ($table) {
+        Schema::table('project_timesheet_module_efforts', function (Blueprint $table) {
             $table->foreign('module_id')->references('id')->on('project_timesheet_modules');
             $table->foreign('user_id')->references('id')->on('users');
         });
