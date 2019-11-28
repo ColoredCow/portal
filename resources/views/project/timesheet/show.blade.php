@@ -17,9 +17,10 @@
     </div>
     <div>
         <timesheet-component
-            :timesheet="{{ $timesheet }}"
-            :project="{{ $project }}"
-            :subtasks="{{ json_encode(config('constants.project.timesheet.module.subtasks')) }}"
+            :timesheet = "{{ $timesheet }}"
+            :project = "{{ $project }}"
+            :subtasks = "{{ json_encode(config('constants.project.timesheet.module.subtasks')) }}"
+            :project-statuses = "{{ json_encode(config('constants.project.timesheet.module.status')) }}"
             ></timesheet-component>
     </div>
     @include('status', ['errors' => $errors->all()])
