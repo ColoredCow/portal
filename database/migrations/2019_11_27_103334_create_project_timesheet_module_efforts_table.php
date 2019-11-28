@@ -35,7 +35,10 @@ class CreateProjectTimesheetModuleEffortsTable extends Migration
      */
     public function down()
     {
-        Schema::dropForeign(['module_id', 'user_id']);
+        Schema::table('project_timesheet_module_efforts', function (Blueprint $table) {
+            $table->dropForeign(['module_id']);
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('project_timesheet_module_efforts');
     }
 }

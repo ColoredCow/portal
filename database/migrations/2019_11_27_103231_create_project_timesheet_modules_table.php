@@ -33,7 +33,9 @@ class CreateProjectTimesheetModulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropForeign('project_timesheets_id');
+        Schema::table('project_timesheet_modules', function (Blueprint $table) {
+            $table->dropForeign(['project_timesheets_id']);
+        });
         Schema::dropIfExists('project_timesheet_modules');
     }
 }
