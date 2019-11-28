@@ -15,14 +15,14 @@ class CreateProjectTimesheetModulesTable extends Migration
     {
         Schema::create('project_timesheet_modules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('project_timesheets_id');
-            $table->string('module_name');
-            $table->string('module_status');
+            $table->unsignedBigInteger('project_timesheet_id');
+            $table->string('name');
+            $table->string('status');
             $table->timestamps();
         });
 
         Schema::table('project_timesheet_modules', function (Blueprint $table) {
-            $table->foreign('project_timesheets_id')->references('id')->on('project_timesheets');
+            $table->foreign('project_timesheet_id')->references('id')->on('project_timesheets');
         });
     }
 
@@ -34,7 +34,7 @@ class CreateProjectTimesheetModulesTable extends Migration
     public function down()
     {
         Schema::table('project_timesheet_modules', function (Blueprint $table) {
-            $table->dropForeign(['project_timesheets_id']);
+            $table->dropForeign(['project_timesheet_id']);
         });
         Schema::dropIfExists('project_timesheet_modules');
     }
