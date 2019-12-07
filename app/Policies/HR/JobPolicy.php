@@ -2,8 +2,8 @@
 
 namespace App\Policies\HR;
 
-use App\Models\HR\Job;
 use App\User;
+use App\Models\HR\Job;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class JobPolicy
@@ -76,6 +76,14 @@ class JobPolicy
      * @return mixed
      */
     public function list(User $user)
+    {
+        if (request()->is('hr/volunteers*')) {
+            return $user->hasPermissionTo('hr_volunteers_jobs.view');
+        }
+        return $user->hasPermissionTo('hr_recruitment_jobs.view');
+    }
+
+    public function viewAny(User $user)
     {
         if (request()->is('hr/volunteers*')) {
             return $user->hasPermissionTo('hr_volunteers_jobs.view');

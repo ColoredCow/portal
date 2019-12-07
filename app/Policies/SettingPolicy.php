@@ -18,4 +18,9 @@ class SettingPolicy
     {
         return $user->hasPermissionTo('settings.update');
     }
+
+    public function viewAny(User $user)
+    {
+        return $user->hasPermissionTo('settings.view');
+    }
 }

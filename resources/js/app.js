@@ -25,6 +25,7 @@ Vue.component('applicant-round-action-component', require('./components/HR/Appli
 Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue'));
 Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue'));
 Vue.component('comment', require('./components/CommentItem.vue'));
+Vue.component('timesheet-component', require('./components/Project/TimesheetComponent.vue'));
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
@@ -101,6 +102,20 @@ if (document.getElementById('page_hr_applicant_edit')) {
 if (document.getElementById('project_container')) {
     const projectContainer = new Vue({
         el: '#project_container',
+        data: {
+            newStage: false
+        },
+        methods: {
+            createProjectStage: function() {
+                this.$refs.projectStage.create();
+            }
+        }
+    });
+}
+
+if (document.getElementById('project_timesheet_container')) {
+    const projectContainer = new Vue({
+        el: '#project_timesheet_container',
         data: {
             newStage: false
         },
@@ -763,3 +778,4 @@ if (document.getElementById('user_roles_table')) {
 
 require('./finance/invoice');
 require('./finance/payment');
+require('./project/timesheet');

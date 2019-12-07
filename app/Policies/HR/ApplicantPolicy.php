@@ -67,4 +67,9 @@ class ApplicantPolicy
     {
         return $user->hasPermissionTo('hr_applicants.view');
     }
+
+    public function viewAny(User $user)
+    {
+        return $user->hasPermissionTo('hr_applicants.view');
+    }
 }

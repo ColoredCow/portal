@@ -36,7 +36,12 @@ return [
         'enabled' => true,
         'binary' => env('PDF_BINARY'),
         'timeout' => false,
-        'options' => [],
+        'options' => [
+            'page-size' => 'B4',
+            'margin-left' => '20mm',
+            'margin-right' => '20mm',
+            'zoom' => 1.2,
+        ],
         'env' => [],
     ],
 

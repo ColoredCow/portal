@@ -14,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->setupEnvForOldPackages();
         Schema::defaultStringLength(191);
     }
 
@@ -25,5 +26,10 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    public function setupEnvForOldPackages()
+    {
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . config('constants.google_application_credentials'));
     }
 }

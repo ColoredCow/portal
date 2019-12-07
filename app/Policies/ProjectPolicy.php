@@ -67,4 +67,9 @@ class ProjectPolicy
     {
         return $user->hasPermissionTo('projects.view');
     }
+
+    public function viewAny(User $user)
+    {
+        return $user->hasPermissionTo('projects.view');
+    }
 }

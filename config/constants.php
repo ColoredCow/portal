@@ -187,6 +187,27 @@ return [
             'fixed_budget' => 'Fixed Budget',
             'hourly' => 'Hourly',
         ],
+        'timesheet' => [
+            'module' => [
+                'subtasks' => [
+                    'research' => 'Research',
+                    'requirements' => 'Requirements',
+                    'design' => 'Design',
+                    'development' => 'Development',
+                    'review' => 'Review',
+                    'qa' => 'QA',
+                    'devops' => 'DevOps',
+                    'setup' => 'Setup',
+                    'discussions' => 'Discussions',
+                ],
+                'status' => [
+                    'pending' => 'Pending',
+                    'in-progress' => 'In Progress',
+                    'in-hold' => 'On Hold',
+                    'completed' => 'Completed',
+                ],
+            ],
+        ],
     ],
     'months' => [
         1 => 'January',
@@ -202,4 +223,6 @@ return [
         11 => 'November',
         12 => 'December',
     ],
+
+    'google_application_credentials' => env('GOOGLE_APPLICATION_CREDENTIALS')
 ];

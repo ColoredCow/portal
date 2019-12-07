@@ -67,4 +67,9 @@ class BookPolicy
     {
         return $user->hasPermissionTo('library_books.view');
     }
+
+    public function viewAny(User $user)
+    {
+        return $user->hasPermissionTo('library_books.view');
+    }
 }

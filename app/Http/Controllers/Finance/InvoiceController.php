@@ -9,7 +9,6 @@ use App\Models\Finance\Invoice;
 use Illuminate\Http\UploadedFile;
 use App\Models\ProjectStageBilling;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\Finance\InvoiceRequest;
@@ -35,7 +34,7 @@ class InvoiceController extends Controller
             $startDate = $request->get('start');
             $endDate = $request->get('end');
             $attr = [
-                'invoices' => Invoice::filterBySentDate($startDate, $endDate, true)->appends(Input::except('page')),
+                'invoices' => Invoice::filterBySentDate($startDate, $endDate, true)->appends(Request::except('page')),
                 'startDate' => $startDate,
                 'endDate' => $endDate,
             ];

@@ -67,4 +67,9 @@ class ClientPolicy
     {
         return $user->hasPermissionTo('clients.view');
     }
+
+    public function viewAny(User $user)
+    {
+        return $user->hasPermissionTo('clients.view');
+    }
 }
