@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <table class="table table-bordered">
             <tr>
@@ -33,9 +34,11 @@
                 <td><input type="text" name="" class="form-control"></td>
             </tr>
         </table>
+
         <button class="btn btn-primary">Add effort</button>
     </div>
 </template>
+
 
 <script>
     export default {
