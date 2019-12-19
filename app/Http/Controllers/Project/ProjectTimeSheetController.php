@@ -4,11 +4,19 @@ namespace App\Http\Controllers\Project;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Services\TimesheetService;
 use App\Http\Controllers\Controller;
 use App\Models\Project\ProjectTimesheet;
 
 class ProjectTimeSheetController extends Controller
 {
+
+    protected $service;
+    
+    public function __construct(TimesheetService $timesheetService)
+    {
+        $this->service = $timesheetService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -50,6 +58,8 @@ class ProjectTimeSheetController extends Controller
         return view('project.timesheet.show')->with([
             'project' => $project,
             'timesheet' => $timesheet,
+            'monthDates' => $this->service->getMonthDates()
         ]);
     }
+
 }

@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -120,7 +119,6 @@ return [
      */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -164,7 +162,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\DatabaseServiceProvider::class,
 
-        Barryvdh\Snappy\ServiceProvider::class,
+        //Barryvdh\Snappy\ServiceProvider::class,
     ],
 
     /*
@@ -179,7 +177,6 @@ return [
      */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,

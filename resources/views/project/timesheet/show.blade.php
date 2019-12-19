@@ -16,12 +16,33 @@
         </div>
     </div>
     <div>
-        <timesheet-component
-            :timesheet = "{{ $timesheet }}"
-            :project = "{{ $project }}"
-            :subtasks = "{{ json_encode(config('constants.project.timesheet.module.subtasks')) }}"
-            :project-statuses = "{{ json_encode(config('constants.project.timesheet.module.status')) }}"
-            ></timesheet-component>
+        <div class="align-items-end d-flex mt-4 row">
+            <div class="col-2">
+                <h4>Modules</h4>
+            </div>
+
+            <div class="col-2">
+                <h4>Subtask</h4>
+            </div>
+
+            <div class="col-2">
+                <h4>Status</h4>
+            </div>
+
+                <div class="col-1">
+                <h4>Total</h4>
+                </div>
+
+            <div class="col-5">
+                <div class="d-flex justify-content-center">
+                   <h4>Month Days</h4>
+                </div>
+            </div>
+        </div>
+
+        @include('project.timesheet.components.module-listing')
+
+        <button class="btn btn-primary">Add New Module</button>
     </div>
     @include('status', ['errors' => $errors->all()])
 </div>

@@ -1,41 +1,143 @@
 <template>
-
     <div>
-        <table class="table table-bordered">
-            <tr>
-                <th class="w-20">Modules</th>
-                <th class="w-20">Subtask</th>
-                <th>Total</th>
-                <th>Mon, 25 Nov</th>
-                <th>Tue, 26 Nov</th>
-                <th>Wed, 27 Nov</th>
-                <th>Thu, 28 Nov</th>
-                <th>Fri, 29 Nov</th>
-            </tr>
-            <tr>
-                <td>
-                    Fixing a bug<br>
-                    <select class="form-control mb-1">
-                        <option>Status</option>
-                        <option v-for="(status, index) in projectStatuses" :value="index">{{ status }}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="form-control mb-1">
-                        <option v-for="(subtask, index) in subtasks" :value="index">{{ subtask }}</option>
-                    </select>
-                    <button class="btn btn-dark flex-shrink-0">New subtask</button>
-                </td>
-                <td><input type="text" name="" class="form-control" readonly="readonly"></td>
-                <td><input type="text" name="" class="form-control"></td>
-                <td><input type="text" name="" class="form-control"></td>
-                <td><input type="text" name="" class="form-control"></td>
-                <td><input type="text" name="" class="form-control"></td>
-                <td><input type="text" name="" class="form-control"></td>
-            </tr>
-        </table>
+        <div class="row mt-4">
+            <div class="col-2">
+                <h4>Modules</h4>
+            </div>
 
-        <button class="btn btn-primary">Add effort</button>
+            <div class="col-2">
+                <h4>Subtask</h4>
+            </div>
+
+            <div class="col-2">
+                <h4>Status</h4>
+            </div>
+
+             <div class="col-1">
+                <h4>Total</h4>
+             </div>
+
+            <div class="col-5">
+                <div class="d-flex overflow-auto w-100">
+                    <span style="width: 50px;" class="mr-2">
+                        <p>25, Mon</p>
+                    </span>
+
+                    <span style="width: 50px;" class="mr-2">
+                        <p>25, Mon</p>
+                    </span>
+
+                    <span style="width: 50px;" class="mr-2">
+                        <p>25, Mon</p>
+                    </span>
+
+                    <span style="width: 50px;" class="mr-2">
+                        <p>25, Mon</p>
+                    </span>
+
+                    <span style="width: 50px;" class="mr-2">
+                        <p>25, Mon</p>
+                    </span>
+
+                    <span style="width: 50px;" class="mr-2">
+                        <p>25, Mon</p>
+                    </span>
+
+                    <span style="width: 50px;" class="mr-2">
+                        <p>25, Mon</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+         <div class="row mt-4">
+            <div class="col-2">
+                <p>Newslatter</p>
+            </div>
+
+            <div class="col-2">
+                <p>Setup Mailchimp</p>
+            </div>
+
+            <div class="col-2">
+                <select>
+                    <option value="">Pending</option>
+                    <option value="">In Progress</option>
+                    <option value="">Completed</option>
+                </select>
+            </div>
+
+             <div class="col-1">
+                <div class="h-75">
+                    <input type="number" class="form-control h-100">
+                </div>
+             </div>
+
+            <div class="col-5">
+                <div class="d-flex" style=" overflow: scroll !important; width: 28em;">
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                     <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+
+                    <div style="min-width: 50px;" class="mr-2 mr-2 flex-grow-0">
+                        <input class="w-100" min="0" type="number">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <button class="btn btn-primary">Add New Module</button>
     </div>
 </template>
 
