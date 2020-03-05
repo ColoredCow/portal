@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Project\ProjectTimesheet;
+
 class TimesheetService
 {
     public function __construct()
@@ -18,5 +20,13 @@ class TimesheetService
             $startDate->addDay();
         }
         return $monthDates;
+    }
+
+    public function addNewModule(ProjectTimesheet $timesheet, $data) {
+        $moduleName = $data['moduleName'];
+        $subTasks = $data['subTasks'];
+        $module = $timesheet->modules()->create(['name' => $moduleName]);
+       // $module
+       //$timesheet->addNewModule($data);
     }
 }

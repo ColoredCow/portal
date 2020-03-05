@@ -24,6 +24,7 @@ class ProjectTimeSheetController extends Controller
      */
     public function index(Project $project)
     {
+   
         return view('project.timesheet.index')->with([
             'project' => $project,
             'timesheets' => $project->timesheets,
@@ -43,15 +44,16 @@ class ProjectTimeSheetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\View\View
+    */
     public function store(Project $project, Request $request)
     {
         $project->timesheets()->create($request->all());
         return redirect()->route('project.timesheet', $project);
     }
+
 
     public function show(Project $project, ProjectTimesheet $timesheet)
     {
@@ -60,6 +62,11 @@ class ProjectTimeSheetController extends Controller
             'timesheet' => $timesheet,
             'monthDates' => $this->service->getMonthDates()
         ]);
+    }
+
+    public function newModule(ProjectTimesheet $timesheet) {
+        $this->service->addNewModule($timesheet, request()->data());
+        dd(request()->all());
     }
 
 }
