@@ -27,5 +27,7 @@ class TimesheetService
         $moduleName = $data['moduleName'];
         $subTasks = $data['subTasks'];
         $module = $timesheet->modules()->create(['name' => $moduleName]);
+        // $module
+       //$timesheet->addNewModule($data);
     }
 }

@@ -24,6 +24,7 @@ class ProjectTimeSheetController extends Controller
      */
     public function index(Project $project)
     {
+   
         return view('project.timesheet.index')->with([
             'project' => $project,
             'timesheets' => $project->timesheets,
@@ -53,6 +54,7 @@ class ProjectTimeSheetController extends Controller
         return redirect()->route('project.timesheet', $project);
     }
 
+
     public function show(Project $project, ProjectTimesheet $timesheet)
     {
         return view('project.timesheet.show')->with([
@@ -62,8 +64,7 @@ class ProjectTimeSheetController extends Controller
         ]);
     }
 
-    public function newModule(ProjectTimesheet $timesheet)
-    {
+    public function newModule(ProjectTimesheet $timesheet) {
         $this->service->addNewModule($timesheet, request()->data());
         dd(request()->all());
     }
