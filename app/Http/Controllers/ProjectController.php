@@ -8,12 +8,15 @@ use App\Models\HR\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\ProjectRequest;
+use App\Services\Project\ProjectService;
 
 class ProjectController extends Controller
 {
-    public function __construct()
+    protected $service;
+    public function __construct(ProjectService $projectService)
     {
         $this->authorizeResource(Project::class);
+        $this->service = $projectService;
     }
 
     /**
@@ -24,6 +27,7 @@ class ProjectController extends Controller
     public function index()
     {
         $this->authorize('list', Project::class);
+        
         if (request()->has('client_id')) {
             $client = Client::find(request()->input('client_id'));
             $projects = $client->projects()->paginate();
@@ -56,13 +60,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $validated = $request->validated();
-        $project = Project::create([
-            'name' => $validated['name'],
-            'client_id' => $validated['client_id'],
-            'client_project_id' => $validated['client_project_id'],
-            'status' => $validated['status'],
-            'invoice_email' => $validated['invoice_email'],
-        ]);
+        $project = $this->service->create($validated);
         return redirect(route('projects.edit', $project->id))->with('status', 'Project created successfully!');
     }
 
@@ -118,17 +116,6 @@ class ProjectController extends Controller
             'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
         ]);
         return redirect(route('projects.edit', $project->id))->with('status', 'Project updated successfully!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Project  $project
-     * @return void
-     */
-    public function destroy(Project $project)
-    {
-        //
     }
 
     public function generateInvoice(Request $request, Project $project)

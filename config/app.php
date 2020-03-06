@@ -161,6 +161,7 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\DatabaseServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
 
         //Barryvdh\Snappy\ServiceProvider::class,
     ],

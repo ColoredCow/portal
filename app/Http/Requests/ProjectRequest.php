@@ -29,7 +29,14 @@ class ProjectRequest extends FormRequest
             'client_project_id' => 'required|integer',
             'status' => 'required|string',
             'invoice_email' => 'nullable|email',
-            'gst_applicable' => 'nullable',
+            'contact_person_name' => 'nullable',
+            'contact_person_email' => 'nullable',
+            'other_members_to_cc' => 'nullable',
+            'address' => 'nullable',
+            'state_id' => 'nullable',
+            'city' => 'nullable',
+            'pincode' => 'nullable',
+            'gst_number' => 'nullable',
         ];
     }
 

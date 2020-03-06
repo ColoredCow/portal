@@ -50,17 +50,29 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-row">
+                <div class="form-row d-none">
                     <div class="form-group col-md-5">
                         <label for="invoice_email">Email for invoice</label>
                         <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ old('invoice_email') }}">
                     </div>
                 </div>
+
+                <div>
+                    @include('project.components.billing-info')
+                </div>
             </div>
+
+        
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
+           
         </form>
     </div>
+
+   
+
+
+
 </div>
 @endsection

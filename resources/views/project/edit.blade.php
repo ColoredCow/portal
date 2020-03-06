@@ -66,12 +66,19 @@
                         <input type="email" class="form-control" name="invoice_email" id="invoice_email" placeholder="Email for invoice" value="{{ $project->invoice_email }}">
                     </div>
                 </div>
+
+                <div>
+                    @include('project.components.billing-info')
+                </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
     </div>
+
+
+
     @if (sizeof($project->stages))
         <h2 class="mt-5">Project Stages</h2>
         @foreach ($project->stages as $stage)

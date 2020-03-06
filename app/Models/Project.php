@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\HR\Employee;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Project\ProjectTimesheet;
+use App\Models\Project\ProjectBillingInfo;
 
 class Project extends Model
 {
@@ -54,5 +55,10 @@ class Project extends Model
     public function timesheets()
     {
         return $this->hasMany(ProjectTimesheet::class);
+    }
+
+    public function billingInfo()
+    {
+        return $this->hasOne(ProjectBillingInfo::class);
     }
 }
