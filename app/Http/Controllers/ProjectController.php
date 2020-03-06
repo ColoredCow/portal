@@ -107,14 +107,8 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, Project $project)
     {
         $validated = $request->validated();
-        $updated = $project->update([
-            'name' => $validated['name'],
-            'client_id' => $validated['client_id'],
-            'client_project_id' => $validated['client_project_id'],
-            'status' => $validated['status'],
-            'invoice_email' => $validated['invoice_email'],
-            'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
-        ]);
+        $this->service->setProject($project);
+        $this->service->update($validated);
         return redirect(route('projects.edit', $project->id))->with('status', 'Project updated successfully!');
     }
 

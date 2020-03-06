@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="mt-4">Billing Info {{ project.name }}</h3>
+        <h3 class="mt-4">Billing Info</h3>
         
            <div class="form-row">
         <div class="form-group col-md-5">
@@ -9,7 +9,7 @@
         </div>
         <div class="form-group offset-md-1 col-md-5">
             <label for="contact_person_name">Contact person name</label>
-            <input v-model="billinginfo.contact_person_name" type="text" onkeypress="return /[a-z]/i.test(event.key)" class="form-control"
+            <input v-model="billinginfo.contact_person_name" type="text" class="form-control"
                 name="contact_person_name" id="contact_person_name" placeholder="Contact person name">
         </div>
     </div>
@@ -32,7 +32,7 @@
     <div class="form-row">
         <div class="form-group col-md-5">
             <label for="city">City</label>
-            <input v-model="billinginfo.city" type="text" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" name="city" id="city"
+            <input v-model="billinginfo.city" type="text" class="form-control" name="city" id="city"
                 placeholder="City">
         </div>
 
