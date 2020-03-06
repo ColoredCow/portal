@@ -21,29 +21,39 @@
                 <h4>Modules</h4>
             </div>
 
-            <div class="col-2">
-                <h4>Subtask</h4>
-            </div>
-
-            <div class="col-2">
-                <h4>Status</h4>
-            </div>
-
-                <div class="col-1">
-                <h4>Total</h4>
+            <div class="col-10">
+                <div class="row align-items-end d-flex">
+                    <div class="col-3">
+                        <h4>Subtask</h4>
+                    </div>
+        
+                    <div class="col-2">
+                        <h4>Status</h4>
+                    </div>
+        
+                        <div class="col-1">
+                        <h4>Total</h4>
+                        </div>
+        
+                    <div class="col-5">
+                        <div class="d-flex justify-content-center">
+                           <h4>Month Days</h4>
+                        </div>
+                    </div>
                 </div>
-
-            <div class="col-5">
-                <div class="d-flex justify-content-center">
-                   <h4>Month Days</h4>
-                </div>
             </div>
+
         </div>
 
-        @include('project.timesheet.components.module-listing')
+        @foreach([1, 2, 3] as $value) 
+            @include('project.timesheet.components.module-listing')
+        @endforeach
 
-        <button class="btn btn-primary">Add New Module</button>
+        <button id="addNewModuleBtn" class="btn btn-primary">Add New Module</button>
     </div>
     @include('status', ['errors' => $errors->all()])
+    @include('project.timesheet.components.new-module-modal')
 </div>
+
+
 @endsection

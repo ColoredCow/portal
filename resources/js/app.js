@@ -26,6 +26,7 @@ Vue.component('project-details-component', require('./components/ProjectDetailsC
 Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue'));
 Vue.component('comment', require('./components/CommentItem.vue'));
 Vue.component('timesheet-component', require('./components/Project/TimesheetComponent.vue'));
+Vue.component('new-timesheet-module', require('./components/Project/NewTimeSheetModule.vue'));
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {

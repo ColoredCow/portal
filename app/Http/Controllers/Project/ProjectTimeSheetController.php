@@ -10,13 +10,13 @@ use App\Models\Project\ProjectTimesheet;
 
 class ProjectTimeSheetController extends Controller
 {
-
     protected $service;
-    
+
     public function __construct(TimesheetService $timesheetService)
     {
         $this->service = $timesheetService;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,10 +43,10 @@ class ProjectTimeSheetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\View\View
+    */
     public function store(Project $project, Request $request)
     {
         $project->timesheets()->create($request->all());
@@ -62,4 +62,9 @@ class ProjectTimeSheetController extends Controller
         ]);
     }
 
+    public function newModule(ProjectTimesheet $timesheet)
+    {
+        $this->service->addNewModule($timesheet, request()->data());
+        dd(request()->all());
+    }
 }

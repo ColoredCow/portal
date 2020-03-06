@@ -1,4 +1,6 @@
 
 $(document).ready(function(){
-   // alert("hello");
+   $('#addNewModuleBtn').on('click', function() {
+      $('#newTimesheetModuleModal').modal('show');
+   });
 });
