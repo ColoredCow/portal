@@ -8,12 +8,12 @@
                 <div class="form-group col-md-5">
                     <label for="client_id" class="field-required">Client</label>
                     <select name="client_id" id="client_id" class="form-control" required="required" v-model="clientId" @change="updateClientDetails()" :disabled="this.invoice">
-                        <option v-for="activeClient in clients" :value="activeClient.id" v-text="activeClient.name"></option>
+                        <option v-for="activeClient in clients" :value="activeClient.id" v-text="activeClient.name" :key="activeClient.id"></option>
                     </select>
                 </div>
             </div>
 
-            <div v-for="(billing, index) in billings">
+            <div v-for="(billing, index) in billings" :key="index">
                 <invoice-project-component :client="client" :billing="billing" v-bind:key="index" v-on:remove="removeProject(index)">
                 </invoice-project-component>
             </div>
