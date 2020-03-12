@@ -14,6 +14,13 @@
         <a class="nav-item nav-link {{ $active === 'invoices' ? 'active' : '' }}" href="{{ route('invoices') }}"><i class="fa fa-copy"></i>&nbsp;Invoices</a>
     </li>
     @endcan
+
+    @can('finance_invoices.view')
+    <li class="nav-item">
+        <a class="nav-item nav-link {{ $active === 'amc' ? 'active' : '' }}" href="{{ route('amc.index') }}"><i class="fa fa-copy"></i>&nbsp;AMC</a>
+    </li>
+    @endcan
+
     <li class="nav-item">
         <a class="nav-item nav-link {{ $active === 'payments' ? 'active' : '' }}" href="{{ route('payments') }}"><i class="fa fa-credit-card"></i>&nbsp;Payments</a>
     </li>

@@ -26,8 +26,6 @@ Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::middleware('auth')->group(function () {
-
-    
     Route::prefix('profile')->group(function () {
         Route::get('gsuite-sync', 'UserController@syncWithGSuite')->name('profile.gsuite-sync');
         Route::get('gsuite-sync-all', 'UserController@syncAllWithGSuite')->name('profile.gsuite-sync-all');
@@ -87,14 +85,11 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('employees', 'Employees\EmployeeController')
             ->only(['index', 'show'])
-            ->names([
-                'index' => 'employees',
-                'show' => 'employees.show',
-            ]);
+            ->names(['index' => 'employees', 'show' => 'employees.show']);
+
         Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
 
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
-
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
@@ -122,6 +117,7 @@ Route::middleware('auth')->group(function () {
                 'edit' => 'payments.edit',
                 'update' => 'payments.update',
             ]);
+        Route::resource('amc', 'AMCController');
         Route::get('invoices/download/{year}/{month}/{file}', 'InvoiceController@download');
         Route::get('/reports', 'ReportsController@index');
     });
@@ -133,7 +129,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', 'ProjectController')
         ->except(['destroy'])
         ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
-    
+
     Route::post('projects/{project}/add-employee', 'ProjectController@addEmployee');
     Route::post('projects/{project}/remove-employee', 'ProjectController@removeEmployee');
 
@@ -162,7 +158,6 @@ Route::middleware('auth')->group(function () {
         ->names(['store' => 'project.stage',
             'update' => 'project.stage.update']);
 
-    
     Route::get('project/{project}/timesheet', 'project\ProjectTimeSheetController@index')->name('project.timesheet');
 
     Route::get('project/{project}/timesheet/create', 'project\ProjectTimeSheetController@create')->name('project.timesheet.create');
@@ -170,12 +165,8 @@ Route::middleware('auth')->group(function () {
     Route::post('timesheet/{timesheet}/module', 'project\ProjectTimeSheetController@newModule')->name('project.timesheet.new-module');
 
     Route::get('project/{project}/timesheet/{timesheet}', 'project\ProjectTimeSheetController@show')->name('project.timesheet.show');
- 
 
     Route::post('project/{project}/timesheet', 'project\ProjectTimeSheetController@store')->name('project.timesheet.store');
-
-
-
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index')->name('knowledgecafe');

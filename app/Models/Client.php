@@ -37,21 +37,24 @@ class Client extends Model
     public static function getInvoicableClients(array $billings = [])
     {
         return self::active()
-            ->whereHas('projects', function ($query) use ($billings) {
-                $query->whereHas('stages', function ($query) use ($billings) {
-                    $query->whereHas('billings', function ($query) use ($billings) {
-                        $query->doesntHave('invoice')->orWhereIn('id', $billings);
-                    });
-                });
-            })
+            // ->whereHas('projects', function ($query) use ($billings) {
+            //     $query->whereHas('stages', function ($query) use ($billings) {
+            //         // $query->whereHas('billings', function ($query) use ($billings) {
+            //         //     $query->doesntHave('invoice')->orWhereIn('id', $billings);
+            //         // });
+            //     });
+            // })
             ->with([
                 'projects' => function ($query) use ($billings) {
-                    $query->whereHas('stages', function ($query) use ($billings) {
-                        $query->whereHas('billings', function ($query) use ($billings) {
-                            $query->doesntHave('invoice')->orWhereIn('id', $billings);
-                        });
-                    });
+                    // $query->whereHas('stages', function ($query) use ($billings) {
+                    //     $query->whereHas('billings', function ($query) use ($billings) {
+                    //         $query->doesntHave('invoice')->orWhereIn('id', $billings);
+                    //     });
+                    // });
                 },
+
+                'projects.billingInfo' => function($query) {},
+
                 'projects.stages' => function ($query) use ($billings) {
                     $query->whereHas('billings', function ($query) use ($billings) {
                         $query->doesntHave('invoice')->orWhereIn('id', $billings);
@@ -59,7 +62,7 @@ class Client extends Model
                 },
                 'projects.stages.billings' => function ($query) use ($billings) {
                     $query->doesntHave('invoice')->orWhereIn('id', $billings);
-                },
+                }
             ])
             ->get();
     }

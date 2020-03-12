@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Helpers\DateHelper;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Finance\PaymentRequest;
 use App\Models\Finance\Invoice;
 use App\Models\Finance\Payment;
+use App\Http\Controllers\Controller;
 use App\Models\Finance\PaymentModes\Cash;
 use App\Models\Finance\PaymentModes\Cheque;
+use App\Http\Requests\Finance\PaymentRequest;
 use App\Models\Finance\PaymentModes\WireTransfer;
 
 class PaymentController extends Controller
