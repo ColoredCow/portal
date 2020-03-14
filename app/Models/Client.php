@@ -8,7 +8,7 @@ class Client extends Model
 {
     protected $guarded = [];
 
-    protected $appends = ['currency'];
+    protected $appends = ['currency', 'reference_number'];
 
     /**
      * Get the projects for the client.
@@ -26,6 +26,12 @@ class Client extends Model
     public function getCurrencyAttribute()
     {
         return config("constants.countries.$this->country.currency");
+    }
+
+    public function getReferenceNumberAttribute()
+    {
+        return config("constants.countries.$this->country.ref") 
+            . $this->getOriginal('reference_number');
     }
 
     /**
@@ -53,7 +59,7 @@ class Client extends Model
                     // });
                 },
 
-                'projects.billingInfo' => function($query) {},
+                'projects.billingInfo' => function ($query) {},
 
                 'projects.stages' => function ($query) use ($billings) {
                     $query->whereHas('billings', function ($query) use ($billings) {

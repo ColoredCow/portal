@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClientRequest;
 use App\Models\Client;
+use App\Http\Requests\ClientRequest;
 
 class ClientController extends Controller
 {
@@ -54,7 +54,7 @@ class ClientController extends Controller
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
 
-        return redirect("/clients/$client->id/edit")->with('status', 'Client created succesfully!');
+        return redirect("/clients/$client->id/edit")->with('status', 'Client created successfully!');
     }
 
     /**

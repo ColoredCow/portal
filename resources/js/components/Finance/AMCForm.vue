@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card-header">
-            <span>Invoice Details</span>
+            <span>AMC Details</span>
         </div>
         <div class="card-body">
             <div class="form-row mb-4">

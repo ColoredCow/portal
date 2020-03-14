@@ -10,7 +10,7 @@
     <div class="card">
         <form action="{{route('invoices.store')}}" method="POST" enctype="multipart/form-data" id="form_invoice" class="form-invoice form-create-invoice">
             @csrf
-            <invoice-create :clients="{{json_encode($clients)}}"></invoice-create>
+            <invoice-create :meta="{{ json_encode(['month' => date('F'), 'issue_date' => date('F d, Y')]) }}"  :clients="{{json_encode($clients)}}"></invoice-create>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>

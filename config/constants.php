@@ -32,10 +32,12 @@ return [
         'india' => [
             'title' => 'India',
             'currency' => 'INR',
+            'ref' => 'In'
         ],
         'united-states' => [
             'title' => 'United States',
             'currency' => 'USD',
+            'ref' => 'Ex'
         ],
     ],
     'pagination_size' => 10,

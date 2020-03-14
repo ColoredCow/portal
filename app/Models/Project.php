@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\HR\Employee;
+use App\Models\Finance\Invoice;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Project\ProjectTimesheet;
 use App\Models\Project\ProjectBillingInfo;
@@ -10,6 +11,7 @@ use App\Models\Project\ProjectBillingInfo;
 class Project extends Model
 {
     protected $guarded = [];
+    protected $appends = ['invoice_number'];
 
     /**
      * Get the client that owns the project.
@@ -60,5 +62,27 @@ class Project extends Model
     public function billingInfo()
     {
         return $this->hasOne(ProjectBillingInfo::class);
+    }
+
+    public function getClientProjectIdAttribute($value)
+    {
+        return sprintf('%03d', $value);
+    }
+
+    public function getInvoiceNumberAttribute()
+    {
+        $totalInvoicesCountNumber = $this->getTotalInvoiceCount() ?:1;
+        return sprintf('%05d', $totalInvoicesCountNumber);
+    }
+
+    public function getTotalInvoiceCount()
+    {
+        return $this->invoices()->count();
+    }
+
+    public function invoices()
+    {
+        //ToDO:: Add relationship with invoices
+        return Invoice::all();
     }
 }

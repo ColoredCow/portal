@@ -24,38 +24,17 @@
         <tr>
             <th>Project</th>
             <th>Cycly</th>
-            <th>Payment Type</th>
+            <th>Started at</th>
             <th>Max alloted hours</th>
+            <th>Effort</th>
         </tr>
-        @foreach ($invoices ?? [] as $invoice)
+        @foreach ($amcs ?? [] as $amc)
         <tr>
-            <td><a href="{{ route('invoices.edit', $invoice) }}">
-                @foreach ($invoice->projectStageBillings as $billing)
-                    {{ $loop->first ? '' : '|' }}
-                    {{ $billing->projectStage->project->name }}
-                @endforeach
-            </a></td>
-            <td>
-                @switch ($invoice->status)
-                    @case('paid')
-                        <span class="badge badge-pill badge-success">
-                        @break
-                    @case('unpaid')
-                        <span class="badge badge-pill badge-danger">
-                        @break
-                @endswitch
-                {{ $invoice->status }}</span>
-            </td>
-            <td>
-                {{ date(config('constants.display_date_format'), strtotime($invoice->sent_on)) }}
-            </td>
-            <td>
-            @if ($invoice->file_path)
-                <a target="_blank" href="/finance/invoices/download/{{ $invoice->file_path }}"><i class="fa fa-file fa-2x text-primary btn-file"></i></a>
-            @else
-                <span>-</span>
-            @endif
-            </td>
+            <td>{{ $amc->project->name }}</td>
+            <td>{{ \Str::title($amc->payment_cycle) }}</td>
+            <td>{{ $amc->started_at }}</td>
+            <td>{{ $amc->alloted_hours }}</td>
+            <td><a target="_blank" href="{{$amc->effort_sheet_link}}">Effort sheet link </a></td>
         </tr>
         @endforeach
     </table>

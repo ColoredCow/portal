@@ -19,6 +19,16 @@
                             <option v-for="project in client.projects" :value="project.id" v-text="project.name" :key="project.id"></option>
                         </select>
                     </div>
+
+                    <div class="mt-4">
+                        <label for="invoice_type" class="field-required">Invoice Type</label>
+                        <select name="invoice_type" @change="setType()" id="invoice_type" class="form-control" required="required" v-model="invoiceType"  :disabled="this.invoice">
+                            <option value="regular-indian" selected >Regular Indian</option>
+                            <option value="regular-foreign" >Regular Foreign</option>
+                            <option value="AMC-Indian">AMC Indian</option>
+                        </select>
+                    </div>
+
                 </div>
 
                 <div class="form-group col-md-7">
@@ -44,7 +54,7 @@
                                 <span>{{ this.billingInfo.contact_person_name }}</span><br>
                                 <span>{{ this.project.name }}</span><br>
                                 <span>{{ this.billingInfo.contact_person_email }}</span><br>
-                                <span>{{ this.billingInfo.address }} {{ this.billingInfo.pincode }} </span><br>
+                                <span> {{ this.billingInfo.address }} {{ this.billingInfo.pincode }} </span><br>
                             </div>
                         </div>
 
@@ -52,32 +62,22 @@
                             <div class="w-50">
                                 <p class="font-weight-bold">Details:</p>
                                 <div class="text-muted">
+
                                     <div class="row">
-                                        <div class="col-6 font-weight-bold">
-                                            Term:
-                                        </div>
-                                        <div class="col-6">
-                                            March
-                                        </div>
+                                        <div class="col-6 font-weight-bold">Term:</div>
+                                        <div class="col-6">{{ meta.month }}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-6 font-weight-bold">
-                                            Invoice Number :
-                                        </div>
-                                        <div class="col-6">
-                                            IN020-001-000001
-                                        </div>
+                                        <div class="col-6 font-weight-bold">Invoice Number :</div>
+                                        <div class="col-6">{{ this.client.reference_number }}-{{ this.project.client_project_id }}-{{ this.project.invoice_number }}</div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-6 font-weight-bold">Issue Date :</div>
+                                        <div class="col-6">{{ meta.issue_date }}</div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-6 font-weight-bold">
-                                            Issue Date :
-                                        </div>
-                                        <div class="col-6">
-                                            March 12, 2019
-                                        </div>
-                                    </div>
                                 </div>
                                 </div>
                             </div>
@@ -85,7 +85,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="form-row mb-4 ml-3">
                 <div class="form-group col-md-12">
@@ -168,15 +167,13 @@
                 
             </div>
 
-
-
         </div>
     </div>
 </template>
 <script>
 
     export default {
-        props: ['clients', 'invoice'],
+        props: ['clients', 'invoice', 'meta'],
         data() {
             return {
                 client: this.clients[0],
@@ -186,6 +183,7 @@
                 currency: this.invoice ? this.invoice.currency : this.clients[0].currency,
                 projectID: this.invoice ? this.invoice.project.id : this.clients[0].projects[0].id,
                 projectBillingInfo: this.invoice ? this.invoice.project.projectBillingInfo : this.clients[0].projects[0].projectBillingInfo,
+                invoiceType:'regular-indian'
             }
         },
         computed: { 
@@ -214,6 +212,10 @@
                         break;
                     }
                 }
+            },
+
+            setInvoiceType:function() {
+                
             }
         },
         mounted() {
