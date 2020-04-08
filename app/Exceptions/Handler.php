@@ -1,12 +1,13 @@
 <?php
+
 namespace App\Exceptions;
 
-use App\Mail\ErrorReport;
-use Carbon\Carbon;
 use Exception;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Auth;
+use Throwable;
+use Carbon\Carbon;
+use App\Mail\ErrorReport;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -31,6 +32,7 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
     /**
      * Report or log an exception.
      *
@@ -39,7 +41,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         $timeOfException = Carbon::now()->format(config('constants.display_datetime_format'));
         foreach ($this->dontReport as $dontReport) {
@@ -55,6 +57,7 @@ class Handler extends ExceptionHandler
         }
         return parent::report($exception);
     }
+
     /**
      * Render an exception into an HTTP response.
      *
@@ -62,7 +65,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
     }
