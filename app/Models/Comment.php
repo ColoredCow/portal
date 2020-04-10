@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
+use Modules\User\Entities\User;
 
 class Comment extends Model
 {

@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
         }
 
         try {
-            Mail::send(new ErrorReport($exception, $timeOfException));
+            //Mail::send(new ErrorReport($exception, $timeOfException));
         } catch (Exception $e) {
             parent::report($e);
         }

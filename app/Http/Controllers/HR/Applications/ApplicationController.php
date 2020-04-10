@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
-use App\User;
+use Modules\User\Entities\User;
 use App\Models\HR\Job;
 use App\Models\Setting;
 use App\Helpers\FileHelper;

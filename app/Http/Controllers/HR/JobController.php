@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\HR;
 
-use App\User;
+use Modules\User\Entities\User;
 use App\Models\HR\Job;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\JobRequest;

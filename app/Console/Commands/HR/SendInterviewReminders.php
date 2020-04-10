@@ -5,7 +5,7 @@ namespace App\Console\Commands\HR;
 use App\Mail\HR\Applicant\ScheduledInterviewReminder;
 use App\Mail\HR\InterviewerScheduledRoundsReminder;
 use App\Models\HR\ApplicationRound;
-use App\User;
+use Modules\User\Entities\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 

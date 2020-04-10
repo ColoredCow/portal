@@ -2,7 +2,7 @@
 
 namespace App\Models\KnowledgeCafe\Library;
 
-use App\User;
+use Modules\User\Entities\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 

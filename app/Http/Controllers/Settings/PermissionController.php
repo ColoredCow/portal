@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
 use App\Http\Requests\Setting\UpdateUserRolesRequest;
 use App\Models\Setting;
-use App\User;
+use Modules\User\Entities\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 

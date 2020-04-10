@@ -2,7 +2,7 @@
 
 namespace App\Policies\HR;
 
-use App\User;
+use Modules\User\Entities\User;
 use App\Models\HR\Job;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -13,7 +13,7 @@ class JobPolicy
     /**
      * Determine whether the user can view the job.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\HR\Job  $job
      * @return mixed
      */
@@ -28,7 +28,7 @@ class JobPolicy
     /**
      * Determine whether the user can create jobs.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -42,7 +42,7 @@ class JobPolicy
     /**
      * Determine whether the user can update the job.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\HR\Job  $job
      * @return mixed
      */
@@ -57,7 +57,7 @@ class JobPolicy
     /**
      * Determine whether the user can delete the job.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\HR\Job  $job
      * @return mixed
      */
@@ -72,7 +72,7 @@ class JobPolicy
     /**
      * Determine whether the user can list jobs.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
     public function list(User $user)

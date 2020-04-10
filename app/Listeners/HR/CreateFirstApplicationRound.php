@@ -4,7 +4,7 @@ namespace App\Listeners\HR;
 
 use App\Events\HR\ApplicationCreated;
 use App\Models\HR\ApplicationRound;
-use App\User;
+use Modules\User\Entities\User;
 use Carbon\Carbon;
 
 class CreateFirstApplicationRound

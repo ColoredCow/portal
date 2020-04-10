@@ -6,7 +6,18 @@
     @include('status', ['errors' => $errors->all()])
     <br>
 
+
     <div class="d-flex justify-content-start row flex-wrap">
+        @if(auth()->user()->hasAnyPermission(['crm_talent.view', 'crm_client.view']))
+        <div class="col-md-4">
+            <div class="card h-75 mx-4 mt-3 mb-5">
+                <a class="card-body no-transition" href="{{ route('settings.permissions') }}">
+                    <br><h2 class="text-center">User Management</h2><br>
+                </a>
+            </div>
+        </div>
+        @endif
+
         @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">

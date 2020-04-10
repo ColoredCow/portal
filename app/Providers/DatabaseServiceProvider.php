@@ -11,7 +11,7 @@ use App\Observers\HR\ApplicationRoundObserver;
 use App\Observers\HR\EmployeeObserver;
 use App\Observers\HR\JobObserver;
 use App\Observers\UserObserver;
-use App\User;
+use Modules\User\Entities\User;
 use Illuminate\Support\ServiceProvider;
 
 class DatabaseServiceProvider extends ServiceProvider

@@ -18,7 +18,7 @@
         @endif
 
        @role('super-admin')
-       <div class="col-md-4">
+       <div class="col-md-4 d-none">
             <div class= "card h-75 mx-4 mt-3 mb-5">
                 <a class="card-body no-transition" href="{{ route('permissions.module.index', ['module' => 'users']) }}">
                     <br><h2 class="text-center">Permissions</h2><br>

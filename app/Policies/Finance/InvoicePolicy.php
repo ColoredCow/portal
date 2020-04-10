@@ -2,7 +2,7 @@
 
 namespace App\Policies\Finance;
 
-use App\User;
+use Modules\User\Entities\User;
 use App\Models\Finance\Invoice;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -13,7 +13,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can view the invoice.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Finance\Invoice  $invoice
      * @return mixed
      */
@@ -25,7 +25,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can create invoices.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -36,7 +36,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can update the invoice.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Finance\Invoice  $invoice
      * @return mixed
      */
@@ -48,7 +48,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can delete the invoice.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Finance\Invoice  $invoice
      * @return mixed
      */
@@ -60,7 +60,7 @@ class InvoicePolicy
     /**
      * Determine whether the user can list invoices.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
     public function list(User $user)
