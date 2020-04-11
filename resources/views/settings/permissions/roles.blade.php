@@ -18,17 +18,17 @@
 	data-update-route="{{ route('permissions.module.index', ['module' => 'roles']) }}"
 	>
 		<h4>Manage Permissions for Roles</h4>
-		<table class="table table-bordered">
-			<thead class="thead-light">
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
 				<tr>
-					<th>Role ID</th>
 					<th>Role</th>
 					<th>Permissions</th>
 				</tr>
 			</thead>
 			<tr v-for="(role, index) in roles">
-				<td>@{{ role.id }}</td>
-				<td>@{{ role.name }}</td>
+				<td>@{{ role.name.split('_').map(function (item) {
+					return item.charAt(0).toUpperCase() + item.substring(1);
+				}).join(' ') }}</td>
 				<td>
 					<button v-if="role.permissions.length === 0" class="btn btn-sm btn-outline-danger" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">No Permission Granted</button>
 					<button v-else class="btn btn-sm btn-outline-primary" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">View permissions</button>

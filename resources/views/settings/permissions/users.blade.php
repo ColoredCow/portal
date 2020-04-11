@@ -22,7 +22,7 @@
 			<thead class="thead-dark">
 				<tr>
 					<th width="20%">User Name</th>
-					<th width="35%">Roles</th>
+					<th width="35%">User Roles</th>
 					<th>Actions</th>
 
 				</tr>
