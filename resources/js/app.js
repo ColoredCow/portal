@@ -751,7 +751,24 @@ if (document.getElementById('user_roles_table')) {
                     userID: userID
                 });
                 document.getElementById('close_update_user_roles_modal').click();
+            },
+
+            formatRoles: function(user) {
+                let roleNames = [];
+                for(var i in user.roles) {
+                    let roleName = user.roles[i].name;
+                    roleName = roleName.split('_').map(function (item) {
+                        return item.charAt(0).toUpperCase() + item.substring(1);
+                    }).join(' ');
+                    
+                    roleNames.push(roleName);
+                }
+
+                return roleNames.join(', ');
+
             }
+
+
         },
         mounted: function() {
             let roleInputContainer = document.querySelector("#update_user_roles_modal");

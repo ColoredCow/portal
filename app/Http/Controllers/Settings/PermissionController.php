@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
-use App\Http\Requests\Setting\UpdateUserRolesRequest;
 use App\Models\Setting;
 use Modules\User\Entities\User;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Permission;
+use App\Http\Requests\Setting\UpdateUserRolesRequest;
+use App\Http\Requests\Setting\UpdateRolePermissionsRequest;
 
 class PermissionController extends Controller
 {
@@ -18,7 +18,7 @@ class PermissionController extends Controller
         $attr = [];
         switch ($module) {
             case 'users':
-                $attr['users'] = User::with('roles')->get();
+                $attr['users'] = User::orderBy('name')->with('roles')->get();
                 $attr['roles'] = Role::all();
                 break;
             default:
