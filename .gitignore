@@ -21,3 +21,5 @@ yarn-error.log
 .DS_Store
 
 /storage/debugbar
+
+node_modules/
