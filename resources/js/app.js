@@ -735,7 +735,6 @@ if (document.getElementById('user_roles_table')) {
             currentUserIndex: 0,
             roleInputs: [],
 
-
         },
         methods: {
             updateUserRolesModal: function(index) {

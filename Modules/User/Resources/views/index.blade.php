@@ -12,7 +12,12 @@
 	</ul>
 	<br>
 		<h4>User Management</h4>
-		<user-listing :users="{{ json_encode($users) }}"></user-listing>
+		<user-listing 
+			:roles="{{ json_encode($roles)  }}" 
+			:users="{{ json_encode($users) }}"
+			:update-route="{{ json_encode( route('permissions.module.index', ['module' => 'users'])) }}"
+		/>
+
 	</div>
 </div>
 @endsection
