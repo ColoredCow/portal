@@ -35,6 +35,13 @@ Vue.component('project-details-component', require('./components/ProjectDetailsC
 Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue').default);
 Vue.component('comment', require('./components/CommentItem.vue').default);
 
+
+new Vue({
+el: '#app'
+});
+
+
+
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
         let form = $('.form-create-invoice');
@@ -769,10 +776,10 @@ if (document.getElementById('user_roles_table')) {
             formatRoles: function(user) {
                 let roleNames = [];
                 for(var i in user.roles) {
-                    let roleName = user.roles[i].name;
-                    roleName = roleName.split('_').map(function (item) {
-                        return item.charAt(0).toUpperCase() + item.substring(1);
-                    }).join(' ');
+                     let roleName = user.roles[i].label;
+                    // roleName = roleName.split('_').map(function (item) {
+                    //     return item.charAt(0).toUpperCase() + item.substring(1);
+                    // }).join(' ');
                     
                     roleNames.push(roleName);
                 }

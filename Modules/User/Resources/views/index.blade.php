@@ -1,8 +1,7 @@
 @extends('user::layouts.master')
-
 @section('content')
 
-<div class="container">
+<div class="container" >
 	<ul class="nav nav-pills mb-3 px-3">
 		<li class="nav-item">
 			<a class="nav-item nav-link active" href="#"><i class="fa fa-users"></i>&nbsp;Users</a>
@@ -12,36 +11,8 @@
 		</li>
 	</ul>
 	<br>
-    <div 
-        class="container"
-	    id="user_roles_table"
-	    data-users ="{{ json_encode($users) }}"
-	    data-roles="{{ json_encode($roles) }}"
-	    data-update-route=""
-    >
-        <h4>User Management</h4>
-
-		<table class="table table-bordered table-striped">
-			<thead class="thead-dark">
-				<tr>
-					<th width="20%">User Name</th>
-					<th width="35%">User Roles</th>
-					<th>Actions</th>
-
-				</tr>
-			</thead>
-			<tr v-for="(user,index) in users">
-				<td>@{{ user.name }}</td>
-				<td>
-						@{{ formatRoles(user) }}
-				</td>
-				<td>
-					<button class="btn btn-sm btn-outline-danger" v-if="user.roles.length == 0" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">No role assigned</button>
-					<button class="btn btn-sm btn-outline-info" v-else data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">View roles assigned</button>
-				</td>
-			</tr>
-		</table>
-		@include('settings.permissions.update-user-roles-modal')
+		<h4>User Management</h4>
+		<user-listing :users="{{ json_encode($users) }}"></user-listing>
 	</div>
 </div>
 @endsection

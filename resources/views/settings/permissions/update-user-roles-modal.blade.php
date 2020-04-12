@@ -2,17 +2,18 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-                <h5 class="modal-title">Roles assigned to:<strong>@{{ users[currentUserIndex].name }}</strong></h5>
+                <h5 class="modal-title">Roles assigned to: <strong>@{{ users[currentUserIndex].name }}</strong></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
 			</div>
 			<div class="modal-body">
 			     <li v-for="role in roles" class="list-group-item">
-	                <div class="form-check">
-	                    <label class="form-check-label">
-	                    <input type="checkbox" :data-role="role.name" :value="role.id" class="form-check-input"> @{{ role.name }}
-	                    </label>
+	                <div :class=" (role.name != 'super-admin') ? 'form-check ml-3' : 'form-check'">
+	                    <label class="form-check-label" >
+	                    <input type="checkbox" :data-role="role.name" :value="role.id" class="form-check-input"> @{{ role.label }}
+						</label>
+						<p class="text-muted" style="font-size:12px;">@{{ role.description }}</p>
 	                </div>
 	            </li>
             </div>
