@@ -25,7 +25,7 @@
 				<td>
 					<button class="btn btn-sm btn-outline-danger" v-if="user.roles.length == 0" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">No role assigned</button>
 					<button class="btn btn-sm btn-outline-info" v-else data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">View roles assigned</button>
-					<button class="btn btn-sm btn-outline-danger " data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Remove User</button>
+					<button class="btn btn-sm btn-outline-danger " data-target="#update_user_roles_modal" @click="removeUser(index)">Remove User</button>
 				</td>
 			</tr>
             </tbody>
@@ -72,6 +72,19 @@
 
             onUserRoleUpdated: function(selectedRoles) {
                 Vue.set(this.selectedUser, 'roles',  selectedRoles);
+            },
+
+            removeUser: async function(index) {
+
+                if(!confirm('Are you sure?')) {
+                    return true;
+                }
+
+                this.currentUserIndex = index;
+                let user = this.users[index];
+                let route = `/user/${user.id}/delete`;
+                await axios.delete(route);
+                this.$delete(this.allUsers, index);
             }
         }
     }
