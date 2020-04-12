@@ -17,6 +17,7 @@
                                         :data-role="role.name" 
                                         :data-label="role.label"
                                         :value="role.id" 
+                                        @click="checkForSuperAdmin(role)"
                                         class="form-check-input"> {{ role.label }}
                                 </label>
                                 <p class="text-muted" style="font-size:12px;">{{ role.description }}</p>
@@ -45,10 +46,10 @@
         },
 
         methods: {
-           async getRoles() {
+            async getRoles() {
                let response = await axios.get('user/get-roles');
                this.roles = response.data;
-           },
+            },
 
             setupUserRoles: function() {
                 let userRoles = this.user.roles;
@@ -56,10 +57,16 @@
                     return false;
                 }
 
+
                 let roleInputContainer = document.querySelector("#update_user_roles_modal");
                 let allRoleInputs = roleInputContainer.querySelectorAll('input[type="checkbox"]');
-                
                 allRoleInputs.forEach((checkbox) => this.roleInputs[checkbox.value] = checkbox);
+
+                if(userRoles.some(role => role.name == 'super-admin')) {
+                    this.roleInputs.map((checkbox) => checkbox.checked = true);
+                    return;
+                }
+
                 this.roleInputs.map((checkbox) => checkbox.checked = false);
                 userRoles.forEach((role) => this.roleInputs[role.id].checked =  true);
             },
@@ -82,6 +89,24 @@
                 document.getElementById('close_update_user_roles_modal').click();
 
                 this.$emit('userRolesUpdated', selectedRoles)
+            },
+
+           checkForSuperAdmin(role) {
+                if(role.name != 'super-admin') {
+                    if(!this.roleInputs[role.id].checked) {
+                        this.roleInputs.map((checkbox) => (checkbox.dataset.role == 'super-admin') ? checkbox.checked = false : '');
+                    }
+                   return true;
+                }
+
+
+                if(this.roleInputs[role.id].checked) {
+                   this.roleInputs.map((checkbox) => checkbox.checked = true);
+                   return true;
+                }
+
+                this.roleInputs.map((checkbox) => checkbox.checked = false);
+                return true;
            }
         },
 

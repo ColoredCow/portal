@@ -58,6 +58,10 @@
                 let roleNames = [];
                 let userRoles = user.roles;
                 for(var i in userRoles) {
+                    let role = userRoles[i];
+                    if(role.name == 'super-admin') {
+                        return role.label;
+                    }
                     let roleName = userRoles[i].label;
                     roleNames.push(roleName);
                 }
