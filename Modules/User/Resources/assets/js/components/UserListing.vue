@@ -123,7 +123,8 @@
                     }
                 });
 
-                Vue.set(this.allUsers[this.currentUserIndex], 'roles',  selectedRoles);
+                 Vue.set(this.allUsers[this.currentUserIndex], 'roles',  selectedRoles);
+
                 let route = `${this.updateRoute}/${userID}`;
                 axios.put(route, {
                     roles: JSON.parse(JSON.stringify(selectedRoles)),
