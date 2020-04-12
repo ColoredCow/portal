@@ -4,7 +4,9 @@ namespace Modules\User\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -14,7 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user::index');
+        $users =  User::with('roles')->get();
+        $roles = Role::with('permissions')->get();
+        return view('user::index', compact('users', 'roles'));
     }
 
     /**

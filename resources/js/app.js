@@ -19,12 +19,21 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
-Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
-Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
-Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue'));
-Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue'));
-Vue.component('comment', require('./components/CommentItem.vue'));
+//Vue.component('user-listing', require('./../../Modules/User/Resources/assets/js/components/UserListing.vue').default);
+//Vue.component('user-listing', require('./components/UserListing.vue').default);
+
+/**
+ *  Module Vue Components
+ */
+require('./../../Modules/User/Resources/assets/js/vueComponents.js')
+
+
+Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue').default);
+Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue').default);
+Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue').default);
+Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue').default);
+Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue').default);
+Vue.component('comment', require('./components/CommentItem.vue').default);
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
@@ -40,6 +49,7 @@ $(document).ready(() => {
         wrapper.fadeOut(500);
     });
 });
+
 
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
@@ -733,7 +743,10 @@ if (document.getElementById('user_roles_table')) {
 
             updateRoles: function() {
                 let selectedRoles = [];
-                let userID = this.users[this.currentUserIndex].id;
+                if(this.users) {
+                    let userID = this.users[this.currentUserIndex].id;
+                }
+            
 
                 this.roleInputs.forEach(function(checkbox) {
                     if(checkbox.checked) {

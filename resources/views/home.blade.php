@@ -8,10 +8,10 @@
 
 
     <div class="d-flex justify-content-start row flex-wrap">
-        @if(auth()->user()->hasAnyPermission(['crm_talent.view', 'crm_client.view']))
+        @if(Module::isEnabled('User'))
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5">
-                <a class="card-body no-transition" href="{{ route('settings.permissions') }}">
+                <a class="card-body no-transition" href="{{ route('user.index') }}">
                     <br><h2 class="text-center">User Management</h2><br>
                 </a>
             </div>

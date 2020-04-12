@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GSuiteUserService;
-use Modules\User\Entities\User;
 use Carbon\Carbon;
+use Modules\User\Entities\User;
+use App\Services\GSuiteUserService;
 
 class UserController extends Controller
 {

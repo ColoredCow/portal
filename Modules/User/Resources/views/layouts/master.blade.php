@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module User</title>
+@extends('layouts.app')
+@section('js_scripts')
+<script src="{{ mix('/js/user.js') }}" defer></script>
+@endsection
 
-       {{-- Laravel Mix - CSS File --}}
-       {{-- <link rel="stylesheet" href="{{ mix('css/user.css') }}"> --}}
-
-    </head>
-    <body>
-        @yield('content')
-
-        {{-- Laravel Mix - JS File --}}
-        {{-- <script src="{{ mix('js/user.js') }}"></script> --}}
-    </body>
-</html>
+@section('css_scripts')
+<link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+@endsection
