@@ -35,10 +35,12 @@ Vue.component('project-details-component', require('./components/ProjectDetailsC
 Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue').default);
 Vue.component('comment', require('./components/CommentItem.vue').default);
 
-
+if (document.getElementById('vueContainer')) {
 new Vue({
-el: '#app'
+    el: '#vueContainer',
 });
+}
+
 
 
 

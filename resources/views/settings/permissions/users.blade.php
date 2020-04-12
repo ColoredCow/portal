@@ -12,7 +12,6 @@
 	</ul>
 	<br>
 	<div class="container"
-	id="user_roles_table"
 	data-users ="{{ json_encode($users) }}"
 	data-roles="{{ json_encode($roles) }}"
 	data-update-route="{{ route('permissions.module.index', ['module' => 'users']) }}"
