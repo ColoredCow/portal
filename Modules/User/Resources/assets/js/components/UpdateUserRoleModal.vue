@@ -11,9 +11,10 @@
                     <div class="modal-body">
                         <li v-for="(role, index) in this.roles" class="list-group-item" :key="index">
                             <div :class=" (role.name != 'super-admin') ? 'form-check ml-3' : 'form-check'">
-                                <label class="form-check-label" >
+                                <label class="form-check-label" style="cursor: pointer;">
                                     <input 
                                         type="checkbox" 
+                                        style="cursor: pointer;"
                                         :data-role="role.name" 
                                         :data-label="role.label"
                                         :value="role.id" 

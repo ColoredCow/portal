@@ -13,12 +13,10 @@
 			<tr v-for="(user,index) in this.allUsers" :key="index">
 				<td>
                     <span class="align-items-center d-flex justify-content-start">
-                        <div style="width:50px;" class="mr-2">
+                        <div style="width:30px;" class="mr-2">
                             <img style="border-radius:50%"  class="w-100" :src="user.avatar" alt="">
                         </div>
-               
                         {{ user.name }}
-
                     </span>
                     </td>
 				<td> {{ formatRoles(user) }} </td>

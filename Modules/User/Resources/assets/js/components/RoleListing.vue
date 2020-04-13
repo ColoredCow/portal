@@ -16,7 +16,7 @@
                 </td>
 				<td>
 					<button v-if="role.permissions.length === 0" class="btn btn-sm btn-outline-danger" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">No Permission Granted</button>
-					<button v-else class="btn btn-sm btn-outline-primary" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">View permissions</button>
+					<button v-else class="btn btn-sm btn-outline-info" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">View permissions</button>
 				</td>
 			</tr>
             </tbody>

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -17,8 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users =  User::with('roles')->get();
-        $roles = Role::with('permissions')->get();
-        return view('user::index', compact('users', 'roles'));
+        return view('user::index', compact('users'));
     }
 
     /**
@@ -79,5 +77,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         return $user->delete();
+        ///TODO:: Fire an event for all the communication and API integrations
     }
 }

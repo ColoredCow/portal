@@ -12,9 +12,10 @@
                     <ul class="list-group" >
                         <li v-for="(permission, index) in permissions" class="list-group-item" :key="index">
                             <div class="form-check">
-                                <label class="form-check-label">
+                                <label class="form-check-label" style="cursor: pointer;">
                                     <input 
                                         type="checkbox"
+                                        style="cursor: pointer;"
                                         class="form-check-input book_category_input" 
                                         :data-permission="permission.name"
                                         :value="permission.id"> {{ permission.name }}
@@ -61,24 +62,6 @@
             },
 
             updatePermissions() {
-                // let selectedRoles = [];
-                // let userID =  this.user.id;
-                // this.roleInputs.forEach(function(checkbox) {
-                //     if(checkbox.checked) {
-                //         selectedRoles.push({
-                //             name:checkbox.dataset.role,
-                //             id:checkbox.value,
-                //             label:checkbox.dataset.label
-                //         });
-                //     }
-                // });
-
-                // let route = `${this.updateRoute}/${userID}`;
-                // axios.put(route, { roles: JSON.parse(JSON.stringify(selectedRoles)), userID: userID});
-                // document.getElementById('close_update_user_roles_modal').click();
-
-                // this.$emit('userRolesUpdated', selectedRoles)
-
                 let selectedPermissions = [];
                 let roleID = this.role.id;
 
