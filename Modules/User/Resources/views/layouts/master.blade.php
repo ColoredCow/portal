@@ -4,5 +4,5 @@
 @endsection
 
 @section('css_scripts')
-<link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+<link href="{{ mix('/css/user.css') }}" rel="stylesheet">
 @endsection
