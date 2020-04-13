@@ -6,29 +6,40 @@
 					<th width="20%">User Name</th>
 					<th width="35%">User Roles</th>
 					<th>Actions</th>
-
 				</tr>
 			</thead>
             <tbody>
-			<tr v-for="(user,index) in this.allUsers" :key="index">
-				<td>
-                    <span class="align-items-center d-flex justify-content-start">
-                        <div style="width:30px;" class="mr-2">
-                            <img style="border-radius:50%"  class="w-100" :src="user.avatar" alt="">
+                <tr v-for="(user,index) in this.allUsers" :key="index">
+                    <td>
+                        <span class="align-items-center d-flex justify-content-start">
+                            <div style="width:30px;" class="mr-2">
+                                <img style="border-radius:50%"  class="w-100" :src="user.avatar" alt="">
+                            </div>
+                            {{ user.name }}
+                        </span>
+                        </td>
+                    <td> {{ formatRoles(user) }} </td>
+                    <td>
+                        <div class="dropdown d-none">
+                            <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select action
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                
+                                <a v-show="userPermissions['can-assign-roles']" class="dropdown-item" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)" href="#">Assign roles</a>
+                                <a v-show="userPermissions['can-delete']" class="dropdown-item text-danger"  @click="removeUser(index)"  ref="#">Remove this user</a>
+                            </div>
                         </div>
-                        {{ user.name }}
-                    </span>
+
+                        <div >
+                            <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
+                            <button v-show="userPermissions['can-delete']" class="btn btn-sm btn-outline-danger "  @click="removeUser(index)">Remove user</button>
+                        </div>
+
                     </td>
-				<td> {{ formatRoles(user) }} </td>
-				<td>
-					<button class="btn btn-sm btn-outline-danger" v-if="user.roles.length == 0" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">No role assigned</button>
-					<button class="btn btn-sm btn-outline-info" v-else data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">View roles assigned</button>
-					<button class="btn btn-sm btn-outline-danger " data-target="#update_user_roles_modal" @click="removeUser(index)">Remove User</button>
-				</td>
-			</tr>
+                </tr>
             </tbody>
 		</table>
-
 
         <user-role-update-modal 
             :user="this.selectedUser"
@@ -40,7 +51,7 @@
 
 <script>
     export default {
-        props:[ 'users', 'updateRoute'],
+        props:[ 'users', 'updateRoute', 'userPermissions'],
 
         data(){
             return { 
@@ -64,7 +75,7 @@
                     roleNames.push(roleName);
                 }
         
-                return roleNames.join(', ');
+                return (roleNames.length) ? roleNames.join(', ') : '-';
             },
 
             updateUserRolesModal: function(index) {

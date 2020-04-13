@@ -681,7 +681,7 @@ function disableBookSuggestions() {
 }
 
 if (document.getElementById('roles_permission_table')) {
-    var rolePermissions = new Vue({
+    new Vue({
         el: '#roles_permission_table',
         data: {
             roles: document.getElementById('roles_permission_table').dataset.roles ? JSON.parse(document.getElementById('roles_permission_table').dataset.roles) : [],

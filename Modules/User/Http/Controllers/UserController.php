@@ -6,17 +6,25 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
+use Modules\User\Services\UserService;
+use App\Http\Requests\Setting\UpdateUserRolesRequest;
 
-class UserController extends Controller
+class UserController extends ModuleBaseController
 {
+    protected $service;
+
+    public function __construct(UserService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        $users =  User::with('roles')->get();
-        return view('user::index', compact('users'));
+        $this->authorize('viewAny', User::class);
+        return $this->service->index();
     }
 
     /**
@@ -69,6 +77,12 @@ class UserController extends Controller
         //
     }
 
+    // public function updateUserRoles(UpdateUserRolesRequest $request)
+    // {
+    //     $validatedData = $request->validated();
+    //     return $this->service->updateUserRoles($validatedData);
+    // }
+
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -76,7 +90,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return $user->delete();
-        ///TODO:: Fire an event for all the communication and API integrations
+        $this->authorize('delete', User::class);
+        return $this->service->delete($user);
     }
 }
+  

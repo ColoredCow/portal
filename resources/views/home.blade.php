@@ -5,8 +5,6 @@
 <div class="container" id="home_page">
     @include('status', ['errors' => $errors->all()])
     <br>
-
-
     <div class="d-flex justify-content-start row flex-wrap">
         @if(Module::isEnabled('User') && auth()->user()->can('user_management.view'))
         <div class="col-md-4">

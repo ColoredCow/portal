@@ -30,7 +30,7 @@
                     </a>
                 @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto d-none">
                         @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
                         <li class="nav-item">
                             <li class="nav-item dropdown">
