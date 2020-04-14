@@ -5,8 +5,8 @@ namespace Modules\User\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\User\Entities\User;
-use Illuminate\Routing\Controller;
 use Modules\User\Services\UserService;
+use App\OfficeSuites\OfficeSuiteFacade;
 use App\Http\Requests\Setting\UpdateUserRolesRequest;
 
 class UserController extends ModuleBaseController
@@ -17,6 +17,7 @@ class UserController extends ModuleBaseController
     {
         $this->service = $service;
     }
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -91,7 +92,7 @@ class UserController extends ModuleBaseController
     public function destroy(User $user)
     {
         $this->authorize('delete', User::class);
-        return $this->service->delete($user);
+        $this->service->delete($user);
+        return OfficeSuiteFacade::removeUser();
     }
 }
-  

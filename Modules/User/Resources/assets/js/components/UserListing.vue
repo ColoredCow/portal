@@ -96,8 +96,9 @@
                 this.currentUserIndex = index;
                 let user = this.users[index];
                 let route = `/user/${user.id}/delete`;
-                await axios.delete(route);
+                let response = await axios.delete(route);
                 this.$delete(this.allUsers, index);
+                alert(response.data);
             }
         }
     }
