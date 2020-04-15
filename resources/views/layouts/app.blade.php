@@ -155,5 +155,11 @@
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
     @yield('js_scripts')
+
+    <script>
+        @yield('inline_js')
+    </script>
+
+
 </body>
 </html>

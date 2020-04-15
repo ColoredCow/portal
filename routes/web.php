@@ -201,4 +201,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('crm', 'CRM\CRMController@index')->name('crm');
     Route::resource('comments', 'CommentController')->only(['update', 'destroy']);
+
+    Route::get('user/read-books', 'UserBookController@index');
+    Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
 });

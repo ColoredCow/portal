@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Google_Client;
 use Google_Service_Directory;
-use Illuminate\Support\Facades\Auth;
 use App\Models\KnowledgeCafe\Library\Book;
 
 class HomeController extends Controller

@@ -34,6 +34,10 @@ Vue.component('applicant-round-action-component', require('./components/HR/Appli
 Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue').default);
 Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue').default);
 Vue.component('comment', require('./components/CommentItem.vue').default);
+Vue.component('user-dashboard-read-books', require('./components/Dashboard/UserDashboardReadBooks.vue').default);
+Vue.component('user-dashboard-wishlist-books', require('./components/Dashboard/UserDashboardWishlistBooks.vue').default);
+Vue.component('user-dashboard-projects', require('./components/Dashboard/UserDashboardProjects.vue').default);
+Vue.component('user-dashboard-library', require('./components/Dashboard/UserDahboardLibrary.vue').default);
 
 if (document.getElementById('vueContainer')) {
 new Vue({
@@ -647,19 +651,19 @@ if (document.getElementById('show_book_info')) {
     });
 }
 
-if(document.getElementById('home_page')) {
-    var el = document.getElementById("markBookAsRead");
-    el.addEventListener("click", markBookAsRead, false);
-    var wishlistBtn = document.getElementById("addBookToWishlist");
-    wishlistBtn.addEventListener("click", addBookToWishlist, false);
-    var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
-    disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
-    let isModalShown = sessionStorage.getItem('book_modal_has_shown');
-    if(!isModalShown) {
-        sessionStorage.setItem("book_modal_has_shown", "true");
-        $('#show_nudge_modal').modal('show');
-    }
-}
+// if(document.getElementById('home_page')) {
+//     var el = document.getElementById("markBookAsRead");
+//     el.addEventListener("click", markBookAsRead, false);
+//     var wishlistBtn = document.getElementById("addBookToWishlist");
+//     wishlistBtn.addEventListener("click", addBookToWishlist, false);
+//     var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
+//     disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
+//     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
+//     if(!isModalShown) {
+//         sessionStorage.setItem("book_modal_has_shown", "true");
+//         $('#show_nudge_modal').modal('show');
+//     }
+// }
 
 function markBookAsRead() {
     let bookID = document.getElementById('markBookAsRead').dataset.id;
