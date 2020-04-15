@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('OFFICE_SUITE_DRIVER', 'gsuite'),
+    'default' => env('OFFICE_SUITE_DRIVER', 'office365'),
 
     'gsuite' => [
         'service_class_path' => 'App\OfficeSuites\GsuiteService',
@@ -23,9 +23,9 @@ return [
         'hd' => env('GOOGLE_HD', '*')
     ],
 
-    // 'office365' => [
-    //     'service_class_path' => 'App\OfficeSuites\Office365Service',
-    //     'client_id' => env('GOOGLE_CLIENT_ID'),
-    //     'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-    // ]
+    'office365' => [
+        'service_class_path' => 'App\OfficeSuites\Office365Service',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    ]
 ];
