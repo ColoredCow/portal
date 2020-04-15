@@ -2,7 +2,7 @@
 
 namespace App\Policies\HR;
 
-use App\User;
+use Modules\User\Entities\User;
 use App\Models\HR\Applicant;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -13,7 +13,7 @@ class ApplicantPolicy
     /**
      * Determine whether the user can view the applicant.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\HR\Applicant  $applicant
      * @return mixed
      */
@@ -25,7 +25,7 @@ class ApplicantPolicy
     /**
      * Determine whether the user can create applicants.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -36,7 +36,7 @@ class ApplicantPolicy
     /**
      * Determine whether the user can update the applicant.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\HR\Applicant  $applicant
      * @return mixed
      */
@@ -48,7 +48,7 @@ class ApplicantPolicy
     /**
      * Determine whether the user can delete the applicant.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\HR\Applicant  $applicant
      * @return mixed
      */
@@ -60,7 +60,7 @@ class ApplicantPolicy
     /**
      * Determine whether the user can list applicants.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
     public function list(User $user)

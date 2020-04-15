@@ -7,7 +7,7 @@ use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
-use App\User;
+use Modules\User\Entities\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KnowledgeCafe\Library\Book;
 use Google_Client;
 use Google_Service_Directory;
+use App\Models\KnowledgeCafe\Library\Book;
 
 class HomeController extends Controller
 {

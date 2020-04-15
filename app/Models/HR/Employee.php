@@ -3,7 +3,7 @@
 namespace App\Models\HR;
 
 use App\Models\Project;
-use App\User;
+use Modules\User\Entities\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 

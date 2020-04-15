@@ -14,6 +14,8 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    @yield('css_scripts')
+
 </head>
 <body>
     <div id="app">
@@ -28,7 +30,7 @@
                     </a>
                 @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto d-none">
                         @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
                         <li class="nav-item">
                             <li class="nav-item dropdown">
@@ -152,5 +154,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
+    @yield('js_scripts')
+
+    <script>
+        @yield('inline_js')
+    </script>
+
+
 </body>
 </html>

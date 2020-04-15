@@ -11,6 +11,13 @@
 |
  */
 
+use App\OfficeSuites\OfficeSuiteFacade as OfficeSuite;
+
+Route::get('test', function () {
+    $officeSuite = app('office_suite');
+    ddd(OfficeSuite::removeUser());
+});
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
@@ -92,7 +99,6 @@ Route::middleware('auth')->group(function () {
         Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
 
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
-
 
         Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
         Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
@@ -195,4 +201,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('crm', 'CRM\CRMController@index')->name('crm');
     Route::resource('comments', 'CommentController')->only(['update', 'destroy']);
+
+    Route::get('user/read-books', 'UserBookController@index');
+    Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
 });

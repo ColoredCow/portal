@@ -3,52 +3,48 @@
 @section('content')
 
 <div class="container" id="home_page">
-    @include('status', ['errors' => $errors->all()])
-    <br>
+    <div>
+        @include('dashboard.modules')
+    </div>
 
-    <div class="d-flex justify-content-start row flex-wrap">
-        @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
-        <div class="col-md-4">
-            <div class="card h-75 mx-4 mt-3 mb-5 ">
-                <a class="card-body no-transition" href="{{ route('hr') }}">
-                    <br><h2 class="text-center">HR</h2><br>
-                </a>
-            </div>
-        </div>
-        @endif
+    <div class="m-3 ">
+        <h3>Dashboard</h3>
+    </div>
 
-        @can('finance_invoices.view')
-        <div class="col-md-4">
-            <div class= "card h-75 mx-4 mt-3 mb-5">
-                <a class="card-body no-transition" href="{{route('invoices')}}">
-                    <br><h2 class="text-center">Finance</h2><br>
-                </a>
-            </div>
-        </div>
-        @endcan
+
+
+    <div class="dashboard_view d-flex  flex-wrap justify-content-start ml-3">
 
         @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
-        <div class="col-md-4">
-            <div class= "card h-75 mx-4 mt-3 mb-5">
-                <a class="card-body no-transition" href="{{ route('knowledgecafe') }}">
-                    <br><h2 class="text-center">KnowledgeCafe</h2><br>
-                </a>
-            </div>
+        <div style="width: 25rem;" class="mr-5 mb-4">
+            <user-dashboard-library />
         </div>
         @endif
 
-        @if(auth()->user()->hasAnyPermission(['crm_talent.view', 'crm_client.view']))
-        <div class="col-md-4">
-            <div class="card h-75 mx-4 mt-3 mb-5">
-                <a class="card-body no-transition" href="{{ route('crm') }}">
-                    <br><h2 class="text-center">CRM</h2><br>
-                </a>
-            </div>
+
+        <div style="width: 25rem;">
+            <user-dashboard-projects />
         </div>
-        @endif
+        
     </div>
+
+    <div>
+
+    </div>
+    
 </div>
 
-@includeWhen($book, 'knowledgecafe.library.books.show_nudge_modal')
 
+
+
+
+
+
+{{-- @includeWhen($book, 'knowledgecafe.library.books.show_nudge_modal') --}}
+
+@endsection
+
+
+@section('inline_js')
+new Vue({ el: '#home_page'});
 @endsection

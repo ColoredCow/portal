@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\HR\Employee;
-use App\User;
+use Modules\User\Entities\User;
 use Carbon\Carbon;
 
 class UserObserver
@@ -11,7 +11,7 @@ class UserObserver
     /**
      * Handle to the user "created" event.
      *
-     * @param  \App\User  $user
+     * @param  \Modules\User\Entities\User  $user
      * @return void
      */
     public function created(User $user)

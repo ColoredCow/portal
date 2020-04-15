@@ -19,12 +19,34 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue'));
-Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue'));
-Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue'));
-Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue'));
-Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue'));
-Vue.component('comment', require('./components/CommentItem.vue'));
+//Vue.component('user-listing', require('./../../Modules/User/Resources/assets/js/components/UserListing.vue').default);
+//Vue.component('user-listing', require('./components/UserListing.vue').default);
+
+/**
+ *  Module Vue Components
+ */
+require('./../../Modules/User/Resources/assets/js/vueComponents.js')
+
+
+Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue').default);
+Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue').default);
+Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue').default);
+Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue').default);
+Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue').default);
+Vue.component('comment', require('./components/CommentItem.vue').default);
+Vue.component('user-dashboard-read-books', require('./components/Dashboard/UserDashboardReadBooks.vue').default);
+Vue.component('user-dashboard-wishlist-books', require('./components/Dashboard/UserDashboardWishlistBooks.vue').default);
+Vue.component('user-dashboard-projects', require('./components/Dashboard/UserDashboardProjects.vue').default);
+Vue.component('user-dashboard-library', require('./components/Dashboard/UserDahboardLibrary.vue').default);
+
+if (document.getElementById('vueContainer')) {
+new Vue({
+    el: '#vueContainer',
+});
+}
+
+
+
 
 $(document).ready(() => {
     if ($('.form-create-invoice').length) {
@@ -40,6 +62,7 @@ $(document).ready(() => {
         wrapper.fadeOut(500);
     });
 });
+
 
 if (document.getElementById('page_hr_applicant_edit')) {
     const applicantEdit = new Vue({
@@ -628,19 +651,19 @@ if (document.getElementById('show_book_info')) {
     });
 }
 
-if(document.getElementById('home_page')) {
-    var el = document.getElementById("markBookAsRead");
-    el.addEventListener("click", markBookAsRead, false);
-    var wishlistBtn = document.getElementById("addBookToWishlist");
-    wishlistBtn.addEventListener("click", addBookToWishlist, false);
-    var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
-    disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
-    let isModalShown = sessionStorage.getItem('book_modal_has_shown');
-    if(!isModalShown) {
-        sessionStorage.setItem("book_modal_has_shown", "true");
-        $('#show_nudge_modal').modal('show');
-    }
-}
+// if(document.getElementById('home_page')) {
+//     var el = document.getElementById("markBookAsRead");
+//     el.addEventListener("click", markBookAsRead, false);
+//     var wishlistBtn = document.getElementById("addBookToWishlist");
+//     wishlistBtn.addEventListener("click", addBookToWishlist, false);
+//     var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
+//     disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
+//     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
+//     if(!isModalShown) {
+//         sessionStorage.setItem("book_modal_has_shown", "true");
+//         $('#show_nudge_modal').modal('show');
+//     }
+// }
 
 function markBookAsRead() {
     let bookID = document.getElementById('markBookAsRead').dataset.id;
@@ -662,7 +685,7 @@ function disableBookSuggestions() {
 }
 
 if (document.getElementById('roles_permission_table')) {
-    var rolePermissions = new Vue({
+    new Vue({
         el: '#roles_permission_table',
         data: {
             roles: document.getElementById('roles_permission_table').dataset.roles ? JSON.parse(document.getElementById('roles_permission_table').dataset.roles) : [],
@@ -718,7 +741,6 @@ if (document.getElementById('user_roles_table')) {
             currentUserIndex: 0,
             roleInputs: [],
 
-
         },
         methods: {
             updateUserRolesModal: function(index) {
@@ -733,7 +755,10 @@ if (document.getElementById('user_roles_table')) {
 
             updateRoles: function() {
                 let selectedRoles = [];
-                let userID = this.users[this.currentUserIndex].id;
+                if(this.users) {
+                    let userID = this.users[this.currentUserIndex].id;
+                }
+            
 
                 this.roleInputs.forEach(function(checkbox) {
                     if(checkbox.checked) {
@@ -751,7 +776,24 @@ if (document.getElementById('user_roles_table')) {
                     userID: userID
                 });
                 document.getElementById('close_update_user_roles_modal').click();
+            },
+
+            formatRoles: function(user) {
+                let roleNames = [];
+                for(var i in user.roles) {
+                     let roleName = user.roles[i].label;
+                    // roleName = roleName.split('_').map(function (item) {
+                    //     return item.charAt(0).toUpperCase() + item.substring(1);
+                    // }).join(' ');
+                    
+                    roleNames.push(roleName);
+                }
+
+                return roleNames.join(', ');
+
             }
+
+
         },
         mounted: function() {
             let roleInputContainer = document.querySelector("#update_user_roles_modal");

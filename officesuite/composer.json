@@ -1,0 +1,8 @@
+{
+    "name": "coloredcow/laravel-officesuites",
+    "description": "A laravel package for office suites",
+    "require": {
+        "laravel/framework": "^7.6"
+    },
+    "license": "MIT"
+}

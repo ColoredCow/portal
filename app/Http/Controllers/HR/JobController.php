@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\HR;
 
-use App\User;
 use App\Models\HR\Job;
+use Modules\User\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\JobRequest;
 

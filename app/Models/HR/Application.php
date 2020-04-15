@@ -5,7 +5,7 @@ namespace App\Models\HR;
 use App\Events\HR\ApplicationCreated;
 use App\Helpers\ContentHelper;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
-use App\User;
+use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
