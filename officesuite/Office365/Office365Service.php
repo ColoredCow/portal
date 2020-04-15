@@ -1,6 +1,8 @@
 <?php
 
-namespace App\OfficeSuites;
+namespace OfficeSuite\Office365;
+
+use OfficeSuite\Contracts\OfficeSuiteServiceContract;
 
 class Office365Service implements OfficeSuiteServiceContract
 {

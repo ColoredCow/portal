@@ -5,8 +5,8 @@ namespace Modules\User\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\User\Entities\User;
+use OfficeSuite\OfficeSuiteFacade;
 use Modules\User\Services\UserService;
-use App\OfficeSuites\OfficeSuiteFacade;
 use App\Http\Requests\Setting\UpdateUserRolesRequest;
 
 class UserController extends ModuleBaseController

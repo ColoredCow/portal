@@ -161,7 +161,7 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\DatabaseServiceProvider::class,
-        App\OfficeSuites\OfficeSuitesServiceProvider::class,
+        OfficeSuite\OfficeSuitesServiceProvider::class,
     ],
 
     /*

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\OfficeSuites;
+namespace OfficeSuite;
 
 use Exception;
+use OfficeSuite\Contracts\OfficeSuiteServiceContract;
 
 class OfficeSuiteManager
 {

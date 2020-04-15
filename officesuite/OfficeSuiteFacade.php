@@ -1,6 +1,6 @@
 <?php
 
-namespace App\OfficeSuites;
+namespace OfficeSuite;
 
 use Illuminate\Support\Facades\Facade;
 

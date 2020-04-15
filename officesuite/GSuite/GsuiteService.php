@@ -1,6 +1,8 @@
 <?php
 
-namespace App\OfficeSuites;
+namespace OfficeSuite\GSuite;
+
+use OfficeSuite\Contracts\OfficeSuiteServiceContract;
 
 class GsuiteService implements OfficeSuiteServiceContract
 {

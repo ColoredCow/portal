@@ -45,7 +45,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Modules\\": "Modules/"
+            "Modules\\": "Modules/",
+            "OfficeSuite\\": "OfficeSuite/"
         },
         "classmap": [
             "database/seeds",
