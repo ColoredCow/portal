@@ -98,7 +98,6 @@
                 let route = `/user/${user.id}/delete`;
                 let response = await axios.delete(route);
                 this.$delete(this.allUsers, index);
-                alert(response.data);
             }
         }
     }
