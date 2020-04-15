@@ -16,7 +16,7 @@
     <div class="dashboard_view d-flex  flex-wrap justify-content-start ml-3">
 
         @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
-        <div style="width: 25rem;" class="mr-5">
+        <div style="width: 25rem;" class="mr-5 mb-4">
             <user-dashboard-library />
         </div>
         @endif
