@@ -6,6 +6,15 @@
         "framework",
         "laravel"
     ],
+
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ColoredCow/laravel-samlidp"
+        }
+    ],
+
+
     "license": "MIT",
     "require": {
         "php": "^7.3",
@@ -21,7 +30,8 @@
         "laravel/ui": "^2.0",
         "niklasravnsborg/laravel-pdf": "^3.1",
         "nwidart/laravel-modules": "^7.0",
-        "spatie/laravel-permission": "^3.3"
+        "spatie/laravel-permission": "^3.3",
+        "codegreencreative/laravel-samlidp": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
