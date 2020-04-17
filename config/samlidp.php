@@ -16,7 +16,7 @@ return [
     // The URI to your login page
     'login_uri' => 'login',
     // Log out of the IdP after SLO
-    'logout_after_slo' => env('LOGOUT_AFTER_SLO', false),
+    'logout_after_slo' => env('LOGOUT_AFTER_SLO', true),
     // The URI to the saml metadata file, this describes your idP
     'issuer_uri' => 'saml/metadata',
     // Name of the certificate PEM file
@@ -35,7 +35,7 @@ return [
             'destination' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_acs',
             'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
             'certificate' => '',
-            'query_params' => false
+            'query_params' => ''
         ]
     ],
 

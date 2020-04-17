@@ -69,4 +69,11 @@
         </div>
     </div>
 </div>
+
+@php
+
+if (request('SAMLRequest', null)) {
+    session()->put('saml_request_for_website', true);
+}
+@endphp
 @endsection
