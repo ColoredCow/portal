@@ -111,8 +111,8 @@
                     }
                 });
 
-                let route = `${this.updateRoute}/${userID}`;
-                axios.put(route, { roles: JSON.parse(JSON.stringify(selectedRoles)), userID: userID});
+                let route = `${this.updateRoute}`;
+                axios.put(route, { roles: JSON.parse(JSON.stringify(selectedRoles)), user_id: userID});
                 document.getElementById('close_update_user_roles_modal').click();
 
                 this.$emit('userRolesUpdated', selectedRoles)

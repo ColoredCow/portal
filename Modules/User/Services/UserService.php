@@ -44,7 +44,7 @@ class UserService
                 'isUpdated' => false,
             ]);
         }
-        $user = User::find($data['userID']);
+        $user = User::find($data['user_id']);
         $roles = array_pluck($data['roles'], 'id');
         return $user->syncRoles($roles);
     }

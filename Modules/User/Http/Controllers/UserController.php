@@ -2,11 +2,10 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\User\Entities\User;
 use Modules\User\Services\UserService;
-use App\Http\Requests\Setting\UpdateUserRolesRequest;
+use Modules\User\Http\Requests\UpdateUserRolesRequest;
 
 class UserController extends ModuleBaseController
 {
@@ -77,11 +76,11 @@ class UserController extends ModuleBaseController
         //
     }
 
-    // public function updateUserRoles(UpdateUserRolesRequest $request)
-    // {
-    //     $validatedData = $request->validated();
-    //     return $this->service->updateUserRoles($validatedData);
-    // }
+    public function updateUserRoles(UpdateUserRolesRequest $request)
+    {
+        $validatedData = $request->validated();
+        return $this->service->updateUserRoles($validatedData);
+    }
 
     /**
      * Remove the specified resource from storage.

@@ -14,7 +14,7 @@
 		<h4>User Management</h4>
 		<user-listing 
 			:users="{{ json_encode($users) }}"
-			:update-route="{{ json_encode( route('permissions.module.index', ['module' => 'users'])) }}"
+			:update-route="{{ json_encode( route('user.update-roles')) }}"
 			:user-permissions = "{{ json_encode(
 				[ 
 				'can-assign-roles' => auth()->user()->can('user_management.assign-roles'),
