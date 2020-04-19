@@ -81,6 +81,11 @@ class LoginController extends Controller
         $authUser->update(['avatar' => $user->avatar_original]);
 
         if (session('saml_request_for_website')) {
+            if(!$authUser->website_user_role) {
+                Auth::logout();
+                return redirect('login');
+            }
+            
             return redirect(config('constants.website_url') . '/wp/wp-admin/');
         }
 
