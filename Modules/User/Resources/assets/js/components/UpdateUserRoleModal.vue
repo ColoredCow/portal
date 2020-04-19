@@ -43,13 +43,11 @@
                                 <label v-if="this.user.websiteUserRole" class="form-check-label">{{ this.user.websiteUserRole }}</label>
                                 <label v-else class="form-check-label" style="cursor: pointer;">No Access provided</label>
                                 <p class="text-muted" style="font-size:12px;">You can set these roles from the website dashboard. 
-                                   <a v-if="this.user.websiteUser" :href="(this.user.websiteUser) ? 'https://local.coloredcow.dev/wp/wp-admin/user-edit.php?idp_referrer=https://employee-portal.dev/user&user_id=' +  this.user.websiteUser.ID : ''">Please click here to manage that. </a> 
+                                   <a v-if="this.user.websiteUser" :href="(this.user.websiteUser) ? this.getWebsiteUserProfileUrl() :'' ">Please click here to manage that. </a> 
                                 </p>
                         </li>
 
                     </div>
-
-
 
                     <div class="modal-footer">
                         <button id="close_update_user_roles_modal" type="type" class="btn btn-light" data-dismiss="modal" aria-label="Close">Cancel</button>
@@ -63,7 +61,7 @@
 <script>
     export default {
        
-       props:['user', 'updateRoute'],
+       props:['user', 'updateRoute', 'config'],
 
         data(){
             return { 
@@ -143,6 +141,15 @@
                 document.querySelector(".active").classList.remove("active");
                 document.querySelector(`#${tile}`).classList.add("active");
                 
+            },
+
+            getWebsiteUserProfileUrl() {
+                return this.config.website_url 
+                        + '/wp/wp-admin/user-edit.php'
+                        + '?idp_referrer=' + window.location.href
+                        + '&user_id=' +  this.user.websiteUser.ID
+                        
+                      
             }
 
         },

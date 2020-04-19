@@ -10,9 +10,7 @@
     <div class="m-3 ">
         <h3>Dashboard</h3>
     </div>
-
-
-
+    
     <div class="dashboard_view d-flex  flex-wrap justify-content-start ml-3">
 
         @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))

@@ -19,8 +19,7 @@
                         </span>
                         </td>
                     <td> 
-                        <span>{{ formatRoles(user) }} &nbsp; <span v-if="user.websiteUserRole"> {{user.websiteUserRole}}</span></span> 
-    
+                        <span>{{ formatRoles(user) }}<span v-if="user.websiteUserRole">, {{user.websiteUserRole}}</span></span>
                     </td>
 
                     <td>
@@ -48,14 +47,16 @@
         <user-role-update-modal 
             :user="this.selectedUser"
             :updateRoute="this.updateRoute"
+            :config="config"
             @userRolesUpdated="this.onUserRoleUpdated"
+
         />
     </div>
 </template>
 
 <script>
     export default {
-        props:[ 'users', 'updateRoute', 'userPermissions', 'websiteRole'],
+        props:[ 'users', 'updateRoute', 'userPermissions', 'config'],
 
         data(){
             return { 

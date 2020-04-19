@@ -20,6 +20,7 @@
 				'can-assign-roles' => auth()->user()->can('user_management.assign-roles'),
 				'can-delete' => auth()->user()->can('user_management.delete'),
 				], true)}}"
+			:config = "{{ json_encode(['website_url' => config('website.url')]) }}"
 		/>
 
 	</div>
