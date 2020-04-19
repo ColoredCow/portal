@@ -54,4 +54,9 @@ trait HasWebsiteUser
             return 'CCWeb- ' . Str::title(head(array_keys($roles)));
         }
     }
+
+
+    public function canAccessWebsite() {
+        return $this->website_user_role;
+    }
 }
