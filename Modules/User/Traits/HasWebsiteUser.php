@@ -43,7 +43,8 @@ trait HasWebsiteUser
 
     public function getWebsiteUserRoleAttribute()
     {
-        $role = $this->getWebsiteUserMeta('cc_capabilities');
+        $roleKey = config('database.connections.wordpress.prefix') . 'capabilities';
+        $role = $this->getWebsiteUserMeta($roleKey);
         if (!$role) {
             return '';
         }
