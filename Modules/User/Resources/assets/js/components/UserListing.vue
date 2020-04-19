@@ -18,7 +18,11 @@
                             {{ user.name }}
                         </span>
                         </td>
-                    <td> {{ formatRoles(user) }} </td>
+                    <td> 
+                        <span>{{ formatRoles(user) }} &nbsp; <span v-if="user.websiteUserRole"> {{user.websiteUserRole}}</span></span> 
+    
+                    </td>
+
                     <td>
                         <div class="dropdown d-none">
                             <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,7 +55,7 @@
 
 <script>
     export default {
-        props:[ 'users', 'updateRoute', 'userPermissions'],
+        props:[ 'users', 'updateRoute', 'userPermissions', 'websiteRole'],
 
         data(){
             return { 

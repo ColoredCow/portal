@@ -4,6 +4,7 @@ namespace Modules\User\Entities;
 
 use App\Models\HR\Employee;
 use Spatie\Permission\Traits\HasRoles;
+use Modules\User\Traits\HasWebsiteUser;
 use Illuminate\Notifications\Notifiable;
 use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles, SoftDeletes;
+    use Notifiable, HasRoles, SoftDeletes,HasWebsiteUser;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'provider', 'provider_id', 'avatar',
     ];
+
+    protected $appends = ['websiteUserRole', 'websiteUser'];
 
     /**
      * The attributes that should be hidden for arrays.

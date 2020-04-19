@@ -19,9 +19,11 @@
     "require": {
         "php": "^7.3",
         "aws/aws-sdk-php": "^3.121",
+        "codegreencreative/laravel-samlidp": "dev-master",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.4",
+        "jgrossi/corcel": "^4.0",
         "jordikroon/google-vision": "^1.8",
         "laravel/framework": "^7.0",
         "laravel/helpers": "^1.1",
@@ -30,8 +32,7 @@
         "laravel/ui": "^2.0",
         "niklasravnsborg/laravel-pdf": "^3.1",
         "nwidart/laravel-modules": "^7.0",
-        "spatie/laravel-permission": "^3.3",
-        "codegreencreative/laravel-samlidp": "dev-master"
+        "spatie/laravel-permission": "^3.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
