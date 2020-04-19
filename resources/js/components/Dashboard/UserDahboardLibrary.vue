@@ -53,15 +53,12 @@
                 this.activeTile = tile;
                 document.querySelector(".active").classList.remove("active");
                 document.querySelector(`#${tile}`).classList.add("active");
-                
             }
         },
 
         mounted() {
             this.getReadBooks();
         }
-
-
 
     }
 

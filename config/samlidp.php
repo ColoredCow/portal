@@ -48,6 +48,8 @@ return [
         'aHR0cHM6Ly9jb2xvcmVkY293LmNvbS93cC93cC1sb2dpbi5waHA/c2FtbF9hY3M=' => [
             'destination' => 'https://coloredcow.com/wp/wp-login.php?saml_acs',
             'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
+            'certificate' => '',
+            'query_params' => ''
         ]
     ],
 

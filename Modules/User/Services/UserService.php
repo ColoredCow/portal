@@ -4,6 +4,8 @@ namespace Modules\User\Services;
 
 use Illuminate\Http\Response;
 use Modules\User\Entities\User;
+use OfficeSuite\OfficeSuiteFacade;
+use Modules\User\Events\UserRemovedEvent;
 
 class UserService
 {
@@ -19,7 +21,9 @@ class UserService
 
     public function delete(User $user)
     {
-        return $user->delete();
+        $user->delete();
+        event(new UserRemovedEvent($user));
+        return OfficeSuiteFacade::removeUser();
         ///TODO:: Fire an event for all the communication and API integrations
     }
 
@@ -40,7 +44,7 @@ class UserService
                 'isUpdated' => false,
             ]);
         }
-        $user = User::find($data['userID']);
+        $user = User::find($data['user_id']);
         $roles = array_pluck($data['roles'], 'id');
         return $user->syncRoles($roles);
     }

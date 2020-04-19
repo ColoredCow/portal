@@ -21,7 +21,6 @@ class UserController extends Controller
     public function syncAllWithGSuite()
     {
         $this->authorize('syncAllWithGSuite', self::class);
-
         $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetchAll();
         $this->updateEmployeeDetailsFromGSuite($gsuiteUserService->getUsers());

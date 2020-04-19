@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Modules\User\Entities\User;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -70,11 +70,25 @@ class LoginController extends Controller
     {
         $user = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
+        if ($authUser && $authUser->trashed()) {
+            return redirect('login');
+        }
+
         Auth::login($authUser, true);
         /**
          * Update user avatar to keep it update with gmail
          */
         $authUser->update(['avatar' => $user->avatar_original]);
+
+        if (session('saml_request_for_website')) {
+            if(!$authUser->website_user_role) {
+                Auth::logout();
+                return redirect('login');
+            }
+            
+            return redirect(config('constants.website_url') . '/wp/wp-admin/');
+        }
+
         return redirect('home');
     }
 
@@ -87,10 +101,11 @@ class LoginController extends Controller
      */
     public function findOrCreateUser($user, $provider)
     {
-        $authUser = User::where('provider_id', $user->id)->first();
+        $authUser = User::withTrashed()->where('provider_id', $user->id)->first();
         if ($authUser) {
             return $authUser;
         }
+
         return User::create([
             'name' => $user->name,
             'email' => $user->email,
