@@ -35,7 +35,8 @@ trait HasWebsiteUser
 
     public function getWebsiteUserRole()
     {
-        $roles = unserialize($this->getWebsiteUserMeta('cc_capabilities'));
+        $roleKey = config('database.connections.wordpress.prefix') . 'capabilities';
+        $roles = unserialize($this->getWebsiteUserMeta($roleKey));
         if ($roles) {
             return Str::title(head(array_keys($roles)));
         }
