@@ -36,6 +36,13 @@ return [
             'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
             'certificate' => '',
             'query_params' => ''
+        ],
+
+        'aHR0cHM6Ly91YXQuY29sb3JlZGNvdy5jb20vd3Avd3AtbG9naW4ucGhwP3NhbWxfYWNz' => [
+            'destination' => 'https://uat.coloredcow.com/wp/wp-login.php?saml_acs',
+            'logout' => 'https://uat.coloredcow.com/wp/wp-login.php?saml_sls',
+            'certificate' => '',
+            'query_params' => ''
         ]
     ],
 
