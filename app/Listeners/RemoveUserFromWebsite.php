@@ -29,6 +29,13 @@ class RemoveUserFromWebsite
         if (!$wpUser) {
             return;
         }
-        WPPost::where('post_author', $wpUser->ID)->update(['post_author' => 1]);
+
+
+        $admin = WPUser::where('user_login', config('website.admin_login_name'))->first();
+        if (!$wpUser) {
+            return;
+        }
+
+        WPPost::where('post_author', $wpUser->ID)->update(['post_author' => $admin->ID]);
     }
 }
