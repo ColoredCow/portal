@@ -8,7 +8,19 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+
+                    <div>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a id="employee_portal" class="nav-link active c-pointer" @click="setActiveTile('employee_portal')">Employee Portal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="website" class="nav-link c-pointer"  @click="setActiveTile('website')">Website</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div v-show="this.activeTile == 'employee_portal'" class="modal-body">
                         <li v-for="(role, index) in this.roles" class="list-group-item" :key="index">
                             <div :class=" (role.name != 'super-admin') ? 'form-check ml-3' : 'form-check'">
                                 <label class="form-check-label" style="cursor: pointer;">
@@ -25,6 +37,18 @@
                             </div>
                         </li>
                     </div>
+
+                    <div v-show="this.activeTile == 'website'" class="modal-body">
+                        <li>
+                                <label v-if="this.user.websiteUserRole" class="form-check-label">{{ this.user.websiteUserRole }}</label>
+                                <label v-else class="form-check-label" style="cursor: pointer;">No Access provided</label>
+                                <p class="text-muted" style="font-size:12px;">You can set these roles from the website dashboard. 
+                                   <a v-if="this.user.websiteUser" :href="(this.user.websiteUser) ? this.getWebsiteUserProfileUrl() :'' ">Please click here to manage that. </a> 
+                                </p>
+                        </li>
+
+                    </div>
+
                     <div class="modal-footer">
                         <button id="close_update_user_roles_modal" type="type" class="btn btn-light" data-dismiss="modal" aria-label="Close">Cancel</button>
                         <button @click="updateUserRoles" type="button"  class="btn btn-primary">Save</button>
@@ -37,12 +61,14 @@
 <script>
     export default {
        
-       props:['user', 'updateRoute'],
+       props:['user', 'updateRoute', 'config'],
 
         data(){
             return { 
                 roles: [],
-                roleInputs:[]
+                roleInputs:[],
+                activeTile:'employee_portal'
+
             }  
         },
 
@@ -85,8 +111,8 @@
                     }
                 });
 
-                let route = `${this.updateRoute}/${userID}`;
-                axios.put(route, { roles: JSON.parse(JSON.stringify(selectedRoles)), userID: userID});
+                let route = `${this.updateRoute}`;
+                axios.put(route, { roles: JSON.parse(JSON.stringify(selectedRoles)), user_id: userID});
                 document.getElementById('close_update_user_roles_modal').click();
 
                 this.$emit('userRolesUpdated', selectedRoles)
@@ -108,7 +134,24 @@
 
                 this.roleInputs.map((checkbox) => checkbox.checked = false);
                 return true;
-           }
+           },
+
+            setActiveTile(tile) {
+                this.activeTile = tile;
+                document.querySelector(".active").classList.remove("active");
+                document.querySelector(`#${tile}`).classList.add("active");
+                
+            },
+
+            getWebsiteUserProfileUrl() {
+                return this.config.website_url 
+                        + '/wp/wp-admin/user-edit.php'
+                        + '?idp_referrer=' + window.location.href
+                        + '&user_id=' +  this.user.websiteUser.ID
+                        
+                      
+            }
+
         },
 
         watch: { 

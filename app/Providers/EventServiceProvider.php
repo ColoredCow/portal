@@ -20,6 +20,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\HR\JobUpdated' => [
             'App\Listeners\HR\UpdateJobRounds',
         ],
+
+        'Modules\User\Events\UserRemovedEvent' => [
+            'App\Listeners\RemoveUserFromWebsite'
+        ],
     ];
 
     /**

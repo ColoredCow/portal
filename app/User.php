@@ -3,14 +3,15 @@
 namespace App;
 
 use App\Models\HR\Employee;
+use Spatie\Permission\Traits\HasRoles;
+use Modules\User\Traits\HasWebsiteUser;
+use Illuminate\Notifications\Notifiable;
 use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles, HasWebsiteUser;
 
     /**
      * The attributes that are mass assignable.
