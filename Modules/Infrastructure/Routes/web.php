@@ -13,6 +13,6 @@
 
 Route::prefix('infrastructure')->group(function () {
     Route::get('/', 'InfrastructureController@index')->name('infrastructure.index');
-    Route::get('/ec2', 'InfrastructureController@getEc2Instances')->name('infrastructure.ec2');
+    Route::get('/instances', 'InfrastructureController@getInstances')->name('infrastructure.get-instances');
     Route::get('/billing-details', 'InfrastructureController@getBillingDetails')->name('infrastructure.billing-details');
 });

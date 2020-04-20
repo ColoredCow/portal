@@ -5,7 +5,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-item nav-link font-weight-bold {{ $tab == 'EC2 Instances' ? 'active' : ''}}" href="{{ route('infrastructure.ec2') }}"><i class="fa fa-users"></i>&nbsp;EC2 Instances</a>
+            <a class="nav-item nav-link font-weight-bold {{ $tab == 'EC2 Instances' ? 'active' : ''}}" href="{{ route('infrastructure.get-instances') }}"><i class="fa fa-users"></i>&nbsp;EC2 Instances</a>
         </li>
 
     </ul>

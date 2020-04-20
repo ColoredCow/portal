@@ -6,8 +6,8 @@
     @include('infrastructure::menu_header', ['tab' => 'DataBase Backups'])
 
     <ul class="mt-5 w-50 list list-group">
-        @foreach($s3buckets as $s3bucket) 
-            <li class="list-item list-group-item">{{ \Str::title($s3bucket['Name']) }}</li>
+        @foreach($storageBuckets as $storageBucket) 
+            <li class="list-item list-group-item">{{ \Str::title($storageBucket['Name']) }}</li>
         @endforeach
     </ul>
 </div>
