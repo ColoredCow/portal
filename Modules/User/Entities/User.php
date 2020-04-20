@@ -3,6 +3,7 @@
 namespace Modules\User\Entities;
 
 use App\Models\HR\Employee;
+use Modules\User\Traits\CanBeExtended;
 use Spatie\Permission\Traits\HasRoles;
 use Modules\User\Traits\HasWebsiteUser;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles, SoftDeletes,HasWebsiteUser;
+    use Notifiable, HasRoles, SoftDeletes, HasWebsiteUser, CanBeExtended;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +30,7 @@ class User extends Authenticatable
      * The attributes that should be hidden for arrays.
      *
      * @var array
-     */
+    **/
     protected $hidden = [
         'password', 'remember_token',
     ];

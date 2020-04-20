@@ -31,7 +31,7 @@ class InfrastructureService
 
     public function getBillingDetails()
     {
-        $seconds = 1800;
+        $seconds = 1 * 60 * 60 * 24;
         return Cache::remember('aws_billing_data', $seconds, function () {
             return $this->getAWSBillingDetails();
         });

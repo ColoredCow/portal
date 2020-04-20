@@ -2,11 +2,13 @@
 
 namespace Modules\User\Providers;
 
+use Exception;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Gate;
 use Modules\User\Policies\UserPolicy;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\User\Services\ExtendUserModel;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -19,7 +21,6 @@ class UserServiceProvider extends ServiceProvider
      * @var string $moduleNameLower
      */
     protected $moduleNameLower = 'user';
-
 
     protected $policies = [
         User::class => UserPolicy::class,
@@ -38,6 +39,7 @@ class UserServiceProvider extends ServiceProvider
         $this->registerFactories();
         $this->registerPolicies();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+        $this->registerExtendableClass();
     }
 
     /**
@@ -61,7 +63,8 @@ class UserServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 
@@ -106,7 +109,7 @@ class UserServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
+        if (!app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -132,7 +135,6 @@ class UserServiceProvider extends ServiceProvider
         return $paths;
     }
 
-
     /**
      * Register the module's policies.
      *
@@ -143,5 +145,23 @@ class UserServiceProvider extends ServiceProvider
         foreach ($this->policies as $key => $value) {
             Gate::policy($key, $value);
         }
+    }
+
+    private function registerExtendableClass()
+    {
+        $this->app->singleton('USER_EXTENDED', function ($app, $data) {
+            $class = config('user.extended_class');
+            if (!class_exists($class)) {
+                return null;
+            }
+
+            if (!is_subclass_of($class, ExtendUserModel::class)) {
+                throw new Exception('User module extension class must extend ' . ExtendUserModel::class);
+            }
+
+            $extendedClass = new $class();
+            $extendedClass->setModelContext($data['context']);
+            return $extendedClass;
+        });
     }
 }
