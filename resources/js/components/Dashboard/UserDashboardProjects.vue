@@ -1,7 +1,9 @@
 <template>
     <div class="card">
-        <div class="card-header">
-            <h3 class="text-center">Projects</h3>
+        <div class="card-header p-1">
+            <h3 class="text-center">
+                <a href="/projects">Projects</a>
+            </h3>
         </div>
         <div class="card-body pt-3" style="height: 21em;overflow: auto;">
            <h5>No Project yet.</h5>

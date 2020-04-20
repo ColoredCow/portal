@@ -6,34 +6,34 @@ use Aws\Sdk;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Infrastructure\Services\InfrastructureService;
 
 class InfrastructureController extends Controller
 {
     protected $sdk;
+    protected $service;
 
-    public function __construct()
+    public function __construct(InfrastructureService $service)
     {
+        $this->service = $service;
         $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1']);
     }
 
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
     public function index()
     {
-        $s3Client = $this->sdk->createS3();
-        $completeSynchronously = $s3Client->listBucketsAsync()->wait();
-        $s3Data = $completeSynchronously->toArray();
-        $s3buckets = $s3Data['Buckets'];
-        return view('infrastructure::index')->with('s3buckets', $s3buckets);
+        $storageBuckets = $this->service->getStorageBuckets();
+        return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
     }
 
-    public function getEc2Instances()
+    public function getInstances()
     {
-        $ec2Client = $this->sdk->createEc2();
-        $instances = $ec2Client->DescribeInstances()->toArray()['Reservations'];
-        return view('infrastructure::ec2_instances')->with('instances', $instances);
+        $instances = $this->service->getServersInstances();
+        return view('infrastructure::instances')->with('instances', $instances);
+    }
+
+    public function getBillingDetails()
+    {
+        return $this->service->getBillingDetails();
     }
 
     /**

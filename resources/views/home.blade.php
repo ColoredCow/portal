@@ -19,6 +19,11 @@
         </div>
         @endif
 
+        @if(auth()->user()->can('infrastructure.view'))
+            <div style="width: 25rem;">
+                <user-dashboard-infrastructure />
+            </div>
+        @endif
 
         <div style="width: 25rem;">
             <user-dashboard-projects />
