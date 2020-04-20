@@ -1,7 +1,7 @@
 <template>
    <div class="card text-center">
         <div class="card-header p-1">
-            <h3>Library</h3>
+           <h3> <a href="/knowledgecafe/library/books">Library</a></h3>
         </div>
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
@@ -27,10 +27,6 @@
             <span v-show="this.activeTile == 'recommend'" >
                 Books recommend for you. COMING SOON
             </span>
-        </div>
-
-        <div class="card-footer">
-           <a class="font-weight-bold" style="font-size:15px;" href="/knowledgecafe/library/books"> See the library</a>
         </div>
     </div>
 </template>

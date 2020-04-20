@@ -12,6 +12,10 @@
             <a class="nav-item nav-link font-weight-bold active" href="{{ route('infrastructure.ec2') }}"><i
                     class="fa fa-users"></i>&nbsp;EC2 Instances</a>
         </li>
+
+        {{-- <li class="nav-item">
+            <a class="nav-item nav-link font-weight-bold" href="{{ route('infrastructure.billing-details') }}"><i class="fa fa-users"></i>&nbsp;Billing details</a>
+        </li> --}}
     </ul>
 
 
