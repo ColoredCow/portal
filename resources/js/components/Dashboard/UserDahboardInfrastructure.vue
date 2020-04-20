@@ -12,12 +12,6 @@
                 <hr class="mt-1 w-100">
 
                 <li class="d-flex justify-content-between" style="font-size:16px;">
-                    <span> Average (Based on last year data) </span> 
-                    <div class="cost badge badge-warning cost p-2">{{ this.billingDetails.avg_by_last_year }}</div> 
-                </li>
-                <hr class="mt-1 w-100">
-
-                <li class="d-flex justify-content-between" style="font-size:16px;">
                     <span> Forcast for this month </span> 
                     <div class="cost badge badge-info cost p-2">{{ this.billingDetails.forcast_amount }}</div> 
                 </li>
@@ -26,6 +20,12 @@
                 <li class="d-flex justify-content-between" style="font-size:16px;">
                     <span> Last Month amount </span> 
                     <div class="cost badge badge-info cost p-2">{{ this.billingDetails.last_month_amount }}</div> 
+                </li>
+                <hr class="mt-1 w-100">
+
+                <li class="d-flex justify-content-between" style="font-size:16px;">
+                    <span> Average (Based on last year data) </span> 
+                    <div class="cost badge badge-warning cost p-2">{{ this.billingDetails.avg_by_last_year }}</div> 
                 </li>
                 <hr class="mt-1 w-100">
 
