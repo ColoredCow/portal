@@ -38,6 +38,7 @@ Vue.component('user-dashboard-read-books', require('./components/Dashboard/UserD
 Vue.component('user-dashboard-wishlist-books', require('./components/Dashboard/UserDashboardWishlistBooks.vue').default);
 Vue.component('user-dashboard-projects', require('./components/Dashboard/UserDashboardProjects.vue').default);
 Vue.component('user-dashboard-library', require('./components/Dashboard/UserDahboardLibrary.vue').default);
+Vue.component('user-dashboard-infrastructure', require('./components/Dashboard/UserDahboardInfrastructure.vue').default);
 
 if (document.getElementById('vueContainer')) {
 new Vue({
