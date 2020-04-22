@@ -22,14 +22,6 @@
                 @endforeach
             </select>
         </div>
-        <div class="form-group offset-md-1 col-md-5">
-            <label for="name" class="field-required">Status</label>
-            <select name="status" id="status" class="form-control" required="required">
-                @foreach (config('client.status') as $status => $display_name)
-                <option value="{{ $status }}">{{ $display_name }}</option>
-                @endforeach
-            </select>
-        </div>
     </div>
     <br>
 </div>

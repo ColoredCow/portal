@@ -5,7 +5,7 @@
     @include('project::menu_header')
     <br>
     <div class="d-flex justify-content-between mb-2">
-        <h4 class="mb-1 pb-1">Projects</h4>
+        <h4 class="mb-1 pb-1">{{ config('project.status')[request()->input('status', 'active')] }} Projects ({{ $projects ? $projects->count() : ''}})</h4>
         <span>
             <a  href= "{{ route('project.create') }}" class="btn btn-info text-white"> Add new project</a>
         </span>
@@ -16,15 +16,16 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
+                    <th>Reference Id</th>
                     <th>Client</th>
                     <th>Resources</th>
-                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($projects as $project)
+                @forelse($projects as $project)
                     <tr>
-                        <td> <a href="{{ route('project.edit', $project) }}">{{ $project->name }} ({{ $project->client_project_id }})</a> </td>
+                        <td> <a href="{{ route('project.edit', $project) }}">{{ $project->name }}</a> </td>
+                        <td> {{ $project->client_project_id }} </td>
                         <td>{{ $project->client->name }}</td>
                         <td>
                             <ul class="ml-0 pl-3">
@@ -33,9 +34,14 @@
                                 @endforeach
                             </ul>
                         </td>
-                        <td>{{ config('project.status')[$project->status] }}</td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="3"> 
+                            <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>  
+                        <td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
 

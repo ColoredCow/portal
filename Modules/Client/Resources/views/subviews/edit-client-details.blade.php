@@ -31,7 +31,11 @@
             <label for="name" class="field-required">Status</label>
             <select name="status" id="status" class="form-control" required="required">
                 @foreach (config('client.status') as $status => $display_name)
-                <option value="{{ $status }}">{{ $display_name }}</option>
+                    @if($status == $client->status)
+                        <option selected="selected" value="{{ $status }}">{{ $display_name }}</option>
+                    @else
+                        <option value="{{ $status }}">{{ $display_name }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>

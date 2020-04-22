@@ -10,7 +10,8 @@ class ClientService implements ClientServiceContract
 {
     public function index()
     {
-        return Client::orderBy('status')->get();
+        return  Client::where('status', request()->input('status', 'active'))
+            ->get();
     }
 
     public function getKeyAccountManagers()
@@ -24,7 +25,7 @@ class ClientService implements ClientServiceContract
             'name' => $data['name'],
             'email' => $data['email'],
             'key_account_manager_id' => $data['key_account_manager_id'],
-            'status' => $data['status']
+            'status' => $data['status'] ?? 'active'
         ]);
     }
 

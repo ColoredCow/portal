@@ -19,4 +19,9 @@ class Client extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public function getReferenceIdAttribute()
+    {
+        return sprintf('%03s', $this->id) ;
+    }
 }

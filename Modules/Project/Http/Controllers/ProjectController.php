@@ -46,7 +46,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $validated = $request->validated();
-        $project = $this->service->store($validated);
+        $this->service->store($validated);
         return redirect(route('project.index'));
     }
 

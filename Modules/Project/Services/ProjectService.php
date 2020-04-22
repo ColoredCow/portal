@@ -11,7 +11,8 @@ class ProjectService implements ProjectServiceContract
 {
     public function index()
     {
-        return Project::all();
+        return Project::where('status', request()->input('status', 'active'))
+            ->get();
     }
 
     public function create()
