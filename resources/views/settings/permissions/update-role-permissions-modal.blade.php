@@ -12,7 +12,7 @@
 					<li v-for="(permission, index) in permissions" class="list-group-item">
 						<div class="form-check">
 							<label class="form-check-label">
-								<input type="checkbox" :data-permission="permission.name"  class="form-check-input book_category_input" :value="permission.id"> @{{ permission.name }}
+								<input type="checkbox" :data-permission="permission.name"  class=" book_category_input" :value="permission.id"> @{{ permission.name }}
 							</label>
 						</div>
 					</li>

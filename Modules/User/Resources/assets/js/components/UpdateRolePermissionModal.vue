@@ -16,7 +16,7 @@
                                     <input 
                                         type="checkbox"
                                         style="cursor: pointer;"
-                                        class="form-check-input book_category_input" 
+                                        class="book_category_input" 
                                         :data-permission="permission.name"
                                         :value="permission.id"> {{ permission.name }}
                                 </label>

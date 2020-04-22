@@ -13,7 +13,7 @@
                     <td>
                         <span class="align-items-center d-flex justify-content-start">
                             <div style="width:30px;" class="mr-2">
-                                <img style="border-radius:50%"  class="w-100" :src="user.avatar" alt="">
+                                <img style="border-radius:50%"  class="w-full" :src="user.avatar" alt="">
                             </div>
                             {{ user.name }}
                         </span>

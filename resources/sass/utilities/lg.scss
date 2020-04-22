@@ -1,0 +1,66 @@
+@media only screen and (min-width: 992px) {
+	.flex-basis-lg-50p {
+		flex-basis: 50%;
+	}
+	.position-lg-absolute {
+		position: absolute;
+	}
+	.top-lg-auto {
+		top: auto;
+	}
+	.bottom-lg-auto {
+		bottom: auto;
+	}
+	@each $size, $length in $sizes {
+		.w-lg-#{$size} {
+			width: $length !important;
+		}
+		.h-lg-#{$size} {
+			height: $length !important;
+		}
+		.min-h-lg-#{$size} {
+			min-height: $length;
+		}
+		.max-h-lg-#{$size} {
+			max-height: $length;
+		}
+		.min-w-lg-#{$size} {
+			min-width: $length;
+		}
+		.max-w-lg-#{$size} {
+			max-width: $length;
+		}
+	}
+	@each $name, $value in $line-heights {
+		.leading-lg-#{$name} {
+			line-height: $value !important;
+		}
+	}
+	@each $size, $value in $font-sizes {
+		.fz-lg-#{$size} {
+			font-size: $value !important;
+		}
+	}
+	@each $name, $value in $rounded {
+		.rounded-lg-#{$name} {
+			border-radius: $value;
+		}
+	}
+	@each $name, $value in $spacers{
+		.top-lg-#{$name} {
+			top: $value;
+		}
+		.bottom-lg-#{$name} {
+			bottom: $value;
+		}
+		.right-lg-n#{$name} {
+			right: $value * -1;
+		}
+	}
+	.h-lg-screen {
+	    height: 100vh !important;
+	}
+	.w-lg-screen {
+	    width: 100vw !important;
+	}
+}

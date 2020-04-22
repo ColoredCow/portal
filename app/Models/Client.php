@@ -8,6 +8,8 @@ class Client extends Model
 {
     protected $guarded = [];
 
+    protected $table = 'clients_old';
+
     protected $appends = ['currency'];
 
     /**

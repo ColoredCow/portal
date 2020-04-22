@@ -9,6 +9,8 @@ class Project extends Model
 {
     protected $guarded = [];
 
+    protected $table = 'projects_old';
+
     /**
      * Get the client that owns the project.
      */

@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-6">
                         <a class="" href="{{ route('books.index', ['search'=> $book->title]) }}">
-                            <img class="mb-1 mw-100" src=" {{ $book->thumbnail }} " />
+                            <img class="mb-1 mw-full" src=" {{ $book->thumbnail }} " />
                         </a>
                         <h5 class="mb-1 font-weight-bold" > {{ $book->title }} </h5>
                         <h6 class="mb-1" > {{ $book->author }} </h6>
@@ -34,7 +34,7 @@
                                 data-id="{{$book->id}}"
                                 data-mark-book-route= "{{route('books.toggleReadStatus')}}"
                                 id="markBookAsRead"
-                                class="btn btn-primary w-100 py-3 font-weight-bold">Yes, I have read this
+                                class="btn btn-primary w-full py-3 font-weight-bold">Yes, I have read this
                             </button>
 
                             <button type="button"
@@ -42,7 +42,7 @@
                                 data-id="{{$book->id}}"
                                 data-route = {{ route('books.addToWishList') }}
                                 id="addBookToWishlist"
-                                class="btn btn-info w-100 py-3 font-weight-bold mt-3">I wish to read it
+                                class="btn btn-info w-full py-3 font-weight-bold mt-3">I wish to read it
                             </button>
 
                             @if($book->readers->count())
@@ -64,7 +64,7 @@
                             @endif
 
                             <div class="mt-3">
-                                <a class="w-100 font-weight-bold" id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}">
+                                <a class="w-full font-weight-bold" id="disableBookSuggestion" data-dismiss="modal" aria-label="Close" data-href= "{{ route('books.disableSuggestion') }}">
                                     <label class="c-pointer">
                                         <input type="checkbox" class="mr-1">Don't show me this again
                                     </label>

@@ -130,13 +130,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports', 'ReportsController@index');
     });
 
-    Route::resource('clients', 'ClientController')
-        ->except(['show', 'destroy'])
-        ->names(['index' => 'clients', 'create' => 'clients.create', 'edit' => 'clients.edit', 'store' => 'clients.store', 'update' => 'clients.update']);
+    // Route::resource('clients', 'ClientController')
+    //     ->except(['show', 'destroy'])
+    //     ->names(['index' => 'clients', 'create' => 'clients.create', 'edit' => 'clients.edit', 'store' => 'clients.store', 'update' => 'clients.update']);
 
-    Route::resource('projects', 'ProjectController')
-        ->except(['destroy'])
-        ->names(['index' => 'projects', 'create' => 'projects.create', 'edit' => 'projects.edit', 'store' => 'projects.store', 'update' => 'projects.update', 'show' => 'projects.show']);
+    // Route::resource('projects-outdated', 'ProjectController')
+    //     ->except(['destroy'])
+    //     ->names(['index' => 'projects', 'create' => 'projects.create',
+    //             'edit' => 'projects.edit', 'store' => 'projects.store',
+    //             'update' => 'projects.update', 'show' => 'projects.show']);
+
     Route::post('projects/{project}/add-employee', 'ProjectController@addEmployee');
     Route::post('projects/{project}/remove-employee', 'ProjectController@removeEmployee');
     Route::get('my-projects/{employee}', 'hr\Employees\EmployeeController@showProjects')->name('projects.my-projects');
@@ -158,9 +161,9 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update'])
-        ->names(['store' => 'project.stage',
-            'update' => 'project.stage.update']);
+    // Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update'])
+    //     ->names(['store' => 'project.stage',
+    //         'update' => 'project.stage.update']);
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index')->name('knowledgecafe');

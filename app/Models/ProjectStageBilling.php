@@ -9,6 +9,8 @@ class ProjectStageBilling extends Model
 {
     protected $guarded = [];
 
+    protected $table = 'projects_old_stage_billings';
+
     protected $appends = ['amount'];
 
     /**

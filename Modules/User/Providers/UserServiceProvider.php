@@ -6,9 +6,11 @@ use Exception;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Gate;
 use Modules\User\Policies\UserPolicy;
+use Modules\User\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\User\Services\ExtendUserModel;
+use Modules\User\Contracts\UserServiceContract;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -40,6 +42,7 @@ class UserServiceProvider extends ServiceProvider
         $this->registerPolicies();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         $this->registerExtendableClass();
+        $this->loadService();
     }
 
     /**
@@ -162,6 +165,17 @@ class UserServiceProvider extends ServiceProvider
             $extendedClass = new $class();
             $extendedClass->setModelContext($data['context']);
             return $extendedClass;
+        });
+    }
+
+    private function loadService()
+    {
+        if (\Arr::has($this->app->getBindings(), UserServiceContract::class)) {
+            return true;
+        }
+
+        return $this->app->bind(UserServiceContract::class, function () {
+            return new UserService();
         });
     }
 }

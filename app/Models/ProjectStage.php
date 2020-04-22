@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectStage extends Model
 {
-    protected $table = 'project_stages';
+    protected $table = 'projects_old_stages';
 
     protected $guarded = [];
 

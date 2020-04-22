@@ -4,6 +4,8 @@ namespace Modules\Infrastructure\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Infrastructure\Services\InfrastructureService;
+use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
 
 class InfrastructureServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,7 @@ class InfrastructureServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+        $this->loadService();
     }
 
     /**
@@ -52,7 +55,8 @@ class InfrastructureServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 
@@ -97,7 +101,7 @@ class InfrastructureServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
+        if (!app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -121,5 +125,16 @@ class InfrastructureServiceProvider extends ServiceProvider
             }
         }
         return $paths;
+    }
+
+    private function loadService()
+    {
+        if (\Arr::has($this->app->getBindings(), InfrastructureServiceContract::class)) {
+            return true;
+        }
+
+        return $this->app->bind(InfrastructureServiceContract::class, function () {
+            return new InfrastructureService();
+        });
     }
 }

@@ -25,15 +25,27 @@
     @endif
 
 
-    @if(auth()->user()->hasAnyPermission(['crm_talent.view', 'crm_client.view']))
+    {{-- @if(auth()->user()->hasAnyPermission(['crm_talent.view', 'crm_client.view']))
         <li class="nav-item">
             <a class="nav-item nav-link font-weight-bold" href="{{ route('crm') }}"><i class="fa fa-bar-chart"></i>&nbsp;CRM</a>
         </li>
-    @endif
+    @endif --}}
 
     @if(auth()->user()->can('infrastructure.view'))
         <li class="nav-item">
             <a class="nav-item nav-link font-weight-bold" href="{{ route('infrastructure.index') }}"><i class="fa fa-bar-chart"> </i>&nbsp;Infrastructure</a>
+        </li>
+    @endif
+
+    @if(auth()->user()->can('client.view'))
+        <li class="nav-item">
+            <a class="nav-item nav-link font-weight-bold" href="{{ route('client.index') }}"><i class="fa fa-bar-chart"> </i>&nbsp;Clients</a>
+        </li>
+    @endif
+
+    @if(auth()->user()->can('project.view'))
+        <li class="nav-item">
+            <a class="nav-item nav-link font-weight-bold" href="{{ route('project.index') }}"><i class="fa fa-bar-chart"> </i>&nbsp;Projects</a>
         </li>
     @endif
 

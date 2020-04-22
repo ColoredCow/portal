@@ -21,8 +21,8 @@
                 <label class="switch mb-0">
                     <input type="checkbox" id="is_active" name="is_active" value="1" v-model="isActive" data-pre-select-status="{{ $client->is_active }}">
                     <div class="slider round" @click="toggleActive" :class="[isActive ? 'active' : 'inactive']" >
-                        <span class="on w-100 text-left pl-3">Active</span>
-                        <span class="off w-100 text-right pr-3">Inactive</span>
+                        <span class="on w-full text-left pl-3">Active</span>
+                        <span class="off w-full text-right pr-3">Inactive</span>
                     </div>
                 </label>
             </div>

@@ -5,8 +5,9 @@ namespace Modules\Infrastructure\Services;
 use Aws\Sdk;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
 
-class InfrastructureService
+class InfrastructureService implements InfrastructureServiceContract
 {
     public function __construct()
     {

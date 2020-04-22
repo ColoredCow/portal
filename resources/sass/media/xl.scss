@@ -1,0 +1,66 @@
+@media only screen and (min-width: 1200px) {
+	body,
+	.btn,
+	.form-control,
+	.custom-select {
+		font-size: 18px;
+		line-height: 22px;
+	}
+	input.caret-down {
+		background-position-x: calc(100% - 24px);
+		background-position-y: 10px;
+	}
+	select.form-control {
+		background-position-x: calc(100% - 24px);
+		background-position-y: 10px;
+	}
+	select.has-custom-arrow {
+		background-position-y: 12px;
+		background-size: 20px;
+	}
+	input:checked ~ .checkbox-custom {
+		&.custom-checkbox-success::after {
+			left: 10px;
+			top: 4px;
+			width: 9px;
+			height: 18px;
+		}
+	}
+	.login-container {
+		background-position-y: 84px;
+		>.gradient {
+			background: none;
+			opacity: 1;
+		}
+	}
+	.objective {
+		&:not(:last-child) {
+			&:after {
+				right: 30px;
+				top: 8px;
+				margin-top: 24px;
+				margin-bottom: 24px;
+			}
+		}
+	}
+	.volunteer-assign-search {
+		&:before {
+			left: 14px;
+			top: 14px;
+			width: 17px;
+			height: 23px;
+		}
+	}
+	.navbar {
+		background: $theme-white-mild;
+		box-shadow: 0 2px 2px 0 $theme-box-shadow-light-dark;
+		.dropdown-menu {
+			box-shadow: 0 2px 2px 0 $theme-box-shadow-light-dark;
+			right: 0px;
+			left: auto !important;
+		}
+		.dropdown-toggle::after {
+			margin-left: 0px;
+		}
+	}
+}

@@ -20,7 +20,7 @@
         <h1 class="mt-1 mb-4 mx-2">{{ $book->title }}</h1>
         <div class="row">
             <div class="col-md-8 col-xl-9 d-flex">
-                <div class="w-25 d-flex justify-content-center align-items-center">
+                <div class="w-25p d-flex justify-content-center align-items-center">
                     <img src="{{ $book->thumbnail }}" alt="{{ $book->title }}" class="img-fluid">
                 </div>
                 <div class="pl-1 pl-xl-3 d-flex flex-column w-75">
@@ -48,7 +48,7 @@
                     @endif
                     <div>
                         <div class="row mx-0" id="readers_section" >
-                            <div class="ml-1 mb-1 mt-2 w-100 d-flex align-items-center">
+                            <div class="ml-1 mb-1 mt-2 w-full d-flex align-items-center">
                                 <p class="font-weight-bold mb-0 text-nowrap mr-2" v-if="borrowers.length">Borrowed by:</p>
                                 <div class="d-flex justify-content-start flex-wrap">
                                     <div v-for="(borrower, index)  in borrowers " class="mr-2 text-center">
@@ -56,7 +56,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ml-1 mb-1 mt-2 w-100 d-flex align-items-center">
+                            <div class="ml-1 mb-1 mt-2 w-full d-flex align-items-center">
                                 <p class="font-weight-bold mb-0 text-nowrap mr-2" v-if="readers.length">Read by:</p>
                                 <div class="d-flex justify-content-start flex-wrap">
                                     <div v-for="(reader, index)  in readers " class="mr-2 text-center">

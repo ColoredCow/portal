@@ -14,7 +14,7 @@
         <h4>Roles management</h4>
         <role-listing 
         :roles="{{ json_encode($roles) }}"
-        :permissions = {{ json_encode($permissions)  }}
+        :permissions = "{{ json_encode($permissions)  }}"
         :update-route="{{ json_encode( route('permissions.module.index', ['module' => 'roles'])) }}"
         />
 		

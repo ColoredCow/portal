@@ -44,7 +44,7 @@
         data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.index') }}" 
         data-category-index-route="{{ route('books.category.index') }}">
-        <div class="d-flex flex-wrap w-100">
+        <div class="d-flex flex-wrap w-full">
             <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
 
                 <div class="d-flex" >

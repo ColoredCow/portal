@@ -14,20 +14,20 @@
     <div class="dashboard_view d-flex  flex-wrap justify-content-start ml-3">
 
         @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
-        <div style="width: 25rem;" class="mr-5 mb-4">
+        <div  class="mr-5 mb-4 min-w-389">
             <user-dashboard-library />
         </div>
         @endif
 
         @if(auth()->user()->can('infrastructure.view'))
-            <div style="width: 25rem;">
+            <div class="min-w-389">
                 <user-dashboard-infrastructure />
             </div>
         @endif
 
-        <div style="width: 25rem;">
+        {{-- <div>
             <user-dashboard-projects />
-        </div>
+        </div> --}}
         
     </div>
 

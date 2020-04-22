@@ -6,8 +6,9 @@ use Illuminate\Http\Response;
 use Modules\User\Entities\User;
 use OfficeSuite\OfficeSuiteFacade;
 use Modules\User\Events\UserRemovedEvent;
+use Modules\User\Contracts\UserServiceContract;
 
-class UserService
+class UserService implements UserServiceContract
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,9 @@ class UserService
      */
     public function index()
     {
-        $users = User::with('roles')->get();
-        return view('user::index', compact('users'));
+        return User::with('roles')
+            ->orderBy('name')
+            ->get();
     }
 
     public function delete(User $user)

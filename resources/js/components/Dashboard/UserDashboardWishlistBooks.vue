@@ -4,12 +4,15 @@
             <div class="row" >
                 <div class="col-2">
                     <div style="width: 30px;">
-                        <img class="w-100" :src="book.thumbnail" alt="">
+                        <img class="w-full" :src="book.thumbnail" alt="">
                     </div>
                 
                 </div>
                 <div class="col-9 text-left d-flex align-items-center">
-                    <a :href="'/knowledgecafe/library/books/'+ book.id ">{{ book.title }}</a>
+                    <div class="w-250">
+                        <a :href="'/knowledgecafe/library/books/'+ book.id ">{{ book.title }}</a>
+                    </div>
+                    
                 </div>
             </div>
             <hr class="mt-1">

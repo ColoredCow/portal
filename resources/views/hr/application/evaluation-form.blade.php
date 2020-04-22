@@ -50,7 +50,7 @@
 	                            @else
 	                                @foreach($evaluation_parameter['option_detail'] as $option)
 	                                    <div class="form-check form-check-inline">
-	                                        <input class="form-check-input" type="radio" name="evaluation[{{ $evaluation_parameter['id'] }}][option_id]" value="{{ $option['id'] }}">
+	                                        <input class="" type="radio" name="evaluation[{{ $evaluation_parameter['id'] }}][option_id]" value="{{ $option['id'] }}">
 	                                        <label class="form-check-label" for="">{{ $option['name'] }}</label>
 	                                    </div>
 	                                @endforeach

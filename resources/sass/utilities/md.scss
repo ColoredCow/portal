@@ -1,0 +1,78 @@
+@media only screen and (min-width: 768px) {
+	.flex-basis-md-50p {
+		flex-basis: 50%;
+	}
+	.position-md-absolute {
+		position: absolute;
+	}
+	.top-md-auto {
+		top: auto;
+	}
+	.bottom-md-auto {
+		bottom: auto;
+	}
+	@each $size, $length in $sizes {
+		.w-md-#{$size} {
+			width: $length !important;
+		}
+		.h-md-#{$size} {
+			height: $length !important;
+		}
+		.min-h-md-#{$size} {
+			min-height: $length;
+		}
+		.max-h-md-#{$size} {
+			max-height: $length;
+		}
+		.min-w-md-#{$size} {
+			min-width: $length;
+		}
+		.max-w-md-#{$size} {
+			max-width: $length;
+		}
+	}
+	@each $name, $value in $line-heights {
+		.leading-md-#{$name} {
+			line-height: $value !important;
+		}
+	}
+	@each $size, $value in $font-sizes {
+		.fz-md-#{$size} {
+			font-size: $value !important;
+		}
+	}
+	@each $name, $value in $rounded {
+		.rounded-md-#{$name} {
+			border-radius: $value;
+		}
+		.rounded-top-left-md-#{$name} {
+			border-top-left-radius: $value;
+		}
+		.rounded-top-right-md-#{$name} {
+			border-top-right-radius: $value;
+		}
+		.rounded-bottom-right-md-#{$name} {
+			border-bottom-right-radius: $value;
+		}
+		.rounded-bottom-left-md-#{$name} {
+			border-bottom-left-radius: $value;
+		}
+	}
+	@each $name, $value in $spacers{
+		.top-md-#{$name} {
+			top: $value;
+		}
+		.bottom-md-#{$name} {
+			bottom: $value;
+		}
+		.right-md-n#{$name} {
+			right: $value * -1;
+		}
+	}
+	.h-md-screen {
+	    height: 100vh !important;
+	}
+	.w-md-screen {
+	    width: 100vw !important;
+	}
+}

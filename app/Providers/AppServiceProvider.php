@@ -25,10 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
-    public function setupEnvForOldPackages() {
+    public function setupEnvForOldPackages()
+    {
         putenv('GOOGLE_APPLICATION_CREDENTIALS=' . config('constants.google_application_credentials'));
     }
 }

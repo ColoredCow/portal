@@ -16,7 +16,7 @@
             <h1>Employee Reports</h1>
         </div>
         <div class="col-md-12">
-            <img src="/images/employee-reports-min.png" alt="employee reports" class="w-100">
+            <img src="/images/employee-reports-min.png" alt="employee reports" class="w-full">
         </div>
     </div>
     <div class="row">

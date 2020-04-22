@@ -11,7 +11,7 @@
 			     <li v-for="role in roles" class="list-group-item">
 	                <div class="form-check">
 	                    <label class="form-check-label">
-	                    <input type="checkbox" :data-role="role.name" :value="role.id" class="form-check-input"> @{{ role.name }}
+	                    <input type="checkbox" :data-role="role.name" :value="role.id" class=""> @{{ role.name }}
 	                    </label>
 	                </div>
 	            </li>

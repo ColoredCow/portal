@@ -1,4 +1,6 @@
 {
     "User": true,
-    "Infrastructure": true
+    "Infrastructure": true,
+    "Project": true,
+    "Client": true
 }

@@ -31,7 +31,7 @@
                                         :data-label="role.label"
                                         :value="role.id" 
                                         @click="checkForSuperAdmin(role)"
-                                        class="form-check-input"> {{ role.label }}
+                                        class=""> {{ role.label }}
                                 </label>
                                 <p class="text-muted" style="font-size:12px;">{{ role.description }}</p>
                             </div>

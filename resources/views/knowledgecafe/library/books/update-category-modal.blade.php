@@ -18,7 +18,7 @@
                             <li v-for="(category, index) in bookCategories" class="list-group-item">
                                 <div class="form-check books_category_item">
                                     <label class="form-check-label">
-                                    <input type="checkbox" :data-category="category.name"  class="form-check-input book_category_input" :value="category.id"> @{{ category.name }}
+                                    <input type="checkbox" :data-category="category.name"  class=" book_category_input" :value="category.id"> @{{ category.name }}
                                     </label>
                                 </div> 
                             </li>

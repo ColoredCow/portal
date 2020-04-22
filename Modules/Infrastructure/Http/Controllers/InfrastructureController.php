@@ -6,14 +6,14 @@ use Aws\Sdk;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Infrastructure\Services\InfrastructureService;
+use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
 
 class InfrastructureController extends Controller
 {
     protected $sdk;
     protected $service;
 
-    public function __construct(InfrastructureService $service)
+    public function __construct(InfrastructureServiceContract $service)
     {
         $this->service = $service;
         $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1']);

@@ -14,7 +14,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="create_calendar_event" name="create_calendar_event" v-model="createCalendarEvent">
+                            <input class="" type="checkbox" id="create_calendar_event" name="create_calendar_event" v-model="createCalendarEvent">
                             <label class="form-check-label" for="create_calendar_event">Create a calendar event</label>
                         </div>
                     </div>

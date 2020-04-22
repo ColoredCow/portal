@@ -55,7 +55,7 @@
                     @foreach ($report['sentAmount'] as $currency => $sentAmount)
                         <h5 id="sent_amount_{{ $currency }}" data-sent-amount="{{ $sentAmount }}"><b>{{ $currency }} : </b>{{ config('constants.currency.' . $currency . '.symbol') }}&nbsp;{{ $sentAmount }}</h5>
                         @if($currency == 'USD')
-                            <h6>Est rate USD to INR:&nbsp;<input type="number" class="form-control form-control-sm d-inline w-25" placeholder="rate" v-model="conversionRateUSD" id="conversion_rate_usd" min="0" step="0.01" data-conversion-rate-usd="{{ config('constants.finance.conversion-rate-usd-to-inr') }}"></h6>
+                            <h6>Est rate USD to INR:&nbsp;<input type="number" class="form-control form-control-sm d-inline w-25p" placeholder="rate" v-model="conversionRateUSD" id="conversion_rate_usd" min="0" step="0.01" data-conversion-rate-usd="{{ config('constants.finance.conversion-rate-usd-to-inr') }}"></h6>
                             <h6>Est amount USD to INR:&nbsp;{{ config('constants.currency.INR.symbol') }}&nbsp;<span>@{{ convertedUSDSentAmount }}</span></h6>
                         @endif
                     @endforeach

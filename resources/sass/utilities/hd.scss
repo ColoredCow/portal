@@ -1,0 +1,66 @@
+@media (min-width: 1440px) {
+	.flex-basis-hd-50p {
+		flex-basis: 50%;
+	}
+	.position-hd-absolute {
+		position: absolute;
+	}
+	.top-hd-auto {
+		top: auto;
+	}
+	.bottom-hd-auto {
+		bottom: auto;
+	}
+	@each $size, $length in $sizes {
+		.w-hd-#{$size} {
+			width: $length !important;
+		}
+		.h-hd-#{$size} {
+			height: $length !important;
+		}
+		.min-h-hd-#{$size} {
+			min-height: $length;
+		}
+		.max-h-hd-#{$size} {
+			max-height: $length;
+		}
+		.min-w-hd-#{$size} {
+			min-width: $length;
+		}
+		.max-w-hd-#{$size} {
+			max-width: $length;
+		}
+	}
+	@each $name, $value in $line-heights {
+		.leading-hd-#{$name} {
+			line-height: $value !important;
+		}
+	}
+	@each $size, $value in $font-sizes {
+		.fz-hd-#{$size} {
+			font-size: $value !important;
+		}
+	}
+	@each $name, $value in $rounded {
+		.rounded-hd-#{$name} {
+			border-radius: $value;
+		}
+	}
+	@each $name, $value in $spacers{
+		.top-hd-#{$name} {
+			top: $value;
+		}
+		.bottom-hd-#{$name} {
+			bottom: $value;
+		}
+		.right-hd-n#{$name} {
+			right: $value * -1;
+		}
+	}
+	.h-hd-screen {
+	    height: 100vh !important;
+	}
+	.w-hd-screen {
+	    width: 100vw !important;
+	}
+}

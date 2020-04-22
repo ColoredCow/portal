@@ -4,14 +4,14 @@ namespace Modules\User\Http\Controllers;
 
 use Illuminate\Http\Response;
 use Modules\User\Entities\User;
-use Modules\User\Services\UserService;
+use Modules\User\Contracts\UserServiceContract;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;
 
 class UserController extends ModuleBaseController
 {
     protected $service;
 
-    public function __construct(UserService $service)
+    public function __construct(UserServiceContract $service)
     {
         $this->service = $service;
     }
@@ -23,7 +23,8 @@ class UserController extends ModuleBaseController
     public function index()
     {
         $this->authorize('viewAny', User::class);
-        return $this->service->index();
+        $users = $this->service->index();
+        return view('user::index', compact('users'));
     }
 
     /**

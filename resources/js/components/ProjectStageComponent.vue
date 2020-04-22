@@ -7,7 +7,7 @@
                 <input type="hidden" name="project_id" :value="projectId">
                 <div class="card-header">
                     <div v-if="stage.name" v-show="!editMode">{{ stage.name }}</div>
-                    <div class="form-group w-25 mb-0" v-show="editMode">
+                    <div class="form-group w-25p mb-0" v-show="editMode">
                         <div class="d-flex align-items-center">
                             <label for="name" class="mb-0 mr-3 field-required">Name</label>
                             <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name" required="required" v-model="stage.name">
@@ -37,8 +37,8 @@
                                     <label class="switch mb-0">
                                         <input type="checkbox" id="cost_include_gst" name="cost_include_gst" value="1" v-model="inputStageCostIncludeGst">
                                         <div class="slider secondary-slider round" @click="toggleInputStageCostIncludeGst" :class="[inputStageCostIncludeGst ? 'active' : 'inactive']" >
-                                            <span class="on w-100 text-left pl-3">Yes</span>
-                                            <span class="off w-100 text-right pr-3">No</span>
+                                            <span class="on w-full text-left pl-3">Yes</span>
+                                            <span class="off w-full text-right pr-3">No</span>
                                         </div>
                                     </label>
                                 </div>

@@ -1,0 +1,92 @@
+@media only screen and (min-width: 1200px) {
+	.flex-basis-xl-20p {
+		flex-basis: 20%;
+	}
+	.flex-basis-xl-30p {
+		flex-basis: 30%;
+	}
+	.flex-basis-xl-50p {
+		flex-basis: 50%;
+	}
+	.flex-order-xl-1 {
+		order: 1;
+	}
+	.flex-order-xl-2 {
+		order: 2;
+	}
+	.flex-order-xl-3 {
+		order: 3;
+	}
+	.position-xl-absolute {
+		position: absolute;
+	}
+	.top-xl-auto {
+		top: auto;
+	}
+	.bottom-xl-auto {
+		bottom: auto;
+	}
+	@each $size, $length in $sizes {
+		.w-xl-#{$size} {
+			width: $length !important;
+		}
+		.h-xl-#{$size} {
+			height: $length !important;
+		}
+		.min-h-xl-#{$size} {
+			min-height: $length;
+		}
+		.max-h-xl-#{$size} {
+			max-height: $length;
+		}
+		.min-w-xl-#{$size} {
+			min-width: $length;
+		}
+		.max-w-xl-#{$size} {
+			max-width: $length;
+		}
+	}
+	@each $name, $value in $line-heights {
+		.leading-xl-#{$name} {
+			line-height: $value !important;
+		}
+	}
+	@each $size, $value in $font-sizes {
+		.fz-xl-#{$size} {
+			font-size: $value !important;
+		}
+	}
+	@each $name, $value in $rounded {
+		.rounded-xl-#{$name} {
+			border-radius: $value;
+		}
+	}
+	@each $name, $value in $spacers{
+		.top-xl-#{$name} {
+			top: $value;
+		}
+		.bottom-xl-#{$name} {
+			bottom: $value;
+		}
+		.right-xl-n#{$name} {
+			right: $value * -1;
+		}
+	}
+	.h-xl-screen {
+	    height: 100vh !important;
+	}
+	.w-xl-screen {
+	    width: 100vw !important;
+	}
+	.border-left-xl-6 {
+		border-left: 6px solid;
+	}
+	.col-count-xl-1 {
+		column-count: 1;
+	}
+	.review-block{
+		position: absolute;
+		margin-top: 30px;
+		left: 45px;
+	}
+}
