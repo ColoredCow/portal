@@ -10,7 +10,7 @@ class ClientService implements ClientServiceContract
 {
     public function index()
     {
-        return  Client::where('status', request()->input('status', 'active'))
+        return  Client::with('keyAccountManager')->where('status', request()->input('status', 'active'))
             ->get();
     }
 
