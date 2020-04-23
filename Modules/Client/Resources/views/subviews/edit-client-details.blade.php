@@ -11,11 +11,11 @@
                             value="{{ $client->name }}">
                     </div>
                     <div class="form-group col-md-5 offset-md-1">
-                        <label for="key_account_manager_id" class="field-required">Key Account manager</label>
-                        <select name="key_account_manager_id" id="key_account_manager_id" class="form-control" required="required">
+                        <label for="status" class="field-required">Status</label>
+                        <select name="status" id="status" class="form-control" required="required">
                             <option value="">Select key account manager</option>
-                            @foreach ($keyAccountManagers as $status => $keyAccountManager)
-                            <option {{ ($keyAccountManager->id == $client->key_account_manager_id) ? 'selected=selected' : '' }} value="{{ $keyAccountManager->id}}">{{ $keyAccountManager->name }}</option>
+                            @foreach (config('client.status') as $status => $label)
+                            <option {{ ($status == $client->status) ? 'selected=selected' : '' }} value="{{ $status }}">{{ $label }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -31,11 +31,18 @@
                             @endforeach
                         </select>
                     </div>
-                    
-                    <div class="form-group offset-md-1 col-md-5">
-                        <label for="email" >Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter client email" value="{{ $client->email }}">
+
+                    <div class="form-group col-md-5 offset-md-1">
+                        <label for="key_account_manager_id" class="field-required">Key Account manager</label>
+                        <select name="key_account_manager_id" id="key_account_manager_id" class="form-control" required="required">
+                            <option value="">Select key account manager</option>
+                            @foreach ($keyAccountManagers as $status => $keyAccountManager)
+                            <option {{ ($keyAccountManager->id == $client->key_account_manager_id) ? 'selected=selected' : '' }} value="{{ $keyAccountManager->id}}">{{ $keyAccountManager->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                    
+
                 </div>
                 <br>
                 <div class="form-row">
@@ -44,9 +51,8 @@
                         <input type="text" class="form-control" name="state" id="state" placeholder="Enter client state" value="{{ $client->state }}">   
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="phone" >Phone</label>
-                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter client phone"
-                            value="{{ $client->phone }}">
+                        <label for="email" >Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter client email" value="{{ $client->email }}">
                     </div>
                 </div>
                 <br>
@@ -54,6 +60,11 @@
                     <div class="form-group col-md-5">
                         <label for="address" class="field-required">Address</label>
                         <textarea  class="form-control" name="address" id="address" placeholder="Client Address" required="required" >{{ $client->address }}</textarea>  
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="phone" >Phone</label>
+                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter client phone"
+                            value="{{ $client->phone }}">
                     </div>
                 </div>
                 <br>
