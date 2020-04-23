@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container" id="vueContainer">
-	@include('project::menu_header')
+	{{-- //@include('client::menu_header') --}}
     <br> <h4>Add new client</h4>
     
     <div>

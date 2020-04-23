@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container" id="view_edit_project">
-	@include('project::menu_header')
+	{{-- @include('project::menu_header') --}}
     <br> <h4 clss="c-pointer" v-on:click="counter += 1">{{ $project->name }} ({{ $project->client_project_id }})</h4>
     <br>
     
