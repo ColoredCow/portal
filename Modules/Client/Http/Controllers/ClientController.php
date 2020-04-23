@@ -35,6 +35,8 @@ class ClientController extends Controller
     {
         return view('client::create', [
             'keyAccountManagers' => $this->service->getkeyAccountmanagers(),
+            'channelPartners' => $this->service->getChannelPartners(),
+            'parentOrganisations' => $this->service->getParentOrganisations(),
         ]);
     }
 
@@ -45,8 +47,8 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $this->service->store($request->all());
-        return redirect(route('client.index'));
+        $client = $this->service->store($request->all());
+        return redirect(route('client.edit', [$client, 'client-type']));
     }
 
     /**
@@ -64,11 +66,14 @@ class ClientController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit(Client $client)
+    public function edit(Client $client, $section = null)
     {
         return view('client::edit', [
             'keyAccountManagers' => $this->service->getkeyAccountmanagers(),
-            'client' => $client
+            'channelPartners' => $this->service->getChannelPartners(),
+            'parentOrganisations' => $this->service->getParentOrganisations(),
+            'client' => $client,
+            'section' => $section ?: config('client.default-client-form-stage')
         ]);
     }
 

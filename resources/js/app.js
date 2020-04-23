@@ -66,7 +66,7 @@ $(document).ready(() => {
 
 
 if (document.getElementById('page_hr_applicant_edit')) {
-    const applicantEdit = new Vue({
+    new Vue({
         el: '#page_hr_applicant_edit',
         data: {
             showResumeFrame: false,
