@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClientRequest;
 use App\Models\Client;
+use App\Http\Requests\ClientRequest;
 
 class ClientController extends Controller
 {

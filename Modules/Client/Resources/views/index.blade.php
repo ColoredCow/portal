@@ -16,8 +16,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
-                    <th>Reference Id</th>
-                    <th>Email</th>
+                    <th>Client Type</th>
                     <th>Key Account Manager</th>
                 </tr>
             </thead>
@@ -25,13 +24,42 @@
                 @forelse($clients?:[] as $client)
                     <tr>
                         <td> <a href="{{ route('client.edit', $client) }}">{{ $client->name }} </a> </td>
-                        <td> {{ $client->reference_id }}</td>
-                        <td>{{ $client->email }}</td>
+                        <td>
+                            <ul class="list-style-none ml-0 pl-1 mb-0">
+                                @php $isIndepandet = true; @endphp
+                                @if($client->is_channel_partner)
+                                <li> Channel Partner</li>
+                                @php $isIndepandet = false; @endphp
+                                @endif
+
+                                @if($client->has_departments)
+                                <li> Parent organisation</li>
+                                @php $isIndepandet = false; @endphp
+                                @endif
+
+                                @if($client->channel_partner_id)
+                                    <li> <span class="font-weight-bold">{{  $client->channelPartner->name  }}</span> is the channel partner</li>
+                                    @php $isIndepandet = false; @endphp
+                                @endif
+
+                                @if($client->parent_organisation_id)
+                                    <li> <span class="font-weight-bold">{{ $client->parentOrganisation->name }}</span> is the parent organisation</li>
+                                    @php $isIndepandet = false; @endphp
+                                @endif
+
+                                @if($isIndepandet) 
+                                <li> - </li>
+                                @endif
+                            </ul>
+                        </td>
+
+                        
+                        {{-- <td>{{ $client->email }}</td> --}}
                         <td>{{ optional($client->keyAccountManager)->name ?: '-' }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3">
+                        <td colspan="2">
                             <p class="my-4 text-left">No {{ config('client.status')[request()->input('status', 'active')] }} clients found.</p>
                         <td>
                     </tr>
