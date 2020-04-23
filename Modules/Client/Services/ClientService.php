@@ -10,7 +10,7 @@ class ClientService implements ClientServiceContract
 {
     public function index()
     {
-        return  Client::with('keyAccountManager')->where('status', request()->input('status', 'active'))
+        return  Client::with(['keyAccountManager', 'channelPartner', 'parentOrganisation'])->where('status', request()->input('status', 'active'))
             ->get();
     }
 
@@ -21,21 +21,42 @@ class ClientService implements ClientServiceContract
 
     public function store($data)
     {
-        return Client::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'key_account_manager_id' => $data['key_account_manager_id'],
-            'status' => $data['status'] ?? 'active'
-        ]);
+        $data['status'] = $data['status'] ?? 'active';
+        return Client::create($data);
     }
 
     public function updateClientData($data, $client)
     {
-        return $client->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'key_account_manager_id' => $data['key_account_manager_id'],
-            'status' => $data['status']
-        ]);
+        if ($data['section'] == 'client-details') {
+            return $this->updateClientDetails($data, $client);
+        }
+
+        if ($data['section'] == 'client-type') {
+            return $this->updateClientTypeDetails($data, $client);
+        }
+
+        return $client->update($data);
+    }
+
+    private function updateClientDetails($data, $client)
+    {
+        return $client->update($data);
+    }
+
+    private function updateClientTypeDetails($data, $client)
+    {
+        $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
+        $data['has_departments'] = $data['has_departments'] ?? false;
+        return $client->update($data);
+    }
+
+    public function getChannelPartners()
+    {
+        return Client::where('is_channel_partner', true)->get();
+    }
+
+    public function getParentOrganisations()
+    {
+        return Client::where('has_departments', true)->get();
     }
 }

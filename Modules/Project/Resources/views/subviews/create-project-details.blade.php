@@ -18,17 +18,6 @@
             </select>
         </div>
     </div>
-    {{-- <br>
-    <div class="form-row">
-        <div class="form-group col-md-5">
-            <label for="name" class="field-required">Status</label>
-            <select name="status" id="status" class="form-control" required="required">
-                @foreach (config('project.status') as $status => $display_name)
-                <option value="{{ $status }}">{{ $display_name }}</option>
-                @endforeach
-            </select>
-        </div>
-    </div> --}}
     <br>
 </div>
 <div class="card-footer">
