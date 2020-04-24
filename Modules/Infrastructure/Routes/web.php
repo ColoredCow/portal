@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('infrastructure')->group(function () {
+Route::prefix('infrastructure')->middleware('auth')->group(function () {
     Route::get('/', 'InfrastructureController@index')->name('infrastructure.index');
     Route::get('/instances', 'InfrastructureController@getInstances')->name('infrastructure.get-instances');
     Route::get('/billing-details', 'InfrastructureController@getBillingDetails')->name('infrastructure.billing-details');

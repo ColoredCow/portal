@@ -62,6 +62,19 @@ $(document).ready(() => {
         let wrapper = $(this).closest('.alert');
         wrapper.fadeOut(500);
     });
+
+    $('.client_edit_form_submission_btn').on('click', function() {
+
+        if(!$("#edit_client_info_form")[0].checkValidity()) {
+            $("#edit_client_info_form")[0].reportValidity()
+            return false;
+        }
+
+        $('#submit_action_input').val($(this).attr('data-submit-action'));
+        $('#edit_client_info_form').submit();
+    });
+
+
 });
 
 

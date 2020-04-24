@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('client')->group(function () {
+Route::prefix('client')->middleware('auth')->group(function () {
     Route::get('/', 'ClientController@index')->name('client.index');
     Route::get('/create', 'ClientController@create')->name('client.create');
     Route::get('/{client}/edit/{section?}', 'ClientController@edit')->name('client.edit');
