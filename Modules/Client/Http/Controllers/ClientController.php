@@ -23,8 +23,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = $this->service->index();
-        return view('client::index', ['clients' => $clients]);
+        return view('client::index', $this->service->index());
     }
 
     /**
@@ -33,11 +32,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('client::create', [
-            'keyAccountManagers' => $this->service->getkeyAccountmanagers(),
-            'channelPartners' => $this->service->getChannelPartners(),
-            'parentOrganisations' => $this->service->getParentOrganisations(),
-        ]);
+        return view('client::create', $this->service->create());
     }
 
     /**
@@ -48,7 +43,7 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $client = $this->service->store($request->all());
-        return redirect(route('client.edit', [$client, 'client-type']));
+        return redirect(route('client.edit', [$client, 'contact-persons']));
     }
 
     /**
@@ -68,13 +63,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client, $section = null)
     {
-        return view('client::edit', [
-            'keyAccountManagers' => $this->service->getkeyAccountmanagers(),
-            'channelPartners' => $this->service->getChannelPartners(),
-            'parentOrganisations' => $this->service->getParentOrganisations(),
-            'client' => $client,
-            'section' => $section ?: config('client.default-client-form-stage')
-        ]);
+        return view('client::edit', $this->service->edit($client, $section));
     }
 
     /**
@@ -85,8 +74,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        $this->service->updateClientData($request->all(), $client);
-        return redirect(route('client.index'));
+        $data = $this->service->update($request->all(), $client);
+        return redirect($data['route']);
     }
 
     /**

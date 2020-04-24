@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('projects')->group(function () {
+Route::prefix('projects')->middleware('auth')->group(function () {
     Route::get('/', 'ProjectController@index')->name('project.index');
     Route::get('/{project}/edit', 'ProjectController@edit')->name('project.edit');
     Route::get('/create', 'ProjectController@create')->name('project.create');

@@ -5,60 +5,53 @@
             <input type="text" class="form-control" name="name" id="name" placeholder="Enter client name" required="required"
                 value="{{ old('name') }}">
         </div>
-        <div class="form-group col-md-5 offset-md-1">
-            <label for="key_account_manager_id" class="field-required">Key Account manager</label>
-            <select name="key_account_manager_id" id="key_account_manager_id" class="form-control" required="required">
-                <option value="">Select key account manager</option>
-                @foreach ($keyAccountManagers as $status => $keyAccountManager)
-                <option value="{{ $keyAccountManager->id}}">{{ $keyAccountManager->name }}</option>
+        <div class="form-group offset-md-1 col-md-5">
+            <label for="channel_partner_id" >Channel partner 
+                <span class="fz-12 text-muted">(If client belongs to an existing channel partner)</span> 
+            </label>
+            <select name="channel_partner_id" id="channel_partner_id" class="form-control">
+                <option value="">Select channel partner</option>
+                @foreach ($channelPartners as $status => $channelPartner)
+                    <option value="{{ $channelPartner->id}}">{{ $channelPartner->name }}</option>
                 @endforeach
             </select>
         </div>
     </div>
     <br>
-    
     <div class="form-row">
-        <div class="form-group col-md-5">
-            <label for="name" class="field-required">Country</label>
-            <select name="country" id="country" class="form-control" required="required">
-                <option value="">Select country</option>
-                @foreach (config('client.countries') as $key => $country)
-                <option value="{{ $country['name'] }}">{{ $country['display_name'] }}</option>
-                @endforeach
-            </select>
-        </div>
+            <div class=" col-md-5 ">
+                <div class="form-check-inline mr-0 form-group">
+                    <input type="checkbox" 
+                        class="checkbox-custom mb-1.9 mb-1.67 mr-3" 
+                        name="is_channel_partner" 
+                        id="is_channel_partner"
+                        value="1">
+                    <label for="is_channel_partner" >Is this client a channel partner?</label>
+                </div>
+
+                <div class="form-check-inline mr-0 form-group">
+                    <input type="checkbox" class="checkbox-custom mb-1.9 mb-1.67 mr-3" name="has_departments" id="has_departments"
+                    value="1">
+                    <label for="has_departments" >Has multiple departments?</label>
+                </div>
+            </div>
+     
         
+
         <div class="form-group offset-md-1 col-md-5">
-            <label for="email" >Email</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Enter client email" value="{{ '' }}">
+            <label for="key_account_manager_id">Parent organisation
+                <span class="fz-12 text-muted">(If client is a department)</span> 
+            </label>
+            <select name="parent_organisation_id" id="parent_organisation_id" class="form-control">
+                <option value="">Select parent organisation</option>
+                @foreach ($parentOrganisations as $key => $parentOrganisation)
+                    <option value="{{ $parentOrganisation->id}}">{{ $parentOrganisation->name }}</option>
+                @endforeach
+            </select>
         </div>
+
     </div>
-    <br>
-    <div class="form-row">
-        <div class="form-group col-md-5">
-            <label for="name" >State</label>
-            <input type="text" class="form-control" name="state" id="state" placeholder="Enter client state" value="{{ '' }}">   
-        </div>
-        <div class="form-group offset-md-1 col-md-5">
-            <label for="phone" >Phone</label>
-            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter client phone"
-                value="{{ '' }}">
-        </div>
-    </div>
-    <br>
-    <div class="form-row">
-        <div class="form-group col-md-5">
-            <label for="address" class="field-required">Address</label>
-            <textarea  class="form-control" name="address" id="address" placeholder="Client Address" required="required" value="{{ '' }}"></textarea>  
-        </div>
-    </div>
-    <br>
-    <div class="form-row">
-        <div class="form-group col-md-5">
-            <label for="pincode" >Pincode</label>
-            <input type="text"  class="form-control" name="pincode" id="pincode" placeholder="Enter pincode"value="{{ '' }}"/> 
-        </div>
-    </div>
+
 </div>
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Create</button>
