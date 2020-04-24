@@ -49,6 +49,11 @@ class Client extends Model
         return $this->hasMany(ClientAddress::class);
     }
 
+    public function billingDetails()
+    {
+        return $this->hasOne(ClientBillingDetail::class)->withDefault();
+    }
+
     public function getTypeAttribute()
     {
         $address = $this->addresses->first();

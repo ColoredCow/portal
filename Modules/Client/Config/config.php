@@ -48,18 +48,27 @@ return [
     'billing-frequency' => [
         [
             'id' => 1,
-            'name' => 'Monthly',
-
-            'currency' => '₹',
-            'display_name' => 'India'
+            'name' => 'Net 15 days',
         ],
 
         [
-            'name' => 'united-states',
-            'initials' => 'US',
             'id' => 2,
-            'currency' => '$',
-            'display_name' => 'United State'
+            'name' => 'Monthly',
+        ],
+
+        [
+            'id' => 3,
+            'name' => 'Quarterly',
+        ],
+
+        [
+            'id' => 4,
+            'name' => 'Yearly',
+        ],
+
+        [
+            'id' => 5,
+            'name' => 'Based on project terms',
         ],
     ]
 ];
