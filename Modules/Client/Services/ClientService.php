@@ -6,6 +6,7 @@ use App\Models\Country;
 use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
 use Modules\Client\Entities\ClientAddress;
+use Modules\Client\Entities\ClientBillingDetail;
 use Modules\Client\Entities\ClientContactPerson;
 use Modules\Client\Contracts\ClientServiceContract;
 
@@ -50,7 +51,6 @@ class ClientService implements ClientServiceContract
     {
         if (!$section || $section == 'client-details') {
             return [
-                'keyAccountManagers' => $this->getKeyAccountManagers(),
                 'channelPartners' => $this->getChannelPartners(),
                 'parentOrganisations' => $this->getParentOrganisations(),
                 'client' => $client,
@@ -79,7 +79,9 @@ class ClientService implements ClientServiceContract
             return  [
                 'client' => $client,
                 'section' => $section ?: config('client.default-client-form-stage'),
+                'clientBillingAddress' => $this->getClientBillingAddress($client),
                 'keyAccountManagers' => $this->getKeyAccountManagers(),
+                'clientBillingDetail' => $client->billingDetails,
             ];
         }
     }
@@ -107,7 +109,7 @@ class ClientService implements ClientServiceContract
             break;
 
             case 'billing-details':
-                //$this->updateClientAddress($data, $client);
+                $this->updateBillingDetails($data, $client);
             break;
 
             case 'default':
@@ -199,6 +201,13 @@ class ClientService implements ClientServiceContract
         return true;
     }
 
+    private function updateBillingDetails($data, $client)
+    {
+        $client->update(['key_account_manager_id' => $data['key_account_manager_id']]);
+        ClientBillingDetail::updateOrCreate(['client_id' => $client->id], $data);
+        return true;
+    }
+
     public function getChannelPartners()
     {
         return Client::where('is_channel_partner', true)->get();
@@ -207,5 +216,20 @@ class ClientService implements ClientServiceContract
     public function getParentOrganisations()
     {
         return Client::where('has_departments', true)->get();
+    }
+
+    public function getClientBillingAddress($client)
+    {
+        $addresses = $client->addresses()->with('country')->get();
+        if ($addresses->isEmpty()) {
+            return null;
+        }
+
+        $billingAddress = $addresses->where('type', 'billing-address')->first();
+        if ($billingAddress && $billingAddress->id) {
+            return $billingAddress;
+        }
+
+        return $addresses->first();
     }
 }
