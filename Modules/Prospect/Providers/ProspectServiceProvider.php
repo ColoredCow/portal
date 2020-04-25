@@ -1,30 +1,21 @@
 <?php
 
-namespace Modules\Client\Providers;
+namespace Modules\Prospect\Providers;
 
-use Modules\Client\Entities\Client;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\Client\Policies\ClientPolicy;
-use Modules\Client\Services\ClientService;
-use Modules\Client\Contracts\ClientServiceContract;
 
-class ClientServiceProvider extends ServiceProvider
+class ProspectServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'Client';
+    protected $moduleName = 'Prospect';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'client';
-
-    protected $policies = [
-        Client::class => ClientPolicy::class,
-    ];
+    protected $moduleNameLower = 'prospect';
 
     /**
      * Boot the application events.
@@ -37,21 +28,7 @@ class ClientServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
-        $this->registerPolicies();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
-        $this->loadService();
-    }
-
-    /**
-     * Register the module's policies.
-     *
-     * @return void
-     */
-    public function registerPolicies()
-    {
-        foreach ($this->policies as $key => $value) {
-            Gate::policy($key, $value);
-        }
     }
 
     /**
@@ -75,8 +52,7 @@ class ClientServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
         );
     }
 
@@ -121,7 +97,7 @@ class ClientServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -145,16 +121,5 @@ class ClientServiceProvider extends ServiceProvider
             }
         }
         return $paths;
-    }
-
-    private function loadService()
-    {
-        if (\Arr::has($this->app->getBindings(), ClientServiceContract::class)) {
-            return true;
-        }
-
-        return $this->app->bind(ClientServiceContract::class, function () {
-            return new ClientService();
-        });
     }
 }

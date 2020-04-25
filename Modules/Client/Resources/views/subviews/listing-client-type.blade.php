@@ -10,12 +10,12 @@
     @php $isIndepandet = false; @endphp
     @endif
 
-    @if($client->channel_partner_id)
+    @if($client->channel_partner_id && $client->channelPartner)
     <li> <span class="font-weight-bold">{{  $client->channelPartner->name  }}</span> is the channel partner</li>
     @php $isIndepandet = false; @endphp
     @endif
 
-    @if($client->parent_organisation_id)
+    @if($client->parent_organisation_id && $client->parentOrganisation)
     <li> <span class="font-weight-bold">{{ $client->parentOrganisation->name }}</span> is the parent
         organisation</li>
     @php $isIndepandet = false; @endphp
