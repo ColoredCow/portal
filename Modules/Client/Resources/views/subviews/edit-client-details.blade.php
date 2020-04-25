@@ -1,7 +1,5 @@
 <div class="card">
-    {{-- <div class="card-header">
-        <span>Initial client details</span>
-    </div> --}}
+ 
     <div id="client_detail_form" class="collapse show" data-parent="#edit_client_form_container">
         <div class="card-body">
             <div class="form-row">
@@ -30,11 +28,13 @@
                             id="is_channel_partner"
                             {{ ($client->is_channel_partner) ? 'checked=checked' : '' }}
                             value="1">
-                        <label for="is_channel_partner">Is this client a channel partner?</label>
+                        <label for="is_channel_partner">Is this client a channel partner?
+                            <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple sub clients."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                        </label>
                 </div>
                 <div class="form-group offset-md-1 col-md-5">
                     <label for="channel_partner_id" >Channel partner 
-                        <span class="fz-12 text-muted">(If client belongs to an existing channel partner)</span> 
+                        <span data-toggle="tooltip" data-placement="right" title="If this client came via a channel partner then link that client from here."><i class="fa fa-question-circle"></i>&nbsp;</span>
                     </label>
                     <select name="channel_partner_id" id="channel_partner_id" class="form-control">
                         <option value="">Select channel partner</option>
@@ -53,11 +53,13 @@
                 <div class=" col-md-5 form-check-inline mr-0 form-group">
                     <input type="checkbox" {{ ($client->has_departments) ? 'checked=checked' : '' }} class="checkbox-custom mb-1.9 mb-1.67 mr-3" name="has_departments" id="has_departments"
                         value="1">
-                    <label for="has_departments">Has multiple departments?</label>
+                    <label for="has_departments">Has multiple departments?
+                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple departments as a new client."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                    </label>
                 </div>
                 <div class="form-group offset-md-1 col-md-5">
                     <label for="key_account_manager_id">Parent organisation
-                        <span class="fz-12 text-muted">(If client is a department)</span> 
+                        <span data-toggle="tooltip" data-placement="right" title="If this client is a department of another client then link that organisation from here."><i class="fa fa-question-circle"></i>&nbsp;</span>
                     </label>
                     <select name="parent_organisation_id" id="parent_organisation_id" class="form-control">
                         <option value="">Select parent organisation</option>

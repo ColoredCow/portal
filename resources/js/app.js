@@ -58,6 +58,7 @@ $(document).ready(() => {
         }
     }
     $('[data-toggle="tooltip"]').tooltip();
+    
     $('.status-close').on('click', function(){
         let wrapper = $(this).closest('.alert');
         wrapper.fadeOut(500);
