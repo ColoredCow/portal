@@ -4,6 +4,7 @@ namespace Modules\Infrastructure\Services;
 
 use Aws\Sdk;
 use Carbon\Carbon;
+use Aws\Credentials\Credentials;
 use Illuminate\Support\Facades\Cache;
 use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
 
@@ -11,7 +12,8 @@ class InfrastructureService implements InfrastructureServiceContract
 {
     public function __construct()
     {
-        $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1']);
+        $credentials = new Credentials(config('infrastructure.services.aws.key'), config('infrastructure.services.aws.secret'));
+        $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1', 'credentials' => $credentials]);
     }
 
     public function getStorageBuckets()
