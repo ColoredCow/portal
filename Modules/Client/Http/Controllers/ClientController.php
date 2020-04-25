@@ -4,11 +4,10 @@ namespace Modules\Client\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
 use Modules\Client\Contracts\ClientServiceContract;
 
-class ClientController extends Controller
+class ClientController extends ModuleBaseController
 {
     protected $service;
 
@@ -23,6 +22,7 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Client::class);
         return view('client::index', $this->service->index());
     }
 
@@ -32,6 +32,7 @@ class ClientController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Client::class);
         return view('client::create', $this->service->create());
     }
 
@@ -42,6 +43,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Client::class);
         $client = $this->service->store($request->all());
         return redirect(route('client.edit', [$client, 'contact-persons']));
     }
@@ -63,6 +65,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client, $section = null)
     {
+        $this->authorize('update', $client);
         return view('client::edit', $this->service->edit($client, $section));
     }
 
@@ -74,17 +77,8 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
+        $this->authorize('update', $client);
         $data = $this->service->update($request->all(), $client);
         return redirect($data['route']);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

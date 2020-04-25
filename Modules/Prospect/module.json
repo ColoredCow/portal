@@ -1,0 +1,13 @@
+{
+    "name": "Prospect",
+    "alias": "prospect",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Prospect\\Providers\\ProspectServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

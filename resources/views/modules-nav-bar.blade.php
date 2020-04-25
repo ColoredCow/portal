@@ -32,7 +32,7 @@
         </li>
     @endcan
 
-    @if(auth()->user()->can('client.view'))
+    @if(auth()->user()->can('clients.view'))
     <li class="nav-item">
         <a class="nav-link" href="{{ route('client.index') }}"></i>Clients</a>
     </li>

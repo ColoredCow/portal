@@ -37,7 +37,7 @@
         </li>
     @endif
 
-    @if(auth()->user()->can('client.view'))
+    @if(auth()->user()->can('clients.view'))
         <li class="nav-item">
             <a class="nav-item nav-link font-weight-bold" href="{{ route('client.index') }}"><i class="fa fa-bar-chart"> </i>&nbsp;Clients</a>
         </li>
@@ -47,6 +47,12 @@
         <li class="nav-item">
             <a class="nav-item nav-link font-weight-bold" href="{{ route('project.index') }}"><i class="fa fa-bar-chart"> </i>&nbsp;Projects</a>
         </li>
+    @endif
+
+    @if(auth()->user()->can('prospect.view'))
+    <li class="nav-item">
+        <a class="nav-item nav-link font-weight-bold" href="{{ '/prospect' }}"><i class="fa fa-bar-chart"> </i>&nbsp;Prospects</a>
+    </li>
     @endif
 
 </ul>

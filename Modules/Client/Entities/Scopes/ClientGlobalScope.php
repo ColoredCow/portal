@@ -27,5 +27,11 @@ class ClientGlobalScope implements Scope
             });
 
         $builder->with($relationships->toArray());
+
+        if (auth()->user()->isSuperAdmin() || auth()->user()->hasRole('client-manager')) {
+            return $builder;
+        }
+
+        return $builder->where('key_account_manager_id', auth()->user()->id);
     }
 }

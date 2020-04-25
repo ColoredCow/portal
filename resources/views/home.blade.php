@@ -19,6 +19,8 @@
         </div>
         @endif
 
+
+
         @if(auth()->user()->can('infrastructure.view'))
             <div class="min-w-389">
                 <user-dashboard-infrastructure />

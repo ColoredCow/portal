@@ -2,5 +2,6 @@
     "User": true,
     "Infrastructure": true,
     "Project": true,
-    "Client": true
+    "Client": true,
+    "Prospect": true
 }
