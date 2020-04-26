@@ -3,5 +3,7 @@
     "Infrastructure": true,
     "Project": true,
     "Client": true,
-    "Prospect": true
+    "Prospect": true,
+    "Lead": true,
+    "Task": true
 }

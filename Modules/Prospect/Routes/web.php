@@ -11,6 +11,11 @@
 |
 */
 
-Route::prefix('prospect')->group(function() {
-    Route::get('/', 'ProspectController@index');
+Route::prefix('prospect')->middleware('auth')->group(function () {
+    Route::get('/', 'ProspectController@index')->name('prospect.index');
+    Route::get('/create', 'ProspectController@create')->name('prospect.create');
+    Route::post('/', 'ProspectController@store')->name('prospect.store');
+    Route::get('/{prospect}', 'ProspectController@show')->name('prospect.show');
+    Route::get('/{prospect}/edit/{section?}', 'ProspectController@edit')->name('prospect.edit');
+    Route::post('/{prospect}/update', 'ProspectController@update')->name('prospect.update');
 });

@@ -1,4 +1,4 @@
-<ul class="nav nav-pills">
+<ul class="nav nav-pills fz-16">
     @if(Module::isEnabled('User') && auth()->user()->can('user_management.view'))
     <li class="nav-item">
         <a class="nav-item nav-link font-weight-bold" href="{{ route('user.index') }}"><i class="fa fa-users"></i>&nbsp;User Management</a>
@@ -49,10 +49,22 @@
         </li>
     @endif
 
-    @if(auth()->user()->can('prospect.view'))
-    <li class="nav-item">
-        <a class="nav-item nav-link font-weight-bold" href="{{ '/prospect' }}"><i class="fa fa-bar-chart"> </i>&nbsp;Prospects</a>
+    <li class="nav-item dropdown">
+        <a id="navbarDropdown_hr" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            CRM <span class="caret"></span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown_hr">
+        @if(auth()->user()->can('prospect.view'))
+            <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
+        @endif
+
+        @can('lead.view')
+            <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
+        @endcan
+        {{-- @can('task.view')
+            <a class="dropdown-item" href="{{ '/task' }}">Tasks</a>
+        @endcan --}}
+        </div>
     </li>
-    @endif
 
 </ul>

@@ -1,4 +1,4 @@
-<ul class="navbar-nav mr-auto {{ request()->is('home') ? 'd-none' : '' }}" >
+<ul class="navbar-nav mr-auto {{ request()->is('home') ? 'd-none' : '' }}"  style="font-size:16px;">
     
     @if(Module::isEnabled('User') && auth()->user()->can('user_management.view'))
         <li class="nav-item">
@@ -61,26 +61,31 @@
         </li>
     </li>
     @endif
-    
-    {{-- @if(auth()->user()->hasAnyPermission(['crm_talent.view', 'crm_client.view']))
-    <li class="nav-item">
-        <li class="nav-item dropdown">
-            <a id="navbarDropdown_crm" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                CRM <span class="caret"></span>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_crm">
-                 <a class="dropdown-item" href="#">Talent</a>
-                 <a class="dropdown-item" href="#">Client</a>
-            </div>
-        </li>
+
+    <li class="nav-item dropdown">
+        <a id="navbarDropdown_hr" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            CRM <span class="caret"></span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown_hr">
+        @if(auth()->user()->can('prospect.view'))
+            <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
+        @endif
+
+        @can('lead.view')
+            <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
+        @endcan
+        {{-- @can('task.view')
+            <a class="dropdown-item" href="{{ '/task' }}">Tasks</a>
+        @endcan --}}
+        </div>
     </li>
-    @endif --}}
 
     @if(auth()->user()->can('infrastructure.view'))
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('infrastructure.index') }}">&nbsp;Infrastructure</a>
-        </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('infrastructure.index') }}">&nbsp;Infrastructure</a>
+    </li>
     @endif
+
 
   
 

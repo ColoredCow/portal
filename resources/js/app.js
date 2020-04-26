@@ -33,6 +33,7 @@ Vue.component('project-stage-billing-component', require('./components/ProjectSt
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue').default);
 Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue').default);
 Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue').default);
+Vue.component('prospect-progress-component', require('./components/Book/ProspectProgress.vue').default);
 Vue.component('comment', require('./components/CommentItem.vue').default);
 Vue.component('user-dashboard-read-books', require('./components/Dashboard/UserDashboardReadBooks.vue').default);
 Vue.component('user-dashboard-wishlist-books', require('./components/Dashboard/UserDashboardWishlistBooks.vue').default);
@@ -70,9 +71,19 @@ $(document).ready(() => {
             $("#edit_client_info_form")[0].reportValidity()
             return false;
         }
-
         $('#submit_action_input').val($(this).attr('data-submit-action'));
         $('#edit_client_info_form').submit();
+    });
+
+
+    $('.prospect_edit_form_submission_btn').on('click', function() {
+
+        if(!$("#edit_prospect_info_form")[0].checkValidity()) {
+            $("#edit_prospect_info_form")[0].reportValidity()
+            return false;
+        }
+        $('#submit_action_input').val($(this).attr('data-submit-action'));
+        $('#edit_prospect_info_form').submit();
     });
 
 
