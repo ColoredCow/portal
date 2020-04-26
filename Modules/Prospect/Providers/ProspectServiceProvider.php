@@ -2,10 +2,13 @@
 
 namespace Modules\Prospect\Providers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\Prospect\Services\ProspectService;
+use Modules\Prospect\Services\ProspectHistoryService;
 use Modules\Prospect\Contracts\ProspectServiceContract;
+use Modules\Prospect\Contracts\ProspectHistoryServiceContract;
 
 class ProspectServiceProvider extends ServiceProvider
 {
@@ -129,12 +132,16 @@ class ProspectServiceProvider extends ServiceProvider
 
     private function loadService()
     {
-        if (\Arr::has($this->app->getBindings(), ProspectServiceContract::class)) {
-            return true;
+        if (!Arr::has($this->app->getBindings(), ProspectServiceContract::class)) {
+            $this->app->bind(ProspectServiceContract::class, function () {
+                return new ProspectService();
+            });
         }
 
-        return $this->app->bind(ProspectServiceContract::class, function () {
-            return new ProspectService();
-        });
+        if (!Arr::has($this->app->getBindings(), ProspectHistoryServiceContract::class)) {
+            $this->app->bind(ProspectHistoryServiceContract::class, function () {
+                return new ProspectHistoryService();
+            });
+        }
     }
 }

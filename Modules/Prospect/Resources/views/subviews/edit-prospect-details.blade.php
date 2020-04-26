@@ -24,8 +24,8 @@
 
            <div class="form-group">
                 <div class="d-flex justify-content-between">
-                    <label for="coming_from" class="field-required">Coming from</label>
-                    <span style="text-decoration:underline">Add new</span>
+                    <label for="coming_from" class="field-required">Source</label>
+                    <span style="text-decoration:underline">Add new source</span>
                 </div>
                 <select v-model="comingFrom" name="coming_from" class="form-control" id="">
                     <option value="marketing">Marketing</option>

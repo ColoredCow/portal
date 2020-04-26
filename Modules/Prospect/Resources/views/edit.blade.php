@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="container">
-	{{-- //@include('client::menu_header') --}}
     <br> <h4 class="mb-5">Edit prospect prospect</h4>
     @include('prospect::subviews.edit-prospect-form-header')
     <div>
@@ -14,9 +13,7 @@
                 @csrf 
                 @includeWhen( $section == 'prospect-details' ,'prospect::subviews.edit-prospect-details')
                 @includeWhen( $section == 'contact-persons' , 'prospect::subviews.edit-prospect-contact-persons')
-                {{-- @includeWhen( $section == 'address' ,'client::subviews.edit-client-address')
-                @includeWhen( $section == 'billing-details' ,'client::subviews.edit-client-billing-details')
-                @includeWhen( $section == 'client-type' ,'client::subviews.edit-client-type-info') --}}
+
             </form>
         </div>
     </div>

@@ -25,7 +25,8 @@ window.Vue = require('vue');
 /**
  *  Module Vue Components
  */
-require('./../../Modules/User/Resources/assets/js/vueComponents.js')
+require('./../../Modules/User/Resources/assets/js/vueComponents.js');
+require('./../../Modules/Prospect/Resources/assets/js/vueComponents.js');
 
 
 Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue').default);
@@ -33,7 +34,6 @@ Vue.component('project-stage-billing-component', require('./components/ProjectSt
 Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue').default);
 Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue').default);
 Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue').default);
-Vue.component('prospect-progress-component', require('./components/Book/ProspectProgress.vue').default);
 Vue.component('comment', require('./components/CommentItem.vue').default);
 Vue.component('user-dashboard-read-books', require('./components/Dashboard/UserDashboardReadBooks.vue').default);
 Vue.component('user-dashboard-wishlist-books', require('./components/Dashboard/UserDashboardWishlistBooks.vue').default);
@@ -41,11 +41,27 @@ Vue.component('user-dashboard-projects', require('./components/Dashboard/UserDas
 Vue.component('user-dashboard-library', require('./components/Dashboard/UserDahboardLibrary.vue').default);
 Vue.component('user-dashboard-infrastructure', require('./components/Dashboard/UserDahboardInfrastructure.vue').default);
 
+if(Vue) {
+    Vue.filter('str_limit', function (value, size) {
+        if (!value) return '';
+        value = value.toString();
+      
+        if (value.length <= size) {
+          return value;
+        }
+        return value.substr(0, size) + '...';
+    });
+}
+
+
 if (document.getElementById('vueContainer')) {
 new Vue({
     el: '#vueContainer',
 });
 }
+
+
+
 
 
 

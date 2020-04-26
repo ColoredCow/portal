@@ -15,13 +15,17 @@ return [
         'contact-persons' => [
             'display-name' => 'Contact Persons'
         ],
-
-        // 'address' => [
-        //     'display-name' => 'Address'
-        // ],
-
-        // 'billing-details' => [
-        //     'display-name' => 'Billing details'
-        // ],
     ],
+
+    'prospect-show-tabs' => [
+        'prospect-info' => [
+            'display-name' => 'Prospect info'
+        ],
+
+        'prospect-progress' => [
+            'display-name' => 'Progress'
+        ],
+    ],
+
+    'default-prospect-show-tab' => 'prospect-progress'
 ];
