@@ -2,9 +2,11 @@
 
 namespace Modules\Prospect\Services;
 
+use Illuminate\Support\Str;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
 use Modules\Prospect\Entities\Prospect;
+use Modules\Prospect\Entities\ProspectStage;
 use Modules\Client\Entities\ClientContactPerson;
 use Modules\Prospect\Entities\ProspectContactPerson;
 use Modules\Prospect\Contracts\ProspectServiceContract;
@@ -33,30 +35,21 @@ class ProspectService implements ProspectServiceContract
         ];
     }
 
-    private function getAssignee()
-    {
-        return User::orderBy('name')->get();
-    }
-
     public function store($data)
     {
         $data['created_by'] = Auth::id();
-        $data['coming_form_id_client_contact'] = $data['coming_form_id_client_contact'] ?? null;
-        $data['coming_form_id_lead'] = $data['coming_form_id_lead'] ?? null;
-        if ($data['coming_form_id_client_contact']) {
-            $data['coming_form_id'] = $data['coming_form_id_client_contact'];
-        }
-
-        if ($data['coming_form_id_lead']) {
-            $data['coming_form_id'] = $data['coming_form_id_lead'];
-        }
         return Prospect::create($data);
     }
 
-    public function show($prospectId)
+    public function show($prospectId, $section)
     {
+        $prospect = Prospect::where('id', $prospectId)
+            ->with('histories')
+            ->first();
         return [
-            'prospect' => Prospect::find($prospectId)
+            'prospect' => $prospect,
+            'section' => $section ?: config('prospect.default-prospect-show-tab'),
+            'prospectStages' => ProspectStage::orderBy('name')->get(),
         ];
     }
 
@@ -82,6 +75,11 @@ class ProspectService implements ProspectServiceContract
         return [
             'route' => ($data['submit_action'] == 'next') ? $nextStage : $defaultRoute
         ];
+    }
+
+    private function getAssignee()
+    {
+        return User::orderBy('name')->get();
     }
 
     private function updateProspectContactPersons($data, $prospect)
@@ -111,21 +109,27 @@ class ProspectService implements ProspectServiceContract
 
     private function updateProspectDetails($data, $prospect)
     {
-        $data['coming_from_id_client_contact'] = $data['coming_from_id_client_contact'] ?? null;
-        $data['coming_from_id_lead'] = $data['coming_from_id_lead'] ?? null;
-        if ($data['coming_from_id_client_contact']) {
-            $data['coming_from_id'] = $data['coming_from_id_client_contact'];
-        }
-
-        if ($data['coming_from_id_lead']) {
-            $data['coming_from_id'] = $data['coming_from_id_lead'];
-        }
-
         return $prospect->update($data);
     }
 
     private function getAllClientContactPersons()
     {
         return ClientContactPerson::with('client')->orderBy('name')->get();
+    }
+
+    public function addNewProgressStage($data)
+    {
+        $stageName = $data['stageName'] ?? '';
+        $stageName = trim($stageName);
+
+        if (!$stageName) {
+            return false;
+        }
+
+        $prospectStage = ProspectStage::firstOrNew(['name' => $stageName]);
+        $prospectStage->created_by = Auth::id();
+        $prospectStage->slug = Str::slug($stageName);
+        $prospectStage->save();
+        return $prospectStage;
     }
 }

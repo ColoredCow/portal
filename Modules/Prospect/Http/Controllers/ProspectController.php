@@ -51,9 +51,9 @@ class ProspectController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, $section = null)
     {
-        return view('prospect::show', $this->service->show($id));
+        return view('prospect::show', $this->service->show($id, $section));
     }
 
     /**
@@ -86,5 +86,10 @@ class ProspectController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function newProgressStage(Request $request)
+    {
+        return $this->service->addNewProgressStage($request->all());
     }
 }
