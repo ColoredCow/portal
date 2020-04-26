@@ -5,16 +5,25 @@ namespace Modules\Prospect\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Prospect\Entities\Prospect;
+use Modules\Prospect\Contracts\ProspectServiceContract;
 
 class ProspectController extends Controller
 {
+    protected $service;
+
+    public function __construct(ProspectServiceContract $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('prospect::index');
+        return view('prospect::index', $this->service->index());
     }
 
     /**
@@ -23,7 +32,7 @@ class ProspectController extends Controller
      */
     public function create()
     {
-        return view('prospect::create');
+        return view('prospect::create', $this->service->create());
     }
 
     /**
@@ -33,7 +42,8 @@ class ProspectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $prospect = $this->service->store($request->all());
+        return redirect(route('prospect.edit', [$prospect, 'contact-persons']));
     }
 
     /**
@@ -43,7 +53,7 @@ class ProspectController extends Controller
      */
     public function show($id)
     {
-        return view('prospect::show');
+        return view('prospect::show', $this->service->show($id));
     }
 
     /**
@@ -51,9 +61,9 @@ class ProspectController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit(Prospect $prospect, $section = null)
     {
-        return view('prospect::edit');
+        return view('prospect::edit', $this->service->edit($prospect, $section));
     }
 
     /**
@@ -64,7 +74,8 @@ class ProspectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $this->service->update($request->all(), $id);
+        return redirect($data['route']);
     }
 
     /**

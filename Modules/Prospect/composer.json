@@ -1,10 +1,10 @@
 {
-    "name": "nwidart/prospect",
+    "name": "coloredcow/prospect",
     "description": "",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "Pankaj Agrawal",
+            "email": "pankaj@coloredcow.com"
         }
     ],
     "extra": {
