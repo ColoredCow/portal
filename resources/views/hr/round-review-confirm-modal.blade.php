@@ -1,5 +1,5 @@
 <div class="modal fade" id="round_confirm" tabindex="-1" role="dialog" aria-labelledby="round_confirm" aria-hidden="true" v-if="selectedAction == 'round'">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="d-block">
@@ -12,7 +12,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-12">
                         <div class="form-check form-check-inline">
                             <input class="" type="checkbox" id="create_calendar_event" name="create_calendar_event" v-model="createCalendarEvent">
                             <label class="form-check-label" for="create_calendar_event">Create a calendar event</label>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="form-row" v-if="createCalendarEvent">
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-5">
                         <label for="summary_calendar_event">Summary for calendar event</label>
                         <input type="text" name="summary_calendar_event" id="summary_calendar_event" class="form-control" required="required">
                     </div>
