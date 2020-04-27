@@ -581,6 +581,29 @@ body.is-impersonating {
     }
 }
 
+.inline-card {
+    position: fixed;
+    height: 100vh;
+    width: 45vw;
+    top: 0;
+    z-index: 100;
+    >.card-body {
+        height: 100%;
+    }
+    &.inline-resume {
+        left: 0;
+        >.card-body>iframe {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    &.inline-evaluation {
+        right: 0;
+        >.card-body {
+            overflow-y: scroll;
+        }
+    }
+}
 // End Custom
 
 @import 'media/md';
