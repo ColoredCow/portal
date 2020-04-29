@@ -19,8 +19,9 @@ class ApplicationMetaObserver
 
         switch ($applicationMeta->key) {
             case config('constants.hr.status.no-show.label'):
+                //$application->markNoShowReminded();
                 Mail::send(new NoShow($applicationMeta));
-                $application->markNoShowReminded();
+                
                 break;
         }
     }
