@@ -17,6 +17,6 @@ class ProspectHistoryGlobalScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->orderBy('updated_at', 'desc');
+        $builder->with('documents')->orderBy('updated_at', 'desc');
     }
 }

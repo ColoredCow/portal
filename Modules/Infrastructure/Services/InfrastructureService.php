@@ -35,7 +35,7 @@ class InfrastructureService implements InfrastructureServiceContract
     public function getBillingDetails()
     {
         $seconds = 1 * 60 * 60 * 24;
-        return Cache::remember('aws_billing_data', $seconds, function () {
+        return Cache::remember('aws_billing_datas', $seconds, function () {
             return $this->getAWSBillingDetails();
         });
     }

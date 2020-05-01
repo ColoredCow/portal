@@ -5,10 +5,13 @@ namespace Modules\Prospect\Services;
 use Illuminate\Support\Str;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectStage;
+use Modules\Prospect\Entities\ProspectDocument;
 use Modules\Client\Entities\ClientContactPerson;
 use Modules\Prospect\Entities\ProspectContactPerson;
+use Modules\ModuleChecklist\Entities\ModuleChecklist;
 use Modules\Prospect\Contracts\ProspectServiceContract;
 
 class ProspectService implements ProspectServiceContract
@@ -31,7 +34,7 @@ class ProspectService implements ProspectServiceContract
             'section' => $section ?? 'prospect-details',
             'contactPersons' => $prospect->contactPersons,
             'clientContactPersons' => $this->getAllClientContactPersons(),
-            'assigneeData' => $this->getAssignee()
+            'assigneeData' => $this->getAssignee(),
         ];
     }
 
@@ -50,6 +53,7 @@ class ProspectService implements ProspectServiceContract
             'prospect' => $prospect,
             'section' => $section ?: config('prospect.default-prospect-show-tab'),
             'prospectStages' => ProspectStage::orderBy('name')->get(),
+            'prospectChecklist' => $this->getProspectChecklist($prospect)
         ];
     }
 
@@ -68,7 +72,6 @@ class ProspectService implements ProspectServiceContract
             break;
             case 'contact-persons':
                 $this->updateProspectContactPersons($data, $prospect);
-               // $nextStage = route('client.edit', [$prospect, 'contact-persons']);
             break;
         }
 
@@ -131,5 +134,35 @@ class ProspectService implements ProspectServiceContract
         $prospectStage->slug = Str::slug($stageName);
         $prospectStage->save();
         return $prospectStage;
+    }
+
+    public function uploadDocuments($documents, $prospect, $prospectHistory)
+    {
+        foreach ($documents as $document) {
+            $fileName = $prospectHistory->id . '-' . $document->getClientOriginalName();
+            $file = Storage::putFileAs('/prospect', $document, $fileName, ['visibility' => 'public']);
+            $prospectDocument = new ProspectDocument;
+
+            $prospectDocument->prospect_id = $prospect->id;
+            $prospectDocument->prospect_history_id = optional($prospectHistory)->id;
+            $prospectDocument->name = $fileName;
+            $prospectDocument->file_path = $file;
+            $prospectDocument->save();
+        }
+    }
+
+    public function getProspectChecklist($prospect)
+    {
+        $moduleChecklist = ModuleChecklist::whereIn('slug', config('prospect.checklist'))
+            ->get();
+        $results = [];
+
+        foreach ($moduleChecklist as $checklist) {
+            $data = $checklist->toArray();
+            $data['status'] = $prospect->getCheckListStatus($checklist->id);
+            $results[] = $data;
+        }
+
+        return collect($results)->reverse();
     }
 }

@@ -19,7 +19,7 @@
                 <br>
                 <div>
                     <div class="font-weight-bold">Assign To</div>
-                    <span>{{ optional($prospect->assigneeTo)->name }}</span>
+                    <span>{{ optional($prospect->assignTo)->name }}</span>
                 </div>
                 <br>
                 <div>

@@ -27,5 +27,13 @@ return [
         ],
     ],
 
-    'default-prospect-show-tab' => 'prospect-progress'
+    'default-prospect-show-tab' => 'prospect-progress',
+
+    'checklist' => [
+        'convert-into-client',
+        'contract',
+        'proposal',
+        'nda',
+        'introduction'
+    ]
 ];
