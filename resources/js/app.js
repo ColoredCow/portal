@@ -67,6 +67,7 @@ new Vue({
 
 
 $(document).ready(() => {
+
     if ($('.form-create-invoice').length) {
         let form = $('.form-create-invoice');
         let client_id = form.find('#client_id').val();
@@ -100,6 +101,11 @@ $(document).ready(() => {
         }
         $('#submit_action_input').val($(this).attr('data-submit-action'));
         $('#edit_prospect_info_form').submit();
+    });
+
+    $('body').on("change", ".custom-file-input", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
 

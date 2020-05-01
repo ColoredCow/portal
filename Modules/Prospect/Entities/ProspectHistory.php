@@ -39,6 +39,11 @@ class ProspectHistory extends Model
 
     public function getPerformedAsAttribute()
     {
-        return $this->prospectStage->name;
+        return optional($this->prospectStage)->name ?? '';
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(ProspectDocument::class);
     }
 }

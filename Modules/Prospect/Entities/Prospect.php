@@ -4,17 +4,26 @@ namespace Modules\Prospect\Entities;
 
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
+use Modules\ModuleChecklist\Entities\NDAMeta;
+use Modules\ModuleChecklist\Entities\ModuleChecklist;
 
 class Prospect extends Model
 {
     protected $fillable = ['created_by', 'status', 'assign_to', 'name', 'coming_from', 'coming_from_id', 'brief_info'];
+
+    protected static function booted()
+    {
+        static::created(function ($prospect) {
+            $prospect->syncDefaultChecklist();
+        });
+    }
 
     public function contactPersons()
     {
         return $this->hasMany(ProspectContactPerson::class);
     }
 
-    public function assigneeTo()
+    public function assignTo()
     {
         return $this->belongsTo(User::class, 'assign_to');
     }
@@ -27,5 +36,81 @@ class Prospect extends Model
     public function histories()
     {
         return $this->hasMany(ProspectHistory::class);
+    }
+
+    public function checklistStatuses()
+    {
+        return $this->hasMany(ProspectChecklistStatus::class);
+    }
+
+    public function getChecklistCurrentTask($checklistID, $checkListTaskID = null)
+    {
+        $checkListStatus = $this->checklistStatuses()->where('status', 'pending')->first();
+
+        if (!$checkListStatus) {
+            return '';
+        }
+
+        return $checkListStatus->moduleChecklistTask->name;
+    }
+
+    public function isChecklistCompleted($moduleCheckListID)
+    {
+        $query = $this->checklistStatuses();
+
+        if ($moduleCheckListID) {
+            $query->where('module_checklist_id', $moduleCheckListID);
+        }
+
+        if (!$query->count()) {
+            return false;
+        }
+
+        return (clone $query)->where('status', 'pending')->first() ? false : true;
+    }
+
+    public function isChecklistInProgress($moduleCheckListID = null)
+    {
+        $query = $this->checklistStatuses();
+        if ($moduleCheckListID) {
+            $query->where('module_checklist_id', $moduleCheckListID);
+        }
+
+        return $query->where('status', '!=', 'pending')->first() ? true : false;
+    }
+
+    public function ndaMeta()
+    {
+        return $this->belongsToMany(NDAMeta::class, 'prospect_nda_meta', 'prospect_id', 'nda_meta_id');
+    }
+
+    public function getCheckListStatus($checkListID)
+    {
+        if ($this->isChecklistCompleted($checkListID)) {
+            return 'completed';
+        }
+
+        if ($this->isChecklistInProgress($checkListID)) {
+            return 'in-progress';
+        }
+
+        return 'pending';
+    }
+
+    public function syncDefaultChecklist()
+    {
+        $moduleChecklist = ModuleChecklist::whereIn('slug', config('prospect.checklist'))
+            ->get();
+
+        foreach ($moduleChecklist as $checklist) {
+            foreach ($checklist->tasks ?: []  as $task) {
+                ProspectChecklistStatus::create([
+                    'prospect_id' => $this->id,
+                    'module_checklist_id' => $checklist->id,
+                    'module_checklist_task_id' => $task->id,
+                    'status' => 'pending'
+                ]);
+            }
+        }
     }
 }

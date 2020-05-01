@@ -11,13 +11,6 @@
 |
  */
 
-use App\OfficeSuites\OfficeSuiteFacade as OfficeSuite;
-
-Route::get('test', function () {
-    $officeSuite = app('office_suite');
-    ddd(OfficeSuite::removeUser());
-});
-
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
@@ -147,18 +140,23 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
+
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {
                 return redirect(route('permissions.module.index', ['module' => 'users']));
             })->name('settings.permissions');
+
             Route::get('{module}', 'PermissionController@index')->name('permissions.module.index');
             Route::put('users/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
             Route::put('roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.update');
         });
+
         Route::prefix('hr')->group(function () {
             Route::get('/', 'HRController@index')->name('settings.hr');
             Route::post('update', 'HRController@update')->name('setting.hr.update');
         });
+
+        Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
     });
 
     // Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update'])

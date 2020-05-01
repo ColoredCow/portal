@@ -49,6 +49,19 @@
         </li>
     @endif
 
+    @if(auth()->user()->can('task.view'))
+        <li class="nav-item">
+            <a class="nav-item nav-link font-weight-bold" href="/tasks"><i class="fa fa-bar-chart"> </i>&nbsp;Task</a>
+        </li>
+    @endif
+
+    @if(auth()->user()->can('legal-document.view'))
+        <li class="nav-item">
+            <a class="nav-item nav-link font-weight-bold" href="{{ route('legal-document.index') }}"><i class="fa fa-bar-chart"> </i>&nbsp;Legal Documents</a>
+        </li>
+    @endif
+
+
     <li class="nav-item dropdown">
         <a id="navbarDropdown_hr" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             CRM <span class="caret"></span>
@@ -62,7 +75,7 @@
             <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
         @endcan
         {{-- @can('task.view')
-            <a class="dropdown-item" href="{{ '/task' }}">Tasks</a>
+           
         @endcan --}}
         </div>
     </li>

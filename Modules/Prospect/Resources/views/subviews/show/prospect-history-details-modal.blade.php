@@ -14,15 +14,25 @@
                     <p class="fz-16">@{{selectedHistory.description}}</p>
                 </div>
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label class="font-weight-bold mb-0">Stage:</label>
                     <p class="fz-16">@{{selectedHistory.performed_as}}</p>
-                </div>
+                </div> --}}
 
                 <div class="form-group">
                     <label class="font-weight-bold mb-0">Added by:</label>
                     <p class="fz-16">@{{selectedHistory.performed_by}}</p>
                 </div>
+
+                <div class="form-group" v-if="selectedHistory.documents && selectedHistory.documents.length">
+                    <label class="font-weight-bold mb-0">Documents:</label> 
+                    <ul class="list-group list-style-none">
+                        <li v-for="(document, index) in selectedHistory.documents" :key="document.id">
+                            <a :href="'/prospect/open-doc/' + document.id" > @{{ document.name }}</a>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" type="button" class="btn btn-info text-white">Ok</button>

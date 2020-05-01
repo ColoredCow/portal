@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Http\Controllers\Controller;
 
 class SettingController extends Controller
 {
@@ -11,5 +11,9 @@ class SettingController extends Controller
     {
         $this->authorize('view', Setting::class);
         return view('settings.index');
+    }
+
+    public function ndaTemplates()
+    {
     }
 }

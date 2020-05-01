@@ -28,7 +28,7 @@
                           <a href="{{ route('prospect.show', $prospect) }}">{{ $prospect->name }}</a>  
                         </td>
                         <td>{{ \Str::title($prospect->coming_from ) }}</td>
-                        <td>{{ optional($prospect->assigneeTo)->name }}</td>
+                        <td>{{ optional($prospect->assignTo)->name }}</td>
                         <td>
                             <div>
                                 <a href="{{ route('prospect.edit', $prospect) }}" class="btn btn-info btn-sm">Edit</a>

@@ -5,5 +5,12 @@
     "Client": true,
     "Prospect": true,
     "Lead": true,
-    "Task": true
+    "Task": true,
+    "Checklist": true,
+    "ModuleJourneyChecklist": true,
+    "JourneyChecklist": true,
+    "Legal": true,
+    "Documents": true,
+    "LegalDocument": true,
+    "ModuleChecklist": true
 }

@@ -4,67 +4,79 @@
             <div class="card">
                 <div class="card-body min-h-40p">
                     <ul class="h-406 overflow-auto">
-                        <li v-on:click="showHistoryDetails(index)" class="mb-3" v-for="(prospectHistory, index) in prospectHistories" :key="index">
+                        <li v-on:click="showHistoryDetails(index)" class="mb-3 c-pointer" v-for="(prospectHistory, index) in prospectHistories" :key="index">
                             <div class="font-weight-bold">
                                 @{{ prospectHistory.performed_on  }}
                             </div>
-                            <div>
-                                <span>
-                                    @{{ `${prospectHistory.performed_as} added by ${prospectHistory.performed_by}`  }}</span>
-                            </div>
 
-                            <div class="text-muted">
+                            <div class="" >
                                 @{{ prospectHistory.description | str_limit(20) }}
                             </div>
+
+                            <div class="font-italic text-black-50">
+                                <span>
+                                    @{{ `${prospectHistory.performed_as} added by ${prospectHistory.performed_by}`  }}
+                                </span>
+                            </div>
+
+                        
+                            <div class="text-muted" v-if="prospectHistory.documents.length" >
+                                @{{ `${prospectHistory.documents.length} documents` }}
+                            </div>
+
+                            
                         </li>
                     </ul>
                 </div>
             </div>
-           
         </div>
-
+        
         <div class="col-md-8">
             <div class="card ">
-                <div class="card-body w-70p min-h-40p">
-                    <form method="POST" action="{{ route('prospect.history-store', $prospect) }}">
-                        @csrf
-                        <div class="form-group">
-                            <textarea required="required" class="form-control" name="description" id="prospect_progress_description" placeholder="Start typing ....."  rows="6"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="d-flex justify-content-between">
-                                <label for="" class="field-required">Select stage</label>
-                                <span 
-                                    class="c-pointer"
-                                    style="text-decoration: underline" 
-                                    data-toggle="modal" 
-                                    data-target="#prospect_progress_new_stage_form"
-                                    >Add new stage</span>
+                <div class="d-flex w-full">
+                    <div class="card-body w-60p min-h-40p">
+                        <form method="POST" action="{{ route('prospect.history-store', $prospect) }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <textarea required="required" class="form-control" name="description" id="prospect_progress_description" placeholder="Start typing ....."  rows="6"></textarea>
                             </div>
-                            
-                            <select class="form-control" name="prospect_stage_id" id="prospect_stage_id" required="required">
-                                <option value=''>Select Stage</option>
-                                <option  v-for="(progressStage, index) in this.progressStatges" :value="progressStage.id"> @{{ progressStage.name }}</option>
-                            </select>
-                        </div>
+    
+                        
+                            <div class="form-group mt-5">
+                                <div class="d-flex justify-content-between">
+                                    <label for="" class="" >Upload document</label>
+                                    <p style="text-decoration: underline" v-on:Click="addMoreDocument()">Add document</p>
+                                </div>
+                               
+                                <div class="mb-2" v-for="(prospectDocument, index) in prospectDocuments" :key="prospectDocument.id">
+                                    <div class="d-flex">
+                                        <div class="custom-file mb-3">
+                                            <input type="file" class="custom-file-input" :id="`customFile${index}`" name="prospect_documents[]">
+                                            <label class="custom-file-label" :for="`customFile${index}`" >Choose file</label>
+                                        </div>
+    
+                                        <span class="btn badge text-danger" v-if="prospectDocuments.length > 1" v-on:Click="removeDocument(index)" class="text-danger">Remove </span>
 
-                        <div class="form-group text-right">
-                            <button class="btn btn-info text-white">Save new progress</button>
-                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="form-group text-left mt-10">
+                                <button class="btn btn-info text-white">Save new progress</button>
+                            </div>
+                        </form>
+                    </div>
 
-                    </form>
+                    <div class="card-body w-40p min-h-40p">
+                        @include('prospect::subviews.show.prospect-checklist')
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     @include('prospect::subviews.show.prospect-progress-stage-modal')
     @include('prospect::subviews.show.prospect-history-details-modal')
 </div>
-
-
-
 
 
 @section('js_scripts')
@@ -80,7 +92,8 @@ new Vue({
             test:'',
             newStageName:'',
             prospectHistories:@json($prospect->histories),
-            selectedHistory:{}
+            selectedHistory:{},
+            prospectDocuments:[]
         }
     },
 
@@ -107,10 +120,28 @@ new Vue({
         showHistoryDetails(index) {
             this.selectedHistory = this.prospectHistories[index];
             $('#prospect_history_details_modal').modal('show');
+        },
+
+        newDocument() {
+            return {
+
+                id: new Date().getTime(),
+                temp:true,
+                name:'',
+            }
+        },
+
+        addMoreDocument() {
+            this.prospectDocuments.push(this.newDocument());
+        },
+
+        removeDocument(index) {
+            this.prospectDocuments.splice(index, 1);
         }
     },
 
     mounted() {
+        this.addMoreDocument();
       // alert("hello");
     }
 });

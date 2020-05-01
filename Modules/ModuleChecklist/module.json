@@ -1,0 +1,13 @@
+{
+    "name": "ModuleChecklist",
+    "alias": "modulechecklist",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\ModuleChecklist\\Providers\\ModuleChecklistServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
