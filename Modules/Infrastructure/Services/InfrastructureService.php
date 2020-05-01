@@ -51,7 +51,6 @@ class InfrastructureService implements InfrastructureServiceContract
         $lastMonthAmount = $lastMonthCostData['To_Display'];
 
         $currentCostData = $results[$currentDate->format('Y-m')] ?? $lastMonthCostData;
-
         $currentAmount = $currentCostData['To_Display'];
 
         $monthlyForCast = $costExplorerClient->getCostForecast([

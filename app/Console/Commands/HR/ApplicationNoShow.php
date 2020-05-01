@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands\HR;
 
+use Carbon\Carbon;
+use App\Models\Setting;
+use Illuminate\Console\Command;
 use App\Models\HR\ApplicationMeta;
 use App\Models\HR\ApplicationRound;
-use App\Models\Setting;
-use Carbon\Carbon;
-use Illuminate\Console\Command;
 
 class ApplicationNoShow extends Command
 {
@@ -71,6 +71,7 @@ class ApplicationNoShow extends Command
                 $body = str_replace(config('constants.hr.template-variables.job-title'), $job->title, $body);
 
                 if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
+                    $application->markNoShowReminded();
                     ApplicationMeta::create([
                         'hr_application_id' => $application->id,
                         'key' => config('constants.hr.status.no-show.label'),
