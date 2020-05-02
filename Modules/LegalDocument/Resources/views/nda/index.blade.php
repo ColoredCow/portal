@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container">
-    @include('legaldocument::NDA.menu')
+    @include('legaldocument::nda.menu')
     <br>
     <div class="d-flex justify-content-start row flex-wrap">
 
-        @include('legaldocument::NDA.templates.index')
+        @include('legaldocument::nda.templates.index')
 
     </div>
 </div>
