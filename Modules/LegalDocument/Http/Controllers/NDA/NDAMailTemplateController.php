@@ -5,9 +5,9 @@ namespace Modules\LegalDocument\Http\Controllers\NDA;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\LegalDocument\Entities\LegalDocumentTemplate;
+use Modules\LegalDocument\Entities\LegalDocumentMailTemplate;
 
-class NDATemplateController extends Controller
+class NDAMailTemplateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,6 @@ class NDATemplateController extends Controller
      */
     public function index()
     {
-        $templates = LegalDocumentTemplate::all();
-        return view('legaldocument::nda.templates.index', ['templates' => $templates]);
     }
 
     /**
@@ -25,7 +23,7 @@ class NDATemplateController extends Controller
      */
     public function create()
     {
-        return view('legaldocument::nda.templates.create');
+        return view('legaldocument::nda.communications.mails.create');
     }
 
     /**
@@ -35,8 +33,8 @@ class NDATemplateController extends Controller
      */
     public function store(Request $request)
     {
-        $legalDocumentTemplate = LegalDocumentTemplate::create($request->all());
-        return redirect(route('legal-document.nda.template.index'));
+        $legalDocumentTemplate = LegalDocumentMailTemplate::create($request->all());
+        return redirect(route('legal-document.nda.index'));
     }
 
     /**
@@ -46,7 +44,7 @@ class NDATemplateController extends Controller
      */
     public function show($id)
     {
-        $template = LegalDocumentTemplate::find($id);
+        $template = LegalDocumentMailTemplate::find($id);
         return view('legaldocument::nda.templates.show', compact('template'));
     }
 
@@ -68,8 +66,8 @@ class NDATemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $legalDocumentTemplate = LegalDocumentTemplate::find($id)->update($request->all());
-        return redirect(route('legal-document.nda.template.index'));
+        $legalDocumentTemplate = LegalDocumentMailTemplate::find($id)->update($request->all());
+        return redirect(route('legal-document.nda.index'));
     }
 
     /**
@@ -84,7 +82,7 @@ class NDATemplateController extends Controller
 
     public function showPreview(Request $request)
     {
-        $template = LegalDocumentTemplate::find(request('template_id'));
+        $template = LegalDocumentMailTemplate::find(request('template_id'));
         $data = [
             'company' => '',
             'recipient' => 'ColoredCow',
