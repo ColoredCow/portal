@@ -55,6 +55,7 @@ class ProspectController extends Controller
      */
     public function show($id, $section = null)
     {
+        return redirect(route('prospect.edit', [$id, 'overview']));
         return view('prospect::show', $this->service->show($id, $section));
     }
 

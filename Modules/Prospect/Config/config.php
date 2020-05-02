@@ -15,6 +15,10 @@ return [
         'contact-persons' => [
             'display-name' => 'Contact Persons'
         ],
+
+        'prospect-requirements' => [
+            'display-name' => 'Requirements'
+        ]
     ],
 
     'prospect-show-tabs' => [

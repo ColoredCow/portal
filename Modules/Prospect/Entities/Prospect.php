@@ -23,6 +23,11 @@ class Prospect extends Model
         return $this->hasMany(ProspectContactPerson::class);
     }
 
+    public function requirements()
+    {
+        return $this->hasMany(ProspectRequirement::class);
+    }
+
     public function assignTo()
     {
         return $this->belongsTo(User::class, 'assign_to');
@@ -45,7 +50,10 @@ class Prospect extends Model
 
     public function getChecklistCurrentTask($checklistID, $checkListTaskID = null)
     {
-        $checkListStatus = $this->checklistStatuses()->where('status', 'pending')->where('module_checklist_id', $checklistID)->first();
+        $checkListStatus = $this->checklistStatuses()
+            ->where('status', 'pending')
+            ->where('module_checklist_id', $checklistID)
+            ->first();
 
         if (!$checkListStatus) {
             return '';

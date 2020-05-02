@@ -10,6 +10,7 @@ use Modules\Prospect\Entities\Prospect;
 use Modules\Prospect\Entities\ProspectStage;
 use Modules\Prospect\Entities\ProspectDocument;
 use Modules\Client\Entities\ClientContactPerson;
+use Modules\Prospect\Entities\ProspectRequirement;
 use Modules\Prospect\Entities\ProspectContactPerson;
 use Modules\ModuleChecklist\Entities\ModuleChecklist;
 use Modules\Prospect\Contracts\ProspectServiceContract;
@@ -29,13 +30,24 @@ class ProspectService implements ProspectServiceContract
 
     public function edit($prospect, $section)
     {
-        return [
+        $data = [
             'prospect' => $prospect,
             'section' => $section ?? 'prospect-details',
             'contactPersons' => $prospect->contactPersons,
             'clientContactPersons' => $this->getAllClientContactPersons(),
             'assigneeData' => $this->getAssignee(),
         ];
+
+        if ($section == 'prospect-requirements') {
+            $data['prospectRequirements'] = $prospect->requirements;
+        }
+
+        if ($section == 'overview') {
+            $data['prospectStages'] = ProspectStage::orderBy('name')->get();
+            $data['prospectChecklist'] = $this->getProspectChecklist($prospect);
+        }
+
+        return $data;
     }
 
     public function store($data)
@@ -72,6 +84,10 @@ class ProspectService implements ProspectServiceContract
             break;
             case 'contact-persons':
                 $this->updateProspectContactPersons($data, $prospect);
+            break;
+
+            case 'prospect-requirements':
+                $this->updateProspectRequirements($data, $prospect);
             break;
         }
 
@@ -113,6 +129,32 @@ class ProspectService implements ProspectServiceContract
     private function updateProspectDetails($data, $prospect)
     {
         return $prospect->update($data);
+    }
+
+    private function updateProspectRequirements($data, $prospect)
+    {
+        $requirements = $data['requirements'] ?? [];
+        $prospectRequirements = collect([]);
+
+        foreach ($requirements as $requirementData) {
+            $requirementID = $requirementData['id'] ?? null;
+            if ($requirementID) {
+                $prospectRequirement = ProspectRequirement::find($requirementID);
+                $prospectRequirement->update($requirementData);
+                $prospectRequirements->push($prospectRequirement);
+                continue;
+            }
+            $prospectRequirement = new ProspectRequirement($requirementData);
+            $prospect->requirements()->save($prospectRequirement);
+            $prospectRequirements->push($prospectRequirement);
+        }
+
+        $prospect->requirements
+            ->diff($prospectRequirements)
+            ->each(function ($requirement) {
+                $requirement->delete();
+            });
+        return true;
     }
 
     private function getAllClientContactPersons()
