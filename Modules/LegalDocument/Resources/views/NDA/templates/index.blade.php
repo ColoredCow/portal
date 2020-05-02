@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    @include('legaldocument::NDA.menu')
+    @include('legaldocument::nda.menu')
     <br>
 
     <div class="d-flex justify-content-between mb-2">
