@@ -12,5 +12,6 @@
     "Legal": true,
     "Documents": true,
     "LegalDocument": true,
-    "ModuleChecklist": true
+    "ModuleChecklist": true,
+    "Communications": true
 }

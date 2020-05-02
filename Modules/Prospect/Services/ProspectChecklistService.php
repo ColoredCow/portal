@@ -2,13 +2,17 @@
 
 namespace Modules\Prospect\Services;
 
+use Modules\User\Entities\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Modules\Prospect\Entities\Prospect;
 use Modules\ModuleChecklist\Entities\NDAMeta;
+use Modules\LegalDocument\Emails\NDA\SendToApprover;
 use Modules\Prospect\Events\NewProspectHistoryEvent;
 use Modules\ModuleChecklist\Entities\ModuleChecklist;
 use Modules\Prospect\Entities\ProspectChecklistStatus;
 use Modules\LegalDocument\Entities\LegalDocumentTemplate;
+use Modules\LegalDocument\Entities\LegalDocumentMailTemplate;
 use Modules\Prospect\Contracts\ProspectChecklistServiceContract;
 
 class ProspectChecklistService implements ProspectChecklistServiceContract
@@ -79,8 +83,11 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
         $ndaMeta->enable_reminder = $data['should_send_reminder'];
         $ndaMeta->save();
 
+        $approver = User::find($ndaMeta->approver_id);
+
         $prospect->ndaMeta()->sync([$ndaMeta->id]);
         ProspectChecklistStatus::markCompleted($prospect, $moduleChecklist->id, $checklistTaskId);
+        Mail::send(new SendToApprover($approver, LegalDocumentMailTemplate::first()));
         event(new NewProspectHistoryEvent($prospect, ['description' => 'NDA Initiated. Waiting for review now']));
     }
 

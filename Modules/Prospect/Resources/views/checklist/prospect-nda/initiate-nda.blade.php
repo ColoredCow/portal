@@ -31,7 +31,7 @@ $ndaMeta = $metaData;
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="name" class="field-required">NDA template</label>
-                                    <div class="c-pointer" style="text-decoration: underline" >Add new template</div>
+                                    <a class="c-pointer" href="{{ route('legal-document.nda.template.create') }}" style="text-decoration: underline" >Add new template</a>
                                 </div>
                           
                                 <select v-model="template" class="form-control" name="nda_template_id" id="">

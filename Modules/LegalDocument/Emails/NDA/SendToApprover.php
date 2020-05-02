@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Mail\HR;
+namespace Modules\LegalDocument\Emails\NDA;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Models\HR\Application;
 use Modules\User\Entities\User;
 use Illuminate\Queue\SerializesModels;
 
-class SendForApproval extends Mailable
+class SendToApprover extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,8 +17,7 @@ class SendForApproval extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param User        $supervisor
-     * @param Application $application
+     * @return void
      */
     public function __construct(User $approver, $mailTemplate)
     {

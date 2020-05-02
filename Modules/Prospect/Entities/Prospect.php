@@ -45,7 +45,7 @@ class Prospect extends Model
 
     public function getChecklistCurrentTask($checklistID, $checkListTaskID = null)
     {
-        $checkListStatus = $this->checklistStatuses()->where('status', 'pending')->first();
+        $checkListStatus = $this->checklistStatuses()->where('status', 'pending')->where('module_checklist_id', $checklistID)->first();
 
         if (!$checkListStatus) {
             return '';
