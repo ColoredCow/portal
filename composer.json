@@ -24,6 +24,7 @@
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.4",
+        "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "jgrossi/corcel": "^4.0",
         "jordikroon/google-vision": "^1.8",
         "laravel/framework": "^7.0",
