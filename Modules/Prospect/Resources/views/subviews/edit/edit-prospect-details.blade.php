@@ -20,7 +20,7 @@
                     <option {{ ($prospect->status == $status) ? 'selected=selected' : '' }} value="{{ $status }}">{{ $label }}</option>
                     @endforeach
                 </select>
-           </div>
+            </div>
 
            <div class="form-group">
                 <div class="d-flex justify-content-between">
@@ -49,7 +49,7 @@
 
 </div>
 <div class="card-footer">
-    @include('prospect::subviews.edit-prospect-form-submit-buttons')
+    @include('prospect::subviews.edit.edit-prospect-form-submit-buttons')
 </div>
 
 

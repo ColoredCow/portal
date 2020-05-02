@@ -47,7 +47,7 @@
         
         </div>
         <div class="card-footer">
-            @include('prospect::subviews.edit-prospect-form-submit-buttons')
+            @include('prospect::subviews.edit.edit-prospect-form-submit-buttons')
         </div>
     </div>
 </div>

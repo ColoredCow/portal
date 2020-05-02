@@ -33,21 +33,24 @@ return [
         'aHR0cHM6Ly9sb2NhbC5jb2xvcmVkY293LmRldi93cC93cC1sb2dpbi5waHA/c2FtbF9hY3M=' => [
             // Your destination is the ACS URL of the Service Provider
             'destination' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_acs',
-            'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
+           // 'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
+            'logout' => '',
             'certificate' => '',
             'query_params' => ''
         ],
 
         'aHR0cHM6Ly91YXQuY29sb3JlZGNvdy5jb20vd3Avd3AtbG9naW4ucGhwP3NhbWxfYWNz' => [
             'destination' => 'https://uat.coloredcow.com/wp/wp-login.php?saml_acs',
-            'logout' => 'https://uat.coloredcow.com/wp/wp-login.php?saml_sls',
+            //'logout' => 'https://uat.coloredcow.com/wp/wp-login.php?saml_sls',
+            'logout' => '',
             'certificate' => '',
             'query_params' => ''
         ],
 
         'aHR0cHM6Ly9jb2xvcmVkY293LmNvbS93cC93cC1sb2dpbi5waHA/c2FtbF9hY3M=' => [
             'destination' => 'https://coloredcow.com/wp/wp-login.php?saml_acs',
-            'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
+            //'logout' => 'https://local.coloredcow.dev/wp/wp-login.php?saml_sls',
+            'logout' => '',
             'certificate' => '',
             'query_params' => ''
         ]

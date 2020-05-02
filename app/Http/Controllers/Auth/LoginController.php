@@ -81,11 +81,11 @@ class LoginController extends Controller
         $authUser->update(['avatar' => $user->avatar_original]);
 
         if (session('saml_request_for_website')) {
-            if(!$authUser->website_user_role) {
+            if (!$authUser->website_user_role) {
                 Auth::logout();
                 return redirect('login');
             }
-            
+
             return redirect(config('constants.website_url') . '/wp/wp-admin/');
         }
 
@@ -101,8 +101,14 @@ class LoginController extends Controller
      */
     public function findOrCreateUser($user, $provider)
     {
-        $authUser = User::withTrashed()->where('provider_id', $user->id)->first();
+        $authUser = User::withTrashed()
+        ->where('provider_id', $user->id)
+        ->orWhere('email', $user->email)
+        ->first();
+
         if ($authUser) {
+            $authUser->provider_id = $user->id;
+            $authUser->save();
             return $authUser;
         }
 
