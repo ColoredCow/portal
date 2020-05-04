@@ -2,6 +2,7 @@
 
 namespace Modules\Prospect\Services;
 
+use App\Models\SkillSet;
 use Illuminate\Support\Str;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
@@ -35,11 +36,12 @@ class ProspectService implements ProspectServiceContract
             'section' => $section ?? 'prospect-details',
             'contactPersons' => $prospect->contactPersons,
             'clientContactPersons' => $this->getAllClientContactPersons(),
-            'assigneeData' => $this->getAssignee(),
+            'assigneeData' => $this->getAssignee()
         ];
 
         if ($section == 'prospect-requirements') {
             $data['prospectRequirements'] = $prospect->requirements;
+            $data['skills'] = SkillSet::orderBy('name')->get();
         }
 
         if ($section == 'overview') {

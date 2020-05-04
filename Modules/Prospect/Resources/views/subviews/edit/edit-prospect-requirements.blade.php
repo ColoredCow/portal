@@ -39,12 +39,9 @@
                                 <span style="text-decoration:underline">Add new skill</span>
                             </label>
                             <select class="form-control" :name="`requirements[${index}][skills][]`" multiple="multiple" v-model="requirement.skills">
-                                <option value="php">PHP</option>
-                                <option value="python">Python</option>
-                                <option value="javascript">Javascript</option>
-                                <option value="html">HTML</option>
-                                <option value="kafka">Kafka</option>
-                                <option value="testing">Testing</option>
+                                @foreach($skills as $skill)
+                                    <option value="{{ $skill->id  }}">{{ $skill->name }}</option>
+                                @endforeach
                             </select>
                         </div>
 
