@@ -84,6 +84,7 @@ class ProspectService implements ProspectServiceContract
             break;
             case 'contact-persons':
                 $this->updateProspectContactPersons($data, $prospect);
+                $nextStage = route('prospect.edit', [$prospect, 'prospect-requirements']);
             break;
 
             case 'prospect-requirements':

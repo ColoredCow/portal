@@ -30,9 +30,9 @@
                         <td>{{ \Str::title($prospect->coming_from ) }}</td>
                         <td>{{ optional($prospect->assignTo)->name }}</td>
                         <td>
-                            <div>
-                                <a href="{{ route('prospect.edit', $prospect) }}" class="btn btn-info btn-sm">Edit</a>
-                            </div>
+                            {{-- <div>
+                                <a href="{{ route('prospect.edit', $prospect) }}" class="d-none btn btn-info btn-sm">Edit</a>
+                            </div> --}}
                             
                         </td>
                     </tr>

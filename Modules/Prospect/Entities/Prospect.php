@@ -5,6 +5,7 @@ namespace Modules\Prospect\Entities;
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
 use Modules\ModuleChecklist\Entities\NDAMeta;
+use Modules\Communication\Entities\CalendarMeeting;
 use Modules\ModuleChecklist\Entities\ModuleChecklist;
 
 class Prospect extends Model
@@ -120,5 +121,10 @@ class Prospect extends Model
                 ]);
             }
         }
+    }
+
+    public function calendarMeetings()
+    {
+        return $this->belongsToMany(CalendarMeeting::class, 'prospect_calendar_meeting', 'prospect_id', 'calendar_meeting_id')->withTimestamps();
     }
 }
