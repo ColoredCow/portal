@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Google_Service_Calendar;
 use Modules\User\Entities\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,10 @@ class LoginController extends Controller
     {
         switch ($provider) {
             case 'google':
-                return Socialite::driver($provider)->with(['hd' => config('constants.gsuite.client-hd')])->redirect();
+                return Socialite::driver($provider)
+                    ->with(['access_type' => 'offline',  'hd' => config('constants.gsuite.client-hd'), 'prompt' => 'consent select_account'])
+                    ->scopes([Google_Service_Calendar::CALENDAR])
+                    ->redirect();
                 break;
 
             default:
@@ -70,6 +74,7 @@ class LoginController extends Controller
     {
         $user = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
+
         if ($authUser && $authUser->trashed()) {
             return redirect('login');
         }

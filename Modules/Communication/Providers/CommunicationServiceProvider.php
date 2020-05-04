@@ -1,30 +1,24 @@
 <?php
 
-namespace Modules\Prospect\Providers;
+namespace Modules\Communication\Providers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\Prospect\Services\ProspectService;
-use Modules\Prospect\Services\ProspectHistoryService;
-use Modules\Prospect\Services\ProspectMeetingService;
-use Modules\Prospect\Contracts\ProspectServiceContract;
-use Modules\Prospect\Services\ProspectChecklistService;
-use Modules\Prospect\Contracts\ProspectHistoryServiceContract;
-use Modules\Prospect\Contracts\ProspectMeetingServiceContract;
-use Modules\Prospect\Contracts\ProspectChecklistServiceContract;
+use Modules\Communication\Services\CalendarMeetingService;
+use Modules\Communication\Contracts\CalendarMeetingContract;
 
-class ProspectServiceProvider extends ServiceProvider
+class CommunicationServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'Prospect';
+    protected $moduleName = 'Communication';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'prospect';
+    protected $moduleNameLower = 'communication';
 
     /**
      * Boot the application events.
@@ -49,7 +43,6 @@ class ProspectServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -137,27 +130,9 @@ class ProspectServiceProvider extends ServiceProvider
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), ProspectServiceContract::class)) {
-            $this->app->bind(ProspectServiceContract::class, function () {
-                return new ProspectService();
-            });
-        }
-
-        if (!Arr::has($this->app->getBindings(), ProspectHistoryServiceContract::class)) {
-            $this->app->bind(ProspectHistoryServiceContract::class, function () {
-                return new ProspectHistoryService();
-            });
-        }
-
-        if (!Arr::has($this->app->getBindings(), ProspectChecklistServiceContract::class)) {
-            $this->app->bind(ProspectChecklistServiceContract::class, function () {
-                return new ProspectChecklistService();
-            });
-        }
-
-        if (!Arr::has($this->app->getBindings(), ProspectMeetingServiceContract::class)) {
-            $this->app->bind(ProspectMeetingServiceContract::class, function () {
-                return new ProspectMeetingService();
+        if (!Arr::has($this->app->getBindings(), CalendarMeetingContract::class)) {
+            $this->app->bind(CalendarMeetingContract::class, function () {
+                return new CalendarMeetingService();
             });
         }
     }

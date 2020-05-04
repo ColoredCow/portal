@@ -4,6 +4,7 @@ return [
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
+        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS')
     ],
     'google' => [
         'vision-api-key' => env('GOOGLE_VISION_API_KEY'),

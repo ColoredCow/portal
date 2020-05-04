@@ -61,8 +61,9 @@
                                 </div>
                             </div>
     
-                            <div class="form-group text-left mt-10">
-                                <button class="btn btn-info text-white">Save new progress</button>
+                            <div class="form-group  mt-10 d-flex justify-content-between">
+                                <button type="submit" class="btn btn-info text-white ">Save new progress</button>
+                                <button data-toggle="modal" data-target="#prospect_schedule_meeting_form" type="button" class="btn btn-success text-white">Schedule a meeting</button>
                             </div>
                         </form>
                     </div>
@@ -74,8 +75,8 @@
             </div>
         </div>
     </div>
-    @include('prospect::subviews.show.prospect-progress-stage-modal')
     @include('prospect::subviews.show.prospect-history-details-modal')
+    @include('prospect::subviews.schedule-prospect-meeting')
 </div>
 
 
@@ -99,22 +100,7 @@ new Vue({
 
     methods:{
         async saveNewStage() {
-            if(!this.newStageName) {
-                return false;
-            }
-
-            if(!confirm('Are you sure?')) {
-                return;
-            }
-
-            let response = await axios.post("{{ route('prospect.new-stage') }}", {
-                stageName: this.newStageName
-            });
-
-            let newStage =  response.data;
-            this.progressStatges.push(newStage);
-            this.newStageName = '';
-            $('#prospect_progress_new_stage_form').modal('hide');
+         
         },
 
         showHistoryDetails(index) {
