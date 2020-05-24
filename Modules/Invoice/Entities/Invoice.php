@@ -25,4 +25,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function getDisplayAmountAttribute()
+    {
+        return $this->amount . ' ' . $this->client->country->currency_symbol;
+    }
 }

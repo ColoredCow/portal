@@ -65,6 +65,11 @@ class Client extends Model
         return  $address->country_id == '1' ? 'indian' : 'international';
     }
 
+    public function getCountryAttribute()
+    {
+        return $this->addresses->first()->country;
+    }
+
     public function getCurrencyAttribute()
     {
         return $this->type == 'indian' ? 'INR' : 'USD';

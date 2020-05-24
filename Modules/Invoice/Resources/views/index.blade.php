@@ -17,7 +17,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Project</th>
-                    <th>Status</th>
+                    <th>Amount</th>
                     <th>Sent On</th>
                     <th>Due Date</th>
                     <th>File Path</th>
@@ -30,7 +30,7 @@
                     <td>
                         <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->project->name }}</a>
                     </td>
-                    <td>{{ Str::title($invoice->status) }}</td>
+                    <td>{{ $invoice->display_amount }}</td>
                     <td>{{ $invoice->sent_on->format('Y-m-d') }}</td>
                     <td>{{ $invoice->due_on->format('Y-m-d')  }}</td>
                     <td><a href="{{ route('invoice.get-file', $invoice->id) }}">Link</a></td>
