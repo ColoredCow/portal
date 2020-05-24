@@ -33,7 +33,8 @@
             <select class="form-control bg-light" name="status" id="">
                 <option {{ request()->input('status') == '' ? "selected=selected" : '' }} value="">All Status
                 </option>
-                <option {{ request()->input('status') == 'sent' ? "selected=selected" : '' }} value="sent">Sent</option>
+                <option {{ request()->input('status') == 'sent' ? "selected=selected" : '' }} value="sent">Pending
+                </option>
                 <option {{ request()->input('status') == 'paid' ? "selected=selected" : '' }} value="paid">Paid</option>
             </select>
         </div>
