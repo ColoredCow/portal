@@ -67,7 +67,7 @@ class Client extends Model
 
     public function getCountryAttribute()
     {
-        return $this->addresses->first()->country;
+        return optional($this->addresses->first())->country;
     }
 
     public function getCurrencyAttribute()
