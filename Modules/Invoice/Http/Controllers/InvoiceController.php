@@ -20,9 +20,17 @@ class InvoiceController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('invoice::index', $this->service->index());
+        $defaultsFilters = [];
+
+        $filters = $request->all();
+
+        if (!$filters) {
+            return redirect(route('invoice.index', $this->service->defaultFilters()));
+        }
+
+        return view('invoice::index', $this->service->index($filters));
     }
 
     /**

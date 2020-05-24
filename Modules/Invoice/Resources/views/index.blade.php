@@ -2,14 +2,20 @@
 @section('content')
 
 <div class="container" id="vueContainer">
-    @include('invoice::index-menu')
     <br>
+    <br>
+
     <div class="d-flex justify-content-between mb-2">
-        <h4 class="mb-1 pb-1">{{ config('invoice.status')[request()->input('status', 'sent')] }} Invoices
-            ({{ $invoices ? $invoices->count() : ''}})</h4>
+        <h4 class="mb-1 pb-1"> Invoices</h4>
         <span>
             <a href="{{ route('invoice.create') }}" class="btn btn-info text-white"> Add new invoice</a>
         </span>
+    </div>
+    <br>
+    <br>
+
+    <div>
+        @include('invoice::index-filters')
     </div>
 
     <div>

@@ -23,6 +23,16 @@ class Invoice extends Model
         return $query->where('status', $status);
     }
 
+    public function scopeYear($query, $year)
+    {
+        return $query->whereYear('sent_on', $year);
+    }
+
+    public function scopeMonth($query, $month)
+    {
+        return $query->whereMonth('sent_on', $month);
+    }
+
     public function project()
     {
         return $this->belongsTo(Project::class);

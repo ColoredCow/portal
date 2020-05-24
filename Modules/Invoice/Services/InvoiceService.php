@@ -2,6 +2,7 @@
 
 namespace Modules\Invoice\Services;
 
+use Illuminate\Support\Arr;
 use Modules\Invoice\Entities\Invoice;
 use Illuminate\Support\Facades\Storage;
 use Modules\Client\Contracts\ClientServiceContract;
@@ -9,11 +10,34 @@ use Modules\Invoice\Contracts\InvoiceServiceContract;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index()
+    public function index($filters = [])
+    {
+        $query = Invoice::query();
+
+        if ($year = Arr::get($filters, 'year', '')) {
+            $query->year($year);
+        }
+
+        if ($month = Arr::get($filters, 'month', '')) {
+            $query->month($month);
+        }
+
+        if ($status = Arr::get($filters, 'status', '')) {
+            $query->status($status);
+        }
+
+        return [
+            'invoices' => $query->get(),
+            'clients' => app(ClientServiceContract::class)->getAll()
+        ];
+    }
+
+    public function defaultFilters()
     {
         return [
-            'invoices' => Invoice::with('project')->status(request()->input('status', 'sent'))->get(),
-            'clients' => app(ClientServiceContract::class)->getAll()
+            'year' => now()->format('Y'),
+            'month' => now()->format('m'),
+            'status' => 'sent'
         ];
     }
 
