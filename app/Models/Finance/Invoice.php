@@ -9,6 +9,8 @@ class Invoice extends Model
 {
     protected $guarded = [];
 
+    protected $table = 'invoices_old';
+
     protected $dates = [
         'sent_on',
         'due_on',

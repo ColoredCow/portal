@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class AddInvoiceIdProjectStageBillings extends Migration
 {
@@ -16,7 +16,7 @@ class AddInvoiceIdProjectStageBillings extends Migration
         Schema::table('project_stage_billings', function (Blueprint $table) {
             $table->unsignedInteger('invoice_id')->nullable();
             $table->foreign('invoice_id')
-                ->references('id')->on('invoices');
+                ->references('id')->on('invoices_old');
         });
     }
 
