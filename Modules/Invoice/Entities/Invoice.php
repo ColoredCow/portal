@@ -28,6 +28,7 @@ class Invoice extends Model
 
     public function getDisplayAmountAttribute()
     {
-        return $this->amount . ' ' . $this->client->country->currency_symbol;
+        $country = optional($this->client)->country;
+        return $this->amount . ' ' . optional($country)->currency_symbol;
     }
 }
