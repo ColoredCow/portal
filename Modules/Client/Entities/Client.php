@@ -14,6 +14,8 @@ class Client extends Model
 
     protected $fillable = ['name', 'email', 'key_account_manager_id', 'status', 'country', 'state', 'phone', 'phone', 'address', 'pincode', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id'];
 
+    protected $appends = ['type', 'currency'];
+
     protected static function booted()
     {
         static::addGlobalScope(new ClientGlobalScope);
@@ -61,5 +63,10 @@ class Client extends Model
             return null;
         }
         return  $address->country_id == '1' ? 'indian' : 'international';
+    }
+
+    public function getCurrencyAttribute()
+    {
+        return $this->type == 'indian' ? 'INR' : 'USD';
     }
 }

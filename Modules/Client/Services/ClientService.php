@@ -127,6 +127,11 @@ class ClientService implements ClientServiceContract
         return User::all();
     }
 
+    public function getAll($status = 'active')
+    {
+        return Client::status($status)->with('projects')->orderBy('name')->get();
+    }
+
     public function store($data)
     {
         $data['status'] = 'active';

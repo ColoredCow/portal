@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateInvoicesTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('invoices_old', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_invoice_id');
             $table->string('currency', 3);
@@ -44,7 +44,7 @@ class CreateInvoicesTable extends Migration
             $table->softDeletes();
 
             $table->foreign('invoice_id')
-                ->references('id')->on('invoices');
+                ->references('id')->on('invoices_old');
         });
 
         Schema::create('cheques', function (Blueprint $table) {
@@ -79,6 +79,6 @@ class CreateInvoicesTable extends Migration
         Schema::dropIfExists('wire_transfers');
         Schema::dropIfExists('cheques');
         Schema::dropIfExists('payments');
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('invoices_old');
     }
 }

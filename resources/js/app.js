@@ -40,14 +40,15 @@ Vue.component('user-dashboard-wishlist-books', require('./components/Dashboard/U
 Vue.component('user-dashboard-projects', require('./components/Dashboard/UserDashboardProjects.vue').default);
 Vue.component('user-dashboard-library', require('./components/Dashboard/UserDahboardLibrary.vue').default);
 Vue.component('user-dashboard-infrastructure', require('./components/Dashboard/UserDahboardInfrastructure.vue').default);
+Vue.component('user-dashboard-invoice', require('./components/Dashboard/UserDahboardInvocie.vue').default);
 
-if(Vue) {
+if (Vue) {
     Vue.filter('str_limit', function (value, size) {
         if (!value) return '';
         value = value.toString();
-      
+
         if (value.length <= size) {
-          return value;
+            return value;
         }
         return value.substr(0, size) + '...';
     });
@@ -55,9 +56,9 @@ if(Vue) {
 
 
 if (document.getElementById('vueContainer')) {
-new Vue({
-    el: '#vueContainer',
-});
+    new Vue({
+        el: '#vueContainer',
+    });
 }
 
 
@@ -76,15 +77,15 @@ $(document).ready(() => {
         }
     }
     $('[data-toggle="tooltip"]').tooltip();
-    
-    $('.status-close').on('click', function(){
+
+    $('.status-close').on('click', function () {
         let wrapper = $(this).closest('.alert');
         wrapper.fadeOut(500);
     });
 
-    $('.client_edit_form_submission_btn').on('click', function() {
+    $('.client_edit_form_submission_btn').on('click', function () {
 
-        if(!$("#edit_client_info_form")[0].checkValidity()) {
+        if (!$("#edit_client_info_form")[0].checkValidity()) {
             $("#edit_client_info_form")[0].reportValidity()
             return false;
         }
@@ -93,9 +94,9 @@ $(document).ready(() => {
     });
 
 
-    $('.prospect_edit_form_submission_btn').on('click', function() {
+    $('.prospect_edit_form_submission_btn').on('click', function () {
 
-        if(!$("#edit_prospect_info_form")[0].checkValidity()) {
+        if (!$("#edit_prospect_info_form")[0].checkValidity()) {
             $("#edit_prospect_info_form")[0].reportValidity()
             return false;
         }
@@ -103,7 +104,7 @@ $(document).ready(() => {
         $('#edit_prospect_info_form').submit();
     });
 
-    $('body').on("change", ".custom-file-input", function() {
+    $('body').on("change", ".custom-file-input", function () {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
@@ -126,15 +127,15 @@ if (document.getElementById('page_hr_applicant_edit')) {
             createCalendarEvent: true,
         },
         methods: {
-            toggleResumeFrame: function() {
+            toggleResumeFrame: function () {
                 this.showResumeFrame = !this.showResumeFrame;
             },
-            toggleEvaluationFrame: function() {
+            toggleEvaluationFrame: function () {
                 this.showEvaluationFrame = !this.showEvaluationFrame;
             },
-            getApplicationEvaluation: function(applicationRoundID) {
-                if(!this.showEvaluationFrame) {
-                    axios.get('/hr/applications/evaluation/' + applicationRoundID).then(function(response) {
+            getApplicationEvaluation: function (applicationRoundID) {
+                if (!this.showEvaluationFrame) {
+                    axios.get('/hr/applications/evaluation/' + applicationRoundID).then(function (response) {
                         $('#page_hr_applicant_edit #application_evaluation_body').html(response.data);
                     }).catch(function (error) {
                         alert('Error fetching applicaiton evaluation!');
@@ -142,7 +143,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
                 }
                 this.toggleEvaluationFrame();
             },
-            takeAction: function() {
+            takeAction: function () {
                 switch (this.selectedAction) {
                     case 'round':
                         let selectedRound = document.querySelector('#action_type option:checked');
@@ -156,7 +157,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
                     case 'approve':
                         $('#approve_application').modal('show');
                         break;
-                     case 'onboard':
+                    case 'onboard':
                         $('#onboard_applicant').modal('show');
                 }
             }
@@ -176,7 +177,7 @@ if (document.getElementById('project_container')) {
             newStage: false
         },
         methods: {
-            createProjectStage: function() {
+            createProjectStage: function () {
                 this.$refs.projectStage.create();
             }
         }
@@ -186,10 +187,8 @@ if (document.getElementById('project_container')) {
 if (document.getElementById('employee_projects')) {
     const employeeProjects = new Vue({
         el: '#employee_projects',
-        data: {
-        },
-        methods: {
-        }
+        data: {},
+        methods: {}
     });
 }
 
@@ -204,15 +203,15 @@ if (document.getElementById('client_form')) {
             clientEmails: document.getElementById('emails').value == '' ? [] : document.getElementById('emails').value.split(','),
         },
         methods: {
-            toggleActive: function() {
+            toggleActive: function () {
                 this.isActive = !this.isActive;
             },
-            addNewEmail: function() {
+            addNewEmail: function () {
                 this.clientEmails.push(this.newEmailName + ' <' + this.newEmailId + '>');
                 this.newEmailName = '';
                 this.newEmailId = '';
             },
-            removeEmail: function(item) {
+            removeEmail: function (item) {
                 let index = this.clientEmails.indexOf(item);
                 if (index !== -1) {
                     this.clientEmails.splice(index, 1);
@@ -232,24 +231,24 @@ if (document.getElementById('finance_report')) {
             conversionRateUSD: document.getElementById('conversion_rate_usd').dataset.conversionRateUsd || 0,
         },
         computed: {
-            convertedUSDSentAmount: function() {
+            convertedUSDSentAmount: function () {
                 let convertedAmount = parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
                 return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
             },
-            totalINREstimated: function() {
+            totalINREstimated: function () {
                 return parseFloat(this.sentAmountINR) + parseFloat(this.convertedUSDSentAmount);
             }
         }
     });
 }
 
-$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function() {
+$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function () {
     let button = $(this);
     let form = $(this).closest('.applicant-round-form');
     let selectedAction = $(this).data('action');
-    const actions = [ 'confirm', 'send-for-approval', 'onboard', 'approve' ];
-      if(actions.includes(selectedAction)) {
-       if (!form[0].checkValidity()) {
+    const actions = ['confirm', 'send-for-approval', 'onboard', 'approve'];
+    if (actions.includes(selectedAction)) {
+        if (!form[0].checkValidity()) {
             form[0].reportValidity();
             return false;
         }
@@ -263,10 +262,10 @@ $('.date-field').datepicker({
     dateFormat: "dd/mm/yy"
 });
 
-$('#form_invoice').on('change', '#client_id', function(){
+$('#form_invoice').on('change', '#client_id', function () {
     let form = $(this).closest('form');
     let client_id = $(this).val();
-    if (! client_id) {
+    if (!client_id) {
         form.find('#project_ids').html('');
         return false;
     }
@@ -280,9 +279,9 @@ $('#copy_weeklydose_service_url').tooltip({
 
 function updateClientProjects(form, client_id) {
     $.ajax({
-        url : '/clients/' + client_id + '/get-projects',
-        method : 'GET',
-        success : function (res) {
+        url: '/clients/' + client_id + '/get-projects',
+        method: 'GET',
+        success: function (res) {
             form.find('#project_ids').html(getProjectList(res));
         }
     });
@@ -300,42 +299,42 @@ function getProjectList(projects) {
 }
 
 function setTooltip(btn, message) {
-	$(btn).tooltip('hide')
-		.attr('data-original-title', message)
-    	.tooltip('show');
+    $(btn).tooltip('hide')
+        .attr('data-original-title', message)
+        .tooltip('show');
 }
 
 function hideTooltip(btn) {
-	setTimeout(function() {
-		$(btn).tooltip('hide');
-	}, 1000);
+    setTimeout(function () {
+        $(btn).tooltip('hide');
+    }, 1000);
 }
 
 
-weeklyDoseClipboard.on('success', function(e) {
-  setTooltip(e.trigger, 'Copied!');
-  hideTooltip(e.trigger);
+weeklyDoseClipboard.on('success', function (e) {
+    setTooltip(e.trigger, 'Copied!');
+    hideTooltip(e.trigger);
 });
 
 tinymce.init({
     selector: '.richeditor',
     skin: 'lightgray',
-    plugins: [ 'lists autolink link' ],
+    plugins: ['lists autolink link'],
     menubar: false,
     statusbar: false,
     entity_encoding: 'raw',
-    forced_root_block : "",
-    force_br_newlines : true,
-    force_p_newlines : false,
-    height : "280"
+    forced_root_block: "",
+    force_br_newlines: true,
+    force_p_newlines: false,
+    height: "280"
 });
 
-$('.hr_round_guide').on('click', '.edit-guide', function(){
+$('.hr_round_guide').on('click', '.edit-guide', function () {
     let container = $(this).closest('.hr_round_guide');
     container.find('.btn-guide, .guide-container').toggleClass('d-none');
 });
 
-$('.hr_round_guide').on('click', '.save-guide', function(){
+$('.hr_round_guide').on('click', '.save-guide', function () {
     let container = $(this).closest('.hr_round_guide');
     let form = container.find('form');
     let button = $(this);
@@ -376,27 +375,29 @@ if (document.getElementById('show_and_save_book')) {
                 store: document.getElementById('show_book').dataset.storeRoute || ''
             },
             buttons: {
-                disableSubmitButton:false,
+                disableSubmitButton: false,
                 disableSaveButton: false
             }
         },
 
         methods: {
-            onFileSelected: function(e) {
+            onFileSelected: function (e) {
                 let file = e.target.files[0];
-                if (!file) { return; }
-                this.compressedFile =  null;
-                let image  = new ImageCompressor(file, {
+                if (!file) {
+                    return;
+                }
+                this.compressedFile = null;
+                let image = new ImageCompressor(file, {
                     quality: .1,
-                    success: function(result) {
+                    success: function (result) {
                         this.compressedFile = result;
                     }
                 });
             },
 
-            submitBookForm: function() {
+            submitBookForm: function () {
                 let formData = new FormData(document.getElementById('book_form'));
-                if(this.compressedFile) {
+                if (this.compressedFile) {
                     formData.append('book_image', compressedFile, compressedFile.name);
                 }
 
@@ -408,42 +409,41 @@ if (document.getElementById('show_and_save_book')) {
                         this.buttons.disableSubmitButton = false;
                         let data = response.data;
 
-                        if(!data) {
+                        if (!data) {
                             alert("Error:Please try again");
                             return;
                         }
 
-                        if(data.error) {
+                        if (data.error) {
                             alert(data.message);
                             return;
                         }
 
                         this.book = data.book;
 
-                        if (Object.keys(this.book).length )
-                        {
+                        if (Object.keys(this.book).length) {
                             this.showInfo = true;
                         }
-                });
+                    });
             },
 
             saveBookToRecords: function () {
-                if(!this.book ) {
+                if (!this.book) {
                     alert("Error in saving records");
                 }
                 this.buttons.disableSaveButton = true;
                 this.book.number_of_copies = this.number_of_copies;
                 this.book['on_kindle'] = document.getElementById('on_kindle').value;
-                axios.post(this.routes.store, this.book ).then (
-                (response) => {
-                    this.buttons.disableSaveButton = false;
+                axios.post(this.routes.store, this.book).then(
+                    (response) => {
+                        this.buttons.disableSaveButton = false;
 
-                    if(response.data.error) {
-                        alert("Error in saving records");
-                        return false;
-                    }
-                   window.location.href = this.routes.index
-                });
+                        if (response.data.error) {
+                            alert("Error in saving records");
+                            return false;
+                        }
+                        window.location.href = this.routes.index
+                    });
             }
         }
 
@@ -456,64 +456,68 @@ if (document.getElementById('books_listing')) {
         data: {
             books: document.getElementById('books_table').dataset.books ? JSON.parse(document.getElementById('books_table').dataset.books) : {},
             bookCategories: document.getElementById('books_table').dataset.categories ? JSON.parse(document.getElementById('books_table').dataset.categories) : [],
-            updateRoute:document.getElementById('books_table').dataset.indexRoute  || '',
-            categoryIndexRoute:document.getElementById('books_table').dataset.categoryIndexRoute  || '',
+            updateRoute: document.getElementById('books_table').dataset.indexRoute || '',
+            categoryIndexRoute: document.getElementById('books_table').dataset.categoryIndexRoute || '',
             categoryInputs: [],
             currentBookIndex: 0,
-            newCategory:'',
+            newCategory: '',
             searchKey: document.getElementById('search_input') ? document.getElementById('search_input').dataset.value : '',
         },
 
         methods: {
-            updateCategoryMode : function(index) {
+            updateCategoryMode: function (index) {
                 let categories = this.books[index]['categories'];
-                if(!categories) {
+                if (!categories) {
                     return false;
                 }
                 this.currentBookIndex = index;
-                this.categoryInputs.map((checkbox) => checkbox.checked = false );
-                categories.forEach((category) => this.categoryInputs[category.id].checked =  true );
+                this.categoryInputs.map((checkbox) => checkbox.checked = false);
+                categories.forEach((category) => this.categoryInputs[category.id].checked = true);
             },
 
-            updateCategory: function() {
+            updateCategory: function () {
                 let selectedCategory = [];
                 let bookID = this.books[this.currentBookIndex]['id'];
 
-                this.categoryInputs.forEach(function(checkbox) {
-                    if(checkbox.checked) {
+                this.categoryInputs.forEach(function (checkbox) {
+                    if (checkbox.checked) {
                         selectedCategory.push({
-                            name:checkbox.dataset.category,
-                            id:checkbox.value
+                            name: checkbox.dataset.category,
+                            id: checkbox.value
                         });
                     }
                 });
 
-                this.$set(this.books[this.currentBookIndex], 'categories',  selectedCategory);
+                this.$set(this.books[this.currentBookIndex], 'categories', selectedCategory);
                 let route = `${this.updateRoute}/${bookID}`;
-                axios.put(route, {categories: JSON.parse(JSON.stringify(selectedCategory))});
+                axios.put(route, {
+                    categories: JSON.parse(JSON.stringify(selectedCategory))
+                });
                 document.getElementById('close_update_category_modal').click();
             },
 
-            addNewCategory: async function() {
-                if(!this.newCategory) {
+            addNewCategory: async function () {
+                if (!this.newCategory) {
                     alert("Please enter category name");
                     return false;
                 }
 
-                let response = await axios.post(this.categoryIndexRoute, {name: this.newCategory});
-                if(response.data && response.data.category) {
+                let response = await axios.post(this.categoryIndexRoute, {
+                    name: this.newCategory
+                });
+                if (response.data && response.data.category) {
                     await this.bookCategories.push(response.data.category);
                     this.newCategory = "";
                     let allCheckboxes = document.querySelectorAll('#update_category_modal input[type="checkbox"]');
-                    let lastCheckbox = allCheckboxes[allCheckboxes.length-1];
+                    let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
                     this.categoryInputs[lastCheckbox.value] = lastCheckbox;
                 }
             },
 
-            deleteBook: async function(index) {
-                let confirmDelete = confirm ('Are you sure ?');
+            deleteBook: async function (index) {
+                let confirmDelete = confirm('Are you sure ?');
 
-                if(!confirmDelete) {
+                if (!confirmDelete) {
                     return false;
                 }
 
@@ -523,30 +527,31 @@ if (document.getElementById('books_listing')) {
                 this.books.splice(index, 1);
             },
 
-            searchBooks: function() {
+            searchBooks: function () {
                 window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
             },
 
             strLimit: function (str, length) {
-                if(!str) {
+                if (!str) {
                     return '';
                 }
                 return str.length > length ? str.substring(0, length) + "..." : str;
             },
 
-            updateCopiesCount: function(index) {
+            updateCopiesCount: function (index) {
                 var new_count = parseInt(prompt('Number of copies of this book', this.books[index].number_of_copies));
                 if (new_count && isFinite(new_count)) {
                     this.books[index].number_of_copies = new_count;
                     axios.put(
-                        this.updateRoute + '/' + this.books[index].id,
-                        {'number_of_copies' : new_count},
+                        this.updateRoute + '/' + this.books[index].id, {
+                            'number_of_copies': new_count
+                        },
                     );
                 }
             },
         },
 
-        mounted: function() {
+        mounted: function () {
             let categoryInputContainer = document.querySelector("#update_category_modal");
             let allCategoryInputs = categoryInputContainer.querySelectorAll('input[type="checkbox"]');
             allCategoryInputs.forEach((checkbox) => this.categoryInputs[checkbox.value] = checkbox);
@@ -560,31 +565,33 @@ if (document.getElementById('books_category')) {
         data: {
             categories: document.getElementById('category_container').dataset.categories ? JSON.parse(document.getElementById('category_container').dataset.categories) : [],
             categoryNameToChange: [],
-            indexRoute:document.getElementById('category_container').dataset.indexRoute  || '',
-            newCategoryName:'',
-            newCategoryMode:'',
+            indexRoute: document.getElementById('category_container').dataset.indexRoute || '',
+            newCategoryName: '',
+            newCategoryMode: '',
 
         },
 
         methods: {
-            showEditMode : function(index) {
+            showEditMode: function (index) {
                 this.categoryNameToChange[index] = this.categories[index]['name'];
                 this.$set(this.categories[index], 'editMode', true);
             },
 
-            updateCategoryName : function(index) {
-                this.$set(this.categories[index], 'name',  this.categoryNameToChange[index]);
+            updateCategoryName: function (index) {
+                this.$set(this.categories[index], 'name', this.categoryNameToChange[index]);
                 let categoryID = this.categories[index]['id'];
                 let route = `${this.indexRoute}/${categoryID}`;
-                axios.put(route, {name: this.categories[index]['name']});
+                axios.put(route, {
+                    name: this.categories[index]['name']
+                });
                 this.$set(this.categories[index], 'editMode', false);
             },
 
-            deleteCategory: async function(index) {
+            deleteCategory: async function (index) {
 
-                let confirmDelete = confirm ('Are you sure ?');
+                let confirmDelete = confirm('Are you sure ?');
 
-                if(!confirmDelete) {
+                if (!confirmDelete) {
                     return false;
                 }
 
@@ -594,22 +601,24 @@ if (document.getElementById('books_category')) {
                 this.categories.splice(index, 1);
             },
 
-            updateNewCategoryMode: function(mode) {
-                if(mode != 'add') {
+            updateNewCategoryMode: function (mode) {
+                if (mode != 'add') {
                     this.newCategoryName = "";
                 }
                 this.newCategoryMode = mode;
             },
 
-            addNewCategory: async function() {
-                if(!this.newCategoryName) {
+            addNewCategory: async function () {
+                if (!this.newCategoryName) {
                     alert("Please enter category name");
                     return false;
                 }
                 let route = `${this.indexRoute}`;
-                let response = await axios.post(route, {name: this.newCategoryName});
+                let response = await axios.post(route, {
+                    name: this.newCategoryName
+                });
 
-                if(response.data && response.data.category) {
+                if (response.data && response.data.category) {
                     this.categories.unshift(response.data.category);
                 }
 
@@ -624,48 +633,43 @@ if (document.getElementById('show_book_info')) {
     const bookForm = new Vue({
         el: '#show_book_info',
         data: {
-            book: document.getElementById('show_book_info').dataset.book
-                        ? document.getElementById('show_book_info').dataset.book
-                        : [],
-            route:document.getElementById('show_book_info').dataset.markBookRoute
-                        ? document.getElementById('show_book_info').dataset.markBookRoute
-                        : '',
-            borrowBookRoute:document.getElementById('show_book_info').dataset.borrowBookRoute
-                        ? document.getElementById('show_book_info').dataset.borrowBookRoute
-                        : '',
-            bookAMonthStoreRoute:document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
-                        ? document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
-                        : '',
-            bookAMonthDestroyRoute:document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute
-                        ? document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute
-                        : '',
-            putBackBookRoute:document.getElementById('show_book_info').dataset.putBackBookRoute
-                        ? document.getElementById('show_book_info').dataset.putBackBookRoute
-                        : '',
-            isRead: document.getElementById('show_book_info').dataset.isRead ? true: false,
-            isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed ? true: false,
-            isBookAMonth: document.getElementById('show_book_info').dataset.isBookAMonth ? true: false,
-            readers: document.getElementById('show_book_info').dataset.readers
-                        ? document.getElementById('show_book_info').dataset.readers
-                        : [],
-            borrowers: document.getElementById('show_book_info').dataset.borrowers
-                        ? document.getElementById('show_book_info').dataset.borrowers
-                        : []
+            book: document.getElementById('show_book_info').dataset.book ?
+                document.getElementById('show_book_info').dataset.book : [],
+            route: document.getElementById('show_book_info').dataset.markBookRoute ?
+                document.getElementById('show_book_info').dataset.markBookRoute : '',
+            borrowBookRoute: document.getElementById('show_book_info').dataset.borrowBookRoute ?
+                document.getElementById('show_book_info').dataset.borrowBookRoute : '',
+            bookAMonthStoreRoute: document.getElementById('show_book_info').dataset.bookAMonthStoreRoute ?
+                document.getElementById('show_book_info').dataset.bookAMonthStoreRoute : '',
+            bookAMonthDestroyRoute: document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute ?
+                document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute : '',
+            putBackBookRoute: document.getElementById('show_book_info').dataset.putBackBookRoute ?
+                document.getElementById('show_book_info').dataset.putBackBookRoute : '',
+            isRead: document.getElementById('show_book_info').dataset.isRead ? true : false,
+            isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed ? true : false,
+            isBookAMonth: document.getElementById('show_book_info').dataset.isBookAMonth ? true : false,
+            readers: document.getElementById('show_book_info').dataset.readers ?
+                document.getElementById('show_book_info').dataset.readers : [],
+            borrowers: document.getElementById('show_book_info').dataset.borrowers ?
+                document.getElementById('show_book_info').dataset.borrowers : []
         },
         methods: {
             markBook: async function (read) {
-                    let response = await axios.post(this.route, {book_id:this.book.id, is_read:read});
-                    this.isRead = read;
-                    if(!response.data) {
-                        return false;
-                    }
-                    this.readers = response.data.readers;
+                let response = await axios.post(this.route, {
+                    book_id: this.book.id,
+                    is_read: read
+                });
+                this.isRead = read;
+                if (!response.data) {
+                    return false;
+                }
+                this.readers = response.data.readers;
             },
 
             addToBookAMonth: async function (action) {
                 let response = await axios.post(this.bookAMonthStoreRoute);
                 this.isBookAMonth = true;
-                if(!response.data) {
+                if (!response.data) {
                     return false;
                 }
             },
@@ -678,13 +682,13 @@ if (document.getElementById('show_book_info')) {
                 }
             },
 
-            borrowTheBook: async function() {
+            borrowTheBook: async function () {
                 let response = await axios.get(this.borrowBookRoute);
                 this.isBorrowed = true;
                 this.borrowers = response.data.borrowers;
             },
 
-            putTheBookBackToLibrary: async function() {
+            putTheBookBackToLibrary: async function () {
                 let response = await axios.get(this.putBackBookRoute);
                 this.isBorrowed = false;
                 this.borrowers = response.data.borrowers;
@@ -694,12 +698,12 @@ if (document.getElementById('show_book_info')) {
         mounted() {
             this.readers = JSON.parse(this.readers);
             this.borrowers = JSON.parse(this.borrowers);
-            this.book    = JSON.parse(this.book);
+            this.book = JSON.parse(this.book);
         }
     });
 }
 
-if(document.getElementById('home_page')) {
+if (document.getElementById('home_page')) {
     var el = document.getElementById("markBookAsRead");
     el.addEventListener("click", markBookAsRead, false);
     var wishlistBtn = document.getElementById("addBookToWishlist");
@@ -707,7 +711,7 @@ if(document.getElementById('home_page')) {
     var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
     disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
     let isModalShown = sessionStorage.getItem('book_modal_has_shown');
-    if(!isModalShown) {
+    if (!isModalShown) {
         sessionStorage.setItem("book_modal_has_shown", "true");
         $('#show_nudge_modal').modal('show');
     }
@@ -716,14 +720,19 @@ if(document.getElementById('home_page')) {
 function markBookAsRead() {
     let bookID = document.getElementById('markBookAsRead').dataset.id;
     let route = document.getElementById('markBookAsRead').dataset.markBookRoute;
-    axios.post(route, {book_id:bookID, is_read:true});
+    axios.post(route, {
+        book_id: bookID,
+        is_read: true
+    });
     $('#show_nudge_modal').modal('hide');
 }
 
 function addBookToWishlist() {
     let bookID = document.getElementById('addBookToWishlist').dataset.id;
-    let route =  document.getElementById('addBookToWishlist').dataset.route;
-    axios.post(route, {book_id:bookID});
+    let route = document.getElementById('addBookToWishlist').dataset.route;
+    axios.post(route, {
+        book_id: bookID
+    });
     $('#show_nudge_modal').modal('hide');
 }
 
@@ -738,31 +747,31 @@ if (document.getElementById('roles_permission_table')) {
         data: {
             roles: document.getElementById('roles_permission_table').dataset.roles ? JSON.parse(document.getElementById('roles_permission_table').dataset.roles) : [],
             permissions: document.getElementById('roles_permission_table').dataset.permissions ? JSON.parse(document.getElementById('roles_permission_table').dataset.permissions) : [],
-            updateRoute: document.getElementById('roles_permission_table').dataset.updateRoute  || '',
+            updateRoute: document.getElementById('roles_permission_table').dataset.updateRoute || '',
             currentRoleIndex: 0,
             permissionInputs: [],
         },
         methods: {
-            updatePermissionModal: function(index) {
+            updatePermissionModal: function (index) {
                 let permissions = this.roles[index].permissions;
                 this.currentRoleIndex = index;
                 this.permissionInputs.map((checkbox) => checkbox.checked = false);
-                permissions.forEach((permission) => this.permissionInputs[permission.id].checked =  true );
+                permissions.forEach((permission) => this.permissionInputs[permission.id].checked = true);
             },
-            updatePermissions: function() {
+            updatePermissions: function () {
                 let selectedPermissions = [];
                 let roleID = this.roles[this.currentRoleIndex]['id'];
 
-                this.permissionInputs.forEach(function(checkbox) {
-                    if(checkbox.checked) {
+                this.permissionInputs.forEach(function (checkbox) {
+                    if (checkbox.checked) {
                         selectedPermissions.push({
-                            name:checkbox.dataset.permission,
-                            id:checkbox.value
+                            name: checkbox.dataset.permission,
+                            id: checkbox.value
                         });
                     }
                 });
 
-                this.$set(this.roles[this.currentRoleIndex], 'permissions',  selectedPermissions);
+                this.$set(this.roles[this.currentRoleIndex], 'permissions', selectedPermissions);
                 let route = `${this.updateRoute}/${roleID}`;
                 axios.put(route, {
                     permissions: JSON.parse(JSON.stringify(selectedPermissions)),
@@ -771,7 +780,7 @@ if (document.getElementById('roles_permission_table')) {
                 document.getElementById('update_role_permissions_modal').click();
             },
         },
-        mounted: function() {
+        mounted: function () {
             let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
             let allPermissionInputs = permissionInputContainer.querySelectorAll('input[type="checkbox"]');
             allPermissionInputs.forEach((checkbox) => this.permissionInputs[checkbox.value] = checkbox);
@@ -785,39 +794,39 @@ if (document.getElementById('user_roles_table')) {
         data: {
             users: document.getElementById('user_roles_table').dataset.users ? JSON.parse(document.getElementById('user_roles_table').dataset.users) : '',
             roles: document.getElementById('user_roles_table').dataset.roles ? JSON.parse(document.getElementById('user_roles_table').dataset.roles) : '',
-            updateRoute:document.getElementById('user_roles_table').dataset.updateRoute  || '',
+            updateRoute: document.getElementById('user_roles_table').dataset.updateRoute || '',
             currentUserIndex: 0,
             roleInputs: [],
 
         },
         methods: {
-            updateUserRolesModal: function(index) {
+            updateUserRolesModal: function (index) {
                 let roles = this.users[index]['roles'];
-                if(!roles) {
+                if (!roles) {
                     return false;
                 }
                 this.currentUserIndex = index;
                 this.roleInputs.map((checkbox) => checkbox.checked = false);
-                roles.forEach((role) => this.roleInputs[role.id].checked =  true);
+                roles.forEach((role) => this.roleInputs[role.id].checked = true);
             },
 
-            updateRoles: function() {
+            updateRoles: function () {
                 let selectedRoles = [];
-                if(this.users) {
+                if (this.users) {
                     let userID = this.users[this.currentUserIndex].id;
                 }
-            
 
-                this.roleInputs.forEach(function(checkbox) {
-                    if(checkbox.checked) {
+
+                this.roleInputs.forEach(function (checkbox) {
+                    if (checkbox.checked) {
                         selectedRoles.push({
-                            name:checkbox.dataset.role,
-                            id:checkbox.value
+                            name: checkbox.dataset.role,
+                            id: checkbox.value
                         });
                     }
                 });
 
-                this.$set(this.users[this.currentUserIndex], 'roles',  selectedRoles);
+                this.$set(this.users[this.currentUserIndex], 'roles', selectedRoles);
                 let route = `${this.updateRoute}/${userID}`;
                 axios.put(route, {
                     roles: JSON.parse(JSON.stringify(selectedRoles)),
@@ -826,14 +835,14 @@ if (document.getElementById('user_roles_table')) {
                 document.getElementById('close_update_user_roles_modal').click();
             },
 
-            formatRoles: function(user) {
+            formatRoles: function (user) {
                 let roleNames = [];
-                for(var i in user.roles) {
-                     let roleName = user.roles[i].label;
+                for (var i in user.roles) {
+                    let roleName = user.roles[i].label;
                     // roleName = roleName.split('_').map(function (item) {
                     //     return item.charAt(0).toUpperCase() + item.substring(1);
                     // }).join(' ');
-                    
+
                     roleNames.push(roleName);
                 }
 
@@ -843,7 +852,7 @@ if (document.getElementById('user_roles_table')) {
 
 
         },
-        mounted: function() {
+        mounted: function () {
             let roleInputContainer = document.querySelector("#update_user_roles_modal");
             let allRoleInputs = roleInputContainer.querySelectorAll('input[type="checkbox"]');
             allRoleInputs.forEach((checkbox) => this.roleInputs[checkbox.value] = checkbox);

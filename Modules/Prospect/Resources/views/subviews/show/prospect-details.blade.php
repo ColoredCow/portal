@@ -49,13 +49,13 @@
                     <div class="font-weight-bold">Contact person</div>
                     <div>
                         <ul class="d-flex flex-row flex-wrap justify-content-between list-group list-style-none pt-3">
-                        @foreach($prospect->contactPersons as $contactPerson)
-                           <li class="mb-2">
-                            <div>{{ $contactPerson->name }}</div>
-                            <div class="text-muted">{{ $contactPerson->email }}</div>
-                            <div class="text-muted">{{ $contactPerson->phone }}</div>
+                            @foreach($prospect->contactPersons as $contactPerson)
+                            <li class="mb-2">
+                                <div>{{ $contactPerson->name }}</div>
+                                <div class="text-muted">{{ $contactPerson->email }}</div>
+                                <div class="text-muted">{{ $contactPerson->phone }}</div>
                             </li>
-                        @endforeach
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -64,16 +64,3 @@
         </div>
     </div>
 </div>
-
-    {{-- @php 
-    $book = \App\Models\KnowledgeCafe\Library\Book::find($prospect->id);
-    @endphp
-
-    <div class="mt-3 w-75">
-        <prospect-history
-        :new-comment-route = "{{ json_encode(route('book-comment.store', $book->id)) }}"
-        :book = "{{ json_encode($book) }}"
-        :book-comments = "{{ json_encode($book->comments) }}"
-        :user = "{{ auth()->user() }}"
-        />
-    </div> --}}
