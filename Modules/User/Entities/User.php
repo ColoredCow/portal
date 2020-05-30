@@ -92,4 +92,9 @@ class User extends Authenticatable
     {
         return $query->where('email', $email);
     }
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
 }

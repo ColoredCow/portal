@@ -3,14 +3,17 @@
 namespace Modules\User\Providers;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Gate;
 use Modules\User\Policies\UserPolicy;
 use Modules\User\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\User\Services\ProfileService;
 use Modules\User\Services\ExtendUserModel;
 use Modules\User\Contracts\UserServiceContract;
+use Modules\User\Contracts\ProfileServiceContract;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -170,12 +173,16 @@ class UserServiceProvider extends ServiceProvider
 
     private function loadService()
     {
-        if (\Arr::has($this->app->getBindings(), UserServiceContract::class)) {
-            return true;
+        if (!Arr::has($this->app->getBindings(), UserServiceContract::class)) {
+            $this->app->bind(UserServiceContract::class, function () {
+                return new UserService();
+            });
         }
 
-        return $this->app->bind(UserServiceContract::class, function () {
-            return new UserService();
-        });
+        if (!Arr::has($this->app->getBindings(), ProfileServiceContract::class)) {
+            $this->app->bind(ProfileServiceContract::class, function () {
+                return new ProfileService();
+            });
+        }
     }
 }

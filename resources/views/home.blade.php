@@ -31,10 +31,6 @@
         </div>
         @endif
 
-        {{-- <div>
-            <user-dashboard-projects />
-        </div> --}}
-
     </div>
 
     <div>
