@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('invoice')->group(function () {
+Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/', 'InvoiceController@index')->name('invoice.index');
     Route::get('/create', 'InvoiceController@create')->name('invoice.create');
     Route::get('/dashboard', 'InvoiceController@dashboard')->name('invoice.dashboard');

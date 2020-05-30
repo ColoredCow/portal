@@ -93,4 +93,9 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-item nav-link font-weight-bold" href="{{ route('user.profile') }}"><i class="fa fa-bar-chart">
+            </i>&nbsp;My Profile</a>
+    </li>
+
 </ul>
