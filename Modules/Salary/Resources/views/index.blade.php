@@ -17,7 +17,7 @@
         @can('weeklydoses.view')
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
-                <a class="card-body no-transition" href="{{ route('weeklydoses') }}">
+                <a class="card-body no-transition" href="{{ route('salary.employee') }}">
                     <br>
                     <h2 class="text-center">Employee Salaries</h2><br>
                 </a>
