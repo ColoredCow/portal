@@ -98,4 +98,12 @@
             </i>&nbsp;My Profile</a>
     </li>
 
+
+    @if(auth()->user()->can('invoice.view'))
+    <li class="nav-item">
+        <a class="nav-item nav-link font-weight-bold" href="{{ route('salary.index') }}"><i class="fa fa-bar-chart">
+            </i>&nbsp;Salaries</a>
+    </li>
+    @endif
+
 </ul>

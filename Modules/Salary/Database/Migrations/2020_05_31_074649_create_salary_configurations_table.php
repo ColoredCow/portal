@@ -15,7 +15,12 @@ class CreateSalaryConfigurationsTable extends Migration
     {
         Schema::create('salary_configurations', function (Blueprint $table) {
             $table->bigIncrements('id');
-
+            $table->string('slug');
+            $table->string('label');
+            $table->string('percentage_rate')->nullable();
+            $table->string('percentage_applied_on')->nullable();
+            $table->string('fixed_amount')->nullable();
+            $table->string('type')->default('dynamic');
             $table->timestamps();
         });
     }
