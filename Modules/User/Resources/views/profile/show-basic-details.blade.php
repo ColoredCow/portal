@@ -1,3 +1,7 @@
+<div class="text-right">
+    <p class="btn btn-info">Edit</p>
+</div>
+
 <div class="d-flex mt-4">
     <div class="mr-10">
         <div class="rounded w-200">
@@ -16,6 +20,11 @@
         </div>
 
         <div class="form-group">
+            <label class="font-weight-bold" for="">Designation:</label>
+            <span>{{ Str::title($user->profile->designation) }}</span>
+        </div>
+
+        <div class="form-group">
             <label class="font-weight-bold" for="">Mobile:</label>
             <span>{{ $user->profile->mobile }}</span>
         </div>
@@ -28,11 +37,6 @@
         <div class="form-group">
             <label class="font-weight-bold" for="">Marital Status:</label>
             <span>{{ $user->profile->marital_status }}</span>
-        </div>
-
-        <div class="form-group">
-            <label class="font-weight-bold" for="">Designation:</label>
-            <span>{{ Str::title($user->profile->designation) }}</span>
         </div>
 
         <div class="form-group">

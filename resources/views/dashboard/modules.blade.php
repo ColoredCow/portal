@@ -13,12 +13,12 @@
     </li>
     @endif
 
-    @can('finance_invoices.view')
+    {{-- @can('finance_invoices.view')
     <li class="nav-item">
         <a class="nav-item nav-link font-weight-bold" href="{{route('invoices')}}"><i
-                class="fa fa-university"></i>&nbsp;Finance</a>
+        class="fa fa-university"></i>&nbsp;Finance</a>
     </li>
-    @endcan
+    @endcan --}}
 
     @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
     <li class="nav-item">
