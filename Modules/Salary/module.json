@@ -1,0 +1,13 @@
+{
+    "name": "Salary",
+    "alias": "salary",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Salary\\Providers\\SalaryServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

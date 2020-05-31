@@ -12,6 +12,7 @@
         <div class="card-body">
             @includeWhen($section == 'basic-details', 'user::profile.show-basic-details')
             @includeWhen($section == 'documents', 'user::profile.show-documents')
+            @includeWhen($section == 'finance', 'user::profile.show-finance-details')
         </div>
     </div>
 

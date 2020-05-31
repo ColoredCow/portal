@@ -1,3 +1,7 @@
+<div class="text-right">
+    <p class="btn btn-info">Edit</p>
+</div>
+
 <div class="d-flex mt-4">
     <div class="mr-10">
         <div class="rounded w-200">
@@ -13,6 +17,11 @@
         <div class="form-group">
             <label class="font-weight-bold" for="">Email:</label>
             <span>{{ $user->email }}</span>
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold" for="">Designation:</label>
+            <span>{{ Str::title($user->profile->designation) }}</span>
         </div>
 
         <div class="form-group">
