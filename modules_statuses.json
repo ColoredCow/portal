@@ -15,5 +15,6 @@
     "ModuleChecklist": true,
     "Communications": true,
     "Communication": true,
-    "Invoice": true
+    "Invoice": true,
+    "Salary": true
 }
