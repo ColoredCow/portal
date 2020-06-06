@@ -24,9 +24,8 @@
                 <tr>
                     <th>Project</th>
                     <th>Amount</th>
-                    <th>Sent On</th>
+                    {{-- <th>Expected receivable </th> --}}
                     <th>Due Date</th>
-                    <th>File Path</th>
                 </tr>
             </thead>
 
@@ -37,9 +36,8 @@
                         <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->project->name }}</a>
                     </td>
                     <td>{{ $invoice->display_amount }}</td>
-                    <td>{{ $invoice->sent_on->format('Y-m-d') }}</td>
-                    <td>{{ $invoice->due_on->format('Y-m-d')  }}</td>
-                    <td><a href="{{ route('invoice.get-file', $invoice->id) }}">Link</a></td>
+                    {{-- <td>{{ $invoice->display_amount }}</td> --}}
+                    <td>{{ $invoice->due_on->format('d M Y')  }}</td>
                 </tr>
                 @endforeach
             </tbody>

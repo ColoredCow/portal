@@ -83,7 +83,10 @@ class InvoiceService implements InvoiceServiceContract
     public function getInvoiceFile($invoiceID)
     {
         $invoice = Invoice::find($invoiceID);
-        return Storage::download($invoice->file_path);
+        return Storage::download($invoice->file_path, basename($invoice->file_path), [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline;'
+        ]);
     }
 
     public function getClientsForInvoice()
