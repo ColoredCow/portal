@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" v-if="currency == 'INR'">
                 <div class="d-flex">
                     <label for="client_id" class="mr-5">GST:</label>
                     <span>
