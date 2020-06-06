@@ -5,8 +5,8 @@
     <br>
     
     <div class="d-flex justify-content-between mb-2"> 
-        <h4>Update Invoice Info</h4>
-        <a class="text-underline" target="_blank" href="{{ route('invoice.get-file', $invoice->id) }}">View invoice PDF here</a>
+        <h4>Invoice Information</h4>
+        <a class="text-underline" onclick="alert('Will add this soon')" href="#">Duplicate this invoice</a>
     </div>
     <form method="POST" action="{{ route('invoice.update', $invoice) }}" enctype="multipart/form-data">
         @csrf
