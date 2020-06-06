@@ -6,7 +6,11 @@
     
     <div class="d-flex justify-content-between mb-2"> 
         <h4>Invoice Information</h4>
-        <a class="text-underline" onclick="alert('Will add this soon')" href="#">Duplicate this invoice</a>
+        <span>
+            <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" onclick="alert('Will add this soon')" href="#">Duplicate this invoice</a>
+            <a class="btn btn-sm btn-info text-white font-weight-bold" target="_blank" href="{{ route('invoice.get-file', $invoice->id) }}">View invoice PDF</a>
+        </span>
+       
     </div>
     <form method="POST" action="{{ route('invoice.update', $invoice) }}" enctype="multipart/form-data">
         @csrf

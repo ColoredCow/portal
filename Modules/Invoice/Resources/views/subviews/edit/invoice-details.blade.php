@@ -55,13 +55,6 @@
                 </div>
             </div>
 
-            <div class="form-group ">
-                <div class="d-flex">
-                    <a class="text-underline" target="_blank" href="{{ route('invoice.get-file', $invoice->id) }}">View invoice PDF
-                        here</a>
-                </div>
-            </div>
-
         </div>
 
         <div class="col-md-5 offset-md-1">
