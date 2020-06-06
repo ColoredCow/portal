@@ -1,7 +1,7 @@
-<form action="{{ route('invoice.index')  }}">
+<form action="{{ route('invoice.index')  }}" id="invoiceFilterForm">
     <div class="d-flex">
         <div class='form-group mr-4 w-168'>
-            <select class="form-control bg-light" name="year" id="">
+            <select class="form-control bg-light" name="year" id="" onchange="document.getElementById('invoiceFilterForm').submit();">
                 <option {{ request()->input('year') == '' ? "selected=selected" : '' }} value="">All Years</option>
                 <option {{ request()->input('year') == '2020' ? "selected=selected" : '' }} value="2020">2020</option>
                 <option {{ request()->input('year') == '2019' ? "selected=selected" : '' }} value="2019">2019</option>
@@ -12,7 +12,7 @@
         </div>
 
         <div class='form-group mr-4 w-168'>
-            <select class="form-control bg-light" name="month" id="">
+            <select class="form-control bg-light" name="month" id="" onchange="document.getElementById('invoiceFilterForm').submit();">
                 <option {{ request()->input('month') == '' ? "selected=selected" : '' }} value="">All Months</option>
                 <option {{ request()->input('month') == '01' ? "selected=selected" : '' }} value="01">January</option>
                 <option {{ request()->input('month') == '02' ? "selected=selected" : '' }} value="02">February</option>
@@ -30,7 +30,7 @@
         </div>
 
         <div class='form-group mr-4 w-168'>
-            <select class="form-control bg-light" name="status" id="">
+            <select class="form-control bg-light" name="status" id="" onchange="document.getElementById('invoiceFilterForm').submit();">
                 <option {{ request()->input('status') == '' ? "selected=selected" : '' }} value="">All Status
                 </option>
                 <option {{ request()->input('status') == 'sent' ? "selected=selected" : '' }} value="sent">Pending
@@ -39,10 +39,10 @@
             </select>
         </div>
 
-        <div class='form-group'>
+        {{-- <div class='form-group'>
             <div>
                 <button type="submit" class="btn btn-info">Refresh</button>
             </div>
-        </div>
+        </div> --}}
     </div>
 </form>
