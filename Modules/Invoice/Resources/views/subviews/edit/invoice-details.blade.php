@@ -45,6 +45,16 @@
                     </span>
                 </div>
             </div>
+
+            <div class="form-group">
+                <div class="d-flex">
+                    <label for="client_id" class="mr-5">Due on:</label>
+                    <span>
+                        <p>{{ $invoice->due_on->format('d-m-Y')}}</p>
+                    </span>
+                </div>
+            </div>
+
             <div class="form-group ">
                 <div class="d-flex">
                     <a class="text-underline" target="_blank" href="{{ route('invoice.get-file', $invoice->id) }}">View invoice PDF
@@ -62,12 +72,6 @@
                     <option value="sent">Sent</option>
                     <option value="paid">Paid</option>
                 </select>
-            </div>
-
-            <div class="form-group">
-                <label for="due_on" class="field-required">Due date</label>
-                <input v-model="due_on" type="date" class="form-control" name="due_on" id="due_on" required="required"
-                    value="{{ now()->addDays(6)->format('Y-m-d') }}">
             </div>
 
             <div class="form-group ">
