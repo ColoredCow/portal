@@ -42,7 +42,7 @@
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Sent on:</label>
                         <span>
-                            <p>{{ $invoice->sent_on->format('d-m-Y') }}</p>
+                            <p>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</p>
                         </span>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Due on:</label>
                         <span>
-                            <p>{{ $invoice->due_on->format('d-m-Y')}}</p>
+                            <p>{{ $invoice->due_on->format(config('invoice.default-date-format'))}}</p>
                         </span>
                     </div>
                 </div>

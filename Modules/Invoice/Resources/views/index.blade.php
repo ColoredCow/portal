@@ -37,7 +37,7 @@
                     </td>
                     <td>{{ $invoice->display_amount }}</td>
                     {{-- <td>{{ $invoice->display_amount }}</td> --}}
-                    <td>{{ $invoice->receivable_date->format('d M Y')  }}</td>
+                    <td>{{ $invoice->receivable_date->format(config('invoice.default-date-format'))  }}</td>
                 </tr>
                 @endforeach
             </tbody>
