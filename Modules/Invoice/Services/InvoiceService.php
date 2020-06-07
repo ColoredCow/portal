@@ -52,7 +52,7 @@ class InvoiceService implements InvoiceServiceContract
             $totalAmount += $invoiceAmount;
         }
 
-        return $totalAmount;
+        return round($totalAmount, 2);
     }
 
     public function defaultFilters()
