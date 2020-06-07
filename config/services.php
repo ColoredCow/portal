@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -42,4 +41,7 @@ return [
         'hd' => env('GOOGLE_HD', '*')
     ],
 
+    'currencylayer' => [
+        'access_key' => env('CURRENCYLAYER_API_KEY')
+    ]
 ];

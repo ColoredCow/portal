@@ -18,6 +18,14 @@
         @include('invoice::index-filters')
     </div>
 
+    <div class="font-muli-bold my-4">
+        Current Exchange rates (1 USD) : &nbsp;  {{  $currencyService->getCurrentRatesInINR() }} INR
+    </div>
+
+    <div class="font-muli-bold my-4">
+        Receivable amount (for current filters): &nbsp; {{ $totalReceivableAmount }} INR
+    </div>
+
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -25,7 +33,7 @@
                     <th>Project</th>
                     <th>Amount</th>
                     {{-- <th>Expected receivable </th> --}}
-                    <th>Due Date</th>
+                    <th>Receivable date</th>
                 </tr>
             </thead>
 
@@ -37,11 +45,10 @@
                     </td>
                     <td>{{ $invoice->display_amount }}</td>
                     {{-- <td>{{ $invoice->display_amount }}</td> --}}
-                    <td>{{ $invoice->due_on->format('d M Y')  }}</td>
+                    <td>{{ $invoice->receivable_date->format(config('invoice.default-date-format'))  }}</td>
                 </tr>
                 @endforeach
             </tbody>
-
         </table>
 
     </div>

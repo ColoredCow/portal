@@ -105,4 +105,11 @@
             </i>&nbsp;Salaries</a>
     </li>
     @endif
+
+    @if(auth()->user()->can('invoice.view'))
+        <li class="nav-item">
+            <a class="nav-item nav-link font-weight-bold" href="{{ route('payment.index') }}"><i class="fa fa-bar-chart">
+                </i>&nbsp;Payments</a>
+        </li>
+    @endif
 </ul>

@@ -1,26 +1,21 @@
 <?php
 
-namespace Modules\Invoice\Providers;
+namespace Modules\Payment\Providers;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\Invoice\Services\InvoiceService;
-use Modules\Invoice\Services\CurrencyService;
-use Modules\Invoice\Contracts\InvoiceServiceContract;
-use Modules\Invoice\Contracts\CurrencyServiceContract;
 
-class InvoiceServiceProvider extends ServiceProvider
+class PaymentServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'Invoice';
+    protected $moduleName = 'Payment';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'invoice';
+    protected $moduleNameLower = 'payment';
 
     /**
      * Boot the application events.
@@ -34,7 +29,6 @@ class InvoiceServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
-        $this->loadService();
     }
 
     /**
@@ -58,8 +52,7 @@ class InvoiceServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'),
-            $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
         );
     }
 
@@ -104,7 +97,7 @@ class InvoiceServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -128,20 +121,5 @@ class InvoiceServiceProvider extends ServiceProvider
             }
         }
         return $paths;
-    }
-
-    private function loadService()
-    {
-        if (!Arr::has($this->app->getBindings(), InvoiceServiceContract::class)) {
-            $this->app->bind(InvoiceServiceContract::class, function () {
-                return new InvoiceService();
-            });
-        }
-
-        if (!Arr::has($this->app->getBindings(), CurrencyServiceContract::class)) {
-            $this->app->bind(CurrencyServiceContract::class, function () {
-                return new CurrencyService();
-            });
-        }
     }
 }

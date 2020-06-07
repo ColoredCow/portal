@@ -11,8 +11,8 @@ class Invoice extends Model
 {
     use Encryptable;
 
-    protected $fillable = ['client_id', 'project_id', 'status', 'currency', 'amount', 'sent_on', 'due_on', 'gst', 'file_path', 'comments'];
-    protected $dates = ['sent_on', 'due_on'];
+    protected $fillable = ['client_id', 'project_id', 'status', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments'];
+    protected $dates = ['sent_on', 'due_on', 'receivable_date'];
 
     protected $encryptable = [
         'amount', 'gst',
@@ -47,5 +47,10 @@ class Invoice extends Model
     {
         $country = optional($this->client)->country;
         return $this->amount . ' ' . optional($country)->currency_symbol;
+    }
+
+    public function isAmountInINR()
+    {
+        return $this->currency == 'INR';
     }
 }

@@ -29,7 +29,7 @@
                 <label for="project_invoice_id" class="field-required">Upload file</label>
                 <div class="d-flex">
                     <div class="custom-file mb-3">
-                        <input type="file" id="invoice_file" name="invoice_file" class="custom-file-input">
+                        <input type="file" id="invoice_file" name="invoice_file" class="custom-file-input" required="required">
                         <label for="customFile0" class="custom-file-label">Choose file</label>
                     </div>
                 </div>

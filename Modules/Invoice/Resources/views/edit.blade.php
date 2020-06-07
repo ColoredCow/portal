@@ -5,8 +5,11 @@
     <br>
     
     <div class="d-flex justify-content-between mb-2"> 
-        <h4>Update Invoice Info</h4>
-        <a class="text-underline" target="_blank" href="{{ route('invoice.get-file', $invoice->id) }}">Download invoice PDF here</a>
+        <h4>Invoice Information</h4>
+        <span>
+            <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" onclick="alert('Will add this soon')" href="#">Duplicate this invoice</a>
+            <a class="btn btn-sm btn-info text-white font-weight-bold" target="_blank" href="{{ route('invoice.get-file', $invoice->id) }}">View invoice PDF</a>
+        </span>
     </div>
     <form method="POST" action="{{ route('invoice.update', $invoice) }}" enctype="multipart/form-data">
         @csrf
@@ -15,7 +18,6 @@
             @include('invoice::subviews.edit.invoice-details')
         </div>
     </form>
-
 </div>
 
 @endsection

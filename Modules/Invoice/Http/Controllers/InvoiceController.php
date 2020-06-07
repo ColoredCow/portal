@@ -92,7 +92,7 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->service->delete($id);
     }
 
     public function getInvoiceFile(Request $request, $invoiceID)

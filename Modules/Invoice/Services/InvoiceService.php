@@ -7,6 +7,7 @@ use Modules\Invoice\Entities\Invoice;
 use Illuminate\Support\Facades\Storage;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -26,10 +27,32 @@ class InvoiceService implements InvoiceServiceContract
             $query->status($status);
         }
 
+        $invoices = $query->get();
+
         return [
-            'invoices' => $query->get(),
-            'clients' => app(ClientServiceContract::class)->getAll()
+            'invoices' => $invoices,
+            'clients' => $this->getClientsForInvoice(),
+            'currencyService' => $this->currencyService(),
+            'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices)
         ];
+    }
+
+    public function getTotalReceivableAmountInINR($invoices)
+    {
+        $totalAmount = 0;
+        $currentRates = $this->currencyService()->getCurrentRatesInINR();
+
+        foreach ($invoices as $invoice) {
+            if ($invoice->isAmountInINR()) {
+                $totalAmount += $invoice->amount;
+                continue;
+            }
+
+            $invoiceAmount = $currentRates * $invoice->amount;
+            $totalAmount += $invoiceAmount;
+        }
+
+        return round($totalAmount, 2);
     }
 
     public function defaultFilters()
@@ -48,6 +71,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function store($data)
     {
+        $data['receivable_date'] = $data['due_on'];
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         return $invoice;
@@ -72,6 +96,11 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
+    public function delete($invoiceID)
+    {
+        return Invoice::find($invoiceID)->delete();
+    }
+
     public function saveInvoiceFile($invoice, $file)
     {
         $folder = '/invoice/' . date('Y') . '/' . date('m');
@@ -92,6 +121,11 @@ class InvoiceService implements InvoiceServiceContract
     public function getClientsForInvoice()
     {
         return app(ClientServiceContract::class)->getAll();
+    }
+
+    public function currencyService()
+    {
+        return app(CurrencyServiceContract::class);
     }
 
     public function dashboard()
