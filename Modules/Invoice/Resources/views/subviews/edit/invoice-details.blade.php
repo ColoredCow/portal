@@ -55,6 +55,14 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="receivable_date" class="field-required">Receivable date</label>
+                <input type="date" class="form-control" name="receivable_date" id="receivable_date" required="required"
+                    value="{{ $invoice->receivable_date->format('Y-m-d') }}">
+            </div>
+
+            
+
         </div>
 
         <div class="col-md-5 offset-md-1">

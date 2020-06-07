@@ -48,6 +48,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function store($data)
     {
+        $data['receivable_date'] = $data['due_on'];
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         return $invoice;

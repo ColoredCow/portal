@@ -25,7 +25,7 @@
                     <th>Project</th>
                     <th>Amount</th>
                     {{-- <th>Expected receivable </th> --}}
-                    <th>Due Date</th>
+                    <th>Receivable date</th>
                 </tr>
             </thead>
 
@@ -37,11 +37,10 @@
                     </td>
                     <td>{{ $invoice->display_amount }}</td>
                     {{-- <td>{{ $invoice->display_amount }}</td> --}}
-                    <td>{{ $invoice->due_on->format('d M Y')  }}</td>
+                    <td>{{ $invoice->receivable_date->format('d M Y')  }}</td>
                 </tr>
                 @endforeach
             </tbody>
-
         </table>
 
     </div>
