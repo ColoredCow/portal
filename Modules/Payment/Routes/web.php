@@ -11,6 +11,11 @@
 |
 */
 
-Route::prefix('payment')->group(function() {
-    Route::get('/', 'PaymentController@index');
+Route::prefix('payment')->middleware('auth')->group(function () {
+    Route::get('/', 'PaymentController@index')->name('payment.index');
+});
+
+Route::prefix('payment-setting')->middleware('auth')->group(function () {
+    Route::get('/', 'PaymentSettingController@index')->name('payment-setting.index');
+    Route::post('/', 'PaymentSettingController@update')->name('payment-setting.update');
 });
