@@ -73,6 +73,11 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
+    public function delete($invoiceID)
+    {
+        return Invoice::find($invoiceID)->delete();
+    }
+
     public function saveInvoiceFile($invoice, $file)
     {
         $folder = '/invoice/' . date('Y') . '/' . date('m');

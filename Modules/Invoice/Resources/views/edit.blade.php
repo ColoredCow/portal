@@ -19,7 +19,6 @@
             @include('invoice::subviews.edit.invoice-details')
         </div>
     </form>
-
 </div>
 
 @endsection

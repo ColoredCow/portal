@@ -1,98 +1,108 @@
-<div class="card-body" id="create_invoice_details_form">
-    <div class="form-row mb-4">
-        <div class="col-md-5">
-            <div class="form-group">
-                <div class="d-flex">
-                    <label for="client_id font-weight-bold" class="mr-5">Client:</label>
-                    <span>
-                        <p>{{ $invoice->client->name }}</p>
-                    </span>
+<div id="edit_invoice_details_form">
+    <div class="card-body">
+        <div class="form-row mb-4">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label for="client_id font-weight-bold" class="mr-5">Client:</label>
+                        <span>
+                            <p>{{ $invoice->client->name }}</p>
+                        </span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="d-flex">
-                    <label for="client_id" class="mr-5">Project:</label>
-                    <span>
-                        <p>{{ $invoice->project->name }}</p>
-                    </span>
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-5">Project:</label>
+                        <span>
+                            <p>{{ $invoice->project->name }}</p>
+                        </span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="d-flex">
-                    <label for="client_id" class="mr-5">Amount:</label>
-                    <span>
-                        <p>{{ $invoice->display_amount }}</p>
-                    </span>
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-5">Amount:</label>
+                        <span>
+                            <p>{{ $invoice->display_amount }}</p>
+                        </span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group" v-if="currency == 'INR'">
-                <div class="d-flex">
-                    <label for="client_id" class="mr-5">GST:</label>
-                    <span>
-                        <p>{{ $invoice->gst . " ₹" }}</p>
-                    </span>
+                <div class="form-group" v-if="currency == 'INR'">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-5">GST:</label>
+                        <span>
+                            <p>{{ $invoice->gst . " ₹" }}</p>
+                        </span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="d-flex">
-                    <label for="client_id" class="mr-5">Sent on:</label>
-                    <span>
-                        <p>{{ $invoice->sent_on->format('d-m-Y') }}</p>
-                    </span>
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-5">Sent on:</label>
+                        <span>
+                            <p>{{ $invoice->sent_on->format('d-m-Y') }}</p>
+                        </span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="d-flex">
-                    <label for="client_id" class="mr-5">Due on:</label>
-                    <span>
-                        <p>{{ $invoice->due_on->format('d-m-Y')}}</p>
-                    </span>
+                <div class="form-group">
+                    <div class="d-flex">
+                        <label for="client_id" class="mr-5">Due on:</label>
+                        <span>
+                            <p>{{ $invoice->due_on->format('d-m-Y')}}</p>
+                        </span>
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="receivable_date" class="field-required">Receivable date</label>
+                    <input type="date" class="form-control" name="receivable_date" id="receivable_date" required="required"
+                        value="{{ $invoice->receivable_date->format('Y-m-d') }}">
+                </div>
+
             </div>
 
-            <div class="form-group">
-                <label for="receivable_date" class="field-required">Receivable date</label>
-                <input type="date" class="form-control" name="receivable_date" id="receivable_date" required="required"
-                    value="{{ $invoice->receivable_date->format('Y-m-d') }}">
+            <div class="col-md-5 offset-md-1">
+                <div class="form-group">
+                    <label for="project_invoice_id" class="field-required">Status</label>
+                    <select class="form-control" name="status" v-model="status">
+                        {{-- <option value="pending">Pending</option> --}}
+                        <option value="sent">Sent</option>
+                        <option value="paid">Paid</option>
+                    </select>
+                </div>
+
+                <div class="form-group ">
+                    <label for="comments">Comments</label>
+                    <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
+                </div>
+
             </div>
-
-            
-
-        </div>
-
-        <div class="col-md-5 offset-md-1">
-            <div class="form-group">
-                <label for="project_invoice_id" class="field-required">Status</label>
-                <select class="form-control" name="status" v-model="status">
-                    {{-- <option value="pending">Pending</option> --}}
-                    <option value="sent">Sent</option>
-                    <option value="paid">Paid</option>
-                </select>
-            </div>
-
-            <div class="form-group ">
-                <label for="comments">Comments</label>
-                <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
-            </div>
-
         </div>
     </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary mr-4">Save</button>
+        <span class="btn btn-danger" @click="deleteInvoice()" >Delete</span>
+    </div>
 </div>
-<div class="card-footer">
-    <button type="submit" class="btn btn-primary">Save</button>
-</div>
-
 
 
 @section('js_scripts')
 <script>
     new Vue({
-    el:'#create_invoice_details_form',
+    el:'#edit_invoice_details_form',
+
+    methods: {
+        deleteInvoice: async function() {
+            if(!confirm("Are you sure?")) {
+                return true;
+            }
+            await axios.delete("{{ route('invoice.delete', $invoice) }}")
+            window.location.href =  "{{ route('invoice.index') }}";
+        }
+    },
 
     data() {
         return {
@@ -111,21 +121,7 @@
         }
     },
 
-    methods: {
-        updateClientDetails: function() {
-            this.projects =  {};
-            for (var i in this.clients) {
-                let client = this.clients[i];
-                if (client.id == this.clientId) {
-                    this.client = client;
-                    this.currency = client.currency;
-                    this.projects = client.projects;
-                    break;
-                }
-            }
-
-        }
-    },
+   
 
     mounted() {
     },
