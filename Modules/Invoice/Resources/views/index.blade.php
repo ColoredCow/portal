@@ -18,6 +18,14 @@
         @include('invoice::index-filters')
     </div>
 
+    <div class="font-muli-bold my-4">
+        Current Exchange rates (1 USD) : &nbsp;  {{  $currencyService->getCurrentRatesInINR() }} INR
+    </div>
+
+    <div class="font-muli-bold my-4">
+        Receivable amount (for current filters): &nbsp; {{ $totalReceivableAmount }} INR
+    </div>
+
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">

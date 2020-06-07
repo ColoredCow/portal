@@ -7,6 +7,7 @@ use Modules\Invoice\Entities\Invoice;
 use Illuminate\Support\Facades\Storage;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -26,10 +27,32 @@ class InvoiceService implements InvoiceServiceContract
             $query->status($status);
         }
 
+        $invoices = $query->get();
+
         return [
-            'invoices' => $query->get(),
-            'clients' => app(ClientServiceContract::class)->getAll()
+            'invoices' => $invoices,
+            'clients' => $this->getClientsForInvoice(),
+            'currencyService' => $this->currencyService(),
+            'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices)
         ];
+    }
+
+    public function getTotalReceivableAmountInINR($invoices)
+    {
+        $totalAmount = 0;
+        $currentRates = $this->currencyService()->getCurrentRatesInINR();
+
+        foreach ($invoices as $invoice) {
+            if ($invoice->isAmountInINR()) {
+                $totalAmount += $invoice->amount;
+                continue;
+            }
+
+            $invoiceAmount = $currentRates * $invoice->amount;
+            $totalAmount += $invoiceAmount;
+        }
+
+        return $totalAmount;
     }
 
     public function defaultFilters()
@@ -98,6 +121,11 @@ class InvoiceService implements InvoiceServiceContract
     public function getClientsForInvoice()
     {
         return app(ClientServiceContract::class)->getAll();
+    }
+
+    public function currencyService()
+    {
+        return app(CurrencyServiceContract::class);
     }
 
     public function dashboard()

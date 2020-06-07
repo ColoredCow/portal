@@ -2,10 +2,13 @@
 
 namespace Modules\Invoice\Providers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\Invoice\Services\InvoiceService;
+use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class InvoiceServiceProvider extends ServiceProvider
 {
@@ -129,12 +132,16 @@ class InvoiceServiceProvider extends ServiceProvider
 
     private function loadService()
     {
-        if (\Arr::has($this->app->getBindings(), InvoiceServiceContract::class)) {
-            return true;
+        if (!Arr::has($this->app->getBindings(), InvoiceServiceContract::class)) {
+            $this->app->bind(InvoiceServiceContract::class, function () {
+                return new InvoiceService();
+            });
         }
 
-        return $this->app->bind(InvoiceServiceContract::class, function () {
-            return new InvoiceService();
-        });
+        if (!Arr::has($this->app->getBindings(), CurrencyServiceContract::class)) {
+            $this->app->bind(CurrencyServiceContract::class, function () {
+                return new CurrencyService();
+            });
+        }
     }
 }
