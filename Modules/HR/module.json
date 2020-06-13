@@ -1,0 +1,13 @@
+{
+    "name": "HR",
+    "alias": "hr",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\HR\\Providers\\HRServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

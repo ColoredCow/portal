@@ -17,5 +17,6 @@
     "Communication": true,
     "Invoice": true,
     "Salary": true,
-    "Payment": true
+    "Payment": true,
+    "HR": true
 }
