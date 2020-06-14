@@ -29,16 +29,17 @@ class ApplicantRequest extends FormRequest
 
         if ($this->method() === 'POST') {
             $rules = [
+                'job_title' => 'required|string',
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
                 'email' => 'required|email',
                 'phone' => 'nullable|string',
-                'resume' => 'required|url',
-                'job_title' => 'required|string',
                 'college' => 'nullable|string',
                 'graduation_year' => 'nullable|numeric',
                 'course' => 'nullable|string',
                 'linkedin' => 'nullable|url',
+                'resume' => 'nullable|url',
+                'resume_file' => 'nullable|file',
                 'form_data' => 'nullable|array',
             ];
         }

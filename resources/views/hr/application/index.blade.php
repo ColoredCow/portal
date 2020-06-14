@@ -5,11 +5,26 @@
     <br>
     @include('hr.menu')
     <br>
+
     <div class="row">
         <div class="col-md-6">
             <h1>Applications</h1>
         </div>
-        <form class="offset-md-2 col-md-4 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
+
+        <div class="col-md-6 text-right text-underline">
+            <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
+        </div>
+        
+
+        <span class="offset-md-2 col-md-4 d-flex justify-content-end align-items-center">
+
+        </span>
+
+    </div>
+
+
+    <div class="row mt-4">
+        <form class="col-md-4 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
             <input type="hidden" name="status" class="form-control" id="search" value=
                    "{{ config('constants.hr.status.' . request("status") . '.label') }}" >
 

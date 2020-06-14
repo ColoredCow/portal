@@ -2,8 +2,8 @@
 
 namespace App\Models\HR;
 
-use App\Services\GSuiteUserService;
 use Carbon\Carbon;
+use App\Services\GSuiteUserService;
 use Illuminate\Database\Eloquent\Model;
 
 class Applicant extends Model
@@ -35,7 +35,8 @@ class Applicant extends Model
         $application = Application::_create([
             'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,
-            'resume' => $attr['resume'],
+            'resume' => $attr['resume'] ?? '',
+            'resume_file' => $attr['resume_file'] ?? '',
             'status' => $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label'),
         ]);
 
@@ -97,7 +98,7 @@ class Applicant extends Model
         return $this->graduation_year ? $this->graduation_year <= Carbon::now()->year : 'esss';
     }
 
-    public function onboard($email, $password, $params = array())
+    public function onboard($email, $password, $params = [])
     {
         $gsuiteUser = new GSuiteUserService;
         $gsuiteUser->create($this->splitName(), $email, $password, $params);

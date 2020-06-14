@@ -88,7 +88,8 @@ Route::middleware('auth')->group(function () {
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
-            ]);
+        ]);
+
         Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
 
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
@@ -98,6 +99,9 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
         Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
+
+        Route::get('/applicant/create', 'ApplicantController@create')->name('hr.applicant.create');
+        Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
