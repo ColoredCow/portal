@@ -1,7 +1,8 @@
 <div class="modal fade" id="excelImport" tabindex="-1" role="dialog" aria-labelledby="excelImport"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form action="" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('hr.applications.excel-import') }}" enctype="multipart/form-data">
+        @csrf
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Import Excel File</h5>
@@ -11,6 +12,16 @@
             </div>
          
             <div class="modal-body">
+                <div class="form-group ">
+                    <label for="excel_file" class="field-required">Job</label>
+                    <select class="form-control" name="job_id" id="job_id" required="required">
+                        <option value="">Select Job</option>
+                        @foreach($jobs as $job)
+                            <option value="{{ $job->id }}">{{ $job->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="form-group ">
                     <label for="excel_file" class="field-required">Upload File</label>
                     <div class="d-flex">
@@ -27,7 +38,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Start Import</button>
+                <button type="submit" class="btn btn-primary">Start Import</button>
             </div>
         </div>
         </form>

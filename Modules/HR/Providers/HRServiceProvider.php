@@ -2,8 +2,11 @@
 
 namespace Modules\HR\Providers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\HR\Services\ApplicationService;
+use Modules\HR\Contracts\ApplicationServiceContract;
 
 class HRServiceProvider extends ServiceProvider
 {
@@ -29,6 +32,8 @@ class HRServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+        $this->loadService();
+
     }
 
     /**
@@ -121,5 +126,14 @@ class HRServiceProvider extends ServiceProvider
             }
         }
         return $paths;
+    }
+
+    private function loadService() {
+         if (!Arr::has($this->app->getBindings(), ApplicationServiceContract::class)) {
+            $this->app->bind(ApplicationServiceContract::class, function () {
+                return new ApplicationService();
+            });
+        }
+
     }
 }

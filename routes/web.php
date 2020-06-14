@@ -102,6 +102,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/applicant/create', 'ApplicantController@create')->name('hr.applicant.create');
         Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
+        Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {

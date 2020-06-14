@@ -4,13 +4,19 @@ namespace App\Http\Controllers\HR;
 
 use App\Models\HR\Job;
 use App\Models\HR\Applicant;
+use Illuminate\Http\Request;
+use App\Imports\ApplicationImport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\HR\ApplicantRequest;
+use Modules\HR\Contracts\ApplicationServiceContract;
 
 class ApplicantController extends Controller
 {
-    public function __construct()
+    protected $service;
+    public function __construct(ApplicationServiceContract $service)
     {
+        $this->service = $service;
         $this->authorizeResource(Applicant::class, null, [
             'except' => ['store'],
         ]);
@@ -47,8 +53,20 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
-        Applicant::_create($validated);
+        $this->service->saveApplication( $validated );
+        return redirect(route('applications.job.index'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function importExcel(Request $request)
+    {
+        $job = Job::find($request->job_id);
+        Excel::import(new ApplicationImport($job), request()->file('excel_file'));
         return redirect(route('applications.job.index'));
     }
 
