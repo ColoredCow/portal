@@ -442,7 +442,7 @@ class Application extends Model
     {
         $folder = '/resume/' . date('Y') . '/' . date('m');
         $fileName = $file->getClientOriginalName();
-        $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
-        return $file;
+        $file = Storage::disk('public')->putFileAs($folder, $file, $fileName, 'public');
+        return '/storage/' . $file;
     }
 }
