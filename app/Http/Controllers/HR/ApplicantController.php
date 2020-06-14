@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\HR;
 
+use App\Models\HR\Job;
+use App\Models\HR\Applicant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRequest;
-use App\Models\HR\Applicant;
 
 class ApplicantController extends Controller
 {
@@ -33,7 +34,8 @@ class ApplicantController extends Controller
      */
     public function create()
     {
-        //
+        $hrJobs = Job::whereIn('type', ['job', 'internship'])->orderBy('title')->get();
+        return view('hr.application.create', ['hrJobs' => $hrJobs]);
     }
 
     /**
@@ -46,7 +48,8 @@ class ApplicantController extends Controller
     {
         $validated = $request->validated();
         $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
-        return Applicant::_create($validated);
+        Applicant::_create($validated);
+        return redirect(route('applications.job.index'));
     }
 
     /**

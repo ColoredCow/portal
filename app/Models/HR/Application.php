@@ -2,12 +2,13 @@
 
 namespace App\Models\HR;
 
-use App\Events\HR\ApplicationCreated;
 use App\Helpers\ContentHelper;
-use App\Models\HR\Evaluation\ApplicationEvaluation;
 use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Events\HR\ApplicationCreated;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 
 class Application extends Model
 {
@@ -53,6 +54,13 @@ class Application extends Model
      */
     public static function _create($attr)
     {
+        $resume_file = $attr['resume_file'] ?? null;
+
+        if ($resume_file) {
+            $attr['resume'] = self::saveResumeFile($resume_file);
+            unset($attr['resume_file']);
+        }
+
         $application = self::create($attr);
         event(new ApplicationCreated($application));
         return $application;
@@ -201,7 +209,7 @@ class Application extends Model
      */
     public function scopeIsOpen($query)
     {
-        return $query->whereIn('status', array(config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')));
+        return $query->whereIn('status', [config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')]);
     }
 
     /**
@@ -427,5 +435,14 @@ class Application extends Model
     public function isRejected()
     {
         return $this->status == config('constants.hr.status.rejected.label');
+    }
+
+    /** We need to change this approch, adding this because of current implementation of the application resume workflow */
+    public static function saveResumeFile($file)
+    {
+        $folder = '/resume/' . date('Y') . '/' . date('m');
+        $fileName = $file->getClientOriginalName();
+        $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
+        return $file;
     }
 }

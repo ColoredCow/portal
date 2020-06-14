@@ -9,7 +9,7 @@
     @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view',
     'hr_volunteers_applications.view']))
     <li class="nav-item">
-        <a class="nav-item nav-link font-weight-bold" href="{{ route('hr') }}"><i class="fa fa-list"></i>&nbsp;HR (Depricated)</a>
+        <a class="nav-item nav-link font-weight-bold" href="{{ route('hr') }}"><i class="fa fa-list"></i>&nbsp;HR</a>
     </li>
     @endif
 
@@ -113,10 +113,5 @@
         </li>
     @endif
 
-    @if(auth()->user()->can('hr.view'))
-        <li class="nav-item">
-            <a class="nav-item nav-link font-weight-bold" href="{{ route('hr-new.index') }}"><i class="fa fa-bar-chart">
-                </i>&nbsp;HR (New)</a>
-        </li>
-    @endif
+
 </ul>
