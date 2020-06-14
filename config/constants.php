@@ -206,5 +206,6 @@ return [
 
     'google_application_credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
 
-    'website_url' => env('WEBSITE_URL', 'https://coloredcow.dev')
+    'website_url' => env('WEBSITE_URL', 'https://coloredcow.com'),
+    'website_upload_dir' => env('WEBSITE_UPLOAD_DIR')
 ];
