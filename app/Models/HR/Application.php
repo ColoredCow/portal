@@ -58,9 +58,8 @@ class Application extends Model
 
         if ($resume_file) {
             $attr['resume'] = self::saveResumeFile($resume_file);
-            unset($attr['resume_file']);
         }
-
+        unset($attr['resume_file']);
         $application = self::create($attr);
         event(new ApplicationCreated($application));
         return $application;
