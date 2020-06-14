@@ -13,15 +13,9 @@
 
         <div class="col-md-6 text-right text-underline">
             <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
+            <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
         </div>
-        
-
-        <span class="offset-md-2 col-md-4 d-flex justify-content-end align-items-center">
-
-        </span>
-
     </div>
-
 
     <div class="row mt-4">
         <form class="col-md-4 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
@@ -158,4 +152,6 @@
     </table>
     {{ $applications->links() }}
 </div>
+
+@include('hr.application.excel-import')
 @endsection

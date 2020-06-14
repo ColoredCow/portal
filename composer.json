@@ -32,6 +32,7 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "maatwebsite/excel": "^3.1",
         "niklasravnsborg/laravel-pdf": "^3.1",
         "nwidart/laravel-modules": "^7.0",
         "spatie/laravel-permission": "^3.3"
