@@ -11,11 +11,10 @@
 |
 */
 
-Route::prefix('user')->middleware('auth')->group(function() {
+Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('/', 'UserController@index')->name('user.index');
     Route::get('get-roles', 'RolesController@getAllRoles')->name('user.role-all');
     Route::get('roles', 'RolesController@index')->name('user.role-index');
     Route::delete('{user}/delete', 'UserController@destroy')->name('user.delete');
     //Route::put('update-roles', 'UserController@updateUserRoles')->name('user.delete');
-
 });
