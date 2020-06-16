@@ -2,7 +2,6 @@
 
 namespace Modules\User\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -22,8 +21,8 @@ class RolesController extends Controller
         return view('user::roles.index', compact('roles', 'permissions'));
     }
 
-    public function getAllRoles() {
+    public function getAllRoles()
+    {
         return Role::all();
     }
-
 }
