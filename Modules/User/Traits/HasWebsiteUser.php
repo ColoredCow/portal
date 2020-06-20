@@ -13,7 +13,12 @@ trait HasWebsiteUser
         }
 
         $userProvider = new \Corcel\Laravel\Auth\AuthUserProvider;
-        return $userProvider->retrieveByCredentials(['email' => $this->email]);
+
+        try {
+            return $userProvider->retrieveByCredentials(['email' => $this->email]);
+        } catch (\Throwable $th) {
+            return null;
+        }
     }
 
     public function getWebsiteUserMeta($key = null)
@@ -55,8 +60,8 @@ trait HasWebsiteUser
         }
     }
 
-
-    public function canAccessWebsite() {
+    public function canAccessWebsite()
+    {
         return $this->website_user_role;
     }
 }
