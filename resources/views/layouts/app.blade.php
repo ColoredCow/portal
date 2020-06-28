@@ -90,6 +90,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
+
     @yield('js_scripts')
 
     <script>

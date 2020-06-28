@@ -2,10 +2,10 @@
 
 namespace App\Listeners\HR;
 
-use App\Events\HR\ApplicationCreated;
-use App\Models\HR\ApplicationRound;
-use Modules\User\Entities\User;
 use Carbon\Carbon;
+use Modules\User\Entities\User;
+use App\Models\HR\ApplicationRound;
+use App\Events\HR\ApplicationCreated;
 
 class CreateFirstApplicationRound
 {

@@ -22,6 +22,7 @@ class CalendarMeetingService implements CalendarMeetingContract
     protected $isDetailsSet = false;
     protected $organizer = null;
     protected $calendarMeeting = null;
+    protected $event;
 
     public function __construct($organizer = null, $details = [])
     {
@@ -90,6 +91,7 @@ class CalendarMeetingService implements CalendarMeetingContract
 
         $event = $this->service->events->insert($calendarId, $event, $options);
         $this->id = $event->id;
+        $this->setEvent($event);
         $this->setHangoutLink($event->hangoutLink);
         $this->addNewMeetingToDB();
     }
@@ -142,8 +144,13 @@ class CalendarMeetingService implements CalendarMeetingContract
     public function setAttendees(array $attendees)
     {
         foreach ($attendees as $attendee) {
+            if (is_array($attendee)) {
+                $this->attendees[] = $attendee;
+                continue;
+            }
+
             $this->attendees[] = [
-                'email' => $attendee,
+                'email' => $attendee
             ];
         }
     }
@@ -199,6 +206,16 @@ class CalendarMeetingService implements CalendarMeetingContract
     public function setEndDateTime($dateTime, $timeZone = null)
     {
         $this->endDateTime = self::getCalendarDateTime($dateTime, $timeZone);
+    }
+
+    private function setEvent($event)
+    {
+        $this->event = $event;
+    }
+
+    public function getEvent()
+    {
+        return $this->event;
     }
 
     public function getCalendarMeeting()

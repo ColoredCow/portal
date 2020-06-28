@@ -2,17 +2,16 @@
 
 namespace App\Models\HR;
 
+use Carbon\Carbon;
 use App\Helpers\FileHelper;
+use Modules\User\Entities\User;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
-use App\Models\HR\ApplicationMeta;
-use App\Models\HR\Evaluation\ApplicationEvaluation;
-use Modules\User\Entities\User;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\HR\Evaluation\ApplicationEvaluation;
 
 class ApplicationRound extends Model
 {
@@ -55,9 +54,9 @@ class ApplicationRound extends Model
                 $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
-                    'scheduled_date' => $attr['next_scheduled_start'],
+                    'scheduled_date' => $attr['next_scheduled_start'] ?? null,
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
-                    'scheduled_person_id' => $attr['next_scheduled_person_id'],
+                    'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                 ]);
                 break;
 

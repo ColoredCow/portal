@@ -18,5 +18,6 @@
     "Invoice": true,
     "Salary": true,
     "Payment": true,
-    "HR": true
+    "HR": true,
+    "AppointmentSlots": true
 }

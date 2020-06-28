@@ -5,9 +5,11 @@ namespace App\Models\HR;
 use Carbon\Carbon;
 use App\Services\GSuiteUserService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Applicant extends Model
 {
+    use Notifiable;
     protected $guarded = [];
 
     protected $table = 'hr_applicants';

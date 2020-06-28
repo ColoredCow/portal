@@ -33,7 +33,6 @@ class HRServiceProvider extends ServiceProvider
         $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         $this->loadService();
-
     }
 
     /**
@@ -44,6 +43,7 @@ class HRServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -57,7 +57,8 @@ class HRServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 
@@ -102,7 +103,7 @@ class HRServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
+        if (!app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -128,12 +129,12 @@ class HRServiceProvider extends ServiceProvider
         return $paths;
     }
 
-    private function loadService() {
-         if (!Arr::has($this->app->getBindings(), ApplicationServiceContract::class)) {
+    private function loadService()
+    {
+        if (!Arr::has($this->app->getBindings(), ApplicationServiceContract::class)) {
             $this->app->bind(ApplicationServiceContract::class, function () {
                 return new ApplicationService();
             });
         }
-
     }
 }
