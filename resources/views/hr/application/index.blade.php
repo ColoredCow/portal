@@ -121,6 +121,7 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Resume</th>
             <th>Applied for</th>
             <th>Applied on</th>
             <th>Status</th>
@@ -129,12 +130,20 @@
         <tr>
             <td>
                 <a href="/{{ Request::path() }}/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
-                @if ($application->resume)
-                <a href="{{$application->resume}}"  target="_blank" ><u> <i class="fa fa-file-text" aria-hidden="true">
-                </i></u></a>
+                @if ($application->applicant->linkedin)
+                    <a href="{{$application->applicant->linkedin}}"  target="_blank" >
+                        <u><i class="fa fa-linkedin-square" aria-hidden="true"></i></u>
+                    </a>
                 @endif
             </td>
             <td>{{ $application->applicant->email }}</td>
+            <td class="text-center" >
+                @if ($application->resume)
+                    <a href="{{$application->resume}}" target="_blank">
+                        <u><i class="fa fa-file-text" aria-hidden="true"></i></u>
+                    </a>
+                @endif
+            </td>
             <td>{{ $application->job->title }}</td>
             <td>{{ $application->created_at->format(config('constants.display_date_format')) }}</td>
             <td>
