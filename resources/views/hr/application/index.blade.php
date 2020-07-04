@@ -129,6 +129,10 @@
         <tr>
             <td>
                 <a href="/{{ Request::path() }}/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
+                @if ($application->resume)
+                <a href="{{$application->resume}}"  target="_blank" ><u> <i class="fa fa-file-text" aria-hidden="true">
+                </i></u></a>
+                @endif
             </td>
             <td>{{ $application->applicant->email }}</td>
             <td>{{ $application->job->title }}</td>
