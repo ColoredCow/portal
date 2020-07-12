@@ -158,7 +158,7 @@
                                 @endif
                                 <div class="form-row">
                                      <div class="form-group col-md-12">
-                                        <button class="btn btn-warning btn-sm text-white" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+                                        <button type="button" class="btn btn-warning btn-sm text-white" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
                                     </div>
                                 </div>
                                 <div class="form-row">
