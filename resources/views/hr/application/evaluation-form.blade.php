@@ -9,33 +9,31 @@
 </div> --}}
 <form method="POST" action="/hr/applications/evaluation/{{ $applicationRound->id }}">
 	@method('PATCH')
-	@csrf
+    @csrf
+    <div class="row mb-3">
+        <div class="col-12">
+            <h4>
+                <span>Score: </span>
+                <span><span class={{ $evaluationScores['total'] >= config('hr.applicationEvaluation.cutoffScore') ? 'text-success' : 'text-danger' }}>{{ $evaluationScores['total'] }}</span> out of 20</span>
+            </h4>
+        </div>
+        <div class="col-12">
+            <h4>
+                <span>Result: </span>
+                @if($evaluationScores['total'] >= config('hr.applicationEvaluation.cutoffScore'))
+                    <span class="text-success">Passing</span>
+                @else
+                    <span class="text-danger">Failing</span>
+                @endif
+            </h4>
+        </div>
+    </div>
 	<div class="row">
 	    <div class="col-4">
-	    	@php
-				$round_segment = '';
-                $non_round_segment = '';
-                $active = 'active';
-			@endphp
 	        <div class="list-group" id="list-tab" role="tablist">
                 @foreach($segment as $evaluation_segment)
-                    @if(!$loop->first)
-                        @php
-                            $active = '';
-                        @endphp
-                    @endif
-	            	@if($evaluation_segment['round_id'] == $applicationRound->hr_round_id)
-	            		@php
-	            			$round_segment .= '<a class="list-group-item list-group-item-action bg-warning text-white ' . $active . '" id="list-' . $evaluation_segment['id'] . '-list" data-toggle="list" href="#list-' . $evaluation_segment['id'] . '" role="tab" aria-controls="' . $evaluation_segment['id'] . '">' . $evaluation_segment['name'] . '</a>';
-	            		@endphp
-	            	@else
-	            		@php
-	            			$non_round_segment .= '<a class="list-group-item list-group-item-action ' . $active . '" id="list-' . $evaluation_segment['id'] . '-list" data-toggle="list" href="#list-' . $evaluation_segment['id'] . '" role="tab" aria-controls="' . $evaluation_segment['id'] . '">' . $evaluation_segment['name'] . '</a>';
-	            		@endphp
-	                @endif
+                    <a class="list-group-item list-group-item-action {{ $loop->first ? 'active' : '' }}" id="list-{{ $evaluation_segment['id'] }}-list" data-toggle="list" href="#list-{{ $evaluation_segment['id'] }}" role="tab" aria-controls="{{ $evaluation_segment['id'] }}">{{ $evaluation_segment['name'] }}</a>
 	            @endforeach
-	            {!! $round_segment !!}
-	            {!! $non_round_segment !!}
 	            <br>
 	            <input type="submit" class="btn btn-success" value="Save Evaluation">
 	        </div>
@@ -49,9 +47,11 @@
 	                        <li class="list-group-item {{ $evaluation_parameter['evaluation'] ? 'list-group-item-success' : '' }}">
 	                            <b>{{ $evaluation_parameter['name'] }}</b>
 	                            <br>
-	                            @if($evaluation_parameter['evaluation'])
-	                                <span><i>Comment: </i>{{ $evaluation_parameter['evaluation_detail']['comment'] }}</span>
-	                                <br>
+                                @if($evaluation_parameter['evaluation'])
+                                    @if($evaluation_parameter['evaluation_detail']['comment'])
+                                        <span><i>Comment: </i>{{ $evaluation_parameter['evaluation_detail']['comment'] }}</span>
+                                        <br>
+                                    @endif
 	                                <span><i>Option: </i>{{ $evaluation_parameter['evaluation_detail']['option'] }}</span>
 	                            @else
 	                                @foreach($evaluation_parameter['option_detail'] as $option)
@@ -68,8 +68,14 @@
 	                        </li>
 	                    @endforeach
                             <li class="list-group-item">
+                                @php
+                                    $commentBlockId = "evaluation_segment_{$evaluation_segment['id']}_comments";
+                                @endphp
                                 <div>
-                                    <b>Comments for next interview</b>
+                                    <button type="button" class="btn btn-sm btn-light border fz-14 segment-evaluation-show-comment" data-block-id="#{{ $commentBlockId }}">Add comments</button>
+                                </div>
+                                <div class="d-none" id="{{ $commentBlockId }}">
+                                    <b>Comments</b>
                                     <textarea name="evaluation_segment[{{ $evaluation_segment['id'] }}][comments]" class="form-control" rows="5">{{ $evaluation_segment['applicationEvaluations']['comments'] }}</textarea>
                                 </div>
                                 <input type="hidden" name="evaluation_segment[{{ $evaluation_segment['id'] }}][evaluation_segment_id]" value="{{ $evaluation_segment['id'] }}">

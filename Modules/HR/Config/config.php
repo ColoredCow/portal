@@ -1,5 +1,8 @@
 <?php
 
 return [
-    'name' => 'HR'
+    'name' => 'HR',
+    'applicationEvaluation' => [
+        'cutoffScore' => 10,
+    ],
 ];

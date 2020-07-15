@@ -17,8 +17,15 @@ class EvaluationController extends Controller
         foreach (self::getSegments($applicationRound->hr_application_id) as $segment) {
             $segmentList[] = self::getSegmentDetails($segment);
         }
+        $evaluationScores = self::calculateEvaluationScores($segmentList);
 
-        return view('hr.application.evaluation-form')->with(['segment' => $segmentList, 'applicationRound' => $applicationRound])->render();
+        // dd($segmentList);
+
+        return view('hr.application.evaluation-form')->with([
+            'segment' => $segmentList,
+            'applicationRound' => $applicationRound,
+            'evaluationScores' => $evaluationScores
+        ])->render();
     }
 
     public function update($applicationRoundId)
@@ -81,6 +88,7 @@ class EvaluationController extends Controller
 
         $evaluationDetails['comment'] = $evaluation->comment;
         $evaluationDetails['option'] = $evaluation->evaluationOption->value;
+        $evaluationDetails['marks'] = $evaluation->evaluationOption->marks;
 
         return $evaluationDetails;
     }
@@ -92,7 +100,8 @@ class EvaluationController extends Controller
         foreach ($options as $option) {
             $optionList[] = [
                 'id' => $option->id,
-                'name' => $option->value
+                'name' => $option->value,
+                'marks' => $option->marks,
             ];
         }
 
@@ -149,5 +158,22 @@ class EvaluationController extends Controller
         $segmentDetails['applicationEvaluations'] = self::getSegmentApplicationEvaluations($segment->applicationEvaluations); // there will be just one segment data for an application
 
         return $segmentDetails;
+    }
+    private function calculateEvaluationScores($segmentList)
+    {
+        $scores = [
+            'total' => 0,
+            'max' => 0
+        ];
+        foreach ($segmentList as $segment) {
+            $scores[$segment['round_id']][$segment['id']] = 0;
+            foreach ($segment['parameters'] as $parameter) {
+                if (isset($parameter['evaluation_detail'])) {
+                    $scores[$segment['round_id']][$segment['id']] += $parameter['evaluation_detail']['marks'];
+                }
+            }
+            $scores['total'] += $scores[$segment['round_id']][$segment['id']];
+        }
+        return $scores;
     }
 }
