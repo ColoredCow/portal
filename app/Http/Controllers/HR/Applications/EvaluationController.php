@@ -21,26 +21,32 @@ class EvaluationController extends Controller
         return view('hr.application.evaluation-form')->with(['segment' => $segmentList, 'applicationRound' => $applicationRound])->render();
     }
 
-    public function update($applicationRoundID)
+    public function update($applicationRoundId)
     {
-        $applicationRound = ApplicationRound::find($applicationRoundID);
+        $applicationRound = ApplicationRound::find($applicationRoundId);
 
         if (array_key_exists('evaluation', request()->all())) {
             $applicationRound->updateOrCreateEvaluation(request()->all()['evaluation']);
+        }
+        if (array_key_exists('evaluation_segment', request()->all())) {
+            $applicationRound->updateOrCreateEvaluationSegment(request()->all()['evaluation_segment']);
         }
 
         return redirect()->back()->with('status', 'Evaluation updated successfully!');
     }
 
-    private function getSegments($applicationID)
+    private function getSegments($applicationId)
     {
         return Segment::whereHas('round')->with(
             [
                 'round',
+                'applicationEvaluations' => function ($query) use ($applicationId) {
+                    $query->where('application_id', $applicationId);
+                },
                 'parameters',
                 'parameters.options',
-                'parameters.applicationEvaluation' => function ($query) use ($applicationID) {
-                    $query->where('application_id', $applicationID);
+                'parameters.applicationEvaluation' => function ($query) use ($applicationId) {
+                    $query->where('application_id', $applicationId);
                     $query->with('evaluationOption');
                 },
             ]
@@ -121,13 +127,26 @@ class EvaluationController extends Controller
         return $parameters;
     }
 
+    private function getSegmentApplicationEvaluations($segmentApplicationEvaluations)
+    {
+        $applicationEvaluations = array();
+        $nextInterviewComments = null;
+        // this for loop will run just once as the maximum size of $segmentApplicationEvaluations will be one.
+        foreach ($segmentApplicationEvaluations as $segmentApplicationEvaluation) {
+            $nextInterviewComments = $segmentApplicationEvaluation->next_interview_comments;
+        }
+        return [
+            'next_interview_comments' => $nextInterviewComments,
+        ];
+    }
+
     private function getSegmentDetails($segment)
     {
         $segmentDetails = array();
 
         $segmentDetails = self::getSegmentGeneralInfo($segment);
-
         $segmentDetails['parameters'] = self::getSegmentParameters($segment->parameters);
+        $segmentDetails['applicationEvaluations'] = self::getSegmentApplicationEvaluations($segment->applicationEvaluations); // there will be just one segment data for an application
 
         return $segmentDetails;
     }

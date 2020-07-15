@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
+use Modules\HR\Entities\ApplicationEvaluationSegment;
 
 class ApplicationRound extends Model
 {
@@ -160,7 +161,23 @@ class ApplicationRound extends Model
                 );
             }
         }
+        return true;
+    }
 
+    public function updateOrCreateEvaluationSegment($segments = [])
+    {
+        foreach ($segments as $segmentId => $segment) {
+            $this->segments()->updateOrCreate(
+                [
+                    'application_round_id' => $this->id,
+                    'application_id' => $this->hr_application_id,
+                    'evaluation_segment_id' => $segment['evaluation_segment_id'],
+                ],
+                [
+                    'next_interview_comments' => $segment['next_interview_comments'],
+                ]
+            );
+        }
         return true;
     }
 
@@ -208,6 +225,11 @@ class ApplicationRound extends Model
     public function evaluations()
     {
         return $this->hasMany(ApplicationEvaluation::class, 'application_round_id');
+    }
+
+    public function segments()
+    {
+        return $this->hasMany(ApplicationEvaluationSegment::class);
     }
 
     public function mailSender()

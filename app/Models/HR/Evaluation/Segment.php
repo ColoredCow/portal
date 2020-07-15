@@ -5,6 +5,7 @@ namespace App\Models\HR\Evaluation;
 use App\Models\HR\Round;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\HR\Entities\ApplicationEvaluationSegment;
 
 class Segment extends Model
 {
@@ -24,5 +25,10 @@ class Segment extends Model
     public function parameters()
     {
         return $this->hasMany(Parameter::class, 'segment_id');
+    }
+
+    public function applicationEvaluations()
+    {
+        return $this->hasMany(ApplicationEvaluationSegment::class, 'evaluation_segment_id');
     }
 }
