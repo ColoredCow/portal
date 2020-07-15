@@ -67,7 +67,7 @@
         editParameter(parameter) {
             this.updateRoute = this.updateRoute.replace('PARAMETER_ID', parameter.id);
             this.selectedParameter = parameter;
-            this.updateParameterOptions = parameter.options;
+            this.updateParameterOptions = parameter.options ? parameter.options : [];
             $('#updateParameterModal').modal('show');
         },
 

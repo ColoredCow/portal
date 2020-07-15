@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="text-right mt-3 mr-3">
-                        <h5 v-on:click="addUpdateParameterOption(index)" class="text-underline c-pointer">Add option</h5>
+                        <h5 v-on:click="addUpdateParameterOption()" class="text-underline c-pointer">Add option</h5>
                     </div>
 
                 </div>
