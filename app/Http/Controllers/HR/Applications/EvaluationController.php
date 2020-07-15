@@ -130,13 +130,13 @@ class EvaluationController extends Controller
     private function getSegmentApplicationEvaluations($segmentApplicationEvaluations)
     {
         $applicationEvaluations = array();
-        $nextInterviewComments = null;
+        $comments = null;
         // this for loop will run just once as the maximum size of $segmentApplicationEvaluations will be one.
         foreach ($segmentApplicationEvaluations as $segmentApplicationEvaluation) {
-            $nextInterviewComments = $segmentApplicationEvaluation->next_interview_comments;
+            $comments = $segmentApplicationEvaluation->comments;
         }
         return [
-            'next_interview_comments' => $nextInterviewComments,
+            'comments' => $comments,
         ];
     }
 

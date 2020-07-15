@@ -70,7 +70,7 @@
                             <li class="list-group-item">
                                 <div>
                                     <b>Comments for next interview</b>
-                                    <textarea name="evaluation_segment[{{ $evaluation_segment['id'] }}][next_interview_comments]" class="form-control" rows="5">{{ $evaluation_segment['applicationEvaluations']['next_interview_comments'] }}</textarea>
+                                    <textarea name="evaluation_segment[{{ $evaluation_segment['id'] }}][comments]" class="form-control" rows="5">{{ $evaluation_segment['applicationEvaluations']['comments'] }}</textarea>
                                 </div>
                                 <input type="hidden" name="evaluation_segment[{{ $evaluation_segment['id'] }}][evaluation_segment_id]" value="{{ $evaluation_segment['id'] }}">
                             </li>

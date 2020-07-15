@@ -174,7 +174,7 @@ class ApplicationRound extends Model
                     'evaluation_segment_id' => $segment['evaluation_segment_id'],
                 ],
                 [
-                    'next_interview_comments' => $segment['next_interview_comments'],
+                    'comments' => $segment['comments'],
                 ]
             );
         }
