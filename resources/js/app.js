@@ -1012,14 +1012,10 @@ require("./finance/payment");
  * HR Module JS code start
  */
 $(document).ready(function() {
-  $(document).on(
-    "click",
-    ".segment-evaluation-show-comment",
-    showSegmentEvaluationCommentBlock
-  );
+  $(document).on("click", ".show-comment", showCommentBlock);
 });
 
-function showSegmentEvaluationCommentBlock() {
+function showCommentBlock() {
   var blockId = $(this).data("block-id");
   $(blockId).removeClass("d-none");
   $(this).addClass("d-none");

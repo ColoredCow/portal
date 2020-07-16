@@ -14,13 +14,13 @@
         <div class="col-12">
             <h4>
                 <span>Score: </span>
-                <span><span class={{ $evaluationScores['total'] >= config('hr.applicationEvaluation.cutoffScore') ? 'text-success' : 'text-danger' }}>{{ $evaluationScores['total'] }}</span> out of 20</span>
+                <span><span class={{ $evaluationScores['score'] >= config('hr.applicationEvaluation.cutoffScore') ? 'text-success' : 'text-danger' }}>{{ $evaluationScores['score'] }}</span> out of {{ $evaluationScores['max'] }}</span>
             </h4>
         </div>
         <div class="col-12">
             <h4>
                 <span>Result: </span>
-                @if($evaluationScores['total'] >= config('hr.applicationEvaluation.cutoffScore'))
+                @if($evaluationScores['score'] >= config('hr.applicationEvaluation.cutoffScore'))
                     <span class="text-success">Passing</span>
                 @else
                     <span class="text-danger">Failing</span>
@@ -32,7 +32,10 @@
 	    <div class="col-4">
 	        <div class="list-group" id="list-tab" role="tablist">
                 @foreach($segment as $evaluation_segment)
-                    <a class="list-group-item list-group-item-action {{ $loop->first ? 'active' : '' }}" id="list-{{ $evaluation_segment['id'] }}-list" data-toggle="list" href="#list-{{ $evaluation_segment['id'] }}" role="tab" aria-controls="{{ $evaluation_segment['id'] }}">{{ $evaluation_segment['name'] }}</a>
+                    <a class="list-group-item list-group-item-action {{ $loop->first ? 'active' : '' }}" id="list-{{ $evaluation_segment['id'] }}-list" data-toggle="list" href="#list-{{ $evaluation_segment['id'] }}" role="tab" aria-controls="{{ $evaluation_segment['id'] }}">
+                        <div>{{ $evaluation_segment['name'] }}</div>
+                        <small>Score: {{ $evaluationScores[$evaluation_segment['round_id']][$evaluation_segment['id']]['score'] }} out of {{ $evaluationScores[$evaluation_segment['round_id']][$evaluation_segment['id']]['max'] }}</small>
+                    </a>
 	            @endforeach
 	            <br>
 	            <input type="submit" class="btn btn-success" value="Save Evaluation">
@@ -62,8 +65,16 @@
                                             </label>
 	                                    </div>
 	                                @endforeach
-	                                <input type="hidden" name="evaluation[{{ $evaluation_parameter['id'] }}][evaluation_id]" value="{{ $evaluation_parameter['id'] }}">
-	                                <input type="text" name="evaluation[{{ $evaluation_parameter['id'] }}][comment]" placeholder="Comment" class="form-control">
+                                    <input type="hidden" name="evaluation[{{ $evaluation_parameter['id'] }}][evaluation_id]" value="{{ $evaluation_parameter['id'] }}">
+                                    <div>
+                                        @php
+                                            $commentBlockId = "evaluation_{$evaluation_parameter['id']}_comments";
+                                        @endphp
+                                        <span class="text-underline fz-14 show-comment c-pointer" data-block-id="#{{ $commentBlockId }}">Add comment</span>
+                                        <div class="d-none" id="{{ $commentBlockId }}">
+                                            <input type="text" name="evaluation[{{ $evaluation_parameter['id'] }}][comment]" placeholder="Comment" class="form-control">
+                                        </div>
+                                    </div>
 	                            @endif
 	                        </li>
 	                    @endforeach
@@ -71,12 +82,9 @@
                                 @php
                                     $commentBlockId = "evaluation_segment_{$evaluation_segment['id']}_comments";
                                 @endphp
-                                <div>
-                                    <button type="button" class="btn btn-sm btn-light border fz-14 segment-evaluation-show-comment" data-block-id="#{{ $commentBlockId }}">Add comments</button>
-                                </div>
-                                <div class="d-none" id="{{ $commentBlockId }}">
-                                    <b>Comments</b>
-                                    <textarea name="evaluation_segment[{{ $evaluation_segment['id'] }}][comments]" class="form-control" rows="5">{{ $evaluation_segment['applicationEvaluations']['comments'] }}</textarea>
+                                <div id="{{ $commentBlockId }}">
+                                    <b>Overall comments</b>
+                                    <textarea name="evaluation_segment[{{ $evaluation_segment['id'] }}][comments]" class="form-control" rows="5" placeholder="Overall comments">{{ $evaluation_segment['applicationEvaluations']['comments'] }}</textarea>
                                 </div>
                                 <input type="hidden" name="evaluation_segment[{{ $evaluation_segment['id'] }}][evaluation_segment_id]" value="{{ $evaluation_segment['id'] }}">
                             </li>
