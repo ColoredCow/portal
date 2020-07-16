@@ -19,8 +19,6 @@ class EvaluationController extends Controller
         }
         $evaluationScores = self::calculateEvaluationScores($segmentList);
 
-        // dd($segmentList);
-
         return view('hr.application.evaluation-form')->with([
             'segment' => $segmentList,
             'applicationRound' => $applicationRound,

@@ -1,12 +1,9 @@
-{{-- <div class="card border-success mb-3">
-	<div class="card-header text-white bg-success">
-		Evaluation Info
-	</div>
+<div class="card border-success mb-3">
 	<div class="card-body">
-	    <p class="card-text"><b>Candidate Name -</b> {{ $applicationRound->application->applicant->name }}</p>
-	    <p class="card-text"><b>Review Round -</b> {{ $applicationRound->round->name }}</p>
+	    {{-- <p class="card-text"><b>Candidate Name -</b> {{ $applicationRound->application->applicant->name }}</p> --}}
+	    <p class="card-text"><strong>{{ $applicationRound->round->name }}</strong></p>
 	</div>
-</div> --}}
+</div>
 <form method="POST" action="/hr/applications/evaluation/{{ $applicationRound->id }}">
 	@method('PATCH')
     @csrf
