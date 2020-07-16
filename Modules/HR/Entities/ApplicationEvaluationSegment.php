@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicationEvaluationSegment extends Model
 {
-    protected $fillable = ['application_id', 'application_round_id', 'evaluation_segment_id', 'next_interview_comments'];
+    protected $fillable = ['application_id', 'application_round_id', 'evaluation_segment_id', 'comments'];
 
     protected $table = 'hr_application_segments';
 

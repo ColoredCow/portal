@@ -17,8 +17,13 @@ class EvaluationController extends Controller
         foreach (self::getSegments($applicationRound->hr_application_id) as $segment) {
             $segmentList[] = self::getSegmentDetails($segment);
         }
+        $evaluationScores = self::calculateEvaluationScores($segmentList);
 
-        return view('hr.application.evaluation-form')->with(['segment' => $segmentList, 'applicationRound' => $applicationRound])->render();
+        return view('hr.application.evaluation-form')->with([
+            'segment' => $segmentList,
+            'applicationRound' => $applicationRound,
+            'evaluationScores' => $evaluationScores
+        ])->render();
     }
 
     public function update($applicationRoundId)
@@ -81,6 +86,7 @@ class EvaluationController extends Controller
 
         $evaluationDetails['comment'] = $evaluation->comment;
         $evaluationDetails['option'] = $evaluation->evaluationOption->value;
+        $evaluationDetails['marks'] = $evaluation->evaluationOption->marks;
 
         return $evaluationDetails;
     }
@@ -92,7 +98,8 @@ class EvaluationController extends Controller
         foreach ($options as $option) {
             $optionList[] = [
                 'id' => $option->id,
-                'name' => $option->value
+                'name' => $option->value,
+                'marks' => $option->marks,
             ];
         }
 
@@ -107,9 +114,11 @@ class EvaluationController extends Controller
 
         if ($parameter->applicationEvaluation) {
             $parameterDetails['evaluation'] = true;
+            $parameterDetails['marks'] = $parameter->marks;
             $parameterDetails['evaluation_detail'] = self::getEvaluationDetails($parameter->applicationEvaluation);
         } else {
             $parameterDetails['evaluation'] = false;
+            $parameterDetails['marks'] = $parameter->marks;
             $parameterDetails['option_detail'] = self::getOptionsDetails($parameter->options);
         }
 
@@ -130,13 +139,13 @@ class EvaluationController extends Controller
     private function getSegmentApplicationEvaluations($segmentApplicationEvaluations)
     {
         $applicationEvaluations = array();
-        $nextInterviewComments = null;
+        $comments = null;
         // this for loop will run just once as the maximum size of $segmentApplicationEvaluations will be one.
         foreach ($segmentApplicationEvaluations as $segmentApplicationEvaluation) {
-            $nextInterviewComments = $segmentApplicationEvaluation->next_interview_comments;
+            $comments = $segmentApplicationEvaluation->comments;
         }
         return [
-            'next_interview_comments' => $nextInterviewComments,
+            'comments' => $comments,
         ];
     }
 
@@ -149,5 +158,28 @@ class EvaluationController extends Controller
         $segmentDetails['applicationEvaluations'] = self::getSegmentApplicationEvaluations($segment->applicationEvaluations); // there will be just one segment data for an application
 
         return $segmentDetails;
+    }
+
+    private function calculateEvaluationScores($segmentList)
+    {
+        $scores = [
+            'score' => 0,
+            'max' => 0
+        ];
+        foreach ($segmentList as $segment) {
+            $scores[$segment['round_id']][$segment['id']] = [
+                'score' => 0,
+                'max' => 0,
+            ];
+            foreach ($segment['parameters'] as $parameter) {
+                $scores[$segment['round_id']][$segment['id']]['max'] += $parameter['marks'];
+                if (isset($parameter['evaluation_detail'])) {
+                    $scores[$segment['round_id']][$segment['id']]['score'] += $parameter['evaluation_detail']['marks'];
+                }
+            }
+            $scores['score'] += $scores[$segment['round_id']][$segment['id']]['score'];
+            $scores['max'] += $scores[$segment['round_id']][$segment['id']]['max'];
+        }
+        return $scores;
     }
 }
