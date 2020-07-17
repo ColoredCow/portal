@@ -1013,6 +1013,7 @@ require("./finance/payment");
  */
 $(document).ready(function() {
   $(document).on("click", ".show-comment", showCommentBlock);
+  $(document).on("click", ".input-section-toggler", showTogglerSection);
 });
 
 function showCommentBlock() {
@@ -1020,6 +1021,15 @@ function showCommentBlock() {
   $(blockId).removeClass("d-none");
   $(this).addClass("d-none");
 }
+
+function showTogglerSection() {
+    var targetSection = $(this).data('target');
+    if ($(this).is(':checked')) {
+        $(`[data-show="${targetSection}"]`).removeClass('d-none');
+    }
+}
+
+
 /*
  * HR Module JS code end
  */

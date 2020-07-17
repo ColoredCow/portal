@@ -58,10 +58,13 @@ $theme-success: rgb(85, 158, 0);
 $theme-success-light: rgba(85, 158, 0, 0.36);
 $theme-white-light: rgba(255, 255, 255, 0.6);
 $theme-white-lightest: rgba(255, 255, 255, 0.2);
+$theme-white-97: rgba(255, 255, 255, 0.97);
 $theme-teal: #63B2B7;
 $theme-pumpkin: #BA6C11;
 $theme-thunder: #433543;
 $theme-gray-border: #D8D8D8;
+$theme-blue-chalk: #F2EBFE;
+$theme-fog: #DAC4FF;
 
 // Pagination
 $pagination-color: $theme-gray-light;
@@ -101,6 +104,7 @@ $theme-colors: (
     'white': $white,
     'theme-white-light': $theme-white-light,
     'theme-white-lightest': $theme-white-lightest,
+    'theme-white-97': $theme-white-97,
     'theme-info-light': $theme-info-light,
     'theme-warning': $theme-warning,
     'theme-warning-light': $theme-warning-light,
@@ -116,6 +120,8 @@ $theme-colors: (
     'theme-teal': $theme-teal,
     'theme-gray-border': $theme-gray-border,
     'theme-white-mild': $theme-white-mild,
+    'theme-blue-chalk': $theme-blue-chalk,
+    'theme-fog': $theme-fog,
 );
 $sizes: (
     'auto': auto,

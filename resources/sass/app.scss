@@ -609,7 +609,7 @@ body.is-impersonating {
 }
 
 
-// Custom 
+// Custom
 
 .reader_image {
 	width: 30px !important;
@@ -671,7 +671,8 @@ body.is-impersonating {
 	}
 
 	&.inline-evaluation {
-		right: 0;
+        right: 0;
+        width: 55vw;
 
 		>.card-body {
 			overflow-y: scroll;
@@ -683,6 +684,12 @@ body.is-impersonating {
 	text-decoration: underline;
 }
 
+input[type="radio"].toggle-button {
+    display: none;
+}
+input[type="radio"].toggle-button:checked + label {
+    @extend .btn-primary;
+}
 // End Custom
 
 @import 'media/md';
