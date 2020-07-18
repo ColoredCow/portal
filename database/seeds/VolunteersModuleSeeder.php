@@ -13,7 +13,7 @@ class VolunteersModuleSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'volunteer-manager']);
+
 
         Permission::create(['name' => 'hr_volunteers_jobs.create']);
         Permission::create(['name' => 'hr_volunteers_jobs.view']);
