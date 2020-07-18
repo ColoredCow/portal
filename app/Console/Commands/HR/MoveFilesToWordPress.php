@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Hr;
+namespace App\Console\Commands\HR;
 
 use Illuminate\Support\Str;
 use App\Models\HR\Application;

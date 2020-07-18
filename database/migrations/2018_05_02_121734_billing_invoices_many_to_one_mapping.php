@@ -13,15 +13,8 @@ class BillingInvoicesManyToOneMapping extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('project_stage_billing_invoices', function (Blueprint $table) {
-            $table->dropForeign([
-                'project_stage_billing_id',
-                'finance_invoice_id',
-            ]);
-        });
-        Schema::table('project_stage_billings', function (Blueprint $table) {
+        Schema::table('project_old_stage_billings', function (Blueprint $table) {
             $table->unsignedInteger('finance_invoice_id')->nullable();
-            $table->foreign('finance_invoice_id')->references('id')->on('finance_invoices');
         });
     }
 
@@ -32,19 +25,8 @@ class BillingInvoicesManyToOneMapping extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_stage_billings', function (Blueprint $table) {
-            $table->dropForeign([
-                'finance_invoice_id',
-            ]);
-        });
-        Schema::create('project_stage_billing_invoices', function (Blueprint $table) {
-            $table->unsignedInteger('project_stage_billing_id');
-            $table->unsignedInteger('finance_invoice_id');
-        });
-
-        Schema::table('project_stage_billing_invoices', function (Blueprint $table) {
-            $table->foreign('project_stage_billing_id')->references('id')->on('project_stage_billings');
-            $table->foreign('finance_invoice_id')->references('id')->on('finance_invoices');
+        Schema::table('project_old_stage_billings', function (Blueprint $table) {
+            $table->dropColumn('finance_invoice_id');
         });
     }
 }

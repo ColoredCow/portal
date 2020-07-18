@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
 
 class PermissionsTableSeeder extends Seeder
@@ -12,6 +13,9 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('permissions')->delete();
+        Artisan::call('permission:cache-reset');
+
         Permission::create(['name' => 'finance_reports.view']);
 
         Permission::create(['name' => 'finance_invoices.create']);

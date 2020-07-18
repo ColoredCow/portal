@@ -13,7 +13,7 @@ class AddInvoiceIdProjectStageBillings extends Migration
      */
     public function up()
     {
-        Schema::table('project_stage_billings', function (Blueprint $table) {
+        Schema::table('project_old_stage_billings', function (Blueprint $table) {
             $table->unsignedInteger('invoice_id')->nullable();
             $table->foreign('invoice_id')
                 ->references('id')->on('invoices_old');
@@ -27,7 +27,7 @@ class AddInvoiceIdProjectStageBillings extends Migration
      */
     public function down()
     {
-        Schema::table('project_stage_billings', function (Blueprint $table) {
+        Schema::table('project_old_stage_billings', function (Blueprint $table) {
             $table->dropForeign(['invoice_id']);
             $table->dropColumn(['invoice_id']);
         });

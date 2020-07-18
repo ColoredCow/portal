@@ -13,6 +13,28 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
+
+        Schema::create('invoices', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('client_id');
+            $table->string('status')->nullable();
+            $table->string('currency', 3);
+            $table->decimal('amount', 10, 2);
+            $table->date('sent_on');
+            $table->date('due_on');
+            $table->decimal('gst', 10, 2)->nullable()->comment('Currency is always Indian Rupees for this field.');
+            $table->text('comments')->nullable();
+            $table->string('file_path')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('client_id')->references('id')->on('clients');
+        });
+
         Schema::create('invoices_old', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_invoice_id');
@@ -75,6 +97,12 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->dropForeign(['project_id']);
+            $table->dropForeign(['client_id']);
+        });
+
+        Schema::dropIfExists('invoices');
         Schema::dropIfExists('cash');
         Schema::dropIfExists('wire_transfers');
         Schema::dropIfExists('cheques');

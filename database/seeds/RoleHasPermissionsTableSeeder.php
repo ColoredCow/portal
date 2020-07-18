@@ -23,6 +23,9 @@ class RoleHasPermissionsTableSeeder extends Seeder
             'weeklydoses.view',
         ])->get());
 
+        Role::create(['name' => 'accountant']);
+
+
         $accountant = Role::where(['name' => 'accountant'])->first();
         $accountant->givePermissionTo('finance_reports.view');
     }

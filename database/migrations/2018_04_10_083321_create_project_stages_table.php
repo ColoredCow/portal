@@ -13,7 +13,7 @@ class CreateProjectStagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_stages', function (Blueprint $table) {
+        Schema::create('project_old_stages', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_id');
             $table->string('name');
@@ -23,8 +23,8 @@ class CreateProjectStagesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('project_stages', function (Blueprint $table) {
-            $table->foreign('project_id')->references('id')->on('projects');
+        Schema::table('project_old_stages', function (Blueprint $table) {
+            $table->foreign('project_id')->references('id')->on('projects_old');
         });
     }
 
@@ -35,7 +35,7 @@ class CreateProjectStagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_stages', function (Blueprint $table) {
+        Schema::dropIfExists('project_old_stages', function (Blueprint $table) {
             $table->dropForeign([
                 'project_id',
             ]);

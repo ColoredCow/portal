@@ -19,7 +19,7 @@ class CreateProjectStageBillingInvoicesTable extends Migration
         });
 
         Schema::table('project_stage_billing_invoices', function (Blueprint $table) {
-            $table->foreign('project_stage_billing_id')->references('id')->on('project_stage_billings');
+            $table->foreign('project_stage_billing_id')->references('id')->on('project_old_stage_billings');
             $table->foreign('finance_invoice_id')->references('id')->on('finance_invoices');
         });
     }
