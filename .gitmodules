@@ -1,0 +1,42 @@
+[submodule "Modules/AppointmentSlots"]
+	path = Modules/AppointmentSlots
+	url = https://github.com/ColoredCow-Portal/AppointmentSlots.git
+[submodule "Modules/Communication"]
+	path = Modules/Communication
+	url = https://github.com/ColoredCow-Portal/Communication.git
+[submodule "Modules/HR"]
+	path = Modules/HR
+	url = https://github.com/ColoredCow-Portal/HR.git
+[submodule "Modules/Infrastructure"]
+	path = Modules/Infrastructure
+	url = https://github.com/ColoredCow-Portal/Infrastructure.git
+[submodule "Modules/Invoice"]
+	path = Modules/Invoice
+	url = https://github.com/ColoredCow-Portal/Invoice.git
+[submodule "Modules/Lead"]
+	path = Modules/Lead
+	url = https://github.com/ColoredCow-Portal/Lead.git
+[submodule "Modules/LegalDocument"]
+	path = Modules/LegalDocument
+	url = https://github.com/ColoredCow-Portal/LegalDocument.git
+[submodule "Modules/ModuleChecklist"]
+	path = Modules/ModuleChecklist
+	url = https://github.com/ColoredCow-Portal/ModuleChecklist.git
+[submodule "Modules/Payment"]
+	path = Modules/Payment
+	url = https://github.com/ColoredCow-Portal/Payment.git
+[submodule "Modules/Project"]
+	path = Modules/Project
+	url = https://github.com/ColoredCow-Portal/Project.git
+[submodule "Modules/Prospect"]
+	path = Modules/Prospect
+	url = https://github.com/ColoredCow-Portal/Prospect.git
+[submodule "Modules/Salary"]
+	path = Modules/Salary
+	url = https://github.com/ColoredCow-Portal/Salary.git
+[submodule "Modules/Task"]
+	path = Modules/Task
+	url = https://github.com/ColoredCow-Portal/Task.git
+[submodule "Modules/User"]
+	path = Modules/User
+	url = https://github.com/ColoredCow-Portal/User.git
