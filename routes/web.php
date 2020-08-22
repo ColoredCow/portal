@@ -105,6 +105,16 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
         Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
+
+        Route::resource('slots', 'Slots\SlotsController')
+                ->except(['show'])
+                ->names([
+                       'index'=>'hr.slots',
+                       'create'=>'hr.slots.create',
+                       'store'=>'hr.slots.store',
+                       'update'=>'hr.slots.update', 
+                       'edit'=>'hr.slots.edit',
+                       'destroy'=>'hr.slots.delete']);
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
