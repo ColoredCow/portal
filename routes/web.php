@@ -105,6 +105,26 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
         Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
+
+        Route::resource('universities', 'Universities\UniversityController')
+            ->only(['index', 'store', 'update', 'edit','create','destroy'])
+            ->names([
+                'index' => 'universities',
+                'store' => 'universities.store',
+                'update'=>'universities.update',
+                'edit'=>'universities.edit',
+                'create'=>'universities.create',
+                'destroy'=>'universities.destroy'
+        ]);
+
+        Route::resource('universities.contacts','Universities\UniversityContactController')
+            ->only(['store','update','destroy'])
+            ->names([
+                'store'=>'universities.contacts.store',
+                'update'=>'universities.contacts.update',
+                'destroy'=>'universities.contacts.destroy'
+        ]);
+        Route::get('universities-reports', 'Universities\ReportController@index')->name('universities.reports');
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
