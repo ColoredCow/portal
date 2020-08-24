@@ -20,9 +20,8 @@ class CreateHrUniversitiesContactsTable extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->foreignId('hr_university_id');
-            $table->foreign('hr_university_id')->references('id')->on('hr_universities')->onDelete('cascade');;
+            $table->foreign('hr_university_id')->references('id')->on('hr_universities')->onDelete('cascade');
             $table->timestamps();
-            
         });
     }
 

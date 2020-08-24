@@ -9,7 +9,6 @@ use App\Http\Requests\HR\UniversityRequest;
 
 class UniversityController extends Controller
 {
- 
     public function index()
     {
         $searchString = (request()->has('search')) ? request()->input('search') : false;
@@ -33,7 +32,6 @@ class UniversityController extends Controller
             'rating'=>isset($validatedData['rating'])?$validatedData['rating']:null
         ]);
         return redirect(route('universities.edit', $university))->with('status', 'University created successfully!');
-
     }
 
     public function edit(University $university)
@@ -43,7 +41,7 @@ class UniversityController extends Controller
         ]);
     }
 
-    public function update(UniversityRequest $request,University $university)
+    public function update(UniversityRequest $request, University $university)
     {
         $validated = $request->validated();
         $updated = $university->update([

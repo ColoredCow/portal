@@ -15,7 +15,7 @@ class AddHrUniversityIdToHrApplicantsTable extends Migration
     {
         Schema::table('hr_applicants', function (Blueprint $table) {
             $table->foreignId('hr_university_id');
-            $table->foreign('hr_university_id')->references('id')->on('hr_universities')->onDelete('cascade');;
+            $table->foreign('hr_university_id')->references('id')->on('hr_universities')->onDelete('cascade');
         });
     }
 

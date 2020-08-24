@@ -117,7 +117,7 @@ Route::middleware('auth')->group(function () {
                 'destroy'=>'universities.destroy'
         ]);
 
-        Route::resource('universities.contacts','Universities\UniversityContactController')
+        Route::resource('universities.contacts', 'Universities\UniversityContactController')
             ->only(['store','update','destroy'])
             ->names([
                 'store'=>'universities.contacts.store',

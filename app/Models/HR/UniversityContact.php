@@ -12,7 +12,8 @@ class UniversityContact extends Model
     
     protected $table = 'hr_universities_contacts';
 
-    public function university(){
-        return $this->belongsTo(University::class,'hr_university_id');
+    public function university()
+    {
+        return $this->belongsTo(University::class, 'hr_university_id');
     }
 }

@@ -41,6 +41,5 @@ class UniversityRequest extends FormRequest
             ];
         }
         return $rules;
-        
     }
 }

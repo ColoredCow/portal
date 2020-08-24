@@ -8,12 +8,9 @@ use App\Models\HR\University;
 use App\Models\HR\UniversityContact;
 use App\Http\Requests\HR\UniversityContactRequest;
 
-
-
 class UniversityContactController extends Controller
 {
-
-    public function store(UniversityContactRequest $request,University $university)
+    public function store(UniversityContactRequest $request, University $university)
     {
         $validatedData = $request->validated();
         UniversityContact::create([
@@ -26,8 +23,8 @@ class UniversityContactController extends Controller
         return redirect(route('universities.edit', $university))->with('status', 'Contact created successfully!');
     }
 
-    public function update($university, UniversityContact $contact,UniversityContactRequest $request)
-    {    
+    public function update($university, UniversityContact $contact, UniversityContactRequest $request)
+    {
         $validatedData = $request->validated();
         $updated=$contact->update([
             'name'=>isset($validatedData['contact_name'])?$validatedData['contact_name']:null,
@@ -36,13 +33,12 @@ class UniversityContactController extends Controller
             'phone'=>isset($validatedData['contact_phone'])?$validatedData['contact_phone']:null,
         ]);
         return redirect(route('universities.edit', $university))->with('status', 'Contact updated successfully!');
-
     }
 
-    public function destroy($university,UniversityContact $contact)
+    public function destroy($university, UniversityContact $contact)
     {
         $isDeleted=$contact->delete();
-        return $isDeleted?redirect(route('universities.edit',$university))->with('status', 'Contact Deleted successfully!'):
-        redirect(route('universities.edit',$university))->with('status', 'Something went wrong! Please try again');
+        return $isDeleted?redirect(route('universities.edit', $university))->with('status', 'Contact Deleted successfully!'):
+        redirect(route('universities.edit', $university))->with('status', 'Something went wrong! Please try again');
     }
 }

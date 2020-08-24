@@ -17,7 +17,7 @@ class CreateHrUniversitiesTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('address')->nullable();
-            $table->float('rating',2,1)->nullable();
+            $table->float('rating', 2, 1)->nullable();
             $table->timestamps();
         });
     }
