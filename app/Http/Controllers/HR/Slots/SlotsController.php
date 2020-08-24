@@ -17,25 +17,24 @@ class SlotsController extends Controller
     public function index()
     {
         $slots=[];
-        foreach (Slots::where('user_id','=',auth()->user()->id)->get() as $model) {
-                $start_time = $model->getOriginal('starts_at');
-                if (!$start_time) {
-                    continue;
-                }
-                if($model->is_booked){
-                    $color='green';
-                }
-                else{
-                    $color='blue';
-                }
-                $slots[] = [
+        foreach (Slots::where('user_id', '=', auth()->user()->id)->get() as $model) {
+            $start_time = $model->getOriginal('starts_at');
+            if (!$start_time) {
+                continue;
+            }
+            if ($model->is_booked) {
+                $color='green';
+            } else {
+                $color='blue';
+            }
+            $slots[] = [
                     'start' => $start_time,
                     'end'   => $model->ends_at,
                     'url'   => route('hr.slots.edit', $model->id),
                     'color' =>$color
                 ];
-            }
-        return view('hr.slots.index',compact('slots'));
+        }
+        return view('hr.slots.index', compact('slots'));
     }
 
     /**
@@ -56,7 +55,6 @@ class SlotsController extends Controller
      */
     public function store(SlotsRequest $request)
     {
-
         Slots::create([
             'starts_at'=>request('start_time'),
             'ends_at'=>request('end_time'),
@@ -75,7 +73,7 @@ class SlotsController extends Controller
      */
     public function edit(Slots $slot)
     {
-        return view('hr.slots.edit',compact('slot'));
+        return view('hr.slots.edit', compact('slot'));
     }
 
     /**

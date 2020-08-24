@@ -112,7 +112,7 @@ Route::middleware('auth')->group(function () {
                        'index'=>'hr.slots',
                        'create'=>'hr.slots.create',
                        'store'=>'hr.slots.store',
-                       'update'=>'hr.slots.update', 
+                       'update'=>'hr.slots.update',
                        'edit'=>'hr.slots.edit',
                        'destroy'=>'hr.slots.delete']);
     });

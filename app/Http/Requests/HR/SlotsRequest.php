@@ -23,7 +23,6 @@ class SlotsRequest extends FormRequest
      */
     public function rules()
     {
-        
         if ($this->method() === 'POST') {
             $rules = [
                 'start_time'=>'required|date',
