@@ -31,7 +31,7 @@
                 @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto d-none">
-                        @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
+                        @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view', 'hr_universities.view']))
                         <li class="nav-item">
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown_hr" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -46,6 +46,9 @@
                                 @endcan
                                 @can('hr_volunteers_applications.view')
                                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
+                                @endcan
+                                @can('hr_universities.view')
+                                    <a class="dropdown-item" href="{{ route('universities') }}">Universities</a>
                                 @endcan
                                 </div>
                             </li>

@@ -9,8 +9,14 @@ use App\Http\Requests\HR\UniversityRequest;
 
 class UniversityController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(University::class);
+    }
+
     public function index()
     {
+        $this->authorize('list', University::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $universities = University::getList($searchString);
         return view('hr.universities.index')->with([

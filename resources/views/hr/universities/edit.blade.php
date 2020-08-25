@@ -104,14 +104,14 @@
                         </form>
                     </div>
                     <div>
-                        <a id="remove" title="Delete" href="#" class="btn btn-link"><i style="color:red" class="fa fa-trash fa-lg"></i></a>
+                        <a id="remove" title="Delete" href="#universities_contacts_create_form" class="btn btn-link"><i style="color:red" class="fa fa-trash fa-lg"></i></a>
                     </div>
                     <hr/>
                 </div>
             </div>         
         </div>
         <div class="card-footer">
-            <a href="#" onClick="addNewContactForm({{old('email')==''?false:true}})">Add More Contact</a>
+            <a href="#universities_contacts_create_form" onClick="addNewContactForm({{old('email')==''?false:true}})">Add More Contact</a>
         </div>
     </div> 
 </div>
