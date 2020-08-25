@@ -12,7 +12,7 @@ use App\Observers\HR\ApplicationRoundObserver;
 use App\Observers\HR\EmployeeObserver;
 use App\Observers\HR\JobObserver;
 use App\Observers\UserObserver;
-use App\Observers\HR\RecurrenceObserver;
+use App\Observers\HR\SlotsObserver;
 use Modules\User\Entities\User;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,7 +30,7 @@ class DatabaseServiceProvider extends ServiceProvider
         ApplicationMeta::observe(ApplicationMetaObserver::class);
         User::observe(UserObserver::class);
         Employee::observe(EmployeeObserver::class);
-        Slots::observe(RecurrenceObserver::class);
+        Slots::observe(SlotsObserver::class);
     }
 
     /**

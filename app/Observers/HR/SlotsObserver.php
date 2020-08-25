@@ -6,7 +6,7 @@ use App\Models\HR\Slots;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class RecurrenceObserver
+class SlotsObserver
 {
     /**
      * Listen to the ApplicationMeta create event

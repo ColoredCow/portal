@@ -17,20 +17,20 @@ class SlotsController extends Controller
     public function index()
     {
         $slots=[];
-        foreach (Slots::where('user_id', '=', auth()->user()->id)->get() as $model) {
-            $start_time = $model->getOriginal('starts_at');
+        foreach (Slots::where('user_id', '=', auth()->user()->id)->get() as $slot) {
+            $start_time = $slot->getOriginal('starts_at');
             if (!$start_time) {
                 continue;
             }
-            if ($model->is_booked) {
+            if ($slot->is_booked) {
                 $color='green';
             } else {
                 $color='blue';
             }
             $slots[] = [
                     'start' => $start_time,
-                    'end'   => $model->ends_at,
-                    'url'   => route('hr.slots.edit', $model->id),
+                    'end'   => $slot->ends_at,
+                    'url'   => route('hr.slots.edit', $slot->id),
                     'color' =>$color
                 ];
         }
