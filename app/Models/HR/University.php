@@ -15,12 +15,11 @@ class University extends Model
     {
         return $this->hasMany(UniversityContact::class, 'hr_university_id');
     }
-    public static function getList($filteredString = false)
+    public static function getUniversities($filteredString = false)
     {
         if (!$filteredString) {
             return self::latest()->paginate(config('constants.pagination_size'));
-        } else {
-            return self::where('name', 'like', '%'.$filteredString.'%')->latest()->paginate(config('constants.pagination_size'));
         }
+        return self::where('name', 'like', '%'.$filteredString.'%')->latest()->paginate(config('constants.pagination_size'));
     }
 }

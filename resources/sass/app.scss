@@ -354,6 +354,10 @@ input:focus+.slider {
     }
 }
 
+.table-nostriped tbody tr:nth-of-type(odd) {
+  background-color:transparent;
+}
+
 /*
   ##Device = Desktops
 */

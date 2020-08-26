@@ -117,14 +117,14 @@ Route::middleware('auth')->group(function () {
                 'destroy'=>'universities.destroy'
         ]);
 
-        Route::resource('universities.contacts', 'Universities\UniversityContactController')
-            ->only(['store','update','destroy'])
+        Route::resource('universities/contacts', 'Universities\UniversityContactController')
+            ->only(['update','destroy'])
             ->names([
-                'store'=>'universities.contacts.store',
                 'update'=>'universities.contacts.update',
                 'destroy'=>'universities.contacts.destroy'
         ]);
-        Route::get('universities-reports', 'Universities\ReportController@index')->name('universities.reports');
+        Route::post('universities/{university}/contacts', 'Universities\UniversityContactController@store')->name('universities.contacts.store');
+        Route::get('universities/reports', 'Universities\ReportController@index')->name('universities.reports');
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {

@@ -42,7 +42,7 @@
                 @forelse($university->universityContacts as $contact)
                 <div class="d-flex">
                     <div>
-                        <form  action="{{ route('universities.contacts.update',[$contact->hr_university_id,$contact]) }}" class="myform" method="POST" id="form_edit_universities_contacts{{$contact->id}}">
+                        <form  action="{{ route('universities.contacts.update',$contact) }}" class="myform" method="POST" id="form_edit_universities_contacts{{$contact->id}}">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
                             <div class="row">
@@ -60,17 +60,17 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="d-flex justify-content-around">
-                                        <button type="submit" title="Save"  id="save_contact{{$contact->id}}"class="mr-3 btn btn-link"><i class="fa fa-save fa-lg"></i></button>
+                                        <button type="submit" title="Save"  id="save_contact{{$contact->id}}"class="mr-3 btn btn-link"><i class="text-primary fa fa-save fa-lg"></i></button>
                                     </div>
                                 </div>  
                             </div>
                         </form>
                     </div>
                     <div>
-                        <form  action="{{ route('universities.contacts.destroy',[$contact->hr_university_id,$contact->id]) }}" class="myformDelete" method="POST" id="form_delete_universities_contacts{{$contact->id}}">
+                        <form  action="{{ route('universities.contacts.destroy',$contact) }}" class="myformDelete" method="POST" id="form_delete_universities_contacts{{$contact->id}}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" title="Delete" href="" class="btn btn-link"><i style="color:red" class="fa fa-trash fa-lg"></i></button>
+                            <button type="submit" title="Delete" href="" class="btn btn-link"><i class="text-danger fa fa-trash fa-lg"></i></button>
                         </form>
                     </div>
                 </div>
@@ -78,9 +78,9 @@
                 @empty
                 <p id="universities_contact_display_message">No contact yet</p>
                 @endforelse
-                <div style="display:none !important" class="d-flex" id="universities_contacts_create_form">
+                <div style="display:none !important" class="d-flex" id="contact_form">
                     <div>
-                        <form  action="{{ route('universities.contacts.store',$university->id) }}"  method="POST" id="form_create_universities_contacts">
+                        <form  action="{{ route('universities.contacts.store',$university) }}"  method="POST" id="form_create_universities_contacts">
                             {{ csrf_field() }}
                                 <div class="row">
                                     <div class="col-md-3">
@@ -97,48 +97,24 @@
                                     </div>
                                     <div class="col-md-1">
                                         <div class="d-flex justify-content-around">
-                                            <button type="submit" title="Save" class="mr-3 btn btn-link"><i class="fa fa-save fa-lg"></i></button>
+                                            <button type="submit" title="Save" class="mr-3 btn btn-link"><i class="text-primary fa fa-save fa-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
                         </form>
                     </div>
                     <div>
-                        <a id="remove" title="Delete" href="#" class="btn btn-link"><i style="color:red" class="fa fa-trash fa-lg"></i></a>
+                        <a id="remove" title="Delete" href="#contact_form" onClick="removeContactForm({{sizeof($university->universityContacts)}})" class="btn btn-link"><i class="text-danger fa fa-trash fa-lg"></i></a>
                     </div>
                     <hr/>
                 </div>
             </div>         
         </div>
         <div class="card-footer">
-            <a href="#" onClick="addNewContactForm({{old('email')==''?false:true}})">Add More Contact</a>
+            <a href="#contact_form" onClick="addNewContactForm({{old('email')==''?false:true}})">Add More Contact</a>
         </div>
     </div> 
 </div>
 @endsection
 
-@section('inline_js')
-function addNewContactForm(opened){
-    var form = document.getElementById("universities_contacts_create_form");
-    var message=document.getElementById("universities_contact_display_message");
-    form.style.display="block";
-    message.style.display="none";
-}
-$(document).ready(function(){
-    var x = document.getElementById("contact_email").value;
-    if(x){
-        var form = document.getElementById("universities_contacts_create_form");
-        form.style.display="block";
-        var message=document.getElementById("universities_contact_display_message");
-        message.style.display="none";
-    }
-    $('body').on('click','#remove',function(){
-        $('#universities_contacts_create_form').attr('style', 'display: none !important');
-        var contactsLength={{sizeof($university->universityContacts)}}
-        if(!contactsLength){
-            var message=document.getElementById("universities_contact_display_message");
-            message.style.display="block";
-        }
-    });     
-});
-@endsection
+

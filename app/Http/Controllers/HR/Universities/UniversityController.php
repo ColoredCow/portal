@@ -12,7 +12,7 @@ class UniversityController extends Controller
     public function index()
     {
         $searchString = (request()->has('search')) ? request()->input('search') : false;
-        $universities = University::getList($searchString);
+        $universities = University::getUniversities($searchString);
         return view('hr.universities.index')->with([
             'universities' => $universities,
         ]);
@@ -28,8 +28,8 @@ class UniversityController extends Controller
         $validatedData = $request->validated();
         $university=University::create([
             'name'=>$validatedData['name'],
-            'address'=>isset($validatedData['address'])?$validatedData['address']:null,
-            'rating'=>isset($validatedData['rating'])?$validatedData['rating']:null
+            'address'=>$validatedData['address'] ?? null,
+            'rating'=>$validatedData['rating'] ?? null
         ]);
         return redirect(route('universities.edit', $university))->with('status', 'University created successfully!');
     }
@@ -43,13 +43,13 @@ class UniversityController extends Controller
 
     public function update(UniversityRequest $request, University $university)
     {
-        $validated = $request->validated();
+        $validatedData = $request->validated();
         $updated = $university->update([
-            'name' => $validated['name'],
-            'address'=>isset($validated['address'])?$validated['address']:null,
-            'rating'=>isset($validated['rating'])?$validated['rating']:null
+            'name'=>$validatedData['name'],
+            'address'=>$validatedData['address'] ?? null,
+            'rating'=>$validatedData['rating'] ?? null
         ]);
-        return redirect(route('universities.edit', $university->id))->with('status', 'University updated successfully!');
+        return redirect(route('universities.edit', $university))->with('status', 'University updated successfully!');
     }
 
 
