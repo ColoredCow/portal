@@ -39,14 +39,14 @@
             @foreach($universities as $university)
             <tr>
             <td>
-            <h5 style="font-weight:bold">{{$university->name}}</h5>
+            <h5 class="font-weight-bold">{{$university->name}}</h5>
             {{$university->address}}
             </td>
             <td>
             <table class="table table-borderless table-nostriped" id="contacts_table{{$university->id}}">
             
                 @foreach($university->universityContacts as $contact)
-                <tr>
+                <tr >
                     <td>
                     {{$contact->name}}
                     </td>
@@ -54,10 +54,10 @@
                     {{$contact->email}}
                     </td>
                     <td>
-                    {{$contact->designation}}
+                    {{$contact->designation??'-'}}
                     </td>
                     <td>
-                    {{$contact->phone}}
+                    {{$contact->phone??'-'}}
                     </td>
                 </tr>
                 @endforeach
@@ -65,12 +65,12 @@
             </td>
             <td>
             <div class="d-flex justify-content-around">   
-                        <a href="{{ route('universities.edit',$university->id) }}" class="mr-1 btn btn-link"><i style="color:green" class="fa fa-edit fa-lg"></i></a>
+                        <a href="{{ route('universities.edit',$university) }}" class="mr-1 btn btn-link"><i class="text-success fa fa-edit fa-lg"></i></a>
                         
-                        <form  action="{{ route('universities.destroy',$university->id) }}" class="myformDelete" method="POST" id="form_delete_universities_contacts{{$university->id}}">
+                        <form  action="{{ route('universities.destroy',$university) }}" class="myformDelete" method="POST" id="form_delete_universities_contacts{{$university->id}}">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-link"><i style="color:red" class="fa fa-trash fa-lg"></i></button>
+                            <button type="submit" class="btn btn-link"><i  class="text-danger fa fa-trash fa-lg"></i></button>
                         </form>
                 <div>  
                 </td>

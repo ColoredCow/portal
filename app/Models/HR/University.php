@@ -15,12 +15,12 @@ class University extends Model
     {
         return $this->hasMany(UniversityContact::class, 'hr_university_id');
     }
-    public static function getList($filteredString = false)
+    public static function getUniversities($filteredString = false)
     {
         if (!$filteredString) {
             return self::latest()->paginate(config('constants.pagination_size'));
-        } else {
-            return self::where('name', 'like', '%'.$filteredString.'%')
+        }
+        return self::where('name', 'like', '%'.$filteredString.'%')
             ->orWhere('address', 'like', "%$filteredString%")
             ->orWhereHas('universityContacts', function ($query) use ($filteredString) {
                 $query->where('name', 'like', '%'.$filteredString.'%')
@@ -29,6 +29,5 @@ class University extends Model
                 ->orWhere('phone', 'like', "%$filteredString%");
             })
             ->latest()->paginate(config('constants.pagination_size'));
-        }
     }
 }

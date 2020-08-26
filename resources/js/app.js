@@ -56,6 +56,12 @@ $(document).ready(() => {
             updateClientProjects(form, client_id);
         }
     }
+    if(document.getElementById("contact_email").value){
+        var form = document.getElementById("contact_form");
+        form.style.display="block";
+        var message=document.getElementById("universities_contact_display_message");
+        message.style.display="none";
+    }   
     $('[data-toggle="tooltip"]').tooltip();
     $('.status-close').on('click', function(){
         let wrapper = $(this).closest('.alert');
@@ -802,6 +808,23 @@ if (document.getElementById('user_roles_table')) {
         }
     });
 }
+
+window.addNewContactForm=function(opened){
+    var form = document.getElementById("contact_form");
+    var message=document.getElementById("universities_contact_display_message");
+    form.style.display="block";
+    message.style.display="none";
+}
+
+window.removeContactForm=function(length){
+    $('#contact_form').attr('style', 'display: none !important');
+    var contactsLength=length;
+    if(!contactsLength){
+        var message=document.getElementById("universities_contact_display_message");
+        message.style.display="block";
+    }
+}
+
 
 require('./finance/invoice');
 require('./finance/payment');
