@@ -25,8 +25,8 @@ class SlotsRequest extends FormRequest
     {
         if ($this->method() === 'POST') {
             $rules = [
-                'start_time'=>'required|date',
-                'end_time'=>'required|date|after:start_time',
+                'starts_at'=>'required|date',
+                'ends_at'=>'required|date|after:starts_at',
                 'recurrence'=>'required',
                 'repeat_till'=>'required_if:recurrence,weekly,monthly'
             ];
@@ -34,8 +34,8 @@ class SlotsRequest extends FormRequest
 
         if ($this->method() === 'PATCH') {
             $rules = [
-                'start_time'=>'required|date',
-                'end_time'=>'required|date|after:start_time',
+                'starts_at'=>'required|date',
+                'ends_at'=>'required|date|after:starts_at',
             ];
         }
         return $rules;

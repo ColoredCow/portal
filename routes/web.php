@@ -114,7 +114,8 @@ Route::middleware('auth')->group(function () {
                        'store'=>'hr.slots.store',
                        'update'=>'hr.slots.update',
                        'edit'=>'hr.slots.edit',
-                       'destroy'=>'hr.slots.delete']);
+                       'destroy'=>'hr.slots.delete'
+                ]);
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\HR\Slots;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\HR\Slots;
+use App\Models\HR\Slot;
 use App\Http\Requests\HR\SlotsRequest;
 
 class SlotsController extends Controller
@@ -16,23 +16,12 @@ class SlotsController extends Controller
      */
     public function index()
     {
-        $slots=[];
-        foreach (Slots::where('user_id', '=', auth()->user()->id)->get() as $slot) {
-            $start_time = $slot->getOriginal('starts_at');
-            if (!$start_time) {
-                continue;
-            }
-            if ($slot->is_booked) {
-                $color='green';
-            } else {
-                $color='blue';
-            }
-            $slots[] = [
-                    'start' => $start_time,
-                    'end'   => $slot->ends_at,
-                    'url'   => route('hr.slots.edit', $slot->id),
-                    'color' =>$color
-                ];
+        $slots=Slot::where('user_id', '=', auth()->id())->whereNotNull('starts_at')->get();
+        foreach ($slots as $slot) {
+            $slot->url=route('hr.slots.edit', $slot->id);
+            $slot->color=$slot->is_booked?'green':'blue';
+            $slot->start=$slot->starts_at;
+            $slot->end=$slot->ends_at;
         }
         return view('hr.slots.index', compact('slots'));
     }
@@ -55,23 +44,24 @@ class SlotsController extends Controller
      */
     public function store(SlotsRequest $request)
     {
-        Slots::create([
-            'starts_at'=>request('start_time'),
-            'ends_at'=>request('end_time'),
-            'recurrence'=>request('recurrence'),
-            'user_id'=>auth()->user()->id,
+        $validated=$request->validated();
+        Slot::create([
+            'starts_at'=>$validated['starts_at'],
+            'ends_at'=>$validated['ends_at'],
+            'recurrence'=>$validated['recurrence'],
+            'user_id'=>auth()->id(),
         ]);
 
-        return redirect(route('hr.slots'));
+        return redirect(route('hr.slots'))->with('status', 'Slot created successfully');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Slot  $slot
      * @return \Illuminate\Http\Response
      */
-    public function edit(Slots $slot)
+    public function edit(Slot $slot)
     {
         return view('hr.slots.edit', compact('slot'));
     }
@@ -80,17 +70,18 @@ class SlotsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Slot  $slot
      * @return \Illuminate\Http\Response
      */
-    public function update(SlotsRequest $request, Slots $slot)
+    public function update(SlotsRequest $request, Slot $slot)
     {
+        $validated=$request->validated();
         $slot->update([
-            'starts_at'=>request('start_time'),
-            'ends_at'=>request('end_time'),
+            'starts_at'=>$validated['starts_at'],
+            'ends_at'=>$validated['ends_at'],
         ]);
-
-        return redirect(route('hr.slots'));
+        
+        return redirect(route('hr.slots'))->with('status', 'Slot updated successfully');
     }
 
     /**
@@ -99,9 +90,9 @@ class SlotsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Slots $slot)
+    public function destroy(Slot $slot)
     {
         $slot->delete();
-        return redirect(route('hr.slots'));
+        return redirect(route('hr.slots'))->with('status', 'Slot deleted successfully');
     }
 }

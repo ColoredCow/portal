@@ -61,6 +61,14 @@ $(document).ready(() => {
         let wrapper = $(this).closest('.alert');
         wrapper.fadeOut(500);
     });
+
+    if(document.getElementById('create_slots')){
+        showRepeatTillInput();
+    }
+
+    if(document.getElementById('show_slots')){
+        showSlots();
+    }
 });
 
 
@@ -805,3 +813,40 @@ if (document.getElementById('user_roles_table')) {
 
 require('./finance/invoice');
 require('./finance/payment');
+
+/**
+ * Slots
+ *
+ */
+
+if(document.getElementById('create_slots')){
+    let starts_at_input = document.getElementById('starts_at');
+    let recurrence_input=document.getElementById('recurrence');
+    starts_at_input.addEventListener('blur', setEndTime);
+    recurrence_input.addEventListener('click',showRepeatTillInput)
+}
+
+function setEndTime(e) {
+    let ends_at_input = document.getElementById('ends_at');
+    ends_at_input.value = moment(e.target.value).add(30, 'm').format('YYYY-MM-DDTHH:mm');
+}
+
+function showRepeatTillInput(){
+    let repeat_till_input = document.getElementById('repeat_date_field');
+    let recurrence_input = document.getElementById('recurrence');
+    if (recurrence_input.value == 'none') {
+        repeat_till_input.style.display = 'none';
+    } else {
+        repeat_till_input.style.display = 'block';
+    }
+}
+
+function showSlots(){
+    let events=JSON.parse($('#slots_value').val());
+    $('#calendar').fullCalendar({
+        selectable: true,
+        timeFormat:    'h:mmA',
+        displayEventEnd: true,
+        events: events,
+    })
+}
