@@ -78,7 +78,7 @@
                 @empty
                 <p id="universities_contact_display_message">No contact yet</p>
                 @endforelse
-                <div style="display:none !important" class="d-flex" id="contact_form">
+                <div class="contact-form d-flex" id="contact_form">
                     <div>
                         <form  action="{{ route('universities.contacts.store',$university) }}"  method="POST" id="form_create_universities_contacts">
                             {{ csrf_field() }}
