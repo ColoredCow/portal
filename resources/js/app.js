@@ -57,11 +57,9 @@ $(document).ready(() => {
         }
     }
     if(document.getElementById("contact_email").value){
-        var form = document.getElementById("contact_form");
-        form.style.display="block";
-        var message=document.getElementById("universities_contact_display_message");
-        message.style.display="none";
-    }   
+        $("#contact_form").removeClass("contact-form");
+        $("#universities_contact_display_message").addClass("contact-form-message");
+    } 
     $('[data-toggle="tooltip"]').tooltip();
     $('.status-close').on('click', function(){
         let wrapper = $(this).closest('.alert');
@@ -810,18 +808,14 @@ if (document.getElementById('user_roles_table')) {
 }
 
 window.addNewContactForm=function(opened){
-    var form = document.getElementById("contact_form");
-    var message=document.getElementById("universities_contact_display_message");
-    form.style.display="block";
-    message.style.display="none";
+    $("#contact_form").removeClass("contact-form");
+    $("#universities_contact_display_message").addClass("contact-form-message");
 }
 
 window.removeContactForm=function(length){
-    $('#contact_form').attr('style', 'display: none !important');
-    var contactsLength=length;
-    if(!contactsLength){
-        var message=document.getElementById("universities_contact_display_message");
-        message.style.display="block";
+   $("#contact_form").addClass("contact-form");
+    if(!length){
+        $("#universities_contact_display_message").removeClass("contact-form-message");
     }
 }
 
