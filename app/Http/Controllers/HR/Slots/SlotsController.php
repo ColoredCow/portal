@@ -17,12 +17,6 @@ class SlotsController extends Controller
     public function index()
     {
         $slots=Slot::where('user_id', '=', auth()->id())->whereNotNull('starts_at')->get();
-        foreach ($slots as $slot) {
-            $slot->url=route('hr.slots.edit', $slot->id);
-            $slot->color=$slot->is_booked?'green':'blue';
-            $slot->start=$slot->starts_at;
-            $slot->end=$slot->ends_at;
-        }
         return view('hr.slots.index', compact('slots'));
     }
 
