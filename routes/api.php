@@ -13,14 +13,16 @@ use Illuminate\Http\Request;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::resource('hr/jobs', 'HR\JobController')->only(['store']);
-Route::resource('hr/applicants', 'HR\ApplicantController')->only(['store']);
-Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
-    Route::prefix('library')->namespace('Library')->group(function () {
-        Route::get('book/getList', 'BookController@getBookList');
+
+Route::middleware('client')->group(function () {
+    Route::resource('hr/jobs', 'HR\JobController')->only(['store']);
+    Route::resource('hr/applicants', 'HR\ApplicantController')->only(['store']);
+    Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
+        Route::prefix('library')->namespace('Library')->group(function () {
+            Route::get('book/getList', 'BookController@getBookList');
+        });
+        Route::resource('weeklydoses', 'WeeklyDoseController')->only(['store']);
     });
-    Route::resource('weeklydoses', 'WeeklyDoseController')->only(['store']);
+    Route::get('hr/universities/getList', 'HR\Universities\UniversityController@getUniversityList');
+    Route::post('hr/universities', 'HR\Universities\UniversityController@store');
 });

@@ -11,7 +11,9 @@ class UniversityController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(University::class);
+        $this->authorizeResource(University::class, null, [
+            'except' => ['store'],
+        ]);
     }
 
     public function index()
@@ -37,7 +39,7 @@ class UniversityController extends Controller
             'address'=>$validatedData['address'] ?? null,
             'rating'=>$validatedData['rating'] ?? null
         ]);
-        return redirect(route('universities.edit', $university))->with('status', 'University created successfully!');
+        return $request->wantsJson()?response()->json(['error' => !$university]):redirect(route('universities.edit', $university))->with('status', 'University created successfully!');
     }
 
     public function edit(University $university)
@@ -58,11 +60,16 @@ class UniversityController extends Controller
         return redirect(route('universities.edit', $university))->with('status', 'University updated successfully!');
     }
 
-
     public function destroy(University $university)
     {
         $isDeleted=$university->delete();
         return $isDeleted?redirect(route('universities'))->with('status', 'University Deleted successfully!'):
         redirect(route('universities'))->with('status', 'Something went wrong! Please try again');
+    }
+
+    public function getUniversityList()
+    {
+        $data=University::all('name', 'id')->toArray();
+        return response()->json($data);
     }
 }

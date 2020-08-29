@@ -7,7 +7,6 @@ use App\Models\HR\University;
 
 class UniversityContact extends Model
 {
-    //
     protected $fillable = ['hr_university_id','name','designation','email','phone'];
     
     protected $table = 'hr_universities_contacts';
