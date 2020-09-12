@@ -1,18 +1,17 @@
 <div class="card border-dark bg-theme-white inline-card inline-evaluation" v-cloak v-show="showEvaluationFrame">
     <div class="card-header bg-dark text-white">
-        <ul class="nav justify-content-start">
+        <ul class="nav justify-content-start d-flex align-items-end">
             <li class="nav-item">
-                <b>Application Evaluation</b>
+                <strong>Evaluation&nbsp;&nbsp;•&nbsp;&nbsp;{{ $applicationRound->round->name }}</strong>
             </li>
-            <li class="nav-item mx-2">
-               <a href="{{ route('hr.evaluation') }}" class="c-pointer text-primary text-decoration-none">
-                    <span>Edit</span>
-                    <i class="fa fa-external-link" aria-hidden="true"></i>
+            <li class="nav-item mx-1 ml-auto">
+               <a href="{{ route('hr.evaluation') }}" class="c-pointer text-white text-decoration-none" target="_blank" title="Edit parameters">
+                    <i class="fa fa-pencil-square-o fz-20" aria-hidden="true"></i>
                 </a>
             </li>
-            <li class="nav-item mx-2 ml-auto">
-                <span class="c-pointer text-white fz-22" @click="toggleEvaluationFrame()">
-                    <i class="fa fa-times" aria-hidden="true"></i>
+            <li class="nav-item mx-2">
+                <span class="c-pointer text-white" @click="toggleEvaluationFrame()" title="close">
+                    <i class="fa fa-times fz-22" aria-hidden="true"></i>
                 </span>
             </li>
         </ul>

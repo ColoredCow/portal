@@ -44,7 +44,8 @@ class ScheduledInterviewReminder extends Mailable
         $body = $body ? $body->setting_value : '';
 
         $body = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body);
-        $body = str_replace(config('constants.hr.template-variables.interview-time'), date(config('constants.hr.interview-time-format'), strtotime($this->applicationRound->scheduled_date)), $body);
+        $body = str_replace(
+            config('constants.hr.template-variables.interview-time'), $this->applicationRound->scheduled_date->format(config('constants.hr.interview-time-format')), $body);
         $body = str_replace(config('constants.hr.template-variables.job-title'), $job->title, $body);
 
         return $this->to($application->applicant->email, $application->applicant->name)

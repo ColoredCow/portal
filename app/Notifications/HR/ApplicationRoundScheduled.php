@@ -46,10 +46,15 @@ class ApplicationRoundScheduled extends Notification
     public function toMail($notifiable)
     {
         $application = $this->applicationRound->application;
+        $applicant = $application->applicant;
         $job = $application->job;
         return (new MailMessage)
-            ->subject(config('app.name') . ': New application round scheduled')
+            ->subject(config('app.name') . ": {$this->applicationRound->round->name} scheduled")
             ->line('You have been assigned an application round.')
+            ->line("Candidate name: {$applicant->name}")
+            ->line("Round: {$this->applicationRound->round->name}")
+            ->line("Timing: {$this->applicationRound->scheduled_date->format(config('constants.display_daydatetime_format'))}")
+            ->line("Meeting Link: {$this->applicationRound->hangout_link}")
             ->action('View this application', route("applications.$job->type.edit", $application->id));
     }
 

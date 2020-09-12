@@ -2,9 +2,9 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\Evaluation\Parameter as EvaluationParameter;
-use App\Models\HR\Evaluation\Segment as EvaluationSegment;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\HR\Evaluation\Segment as EvaluationSegment;
+use App\Models\HR\Evaluation\Parameter as EvaluationParameter;
 
 class Round extends Model
 {

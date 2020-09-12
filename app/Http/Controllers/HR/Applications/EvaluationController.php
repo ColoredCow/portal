@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
-use App\Http\Controllers\Controller;
+use App\Models\HR\Employee;
 use App\Models\HR\ApplicationRound;
+use App\Http\Controllers\Controller;
 use App\Models\HR\Evaluation\Segment;
 
 class EvaluationController extends Controller
@@ -12,17 +13,19 @@ class EvaluationController extends Controller
     {
         $applicationRound = ApplicationRound::find($applicationRoundID)->load('application.applicant');
 
-        $segmentList = array();
+        $segmentList = [];
 
         foreach (self::getSegments($applicationRound->hr_application_id) as $segment) {
             $segmentList[] = self::getSegmentDetails($segment);
         }
+
         $evaluationScores = self::calculateEvaluationScores($segmentList);
 
         return view('hr.application.evaluation-form')->with([
             'segment' => $segmentList,
             'applicationRound' => $applicationRound,
-            'evaluationScores' => $evaluationScores
+            'evaluationScores' => $evaluationScores,
+            'employees' => Employee::active()->orderBy('name')->get(),
         ])->render();
     }
 
@@ -42,13 +45,15 @@ class EvaluationController extends Controller
 
     private function getSegments($applicationId)
     {
-        return Segment::whereHas('round')->with(
+        return Segment::whereHas('round')->orWhereNull('round_id')->with(
             [
                 'round',
                 'applicationEvaluations' => function ($query) use ($applicationId) {
                     $query->where('application_id', $applicationId);
                 },
-                'parameters',
+                'parameters' => function ($query) {
+                    $query->whereNull('parent_id');
+                },
                 'parameters.options',
                 'parameters.applicationEvaluation' => function ($query) use ($applicationId) {
                     $query->where('application_id', $applicationId);
@@ -60,11 +65,11 @@ class EvaluationController extends Controller
 
     private function getSegmentGeneralInfo($segment)
     {
-        $segmentGeneralInfo = array();
+        $segmentGeneralInfo = [];
 
         $segmentGeneralInfo['id'] = $segment->id;
         $segmentGeneralInfo['name'] = $segment->name;
-        $segmentGeneralInfo['round'] = $segment->round->name;
+        $segmentGeneralInfo['round'] = optional($segment->round)->name;
         $segmentGeneralInfo['round_id'] = $segment->round_id;
 
         return $segmentGeneralInfo;
@@ -72,8 +77,7 @@ class EvaluationController extends Controller
 
     private function getParameterGeneralInfo($parameter)
     {
-        $parameterGeneralInfo = array();
-
+        $parameterGeneralInfo = [];
         $parameterGeneralInfo['id'] = $parameter->id;
         $parameterGeneralInfo['name'] = $parameter->name;
 
@@ -82,7 +86,7 @@ class EvaluationController extends Controller
 
     private function getEvaluationDetails($evaluation)
     {
-        $evaluationDetails = array();
+        $evaluationDetails = [];
 
         $evaluationDetails['comment'] = $evaluation->comment;
         $evaluationDetails['option'] = $evaluation->evaluationOption->value;
@@ -93,7 +97,7 @@ class EvaluationController extends Controller
 
     private function getOptionsDetails($options)
     {
-        $optionList = array();
+        $optionList = [];
 
         foreach ($options as $option) {
             $optionList[] = [
@@ -108,18 +112,30 @@ class EvaluationController extends Controller
 
     private function getParameterInfo($parameter)
     {
-        $parameterDetails = array();
+        if (!$parameter) {
+            return null;
+        }
 
         $parameterDetails = self::getParameterGeneralInfo($parameter);
 
+        $parameterDetails['marks'] = $parameter->marks;
+        $parameterDetails['option_detail'] = self::getOptionsDetails($parameter->options);
+
+        $parameterDetails['evaluation'] = false;
+        $parameterDetails['evaluation_detail'] = [];
         if ($parameter->applicationEvaluation) {
             $parameterDetails['evaluation'] = true;
-            $parameterDetails['marks'] = $parameter->marks;
             $parameterDetails['evaluation_detail'] = self::getEvaluationDetails($parameter->applicationEvaluation);
-        } else {
-            $parameterDetails['evaluation'] = false;
-            $parameterDetails['marks'] = $parameter->marks;
-            $parameterDetails['option_detail'] = self::getOptionsDetails($parameter->options);
+        }
+
+        $parameterDetails['children'] = [];
+        foreach ($parameter->children as $childParameter) {
+            $parameterDetails['children'][] = self::getParameterInfo($childParameter);
+        }
+
+        // the if condition below will run only in recursive calls.
+        if ($parameter->parent_id) {
+            $parameterDetails['parent_option'] = head(self::getOptionsDetails([$parameter->parentOption]));
         }
 
         return $parameterDetails;
@@ -127,7 +143,7 @@ class EvaluationController extends Controller
 
     private function getSegmentParameters($segmentParameters)
     {
-        $parameters = array();
+        $parameters = [];
 
         foreach ($segmentParameters as $parameter) {
             $parameters[] = self::getParameterInfo($parameter);
@@ -138,7 +154,7 @@ class EvaluationController extends Controller
 
     private function getSegmentApplicationEvaluations($segmentApplicationEvaluations)
     {
-        $applicationEvaluations = array();
+        $applicationEvaluations = [];
         $comments = null;
         // this for loop will run just once as the maximum size of $segmentApplicationEvaluations will be one.
         foreach ($segmentApplicationEvaluations as $segmentApplicationEvaluation) {
@@ -151,11 +167,13 @@ class EvaluationController extends Controller
 
     private function getSegmentDetails($segment)
     {
-        $segmentDetails = array();
+        $segmentDetails = [];
 
         $segmentDetails = self::getSegmentGeneralInfo($segment);
         $segmentDetails['parameters'] = self::getSegmentParameters($segment->parameters);
-        $segmentDetails['applicationEvaluations'] = self::getSegmentApplicationEvaluations($segment->applicationEvaluations); // there will be just one segment data for an application
+
+        // there will be just one segment data for an application
+        $segmentDetails['applicationEvaluations'] = self::getSegmentApplicationEvaluations($segment->applicationEvaluations);
 
         return $segmentDetails;
     }
@@ -173,7 +191,7 @@ class EvaluationController extends Controller
             ];
             foreach ($segment['parameters'] as $parameter) {
                 $scores[$segment['round_id']][$segment['id']]['max'] += $parameter['marks'];
-                if (isset($parameter['evaluation_detail'])) {
+                if (isset($parameter['evaluation_detail']['marks'])) {
                     $scores[$segment['round_id']][$segment['id']]['score'] += $parameter['evaluation_detail']['marks'];
                 }
             }

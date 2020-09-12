@@ -47,9 +47,12 @@
                     <ul class="navbar-nav ml-auto">
                         @auth
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{-- <img src="{{ $user->avatar }}" class="user-avatar">&nbsp; --}}
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <img src="{{ auth()->user()->avatar }}" class="user-avatar w-25 h-25 rounded-circle mr-1">
+                                    <span>
+                                        <span class="mr-1">{{ auth()->user()->name }}</span>
+                                        <span class="caret"></span>
+                                    </span>
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -81,6 +84,17 @@
             </div>
         </nav>
 
+        @if (session('status'))
+            <div class="w-full flex-center">
+                <div class="alert alert-success alert-dismissible fade show position-absolute z-index-1100 fz-14 shadow mb-5 ml-5 top-8.33" role="alert" id="statusAlert">
+                    <span>{!! session('status') !!}</span>
+                    <button type="button" class="close pt-1.5" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        @endif
+
         <main class="py-4">
             @yield('content')
         </main>
@@ -95,6 +109,14 @@
 
     <script>
         @yield('inline_js')
+    </script>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     </script>
 
 

@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\HR;
 
-use Carbon\Carbon;
 use App\Helpers\ContentHelper;
-use App\Models\HR\ApplicationRound;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HR\ApplicantRoundMailRequest;
+use App\Http\Requests\HR\ApplicationRoundRequest;
+use App\Mail\HR\Applicant\RoundReviewed;
+use App\Models\HR\ApplicationRound;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\HR\Applicant\RoundReviewed;
-use App\Http\Requests\HR\ApplicationRoundRequest;
-use App\Http\Requests\HR\ApplicantRoundMailRequest;
+use Modules\HR\Helpers\TemplateHelper;
 
 class ApplicationRoundController extends Controller
 {
@@ -26,7 +28,9 @@ class ApplicationRoundController extends Controller
         if (array_key_exists('round_evaluation', $request->validated())) {
             $round->updateOrCreateEvaluation($request->validated()['round_evaluation']);
         }
-        return redirect()->back()->with('status', 'Application updated successfully!');
+
+        $routeName = $round->application->job->type == 'internship' ? 'applications.internship.index' : 'applications.job.index';
+        return redirect()->route($routeName)->with('status', 'Application updated successfully!');
     }
 
     /**
@@ -62,5 +66,31 @@ class ApplicationRoundController extends Controller
             "Mail sent successfully to the <b>$applicant->name</b> at <b>$applicant->email</b>.<br>
             <span data-toggle='modal' data-target='#round_mail_$applicationRound->id' class='modal-toggler-text text-primary'>Click here to see the mail content.</a>"
         );
+    }
+
+    public function getMailContent(ApplicationRound $applicationRound, string $status)
+    {
+        $applicationRound->load('round', 'application', 'application.applicant', 'application.job');
+        $application = $applicationRound->application;
+        $templateType = $status == 'confirm' ? 'confirmed_mail_template' : 'rejected_mail_template';
+        $template = $applicationRound->round->{$templateType};
+        return [
+            'subject' => $template['subject'] ?? '',
+            'body' => isset($template['body']) ? TemplateHelper::parse($template['body'], [
+                'interview_slot_link' => "<a href='" . $application->getScheduleInterviewLink() . "'>Schedule interview</a>",
+                'applicant_name' => $application->applicant->name,
+                'job_title' => $application->job->title,
+                'interview_time' => $applicationRound->scheduled_date ? $applicationRound->scheduled_date->format(config('constants.display_time_format')) : '',
+            ]) : '',
+        ];
+    }
+
+    public function storeFollowUp(Request $request, ApplicationRound $applicationRound)
+    {
+        $applicationRound->followUps()->create([
+            'comments' => $request->get('comments'),
+            'conducted_by' => auth()->id(),
+        ]);
+        return redirect()->back()->with('status', 'Follow up successful!');
     }
 }

@@ -39,6 +39,7 @@ class JobRequest extends FormRequest
                 'twitter_post' => 'nullable|url',
                 'linkedin_post' => 'nullable|url',
                 'rounds' => 'nullable',
+                'description' => 'nullable|string',
             ];
         }
         return $rules;

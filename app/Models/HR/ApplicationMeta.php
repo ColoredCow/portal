@@ -2,7 +2,6 @@
 
 namespace App\Models\HR;
 
-use App\Models\HR\Application;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationMeta extends Model
@@ -44,6 +43,11 @@ class ApplicationMeta extends Model
     public static function scopeOnboarded($query)
     {
         return $query->where('key', config('constants.hr.status.onboarded.label'));
+    }
+
+    public static function scopeCustomMail($query)
+    {
+        return $query->where('key', config('constants.hr.status.custom-mail.label'));
     }
 
     /**

@@ -8,7 +8,7 @@ require("./bootstrap");
 
 import "jquery-ui/ui/widgets/datepicker.js";
 import ImageCompressor from "image-compressor.js";
-var weeklyDoseClipboard = new ClipboardJS("#copy_weeklydose_service_url");
+var clipboard = new ClipboardJS(".btn-clipboard");
 
 window.Vue = require("vue");
 
@@ -92,6 +92,11 @@ if (document.getElementById("vueContainer")) {
 }
 
 $(document).ready(() => {
+
+  setTimeout(function() {
+    $('#statusAlert').alert('close');
+  }, 2000);
+  
   if ($(".form-create-invoice").length) {
     let form = $(".form-create-invoice");
     let client_id = form.find("#client_id").val();
@@ -142,13 +147,11 @@ if (document.getElementById("page_hr_applicant_edit")) {
     data: {
       showResumeFrame: false,
       showEvaluationFrame: false,
-      applicationJobRounds:
-        JSON.parse(
-          document.getElementById("action_type").dataset.applicationJobRounds
-        ) || {},
+      applicationJobRounds: document.getElementById("action_type") ? JSON.parse(document.getElementById("action_type").dataset.applicationJobRounds) : {},
       selectedNextRound: "",
       nextRoundName: "",
-      selectedAction: "",
+      selectedAction: "round",
+      selectedActionOption: "",
       nextRound: "",
       createCalendarEvent: true,
     },
@@ -160,6 +163,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
         this.showEvaluationFrame = !this.showEvaluationFrame;
       },
       getApplicationEvaluation: function(applicationRoundID) {
+        $("#page_hr_applicant_edit #application_evaluation_body").html('<div class="my-4 fz-18 text-center">Loading...</div>');
         if (!this.showEvaluationFrame) {
           axios
             .get("/hr/applications/evaluation/" + applicationRoundID)
@@ -169,19 +173,28 @@ if (document.getElementById("page_hr_applicant_edit")) {
               );
             })
             .catch(function(error) {
-              alert("Error fetching applicaiton evaluation!");
+              alert("Error fetching application evaluation!");
             });
         }
         this.toggleEvaluationFrame();
       },
+
+      onSelectNextRound: function (event) {
+        this.selectedAction = event.target.value;
+        this.selectedActionOption = event.target.options[event.target.options.selectedIndex];
+      },
       takeAction: function() {
         switch (this.selectedAction) {
           case "round":
-            let selectedRound = document.querySelector(
-              "#action_type option:checked"
-            );
-            this.selectedNextRound = selectedRound.dataset.nextRoundId;
-            this.nextRoundName = selectedRound.innerText;
+            if (!this.selectedActionOption) {
+              this.selectedActionOption = document.querySelector("#action_type option:checked")
+            }
+            this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
+            this.nextRoundName = this.selectedActionOption.innerText;
+            loadTemplateMail('confirm', res => {
+              $('#confirmMailToApplicantSubject').val(res.subject);
+              tinymce.get('confirmMailToApplicantBody').setContent(res.body, {format: 'html'});
+            });
             $("#round_confirm").modal("show");
             break;
           case "send-for-approval":
@@ -193,6 +206,13 @@ if (document.getElementById("page_hr_applicant_edit")) {
           case "onboard":
             $("#onboard_applicant").modal("show");
         }
+      },
+      rejectApplication: function() {
+        $("#application_reject_modal").modal("show");
+        loadTemplateMail('reject', res => {
+            $('#rejectMailToApplicantSubject').val(res.subject);
+            tinymce.get('rejectMailToApplicantBody').setContent(res.body, {format: 'html'});
+          });
       },
     },
     mounted() {
@@ -364,7 +384,7 @@ function hideTooltip(btn) {
   }, 1000);
 }
 
-weeklyDoseClipboard.on("success", function(e) {
+clipboard.on("success", function(e) {
   setTooltip(e.trigger, "Copied!");
   hideTooltip(e.trigger);
 });
@@ -380,6 +400,7 @@ tinymce.init({
   force_br_newlines: true,
   force_p_newlines: false,
   height: "280",
+  convert_urls : 0,
 });
 
 $(".hr_round_guide").on("click", ".edit-guide", function() {
@@ -1013,23 +1034,78 @@ require("./finance/payment");
  */
 $(document).ready(function() {
   $(document).on("click", ".show-comment", showCommentBlock);
-  $(document).on("click", ".input-section-toggler", showTogglerSection);
+  $(document).on("click", ".section-toggle", sectionToggle);
+  $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
+  $(document).on("click", ".show-evaluation-stage", function() {
+    $(".evaluation-stage").addClass("d-none");
+    var target = $(this).data('target');
+    $(target).removeClass('d-none');
+  });
+  $(document).on("change", ".set-segment-assignee", setSegmentAssignee);
+
+  $(document).on('change', '.send-mail-to-applicant', toggleApplicantMailEditor);
 });
 
 function showCommentBlock() {
   var blockId = $(this).data("block-id");
-  $(blockId).removeClass("d-none");
+  $(blockId)
+    .removeClass("d-none")
+    .find("input")
+    .focus();
   $(this).addClass("d-none");
 }
 
-function showTogglerSection() {
-    var targetSection = $(this).data('target');
+function sectionToggle() {
+  var targetParent = $(this).data("target-parent");
+  var targetOption = $(this).data("target-option");
+  $(`.${targetParent}`).addClass("d-none");
+  $(`.${targetOption}`).removeClass("d-none");
+}
+
+function sectionToggleCheckbox() {
+    var showOnChecked = $(this).data("show-on-checked");
     if ($(this).is(':checked')) {
-        $(`[data-show="${targetSection}"]`).removeClass('d-none');
+        $(showOnChecked).removeClass("d-none");
+    } else {
+        $(showOnChecked).addClass("d-none");
     }
 }
 
+function setSegmentAssignee() {
+    var segment = $(this).data('target-segment');
+    var assignee = $(this).find(':selected').text();
+    if (assignee) {
+        $(segment).find('.assignee').removeClass('d-none').find('.name').text(assignee);
+    } else {
+        $(segment).find('.assignee').addClass('d-none').find('.name').text('');
+    }
+}
+
+function toggleApplicantMailEditor() {
+    let target = $(this).data('target');
+    $(target).toggleClass('d-none');
+}
+
+function loadTemplateMail(status, successCallback) {
+    // make query to load current template
+    let applicationRoundId = $('#current_applicationround_id').val();
+    $.post({
+        url: `/hr/applicationround/${applicationRoundId}/mail-content/${status}`,
+        method: 'post',
+        success: successCallback,
+        error: err => {
+            console.log(err);
+        }
+    });
+}
 
 /*
  * HR Module JS code end
  */
+
+// fix for tinymce and bootstrap modal
+$(document).on('focusin', function(e) {
+    if ($(event.target).closest(".mce-window").length) {
+        e.stopImmediatePropagation();
+    }
+});

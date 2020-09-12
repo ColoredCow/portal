@@ -1,4 +1,4 @@
-<div class="modal fade hr_round_review" id="application_reject_modal" tabindex="-1" role="dialog" aria-labelledby="application_reject_modal" aria-hidden="true">
+{{-- <div class="modal fade hr_round_review" id="application_reject_modal" tabindex="-1" role="dialog" aria-labelledby="application_reject_modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -22,6 +22,49 @@
                 <h3 class="my-4 pl-1">OR</h3>
                 <div class="d-flex align-items-center">
                     <button type="button" class="btn btn-outline-danger round-submit" data-action="reject">Reject this candidate for all jobs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+<div class="modal fade" id="application_reject_modal" tabindex="-1" role="dialog" aria-labelledby="application_reject_modal"
+    aria-hidden="true" v-if="selectedAction == 'round'">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-block">
+                    <h5 class="modal-title">Reject application</h5>
+                    <h6 class="text-secondary">{{ $applicationRound->application->applicant->name }} &mdash;
+                        {{ $applicationRound->application->applicant->email }}</h6>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" name="send_mail_to_applicant[reject]" class="custom-control-input send-mail-to-applicant" id="rejectSendMailToApplicant" data-target="#rejectMailToApplicantBlock" checked>
+                            <label class="custom-control-label" for="rejectSendMailToApplicant">Send email</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" id="rejectMailToApplicantBlock">
+                    <div class="form-group col-md-12">
+                        <label for="rejectMailToApplicantSubject">Subject</label>
+                        <input type="text" name="mail_to_applicant[reject][subject]" id="rejectMailToApplicantSubject"
+                            class="form-control">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="rejectMailToApplicantBody">Body</label>
+                        <textarea name="mail_to_applicant[reject][body]" id="rejectMailToApplicantBody" class="form-control richeditor"></textarea>
+                    </div>
+                </div>
+                <div class="form-row mt-2">
+                    <div class="form-group col-md-12">
+                        <button type="button" class="btn btn-danger px-4 round-submit" data-action="reject">Reject</button>
+                    </div>
                 </div>
             </div>
         </div>

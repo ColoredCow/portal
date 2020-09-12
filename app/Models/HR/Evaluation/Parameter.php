@@ -10,7 +10,7 @@ class Parameter extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'segment_id', 'marks'];
+    protected $fillable = ['name', 'segment_id', 'marks', 'parent_id', 'parent_option_id'];
 
     protected $table = 'hr_evaluation_parameters';
 
@@ -29,6 +29,21 @@ class Parameter extends Model
     public function options()
     {
         return $this->hasMany(ParameterOption::class, 'evaluation_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(self::class);
+    }
+
+    public function parentOption()
+    {
+        return $this->belongsTo(ParameterOption::class, 'parent_option_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id')->with(['parent', 'parentOption']);
     }
 
     public function applicationEvaluation()

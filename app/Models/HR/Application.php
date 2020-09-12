@@ -2,6 +2,7 @@
 
 namespace App\Models\HR;
 
+use App\Traits\HasTags;
 use App\Helpers\ContentHelper;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,8 @@ use App\Models\HR\Evaluation\ApplicationEvaluation;
 
 class Application extends Model
 {
+    use HasTags;
+
     protected $guarded = ['id'];
 
     protected $table = 'hr_applications';
@@ -89,6 +92,15 @@ class Application extends Model
                 case 'name':
                     $query->filterByName($value);
                     break;
+                case 'tags':
+                    $query->filterByTags($value);
+                    break;
+                case 'assignee':
+                    $query->filterByAssignee($value);
+                    break;
+                case 'search':
+                    $query->filterByKeyword($value);
+                    break;
             }
         }
 
@@ -145,21 +157,30 @@ class Application extends Model
      */
     public function scopeFilterByJobType($query, $type)
     {
-        $query->whereHas('job', function ($subQuery) use ($type) {
+        return $query->whereHas('job', function ($subQuery) use ($type) {
             $functionName = 'is' . $type;
             $subQuery->{$functionName}();
         });
-
-        return $query;
     }
 
     public function scopeFilterByName($query, $search)
     {
-        $query->whereHas('applicant', function ($query) use ($search) {
+        return $query->whereHas('applicant', function ($query) use ($search) {
             ($search) ? $query->where('name', 'LIKE', "%$search%") : '';
         });
+    }
 
-        return $query;
+    public function scopeFilterByKeyword($query, $search)
+    {
+        if (!$search) {
+            return $query;
+        }
+
+        return $query->whereHas('applicant', function ($query) use ($search) {
+            $query->where('name', 'LIKE', "%$search%");
+            $query->orWhere('email', 'LIKE', "%$search%");
+            $query->orWhere('phone', 'LIKE', "%$search%");
+        });
     }
 
     /**
@@ -172,9 +193,19 @@ class Application extends Model
      */
     public function scopeFilterByJob($query, $id)
     {
-        $query->where('hr_job_id', $id);
+        return $query->where('hr_job_id', $id);
+    }
 
-        return $query;
+    public function scopeFilterByAssignee($query, $id)
+    {
+        return $query->whereHas('latestApplicationRound', function ($subQuery) use ($id) {
+            return $subQuery->where('is_latest', true)->where('scheduled_person_id', $id);
+        });
+    }
+
+    public function latestApplicationRound()
+    {
+        return $this->hasOne(ApplicationRound::class, 'hr_application_id')->latest('id');
     }
 
     /**
@@ -361,7 +392,10 @@ class Application extends Model
         $approvedEvents = $this->applicationMeta()->approved()->get();
         foreach ($approvedEvents as $event) {
             $details = json_decode($event->value);
-            $details->approvedBy = User::find($details->approved_by)->name;
+            if (!$approver = User::find($details->approved_by)) {
+                continue;
+            }
+            $details->approvedBy = $approver->name;
             $event->value = $details;
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.approved'),
@@ -378,6 +412,28 @@ class Application extends Model
             $timeline[] = [
                 'type' => config('constants.hr.application-meta.keys.onboarded'),
                 'event' => $event,
+                'date' => $event->created_at,
+            ];
+        }
+
+        $customEmails = $this->applicationMeta()->customMail()->get();
+        foreach ($customEmails as $event) {
+            $details = json_decode($event->value, true);
+            $event->value = $details;
+            $custom_email = [
+                'modal-id' => 'custom_mail_' . $event->id,
+                'mail-to' => $this->applicant->email,
+                'mail-subject' => $details['mail-subject'] ?? 'No subject',
+                'mail-body' => $details['mail-body'] ?? 'No body',
+                'mail-sender' => $details['mail-sender'] ?? '',
+                'mail-date' => $event->created_at
+            ];
+
+            $timeline[] = [
+                'type' => config('constants.hr.application-meta.keys.custom-mail'),
+                'event' => $event,
+                'title' => $details['title'] ?? $details['action'] ?? 'No Title',
+                'mail_data' => $custom_email,
                 'date' => $event->created_at,
             ];
         }
@@ -443,5 +499,11 @@ class Application extends Model
         $fileName = $file->getClientOriginalName();
         $file = Storage::disk('public')->putFileAs($folder, $file, $fileName, 'public');
         return '/storage/' . $file;
+    }
+
+    public function getScheduleInterviewLink()
+    {
+        $params = encrypt(json_encode(['application_id' => $this->id]));
+        return route('select-appointments', $params);
     }
 }

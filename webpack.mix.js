@@ -15,4 +15,8 @@ require('laravel-mix-merge-manifest');
 mix.mergeManifest();
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css').version();
+   .sass('resources/sass/app.scss', 'public/css');
+mix.js('Modules/HR/Resources/assets/js/app.js', 'public/js/hr.js')
+    .sass('Modules/HR/Resources/assets/sass/app.scss', 'public/css/hr.css');
+
+mix.version();

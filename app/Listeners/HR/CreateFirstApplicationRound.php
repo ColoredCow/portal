@@ -2,7 +2,6 @@
 
 namespace App\Listeners\HR;
 
-use Carbon\Carbon;
 use Modules\User\Entities\User;
 use App\Models\HR\ApplicationRound;
 use App\Events\HR\ApplicationCreated;
@@ -31,13 +30,19 @@ class CreateFirstApplicationRound
 
         $job = $application->job;
 
-        $scheduledPerson = User::findByEmail($job->postedBy);
-        $scheduledPerson = $scheduledPerson ?? User::find(config('constants.hr.defaults.scheduled_person_id'));
+        $defaultAssignee = $job->rounds->first()->pivot->hr_round_interviewer_id;
+        $scheduledPerson = null;
+
+        if ($defaultAssignee) {
+            $scheduledPerson = User::find($defaultAssignee);
+        }
+
+        $scheduledPerson = $scheduledPerson ?: User::find(config('constants.hr.defaults.scheduled_person_id'));
 
         $applicationRound = ApplicationRound::create([
             'hr_application_id' => $application->id,
             'hr_round_id' => $job->rounds->first()->id,
-            'scheduled_date' => Carbon::now()->addDay(),
+            'scheduled_date' => now()->addDay(),
             'scheduled_person_id' => $scheduledPerson->id,
         ]);
     }

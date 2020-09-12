@@ -52,8 +52,8 @@ class ApplicationNoShow extends Command
                 $query->where('reminder_enabled', true);
             })
             ->whereNull('round_status')
-            ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
-            ->where('scheduled_date', '<=', Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
+            ->whereDate('scheduled_date', '=', today()->toDateString())
+            ->where('scheduled_date', '<=', now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
             ->get();
 
         $subject = Setting::module('hr')->key('no_show_mail_subject')->first();
@@ -67,7 +67,7 @@ class ApplicationNoShow extends Command
                 $job = $application->job;
 
                 $body = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body);
-                $body = str_replace(config('constants.hr.template-variables.interview-time'), date(config('constants.hr.interview-time-format'), strtotime($applicationRound->scheduled_date)), $body);
+                $body = str_replace(config('constants.hr.template-variables.interview-time'), $applicationRound->scheduled_date->format(config('constants.hr.interview-time-format')), $body);
                 $body = str_replace(config('constants.hr.template-variables.job-title'), $job->title, $body);
 
                 if ($application->status != config('constants.hr.application-meta.keys.no-show')) {

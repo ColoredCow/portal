@@ -11,28 +11,30 @@
             <h1>Applications</h1>
         </div>
 
-        <div class="col-md-6 text-right text-underline">
+        <div class="col-md-6 text-right">
             <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
             <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
         </div>
     </div>
 
     <div class="row mt-4">
-        <form class="col-md-4 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
+        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
             <input type="hidden" name="status" class="form-control" id="search" value=
                    "{{ config('constants.hr.status.' . request("status") . '.label') }}" >
 
-        <input type="text" name="search" class="form-control" id="search" placeholder="Search Applicants" value=@if(request()->has('search')){{request()->get('search')}}
-                   @endif>
-
+            <input 
+                type="text" name="search" class="form-control" id="search" placeholder="Search by name,email and phone" 
+                value=@if(request()->has('search')){{request()->get('search')}}@endif>
                <button class="btn btn-info ml-2">Search</button>
-            </form>
+        </form>
     </div>
-    @if(request()->has('search'))
+    @if(request()->has('search') || request()->has('tags'))
     <div class="row mt-3 mb-2">
         <div class="col-6">
-            <a class="text-muted c-pointer" href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}">
-                <i class="fa fa-times"></i>&nbsp;Clear current search and filters
+            <a class="text-muted c-pointer" 
+                href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}">
+                <i class="fa fa-times"></i>
+                <span>Clear current search and filters</span>
             </a>
         </div>
     </div>
@@ -118,50 +120,55 @@
     </div>
 
     <table class="table table-striped table-bordered" id="applicants_table">
-        <tr>
+        <thead>
             <th>Name</th>
-            <th>Email</th>
-            <th>Resume</th>
-            <th>Applied for</th>
-            <th>Applied on</th>
-            <th>Status</th>
-        </tr>
-        @foreach ($applications as $application)
-        <tr>
-            <td>
-                <a href="/{{ Request::path() }}/{{ $application->id }}/edit">{{ $application->applicant->name }}</a>
-                @if ($application->applicant->linkedin)
-                    <a href="{{$application->applicant->linkedin}}"  target="_blank" >
-                        <u><i class="fa fa-linkedin-square" aria-hidden="true"></i></u>
-                    </a>
-                @endif
-            </td>
-            <td>{{ $application->applicant->email }}</td>
-            <td class="text-center" >
-                @if ($application->resume)
-                    <a href="{{$application->resume}}" target="_blank">
-                        <u><i class="fa fa-file-text" aria-hidden="true"></i></u>
-                    </a>
-                @endif
-            </td>
-            <td>{{ $application->job->title }}</td>
-            <td>{{ $application->created_at->format(config('constants.display_date_format')) }}</td>
-            <td>
-                <span class="d-flex justify-content-start">
-                    @if (in_array($application->status, ['in-progress', 'new']))
-                        <span class="badge badge-warning badge-pill">{{ $application->applicationRounds->last()->round->name }}</span>
-                        @if ($application->applicationRounds->count() > 1)
-                            <span class="badge badge-info badge-pill ml-1 px-2">Completed: {{ $application->applicationRounds->count() - 1 }}</span>
-                        @else
-                            <span class="badge badge-info badge-pill ml-1 px-2">New</span>
-                        @endif
-                    @else
-                        <span class="{{ config("constants.hr.status.$application->status.class") }} badge-pill">{{ config("constants.hr.status.$application->status.title") }}</span>
-                    @endif
-                </span>
-            </td>
-        </tr>
-        @endforeach
+            <th>Details</th>
+            <th>
+                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="assigneeDropdown">Assignee</span>
+                <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
+                    <span class="dropdown-item-text fz-12">Filter by assignee</span>
+                    @foreach ($assignees as $assignee)
+                        @php
+                            $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
+                            $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
+                        @endphp
+                        <a class="dropdown-item" href="{{ $target }}">
+                            <i class="fa fa-check fz-12 {{ $class }}"></i>
+                            <img src="{{ $assignee->avatar }}" alt="{{ $assignee->name }}" class="w-20 h-20 rounded-circle mr-1">
+                            <span>{{ $assignee->name }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </th>
+            <th>
+                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Status</span>
+                <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                    <span class="dropdown-item-text fz-12">Filter by status</span>
+                    @foreach ($tags as $tag)
+                        @php
+                            $target = request()->fullUrlWithQuery(['tags' => [
+                                $tag->id
+                            ]]);
+                            $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
+                        @endphp
+                        <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                            <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
+                            <div class="rounded w-13 h-13 d-inline-block mr-1" style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
+                            <span>{{ $tag->name }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </th>
+        </thead>
+        <tbody>
+            @forelse ($applications as $application)
+                @include('hr::application.render-application-row')
+                @empty
+                <tr>
+                    <td colspan="100%" class="text-center">No application found for this filter.</td>
+                </tr>
+            @endforelse
+        </tbody>
     </table>
     {{ $applications->links() }}
 </div>

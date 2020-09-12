@@ -33,7 +33,7 @@
         </div>
         @endcan
 
-        @can('hr_volunteers_applications.view')
+        @can('hr_recruitment_applications.view')
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
                 <a class="card-body no-transition" href="{{ route('hr.evaluation') }}">
@@ -42,6 +42,17 @@
                 </a>
             </div>
         </div>
+        @endcan
+
+        @can('hr_recruitment_applications.view')
+            <div class="col-md-4">
+                <div class="card h-75 mx-4 mt-3 mb-5">
+                    <a class="card-body no-transition" href="{{ route('settings.hr') }}">
+                        <br>
+                        <h2 class="text-center">Settings</h2><br>
+                    </a>
+                </div>
+            </div>
         @endcan
 
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Nwidart\Modules\Facades\Module;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +17,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->setupEnvForOldPackages();
         Schema::defaultStringLength(191);
+        Module::macro('checkStatus', function ($moduleName) {
+            return Module::has($moduleName) && Module::isEnabled($moduleName);
+        });
     }
 
     /**

@@ -27,6 +27,12 @@
             </div>
 
             <div class="card-body">
+
+                <div class="form-group">
+                    <h3>Job Description</h3>
+                    <textarea id="description" class="form-control" name="description" cols="5" rows="3" >{{$job->description}}</textarea>
+                </div>
+                <br>
                 @if (sizeof($job->rounds))
                     <h3>Interviewers</h3>
                     <div class="form-row">

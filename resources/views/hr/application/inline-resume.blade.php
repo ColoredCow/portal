@@ -14,6 +14,6 @@
         </ul>
     </div>
     <div class="card-body">
-        <iframe src="{{ $resume }}#zoom=50"></iframe>
+        <iframe src="{{ $resume }}#zoom=100"></iframe>
     </div>
 </div>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-    protected $fillable = ['title', 'type', 'posted_by', 'link', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post'];
+    protected $fillable = ['title', 'type', 'description', 'posted_by', 'link', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post'];
 
     protected $table = 'hr_jobs';
 

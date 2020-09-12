@@ -3,30 +3,42 @@
 namespace App\Models\HR;
 
 use Carbon\Carbon;
+use App\Traits\HasTags;
 use App\Helpers\FileHelper;
 use Modules\User\Entities\User;
 use App\Mail\HR\SendForApproval;
 use App\Mail\HR\SendOfferLetter;
+use Modules\HR\Entities\FollowUp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
+use Modules\Communication\Traits\HasCalendarMeetings;
 use Modules\HR\Entities\ApplicationEvaluationSegment;
 
 class ApplicationRound extends Model
 {
+    use HasTags, HasCalendarMeetings;
+
     protected $guarded = [];
 
     protected $table = 'hr_application_round';
 
     public $timestamps = false;
 
+    protected $dates = [
+        'scheduled_date',
+        'conducted_date',
+    ];
+
     public function _update($attr)
     {
+        // TODO: the fillable definition below need to be put somewhere else.
+        // When just updating an application round (maybe updating comment), the below details are getting overriden.
         $fillable = [
-            'conducted_person_id' => Auth::id(),
-            'conducted_date' => Carbon::now(),
+            'conducted_person_id' => auth()->id(),
+            'conducted_date' => now(),
         ];
 
         $application = $this->application;
@@ -37,7 +49,7 @@ class ApplicationRound extends Model
 
                 // If the application status is no-show or no-show-reminded, and the new schedule date is greater
                 // than the current time, we change the application status to in-progress.
-                if ($application->isNoShow() && Carbon::parse($attr['scheduled_date'])->gt(Carbon::now())) {
+                if ($application->isNoShow() && Carbon::parse($attr['scheduled_date'])->gt(now())) {
                     $application->markInProgress();
                 }
                 $fillable = [
@@ -49,6 +61,7 @@ class ApplicationRound extends Model
 
             case 'confirm':
                 $fillable['round_status'] = 'confirmed';
+                $this->update($fillable);
                 $application->markInProgress();
                 $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
                 $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
@@ -59,6 +72,7 @@ class ApplicationRound extends Model
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                 ]);
+
                 break;
 
             case 'reject':
@@ -139,7 +153,14 @@ class ApplicationRound extends Model
                     'provider_id' => '',
                 ]);
                 break;
+
+            case 'update':
+                // this is a workaround to nullify the fillable array so that in case of
+                // regular update, nothing gets changed in the application round except the reviews.
+                $fillable = [];
+                break;
         }
+
         $this->update($fillable);
         $this->_updateOrCreateReviews($attr['reviews']);
     }
@@ -156,7 +177,7 @@ class ApplicationRound extends Model
                     ],
                     [
                         'option_id' => $evaluation['option_id'],
-                        'comment' => $evaluation['comment'],
+                        'comment' => $evaluation['comment'] ?? null,
                     ]
                 );
             }
@@ -183,7 +204,7 @@ class ApplicationRound extends Model
 
     protected function _updateOrCreateReviews($reviews = [])
     {
-        foreach ($reviews as $review_key => $review_value) {
+        foreach ($reviews[$this->id] ?? [] as $review_key => $review_value) {
             $application_reviews = $this->applicationRoundReviews()->updateOrCreate(
                 [
                     'hr_application_round_id' => $this->id,
@@ -237,6 +258,11 @@ class ApplicationRound extends Model
         return $this->belongsTo(User::class, 'mail_sender');
     }
 
+    public function followUps()
+    {
+        return $this->hasMany(FollowUp::class, 'hr_application_round_id');
+    }
+
     /**
      * Get communication mail for this application round.
      *
@@ -249,7 +275,7 @@ class ApplicationRound extends Model
             'mail-to' => $this->application->applicant->email,
             'mail-subject' => $this->mail_subject,
             'mail-body' => $this->mail_body,
-            'mail-sender' => $this->mailSender->name,
+            'mail-sender' => $this->mailSender ? $this->mailSender->name : 'NA',
             'mail-date' => $this->mail_sent_at,
         ];
     }
@@ -279,7 +305,7 @@ class ApplicationRound extends Model
                 ]);
             })
             ->whereNull('round_status')
-            ->whereDate('scheduled_date', '=', Carbon::today()->toDateString())
+            ->whereDate('scheduled_date', '=', today()->toDateString())
             ->orderBy('scheduled_date')
             ->get();
 
@@ -311,6 +337,30 @@ class ApplicationRound extends Model
      */
     public function getShowActionsAttribute()
     {
-        return is_null($this->round_status) || $this->isRejected() || (!$this->isOnboarded());
+        if ($this->isRejected()) {
+            return true;
+        }
+
+        if ($this->conducted_date) {
+            return false;
+        }
+
+        return is_null($this->round_status) || (!$this->isOnboarded());
+    }
+
+    public function getPreviousApplicationRound()
+    {
+        return ApplicationRound::with('round')->where('hr_application_id', $this->hr_application_id)
+            ->where('round_status', 'confirmed')
+            ->whereNotNull('conducted_date')
+            ->where('id', '<', $this->id)
+            ->orderByDesc('id')
+            ->first();
+    }
+
+    public function updateIsLatestColumn()
+    {
+        self::where('hr_application_id', $this->hr_application_id)->update(['is_latest' => false]);
+        $this->update(['is_latest' => true]);
     }
 }

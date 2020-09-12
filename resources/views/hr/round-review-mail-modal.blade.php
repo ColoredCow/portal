@@ -19,12 +19,12 @@
                     <h6 class="mb-4">Sending to: {{ $application->applicant->email }}</h6>
                     <div class="form-group">
                         <label for="subject">Mail subject:</label>
-                        <input type="text" class="form-control" name="mail_subject" required="required" placeholder="Subject" value="{{ $applicationRound->round->{$mailTemplate}['subject'] }}">
+                        <input type="text" class="form-control" name="mail_subject" required="required" placeholder="Subject" value="{{ $applicationRound->round->{$mailTemplate}['subject'] ?? null }}">
                     </div>
                     <div class="form-group">
                         <label for="mail_content">Mail body:</label>
                         <textarea name="mail_body" id="mail_body" rows="10" class="richeditor form-control" placeholder="Body">
-                            {{ $applicationRound->round->{$mailTemplate}['body'] }}
+                            {{ $applicationRound->round->{$mailTemplate}['body'] ?? null }}
                         </textarea>
                     </div>
                 </div>

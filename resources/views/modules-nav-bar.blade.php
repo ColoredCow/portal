@@ -1,6 +1,6 @@
 <ul class="navbar-nav mr-auto {{ request()->is('home') ? 'd-none' : '' }}" style="font-size:16px;">
 
-    @if(Module::isEnabled('User') && auth()->user()->can('user_management.view'))
+    @if(Module::checkStatus('User') && auth()->user()->can('user_management.view'))
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user.index') }}">User Management</a>
     </li>
@@ -24,6 +24,12 @@
             @can('hr_volunteers_applications.view')
             <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
             @endcan
+            @can('hr_recruitment_applications.view')
+            <a class="dropdown-item" href="{{ route('hr.evaluation') }}">Manage Evaluation</a>
+            @endcan
+            @can('hr_recruitment_applications.view')
+            <a class="dropdown-item" href="{{ route('settings.hr') }}">Settings</a>
+            @endcan
         </div>
     </li>
     </li>
@@ -34,17 +40,17 @@
         </li>
     @endcan --}}
 
-    @if(auth()->user()->can('clients.view'))
+    @if(Module::checkStatus('Client') && auth()->user()->can('clients.view'))
     <li class="nav-item">
         <a class="nav-link" href="{{ route('client.index') }}"></i>Clients</a>
     </li>
     @endif
 
-    @can('projects.view')
+    @if(Module::checkStatus('Project') && auth()->user()->can('projects.view'))
     <li class="nav-item">
         <a class="nav-link" href='{{ route('project.index') }}'>Projects</a>
     </li>
-    @endcan
+    @endif
 
     @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
     <li class="nav-item">
@@ -65,32 +71,28 @@
     </li>
     @endif
 
+    @if(Module::checkStatus('Prospect') || Module::checkStatus('Lead'))
     <li class="nav-item dropdown">
         <a id="navbarDropdown_hr" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" v-pre>
             CRM <span class="caret"></span>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown_hr">
-            @if(auth()->user()->can('prospect.view'))
+            @if(Module::checkStatus('Prospect') && auth()->user()->can('prospect.view'))
             <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
             @endif
 
-            @can('lead.view')
+            @if(Module::checkStatus('Lead') && auth()->user()->can('lead.view'))
             <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
-            @endcan
-            {{-- @can('task.view')
-            <a class="dropdown-item" href="{{ '/task' }}">Tasks</a>
-            @endcan --}}
+            @endif
         </div>
     </li>
+    @endif
 
-    @if(auth()->user()->can('infrastructure.view'))
+    @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.view'))
     <li class="nav-item">
         <a class="nav-link" href="{{ route('infrastructure.index') }}">&nbsp;Infrastructure</a>
     </li>
     @endif
-
-
-
 
 </ul>

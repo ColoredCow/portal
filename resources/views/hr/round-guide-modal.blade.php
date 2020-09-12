@@ -1,5 +1,5 @@
 <div class="modal fade hr_round_guide" id="round_guide_{{ $round->id }}" tabindex="-1" role="dialog" aria-labelledby="round_guide_{{ $round->id }}" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form action="{{ route('hr.round.update', $round->id) }}" method="POST">
 

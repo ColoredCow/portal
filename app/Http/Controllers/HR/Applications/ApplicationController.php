@@ -2,28 +2,35 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
+use App\Models\Tag;
 use App\Models\HR\Job;
 use App\Models\Setting;
 use App\Helpers\FileHelper;
-use App\Helpers\ContentHelper;
+use Illuminate\Support\Str;
 use App\Models\HR\Application;
 use Modules\User\Entities\User;
 use App\Models\HR\ApplicationMeta;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\HR\Application\JobChanged;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Modules\HR\Services\ApplicationService;
 use App\Http\Requests\HR\ApplicationRequest;
 use App\Mail\HR\Application\RoundNotConducted;
-use App\Mail\HR\Application\CustomApplicationMail;
 use App\Http\Requests\HR\CustomApplicationMailRequest;
 
 abstract class ApplicationController extends Controller
 {
     abstract public function getApplicationType();
+
+    protected $service;
+
+    public function __construct(ApplicationService $service)
+    {
+        $this->service = $service;
+    }
 
     /**
      * Display a listing of the resource.
@@ -32,17 +39,46 @@ abstract class ApplicationController extends Controller
      */
     public function index()
     {
+        $referer = request()->headers->get('referer');
+
+        // We need this so that we can redirect user to the older page number.
+        // we can improve this logic in the future.
+
+        if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
+            session()->put(['should_skip_page' => true]);
+            return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
+        }
+
+        session()->put([
+            'previous_application_data' => request()->all(),
+            'should_skip_page' => false
+        ]);
+
+        //#TO DO: Move this logic to application service.
         $filters = [
             'status' => request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
-            'name' => request()->get('search'),
+            'search' => request()->get('search'),
+            'tags' => request()->get('tags'),
+            'assignee' => request()->get('assignee'), // TODO
         ];
-        $applications = Application::with(['applicant', 'job'])
-            ->applyFilter($filters)
-            ->latest()
-            ->paginate(config('constants.pagination_size'))
-            ->appends(Request::except('page'));
+
+        $loggedInUserId = auth()->id();
+        $applications = Application::join('hr_application_round', function ($join) {
+            $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
+                ->where('hr_application_round.is_latest', true);
+        })
+        ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
+        ->whereHas('latestApplicationRound')
+        ->applyFilter($filters)
+        ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
+        ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
+        ->orderByRaw('hr_application_round.scheduled_date ASC')
+        ->select('hr_applications.*')
+        ->latest()
+        ->paginate(config('constants.pagination_size'))
+        ->appends(Request::except('page'));
 
         $countFilters = array_except($filters, ['status']);
         $attr = [
@@ -58,6 +94,8 @@ abstract class ApplicationController extends Controller
         }
 
         $attr['jobs'] = Job::all();
+        $attr['tags'] = Tag::orderBy('name')->get();
+        $attr['assignees'] = User::orderBy('name')->get();
         return view('hr.application.index')->with($attr);
     }
 
@@ -71,8 +109,8 @@ abstract class ApplicationController extends Controller
     {
         $application = Application::findOrFail($id);
 
-        $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta']);
-
+        // phew!
+        $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps']);
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
@@ -80,7 +118,7 @@ abstract class ApplicationController extends Controller
             'applicant' => $application->applicant,
             'application' => $application,
             'timeline' => $application->applicant->timeline(),
-            'interviewers' => User::interviewers()->get(),
+            'interviewers' => User::interviewers()->orderBy('name')->get(),
             'applicantOpenApplications' => $application->applicant->openApplications(),
             'applicationFormDetails' => $application->applicationMeta()->formData()->first(),
             'offer_letter' => $application->offer_letter,
@@ -134,7 +172,7 @@ abstract class ApplicationController extends Controller
                     'value' => json_encode([
                         'round' => $validated['application_round_id'],
                         'reason' => $validated['no_show_reason'],
-                        'user' => Auth::id(),
+                        'user' => auth()->id(),
                         'mail_subject' => $validated['no_show_mail_subject'],
                         'mail_body' => $validated['no_show_mail_body'],
                     ]),
@@ -151,20 +189,11 @@ abstract class ApplicationController extends Controller
     {
         $validated = $mailRequest->validated();
 
-        $mailDetails = [
-            'action' => ContentHelper::editorFormat($validated['mail_action']),
-            'mail_subject' => ContentHelper::editorFormat($validated['mail_subject']),
-            'mail_body' => ContentHelper::editorFormat($validated['mail_body']),
-            'mail_triggered_by' => Auth::id(),
-        ];
-
-        ApplicationMeta::create([
-            'hr_application_id' => $application->id,
-            'key' => config('constants.hr.application-meta.keys.custom-mail'),
-            'value' => json_encode($mailDetails),
+        $this->service->sendApplicationMail($application, [
+            'action' => $validated['mail_action'],
+            'mail_subject' => $validated['mail_subject'],
+            'mail_body' => $validated['mail_body'],
         ]);
-
-        Mail::send(new CustomApplicationMail($application, $mailDetails['mail_subject'], $mailDetails['mail_body']));
 
         $status = 'Mail sent successfully to <b>' . $application->applicant->name . '</b> at <b>' . $application->applicant->email . '</b>.<br>';
 

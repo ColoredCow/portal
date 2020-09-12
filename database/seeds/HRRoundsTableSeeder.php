@@ -27,7 +27,7 @@ class HrRoundsTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'name' => 'Telephonic Interview',
+                'name' => 'Introductory Call',
                 'guidelines' => 'Look for the creativity',
                 'reminder_enabled' => 1,
                 'confirmed_mail_template' => '{"body": "<p class=\\"p1\\">Hi |*applicant_name*|,</p><p class=\\"p1\\">Thanks for talking to us on |*interview_time*|.<br /><br />It’s nice talking to you. We are glad that candidly shared your life stories and experiences with us. It all was quite interesting!<br /><br />Interesting enough, that we\'d like to invite you for a 30-minutes chat over video. This call is going to be about the Computer Science basics. I’ll send you a separate email with details.<br /><br />This will be a chance for you to learn more about ColoredCow and for us to learn more about you and your concepts, and knowledge. <br /><br />As we said earlier we are in an interesting phase of growth and offer a chance for hands-on learning and an opportunity to take your career in the direction of your dreams. <br /><br />In case you have questions, now or later, feel free to email me. I\'ll be happy to answer those for you.<br /><br />Looking forward to chatting soon.</p><p class=\\"p1\\">Our FB page is the best place to get most of the update about happening at ColoredCow, be it our work or opportunities to work together. Check that out to know more <a href=\\"https://www.facebook.com/ColoredCowConsulting/\\">https://www.facebook.com/ColoredCowConsulting/</a><br /><br />Thanks<br />HR Team<br />ColoredCow</p>", "subject": "ColoredCow Congratulates you again on making it to the next round!"}',

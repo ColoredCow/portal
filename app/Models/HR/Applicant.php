@@ -83,6 +83,7 @@ class Applicant extends Model
             ];
             $timeline = array_merge($timeline, $application->timeline());
         }
+
         // Sort the timeline based on the date value in each subarray in the timeline.
         array_multisort(array_map(function ($element) {
             return $element['date'];

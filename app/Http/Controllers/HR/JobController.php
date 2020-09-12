@@ -109,6 +109,7 @@ class JobController extends Controller
             'twitter_post' => $validated['twitter_post'],
             'linkedin_post' => $validated['linkedin_post'],
             'rounds' => $validated['rounds'],
+            'description' => $validated['description'],
         ]);
 
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);

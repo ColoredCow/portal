@@ -20,10 +20,13 @@ return [
     'date_format' => 'Y-m-d',
     'datetime_format' => 'Y-m-d H:i:s',
     'display_date_format' => 'd/m/Y',
+    'display_time_format' => 'H:ia',
+    'full_display_date_format' => 'H:ia M d, Y',
     'full_display_date_format' => 'M d, Y',
     'display_datetime_format' => 'Y-m-d\TH:i',
     'calendar_datetime_format' => 'Y-m-d\TH:i:s',
     'input_date_format' => 'dd/mm/yyyy',
+    'display_daydatetime_format' => 'D h:ia, d M y',
     'modules' => [
         'hr',
         'finance',
@@ -133,9 +136,15 @@ return [
                 'title' => 'Onboarded',
                 'class' => 'badge badge-success',
             ],
+
+            'custom-mail' => [
+                'label' => 'custom-mail',
+                'title' => 'Custom mail',
+                'class' => 'badge badge-success p-1',
+            ],
         ],
         'defaults' => [
-            'scheduled_person_id' => 1,
+            'scheduled_person_id' => env('HR_DEFAULT_SCHEDULED_PERSON', 1),
         ],
         'offer-letters-dir' => 'offer-letters',
     ],
