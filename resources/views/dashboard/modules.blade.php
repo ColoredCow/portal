@@ -110,4 +110,8 @@
     </li>
     @endif
 
+    <li class="nav-item">
+        <a class="nav-item nav-link font-weight-bold" href="{{ route('userappointmentslots.index') }}"><i class="fa fa-calendar">
+            </i>&nbsp;Appointment Slots</a>
+    </li>
 </ul>

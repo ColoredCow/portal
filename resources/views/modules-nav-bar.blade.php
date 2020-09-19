@@ -33,6 +33,7 @@
             @can('hr_universities.view')
                 <a class="dropdown-item" href="{{ route('universities.index') }}">Universities</a>
             @endcan
+            <a class="dropdown-item" href="{{route('userappointmentslots.index')}}">Appointment Slots</a>
         </div>
     </li>
     </li>
