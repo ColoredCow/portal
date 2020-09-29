@@ -1,5 +1,3 @@
-# Introduction
-
 :wave: Welcome to ColoredCow Employee Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
 
 ### Installation
