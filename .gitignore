@@ -1,4 +1,3 @@
-/node_modules
 /public/hot
 /public/storage
 /storage/*.key
@@ -23,3 +22,5 @@ yarn-error.log
 /storage/debugbar
 
 node_modules/
+/node_modules
+node_modules
