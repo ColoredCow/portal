@@ -213,13 +213,10 @@
             </th>
         </thead>
         <tbody>
-            {{-- {{json_encode($applications)}} --}}
-            {{-- {{json_encode($applications[0]['latestApplicationRound']['round']['name'])}} --}}
            @forelse ($applications as $application)   
                 @if((lcfirst(str_replace(" ", "",$application['latestApplicationRound']['round']['name'])) == request()->round) || !request()->has('status'))
                     @include('hr::application.render-application-row')
                 @endif
-                {{lcfirst(str_replace(" ", "",$application['latestApplicationRound']['round']['name']))}}
             @empty 
             <tr>
                 <td colspan="100%" class="text-center">No application found for this filter.</td>
