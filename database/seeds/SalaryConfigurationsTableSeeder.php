@@ -12,11 +12,8 @@ class SalaryConfigurationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('salary_configurations')->delete();
-        
-        
-        
     }
 }

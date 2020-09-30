@@ -69,17 +69,16 @@ abstract class ApplicationController extends Controller
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
         })
-        ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
-        ->whereHas('latestApplicationRound')
-        ->applyFilter($filters)
-        ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
-        ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
-        ->orderByRaw('hr_application_round.scheduled_date ASC')
-        ->select('hr_applications.*')
-        ->latest()
-        ->paginate(config('constants.pagination_size'))
-        ->appends(Request::except('page'));
-
+            ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
+            ->whereHas('latestApplicationRound')
+            ->applyFilter($filters)
+            ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
+            ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
+            ->orderByRaw('hr_application_round.scheduled_date ASC')
+            ->select('hr_applications.*')
+            ->latest()
+            ->paginate(config('constants.pagination_size'))
+            ->appends(Request::except('page'));
         $countFilters = array_except($filters, ['status']);
         $attr = [
             'applications' => $applications,
