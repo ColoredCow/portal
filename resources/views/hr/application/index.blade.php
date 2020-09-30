@@ -63,7 +63,7 @@
 
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.in-progress.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{request()->has('search')? "&search=".request('search'):"" }}&round=15>
+                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{request()->has('search')? "&search=".request('search'):"" }}&round=trialProgram>
                     <i class="fa fa-clipboard"></i>&nbsp;
                     Trial Program
                     @if(request()->has('search'))
@@ -213,16 +213,19 @@
             </th>
         </thead>
         <tbody>
-            @forelse ($applications as $application)
-                @if(($application['latestApplicationRound']['hr_round_id'] == request()->round) || !request()->has('status'))
+            {{-- {{json_encode($applications)}} --}}
+            {{-- {{json_encode($applications[0]['latestApplicationRound']['round']['name'])}} --}}
+           @forelse ($applications as $application)   
+                @if((lcfirst(str_replace(" ", "",$application['latestApplicationRound']['round']['name'])) == request()->round) || !request()->has('status'))
                     @include('hr::application.render-application-row')
                 @endif
-            @empty
+                {{lcfirst(str_replace(" ", "",$application['latestApplicationRound']['round']['name']))}}
+            @empty 
             <tr>
                 <td colspan="100%" class="text-center">No application found for this filter.</td>
             </tr>
             @endforelse
-        </tbody>
+        </tbody> 
     </table>
     {{ $applications->links() }}
 </div>

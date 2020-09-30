@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Helpers\FileHelper;
 use Illuminate\Support\Str;
 use App\Models\HR\Application;
+use App\Models\HR\ApplicationRound;
 use Modules\User\Entities\User;
 use App\Models\HR\ApplicationMeta;
 use App\Http\Controllers\Controller;
@@ -20,6 +21,7 @@ use Modules\HR\Services\ApplicationService;
 use App\Http\Requests\HR\ApplicationRequest;
 use App\Mail\HR\Application\RoundNotConducted;
 use App\Http\Requests\HR\CustomApplicationMailRequest;
+use DB;
 
 abstract class ApplicationController extends Controller
 {
@@ -69,7 +71,7 @@ abstract class ApplicationController extends Controller
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
         })
-            ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
+            ->with(['applicant', 'job', 'tags', 'latestApplicationRound', 'latestApplicationRound.round'])
             ->whereHas('latestApplicationRound')
             ->applyFilter($filters)
             ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
@@ -91,7 +93,6 @@ abstract class ApplicationController extends Controller
                 ->get()
                 ->count();
         }
-
         $attr['jobs'] = Job::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['assignees'] = User::orderBy('name')->get();
