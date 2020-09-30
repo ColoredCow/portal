@@ -24,7 +24,7 @@
                 value="{{ config('constants.hr.status.' . request("status") . '.label') }}">@endif
 
             <input type="hidden" name="round" class="form-control" id="search"
-            value=@if(request()->has('round')){{request()->get('round')}}@endif>
+                value=@if(request()->has('round')){{request()->get('round')}}@endif>
 
             <input type="text" name="search" class="form-control" id="search"
                 placeholder="Search by name,email and phone"
@@ -213,16 +213,20 @@
             </th>
         </thead>
         <tbody>
-           @forelse ($applications as $application)   
-                @if((lcfirst(str_replace(" ", "",$application['latestApplicationRound']['round']['name'])) == request()->round) || !request()->has('status'))
-                    @include('hr::application.render-application-row')
-                @endif
-            @empty 
+            @forelse ($applications as $application)
+            @if((lcfirst(str_replace(" ", "",$application->latestApplicationRound->round->name)) ==
+            request()->round) || !request()->has('status'))
+            @include('hr::application.render-application-row')
+            @endif
+            @if(request()->has('status')&& request()->status!= "in-progress")
+            @include('hr::application.render-application-row')
+            @endif
+            @empty
             <tr>
                 <td colspan="100%" class="text-center">No application found for this filter.</td>
             </tr>
             @endforelse
-        </tbody> 
+        </tbody>
     </table>
     {{ $applications->links() }}
 </div>

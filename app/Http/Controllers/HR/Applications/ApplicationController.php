@@ -71,7 +71,7 @@ abstract class ApplicationController extends Controller
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
         })
-            ->with(['applicant', 'job', 'tags', 'latestApplicationRound', 'latestApplicationRound.round'])
+            ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
             ->whereHas('latestApplicationRound')
             ->applyFilter($filters)
             ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
