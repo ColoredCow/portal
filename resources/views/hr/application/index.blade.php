@@ -12,16 +12,13 @@
 
         <div class="col-md-6 text-right">
             <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
-            <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel
-                file</button>
+            <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
         </div>
     </div>
     <div class="row mt-4">
-        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET"
-            action="/{{ Request::path() }}">
-            @if(request()->has('search'))
+        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">  
             <input type="hidden" name="status" class="form-control" id="search"
-                value="{{ config('constants.hr.status.' . request("status") . '.label') }}">@endif
+                value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
 
             <input type="hidden" name="round" class="form-control" id="search"
                 value=@if(request()->has('round')){{request()->get('round')}}@endif>
@@ -172,8 +169,7 @@
             <th>Name</th>
             <th>Details</th>
             <th>
-                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false" id="assigneeDropdown">Assignee</span>
+                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="assigneeDropdown">Assignee</span>
                 <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
                     <span class="dropdown-item-text fz-12">Filter by assignee</span>
                     @foreach ($assignees as $assignee)
@@ -191,31 +187,29 @@
                 </div>
             </th>
             <th>
-                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false" id="statusDropdown">Status</span>
+                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Status</span>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                     <span class="dropdown-item-text fz-12">Filter by status</span>
                     @foreach ($tags as $tag)
-                    @php
-                    $target = request()->fullUrlWithQuery(['tags' => [
-                    $tag->id
-                    ]]);
-                    $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
-                    @endphp
-                    <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
-                        <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
-                        <div class="rounded w-13 h-13 d-inline-block mr-1"
-                            style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
-                        <span>{{ $tag->name }}</span>
-                    </a>
+                        @php
+                            $target = request()->fullUrlWithQuery(['tags' => [
+                            $tag->id
+                            ]]);
+                            $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
+                        @endphp
+                        <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                            <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
+                            <div class="rounded w-13 h-13 d-inline-block mr-1"
+                                style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
+                            <span>{{ $tag->name }}</span>
+                        </a>
                     @endforeach
                 </div>
             </th>
         </thead>
         <tbody>
             @forelse ($applications as $application)
-            @if((lcfirst(str_replace(" ", "",$application->latestApplicationRound->round->name)) ==
-            request()->round) || !request()->has('status'))
+            @if((lcfirst(str_replace(" ", "",$application->latestApplicationRound->round->name)) == request()->round) || !request()->has('status'))
             @include('hr::application.render-application-row')
             @endif
             @if(request()->has('status')&& request()->status!= "in-progress")

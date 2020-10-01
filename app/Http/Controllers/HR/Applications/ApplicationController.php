@@ -20,7 +20,6 @@ use Modules\HR\Services\ApplicationService;
 use App\Http\Requests\HR\ApplicationRequest;
 use App\Mail\HR\Application\RoundNotConducted;
 use App\Http\Requests\HR\CustomApplicationMailRequest;
-use DB;
 
 abstract class ApplicationController extends Controller
 {
