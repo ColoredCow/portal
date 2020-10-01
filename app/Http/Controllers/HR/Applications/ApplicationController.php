@@ -80,6 +80,12 @@ abstract class ApplicationController extends Controller
             ->paginate(config('constants.pagination_size'))
             ->appends(Request::except('page'));
         $countFilters = array_except($filters, ['status']);
+        $countTrialProgram = 0;
+        foreach($applications as $application){
+            if($application->latestApplicationRound->round->name == 'Trial Program'){
+                $countTrialProgram++;
+            }
+        }
         $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
@@ -94,6 +100,7 @@ abstract class ApplicationController extends Controller
         $attr['jobs'] = Job::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['assignees'] = User::orderBy('name')->get();
+        $attr['trialProgramCount'] = $countTrialProgram;
         return view('hr.application.index')->with($attr);
     }
 

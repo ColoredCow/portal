@@ -52,7 +52,7 @@
                     <span
                         class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status ? 'text-white' : 'active bg-white text-info' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$newApplicationsCount + $inProgressApplicationsCount }}
+                        {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount }}
                     </span>
                     @endif
                 </a>
@@ -67,7 +67,7 @@
                     <span
                         class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.in-progress.label') ? 'active bg-info text-white' : 'text-info' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$inProgressApplicationsCount}}
+                        {{$trialProgramCount}}
                     </span>
                     @endif
                 </a>
@@ -209,11 +209,15 @@
         </thead>
         <tbody>
             @forelse ($applications as $application)
-            @if((lcfirst(str_replace(" ", "",$application->latestApplicationRound->round->name)) == request()->round) || !request()->has('status'))
-            @include('hr::application.render-application-row')
-            @endif
-            @if(request()->has('status')&& request()->status!= "in-progress")
-            @include('hr::application.render-application-row')
+            @if(request()->has('status'))
+                @if((lcfirst(str_replace(" ", "",$application->latestApplicationRound->round->name)) == request()->round))
+                @include('hr::application.render-application-row')
+                @endif
+                @if(request()->has('status')&& request()->status!= "in-progress")
+                @include('hr::application.render-application-row')
+                @endif
+            @elseif($application->latestApplicationRound->round->name != 'Trial Program')
+                @include('hr::application.render-application-row')
             @endif
             @empty
             <tr>
