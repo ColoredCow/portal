@@ -208,6 +208,7 @@ class Application extends Model
         return $this->hasOne(ApplicationRound::class, 'hr_application_id')->latest('id');
     }
 
+
     /**
      * Get applications where status is rejected.
      */
