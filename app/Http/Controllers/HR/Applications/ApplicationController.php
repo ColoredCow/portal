@@ -56,7 +56,7 @@ abstract class ApplicationController extends Controller
     
         //#TO DO: Move this logic to application service.
         $filters = [
-            'status' =>request()->get('status')? : 'non-rejected',
+            'status' =>request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
             'search' => request()->get('search'),
@@ -69,7 +69,7 @@ abstract class ApplicationController extends Controller
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
         })
-            ->with(['applicant', 'job', 'tags','latestApplicationRound'])
+            ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
             ->whereHas('latestApplicationRound')
             ->applyFilter($filters)
             ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
@@ -84,27 +84,27 @@ abstract class ApplicationController extends Controller
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
-        $inProgressRounds = ['Trial Program'];
+        $hrRounds = ['Resume Screening', 'Introductory Call', 'Basic Technical Round', 'Detailed Technical Round', 'Team Interaction Round', 'HR Round', 'Trial Program', 'Volunteer Screening'];
         $strings = array_pluck(config('constants.hr.status'), 'label');
        
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
-                ->whereHas('latestApplicationRound', function ($subQuery) use($inProgressRounds) {
-                    return $subQuery->where('is_latest', 1)
-                         ->whereHas('round', function ($subQuery) use($inProgressRounds) {
-                            return $subQuery->whereNotIn('name',[$inProgressRounds]);;
+                ->whereHas('latestApplicationRound', function ($subQuery) use($hrRounds) {
+                    return $subQuery->where('is_latest', true)
+                         ->whereHas('round', function ($subQuery) use($hrRounds) {
+                            return $subQuery->whereNotIn('name', $hrRounds);
                          });
                 })
                 ->get()
                 ->count();
         }
         
-        foreach ($inProgressRounds as $round) {
+        foreach ($hrRounds as $round) {
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
             ->where('status', config('constants.hr.status.in-progress.label'))
             ->whereHas('latestApplicationRound', function ($subQuery) use($round) {
-                return $subQuery->where('is_latest', 1)
+                return $subQuery->where('is_latest', true)
                          ->whereHas('round', function ($subQuery) use ($round) {
                             return $subQuery->where('name', $round);
                          });

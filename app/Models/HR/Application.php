@@ -213,7 +213,7 @@ class Application extends Model
     public function scopeFilterByRoundName($query, $round)
     {
         return $query->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
-               return $subQuery->where('is_latest', 1)
+               return $subQuery->where('is_latest', true)
                          ->whereHas('round', function ($subQuery) use ($round) {
                             return $subQuery->where('name', $round);
                          });
@@ -267,7 +267,7 @@ class Application extends Model
     {
         return $query->whereIn('status', [config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')])
                      ->whereHas('latestApplicationRound', function ($subQuery) {
-                         return $subQuery->where('is_latest', 1)
+                         return $subQuery->where('is_latest', true)
                                         ->whereHas('round', function ($subQuery) {
                                             return $subQuery->whereNotIn('name', ["Trial Program"]);
                                         });
