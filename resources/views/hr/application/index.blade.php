@@ -208,7 +208,6 @@
             </th>
         </thead>
         <tbody>
-            {{json_encode($applications)}}
             @forelse ($applications as $application)
                 @include('hr::application.render-application-row')
             @empty
