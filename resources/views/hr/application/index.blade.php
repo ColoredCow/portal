@@ -50,9 +50,9 @@
                     Open
                     @if(request()->has('search'))
                     <span
-                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status ? 'text-white' : 'active bg-white text-info' }}"
+                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status ? 'text-white' : 'active bg-info text-info' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount }}
+                        {{$newApplicationsCount + $inProgressApplicationsCount}}
                     </span>
                     @endif
                 </a>
@@ -60,7 +60,7 @@
 
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.in-progress.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{request()->has('search')? "&search=".request('search'):"" }}&round=trialProgram>
+                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{request()->has('search')? "&search=".request('search'):"" }}&round=Trial-Program>
                     <i class="fa fa-clipboard"></i>&nbsp;
                     Trial Program
                     @if(request()->has('search'))
@@ -80,7 +80,7 @@
                     {{ config('constants.hr.status.on-hold.title') }}
                     @if(request()->has('search'))
                     <span
-                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-white text-info' : 'text-white' }}"
+                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-info' : 'text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$onHoldApplicationsCount}}
                     </span>
@@ -93,7 +93,7 @@
                     <i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}
                     @if(request()->has('search'))
                     <span
-                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'text-white' }}"
+                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-info' : 'text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$noShowApplicationsCount}}
                     </span>
@@ -107,7 +107,7 @@
                     Closed
                     @if(request()->has('search'))
                     <span
-                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-white text-info' : 'text-white' }}"
+                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-info' : 'text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$rejectedApplicationsCount}}
                     </span>
@@ -120,7 +120,7 @@
                     <i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}
                     @if(request()->has('search'))
                     <span
-                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-white text-info' : 'text-white' }}"
+                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-info' : 'text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$sentForApprovalApplicationsCount}}
                     </span>
@@ -134,7 +134,7 @@
                     Approved
                     @if(request()->has('search'))
                     <span
-                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.approved.label') ? 'active bg-white text-info' : 'text-white' }}"
+                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.approved.label') ? 'active bg-info text-info' : 'text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$approvedApplicationsCount}}
                     </span>
@@ -148,7 +148,7 @@
                     Onboard
                     @if(request()->has('search'))
                     <span
-                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.onbaorded.label') ? 'active bg-white text-info' : 'text-white' }}"
+                        class="ml-1 d-inline-block bg-info text-white px-2 py-0 {{ $status === config('constants.hr.status.onbaorded.label') ? 'active bg-info text-info' : 'text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$onboardedApplicationsCount}}
                     </span>
@@ -208,17 +208,9 @@
             </th>
         </thead>
         <tbody>
+            {{json_encode($applications)}}
             @forelse ($applications as $application)
-            @if(request()->has('status'))
-                @if((lcfirst(str_replace(" ", "",$application->latestApplicationRound->round->name)) == request()->round))
                 @include('hr::application.render-application-row')
-                @endif
-                @if(request()->has('status')&& request()->status!= "in-progress")
-                @include('hr::application.render-application-row')
-                @endif
-            @elseif($application->latestApplicationRound->round->name != 'Trial Program')
-                @include('hr::application.render-application-row')
-            @endif
             @empty
             <tr>
                 <td colspan="100%" class="text-center">No application found for this filter.</td>
@@ -226,7 +218,7 @@
             @endforelse
         </tbody>
     </table>
-    {{ $applications->links() }}
+    {{-- {{ $applications->links() }} --}}
 </div>
 
 @include('hr.application.excel-import')

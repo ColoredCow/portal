@@ -53,23 +53,23 @@ abstract class ApplicationController extends Controller
             'previous_application_data' => request()->all(),
             'should_skip_page' => false
         ]);
-
+    
         //#TO DO: Move this logic to application service.
         $filters = [
-            'status' => request()->get('status') ?: 'non-rejected',
+            'status' =>request()->get('status')? : 'non-rejected',
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
+            'round' =>str_replace("-", " ", request()->get('round'))
         ];
-
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
         })
-            ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
+            ->with(['applicant', 'job', 'tags','latestApplicationRound'])
             ->whereHas('latestApplicationRound')
             ->applyFilter($filters)
             ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
@@ -79,28 +79,42 @@ abstract class ApplicationController extends Controller
             ->latest()
             ->paginate(config('constants.pagination_size'))
             ->appends(Request::except('page'));
-        $countFilters = array_except($filters, ['status']);
-        $countTrialProgram = 0;
-        foreach($applications as $application){
-            if($application->latestApplicationRound->round->name == 'Trial Program'){
-                $countTrialProgram++;
-            }
-        }
+        $countFilters = array_except($filters, ['status','round']);
         $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
+        $inProgressRounds = ['Trial Program'];
         $strings = array_pluck(config('constants.hr.status'), 'label');
+       
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
+                ->whereHas('latestApplicationRound', function ($subQuery) use($inProgressRounds) {
+                    return $subQuery->where('is_latest', 1)
+                         ->whereHas('round', function ($subQuery) use($inProgressRounds) {
+                            return $subQuery->whereNotIn('name',[$inProgressRounds]);;
+                         });
+                })
                 ->get()
                 ->count();
+        }
+        
+        foreach ($inProgressRounds as $round) {
+            $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
+            ->where('status', config('constants.hr.status.in-progress.label'))
+            ->whereHas('latestApplicationRound', function ($subQuery) use($round) {
+                return $subQuery->where('is_latest', 1)
+                         ->whereHas('round', function ($subQuery) use ($round) {
+                            return $subQuery->where('name', $round);
+                         });
+            })
+            ->get()
+            ->count();
         }
         $attr['jobs'] = Job::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['assignees'] = User::orderBy('name')->get();
-        $attr['trialProgramCount'] = $countTrialProgram;
         return view('hr.application.index')->with($attr);
     }
 
