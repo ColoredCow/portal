@@ -12,23 +12,21 @@ class LegalDocumentsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('legal_documents')->delete();
-        
-        \DB::table('legal_documents')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('legal_documents')->insert(array(
+            0 =>
+            array(
                 'slug' => 'nda',
                 'name' => 'NDA',
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 'slug' => 'contracts',
                 'name' => 'Contracts',
             ),
         ));
-        
-        
     }
 }
