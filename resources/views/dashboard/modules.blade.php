@@ -6,9 +6,7 @@
     </li>
     @endif
 
-    @if(Module::checkStatus('HR') && auth()->user()->hasAnyPermission(['hr_recruitment_applications.view',
-    'hr_employees.view',
-    'hr_volunteers_applications.view']))
+    @if(Module::checkStatus('HR') && auth()->user()->hasAnyPermission(['hr_recruitment_applications.view','hr_employees.view','hr_volunteers_applications.view','hr_universities.view']))
     <li class="nav-item">
         <a class="nav-item nav-link font-weight-bold" href="{{ route('hr') }}"><i class="fa fa-list"></i>&nbsp;HR</a>
     </li>
@@ -112,4 +110,8 @@
     </li>
     @endif
 
+    <li class="nav-item">
+        <a class="nav-item nav-link font-weight-bold" href="{{ route('userappointmentslots.index') }}"><i class="fa fa-calendar">
+            </i>&nbsp;Appointment Slots</a>
+    </li>
 </ul>
