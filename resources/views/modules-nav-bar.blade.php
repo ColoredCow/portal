@@ -7,7 +7,7 @@
     @endif
 
     @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view',
-    'hr_volunteers_applications.view','hr_universities.view']))
+    'hr_volunteers_applications.view']))
     <li class="nav-item">
     <li class="nav-item dropdown">
         <a id="navbarDropdown_hr" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
@@ -30,10 +30,6 @@
             @can('hr_recruitment_applications.view')
             <a class="dropdown-item" href="{{ route('settings.hr') }}">Settings</a>
             @endcan
-            @can('hr_universities.view')
-                <a class="dropdown-item" href="{{ route('universities.index') }}">Universities</a>
-            @endcan
-            <a class="dropdown-item" href="{{route('userappointmentslots.index')}}">Appointment Slots</a>
         </div>
     </li>
     </li>

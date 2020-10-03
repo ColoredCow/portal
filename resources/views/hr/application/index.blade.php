@@ -23,7 +23,7 @@
                    "{{ config('constants.hr.status.' . request("status") . '.label') }}" >
 
             <input 
-                type="text" name="search" class="form-control" id="search" placeholder="Search by name,email and phone" 
+                type="text" name="search" class="form-control" id="search" placeholder="Search by name, email and phone" 
                 value=@if(request()->has('search')){{request()->get('search')}}@endif>
                <button class="btn btn-info ml-2">Search</button>
         </form>

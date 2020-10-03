@@ -1035,6 +1035,7 @@ require("./finance/payment");
 $(document).ready(function() {
   $(document).on("click", ".show-comment", showCommentBlock);
   $(document).on("click", ".section-toggle", sectionToggle);
+  $(document).on("click", "#saveFollowUp", saveFollowUp);
   $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
   $(document).on("click", ".show-evaluation-stage", function() {
     $(".evaluation-stage").addClass("d-none");
@@ -1043,7 +1044,11 @@ $(document).ready(function() {
   });
   $(document).on("change", ".set-segment-assignee", setSegmentAssignee);
 
-  $(document).on('change', '.send-mail-to-applicant', toggleApplicantMailEditor);
+  $(document).on('change', '.send-mail-to-applicant', function() {
+      var target = $(this).data('target');
+      $(`${target}`).toggleClass('d-none');
+  });
+  $(document).on('click', '.toggle-block-display', toggleBlockDisplay);
 });
 
 function showCommentBlock() {
@@ -1081,9 +1086,14 @@ function setSegmentAssignee() {
     }
 }
 
-function toggleApplicantMailEditor() {
+function toggleBlockDisplay() {
     let target = $(this).data('target');
     $(target).toggleClass('d-none');
+
+    var toggleIcon = $(this).data('toggle-icon');
+    if (toggleIcon) {
+        $('.toggle-icon').toggleClass('d-none');
+    }
 }
 
 function loadTemplateMail(status, successCallback) {
@@ -1097,6 +1107,19 @@ function loadTemplateMail(status, successCallback) {
             console.log(err);
         }
     });
+}
+
+function saveFollowUp() {
+    var form = $(this).closest('form');
+    if ($('#followUpAndReject').is(':checked')) {
+        var followUpComments = form.find('[name="comments"]').val();
+        $(document).find('#followUpCommentForReject').val(followUpComments);
+        $(this).closest('.modal').modal('hide');
+        $(document).find('#rejectApplication').trigger('click');
+    } else {
+        $(this).attr('disabled', 'disabled').addClass('disabled c-disabled');
+        form.submit();
+    }
 }
 
 /*
