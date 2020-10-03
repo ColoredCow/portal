@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" id="page_hr_applicant_edit">
+<div :class="[showResumeFrame ? 'container-fluid' : 'container']" id="page_hr_applicant_edit">
     <div class="row">
         <div class="col-md-12">
             <br>
@@ -14,7 +14,7 @@
         <div class="col-md-3">
             @include('hr.application.timeline', ['timeline' => $timeline, 'currentApplication' => $application])
         </div>
-        <div class="col-md-8" v-bind:class="{ 'offset-md-2': showResumeFrame }">
+        <div v-bind:class="[showResumeFrame ? 'offset-md-2 col-md-7 pl-9' : 'col-md-8']">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -184,7 +184,10 @@
                                                 <span>Scheduled date</span>
                                                     @if($applicationRound->scheduled_date)
                                                         @if($applicationRound->hangout_link)
-                                                            <a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">Meeting Link</a>
+                                                            <a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
+                                                                <i class="fa fa-video-camera" aria-hidden="true"></i>
+                                                                <span>Meeting Link</span>
+                                                            </a>
                                                         @endif
                                                     @endif
                                                 </div>
@@ -280,7 +283,7 @@
                                 @endif
                                 @if ($loop->last && !$application->isRejected())
                                     {{-- @if ($applicantOpenApplications->count() > 1) --}}
-                                        <button type="button" class="btn btn-outline-danger ml-2" @click="rejectApplication()">Reject</button>
+                                        <button type="button" class="btn btn-outline-danger ml-2" id="rejectApplication" @click="rejectApplication()">Reject</button>
                                         @include('hr.application.rejection-modal', ['currentApplication' => $application, 'allApplications' => $applicantOpenApplications ])
                                     {{-- @else --}}
                                         {{-- <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject" data-toggle="modal" data-target="#application_reject_modal">Reject</button> --}}

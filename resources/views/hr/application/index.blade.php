@@ -23,8 +23,8 @@
             <input type="hidden" name="round" class="form-control" id="search"
                 value=@if(request()->has('round')){{request()->get('round')}}@endif>
 
-            <input type="text" name="search" class="form-control" id="search"
-                placeholder="Search by name,email and phone"
+            <input 
+                type="text" name="search" class="form-control" id="search" placeholder="Search by name, email and phone" 
                 value=@if(request()->has('search')){{request()->get('search')}}@endif>
             <button class="btn btn-info ml-2">Search</button>
         </form>
