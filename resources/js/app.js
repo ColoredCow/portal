@@ -899,16 +899,17 @@ require('./finance/payment');
  * HR Module JS code start
  */
 $(document).ready(function() {
-	$(document).on('click', '.show-comment', showCommentBlock);
-	$(document).on('click', '.section-toggle', sectionToggle);
-	$(document).on('change', '.section-toggle-checkbox', sectionToggleCheckbox);
-	$(document).on('click', '.show-evaluation-stage', function() {
+  $(document).on("click", ".show-comment", showCommentBlock);
+  $(document).on("click", ".section-toggle", sectionToggle);
+  $(document).on("click", "#saveFollowUp", saveFollowUp);
+  $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
+  $(document).on('click', '.show-evaluation-stage', function() {
 		$('.evaluation-stage').addClass('d-none');
 		var target = $(this).data('target');
 		$(target).removeClass('d-none');
 	});
-	$(document).on('change', '.set-segment-assignee', setSegmentAssignee);
-
+  $(document).on("change", ".set-segment-assignee", setSegmentAssignee);
+  $(document).on('click', '.toggle-block-display', toggleBlockDisplay);
 	$(document).on('change', '.send-mail-to-applicant', toggleApplicantMailEditor);
 });
 
@@ -944,10 +945,22 @@ function setSegmentAssignee() {
 	}
 }
 
+function toggleBlockDisplay() {
+    let target = $(this).data('target');
+    $(target).toggleClass('d-none');
+
+    var toggleIcon = $(this).data('toggle-icon');
+    if (toggleIcon) {
+        $('.toggle-icon').toggleClass('d-none');
+    }
+}
+
+
 function toggleApplicantMailEditor() {
 	let target = $(this).data('target');
 	$(target).toggleClass('d-none');
 }
+ 
 
 function loadTemplateMail(status, successCallback) {
 	// make query to load current template
@@ -960,6 +973,19 @@ function loadTemplateMail(status, successCallback) {
 			console.log(err);
 		}
 	});
+}
+
+function saveFollowUp() {
+    var form = $(this).closest('form');
+    if ($('#followUpAndReject').is(':checked')) {
+        var followUpComments = form.find('[name="comments"]').val();
+        $(document).find('#followUpCommentForReject').val(followUpComments);
+        $(this).closest('.modal').modal('hide');
+        $(document).find('#rejectApplication').trigger('click');
+    } else {
+        $(this).attr('disabled', 'disabled').addClass('disabled c-disabled');
+        form.submit();
+    }
 }
 
 /*

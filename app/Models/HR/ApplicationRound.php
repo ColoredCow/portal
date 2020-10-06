@@ -77,6 +77,13 @@ class ApplicationRound extends Model
 
             case 'reject':
                 $fillable['round_status'] = 'rejected';
+                if (!empty($attr['follow_up_comment_for_reject'])) {
+                    $this->followUps()->create([
+                        'comments' => $attr['follow_up_comment_for_reject'],
+                        'conducted_by' => auth()->id(),
+                    ]);
+                    $this->untag('need-follow-up');
+                }
                 foreach ($applicant->applications as $applicantApplication) {
                     $applicantApplication->reject();
                 }
@@ -230,12 +237,12 @@ class ApplicationRound extends Model
 
     public function scheduledPerson()
     {
-        return $this->belongsTo(User::class, 'scheduled_person_id');
+        return $this->belongsTo(User::class, 'scheduled_person_id')->withTrashed();
     }
 
     public function conductedPerson()
     {
-        return $this->belongsTo(User::class, 'conducted_person_id');
+        return $this->belongsTo(User::class, 'conducted_person_id')->withTrashed();
     }
 
     public function applicationRoundReviews()

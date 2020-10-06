@@ -101,6 +101,8 @@ class Application extends Model
                 case 'search':
                     $query->filterByKeyword($value);
                     break;
+                case 'round':
+                    $query->filterByRoundName($value);
             }
         }
 
@@ -139,6 +141,9 @@ class Application extends Model
             case config('constants.hr.status.onboarded.label'):
                 $query->onboarded();
                 break;
+            case config('constants.hr.status.in-progress.label'):
+                $query->inProgress();
+                break;
             default:
                 $query->isOpen();
                 break;
@@ -163,6 +168,7 @@ class Application extends Model
         });
     }
 
+    
     public function scopeFilterByName($query, $search)
     {
         return $query->whereHas('applicant', function ($query) use ($search) {
@@ -194,6 +200,25 @@ class Application extends Model
     public function scopeFilterByJob($query, $id)
     {
         return $query->where('hr_job_id', $id);
+    }
+
+    /**
+    * Apply filter on applications based on their Round Name
+    *
+    * @param \Illuminate\Database\Eloquent\Builder $query
+    * @param String $status
+    *
+    * @return \Illuminate\Database\Eloquent\Builder $query
+    */
+    public function scopeFilterByRoundName($query, $round)
+    {
+        return $query->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
+               return $subQuery->where('is_latest', true)
+                         ->whereHas('round', function ($subQuery) use ($round) {
+                            return $subQuery->where('name', $round);
+                         });
+               
+        });
     }
 
     public function scopeFilterByAssignee($query, $id)
@@ -240,7 +265,18 @@ class Application extends Model
      */
     public function scopeIsOpen($query)
     {
-        return $query->whereIn('status', [config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')]);
+        return $query->whereIn('status', [config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')])
+                     ->whereHas('latestApplicationRound', function ($subQuery) {
+                         return $subQuery->where('is_latest', true)
+                                        ->whereHas('round', function ($subQuery) {
+                                            return $subQuery->whereNotIn('name', ["Trial Program"]);
+                                        });
+                     });
+    }
+
+    public function scopeInProgress($query)
+    {
+        return $query->where('status', config('constants.hr.status.in-progress.label'));
     }
 
     /**

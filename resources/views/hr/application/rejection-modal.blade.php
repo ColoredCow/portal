@@ -43,14 +43,20 @@
             </div>
             <div class="modal-body">
                 <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" name="send_mail_to_applicant[reject]" class="custom-control-input send-mail-to-applicant" id="rejectSendMailToApplicant" data-target="#rejectMailToApplicantBlock" checked>
-                            <label class="custom-control-label" for="rejectSendMailToApplicant">Send email</label>
+                    <div class="form-group col-md-12 d-flex align-items-center">
+                        <div class="py-0.67">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" name="send_mail_to_applicant[reject]" class="custom-control-input send-mail-to-applicant" id="rejectSendMailToApplicant" data-target="#previewMailToApplicant" checked>
+                                <label class="custom-control-label" for="rejectSendMailToApplicant">Send email</label>
+                            </div>
+                        </div>
+                        <div class="toggle-block-display c-pointer rounded-circle bg-theme-gray-lightest hover-bg-theme-gray-lighter px-1 py-0.67 ml-1" id="previewMailToApplicant" data-target="#rejectMailToApplicantBlock" data-toggle-icon="true">
+                            <i class="fa fa-eye toggle-icon d-none" aria-hidden="true"></i>
+                            <i class="fa fa-eye-slash toggle-icon" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
-                <div class="form-row" id="rejectMailToApplicantBlock">
+                <div class="form-row d-none" id="rejectMailToApplicantBlock">
                     <div class="form-group col-md-12">
                         <label for="rejectMailToApplicantSubject">Subject</label>
                         <input type="text" name="mail_to_applicant[reject][subject]" id="rejectMailToApplicantSubject"
@@ -63,6 +69,7 @@
                 </div>
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">
+                        <input type="hidden" name="follow_up_comment_for_reject" id="followUpCommentForReject" />
                         <button type="button" class="btn btn-danger px-4 round-submit" data-action="reject">Reject</button>
                     </div>
                 </div>

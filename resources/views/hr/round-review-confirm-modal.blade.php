@@ -53,14 +53,20 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" name="send_mail_to_applicant[confirm]" class="custom-control-input send-mail-to-applicant" id="confirmSendMailToApplicant" data-target="#confirmMailToApplicantBlock" checked>
-                            <label class="custom-control-label" for="confirmSendMailToApplicant">Send email</label>
+                    <div class="form-group col-md-12 d-flex align-items-center">
+                        <div class="py-0.67">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" name="send_mail_to_applicant[confirm]" class="custom-control-input send-mail-to-applicant" id="confirmSendMailToApplicant" data-target="#previewMailToApplicant" checked>
+                                <label class="custom-control-label" for="confirmSendMailToApplicant">Send email</label>
+                            </div>
+                        </div>
+                        <div class="toggle-block-display c-pointer rounded-circle bg-theme-gray-lightest hover-bg-theme-gray-lighter px-1 py-0.67 ml-1" id="previewMailToApplicant" data-target="#confirmMailToApplicantBlock" data-toggle-icon="true">
+                            <i class="fa fa-eye toggle-icon d-none" aria-hidden="true"></i>
+                            <i class="fa fa-eye-slash toggle-icon" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
-                <div class="form-row" id="confirmMailToApplicantBlock">
+                <div class="form-row d-none" id="confirmMailToApplicantBlock">
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="confirmMailToApplicantSubject">Subject</label>
                         <input type="text" name="mail_to_applicant[confirm][subject]" id="confirmMailToApplicantSubject"
