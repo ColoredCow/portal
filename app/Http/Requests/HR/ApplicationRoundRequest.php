@@ -42,6 +42,7 @@ class ApplicationRoundRequest extends FormRequest
             'onboard_password' => 'nullable|string|required_if:action,onboard',
             'send_mail_to_applicant.confirm' => 'nullable|filled',
             'send_mail_to_applicant.reject' => 'nullable|filled',
+            'follow_up_comment_for_reject' => 'nullable|string',
         ];
 
         if (request()->input('action') == 'confirm') {
@@ -49,8 +50,8 @@ class ApplicationRoundRequest extends FormRequest
                 $rules['mail_to_applicant.confirm.subject'] = 'nullable|string|required_with:send_mail_to_applicant';
                 $rules['mail_to_applicant.confirm.body'] = 'nullable|string|required_with:send_mail_to_applicant';
             }
-        } else if (request()->input('action') == 'reject') {
-             if (request()->input('send_mail_to_applicant.reject') == 'on') {
+        } elseif (request()->input('action') == 'reject') {
+            if (request()->input('send_mail_to_applicant.reject') == 'on') {
                 $rules['mail_to_applicant.reject.subject'] = 'nullable|string|required_with:send_mail_to_applicant';
                 $rules['mail_to_applicant.reject.body'] = 'nullable|string|required_with:send_mail_to_applicant';
             }

@@ -117,11 +117,6 @@ return [
     |
     */
 
-    'attributes' => [
-        'contact_name'=>'name',
-        'contact_email'=>'email',
-        'contact_designation'=>'designation',
-        'contact_phone' => 'phone'
-    ],
+    'attributes' => [],
 
 ];

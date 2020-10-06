@@ -40,3 +40,6 @@
 [submodule "Modules/User"]
 	path = Modules/User
 	url = https://github.com/ColoredCow-Portal/User.git
+[submodule "Modules/Client"]
+	path = Modules/Client
+	url = https://github.com/ColoredCow-Portal/Client.git
