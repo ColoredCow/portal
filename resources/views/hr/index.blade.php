@@ -8,7 +8,8 @@
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
                 <a class="card-body no-transition" href="{{ route('applications.job.index') }}">
-                    <br><h2 class="text-center">Recruitment</h2><br>
+                    <br>
+                    <h2 class="text-center">Recruitment</h2><br>
                 </a>
             </div>
         </div>
@@ -17,7 +18,8 @@
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
                 <a class="card-body no-transition" href="{{ route('employees') }}">
-            	   <br><h2 class="text-center">Employees</h2><br>
+                    <br>
+                    <h2 class="text-center">Employees</h2><br>
                 </a>
             </div>
         </div>
@@ -27,7 +29,8 @@
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
                 <a class="card-body no-transition" href="{{ route('applications.volunteer.index') }}">
-                    <br><h2 class="text-center">Volunteer</h2><br>
+                    <br>
+                    <h2 class="text-center">Volunteer</h2><br>
                 </a>
             </div>
         </div>
@@ -45,14 +48,25 @@
         @endcan
 
         @can('hr_recruitment_applications.view')
-            <div class="col-md-4">
-                <div class="card h-75 mx-4 mt-3 mb-5">
-                    <a class="card-body no-transition" href="{{ route('settings.hr') }}">
-                        <br>
-                        <h2 class="text-center">Settings</h2><br>
-                    </a>
-                </div>
+        <div class="col-md-4">
+            <div class="card h-75 mx-4 mt-3 mb-5">
+                <a class="card-body no-transition" href="{{ route('settings.hr') }}">
+                    <br>
+                    <h2 class="text-center">Settings</h2><br>
+                </a>
             </div>
+        </div>
+        @endcan
+
+        @can('hr_universities.view')
+        <div class="col-md-4">
+            <div class="card h-75 mx-4 mt-3 mb-5 ">
+                <a class="card-body no-transition" href="{{ route('universities.index') }}">
+                    <br>
+                    <h2 class="text-center">Universities</h2><br>
+                </a>
+            </div>
+        </div>
         @endcan
 
     </div>
