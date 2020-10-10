@@ -28,9 +28,9 @@
                                     {{ $tag->name }}
                                 </div>
                             @endforeach
-                            <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12">
+                            {{-- <div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12">
                                 {{ config("constants.hr.status.$application->status.title") }}
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-4 text-right">
                             <div class="mb-1">
