@@ -60,6 +60,8 @@ class ApplicationRound extends Model
                 break;
 
             case 'confirm':
+                $application->untag('new');
+                $application->tag('in-progress');
                 $fillable['round_status'] = 'confirmed';
                 $this->update($fillable);
                 $application->markInProgress();
@@ -96,6 +98,8 @@ class ApplicationRound extends Model
                 break;
 
             case 'send-for-approval':
+                $application->untag('new');
+                $application->untag('in-progress');
                 $fillable['round_status'] = 'confirmed';
                 $application->sendForApproval($attr['send_for_approval_person']);
 
@@ -113,6 +117,8 @@ class ApplicationRound extends Model
                 break;
 
             case 'approve':
+                $application->untag('new');
+                $application->untag('in-progress');
                 $fillable['round_status'] = 'approved';
                 $application->approve();
 
@@ -134,6 +140,8 @@ class ApplicationRound extends Model
                 break;
 
             case 'onboard':
+                $application->untag('new');
+                $application->untag('in-progress');
                 $fillable['round_status'] = 'confirmed';
                 $application->onboarded();
 

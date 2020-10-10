@@ -49,7 +49,8 @@ class Applicant extends Model
                 'value' => json_encode($attr['form_data']),
             ]);
         }
-
+        
+        $applicant->wasRecentlyCreated ? $application->tag('new') : null;
         return $applicant;
     }
 
