@@ -49,7 +49,8 @@ class Applicant extends Model
                 'value' => json_encode($attr['form_data']),
             ]);
         }
-
+        
+        $application->tag('new');
         return $applicant;
     }
 
