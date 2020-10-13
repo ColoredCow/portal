@@ -50,7 +50,7 @@ class Applicant extends Model
             ]);
         }
         
-        $applicant->wasRecentlyCreated ? $application->tag('new') : null;
+        $applicant->wasRecentlyCreated ? $application->tag('new-application') : null;
         return $applicant;
     }
 
