@@ -48,13 +48,11 @@
                     href=/{{ Request::path() }}{{request()->has('search')? "?search=".request('search'):"" }}> <i
                     class="fa fa-clipboard"></i>&nbsp;
                     Open
-                    @if(request()->has('search'))
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status ? 'bg-info text-white' : 'active bg-white text-info' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$newApplicationsCount + $inProgressApplicationsCount}}
+                        {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </span>
-                    @endif
                 </a>
             </li>
 
@@ -63,13 +61,11 @@
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{request()->has('search')? "&search=".request('search'):"" }}&round=Trial-Program>
                     <i class="fa fa-clipboard"></i>&nbsp;
                     Trial Program
-                    @if(request()->has('search'))
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ request()->get('round')=='Trial-Program' ? 'active bg-white text-info' : 'bg-info text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$trialProgramCount}}
                     </span>
-                    @endif
                 </a>
             </li>
 
@@ -78,26 +74,22 @@
                     href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-file-text-o"></i>&nbsp;
                     {{ config('constants.hr.status.on-hold.title') }}
-                    @if(request()->has('search'))
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$onHoldApplicationsCount}}
                     </span>
-                    @endif
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}
-                    @if(request()->has('search'))
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$noShowApplicationsCount}}
                     </span>
-                    @endif
                 </a>
             </li>
             <li class="nav-item">
@@ -105,26 +97,22 @@
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-times-circle"></i>&nbsp;
                     Closed
-                    @if(request()->has('search'))
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$rejectedApplicationsCount}}
                     </span>
-                    @endif
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}"
                     href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}
-                    @if(request()->has('search'))
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$sentForApprovalApplicationsCount}}
                     </span>
-                    @endif
                 </a>
             </li>
             <li class="nav-item">
@@ -132,13 +120,11 @@
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-check-square"></i>&nbsp;
                     Approved
-                    @if(request()->has('search'))
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.approved.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$approvedApplicationsCount}}
                     </span>
-                    @endif
                 </a>
             </li>
             <li class="nav-item">
@@ -146,13 +132,11 @@
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-certificate"></i>&nbsp;
                     Onboard
-                    @if(request()->has('search'))
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$onboardedApplicationsCount}}
                     </span>
-                    @endif
                 </a>
             </li>
         </ul>
