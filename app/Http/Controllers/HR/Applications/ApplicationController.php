@@ -90,6 +90,9 @@ abstract class ApplicationController extends Controller
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
+                ->whereHas('latestApplicationRound', function ($subQuery){
+                    return $subQuery->where('is_latest', true);
+                })
                 ->count();
         }
         
