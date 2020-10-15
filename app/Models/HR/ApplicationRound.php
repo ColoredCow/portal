@@ -62,19 +62,53 @@ class ApplicationRound extends Model
             case 'confirm':
                 $application->untag('new-application');
                 $application->tag('in-progress');
-                $fillable['round_status'] = 'confirmed';
-                $this->update($fillable);
-                $application->markInProgress();
-                $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                $applicationRound = self::create([
+                if((Round::where('id', $attr['next_round'])->get('name')[0]->attributes['name'] == 'Trial Program')){
+                    // dd(Round::where('name', 'Preparatory-1')->get('id')[0]->attributes['id']);
+                    $fillable['round_status'] = 'confirmed';
+                    $this->update($fillable);
+                    $application->markInProgress();
+                    $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
+                    $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                    $applicationRound = self::create([
+                    'hr_application_id' => $application->id,
+                    'hr_round_id' => $attr['next_round'],
+                    'trial_round_id' => Round::where('name', 'Preparatory-1')->get('id')[0]->attributes['id'],
+                    'scheduled_date' => $attr['next_scheduled_start'] ?? null,
+                    'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                    'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
+                    ]);
+                }
+                else if(in_array(Round::where('id', $attr['next_round'])->get('name')[0]->attributes['name'], ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])){
+                    // dd('Preparatory');
+                    $fillable['round_status'] = 'confirmed';
+                    $this->update($fillable);
+                    $application->markInProgress();
+                    $nextApplicationRound = $application->job->rounds->where('id', Round::where('name', 'Trial Program')->get('id')[0]->attributes['id'])->first();
+                    $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                    $applicationRound = self::create([
+                    'hr_application_id' => $application->id,
+                    'hr_round_id' => Round::where('name', 'Trial Program')->get('id')[0]->attributes['id'],
+                    'trial_round_id' => $attr['next_round'],
+                    'scheduled_date' => $attr['next_scheduled_start'] ?? null,
+                    'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                    'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
+                    ]);
+                }   
+                else{
+                    // dd("Pre-Trial");
+                    $fillable['round_status'] = 'confirmed';
+                    $this->update($fillable);
+                    $application->markInProgress();
+                    $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
+                    $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                    $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
                     'scheduled_date' => $attr['next_scheduled_start'] ?? null,
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
-                ]);
-
+                    ]);
+                }
                 break;
 
             case 'reject':
@@ -237,11 +271,16 @@ class ApplicationRound extends Model
     {
         return $this->belongsTo(Application::class, 'hr_application_id');
     }
+    
+    public function trialRound()
+    {
+        return $this->belongsTo(Round::class, 'trial_round_id');
+    }
 
     public function round()
     {
         return $this->belongsTo(Round::class, 'hr_round_id');
-    }
+    } 
 
     public function scheduledPerson()
     {
@@ -375,7 +414,14 @@ class ApplicationRound extends Model
 
     public function updateIsLatestColumn()
     {
-        self::where('hr_application_id', $this->hr_application_id)->update(['is_latest' => false]);
-        $this->update(['is_latest' => true]);
+        // dd($this->round->name);
+        if($this->round->name == "Trial Program"){
+            self::where('hr_application_id', $this->hr_application_id)->update(['is_latest_trial_round' => false, 'is_latest' => false]);
+            $this->update(['is_latest_trial_round' => true, 'is_latest' => true]);
+        }
+        else{
+            self::where('hr_application_id', $this->hr_application_id)->update(['is_latest' => false]);
+            $this->update(['is_latest' => true]);
+        }
     }
 }
