@@ -26,7 +26,7 @@ return [
     'display_datetime_format' => 'Y-m-d\TH:i',
     'calendar_datetime_format' => 'Y-m-d\TH:i:s',
     'input_date_format' => 'dd/mm/yyyy',
-    'display_daydatetime_format' => 'D h:ia, d M y',
+    'display_daydatetime_format' => 'D h:ia, jS M Y',
     'modules' => [
         'hr',
         'finance',
