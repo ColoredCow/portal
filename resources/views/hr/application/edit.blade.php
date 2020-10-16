@@ -122,12 +122,12 @@
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade {{ $application->latestApplicationRound->round->name == 'Trial Program' ? 'show active' : '' }}" id="nav-trial" role="tabpanel" aria-labelledby="nav-trial-tab">               
+                            <br>
                             @foreach ($application->trialApplicationRounds as $applicationRound)
                                 @php
                                     $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
                                     $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
                                 @endphp
-                                <br>
                                 @if(sizeof($applicationRound->followUps))
                                     <div class="my-2">
                                     @foreach($applicationRound->followUps as $followUp)
@@ -150,7 +150,7 @@
                                     </div>
                                     @include('hr.application.follow-up-modal')
                                 @endif
-                                <div class="card mx-2 mb-2">
+                                <div class="card mb-3">
                                     <div class="card-header d-flex align-items-center justify-content-between">
                                         <div class="d-flex flex-column">
                                             <div>
@@ -330,12 +330,12 @@
                             @endforeach
                         </div>
                         <div class="tab-pane fade {{ $application->latestApplicationRound->round->name == 'Trial Program' ? '' : 'show active' }}" id="nav-pre-trial" role="tabpanel" aria-labelledby="nav-pre-trial-tab">
+                            <br>
                             @foreach ($application->applicationRounds as $applicationRound)
                                 @php
                                     $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
                                     $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
                                 @endphp
-                                <br>
                                 @if(sizeof($applicationRound->followUps))
                                     <div class="mt-3">
                                         @foreach($applicationRound->followUps as $followUp)
@@ -358,7 +358,7 @@
                                     </div>
                                     @include('hr.application.follow-up-modal')
                                 @endif
-                                <div class="card mx-2 mb-2">
+                                <div class="card mb-3">
                                     <div class="card-header d-flex align-items-center justify-content-between">
                                         <div class="d-flex flex-column">
                                             <div>
@@ -567,7 +567,7 @@
                             </div>
                             @include('hr.application.follow-up-modal')
                         @endif
-                        <div class="card mx-2 mb-2">
+                        <div class="card">
                             <div class="card-header d-flex align-items-center justify-content-between">
                                 <div class="d-flex flex-column">
                                     <div>
@@ -744,7 +744,8 @@
                         @include('hr.application.application-evaluation', ['round' => $applicationRound->round])
                     @endforeach
                 @endif
-            </div>          
+            </div>
+            
         </div>
     </div>
 </div>
