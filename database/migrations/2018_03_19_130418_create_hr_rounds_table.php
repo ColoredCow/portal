@@ -16,7 +16,6 @@ class CreateHrRoundsTable extends Migration
         Schema::create('hr_rounds', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('in_trial_round')->default(0);
             $table->timestamps();
         });
     }

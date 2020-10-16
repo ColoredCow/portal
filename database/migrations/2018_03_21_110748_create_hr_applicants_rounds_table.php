@@ -17,7 +17,6 @@ class CreateHrApplicantsRoundsTable extends Migration
             $table->increments('id');
             $table->integer('hr_applicant_id')->unsigned();
             $table->integer('hr_round_id')->unsigned();
-            $table->integer('trial_round_id')->unsigned()->nullable();
             $table->timestamp('scheduled_date')->nullable();
             $table->integer('scheduled_person_id')->unsigned();
             $table->timestamp('conducted_date')->nullable();
@@ -28,7 +27,6 @@ class CreateHrApplicantsRoundsTable extends Migration
         Schema::table('hr_applicants_rounds', function (Blueprint $table) {
             $table->foreign('hr_applicant_id')->references('id')->on('hr_applicants');
             $table->foreign('hr_round_id')->references('id')->on('hr_rounds');
-            $table->foreign('trial_round_id')->references('id')->on('hr_rounds');
             $table->foreign('scheduled_person_id')->references('id')->on('users');
             $table->foreign('conducted_person_id')->references('id')->on('users');
         });
