@@ -14,7 +14,7 @@ class AddNewColumnsToHrApplicantsRounds extends Migration
     public function up()
     {
         Schema::table('hr_application_round', function (Blueprint $table) {
-            $table->foreign('trial_round_id')->references('id')->on('hr_rounds')->after('hr_round_id');
+            $table->foreign('trial_round_id')->nullable()->references('id')->on('hr_rounds')->after('hr_round_id');
             $table->integer('is_latest_trial_round')->unsigned()->default(0)->after('is_latest');
         });
     }
