@@ -31,8 +31,22 @@ class Application extends Model
 
     public function applicationRounds()
     {
-        return $this->hasMany(ApplicationRound::class, 'hr_application_id');
+        return $this->hasMany(ApplicationRound::class, 'hr_application_id')
+                    ->whereHas('round', function ($subQuery){
+                        return $subQuery->where('in_trial_round', false)
+                                        ->whereNotIn('name', ['Trial Program']);
+                    });
     }
+
+    public function trialApplicationRounds()
+    {
+        return $this->hasMany(ApplicationRound::class, 'hr_application_id')
+                    ->whereHas('round', function ($subQuery){
+                        return $subQuery->where('name', 'Trial Program');
+                    });
+                    
+    }
+    
 
     public function evaluations()
     {
@@ -375,6 +389,16 @@ class Application extends Model
         $this->load('applicationRounds', 'applicationRounds.round');
         $timeline = [];
         foreach ($this->applicationRounds as $applicationRound) {
+            if ($applicationRound->conducted_date) {
+                $timeline[] = [
+                    'type' => 'round-conducted',
+                    'application' => $this,
+                    'applicationRound' => $applicationRound,
+                    'date' => $applicationRound->conducted_date,
+                ];
+            }
+        }
+        foreach ($this->trialApplicationRounds as $applicationRound) {
             if ($applicationRound->conducted_date) {
                 $timeline[] = [
                     'type' => 'round-conducted',
