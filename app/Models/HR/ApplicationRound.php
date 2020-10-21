@@ -62,8 +62,8 @@ class ApplicationRound extends Model
             case 'confirm':
                 $application->untag('new-application');
                 $application->tag('in-progress');
-                if((Round::where('id', $attr['next_round'])->get('name')[0]->attributes['name'] == 'Trial Program')){
-                    // dd(Round::where('name', 'Preparatory-1')->get('id')[0]->attributes['id']);
+                //move application to Trial Round
+                if((Round::isTrialRound($attr['next_round']))){
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
@@ -72,30 +72,31 @@ class ApplicationRound extends Model
                     $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => $attr['next_round'],
-                    'trial_round_id' => Round::where('name', 'Preparatory-1')->get('id')[0]->attributes['id'],
+                    'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
                     'scheduled_date' => $attr['next_scheduled_start'] ?? null,
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                     ]);
                 }
-                else if(in_array(Round::where('id', $attr['next_round'])->get('name')[0]->attributes['name'], ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])){
-                    // dd('Preparatory');
+                //if application are requested to move to preparatory or warmup round then they are automatically moved to Trial Round
+                //and trial_round_id column is set to the id of preparatory rounds that is requested
+                else if(Round::inPreparatoryRounds($attr['next_round'])){
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
-                    $nextApplicationRound = $application->job->rounds->where('id', Round::where('name', 'Trial Program')->get('id')[0]->attributes['id'])->first();
+                    $nextApplicationRound = $application->job->rounds->where('id', Round::where('name', 'Trial Program')->first()->id)->first();
                     $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                     $applicationRound = self::create([
                     'hr_application_id' => $application->id,
-                    'hr_round_id' => Round::where('name', 'Trial Program')->get('id')[0]->attributes['id'],
+                    'hr_round_id' => Round::where('name', 'Trial Program')->first()->id,
                     'trial_round_id' => $attr['next_round'],
                     'scheduled_date' => $attr['next_scheduled_start'] ?? null,
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                     ]);
-                }   
+                }  
+                //For Pre-trial Rounds 
                 else{
-                    // dd("Pre-Trial");
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
