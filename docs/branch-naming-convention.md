@@ -1,4 +1,4 @@
-## Branch Naming Guidelines
+## Branch Naming Convention
 In any software development company, every day many branches are created and pushed to the github repository. So, having a manageable code repository is mandatory when working on a team project.
 Therefore, ColoredCow uses a branch naming conventions to work with git repositories. 
 
