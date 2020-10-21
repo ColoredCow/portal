@@ -181,146 +181,146 @@
                                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                                         </div>
                                     </div>
-                                        <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
-                                
-                                            {{ csrf_field() }}
-                                            {{ method_field('PATCH') }}
-                                            <div id="collapse_{{ $loop->iteration }}" class="collapse {{$application->latestApplicationRound->round->name == 'Trial Program'? ($loop->last ? 'show' : '') : '' }}">
-                                                <div class="card-body">
-                                                    @if ( !$applicationRound->round_status)
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-5">
-                                                                <label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
-                                                                    <div>
-                                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                                    <span>Scheduled date</span>
-                                                                        @if($applicationRound->scheduled_date)
-                                                                            @if($applicationRound->hangout_link)
-                                                                                <a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
-                                                                                    <i class="fa fa-video-camera" aria-hidden="true"></i>
-                                                                                    <span>Meeting Link</span>
-                                                                                </a>
-                                                                            @endif
+                                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PATCH') }}
+                                        <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->name == 'Trial Program'? ($loop->last ? 'show' : '') : '' }}">
+                                            <div class="card-body">
+                                                @if ( !$applicationRound->round_status)
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-5">
+                                                            <label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
+                                                                <div>
+                                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                <span>Scheduled date</span>
+                                                                    @if($applicationRound->scheduled_date)
+                                                                        @if($applicationRound->hangout_link)
+                                                                            <a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
+                                                                                <i class="fa fa-video-camera" aria-hidden="true"></i>
+                                                                                <span>Meeting Link</span>
+                                                                            </a>
                                                                         @endif
-                                                                    </div>
-                                                                </label>
-                                                                @if ($applicationRound->scheduled_date)
-                                                                    <input type="datetime-local" 
-                                                                        name="scheduled_date" id="scheduled_date" 
-                                                                        class="form-control form-control-sm" 
-                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
-                                                                @else
-                                                                    <div class="fz-16 leading-tight">Pending calendar confirmation</div>
-                                                                @endif
-                                                            </div>
-                                                            <div class="form-group col-md-4">
-                                                                <label for="scheduled_person_id" class="fz-14 leading-none text-secondary">
-                                                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                                                    <span>Scheduled for</span>
-                                                                </label>
-                                                                @if ($applicationRound->scheduled_date)
-                                                                    <select name="scheduled_person_id" id="scheduled_person_id" class="form-control form-control-sm" >
-                                                                        @foreach ($interviewers as $interviewer)
-                                                                            @php
-                                                                                $selected = $applicationRound->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
-                                                                            @endphp
-                                                                            <option value="{{ $interviewer->id }}" {{ $selected }}>
-                                                                                {{ $interviewer->name }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                @else
-                                                                    <div class="fz-16 leading-tight">
-                                                                        <img src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
-                                                                        <span>{{ $applicationRound->scheduledPerson->name }}</span>
-                                                                    </div>
-                                                                @endif
-                                                                
-                                                            </div>
+                                                                    @endif
+                                                                </div>
+                                                            </label>
                                                             @if ($applicationRound->scheduled_date)
-                                                                <div class="form-group col-md-3 d-flex align-items-end">
+                                                                <input type="datetime-local" 
+                                                                    name="scheduled_date" id="scheduled_date" 
+                                                                    class="form-control form-control-sm" 
+                                                                    value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+                                                            @else
+                                                                <div class="fz-16 leading-tight">Pending calendar confirmation</div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="scheduled_person_id" class="fz-14 leading-none text-secondary">
+                                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                                                <span>Scheduled for</span>
+                                                            </label>
+                                                            @if ($applicationRound->scheduled_date)
+                                                                <select name="scheduled_person_id" id="scheduled_person_id" class="form-control form-control-sm" >
+                                                                    @foreach ($interviewers as $interviewer)
+                                                                        @php
+                                                                            $selected = $applicationRound->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
+                                                                        @endphp
+                                                                        <option value="{{ $interviewer->id }}" {{ $selected }}>
+                                                                            {{ $interviewer->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            @else
+                                                                <div class="fz-16 leading-tight">
+                                                                    <img src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
+                                                                    <span>{{ $applicationRound->scheduledPerson->name }}</span>
+                                                                </div>
+                                                            @endif  
+                                                        </div>
+                                                        @if ($applicationRound->scheduled_date)
+                                                            <div class="form-group col-md-3 d-flex align-items-end">
                                                                 <button type="button" class="py-1 mb-0 btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
                                                             </div>
-                                                            @endif
-                                                        </div>
-                                                    @endif
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-12">
-                                                            <button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
-                                                        </div>
+                                                        @endif
                                                     </div>
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-12">
-                                                            @php
-                                                                if ($loop->last && sizeOf($errors)) {
-                                                                    $applicationRoundReviewValue = old('reviews.feedback');
-                                                                }
-                                                            @endphp
-                                                            <textarea name="reviews[{{ $applicationRound->id }}][feedback]" id="reviews[{{ $applicationRound->id }}][feedback]" rows="6" class="form-control" placeholder="Enter comments...">{{ $applicationRoundReviewValue }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row d-flex justify-content-end">
-                                                        <button type="button" class="btn btn-info btn-sm round-submit" data-action="update">Update feedback</button>
+                                                @endif
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12">
+                                                        <button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
                                                     </div>
                                                 </div>
-                                                @if($application->latestApplicationRound->round->name == 'Trial Program')
-                                                    @php
-                                                        $showFooter = false;
-                                                        if ($loop->last) {
-                                                            if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), 
-                                                            config('constants.hr.status.approved.label')])) {
-                                                                $showFooter = true;
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12">
+                                                        @php
+                                                            if ($loop->last && sizeOf($errors)) {
+                                                                $applicationRoundReviewValue = old('reviews.feedback');
                                                             }
-                                                            elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
-                                                                $showFooter = true;
-                                                            }
-                                                        }
-                                                        elseif (!$applicationRound->mail_sent) {
-                                                            $showFooter = true;
-                                                        }
-                                                    @endphp
-                                                    @if ($showFooter)
-                                                        <div class="card-footer">
-                                                            <div class="d-flex align-items-center">
-                                                            @if ($applicationRound->showActions)
-                                                                <select name="action_type" id="action_type" 
-                                                                class="form-control w-50p" v-on:change="onSelectNextRound($event)" 
-                                                                data-application-job-rounds="{{ json_encode($application->job->trialRounds) }}">
-                                                                    <option v-for="round in applicationJobRounds" value="round" 
-                                                                    :data-next-round-id="round.id">Move to @{{ round.name }}</option>
-                                                                    <option value="send-for-approval">Send for approval</option>
-                                                                    <option value="approve">Approve</option>
-                                                                    <option value="onboard">Onboard</option>
-                                                                </select>
-                                                                <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
-                                                            @endif
-                                                            @if ($loop->last && !$application->isRejected())
-                                                                {{-- @if ($applicantOpenApplications->count() > 1) --}}
-                                                                    <button type="button" class="btn btn-outline-danger ml-2" id="rejectApplication" @click="rejectApplication()">Reject</button>
-                                                                    @include('hr.application.rejection-modal', ['currentApplication' => $application, 'allApplications' => $applicantOpenApplications ])
-                                                                {{-- @else --}}
-                                                                    {{-- <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject" data-toggle="modal" data-target="#application_reject_modal">Reject</button> --}}
-                                                                {{-- @endif --}}
-                                                            @endif
-                                                            @if (!is_null($applicationRound->round_status) && !$applicationRound->mail_sent)
-                                                                <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
-                                                            @endif
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                @endif
+                                                        @endphp
+                                                        <textarea name="reviews[{{ $applicationRound->id }}][feedback]" id="reviews[{{ $applicationRound->id }}][feedback]" rows="6" class="form-control" placeholder="Enter comments...">{{ $applicationRoundReviewValue }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row d-flex justify-content-end">
+                                                    <button type="button" class="btn btn-info btn-sm round-submit" data-action="update">Update feedback</button>
+                                                </div>
                                             </div>
-                                            <input type="hidden" name="action" value="updated">
-                                            <input type="hidden" name="next_round" value="">
-                                            @if ($loop->last)
-                                                <input type="hidden" name="current_applicationround_id" id="current_applicationround_id" value="{{ $applicationRound->id }}">
+                                            @php
+                                                $showFooter = false;
+                                                if ($loop->last && $application->latestApplicationRound->round->name == 'Trial Program') {
+                                                    if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), 
+                                                    config('constants.hr.status.approved.label')])) {
+                                                        $showFooter = true;
+                                                    }
+                                                    elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
+                                                        $showFooter = true;
+                                                    }
+                                                }
+                                                elseif (!$applicationRound->mail_sent) {
+                                                    $showFooter = true;
+                                                }
+                                            @endphp
+                                            @if ($showFooter)
+                                            <div class="card-footer">
+                                                <div class="d-flex align-items-center">
+                                                    @if($application->latestApplicationRound->round->name == 'Trial Program')
+                                                        @if ($applicationRound->showActions)
+                                                            <select name="action_type" id="action_type" 
+                                                            class="form-control w-50p" v-on:change="onSelectNextRound($event)" 
+                                                            data-application-job-rounds="{{ json_encode($application->job->trialRounds) }}">
+                                                                <option v-for="round in applicationJobRounds" value="round" 
+                                                                :data-next-round-id="round.id">Move to @{{ round.name }}</option>
+                                                                <option value="send-for-approval">Send for approval</option>
+                                                                <option value="approve">Approve</option>
+                                                                <option value="onboard">Onboard</option>
+                                                            </select>
+                                                            <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
+                                                        @endif
+                                                        @if ($loop->last && !$application->isRejected())
+                                                            {{-- @if ($applicantOpenApplications->count() > 1) --}}
+                                                                <button type="button" class="btn btn-outline-danger ml-2" id="rejectApplication" @click="rejectApplication()">Reject</button>
+                                                                @include('hr.application.rejection-modal', ['currentApplication' => $application, 'allApplications' => $applicantOpenApplications ])
+                                                            {{-- @else --}}
+                                                                {{-- <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject" data-toggle="modal" data-target="#application_reject_modal">Reject</button> --}}
+                                                            {{-- @endif --}}
+                                                        @endif
+                                                    @endif
+                                                    @if (!is_null($applicationRound->round_status) && !$applicationRound->mail_sent)
+                                                        <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
+                                                    @endif
+                                                </div>
+                                            </div>
                                             @endif
-                                            @includeWhen($applicationRound->showActions, 'hr.round-review-confirm-modal', 
-                                            ['applicationRound' => $applicationRound])
+                                        </div>
+                                        <input type="hidden" name="action" value="updated">
+                                        <input type="hidden" name="next_round" value="">
+                                        @if ($loop->last && $application->latestApplicationRound->round->name == 'Trial Program')
+                                            <input type="hidden" name="current_applicationround_id" id="current_applicationround_id" value="{{ $applicationRound->id }}">
+                                        @endif
+                                        @includeWhen($applicationRound->showActions, 'hr.round-review-confirm-modal', 
+                                        ['applicationRound' => $applicationRound])
+                                        @if($application->latestApplicationRound->round->name == 'Trial Program')
                                             @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                                             @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                                             @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
-                                        </form>
+                                        @endif
+                                    </form>                          
                                 </div>
                                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                                 @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])
@@ -387,148 +387,146 @@
                                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#pre-trial-collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                                         </div>
                                     </div>
-                                        <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
-                                            {{ csrf_field() }}
-                                            {{ method_field('PATCH') }}
-                                            <div id="pre-trial-collapse_{{ $loop->iteration }}" class="collapse {{$application->latestApplicationRound->round->name != 'Trial Program'? ($loop->last ? 'show' : '') : '' }}">
-                                                <div class="card-body">
-                                                    @if ( !$applicationRound->round_status)
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-5">
-                                                                <label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
-                                                                    <div>
+                                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PATCH') }}
+                                        <div id="pre-trial-collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->name == 'Trial Program'? '' : ($loop->last ? 'show' : '') }}">
+                                            <div class="card-body">
+                                                @if ( !$applicationRound->round_status)
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-5">
+                                                            <label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
+                                                                <div>
                                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                                     <span>Scheduled date</span>
-                                                                        @if($applicationRound->scheduled_date)
-                                                                            @if($applicationRound->hangout_link)
-                                                                                <a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
-                                                                                    <i class="fa fa-video-camera" aria-hidden="true"></i>
-                                                                                    <span>Meeting Link</span>
-                                                                                </a>
-                                                                            @endif
+                                                                    @if($applicationRound->scheduled_date)
+                                                                        @if($applicationRound->hangout_link)
+                                                                            <a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
+                                                                                <i class="fa fa-video-camera" aria-hidden="true"></i>
+                                                                                <span>Meeting Link</span>
+                                                                            </a>
                                                                         @endif
-                                                                    </div>
-                                                                </label>
-                                                                @if ($applicationRound->scheduled_date)
-                                                                    <input type="datetime-local" 
-                                                                        name="scheduled_date" id="scheduled_date" 
-                                                                        class="form-control form-control-sm" 
-                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
-                                                                @else
-                                                                    <div class="fz-16 leading-tight">Pending calendar confirmation</div>
-                                                                @endif
-                                                            </div>
-                                                            <div class="form-group col-md-4">
-                                                                <label for="scheduled_person_id" class="fz-14 leading-none text-secondary">
-                                                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                                                    <span>Scheduled for</span>
-                                                                </label>
-                                                                @if ($applicationRound->scheduled_date)
-                                                                    <select name="scheduled_person_id" id="scheduled_person_id" class="form-control form-control-sm" >
-                                                                        @foreach ($interviewers as $interviewer)
-                                                                            @php
-                                                                                $selected = $applicationRound->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
-                                                                            @endphp
-                                                                            <option value="{{ $interviewer->id }}" {{ $selected }}>
-                                                                                {{ $interviewer->name }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                @else
-                                                                    <div class="fz-16 leading-tight">
-                                                                        <img src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
-                                                                        <span>{{ $applicationRound->scheduledPerson->name }}</span>
-                                                                    </div>
-                                                                @endif
-                                                                
-                                                            </div>
+                                                                    @endif
+                                                                </div>
+                                                            </label>
                                                             @if ($applicationRound->scheduled_date)
-                                                                <div class="form-group col-md-3 d-flex align-items-end">
-                                                                <button type="button" class="py-1 mb-0 btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
-                                                            </div>
+                                                                <input type="datetime-local" 
+                                                                    name="scheduled_date" id="scheduled_date" 
+                                                                    class="form-control form-control-sm" 
+                                                                    value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+                                                            @else
+                                                                <div class="fz-16 leading-tight">Pending calendar confirmation</div>
                                                             @endif
                                                         </div>
-                                                    @endif                     
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-12">
-                                                            <button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="scheduled_person_id" class="fz-14 leading-none text-secondary">
+                                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                                                <span>Scheduled for</span>
+                                                            </label>
+                                                            @if ($applicationRound->scheduled_date)
+                                                                <select name="scheduled_person_id" id="scheduled_person_id" class="form-control form-control-sm" >
+                                                                    @foreach ($interviewers as $interviewer)
+                                                                        @php
+                                                                            $selected = $applicationRound->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
+                                                                        @endphp
+                                                                        <option value="{{ $interviewer->id }}" {{ $selected }}>
+                                                                            {{ $interviewer->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            @else
+                                                                <div class="fz-16 leading-tight">
+                                                                    <img src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
+                                                                    <span>{{ $applicationRound->scheduledPerson->name }}</span>
+                                                                </div>
+                                                            @endif     
                                                         </div>
+                                                        @if ($applicationRound->scheduled_date)
+                                                            <div class="form-group col-md-3 d-flex align-items-end">
+                                                                <button type="button" class="py-1 mb-0 btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-12">
-                                                            @php
-                                                                if ($loop->last && sizeOf($errors)) {
-                                                                    $applicationRoundReviewValue = old('reviews.feedback');
-                                                                }
-                                                            @endphp
-                                                            <textarea name="reviews[{{ $applicationRound->id }}][feedback]" id="reviews[{{ $applicationRound->id }}][feedback]" rows="6" class="form-control" placeholder="Enter comments...">{{ $applicationRoundReviewValue }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row d-flex justify-content-end">
-                                                        <button type="button" class="btn btn-info btn-sm round-submit" data-action="update">Update feedback</button>
+                                                @endif                     
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12">
+                                                        <button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
                                                     </div>
                                                 </div>
-                                                @if($application->latestApplicationRound->round->name != 'Trial Program')
-                                                    @php
-                                                        $showFooter = false;
-                                                        if ($loop->last) {
-                                                            if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), 
-                                                            config('constants.hr.status.approved.label')])) {
-                                                                $showFooter = true;
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12">
+                                                        @php
+                                                            if ($loop->last && sizeOf($errors)) {
+                                                                $applicationRoundReviewValue = old('reviews.feedback');
                                                             }
-                                                            elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
-                                                                $showFooter = true;
-                                                            }
-                                                        }
-                                                        elseif (!$applicationRound->mail_sent) {
-                                                            $showFooter = true;
-                                                        }
-                                                    @endphp
-                                                    @if ($showFooter)
-                                                    <div class="card-footer">
-                                                        <div class="d-flex align-items-center">
-                                                        @if ($applicationRound->showActions)
-                                                            <select name="action_type" id="action_type" 
-                                                            class="form-control w-50p" v-on:change="onSelectNextRound($event)" 
-                                                            data-application-job-rounds="{{ json_encode($application->job->rounds) }}">
-                                                                <option v-for="round in applicationJobRounds" value="round" 
-                                                                :data-next-round-id="round.id">Move to @{{ round.name }}</option>
-                                                                <option value="send-for-approval">Send for approval</option>
-                                                                <option value="approve">Approve</option>
-                                                                <option value="onboard">Onboard</option>
-                                                            </select>
-                                                            <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
-                                                        @endif
-                                                        @if ($loop->last && !$application->isRejected())
-                                                            {{-- @if ($applicantOpenApplications->count() > 1) --}}
-                                                                <button type="button" class="btn btn-outline-danger ml-2" id="rejectApplication" @click="rejectApplication()">Reject</button>
-                                                                @include('hr.application.rejection-modal', ['currentApplication' => $application, 'allApplications' => $applicantOpenApplications ])
-                                                            {{-- @else --}}
-                                                                {{-- <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject" data-toggle="modal" data-target="#application_reject_modal">Reject</button> --}}
-                                                            {{-- @endif --}}
+                                                        @endphp
+                                                        <textarea name="reviews[{{ $applicationRound->id }}][feedback]" id="reviews[{{ $applicationRound->id }}][feedback]" rows="6" class="form-control" placeholder="Enter comments...">{{ $applicationRoundReviewValue }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row d-flex justify-content-end">
+                                                    <button type="button" class="btn btn-info btn-sm round-submit" data-action="update">Update feedback</button>
+                                                </div>
+                                            </div>
+                                            @php
+                                                $showFooter = false;
+                                                if ($loop->last && $application->latestApplicationRound->round->name != 'Trial Program') {
+                                                    if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), 
+                                                    config('constants.hr.status.approved.label')])) {
+                                                        $showFooter = true;
+                                                    }
+                                                    elseif (in_array($applicationRound->round_status, [null, config('constants.hr.status.rejected.label')])) {
+                                                        $showFooter = true;
+                                                    }
+                                                }
+                                                elseif (!$applicationRound->mail_sent) {
+                                                    $showFooter = true;
+                                                }
+                                            @endphp
+                                            @if ($showFooter)
+                                                <div class="card-footer">
+                                                    <div class="d-flex align-items-center">
+                                                        @if($application->latestApplicationRound->round->name != 'Trial Program')
+                                                            @if ($applicationRound->showActions)
+                                                                <select name="action_type" id="action_type" 
+                                                                class="form-control w-50p" v-on:change="onSelectNextRound($event)" 
+                                                                data-application-job-rounds="{{ json_encode($application->job->rounds) }}">
+                                                                    <option v-for="round in applicationJobRounds" value="round" 
+                                                                    :data-next-round-id="round.id">Move to @{{ round.name }}</option>
+                                                                    <option value="send-for-approval">Send for approval</option>
+                                                                    <option value="approve">Approve</option>
+                                                                    <option value="onboard">Onboard</option>
+                                                                </select>
+                                                                <button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
+                                                            @endif
+                                                            @if ($loop->last && !$application->isRejected())
+                                                                {{-- @if ($applicantOpenApplications->count() > 1) --}}
+                                                                    <button type="button" class="btn btn-outline-danger ml-2" id="rejectApplication" @click="rejectApplication()">Reject</button>
+                                                                    @include('hr.application.rejection-modal', ['currentApplication' => $application, 'allApplications' => $applicantOpenApplications ])
+                                                                {{-- @else --}}
+                                                                    {{-- <button type="button" class="btn btn-outline-danger ml-2 round-submit" data-action="reject" data-toggle="modal" data-target="#application_reject_modal">Reject</button> --}}
+                                                                {{-- @endif --}}
+                                                            @endif
                                                         @endif
                                                         @if (!is_null($applicationRound->round_status) && !$applicationRound->mail_sent)
                                                             <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
                                                         @endif
-                                                        </div>
                                                     </div>
-                                                @endif
-                                            </div>
-                                            @if($application->latestApplicationRound->round->name == 'Trial Program')
-                                                <input type="hidden" name="action" value="updated">
-                                                <input type="hidden" name="next_round" value="">
-                                                @if ($loop->last)
-                                                    <input type="hidden" name="current_applicationround_id" id="current_applicationround_id" value="{{ $applicationRound->id }}">
-                                                @endif
-                                                @includeWhen($applicationRound->showActions, 'hr.round-review-confirm-modal', 
-                                                ['applicationRound' => $applicationRound])
-                                                @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
-                                                @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
-                                                @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
+                                                </div>
                                             @endif
-                                        </form>  
-                                   
-                                    @endif               
+                                        </div>
+                                        <input type="hidden" name="action" value="updated">
+                                        <input type="hidden" name="next_round" value="">
+                                        @if ($loop->last && $application->latestApplicationRound->round->name != 'Trial Program')
+                                            <input type="hidden" name="current_applicationround_id" id="current_applicationround_id" value="{{ $applicationRound->id }}">
+                                        @endif
+                                        @includeWhen($applicationRound->showActions, 'hr.round-review-confirm-modal', 
+                                        ['applicationRound' => $applicationRound])
+                                        @if($application->latestApplicationRound->round->name != 'Trial Program')
+                                            @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
+                                            @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
+                                            @includeWhen($loop->last, 'hr.application.approve-applicant-modal') 
+                                        @endif               
+                                    </form>                
                                 </div>
                                 @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                                 @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])
@@ -742,8 +740,7 @@
                         @include('hr.application.application-evaluation', ['round' => $applicationRound->round])
                     @endforeach
                 @endif
-            </div>
-            
+            </div>  
         </div>
     </div>
 </div>
