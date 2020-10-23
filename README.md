@@ -6,3 +6,6 @@ Use our [installation guidelines](https://github.com/ColoredCow-Portal/portal/bl
 
 ### Development
 Use the [development guidelines](https://github.com/ColoredCow-Portal/portal/blob/master/docs/development.md) to help you get started on your tasks.
+
+### Branch Naming Convention
+Use these [naming conventions](https://github.com/ColoredCow-Portal/portal/blob/master/docs/branch-naming-convention.md) to get started with your projects in the git repositories.
