@@ -18,12 +18,17 @@ class Job extends Model
 
     public function rounds()
     {
-        return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id')->where('in_trial_round', false);
+        return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id');
+    }
+
+    public function exceptTrialRounds()
+    {
+        return $this->rounds()->where('in_trial_round', false);
     }
 
     public function trialRounds()
     {
-        return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id')->where('in_trial_round', true);
+        return $this->rounds()->where('in_trial_round', true);
     }
 
     /**

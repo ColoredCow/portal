@@ -23,28 +23,11 @@ class Round extends Model
     ];
 
     public static function isTrialRound($id){
-        if(Round::find($id)->name == 'Trial Program'){
-            return true;
-        } else {
-            return false;
-        }
+        return Round::find($id)->name == 'Trial Program';
     }
 
     public static function inPreparatoryRounds($id){
-        $roundsId = Round::getRoundsId(['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup']);
-        if(in_array($id, $roundsId)){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static function getRoundsId($roundsArray){
-        $idArray=[];
-        foreach($roundsArray as $round){
-            $idArray[] = Round::where('name', $round)->first()->id;
-        }
-        return($idArray);
+        return Round::whereIn('name', ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])->pluck('id')->contains($id);
     }
 
     public function jobs()

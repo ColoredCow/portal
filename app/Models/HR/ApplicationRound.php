@@ -43,6 +43,7 @@ class ApplicationRound extends Model
 
         $application = $this->application;
         $applicant = $this->application->applicant;
+        $nextRound = Round::find($attr['next_round']);
 
         switch ($attr['action']) {
             case 'schedule-update':
@@ -63,7 +64,7 @@ class ApplicationRound extends Model
                 $application->untag('new-application');
                 $application->tag('in-progress');
                 //move application to Trial Round
-                if((Round::isTrialRound($attr['next_round']))){
+                if(($nextRound->isTrialRound($nextRound->id))){
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
@@ -71,7 +72,7 @@ class ApplicationRound extends Model
                     $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                     $applicationRound = self::create([
                     'hr_application_id' => $application->id,
-                    'hr_round_id' => $attr['next_round'],
+                    'hr_round_id' => $nextRound->id,
                     'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
                     'scheduled_date' => $attr['next_scheduled_start'] ?? null,
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
@@ -80,7 +81,7 @@ class ApplicationRound extends Model
                 }
                 //if application are requested to move to preparatory or warmup round then they are automatically moved to Trial Round
                 //and trial_round_id column is set to the id of preparatory rounds that is requested
-                else if(Round::inPreparatoryRounds($attr['next_round'])){
+                else if($nextRound->inPreparatoryRounds($nextRound->id)){
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
@@ -89,7 +90,7 @@ class ApplicationRound extends Model
                     $applicationRound = self::create([
                     'hr_application_id' => $application->id,
                     'hr_round_id' => Round::where('name', 'Trial Program')->first()->id,
-                    'trial_round_id' => $attr['next_round'],
+                    'trial_round_id' => $nextRound->id,
                     'scheduled_date' => $attr['next_scheduled_start'] ?? null,
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
@@ -104,7 +105,7 @@ class ApplicationRound extends Model
                     $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                     $applicationRound = self::create([
                     'hr_application_id' => $application->id,
-                    'hr_round_id' => $attr['next_round'],
+                    'hr_round_id' => $nextRound->id,
                     'scheduled_date' => $attr['next_scheduled_start'] ?? null,
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
@@ -415,8 +416,7 @@ class ApplicationRound extends Model
 
     public function updateIsLatestColumn()
     {
-        // dd($this->round->name);
-        if($this->round->name == "Trial Program"){
+        if($this->round->isTrialRound($this->round->id)){
             self::where('hr_application_id', $this->hr_application_id)->update(['is_latest_trial_round' => false, 'is_latest' => false]);
             $this->update(['is_latest_trial_round' => true, 'is_latest' => true]);
         }
