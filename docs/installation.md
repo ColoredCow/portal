@@ -60,18 +60,11 @@ php artisan key:generate
     ```
     GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
     ```
-    
+
 10. Run migrations
     1. Portal
     ```
     php artisan migrate
-    ```
-    
-    2. Submodule
-
-    Migrate the given module, or without a module an argument, migrate all modules.
-    ```
-    php artisan module:migrate MODULENAME
     ```
 
 11. Run seeders
