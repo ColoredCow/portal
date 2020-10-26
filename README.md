@@ -4,6 +4,9 @@
 ### Installation
 Use our [installation guidelines](https://github.com/ColoredCow-Portal/portal/blob/master/docs/installation.md) to set up the project on your local.
 
+### Authorization
+Use our [authorization guidelines](https://github.com/ColoredCow-Portal/portal/blob/feature/issue-42_authorizationdoc/docs/authorization.md) to assign role to your account.
+
 ### Development
 Use the [development guidelines](https://github.com/ColoredCow-Portal/portal/blob/master/docs/development.md) to help you get started on your tasks.
 
