@@ -38,7 +38,7 @@ composer install
 npm install
 ```
 
-7. NPM build
+7. npm build
 ```sh
 npm run development
 ```
@@ -50,7 +50,7 @@ composer install
 npm install
 ```
 
-9. NPM build for each module
+9. npm build for each module
 ```sh
 cd Modules/MODULENAME
 npm run development
@@ -63,6 +63,7 @@ npm run development
     ```
     
     2. Submodule
+
     Migrate the given module, or without a module an argument, migrate all modules.
     ```
     php artisan module:migrate MODULENAME
@@ -78,6 +79,7 @@ npm run development
     php artisan db:seed --class=CLASSNAME
     ```
     2. Submodule
+
     Seed the given module, or without an argument, seed all modules
     ```
     php artisan module:seed MODULENAME
