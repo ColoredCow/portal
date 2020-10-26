@@ -43,3 +43,6 @@
 [submodule "Modules/Client"]
 	path = Modules/Client
 	url = https://github.com/ColoredCow-Portal/Client.git
+[submodule "Modules/EffortTracking"]
+	path = Modules/EffortTracking
+	url = https://github.com/ColoredCow-Portal/effort-tracking.git
