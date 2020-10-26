@@ -62,10 +62,9 @@ php artisan key:generate
     ```
 
 10. Run migrations
-    1. Portal
-    ```
-    php artisan migrate
-    ```
+```
+php artisan migrate
+```
 
 11. Run seeders
     1. Portal
