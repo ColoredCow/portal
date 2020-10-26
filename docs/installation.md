@@ -23,7 +23,7 @@ npm install
 
 4. npm build
 ```sh
-npm run development
+npm run dev
 ```
 
 5. Install dependencies for each module
@@ -36,7 +36,7 @@ npm install
 6. npm build for each module
 ```sh
 cd Modules/MODULENAME
-npm run development
+npm run dev
 ```  
 
 7. Copy `.env.example` as `.env`
