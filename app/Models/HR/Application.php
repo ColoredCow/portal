@@ -47,11 +47,10 @@ class Application extends Model
     /**
      * To fetch the application rounds which are not in Trial program
      */
-
     public function applicationRoundsExceptTrial()
     {
         return $this->applicationrounds()->whereHas('round', function ($subQuery){
-            return $subQuery->whereNot('name', 'Trial Program');
+            return $subQuery->whereNotIn('name', ['Trial Program']);
         });          
     }  
 
