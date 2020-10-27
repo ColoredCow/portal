@@ -116,12 +116,12 @@
                 @if(sizeOf($application->trialApplicationRounds))
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link {{ $application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id) ? 'active' : '' }}" id="nav-trial-tab" data-toggle="tab" href="#nav-trial" role="tab" aria-controls="nav-trial" aria-selected="true">Trial</a>
-                        <a class="nav-item nav-link {{ $application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id) ? '' : 'active' }}" id="nav-pre-trial-tab" data-toggle="tab" href="#nav-pre-trial" role="tab" aria-controls="nav-pre-trial" aria-selected="false">Pre-Trial</a>
+                        <a class="nav-item nav-link {{ $application->latestApplicationRound->round->isTrialRound() ? 'active' : '' }}" id="nav-trial-tab" data-toggle="tab" href="#nav-trial" role="tab" aria-controls="nav-trial" aria-selected="true">Trial</a>
+                        <a class="nav-item nav-link {{ $application->latestApplicationRound->round->isTrialRound() ? '' : 'active' }}" id="nav-pre-trial-tab" data-toggle="tab" href="#nav-pre-trial" role="tab" aria-controls="nav-pre-trial" aria-selected="false">Pre-Trial</a>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade {{ $application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id) ? 'show active' : '' }}" id="nav-trial" role="tabpanel" aria-labelledby="nav-trial-tab">               
+                        <div class="tab-pane fade {{ $application->latestApplicationRound->round->isTrialRound() ? 'show active' : '' }}" id="nav-trial" role="tabpanel" aria-labelledby="nav-trial-tab">               
                             <br>
                             @foreach ($application->trialApplicationRounds as $applicationRound)
                                 @php
@@ -184,7 +184,7 @@
                                     <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
-                                        <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id)? ($loop->last ? 'show' : '') : '' }}">
+                                        <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->isTrialRound()? ($loop->last ? 'show' : '') : '' }}">
                                             <div class="card-body">
                                                 @if ( !$applicationRound->round_status)
                                                     <div class="form-row">
@@ -263,7 +263,7 @@
                                             </div>
                                             @php
                                                 $showFooter = false;
-                                                if ($loop->last && $application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id)) {
+                                                if ($loop->last && $application->latestApplicationRound->round->isTrialRound()) {
                                                     if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), 
                                                     config('constants.hr.status.approved.label')])) {
                                                         $showFooter = true;
@@ -279,7 +279,7 @@
                                             @if ($showFooter)
                                             <div class="card-footer">
                                                 <div class="d-flex align-items-center">
-                                                    @if($application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id))
+                                                    @if($application->latestApplicationRound->round->isTrialRound())
                                                         @if ($applicationRound->showActions)
                                                             <select name="action_type" id="action_type" 
                                                             class="form-control w-50p" v-on:change="onSelectNextRound($event)" 
@@ -310,12 +310,12 @@
                                         </div>
                                         <input type="hidden" name="action" value="updated">
                                         <input type="hidden" name="next_round" value="">
-                                        @if ($loop->last && $application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id))
+                                        @if ($loop->last && $application->latestApplicationRound->round->isTrialRound())
                                             <input type="hidden" name="current_applicationround_id" id="current_applicationround_id" value="{{ $applicationRound->id }}">
                                         @endif
                                         @includeWhen($applicationRound->showActions, 'hr.round-review-confirm-modal', 
                                         ['applicationRound' => $applicationRound])
-                                        @if($application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id))
+                                        @if($application->latestApplicationRound->round->isTrialRound())
                                             @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                                             @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                                             @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
@@ -327,9 +327,9 @@
                                 @include('hr.application.application-evaluation', ['round' => $applicationRound->trialRound])
                             @endforeach
                         </div>
-                        <div class="tab-pane fade {{ $application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id) ? '' : 'show active' }}" id="nav-pre-trial" role="tabpanel" aria-labelledby="nav-pre-trial-tab">
+                        <div class="tab-pane fade {{ $application->latestApplicationRound->round->isTrialRound() ? '' : 'show active' }}" id="nav-pre-trial" role="tabpanel" aria-labelledby="nav-pre-trial-tab">
                             <br>
-                            @foreach ($application->applicationRounds as $applicationRound)
+                            @foreach ($application->applicationRoundsExceptTrial as $applicationRound)
                                 @php
                                     $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
                                     $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';
@@ -390,7 +390,7 @@
                                     <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
-                                        <div id="pre-trial-collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id)? '' : ($loop->last ? 'show' : '') }}">
+                                        <div id="pre-trial-collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->isTrialRound()? '' : ($loop->last ? 'show' : '') }}">
                                             <div class="card-body">
                                                 @if ( !$applicationRound->round_status)
                                                     <div class="form-row">
@@ -469,7 +469,7 @@
                                             </div>
                                             @php
                                                 $showFooter = false;
-                                                if ($loop->last && !$application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id)) {
+                                                if ($loop->last && !$application->latestApplicationRound->round->isTrialRound()) {
                                                     if (in_array($applicationRound->application->status, [config('constants.hr.status.sent-for-approval.label'), 
                                                     config('constants.hr.status.approved.label')])) {
                                                         $showFooter = true;
@@ -485,7 +485,7 @@
                                             @if ($showFooter)
                                                 <div class="card-footer">
                                                     <div class="d-flex align-items-center">
-                                                        @if(!$application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id))
+                                                        @if(!$application->latestApplicationRound->round->isTrialRound())
                                                             @if ($applicationRound->showActions)
                                                                 <select name="action_type" id="action_type" 
                                                                 class="form-control w-50p" v-on:change="onSelectNextRound($event)" 
@@ -516,12 +516,12 @@
                                         </div>
                                         <input type="hidden" name="action" value="updated">
                                         <input type="hidden" name="next_round" value="">
-                                        @if ($loop->last && !$application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id))
+                                        @if ($loop->last && !$application->latestApplicationRound->round->isTrialRound())
                                             <input type="hidden" name="current_applicationround_id" id="current_applicationround_id" value="{{ $applicationRound->id }}">
                                         @endif
                                         @includeWhen($applicationRound->showActions, 'hr.round-review-confirm-modal', 
                                         ['applicationRound' => $applicationRound])
-                                        @if(!$application->latestApplicationRound->round->isTrialRound($application->latestApplicationRound->round->id))
+                                        @if(!$application->latestApplicationRound->round->isTrialRound())
                                             @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                                             @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                                             @includeWhen($loop->last, 'hr.application.approve-applicant-modal') 
@@ -535,7 +535,7 @@
                         </div>
                     </div>
                 @else
-                    @foreach ($application->applicationRounds as $applicationRound)
+                    @foreach ($application->applicationRoundsExceptTrial as $applicationRound)
                         @php
                             $applicationRoundReview = $applicationRound->applicationRoundReviews->where('review_key', 'feedback')->first();
                             $applicationRoundReviewValue = $applicationRoundReview ? $applicationRoundReview->review_value : '';

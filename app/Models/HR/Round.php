@@ -22,12 +22,12 @@ class Round extends Model
         'rejected_mail_template' => 'array',
     ];
 
-    public static function isTrialRound($id){
-        return Round::find($id)->name == 'Trial Program';
+    public function isTrialRound(){
+        return $this->name == 'Trial Program';
     }
 
-    public static function inPreparatoryRounds($id){
-        return Round::whereIn('name', ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])->pluck('id')->contains($id);
+    public function inPreparatoryRounds(){
+        return Round::whereIn('name', ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])->pluck('id')->contains($this->id);
     }
 
     public function jobs()

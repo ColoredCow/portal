@@ -31,22 +31,29 @@ class Application extends Model
 
     public function applicationRounds()
     {
-        return $this->hasMany(ApplicationRound::class, 'hr_application_id')
-                    ->whereHas('round', function ($subQuery){
-                        return $subQuery->where('in_trial_round', false)
-                                        ->whereNotIn('name', ['Trial Program']);
-                    });
+        return $this->hasMany(ApplicationRound::class, 'hr_application_id');
     }
 
+    /**
+     * To fetch the application rounds which are in Trial program
+     */
     public function trialApplicationRounds()
     {
-        return $this->hasMany(ApplicationRound::class, 'hr_application_id')
-                    ->whereHas('round', function ($subQuery){
-                        return $subQuery->where('name', 'Trial Program');
-                    });
-                    
+        return $this->applicationrounds()->whereHas('round', function ($subQuery){
+            return $subQuery->where('name', 'Trial Program');
+        });          
     }
-    
+
+    /**
+     * To fetch the application rounds which are not in Trial program
+     */
+
+    public function applicationRoundsExceptTrial()
+    {
+        return $this->applicationrounds()->whereHas('round', function ($subQuery){
+            return $subQuery->whereNot('name', 'Trial Program');
+        });          
+    }  
 
     public function evaluations()
     {

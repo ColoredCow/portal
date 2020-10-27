@@ -64,7 +64,7 @@ class ApplicationRound extends Model
                 $application->untag('new-application');
                 $application->tag('in-progress');
                 //move application to Trial Round
-                if(($nextRound->isTrialRound($nextRound->id))){
+                if(($nextRound->isTrialRound())){
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
@@ -81,7 +81,7 @@ class ApplicationRound extends Model
                 }
                 //if application are requested to move to preparatory or warmup round then they are automatically moved to Trial Round
                 //and trial_round_id column is set to the id of preparatory rounds that is requested
-                else if($nextRound->inPreparatoryRounds($nextRound->id)){
+                else if($nextRound->inPreparatoryRounds()){
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
@@ -416,7 +416,7 @@ class ApplicationRound extends Model
 
     public function updateIsLatestColumn()
     {
-        if($this->round->isTrialRound($this->round->id)){
+        if($this->round->isTrialRound()){
             self::where('hr_application_id', $this->hr_application_id)->update(['is_latest_trial_round' => false, 'is_latest' => false]);
             $this->update(['is_latest_trial_round' => true, 'is_latest' => true]);
         }
