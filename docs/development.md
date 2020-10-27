@@ -40,4 +40,4 @@ git push origin branchname     # push your local branch to GitHub submodule repo
     2. [Database Alterations](https://www.laravelbestpractices.com/#database-alterations)
 
 3. Formatting
-    1. We at Portal follows the PSR-2 coding standard.
+    1. We at Portal follows the [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/).
