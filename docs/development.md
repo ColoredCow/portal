@@ -25,3 +25,19 @@ git add .                      # stage the changes
 git commit -m 'message'        # commit the changes
 git push origin branchname     # push your local branch to GitHub submodule repo and then create a Pull Request
 ```
+## Coding style
+
+1. Naming Conventions
+    1. [Controllers](https://www.laravelbestpractices.com/#controllers)
+    2. [Models](https://www.laravelbestpractices.com/#models)
+    3. [Functions](https://www.laravelbestpractices.com/#functions)
+    4. [Routes](https://www.laravelbestpractices.com/#routes)
+    5. [Variables](https://www.laravelbestpractices.com/#variables)
+    6. [Views](https://www.laravelbestpractices.com/#variables)
+
+2. Database conventions
+    1. [Table and Fields Naming](https://www.laravelbestpractices.com/#table-fields-naming)
+    2. [Database Alterations](https://www.laravelbestpractices.com/#database-alterations)
+
+3. Formatting
+    1. We at Portal follows the PSR-2 coding standard.
