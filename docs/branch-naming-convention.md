@@ -1,13 +1,13 @@
 ## Branch Naming Convention
-In any software development company, every day many branches are created and pushed to the github repository. So, having a manageable code repository is mandatory when working on a team project.
+In any software, every day many branches are created and pushed to the GitHub repository. Having a manageable code repository is important and mandatory when working with a team.
 
-Employee Portal uses a branch naming convention to work with git repositories. 
+Employee Portal uses branch naming conventions to work with git repositories. 
 In this convention, the branches are divided into two categories:
 
 ### Code Flow Branches 
 These branches which we expect to be permanently available on the repository follow the flow of code changes starting from development until the production.
 
- #### 1. Develop
+#### 1. Develop
 All new pull requests related to features and bug fixes be merged into this branch after code reviews. Resolving developer codes conflicts should be done as early as here.
 
 #### 2. Master
