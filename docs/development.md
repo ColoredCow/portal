@@ -41,3 +41,6 @@ git push origin branchname     # push your local branch to GitHub submodule repo
 
 3. Formatting
     1. We at Portal follows the [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/).
+
+### References
+[Laravel Guidelines](https://github.com/ColoredCow/resources/tree/master/laravel)
