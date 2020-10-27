@@ -1,19 +1,19 @@
 ## Branch Naming Convention
 In any software development company, every day many branches are created and pushed to the github repository. So, having a manageable code repository is mandatory when working on a team project.
-Therefore, ColoredCow uses a branch naming conventions to work with git repositories. 
 
-In this convention the branches are divided into two categories:
+Employee Portal uses a branch naming convention to work with git repositories. 
+In this convention, the branches are divided into two categories:
 
 ### Code Flow Branches 
 These branches which we expect to be permanently available on the repository follow the flow of code changes starting from development until the production.
 
  #### 1. Develop
-All new pull requests related to features and bug fixes be merged into this branch after review from the assignee. Resolving developer codes conflicts should be done as early as here.
+All new pull requests related to features and bug fixes be merged into this branch after code reviews. Resolving developer codes conflicts should be done as early as here.
 
 #### 2. Master
 This is the main branch for production. Nothing should be directly pushed into this branch except for the hot-fix errors and the develop branch after the complete testing of the issues or bug fixes.
     
-### Temporary Branches-  
+### Temporary Branches 
 As the name implies, these are disposable branches that can be created and deleted by need of the developer or deployer.
 #### 1. Feature
 Any code changes for a new module or use case should be done on a feature branch. This branch is created based on the current development branch. When all changes are Done, a Pull Request/Merge Request is needed to put all of these to the development branch.
