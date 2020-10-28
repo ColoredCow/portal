@@ -25,7 +25,7 @@ git add .                      # stage the changes
 git commit -m 'message'        # commit the changes
 git push origin branchname     # push your local branch to GitHub submodule repo and then create a Pull Request
 ```
-## Coding style
+## Coding Guidelines and Conventions
 
 1. Naming Conventions
     1. [Controllers](https://www.laravelbestpractices.com/#controllers)
@@ -40,7 +40,7 @@ git push origin branchname     # push your local branch to GitHub submodule repo
     2. [Database Alterations](https://www.laravelbestpractices.com/#database-alterations)
 
 3. Formatting
-    1. We at Portal follows the [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/).
+    1. [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/).
 
 ### References
 [Laravel Guidelines](https://github.com/ColoredCow/resources/tree/master/laravel)
