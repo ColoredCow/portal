@@ -23,7 +23,7 @@ The following behaviours are excepted and requested of all community members:
 * Be friendly and patient.
 * Be welcoming. We strive to be a community that welcomes and supports people of all backgrounds and identities.
 * Be considerate. Your work can be used by other people, and you in turn will depend on the work of others. Any decision you take will affect users and colleagues, and you should take those consequences into account when making decisions.
-* Be respectful.Members of the ColoredCow-Portal community should be respectful when dealing with other members. It’s important to remember that a community where people feel comfortable or guarded is a productive one.
+* Be respectful. Members of the ColoredCow-Portal community should be respectful when dealing with other members. It’s important to remember that a community where people feel comfortable or guarded is a productive one.
 * Be careful in the words that you choose. We are a community of professionals, and we conduct ourselves professionally. Be kind to others.
 * When we disagree, try to understand why. Disagreements, both social and technical, happen all the time and ColoredCow-Portal is no exception. It is important that we resolve disagreements and differing views constructively. Remember that we’re different. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn’t mean that they’re wrong. Don’t forget that it is human to err and blaming each other doesn’t get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.
 
