@@ -88,54 +88,7 @@ class HrRoundsTableSeeder extends Seeder
                 'confirmed_mail_template' => NULL,
                 'rejected_mail_template' => NULL,
                 'in_trial_round' => 0,
-            ),
-            8 => 
-            array (
-                'name' => 'Preparatory-1',
-                'guidelines' => NULL,
-                'reminder_enabled' => 0,
-                'confirmed_mail_template' => NULL,
-                'rejected_mail_template' => NULL,
-                'in_trial_round' => 1,
-            ),
-            9 => 
-            array (
-                'name' => 'Preparatory-2',
-                'guidelines' => NULL,
-                'reminder_enabled' => 0,
-                'confirmed_mail_template' => NULL,
-                'rejected_mail_template' => NULL,
-                'in_trial_round' => 1,
-            ),
-            10 => 
-            array (
-                'name' => 'Preparatory-3',
-                'guidelines' => NULL,
-                'reminder_enabled' => 0,
-                'confirmed_mail_template' => NULL,
-                'rejected_mail_template' => NULL,
-                'in_trial_round' => 1,
-            ),
-            11 => 
-            array (
-                'name' => 'Preparatory-4',
-                'guidelines' => NULL,
-                'reminder_enabled' => 0,
-                'confirmed_mail_template' => NULL,
-                'rejected_mail_template' => NULL,
-                'in_trial_round' => 1,
-            ),
-            12 => 
-            array (
-                'name' => 'Warmup',
-                'guidelines' => NULL,
-                'reminder_enabled' => 0,
-                'confirmed_mail_template' => NULL,
-                'rejected_mail_template' => NULL,
-                'in_trial_round' => 1,
-            ),
-        ));
-        
-        
+            )
+        ));   
     }
 }

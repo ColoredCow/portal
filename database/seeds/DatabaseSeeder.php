@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -22,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LegalDocumentsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(AddPreparatoryRoundsSeeder::class);
     }
 }
