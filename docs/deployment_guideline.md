@@ -22,7 +22,7 @@ Entering a passphrase adds one more level of security, it’s up to you whether 
 
 The `Public key` is now located in ```/home/username/.ssh/id_rsa.pub```. The `Private key`(identification) is now located in ```/home/username/.ssh/id_rsa```.
 
-In case of window machine keys must be located in ```C:\Users\username\.ssh```
+In case of window machine keys are located in ```C:\Users\username\.ssh```
 
 3. Contact UAT administrator
 
@@ -43,4 +43,19 @@ In this case, the `Private key` name is ```id_rsa```. There may be a chance your
 ```
 cd /var/www/html/uat.employee.coloredcow/
 ```
-4. You will see the project directory. Run required commands like git pull, npm, composer etc to update the portal and submodules.
+4. You will see the project directory. Run required deployments commands to update the portal and submodules.
+
+#### Deployments Commands
+
+```sh
+git checkout develop                              # switch to develop branch
+git submodule update --init                       # updates all the submodules
+git submodule update --init Modules/MODULENAME    # update submodule individually
+git pull origin master                            # pull updates from latest master
+git pull --recurse-submodules                     # pull all changes in the portal and submodules
+git submodule update --remote                     # pull all changes for the submodules
+git submodule foreach 'git checkout master'       # executing a command on every submodule
+npm install                                       # install dependencies
+composer install                                  # install dependencies
+npm run production                                # Run all Mix tasks and minify output...
+```
