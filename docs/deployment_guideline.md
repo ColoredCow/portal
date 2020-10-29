@@ -47,9 +47,9 @@ In this case, the `Private key` name is ```id_rsa```. There may be a chance your
 ```
 cd /var/www/html/uat.employee.coloredcow/
 ```
-4. You will see the project directory. Run required deployments commands to update the portal and submodules.
+4. You will see the project directory. Run required deployment commands to update the portal and submodules.
 
-#### Deployments Commands
+#### Deployment Commands
 
 ```sh
 git checkout develop                              # switch to develop branch
