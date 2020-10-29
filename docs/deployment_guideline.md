@@ -22,6 +22,8 @@ Entering a passphrase adds one more level of security, it’s up to you whether 
 
 The `Public key` is now located in ```/home/username/.ssh/id_rsa.pub```. The `Private key`(identification) is now located in ```/home/username/.ssh/id_rsa```.
 
+In case of window machine keys must be located in ```C:\Users\username\.ssh```
+
 3. Contact UAT administrator
 
 Once you have the `Public key`, please contact the UAT administrator with this public key to gain access to UAT.

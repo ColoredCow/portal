@@ -11,7 +11,7 @@ Use our [authorization guidelines](https://github.com/ColoredCow-Portal/portal/b
 Use the [development guidelines](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/development_guideline.md) to help you get started on your tasks.
 
 ### Testing
-Use the [testing guidelines](https://github.com/ColoredCow-Portal/portal/blob/master/docs/testing.md) to help you deploy your tasks on UAT.
+Use the [testing guidelines](https://github.com/ColoredCow-Portal/portal/blob/master/docs/deployment_guideline.md) to help you deploy your tasks on UAT.
 
 ### Branch Naming Convention
 Use these [naming conventions](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/branch-naming-convention.md) to get started with your projects in the git repositories.
