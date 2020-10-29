@@ -33,6 +33,10 @@ Once you have the `Public key`, please contact the UAT administrator with this p
 ```
 cd /home/username/.ssh/id_rsa
 ```
+In case of window machine change directory to 
+```
+cd C:\Users\username\.ssh\id_rsa
+```
 2. Login to the server
 ```
 ssh -i id_rsa your-name@uat.employee.coloredcow.com
@@ -54,8 +58,8 @@ git submodule update --init Modules/MODULENAME    # update submodule individuall
 git pull origin master                            # pull updates from latest master
 git pull --recurse-submodules                     # pull all changes in the portal and submodules
 git submodule update --remote                     # pull all changes for the submodules
-git submodule foreach 'git checkout master'       # executing a command on every submodule
+git submodule foreach 'git checkout develop'      # executing a command on every submodule
 npm install                                       # install dependencies
 composer install                                  # install dependencies
-npm run production                                # Run all Mix tasks and minify output...
+npm run prod                                      # Run all Mix tasks and minify output...
 ```
