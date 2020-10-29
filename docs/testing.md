@@ -1,43 +1,43 @@
-## Testing Guidelines :mag_right:
-Testing is a critical and required part of the ColoredCow-Portal.
+## Deployment Guidelines :mag_right:
+Deployment is a critical and required part of the ColoredCow-Portal.
 
 ### UAT account setup
 1. Create the `SSH`(RSA) Key Pair
 
-The first step is to create the key pair on the client machine (there is a good chance that this will just be your computer):
+Create the key pair on your machine by running the following command.
 ```
 ssh-keygen -t rsa
 ```
 2. Store the Keys and Passphrase
 
-Once you have entered the Gen Key command, you will get a few more questions:
+Follow the steps/questions mentioned below. 
 ```
-Enter file in which to save the key (/home/demo/.ssh/id_rsa):
+Enter file in which to save the key (/home/username/.ssh/id_rsa):
 ```
-You can press enter here, saving the file to the user home (in this case, my example user is called demo).
+Press enter to save the file.
 ```
 Enter passphrase (empty for no passphrase):
 ```
-It’s up to you whether you want to use a passphrase. Entering a passphrase does have its benefits: the security of a key, no matter how encrypted, still depends on the fact that it is not visible to anyone else.
+Entering a passphrase adds one more level of security, it’s up to you whether you want to use a passphrase.
 
-The `Public key` is now located in ```/home/demo/.ssh/id_rsa.pub```. The `Private key`(identification) is now located in ```/home/demo/.ssh/id_rsa```.
+The `Public key` is now located in ```/home/username/.ssh/id_rsa.pub```. The `Private key`(identification) is now located in ```/home/username/.ssh/id_rsa```.
 
 3. Contact UAT administrator
 
-Once you have the `Public key`, Please contact the UAT administrator with this public to gain access to UAT.
+Once you have the `Public key`, please contact the UAT administrator with this public key to gain access to UAT.
 
-### Working in UAT
+### Accessing UAT through SSH
 1. Change the directory to where `Private key` is located in your local machine.
 ```
-cd /home/demo/.ssh/id_rsa
+cd /home/username/.ssh/id_rsa
 ```
-2. Login to server
+2. Login to the server
 ```
 ssh -i id_rsa your-name@uat.employee.coloredcow.com
 ```
 In this case, the `Private key` name is ```id_rsa```. There may be a chance your key name may look like ```my_private_key_file.pem```.
 
-3. Change directory to project directory
+3. Once successfully logged in, change directory to project directory
 ```
 cd /var/www/html/uat.employee.coloredcow/
 ```
