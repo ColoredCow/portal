@@ -28,8 +28,23 @@ The following behaviours are excepted and requested of all community members:
 * When we disagree, try to understand why. Disagreements, both social and technical, happen all the time and ColoredCow-Portal is no exception. It is important that we resolve disagreements and differing views constructively. Remember that we’re different. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn’t mean that they’re wrong. Don’t forget that it is human to err and blaming each other doesn’t get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.
 
 ## Guidelines for chat room
-Todo
-1. How to use chat room
-2. What you can ask
-3. When and whom you can tag
-4. How/when to post your daily updates
+
+1. Write an effective daily progress report
+
+A daily progress report is an internal glimpse into your day, and it serves a good purpose. All you need to do is take your manager by the hand and walk him through your day. This gives you a better sense of how you’re pacing things. Additionally, you can learn how to get better at your job.
+
+Just as weekly reports dive into a weekly review, writing daily reports will cover a complete review of your day. These looks into:
+
+* ### The Past:
+
+A quick recap of what covered in the entire day(notable achievements of the day + challenges encountered).
+
+* ### The Present:
+
+This will cover about what you are presently working on?
+
+* ### The future:
+
+Plans for the coming day.
+
+So you’re willing to give a snapshot of your day. The real question is – when and how? Answer to that is simple, Just post your snapshot at the end of the day in our chat room.
