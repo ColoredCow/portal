@@ -12,3 +12,6 @@ Use the [development guidelines](https://github.com/ColoredCow-Portal/portal/blo
 
 ### Branch Naming Convention
 Use these [naming conventions](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/branch-naming-convention.md) to get started with your projects in the git repositories.
+
+### Chat CODE_OF_CONDUCT
+Use our [Chat Code of Conduct](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/chat_CODE_OF_CONDUCT.md) to collaborate on portal and taks to build the team spirit.
