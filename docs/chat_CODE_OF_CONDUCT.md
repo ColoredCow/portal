@@ -43,7 +43,7 @@ A quick recap of what covered in the entire day(notable achievements of the day 
 
 This will cover about what you are presently working on?
 
-* ### The future:
+* ### The Future:
 
 Plans for the coming day.
 
