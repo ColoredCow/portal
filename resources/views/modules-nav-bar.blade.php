@@ -54,6 +54,10 @@
     <li class="nav-item">
         <a class="nav-link" href='{{ route('project.index') }}'>Projects</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href='{{ route('task.index') }}'>Project Tasks</a>
+    </li>
+
     @endif
 
     @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
