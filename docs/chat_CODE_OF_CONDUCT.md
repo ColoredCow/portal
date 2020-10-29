@@ -48,3 +48,10 @@ This will cover about what you are presently working on?
 Plans for the coming day.
 
 So you’re willing to give a snapshot of your day. The real question is – when and how? Answer to that is simple, Just post your snapshot at the end of the day in our chat room.
+
+2. Who and when you can tag someone
+
+* Only use the @ sign when you need a quick response from someone. If you have a general question that can wait five or more minutes, alerting people can be annoying and may cause people to mute channel.
+
+* ColoredCow-Portal community is not like a public bulletin board system, you don’t need to @ mention a person’s name to get them to read a message.  Google chat highlights channels with new messages and people should be scanning through them periodically.
+
