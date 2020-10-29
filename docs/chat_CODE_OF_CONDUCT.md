@@ -48,7 +48,7 @@ This will cover about what you are presently working on?
 Plans for the coming day.
 
 So you’re willing to give a snapshot of your day. The real question is – when and how?\
-Answer to that is simple, Just post your snapshot at the end of the day between 7:00 PM - 8:00 PM in our chat room.
+Answer to that is simple, just post your snapshot at the end of the day between 7:00 PM - 8:00 PM in our chat room.
 
 2. Who and when you can tag someone
 
