@@ -37,7 +37,6 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                          <button type="button" class="btn btn-success px-4 round-submit richeditor" data-action="approve">Confirm</button>
-                        </div>
                     </div>
                 </div>
             </div>
