@@ -1,6 +1,6 @@
 ## Branch Naming Convention
 
-### Quick Legend
+## Quick Legend
 <table>
   <thead>
     <tr>
@@ -42,7 +42,8 @@
     </tr>
   </tbody>
 </table>
-<hr>
+
+## Branching
 
 In any software, every day many branches are created and pushed to the GitHub repository. Having a manageable code repository is important and mandatory when working with a team.
 
