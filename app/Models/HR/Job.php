@@ -21,6 +21,16 @@ class Job extends Model
         return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id');
     }
 
+    public function exceptTrialRounds()
+    {
+        return $this->rounds()->where('in_trial_round', false);
+    }
+
+    public function trialRounds()
+    {
+        return $this->rounds()->where('in_trial_round', true);
+    }
+
     /**
      * Custom update method that updates a job and fires specific events
      *
