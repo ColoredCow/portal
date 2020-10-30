@@ -33,7 +33,7 @@
     <tr>
       <td></td>
       <td>hotfix</td>
-      <td>Can be merged directly into master.</td>
+      <td>Base branch should be master.</td>
     </tr>
     <tr>
       <td></td>
@@ -67,7 +67,7 @@ Any code changes for a new module or use case should be done on a feature branch
 Examples:
 - feature/21/
 - feature/30/dark-theme
-- feature/module/30/add-nickname_hr
+- feature/modulename/30/add-nickname
 
 
 It is recommended to use all lower caps letters and hyphen (-) to separate words unless it is a specific item name, ID or a module name. Forward slash ('/') could be used to separate the ID and description.
@@ -81,7 +81,7 @@ Examples:
 - bugfix/21/mail-not-sending
 
 #### 3. Hot Fix
-If there is an issue in the master branch the it needs to be  fixed immediately, then that issue should be created as a Hotfix. The hotfix branch should be pulled from the master branch and can be directly pushed to the master branch. 
+If there is an issue in the master branch then it needs to be  fixed immediately, then that issue should be created as a Hotfix. The hotfix branch should be pulled from the master branch. 
 		
 Examples:
 - hotfix/disable-endpoint-zero-day-exploit
