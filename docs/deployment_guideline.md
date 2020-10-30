@@ -50,7 +50,7 @@ cd /var/www/html/uat.employee.coloredcow/
 4. You will see the project directory. Run required deployment commands to update the portal and submodules.
 
 #### Deployment Commands
-
+Commonly used commands during deployment
 ```sh
 git checkout develop                              # switch to develop branch
 git submodule update --init                       # updates all the submodules
