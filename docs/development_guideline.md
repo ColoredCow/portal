@@ -50,7 +50,7 @@ There are a few things you can do to make working with submodules a little easie
 
 1. Submodule Foreach
 
-    * Git provides a command that lets us execute an arbitrary shell command on every submodule. To allow execution in nested subprojects the ```--recursive``` parameter is supported. For our example we assume that we want to checkout develop branch in all submodules.
+    * Git provides a command that lets us execute an arbitrary shell command on every submodule. For our example we assume that we want to checkout develop branch in all submodules.
 
         ```sh
         git submodule foreach 'git checkout develop'   # checkout develop branch in all submodules
