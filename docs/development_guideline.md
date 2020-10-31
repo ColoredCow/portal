@@ -11,7 +11,7 @@ Once you have set up the submodules you can update the repository with fetch/pul
 cd project/
 git checkout develop           # switch to develop branch
 git pull --recurse-submodules  # pull all changes in the repo including changes in the submodules
-git submodule update --remote  # pull all changes for the submodules(optional)
+git submodule update --remote  # pull all changes for the submodules
 ```
 
 2. Push your local changes to Github.
@@ -23,17 +23,21 @@ git push origin branchname     # push your local branch to GitHub and then creat
 ```
 3. Executing a command on every submodule
 
-Git provides a command that lets us execute an arbitrary shell command on every submodule. To allow execution in nested subprojects the ```--recursive``` parameter is supported. For our example we assume that we want to reset all submodules.
+Git provides a command that lets us execute an arbitrary shell command on every submodule. To allow execution in nested subprojects the ```--recursive``` parameter is supported. For our example we assume that we want to checkout develop branch in all submodules.
 ```sh
 git submodule foreach 'git checkout develop'   # checkout develop branch in all submodules
 ```
-Similarly, using ```git submodule foreach 'Command Name'``` we can exceute command on every submodule.
 
 ## Working in a `submodule` repo
+
+1. Updating the submodules with lastest changes
 ```sh
 cd project/Modules/MODULENAME
-git checkout master            # switch to master branch
-git pull origin master         # pull updates from latest master
+git checkout develop            # switch to develop branch
+git pull origin develop         # pull updates from latest develop
+```
+2 .Push your local changes to github
+```sh
 git checkout -b branchname     # create a branch where you will commit your changes
 git add .                      # stage the changes
 git commit -m 'message'        # commit the changes
