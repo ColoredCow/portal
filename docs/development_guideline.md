@@ -4,16 +4,30 @@
 
 
 ## Working in the `portal` repo
+1. Pulling with submodules
+
+Once you have set up the submodules you can update the repository with fetch/pull like you would normally do. To pull everything including the submodules, use the ```--recurse-submodules``` and the ```--remote``` parameter in the git pull command.
 ```sh
 cd project/
-git checkout master            # switch to master branch
-git pull origin master         # pull updates from latest master
-git submodule update --init    # updates all the submodules
+git checkout develop           # switch to develop branch
+git pull --recurse-submodules  # pull all changes in the repo including changes in the submodules
+git submodule update --remote  # pull all changes for the submodules(optional)
+```
+
+2. Push your local changes to Github.
+```sh
 git checkout -b branchname     # create a branch where you will commit your changes
 git add .                      # stage the changes
 git commit -m 'message'        # commit the changes
 git push origin branchname     # push your local branch to GitHub and then create a Pull Request
 ```
+3. Executing a command on every submodule
+
+Git provides a command that lets us execute an arbitrary shell command on every submodule. To allow execution in nested subprojects the ```--recursive``` parameter is supported. For our example we assume that we want to reset all submodules.
+```sh
+git submodule foreach 'git checkout develop'   # checkout develop branch in all submodules
+```
+Similarly, using ```git submodule foreach 'Command Name'``` we can exceute command on every submodule.
 
 ## Working in a `submodule` repo
 ```sh
@@ -25,6 +39,7 @@ git add .                      # stage the changes
 git commit -m 'message'        # commit the changes
 git push origin branchname     # push your local branch to GitHub submodule repo and then create a Pull Request
 ```
+
 ## Coding Guidelines and Conventions
 
 1. Naming Conventions
