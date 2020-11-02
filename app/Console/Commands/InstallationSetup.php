@@ -11,14 +11,14 @@ class InstallationSetup extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'portal:setup {--module=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Intsall the specified submodule';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,15 @@ class InstallationSetup extends Command
      */
     public function handle()
     {
-        //
+        $moduleName = $this->option('module');
+        if (!$moduleName) {
+            $shellOutput=@shell_exec('composer install && npm install && npm run dev');
+            $this->info($shellOutput);
+        } else {
+            $shellOutput=@shell_exec('git submodule update --init Modules/'.$moduleName);
+            $this->info($shellOutput);
+            $shellOutput=@shell_exec('cd Modules/'.$moduleName.' && npm install && npm run dev && composer install');
+            $this->info($shellOutput);
+        }
     }
 }
