@@ -4,7 +4,7 @@
 
 
 ## Working in the `portal` repo
-### 1. Pulling with submodules
+1. Pulling with submodules
 
     * Once you have set up the submodules you can update the repository with fetch/pull like you would normally do. To pull everything including the submodules, use the ```--recurse-submodules``` and the ```--remote``` parameter in the git pull command.
 
@@ -15,7 +15,8 @@
         git submodule update --remote  # pull all changes for the submodules
         ```
 
-### 2. Push your local changes to Github.
+2. Push your local changes to Github.
+
     * Once you have updated you develop branch with the latest changes, you can follow these steps to create a new branch, make changes, and push it to GitHub.   
 
         ```sh
@@ -25,20 +26,20 @@
         git push origin branchname     # push your local branch to GitHub and then create a Pull Request
         ```
 
-### 3. Creating new migration and seeders.
+3. Creating new migration and seeders.
 
     1. Migrations
 
-    * To create a migration, use the make:migration Artisan command:. The new migration will be placed in your ```database/migrations``` directory.
+    * To create a migration, use the ```make:migration``` Artisan command. The new migration will be placed in your ```database/migrations``` directory.
 
-    ```
-    php artisan make:migration MigrationName
-    ```
+        ```
+        php artisan make:migration MigrationName
+        ```
     * To run all of your outstanding migrations, execute the migrate Artisan command:
 
-    ```
-    php artisan migrate
-    ```
+        ```
+        php artisan migrate
+        ```
 
     2. Seeders
 
@@ -47,7 +48,7 @@
         ```
         php artisan make:seeder SeederName
         ```
-    * You may use the db:seed Artisan command to seed your database. By default, the db:seed command runs the DatabaseSeeder class, which may be used to call other seed classes. However, you may use the --class option to specify a specific seeder class to run individually:
+    * You may use the ```db:seed``` Artisan command to seed your database. By default, the ```db:seed``` command runs the DatabaseSeeder class, which may be used to call other seed classes. However, you may use the ```--class``` option to specify a specific seeder class to run individually:
 
         ```
         php artisan db:seed
@@ -56,7 +57,8 @@
 
 ## Working in a `submodule` repo
 
-### 1. Updating the submodules with lastest changes
+1. Updating the submodules with lastest changes
+
     * However, you can use these commands to pull updates from the latest develop on submodule individually.
 
         ```sh
@@ -64,7 +66,8 @@
         git checkout develop            # switch to develop branch
         git pull origin develop         # pull updates from latest develop
         ```
-### 2. Push your local changes to Github
+2. Push your local changes to Github
+
     *  Once you have updated the develop branch with the latest changes, you can follow these steps to create Pull Request on submodule repo.
 
         ```sh
@@ -73,7 +76,7 @@
         git commit -m 'message'        # commit the changes
         git push origin branchname     # push your local branch to GitHub submodule repo and then create a Pull Request
         ```
-### 3. Creating new Migrations and seeders.
+3. Creating new Migrations and seeders.
 
     1. Migrations
 
@@ -89,7 +92,7 @@
         ```
     2. Seeders
 
-    * Generate the given seed name for the specified module. The new migration will be placed in your ```ModuleName/Database/Seeders``` directory.
+    * Generate the given seed name for the specified module. The new seeder will be placed in your ```ModuleName/Database/Seeders``` directory.
 
         ```
         php artisan module:make-seed SeederName ModuleName
