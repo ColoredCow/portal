@@ -4,6 +4,10 @@
 ```sh
 git clone https://github.com/coloredcow-portal/portal
 ```
+If you want to clone it with its submodules, you can use the `--recursive` parameter.
+```sh
+git clone --recursive https://github.com/coloredcow-portal/portal
+```
 
 2. Install the submodules:
 ```sh

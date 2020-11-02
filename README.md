@@ -10,6 +10,9 @@ Use our [authorization guidelines](https://github.com/ColoredCow-Portal/portal/b
 ### Development
 Use the [development guidelines](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/development_guideline.md) to help you get started on your tasks.
 
+### Deployment
+Use the [deployment guidelines](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/deployment_guideline.md) to help you deploy your tasks on UAT.
+
 ### Branch Naming Convention
 Use these [naming conventions](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/branch-naming-convention.md) to get started with your projects in the git repositories.
 
