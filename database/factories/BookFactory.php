@@ -1,4 +1,5 @@
 <?php
+namespace Database\Factories;
 
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookCategory;
