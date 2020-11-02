@@ -11,12 +11,12 @@
         ```sh
         cd project/
         git checkout develop           # switch to develop branch
-        git pull --recurse-submodules  # pull all changes in the repo including changes in the submodules
+        git pull origin develop --recurse-submodules  # pull all changes in the develop branch in the repo including, changes in the develop branch of submodules
         git submodule update --remote  # pull all changes for the submodules
         ```
 
 2. Push your local changes to Github.
-    * Once you have updated the develop branch with the latest changes, you can follow these steps to create Pull Request.  
+    * Once you have updated you develop branch with the latest changes, you can follow these steps to create a new branch, make changes, and push it to GitHub.   
 
         ```sh
         git checkout -b branchname     # create a branch where you will commit your changes
@@ -71,7 +71,9 @@ There are a few things you can do to make working with submodules a little easie
     2. [Database Alterations](https://www.laravelbestpractices.com/#database-alterations)
 
 3. Formatting
-    1. [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/).
+    1. [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/)
 
 ### References
 1. [Laravel Guidelines](https://github.com/ColoredCow/resources/tree/master/laravel)
+2. [Submodules](https://www.vogella.com/tutorials/GitSubmodules/article.html)
+3. [Laravel Modules](https://nwidart.com/laravel-modules/v6/introduction)
