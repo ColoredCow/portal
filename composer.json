@@ -29,7 +29,7 @@
         "jordikroon/google-vision": "^1.8",
         "laravel/framework": "^8.0",
         "laravel/helpers": "^1.1",
-        "laravel/legacy-factories": "^1.0",
+        "laravel/legacy-factories": "^1.1",
         "laravel/socialite": "^5.0.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
@@ -67,7 +67,7 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "classmap": [
-            "database/seeds",
+            "database/seeders",
             "database/factories"
         ]
     },
