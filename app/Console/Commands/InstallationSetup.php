@@ -39,12 +39,12 @@ class InstallationSetup extends Command
     {
         $moduleName = $this->option('module');
         if (!$moduleName) {
-            $shellOutput=@shell_exec('composer install && npm install && npm run dev');
+            $shellOutput=@shell_exec('npm install && npm run dev');
             $this->info($shellOutput);
         } else {
             $shellOutput=@shell_exec('git submodule update --init Modules/'.$moduleName);
             $this->info($shellOutput);
-            $shellOutput=@shell_exec('cd Modules/'.$moduleName.' && npm install && npm run dev && composer install');
+            $shellOutput=@shell_exec('cd Modules && cd '.$moduleName.' && composer install && npm install && npm run dev');
             $this->info($shellOutput);
         }
     }
