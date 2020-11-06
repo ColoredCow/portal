@@ -26,35 +26,6 @@
         git push origin branchname     # push your local branch to GitHub and then create a Pull Request
         ```
 
-3. Creating new migration and seeders.
-
-    1. Migrations
-
-    * To create a migration, use the ```make:migration``` Artisan command. The new migration will be placed in your ```database/migrations``` directory.
-
-        ```
-        php artisan make:migration MigrationName
-        ```
-    * To run all of your outstanding migrations, execute the migrate Artisan command:
-
-        ```
-        php artisan migrate
-        ```
-
-    2. Seeders
-
-    * To generate a seeder, execute the ```make:seeder``` Artisan command. The new seeder will be placed in your ```database/Seeders``` directory.
-
-        ```
-        php artisan make:seeder SeederName
-        ```
-    * You may use the ```db:seed``` Artisan command to seed your database. By default, the ```db:seed``` command runs the DatabaseSeeder class, which may be used to call other seed classes. However, you may use the ```--class``` option to specify a specific seeder class to run individually:
-
-        ```
-        php artisan db:seed
-        php artisan db:seed --class=SeederName
-        ```
-
 ## Working in a `submodule` repo
 
 1. Updating the submodules with lastest changes
@@ -76,35 +47,10 @@
         git commit -m 'message'        # commit the changes
         git push origin branchname     # push your local branch to GitHub submodule repo and then create a Pull Request
         ```
-3. Creating new Migrations and seeders.
 
-    **Note:** When you are working in specified submodules, create migrations/seeders in the specified submodules instead of the main portal module.
+**Note: For creating migrations and seeders** 
 
-    1. Migrations
-
-    * Generate a migration for specified module. The new migration will be placed in your ```ModuleName/Database/Migrations``` directory.
-
-        ```
-        php artisan module:make-migration migrationName ModuleName
-        ```
-    * Migrate the given module, or without a module an argument, migrate all modules.
-
-        ```
-        php artisan module:migrate ModuleName
-        ```
-    2. Seeders
-
-    * Generate the given seed name for the specified module. The new seeder will be placed in your ```ModuleName/Database/Seeders``` directory.
-
-        ```
-        php artisan module:make-seed SeederName ModuleName
-        ```
-    * Seed the given module, or without an argument, seed all modules.
-    
-        ```
-        php artisan module:seed ModuleName
-        ```
-
+When you are working in specified submodule, create migrations/seeders in the specified submodule instead of the main portal module.
 
 ## Submodule Tips
 
