@@ -1,4 +1,5 @@
 <?php
+namespace Database\Factories;
 
 use App\Models\HR\Employee;
 use Faker\Generator as Faker;
