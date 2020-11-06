@@ -43,7 +43,7 @@
 
     2. Seeders
 
-    * To generate a seeder, execute the ```make:seeder``` Artisan command. The new seeder will be placed in your ```database/seeds``` directory.
+    * To generate a seeder, execute the ```make:seeder``` Artisan command. The new seeder will be placed in your ```database/Seeders``` directory.
 
         ```
         php artisan make:seeder SeederName
