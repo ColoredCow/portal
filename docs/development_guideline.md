@@ -28,6 +28,8 @@
 
 3. Creating new migration and seeders.
 
+    **Note:** When you are working in specified submodules, create migrations/seeders in the specified submodules instead of the main portal module.
+
     1. Migrations
 
     * To create a migration, use the ```make:migration``` Artisan command. The new migration will be placed in your ```database/migrations``` directory.
