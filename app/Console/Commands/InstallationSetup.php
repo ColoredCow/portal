@@ -48,7 +48,9 @@ class InstallationSetup extends Command
         if (!$moduleName) {
             $moduleList = Module::allEnabled();
             foreach ($moduleList as $module) {
-                self::setupModule($module->getName());
+                $moduleName = $module->getName();
+                $this->info('Installing '. $moduleName);
+                self::setupModule($moduleName);
             }
         } else {
             Module::has($moduleName) ? self::setupModule($moduleName) : $this->info('Module ' . $moduleName . ' does not exist');
