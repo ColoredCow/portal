@@ -32,7 +32,7 @@ npm run dev
 ```sh
 php artisan portal:setup
 ```
-However, you may use the ```module``` option to specify a specific ```MODULENAME``` to update individually:
+However, you may use the ```module``` option to specify a specific ```MODULENAME``` to install individually:
 
 ```sh
 php artisan portal:setup --module=MODULENAME
