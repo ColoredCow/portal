@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Nwidart\Modules\Facades\Module;
 
 class InstallationSetup extends Command
 {
@@ -30,6 +31,12 @@ class InstallationSetup extends Command
         parent::__construct();
     }
 
+    protected static function setupModule($moduleName)
+    {
+        @shell_exec('git submodule update --init Modules/' . $moduleName);
+        @shell_exec('cd Modules && cd ' . $moduleName . ' && composer install && npm install && npm run dev');
+    }
+
     /**
      * Execute the console command.
      *
@@ -39,13 +46,12 @@ class InstallationSetup extends Command
     {
         $moduleName = $this->option('module');
         if (!$moduleName) {
-            $shellOutput=@shell_exec('npm install && npm run dev');
-            $this->info($shellOutput);
+            $moduleList = Module::allEnabled();
+            foreach ($moduleList as $module) {
+                self::setupModule($module->getName());
+            }
         } else {
-            $shellOutput=@shell_exec('git submodule update --init Modules/'.$moduleName);
-            $this->info($shellOutput);
-            $shellOutput=@shell_exec('cd Modules && cd '.$moduleName.' && composer install && npm install && npm run dev');
-            $this->info($shellOutput);
+            Module::has($moduleName) ? self::setupModule($moduleName) : $this->info('Module ' . $moduleName . ' does not exist');
         }
     }
 }

@@ -9,47 +9,34 @@ If you want to clone it with its submodules, you can use the `--recursive` param
 git clone --recursive https://github.com/coloredcow-portal/portal
 ```
 
-2. Install the submodules:
-```sh
-git submodule update --init 
-```
-However, you may use the ```Modules/MODULENAME``` option to specify a specific path to update individually:
-
-```sh
-git submodule update --init Modules/MODULENAME
-```
-
-3. Install dependencies
+2. Install dependencies
 ```sh
 composer install
 npm install
 ```
 
-4. npm build
+3. npm build
 ```sh
 npm run dev
 ```
 
-5. Install dependencies for each module
+4. Install the submodules:
 ```sh
-cd Modules/MODULENAME
-composer install
-npm install
+php artisan portal:setup
+```
+However, you may use the ```module``` option to specify a specific ```MODULENAME``` to update individually:
+
+```sh
+php artisan portal:setup --module=MODULENAME
 ```
 
-6. npm build for each module
-```sh
-cd Modules/MODULENAME
-npm run dev
-```  
+5. Copy `.env.example` as `.env`
 
-7. Copy `.env.example` as `.env`
-
-8. Run the following command to add a key
+6. Run the following command to add a key
 ```
 php artisan key:generate
 ```
-9. Add the following settings in `.env` file:
+7. Add the following settings in `.env` file:
     1. Laravel app configurations
     ```
     APP_NAME, APP_ENV, APP_DEBUG, APP_URL
@@ -65,12 +52,12 @@ php artisan key:generate
     GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
     ```
 
-10. Run migrations
+8. Run migrations
 ```
 php artisan migrate
 ```
 
-11. Run seeders
+9. Run seeders
     1. Portal
     ```
     php artisan db:seed
