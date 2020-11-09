@@ -16,6 +16,7 @@
         ```
 
 2. Push your local changes to Github.
+
     * Once you have updated you develop branch with the latest changes, you can follow these steps to create a new branch, make changes, and push it to GitHub.   
 
         ```sh
@@ -28,6 +29,7 @@
 ## Working in a `submodule` repo
 
 1. Updating the submodules with lastest changes
+
     * However, you can use these commands to pull updates from the latest develop on submodule individually.
 
         ```sh
@@ -36,6 +38,7 @@
         git pull origin develop         # pull updates from latest develop
         ```
 2. Push your local changes to Github
+
     *  Once you have updated the develop branch with the latest changes, you can follow these steps to create Pull Request on submodule repo.
 
         ```sh
@@ -44,6 +47,11 @@
         git commit -m 'message'        # commit the changes
         git push origin branchname     # push your local branch to GitHub submodule repo and then create a Pull Request
         ```
+
+**Note: For creating migrations and seeders** 
+
+When you are working in specified submodule, create migrations/seeders in the specified submodule instead of the main portal module.
+
 ## Submodule Tips
 
 There are a few things you can do to make working with submodules a little easier.
