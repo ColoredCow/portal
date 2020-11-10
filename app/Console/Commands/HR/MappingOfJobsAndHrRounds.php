@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Console\Commands\HR;
+
+use App\Models\HR\HRJobsRounds;
+use App\Models\HR\Job;
+use App\Models\HR\Round;
+use Illuminate\Console\Command;
+
+class MappingOfJobsAndHrRounds extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'mapping-of-jobs-and-hr-rounds';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'This will map all the jobs with the hrRounds. This has to be run whenever new HR Rounds are added.';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {  
+        foreach(Job::get() as $job){
+            foreach(Round::get() as $round){
+                HRJobsRounds::updateOrCreate(
+                    [
+                        'hr_job_id' => $job->id, 
+                        'hr_round_id' => $round->id,
+                    ]
+                );
+            } 
+        }
+    }
+}
