@@ -4,44 +4,39 @@
 ```sh
 git clone https://github.com/coloredcow-portal/portal
 ```
-If you want to clone it with its submodules, you can use the `--recursive` parameter.
-```sh
-git clone --recursive https://github.com/coloredcow-portal/portal
-```
+2. Clone the submodules
 
-2. Install the submodules:
-```sh
-git submodule update --init 
-```
-However, you may use the ```Modules/MODULENAME``` option to specify a specific path to update individually:
+Clone every submodule individually
 
 ```sh
+cd portal
 git submodule update --init Modules/MODULENAME
 ```
+3. Checkout develop branch
+```sh
+git submodule foreach 'git checkout develop'
+```
 
-3. Install dependencies
+4. Install dependencies
 ```sh
 composer install
 npm install
 ```
 
-4. npm build
+5. npm build
 ```sh
 npm run dev
 ```
 
-5. Install dependencies for each module
+6. Install the submodules:
 ```sh
-cd Modules/MODULENAME
-composer install
-npm install
+php artisan portal:setup
 ```
+However, you may use the ```module``` option to specify a specific ```MODULENAME``` to install individually:
 
-6. npm build for each module
 ```sh
-cd Modules/MODULENAME
-npm run dev
-```  
+php artisan portal:setup --module=MODULENAME
+```
 
 7. Copy `.env.example` as `.env`
 
