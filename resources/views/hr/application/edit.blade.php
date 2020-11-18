@@ -112,12 +112,12 @@
                     </div>
                 </div>
             </div>
-            <div class="card mt-3">
+                <div class="card mt-3 bg-transparent border-0">
                 @if(sizeOf($application->trialApplicationRounds))
                     <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link {{ $application->latestApplicationRound->round->isTrialRound() ? 'active' : '' }}" id="nav-trial-tab" data-toggle="tab" href="#nav-trial" role="tab" aria-controls="nav-trial" aria-selected="true">Trial</a>
-                        <a class="nav-item nav-link {{ $application->latestApplicationRound->round->isTrialRound() ? '' : 'active' }}" id="nav-pre-trial-tab" data-toggle="tab" href="#nav-pre-trial" role="tab" aria-controls="nav-pre-trial" aria-selected="false">Pre-Trial</a>
+                        <div class="nav nav-pills" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link {{ $application->latestApplicationRound->round->isTrialRound() ? 'active' : '' }}" id="nav-trial-tab" data-toggle="tab" href="#nav-trial" role="tab" aria-controls="nav-trial" aria-selected="true">Trial</a>
+                            <a class="nav-item nav-link {{ $application->latestApplicationRound->round->isTrialRound() ? '' : 'active' }}" id="nav-pre-trial-tab" data-toggle="tab" href="#nav-pre-trial" role="tab" aria-controls="nav-pre-trial" aria-selected="false">Pre-Trial</a>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
