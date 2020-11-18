@@ -3,7 +3,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class HrRoundsTableSeeder extends Seeder
+class HRRoundsTableSeeder extends Seeder
 {
 
     /**
