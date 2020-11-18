@@ -13,5 +13,6 @@
     "Salary": true,
     "Payment": true,
     "HR": true,
-    "AppointmentSlots": true
+    "AppointmentSlots": true,
+    "EffortTracking": true
 }

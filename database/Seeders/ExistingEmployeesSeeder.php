@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use App\Models\HR\Employee;
 use App\User;

@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('application:no-show')->everyThirtyMinutes();
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
         $schedule->command('hr:check-follow-ups')->daily();
+        $schedule->command('mapping-of-jobs-and-hr-rounds');
     }
 
     /**

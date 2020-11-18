@@ -2,7 +2,7 @@
     <div class="card-header bg-dark text-white">
         <ul class="nav justify-content-start d-flex align-items-end">
             <li class="nav-item">
-                <strong>Evaluation&nbsp;&nbsp;•&nbsp;&nbsp;{{ $applicationRound->round->name }}</strong>
+                <strong>Evaluation&nbsp;&nbsp;•&nbsp;&nbsp;{{ $round->name }}</strong>
             </li>
             <li class="nav-item mx-1 ml-auto">
                <a href="{{ route('hr.evaluation') }}" class="c-pointer text-white text-decoration-none" target="_blank" title="Edit parameters">

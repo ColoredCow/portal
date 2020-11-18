@@ -26,7 +26,7 @@
                             $application = $item['application'];
                         @endphp
                         <b><u>{{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</u></b><br>
-                        {{ $applicationRound->round->name }} for {{ $application->job->title }} conducted by {{ $applicationRound->conductedPerson->name }}<br>
+                        {{ $applicationRound->round->isTrialRound()? $applicationRound->trialRound->name : $applicationRound->round->name }} for {{ $application->job->title }} conducted by {{ $applicationRound->conductedPerson->name }}<br>
                         @if ($applicationRound->mail_sent)
                             <span data-toggle="modal" data-target="#{{ $applicationRound->communicationMail['modal-id'] }}" class="{{ config("constants.hr.status.$applicationRound->round_status.class") }} modal-toggler">Communication mail</span><br>
                             @include('hr.communication-mail-modal', [ 'data' => $applicationRound->communicationMail ])

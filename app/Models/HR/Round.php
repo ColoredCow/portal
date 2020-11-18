@@ -22,6 +22,14 @@ class Round extends Model
         'rejected_mail_template' => 'array',
     ];
 
+    public function isTrialRound(){
+        return $this->name == 'Trial Program';
+    }
+
+    public function inPreparatoryRounds(){
+        return Round::whereIn('name', ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])->pluck('id')->contains($this->id);
+    }
+
     public function jobs()
     {
         return $this->belongsToMany(Job::class, 'hr_jobs_rounds', 'hr_round_id', 'hr_job_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer');
