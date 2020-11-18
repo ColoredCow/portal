@@ -73,6 +73,7 @@ Examples:
 It is recommended to use all lower caps letters and hyphen (-) to separate words unless it is a specific item name, ID or a module name. Forward slash ('/') could be used to separate the ID and description.
 If there are changes that are affecting another repository also then again a forward slash ('/') should be used to specify the module or repository the issue belongs to.
 
+
 #### 2. Bug Fix
 If the code changes made from the feature branch were rejected after a release, sprint or demo, any necessary fixes after that should be done on the bugfix branch.
 		
@@ -92,4 +93,3 @@ If there is a need to create a new readme/documentation file or do some changes 
 
 Examples:
 - doc/naming-conventions
-
