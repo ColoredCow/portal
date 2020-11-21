@@ -78,7 +78,25 @@
                         </div>
                         <div class="form-group col-md-5">
                             <label class="text-secondary fz-14 leading-none mb-0.16">College</label>
-                            <div>{{ $applicant->college ?? '-' }}</div>
+                            @if(!$applicant->hr_university_id)
+                                <div id="applicant_college">{{ $applicant->college ?? '-' }}</div>
+                            @endif
+                            @if ($universities->isNotEmpty())
+                                <select name="university_id"
+                                    id="application_university_id"
+                                    class="form-control form-control-sm pr-md-7"
+                                    data-applicant-id="{{ $applicant->id }}">
+                                    <option value="">Select</option>
+                                    @foreach ($universities as $university)
+                                        @php
+                                            $selected = $applicant->hr_university_id == $university->id ? 'selected="selected"' : '';
+                                        @endphp
+                                        <option value="{{ $university->id }}" {{ $selected }}>
+                                            {{ $university->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            @endif
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
                             <label class="text-secondary fz-14 leading-none mb-0.16">Course</label>

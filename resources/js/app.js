@@ -899,18 +899,24 @@ require('./finance/payment');
  * HR Module JS code start
  */
 $(document).ready(function() {
-  $(document).on("click", ".show-comment", showCommentBlock);
-  $(document).on("click", ".section-toggle", sectionToggle);
-  $(document).on("click", "#saveFollowUp", saveFollowUp);
-  $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-  $(document).on('click', '.show-evaluation-stage', function() {
+	$(document).on("click", ".show-comment", showCommentBlock);
+	$(document).on("click", ".section-toggle", sectionToggle);
+	$(document).on("click", "#saveFollowUp", saveFollowUp);
+	$(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
+	$(document).on('click', '.show-evaluation-stage', function() {
 		$('.evaluation-stage').addClass('d-none');
 		var target = $(this).data('target');
 		$(target).removeClass('d-none');
 	});
-  $(document).on("change", ".set-segment-assignee", setSegmentAssignee);
-  $(document).on('click', '.toggle-block-display', toggleBlockDisplay);
+	$(document).on("change", ".set-segment-assignee", setSegmentAssignee);
+	$(document).on('click', '.toggle-block-display', toggleBlockDisplay);
 	$(document).on('change', '.send-mail-to-applicant', toggleApplicantMailEditor);
+	$(document).on('change', '#application_university_id', function () {
+		var applicantId = $(this).data('applicant-id');
+		var universityId = $(this).val();
+		updateUniversityId(applicantId, universityId);
+	});
+	
 });
 
 function showCommentBlock() {
@@ -998,3 +1004,18 @@ $(document).on('focusin', function(e) {
 		e.stopImmediatePropagation();
 	}
 });
+
+function updateUniversityId(applicantId, universityId) {
+	$.ajax({
+		url: '/hr/applications/internship/' + applicantId + '/update-university',
+		method: 'POST',
+		data: {
+			university_id: universityId
+		},
+		success: function(res) {
+			if(res.status == true) {
+				$('#applicant_college').addClass('d-none');
+			}
+		}
+	});
+}

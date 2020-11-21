@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
+            Route::post('internship/{applicant}/update-university', 'InternshipApplicationController@updateApplicantUniversity')->name('applications.internship.update-university');
             Route::resource('volunteer', 'VolunteerApplicationController')
                 ->only(['index', 'edit'])
                 ->names([
