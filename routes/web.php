@@ -104,7 +104,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/applicant/create', 'ApplicantController@create')->name('hr.applicant.create');
         Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
-        Route::post('/{applicant}/update-university', 'ApplicantController@updateApplicantUniversity')->name('hr.applicant.update-university');
+        Route::post('/{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
         Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
     });
 

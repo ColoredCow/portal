@@ -115,7 +115,7 @@ class ApplicantController extends Controller
         //
     }
 
-    public function updateApplicantUniversity(Applicant $applicant, Request $request)
+    public function updateUniversity(Applicant $applicant, Request $request)
     {
         $status = $applicant->update([
             'hr_university_id' => request()->university_id
