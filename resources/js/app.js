@@ -1007,7 +1007,7 @@ $(document).on('focusin', function(e) {
 
 function updateUniversityId(applicantId, universityId) {
 	$.ajax({
-		url: '/hr/applications/internship/' + applicantId + '/update-university',
+		url: '/hr/' + applicantId + '/update-university',
 		method: 'POST',
 		data: {
 			university_id: universityId

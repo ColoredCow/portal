@@ -227,14 +227,4 @@ abstract class ApplicationController extends Controller
             'content-type' => 'application/pdf',
         ]);
     }
-
-    public function updateApplicantUniversity(Applicant $applicant, Request $request)
-    {
-        $status = $applicant->update([
-            'hr_university_id' => request()->university_id
-        ]);
-        return response()->json([
-            'status' => $status,
-        ]);
-    }
 }

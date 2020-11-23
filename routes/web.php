@@ -74,7 +74,6 @@ Route::middleware('auth')->group(function () {
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
-            Route::post('internship/{applicant}/update-university', 'InternshipApplicationController@updateApplicantUniversity')->name('applications.internship.update-university');
             Route::resource('volunteer', 'VolunteerApplicationController')
                 ->only(['index', 'edit'])
                 ->names([
@@ -105,6 +104,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/applicant/create', 'ApplicantController@create')->name('hr.applicant.create');
         Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
+        Route::post('/{applicant}/update-university', 'ApplicantController@updateApplicantUniversity')->name('hr.applicant.update-university');
         Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
     });
 
