@@ -7,7 +7,6 @@ use App\Models\HR\Job;
 use App\Models\Setting;
 use App\Helpers\FileHelper;
 use Illuminate\Support\Str;
-use App\Models\HR\Applicant;
 use App\Models\HR\Application;
 use Modules\User\Entities\User;
 use App\Models\HR\ApplicationMeta;
