@@ -4,6 +4,7 @@ namespace App\Models\HR;
 
 use Carbon\Carbon;
 use App\Services\GSuiteUserService;
+use Modules\HR\Entities\University;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
@@ -49,7 +50,7 @@ class Applicant extends Model
                 'value' => json_encode($attr['form_data']),
             ]);
         }
-        
+
         $applicant->wasRecentlyCreated ? $application->tag('new-application') : null;
         return $applicant;
     }
@@ -117,5 +118,15 @@ class Applicant extends Model
             'firstName' => $firstName,
             'lastName' => $lastName,
         ];
+    }
+
+    /**
+     * Get the applicant's university.
+     *
+     * @return Modules\HR\Entities\University|null
+     */
+    public function university()
+    {
+        return $this->hasOne(University::class, 'id', 'hr_university_id');
     }
 }
