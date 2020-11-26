@@ -911,12 +911,6 @@ $(document).ready(function() {
 	$(document).on("change", ".set-segment-assignee", setSegmentAssignee);
 	$(document).on('click', '.toggle-block-display', toggleBlockDisplay);
 	$(document).on('change', '.send-mail-to-applicant', toggleApplicantMailEditor);
-	$(document).on('change', '#application_university_id', function () {
-		var applicantId = $(this).data('applicant-id');
-		var universityId = $(this).val();
-		updateUniversityId(applicantId, universityId);
-	});
-	
 });
 
 function showCommentBlock() {
@@ -1004,18 +998,3 @@ $(document).on('focusin', function(e) {
 		e.stopImmediatePropagation();
 	}
 });
-
-function updateUniversityId(applicantId, universityId) {
-	$.ajax({
-		url: '/hr/' + applicantId + '/update-university',
-		method: 'POST',
-		data: {
-			university_id: universityId
-		},
-		success: function(res) {
-			if(res.status == true) {
-				$('#applicant_college').addClass('d-none');
-			}
-		}
-	});
-}

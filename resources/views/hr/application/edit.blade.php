@@ -77,7 +77,11 @@
                             <div>{{ $applicant->email }}</div>
                         </div>
                         <div class="form-group col-md-5">
-                            <label class="text-secondary fz-14 leading-none mb-0.16">College</label>
+                            <label class="text-secondary fz-14 leading-none mb-0.16">
+                                College
+                                <span class="badge badge-danger d-none university-update-failure">Failed to update</span>
+                                <span class="badge badge-success d-none university-update-success">Updated successfully!</span>
+                            </label>
                             @if(!$applicant->hr_university_id)
                                 <div id="applicant_college">{{ $applicant->college ?? '-' }}</div>
                             @endif
