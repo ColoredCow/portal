@@ -35,9 +35,7 @@
                         @include('modules-nav-bar')
                     </div>
                     @endauth
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
@@ -51,11 +49,8 @@
                         <ul class="navbar-nav ml-auto">
                             @auth
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center"
-                                    href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false" v-pre>
-                                    <img src="{{ auth()->user()->avatar }}"
-                                        class="user-avatar w-25 h-25 rounded-circle mr-1">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <img src="{{ auth()->user()->avatar }}" class="user-avatar w-25 h-25 rounded-circle mr-1">
                                     <span>
                                         <span class="mr-1">{{ auth()->user()->name }}</span>
                                         <span class="caret"></span>
@@ -73,8 +68,7 @@
                                     @endif
 
                                     @if(auth()->user()->canAccessWebsite())
-                                    <a target="_blank" class="dropdown-item"
-                                        href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to website</a>
+                                    <a target="_blank" class="dropdown-item" href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to website</a>
                                     @endif
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -82,8 +76,7 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -114,6 +107,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
     <script src="{{ asset('src/tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ mix('/js/hr.js') }}"></script>
 
     @yield('js_scripts')
 
