@@ -39,9 +39,9 @@ class Application extends Model
      */
     public function trialApplicationRounds()
     {
-        return $this->applicationrounds()->whereHas('round', function ($subQuery){
+        return $this->applicationrounds()->whereHas('round', function ($subQuery) {
             return $subQuery->where('name', 'Trial Program');
-        });          
+        });
     }
 
     /**
@@ -49,10 +49,10 @@ class Application extends Model
      */
     public function applicationRoundsExceptTrial()
     {
-        return $this->applicationrounds()->whereHas('round', function ($subQuery){
+        return $this->applicationrounds()->whereHas('round', function ($subQuery) {
             return $subQuery->whereNotIn('name', ['Trial Program']);
-        });          
-    }  
+        });
+    }
 
     public function evaluations()
     {
@@ -188,7 +188,6 @@ class Application extends Model
         });
     }
 
-    
     public function scopeFilterByName($query, $search)
     {
         return $query->whereHas('applicant', function ($query) use ($search) {
@@ -206,6 +205,9 @@ class Application extends Model
             $query->where('name', 'LIKE', "%$search%");
             $query->orWhere('email', 'LIKE', "%$search%");
             $query->orWhere('phone', 'LIKE', "%$search%");
+            $query->orWhereHas('university', function ($universityQuery) use ($search) {
+                $universityQuery->where('name', 'LIKE', "%$search%");
+            });
         });
     }
 
@@ -223,21 +225,21 @@ class Application extends Model
     }
 
     /**
-    * Apply filter on applications based on their Round Name
-    *
-    * @param \Illuminate\Database\Eloquent\Builder $query
-    * @param String $status
-    *
-    * @return \Illuminate\Database\Eloquent\Builder $query
-    */
+     * Apply filter on applications based on their Round Name
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param String $status
+     *
+     * @return \Illuminate\Database\Eloquent\Builder $query
+     */
     public function scopeFilterByRoundName($query, $round)
     {
         return $query->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
-               return $subQuery->where('is_latest', true)
-                         ->whereHas('round', function ($subQuery) use ($round) {
-                            return $subQuery->where('name', $round);
-                         });
-               
+            return $subQuery->where('is_latest', true)
+                ->whereHas('round', function ($subQuery) use ($round) {
+                    return $subQuery->where('name', $round);
+                });
+
         });
     }
 
@@ -252,7 +254,6 @@ class Application extends Model
     {
         return $this->hasOne(ApplicationRound::class, 'hr_application_id')->latest('id');
     }
-
 
     /**
      * Get applications where status is rejected.
@@ -286,12 +287,12 @@ class Application extends Model
     public function scopeIsOpen($query)
     {
         return $query->whereIn('status', [config('constants.hr.status.new.label'), config('constants.hr.status.in-progress.label')])
-                     ->whereHas('latestApplicationRound', function ($subQuery) {
-                         return $subQuery->where('is_latest', true)
-                                        ->whereHas('round', function ($subQuery) {
-                                            return $subQuery->whereNotIn('name', ["Trial Program"]);
-                                        });
-                     });
+            ->whereHas('latestApplicationRound', function ($subQuery) {
+                return $subQuery->where('is_latest', true)
+                    ->whereHas('round', function ($subQuery) {
+                        return $subQuery->whereNotIn('name', ["Trial Program"]);
+                    });
+            });
     }
 
     public function scopeInProgress($query)
@@ -493,7 +494,7 @@ class Application extends Model
                 'mail-subject' => $details['mail-subject'] ?? 'No subject',
                 'mail-body' => $details['mail-body'] ?? 'No body',
                 'mail-sender' => $details['mail-sender'] ?? '',
-                'mail-date' => $event->created_at
+                'mail-date' => $event->created_at,
             ];
 
             $timeline[] = [
