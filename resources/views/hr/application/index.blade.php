@@ -24,7 +24,7 @@
                 value=@if(request()->has('round')){{request()->get('round')}}@endif>
 
             <input 
-                type="text" name="search" class="form-control" id="search" placeholder="Search by name/email/phone/university"
+                type="text" name="search" class="form-control" id="search" placeholder="Name, email, phone, or university"
                 value=@if(request()->has('search')){{request()->get('search')}}@endif>
             <button class="btn btn-info ml-2">Search</button>
         </form>
