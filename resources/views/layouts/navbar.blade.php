@@ -1,7 +1,7 @@
-<ul class="nav nav-pills fz-16">
+<ul class="navbar-nav mr-auto" style="font-size:16px;">
     @if(Module::checkStatus('HR'))
         <li class="nav-item dropdown">
-            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button"
+            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>HR <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
@@ -28,25 +28,9 @@
         </li>
     @endif
 
-    @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
-        <li class="nav-item dropdown">
-            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span class="caret"></span>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
-                @can('library_books.view')
-                    <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
-                @endcan
-                @can('weeklydoses.view')
-                    <a class="dropdown-item" href="{{ route('weeklydoses') }}">WeeklyDose</a>
-                @endcan
-            </div>
-        </li>
-    @endif
-
     @if(Module::checkStatus('Client') || Module::checkStatus('Project'))
         <li class="nav-item dropdown">
-            <a id="navbarDropdown_pm" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button"
+            <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Project Management <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
@@ -62,13 +46,13 @@
 
     @if(Module::checkStatus('Task') && auth()->user()->can('task.view'))
         <li class="nav-item">
-            <a class="nav-item nav-link font-weight-bold" href="/task"><i class="fa fa-bar-chart"></i>&nbsp;Task</a>
+            <a class="nav-item nav-link" href="/task">Task</a>
         </li>
     @endif
 
     @if(Module::checkStatus('Invoice') || Module::checkStatus('LegalDocument'))
         <li class="nav-item dropdown">
-            <a id="navbarDropdown_finance" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button"
+            <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
@@ -86,7 +70,7 @@
 
     @if(Module::checkStatus('Prospect') || Module::checkStatus('Lead') || Module::checkStatus('SalesAutomation'))
         <li class="nav-item dropdown">
-            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button"
+            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Sales <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
@@ -103,16 +87,32 @@
         </li>
     @endif
 
+    @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span class="caret"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+                @can('library_books.view')
+                    <a class="dropdown-item" href="{{ route('books.index') }}">Library</a>
+                @endcan
+                @can('weeklydoses.view')
+                    <a class="dropdown-item" href="{{ route('weeklydoses') }}">WeeklyDose</a>
+                @endcan
+            </div>
+        </li>
+    @endif
+
     @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.view'))
         <li class="nav-item">
-            <a class="nav-item nav-link font-weight-bold" href="{{ route('infrastructure.index') }}"><i class="fa fa-bar-chart"> </i>&nbsp;Infrastructure</a>
+            <a class="nav-item nav-link" href="{{ route('infrastructure.index') }}">Infrastructure</a>
         </li>
     @endif
 
     @if(Module::checkStatus('HR') || Module::checkStatus('User'))
         <li class="nav-item dropdown">
-            <a id="navbarDropdown_settings" class="nav-link dropdown-toggle font-weight-bold" href="#" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><i class="fa fa-cog"></i> Settings<span class="caret"></span>
+            <a id="navbarDropdown_settings" class="nav-link dropdown-toggle" href="#" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Settings<span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
                 @if(Module::checkStatus('HR') && auth()->user()->can('hr_recruitment_applications.view'))
