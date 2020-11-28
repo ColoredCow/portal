@@ -14,5 +14,6 @@
     "Payment": true,
     "HR": true,
     "AppointmentSlots": true,
-    "EffortTracking": true
+    "EffortTracking": true,
+    "SalesAutomation": true
 }
