@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Models\HR\Application;
 use Modules\User\Entities\User;
 use App\Models\HR\ApplicationMeta;
+use Modules\HR\Entities\University;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\HR\Application\JobChanged;
@@ -142,6 +143,7 @@ abstract class ApplicationController extends Controller
                 'noShow' => Setting::getNoShowEmail(),
             ],
             'type' => config("constants.hr.opportunities.$job->type.type"),
+            'universities' => University::orderBy('name')->get(),
         ];
 
         if ($job->type == 'job') {

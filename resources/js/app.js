@@ -899,17 +899,17 @@ require('./finance/payment');
  * HR Module JS code start
  */
 $(document).ready(function() {
-  $(document).on("click", ".show-comment", showCommentBlock);
-  $(document).on("click", ".section-toggle", sectionToggle);
-  $(document).on("click", "#saveFollowUp", saveFollowUp);
-  $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-  $(document).on('click', '.show-evaluation-stage', function() {
+	$(document).on("click", ".show-comment", showCommentBlock);
+	$(document).on("click", ".section-toggle", sectionToggle);
+	$(document).on("click", "#saveFollowUp", saveFollowUp);
+	$(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
+	$(document).on('click', '.show-evaluation-stage', function() {
 		$('.evaluation-stage').addClass('d-none');
 		var target = $(this).data('target');
 		$(target).removeClass('d-none');
 	});
-  $(document).on("change", ".set-segment-assignee", setSegmentAssignee);
-  $(document).on('click', '.toggle-block-display', toggleBlockDisplay);
+	$(document).on("change", ".set-segment-assignee", setSegmentAssignee);
+	$(document).on('click', '.toggle-block-display', toggleBlockDisplay);
 	$(document).on('change', '.send-mail-to-applicant', toggleApplicantMailEditor);
 });
 
