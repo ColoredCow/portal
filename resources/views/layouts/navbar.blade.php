@@ -81,7 +81,7 @@
                     <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
                 @endif
                 @if(Module::checkStatus('SalesAutomation'))
-                    <a class="dropdown-item" href="{{ '/lead' }}">Sales Automation</a>
+                    <a class="dropdown-item" href="{{ route('salesautomation.index') }}">Sales Automation</a>
                 @endif
             </div>
         </li>

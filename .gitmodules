@@ -46,3 +46,6 @@
 [submodule "Modules/EffortTracking"]
 	path = Modules/EffortTracking
 	url = https://github.com/ColoredCow-Portal/effort-tracking.git
+[submodule "Modules/SalesAutomation"]
+	path = Modules/SalesAutomation
+	url = https://github.com/coloredcow-portal/SalesAutomation
