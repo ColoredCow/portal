@@ -43,11 +43,17 @@
                 </div> --}}
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label class="leading-none" for="next_scheduled_person_id">Assignee</label>
+                        <label class="fz-14 leading-none text-secondary" for="next_scheduled_person_id">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span>{{ __('Assignee') }}</span>
+                        </label>
                         <select name="next_scheduled_person_id" id="next_scheduled_person_id" class="form-control"
                             required="required">
                             @foreach ($interviewers as $interviewer)
-                                <option value="{{ $interviewer->id }}">{{ $interviewer->name }}</option>
+                                @php
+                                    $selected = $interviewer->id == auth()->id() ? 'selected' : '';
+                                @endphp
+                                <option value="{{ $interviewer->id }}" {{ $selected }}>{{ $interviewer->name }}</option>
                             @endforeach
                         </select>
                     </div>

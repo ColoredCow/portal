@@ -704,6 +704,8 @@ input[type="radio"].toggle-button:checked + label.thumb > i.fa {
 }
 // End Custom
 
+[v-cloak] { display: none; }
+
 @import 'media/md';
 @import 'media/xl';
 // Bootstrap
