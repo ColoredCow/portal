@@ -31,9 +31,6 @@
                     <label for="description" class="fz-14 leading-none text-secondary mb-0.16">Job Description</label>
                     <textarea id="description" class="form-control" name="description" rows="4" placeholder="Enter job description...">{{$job->description}}</textarea>
                 </div>
-                <br>
-                
-                <br>
             </div>
         </div>
         @if (sizeof($job->rounds))
