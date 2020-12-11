@@ -22,8 +22,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Details</h5>
                 <span class="float-right">
-                    <span class="fz-14 leading-none text-secondary">Created by</span>
-                    <span>{{ $job->posted_by }}</span>
+                    <span class="fz-14 leading-none text-secondary">Created by {{ $job->posted_by }}</span>
                 </span>
             </div>
             <div class="card-body">
@@ -42,7 +41,7 @@
                     <div class="form-row">
                         @foreach ($job->rounds as $key => $round)
                             <div class="form-group col-md-5 {{ $key%2 ? 'offset-md-1' : '' }}">
-                                <label for="rounds[{{ $round->id }}][hr_round_interviewer_id]" class="fz-14 leading-none text-secondary mb-0.16">{{ $round->name }}</label>
+                                <label for="round_{{ $round->id }}" class="fz-14 leading-none text-secondary mb-0.16">{{ $round->name }}</label>
                                     <select
                                         class="form-control"
                                         name="rounds[{{ $round->id }}][hr_round_interviewer_id]"
