@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
             Route::get('volunteer/{application}/offer-letter', 'VolunteerApplicationController@viewOfferLetter')->name('applications.volunteer.offer-letter');
 
             Route::resource('job', 'JobApplicationController')
-                ->only(['edit', 'update'])
+                ->only(['index', 'edit', 'update'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::resource('internship', 'InternshipApplicationController')
