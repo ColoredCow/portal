@@ -2,11 +2,11 @@
 
 namespace App\Mail\HR\Application;
 
-use App\Models\HR\Application;
-use App\Models\HR\ApplicationMeta;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationMeta;
 
 class RoundNotConducted extends Mailable
 {

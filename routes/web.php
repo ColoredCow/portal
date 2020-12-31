@@ -34,19 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('hr')->namespace('HR')->group(function () {
         Route::get('/', 'HRController@index')->name('hr');
 
-        Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
-            Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
-            Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
-            Route::resource('opportunities', 'RecruitmentOpportunityController')
-                ->only(['index', 'store', 'update', 'edit'])
-                ->names([
-                    'index' => 'recruitment.opportunities',
-                    'store' => 'recruitment.opportunities.store',
-                    'update' => 'recruitment.opportunities.update',
-                    'edit' => 'recruitment.opportunities.edit',
-                ]);
-        });
-
         Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');

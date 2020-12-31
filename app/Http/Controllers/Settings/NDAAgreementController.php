@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Models\Setting;
-use App\Models\HR\Round;
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
+use Modules\HR\Entities\Round;
 
 class NDAAgreementController extends Controller
 {

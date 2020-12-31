@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
-use App\Models\Tag;
-use App\Models\HR\Job;
-use App\Models\Setting;
 use App\Helpers\FileHelper;
-use Illuminate\Support\Str;
-use App\Models\HR\Application;
-use Modules\User\Entities\User;
-use App\Models\HR\ApplicationMeta;
-use Modules\HR\Entities\University;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\HR\Application\JobChanged;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
-use Modules\HR\Services\ApplicationService;
 use App\Http\Requests\HR\ApplicationRequest;
-use App\Mail\HR\Application\RoundNotConducted;
 use App\Http\Requests\HR\CustomApplicationMailRequest;
+use App\Mail\HR\Application\JobChanged;
+use App\Mail\HR\Application\RoundNotConducted;
+use App\Models\Setting;
+use App\Models\Tag;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\Job;
+use Modules\HR\Entities\University;
+use Modules\HR\Services\ApplicationService;
+use Modules\User\Entities\User;
 
 abstract class ApplicationController extends Controller
 {

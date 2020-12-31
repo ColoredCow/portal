@@ -2,13 +2,13 @@
 
 namespace App\Jobs\HR;
 
+use App\Notifications\HR\ApplicationRoundScheduled;
 use Illuminate\Bus\Queueable;
-use App\Models\HR\ApplicationRound;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Notifications\HR\ApplicationRoundScheduled;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\ApplicationRound;
 
 class SendApplicationRoundScheduled implements ShouldQueue
 {

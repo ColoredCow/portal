@@ -2,10 +2,10 @@
 
 namespace App\Mail\HR\Applicant;
 
-use App\Models\HR\ApplicationMeta;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\ApplicationMeta;
 
 class NoShow extends Mailable
 {

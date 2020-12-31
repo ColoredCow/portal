@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\HR;
 
+use App\Helpers\ContentHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\RoundRequest;
-use App\Models\HR\Round;
-use App\Helpers\ContentHelper;
+use Modules\HR\Entities\Round;
 
 class RoundController extends Controller
 {
@@ -13,7 +13,7 @@ class RoundController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\HR\RoundRequest  $request
-     * @param  \App\Models\HR\Round  $round
+     * @param  \Modules\HR\Entities\Round  $round
      * @return string
      */
     public function update(RoundRequest $request, Round $round)

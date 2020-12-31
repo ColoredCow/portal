@@ -2,10 +2,10 @@
 
 namespace App\Mail\HR;
 
-use App\Models\HR\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\Application;
 
 class SendOfferLetter extends Mailable
 {

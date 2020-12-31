@@ -2,12 +2,12 @@
 
 namespace App;
 
-use App\Models\HR\Employee;
-use Spatie\Permission\Traits\HasRoles;
-use Modules\User\Traits\HasWebsiteUser;
-use Illuminate\Notifications\Notifiable;
 use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Modules\HR\Entities\Employee;
+use Modules\User\Traits\HasWebsiteUser;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {

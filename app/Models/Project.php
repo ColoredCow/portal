@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\HR\Employee;
 use Illuminate\Database\Eloquent\Model;
+use Modules\HR\Entities\Employee;
 
 class Project extends Model
 {

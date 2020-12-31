@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Settings;
 use App\Helpers\ContentHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\SettingRequest;
-use App\Models\HR\Round;
 use App\Models\Setting;
+use Modules\HR\Entities\Round;
 
 class HRController extends Controller
 {

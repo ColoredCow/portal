@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\HR;
 
-use Illuminate\Support\Str;
-use App\Models\HR\Application;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
+use Modules\HR\Entities\Application;
 
 class MoveFilesToWordPress extends Command
 {

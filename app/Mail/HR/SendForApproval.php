@@ -4,9 +4,9 @@ namespace App\Mail\HR;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Models\HR\Application;
-use Modules\User\Entities\User;
 use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\Application;
+use Modules\User\Entities\User;
 
 class SendForApproval extends Mailable
 {

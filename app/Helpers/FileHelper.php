@@ -2,11 +2,10 @@
 
 namespace App\Helpers;
 
-use App\Models\HR\Applicant;
-use App\Models\HR\Application;
 use App\Models\Setting;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\Application;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use niklasravnsborg\LaravelPdf\Pdf as PdfFile;
 
@@ -38,14 +37,14 @@ class FileHelper
      */
     public static function getCurrentStorageDirectory()
     {
-        $now = Carbon::now();
+        $now = now();
         return $now->format('Y') . '/' . $now->format('m');
     }
 
     public static function getOfferLetterFileName(PdfFile $file, Applicant $applicant)
     {
         $dashedApplicantName = str_replace(' ', '-', $applicant->name);
-        $timestamp = Carbon::now()->format('Ymd');
+        $timestamp = now()->format('Ymd');
         return "$dashedApplicantName-$timestamp.pdf";
     }
 

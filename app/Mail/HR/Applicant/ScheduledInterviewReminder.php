@@ -2,11 +2,11 @@
 
 namespace App\Mail\HR\Applicant;
 
-use App\Models\HR\ApplicationRound;
 use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\ApplicationRound;
 
 class ScheduledInterviewReminder extends Mailable
 {

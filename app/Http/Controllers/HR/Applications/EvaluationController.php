@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
-use App\Models\HR\Employee;
-use App\Models\HR\ApplicationRound;
 use App\Http\Controllers\Controller;
-use App\Models\HR\Evaluation\Segment;
+use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\Employee;
+use Modules\HR\Entities\Evaluation\Segment;
 
 class EvaluationController extends Controller
 {
