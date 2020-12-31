@@ -21,9 +21,12 @@
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Details</h5>
-                <span class="float-right">
-                    <span class="fz-14 leading-none text-secondary">Created by {{ $job->posted_by }}</span>
-                </span>
+                @if ($job->postedBy)
+                    <div class="float-right fz-14 leading-none text-secondary d-flex align-items-center">
+                        <span class="mr-1">Posted by</span>
+                        <img src="{{ $job->postedBy->avatar }}" alt="{{ $job->postedBy->name }}" class="rounded-circle w-20 h-20" data-toggle="tooltip" title="{{ $job->postedBy->name }}">
+                    </div>
+                @endif
             </div>
             <div class="card-body">
                 <div class="form-group">
