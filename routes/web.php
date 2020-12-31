@@ -38,9 +38,10 @@ Route::middleware('auth')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
-                ->only(['index', 'store', 'update', 'edit'])
+                ->only(['index', 'create', 'store', 'update', 'edit'])
                 ->names([
                     'index' => 'recruitment.opportunities',
+                    'create' => 'recruitment.opportunities.create',
                     'store' => 'recruitment.opportunities.store',
                     'update' => 'recruitment.opportunities.update',
                     'edit' => 'recruitment.opportunities.edit',

@@ -27,7 +27,7 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="description" class="fz-14 leading-none text-secondary mb-0.16">Job Description</label>
+                    <label for="description" class="fz-14 leading-none text-secondary mb-1">Job Description</label>
                     <textarea id="description" class="form-control" name="description" rows="4" placeholder="Enter job description...">{{$job->description}}</textarea>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <div class="form-row">
                         @foreach ($job->rounds as $key => $round)
                             <div class="form-group col-md-5 {{ $key%2 ? 'offset-md-1' : '' }}">
-                                <label for="round_{{ $round->id }}" class="fz-14 leading-none text-secondary mb-0.16">{{ $round->name }}</label>
+                                <label for="round_{{ $round->id }}" class="fz-14 leading-none text-secondary mb-1">{{ $round->name }}</label>
                                     <select
                                         class="form-control"
                                         name="rounds[{{ $round->id }}][hr_round_interviewer_id]"
@@ -68,19 +68,19 @@
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="facebook_post" class="fz-14 leading-none text-secondary mb-0.16">Facebook post&nbsp;&nbsp;<i class="fa fa-facebook"></i></label>
+                        <label for="facebook_post" class="fz-14 leading-none text-secondary mb-1">Facebook post&nbsp;&nbsp;<i class="fa fa-facebook"></i></label>
                         <input type="text" class="form-control" name="facebook_post" id="facebook_post" placeholder="Facebook link" value="{{ $job->facebook_post }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="twitter_post" class="fz-14 leading-none text-secondary mb-0.16">Twitter post&nbsp;&nbsp;<i class="fa fa-twitter"></i></label>
+                        <label for="twitter_post" class="fz-14 leading-none text-secondary mb-1">Twitter post&nbsp;&nbsp;<i class="fa fa-twitter"></i></label>
                         <input type="text" class="form-control" name="twitter_post" id="twitter_post" placeholder="Twitter link" value="{{ $job->twitter_post }}">
                     </div>
                     <div class="form-group col-md-5">
-                        <label for="linkedin_post" class="fz-14 leading-none text-secondary mb-0.16">LinkedIn post&nbsp;&nbsp;<i class="fa fa-linkedin"></i></label>
+                        <label for="linkedin_post" class="fz-14 leading-none text-secondary mb-1">LinkedIn post&nbsp;&nbsp;<i class="fa fa-linkedin"></i></label>
                         <input type="text" class="form-control" name="linkedin_post" id="linkedin_post" placeholder="LinkedIn link" value="{{ $job->linkedin_post }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="instagram_post" class="fz-14 leading-none text-secondary mb-0.16">Instagram post&nbsp;&nbsp;<i class="fa fa-instagram"></i></label>
+                        <label for="instagram_post" class="fz-14 leading-none text-secondary mb-1">Instagram post&nbsp;&nbsp;<i class="fa fa-instagram"></i></label>
                         <input type="text" class="form-control" name="instagram_post" id="instagram_post" placeholder="Instagram link" value="{{ $job->instagram_post }}">
                     </div>
                 </div>

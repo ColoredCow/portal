@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\HR;
 
-use App\Models\HR\Job;
-use Modules\User\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\JobRequest;
+use App\Models\HR\Job;
+use Modules\HR\Entities\Round;
+use Modules\User\Entities\User;
 
 class JobController extends Controller
 {
@@ -47,7 +48,10 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        return view('hr.job.create')->with([
+            'rounds' => Round::all(),
+            'interviewers' => User::interviewers()->get(),
+        ]);
     }
 
     /**
@@ -60,11 +64,15 @@ class JobController extends Controller
     {
         $validated = $request->validated();
 
-        return Job::create([
+        // dd($validated);
+
+        return 
+        Job::create([
             'title' => $validated['title'],
-            'posted_by' => $validated['by'],
-            'link' => $validated['link'],
+            'description' => $validated['description'] ?? null, // null needed for backward compatibility
             'type' => $validated['type'],
+            'posted_by' => $validated['by'] ?? null,
+            'link' => $validated['link'] ?? null,
         ]);
     }
 

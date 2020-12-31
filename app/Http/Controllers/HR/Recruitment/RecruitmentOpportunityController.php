@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\HR\Recruitment;
 
+use App\Http\Controllers\HR\JobController;
 use App\Models\HR\Job;
 use Illuminate\Support\Facades\Request;
-use App\Http\Controllers\HR\JobController;
 
 class RecruitmentOpportunityController extends JobController
 {

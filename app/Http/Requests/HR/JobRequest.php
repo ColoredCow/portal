@@ -26,9 +26,9 @@ class JobRequest extends FormRequest
         if ($this->method() === 'POST') {
             $rules = [
                 'title' => 'required|string',
-                'by' => 'required|string',
-                'link' => 'required|url',
                 'type' => 'required|string|in:job,internship,volunteer',
+                'by' => 'nullable|string', // Todo: remove this. not needed anymore.
+                'link' => 'nullable|url', // Todo: remove this. not needed anymore.
             ];
         }
 

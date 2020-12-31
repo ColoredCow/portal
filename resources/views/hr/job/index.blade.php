@@ -6,7 +6,10 @@
     @includeWhen($type == 'volunteer', 'hr.volunteers.menu')
     @includeWhen($type == 'recruitment', 'hr.menu')
     <br><br>
-    <h1>{{ $type == 'volunteer' ? 'Projects' : 'Jobs' }}</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>{{ $type == 'volunteer' ? 'Projects' : 'Jobs' }}</h1>
+        <a href="{{ route('recruitment.opportunities.create') }}" class="btn btn-primary"><i class="fa fa-plus mr-1"></i>New Job</a>
+    </div>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Title</th>
