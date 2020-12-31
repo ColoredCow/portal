@@ -3,9 +3,9 @@
 namespace App\Console\Commands\HR;
 
 use App\Models\HR\HRJobsRounds;
-use App\Models\HR\Job;
 use App\Models\HR\Round;
 use Illuminate\Console\Command;
+use Modules\HR\Entities\Job;
 
 class MappingOfJobsAndHrRounds extends Command
 {

@@ -2,14 +2,15 @@
 
 namespace App\Models\HR;
 
-use App\Traits\HasTags;
-use App\Helpers\ContentHelper;
-use Modules\User\Entities\User;
-use Illuminate\Support\Facades\Auth;
 use App\Events\HR\ApplicationCreated;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use App\Helpers\ContentHelper;
 use App\Models\HR\Evaluation\ApplicationEvaluation;
+use App\Traits\HasTags;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Modules\HR\Entities\Job;
+use Modules\User\Entities\User;
 
 class Application extends Model
 {

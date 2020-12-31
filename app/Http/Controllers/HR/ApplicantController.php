@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\HR;
 
-use App\Models\HR\Job;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\HR\ApplicantRequest;
+use App\Imports\ApplicationImport;
 use App\Models\HR\Applicant;
 use Illuminate\Http\Request;
-use App\Imports\ApplicationImport;
-use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Http\Requests\HR\ApplicantRequest;
 use Modules\HR\Contracts\ApplicationServiceContract;
+use Modules\HR\Entities\Job;
 
 class ApplicantController extends Controller
 {

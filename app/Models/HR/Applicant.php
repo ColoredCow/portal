@@ -2,11 +2,12 @@
 
 namespace App\Models\HR;
 
-use Carbon\Carbon;
 use App\Services\GSuiteUserService;
-use Modules\HR\Entities\University;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Modules\HR\Entities\Job;
+use Modules\HR\Entities\University;
 
 class Applicant extends Model
 {
