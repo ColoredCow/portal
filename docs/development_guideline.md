@@ -1,87 +1,82 @@
-## Development Guidelines :computer:
-1. Make sure you have added yourself as an assignee to the GitHub issue you are working on. In case there is no GitHub issue, please create one or ask the admin to create an issue.
-2. Use the installation guidelines to set up the project.
+## Deployment Guidelines :mag_right:
+Deployment is a critical and required part of the ColoredCow-Portal.
 
+### UAT account setup
+1. Create the `SSH`(RSA) Key Pair
 
-## Working in the `portal` repo
-1. Pulling with submodules
+Create the key pair on your machine by running the following command.
+```
+ssh-keygen -t rsa
+```
+2. Store the Keys and Passphrase
 
-    * Once you have set up the submodules you can update the repository with fetch/pull like you would normally do. To pull everything including the submodules, use the ```--recurse-submodules``` and the ```--remote``` parameter in the git pull command.
+Follow the steps/questions mentioned below. 
+```
+Enter file in which to save the key (/home/username/.ssh/id_rsa):
+```
+Press enter to save the file.
+```
+Enter passphrase (empty for no passphrase):
+```
+Entering a passphrase adds one more level of security, it’s up to you whether you want to use a passphrase.
 
-        ```sh
-        cd project/
-        git checkout develop           # switch to develop branch
-        git pull origin develop --recurse-submodules  # pull all changes in the develop branch in the repo including, changes in the develop branch of submodules
-        git submodule update --remote  # pull all changes for the submodules
-        ```
+The `Public key` is now located in ```/home/username/.ssh/id_rsa.pub```. The `Private key`(identification) is now located in ```/home/username/.ssh/id_rsa```.
 
-2. Push your local changes to Github.
+In case of window machine keys are located in ```C:\Users\username\.ssh```
 
-    * Once you have updated you develop branch with the latest changes, you can follow these steps to create a new branch, make changes, and push it to GitHub.   
+3. Contact UAT administrator
 
-        ```sh
-        git checkout -b branchname     # create a branch where you will commit your changes
-        git add .                      # stage the changes
-        git commit -m 'message'        # commit the changes
-        git push origin branchname     # push your local branch to GitHub and then create a Pull Request
-        ```
+Once you have the `Public key`, please contact the UAT administrator with this public key to gain access to UAT.
 
-## Working in a `submodule` repo
+### Accessing UAT through SSH
+1. Change the directory to where `Private key` is located in your local machine.
+```
+cd /home/username/.ssh/id_rsa
+```
+In case of window machine change directory to 
+```
+cd C:\Users\username\.ssh\id_rsa
+```
+2. Login to the server
+```
+ssh -i id_rsa your-name@uat.employee.coloredcow.com
+```
+In this case, the `Private key` name is ```id_rsa```. There may be a chance your key name may look like ```my_private_key_file.pem```.
 
-1. Updating the submodules with lastest changes
+3. Once successfully logged in, change directory to project directory
+```
+cd /var/www/html/uat.employee.coloredcow/
+```
+4. You will see the project directory. Run required deployment commands to update the portal and submodules.
 
-    * However, you can use these commands to pull updates from the latest develop on submodule individually.
+#### Deployment Commands - UAT
 
-        ```sh
-        cd project/Modules/MODULENAME
-        git checkout develop            # switch to develop branch
-        git pull origin develop         # pull updates from latest develop
-        ```
-2. Push your local changes to Github
+```sh
+git checkout develop
+git pull origin develop
+git submodule foreach 'git checkout develop && git pull origin develop'
+git submodule foreach 'composer install'
+git submodule foreach 'npm install'
+git submodule foreach 'npm run production'
+```
 
-    *  Once you have updated the develop branch with the latest changes, you can follow these steps to create Pull Request on submodule repo.
+#### Deployment Commands - Production
 
-        ```sh
-        git checkout -b branchname     # create a branch where you will commit your changes
-        git add .                      # stage the changes
-        git commit -m 'message'        # commit the changes
-        git push origin branchname     # push your local branch to GitHub submodule repo and then create a Pull Request
-        ```
+```sh
+git checkout master
+git pull origin master
+git submodule foreach 'git checkout master && git pull origin master'
+git submodule foreach 'composer install'
+git submodule foreach 'npm install'
+git submodule foreach 'npm run production'
+```
 
-**Note: For creating migrations and seeders** 
+#### Remembering git password
+In case, git asks you to enter username and password for every module pull, you can cache your credentials in cache. Run the following command and run the deployment commands above.
+```
+git config --global credential.helper cache
+```
 
-When you are working in specified submodule, create migrations/seeders in the specified submodule instead of the main portal module.
+After this, it will only ask you to enter your GitHub password once and will cache password for the next 15 min.
 
-## Submodule Tips
-
-There are a few things you can do to make working with submodules a little easier.
-
-1. Submodule Foreach
-
-    * Git provides a command that lets us execute an arbitrary shell command on every submodule. For our example we assume that we want to checkout develop branch in all submodules.
-
-        ```sh
-        git submodule foreach 'git checkout develop'   # checkout develop branch in all submodules
-        ```
-
-## Coding Guidelines and Conventions
-
-1. Naming Conventions
-    1. [Controllers](https://www.laravelbestpractices.com/#controllers)
-    2. [Models](https://www.laravelbestpractices.com/#models)
-    3. [Functions](https://www.laravelbestpractices.com/#functions)
-    4. [Routes](https://www.laravelbestpractices.com/#routes)
-    5. [Variables](https://www.laravelbestpractices.com/#variables)
-    6. [Views](https://www.laravelbestpractices.com/#variables)
-
-2. Database conventions
-    1. [Table and Fields Naming](https://www.laravelbestpractices.com/#table-fields-naming)
-    2. [Database Alterations](https://www.laravelbestpractices.com/#database-alterations)
-
-3. Formatting
-    1. [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/)
-
-### References
-1. [Laravel Guidelines](https://github.com/ColoredCow/resources/tree/master/laravel)
-2. [Submodules](https://www.vogella.com/tutorials/GitSubmodules/article.html)
-3. [Laravel Modules](https://nwidart.com/laravel-modules/v6/introduction)
+**Precaution**: Please use [GitHub access tokens](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) instead of raw passwords. These are more secure and not easy to guess.
