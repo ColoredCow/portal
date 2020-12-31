@@ -2,9 +2,9 @@
 
 namespace App\Policies\HR;
 
-use Modules\User\Entities\User;
-use App\Models\HR\Applicant;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\HR\Entities\Applicant;
+use Modules\User\Entities\User;
 
 class ApplicantPolicy
 {
@@ -14,7 +14,7 @@ class ApplicantPolicy
      * Determine whether the user can view the applicant.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \Modules\HR\Entities\Applicant  $applicant
      * @return mixed
      */
     public function view(User $user, Applicant $applicant)
@@ -37,7 +37,7 @@ class ApplicantPolicy
      * Determine whether the user can update the applicant.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \Modules\HR\Entities\Applicant  $applicant
      * @return mixed
      */
     public function update(User $user, Applicant $applicant)
@@ -49,7 +49,7 @@ class ApplicantPolicy
      * Determine whether the user can delete the applicant.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \Modules\HR\Entities\Applicant  $applicant
      * @return mixed
      */
     public function delete(User $user, Applicant $applicant)

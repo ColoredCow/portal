@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\HR\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Modules\HR\Entities\Application;
 
 class Tag extends Model
 {

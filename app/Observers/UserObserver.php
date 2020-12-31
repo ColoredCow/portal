@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\HR\Employee;
-use Modules\User\Entities\User;
 use Carbon\Carbon;
+use Modules\HR\Entities\Employee;
+use Modules\User\Entities\User;
 
 class UserObserver
 {

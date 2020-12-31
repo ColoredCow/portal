@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\HR\Employees;
 
-use App\Models\HR\Employee;
 use App\Http\Controllers\Controller;
+use Modules\HR\Entities\Employee;
 
 class EmployeeController extends Controller
 {

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRequest;
 use App\Imports\ApplicationImport;
-use App\Models\HR\Applicant;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Contracts\ApplicationServiceContract;
+use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Job;
 
 class ApplicantController extends Controller
@@ -73,7 +73,7 @@ class ApplicantController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \Modules\HR\Entities\Applicant  $applicant
      * @return \Illuminate\Http\Response
      */
     public function show(Applicant $applicant)
@@ -84,7 +84,7 @@ class ApplicantController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \Modules\HR\Entities\Applicant  $applicant
      * @return void
      */
     public function edit(Applicant $applicant)
@@ -96,7 +96,7 @@ class ApplicantController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \Modules\HR\Entities\Applicant  $applicant
      * @return void
      */
     public function update(ApplicantRequest $request, Applicant $applicant)
@@ -107,7 +107,7 @@ class ApplicantController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\HR\Applicant  $applicant
+     * @param  \Modules\HR\Entities\Applicant  $applicant
      * @return void
      */
     public function destroy(Applicant $applicant)

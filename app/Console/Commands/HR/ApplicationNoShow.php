@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands\HR;
 
-use Carbon\Carbon;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Models\HR\ApplicationMeta;
-use App\Models\HR\ApplicationRound;
+use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\ApplicationRound;
 
 class ApplicationNoShow extends Command
 {

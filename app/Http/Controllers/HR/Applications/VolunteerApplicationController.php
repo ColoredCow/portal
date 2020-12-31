@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\HR\Applications;
 
-use App\Models\HR\Application;
 use Illuminate\Support\Facades\Request;
+use Modules\HR\Entities\Application;
 
 class VolunteerApplicationController extends ApplicationController
 {

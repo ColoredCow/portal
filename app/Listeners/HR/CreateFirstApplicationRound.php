@@ -2,9 +2,9 @@
 
 namespace App\Listeners\HR;
 
-use Modules\User\Entities\User;
-use App\Models\HR\ApplicationRound;
 use App\Events\HR\ApplicationCreated;
+use Modules\HR\Entities\ApplicationRound;
+use Modules\User\Entities\User;
 
 class CreateFirstApplicationRound
 {

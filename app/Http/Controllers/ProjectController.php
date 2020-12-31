@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectRequest;
 use App\Models\Client;
 use App\Models\Project;
-use App\Models\HR\Employee;
 use Illuminate\Http\Request;
-use App\Http\Requests\ProjectRequest;
+use Modules\HR\Entities\Employee;
 
 class ProjectController extends Controller
 {

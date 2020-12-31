@@ -2,10 +2,10 @@
 
 namespace App\Events\HR;
 
-use App\Models\HR\Application;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\Application;
 
 class ApplicationCreated
 {

@@ -3,9 +3,9 @@
 namespace App\Notifications\HR;
 
 use Illuminate\Bus\Queueable;
-use App\Models\HR\ApplicationRound;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+use Modules\HR\Entities\ApplicationRound;
 
 class ApplicationRoundScheduled extends Notification
 {

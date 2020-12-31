@@ -2,10 +2,10 @@
 
 namespace App\Mail\HR\Applicant;
 
-use App\Models\HR\ApplicationRound;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Modules\HR\Entities\ApplicationRound;
 
 class RoundReviewed extends Mailable
 {
