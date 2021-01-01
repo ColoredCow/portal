@@ -14,7 +14,7 @@
     @include($menu)
     <br><br>
     @include('status', ['errors' => $errors->all()])
-    <h2 class="mb-3">New Job</h2>
+    <h2 class="mb-3">New Opportunity</h2>
     <form action="{{ $formAction }}" method="POST">
         @csrf
         <div class="card mb-3">
@@ -22,21 +22,28 @@
                 <h5 class="mb-0">Details</h5>
             </div>
             <div class="card-body">
+                <div class="form-group">
+                    <label for="title" class="fz-14 leading-none text-secondary mb-1">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter job title..." value="{{ old('title') }}" autofocus required>
+                </div>
                 <div class="form-row">
                     <div class="col-md-6 form-group">
-                        <label for="title" class="fz-14 leading-none text-secondary mb-1">Job Title</label>
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter job title..." value="{{ old('title') }}" autofocus required>
+                        <label for="title" class="fz-14 leading-none text-secondary mb-1">Status</label>
+                        <select class="form-control" name="status" id="status" value="{{ old('status') }}">
+                            <option value="job" {{ old('status') == 'job' ? 'selected' : '' }}>Job</option>
+                            <option value="internship" {{ old('status') == 'internship' ? 'selected' : '' }}>Internship</option>
+                        </select>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="title" class="fz-14 leading-none text-secondary mb-1">Type</label>
                         <select class="form-control" name="type" id="type" value="{{ old('type') }}">
-                            <option value="job">Job</option>
-                            <option value="internship">Internship</option>
+                            <option value="job" {{ old('type') == 'job' ? 'selected' : '' }}>Job</option>
+                            <option value="internship" {{ old('type') == 'internship' ? 'selected' : '' }}>Internship</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description" class="fz-14 leading-none text-secondary mb-1">Job Description</label>
+                    <label for="description" class="fz-14 leading-none text-secondary mb-1">Description</label>
                     <textarea id="description" class="form-control" name="description" rows="4" placeholder="Enter job description..." required>{{ old('description') }}</textarea>
                 </div>
             </div>
