@@ -29,19 +29,20 @@
                 @endif
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <label for="title" class="fz-14 leading-none text-secondary mb-1">Job Title</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter job title..." value="{{ old('title', $job->title) }}" autofocus required>
-                </div>
                 <div class="form-row">
                     <div class="col-md-6 form-group">
+                        <label for="title" class="fz-14 leading-none text-secondary mb-1">Job Title</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter job title..." value="{{ old('title', $job->title) }}" autofocus required>
+                    </div>
+                    <div class="col-md-3 form-group">
                         <label for="title" class="fz-14 leading-none text-secondary mb-1">Status</label>
                         <select class="form-control" name="status" id="status" value="{{ old('status') }}">
-                            <option value="job" {{ old('status', $job->status) == 'job' ? 'selected' : '' }}>Job</option>
-                            <option value="internship" {{ old('status', $job->status) == 'internship' ? 'selected' : '' }}>Internship</option>
+                            @foreach (config('hr.opportunities-status') as $status => $label)
+                                <option value="{{ $status }}" {{ old('status', $job->status) == $status ? 'selected' : '' }}>{{ $label }}</option>
+                            @endforeach
                         </select>
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-3 form-group">
                         <label for="title" class="fz-14 leading-none text-secondary mb-1">Type</label>
                         <select class="form-control" name="type" id="type" value="{{ old('type') }}">
                             <option value="job" {{ old('type', $job->type) == 'job' ? 'selected' : '' }}>Job</option>
@@ -112,6 +113,11 @@
         <div>
             <button type="submit" class="btn btn-primary">Update</button>
             <a href="{{ $job->link }}" target="_blank" class="btn btn-info" role="button">Preview job</a>
+            <form action="{{ route('recruitment.opportunities.destroy', $job) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+            </form>
         </div>
     </form>
 </div>
