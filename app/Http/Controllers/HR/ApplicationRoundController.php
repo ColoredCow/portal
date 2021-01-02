@@ -6,11 +6,11 @@ use App\Helpers\ContentHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HR\ApplicantRoundMailRequest;
 use App\Http\Requests\HR\ApplicationRoundRequest;
-use App\Mail\HR\Applicant\RoundReviewed;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\Recruitment\Applicant\RoundReviewed;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Helpers\TemplateHelper;
 
