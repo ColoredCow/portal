@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\HR;
 
-use App\Mail\HR\Applicant\ScheduledInterviewReminder;
-use App\Mail\HR\InterviewerScheduledRoundsReminder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\Recruitment\Applicant\ScheduledInterviewReminder;
+use Modules\HR\Emails\Recruitment\InterviewerScheduledRoundsReminder;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\User\Entities\User;
 
