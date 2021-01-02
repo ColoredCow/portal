@@ -48,26 +48,15 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {
-            Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
 
-            Route::get('job/{application}/offer-letter', 'JobApplicationController@viewOfferLetter')->name('applications.job.offer-letter');
-            Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
             Route::get('volunteer/{application}/offer-letter', 'VolunteerApplicationController@viewOfferLetter')->name('applications.volunteer.offer-letter');
 
-            Route::resource('job', 'JobApplicationController')
-                ->only(['index', 'edit', 'update'])
-                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update']);
-            Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
-            Route::resource('internship', 'InternshipApplicationController')
-                ->only(['index', 'edit'])
-                ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
             Route::resource('volunteer', 'VolunteerApplicationController')
                 ->only(['index', 'edit'])
                 ->names([
                     'index' => 'applications.volunteer.index',
                     'edit' => 'applications.volunteer.edit',
                 ]);
-            Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail');
         });
 
         Route::resource('employees', 'Employees\EmployeeController')
@@ -80,18 +69,6 @@ Route::middleware('auth')->group(function () {
         Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
 
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
-
-        Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
-        Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
-        Route::post('/applicationround/{applicationRound}/mail-content/{status}', 'ApplicationRoundController@getMailContent');
-        Route::post('/applicationround/{applicationRound}/follow-up', 'ApplicationRoundController@storeFollowUp')->name('hr.application-round.follow-up.store');
-
-        Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
-        Route::post('application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
-
-        Route::get('/applicant/create', 'ApplicantController@create')->name('hr.applicant.create');
-        Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
-        Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
