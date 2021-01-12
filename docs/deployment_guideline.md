@@ -49,17 +49,34 @@ cd /var/www/html/uat.employee.coloredcow/
 ```
 4. You will see the project directory. Run required deployment commands to update the portal and submodules.
 
-#### Deployment Commands
-Commonly used commands during deployment
+#### Deployment Commands - UAT
+
 ```sh
-git checkout develop                              # switch to develop branch
-git submodule update --init                       # updates all the submodules
-git submodule update --init Modules/MODULENAME    # update submodule individually
-git pull origin master                            # pull updates from latest master
-git pull --recurse-submodules                     # pull all changes in the portal and submodules
-git submodule update --remote                     # pull all changes for the submodules
-git submodule foreach 'git checkout develop'      # executing a command on every submodule
-npm install                                       # install dependencies
-composer install                                  # install dependencies
-npm run prod                                      # Run all Mix tasks and minify output...
+git checkout develop
+git pull origin develop
+git submodule foreach 'git checkout develop && git pull origin develop'
+git submodule foreach 'composer install'
+git submodule foreach 'npm install'
+git submodule foreach 'npm run production'
 ```
+
+#### Deployment Commands - Production
+
+```sh
+git checkout master
+git pull origin master
+git submodule foreach 'git checkout master && git pull origin master'
+git submodule foreach 'composer install'
+git submodule foreach 'npm install'
+git submodule foreach 'npm run production'
+```
+
+#### Remembering git password
+In case, git asks you to enter username and password for every module pull, you can cache your credentials in cache. Run the following command and run the deployment commands above.
+```
+git config --global credential.helper cache
+```
+
+After this, it will only ask you to enter your GitHub password once and will cache password for the next 15 min.
+
+**Precaution**: Please use [GitHub access tokens](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) instead of raw passwords. These are more secure and not easy to guess.
