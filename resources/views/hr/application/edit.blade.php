@@ -203,7 +203,7 @@
                                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                                         </div>
                                     </div>
-                                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+                                    <form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                                         <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->isTrialRound()? ($loop->last ? 'show' : '') : '' }}">
@@ -409,7 +409,7 @@
                                             <div class="icon-pencil position-relative ml-3" data-toggle="collapse" data-target="#pre-trial-collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                                         </div>
                                     </div>
-                                    <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+                                    <form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                                         <div id="pre-trial-collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->isTrialRound()? '' : ($loop->last ? 'show' : '') }}">
@@ -617,7 +617,7 @@
                                 </div>
                             </div>
                             @if($application->latestApplicationRound->round->name != 'Trial Program')
-                                <form action="/hr/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+                                <form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
                         
                                     {{ csrf_field() }}
                                     {{ method_field('PATCH') }}

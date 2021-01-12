@@ -1,4 +1,4 @@
-<form method="POST" action="/hr/applications/evaluation/{{ $applicationRound->id }}">
+<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
 	@method('PATCH')
     @csrf
     <div class="row mb-3 d-none evaluation-result">

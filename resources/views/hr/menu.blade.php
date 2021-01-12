@@ -3,10 +3,10 @@
         <a class="nav-item nav-link {{ Request::is('hr/recruitment/opportunities*') ? 'active' : '' }}" href="{{ route('recruitment.opportunities') }}"><i class="fa fa-list-ul"></i>&nbsp;Opportunities</a>
     </li>
     <li class="nav-item">
-        <a class="nav-item nav-link {{ Request::is('hr/applications/job*') ? 'active' : '' }}" href="{{ route('applications.job.index') }}"><i class="fa fa-users"></i>&nbsp;Job Applications</a>
+        <a class="nav-item nav-link {{ Request::is('hr/recruitment/job*') ? 'active' : '' }}" href="{{ route('applications.job.index') }}"><i class="fa fa-users"></i>&nbsp;Job Applications</a>
     </li>
     <li class="nav-item">
-        <a class="nav-item nav-link {{ Request::is('hr/applications/internship*') ? 'active' : '' }}" href="{{ route('applications.internship.index') }}"><i class="fa fa-university"></i>&nbsp;Internship Applications</a>
+        <a class="nav-item nav-link {{ Request::is('hr/recruitment/internship*') ? 'active' : '' }}" href="{{ route('applications.internship.index') }}"><i class="fa fa-university"></i>&nbsp;Internship Applications</a>
     </li>
     <li class="nav-item">
         <a class="nav-item nav-link {{ Request::is('hr/recruitment/reports*') ? 'active' : '' }}" href="{{ route('recruitment.reports') }}"><i class="fa fa-pie-chart"></i>&nbsp;Reports</a>

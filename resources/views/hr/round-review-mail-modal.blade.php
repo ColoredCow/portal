@@ -1,7 +1,7 @@
 <div class="modal fade hr_round_review" id="round_{{ $applicationRound->id }}" tabindex="-1" role="dialog" aria-labelledby="round_{{ $applicationRound->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/hr/application-round/{{ $applicationRound->id }}/sendmail" method="POST">
+            <form action="/hr/recruitment/application-round/{{ $applicationRound->id }}/sendmail" method="POST">
 
                 {{ csrf_field() }}
 

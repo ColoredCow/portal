@@ -33,7 +33,7 @@
                     @if ($job->applications->count())
                         <p class="mb-0 mx-1">•</p>
                         <a href="{{ route('applications.' . $job->type . '.index') }}?hr_job_id={{$job->id }}" class="fz-14 d-flex align-items-center">
-                            <span>View open <i class="fa fa-external-link w-10 h-10"></i></span>
+                            <span>View applications</span>
                         </a>
                     @endif
                 </div>
