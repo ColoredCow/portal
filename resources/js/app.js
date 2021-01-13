@@ -136,7 +136,7 @@ if (document.getElementById('page_hr_applicant_edit')) {
 				);
 				if (!this.showEvaluationFrame) {
 					axios
-						.get('/hr/applications/evaluation/' + applicationRoundID)
+						.get('/hr/evaluation/' + applicationRoundID)
 						.then(function(response) {
 							$('#page_hr_applicant_edit #application_evaluation_body').html(response.data);
 						})
