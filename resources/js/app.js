@@ -966,7 +966,7 @@ function loadTemplateMail(status, successCallback) {
 	// make query to load current template
 	let applicationRoundId = $('#current_applicationround_id').val();
 	$.post({
-		url: `/hr/applicationround/${applicationRoundId}/mail-content/${status}`,
+		url: `/hr/recruitment/applicationround/${applicationRoundId}/mail-content/${status}`,
 		method: 'post',
 		success: successCallback,
 		error: (err) => {
