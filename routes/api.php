@@ -16,8 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('hr/jobs', 'HR\JobController')->only(['store']);
-Route::resource('hr/applicants', 'HR\ApplicantController')->only(['store']);
+
 Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
     Route::prefix('library')->namespace('Library')->group(function () {
         Route::get('book/getList', 'BookController@getBookList');
