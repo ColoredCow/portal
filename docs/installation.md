@@ -50,11 +50,16 @@ php artisan key:generate
     APP_NAME, APP_ENV, APP_DEBUG, APP_URL
     ```
 
-    2. Database configurations
+    2. Database configurations        
+        
+        Make sure you have a database created in your local server.
+        For more info check this [link](https://www.youtube.com/watch?v=4geOENi3--M)
+        
     ```
     DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
     ```
-
+    
+    
     3. Google configurations
     ```
     GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
