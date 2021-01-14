@@ -52,7 +52,7 @@ php artisan key:generate
 
     2. Database configurations        
         
-        Make sure you have a database ctreated in your local server.
+        Make sure you have a database created in your local server.
         For more info check this [link](https://www.youtube.com/watch?v=4geOENi3--M)
         
     ```
