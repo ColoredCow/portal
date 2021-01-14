@@ -1,6 +1,9 @@
 ### Introduction
 :wave: Welcome to ColoredCow Employee Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
 
+### Prerequisites
+Check our [prerequisites](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/prerequisite.md) to get started.
+
 ### Installation
 Use our [installation guidelines](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/installation.md) to set up the project on your local.
 
