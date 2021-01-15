@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         @if (isset($applicant->reference))
-                        <div class="form-group offset-md-1 col-md-5">
+                        <div class="form-group col-md-5">
                             <label class="text-secondary fz-14 leading-none mb-0.16">Reference</label>
                             <div>{{ $applicant->reference }}</div>
                         </div>
