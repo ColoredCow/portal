@@ -107,6 +107,12 @@
                                 <textarea type="text" class="form-control" rows="5" name="form_data[Why Should We Pick You?]"
                                     placeholder="Reason For Eligibility">{{ old('form_data[Why Should We Pick You?]') }}</textarea>
                             </div>
+                            
+                            <div class="form-group">
+                                <label for="name">Reference</label>
+                                <input type="text" class="form-control" name="reference" id="reference" placeholder="reference"
+                                    value="{{ old('reference') }}">
+                            </div>
                         </div>
                     </div>
                 </div>
