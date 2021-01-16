@@ -126,7 +126,7 @@
                         @if (isset($applicant->reference))
                         <div class="form-group col-md-5">
                             <label class="text-secondary fz-14 leading-none mb-0.16">Reference</label>
-                            <div>{{ $applicant->reference }}</div>
+                            <div>{{ $applicant->reference ?? '-' }}</div>
                         </div>
                         @endif
                         @if (isset($applicationFormDetails->value))
