@@ -21,8 +21,11 @@ There are some topics and tools you need to know to prior to work in employee po
 
 - [Git, GitHub and Development](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
-### 4.Submodules :notes:
+### 4.Git Submodules :notes:
 
 - [All About git submodules](https://www.atlassian.com/git/tutorials/git-submodule)
 
+### 5. Laravel Modules :butterfly:
+
 - [Laravel Module Utility Commands](https://nwidart.com/laravel-modules/v1/advanced-tools/artisan-commands)
+
