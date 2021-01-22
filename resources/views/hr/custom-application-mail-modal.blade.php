@@ -1,7 +1,7 @@
 <div class="modal fade hr_round_review" id="customApplicationMail" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form action="/hr/recruitment/application-round/{{ $application->id }}/sendmail" method="POST">
+            <form action="{{ route('application.custom-email', $application) }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <div class="d-block text-left">
