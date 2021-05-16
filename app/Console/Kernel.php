@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('mapping-of-jobs-and-hr-rounds');
+        $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
     }
 
     /**
@@ -37,7 +38,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
