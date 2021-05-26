@@ -453,7 +453,7 @@ if (document.getElementById('show_and_save_book')) {
 				}
 				this.buttons.disableSaveButton = true;
 				this.book.number_of_copies = this.number_of_copies;
-				this.book['on_kindle'] = document.getElementById('on_kindle').value;
+				this.book['on_kindle'] = document.getElementById('on_kindle').checked ? 1 : 0;
 				axios.post(this.routes.store, this.book).then((response) => {
 					this.buttons.disableSaveButton = false;
 

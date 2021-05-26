@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-5">
-                                <label for="name" class="field-required">How to Add @{{addMethod}}</label>
+                                <label for="name" class="field-required">Select the method</label>
                                 <select class="form-control" name="add_method" id="add_method" v-model="addMethod">
                                     <option value="from_image">Click Image</option>
                                     <option value="from_isbn">ISBN number</option>
