@@ -25,20 +25,27 @@ There are some topics and tools you need to know to prior to work in employee po
 
 - [All About git submodules](https://www.atlassian.com/git/tutorials/git-submodule)
 
-### 5.Php :running:
+### 5. PHP :running:
+- [PHP v7.3 or higher] is needed.
 
-- [Php -v 7.3](https://www.apachefriends.org/download.html)
+You can install it with the following ways:
+1. XAMPP
+- If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
+- If you already have XAMPP installed, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
 
-- If you wishes to change php version for this specific directory in xampp refers to this [link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp)
+
+- If you are using XAMPP for local development, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to correct PHP version.
 
 ### 6. Composer :running:
 
-- [Composer -v 2.0](https://getcomposer.org/download)
+- [Composer -v2.0](https://getcomposer.org/download)
 
 ### 7. Nodejs :running:
 
-- [Nodejs -v 14.16](https://nodejs.org/en/download)
+- [Nodejs -v14 or higher](https://nodejs.org/en/download)
 
 ### 8. Laravel Modules :butterfly:
+
+This project uses Laravel Modules, so a basic understanding of the commands is recommended:
 
 - [Laravel Module Utility Commands](https://nwidart.com/laravel-modules/v1/advanced-tools/artisan-commands)
