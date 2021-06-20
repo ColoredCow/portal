@@ -33,9 +33,6 @@ You can install it with the following ways:
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
     - If you already have XAMPP installed, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
 
-
-- If you are using XAMPP for local development, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to correct PHP version.
-
 ### 6. Composer :running:
 
 - [Composer v2.0](https://getcomposer.org/download)
