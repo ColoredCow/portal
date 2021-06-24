@@ -53,11 +53,6 @@ php artisan key:generate
     APP_URL=http://portal.test
     ```
 
-     Updates APP_URL as:
-     ```
-        APP_URL=http://portal.test
-     ```
-
     2. Database configurations        
         
         Make sure you have a database created in your local server.
