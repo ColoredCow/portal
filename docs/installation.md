@@ -50,6 +50,11 @@ php artisan key:generate
     APP_NAME, APP_ENV, APP_DEBUG, APP_URL
     ```
 
+     Updates APP_URL as:
+     ```
+        APP_URL=http://portal.test
+     ```
+
     2. Database configurations        
         
         Make sure you have a database created in your local server.
@@ -85,3 +90,33 @@ php artisan migrate
     ```
     php artisan module:seed MODULENAME
     ```
+
+12. Setup Virtual Host
+    1. For XAMPP:
+        - Step 1: Go to C:\WINDOWS\system32\drivers\etc\ and open the "hosts" file in notepad (run as administrator) and paste following:
+            
+             ```
+                127.0.0.1      portal.test
+             ```   
+
+        - Step 2: Go to xampp\apache\conf\extra\httpd-vhosts.conf and paste following:
+                  In DocumentRoot and Directory paste your project folder path upto public.
+
+                ```
+                    <VirtualHost *:80>
+                        ServerName portal.test
+                        DocumentRoot "C:/xampp/htdocs/portal/public"
+                        <Directory "C:/xampp/htdocs/portal/public">
+                            DirectoryIndex index.php
+                            AllowOverride All
+                            Order allow,deny
+                            Allow from all
+                        </Directory>
+                    </VirtualHost>
+                ```
+
+         - Step 3: Restart XAMPP and now run in your browser :
+             
+             ```
+              portal.test
+             ```           
