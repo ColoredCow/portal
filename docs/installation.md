@@ -100,20 +100,20 @@ php artisan migrate
        - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file:
         Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:/xampp/htdocs/portal/public`.
 
-                ```
-                    <VirtualHost *:80>
-                        ServerName portal.test
-                        DocumentRoot "your_project_path"
-                        <Directory "your_project_path">
-                            DirectoryIndex index.php
-                            AllowOverride All
-                            Order allow,deny
-                            Allow from all
-                        </Directory>
-                    </VirtualHost>
-                ```
+            ```
+            <VirtualHost *:80>
+                ServerName portal.test
+                DocumentRoot "your_project_path"
+                <Directory "your_project_path">
+                    DirectoryIndex index.php
+                    AllowOverride All
+                    Order allow,deny
+                    Allow from all
+                </Directory>
+            </VirtualHost>
+            ```
 
-         - Restart XAMPP. Next, open the following url in your browser:
+       - Restart XAMPP. Next, open the following url in your browser:
          
              ```
              portal.test
