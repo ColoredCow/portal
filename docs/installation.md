@@ -115,6 +115,6 @@ php artisan migrate
 
        - Restart XAMPP. Next, open the following url in your browser:
          
-             ```
-             portal.test
-             ```        
+            ```
+            portal.test
+            ```        
