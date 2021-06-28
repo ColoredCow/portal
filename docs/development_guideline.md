@@ -1,6 +1,6 @@
 ## Development Guidelines :computer:
 1. Make sure you have added yourself as an assignee to the GitHub issue you are working on. In case there is no GitHub issue, please create one or ask the admin to create an issue.
-2. Use our [installation guidelines](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/installation.md)to set up the project.
+2. Use our [installation guidelines](https://github.com/ColoredCow-Portal/portal/blob/develop/docs/installation.md) to set up the project.
 
 
 ## Working in the `portal` repo
