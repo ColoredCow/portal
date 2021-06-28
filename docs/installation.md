@@ -47,7 +47,10 @@ php artisan key:generate
 9. Add the following settings in `.env` file:
     1. Laravel app configurations
     ```
-    APP_NAME, APP_ENV, APP_DEBUG, APP_URL
+    APP_NAME="ColoredCow Portal"
+    APP_ENV=local
+    APP_DEBUG=true
+    APP_URL=http://portal.test
     ```
 
     2. Database configurations        
@@ -85,3 +88,33 @@ php artisan migrate
     ```
     php artisan module:seed MODULENAME
     ```
+
+12. Setup Virtual Host
+    1. For XAMPP:
+         - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
+            
+             ```
+             127.0.0.1      portal.test
+             ```   
+
+       - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file:
+        Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:/xampp/htdocs/portal/public`.
+
+            ```
+            <VirtualHost *:80>
+                ServerName portal.test
+                DocumentRoot "your_project_path"
+                <Directory "your_project_path">
+                    DirectoryIndex index.php
+                    AllowOverride All
+                    Order allow,deny
+                    Allow from all
+                </Directory>
+            </VirtualHost>
+            ```
+
+       - Restart XAMPP. Next, open the following url in your browser:
+         
+            ```
+            portal.test
+            ```        
