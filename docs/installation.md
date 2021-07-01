@@ -63,7 +63,7 @@ php artisan key:generate
     ```
     
     
-    3. Google configurations
+    3. Google configurations _(optional)_
     ```
     GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
     ```
