@@ -127,24 +127,19 @@ php artisan migrate
 Clone every submodule individually (Client, Invoice, LegalDocument, Project, Salary, User)
 ```sh
 git submodule update --init Modules/Client
-```
-```sh
+
 git submodule update --init Modules/Invoice
-```
-```sh
+
 git submodule update --init Modules/LegalDocument
-```
-```sh
+
 git submodule update --init Modules/Project
-```
-```sh
+
 git submodule update --init Modules/Salary
-```
-```sh
+
 git submodule update --init Modules/User
 ```
-2. Checkout develop branch
+2. Switch to `master` branch
 ```sh
-git submodule foreach 'git checkout develop'
+git submodule foreach 'git checkout master'
 ```
 After Successful Installation, you should be able to see the invoice module at the dashboard and Finance module dropdown.
