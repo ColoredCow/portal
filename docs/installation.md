@@ -129,7 +129,7 @@ Clone every submodule individually (Client, Invoice, LegalDocument, Project, Sal
 ```sh
 git submodule update --init Modules/MODULENAME
 ```
-2. Checkout develop branch
+2. Switch to `master` branch
 ```sh
 git submodule foreach 'git checkout develop'
 ```
