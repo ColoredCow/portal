@@ -84,7 +84,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('payments', 'PaymentController')
             ->except(['show', 'destroy'])
             ->names([
-                'index' => 'payments',
+                'index' => 'payment.index',
                 'create' => 'payments.create',
                 'store' => 'payments.store',
                 'edit' => 'payments.edit',

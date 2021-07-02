@@ -118,3 +118,28 @@ php artisan migrate
             ```
             portal.test
             ```        
+
+
+## Finance Module Setup Guideline
+
+1. Clone the submodules
+
+Clone every submodule individually (Client, Invoice, LegalDocument, Project, Salary, User)
+```sh
+git submodule update --init Modules/Client
+
+git submodule update --init Modules/Invoice
+
+git submodule update --init Modules/LegalDocument
+
+git submodule update --init Modules/Project
+
+git submodule update --init Modules/Salary
+
+git submodule update --init Modules/User
+```
+2. Switch to `master` branch
+```sh
+git submodule foreach 'git checkout master'
+```
+After Successful Installation, you should be able to see the invoice module at the dashboard and Finance module dropdown.
