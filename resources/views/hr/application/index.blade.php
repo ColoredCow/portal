@@ -94,7 +94,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
+                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{request()->has('hr_job_id')?'&hr_job_id='.request('hr_job_id'):''}}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-times-circle"></i>&nbsp;
                     Closed
                     <span
@@ -147,7 +147,6 @@
         </div>
         @endif
     </div>
-
     <table class="table table-striped table-bordered" id="applicants_table">
         <thead>
             <th>Name</th>
