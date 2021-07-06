@@ -86,7 +86,7 @@
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}
                     <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.no-show-reminded.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
+                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </span>
