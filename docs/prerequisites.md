@@ -21,11 +21,7 @@ There are some topics and tools you need to know to prior to work in employee po
 
 - [Git, GitHub and Development](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
-### 4.Git Submodules :notes:
-
-- [All About git submodules](https://www.atlassian.com/git/tutorials/git-submodule)
-
-### 5. PHP :running:
+### 4. PHP :running:
 PHP v7.3 or higher is needed.
 
 You can install it with the following ways:
@@ -33,15 +29,15 @@ You can install it with the following ways:
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
     - If you already have XAMPP installed, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
 
-### 6. Composer :running:
+### 5. Composer :running:
 
 - [Composer v2.0](https://getcomposer.org/download)
 
-### 7. Nodejs :running:
+### 6. Nodejs :running:
 
 - [Nodejs v14 or higher](https://nodejs.org/en/download)
 
-### 8. Laravel Modules :butterfly:
+### 7. Laravel Modules :butterfly:
 
 This project uses Laravel Modules, so a basic understanding of the commands is recommended:
 

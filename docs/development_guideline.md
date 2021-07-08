@@ -4,65 +4,19 @@
 
 
 ## Working in the `portal` repo
-1. Pulling with submodules
-
-    * Once you have set up the submodules you can update the repository with fetch/pull like you would normally do. To pull everything including the submodules, use the ```--recurse-submodules``` and the ```--remote``` parameter in the git pull command.
-
-        ```sh
-        cd project/
-        git checkout develop           # switch to develop branch
-        git pull origin develop --recurse-submodules  # pull all changes in the develop branch in the repo including, changes in the develop branch of submodules
-        git submodule update --remote  # pull all changes for the submodules
-        ```
-
-2. Push your local changes to Github.
-
-    * Once you have updated you develop branch with the latest changes, you can follow these steps to create a new branch, make changes, and push it to GitHub.   
+1. Push your local changes to Github.
+    * Once you have updated you master branch with the latest changes, you can follow these steps to create a new branch, make changes, and push it to GitHub.
 
         ```sh
         git checkout -b branchname     # create a branch where you will commit your changes
         git add .                      # stage the changes
-        git commit -m 'message'        # commit the changes
+        git commit -m 'commit message'        # commit the changes
         git push origin branchname     # push your local branch to GitHub and then create a Pull Request
         ```
 
-## Working in a `submodule` repo
+**Note: For creating migrations and seeders**
 
-1. Updating the submodules with lastest changes
-
-    * However, you can use these commands to pull updates from the latest develop on submodule individually.
-
-        ```sh
-        cd project/Modules/MODULENAME
-        git checkout develop            # switch to develop branch
-        git pull origin develop         # pull updates from latest develop
-        ```
-2. Push your local changes to Github
-
-    *  Once you have updated the develop branch with the latest changes, you can follow these steps to create Pull Request on submodule repo.
-
-        ```sh
-        git checkout -b branchname     # create a branch where you will commit your changes
-        git add .                      # stage the changes
-        git commit -m 'message'        # commit the changes
-        git push origin branchname     # push your local branch to GitHub submodule repo and then create a Pull Request
-        ```
-
-**Note: For creating migrations and seeders** 
-
-When you are working in specified submodule, create migrations/seeders in the specified submodule instead of the main portal module.
-
-## Submodule Tips
-
-There are a few things you can do to make working with submodules a little easier.
-
-1. Submodule Foreach
-
-    * Git provides a command that lets us execute an arbitrary shell command on every submodule. For our example we assume that we want to checkout develop branch in all submodules.
-
-        ```sh
-        git submodule foreach 'git checkout develop'   # checkout develop branch in all submodules
-        ```
+When you are working in specified module, create migrations/seeders in the specified module instead of the main portal module.
 
 ## Coding Guidelines and Conventions
 
@@ -83,5 +37,4 @@ There are a few things you can do to make working with submodules a little easie
 
 ### References
 1. [Laravel Guidelines](https://github.com/ColoredCow/resources/tree/master/laravel)
-2. [Submodules](https://www.vogella.com/tutorials/GitSubmodules/article.html)
-3. [Laravel Modules](https://nwidart.com/laravel-modules/v6/introduction)
+2. [Laravel Modules](https://nwidart.com/laravel-modules/v6/introduction)
