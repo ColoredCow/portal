@@ -1,0 +1,13 @@
+{
+    "name": "SalesAutomation",
+    "alias": "salesautomation",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\SalesAutomation\\Providers\\SalesAutomationServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

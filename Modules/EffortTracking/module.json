@@ -1,0 +1,13 @@
+{
+    "name": "EffortTracking",
+    "alias": "efforttracking",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\EffortTracking\\Providers\\EffortTrackingServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
