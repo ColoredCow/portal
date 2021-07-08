@@ -1,0 +1,13 @@
+{
+    "name": "AppointmentSlots",
+    "alias": "appointmentslots",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\AppointmentSlots\\Providers\\AppointmentSlotsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

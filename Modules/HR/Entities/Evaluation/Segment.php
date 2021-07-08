@@ -1,0 +1,34 @@
+<?php
+
+namespace Modules\HR\Entities\Evaluation;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\HR\Entities\ApplicationEvaluationSegment;
+use Modules\HR\Entities\Round;
+
+class Segment extends Model
+{
+    use SoftDeletes;
+
+    protected $fillable = ['name', 'round_id'];
+
+    protected $table = 'hr_evaluation_segments';
+
+    protected $dates = ['deleted_at'];
+
+    public function round()
+    {
+        return $this->belongsTo(Round::class);
+    }
+
+    public function parameters()
+    {
+        return $this->hasMany(Parameter::class, 'segment_id');
+    }
+
+    public function applicationEvaluations()
+    {
+        return $this->hasMany(ApplicationEvaluationSegment::class, 'evaluation_segment_id');
+    }
+}

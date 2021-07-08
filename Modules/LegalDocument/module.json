@@ -1,0 +1,13 @@
+{
+    "name": "LegalDocument",
+    "alias": "legaldocument",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\LegalDocument\\Providers\\LegalDocumentServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

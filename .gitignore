@@ -1,3 +1,4 @@
+# laravel defaults
 /public/hot
 /public/storage
 /storage/*.key
@@ -11,16 +12,25 @@ npm-debug.log
 yarn-error.log
 .env
 
-/public/mix-manifest.json
 
+# compiled assets
+/public/mix-manifest.json
 /public/build
 /public/css
 /public/js
 /public/images/vendor
+
+# macos
 .DS_Store
 
+# laravel debugbar
 /storage/debugbar
 
-node_modules/
+# node module dependencies
 /node_modules
-node_modules
+
+# ignoring dependencies inside Modules if created mistakenly
+Modules/*/composer.lock
+Modules/*/vendor
+Modules/*/package-lock.json
+Modules/*/node_modules

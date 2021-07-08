@@ -4,49 +4,27 @@
 ```sh
 git clone https://github.com/coloredcow-portal/portal
 ```
-2. Clone the submodules
 
-Clone every submodule individually
-
-```sh
-cd portal
-git submodule update --init Modules/MODULENAME
-```
-3. Checkout develop branch
-```sh
-git submodule foreach 'git checkout develop'
-```
-
-4. Install dependencies
+2. Install dependencies
 ```sh
 composer install
 npm install
 ```
 
-5. npm build
+3. npm build
 ```sh
 npm run dev
 ```
 
-6. Install the submodules:
+4. Copy `.env.example` as `.env`
+
+5. Run the following command to add a key
 ```sh
-php artisan portal:setup
-```
-However, you may use the ```module``` option to specify a specific ```MODULENAME``` to install individually:
-
-```sh
-php artisan portal:setup --module=MODULENAME
-```
-
-7. Copy `.env.example` as `.env`
-
-8. Run the following command to add a key
-```
 php artisan key:generate
 ```
-9. Add the following settings in `.env` file:
+6. Add the following settings in `.env` file:
     1. Laravel app configurations
-    ```
+    ```sh
     APP_NAME="ColoredCow Portal"
     APP_ENV=local
     APP_DEBUG=true
@@ -68,28 +46,32 @@ php artisan key:generate
     GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
     ```
 
-10. Run migrations
-```
+7. Run migrations
+```sh
 php artisan migrate
 ```
 
-11. Run seeders
+8. Run seeders
     1. Portal
-    ```
+    ```sh
     php artisan db:seed
     ```
-    However, you may use the ```--class``` option to specify a specific seeder class to run individually:
-    ```
+    In case you want to run a specific seeder class, use the ```--class``` option:
+    ```sh
     php artisan db:seed --class=CLASSNAME
     ```
-    2. Submodule
+    2. Module
 
-    Seed the given module, or without an argument, seed all modules
+    Seed the modules:
+    ```sh
+    php artisan module:seed
     ```
-    php artisan module:seed MODULENAME
+    In case you want to run seeders inside a specific module, run:
+    ```sh
+    php artisan module:seed MODULE_NAME
     ```
 
-12. Setup Virtual Host
+9. Setup Virtual Host
     1. For XAMPP:
          - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
             
@@ -103,8 +85,8 @@ php artisan migrate
             ```
             <VirtualHost *:80>
                 ServerName portal.test
-                DocumentRoot "your_project_path"
-                <Directory "your_project_path">
+                DocumentRoot "/path/to/your/project"
+                <Directory "/path/to/your/project">
                     DirectoryIndex index.php
                     AllowOverride All
                     Order allow,deny
@@ -113,33 +95,4 @@ php artisan migrate
             </VirtualHost>
             ```
 
-       - Restart XAMPP. Next, open the following url in your browser:
-         
-            ```
-            portal.test
-            ```        
-
-
-## Finance Module Setup Guideline
-
-1. Clone the submodules
-
-Clone every submodule individually (Client, Invoice, LegalDocument, Project, Salary, User)
-```sh
-git submodule update --init Modules/Client
-
-git submodule update --init Modules/Invoice
-
-git submodule update --init Modules/LegalDocument
-
-git submodule update --init Modules/Project
-
-git submodule update --init Modules/Salary
-
-git submodule update --init Modules/User
-```
-2. Switch to `master` branch
-```sh
-git submodule foreach 'git checkout master'
-```
-After Successful Installation, you should be able to see the invoice module at the dashboard and Finance module dropdown.
+       - Restart XAMPP. Next, open this url in your browser: http://portal.test

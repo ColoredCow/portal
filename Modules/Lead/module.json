@@ -1,0 +1,13 @@
+{
+    "name": "Lead",
+    "alias": "lead",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Lead\\Providers\\LeadServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
