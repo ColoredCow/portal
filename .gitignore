@@ -24,3 +24,7 @@ yarn-error.log
 node_modules/
 /node_modules
 node_modules
+
+Modules/*/composer.lock
+Modules/*/vendor
+Modules/*/package-lock.json
