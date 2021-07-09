@@ -51,11 +51,6 @@ class User extends Authenticatable
         return $this->hasRole('super-admin');
     }
 
-    public function isAssignee($role)
-    {
-        return $this->hasRole($role);
-    }
-
     public static function scopeInterviewers($query)
     {
         return $query->where('provider', 'google');
