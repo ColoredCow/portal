@@ -45,7 +45,7 @@
         <ul class="nav nav-pills mb-2">
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status ? 'text-info' : 'active bg-info text-white' }}"
-                    href=/{{ Request::path() }}{{request()->has('search')? "?search=".request('search'):"" }}> <i
+                    href=/{{ Request::path() }}{{request()->has('hr_job_id')?'?hr_job_id='.request('hr_job_id'):''}}{{request()->has('search')? "?search=".request('search'):"" }}> <i
                     class="fa fa-clipboard"></i>&nbsp;
                     Open
                     <span
@@ -58,7 +58,7 @@
 
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.in-progress.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{request()->has('search')? "&search=".request('search'):"" }}&round=Trial-Program>
+                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{request()->has('hr_job_id')?'&hr_job_id='.request('hr_job_id'):''}}{{request()->has('search')? "&search=".request('search'):"" }}&round=Trial-Program>
                     <i class="fa fa-clipboard"></i>&nbsp;
                     Trial Program
                     <span
@@ -71,7 +71,7 @@
 
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{request()->has('search')? "&search=".request('search'):"" }}>
+                    href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{request()->has('hr_job_id')?'&hr_job_id='.request('hr_job_id'):''}}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-file-text-o"></i>&nbsp;
                     {{ config('constants.hr.status.on-hold.title') }}
                     <span
@@ -83,7 +83,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
+                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{request()->has('hr_job_id')?'&hr_job_id='.request('hr_job_id'):''}}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
@@ -106,7 +106,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{request()->has('search')? "&search=".request('search'):"" }}>
+                    href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{request()->has('hr_job_id')?'&hr_job_id='.request('hr_job_id'):''}}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}
                     <span
                         class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
@@ -117,7 +117,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.approved.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
+                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{request()->has('hr_job_id')?'&hr_job_id='.request('hr_job_id'):''}}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-check-square"></i>&nbsp;
                     Approved
                     <span
@@ -129,7 +129,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.onboarded.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{request()->has('search')? "&search=".request('search'):"" }}>
+                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{request()->has('hr_job_id')?'&hr_job_id='.request('hr_job_id'):''}}{{request()->has('search')? "&search=".request('search'):"" }}>
                     <i class="fa fa-certificate"></i>&nbsp;
                     Onboard
                     <span
