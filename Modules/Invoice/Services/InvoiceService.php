@@ -33,7 +33,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoices' => $invoices,
             'clients' => $this->getClientsForInvoice(),
             'currencyService' => $this->currencyService(),
-            'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices)
+            'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
         ];
     }
 
@@ -60,7 +60,7 @@ class InvoiceService implements InvoiceServiceContract
         return [
             'year' => now()->format('Y'),
             'month' => now()->format('m'),
-            'status' => 'sent'
+            'status' => 'sent',
         ];
     }
 
@@ -92,7 +92,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         return [
             'invoice' => Invoice::find($id),
-            'clients' => $this->getClientsForInvoice()
+            'clients' => $this->getClientsForInvoice(),
         ];
     }
 
@@ -119,7 +119,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice = Invoice::find($invoiceID);
         return Storage::download($invoice->file_path, basename($invoice->file_path), [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline;'
+            'Content-Disposition' => 'inline;',
         ]);
     }
 
@@ -137,4 +137,18 @@ class InvoiceService implements InvoiceServiceContract
     {
         return Invoice::status('sent')->get();
     }
+
+    /**
+     *  TaxReports
+     */
+
+    public function defaultTaxReportFilters()
+    {
+        return [];
+    }
+
+    public function taxReport($filters) {
+        return [];
+    }
+
 }

@@ -102,4 +102,14 @@ class InvoiceController extends Controller
     {
         return $this->service->dashboard();
     }
+
+    public function taxReport(Request $request) {
+        $filters = $request->all();
+        
+        if (!$filters) {
+            return redirect(route('invoice.tax-report', $this->service->defaultTaxReportFilters()));
+        }
+
+        return view('invoice::tax-report', $this->service->taxReport($filters));
+    }
 }

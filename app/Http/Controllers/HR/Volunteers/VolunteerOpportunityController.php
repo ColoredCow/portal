@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\HR\Volunteers;
 
-use App\Http\Controllers\HR\JobController;
-use Illuminate\Support\Facades\Request;
 use Modules\HR\Entities\Job;
+use Illuminate\Support\Facades\Request;
+use Modules\HR\Http\Controllers\Recruitment\JobController;
 
 class VolunteerOpportunityController extends JobController
 {
