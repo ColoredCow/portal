@@ -156,7 +156,6 @@
                 <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
                     <span class="dropdown-item-text fz-12">Filter by assignee</span>
                     @foreach ($assignees as $assignee)
-                        @if($assignee->hasRole('super-admin') or $assignee->hasRole('admin') or $assignee->hasRole('hr-manager') )
                         @php
                             $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
                             $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
@@ -167,7 +166,6 @@
                                 class="w-20 h-20 rounded-circle mr-1">
                             <span>{{ $assignee->name }}</span>
                         </a>
-                        @endif
                     @endforeach
                 </div>
             </th>
