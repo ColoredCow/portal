@@ -164,7 +164,10 @@ class InvoiceService implements InvoiceServiceContract
     public function defaultTaxReportFilters()
     {
         return [
-            "country" => "Indian",
+            "region" => "indian",
+            'year' => now()->format('Y'),
+            'month' => now()->format('m'),
+            'status' => 'paid',
         ];
     }
 
