@@ -3,8 +3,11 @@
 namespace Modules\Invoice\Services;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Modules\Invoice\Entities\Invoice;
 use Illuminate\Support\Facades\Storage;
+use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
@@ -15,19 +18,9 @@ class InvoiceService implements InvoiceServiceContract
     {
         $query = Invoice::query();
 
-        if ($year = Arr::get($filters, 'year', '')) {
-            $query->year($year);
-        }
-
-        if ($month = Arr::get($filters, 'month', '')) {
-            $query->month($month);
-        }
-
-        if ($status = Arr::get($filters, 'status', '')) {
-            $query->status($status);
-        }
-
-        $invoices = $query->get();
+        $invoices = $this
+            ->applyFilters($query, $filters)
+            ->get();
 
         return [
             'invoices' => $invoices,
@@ -138,17 +131,73 @@ class InvoiceService implements InvoiceServiceContract
         return Invoice::status('sent')->get();
     }
 
+    private function applyFilters($query, $filters)
+    {
+        if ($year = Arr::get($filters, 'year', '')) {
+            $query->year($year);
+        }
+
+        if ($month = Arr::get($filters, 'month', '')) {
+            $query->month($month);
+        }
+
+        if ($status = Arr::get($filters, 'status', '')) {
+            $query->status($status);
+        }
+
+        if ($country = Arr::get($filters, 'country', '')) {
+            $query->country($country);
+        }
+
+        return $query;
+    }
+
     /**
      *  TaxReports
      */
 
     public function defaultTaxReportFilters()
     {
-        return [];
+        return [
+            "country" => "Indian",
+        ];
     }
 
-    public function taxReport($filters) {
-        return [];
+    public function taxReport($filters)
+    {
+        return [
+            "invoices" => $this->taxReportInvoices($filters)
+        ];
     }
 
+    public function taxReportExport($filters)
+    {
+        $invoices = $this->taxReportInvoices($filters);
+        $invoices = $this->formatInvoicesForExport($invoices);
+        return Excel::download(new TaxReportExport($invoices), 'TaxReportExport.xlsx');
+    }
+
+    private function taxReportInvoices($filters)
+    {
+        $query = Invoice::query();
+        return $this
+            ->applyFilters($query, $filters)
+            ->get() ?: [];
+    }
+
+    private function formatInvoicesForExport($invoices) {
+        return $invoices->map(function($invoice) {
+            return [
+                "Project" => $invoice->project->name,
+                "Amount" => $invoice->display_amount,
+                "GST" => $invoice->gst,
+                "Amount (+GST)" => $invoice->invoiceAmount(),
+                "Received amount" => $invoice->amount_paid ,
+                "TDS" => $invoice->tds,
+                "Sent at" => $invoice->sent_on->format(config('invoice.default-date-format')),
+                "Payment at" => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-' ,
+                "Status" => Str::studly($invoice->status) 
+            ];
+        });
+    }
 }

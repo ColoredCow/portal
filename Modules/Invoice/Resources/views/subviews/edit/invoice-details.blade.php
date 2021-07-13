@@ -106,7 +106,7 @@
                     <label for="receivable_date" class="field-required mr-8 pt-1">Payment date</label>
                     <input type="date" class="form-control flex-1" name="payment_date" id="payment_date" 
                     required="required"
-                    value="{{ $invoice->payment_date ? $invoice->payment_date->format('Y-m-d') : date('Y-m-d') }}">
+                    value="{{ $invoice->payment_at ? $invoice->payment_at->format('Y-m-d') : date('Y-m-d') }}">
                 </div>
 
                 <div class="form-group" v-if="this.client.type == 'indian'">
