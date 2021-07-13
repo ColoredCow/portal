@@ -40,6 +40,15 @@ class Invoice extends Model
                 $subQuery->where('name', 'LIKE', "%{$country}%");
             });
     }
+
+    public function scopeRegion($query, $region)
+    {
+        return $query
+            ->whereHas('client.addresses.country', function ($subQuery) use($region) {
+                $operator =  $region == "indian" ?  'LIKE' : 'NOT LIKE';
+                return $subQuery->where('name', $operator, "%India%");
+            });
+    }
     
     public function project()
     {

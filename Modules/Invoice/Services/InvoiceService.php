@@ -134,20 +134,25 @@ class InvoiceService implements InvoiceServiceContract
     private function applyFilters($query, $filters)
     {
         if ($year = Arr::get($filters, 'year', '')) {
-            $query->year($year);
+            $query = $query->year($year);
         }
 
         if ($month = Arr::get($filters, 'month', '')) {
-            $query->month($month);
+            $query = $query->month($month);
         }
 
         if ($status = Arr::get($filters, 'status', '')) {
-            $query->status($status);
+            $query = $query->status($status);
         }
 
         if ($country = Arr::get($filters, 'country', '')) {
-            $query->country($country);
+            $query = $query->country($country);
         }
+
+        if ($country = Arr::get($filters, 'region', '')) {
+            $query = $query->region($country);
+        }
+
 
         return $query;
     }

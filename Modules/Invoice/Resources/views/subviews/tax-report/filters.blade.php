@@ -1,12 +1,12 @@
 <form action="{{ route('invoice.tax-report')  }}" id="invoiceFilterForm">
     <div class="d-flex">
         <div class='form-group mr-4 w-168'>
-            <select class="form-control bg-light" name="country"
+            <select class="form-control bg-light" name="region"
                 onchange="document.getElementById('invoiceFilterForm').submit();">
-                <option {{ request()->input('country') == '' ? "selected=selected" : '' }} value="">All Country</option>
-                <option {{ request()->input('country') == 'India' ? "selected=selected" : '' }} value="India">India
+                <option {{ request()->input('region') == '' ? "selected=selected" : '' }} value="">All region</option>
+                <option {{ request()->input('region') == 'indian' ? "selected=selected" : '' }} value="indian">Indian
                 </option>
-                <option {{ request()->input('country') == 'United States' ? "selected=selected" : '' }} value="United States">US</option>
+                <option {{ request()->input('region') == 'international' ? "selected=selected" : '' }} value="international">International</option>
             </select>
         </div>
 
