@@ -22,6 +22,7 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
+                    <th></th>
                     <th>Project</th>
                     <th>Amount</th>
                     <th>GST</th>
@@ -37,6 +38,7 @@
             <tbody>
                 @foreach ($invoices as $invoice)
                 <tr>
+                    <td>{{ $loop->iteration }}</td>
                     <td>
                         <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->project->name }}</a>
                     </td>
