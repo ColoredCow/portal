@@ -59,7 +59,7 @@
                         <select name="currency" v-model="currency" id="currency" class="input-group-text"
                             required="required">
                             @foreach($countries as $country)
-                            <option value="{{$country->currency}}">{{$country->currency}}</option>
+                                <option value="{{$country->currency}}">{{$country->currency}}</option>
                             @endforeach 
                         </select>
                     </div>

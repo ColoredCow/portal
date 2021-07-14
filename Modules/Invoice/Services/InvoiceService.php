@@ -62,7 +62,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         return [
             'clients' => $this->getClientsForInvoice(),
-            'countries' =>Country::all()
+            'countries' => Country::all(),
         ];
     }
 
