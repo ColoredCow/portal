@@ -6,8 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    public function index(){
-    return db::table("countries")->get();
-    }
-    
+   
 }
