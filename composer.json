@@ -20,7 +20,6 @@
         "php": "^7.3",
         "aws/aws-sdk-php": "^3.121",
         "barryvdh/laravel-snappy": "^0.4.7",
-        "codegreencreative/laravel-samlidp": "dev-master",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.4",
@@ -34,9 +33,10 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "maatwebsite/excel": "^3.1",
-        "niklasravnsborg/laravel-pdf": "^3.1",
+        "niklasravnsborg/laravel-pdf": "^4.1",
         "nwidart/laravel-modules": "^7.0",
-        "spatie/laravel-permission": "^3.3"
+        "spatie/laravel-permission": "^3.3",
+        "codegreencreative/laravel-samlidp": "master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
