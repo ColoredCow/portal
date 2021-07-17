@@ -26,6 +26,12 @@ return [
         'closed' => 'Closed'
     ],
 
+    'domain-status' => [
+        'engineering' => 'Engineering',
+        'design' => 'Design',
+        'marketing' => 'Marketing'
+    ],
+
     'template-variables' => [
         'applicant-name' => '|*applicant_name*|',
         'interview-time' => '|*interview_time*|',

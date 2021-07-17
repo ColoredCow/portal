@@ -16,6 +16,7 @@ class JobRequest extends FormRequest
         if ($this->method() === 'POST') {
             $rules = [
                 'title' => 'required|string',
+                'domain' => 'required|string',
                 'description' => 'required|string',
                 'type' => 'required|string|in:job,internship,volunteer',
                 'status' => 'required|string',
@@ -27,6 +28,7 @@ class JobRequest extends FormRequest
         if ($this->method() === 'PATCH') {
             $rules = [
                 'title' => 'required|string',
+                'domain' => 'required|string',
                 'description' => 'required|string',
                 'type' => 'required|string|in:job,internship,volunteer',
                 'status' => 'required|string',
