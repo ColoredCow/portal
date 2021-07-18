@@ -20,4 +20,4 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
       - name: Check PHP Coding Standards
-        run: php ./vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php --dry-run --verbose --diff
+        run: php ./vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php --dry-run --verbose --diff --path-mode=intersection app/Models/Finance/Payment.php
