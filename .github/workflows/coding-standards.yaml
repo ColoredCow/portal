@@ -35,7 +35,7 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
       - name: ESLINT
-        run: ./node_modules/.bin/eslint resources/js/ Modules/**/resources/assets/js/ --ext .js,.vue
+        run: ./node_modules/.bin/eslint resources/js/ Modules/*/Resources/assets/js/ --ext .js,.vue
 
   larastan:
     name: Larastan
