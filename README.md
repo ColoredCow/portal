@@ -25,3 +25,6 @@ Use these [naming conventions](./docs/branch-naming-convention.md) to get starte
 
 ### ColoredCow Portal chat CODE OF CONDUCT
 Use our [Chat Code of Conduct](./docs/chat_CODE_OF_CONDUCT.md) to collaborate on portal and task to build the team spirit.
+
+## Contributing
+- [Coding Standards](./docs/coding-standards.md)
