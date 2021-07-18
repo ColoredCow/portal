@@ -1,19 +1,18 @@
 ## Coding Standards
 
-We enforce best coding practices as recommended by community leaders.
+We enforce best coding practices as recommended by community leaders. This projects uses the following tools to ensure best coding practices are being followed.
 
-This projects uses the following tools to ensure best coding practices are being followed.
+  - [Husky & Lint-Staged](#husky--lint-staged)
+  - [PHP CS Fixer](#php-cs-fixer)
+  - [Larastan](#larastan)
+  - [ESLint](#eslint)
 
 ### Husky & Lint-Staged
-[Husky](https://github.com/typicode/husky) helps to trigger git hooks. We use pre-commit hook to run code fixers to fix errors that violates our coding standards.
+[Husky](https://github.com/typicode/husky) helps to trigger git hooks. We use the pre-commit hook to run code fixers to fix errors that violates our coding standards. [Lint staged](https://github.com/okonet/lint-staged) helps Husky triggers to run only on files modified in the commit and avoid running on the whole codebase. More information can be found in [`package.json`](../package.json) file.
 
-[Lint staged](https://github.com/okonet/lint-staged) helps Husky triggers to run only on files modified in the commit and avoid running on the whole codebase.
+**Note:** Your commit may fail if the automatic fixes fails. In such case, you can fix the errors manually and then commit again.
 
-**Note: **Your commit may fail if the automatic fixes fails. In such case, you can fix the errors manually and then commit again.
-
-More information can be found in [`package.json`](../package.json) file.
-
-To manually run the code analyzers/fixers on the staged files, run the following command:
+Run the code fixers on the staged files manually using:
 ```sh
 npx lint-staged
 ```
