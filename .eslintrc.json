@@ -4,7 +4,10 @@
         "commonjs": true,
         "es2021": true
     },
-    "extends": "plugin:vue/essential",
+    "extends": [
+        // "eslint:recommended",
+        "plugin:vue/essential"
+    ],
     "parserOptions": {
         "ecmaVersion": 12
     },

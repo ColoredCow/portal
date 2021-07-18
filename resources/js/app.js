@@ -962,7 +962,7 @@ function toggleApplicantMailEditor() {
 	let target = $(this).data("target");
 	$(target).toggleClass("d-none");
 }
- 
+
 
 function loadTemplateMail(status, successCallback) {
 	// make query to load current template
