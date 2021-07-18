@@ -5,11 +5,10 @@ on:
     branches: [master]
 
 jobs:
-  coding-standards:
-    name: "Coding Standards"
-    runs-on: "ubuntu-latest"
+  setup:
+    runs-on: ubuntu-latest
     steps:
-      - uses: "actions/checkout@v2"
+      - uses: actions/checkout@v2
       - name: Setup PHP v7.4
         uses: shivammathur/setup-php@v2
         with:
@@ -18,5 +17,19 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Install NPM Dependencies
         run: npm install
-      - name: Check PHP Coding Standards
+
+  phpcs:
+    name: PHP CS
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: PHP Coding Standards
         run: php ./vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php --dry-run --verbose --diff --path-mode=intersection app/Models/Finance/Payment.php
+
+  larastan:
+    name: Larastan
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Larastan
+        run: vendor/bin/phpstan analyse
