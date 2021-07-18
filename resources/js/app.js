@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+    console.log('hello');
+
 require('./bootstrap');
 
 import 'jquery-ui/ui/widgets/datepicker.js';
