@@ -25,8 +25,10 @@ class Payment extends Model
         return $this->morphTo();
     }
 
-    public functino test() {
+    public function test()
+    {
         $myvar = 'test';
+
         return 'hello';
     }
 }
