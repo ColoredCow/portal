@@ -24,11 +24,4 @@ class Payment extends Model
     {
         return $this->morphTo();
     }
-
-    public function test()
-    {
-        $myvar = 'test';
-
-        return 'hello';
-    }
 }

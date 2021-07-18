@@ -110,9 +110,4 @@ class Invoice extends Model
     {
         return $this->payments->count() ? 'paid' : 'unpaid';
     }
-
-    public fhnction someFunction() {
-        $var = 'somve value is heere'
-        return $var;
-    }
 }
