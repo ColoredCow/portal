@@ -113,8 +113,8 @@ class Invoice extends Model
 
     public function someFunction()
     {
-        $myVar = 'somve value is heere';
+        $myVar2 = 'somve value is heere';
 
-        return $myVar;
+        return $myVar2;
     }
 }

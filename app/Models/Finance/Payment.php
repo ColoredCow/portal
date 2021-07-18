@@ -2,7 +2,6 @@
 
 namespace App\Models\Finance;
 
-use App\Models\Finance\Invoice;
 use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
@@ -24,5 +23,10 @@ class Payment extends Model
     public function mode()
     {
         return $this->morphTo();
+    }
+
+    public function test()
+    {
+        return 'hello';
     }
 }
