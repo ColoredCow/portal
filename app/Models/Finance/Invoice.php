@@ -110,4 +110,9 @@ class Invoice extends Model
     {
         return $this->payments->count() ? 'paid' : 'unpaid';
     }
+
+    public function someFunction()
+    {
+        return 'heelo';
+    }
 }
