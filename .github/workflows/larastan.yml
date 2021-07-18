@@ -1,0 +1,20 @@
+name: Larastan
+on:
+  push:
+  pull_request:
+    branches:
+      - "master"
+      - "feature/linting"
+
+jobs:
+  larastan:
+    name: "Larastan - Static Analysis"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v2"
+      - name: Install composer dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Install NPM Dependencies
+        run: npm install
+      - name: Run larastan
+        run: vendor/bin/phpstan analyse
