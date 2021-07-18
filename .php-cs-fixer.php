@@ -1,6 +1,5 @@
 <?php
 
-use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $rules = [
@@ -16,9 +15,6 @@ $rules = [
     ],
     'braces' => true,
     'cast_spaces' => true,
-    'class_attributes_separation' => [
-        'elements' => ['method'],
-    ],
     'class_definition' => true,
     'concat_space' => [
         'spacing' => 'one',
@@ -37,7 +33,6 @@ $rules = [
     'linebreak_after_opening_tag' => true,
     'line_ending' => true,
     'lowercase_cast' => true,
-    'lowercase_constants' => true,
     'lowercase_keywords' => true,
     'lowercase_static_reference' => true, // added from Symfony
     'magic_method_casing' => true, // added from Symfony
@@ -84,9 +79,7 @@ $rules = [
     'normalize_index_brace' => true,
     'not_operator_with_successor_space' => true,
     'object_operator_without_whitespace' => true,
-    'ordered_imports' => ['sortAlgorithm' => 'length'],
     'phpdoc_indent' => true,
-    'phpdoc_inline_tag' => true,
     'phpdoc_no_access' => true,
     'phpdoc_no_package' => true,
     'phpdoc_no_useless_inheritdoc' => true,
@@ -97,7 +90,6 @@ $rules = [
     'phpdoc_trim' => true,
     'phpdoc_types' => true,
     'phpdoc_var_without_name' => true,
-    'psr4' => true,
     'self_accessor' => true,
     'short_scalar_cast' => true,
     'simplified_null_return' => true,
@@ -115,7 +107,6 @@ $rules = [
     'switch_case_semicolon_to_colon' => true,
     'switch_case_space' => true,
     'ternary_operator_spaces' => true,
-    'trailing_comma_in_multiline_array' => true,
     'trim_array_spaces' => true,
     'unary_operator_spaces' => true,
     'visibility_required' => [
@@ -139,9 +130,9 @@ $finder = Finder::create()
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-return Config::create()
-    ->setFinder($finder)
+$config = new PhpCsFixer\Config();
+
+return $config->setFinder($finder)
     ->setRules($rules)
     ->setRiskyAllowed(true)
     ->setUsingCache(true);
-{"mode":"full","isActive":false}
