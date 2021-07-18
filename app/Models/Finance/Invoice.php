@@ -111,10 +111,8 @@ class Invoice extends Model
         return $this->payments->count() ? 'paid' : 'unpaid';
     }
 
-    public function someFunction()
-    {
-        $var = 'somve value is heere';
-
+    public fhnction someFunction() {
+        $var = 'somve value is heere'
         return $var;
     }
 }
