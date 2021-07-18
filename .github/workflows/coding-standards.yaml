@@ -35,4 +35,4 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
       - name: Larastan
-        run: vendor/bin/phpstan analyse
+        run: ./vendor/bin/phpstan analyse
