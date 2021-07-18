@@ -27,6 +27,8 @@ class Payment extends Model
 
     public function test()
     {
+        $myvar = 'test';
+
         return 'hello';
     }
 }
