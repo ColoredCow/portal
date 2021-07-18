@@ -1,3 +1,7 @@
+## ColoredCow Portal
+![GitHub issues](https://img.shields.io/github/issues/Coloredcow-Portal/portal?style=flat-square)
+[![Larastan](https://github.com/ColoredCow-Portal/portal/actions/workflows/larastan.yml/badge.svg?branch=master)](https://github.com/ColoredCow-Portal/portal/actions/workflows/larastan.yml)
+
 ### Introduction
 :wave: Welcome to ColoredCow Employee Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
 
