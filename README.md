@@ -3,7 +3,7 @@
 [![Coding Standards](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml/badge.svg?branch=master)](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml)
 
 ### Introduction
-:wave: Welcome to ColoredCow Employee Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
+:wave: Welcome to ColoredCow Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
 
 ### Prerequisites
 Check our [prerequisites](./docs/prerequisites.md) to get started.
