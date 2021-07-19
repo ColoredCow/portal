@@ -53,7 +53,9 @@ class User extends Authenticatable
 
     public static function scopeInterviewers($query)
     {
-        return $query->where('provider', 'google');
+        return $query->whereHas('roles', function($query){
+            $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
+        });
     }
 
     public function getAvatarAttribute($value)
