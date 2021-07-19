@@ -43,10 +43,10 @@
                         </select>
                     </div>
                     <div class="col-md-3 form-group">
-                     <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain</label>
-                        <select class="form-control" name="domain" id="domain" value="{{ old('domain') }}">
-                            @foreach (config('hr.domain-status') as $domain => $label)
-                            <option value="{{ $domain }}" {{ old('domain') == $domain ? 'selected' : '' }}>{{ $label }}</option>
+                        <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain</label>
+                        <select class="form-control" name="domain" id="domain" value="{{ old('domain') }}" required>
+                            @foreach (config('hr.opportunities.domains') as $domain => $label)
+                                <option value="{{ $domain }}" {{ old('domain') == $domain ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
                         </select>
                     </div>

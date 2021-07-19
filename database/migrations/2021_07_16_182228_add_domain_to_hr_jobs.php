@@ -26,7 +26,7 @@ class AddDomainToHrJobs extends Migration
     public function down()
     {
         Schema::table('hr_jobs', function (Blueprint $table) {
-            //
+            $table->dropColumn('domain');
         });
     }
 }

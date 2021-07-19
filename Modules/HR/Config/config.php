@@ -18,18 +18,18 @@ return [
             'title' => 'Volunteer',
             'type' => 'volunteer',
         ],
+        'domains' => [
+            'engineering' => 'Engineering',
+            'design' => 'Design',
+            'marketing' => 'Marketing'
+        ],
+    
     ],
 
     'opportunities-status' => [
         'draft' => 'Draft',
         'published' => 'Published',
         'closed' => 'Closed'
-    ],
-
-    'domain-status' => [
-        'engineering' => 'Engineering',
-        'design' => 'Design',
-        'marketing' => 'Marketing'
     ],
 
     'template-variables' => [
