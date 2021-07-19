@@ -58,8 +58,9 @@
                     <div class="input-group-prepend">
                         <select name="currency" v-model="currency" id="currency" class="input-group-text"
                             required="required">
-                            <option value="INR">INR</option>
-                            <option value="USD">USD</option>
+                            @foreach($countries as $country)
+                                <option value="{{$country->currency}}">{{$country->currency}}</option>
+                            @endforeach 
                         </select>
                     </div>
                     <input v-model="amount" type="number" class="form-control" name="amount" id="amount"

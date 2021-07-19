@@ -2,6 +2,7 @@
 
 namespace Modules\Invoice\Services;
 
+use App\Models\Country;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
@@ -59,7 +60,10 @@ class InvoiceService implements InvoiceServiceContract
 
     public function create()
     {
-        return ['clients' => $this->getClientsForInvoice()];
+        return [
+            'clients' => $this->getClientsForInvoice(),
+            'countries' => Country::all(),
+        ];
     }
 
     public function store($data)
@@ -86,6 +90,7 @@ class InvoiceService implements InvoiceServiceContract
         return [
             'invoice' => Invoice::find($id),
             'clients' => $this->getClientsForInvoice(),
+            'countries' => Country::all(),
         ];
     }
 
