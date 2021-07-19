@@ -47,10 +47,10 @@
 
 In any software, every day many branches are created and pushed to the GitHub repository. Having a manageable code repository is important and mandatory when working with a team.
 
-Employee Portal uses branch naming conventions to work with git repositories. 
+ColoredCow Portal uses branch naming conventions to work with git repositories.
 In this convention, the branches are divided into two categories:
 
-### Code Flow Branches 
+### Code Flow Branches
 These branches which we expect to be permanently available on the repository follow the flow of code changes starting from development until the production.
 
 #### 1. Develop
@@ -58,12 +58,12 @@ All new pull requests related to features and bug fixes shoulb be merged into th
 
 #### 2. Master
 This is the main branch for production. Nothing should be directly pushed into this branch except for the hot-fix errors and the develop branch after the complete testing of the issues or bug fixes.
-    
-### Temporary Branches 
+
+### Temporary Branches
 As the name implies, these are disposable branches that can be created and deleted by need of the developer or deployer.
 #### 1. Feature
 Any code changes for a new module or use case should be done on a feature branch. This branch is created based on the current development branch. When all changes are Done, a Pull Request/Merge Request is needed to put all of these to the development branch.
-		
+
 Examples:
 - feature/21/
 - feature/30/dark-theme
@@ -76,14 +76,14 @@ If there are changes that are affecting another repository also then again a for
 
 #### 2. Bug Fix
 If the code changes made from the feature branch were rejected after a release, sprint or demo, any necessary fixes after that should be done on the bugfix branch.
-		
+
 Examples:
 - bugfix/change-color
 - bugfix/21/mail-not-sending
 
 #### 3. Hot Fix
-If there is an issue in the master branch then it needs to be  fixed immediately, then that issue should be created as a Hotfix. The hotfix branch should be pulled from the master branch. 
-		
+If there is an issue in the master branch then it needs to be  fixed immediately, then that issue should be created as a Hotfix. The hotfix branch should be pulled from the master branch.
+
 Examples:
 - hotfix/disable-endpoint-zero-day-exploit
 - hotfix/increase-scaling-threshold

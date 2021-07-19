@@ -33,8 +33,8 @@ return [
     ],
 
     'default' => [
-        'email' => env('HR_DEFAULT_FROM_EMAIL', 'employeeportal@example.com'),
-        'name' => env('HR_DEFAULT_FROM_NAME', 'Employee Portal Careers'),
+        'email' => env('HR_DEFAULT_FROM_EMAIL', 'portal@coloredcow.com'),
+        'name' => env('HR_DEFAULT_FROM_NAME', 'ColoredCow Portal Careers'),
     ],
     'interview-time-format' => 'h:i a',
     'no-show-hours-limit' => 2,
