@@ -1,3 +1,7 @@
+## ColoredCow Portal
+![GitHub issues](https://img.shields.io/github/issues/Coloredcow-Portal/portal)
+[![Coding Standards](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yaml/badge.svg?branch=master)](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yaml)
+
 ### Introduction
 :wave: Welcome to ColoredCow Employee Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
 
@@ -21,3 +25,6 @@ Use these [naming conventions](./docs/branch-naming-convention.md) to get starte
 
 ### ColoredCow Portal chat CODE OF CONDUCT
 Use our [Chat Code of Conduct](./docs/chat_CODE_OF_CONDUCT.md) to collaborate on portal and task to build the team spirit.
+
+## Contributing
+- [Coding Standards](./docs/coding-standards.md)

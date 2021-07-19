@@ -31,16 +31,16 @@ php artisan key:generate
     APP_URL=http://portal.test
     ```
 
-    2. Database configurations        
-        
+    2. Database configurations
+
         Make sure you have a database created in your local server.
         For more info check this [link](https://www.youtube.com/watch?v=4geOENi3--M)
-        
+
     ```
     DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
     ```
-    
-    
+
+
     3. Google configurations _(optional)_
     ```
     GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
@@ -74,15 +74,15 @@ php artisan migrate
 9. Setup Virtual Host
     1. For XAMPP:
          - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
-            
+
              ```
              127.0.0.1      portal.test
-             ```   
+             ```
 
        - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file:
         Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:/xampp/htdocs/portal/public`.
 
-            ```
+            ```apacheconf
             <VirtualHost *:80>
                 ServerName portal.test
                 DocumentRoot "/path/to/your/project"

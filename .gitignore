@@ -34,3 +34,6 @@ Modules/*/composer.lock
 Modules/*/vendor
 Modules/*/package-lock.json
 Modules/*/node_modules
+
+# phpcs cache
+.php-cs-fixer.cache
