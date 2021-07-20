@@ -133,7 +133,7 @@
 
                 <div class="form-group" v-if="this.client.type != 'indian'">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate:</label>
+                        <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate Diff:</label>
                         <input type="text" class = "form-control w-272 ml-auto" name="conversion_rate" v-model = 'conversion_rate'required="required">
                     </div>
                 </div>
