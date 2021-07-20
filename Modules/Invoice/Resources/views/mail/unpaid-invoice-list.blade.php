@@ -13,7 +13,7 @@
 
             <tbody>
                 @foreach($unpaidInvoices as $invoice)
-                    <tr style = "{{ $invoice->receivable_date < date('Y-m-d') ? 'color: red; border-top: 1px solid #000' : 'border-top: 1px solid #000' }}">
+                    <tr style = "{{ $invoice->shouldHighlighted()? 'color: red; border-top: 1px solid #000' : 'border-top: 1px solid #000' }}">
                         <td style = "padding-right: 10px;">{{ $invoice->project->name }}</td>
                         <td style = "padding-right: 10px;">{{ $invoice->created_at->format(config('invoice.default-date-format')) }}</td>
                         <td style = "padding-right: 10px;">{{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}</td> 
