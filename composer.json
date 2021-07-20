@@ -17,10 +17,12 @@
 
     "license": "MIT",
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
+        "ext-gd": "*",
         "aws/aws-sdk-php": "^3.121",
         "barryvdh/laravel-snappy": "^0.4.7",
         "codegreencreative/laravel-samlidp": "dev-master",
+        "consoletvs/charts": "7.*",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.4",
@@ -33,6 +35,7 @@
         "laravel/socialite": "^5.0.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "laravelcollective/html": "^6.2",
         "maatwebsite/excel": "^3.1",
         "niklasravnsborg/laravel-pdf": "^3.1",
         "nwidart/laravel-modules": "^7.0",
@@ -51,7 +54,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4.3"
+        }
     },
     "extra": {
         "laravel": {
