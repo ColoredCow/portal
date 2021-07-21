@@ -12,13 +12,14 @@ class DashboardController extends Controller
 
         $date = Carbon::now()->subDays(7);
   
-        $all = Sql::where('created_at', '>=', $date)->orderBy('created_at', 'ASC')->get();
+        $table = Sql::where('created_at', '>=', $date)->orderBy('created_at', 'ASC')->get();
     
         $user=DB::table('hr_applicants')
         ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as number'))
         ->groupBy('date')
         ->get();
        
-       return view('graph',compact('user','all'));
-   }        
-    }
+       return view('graph',compact('user','table'));
+   }
+           
+}

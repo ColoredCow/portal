@@ -17,15 +17,15 @@
                 <th>Email</th>
                 <th>Graduation Year</th>
             </tr>
-            @foreach($all as $table)
+            @foreach($table as $tables)
             <tr>
-               <td>{{ $table-> id}}</td>
-               <td>{{ $table-> name}}</td>    
-               <td>{{ $table-> college}}</td>   
-               <td>{{ $table-> created_at}}</td>   
-               <td>{{ $table-> phone}}</td>    
-               <td>{{ $table-> email}}</td>  
-               <td>{{ $table-> graduation_year}}</td>       
+               <td>{{ $tables-> id}}</td>
+               <td>{{ $tables-> name}}</td>    
+               <td>{{ $tables-> college}}</td>   
+               <td>{{ $tables-> created_at}}</td>   
+               <td>{{ $tables-> phone}}</td>    
+               <td>{{ $tables-> email}}</td>  
+               <td>{{ $tables-> graduation_year}}</td>       
             </tr>        
             @endforeach 
         </table>
@@ -36,9 +36,8 @@
 
 </br>
 
-  <head>
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);
@@ -67,12 +66,9 @@
         chart.draw(data, google.charts.Bar.convertOptions(options));
       }
     </script>
-  </head>
-  <body>
-
+</head>
+<body>
   <h2>Chart</h2>
   <div id="barchart_material" style="width: 900px; height: 500px;"></div>
-  
-  </body>
-</html>
+</body>
 @endsection
