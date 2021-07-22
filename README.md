@@ -5,6 +5,9 @@
 ### Introduction
 :wave: Welcome to ColoredCow Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
 
+### Architecture
+Check the Employee Portal [Architecture](https://docs.google.com/presentation/d/1R6v-6Ata4N89G9W8DPS3qUQqwd-MO5ymGJeyXvD2kpo/edit#slide=id.ge4e7bf2453_0_67) to get a better understanding.
+
 ### Prerequisites
 Check our [prerequisites](./docs/prerequisites.md) to get started.
 
