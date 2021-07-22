@@ -1,47 +1,33 @@
-# Welcome to Employee Portal
+## ColoredCow Portal
+![GitHub issues](https://img.shields.io/github/issues/Coloredcow-Portal/portal)
+[![Coding Standards](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml/badge.svg?branch=master)](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml)
 
-Solution for organizations to manage all operations' data. Built over GSuite.
+### Introduction
+:wave: Welcome to ColoredCow Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
 
-### Status
+### Architecture
+Check the Employee Portal [Architecture](https://docs.google.com/presentation/d/1R6v-6Ata4N89G9W8DPS3qUQqwd-MO5ymGJeyXvD2kpo/edit#slide=id.ge4e7bf2453_0_67) to get a better understanding.
 
-[![Build Status](https://travis-ci.org/ColoredCow/employee-portal.svg?branch=master)](https://travis-ci.org/ColoredCow/employee-portal) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ColoredCow/employee-portal/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ColoredCow/employee-portal/?branch=master)
-
+### Prerequisites
+Check our [prerequisites](./docs/prerequisites.md) to get started.
 
 ### Installation
-1. Clone or download the repository
-```
-git clone https://github.com/coloredcow/employee-portal
-```
+Use our [installation guidelines](./docs/installation.md) to set up the project on your local.
 
-2. Install dependencies:
-```
-composer install
-npm install
-```
+### Authorization
+Use our [authorization guidelines](./docs/authorization.md) to assign role to your account.
 
-3. Copy `.env.example` as `.env`
+### Development
+Use the [development guidelines](./docs/development_guideline.md) to help you get started on your tasks.
 
-4. Run the following command to add a key
-```
-php artisan key:generate
-```
-5. Add the following settings in `.env` file:
-    1. Laravel app configurations
-    ```
-    APP_NAME, APP_ENV, APP_DEBUG, APP_URL
-    ```
+### Deployment
+Use the [deployment guidelines](./docs/deployment_guideline.md) to help you deploy your tasks on UAT.
 
-    2. Database configurations
-    ```
-    DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
-    ```
+### Branch Naming Convention
+Use these [naming conventions](./docs/branch-naming-convention.md) to get started with your projects in the git repositories.
 
-    3. Google configurations
-    ```
-    GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
-    ```
+### ColoredCow Portal chat CODE OF CONDUCT
+Use our [Chat Code of Conduct](./docs/chat_CODE_OF_CONDUCT.md) to collaborate on portal and task to build the team spirit.
 
-6. Run migrations
-```
-php artisan migrate
-```
+## Contributing
+- [Coding Standards](./docs/coding-standards.md)
