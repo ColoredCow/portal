@@ -1,27 +1,29 @@
 ## Installation Guidelines :rocket:
 
-1. Clone this repository
-```sh
-git clone https://github.com/coloredcow-portal/portal
-```
+1. Clone this repository and move to `portal` directory
+   ```sh
+   git clone https://github.com/coloredcow-portal/portal
+   cd portal
+   ```
 
 2. Install dependencies
-```sh
-composer install
-npm install
-```
+   ```sh
+   composer install
+   npm install
+   ```
 
 3. npm build
-```sh
-npm run dev
-```
+   ```sh
+   npm run dev
+   ```
 
 4. Copy `.env.example` as `.env`
 
 5. Run the following command to add a key
-```sh
-php artisan key:generate
-```
+   ```sh
+   php artisan key:generate
+   ```
+
 6. Add the following settings in `.env` file:
     1. Laravel app configurations
     ```sh
