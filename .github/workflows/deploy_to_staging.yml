@@ -24,7 +24,7 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
         cd /var/www/html/uat.employee.coloredcow.com/
-        php artisan down --message 'The app is being (quickly!) updated. Please try again in a minute.'
+        php artisan down --message \'The app is being (quickly!) updated. Please try again in a minute.\'
         git pull origin master
         php artisan migrate
         composer install --no-interaction --prefer-dist --optimize-autoloader
