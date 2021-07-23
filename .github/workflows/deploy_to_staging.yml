@@ -24,6 +24,16 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /var/www/html/uat.employee.coloredcow.com/
-          ls
-          pwd
+          php artisan down
+          git checkout -f
+          git pull origin master
+          php artisan migrate
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          npm install
+          npm run production
+          php artisan optimize
+          php artisan up
+          sudo find . -type d -exec chmod 775 {} \;
+          sudo find . -type f -exec chmod 664 {} \;
+          sudo chown -R www-data:portal uat.employee.coloredcow.com/
 
