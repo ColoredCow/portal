@@ -23,7 +23,7 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
-        cd /var/www/html/uat.employee.coloredcow.com/
+        cd /var/www/html/uat.employee.coloredcow.com/ \
         php artisan down
         git pull origin master
         php artisan migrate
