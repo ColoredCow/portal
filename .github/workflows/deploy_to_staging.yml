@@ -19,17 +19,7 @@ jobs:
     - name: Deploy to production
       uses: appleboy/ssh-action@master
       with:
-        username: ${{ secrets.SSH_USERNAME }}
         host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
-        script: |
-        cd /var/www/html/uat.employee.coloredcow.com/
-        php artisan down
-        git checkout -f
-        git pull origin master
-        php artisan migrate
-        composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-        npm install
-        npm run production
-        php artisan optimize
-        php artisan up
+        script: whoami
