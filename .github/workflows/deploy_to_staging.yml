@@ -23,13 +23,4 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
-        cd /var/www/html/uat.employee.coloredcow.com/
-        php artisan down
-        git pull origin master
-        php artisan migrate
-        composer install --no-interaction --prefer-dist --optimize-autoloader
-        npm install
-        npm run production
-        php artisan optimize
-        php artisan up
-        sudo chown -R www-data:www-data .
+        cd /var/www/html/uat.employee.coloredcow.com/ && php artisan down && git pull origin master && php artisan migrate && composer install --no-interaction --prefer-dist --optimize-autoloader && npm install && npm run production && php artisan optimize && php artisan up && sudo chown -R www-data:www-data .
