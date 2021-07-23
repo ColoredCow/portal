@@ -24,16 +24,33 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /var/www/html/uat.employee.coloredcow.com/
+
+          echo "Enabling maintenance mode"
           php artisan down
+
+          echo "Pulling latest code"
           git checkout -f
           git pull origin master
           php artisan migrate
+
+          echo "Running composer"
           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+          echo "Running npm"
           npm install
           npm run production
-          php artisan optimize
+
+          echo "Optimizing Laravel app"
+          composer install --optimize-autoloader --no-dev
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+          echo "Disabling maintenance mode"
           php artisan up
+
+          echo "Updating file permissions"
           sudo find . -type d -exec chmod 775 {} \;
           sudo find . -type f -exec chmod 664 {} \;
-          sudo chown -R www-data:portal uat.employee.coloredcow.com/
+          sudo chown -R www-data:portal .
 
