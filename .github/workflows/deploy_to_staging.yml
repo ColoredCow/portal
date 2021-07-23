@@ -1,0 +1,35 @@
+name: Deploy to staging
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    # uses GitHub environment
+    environment:
+      name: Staging
+      url: "https://uat.employee.coloredcow.com"
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy to production
+      uses: appleboy/ssh-action@master
+      with:
+        username: ${{ secrets.SSH_USERNAME }}
+        host: ${{ secrets.SSH_HOST }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+        cd /var/www/html/uat.employee.coloredcow.com/
+        php artisan down --message 'The app is being (quickly!) updated. Please try again in a minute.')
+        git pull origin master
+        php artisan migrate
+        composer install --no-interaction --prefer-dist --optimize-autoloader
+        npm install
+        npm run production
+        php artisan optimize
+        php artisan up
+        sudo chown -R www-data:www-data .
