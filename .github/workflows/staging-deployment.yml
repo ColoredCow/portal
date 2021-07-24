@@ -16,15 +16,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Deploy to production
+    - name: Deploy to staging
       uses: appleboy/ssh-action@master
+      env:
+        SSH_BUILD_DIRECTORY: ${{ secrets.SSH_BUILD_DIRECTORY }}
+        SSH_POST_BUILD_SCRIPT: post_build_script.sh
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-      env:
-        SSH_BUILD_DIRECTORY: ${{ secrets.SSH_BUILD_DIRECTORY }}
-        SSH_POST_BUILD_SCRIPT: post_build_script.sh
+        envs: SSH_BUILD_DIRECTORY,SSH_POST_BUILD_SCRIPT
         script: |
           cd $SSH_BUILD_DIRECTORY
 
