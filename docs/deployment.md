@@ -2,7 +2,7 @@
 Portal uses GitHub action to deploy the portal on staging server.
 
 ### Staging Deployment
-Staging builds are configured using GitHub Actions. The file `.github/workflows/deploy-staging.yml` contains the commands to deploy the portal.
+Staging builds are configured using GitHub Actions. The file `.github/workflows/deploy-staging.yml` contains the commands to deploy the portal. Production builds happen when code is pushed to `master` branch.
 
 To set up the deployment workflow, follow the steps below.
 
