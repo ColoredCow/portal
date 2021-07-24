@@ -1,0 +1,8 @@
+# Usage: The build workflow runs `post_build_script.sh` file if found after all the build steps are done.
+# Setup: Make a copy of this sample file and rename it to post_build_script.sh
+# This file assumes the current working directory is the project root folder.
+
+echo "Updating file permissions"
+sudo find . -type d -exec chmod 755 {} \;
+sudo find . -type f -exec chmod 664 {} \;
+sudo chown -R nginx:nginx .

@@ -1,6 +1,7 @@
 ## ColoredCow Portal
-![GitHub issues](https://img.shields.io/github/issues/Coloredcow-Portal/portal)
+![GitHub issues](https://img.shields.io/github/issues/coloredcow/portal)
 [![Coding Standards](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml/badge.svg?branch=master)](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/coloredcow/portal/Deploy%20to%20staging?label=Staging%20Build)
 
 ### Introduction
 :wave: Welcome to ColoredCow Portal. A hub-and-spoke platform for organizations to effectively manage their operations and data. Uses GSuite.
