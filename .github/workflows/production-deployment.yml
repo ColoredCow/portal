@@ -1,8 +1,7 @@
-name: Staging Deployment
+name: Production Deployment
 on:
-  pull_request:
-  push:
-    branches: [master]
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -11,12 +10,11 @@ jobs:
 
     # uses GitHub environment
     environment:
-      name: Staging
-      url: "https://uat.employee.coloredcow.com"
+      name: Production
 
     steps:
     - uses: actions/checkout@v2
-    - name: Deploy to staging
+    - name: Deploy to production
       uses: appleboy/ssh-action@master
       env:
         SSH_BUILD_DIRECTORY: ${{ secrets.SSH_BUILD_DIRECTORY }}

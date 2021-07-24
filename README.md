@@ -15,20 +15,10 @@ Check our [prerequisites](./docs/prerequisites.md) to get started.
 ### Installation
 Use our [installation guidelines](./docs/installation.md) to set up the project on your local.
 
-### Authorization
-Use our [authorization guidelines](./docs/authorization.md) to assign role to your account.
-
-### Development
-Use the [development guidelines](./docs/development_guideline.md) to help you get started on your tasks.
-
-### Deployment
-Use the [deployment guidelines](./docs/deployment_guideline.md) to help you deploy your tasks on UAT.
-
-### Branch Naming Convention
-Use these [naming conventions](./docs/branch-naming-convention.md) to get started with your projects in the git repositories.
-
-### ColoredCow Portal chat CODE OF CONDUCT
-Use our [Chat Code of Conduct](./docs/chat_CODE_OF_CONDUCT.md) to collaborate on portal and task to build the team spirit.
-
 ## Contributing
+- [Development Guide](./docs/development.md)
+- [Deployment Guide](./docs/deployment.md)
+- [Branch Naming Convention](./docs/branch-naming-convention.md)
 - [Coding Standards](./docs/coding-standards.md)
+- [Authorization](./docs/authorization.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
