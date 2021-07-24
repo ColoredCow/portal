@@ -24,7 +24,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
       env:
         BUILD_DIRECTORY: ${{ secrets.BUILD_DIRECTORY }}
-        $POST_BUILD_SCRIPT: ${{ secrets.$POST_BUILD_SCRIPT }}
+        POST_BUILD_SCRIPT: ${{ secrets.$POST_BUILD_SCRIPT }}
         script: |
           cd $BUILD_DIRECTORY
 
