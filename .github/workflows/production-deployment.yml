@@ -52,6 +52,6 @@ jobs:
           php artisan up
 
           if test -f "$SSH_POST_BUILD_SCRIPT"; then
-              echo "Running post build script"
-              sh ./$POST_BUILD_SCRIPT
+            echo "Running post build script"
+            sh ./$SSH_POST_BUILD_SCRIPT
           fi
