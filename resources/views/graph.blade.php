@@ -5,7 +5,7 @@
 <div class="row"> 
     <div class="col-md-12 " >
         <br />
-        <h3 align="left">Daily Applications</h3>
+        <h2 align="left">Daily Applications</h2>
         <br />
         <table class= "table table-dark" >
             <tr>
@@ -55,8 +55,8 @@
 
         var options = {
           chart: {
-            title: 'Daily appllication',
-            subtitle: 'application from June-July',
+            title: 'Daily Appllication',
+            subtitle: 'Application By Date',
           },
           bars: 'horizontal' 
         };
@@ -68,6 +68,14 @@
     </script>
 </head>
 <body>
+  <h3>Date Range Search</h3>
+  <form action="/dashboard" method="POST">
+    {{csrf_field()}}
+    <input type="date" name="from" value="{{date('Y-m-d')}}">
+    <input type="date" name="to" value="{{date('Y-m-d')}}">
+    <input type="submit" value="View">
+  </form>
+  <br>
   <h2>Chart</h2>
   <div id="barchart_material" style="width: 900px; height: 500px;"></div>
 </body>

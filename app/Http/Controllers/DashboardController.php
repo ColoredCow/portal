@@ -21,5 +21,15 @@ class DashboardController extends Controller
        
        return view('graph',compact('user','table'));
    }
+   function searchBydate(Request $req)
+   {
+        $user=Sql::where('created_at','>=',$req->from) 
+        ->where('created_at','<=',$req->to)
+        ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as number'))
+        ->groupBy('date')
+        ->get();
+       
+        return view('date',compact('user'));
+   }
            
 }
