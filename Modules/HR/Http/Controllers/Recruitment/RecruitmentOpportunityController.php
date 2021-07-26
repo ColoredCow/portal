@@ -47,7 +47,7 @@ class RecruitmentOpportunityController extends JobController
 
         $opportunity = Job::create([
             'title' => $validated['title'],
-            'description' => $validated['description'] ?? null, // null needed for backward compatibility
+            'description' => $validated['description'],
             'type' => $validated['type'],
             'posted_by' => $validated['by'] ?? null,
             'link' => $validated['link'] ?? null,
@@ -58,7 +58,7 @@ class RecruitmentOpportunityController extends JobController
 
     public function destroy(Job $opportunity)
     {
-        Corcel::where(['post_type' => 'career', 'post_title' => $opportunity['title']], 0)->delete();
+        Corcel::where(['post_type' => 'career', 'post_title' => $opportunity['title']])->delete();
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities') : route('recruitment.opportunities');
         $opportunity->delete();
         return redirect($route)->with('status', "Successfully deleted $opportunity->title!");
