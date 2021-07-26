@@ -35,7 +35,7 @@
 </head>
 <body>
   <h2>Chart</h2>
-  <form action="/date" method="POST">
+  <form action="/dashboard" method="POST">
     {{csrf_field()}}
     <input type="date" name="from" value="{{date('Y-m-d')}}">
     <input type="date" name="to" value="{{date('Y-m-d')}}">
