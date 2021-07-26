@@ -1,0 +1,58 @@
+name: Staging Deployment
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    # uses GitHub environment
+    environment:
+      name: Staging
+      url: "https://uat.employee.coloredcow.com"
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy to staging
+      uses: appleboy/ssh-action@master
+      env:
+        SSH_BUILD_DIRECTORY: ${{ secrets.SSH_BUILD_DIRECTORY }}
+        SSH_POST_BUILD_SCRIPT: post_build_script.sh
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        envs: SSH_BUILD_DIRECTORY,SSH_POST_BUILD_SCRIPT
+        script: |
+          cd $SSH_BUILD_DIRECTORY
+
+          echo "Enabling maintenance mode"
+          php artisan down
+
+          echo "Pulling latest code"
+          git checkout -f
+          git pull origin master
+          php artisan migrate
+
+          echo "Running composer"
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+          echo "Running npm"
+          npm install
+          npm run production
+
+          echo "Optimizing Laravel app"
+          composer install --optimize-autoloader --no-dev
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+          echo "Disabling maintenance mode"
+          php artisan up
+
+          if test -f "$SSH_POST_BUILD_SCRIPT"; then
+            echo "Running post build script"
+            sh ./$SSH_POST_BUILD_SCRIPT
+          fi

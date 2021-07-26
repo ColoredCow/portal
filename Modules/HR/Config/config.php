@@ -18,6 +18,12 @@ return [
             'title' => 'Volunteer',
             'type' => 'volunteer',
         ],
+        'domains' => [
+            'engineering' => 'Engineering',
+            'design' => 'Design',
+            'marketing' => 'Marketing'
+        ],
+    
     ],
 
     'opportunities-status' => [
