@@ -49,7 +49,7 @@ class RecruitmentOpportunityController extends JobController
             'title' => $validated['title'],
             'description' => $validated['description'],
             'type' => $validated['type'],
-            'posted_by' => $validated['by'] ?? null,
+            'posted_by' => auth()->id(),
             'link' => $validated['link'] ?? null,
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
