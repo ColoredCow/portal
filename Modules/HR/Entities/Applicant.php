@@ -35,16 +35,6 @@ class Applicant extends Model
             'course' => isset($attr['course']) ? $attr['course'] : null,
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
         ]);
-
-        if (isset($attr['college']))
-        {   $university = University::select('id')->where('name', $attr['college'])->first();
-            if($university==null)
-            { 
-                University::create(['name'=>$attr['college']]);
-                $university = University::select('id')->where('name', $attr['college'])->first();
-            }  
-            Applicant::where('email', $attr['email'])->update(['hr_university_id' => $university->id]);
-        }
         
         $job = Job::where('title', $attr['job_title'])->first();
         $application = Application::_create([
