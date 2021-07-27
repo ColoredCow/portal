@@ -11,9 +11,11 @@ use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\Applicant;
 use Modules\HR\Observers\EmployeeObserver;
 use Modules\HR\Observers\Recruitment\ApplicationMetaObserver;
 use Modules\HR\Observers\Recruitment\ApplicationRoundObserver;
+use Modules\HR\Observers\Recruitment\ApplicantObserver;
 use Modules\HR\Observers\Recruitment\JobObserver;
 use Modules\HR\Services\ApplicationService;
 use Modules\HR\Services\UniversityService;
@@ -184,5 +186,6 @@ class HRServiceProvider extends ServiceProvider
         ApplicationRound::observe(ApplicationRoundObserver::class);
         ApplicationMeta::observe(ApplicationMetaObserver::class);
         Employee::observe(EmployeeObserver::class);
+        Applicant::observe(ApplicantObserver::class);
     }
 }
