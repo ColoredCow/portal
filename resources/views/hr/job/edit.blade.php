@@ -118,15 +118,15 @@
                 </div>
             </div>
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a href="{{ $job->link }}" target="_blank" class="btn btn-info" role="button">Preview job</a>
+        <div class="d-flex">
+            <button type="submit" class="btn btn-primary ml-2">Update</button>
+            </form>
+            <a href="{{ $job->link }}" target="_blank" class="btn btn-info ml-2" role="button">Preview job</a>
             <form action="{{ route('recruitment.opportunities.destroy', $job) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                <button type="submit" class="btn btn-outline-danger ml-2" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
             </form>
         </div>
-    </form>
 </div>
 @endsection
