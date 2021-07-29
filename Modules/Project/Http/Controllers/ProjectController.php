@@ -5,6 +5,7 @@ namespace Modules\Project\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
@@ -12,6 +13,7 @@ use Modules\Project\Contracts\ProjectServiceContract;
 class ProjectController extends Controller
 {
     protected $service;
+    protected $googleServiceProvider;
 
     public function __construct(ProjectServiceContract $service)
     {
@@ -25,6 +27,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = $this->service->index();
+
         return view('project::index')->with('projects', $projects);
     }
 
@@ -35,6 +38,7 @@ class ProjectController extends Controller
     public function create()
     {
         $clients = $this->service->getClients();
+
         return view('project::create')->with('clients', $clients);
     }
 
@@ -45,8 +49,17 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
+        $subFolders = explode(',', env('PROJECT_SUB_FOLDERS'));
         $validated = $request->validated();
+        Storage::disk('google')->makeDirectory($request->name);
+        $path = Storage::disk('google')->getAdapter()->getMetadata(env('GOOGLE_DRIVE_FOLDER_ID') . '/' . $request->name)['path'];
+        $path = explode('/', $path);
+        $projectFolder = $path[1];
+        foreach ($subFolders as $subFolder) {
+            Storage::disk('google')->makeDirectory($projectFolder . '/' . $subFolder);
+        }
         $this->service->store($validated);
+
         return redirect(route('project.index'));
     }
 

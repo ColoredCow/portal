@@ -158,6 +158,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\GoogleDriveServiceProvider::class,
 
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\DatabaseServiceProvider::class,

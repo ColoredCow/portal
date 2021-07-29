@@ -14,7 +14,7 @@
         "codegreencreative/laravel-samlidp": "^5.0",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
-        "google/apiclient": "^2.4",
+        "google/apiclient": "^2.10",
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "jgrossi/corcel": "^5.0",
         "jordikroon/google-vision": "^1.8",
@@ -25,6 +25,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "maatwebsite/excel": "^3.1",
+        "nao-pon/flysystem-google-drive": "^1.1",
         "niklasravnsborg/laravel-pdf": "^4.1",
         "nwidart/laravel-modules": "^7.0",
         "spatie/laravel-permission": "^3.3"
