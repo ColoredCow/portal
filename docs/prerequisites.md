@@ -28,6 +28,8 @@ You can install it with the following ways:
 1. XAMPP
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
     - If you already have XAMPP installed, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
+2. WAMP
+    - If you prefer using WAMP, you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits)
 
 ### 5. Composer :running:
 
