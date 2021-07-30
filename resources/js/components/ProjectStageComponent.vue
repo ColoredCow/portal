@@ -180,7 +180,7 @@
 <script>
 import ProjectStageBillingComponent from "./ProjectStageBillingComponent.vue";
 
-export default {
+new Vue( {
 	props: ["stage", "csrfToken", "projectId", "configs", "client", "stageRoute"],
 	data() {
 		return {
@@ -302,5 +302,5 @@ export default {
 			this.inputStageCostIncludeGst = !this.inputStageCostIncludeGst;
 		}
 	}
-};
+});
 </script>

@@ -33,7 +33,7 @@
 </template>
 
 <script>
-export default {
+new Vue({
 	props: ["billing", "index", "stageCostWithGst", "gstAmount", "stageCostWithoutGst", "currency", "clientCountryGstApplicable"],
 	computed: {
 		billingCostWithoutGst: function() {
@@ -56,5 +56,5 @@ export default {
 			this.$emit("addBillingInvoice", args);
 		}
 	}
-};
+});
 </script>
