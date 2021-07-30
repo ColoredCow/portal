@@ -21,30 +21,30 @@
 
 
 <script>
-    export default {
-        props: ['book', 'newCommentRoute', 'bookComments', 'user'],
-        data() {
-            return {
-               book_id:1,
-               comments:[],
-               newComment:''
-            }
-        },
+export default {
+	props: ["book", "newCommentRoute", "bookComments", "user"],
+	data() {
+		return {
+			book_id:1,
+			comments:[],
+			newComment:""
+		};
+	},
 
-        mounted() {
-            this.comments = this.bookComments;
-        },
+	mounted() {
+		this.comments = this.bookComments;
+	},
 
-        methods: {
-           async addNewComment() {
-                let response = await axios.post(this.newCommentRoute, {comment:this.newComment});
-                this.newComment = '';
-                this.comments.push(response.data);
-           },
+	methods: {
+		async addNewComment() {
+			let response = await axios.post(this.newCommentRoute, {comment:this.newComment});
+			this.newComment = "";
+			this.comments.push(response.data);
+		},
 
-           async onDeleteComment(data) {
-                this.comments.splice(data.index, 1);   
-           },
-        }
-    }
+		async onDeleteComment(data) {
+			this.comments.splice(data.index, 1);   
+		},
+	}
+};
 </script>

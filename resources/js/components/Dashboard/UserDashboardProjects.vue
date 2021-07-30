@@ -12,29 +12,29 @@
 </template>
 
 <script>
-    export default {
-        props: [],
-        data() {
-            return {
-                books:[]
-            }
-        },
+export default {
+	props: [],
+	data() {
+		return {
+			books:[]
+		};
+	},
 
-        methods: {
-            async getReadBooks() {
-                let response = await axios.get('/user/read-books');
-                this.books =  response.data;
+	methods: {
+		async getReadBooks() {
+			let response = await axios.get("/user/read-books");
+			this.books =  response.data;
 
-            }
-        },
+		}
+	},
 
-        mounted() {
-            //this.getReadBooks();
-        }
+	mounted() {
+		//this.getReadBooks();
+	}
 
 
 
-    }
+};
 
 
 </script>

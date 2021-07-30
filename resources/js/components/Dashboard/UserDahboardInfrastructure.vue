@@ -39,35 +39,35 @@
 </template>
 
 <script>
-    export default {
-        props: [],
-        data() {
-            return {
-                billingDetails:{
-                    current_amount:'',
-                    last_month_amount:'',
-                    forcast_amount:'',
-                    should_alert:false,
-                    avg_by_last_year:''
-                },
+export default {
+	props: [],
+	data() {
+		return {
+			billingDetails:{
+				current_amount:"",
+				last_month_amount:"",
+				forcast_amount:"",
+				should_alert:false,
+				avg_by_last_year:""
+			},
 
-                currentAmountClass:"badge-info"
-            }
-        },
+			currentAmountClass:"badge-info"
+		};
+	},
 
-        methods: {
-            async getBillingDetails() {
-                let response = await axios.get('/infrastructure/billing-details');
-                this.billingDetails =  response.data;
-                if(this.billingDetails.should_alert) {
-                    this.currentAmountClass = 'badge-danger'
-                }
+	methods: {
+		async getBillingDetails() {
+			let response = await axios.get("/infrastructure/billing-details");
+			this.billingDetails =  response.data;
+			if(this.billingDetails.should_alert) {
+				this.currentAmountClass = "badge-danger";
+			}
 
-            }
-        },
+		}
+	},
 
-        mounted() {
-            this.getBillingDetails();
-        }
-    }
+	mounted() {
+		this.getBillingDetails();
+	}
+};
 </script>

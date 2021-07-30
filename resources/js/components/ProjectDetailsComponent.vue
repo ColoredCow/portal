@@ -23,13 +23,13 @@
                             <div class="offset-sm-4 col-sm-4 text-center">
                                 <p><strong>Employees</strong></p>
                                 <ul class="unstyled-list p-0">
-                                  <li v-for="employee in project.employees">{{employee.name}}</li>
+                                  <li v-for="employee in project.employees" :key="employee.id">{{employee.name}}</li>
                                 </ul>
                             </div>
                             <div class="col-sm-4 text-center">
                                 <p><strong>Contribution</strong></p>
                                 <ul class="unstyled-list p-0">
-                                    <li v-for="employee in project.employees">0</li>
+                                    <li v-for="employee in project.employees" :key="employee.id">0</li>
                                 </ul>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             </tr>
                         </thead>
                         <tbody v-if="project">
-                            <tr v-for="employee in project.employees">
+                            <tr v-for="employee in project.employees" :key="employee.id">
                                 <td>
                                   {{employee.name}}
                                 </td>
@@ -84,7 +84,7 @@
                                     <label for="employee">Select Employee</label>
                                     <select required class="form-control" name="employee" v-model="selectedEmployee">
                                         <option disabled value="">Please select one</option>
-                                        <option v-for="employee in employees" :value="employee.id">{{employee.name}}</option>
+                                        <option v-for="employee in employees" :key="employee.id">{{employee.name}}</option>
                                     </select>
 
                                     <label for="contribution">Contribution</label>
@@ -110,59 +110,59 @@
 
 <script>
   
-  export default {
-    props: ['project', 'clients', 'employees'],
+export default {
+	props: ["project", "clients", "employees"],
 
-    data() {
-      return {
-        loadAddEmployeeForm: false,
-        selectedEmployee: null,
-        contributionType: null,
-      }
-    },
+	data() {
+		return {
+			loadAddEmployeeForm: false,
+			selectedEmployee: null,
+			contributionType: null,
+		};
+	},
 
-    methods: {
-      showAddEmployeeForm() {
-        this.loadAddEmployeeForm = true;
-        $('#addEmployeeForm').modal('show');
-      },
+	methods: {
+		showAddEmployeeForm() {
+			this.loadAddEmployeeForm = true;
+			$("#addEmployeeForm").modal("show");
+		},
 
-      destroyFormModal() {
-        this.loadAddEmployeeForm = false;
-        $('#addEmployeeForm').modal('hide');
-      },
+		destroyFormModal() {
+			this.loadAddEmployeeForm = false;
+			$("#addEmployeeForm").modal("hide");
+		},
 
-      addEmployeeToProject() {
-        let employeeData = {
-          employeeId: this.selectedEmployee,
-          contribution: this.contributionType
-        }
+		addEmployeeToProject() {
+			let employeeData = {
+				employeeId: this.selectedEmployee,
+				contribution: this.contributionType
+			};
 
-        axios.post('/projects/'+this.project.id+'/add-employee', employeeData)
-          .then((response) => {
-            window.location.reload(); //since we are not using vue-router
-            this.destroyFormModal();
-        })
-        .catch(error => {
-          console.log('err', error);
-        });
-      },
+			axios.post("/projects/"+this.project.id+"/add-employee", employeeData)
+				.then((response) => {
+					window.location.reload(); //since we are not using vue-router
+					this.destroyFormModal();
+				})
+				.catch(error => {
+					console.log("err", error);
+				});
+		},
 
-      removeEmployee(employeeId) {
-        let employeeData = {
-          employeeId: employeeId,
-        }
+		removeEmployee(employeeId) {
+			let employeeData = {
+				employeeId: employeeId,
+			};
 
-        axios.post('/projects/'+this.project.id+'/remove-employee', employeeData)
-          .then((response) => {
-            window.location.reload(); //since we are not using vue-router
-        })
-        .catch(error => {
-          console.log('err', error);
-        });
-      }
-    }
-  }
+			axios.post("/projects/"+this.project.id+"/remove-employee", employeeData)
+				.then((response) => {
+					window.location.reload(); //since we are not using vue-router
+				})
+				.catch(error => {
+					console.log("err", error);
+				});
+		}
+	}
+};
 </script>
 
 <style>

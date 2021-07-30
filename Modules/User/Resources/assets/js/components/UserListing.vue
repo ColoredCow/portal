@@ -55,55 +55,55 @@
 </template>
 
 <script>
-    export default {
-        props:[ 'users', 'updateRoute', 'userPermissions', 'config'],
+export default {
+	props:[ "users", "updateRoute", "userPermissions", "config"],
 
-        data(){
-            return { 
-                currentUserIndex: 0,
-                roleInputs: [],
-                allUsers: this.users,
-                selectedUser:{}
-            }  
-        },
+	data(){
+		return { 
+			currentUserIndex: 0,
+			roleInputs: [],
+			allUsers: this.users,
+			selectedUser:{}
+		};  
+	},
 
-        methods: {
-            formatRoles(user) {
-                let roleNames = [];
-                let userRoles = user.roles;
-                for(var i in userRoles) {
-                    let role = userRoles[i];
-                    if(role.name == 'super-admin') {
-                        return role.label;
-                    }
-                    let roleName = userRoles[i].label;
-                    roleNames.push(roleName);
-                }
+	methods: {
+		formatRoles(user) {
+			let roleNames = [];
+			let userRoles = user.roles;
+			for(var i in userRoles) {
+				let role = userRoles[i];
+				if(role.name == "super-admin") {
+					return role.label;
+				}
+				let roleName = userRoles[i].label;
+				roleNames.push(roleName);
+			}
         
-                return (roleNames.length) ? roleNames.join(', ') : '-';
-            },
+			return (roleNames.length) ? roleNames.join(", ") : "-";
+		},
 
-            updateUserRolesModal: function(index) {
-                this.currentUserIndex = index;
-                this.selectedUser = this.users[index];
-            },
+		updateUserRolesModal: function(index) {
+			this.currentUserIndex = index;
+			this.selectedUser = this.users[index];
+		},
 
-            onUserRoleUpdated: function(selectedRoles) {
-                Vue.set(this.selectedUser, 'roles',  selectedRoles);
-            },
+		onUserRoleUpdated: function(selectedRoles) {
+			Vue.set(this.selectedUser, "roles",  selectedRoles);
+		},
 
-            removeUser: async function(index) {
+		removeUser: async function(index) {
 
-                if(!confirm('Are you sure?')) {
-                    return true;
-                }
+			if(!confirm("Are you sure?")) {
+				return true;
+			}
 
-                this.currentUserIndex = index;
-                let user = this.users[index];
-                let route = `/user/${user.id}/delete`;
-                let response = await axios.delete(route);
-                this.$delete(this.allUsers, index);
-            }
-        }
-    }
+			this.currentUserIndex = index;
+			let user = this.users[index];
+			let route = `/user/${user.id}/delete`;
+			let response = await axios.delete(route);
+			this.$delete(this.allUsers, index);
+		}
+	}
+};
 </script>

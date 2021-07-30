@@ -34,36 +34,36 @@
 </template>
 
 <script>
-    export default {
-        props: ['comment', 'editable', 'bookIndex'],
-        data() {
-            return {
-                state:'view'
-            }
-        },
+export default {
+	props: ["comment", "editable", "bookIndex"],
+	data() {
+		return {
+			state:"view"
+		};
+	},
         
-        methods: {
-            enableEditMode() {
-                this.state = 'edit';
-            },
+	methods: {
+		enableEditMode() {
+			this.state = "edit";
+		},
 
-            disableEditMode() {
-                this.state = 'view';
-            },
+		disableEditMode() {
+			this.state = "view";
+		},
 
-            async updateComment(){
-                let response = await axios.put(`/comments/${this.comment.id}`, {comment:this.comment.body});
-                this.disableEditMode();
-            },
+		async updateComment(){
+			let response = await axios.put(`/comments/${this.comment.id}`, {comment:this.comment.body});
+			this.disableEditMode();
+		},
 
-            async deleteComment() {
-                if(!confirm('Are you sure ?')) {
-                    return false
-                }
+		async deleteComment() {
+			if(!confirm("Are you sure ?")) {
+				return false;
+			}
 
-                let response = await axios.delete(`/comments/${this.comment.id}`);
-                this.$emit('onDeleteComment', { index:this.bookIndex, comment:this.comment} );
-            }
-        }
-    }
+			let response = await axios.delete(`/comments/${this.comment.id}`);
+			this.$emit("onDeleteComment", { index:this.bookIndex, comment:this.comment} );
+		}
+	}
+};
 </script>
