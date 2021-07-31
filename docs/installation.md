@@ -8,21 +8,34 @@ git clone https://github.com/coloredcow-portal/portal
 2. Install dependencies
 ```sh
 composer install
+```
+Note: Use the php version (7.3 / 7.4) or else use the below link to download.
+link(https://www.php.net/downloads.php#v7.4.22).
+```
 npm install
 ```
-
-3. npm build
+3. Change's in the php.ini file,
+Go to your php.ini file(C:\xampp\php)
+Search for openssl,
+```
+;extension=openssl
+```
+remove the colon in the front and save like this
+```
+extension=openssl
+```
+4. npm build
 ```sh
 npm run dev
 ```
 
-4. Copy `.env.example` as `.env`
+5. Copy `.env.example` as `.env`
 
-5. Run the following command to add a key
+6. Run the following command to add a key
 ```sh
 php artisan key:generate
 ```
-6. Add the following settings in `.env` file:
+7. Add the following settings in `.env` file:
     1. Laravel app configurations
     ```sh
     APP_NAME="ColoredCow Portal"
@@ -46,12 +59,12 @@ php artisan key:generate
     GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
     ```
 
-7. Run migrations
+8. Run migrations
 ```sh
 php artisan migrate
 ```
 
-8. Run seeders
+9. Run seeders
     1. Portal
     ```sh
     php artisan db:seed
@@ -71,7 +84,7 @@ php artisan migrate
     php artisan module:seed MODULE_NAME
     ```
 
-9. Setup Virtual Host
+10. Setup Virtual Host
     1. For XAMPP:
          - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
             
