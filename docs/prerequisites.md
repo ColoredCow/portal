@@ -30,6 +30,11 @@ You can install it with the following ways:
     - If you already have XAMPP installed, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
 2. WAMP
     - If you prefer using WAMP, you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits)
+    Possible error that may arise - (enable the openSSL extension in your php.ini)
+    To solve this issue - 
+    -Edit the system environment variables and set the path of your selected php version.
+    -In php.ini, uncomment the ";extension=openssl" by removing ";" before it and then restart the apache services.
+    - Command to run, composer update.
 
 ### 5. Composer :running:
 
