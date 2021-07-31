@@ -3,9 +3,9 @@
 
 @section('content')
 <div class="row"> 
-    <div class="col-md-12 " >
-        <br />
-        <h2 align="left">Daily Applications</h2>
+    <div class="col-md-6 " >
+        <br>
+        <h2 align="center">Daily Applications</h2>
         <br />
         <table class= "table table-dark" >
             <tr>
@@ -34,49 +34,76 @@
 
 <br>
 
-</br>
+<br>
 
 <head>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Date', 'Count'],
-            <?php
-              foreach($user as $users) {
-                  echo "['".$users->date."', ".$users->number."],";
-              }
-            ?>
-
-        ]);
-
-        var options = {
-          chart: {
-            title: 'Daily Appllication',
-            subtitle: 'Application By Date',
-          },
-          bars: 'horizontal' 
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
-    </script>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
 </head>
+<br>
 <body>
-  <h3>Date Range Search</h3>
-  <form action="/dashboard" method="POST">
+<form action="/dashboard" method="POST">
     {{csrf_field()}}
     <input type="date" name="from" value="{{date('Y-m-d')}}">
     <input type="date" name="to" value="{{date('Y-m-d')}}">
     <input type="submit" value="View">
-  </form>
-  <br>
-  <h2>Chart</h2>
-  <div id="barchart_material" style="width: 900px; height: 500px;"></div>
-</body>
+</form>
+<br>
+  <div class="chart-container" align="center">
+    <div class="bar-chart-container" style="width : 800px">
+      <canvas id="bar-chart"></canvas>
+    </div>
+  </div>
+  <script>
+  $(function(){
+      var cData = JSON.parse(`<?php echo $chart_data; ?>`);
+      var ctx = $("#bar-chart");
+ 
+      var data = {
+        labels: cData.label,
+        datasets: [
+          {
+            label: "Count",
+            data: cData.data,
+            backgroundColor: ["#DEB887","#A9A9A9","#DC143C","#F4A460","#2E8B57","#1D7A46","#CDA776",],
+            borderColor: ["#CDA776","#989898","#CB252B","#E39371","#F4A460","#1D7A46","#CDA776",],
+            borderWidth: [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
+          }
+        ]
+      };
+      var options = {
+        responsive: true,
+        title: {
+          display: true,
+          position: "top",
+          text: "Daily Application Count",
+          fontSize: 18,
+          fontColor: "#212408"
+        },
+        legend: {
+          display: true,
+          position: "right",
+          labels: {
+            fontColor: "#333",
+            fontSize: 16
+          }
+        },
+        scales: {
+        yAxes: [{
+          ticks: { min: 1, max: 5, stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5},
+        }]
+        },   
+        
+      };
+ 
+       var chart1 = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: options
+      });
+  });
+</script>
+
+</body>  
 @endsection
