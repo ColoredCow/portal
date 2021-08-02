@@ -4,7 +4,16 @@
 ```sh
 git clone https://github.com/coloredcow-portal/portal
 ```
-
+Pre-requisites (for seting up XAMPP)
+Enable the OpenSSL extension. Go to your php.ini file (C:\xampp\php)
+Search for openssl
+```
+;extension=openssl
+```
+remove the colon in the front and save like this
+```
+extension=openssl
+```
 2. Install dependencies
 ```sh
 composer install
@@ -13,16 +22,6 @@ Note: Use the php version (7.3 / 7.4) or else use the below link to download.
 link(https://www.php.net/downloads.php#v7.4.22).
 ```
 npm install
-```
-3. Change's in the php.ini file,
-Go to your php.ini file(C:\xampp\php)
-Search for openssl,
-```
-;extension=openssl
-```
-remove the colon in the front and save like this
-```
-extension=openssl
 ```
 4. npm build
 ```sh
