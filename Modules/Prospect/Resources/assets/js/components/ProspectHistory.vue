@@ -35,9 +35,9 @@ export default {
 		};
 	},
 
-	mounted: function() {
-		this.$comments = this.$bookComments.reverse();
-	},
+	mounted() {
+            this.comments = this.bookComments.reverse();
+        },
 
 	methods: {
 		async addNewComment() {

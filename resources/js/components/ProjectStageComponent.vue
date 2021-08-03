@@ -55,7 +55,7 @@
                                 <div class="form-group col-md-8">
                                     <label for="name" class="field-required">Type</label>
                                     <select name="type" id="type" class="form-control" required="required" v-model="stageType">
-                                        <option v-for="(displayName, type) in configs.projectTypes" :key="type">
+                                        <option v-for="(displayName, type) in configs.projectTypes" :value="type">
                                             {{ displayName }}
                                         </option>
                                     </select>
@@ -180,7 +180,7 @@
 <script>
 import ProjectStageBillingComponent from "./ProjectStageBillingComponent.vue";
 
-new Vue( {
+export default {
 	props: ["stage", "csrfToken", "projectId", "configs", "client", "stageRoute"],
 	data() {
 		return {
@@ -302,5 +302,5 @@ new Vue( {
 			this.inputStageCostIncludeGst = !this.inputStageCostIncludeGst;
 		}
 	}
-});
+};
 </script>

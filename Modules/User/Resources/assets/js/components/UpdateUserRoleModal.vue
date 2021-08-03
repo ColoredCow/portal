@@ -86,7 +86,7 @@ export default {
 
 
 			let roleInputContainer = document.querySelector("#update_user_roles_modal");
-			let allRoleInputs = roleInputContainer.querySelectorAll("input[type=\"checkbox\"]");
+			let allRoleInputs = roleInputContainer.querySelectorAll("input[type='checkbox']");
 			allRoleInputs.forEach((checkbox) => this.roleInputs[checkbox.value] = checkbox);
 
 			if(userRoles.some(role => role.name == "super-admin")) {

@@ -55,7 +55,7 @@ export default {
 			}
 
 			let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
-			let allPermissionInputs = permissionInputContainer.querySelectorAll("input[type=\"checkbox\"]");
+			let allPermissionInputs = permissionInputContainer.querySelectorAll("input[type='checkbox']");
 			allPermissionInputs.forEach((checkbox) => {this.permissionInputs[checkbox.value] = checkbox; console.log("checkbox.value");});
 			this.permissionInputs.map((checkbox) => checkbox.checked = false);
 			permissions.forEach((permission) => this.permissionInputs[permission.id].checked =  true );
