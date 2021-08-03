@@ -28,6 +28,7 @@ You can install it with the following ways:
 1. XAMPP
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
     - If you already have XAMPP installed, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
+    - If user face any issues or make any changes in the project, should restart the Apache services.
 2. WAMP
     - If you prefer using WAMP, you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits)
    A possible error that may arise with openSSL extension. It should be enaled from your 'php.ini' file. To enable it, use the following steps:
@@ -38,7 +39,7 @@ You can install it with the following ways:
       ```sh
       composer update
       ```
-   - In case user is working in VSCode, possible errors may arise because of path, as may not be able to access the selected PHP version.
+   - If the user is working in VSCode, possible errors may arise because of path, as may not be able to access the selected PHP version from its terminl.
 
 ### 5. Composer :running:
 
