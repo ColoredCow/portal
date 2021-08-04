@@ -16,12 +16,12 @@
    ```sh
    npm run dev
    ```
-    A possible error may arise with `cross-env`. So try running the following commands -
-   -To clear a cache in npm, we need to run the npm cache command in our terminal.
+    A possible error may arise with `cross-env`. So try running the following commands.
+   - To clear a cache in npm, we need to run the npm cache command in our terminal.
    ```sh
    npm cache clear --force
    ```
-   -Then, 
+   - Then, 
    ```sh
    npm install cross-env
    
