@@ -36,8 +36,8 @@ export default {
 	},
 
 	mounted() {
-            this.comments = this.bookComments.reverse();
-        },
+		this.comments = this.bookComments.reverse();
+	},
 
 	methods: {
 		async addNewComment() {

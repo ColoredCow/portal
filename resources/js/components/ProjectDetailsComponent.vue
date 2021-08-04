@@ -23,13 +23,13 @@
                             <div class="offset-sm-4 col-sm-4 text-center">
                                 <p><strong>Employees</strong></p>
                                 <ul class="unstyled-list p-0">
-                                  <li v-for="employee in project.employees" >{{employee.name}}</li>
+                                  <li v-for="employee in project.employees" :key="employee.id">{{employee.name}}</li>
                                 </ul>
                             </div>
                             <div class="col-sm-4 text-center">
                                 <p><strong>Contribution</strong></p>
                                 <ul class="unstyled-list p-0">
-                                    <li v-for="employee in project.employees" >0</li>
+                                    <li v-for="employee in project.employees" :key="employee.id" >0</li>
                                 </ul>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             </tr>
                         </thead>
                         <tbody v-if="project">
-                            <tr v-for="employee in project.employees" >
+                            <tr v-for="employee in project.employees" :key="employee.id">
                                 <td>
                                   {{employee.name}}
                                 </td>
@@ -84,7 +84,7 @@
                                     <label for="employee">Select Employee</label>
                                     <select required class="form-control" name="employee" v-model="selectedEmployee">
                                         <option disabled value="">Please select one</option>
-                                        <option v-for="employee in employees" :value="employee.id">{{employee.name}}</option>
+                                        <option v-for="employee in employees" :value="employee.id" :key="employee.id">{{employee.name}}</option>
                                     </select>
 
                                     <label for="contribution">Contribution</label>

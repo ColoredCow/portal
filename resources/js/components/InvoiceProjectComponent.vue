@@ -3,19 +3,19 @@
         <div class="form-group col-md-3">
             <label>Project</label>
             <select class="form-control" v-model="projectId" v-on:change="updateActiveProject()">
-                <option v-for="project in projects" :value="project.id">{{ project.name }}</option>
+                <option v-for="project in projects" :value="project.id" :key="project.id">{{ project.name }}</option>
             </select>
         </div>
         <div class="form-group col-md-3">
             <label>Stage</label>
             <select class="form-control" v-model="stageId" v-on:change="updateActiveStage()">
-                <option v-for="stage in activeProject.stages" :value="stage.id">{{ stage.name }}</option>
+                <option v-for="stage in activeProject.stages" :value="stage.id" :key="stage.id">{{ stage.name }}</option>
             </select>
         </div>
         <div class="form-group col-md-2">
             <label>Billing</label>
             <select name="billings[]" class="form-control" v-model="billingId">
-                <option v-for="stageBilling in activeStage.billings" :value="stageBilling.id">{{ stageBilling.percentage + '%' }} –  {{ client.currency }} {{ stageBilling.amount }}</option>
+                <option v-for="stageBilling in activeStage.billings" :value="stageBilling.id" :key="stageBilling.id">{{ stageBilling.percentage + '%' }} –  {{ client.currency }} {{ stageBilling.amount }}</option>
             </select>
         </div>
         <div class="col-md-1">

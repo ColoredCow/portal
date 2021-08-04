@@ -55,7 +55,7 @@
                                 <div class="form-group col-md-8">
                                     <label for="name" class="field-required">Type</label>
                                     <select name="type" id="type" class="form-control" required="required" v-model="stageType">
-                                        <option v-for="(displayName, type) in configs.projectTypes" :value="type">
+                                        <option v-for="(displayName, type) in configs.projectTypes" :value="type" :key="type">
                                             {{ displayName }}
                                         </option>
                                     </select>
