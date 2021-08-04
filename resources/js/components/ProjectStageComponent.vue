@@ -10,7 +10,7 @@
                     <div class="form-group w-25p mb-0" v-show="editMode">
                         <div class="d-flex align-items-center">
                             <label for="name" class="mb-0 mr-3 field-required">Name</label>
-                            <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name" required="required" v-model="stage.name">
+                            <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name" required="required" v-model="name">
                         </div>
                     </div>
                     <div class="card-edit icon-pencil" @click="editMode = !editMode" v-show="!editMode"><i class="fa fa-pencil"></i></div>
@@ -62,11 +62,11 @@
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="start_date">Start date</label>
-                                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="dd/mm/yy" v-model="stage.start_date">
+                                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="dd/mm/yy" v-model="start_date">
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="end_date">End date</label>
-                                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="dd/mm/yy" v-model="stage.end_date">
+                                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="dd/mm/yy" v-model="end_date">
                                 </div>
                             </div>
                             <br>
