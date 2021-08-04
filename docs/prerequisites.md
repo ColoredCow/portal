@@ -35,7 +35,7 @@ You can install it with the following ways:
    - Edit the system environment variables and set the path of your selected PHP version.
    - In 'php.ini', uncomment the ";extension=openSSL" by removing ";" before it.
    - The WAMP users have to right click on the server icon in the toolbar, and choose ‘Restart all services’ after making changes to the 'php.ini' file.
-   - Run this command in the top-most directory of your project:
+   - Run this command in the root directory of your project:
       ```sh
       composer update
       ```
