@@ -11,8 +11,8 @@ class Invoice extends Model
 {
     use Encryptable;
 
-    protected $fillable = ['client_id', 'project_id', 'status', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge'];
-    protected $dates = ['sent_on', 'due_on', 'receivable_date'];
+    protected $fillable = ['client_id', 'project_id', 'status', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at'];
+    protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at'];
 
     protected $encryptable = [
         'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate', 'tds'
@@ -33,6 +33,23 @@ class Invoice extends Model
         return $query->whereMonth('sent_on', $month);
     }
 
+    public function scopeCountry($query, $country)
+    {
+        return $query
+            ->whereHas('client.addresses.country', function ($subQuery) use($country) {
+                $subQuery->where('name', 'LIKE', "%{$country}%");
+            });
+    }
+
+    public function scopeRegion($query, $region)
+    {
+        return $query
+            ->whereHas('client.addresses.country', function ($subQuery) use($region) {
+                $operator =  $region == "indian" ?  'LIKE' : 'NOT LIKE';
+                return $subQuery->where('name', $operator, "%India%");
+            });
+    }
+    
     public function project()
     {
         return $this->belongsTo(Project::class);

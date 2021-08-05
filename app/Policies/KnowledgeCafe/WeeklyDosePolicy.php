@@ -14,7 +14,7 @@ class WeeklyDosePolicy
      * Determine whether the user can view the weekly dose.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\WeeklyDose  $weeklyDose
+     * @param  \App\Models\KnowledgeCafe\WeeklyDose  $weeklyDose
      * @return mixed
      */
     public function view(User $user, WeeklyDose $weeklyDose)
@@ -26,7 +26,7 @@ class WeeklyDosePolicy
      * Determine whether the user can create weekly doses.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @return boolean
+     * @return bool
      */
     public function create(User $user)
     {
@@ -37,8 +37,8 @@ class WeeklyDosePolicy
      * Determine whether the user can update the weekly dose.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\WeeklyDose  $weeklyDose
-     * @return boolean
+     * @param  \App\Models\KnowledgeCafe\WeeklyDose  $weeklyDose
+     * @return bool
      */
     public function update(User $user, WeeklyDose $weeklyDose)
     {
@@ -49,8 +49,8 @@ class WeeklyDosePolicy
      * Determine whether the user can delete the weekly dose.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\WeeklyDose  $weeklyDose
-     * @return boolean
+     * @param  \App\Models\KnowledgeCafe\WeeklyDose  $weeklyDose
+     * @return bool
      */
     public function delete(User $user, WeeklyDose $weeklyDose)
     {

@@ -20,6 +20,8 @@ class UpdateInvoicePaymentDetails extends Migration
             $table->text('tds')->nullable();
             $table->text('tds_percentage')->nullable();
             $table->text('currency_transaction_charge')->nullable();
+            $table->date('payment_at')->nullable();
+            
         });
     }
 
@@ -31,7 +33,7 @@ class UpdateInvoicePaymentDetails extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn(['amount_paid', 'bank_charges', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge']);
+            $table->dropColumn(['amount_paid', 'bank_charges', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at']);
         });
     }
 }

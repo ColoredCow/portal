@@ -69,6 +69,7 @@ class JobController extends Controller
 
         $opportunity = Job::create([
             'title' => $validated['title'],
+            'domain' => $validated['domain'],
             'description' => $validated['description'] ?? null, // null needed for backward compatibility
             'type' => $validated['type'],
             'posted_by' => $validated['by'] ?? null,

@@ -13,6 +13,8 @@
 
 Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/', 'InvoiceController@index')->name('invoice.index');
+    Route::get('/tax-report', 'InvoiceController@taxReport')->name('invoice.tax-report');
+    Route::get('/tax-report-export', 'InvoiceController@taxReportExport')->name('invoice.tax-report-export');
     Route::get('/create', 'InvoiceController@create')->name('invoice.create');
     Route::get('/dashboard', 'InvoiceController@dashboard')->name('invoice.dashboard');
     Route::post('/', 'InvoiceController@store')->name('invoice.store');
@@ -20,4 +22,6 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/get-file/{invoiceId}', 'InvoiceController@getInvoiceFile')->name('invoice.get-file');
     Route::post('/{invoiceId}/update', 'InvoiceController@update')->name('invoice.update');
     Route::delete('/{invoiceId}/delete', 'InvoiceController@destroy')->name('invoice.delete');
+
+
 });

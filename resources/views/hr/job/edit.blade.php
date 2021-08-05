@@ -15,7 +15,7 @@
     <br><br>
     @include('status', ['errors' => $errors->all()])
     <h2 class="mb-3">Edit Opportunity</h2>
-    <form action="{{ $formAction }}" method="POST">
+    <form action="{{ $formAction }}" method="POST" id="update-form">
         @csrf
         @method('PATCH')
         <div class="card mb-3">
@@ -47,6 +47,14 @@
                         <select class="form-control" name="type" id="type" value="{{ old('type') }}">
                             <option value="job" {{ old('type', $job->type) == 'job' ? 'selected' : '' }}>Job</option>
                             <option value="internship" {{ old('type', $job->type) == 'internship' ? 'selected' : '' }}>Internship</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain<strong class="text-danger">*</strong></label>
+                        <select class="form-control" name="domain" id="domain" value="{{ old('domain') }}" required>
+                            @foreach (config('hr.opportunities.domains') as $domain => $label)
+                                <option value="{{ $domain }}" {{ old('domain', $job->domain) == $domain ? 'selected' : '' }}>{{ $label }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -110,15 +118,15 @@
                 </div>
             </div>
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a href="{{ $job->link }}" target="_blank" class="btn btn-info" role="button">Preview job</a>
-            <form action="{{ route('recruitment.opportunities.destroy', $job) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-            </form>
-        </div>
     </form>
+    <div class="d-flex">
+        <button type="submit" class="btn btn-primary  ml-2" form="update-form">Update</button>
+        <a href="{{ $job->link }}" target="_blank" class="btn btn-info  ml-2" role="button">Preview job</a>
+        <form action="{{ route('recruitment.opportunities.destroy', $job) }}" method="POST" id="delete-form">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-outline-danger  ml-2" onclick="return confirm('Are you sure you want to delete?')" form="delete-form">Delete</button>
+        </form>
+    </div>
 </div>
 @endsection
