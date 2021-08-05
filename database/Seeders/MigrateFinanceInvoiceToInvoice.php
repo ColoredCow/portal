@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use App\Models\Finance\Invoice;
@@ -48,6 +49,7 @@ class MigrateFinanceInvoiceToInvoice extends Seeder
         } else {
             $invoiceAttr['due_on'] = $invoice->due_date;
         }
+
         return Invoice::create($invoiceAttr);
     }
 
@@ -88,6 +90,7 @@ class MigrateFinanceInvoiceToInvoice extends Seeder
                 break;
         }
         $model = config('constants.finance.payments.modes.' . $invoice->payment_type);
+
         return $model::create($modeAttr);
     }
 

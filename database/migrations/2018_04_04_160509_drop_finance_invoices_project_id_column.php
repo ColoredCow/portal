@@ -14,7 +14,7 @@ class DropFinanceInvoicesProjectIdColumn extends Migration
     public function up()
     {
         Schema::table('finance_invoices', function (Blueprint $table) {
-            $table->dropForeign([ 'project_id' ]);
+            $table->dropForeign(['project_id']);
             $table->dropColumn('project_id');
         });
     }
