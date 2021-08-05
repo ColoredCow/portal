@@ -10,7 +10,6 @@ class NDAAgreementController extends Controller
 {
     public function index()
     {
-     
         $this->authorize('view', Setting::class);
         $attr['settings'] = Setting::where('module', 'agreement-nda')->get()->keyBy('setting_key');
         $attr['rounds'] = Round::all();
@@ -18,6 +17,7 @@ class NDAAgreementController extends Controller
             config('constants.hr.status.confirmed'),
             config('constants.hr.status.rejected'),
         ];
+
         return view('settings.agreement.nda.index')->with($attr);
     }
 }

@@ -17,13 +17,13 @@ trait HasTags
     public function scopeFilterByTags($query, $tags)
     {
         if (is_array($tags)) {
-            return $query->whereHas('tags', function($subQuery) use ($tags) {
+            return $query->whereHas('tags', function ($subQuery) use ($tags) {
                 $subQuery->whereIn('tag_id', $tags);
             });
         }
 
         if (is_string($tags)) {
-            return $query->whereHas('tags', function($subQuery) use ($tags) {
+            return $query->whereHas('tags', function ($subQuery) use ($tags) {
                 $subQuery->where('tag_id', $tags);
             });
         }
@@ -37,11 +37,12 @@ trait HasTags
     public function tag($slug, $status = true)
     {
         $tag = Tag::slug($slug)->first();
-        if (!$tag) {
+        if (! $tag) {
             return;
         }
         if ($status) {
             $this->tags()->syncWithoutDetaching($tag);
+
             return;
         }
         $this->tags()->detach($tag);
@@ -53,6 +54,7 @@ trait HasTags
         if ($tag) {
             return $this->tags->contains($tag);
         }
+
         return false;
     }
 }

@@ -3,21 +3,17 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use Vision\Feature;
 use Vision\Request\Image\LocalImage;
 use Vision\Vision;
 
 class BookServices
 {
-
     /**
-     * Fetch book details from $isbn
-
-     * @param String $isbn
+     * Fetch book details from $isbn.
+     * @param string $isbn
      * @return @mixed
      */
-
     public static function getBookDetails($isbn)
     {
         $client = new Client();
@@ -26,7 +22,7 @@ class BookServices
         ]);
         $book = json_decode($res->getBody(), true);
 
-        if (!isset($book['items'])) {
+        if (! isset($book['items'])) {
             $res = $client->request('GET', 'https://www.googleapis.com/books/v1/volumes?q=ISBN:' . $isbn, [
                 'timeout' => 5.0,
             ]);
@@ -34,7 +30,7 @@ class BookServices
             $book = json_decode($res->getBody(), true);
         }
 
-        if (!isset($book['items'])) {
+        if (! isset($book['items'])) {
             return 'please try again';
         }
 
@@ -42,10 +38,10 @@ class BookServices
     }
 
     /**
-     * Fetch ISBN form book image
+     * Fetch ISBN form book image.
      *
      * @param File $file
-     * @return String
+     * @return string
      */
     public static function getISBN($file)
     {

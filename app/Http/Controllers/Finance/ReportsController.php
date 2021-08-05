@@ -11,18 +11,19 @@ use Illuminate\Http\Request;
 class ReportsController extends Controller
 {
     /**
-     * Display the financial reports
+     * Display the financial reports.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $this->authorize('view', ReportsController::class);
+        $this->authorize('view', self::class);
+
         return view('finance.reports.index')->with(self::getReportAttributes());
     }
 
     /**
-     * Get a complete list attributes and their values to be displayed on the reports page
+     * Get a complete list attributes and their values to be displayed on the reports page.
      * @return array
      */
     public static function getReportAttributes()
@@ -79,7 +80,7 @@ class ReportsController extends Controller
     }
 
     /**
-     * Get financial calcucations based on sent and paid invoices to be shown in the reports
+     * Get financial calcucations based on sent and paid invoices to be shown in the reports.
      * @param  \Illuminate\Database\Eloquent\Collection $sentInvoices
      * @param  \Illuminate\Database\Eloquent\Collection $paidInvoices
      * @return array
@@ -109,7 +110,7 @@ class ReportsController extends Controller
             $report['gst'] += $invoice->gst;
             $report['sentAmount'][$invoice->currency] += $invoice->amount;
 
-            if (!$invoice->payments->count()) {
+            if (! $invoice->payments->count()) {
                 $report['receivable'][$invoice->currency] += $invoice->amount;
             }
         }
@@ -134,11 +135,12 @@ class ReportsController extends Controller
                 // $report['dueAmount'][$invoice->currency_due_amount] += $invoice->due_amount;
             }
         }
+
         return $report;
     }
 
     /**
-     * arrange invoices based on their start and end date
+     * arrange invoices based on their start and end date.
      *
      * @param  \Illuminate\Database\Eloquent\Collection $invoices
      * @param  Carbon $start    Start date
@@ -173,6 +175,7 @@ class ReportsController extends Controller
                 }
             }
         }
+
         return $arrangedInvoices;
     }
 }

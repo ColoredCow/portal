@@ -18,6 +18,7 @@ class BookCommentController extends Controller
             'commentable_type' => Book::class
         ]);
         $book->comments()->save($comment);
+
         return response()->json($book->comments->last());
     }
 }
