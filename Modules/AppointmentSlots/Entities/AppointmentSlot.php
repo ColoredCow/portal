@@ -31,16 +31,17 @@ class AppointmentSlot extends Model
         if ($bufferInHours) {
             $future = $future->addHours($bufferInHours);
         }
+
         return $query->where('start_time', '>=', $future);
     }
 
     public function parent()
     {
-        return $this->belongsTo(AppointmentSlot::class, 'parent_appointment_slot_id');
+        return $this->belongsTo(self::class, 'parent_appointment_slot_id');
     }
 
     public function children()
     {
-        return $this->hasMany(AppointmentSlot::class, 'parent_appointment_slot_id');
+        return $this->hasMany(self::class, 'parent_appointment_slot_id');
     }
 }

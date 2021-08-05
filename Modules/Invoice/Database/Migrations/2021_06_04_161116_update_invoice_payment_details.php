@@ -21,7 +21,6 @@ class UpdateInvoicePaymentDetails extends Migration
             $table->text('tds_percentage')->nullable();
             $table->text('currency_transaction_charge')->nullable();
             $table->date('payment_at')->nullable();
-            
         });
     }
 

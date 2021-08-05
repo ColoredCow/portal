@@ -24,15 +24,15 @@ class TaxReportExport implements FromCollection, WithHeadings, ShouldAutoSize, W
 
     public function headings(): array
     {
-        if(is_array($this->invoices->first())) {
+        if (is_array($this->invoices->first())) {
             return array_keys($this->invoices->first());
         }
 
         return [];
     }
 
-    public function title(): string 
+    public function title(): string
     {
-        return "Monthly tax report";
+        return 'Monthly tax report';
     }
 }

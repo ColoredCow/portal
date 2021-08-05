@@ -11,9 +11,8 @@ class NoShow extends Mailable
 {
     use Queueable, SerializesModels;
 
-
     /**
-     * Instance of the ApplicationMeta
+     * Instance of the ApplicationMeta.
      * @var ApplicationMeta
      */
     public $applicationMeta;

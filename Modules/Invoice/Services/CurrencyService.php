@@ -25,6 +25,7 @@ class CurrencyService implements CurrencyServiceContract
     public function getCurrentRatesInINR()
     {
         $seconds = 1 * 60 * 60 * 4;
+
         return Cache::remember('current_usd_rates', $seconds, function () {
             return $this->fetchExchangeRateInINR();
         });
@@ -40,6 +41,7 @@ class CurrencyService implements CurrencyServiceContract
         ]);
 
         $data = json_decode($response->getBody()->getContents(), true);
+
         return round($data['quotes']['USDINR'], 2);
     }
 }

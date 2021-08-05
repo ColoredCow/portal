@@ -51,6 +51,7 @@ class ApplicantRequest extends FormRequest
                 'reviews' => 'nullable',
             ];
         }
+
         return $rules;
     }
 }

@@ -24,6 +24,7 @@ class ProspectHistoryController extends Controller
     public function store(Request $request, $prospectId)
     {
         $this->service->store($request->all(), $prospectId);
+
         return redirect(route('prospect.show', $prospectId));
     }
 }

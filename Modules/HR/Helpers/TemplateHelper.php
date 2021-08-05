@@ -2,8 +2,6 @@
 
 namespace Modules\HR\Helpers;
 
-use Modules\HR\Entities\ApplicationRound;
-
 class TemplateHelper
 {
     public static function parse(string $content, array $values)
@@ -19,7 +17,7 @@ class TemplateHelper
 
         foreach ($availableVariables as $variable) {
             $search = "|*$variable*|";
-            $replace = $values[$variable] ?? "";
+            $replace = $values[$variable] ?? '';
             $parsedContent = str_replace($search, $replace, $parsedContent);
         }
 

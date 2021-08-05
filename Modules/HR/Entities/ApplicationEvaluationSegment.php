@@ -3,8 +3,6 @@
 namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Entities\Application;
-use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Evaluation\Segment;
 
 class ApplicationEvaluationSegment extends Model

@@ -20,6 +20,7 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
     public function show($prospectID, $checklistID)
     {
         $prospect = Prospect::find($prospectID);
+
         return [
             'prospect' => $prospect,
             'checklistId' => $checklistID,

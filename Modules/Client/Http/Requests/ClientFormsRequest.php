@@ -32,12 +32,11 @@ class ClientFormsRequest extends FormRequest
             'address.*.country_id' => 'required|string',
             'address.*.address' => 'required|string',
             'address.*.state' => 'nullable|string',
-            "address.*.gst_number" => 'nullable|string',
-            "address.*.city" => 'nullable|string',
-            "address.*.area_code" => 'nullable|string',
+            'address.*.gst_number' => 'nullable|string',
+            'address.*.city' => 'nullable|string',
+            'address.*.area_code' => 'nullable|string',
         ];
     }
-
 
     private function billingDetailsValidation()
     {

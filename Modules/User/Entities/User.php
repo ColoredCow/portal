@@ -42,9 +42,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Checks if the user is super admin
+     * Checks if the user is super admin.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuperAdmin()
     {
@@ -53,7 +53,7 @@ class User extends Authenticatable
 
     public static function scopeInterviewers($query)
     {
-        return $query->whereHas('roles', function($query){
+        return $query->whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         });
     }

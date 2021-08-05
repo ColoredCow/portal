@@ -17,6 +17,7 @@ class PaymentSettingController extends Controller
     public function index()
     {
         $paymentConfig = PaymentConfiguration::formatAll();
+
         return view('payment::settings.index', ['paymentConfig' => $paymentConfig]);
     }
 

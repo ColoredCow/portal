@@ -22,6 +22,4 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/get-file/{invoiceId}', 'InvoiceController@getInvoiceFile')->name('invoice.get-file');
     Route::post('/{invoiceId}/update', 'InvoiceController@update')->name('invoice.update');
     Route::delete('/{invoiceId}/delete', 'InvoiceController@destroy')->name('invoice.delete');
-
-
 });

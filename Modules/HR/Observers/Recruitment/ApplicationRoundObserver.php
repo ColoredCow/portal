@@ -43,11 +43,11 @@ class ApplicationRoundObserver
     }
 
     /**
-    * Listen to the ApplicationRound updated event.
-    *
-    * @param  \Modules\HR\Entities\ApplicationRound  $applicationRound
-    * @return void
-    */
+     * Listen to the ApplicationRound updated event.
+     *
+     * @param  \Modules\HR\Entities\ApplicationRound  $applicationRound
+     * @return void
+     */
     public function updated(ApplicationRound $applicationRound)
     {
         if ($applicationRound->round_status == config('constants.hr.status.rejected.label')) {

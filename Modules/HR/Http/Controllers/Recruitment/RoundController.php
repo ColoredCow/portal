@@ -36,6 +36,7 @@ class RoundController extends Controller
                 $round->update([
                     'guidelines' => $guidelines,
                 ]);
+
                 return $guidelines;
                 break;
         }

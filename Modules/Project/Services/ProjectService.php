@@ -55,7 +55,7 @@ class ProjectService implements ProjectServiceContract
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
-        if (!$updateSection) {
+        if (! $updateSection) {
             return false;
         }
 
@@ -99,6 +99,7 @@ class ProjectService implements ProjectServiceContract
         $client = Client::find($clientID);
         $clientProjectsCount = $client->projects->count() ?: 0;
         $clientProjectsCount = $clientProjectsCount + 1;
+
         return sprintf('%03s', $clientProjectsCount);
     }
 }

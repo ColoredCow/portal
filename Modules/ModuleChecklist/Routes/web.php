@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('modulechecklist')->group(function() {
+Route::prefix('modulechecklist')->group(function () {
     Route::get('/', 'ModuleChecklistController@index');
 });

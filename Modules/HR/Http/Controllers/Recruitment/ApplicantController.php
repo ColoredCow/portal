@@ -16,9 +16,9 @@ use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 class ApplicantController extends Controller
 {
     use AuthorizesRequests;
-    
+
     protected $service;
-    
+
     public function __construct(ApplicationServiceContract $service)
     {
         $this->service = $service;
@@ -46,6 +46,7 @@ class ApplicantController extends Controller
     public function create()
     {
         $hrJobs = Job::whereIn('type', ['job', 'internship'])->orderBy('title')->get();
+
         return view('hr.application.create', ['hrJobs' => $hrJobs]);
     }
 
@@ -58,7 +59,8 @@ class ApplicantController extends Controller
     public function store(ApplicantRequest $request)
     {
         $validated = $request->validated();
-        $this->service->saveApplication( $validated );
+        $this->service->saveApplication($validated);
+
         return redirect(route('applications.job.index'));
     }
 
@@ -72,6 +74,7 @@ class ApplicantController extends Controller
     {
         $job = Job::find($request->job_id);
         Excel::import(new ApplicationImport($job), request()->file('excel_file'));
+
         return redirect(route('applications.job.index'));
     }
 
@@ -119,9 +122,9 @@ class ApplicantController extends Controller
     {
         //
     }
-    
+
     /**
-     * To update applicant university
+     * To update applicant university.
      *
      * @param Applicant $applicant
      * @param Request $request
@@ -132,6 +135,7 @@ class ApplicantController extends Controller
         $status = $applicant->update([
             'hr_university_id' => request()->university_id
         ]);
+
         return response()->json([
             'status' => $status,
         ]);

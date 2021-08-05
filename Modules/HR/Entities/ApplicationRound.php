@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Communication\Traits\HasCalendarMeetings;
 use Modules\HR\Emails\Recruitment\SendForApproval;
 use Modules\HR\Emails\Recruitment\SendOfferLetter;
-use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
-use Modules\HR\Entities\FollowUp;
 use Modules\User\Entities\User;
 
 class ApplicationRound extends Model
@@ -64,7 +62,7 @@ class ApplicationRound extends Model
                 $application->untag('new-application');
                 $application->tag('in-progress');
                 //move application to Trial Round
-                if(($nextRound->isTrialRound())){
+                if (($nextRound->isTrialRound())) {
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
@@ -81,7 +79,7 @@ class ApplicationRound extends Model
                 }
                 //if application are requested to move to preparatory or warmup round then they are automatically moved to Trial Round
                 //and trial_round_id column is set to the id of preparatory rounds that is requested
-                else if($nextRound->inPreparatoryRounds()){
+                elseif ($nextRound->inPreparatoryRounds()) {
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
@@ -95,9 +93,9 @@ class ApplicationRound extends Model
                     'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                     'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                     ]);
-                }  
-                //For Pre-trial Rounds 
-                else{
+                }
+                //For Pre-trial Rounds
+                else {
                     $fillable['round_status'] = 'confirmed';
                     $this->update($fillable);
                     $application->markInProgress();
@@ -116,7 +114,7 @@ class ApplicationRound extends Model
             case 'reject':
                 $application->untag('new-application');
                 $fillable['round_status'] = 'rejected';
-                if (!empty($attr['follow_up_comment_for_reject'])) {
+                if (! empty($attr['follow_up_comment_for_reject'])) {
                     $this->followUps()->create([
                         'comments' => $attr['follow_up_comment_for_reject'],
                         'conducted_by' => auth()->id(),
@@ -170,7 +168,7 @@ class ApplicationRound extends Model
                 $subject = $attr['subject'];
                 $body = $attr['body'];
 
-                if (!$application->offer_letter) {
+                if (! $application->offer_letter) {
                     $application->offer_letter = FileHelper::generateOfferLetter($application);
                 }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
@@ -234,6 +232,7 @@ class ApplicationRound extends Model
                 );
             }
         }
+
         return true;
     }
 
@@ -251,6 +250,7 @@ class ApplicationRound extends Model
                 ]
             );
         }
+
         return true;
     }
 
@@ -267,6 +267,7 @@ class ApplicationRound extends Model
                 ]
             );
         }
+
         return true;
     }
 
@@ -274,7 +275,7 @@ class ApplicationRound extends Model
     {
         return $this->belongsTo(Application::class, 'hr_application_id');
     }
-    
+
     public function trialRound()
     {
         return $this->belongsTo(Round::class, 'trial_round_id');
@@ -283,7 +284,7 @@ class ApplicationRound extends Model
     public function round()
     {
         return $this->belongsTo(Round::class, 'hr_round_id');
-    } 
+    }
 
     public function scheduledPerson()
     {
@@ -340,7 +341,7 @@ class ApplicationRound extends Model
     public function getNoShowAttribute()
     {
         if ($this->round_status) {
-            return null;
+            return;
         }
 
         $scheduledDate = Carbon::parse($this->scheduled_date);
@@ -348,7 +349,6 @@ class ApplicationRound extends Model
             return true;
         }
 
-        return null;
     }
 
     public static function scheduledForToday()
@@ -390,7 +390,7 @@ class ApplicationRound extends Model
      * if the application round status is null or rejected. Also, returns true if the application
      * round is confirmed but the application is sent/waiting for approval.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShowActionsAttribute()
     {
@@ -402,12 +402,12 @@ class ApplicationRound extends Model
             return false;
         }
 
-        return is_null($this->round_status) || (!$this->isOnboarded());
+        return is_null($this->round_status) || (! $this->isOnboarded());
     }
 
     public function getPreviousApplicationRound()
     {
-        return ApplicationRound::with('round')->where('hr_application_id', $this->hr_application_id)
+        return self::with('round')->where('hr_application_id', $this->hr_application_id)
             ->where('round_status', 'confirmed')
             ->whereNotNull('conducted_date')
             ->where('id', '<', $this->id)
@@ -417,7 +417,7 @@ class ApplicationRound extends Model
 
     public function updateIsLatestColumn()
     {
-        if($this->round->isTrialRound()){
+        if ($this->round->isTrialRound()) {
             self::where('hr_application_id', $this->hr_application_id)->update(['is_latest_trial_round' => false, 'is_latest' => false]);
             $this->update(['is_latest_trial_round' => true, 'is_latest' => true]);
         } else {

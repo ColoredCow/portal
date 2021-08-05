@@ -8,7 +8,7 @@ class UniversityContactRequest extends FormRequest
 {
     public function rules()
     {
-        $rules=[];
+        $rules = [];
         if ($this->method() === 'POST') {
             $rules = [
                 'name'=>'required|string',
@@ -17,16 +17,18 @@ class UniversityContactRequest extends FormRequest
                 'phone' => 'required | numeric | digits:10',
                 'hr_university_id'=>'required|exists:hr_universities,id'
             ];
+
             return $rules;
         }
         if ($this->method() === 'PUT') {
-            $rules= [
+            $rules = [
                 'name'=>'required|string',
-                'email'=>"required|string",
+                'email'=>'required|string',
                 'designation'=>'required|string',
                 'phone' => 'required | numeric | digits:10'
             ];
         }
+
         return $rules;
     }
 

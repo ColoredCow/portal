@@ -25,6 +25,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = $this->service->index();
+
         return view('project::index')->with('projects', $projects);
     }
 
@@ -35,6 +36,7 @@ class ProjectController extends Controller
     public function create()
     {
         $clients = $this->service->getClients();
+
         return view('project::create')->with('clients', $clients);
     }
 
@@ -47,6 +49,7 @@ class ProjectController extends Controller
     {
         $validated = $request->validated();
         $this->service->store($validated);
+
         return redirect(route('project.index'));
     }
 
