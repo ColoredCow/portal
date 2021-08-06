@@ -348,7 +348,6 @@ class ApplicationRound extends Model
         if ($scheduledDate < Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))) {
             return true;
         }
-
     }
 
     public static function scheduledForToday()
