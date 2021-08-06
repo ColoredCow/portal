@@ -5,7 +5,7 @@ Targets #{ISSUE_ID}
 
 ### Description
 <!--- Describe your changes in detail -->
-<!--- Why these change are required? What existing problem does the pull request solve? -->
+<!--- Why these changes are required? What existing problem does the pull request solve? -->
 
 ### Checklist:
 <!--- Mark the checkboxes accordingly. -->
