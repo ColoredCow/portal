@@ -7,6 +7,7 @@
 ### Types of changes
 <!--- What types of changes does your code introduce? -->
 - [ ] Bug fix (a change which fixes an issue)
+- [ ] Documentation
 - [ ] New feature (a change which adds functionality)
 
 ### Description
