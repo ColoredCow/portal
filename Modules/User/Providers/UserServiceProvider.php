@@ -18,12 +18,12 @@ use Modules\User\Contracts\ProfileServiceContract;
 class UserServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'User';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'user';
 
@@ -115,7 +115,7 @@ class UserServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -138,6 +138,7 @@ class UserServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 
@@ -157,29 +158,30 @@ class UserServiceProvider extends ServiceProvider
     {
         $this->app->singleton('USER_EXTENDED', function ($app, $data) {
             $class = config('user.extended_class');
-            if (!class_exists($class)) {
-                return null;
+            if (! class_exists($class)) {
+                return;
             }
 
-            if (!is_subclass_of($class, ExtendUserModel::class)) {
+            if (! is_subclass_of($class, ExtendUserModel::class)) {
                 throw new Exception('User module extension class must extend ' . ExtendUserModel::class);
             }
 
             $extendedClass = new $class();
             $extendedClass->setModelContext($data['context']);
+
             return $extendedClass;
         });
     }
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), UserServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), UserServiceContract::class)) {
             $this->app->bind(UserServiceContract::class, function () {
                 return new UserService();
             });
         }
 
-        if (!Arr::has($this->app->getBindings(), ProfileServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), ProfileServiceContract::class)) {
             $this->app->bind(ProfileServiceContract::class, function () {
                 return new ProfileService();
             });

@@ -38,7 +38,7 @@ class Client extends Model
 
     public function getReferenceIdAttribute()
     {
-        return sprintf('%03s', $this->id) ;
+        return sprintf('%03s', $this->id);
     }
 
     public function contactPersons()
@@ -59,9 +59,10 @@ class Client extends Model
     public function getTypeAttribute()
     {
         $address = $this->addresses->first();
-        if (!$address) {
-            return null;
+        if (! $address) {
+            return;
         }
+
         return  $address->country_id == '1' ? 'indian' : 'international';
     }
 

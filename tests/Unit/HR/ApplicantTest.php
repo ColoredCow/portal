@@ -8,7 +8,7 @@ use App\Models\HR\Applicant;
 class ApplicantTest extends TestCase
 {
     /**
-     * Test case to check creation of an applicant
+     * Test case to check creation of an applicant.
      *
      * @return void
      */

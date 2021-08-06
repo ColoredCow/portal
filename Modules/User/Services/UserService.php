@@ -25,6 +25,7 @@ class UserService implements UserServiceContract
     {
         $user->delete();
         event(new UserRemovedEvent($user));
+
         return OfficeSuiteFacade::removeUser();
         ///TODO:: Fire an event for all the communication and API integrations
     }
@@ -41,13 +42,14 @@ class UserService implements UserServiceContract
 
     public function updateUserRoles($data)
     {
-        if (!isset($data['roles'])) {
+        if (! isset($data['roles'])) {
             return response()->json([
                 'isUpdated' => false,
             ]);
         }
         $user = User::find($data['user_id']);
         $roles = array_pluck($data['roles'], 'id');
+
         return $user->syncRoles($roles);
     }
 }

@@ -11,7 +11,7 @@ class InterviewerScheduledRoundsReminder extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Application rounds scheduled for the user
+     * Application rounds scheduled for the user.
      * @var array
      */
     public $applicationRounds;

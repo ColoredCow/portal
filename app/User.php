@@ -37,9 +37,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Checks if the user is super admin
+     * Checks if the user is super admin.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuperAdmin()
     {

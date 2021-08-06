@@ -15,6 +15,7 @@ class ProfileService implements ProfileServiceContract
     {
         $user = auth()->user();
         $section = request()->input('section', 'basic-details');
+
         return ['user' => $user, 'section' => $section];
     }
 }

@@ -19,6 +19,7 @@ class HRController extends Controller
             config('constants.hr.status.confirmed'),
             config('constants.hr.status.rejected'),
         ];
+
         return view('settings.hr.index')->with($attr);
     }
     public function update(SettingRequest $request)
@@ -31,6 +32,7 @@ class HRController extends Controller
                 ['setting_value' => $value ? ContentHelper::editorFormat($value) : null]
             );
         }
+
         return redirect()->back()->with('status', 'Settings saved!');
     }
 }

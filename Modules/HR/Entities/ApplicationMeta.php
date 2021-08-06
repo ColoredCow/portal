@@ -3,7 +3,6 @@
 namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Entities\Application;
 
 class ApplicationMeta extends Model
 {
@@ -52,7 +51,7 @@ class ApplicationMeta extends Model
     }
 
     /**
-     * Get details of communication mail if application meta is for change job
+     * Get details of communication mail if application meta is for change job.
      *
      * @return mixed
      */

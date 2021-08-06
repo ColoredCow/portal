@@ -17,12 +17,12 @@ use Modules\Prospect\Contracts\ProspectChecklistServiceContract;
 class ProspectServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Prospect';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'prospect';
 
@@ -109,7 +109,7 @@ class ProspectServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -132,30 +132,31 @@ class ProspectServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), ProspectServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), ProspectServiceContract::class)) {
             $this->app->bind(ProspectServiceContract::class, function () {
                 return new ProspectService();
             });
         }
 
-        if (!Arr::has($this->app->getBindings(), ProspectHistoryServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), ProspectHistoryServiceContract::class)) {
             $this->app->bind(ProspectHistoryServiceContract::class, function () {
                 return new ProspectHistoryService();
             });
         }
 
-        if (!Arr::has($this->app->getBindings(), ProspectChecklistServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), ProspectChecklistServiceContract::class)) {
             $this->app->bind(ProspectChecklistServiceContract::class, function () {
                 return new ProspectChecklistService();
             });
         }
 
-        if (!Arr::has($this->app->getBindings(), ProspectMeetingServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), ProspectMeetingServiceContract::class)) {
             $this->app->bind(ProspectMeetingServiceContract::class, function () {
                 return new ProspectMeetingService();
             });

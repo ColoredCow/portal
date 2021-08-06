@@ -10,6 +10,7 @@ class SettingController extends Controller
     public function index()
     {
         $this->authorize('view', Setting::class);
+
         return view('settings.index');
     }
 

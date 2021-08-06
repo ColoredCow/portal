@@ -16,6 +16,7 @@ class NDATemplateController extends Controller
     public function index()
     {
         $templates = LegalDocumentTemplate::all();
+
         return view('legaldocument::nda.templates.index', ['templates' => $templates]);
     }
 
@@ -36,6 +37,7 @@ class NDATemplateController extends Controller
     public function store(Request $request)
     {
         $legalDocumentTemplate = LegalDocumentTemplate::create($request->all());
+
         return redirect(route('legal-document.nda.template.index'));
     }
 
@@ -47,6 +49,7 @@ class NDATemplateController extends Controller
     public function show($id)
     {
         $template = LegalDocumentTemplate::find($id);
+
         return view('legaldocument::nda.templates.show', compact('template'));
     }
 
@@ -69,6 +72,7 @@ class NDATemplateController extends Controller
     public function update(Request $request, $id)
     {
         $legalDocumentTemplate = LegalDocumentTemplate::find($id)->update($request->all());
+
         return redirect(route('legal-document.nda.template.index'));
     }
 
@@ -95,6 +99,7 @@ class NDATemplateController extends Controller
         $finalData = array_merge($data, request()->all());
         $pdf = app('snappy.pdf.wrapper');
         $pdf->loadHTML($template->parse($finalData));
+
         return $pdf->inline();
     }
 }

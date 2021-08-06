@@ -2,12 +2,9 @@
 
 namespace Modules\HR\Http\Controllers\Universities;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\HR\Entities\University;
 use Modules\HR\Entities\UniversityAlias;
-use Modules\HR\Entities\UniversityContact;
 use Modules\HR\Http\Requests\UniversityAliasRequest;
 
 class UniversityAliasController extends Controller
@@ -16,6 +13,7 @@ class UniversityAliasController extends Controller
     {
         $validated = $request->validated();
         $alias = UniversityAlias::create($validated);
+
         return response()->json([
             'message' => __('Alias created successfully'),
             'data' => $alias,
@@ -26,6 +24,7 @@ class UniversityAliasController extends Controller
     {
         $validated = $request->validated();
         $alias->update($validated);
+
         return response()->json([
             'message' => __('Alias updated successfully'),
             'data' => $alias,
@@ -37,8 +36,9 @@ class UniversityAliasController extends Controller
         $university = $alias->university;
         $isDeleted = $alias->delete();
         $status = $isDeleted ? 'Alias deleted successfully!' : 'Something went wrong! Please try again';
+
         return response()->json([
             'message'=>$status,
-        ],200);
+        ], 200);
     }
 }

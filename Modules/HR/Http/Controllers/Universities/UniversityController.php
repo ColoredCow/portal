@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers\Universities;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\UniversityRequest;
@@ -27,6 +26,7 @@ class UniversityController extends Controller
         $this->authorize('list', University::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $universities = $this->service->list($searchString);
+
         return view('hr::universities.index')->with([
             'universities' => $universities,
         ]);
@@ -39,11 +39,12 @@ class UniversityController extends Controller
 
     public function store(UniversityRequest $request)
     {
-        $university=University::create([
+        $university = University::create([
             'name'=>$request['name'],
             'address'=>$request['address'] ?? null,
             'rating'=>$request['rating'] ?? null
         ]);
+
         return redirect(route('universities.edit', $university))->with('status', 'University created successfully!');
     }
 
@@ -61,14 +62,15 @@ class UniversityController extends Controller
             'address'=>$request['address'] ?? null,
             'rating'=>$request['rating'] ?? null
         ]);
+
         return redirect(route('universities.edit', $university))->with('status', 'University updated successfully!');
     }
 
-
     public function destroy(University $university)
     {
-        $isDeleted=$university->delete();
-        $status=$isDeleted?'University Deleted successfully!':'Something went wrong! Please try again';
+        $isDeleted = $university->delete();
+        $status = $isDeleted ? 'University Deleted successfully!' : 'Something went wrong! Please try again';
+
         return redirect(route('universities.index'))->with('status', $status);
     }
 }

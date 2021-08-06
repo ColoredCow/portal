@@ -8,8 +8,8 @@ trait HasWebsiteUser
 {
     public function getWebsiteUserAttribute()
     {
-        if (!class_exists('Corcel\Laravel\Auth\AuthUserProvider')) {
-            return null;
+        if (! class_exists('Corcel\Laravel\Auth\AuthUserProvider')) {
+            return;
         }
 
         $userProvider = new \Corcel\Laravel\Auth\AuthUserProvider;
@@ -17,17 +17,17 @@ trait HasWebsiteUser
         try {
             return $userProvider->retrieveByCredentials(['email' => $this->email]);
         } catch (\Throwable $th) {
-            return null;
+            return;
         }
     }
 
     public function getWebsiteUserMeta($key = null)
     {
-        if (!$this->website_user) {
+        if (! $this->website_user) {
             return '';
         }
 
-        if (!$key) {
+        if (! $key) {
             return $this->website_user->meta;
         }
 
@@ -35,6 +35,7 @@ trait HasWebsiteUser
         if ($userMeta) {
             return $userMeta->meta_value;
         }
+
         return '';
     }
 
@@ -51,7 +52,7 @@ trait HasWebsiteUser
     {
         $roleKey = config('database.connections.wordpress.prefix') . 'capabilities';
         $role = $this->getWebsiteUserMeta($roleKey);
-        if (!$role) {
+        if (! $role) {
             return '';
         }
         $roles = unserialize($role);

@@ -7,7 +7,7 @@ use Modules\SalesAutomation\Traits\HasFilters;
 
 class SalesArea extends Model
 {
-	use HasFilters;
+    use HasFilters;
 
     protected $guarded = [];
 }

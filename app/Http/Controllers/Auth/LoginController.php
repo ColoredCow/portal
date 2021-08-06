@@ -80,14 +80,15 @@ class LoginController extends Controller
         }
 
         Auth::login($authUser, true);
-        /**
+        /*
          * Update user avatar to keep it update with gmail
          */
         $authUser->update(['avatar' => $user->avatar_original]);
 
         if (session('saml_request_for_website')) {
-            if (!$authUser->website_user_role) {
+            if (! $authUser->website_user_role) {
                 Auth::logout();
+
                 return redirect('login');
             }
 
@@ -114,6 +115,7 @@ class LoginController extends Controller
         if ($authUser) {
             $authUser->provider_id = $user->id;
             $authUser->save();
+
             return $authUser;
         }
 

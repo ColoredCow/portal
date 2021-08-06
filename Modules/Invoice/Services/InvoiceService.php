@@ -71,6 +71,7 @@ class InvoiceService implements InvoiceServiceContract
         $data['receivable_date'] = $data['due_on'];
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
+
         return $invoice;
     }
 
@@ -115,6 +116,7 @@ class InvoiceService implements InvoiceServiceContract
     public function getInvoiceFile($invoiceID)
     {
         $invoice = Invoice::find($invoiceID);
+
         return Storage::download($invoice->file_path, basename($invoice->file_path), [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline;',
@@ -158,18 +160,16 @@ class InvoiceService implements InvoiceServiceContract
             $query = $query->region($country);
         }
 
-
         return $query;
     }
 
     /**
-     *  TaxReports
+     *  TaxReports.
      */
-
     public function defaultTaxReportFilters()
     {
         return [
-            "region" => "indian",
+            'region' => 'indian',
             'year' => now()->format('Y'),
             'month' => now()->format('m'),
             'status' => 'paid',
@@ -179,7 +179,7 @@ class InvoiceService implements InvoiceServiceContract
     public function taxReport($filters)
     {
         return [
-            "invoices" => $this->taxReportInvoices($filters)
+            'invoices' => $this->taxReportInvoices($filters)
         ];
     }
 
@@ -187,29 +187,32 @@ class InvoiceService implements InvoiceServiceContract
     {
         $invoices = $this->taxReportInvoices($filters);
         $invoices = $this->formatInvoicesForExport($invoices);
+
         return Excel::download(new TaxReportExport($invoices), 'TaxReportExport.xlsx');
     }
 
     private function taxReportInvoices($filters)
     {
         $query = Invoice::query();
+
         return $this
             ->applyFilters($query, $filters)
             ->get() ?: [];
     }
 
-    private function formatInvoicesForExport($invoices) {
-        return $invoices->map(function($invoice) {
+    private function formatInvoicesForExport($invoices)
+    {
+        return $invoices->map(function ($invoice) {
             return [
-                "Project" => $invoice->project->name,
-                "Amount" => $invoice->display_amount,
-                "GST" => $invoice->gst,
-                "Amount (+GST)" => $invoice->invoiceAmount(),
-                "Received amount" => $invoice->amount_paid ,
-                "TDS" => $invoice->tds,
-                "Sent at" => $invoice->sent_on->format(config('invoice.default-date-format')),
-                "Payment at" => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-' ,
-                "Status" => Str::studly($invoice->status) 
+                'Project' => $invoice->project->name,
+                'Amount' => $invoice->display_amount,
+                'GST' => $invoice->gst,
+                'Amount (+GST)' => $invoice->invoiceAmount(),
+                'Received amount' => $invoice->amount_paid,
+                'TDS' => $invoice->tds,
+                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
+                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
+                'Status' => Str::studly($invoice->status)
             ];
         });
     }

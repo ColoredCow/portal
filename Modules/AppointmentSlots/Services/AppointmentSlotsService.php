@@ -31,6 +31,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         if ($applicationRound && is_null($applicationRound->scheduled_date) && is_null($applicationRound->round_status)) {
             return true;
         }
+
         return false;
     }
 
@@ -67,7 +68,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
     {
         $email = $data['email'];
         $applicant = Applicant::where('email', $email)->first();
-        if (!$applicant) {
+        if (! $applicant) {
             return ['error' => true, 'message' => 'invalid email id'];
         }
 
@@ -104,7 +105,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
 
     public function fillScheduleForTheDay($userId, $startDate = null)
     {
-        if (!$startDate) {
+        if (! $startDate) {
             $startDate = Carbon::createFromTimeString('11:00:00');
         }
         $slots = [];
@@ -131,7 +132,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             if ($slot['start_time']->dayOfWeek == 0 || $slot['start_time']->dayOfWeek == 6) {
                 continue;
             }
-            if (!AppointmentSlot::where('user_id', $userId)
+            if (! AppointmentSlot::where('user_id', $userId)
                 ->where('start_time', $slot['start_time'])
                 ->exists()) {
                 AppointmentSlot::insert($slot);
@@ -180,6 +181,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             'calendar_event' => $calendarMeetingService->getEvent()->id,
             'calendar_meeting_id' => $calendarMeetingService->calendarMeeting->id,
         ]);
+
         return true;
     }
 
@@ -201,7 +203,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
      * Get free slots for a user.
      *
      * @param  int  $userId
-     * @return boolean
+     * @return bool
      */
     private function getUserFreeSlots($userId)
     {

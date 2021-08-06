@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class UsersTableSeeder extends Seeder
 {
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */

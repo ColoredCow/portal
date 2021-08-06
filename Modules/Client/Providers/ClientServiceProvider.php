@@ -13,12 +13,12 @@ use Modules\Client\Contracts\ClientServiceContract;
 class ClientServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Client';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'client';
 
@@ -121,7 +121,7 @@ class ClientServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -144,6 +144,7 @@ class ClientServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 
