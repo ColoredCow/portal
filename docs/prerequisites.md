@@ -22,7 +22,7 @@ There are some topics and tools you need to know to prior to work in portal so p
 - [Git, GitHub and Development](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
 ### 4. PHP :running:
-PHP v7.3 or higher is needed.
+PHP v7.3 or v7.4 is needed.
 
 You can install it with the following ways:
 1. XAMPP
