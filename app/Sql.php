@@ -10,5 +10,4 @@ class Sql extends Model
     protected $table = 'hr_applicants';
     public $timestamps = false;
     protected $fillable = ["id","name","created_at","updated_at"];
-
 }
