@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 use App\Sql;
 use Carbon\Carbon;
 
-
 class DashboardController extends Controller
 {
     public function index()
