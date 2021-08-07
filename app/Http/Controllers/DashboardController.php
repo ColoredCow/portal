@@ -47,11 +47,11 @@ class DashboardController extends Controller
         $data = [];
 
         foreach ($record as $row) {
-           $data['label'][] = $row->date;
-           $data['data'][] = (int) $row->count;
+            $data['label'][] = $row->date;
+            $data['data'][] = (int) $row->count;
         }
                 
         $data['chart_data'] = json_encode($data);
         return view('graph', $data, compact('today_count'));
-     }
- }
+    }
+}
