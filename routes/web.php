@@ -46,7 +46,6 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {
-
             Route::get('volunteer/{application}/offer-letter', 'VolunteerApplicationController@viewOfferLetter')->name('applications.volunteer.offer-letter');
 
             Route::resource('volunteer', 'VolunteerApplicationController')
@@ -175,7 +174,6 @@ Route::middleware('auth')->group(function () {
     Route::get('user/read-books', 'UserBookController@index');
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     
-    Route::get('/dashboard', 'DashboardController@index'); 
+    Route::get('/dashboard', 'DashboardController@index');
     Route::post('/dashboard', 'DashboardController@searchBydate');
-
 });
