@@ -127,7 +127,7 @@ $finder = Finder::create()
     ->notName('server.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true)
-    ->exclude('/node_modules');
+    ->exclude('node_modules');
 
 $config = new PhpCsFixer\Config();
 
