@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
   function index(){   
-    $today_count = Sql::whereDate('created_at', '=',now())
+    $today_Count = Sql::whereDate('created_at', '=',now())
     ->count();
 
     $record = Sql::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
