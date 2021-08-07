@@ -180,7 +180,7 @@
         },
 
         updateTds() {
-            this.tds = this.amount - this.amount_paid
+            this.tds = this.amount - this.amount_paid + (this.amount * 0.18)
             this.tds_percentage = (this.tds/this.amount) * 100
         },
 
