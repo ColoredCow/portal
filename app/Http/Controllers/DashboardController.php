@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
   function index(){   
-    $today_Count = Sql::whereDate('created_at', '=',now())
+    $todayCount = Sql::whereDate('created_at', '=',now())
     ->count();
 
     $record = Sql::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
@@ -21,8 +21,8 @@ class DashboardController extends Controller
     $data = [];
     
     foreach($record as $row) {
-      $data['data'][] = (int) $row->count;
-      $data['label'][] = $row->date;
+       $data['data'][] = (int) $row->count;
+       $data['label'][] = $row->date;
     }
     
     $data['chart_data'] = json_encode($data);
@@ -30,7 +30,7 @@ class DashboardController extends Controller
   }
   
   function searchBydate(Request $req){
-    $today_count = Sql::whereDate('created_at', '=',now())
+    $todayCount = Sql::whereDate('created_at', '=',now())
     ->count();
 
     $record = Sql::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
@@ -43,8 +43,8 @@ class DashboardController extends Controller
     $data = [];
     
     foreach($record as $row) {
-    $data['label'][] = $row->date;
-    $data['data'][] = (int) $row->count;
+       $data['label'][] = $row->date;
+       $data['data'][] = (int) $row->count;
     }
     
     $data['chart_data'] = json_encode($data);
