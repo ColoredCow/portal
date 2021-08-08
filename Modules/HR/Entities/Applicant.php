@@ -35,7 +35,7 @@ class Applicant extends Model
             'course' => isset($attr['course']) ? $attr['course'] : null,
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
         ]);
-        
+
         $job = Job::where('title', $attr['job_title'])->first();
         $application = Application::_create([
             'hr_job_id' => $job->id,
