@@ -15,7 +15,7 @@ class Event
   const ALL_DAY_REGEX = '/^\d{4}-\d\d-\d\d$/'; // matches strings like "2013-12-29"
 
   public $title;
-    public $allDay; // a boolean
+  public $allDay; // a boolean
   public $start; // a DateTime
   public $end; // a DateTime, or null
   public $properties = []; // an array of other misc properties
