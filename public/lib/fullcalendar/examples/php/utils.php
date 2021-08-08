@@ -14,11 +14,11 @@ class Event
     // Tests whether the given ISO8601 string has a time-of-day or not
   const ALL_DAY_REGEX = '/^\d{4}-\d\d-\d\d$/'; // matches strings like "2013-12-29"
 
-  public $title;
-  public $allDay; // a boolean
-  public $start; // a DateTime
-  public $end; // a DateTime, or null
-  public $properties = []; // an array of other misc properties
+    public $title;
+    public $allDay; // a boolean
+    public $start; // a DateTime
+    public $end; // a DateTime, or null
+    public $properties = []; // an array of other misc properties
 
   // Constructs an Event object from the given array of key=>values.
     // You can optionally force the timeZone of the parsed dates.
