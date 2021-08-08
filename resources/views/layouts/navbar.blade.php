@@ -110,6 +110,12 @@
         </li>
     @endif
 
+    @if(Module::checkStatus('Audit') && auth()->user()->can('audit.view'))
+        <li class="nav-item">
+            <a class="nav-item nav-link" href="{{ route('audit.index') }}">Audit</a>
+        </li>
+    @endif
+
     @if(Module::checkStatus('HR') || Module::checkStatus('User'))
         <li class="nav-item dropdown">
             <a id="navbarDropdown_settings" class="nav-link dropdown-toggle" href="#" role="button"
