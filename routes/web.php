@@ -48,7 +48,6 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {
-
             Route::get('volunteer/{application}/offer-letter', 'VolunteerApplicationController@viewOfferLetter')->name('applications.volunteer.offer-letter');
 
             Route::resource('volunteer', 'VolunteerApplicationController')
