@@ -13,7 +13,7 @@ class RenameConversionRateColumnInInvoice extends Migration
      */
     public function up()
     {
-        Schema::table('invoice', function (Blueprint $table) {
+        Schema::table('invoices', function (Blueprint $table) {
             $table->renameColumn('conversion_rate', 'conversion_rate_diff');
         });
     }
@@ -25,7 +25,7 @@ class RenameConversionRateColumnInInvoice extends Migration
      */
     public function down()
     {
-        Schema::table('invoice', function (Blueprint $table) {
+        Schema::table('invoices', function (Blueprint $table) {
             $table->renameColumn('conversion_rate_diff', 'conversion_rate');
         });
     }
