@@ -32,8 +32,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('hr')->namespace('HR')->group(function () {
-        Route::get('/', 'HRController@index')->name('hr');
-
         Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');

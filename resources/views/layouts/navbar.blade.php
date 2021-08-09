@@ -56,13 +56,14 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
-                @if(Module::checkStatus('LegalDocument') && auth()->user()->can('legal-document.view'))
-                    <a class="dropdown-item" href="{{ route('legal-document.index') }}">Legal Documents</a>
-                @endif
                 @if(Module::checkStatus('Invoice') && auth()->user()->can('invoice.view'))
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
-                    <a class="dropdown-item" href="{{ route('salary.index') }}">Salaries</a>
-                    <a class="dropdown-item" href="{{ route('payment.index') }}">Payments</a>
+                    <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly tax report</a>
+                    <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
+                    <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>
+                @endif
+                @if(Module::checkStatus('LegalDocument') && auth()->user()->can('legal-document.view'))
+                <a class="dropdown-item disabled" href="{{ route('legal-document.index') }}">Legal Documents</a>
                 @endif
             </div>
         </li>

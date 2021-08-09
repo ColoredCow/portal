@@ -12,24 +12,24 @@
                     <div>
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a id="employee_portal" class="nav-link active c-pointer" @click="setActiveTile('employee_portal')">Employee Portal</a>
+                                <a id="portal" class="nav-link active c-pointer" @click="setActiveTile('portal')">Portal</a>
                             </li>
                             <li class="nav-item">
                                 <a id="website" class="nav-link c-pointer"  @click="setActiveTile('website')">Website</a>
                             </li>
                         </ul>
                     </div>
-                    
-                    <div v-show="this.activeTile == 'employee_portal'" class="modal-body">
+
+                    <div v-show="this.activeTile == 'portal'" class="modal-body">
                         <li v-for="(role, index) in this.roles" class="list-group-item" :key="index">
                             <div :class=" (role.name != 'super-admin') ? 'form-check ml-3' : 'form-check'">
                                 <label class="form-check-label" style="cursor: pointer;">
-                                    <input 
-                                        type="checkbox" 
+                                    <input
+                                        type="checkbox"
                                         style="cursor: pointer;"
-                                        :data-role="role.name" 
+                                        :data-role="role.name"
                                         :data-label="role.label"
-                                        :value="role.id" 
+                                        :value="role.id"
                                         @click="checkForSuperAdmin(role)"
                                         class=""> {{ role.label }}
                                 </label>
@@ -42,8 +42,8 @@
                         <li>
                                 <label v-if="this.user.websiteUserRole" class="form-check-label">{{ this.user.websiteUserRole }}</label>
                                 <label v-else class="form-check-label" style="cursor: pointer;">No Access provided</label>
-                                <p class="text-muted" style="font-size:12px;">You can set these roles from the website dashboard. 
-                                   <a v-if="this.user.websiteUser" :href="(this.user.websiteUser) ? this.getWebsiteUserProfileUrl() :'' ">Please click here to manage that. </a> 
+                                <p class="text-muted" style="font-size:12px;">You can set these roles from the website dashboard.
+                                   <a v-if="this.user.websiteUser" :href="(this.user.websiteUser) ? this.getWebsiteUserProfileUrl() :'' ">Please click here to manage that. </a>
                                 </p>
                         </li>
 
@@ -60,16 +60,16 @@
 
 <script>
     export default {
-       
+
        props:['user', 'updateRoute', 'config'],
 
         data(){
-            return { 
+            return {
                 roles: [],
                 roleInputs:[],
-                activeTile:'employee_portal'
+                activeTile:'portal'
 
-            }  
+            }
         },
 
         methods: {
@@ -140,22 +140,22 @@
                 this.activeTile = tile;
                 document.querySelector(".active").classList.remove("active");
                 document.querySelector(`#${tile}`).classList.add("active");
-                
+
             },
 
             getWebsiteUserProfileUrl() {
-                return this.config.website_url 
+                return this.config.website_url
                         + '/wp/wp-admin/user-edit.php'
                         + '?idp_referrer=' + window.location.href
                         + '&user_id=' +  this.user.websiteUser.ID
-                        
-                      
+
+
             }
 
         },
 
-        watch: { 
-            user: function(selectedUser) { 
+        watch: {
+            user: function(selectedUser) {
                 this.setupUserRoles();
             }
         },
