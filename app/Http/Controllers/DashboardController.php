@@ -11,8 +11,8 @@ class DashboardController extends Controller
     public function index()
     {
         $todayCount = Applicant::whereDate('created_at', '=', now())
-    ->count(); 
-
+    ->count();
+        
         $record = Applicant::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"), \DB::raw("DATE(created_at) as date"))
     ->where('created_at', '>', Carbon::today()->subDay(7))
     ->groupBY('date')
@@ -27,7 +27,7 @@ class DashboardController extends Controller
         }
     
         $data['chart_data'] = json_encode($data);
-        return view('graph', $data, compact('todayCount'));   
+        return view('graph', $data, compact('todayCount'));  
     }
   
     public function searchBydate(Request $req)
