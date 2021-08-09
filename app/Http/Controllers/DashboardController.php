@@ -3,17 +3,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Sql;
+use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
   public function index()
   {
-    $today_count = Sql::whereDate('created_at' , '=' , now())
+    $today_count = Applicant::whereDate('created_at' , '=' , now())
     ->count();  
 
-    $record = Sql::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
+    $record = Applicant::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
     ->where('created_at', '>', Carbon::today()->subDay(7))
     ->groupBY('date')
     ->orderBy('date', 'ASC')
@@ -31,10 +31,10 @@ class DashboardController extends Controller
   }
   
   function searchBydate(Request $req){
-    $today_count = Sql::whereDate('created_at', '=',now())
+    $today_count = Applicant::whereDate('created_at', '=',now())
     ->count();
 
-    $record = Sql::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
+    $record = Applicant::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
     ->where('created_at', '>=',$req->from )
     ->where('created_at', '<=',$req->to )
     ->groupBy('date')
