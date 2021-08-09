@@ -10,36 +10,36 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $today_count = Applicant::whereDate('created_at' , '=' , now())
+        $todayCount = Applicant::whereDate('created_at', '=' , now())
     ->count();  
 
-        $record = Applicant::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
+        $record = Applicant::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"), \DB::raw("DATE(created_at) as date"))
     ->where('created_at', '>', Carbon::today()->subDay(7))
     ->groupBY('date')
-    ->orderBy('date', 'ASC')
+    ->orderBy('date',  'ASC')
     ->get();
        
         $data = [];
     
-        foreach($record as $row) {
-           $data['data'][] = (int) $row->count;
-           $data['label'][] = $row->date;
+        foreach ($record as $row) {
+            $data['data'][] = (int) $row->count;
+            $data['label'][] = $row->date;
         }
     
         $data['chart_data'] = json_encode($data);
-        return view('graph', $data,compact('today_count'));      
-  }
+        return view('graph', $data,compact('todayCount'));      
+    }
   
     public function searchBydate(Request $req)
     {
-        $today_count = Applicant::whereDate('created_at', '=',now())
+        $todayCount = Applicant::whereDate('created_at', '=',now())
     ->count();
 
-        $record = Applicant::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"),\DB::raw("DATE(created_at) as date"))
+        $record = Applicant::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month"), \DB::raw("DATE(created_at) as date"))
     ->where('created_at', '>=',$req->from )
     ->where('created_at', '<=',$req->to )
     ->groupBy('date')
-    ->orderBy('date','ASC')
+    ->orderBy('date', 'ASC')
     ->get();
     
         $data = [];
@@ -50,7 +50,7 @@ class DashboardController extends Controller
         }
     
         $data['chart_data'] = json_encode($data);
-        return view('graph', $data,compact('today_count'));
-  }
+        return view('graph', $data,compact('todayCount'));
+   }
            
 }
