@@ -51,6 +51,5 @@ class DashboardController extends Controller
     
         $data['chart_data'] = json_encode($data);
         return view('graph', $data, compact('todayCount'));
-    }
-           
+    }           
 }
