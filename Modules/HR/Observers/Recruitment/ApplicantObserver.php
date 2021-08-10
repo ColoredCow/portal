@@ -20,9 +20,9 @@ class ApplicantObserver
 
         if (isset($data['college'])) {
             $university = University::select('id')->where('name', $data['college'])->first();
-            if ($university == null) {
+            if (!$university) {
                 $universityAlias = UniversityAlias::select('hr_university_id')->where('name', $data['college'])->first();
-                if ($universityAlias == null) {
+                if (!$universityAlias) {
                     $university = University::create(['name'=>$data['college']]);
                     $applicant->update(['hr_university_id' => $university->id]);
                 } else {
