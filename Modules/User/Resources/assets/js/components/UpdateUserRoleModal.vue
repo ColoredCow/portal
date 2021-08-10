@@ -147,7 +147,7 @@ export default {
 			return this.config.website_url
                         + "/wp/wp-admin/user-edit.php"
                         + "?idp_referrer=" + window.location.href
-                        + "&user_id=" +  this.user.websiteUser.ID;
+                        + "&user_id=" + this.user.websiteUser.ID;
 
 
 		}
