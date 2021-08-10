@@ -22,7 +22,7 @@
       <br>
       <div class="card">
         <div class="card-header" align='left'>
-          <span style="font-size: 35px;">Application Recived</span> &emsp;&emsp; <span style="font-size: 20px;">Today's Count:<?php echo $today_count; ?></span> 
+          <span style="font-size: 35px;">Application Recived</span> &emsp;&emsp; <span style="font-size: 20px;">Today's Count:<?php echo $todayCount; ?></span> 
         </div>
         <div class="card-body">
           <canvas id="line-chart"></canvas>
