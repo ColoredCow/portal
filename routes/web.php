@@ -118,7 +118,7 @@ Route::middleware('auth')->group(function () {
 
             Route::get('{module}', 'PermissionController@index')->name('permissions.module.index');
             Route::put('users/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
-            Route::put('roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.role');
+            Route::put('roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.update.role');
         });
 
         Route::prefix('hr')->group(function () {
