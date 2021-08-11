@@ -21,6 +21,7 @@ class BookCategoryController extends Controller
     public function index()
     {
         $categories = BookCategory::withCount('books')->orderBy('name')->get();
+
         return view('knowledgecafe.library.categories.index')
         ->with('categories', $this->formatCategoryData($categories));
     }
@@ -77,7 +78,7 @@ class BookCategoryController extends Controller
     public function update(BookCategoryRequest $request, BookCategory $bookCategory)
     {
         return response()->json(
-            ['isUpdated' => $bookCategory->update($request->validated()) ]
+            ['isUpdated' => $bookCategory->update($request->validated())]
         );
     }
 
@@ -89,13 +90,13 @@ class BookCategoryController extends Controller
      */
     public function destroy(BookCategory $bookCategory)
     {
-        return response()->json(['isDeleted' => $bookCategory->delete() ]);
+        return response()->json(['isDeleted' => $bookCategory->delete()]);
     }
 
     /**
-    * @param  Array  $categories
-    * @return Array
-    */
+     * @param  array  $categories
+     * @return array
+     */
     public function formatCategoryData($categories)
     {
         $data = [];
@@ -106,6 +107,7 @@ class BookCategoryController extends Controller
                 'assign_books_count' => $category->books_count
             ];
         }
+
         return $data;
     }
 }

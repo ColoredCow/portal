@@ -26,11 +26,12 @@ class HomeController extends Controller
     public function index()
     {
         $unreadBook = (session('disable_book_suggestion')) ? null : Book::getRandomUnreadBook();
+
         return view('home')->with(['book' => $unreadBook]);
     }
 
     /**
-     * Fetch a user's groups from GSuite API
+     * Fetch a user's groups from GSuite API.
      * @param  string $email Email of the user
      * @return array        List of groups
      */
@@ -51,11 +52,12 @@ class HomeController extends Controller
         $groups = $googleGroups->getGroups();
 
         $userGroups = [];
-        if (sizeof($groups)) {
+        if (count($groups)) {
             foreach ($groups as $group) {
                 $userGroups[$group->email] = $group->name;
             }
         }
+
         return $userGroups;
     }
 }

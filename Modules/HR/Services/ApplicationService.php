@@ -57,7 +57,6 @@ class ApplicationService implements ApplicationServiceContract
                 ->count();
         }
 
-
         foreach ($hrRounds as $round) {
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
                 ->where('status', config('hr.status.in-progress.label'))
@@ -84,6 +83,7 @@ class ApplicationService implements ApplicationServiceContract
     {
         $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
         Applicant::_create($data);
+
         return true;
     }
 
@@ -93,5 +93,4 @@ class ApplicationService implements ApplicationServiceContract
         $data['mail_sender_name'] = $data['mail_sender_name'] ?? auth()->user()->name;
         event(new CustomMailTriggeredForApplication($application, $data));
     }
-
 }

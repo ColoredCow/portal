@@ -19,16 +19,15 @@ class ApplicationImport implements ToCollection, WithHeadingRow
     }
 
     /**
-    * @param Collection $collection
-    */
+     * @param Collection $collection
+     */
     public function collection(Collection $collection)
     {
         $rows = $collection->reject(function ($row) {
             return $row->filter()->isNotEmpty() == false;
         });
 
-
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             $data = [];
             $data['job_title'] = $this->job->title;
             $data['first_name'] = $row['first_name'];
@@ -41,12 +40,10 @@ class ApplicationImport implements ToCollection, WithHeadingRow
             $data['linkedin'] = $row['linkedin'];
             $data['resume'] = $row['resume_url'] ?? 'abc';
             $data['form_data'] = [
-                "Why Should We Pick You?" => $row['reason_for_eligibility']
+                'Why Should We Pick You?' => $row['reason_for_eligibility']
             ];
 
             $this->service->saveApplication($data);
         }
-        
-
     }
 }

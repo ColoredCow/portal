@@ -23,7 +23,7 @@ return [
             'design' => 'Design',
             'marketing' => 'Marketing'
         ],
-    
+
     ],
 
     'opportunities-status' => [

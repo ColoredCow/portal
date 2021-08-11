@@ -25,7 +25,7 @@ class AppointmentSlotMailSent
      */
     public function handle($event)
     {
-        if (!$event->getCondition() == 'select-appointment-slot') {
+        if (! $event->getCondition() == 'select-appointment-slot') {
             return true;
         }
 

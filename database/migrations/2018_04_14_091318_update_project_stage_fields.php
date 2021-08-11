@@ -27,8 +27,6 @@ class UpdateProjectStageFields extends Migration
      */
     public function down()
     {
-
-
         Schema::table('project_old_stages', function (Blueprint $table) {
             $table->dropColumn(['type', 'end_date', 'start_date']);
         });

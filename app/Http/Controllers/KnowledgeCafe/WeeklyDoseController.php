@@ -13,7 +13,6 @@ class WeeklyDoseController extends Controller
      *
      * @return \Illuminate\View\View
      */
-
     public function index()
     {
         $this->authorize('list', WeeklyDose::class);

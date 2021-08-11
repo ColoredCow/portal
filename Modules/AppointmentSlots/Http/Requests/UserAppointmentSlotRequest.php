@@ -29,6 +29,7 @@ class UserAppointmentSlotRequest extends FormRequest
                 'edit_end_time' => 'required|date|after:edit_start_time',
             ];
         }
+
         return $rules;
     }
 

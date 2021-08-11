@@ -56,7 +56,7 @@ class Prospect extends Model
             ->where('module_checklist_id', $checklistID)
             ->first();
 
-        if (!$checkListStatus) {
+        if (! $checkListStatus) {
             return '';
         }
 
@@ -71,7 +71,7 @@ class Prospect extends Model
             $query->where('module_checklist_id', $moduleCheckListID);
         }
 
-        if (!$query->count()) {
+        if (! $query->count()) {
             return false;
         }
 

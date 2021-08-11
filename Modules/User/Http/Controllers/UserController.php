@@ -24,6 +24,7 @@ class UserController extends ModuleBaseController
     {
         $this->authorize('viewAny', User::class);
         $users = $this->service->index();
+
         return view('user::index', compact('users'));
     }
 
@@ -80,6 +81,7 @@ class UserController extends ModuleBaseController
     public function updateUserRoles(UpdateUserRolesRequest $request)
     {
         $validatedData = $request->validated();
+
         return $this->service->updateUserRoles($validatedData);
     }
 

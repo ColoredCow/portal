@@ -17,6 +17,7 @@ class RolesController extends Controller
     {
         $roles = Role::with('permissions')->get();
         $permissions = Permission::all();
+
         return view('user::roles.index', compact('roles', 'permissions'));
     }
 

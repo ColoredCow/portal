@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 class CampaignsController extends Controller
 {
     /**
-     * Display the employee reports
+     * Display the employee reports.
      *
      * @return \Illuminate\View\View
      */

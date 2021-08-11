@@ -6,15 +6,16 @@ use Modules\SalesAutomation\Entities\SalesArea;
 
 class SalesAreaService
 {
-	public function index(array $filters = [])
+    public function index(array $filters = [])
     {
         $salesAreaQuery = $this->getSalesAreaFilterQuery($filters);
         $salesAreas = $salesAreaQuery->paginate(config('salesautomation.sales-area.paginate'));
         $responseData = [
             'salesAreas' => $salesAreas,
             'filters' => $filters,
-            'filterDepth' => sizeof($filters),
+            'filterDepth' => count($filters),
         ];
+
         return $responseData;
     }
 
@@ -28,22 +29,25 @@ class SalesAreaService
                     break;
             }
         }
+
         return $salesAreaQuery;
     }
 
-	public function store(array $data)
-	{
-		$salesArea = SalesArea::create([
+    public function store(array $data)
+    {
+        $salesArea = SalesArea::create([
             'name' => $data['name'],
         ]);
-		return $salesArea;
-	}
+
+        return $salesArea;
+    }
 
     public function update(array $data, SalesArea $salesArea)
     {
         $salesArea->update([
             'name' => $data['name'],
         ]);
+
         return $salesArea;
     }
 

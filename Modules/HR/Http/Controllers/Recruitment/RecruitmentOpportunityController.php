@@ -4,7 +4,6 @@ namespace Modules\HR\Http\Controllers\Recruitment;
 
 use Illuminate\Support\Facades\Request;
 use Modules\HR\Entities\Job;
-use Modules\HR\Http\Controllers\Recruitment\JobController;
 
 class RecruitmentOpportunityController extends JobController
 {

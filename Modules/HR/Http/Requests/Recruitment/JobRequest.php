@@ -39,6 +39,7 @@ class JobRequest extends FormRequest
                 'rounds' => 'nullable',
             ];
         }
+
         return $rules;
     }
 

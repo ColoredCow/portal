@@ -25,6 +25,7 @@ class ClientController extends ModuleBaseController
     public function index()
     {
         $this->authorize('viewAny', Client::class);
+
         return view('client::index', $this->service->index());
     }
 
@@ -35,6 +36,7 @@ class ClientController extends ModuleBaseController
     public function create()
     {
         $this->authorize('create', Client::class);
+
         return view('client::create', $this->service->create());
     }
 
@@ -47,6 +49,7 @@ class ClientController extends ModuleBaseController
     {
         $this->authorize('create', Client::class);
         $client = $this->service->store($request->all());
+
         return redirect(route('client.edit', [$client, 'contact-persons']));
     }
 
@@ -68,6 +71,7 @@ class ClientController extends ModuleBaseController
     public function edit(Client $client, $section = null)
     {
         $this->authorize('update', $client);
+
         return view('client::edit', $this->service->edit($client, $section));
     }
 
@@ -81,6 +85,7 @@ class ClientController extends ModuleBaseController
     {
         $this->authorize('update', $client);
         $data = $this->service->update($request->all(), $client);
+
         return redirect($data['route']);
     }
 }

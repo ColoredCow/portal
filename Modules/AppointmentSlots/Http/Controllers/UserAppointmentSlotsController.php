@@ -9,7 +9,6 @@ use Modules\User\Entities\User;
 
 class UserAppointmentSlotsController extends Controller
 {
-
     public function show(User $user)
     {
         if ($user->id != auth()->id()) {
@@ -23,6 +22,7 @@ class UserAppointmentSlotsController extends Controller
             $slot->color = $slot->status == 'free' ? 'blue' : 'green';
         }
         $users = User::all();
+
         return view('appointmentslots::user_appointments.show', compact('slots', 'users', 'user'));
     }
 
@@ -38,7 +38,8 @@ class UserAppointmentSlotsController extends Controller
             'recurrence' => $validated['recurrence'],
             'user_id' => $validated['user_id'],
         ]);
-        return redirect(route("userappointmentslots.show", $validated['user_id']))->with('status', 'Slot created successfully');
+
+        return redirect(route('userappointmentslots.show', $validated['user_id']))->with('status', 'Slot created successfully');
     }
 
     public function update(UserAppointmentSlotRequest $request, AppointmentSlot $appointmentSlot)
@@ -49,6 +50,7 @@ class UserAppointmentSlotsController extends Controller
             'start_time' => $validated['edit_start_time'],
             'end_time' => $validated['edit_end_time'],
         ]);
+
         return redirect(route('userappointmentslots.show', $appointmentSlot->user_id))->with('status', 'Slot updated successfully');
     }
 
@@ -56,6 +58,7 @@ class UserAppointmentSlotsController extends Controller
     {
         $this->authorize('delete', $appointmentSlot);
         $appointmentSlot->delete();
+
         return redirect(route('userappointmentslots.show', $appointmentSlot->user_id))->with('status', 'Slot deleted successfully');
     }
 }

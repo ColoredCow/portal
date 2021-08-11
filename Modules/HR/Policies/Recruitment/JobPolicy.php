@@ -22,6 +22,7 @@ class JobPolicy
         if ($job->type == 'volunteer') {
             return $user->hasPermissionTo('hr_volunteers_jobs.view');
         }
+
         return $user->hasPermissionTo('hr_recruitment_jobs.view');
     }
 
@@ -36,6 +37,7 @@ class JobPolicy
         if (request()->is('hr/volunteers*')) {
             return $user->hasPermissionTo('hr_volunteers_jobs.create');
         }
+
         return $user->hasPermissionTo('hr_recruitment_jobs.create');
     }
 
@@ -51,6 +53,7 @@ class JobPolicy
         if ($job->type == 'volunteer') {
             return $user->hasPermissionTo('hr_volunteers_jobs.update');
         }
+
         return $user->hasPermissionTo('hr_recruitment_jobs.update');
     }
 
@@ -66,6 +69,7 @@ class JobPolicy
         if ($job->type == 'volunteer') {
             return $user->hasPermissionTo('hr_volunteers_jobs.delete');
         }
+
         return $user->hasPermissionTo('hr_recruitment_jobs.delete');
     }
 
@@ -80,6 +84,7 @@ class JobPolicy
         if (request()->is('hr/volunteers*')) {
             return $user->hasPermissionTo('hr_volunteers_jobs.view');
         }
+
         return $user->hasPermissionTo('hr_recruitment_jobs.view');
     }
 
@@ -88,6 +93,7 @@ class JobPolicy
         if (request()->is('hr/volunteers*')) {
             return $user->hasPermissionTo('hr_volunteers_jobs.view');
         }
+
         return $user->hasPermissionTo('hr_recruitment_jobs.view');
     }
 }

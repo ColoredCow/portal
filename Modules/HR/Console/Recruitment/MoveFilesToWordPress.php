@@ -46,7 +46,7 @@ class MoveFilesToWordPress extends Command
             $sourcePath = public_path($application->resume);
             $websitePath = config('constants.website_upload_dir') . '/' . date('Y') . '/' . date('m') . '/';
 
-            if (!is_dir($websitePath)) {
+            if (! is_dir($websitePath)) {
                 mkdir($websitePath);
             }
 

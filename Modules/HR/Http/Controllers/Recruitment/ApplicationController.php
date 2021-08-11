@@ -44,8 +44,9 @@ abstract class ApplicationController extends Controller
         // We need this so that we can redirect user to the older page number.
         // we can improve this logic in the future.
 
-        if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
+        if (! session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
             session()->put(['should_skip_page' => true]);
+
             return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
         }
 
@@ -53,7 +54,7 @@ abstract class ApplicationController extends Controller
             'previous_application_data' => request()->all(),
             'should_skip_page' => false
         ]);
-    
+
         //#TO DO: Move this logic to application service.
         $filters = [
             'status' =>request()->get('status') ?: 'non-rejected',
@@ -62,7 +63,7 @@ abstract class ApplicationController extends Controller
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
-            'round' =>str_replace("-", " ", request()->get('round'))
+            'round' =>str_replace('-', ' ', request()->get('round'))
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
@@ -79,46 +80,47 @@ abstract class ApplicationController extends Controller
             ->latest()
             ->paginate(config('constants.pagination_size'))
             ->appends(request()->except('page'));
-        $countFilters = array_except($filters, ['status','round']);
+        $countFilters = array_except($filters, ['status', 'round']);
         $attr = [
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
         $hrRounds = ['Resume Screening', 'Introductory Call', 'Basic Technical Round', 'Detailed Technical Round', 'Team Interaction Round', 'HR Round', 'Trial Program', 'Volunteer Screening'];
         $strings = array_pluck(config('constants.hr.status'), 'label');
-       
+
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
-                ->whereHas('latestApplicationRound', function ($subQuery){
+                ->whereHas('latestApplicationRound', function ($subQuery) {
                     return $subQuery->where('is_latest', true);
                 })
                 ->count();
         }
-        
+
         foreach ($hrRounds as $round) {
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
             ->where('status', config('constants.hr.status.in-progress.label'))
-            ->whereHas('latestApplicationRound', function ($subQuery) use($round) {
+            ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
                 return $subQuery->where('is_latest', true)
                          ->whereHas('round', function ($subQuery) use ($round) {
-                            return $subQuery->where('name', $round);
+                             return $subQuery->where('name', $round);
                          });
             })
             ->count();
         }
         $attr['jobs'] = Job::all();
         $attr['tags'] = Tag::orderBy('name')->get();
-        $attr['assignees'] = User::whereHas('roles', function($query){
-                $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
-            })->get();
+        $attr['assignees'] = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
+        })->get();
+
         return view('hr.application.index')->with($attr);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  String  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -151,6 +153,7 @@ abstract class ApplicationController extends Controller
             $attr['hasGraduated'] = $application->applicant->hasGraduated();
             $attr['internships'] = Job::isInternship()->latest()->get();
         }
+
         return view('hr.application.edit')->with($attr);
     }
 
@@ -158,16 +161,17 @@ abstract class ApplicationController extends Controller
     {
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
         $pdf = FileHelper::generateOfferLetter($application, $offerLetterTemplate['body'], true);
+
         return response()->json([
             'pdf' => $pdf,
         ]);
     }
 
     /**
-     * Update the specified resource
+     * Update the specified resource.
      *
      * @param ApplicationRequest $request
-     * @param integer $id
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ApplicationRequest $request, int $id)
@@ -180,6 +184,7 @@ abstract class ApplicationController extends Controller
             case config('constants.hr.application-meta.keys.change-job'):
                 $changeJobMeta = $application->changeJob($validated);
                 Mail::send(new JobChanged($application, $changeJobMeta));
+
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');
                 break;
             case config('constants.hr.application-meta.keys.no-show'):
@@ -195,6 +200,7 @@ abstract class ApplicationController extends Controller
                     ]),
                 ]);
                 Mail::send(new RoundNotConducted($application, $roundNotConductedMeta));
+
                 return redirect()->back()->with('status', 'Application updated successfully!');
                 break;
         }
@@ -220,9 +226,10 @@ abstract class ApplicationController extends Controller
 
     public function viewOfferLetter(Application $application)
     {
-        if (!Storage::exists($application->offer_letter)) {
+        if (! Storage::exists($application->offer_letter)) {
             return false;
         }
+
         return Response::make(Storage::get($application->offer_letter), 200, [
             'content-type' => 'application/pdf',
         ]);

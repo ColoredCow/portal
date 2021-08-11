@@ -14,7 +14,6 @@ class UserRemovedEvent
      *
      * @return void
      */
-
     public $user;
 
     public function __construct(User $user)

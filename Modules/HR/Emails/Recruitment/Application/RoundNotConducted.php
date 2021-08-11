@@ -13,7 +13,7 @@ class RoundNotConducted extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Application instance for which round wasn't conducted
+     * Application instance for which round wasn't conducted.
      *
      * @var Application
      */

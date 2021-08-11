@@ -68,7 +68,6 @@ class InvoicePolicy
         return $user->hasPermissionTo('finance_invoices.view');
     }
 
-
     public function viewAny(User $user)
     {
         return $user->hasPermissionTo('finance_invoices.view');

@@ -45,6 +45,7 @@ class ProspectController extends Controller
     public function store(Request $request)
     {
         $prospect = $this->service->store($request->all());
+
         return redirect(route('prospect.edit', [$prospect, 'contact-persons']));
     }
 
@@ -56,6 +57,7 @@ class ProspectController extends Controller
     public function show($id, $section = null)
     {
         return redirect(route('prospect.edit', [$id, 'overview']));
+
         return view('prospect::show', $this->service->show($id, $section));
     }
 
@@ -78,6 +80,7 @@ class ProspectController extends Controller
     public function update(Request $request, $id)
     {
         $data = $this->service->update($request->all(), $id);
+
         return redirect($data['route']);
     }
 
@@ -99,6 +102,7 @@ class ProspectController extends Controller
     public function openDocument(Request $request, $documentID)
     {
         $prospectDocument = ProspectDocument::find($documentID);
+
         return Storage::download($prospectDocument->file_path);
     }
 }

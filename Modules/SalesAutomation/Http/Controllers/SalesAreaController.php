@@ -10,7 +10,6 @@ use Modules\SalesAutomation\Services\SalesAreaService;
 
 class SalesAreaController extends Controller
 {
-
     protected $service;
 
     public function __construct(SalesAreaService $service)
@@ -26,6 +25,7 @@ class SalesAreaController extends Controller
     {
         $filters = request()->has('filters') ? request()->get('filters') : [];
         $data = $this->service->index($filters);
+
         return view('salesautomation::sales-area.index')->with($data);
     }
 
@@ -46,6 +46,7 @@ class SalesAreaController extends Controller
     public function store(Request $request)
     {
         $salesArea = $this->service->store($request->all());
+
         return redirect()->route('sales-area.index')->with('status', 'Sales Area added successfully!');
     }
 
@@ -78,6 +79,7 @@ class SalesAreaController extends Controller
     public function update(Request $request, SalesArea $salesArea)
     {
         $this->service->update($request->all(), $salesArea);
+
         return redirect()->route('sales-area.index')->with('status', 'Sales Area updated successfully!');
     }
 
@@ -89,6 +91,7 @@ class SalesAreaController extends Controller
     public function destroy(SalesArea $salesArea)
     {
         $this->service->destroy($salesArea);
+
         return redirect()->route('sales-area.index')->with('status', 'Sales Area deleted successfully!');
     }
 }
