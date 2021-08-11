@@ -25,31 +25,31 @@
 
 
 <script>
-    export default {
-        props: ['book', 'newCommentRoute', 'bookComments', 'user'],
-        data() {
-            return {
-               book_id:1,
-               comments:[],
-               newComment:''
-            }
-        },
+export default {
+	props: ["book", "newCommentRoute", "bookComments", "user"],
+	data() {
+		return {
+			book_id:1,
+			comments:[],
+			newComment:""
+		};
+	},
 
-        mounted() {
-            this.comments = this.bookComments.reverse();
-        },
+	mounted() {
+		this.comments = this.bookComments.slice().reverse();
+	},
 
-        methods: {
-           async addNewComment() {
-                let response = await axios.post(this.newCommentRoute, {comment:this.newComment});
-                this.newComment = '';
-                this.comments.push(response.data);
-                this.comments.reverse();
-           },
+	methods: {
+		async addNewComment() {
+			let response = await axios.post(this.newCommentRoute, {comment:this.newComment});
+			this.newComment = "";
+			this.comments.push(response.data);
+			this.comments.reverse();
+		},
 
-           async onDeleteComment(data) {
-                this.comments.splice(data.index, 1);   
-           },
-        }
-    }
+		async onDeleteComment(data) {
+			this.comments.splice(data.index, 1);   
+		},
+	}
+};
 </script>

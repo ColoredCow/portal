@@ -59,110 +59,110 @@
 </template>
 
 <script>
-    export default {
+export default {
 
-       props:['user', 'updateRoute', 'config'],
+	props:["user", "updateRoute", "config"],
 
-        data(){
-            return {
-                roles: [],
-                roleInputs:[],
-                activeTile:'portal'
+	data(){
+		return {
+			roles: [],
+			roleInputs:[],
+			activeTile:"portal"
 
-            }
-        },
+		};
+	},
 
-        methods: {
-            async getRoles() {
-               let response = await axios.get('user/get-roles');
-               this.roles = response.data;
-            },
+	methods: {
+		async getRoles() {
+			let response = await axios.get("user/get-roles");
+			this.roles = response.data;
+		},
 
-            setupUserRoles: function() {
-                let userRoles = this.user.roles;
-                if(!userRoles) {
-                    return false;
-                }
-
-
-                let roleInputContainer = document.querySelector("#update_user_roles_modal");
-                let allRoleInputs = roleInputContainer.querySelectorAll('input[type="checkbox"]');
-                allRoleInputs.forEach((checkbox) => this.roleInputs[checkbox.value] = checkbox);
-
-                if(userRoles.some(role => role.name == 'super-admin')) {
-                    this.roleInputs.map((checkbox) => checkbox.checked = true);
-                    return;
-                }
-
-                this.roleInputs.map((checkbox) => checkbox.checked = false);
-                userRoles.forEach((role) => this.roleInputs[role.id].checked =  true);
-            },
-
-            updateUserRoles() {
-                let selectedRoles = [];
-                let userID =  this.user.id;
-                this.roleInputs.forEach(function(checkbox) {
-                    if(checkbox.checked) {
-                        selectedRoles.push({
-                            name:checkbox.dataset.role,
-                            id:checkbox.value,
-                            label:checkbox.dataset.label
-                        });
-                    }
-                });
-
-                let route = `${this.updateRoute}`;
-                axios.put(route, { roles: JSON.parse(JSON.stringify(selectedRoles)), user_id: userID});
-                document.getElementById('close_update_user_roles_modal').click();
-
-                this.$emit('userRolesUpdated', selectedRoles)
-            },
-
-           checkForSuperAdmin(role) {
-                if(role.name != 'super-admin') {
-                    if(!this.roleInputs[role.id].checked) {
-                        this.roleInputs.map((checkbox) => (checkbox.dataset.role == 'super-admin') ? checkbox.checked = false : '');
-                    }
-                   return true;
-                }
+		setupUserRoles: function() {
+			let userRoles = this.user.roles;
+			if(!userRoles) {
+				return false;
+			}
 
 
-                if(this.roleInputs[role.id].checked) {
-                   this.roleInputs.map((checkbox) => checkbox.checked = true);
-                   return true;
-                }
+			let roleInputContainer = document.querySelector("#update_user_roles_modal");
+			let allRoleInputs = roleInputContainer.querySelectorAll("input[type='checkbox']");
+			allRoleInputs.forEach((checkbox) => this.roleInputs[checkbox.value] = checkbox);
 
-                this.roleInputs.map((checkbox) => checkbox.checked = false);
-                return true;
-           },
+			if(userRoles.some(role => role.name == "super-admin")) {
+				this.roleInputs.map((checkbox) => checkbox.checked = true);
+				return;
+			}
 
-            setActiveTile(tile) {
-                this.activeTile = tile;
-                document.querySelector(".active").classList.remove("active");
-                document.querySelector(`#${tile}`).classList.add("active");
+			this.roleInputs.map((checkbox) => checkbox.checked = false);
+			userRoles.forEach((role) => this.roleInputs[role.id].checked =  true);
+		},
 
-            },
+		updateUserRoles() {
+			let selectedRoles = [];
+			let userID =  this.user.id;
+			this.roleInputs.forEach(function(checkbox) {
+				if(checkbox.checked) {
+					selectedRoles.push({
+						name:checkbox.dataset.role,
+						id:checkbox.value,
+						label:checkbox.dataset.label
+					});
+				}
+			});
 
-            getWebsiteUserProfileUrl() {
-                return this.config.website_url
-                        + '/wp/wp-admin/user-edit.php'
-                        + '?idp_referrer=' + window.location.href
-                        + '&user_id=' +  this.user.websiteUser.ID
+			let route = `${this.updateRoute}`;
+			axios.put(route, { roles: JSON.parse(JSON.stringify(selectedRoles)), user_id: userID});
+			document.getElementById("close_update_user_roles_modal").click();
+
+			this.$emit("userRolesUpdated", selectedRoles);
+		},
+
+		checkForSuperAdmin(role) {
+			if(role.name != "super-admin") {
+				if(!this.roleInputs[role.id].checked) {
+					this.roleInputs.map((checkbox) => (checkbox.dataset.role == "super-admin") ? checkbox.checked = false : "");
+				}
+				return true;
+			}
 
 
-            }
+			if(this.roleInputs[role.id].checked) {
+				this.roleInputs.map((checkbox) => checkbox.checked = true);
+				return true;
+			}
 
-        },
+			this.roleInputs.map((checkbox) => checkbox.checked = false);
+			return true;
+		},
 
-        watch: {
-            user: function(selectedUser) {
-                this.setupUserRoles();
-            }
-        },
+		setActiveTile(tile) {
+			this.activeTile = tile;
+			document.querySelector(".active").classList.remove("active");
+			document.querySelector(`#${tile}`).classList.add("active");
 
-        mounted: function() {
-            this.getRoles();
-        }
+		},
 
-    }
+		getWebsiteUserProfileUrl() {
+			return this.config.website_url
+                        + "/wp/wp-admin/user-edit.php"
+                        + "?idp_referrer=" + window.location.href
+                        + "&user_id=" + this.user.websiteUser.ID;
+
+
+		}
+
+	},
+
+	watch: {
+		user: function(selectedUser) {
+			this.setupUserRoles();
+		}
+	},
+
+	mounted: function() {
+		this.getRoles();
+	}
+
+};
 </script>

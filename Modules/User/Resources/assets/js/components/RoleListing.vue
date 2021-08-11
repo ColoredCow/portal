@@ -27,40 +27,40 @@
 </template>
 
 <script>
-    export default {
-        props:[ 'roles', 'updateRoute', 'permissions'],
+export default {
+	props:[ "roles", "updateRoute", "permissions"],
 
-        data(){
-            return { 
-                currentUserIndex: 0,
-                roleInputs: [],
-                allRoles: this.roles,
-                selectedRole:{}
-            }  
-        },
+	data(){
+		return { 
+			currentUserIndex: 0,
+			roleInputs: [],
+			allRoles: this.roles,
+			selectedRole:{}
+		};  
+	},
 
-        methods: {
-            formatRoles(user) {
-                let roleNames = [];
-                let userRoles = user.roles;
-                for(var i in userRoles) {
-                    let roleName = userRoles[i].label;
-                    roleNames.push(roleName);
-                }
+	methods: {
+		formatRoles(user) {
+			let roleNames = [];
+			let userRoles = user.roles;
+			for(var i in userRoles) {
+				let roleName = userRoles[i].label;
+				roleNames.push(roleName);
+			}
         
-                return roleNames.join(', ');
-            },
+			return roleNames.join(", ");
+		},
 
-            updatePermissionModal: function(index) {
-                this.currentUserIndex = index;
-                this.selectedRole = this.roles[index];
-            },
+		updatePermissionModal: function(index) {
+			this.currentUserIndex = index;
+			this.selectedRole = this.roles[index];
+		},
 
-            onRolePressionsUpdated: function(selectedPermissions) {
-                Vue.set(this.selectedRole, 'permissions',  selectedPermissions);
-            }
+		onRolePressionsUpdated: function(selectedPermissions) {
+			Vue.set(this.selectedRole, "permissions",  selectedPermissions);
+		}
 
 
-        }
-    }
+	}
+};
 </script>

@@ -33,28 +33,28 @@
 </template>
 
 <script>
-    export default {
-        props: ['billing', 'index', 'stageCostWithGst', 'gstAmount', 'stageCostWithoutGst', 'currency', 'clientCountryGstApplicable'],
-        computed: {
-            billingCostWithoutGst: function() {
-                return this.stageCostWithoutGst  == 0 ? parseFloat(0).toFixed(2) : parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst).toFixed(2);
-            },
-            billingGstAmount: function() {
-                return parseFloat((this.billing.percentage/100)*this.gstAmount).toFixed(2);
-            },
-            billingCostWithGst: function() {
-                return this.stageCostWithGst == 0 ? parseFloat(0).toFixed(2) : parseFloat((this.billing.percentage/100)*this.stageCostWithGst).toFixed(2);
-            }
-        },
-        methods: {
-            addNewInvoice() {
-                let args = {
-                    'billingId' : this.billing.id,
-                    'invoiceAmount' : this.clientCountryGstApplicable ? this.billingCostWithGst : this.billingCostWithoutGst,
-                    'gst' : this.billingGstAmount,
-                };
-                this.$emit('addBillingInvoice', args);
-            }
-        }
-    }
+new Vue({
+	props: ["billing", "index", "stageCostWithGst", "gstAmount", "stageCostWithoutGst", "currency", "clientCountryGstApplicable"],
+	computed: {
+		billingCostWithoutGst: function() {
+			return this.stageCostWithoutGst  == 0 ? parseFloat(0).toFixed(2) : parseFloat((this.billing.percentage/100)*this.stageCostWithoutGst).toFixed(2);
+		},
+		billingGstAmount: function() {
+			return parseFloat((this.billing.percentage/100)*this.gstAmount).toFixed(2);
+		},
+		billingCostWithGst: function() {
+			return this.stageCostWithGst == 0 ? parseFloat(0).toFixed(2) : parseFloat((this.billing.percentage/100)*this.stageCostWithGst).toFixed(2);
+		}
+	},
+	methods: {
+		addNewInvoice() {
+			let args = {
+				"billingId" : this.billing.id,
+				"invoiceAmount" : this.clientCountryGstApplicable ? this.billingCostWithGst : this.billingCostWithoutGst,
+				"gst" : this.billingGstAmount,
+			};
+			this.$emit("addBillingInvoice", args);
+		}
+	}
+});
 </script>
