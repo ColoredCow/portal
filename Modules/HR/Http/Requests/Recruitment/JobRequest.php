@@ -22,6 +22,8 @@ class JobRequest extends FormRequest
                 'status' => 'required|string',
                 'by' => 'nullable|string', // Todo: remove this. not needed anymore.
                 'link' => 'nullable|url', // Todo: remove this. not needed anymore.
+                'start_date' =>'required|date',
+                'end_date' => 'required|date',
             ];
         }
 
@@ -37,6 +39,8 @@ class JobRequest extends FormRequest
                 'twitter_post' => 'nullable|url',
                 'linkedin_post' => 'nullable|url',
                 'rounds' => 'nullable',
+                'start_date' =>'required|date',
+                'end_date' => 'required|date',
             ];
         }
         return $rules;

@@ -50,7 +50,18 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-md-3 form-group">
+                        <label for="start_date" class="fz-14 leading-none text-secondary mb-1">Start Date</label>
+                        <input type="date" name="start_date" class="form-control">
+                        
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label for="end_date" class="fz-14 leading-none text-secondary mb-1">End Date</label>
+                        <input type="date" name="end_date" class="form-control">
+                    </div>
                 </div>
+
                 <div class="form-group">
                     <label for="description" class="fz-14 leading-none text-secondary mb-1">Description</label>
                     <textarea id="description" class="form-control richeditor" name="description" rows="4" placeholder="Enter job description...">{{ old('description') }}</textarea>

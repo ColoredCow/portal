@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
 Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
     Route::prefix('library')->namespace('Library')->group(function () {
         Route::get('book/getList', 'BookController@getBookList');
