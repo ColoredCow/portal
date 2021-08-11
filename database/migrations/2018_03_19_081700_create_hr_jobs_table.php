@@ -22,8 +22,6 @@ class CreateHrJobsTable extends Migration
             $table->string('twitter_post')->nullable();
             $table->string('linkedin_post')->nullable();
             $table->string('instagram_post')->nullable();
-            
-
             $table->timestamps();
         });
     }
