@@ -28,12 +28,6 @@ export default {
 		}
 	},
 
-	mounted() {
-		//this.getReadBooks();
-	}
-
-
-
 };
 
 
