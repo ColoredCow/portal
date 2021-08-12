@@ -1,4 +1,4 @@
--## Installation Guidelines :rocket:
+## Installation Guidelines :rocket:
 
 1. Clone this repository and move to `portal` directory
    ```sh
@@ -10,23 +10,9 @@
 ```sh
 composer install 
 ```
-Note: Install php version 7.3 or 7.4 not more than that
-link for php7.4(https://www.php.net/downloads.php#v7.4.21)
 ```
 npm install
 ```
- Changes in php.ini file 
- Go to `C:\xampp\php` and open the `php.ini` file in notepad (run as administrator).
- Type in the find box `ssl`
- ```
- ;extension=openssl
- ```
-Remove the semicolon in the front 
- ```
- extension=openssl
- ```
-save the file
-
 
 3. npm build
 ```sh
