@@ -53,7 +53,7 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @if(Module::checkStatus('User'))
+                                    @if (Module::checkStatus('User'))
                                         <a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a>
                                     @endif
                                     @if(auth()->user()->provider == 'google')
@@ -61,7 +61,7 @@
                                     @endif
                                     @if(auth()->user()->isSuperAdmin())
                                         <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all users</a>
-                                    @endif
+                                        @endif
                                     @if(auth()->user()->canAccessWebsite())
                                         <a target="_blank" class="dropdown-item" href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to website</a>
                                     @endif

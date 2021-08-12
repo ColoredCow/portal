@@ -74,8 +74,8 @@ class JobController extends Controller
             'type' => $validated['type'],
             'posted_by' => $validated['by'] ?? null,
             'link' => $validated['link'] ?? null,
-            'start_date' => $validated['start_date'] ?? null,
-            'end_date' => $validated['end_date'] ?? null,
+            'start_date' =>$validated['start_date'],
+            'end_date' =>$validated['end_date'],
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
         return redirect($route)->with('status', "Successfully updated $opportunity->title!");
