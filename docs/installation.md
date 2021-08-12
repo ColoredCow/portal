@@ -26,6 +26,7 @@ npm run dev
 ```sh
 php artisan key:generate
 ```
+
 6. Add the following settings in `.env` file:
     1. Laravel app configurations
     ```sh
