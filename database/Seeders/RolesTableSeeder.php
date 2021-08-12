@@ -86,6 +86,20 @@ class RolesTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'User having this role will be able to Create, Update and Delete the clients having him as a key account manager.',
             ],
+            10 => [
+                'id' => 11,
+                'name' => 'project-manager',
+                'label' => 'Project Manager',
+                'guard_name' => 'web',
+                'description' => 'User having this role will be able to Create, Update and Delete the projects having him as a project manager.',
+            ],
+            11 => [
+                'id' => 12,
+                'name' => 'accountant',
+                'label' => 'Accountant',
+                'guard_name' => 'web',
+                'description' => 'User having this role will be able to view the finance report',
+            ]
         ]);
     }
 }
