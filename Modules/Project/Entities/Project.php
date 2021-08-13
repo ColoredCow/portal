@@ -15,7 +15,7 @@ class Project extends Model
 
     public function resources()
     {
-        return $this->belongsToMany(User::class, 'project_resource', 'project_id', 'resource_id')
+        return $this->belongsToMany(User::class, 'project_resources', 'project_id', 'resource_id')
             ->withPivot('designation')->withTimestamps();
     }
 
