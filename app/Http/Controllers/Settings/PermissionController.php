@@ -47,7 +47,7 @@ class PermissionController extends Controller
 
     public function updateRolePermissions(UpdateRolePermissionsRequest $request)
     {
-        $this->authorize('settings.update-role', Permission::class);
+        $this->authorize('settings.update', Permission::class);
         $validatedData = $request->validated();
         if (!isset($validatedData['permissions'])) {
             return response()->json([
