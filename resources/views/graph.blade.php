@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-
 @section('content')
 <head>
-   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <script type="text/javascript" src="{{ URL::asset('js/.js') }}"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
 </head>
 <br>
+
 <body>
   <div class="chart-container" align="center">
    <div class="line-chart-container" style="width : 1000px">
@@ -20,6 +20,7 @@
         <input type="submit" value="View"> 
       </form>  
       <br>
+
       <div class="card">
         <div class="card-header" align='left'>
           <span style="font-size: 35px;">Application Recived</span> &emsp;&emsp; <span style="font-size: 20px;">Today's Count:<?php echo $todayCount; ?></span> 
@@ -29,16 +30,6 @@
         </div>
       </div>
       <script>
-        $(function(){
-          $("#EndDate").change(function () {
-            var startDate = document.getElementById("StartDate").value;
-            var endDate = document.getElementById("EndDate").value;
-            if ((Date.parse(endDate) <= Date.parse(startDate))) {
-              alert("End date should be greater than Start date");
-              document.getElementById("EndDate").value = "";
-            }
-          });
-        });
         $(function(){
         var cData = JSON.parse(`<?php echo $chart_data; ?>`);
         var ctx = $("#line-chart");
@@ -62,32 +53,32 @@
                 displayColors:false,
                 bodyFontSize: 20,
                 bodyFontStyle: 'bold',
-                //backgroundColor:"#E5E5E5",
-                //bodyFontColor:"#E0DEDE",
+                backgroundColor:"#E5E5E5",
+                bodyFontColor:"#E0DEDE",
                 cornerRadius:0,
                 borderWidth:2
               },
               title: {
-              display: false,
+               display: false,
               },
               legend: {
-              display: false,
+               display: false,
               }, 
               scales: {
                 yAxes: [{
-                ticks: { min: 0, max: 5, stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5},
+                ticks: {stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5},
                 }]
               },  
               elements: {
-              line: {
-                fill: false,
-                tension: 0
+               line: {
+                 fill: false,
+                 tension: 0
                 },
-              point:{
-                radius:0
-              }
-            }   
-          };
+               point:{
+                 radius:0
+                }
+              }    
+            };
 
           var charts = new Chart(ctx, {
             type: "line",
