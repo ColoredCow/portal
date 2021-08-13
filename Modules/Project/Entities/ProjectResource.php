@@ -4,7 +4,7 @@ namespace Modules\Project\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectResources extends Model
+class ProjectResource extends Model
 {
     protected $guarded = [];
 }
