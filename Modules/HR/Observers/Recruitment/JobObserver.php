@@ -4,7 +4,6 @@ namespace Modules\HR\Observers\Recruitment;
 
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
-use Modules\HR\Http\Controllers\Recruitment\JobController;
 use Corcel\Model\Post as Corcel;
 
 class JobObserver
@@ -20,11 +19,11 @@ class JobObserver
         $job->rounds()->attach(Round::all()->pluck('id')->toArray());
         $data = request()->all();
 
-        if ($data['status'] == "published") {
-            $Corcel=new Corcel();
-            $Corcel->post_title=$data['title'];
-            $Corcel->post_content=$data['description'];
-            $Corcel->post_type="career";
+        if ($data['status'] == 'published') {
+            $Corcel = new Corcel();
+            $Corcel->post_title = $data['title'];
+            $Corcel->post_content = $data['description'];
+            $Corcel->post_type = 'career';
             $Corcel->save();
             $Corcel->saveMeta('hr_id', $job['id']);
         }
@@ -40,11 +39,11 @@ class JobObserver
     {
         $data = request()->all();
 
-        if ($data['status'] == "published") {
+        if ($data['status'] == 'published') {
             $Corcel = new Corcel();
-            $Corcel->post_title=$data['title'];
-            $Corcel->post_content=$data['description'];
-            $Corcel->post_type="career";
+            $Corcel->post_title = $data['title'];
+            $Corcel->post_content = $data['description'];
+            $Corcel->post_type = 'career';
             $Corcel->save();
             $Corcel->saveMeta('hr_id', $job['id']);
             $post = Corcel::hasMeta('hr_id', $job['id'])->first();
