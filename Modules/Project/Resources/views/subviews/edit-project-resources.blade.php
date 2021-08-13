@@ -22,7 +22,7 @@
                     <div class="col-4">
                         <select v-model="projectResource.id" :name="`projectResource[${index}][resource_id]`" class="form-control">
                             <option value="">Select Resource</option>
-                            <option v-for="(resource) in allRsources" :value="resource.id" :key="resource.id">@{{ resource.name }}</option>
+                            <option v-for="(resource) in allResources" :value="resource.id" :key="resource.id">@{{ resource.name }}</option>
                         </select>
                     </div>
                     <div class="col-4">

@@ -30,7 +30,7 @@ new Vue({
         return {
             project: @json($project),
             projectResources:@json($projectResources),
-            allRsources:@json($resources),
+            allResources:@json($resources->sortBy('name')->values()),
             resourcesDesignations:@json($resourcesDesignations)
         }
     },
