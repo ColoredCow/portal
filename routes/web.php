@@ -174,6 +174,6 @@ Route::middleware('auth')->group(function () {
     Route::get('user/read-books', 'UserBookController@index');
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     
-    Route::get('/dashboard', 'DashboardController@index');
-    Route::post('/dashboard', 'DashboardController@searchBydate');
+    Route::get('/dashboard', 'HR\DashboardController@index');
+    Route::post('/dashboard', 'HR\DashboardController@searchBydate');
 });
