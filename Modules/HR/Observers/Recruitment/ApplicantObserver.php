@@ -30,7 +30,7 @@ class ApplicantObserver
                 }
                 
                 return;
-            } 
+            }
             $applicant->update(['hr_university_id' => $university->id]);
         }
     }
