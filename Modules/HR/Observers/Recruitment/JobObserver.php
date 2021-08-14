@@ -23,7 +23,7 @@ class JobObserver
             $Corcel = new Corcel();
             $Corcel->post_title = $data['title'];
             $Corcel->post_content = $data['description'];
-            $Corcel->post_type = 'career';
+            $Corcel->post_type = config('hr.post-type.career');
             $Corcel->save();
             $Corcel->saveMeta('hr_id', $job['id']);
         }
@@ -40,15 +40,8 @@ class JobObserver
         $data = request()->all();
 
         if ($data['status'] == 'published') {
-            $Corcel = new Corcel();
-            $Corcel->post_title = $data['title'];
-            $Corcel->post_content = $data['description'];
-            $Corcel->post_type = 'career';
-            $Corcel->save();
-            $Corcel->saveMeta('hr_id', $job['id']);
             $post = Corcel::hasMeta('hr_id', $job['id'])->first();
-            $corcel = Corcel::find($post->ID);
-            $corcel->delete();
+            Corcel::find($post->ID)->update(['post_type' => config('hr.post-type.career'), 'post_title' => $data['title'] ,'post_content' => $data['description']]);
         }
     }
 
