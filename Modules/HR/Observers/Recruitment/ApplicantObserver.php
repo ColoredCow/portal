@@ -28,7 +28,7 @@ class ApplicantObserver
                 } else {
                     $applicant->update(['hr_university_id' => $universityAlias->hr_university_id]);
                 }
-                
+
                 return;
             }
             $applicant->update(['hr_university_id' => $university->id]);
