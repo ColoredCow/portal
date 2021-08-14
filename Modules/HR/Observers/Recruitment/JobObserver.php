@@ -41,7 +41,7 @@ class JobObserver
 
         if ($data['status'] == 'published') {
             $post = Corcel::hasMeta('hr_id', $job['id'])->first();
-            Corcel::find($post->ID)->update(['post_type' => config('hr.post-type.career'), 'post_title' => $data['title'] ,'post_content' => $data['description']]);
+            Corcel::find($post->ID)->update(['post_type' => config('hr.post-type.career'), 'post_title' => $data['title'], 'post_content' => $data['description']]);
         }
     }
 
