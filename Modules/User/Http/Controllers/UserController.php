@@ -38,16 +38,6 @@ class UserController extends ModuleBaseController
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Show the specified resource.
      * @param int $id
      * @return Response
@@ -67,17 +57,6 @@ class UserController extends ModuleBaseController
         return view('user::edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     public function updateUserRoles(UpdateUserRolesRequest $request)
     {
         $validatedData = $request->validated();
@@ -88,7 +67,7 @@ class UserController extends ModuleBaseController
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Response
+     * @return void
      */
     public function destroy(User $user)
     {
