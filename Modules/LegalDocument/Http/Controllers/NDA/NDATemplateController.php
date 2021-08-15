@@ -76,16 +76,6 @@ class NDATemplateController extends Controller
         return redirect(route('legal-document.nda.template.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function showPreview(Request $request)
     {
         $template = LegalDocumentTemplate::find(request('template_id'));

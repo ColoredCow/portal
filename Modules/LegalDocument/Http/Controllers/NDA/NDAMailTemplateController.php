@@ -9,13 +9,6 @@ use Modules\LegalDocument\Entities\LegalDocumentMailTemplate;
 
 class NDAMailTemplateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index()
-    {
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -71,16 +64,6 @@ class NDAMailTemplateController extends Controller
         $legalDocumentTemplate = LegalDocumentMailTemplate::find($id)->update($request->all());
 
         return redirect(route('legal-document.nda.index'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function showPreview(Request $request)

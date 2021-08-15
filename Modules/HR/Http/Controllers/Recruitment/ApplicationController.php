@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;

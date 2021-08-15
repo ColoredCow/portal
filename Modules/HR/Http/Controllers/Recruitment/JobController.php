@@ -2,6 +2,7 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
+use Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\Job;

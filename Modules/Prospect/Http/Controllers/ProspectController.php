@@ -84,16 +84,6 @@ class ProspectController extends Controller
         return redirect($data['route']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function newProgressStage(Request $request)
     {
         return $this->service->addNewProgressStage($request->all());

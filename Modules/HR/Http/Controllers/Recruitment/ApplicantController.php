@@ -28,17 +28,6 @@ class ApplicantController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @return void
-     */
-    public function index(ApplicantRequest $request)
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return void
@@ -76,51 +65,6 @@ class ApplicantController extends Controller
         Excel::import(new ApplicationImport($job), request()->file('excel_file'));
 
         return redirect(route('applications.job.index'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Modules\HR\Entities\Applicant  $applicant
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Applicant $applicant)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Modules\HR\Entities\Applicant  $applicant
-     * @return void
-     */
-    public function edit(Applicant $applicant)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @param  \Modules\HR\Entities\Applicant  $applicant
-     * @return void
-     */
-    public function update(ApplicantRequest $request, Applicant $applicant)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Modules\HR\Entities\Applicant  $applicant
-     * @return void
-     */
-    public function destroy(Applicant $applicant)
-    {
-        //
     }
 
     /**

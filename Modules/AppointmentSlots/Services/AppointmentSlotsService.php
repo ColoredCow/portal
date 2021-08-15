@@ -46,7 +46,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             $userId = $application->latestApplicationRound->scheduled_person_id;
             // if already rejected
             if ($application->isRejected() || $application->latestApplicationRound->scheduled_date) {
-                return abort(404);
+                abort(404);
             }
         } else {
             // old method. Kept for backward compatibility. Deprecated.

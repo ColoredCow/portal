@@ -22,15 +22,6 @@ class PaymentSettingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
      * Show the specified resource.
      * @param int $id
      * @return Response
@@ -69,13 +60,4 @@ class PaymentSettingController extends Controller
         return redirect(route('payment-setting.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
