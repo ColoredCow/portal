@@ -58,13 +58,12 @@
                         </select>   
                     </div>
                     <div class="col-md-3 form-group">
-                    <label for="start_date" class="fz-14 leading-none text-secondary mb-1">Start Date<strong class="text-danger"></strong></label>
-                    <input type="date" id="start_date" name="start_date" class="form-control">
+                        <label for="start_date" class="fz-14 leading-none text-secondary mb-1">Start Date></label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ old('start_date' , $job->start_date)}}">     
                     </div>
-
                     <div class="col-md-3 form-group">
-                    <label for="end_date" class="fz-14 leading-none text-secondary mb-1">End Date<strong class="text-danger"></strong></label>
-                    <input type="date" id="end_date" name="end_date" class="form-control">
+                        <label for="end_date" class="fz-14 leading-none text-secondary mb-1">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ old('start_date' , $job->end_date)}}">
                     </div>
                 </div>
                 <div class="form-group">
