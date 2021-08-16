@@ -30,12 +30,12 @@ class UpdateProjectResourceTable extends Migration
     public function down()
     {
         Schema::table('project_resources', function (Blueprint $table) {
-            $table->bigInteger('project_id')->change();
-            $table->bigInteger('resource_id')->change();
             $table->dropForeign('project_resources_resource_id_foreign');
             $table->dropIndex('project_resources_resource_id_foreign');
             $table->dropForeign('project_resources_project_id_foreign');
             $table->dropIndex('project_resources_project_id_foreign');
+            $table->bigInteger('project_id')->change();
+            $table->bigInteger('resource_id')->change();
         });
         Schema::rename( 'project_resources', 'project_resource' );
     }
