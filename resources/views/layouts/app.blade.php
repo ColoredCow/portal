@@ -15,7 +15,13 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     @yield('css_scripts')
+    
+    <!-- Chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
+    <script type="text/javascript" src="{{ URL::asset('resources/js/app.js') }}"></script>
 
 </head>
 
