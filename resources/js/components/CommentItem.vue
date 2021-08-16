@@ -34,7 +34,7 @@
 </template>
 
 <script>
-new Vue( {
+export default {
 	props: ["comment", "editable", "bookIndex"],
 	data() {
 		return {
@@ -65,5 +65,5 @@ new Vue( {
 			this.$emit("onDeleteComment", { index:this.bookIndex, comment:this.comment} );
 		}
 	}
-});
+};
 </script>
