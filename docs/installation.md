@@ -1,4 +1,4 @@
--## Installation Guidelines :rocket:
+## Installation Guidelines :rocket:
 
 1. Clone this repository
 ```sh
