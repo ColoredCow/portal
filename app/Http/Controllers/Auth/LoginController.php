@@ -67,7 +67,6 @@ class LoginController extends Controller
      * If the user exists, log them in. Otherwise, create a new user then log them in. After that
      * redirect them to the authenticated users homepage.
      *
-     * @return Response
      */
     public function handleProviderCallback($provider)
     {

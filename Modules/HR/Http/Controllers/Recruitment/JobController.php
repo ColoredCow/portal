@@ -113,7 +113,6 @@ class JobController extends Controller
      *
      * @param  JobRequest  $request
      * @param  Job  $opportunity
-     * @return RedirectResponse
      */
     public function update(JobRequest $request, Job $opportunity)
     {
