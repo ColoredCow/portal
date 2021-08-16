@@ -63,7 +63,7 @@ class ProspectController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param Prospect $prospect
      * @return Response
      */
     public function edit(Prospect $prospect, $section = null)

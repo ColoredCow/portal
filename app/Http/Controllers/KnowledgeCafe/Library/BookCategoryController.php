@@ -39,8 +39,8 @@ class BookCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest  $request
-     *  @return void
+     * @param  BookCategoryRequest  $request
+     * @return void
      */
     public function store(BookCategoryRequest $request)
     {
@@ -71,8 +71,8 @@ class BookCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest  $request
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
+     * @param  BookCategoryRequest  $request
+     * @param  BookCategory  $bookCategory
      * @return \Illuminate\Http\Response
      */
     public function update(BookCategoryRequest $request, BookCategory $bookCategory)

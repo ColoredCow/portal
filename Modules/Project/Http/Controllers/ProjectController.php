@@ -42,7 +42,7 @@ class ProjectController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
+     * @param ProjectRequest $request
      * @return Response
      */
     public function store(ProjectRequest $request)
@@ -65,7 +65,7 @@ class ProjectController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param Project $project
      * @return Response
      */
     public function edit(Project $project)
@@ -82,7 +82,6 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
      * @return Response
      */
     public function update(Request $request, Project $project)

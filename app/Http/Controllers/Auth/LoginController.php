@@ -44,7 +44,6 @@ class LoginController extends Controller
     /**
      * Redirect the user to the OAuth Provider.
      *
-     * @return Response
      */
     public function redirectToProvider($provider)
     {
@@ -101,8 +100,6 @@ class LoginController extends Controller
     /**
      * If a user has registered before using social auth, return the user
      * else, create a new user object.
-     * @param  $user Socialite user object
-     * @param $provider Social auth provider
      * @return  User
      */
     public function findOrCreateUser($user, $provider)

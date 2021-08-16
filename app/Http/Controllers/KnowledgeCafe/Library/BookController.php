@@ -46,7 +46,7 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\BookRequest  $request
+     * @param  BookRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(BookRequest $request)
@@ -116,7 +116,7 @@ class BookController extends Controller
     /**
      * Fetch the book info.
      *
-     * @param  \App\Http\Requests\BookRequest  $request
+     * @param  BookRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function fetchBookInfo(BookRequest $request)

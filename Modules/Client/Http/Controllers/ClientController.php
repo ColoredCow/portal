@@ -42,7 +42,7 @@ class ClientController extends ModuleBaseController
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
+     * @param ClientRequest $request
      * @return Response
      */
     public function store(ClientRequest $request)
@@ -65,7 +65,6 @@ class ClientController extends ModuleBaseController
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
      * @return Response
      */
     public function edit(Client $client, $section = null)
@@ -77,8 +76,7 @@ class ClientController extends ModuleBaseController
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
+     * @param ClientFormsRequest $request
      * @return Response
      */
     public function update(ClientFormsRequest $request, Client $client)

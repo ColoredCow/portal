@@ -66,7 +66,7 @@ class UserController extends ModuleBaseController
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
+     * @param User $user
      * @return void
      */
     public function destroy(User $user)

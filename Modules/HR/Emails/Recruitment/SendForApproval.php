@@ -18,8 +18,7 @@ class SendForApproval extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param User        $supervisor
-     * @param Application $application
+     * @param User $approver
      */
     public function __construct(User $approver, $mailTemplate)
     {

@@ -61,7 +61,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\HR\JobRequest  $request
+     * @param  JobRequest  $request
      * @return \Modules\HR\Entities\Job
      */
     public function store(JobRequest $request)
@@ -111,9 +111,9 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\HR\JobRequest  $request
-     * @param  \Modules\HR\Entities\Job  $opportunity
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  JobRequest  $request
+     * @param  Job  $opportunity
+     * @return RedirectResponse
      */
     public function update(JobRequest $request, Job $opportunity)
     {

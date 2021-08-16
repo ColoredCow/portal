@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     /**
      * Display the project details of an Employee.
      *
-     * @param  \App\Models\Employee $employee
+     * @param  Employee $employee
      * @return \Illuminate\Http\Response
      */
     public function showProjects(Employee $employee)

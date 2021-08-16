@@ -35,8 +35,8 @@ class WeeklyDoseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\WeeklyDoseRequest  $request
-     * @return \App\Models\WeeklyDose
+     * @param  WeeklyDoseRequest  $request
+     * @return WeeklyDose
      */
     public function store(WeeklyDoseRequest $request)
     {
@@ -49,48 +49,4 @@ class WeeklyDoseController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Social\WeeklyDose  $weeklyDose
-     * @return void
-     */
-    public function show(WeeklyDose $weeklyDose)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Social\WeeklyDose  $weeklyDose
-     * @return void
-     */
-    public function edit(WeeklyDose $weeklyDose)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\WeeklyDoseRequest  $request
-     * @param  \App\Models\Social\WeeklyDose  $weeklyDose
-     * @return void
-     */
-    public function update(WeeklyDoseRequest $request, WeeklyDose $weeklyDose)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Social\WeeklyDose  $weeklyDose
-     * @return void
-     */
-    public function destroy(WeeklyDose $weeklyDose)
-    {
-        //
-    }
 }

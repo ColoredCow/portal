@@ -72,7 +72,6 @@ class Application extends Model
      * Custom create method that creates an application and fires necessary events.
      *
      * @param  array $attr  fillables to be stored
-     * @return this
      */
     public static function _create($attr)
     {
@@ -228,7 +227,6 @@ class Application extends Model
      * Apply filter on applications based on their Round Name.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $status
      *
      * @return \Illuminate\Database\Eloquent\Builder $query
      */

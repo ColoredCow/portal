@@ -22,7 +22,7 @@ class AutoRespondApplicant
     /**
      * Handle the event.
      *
-     * @param  ApplicantCreated  $event
+     * @param  ApplicationCreated  $event
      * @return void
      */
     public function handle(ApplicationCreated $event)

@@ -44,7 +44,6 @@ class PaymentSettingController extends Controller
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
      * @return Response
      */
     public function update(Request $request)
