@@ -13,7 +13,7 @@ class UpdateProjectResourceTable extends Migration
      */
     public function up()
     {
-        Schema::rename( 'project_resource', 'project_resources' );
+        Schema::rename('project_resource', 'project_resources');
         Schema::table('project_resources', function (Blueprint $table) {
             $table->unsignedBigInteger('project_id')->change();
             $table->unsignedInteger('resource_id')->change();
@@ -39,6 +39,6 @@ class UpdateProjectResourceTable extends Migration
             $table->bigInteger('project_id')->change();
             $table->bigInteger('resource_id')->change();
         });
-        Schema::rename( 'project_resources', 'project_resource' );
+        Schema::rename('project_resources', 'project_resource');
     }
 }
