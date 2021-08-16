@@ -15,7 +15,7 @@ class AddStartDateAndEndDateToHrJobs extends Migration
     {
         Schema::table('hr_jobs', function (Blueprint $table) {
             $table->date('start_date')->after('domain')->nullable();
-            $table->date('end_date')->after('link')->nullable();      
+            $table->date('end_date')->after('link')->nullable(); 
         });
     }
 
