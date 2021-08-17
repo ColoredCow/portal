@@ -15,8 +15,11 @@ class DashboardController extends Controller
         $todayCount = Applicant::whereDate('created_at', '=', now())
             ->count();
         
-        $record = Applicant::select(\DB::raw("COUNT(*) as count"), 
-        \DB::raw("MONTHNAME(created_at) as month"), \DB::raw("DATE(created_at) as date"))
+        $record = Applicant::select(
+            \DB::raw("COUNT(*) as count"), 
+            \DB::raw("MONTHNAME(created_at) as month"), 
+            \DB::raw("DATE(created_at) as date")
+        )
             ->where('created_at', '>', Carbon::today()->subDay(7))
             ->groupBY('date')
             ->orderBy('date', 'ASC')
@@ -38,8 +41,11 @@ class DashboardController extends Controller
         $todayCount = Applicant::whereDate('created_at', '=', now())
             ->count();
 
-        $record = Applicant::select(\DB::raw("COUNT(*) as count"), 
-        \DB::raw("MONTHNAME(created_at) as month"), \DB::raw("DATE(created_at) as date"))
+        $record = Applicant::select(
+            \DB::raw("COUNT(*) as count"), 
+            \DB::raw("MONTHNAME(created_at) as month"), 
+            \DB::raw("DATE(created_at) as date")
+        )
             ->where('created_at', '>=', $req->from)
             ->where('created_at', '<=', $req->to)
             ->groupBy('date')
