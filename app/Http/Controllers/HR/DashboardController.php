@@ -16,8 +16,8 @@ class DashboardController extends Controller
             ->count();
         
         $record = Applicant::select(
-            \DB::raw("COUNT(*) as count"), 
-            \DB::raw("MONTHNAME(created_at) as month"), 
+            \DB::raw("COUNT(*) as count"),
+            \DB::raw("MONTHNAME(created_at) as month"),
             \DB::raw("DATE(created_at) as date")
         )
             ->where('created_at', '>', Carbon::today()->subDay(7))
@@ -42,8 +42,8 @@ class DashboardController extends Controller
             ->count();
 
         $record = Applicant::select(
-            \DB::raw("COUNT(*) as count"), 
-            \DB::raw("MONTHNAME(created_at) as month"), 
+            \DB::raw("COUNT(*) as count"),
+            \DB::raw("MONTHNAME(created_at) as month"),
             \DB::raw("DATE(created_at) as date")
         )
             ->where('created_at', '>=', $req->from)
