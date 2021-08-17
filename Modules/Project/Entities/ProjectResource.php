@@ -7,5 +7,4 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectResource extends Model
 {
     protected $guarded = [];
-    protected $table = 'project_resource';
 }
