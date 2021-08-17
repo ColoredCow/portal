@@ -15,7 +15,6 @@ class EvaluationController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function index()
     {
@@ -28,7 +27,6 @@ class EvaluationController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function segmentParameters(Request $request, $segmentID)
     {
@@ -43,7 +41,6 @@ class EvaluationController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function createSegment(Request $request)
     {
@@ -54,7 +51,6 @@ class EvaluationController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function updateSegment(Request $request, $segmentID)
     {

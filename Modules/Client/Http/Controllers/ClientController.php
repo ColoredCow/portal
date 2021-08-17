@@ -20,7 +20,6 @@ class ClientController extends ModuleBaseController
 
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function index()
     {
@@ -31,7 +30,6 @@ class ClientController extends ModuleBaseController
 
     /**
      * Show the form for creating a new resource.
-     * @return Response
      */
     public function create()
     {
@@ -43,7 +41,6 @@ class ClientController extends ModuleBaseController
     /**
      * Store a newly created resource in storage.
      * @param ClientRequest $request
-     * @return Response
      */
     public function store(ClientRequest $request)
     {
@@ -56,7 +53,6 @@ class ClientController extends ModuleBaseController
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Response
      */
     public function show($id)
     {
@@ -65,7 +61,6 @@ class ClientController extends ModuleBaseController
 
     /**
      * Show the form for editing the specified resource.
-     * @return Response
      */
     public function edit(Client $client, $section = null)
     {
@@ -77,7 +72,6 @@ class ClientController extends ModuleBaseController
     /**
      * Update the specified resource in storage.
      * @param ClientFormsRequest $request
-     * @return Response
      */
     public function update(ClientFormsRequest $request, Client $client)
     {

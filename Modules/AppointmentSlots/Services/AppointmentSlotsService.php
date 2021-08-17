@@ -203,7 +203,6 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
      * Get free slots for a user.
      *
      * @param  int  $userId
-     * @return bool
      */
     private function getUserFreeSlots($userId)
     {

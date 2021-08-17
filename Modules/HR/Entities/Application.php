@@ -509,7 +509,6 @@ class Application extends Model
     /**
      * Change the job for an application.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function changeJob($attr)
     {
