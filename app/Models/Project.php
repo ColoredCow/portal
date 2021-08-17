@@ -22,7 +22,6 @@ class Project extends Model
     /**
      * Get details to list projects.
      *
-     * @return self
      */
     public static function getList()
     {

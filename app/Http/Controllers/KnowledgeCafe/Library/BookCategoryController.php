@@ -40,7 +40,6 @@ class BookCategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  BookCategoryRequest  $request
-     * @return void
      */
     public function store(BookCategoryRequest $request)
     {
@@ -48,32 +47,10 @@ class BookCategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     *  @return void
-     */
-    public function show(BookCategory $bookCategory)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     * @return void
-     */
-    public function edit(BookCategory $bookCategory)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  BookCategoryRequest  $request
      * @param  BookCategory  $bookCategory
-     * @return \Illuminate\Http\Response
      */
     public function update(BookCategoryRequest $request, BookCategory $bookCategory)
     {
@@ -86,7 +63,6 @@ class BookCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     * @return void
      */
     public function destroy(BookCategory $bookCategory)
     {
@@ -95,7 +71,6 @@ class BookCategoryController extends Controller
 
     /**
      * @param  array  $categories
-     * @return array
      */
     public function formatCategoryData($categories)
     {

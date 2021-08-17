@@ -40,7 +40,6 @@ class InfrastructureController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Response
      */
     public function create()
     {
@@ -50,7 +49,6 @@ class InfrastructureController extends Controller
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Response
      */
     public function show($id)
     {
@@ -60,7 +58,6 @@ class InfrastructureController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Response
      */
     public function edit($id)
     {

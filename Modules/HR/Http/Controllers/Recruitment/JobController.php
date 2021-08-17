@@ -48,7 +48,6 @@ class JobController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
      */
     public function create()
     {
@@ -62,7 +61,6 @@ class JobController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  JobRequest  $request
-     * @return \Modules\HR\Entities\Job
      */
     public function store(JobRequest $request)
     {
@@ -79,17 +77,6 @@ class JobController extends Controller
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
 
         return redirect($route)->with('status', "Successfully updated $opportunity->title!");
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Modules\HR\Entities\Job  $opportunity
-     * @return void
-     */
-    public function show(Job $opportunity)
-    {
-        //
     }
 
     /**
@@ -128,7 +115,6 @@ class JobController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Modules\HR\Entities\Job  $opportunity
-     * @return void
      */
     public function destroy(Job $opportunity)
     {

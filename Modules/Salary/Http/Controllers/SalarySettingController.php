@@ -12,7 +12,6 @@ class SalarySettingController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function index()
     {
@@ -23,7 +22,6 @@ class SalarySettingController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Response
      */
     public function create()
     {
@@ -33,7 +31,6 @@ class SalarySettingController extends Controller
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Response
      */
     public function show($id)
     {
@@ -43,7 +40,6 @@ class SalarySettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Response
      */
     public function edit($id)
     {
@@ -53,7 +49,6 @@ class SalarySettingController extends Controller
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @return Response
      */
     public function update(Request $request)
     {

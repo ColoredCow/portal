@@ -30,7 +30,6 @@ class ApplicantController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return void
      */
     public function create()
     {
@@ -43,7 +42,6 @@ class ApplicantController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  ApplicantRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(ApplicantRequest $request)
     {
@@ -57,7 +55,6 @@ class ApplicantController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function importExcel(Request $request)
     {
@@ -72,7 +69,6 @@ class ApplicantController extends Controller
      *
      * @param Applicant $applicant
      * @param Request $request
-     * @return Response
      */
     public function updateUniversity(Applicant $applicant, Request $request)
     {

@@ -71,7 +71,6 @@ class ProjectController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Project  $project
-     * @return void
      */
     public function show(Project $project)
     {

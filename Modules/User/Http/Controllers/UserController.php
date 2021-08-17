@@ -18,7 +18,6 @@ class UserController extends ModuleBaseController
 
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function index()
     {
@@ -30,7 +29,6 @@ class UserController extends ModuleBaseController
 
     /**
      * Show the form for creating a new resource.
-     * @return Response
      */
     public function create()
     {
@@ -40,7 +38,6 @@ class UserController extends ModuleBaseController
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Response
      */
     public function show($id)
     {
@@ -50,7 +47,6 @@ class UserController extends ModuleBaseController
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Response
      */
     public function edit($id)
     {

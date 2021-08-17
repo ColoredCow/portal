@@ -11,7 +11,6 @@ class NDATemplateController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function index()
     {
@@ -22,7 +21,6 @@ class NDATemplateController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Response
      */
     public function create()
     {
@@ -32,7 +30,6 @@ class NDATemplateController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Response
      */
     public function store(Request $request)
     {
@@ -44,7 +41,6 @@ class NDATemplateController extends Controller
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Response
      */
     public function show($id)
     {
@@ -56,7 +52,6 @@ class NDATemplateController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param int $id
-     * @return Response
      */
     public function edit($id)
     {
@@ -67,7 +62,6 @@ class NDATemplateController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
-     * @return Response
      */
     public function update(Request $request, $id)
     {

@@ -36,7 +36,6 @@ abstract class ApplicationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -122,7 +121,6 @@ abstract class ApplicationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  string  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
