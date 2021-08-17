@@ -4,7 +4,7 @@
         <td class="form-group mt-3">
             <div class="d-flex align-items-center">
                 <div class="input-group w-50">
-                    <input type="number" class="form-control input-billing" v-model="billing.percentage" step="0.01" min="0" :name="billing.isNew ? 'new_billing[]' : 'billing[][' + billing.id + ']'" :disabled="billing.invoice_id">
+                    <input type="number" class="form-control input-billing" v-model="percentage" step="0.01" min="0" :name="billing.isNew ? 'new_billing[]' : 'billing[][' + billing.id + ']'" :disabled="billing.invoice_id">
                     <div class="input-group-append">
                         <span class="input-group-text">%</span>
                     </div>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-new Vue({
+export default {
 	props: ["billing", "index", "stageCostWithGst", "gstAmount", "stageCostWithoutGst", "currency", "clientCountryGstApplicable"],
 	computed: {
 		billingCostWithoutGst: function() {
@@ -56,5 +56,5 @@ new Vue({
 			this.$emit("addBillingInvoice", args);
 		}
 	}
-});
+};
 </script>
