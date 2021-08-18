@@ -28,7 +28,6 @@ parameters:
         - '#Call to method getMessage\(\) on an unknown class Google_IO_Exception#'
         - '#Unreachable statement - code above always terminates#'
         - '#Negated boolean expression is always false#'
-        - '#Result of && is always false#'
         - '#Left side of && is always true#'
         - '#Parameter \#[0-9]+ \$[a-zA-z]+ of function [a-zA-z\_]+ expects [a-zA-Z0-9\\_\|\<\>\-]+, [a-zA-Z]+ given#'
         - '#Parameter \#[0-9]+ \$[a-zA-z]+ of method [a-zA-Z0-9\\_\|\<\>\,]+::[a-zA-Z]+\(\) expects [a-zA-Z\|]+, [a-zA-Z0-9\\_\|\<\>]+ given#'
