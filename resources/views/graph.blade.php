@@ -8,15 +8,15 @@
       <h2 align="left">Analytics</h2>
       <form action="/dashboard" method="POST" align="right">
         {{csrf_field()}}
-        <input type="date" name="from" id='StartDate'> to 
+        <input type="date" name="from" id='StartDate'> to
         <input type="date" name="to" id="EndDate">
-        <input type="submit" value="View"> 
-      </form>  
+        <input type="submit" value="View">
+      </form>
       <br>
 
       <div class="card">
         <div class="card-header" align='left'>
-          <span style="font-size: 35px;">Application Recived</span> &emsp;&emsp; <span style="font-size: 20px;">Today's Count:<?php echo $todayCount; ?></span> 
+          <span style="font-size: 35px;">Application Recived</span> &emsp;&emsp; <span style="font-size: 20px;">Today's Count:<?php echo $todayCount; ?></span>
         </div>
         <div class="card-body">
           <canvas id="line-chart"></canvas>
@@ -56,12 +56,12 @@
             },
             legend: {
             display: false,
-            }, 
+            },
             scales: {
             yAxes: [{
             ticks: {stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5},
             }]
-            },  
+            },
             elements: {
             line: {
             fill: false,
@@ -70,7 +70,7 @@
             point:{
             radius:0
             }
-            }    
+            }
           };
 
           var charts = new Chart(ctx, {
