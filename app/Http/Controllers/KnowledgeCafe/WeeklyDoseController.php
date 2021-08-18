@@ -48,5 +48,4 @@ class WeeklyDoseController extends Controller
             'recommended_by' => $validated['recommended_by'],
         ]);
     }
-
 }

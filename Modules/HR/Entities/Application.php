@@ -508,7 +508,6 @@ class Application extends Model
 
     /**
      * Change the job for an application.
-     *
      */
     public function changeJob($attr)
     {

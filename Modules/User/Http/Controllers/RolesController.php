@@ -2,7 +2,6 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;

@@ -15,7 +15,6 @@ class VolunteerApplicationController extends ApplicationController
 
     /**
      * Display a listing of the resource.
-     *
      */
     public function index()
     {

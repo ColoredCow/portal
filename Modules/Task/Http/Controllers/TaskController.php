@@ -2,8 +2,6 @@
 
 namespace Modules\Task\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class TaskController extends Controller
@@ -41,5 +39,4 @@ class TaskController extends Controller
     {
         return view('task::edit');
     }
-
 }

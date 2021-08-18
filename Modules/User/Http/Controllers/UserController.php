@@ -2,7 +2,6 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Illuminate\Http\Response;
 use Modules\User\Entities\User;
 use Modules\User\Contracts\UserServiceContract;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;

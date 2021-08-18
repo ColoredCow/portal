@@ -3,7 +3,6 @@
 namespace Modules\SalesAutomation\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class SalesAutomationController extends Controller
@@ -45,5 +44,4 @@ class SalesAutomationController extends Controller
     {
         return view('salesautomation::edit');
     }
-
 }

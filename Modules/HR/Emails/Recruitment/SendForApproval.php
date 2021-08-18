@@ -5,7 +5,6 @@ namespace Modules\HR\Emails\Recruitment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
 
 class SendForApproval extends Mailable

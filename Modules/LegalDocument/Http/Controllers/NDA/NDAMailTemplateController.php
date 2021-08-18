@@ -3,13 +3,11 @@
 namespace Modules\LegalDocument\Http\Controllers\NDA;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\LegalDocument\Entities\LegalDocumentMailTemplate;
 
 class NDAMailTemplateController extends Controller
 {
-
     /**
      * Show the form for creating a new resource.
      */

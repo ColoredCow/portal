@@ -2,8 +2,6 @@
 
 namespace Modules\Salary\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
 use Modules\Salary\Services\SalaryCalculationService;
@@ -51,5 +49,4 @@ class SalaryController extends Controller
     {
         return view('salary::edit');
     }
-
 }

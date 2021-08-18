@@ -4,7 +4,6 @@ namespace Modules\Salary\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Salary\Entities\SalaryConfiguration;
 
@@ -67,5 +66,4 @@ class SalarySettingController extends Controller
 
         return redirect(route('salary-settings.index'));
     }
-
 }

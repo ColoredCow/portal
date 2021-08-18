@@ -2,8 +2,6 @@
 
 namespace Modules\LegalDocument\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class LegalDocumentController extends Controller
@@ -41,5 +39,4 @@ class LegalDocumentController extends Controller
     {
         return view('legaldocument::edit');
     }
-
 }

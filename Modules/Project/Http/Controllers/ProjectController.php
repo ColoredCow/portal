@@ -3,7 +3,6 @@
 namespace Modules\Project\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
@@ -82,5 +81,4 @@ class ProjectController extends Controller
     {
         return $this->service->updateProjectData($request->all(), $project);
     }
-
 }

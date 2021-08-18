@@ -2,8 +2,6 @@
 
 namespace Modules\Client\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\Client\Entities\Client;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Http\Requests\ClientFormsRequest;

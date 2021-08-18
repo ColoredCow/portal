@@ -14,7 +14,7 @@ class UserAppointmentSlotRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        
+
         if ($this->method() === 'POST') {
             $rules = [
                 'start_time' => 'required|date',

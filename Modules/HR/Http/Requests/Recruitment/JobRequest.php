@@ -14,7 +14,7 @@ class JobRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        
+
         if ($this->method() === 'POST') {
             $rules = [
                 'title' => 'required|string',

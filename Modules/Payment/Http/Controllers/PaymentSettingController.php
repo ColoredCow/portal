@@ -4,7 +4,6 @@ namespace Modules\Payment\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Payment\Entities\PaymentConfiguration;
 
@@ -54,5 +53,4 @@ class PaymentSettingController extends Controller
 
         return redirect(route('payment-setting.index'));
     }
-
 }

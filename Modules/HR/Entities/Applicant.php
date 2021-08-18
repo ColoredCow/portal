@@ -124,7 +124,6 @@ class Applicant extends Model
 
     /**
      * Get the applicant's university.
-     *
      */
     public function university()
     {

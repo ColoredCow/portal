@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Employee;

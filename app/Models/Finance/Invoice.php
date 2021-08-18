@@ -36,7 +36,6 @@ class Invoice extends Model
 
     /**
      * Get details to list invoices.
-     *
      */
     public static function getList()
     {

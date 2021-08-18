@@ -2,8 +2,6 @@
 
 namespace Modules\ModuleChecklist\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class ModuleChecklistController extends Controller
@@ -41,5 +39,4 @@ class ModuleChecklistController extends Controller
     {
         return view('modulechecklist::edit');
     }
-
 }

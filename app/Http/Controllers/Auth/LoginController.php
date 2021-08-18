@@ -43,7 +43,6 @@ class LoginController extends Controller
 
     /**
      * Redirect the user to the OAuth Provider.
-     *
      */
     public function redirectToProvider($provider)
     {
@@ -66,7 +65,6 @@ class LoginController extends Controller
      * database by looking up their provider_id in the database.
      * If the user exists, log them in. Otherwise, create a new user then log them in. After that
      * redirect them to the authenticated users homepage.
-     *
      */
     public function handleProviderCallback($provider)
     {

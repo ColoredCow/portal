@@ -2,8 +2,6 @@
 
 namespace Modules\EffortTracking\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class EffortTrackingController extends Controller
@@ -41,5 +39,4 @@ class EffortTrackingController extends Controller
     {
         return view('efforttracking::edit');
     }
-
 }

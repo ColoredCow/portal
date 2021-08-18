@@ -2,7 +2,6 @@
 
 namespace Modules\User\Services;
 
-use Illuminate\Http\Response;
 use Modules\User\Contracts\ProfileServiceContract;
 
 class ProfileService implements ProfileServiceContract

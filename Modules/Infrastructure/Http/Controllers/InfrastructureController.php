@@ -3,8 +3,6 @@
 namespace Modules\Infrastructure\Http\Controllers;
 
 use Aws\Sdk;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
 
@@ -63,5 +61,4 @@ class InfrastructureController extends Controller
     {
         return view('infrastructure::edit');
     }
-
 }

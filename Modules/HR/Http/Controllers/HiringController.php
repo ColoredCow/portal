@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class HiringController extends Controller
