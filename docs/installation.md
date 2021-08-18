@@ -4,8 +4,7 @@
 ```sh
 git clone https://github.com/coloredcow-portal/portal
 ```
-Note: Install php version 7.3 or 7.4 not more than that
-link for php7.4(https://www.php.net/downloads.php#v7.4.21)
+Note: Required PHP versions - [7.3](https://www.php.net/downloads.php#v7.3.29) or [7.4](https://www.php.net/downloads.php#v7.4.21)
 
 2. Install dependencies
 ```sh
