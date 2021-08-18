@@ -19,16 +19,15 @@ class JobObserver
         $job->rounds()->attach(Round::all()->pluck('id')->toArray());
         $data = request()->all();
 
-        
-            $Corcel = new Corcel();
-            $Corcel->post_title = $data['title'];
-            $Corcel->post_content = $data['description'];
-            $Corcel->post_type = config('hr.post-type.career');
-            if ($data['status'] != 'published') {
-                $Corcel->post_status = 'draft';
-            }
-            $Corcel->save();
-            $Corcel->saveMeta('hr_id', $job['id']);
+        $Corcel = new Corcel();
+        $Corcel->post_title = $data['title'];
+        $Corcel->post_content = $data['description'];
+        $Corcel->post_type = config('hr.post-type.career');
+        if ($data['status'] != 'published') {
+            $Corcel->post_status = 'draft';
+        }
+        $Corcel->save();
+        $Corcel->saveMeta('hr_id', $job['id']);
         
     }
 
@@ -42,17 +41,17 @@ class JobObserver
     {
         $data = request()->all();
 
-            $post = Corcel::hasMeta('hr_id', $job['id'])->first();
-            $Corcel=Corcel::find($post->ID);
-            $Corcel->post_title = $data['title'];
-            $Corcel->post_content = $data['description'];
-            $Corcel->post_type = config('hr.post-type.career');
-            if ($data['status'] == 'published') {
-                $Corcel->post_status = 'publish';
-            } else {
-                $Corcel->post_status = 'draft';
-            }
-            $Corcel->update();
+        $post = Corcel::hasMeta('hr_id', $job['id'])->first();
+        $Corcel=Corcel::find($post->ID);
+        $Corcel->post_title = $data['title'];
+        $Corcel->post_content = $data['description'];
+        $Corcel->post_type = config('hr.post-type.career');
+        if ($data['status'] == 'published') {
+            $Corcel->post_status = 'publish';
+        } else {
+            $Corcel->post_status = 'draft';
+        }
+        $Corcel->update();
     }
 
     /**
