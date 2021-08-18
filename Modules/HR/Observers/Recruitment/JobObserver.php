@@ -41,7 +41,7 @@ class JobObserver
         $data = request()->all();
 
         $post = Corcel::hasMeta('hr_id', $job['id'])->first();
-        $Corcel=Corcel::find($post->ID);
+        $Corcel = Corcel::find($post->ID);
         $Corcel->post_title = $data['title'];
         $Corcel->post_content = $data['description'];
         $Corcel->post_type = config('hr.post-type.career');
