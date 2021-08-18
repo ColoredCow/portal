@@ -12,6 +12,7 @@ parameters:
         - app/Exceptions/Handler.php
         - Modules/*/Providers/*ServiceProvider.php
         - Modules/*/Services/*Service.php
+        - Modules/Invoice/Entities/Invoice.php
 
     # The level 8 is the highest level
     level: 5
