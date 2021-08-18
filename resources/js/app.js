@@ -1000,7 +1000,7 @@ $(function(){
 });
 
 $(function(){
-	var cData = "<?php echo $chart_data; ?>";
+	var cData = value;
 	var ctx = $("#line-chart");
 
 	var data = {
