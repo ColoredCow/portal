@@ -55,7 +55,15 @@
                             @foreach (config('hr.opportunities.domains') as $domain => $label)
                                 <option value="{{ $domain }}" {{ old('domain', $job->domain) == $domain ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
-                        </select>
+                        </select>   
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="start_date" class="fz-14 leading-none text-secondary mb-1">Start Date></label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ old('start_date', $job->start_date) }}">     
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="end_date" class="fz-14 leading-none text-secondary mb-1">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ old('end_date', $job->end_date) }}">
                     </div>
                 </div>
                 <div class="form-group">
