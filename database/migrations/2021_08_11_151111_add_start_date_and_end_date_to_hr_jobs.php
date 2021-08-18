@@ -27,7 +27,7 @@ class AddStartDateAndEndDateToHrJobs extends Migration
     public function down()
     {
         Schema::table('hr_jobs', function (Blueprint $table) {
-            $table->dropColumn(['start_date','end_date']);
+            $table->dropColumn(['start_date', 'end_date']);
         });
     }
 }
