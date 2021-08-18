@@ -28,7 +28,6 @@ class JobObserver
         }
         $Corcel->save();
         $Corcel->saveMeta('hr_id', $job['id']);
-        
     }
 
     /**
