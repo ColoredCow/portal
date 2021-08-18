@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description" class="fz-14 leading-none text-secondary mb-1">Job Description</label>
+                    <label for="description" class="fz-14 leading-none text-secondary mb-1">Job Description<strong class="text-danger">*</strong></label>
                     <textarea id="description" class="form-control richeditor" name="description" rows="4" placeholder="Enter job description...">{{ old('description', $job->description) }}</textarea>
                 </div>
             </div>
