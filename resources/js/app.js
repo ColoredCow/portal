@@ -999,6 +999,63 @@ $(function(){
 	});
 });
 
+$(function(){
+	var cData = "<?php echo $chart_data; ?>";
+	var ctx = $("#line-chart");
+
+	var data = {
+	  labels: cData.label,
+	  datasets: [
+	  {
+		label: "Count",
+		data: cData.data,
+		backgroundColor: "#67A7E2",
+		borderColor:"#67A7E2",
+		borderWidth: 1,
+		pointHoverRadius: 7
+	  }
+	  ]
+	};
+	var options = {
+	  responsive: true,
+	  tooltips:{
+		displayColors:false,
+		bodyFontSize: 20,
+		bodyFontStyle: 'bold',
+		backgroundColor:"#E5E5E5",
+		bodyFontColor:"#E0DEDE",
+		cornerRadius:0,
+		borderWidth:2
+	  },
+	  title: {
+	    display: false,
+	  },
+	  legend: {
+	    display: false,
+	  }, 
+	  scales: {
+	    yAxes: [{
+	       ticks: {stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5},
+	    }]
+	  },  
+	  elements: {
+	    line: {
+	       fill: false,
+	       tension: 0
+	    },
+	    point:{
+	       radius:0
+	    }
+	  }
+	};
+
+	var charts = new Chart(ctx, {
+	  type: "line",
+	  data: data,
+	  options: options
+	});
+ });
+
 /*
  * HR Module JS code end
  */
