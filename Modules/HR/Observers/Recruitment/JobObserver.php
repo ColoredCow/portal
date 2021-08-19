@@ -16,9 +16,7 @@ class JobObserver
      */
     public function created(Job $job)
     {
-<<<<<<< HEAD
         $job->rounds()->attach(Round::pluck('id')->toArray());
-=======
         $job->rounds()->attach(Round::all()->pluck('id')->toArray());
         $data = request()->all();
 
@@ -61,6 +59,5 @@ class JobObserver
     public function deleted(Job $job)
     {
         Corcel::where(['post_type' => 'career', 'post_title' => $job['title']])->delete();
->>>>>>> 6a7f4201bed578975beff45880a2495ce8a7ab59
     }
 }
