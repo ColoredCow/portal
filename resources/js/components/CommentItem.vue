@@ -18,7 +18,7 @@
         <div class="card-body pt-3">
             <div>
                 <div v-if="state == 'edit'">
-                    <textarea v-model="comment.body" class="form-control"> </textarea>
+                    <textarea v-model="body" class="form-control"> </textarea>
                     <span class="float-right">
                         <button class="btn btn-sm btn-success mt-2 mx-3" @click="updateComment()">Save</button>
                         <button class="btn btn-sm btn-secondary mt-2" @click="disableEditMode()">Cancel</button>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-new Vue( {
+export default {
 	props: ["comment", "editable", "bookIndex"],
 	data() {
 		return {
@@ -65,5 +65,5 @@ new Vue( {
 			this.$emit("onDeleteComment", { index:this.bookIndex, comment:this.comment} );
 		}
 	}
-});
+};
 </script>
