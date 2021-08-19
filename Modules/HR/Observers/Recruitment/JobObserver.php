@@ -45,11 +45,7 @@ class JobObserver
         $Corcel->post_title = $data['title'];
         $Corcel->post_content = $data['description'];
         $Corcel->post_type = config('hr.post-type.career');
-        if ($data['status'] == 'published') {
-            $Corcel->post_status = 'publish';
-        } else {
-            $Corcel->post_status = 'draft';
-        }
+        $Corcel->post_status = $data['status'] == 'published' ? 'publish' : 'draft';
         $Corcel->update();
     }
 
