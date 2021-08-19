@@ -22,9 +22,7 @@
           <canvas id="line-chart"></canvas>
         </div>
       </div>
-      <script type="text/javascript">
-          var value = {!! $chart_data !!};
-      </script>
+       <a id="value" value="{{ $chart_data }}"></a>
    </div>
  </div>
 </body>
