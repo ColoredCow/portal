@@ -32,6 +32,10 @@ return [
         'closed' => 'Closed'
     ],
 
+    'post-type' => [
+        'career' => 'Career',
+    ],
+
     'template-variables' => [
         'applicant-name' => '|*applicant_name*|',
         'interview-time' => '|*interview_time*|',
