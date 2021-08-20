@@ -13,7 +13,7 @@ class AppointmentSlotsPolicy
     /**
      * Create a new policy instance.
      *
-     * @return void
+     * @return bool
      */
     public function view(User $user)
     {

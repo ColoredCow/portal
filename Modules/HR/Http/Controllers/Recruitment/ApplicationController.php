@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
@@ -34,8 +35,6 @@ abstract class ApplicationController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -121,7 +120,6 @@ abstract class ApplicationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  string  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {

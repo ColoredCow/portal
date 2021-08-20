@@ -5,7 +5,6 @@ namespace Modules\HR\Emails\Recruitment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
 
 class SendForApproval extends Mailable
@@ -18,8 +17,7 @@ class SendForApproval extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param User        $supervisor
-     * @param Application $application
+     * @param User $approver
      */
     public function __construct(User $approver, $mailTemplate)
     {

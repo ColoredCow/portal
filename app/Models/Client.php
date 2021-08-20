@@ -34,7 +34,6 @@ class Client extends Model
      * Returns the clients with relations that can be invoiced.
      *
      * @param  array  $billings    Billings for which client should be added in the response.
-     * @return self
      */
     public static function getInvoicableClients(array $billings = [])
     {

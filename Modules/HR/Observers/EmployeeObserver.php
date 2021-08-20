@@ -12,7 +12,7 @@ class EmployeeObserver
     /**
      * Handle to the employee "created" event.
      *
-     * @param  \Modules\User\Entities\Employee  $employee
+     * @param  Employee  $employee
      * @return void
      */
     public function created(Employee $employee)
@@ -40,7 +40,7 @@ class EmployeeObserver
     /**
      * Handle the employee "updated" event.
      *
-     * @param  \Modules\User\Entities\Employee  $employee
+     * @param  Employee  $employee
      * @return void
      */
     public function updated(Employee $employee)
