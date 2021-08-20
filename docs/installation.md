@@ -4,7 +4,9 @@
 ```sh
 git clone https://github.com/coloredcow-portal/portal
 ```
-Note: Required PHP versions - [7.3](https://www.php.net/downloads.php#v7.3.29) or [7.4](https://www.php.net/downloads.php#v7.4.21)
+Note: Required PHP versions 
+-> [7.3](https://www.php.net/downloads.php#v7.3.29) or 
+-> [7.4](https://www.php.net/downloads.php#v7.4.21)
 
 2. Install dependencies
 ```sh
@@ -13,7 +15,7 @@ composer install
 ```
 npm install
 ```
-Important!
+Note:If you face any error while installing composer, then make sure you have OpenSSL enabled in your php.ini file
 Changes in php.ini file 
 Go to `C:\xampp\php` and open the `php.ini` file in notepad (run as administrator).
 Type in the find box `ssl`
