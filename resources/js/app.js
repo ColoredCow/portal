@@ -4,13 +4,13 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require("./bootstrap");
+require('./bootstrap');
 
-import "jquery-ui/ui/widgets/datepicker.js";
-import ImageCompressor from "image-compressor.js";
-var clipboard = new ClipboardJS(".btn-clipboard");
+import 'jquery-ui/ui/widgets/datepicker.js';
+import ImageCompressor from 'image-compressor.js';
+var clipboard = new ClipboardJS('.btn-clipboard');
 
-window.Vue = require("vue");
+window.Vue = require('vue');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -24,103 +24,106 @@ window.Vue = require("vue");
 /**
  *  Module Vue Components
  */
-require("./../../Modules/User/Resources/assets/js/vueComponents.js");
+require('./../../Modules/User/Resources/assets/js/vueComponents.js');
 // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
 
-Vue.component("project-stage-component", require("./components/ProjectStageComponent.vue").default);
-Vue.component("project-stage-billing-component", require("./components/ProjectStageBillingComponent.vue").default);
-Vue.component("applicant-round-action-component", require("./components/HR/ApplicantRoundActionComponent.vue").default);
-Vue.component("project-details-component", require("./components/ProjectDetailsComponent.vue").default);
-Vue.component("books-comments-component", require("./components/Book/BooksCommentsComponent.vue").default);
-Vue.component("comment", require("./components/CommentItem.vue").default);
-Vue.component("user-dashboard-read-books", require("./components/Dashboard/UserDashboardReadBooks.vue").default);
+Vue.component('project-stage-component', require('./components/ProjectStageComponent.vue').default);
+Vue.component('project-stage-billing-component', require('./components/ProjectStageBillingComponent.vue').default);
+Vue.component('applicant-round-action-component', require('./components/HR/ApplicantRoundActionComponent.vue').default);
+Vue.component('project-details-component', require('./components/ProjectDetailsComponent.vue').default);
+Vue.component('books-comments-component', require('./components/Book/BooksCommentsComponent.vue').default);
+Vue.component('comment', require('./components/CommentItem.vue').default);
+Vue.component('user-dashboard-read-books', require('./components/Dashboard/UserDashboardReadBooks.vue').default);
 Vue.component(
-	"user-dashboard-wishlist-books",
-	require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
+	'user-dashboard-wishlist-books',
+	require('./components/Dashboard/UserDashboardWishlistBooks.vue').default
 );
-Vue.component("user-dashboard-projects", require("./components/Dashboard/UserDashboardProjects.vue").default);
-Vue.component("user-dashboard-library", require("./components/Dashboard/UserDahboardLibrary.vue").default);
+Vue.component('user-dashboard-projects', require('./components/Dashboard/UserDashboardProjects.vue').default);
+Vue.component('user-dashboard-library', require('./components/Dashboard/UserDahboardLibrary.vue').default);
 Vue.component(
-	"user-dashboard-infrastructure",
-	require("./components/Dashboard/UserDahboardInfrastructure.vue").default
+	'user-dashboard-infrastructure',
+	require('./components/Dashboard/UserDahboardInfrastructure.vue').default
 );
-Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDahboardInvocie.vue").default);
+Vue.component('user-dashboard-invoice', require('./components/Dashboard/UserDahboardInvocie.vue').default);
 
 if (Vue) {
-	Vue.filter("str_limit", function(value, size) {
-		if (!value) return "";
+	Vue.filter('str_limit', function(value, size) {
+		if (!value) return '';
 		value = value.toString();
 
 		if (value.length <= size) {
 			return value;
 		}
-		return value.substr(0, size) + "...";
+		return value.substr(0, size) + '...';
 	});
 }
 
-if (document.getElementById("vueContainer")) {
+if (document.getElementById('vueContainer')) {
 	new Vue({
-		el: "#vueContainer"
+		el: '#vueContainer'
 	});
 }
 
 $(document).ready(() => {
 	setTimeout(function() {
-		$("#statusAlert").alert("close");
+		$('#statusAlert').alert('close');
 	}, 2000);
 
-	if ($(".form-create-invoice").length) {
-		let form = $(".form-create-invoice");
-		let client_id = form.find("#client_id").val();
+	if ($('.form-create-invoice').length) {
+		let form = $('.form-create-invoice');
+		let client_id = form.find('#client_id').val();
 		if (client_id) {
 			updateClientProjects(form, client_id);
 		}
 	}
-	$("[data-toggle=\"tooltip\"]").tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
 
-	$(".status-close").on("click", function() {
-		let wrapper = $(this).closest(".alert");
+	$('.status-close').on('click', function() {
+		let wrapper = $(this).closest('.alert');
 		wrapper.fadeOut(500);
 	});
 
-	$(".client_edit_form_submission_btn").on("click", function() {
-		if (!$("#edit_client_info_form")[0].checkValidity()) {
-			$("#edit_client_info_form")[0].reportValidity();
+	$('.client_edit_form_submission_btn').on('click', function() {
+		if (!$('#edit_client_info_form')[0].checkValidity()) {
+			$('#edit_client_info_form')[0].reportValidity();
 			return false;
 		}
-		$("#submit_action_input").val($(this).attr("data-submit-action"));
-		$("#edit_client_info_form").submit();
+		$('#submit_action_input').val($(this).attr('data-submit-action'));
+		$('#edit_client_info_form').submit();
 	});
 
-	$(".prospect_edit_form_submission_btn").on("click", function() {
-		if (!$("#edit_prospect_info_form")[0].checkValidity()) {
-			$("#edit_prospect_info_form")[0].reportValidity();
+	$('.prospect_edit_form_submission_btn').on('click', function() {
+		if (!$('#edit_prospect_info_form')[0].checkValidity()) {
+			$('#edit_prospect_info_form')[0].reportValidity();
 			return false;
 		}
-		$("#submit_action_input").val($(this).attr("data-submit-action"));
-		$("#edit_prospect_info_form").submit();
+		$('#submit_action_input').val($(this).attr('data-submit-action'));
+		$('#edit_prospect_info_form').submit();
 	});
 
-	$("body").on("change", ".custom-file-input", function() {
-		var fileName = $(this).val().split("\\").pop();
-		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	$('body').on('change', '.custom-file-input', function() {
+		var fileName = $(this).val().split('\\').pop();
+		$(this).siblings('.custom-file-label').addClass('selected').html(fileName);
 	});
+
+	datePickerChart();
+	lineChart();
 });
 
-if (document.getElementById("page_hr_applicant_edit")) {
+if (document.getElementById('page_hr_applicant_edit')) {
 	new Vue({
-		el: "#page_hr_applicant_edit",
+		el: '#page_hr_applicant_edit',
 		data: {
 			showResumeFrame: false,
 			showEvaluationFrame: false,
-			applicationJobRounds: document.getElementById("action_type")
-				? JSON.parse(document.getElementById("action_type").dataset.applicationJobRounds)
+			applicationJobRounds: document.getElementById('action_type')
+				? JSON.parse(document.getElementById('action_type').dataset.applicationJobRounds)
 				: {},
-			selectedNextRound: "",
-			nextRoundName: "",
-			selectedAction: "round",
-			selectedActionOption: "",
-			nextRound: "",
+			selectedNextRound: '',
+			nextRoundName: '',
+			selectedAction: 'round',
+			selectedActionOption: '',
+			nextRound: '',
 			createCalendarEvent: true
 		},
 		methods: {
@@ -131,17 +134,17 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				this.showEvaluationFrame = !this.showEvaluationFrame;
 			},
 			getApplicationEvaluation: function(applicationRoundID) {
-				$("#page_hr_applicant_edit #application_evaluation_body").html(
-					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
+				$('#page_hr_applicant_edit #application_evaluation_body').html(
+					'<div class="my-4 fz-18 text-center">Loading...</div>'
 				);
 				if (!this.showEvaluationFrame) {
 					axios
-						.get("/hr/evaluation/" + applicationRoundID)
+						.get('/hr/evaluation/' + applicationRoundID)
 						.then(function(response) {
-							$("#page_hr_applicant_edit #application_evaluation_body").html(response.data);
+							$('#page_hr_applicant_edit #application_evaluation_body').html(response.data);
 						})
 						.catch(function(error) {
-							alert("Error fetching application evaluation!");
+							alert('Error fetching application evaluation!');
 						});
 				}
 				this.toggleEvaluationFrame();
@@ -153,47 +156,47 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			},
 			takeAction: function() {
 				switch (this.selectedAction) {
-				case "round":
-					if (!this.selectedActionOption) {
-						this.selectedActionOption = document.querySelector("#action_type option:checked");
-					}
-					this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
-					this.nextRoundName = this.selectedActionOption.innerText;
-					loadTemplateMail("confirm", (res) => {
-						$("#confirmMailToApplicantSubject").val(res.subject);
-						tinymce.get("confirmMailToApplicantBody").setContent(res.body, { format: "html" });
-					});
-					$("#round_confirm").modal("show");
-					break;
-				case "send-for-approval":
-					$("#send_for_approval").modal("show");
-					break;
-				case "approve":
-					$("#approve_application").modal("show");
-					break;
-				case "onboard":
-					$("#onboard_applicant").modal("show");
+					case 'round':
+						if (!this.selectedActionOption) {
+							this.selectedActionOption = document.querySelector('#action_type option:checked');
+						}
+						this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
+						this.nextRoundName = this.selectedActionOption.innerText;
+						loadTemplateMail('confirm', (res) => {
+							$('#confirmMailToApplicantSubject').val(res.subject);
+							tinymce.get('confirmMailToApplicantBody').setContent(res.body, { format: 'html' });
+						});
+						$('#round_confirm').modal('show');
+						break;
+					case 'send-for-approval':
+						$('#send_for_approval').modal('show');
+						break;
+					case 'approve':
+						$('#approve_application').modal('show');
+						break;
+					case 'onboard':
+						$('#onboard_applicant').modal('show');
 				}
 			},
 			rejectApplication: function() {
-				$("#application_reject_modal").modal("show");
-				loadTemplateMail("reject", (res) => {
-					$("#rejectMailToApplicantSubject").val(res.subject);
-					tinymce.get("rejectMailToApplicantBody").setContent(res.body, { format: "html" });
+				$('#application_reject_modal').modal('show');
+				loadTemplateMail('reject', (res) => {
+					$('#rejectMailToApplicantSubject').val(res.subject);
+					tinymce.get('rejectMailToApplicantBody').setContent(res.body, { format: 'html' });
 				});
 			}
 		},
 		mounted() {
 			this.selectedNextRound = this.applicationJobRounds[0].id;
-			this.selectedAction = "round";
+			this.selectedAction = 'round';
 			this.nextRoundName = this.applicationJobRounds[0].name;
 		}
 	});
 }
 
-if (document.getElementById("project_container")) {
+if (document.getElementById('project_container')) {
 	const projectContainer = new Vue({
-		el: "#project_container",
+		el: '#project_container',
 		data: {
 			newStage: false
 		},
@@ -205,35 +208,35 @@ if (document.getElementById("project_container")) {
 	});
 }
 
-if (document.getElementById("employee_projects")) {
+if (document.getElementById('employee_projects')) {
 	const employeeProjects = new Vue({
-		el: "#employee_projects",
+		el: '#employee_projects',
 		data: {},
 		methods: {}
 	});
 }
 
-if (document.getElementById("client_form")) {
+if (document.getElementById('client_form')) {
 	const clientForm = new Vue({
-		el: "#client_form",
+		el: '#client_form',
 		data: {
-			country: document.getElementById("country").dataset.preSelectCountry || "",
-			isActive: document.getElementById("is_active").dataset.preSelectStatus
-				? parseInt(document.getElementById("is_active").dataset.preSelectStatus)
+			country: document.getElementById('country').dataset.preSelectCountry || '',
+			isActive: document.getElementById('is_active').dataset.preSelectStatus
+				? parseInt(document.getElementById('is_active').dataset.preSelectStatus)
 				: 1,
-			newEmailName: "",
-			newEmailId: "",
+			newEmailName: '',
+			newEmailId: '',
 			clientEmails:
-				document.getElementById("emails").value == "" ? [] : document.getElementById("emails").value.split(",")
+				document.getElementById('emails').value == '' ? [] : document.getElementById('emails').value.split(',')
 		},
 		methods: {
 			toggleActive: function() {
 				this.isActive = !this.isActive;
 			},
 			addNewEmail: function() {
-				this.clientEmails.push(this.newEmailName + " <" + this.newEmailId + ">");
-				this.newEmailName = "";
-				this.newEmailId = "";
+				this.clientEmails.push(this.newEmailName + ' <' + this.newEmailId + '>');
+				this.newEmailName = '';
+				this.newEmailId = '';
 			},
 			removeEmail: function(item) {
 				let index = this.clientEmails.indexOf(item);
@@ -245,14 +248,14 @@ if (document.getElementById("client_form")) {
 	});
 }
 
-if (document.getElementById("finance_report")) {
+if (document.getElementById('finance_report')) {
 	const financeReport = new Vue({
-		el: "#finance_report",
+		el: '#finance_report',
 		data: {
-			showReportTable: "received",
-			sentAmountINR: document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
-			sentAmountUSD: document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
-			conversionRateUSD: document.getElementById("conversion_rate_usd").dataset.conversionRateUsd || 0
+			showReportTable: 'received',
+			sentAmountINR: document.getElementById('sent_amount_INR').dataset.sentAmount || 0,
+			sentAmountUSD: document.getElementById('sent_amount_USD').dataset.sentAmount || 0,
+			conversionRateUSD: document.getElementById('conversion_rate_usd').dataset.conversionRateUsd || 0
 		},
 		computed: {
 			convertedUSDSentAmount: function() {
@@ -266,112 +269,112 @@ if (document.getElementById("finance_report")) {
 	});
 }
 
-$("#page_hr_applicant_edit .applicant-round-form").on("click", ".round-submit", function() {
+$('#page_hr_applicant_edit .applicant-round-form').on('click', '.round-submit', function() {
 	let button = $(this);
-	let form = $(this).closest(".applicant-round-form");
-	let selectedAction = $(this).data("action");
-	const actions = [ "confirm", "send-for-approval", "onboard", "approve" ];
+	let form = $(this).closest('.applicant-round-form');
+	let selectedAction = $(this).data('action');
+	const actions = [ 'confirm', 'send-for-approval', 'onboard', 'approve' ];
 	if (actions.includes(selectedAction)) {
 		if (!form[0].checkValidity()) {
 			form[0].reportValidity();
 			return false;
 		}
 	}
-	form.find("[name=\"action\"]").val(selectedAction);
-	button.prop("disabled", "disabled").addClass("disabled");
+	form.find('[name="action"]').val(selectedAction);
+	button.prop('disabled', 'disabled').addClass('disabled');
 	form.submit();
 });
 
-$(".date-field").datepicker({
-	dateFormat: "dd/mm/yy"
+$('.date-field').datepicker({
+	dateFormat: 'dd/mm/yy'
 });
 
-$("#form_invoice").on("change", "#client_id", function() {
-	let form = $(this).closest("form");
+$('#form_invoice').on('change', '#client_id', function() {
+	let form = $(this).closest('form');
 	let client_id = $(this).val();
 	if (!client_id) {
-		form.find("#project_ids").html("");
+		form.find('#project_ids').html('');
 		return false;
 	}
 	updateClientProjects(form, client_id);
 });
 
-$("#copy_weeklydose_service_url").tooltip({
-	trigger: "click",
-	placement: "bottom"
+$('#copy_weeklydose_service_url').tooltip({
+	trigger: 'click',
+	placement: 'bottom'
 });
 
 function updateClientProjects(form, client_id) {
 	$.ajax({
-		url: "/clients/" + client_id + "/get-projects",
-		method: "GET",
+		url: '/clients/' + client_id + '/get-projects',
+		method: 'GET',
 		success: function(res) {
-			form.find("#project_ids").html(getProjectList(res));
+			form.find('#project_ids').html(getProjectList(res));
 		}
 	});
 }
 
 function getProjectList(projects) {
-	let html = "";
+	let html = '';
 	for (var index = 0; index < projects.length; index++) {
 		let project = projects[index];
-		html += "<option value=\"" + project.id + "\">";
+		html += '<option value="' + project.id + '">';
 		html += project.name;
-		html += "</option>";
+		html += '</option>';
 	}
 	return html;
 }
 
 function setTooltip(btn, message) {
-	$(btn).tooltip("hide").attr("data-original-title", message).tooltip("show");
+	$(btn).tooltip('hide').attr('data-original-title', message).tooltip('show');
 }
 
 function hideTooltip(btn) {
 	setTimeout(function() {
-		$(btn).tooltip("hide");
+		$(btn).tooltip('hide');
 	}, 1000);
 }
 
-clipboard.on("success", function(e) {
-	setTooltip(e.trigger, "Copied!");
+clipboard.on('success', function(e) {
+	setTooltip(e.trigger, 'Copied!');
 	hideTooltip(e.trigger);
 });
 
 tinymce.init({
-	selector: ".richeditor",
-	skin: "lightgray",
-	plugins: [ "lists autolink link" ],
+	selector: '.richeditor',
+	skin: 'lightgray',
+	plugins: [ 'lists autolink link' ],
 	menubar: false,
 	statusbar: false,
-	entity_encoding: "raw",
-	forced_root_block: "",
+	entity_encoding: 'raw',
+	forced_root_block: '',
 	force_br_newlines: true,
 	force_p_newlines: false,
-	height: "280",
+	height: '280',
 	convert_urls: 0
 });
 
-$(".hr_round_guide").on("click", ".edit-guide", function() {
-	let container = $(this).closest(".hr_round_guide");
-	container.find(".btn-guide, .guide-container").toggleClass("d-none");
+$('.hr_round_guide').on('click', '.edit-guide', function() {
+	let container = $(this).closest('.hr_round_guide');
+	container.find('.btn-guide, .guide-container').toggleClass('d-none');
 });
 
-$(".hr_round_guide").on("click", ".save-guide", function() {
-	let container = $(this).closest(".hr_round_guide");
-	let form = container.find("form");
+$('.hr_round_guide').on('click', '.save-guide', function() {
+	let container = $(this).closest('.hr_round_guide');
+	let form = container.find('form');
 	let button = $(this);
 	$.ajax({
-		method: form.attr("method"),
-		url: form.attr("action"),
-		data: form.serialize() + "&guidelines=" + tinyMCE.activeEditor.getContent(),
+		method: form.attr('method'),
+		url: form.attr('action'),
+		data: form.serialize() + '&guidelines=' + tinyMCE.activeEditor.getContent(),
 		beforeSend: function() {
-			button.prop("disabled", true).find(".item").toggleClass("d-none");
+			button.prop('disabled', true).find('.item').toggleClass('d-none');
 		},
 		success: function(res) {
-			button.prop("disabled", false).find(".item").toggleClass("d-none");
+			button.prop('disabled', false).find('.item').toggleClass('d-none');
 			if (res.length) {
-				container.find(".guide-display").html(res);
-				container.find(".btn-guide, .guide-container").toggleClass("d-none");
+				container.find('.guide-display').html(res);
+				container.find('.btn-guide, .guide-container').toggleClass('d-none');
 			}
 		}
 	});
@@ -382,18 +385,18 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
  *
  */
 
-if (document.getElementById("show_and_save_book")) {
+if (document.getElementById('show_and_save_book')) {
 	const bookForm = new Vue({
-		el: "#show_and_save_book",
+		el: '#show_and_save_book',
 		data: {
-			addMethod: "from_isbn",
+			addMethod: 'from_isbn',
 			showInfo: false,
 			book: {},
 			number_of_copies: 1,
 			routes: {
-				index: document.getElementById("show_book").dataset.indexRoute || "",
-				fetch: document.getElementById("book_form").dataset.actionRoute || "",
-				store: document.getElementById("show_book").dataset.storeRoute || ""
+				index: document.getElementById('show_book').dataset.indexRoute || '',
+				fetch: document.getElementById('book_form').dataset.actionRoute || '',
+				store: document.getElementById('show_book').dataset.storeRoute || ''
 			},
 			buttons: {
 				disableSubmitButton: false,
@@ -417,9 +420,9 @@ if (document.getElementById("show_and_save_book")) {
 			},
 
 			submitBookForm: function() {
-				let formData = new FormData(document.getElementById("book_form"));
+				let formData = new FormData(document.getElementById('book_form'));
 				if (this.compressedFile) {
-					formData.append("book_image", compressedFile, compressedFile.name);
+					formData.append('book_image', compressedFile, compressedFile.name);
 				}
 
 				this.book = {};
@@ -430,7 +433,7 @@ if (document.getElementById("show_and_save_book")) {
 					let data = response.data;
 
 					if (!data) {
-						alert("Error:Please try again");
+						alert('Error:Please try again');
 						return;
 					}
 
@@ -449,16 +452,16 @@ if (document.getElementById("show_and_save_book")) {
 
 			saveBookToRecords: function() {
 				if (!this.book) {
-					alert("Error in saving records");
+					alert('Error in saving records');
 				}
 				this.buttons.disableSaveButton = true;
 				this.book.number_of_copies = this.number_of_copies;
-				this.book["on_kindle"] = document.getElementById("on_kindle").checked ? 1 : 0;
+				this.book['on_kindle'] = document.getElementById('on_kindle').checked ? 1 : 0;
 				axios.post(this.routes.store, this.book).then((response) => {
 					this.buttons.disableSaveButton = false;
 
 					if (response.data.error) {
-						alert("Error in saving records");
+						alert('Error in saving records');
 						return false;
 					}
 					window.location.href = this.routes.index;
@@ -468,29 +471,29 @@ if (document.getElementById("show_and_save_book")) {
 	});
 }
 
-if (document.getElementById("books_listing")) {
+if (document.getElementById('books_listing')) {
 	const bookForm = new Vue({
-		el: "#books_listing",
+		el: '#books_listing',
 		data: {
-			books: document.getElementById("books_table").dataset.books
-				? JSON.parse(document.getElementById("books_table").dataset.books)
+			books: document.getElementById('books_table').dataset.books
+				? JSON.parse(document.getElementById('books_table').dataset.books)
 				: {},
-			bookCategories: document.getElementById("books_table").dataset.categories
-				? JSON.parse(document.getElementById("books_table").dataset.categories)
+			bookCategories: document.getElementById('books_table').dataset.categories
+				? JSON.parse(document.getElementById('books_table').dataset.categories)
 				: [],
-			updateRoute: document.getElementById("books_table").dataset.indexRoute || "",
-			categoryIndexRoute: document.getElementById("books_table").dataset.categoryIndexRoute || "",
+			updateRoute: document.getElementById('books_table').dataset.indexRoute || '',
+			categoryIndexRoute: document.getElementById('books_table').dataset.categoryIndexRoute || '',
 			categoryInputs: [],
 			currentBookIndex: 0,
-			newCategory: "",
-			searchKey: document.getElementById("search_input")
-				? document.getElementById("search_input").dataset.value
-				: ""
+			newCategory: '',
+			searchKey: document.getElementById('search_input')
+				? document.getElementById('search_input').dataset.value
+				: ''
 		},
 
 		methods: {
 			updateCategoryMode: function(index) {
-				let categories = this.books[index]["categories"];
+				let categories = this.books[index]['categories'];
 				if (!categories) {
 					return false;
 				}
@@ -501,7 +504,7 @@ if (document.getElementById("books_listing")) {
 
 			updateCategory: function() {
 				let selectedCategory = [];
-				let bookID = this.books[this.currentBookIndex]["id"];
+				let bookID = this.books[this.currentBookIndex]['id'];
 
 				this.categoryInputs.forEach(function(checkbox) {
 					if (checkbox.checked) {
@@ -512,17 +515,17 @@ if (document.getElementById("books_listing")) {
 					}
 				});
 
-				this.$set(this.books[this.currentBookIndex], "categories", selectedCategory);
+				this.$set(this.books[this.currentBookIndex], 'categories', selectedCategory);
 				let route = `${this.updateRoute}/${bookID}`;
 				axios.put(route, {
 					categories: JSON.parse(JSON.stringify(selectedCategory))
 				});
-				document.getElementById("close_update_category_modal").click();
+				document.getElementById('close_update_category_modal').click();
 			},
 
 			addNewCategory: async function() {
 				if (!this.newCategory) {
-					alert("Please enter category name");
+					alert('Please enter category name');
 					return false;
 				}
 
@@ -531,21 +534,21 @@ if (document.getElementById("books_listing")) {
 				});
 				if (response.data && response.data.category) {
 					await this.bookCategories.push(response.data.category);
-					this.newCategory = "";
-					let allCheckboxes = document.querySelectorAll("#update_category_modal input[type=\"checkbox\"]");
+					this.newCategory = '';
+					let allCheckboxes = document.querySelectorAll('#update_category_modal input[type="checkbox"]');
 					let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
 					this.categoryInputs[lastCheckbox.value] = lastCheckbox;
 				}
 			},
 
 			deleteBook: async function(index) {
-				let confirmDelete = confirm("Are you sure ?");
+				let confirmDelete = confirm('Are you sure ?');
 
 				if (!confirmDelete) {
 					return false;
 				}
 
-				let bookID = this.books[index]["id"];
+				let bookID = this.books[index]['id'];
 				let route = `${this.updateRoute}/${bookID}`;
 				let response = await axios.delete(route);
 				this.books.splice(index, 1);
@@ -557,16 +560,16 @@ if (document.getElementById("books_listing")) {
 
 			strLimit: function(str, length) {
 				if (!str) {
-					return "";
+					return '';
 				}
-				return str.length > length ? str.substring(0, length) + "..." : str;
+				return str.length > length ? str.substring(0, length) + '...' : str;
 			},
 
 			updateCopiesCount: function(index) {
-				var new_count = parseInt(prompt("Number of copies of this book", this.books[index].number_of_copies));
+				var new_count = parseInt(prompt('Number of copies of this book', this.books[index].number_of_copies));
 				if (new_count && isFinite(new_count)) {
 					this.books[index].number_of_copies = new_count;
-					axios.put(this.updateRoute + "/" + this.books[index].id, {
+					axios.put(this.updateRoute + '/' + this.books[index].id, {
 						number_of_copies: new_count
 					});
 				}
@@ -574,65 +577,65 @@ if (document.getElementById("books_listing")) {
 		},
 
 		mounted: function() {
-			let categoryInputContainer = document.querySelector("#update_category_modal");
-			let allCategoryInputs = categoryInputContainer.querySelectorAll("input[type=\"checkbox\"]");
+			let categoryInputContainer = document.querySelector('#update_category_modal');
+			let allCategoryInputs = categoryInputContainer.querySelectorAll('input[type="checkbox"]');
 			allCategoryInputs.forEach((checkbox) => (this.categoryInputs[checkbox.value] = checkbox));
 		}
 	});
 }
 
-if (document.getElementById("books_category")) {
+if (document.getElementById('books_category')) {
 	const bookForm = new Vue({
-		el: "#books_category",
+		el: '#books_category',
 		data: {
-			categories: document.getElementById("category_container").dataset.categories
-				? JSON.parse(document.getElementById("category_container").dataset.categories)
+			categories: document.getElementById('category_container').dataset.categories
+				? JSON.parse(document.getElementById('category_container').dataset.categories)
 				: [],
 			categoryNameToChange: [],
-			indexRoute: document.getElementById("category_container").dataset.indexRoute || "",
-			newCategoryName: "",
-			newCategoryMode: ""
+			indexRoute: document.getElementById('category_container').dataset.indexRoute || '',
+			newCategoryName: '',
+			newCategoryMode: ''
 		},
 
 		methods: {
 			showEditMode: function(index) {
-				this.categoryNameToChange[index] = this.categories[index]["name"];
-				this.$set(this.categories[index], "editMode", true);
+				this.categoryNameToChange[index] = this.categories[index]['name'];
+				this.$set(this.categories[index], 'editMode', true);
 			},
 
 			updateCategoryName: function(index) {
-				this.$set(this.categories[index], "name", this.categoryNameToChange[index]);
-				let categoryID = this.categories[index]["id"];
+				this.$set(this.categories[index], 'name', this.categoryNameToChange[index]);
+				let categoryID = this.categories[index]['id'];
 				let route = `${this.indexRoute}/${categoryID}`;
 				axios.put(route, {
-					name: this.categories[index]["name"]
+					name: this.categories[index]['name']
 				});
-				this.$set(this.categories[index], "editMode", false);
+				this.$set(this.categories[index], 'editMode', false);
 			},
 
 			deleteCategory: async function(index) {
-				let confirmDelete = confirm("Are you sure ?");
+				let confirmDelete = confirm('Are you sure ?');
 
 				if (!confirmDelete) {
 					return false;
 				}
 
-				let categoryID = this.categories[index]["id"];
+				let categoryID = this.categories[index]['id'];
 				let route = `${this.indexRoute}/${categoryID}`;
 				let response = await axios.delete(route);
 				this.categories.splice(index, 1);
 			},
 
 			updateNewCategoryMode: function(mode) {
-				if (mode != "add") {
-					this.newCategoryName = "";
+				if (mode != 'add') {
+					this.newCategoryName = '';
 				}
 				this.newCategoryMode = mode;
 			},
 
 			addNewCategory: async function() {
 				if (!this.newCategoryName) {
-					alert("Please enter category name");
+					alert('Please enter category name');
 					return false;
 				}
 				let route = `${this.indexRoute}`;
@@ -644,42 +647,42 @@ if (document.getElementById("books_category")) {
 					this.categories.unshift(response.data.category);
 				}
 
-				this.newCategoryMode = "saved";
+				this.newCategoryMode = 'saved';
 			}
 		}
 	});
 }
 
-if (document.getElementById("show_book_info")) {
+if (document.getElementById('show_book_info')) {
 	const bookForm = new Vue({
-		el: "#show_book_info",
+		el: '#show_book_info',
 		data: {
-			book: document.getElementById("show_book_info").dataset.book
-				? document.getElementById("show_book_info").dataset.book
+			book: document.getElementById('show_book_info').dataset.book
+				? document.getElementById('show_book_info').dataset.book
 				: [],
-			route: document.getElementById("show_book_info").dataset.markBookRoute
-				? document.getElementById("show_book_info").dataset.markBookRoute
-				: "",
-			borrowBookRoute: document.getElementById("show_book_info").dataset.borrowBookRoute
-				? document.getElementById("show_book_info").dataset.borrowBookRoute
-				: "",
-			bookAMonthStoreRoute: document.getElementById("show_book_info").dataset.bookAMonthStoreRoute
-				? document.getElementById("show_book_info").dataset.bookAMonthStoreRoute
-				: "",
-			bookAMonthDestroyRoute: document.getElementById("show_book_info").dataset.bookAMonthDestroyRoute
-				? document.getElementById("show_book_info").dataset.bookAMonthDestroyRoute
-				: "",
-			putBackBookRoute: document.getElementById("show_book_info").dataset.putBackBookRoute
-				? document.getElementById("show_book_info").dataset.putBackBookRoute
-				: "",
-			isRead: document.getElementById("show_book_info").dataset.isRead ? true : false,
-			isBorrowed: document.getElementById("show_book_info").dataset.isBorrowed ? true : false,
-			isBookAMonth: document.getElementById("show_book_info").dataset.isBookAMonth ? true : false,
-			readers: document.getElementById("show_book_info").dataset.readers
-				? document.getElementById("show_book_info").dataset.readers
+			route: document.getElementById('show_book_info').dataset.markBookRoute
+				? document.getElementById('show_book_info').dataset.markBookRoute
+				: '',
+			borrowBookRoute: document.getElementById('show_book_info').dataset.borrowBookRoute
+				? document.getElementById('show_book_info').dataset.borrowBookRoute
+				: '',
+			bookAMonthStoreRoute: document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
+				? document.getElementById('show_book_info').dataset.bookAMonthStoreRoute
+				: '',
+			bookAMonthDestroyRoute: document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute
+				? document.getElementById('show_book_info').dataset.bookAMonthDestroyRoute
+				: '',
+			putBackBookRoute: document.getElementById('show_book_info').dataset.putBackBookRoute
+				? document.getElementById('show_book_info').dataset.putBackBookRoute
+				: '',
+			isRead: document.getElementById('show_book_info').dataset.isRead ? true : false,
+			isBorrowed: document.getElementById('show_book_info').dataset.isBorrowed ? true : false,
+			isBookAMonth: document.getElementById('show_book_info').dataset.isBookAMonth ? true : false,
+			readers: document.getElementById('show_book_info').dataset.readers
+				? document.getElementById('show_book_info').dataset.readers
 				: [],
-			borrowers: document.getElementById("show_book_info").dataset.borrowers
-				? document.getElementById("show_book_info").dataset.borrowers
+			borrowers: document.getElementById('show_book_info').dataset.borrowers
+				? document.getElementById('show_book_info').dataset.borrowers
 				: []
 		},
 		methods: {
@@ -732,55 +735,55 @@ if (document.getElementById("show_book_info")) {
 	});
 }
 
-if (document.getElementById("home_page")) {
-	var el = document.getElementById("markBookAsRead");
-	el.addEventListener("click", markBookAsRead, false);
-	var wishlistBtn = document.getElementById("addBookToWishlist");
-	wishlistBtn.addEventListener("click", addBookToWishlist, false);
-	var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
-	disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
-	let isModalShown = sessionStorage.getItem("book_modal_has_shown");
+if (document.getElementById('home_page')) {
+	var el = document.getElementById('markBookAsRead');
+	el.addEventListener('click', markBookAsRead, false);
+	var wishlistBtn = document.getElementById('addBookToWishlist');
+	wishlistBtn.addEventListener('click', addBookToWishlist, false);
+	var disableBookSuggestionBtn = document.getElementById('disableBookSuggestion');
+	disableBookSuggestionBtn.addEventListener('click', disableBookSuggestions, false);
+	let isModalShown = sessionStorage.getItem('book_modal_has_shown');
 	if (!isModalShown) {
-		sessionStorage.setItem("book_modal_has_shown", "true");
-		$("#show_nudge_modal").modal("show");
+		sessionStorage.setItem('book_modal_has_shown', 'true');
+		$('#show_nudge_modal').modal('show');
 	}
 }
 
 function markBookAsRead() {
-	let bookID = document.getElementById("markBookAsRead").dataset.id;
-	let route = document.getElementById("markBookAsRead").dataset.markBookRoute;
+	let bookID = document.getElementById('markBookAsRead').dataset.id;
+	let route = document.getElementById('markBookAsRead').dataset.markBookRoute;
 	axios.post(route, {
 		book_id: bookID,
 		is_read: true
 	});
-	$("#show_nudge_modal").modal("hide");
+	$('#show_nudge_modal').modal('hide');
 }
 
 function addBookToWishlist() {
-	let bookID = document.getElementById("addBookToWishlist").dataset.id;
-	let route = document.getElementById("addBookToWishlist").dataset.route;
+	let bookID = document.getElementById('addBookToWishlist').dataset.id;
+	let route = document.getElementById('addBookToWishlist').dataset.route;
 	axios.post(route, {
 		book_id: bookID
 	});
-	$("#show_nudge_modal").modal("hide");
+	$('#show_nudge_modal').modal('hide');
 }
 
 function disableBookSuggestions() {
-	$("#show_nudge_modal").modal("hide");
-	window.location.href = document.getElementById("disableBookSuggestion").dataset.href;
+	$('#show_nudge_modal').modal('hide');
+	window.location.href = document.getElementById('disableBookSuggestion').dataset.href;
 }
 
-if (document.getElementById("roles_permission_table")) {
+if (document.getElementById('roles_permission_table')) {
 	new Vue({
-		el: "#roles_permission_table",
+		el: '#roles_permission_table',
 		data: {
-			roles: document.getElementById("roles_permission_table").dataset.roles
-				? JSON.parse(document.getElementById("roles_permission_table").dataset.roles)
+			roles: document.getElementById('roles_permission_table').dataset.roles
+				? JSON.parse(document.getElementById('roles_permission_table').dataset.roles)
 				: [],
-			permissions: document.getElementById("roles_permission_table").dataset.permissions
-				? JSON.parse(document.getElementById("roles_permission_table").dataset.permissions)
+			permissions: document.getElementById('roles_permission_table').dataset.permissions
+				? JSON.parse(document.getElementById('roles_permission_table').dataset.permissions)
 				: [],
-			updateRoute: document.getElementById("roles_permission_table").dataset.updateRoute || "",
+			updateRoute: document.getElementById('roles_permission_table').dataset.updateRoute || '',
 			currentRoleIndex: 0,
 			permissionInputs: []
 		},
@@ -793,7 +796,7 @@ if (document.getElementById("roles_permission_table")) {
 			},
 			updatePermissions: function() {
 				let selectedPermissions = [];
-				let roleID = this.roles[this.currentRoleIndex]["id"];
+				let roleID = this.roles[this.currentRoleIndex]['id'];
 
 				this.permissionInputs.forEach(function(checkbox) {
 					if (checkbox.checked) {
@@ -804,40 +807,40 @@ if (document.getElementById("roles_permission_table")) {
 					}
 				});
 
-				this.$set(this.roles[this.currentRoleIndex], "permissions", selectedPermissions);
+				this.$set(this.roles[this.currentRoleIndex], 'permissions', selectedPermissions);
 				let route = `${this.updateRoute}/${roleID}`;
 				axios.put(route, {
 					permissions: JSON.parse(JSON.stringify(selectedPermissions)),
 					roleID: roleID
 				});
-				document.getElementById("update_role_permissions_modal").click();
+				document.getElementById('update_role_permissions_modal').click();
 			}
 		},
 		mounted: function() {
-			let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
-			let allPermissionInputs = permissionInputContainer.querySelectorAll("input[type=\"checkbox\"]");
+			let permissionInputContainer = document.querySelector('#update_role_permissions_modal');
+			let allPermissionInputs = permissionInputContainer.querySelectorAll('input[type="checkbox"]');
 			allPermissionInputs.forEach((checkbox) => (this.permissionInputs[checkbox.value] = checkbox));
 		}
 	});
 }
 
-if (document.getElementById("user_roles_table")) {
+if (document.getElementById('user_roles_table')) {
 	var userRoles = new Vue({
-		el: "#user_roles_table",
+		el: '#user_roles_table',
 		data: {
-			users: document.getElementById("user_roles_table").dataset.users
-				? JSON.parse(document.getElementById("user_roles_table").dataset.users)
-				: "",
-			roles: document.getElementById("user_roles_table").dataset.roles
-				? JSON.parse(document.getElementById("user_roles_table").dataset.roles)
-				: "",
-			updateRoute: document.getElementById("user_roles_table").dataset.updateRoute || "",
+			users: document.getElementById('user_roles_table').dataset.users
+				? JSON.parse(document.getElementById('user_roles_table').dataset.users)
+				: '',
+			roles: document.getElementById('user_roles_table').dataset.roles
+				? JSON.parse(document.getElementById('user_roles_table').dataset.roles)
+				: '',
+			updateRoute: document.getElementById('user_roles_table').dataset.updateRoute || '',
 			currentUserIndex: 0,
 			roleInputs: []
 		},
 		methods: {
 			updateUserRolesModal: function(index) {
-				let roles = this.users[index]["roles"];
+				let roles = this.users[index]['roles'];
 				if (!roles) {
 					return false;
 				}
@@ -861,13 +864,13 @@ if (document.getElementById("user_roles_table")) {
 					}
 				});
 
-				this.$set(this.users[this.currentUserIndex], "roles", selectedRoles);
+				this.$set(this.users[this.currentUserIndex], 'roles', selectedRoles);
 				let route = `${this.updateRoute}/${userID}`;
 				axios.put(route, {
 					roles: JSON.parse(JSON.stringify(selectedRoles)),
 					userID: userID
 				});
-				document.getElementById("close_update_user_roles_modal").click();
+				document.getElementById('close_update_user_roles_modal').click();
 			},
 
 			formatRoles: function(user) {
@@ -881,19 +884,19 @@ if (document.getElementById("user_roles_table")) {
 					roleNames.push(roleName);
 				}
 
-				return roleNames.join(", ");
+				return roleNames.join(', ');
 			}
 		},
 		mounted: function() {
-			let roleInputContainer = document.querySelector("#update_user_roles_modal");
-			let allRoleInputs = roleInputContainer.querySelectorAll("input[type=\"checkbox\"]");
+			let roleInputContainer = document.querySelector('#update_user_roles_modal');
+			let allRoleInputs = roleInputContainer.querySelectorAll('input[type="checkbox"]');
 			allRoleInputs.forEach((checkbox) => (this.roleInputs[checkbox.value] = checkbox));
 		}
 	});
 }
 
-require("./finance/invoice");
-require("./finance/payment");
+require('./finance/invoice');
+require('./finance/payment');
 
 /*
  * HR Module JS code start
@@ -903,71 +906,71 @@ $(document).ready(function() {
 	$(document).on("click", ".section-toggle", sectionToggle);
 	$(document).on("click", "#saveFollowUp", saveFollowUp);
 	$(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-	$(document).on("click", ".show-evaluation-stage", function() {
-		$(".evaluation-stage").addClass("d-none");
-		var target = $(this).data("target");
-		$(target).removeClass("d-none");
+	$(document).on('click', '.show-evaluation-stage', function() {
+		$('.evaluation-stage').addClass('d-none');
+		var target = $(this).data('target');
+		$(target).removeClass('d-none');
 	});
 	$(document).on("change", ".set-segment-assignee", setSegmentAssignee);
-	$(document).on("click", ".toggle-block-display", toggleBlockDisplay);
-	$(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
+	$(document).on('click', '.toggle-block-display', toggleBlockDisplay);
+	$(document).on('change', '.send-mail-to-applicant', toggleApplicantMailEditor);
 });
 
 function showCommentBlock() {
-	var blockId = $(this).data("block-id");
-	$(blockId).removeClass("d-none").find("input").focus();
-	$(this).addClass("d-none");
+	var blockId = $(this).data('block-id');
+	$(blockId).removeClass('d-none').find('input').focus();
+	$(this).addClass('d-none');
 }
 
 function sectionToggle() {
-	var targetParent = $(this).data("target-parent");
-	var targetOption = $(this).data("target-option");
-	$(`.${targetParent}`).addClass("d-none");
-	$(`.${targetOption}`).removeClass("d-none");
+	var targetParent = $(this).data('target-parent');
+	var targetOption = $(this).data('target-option');
+	$(`.${targetParent}`).addClass('d-none');
+	$(`.${targetOption}`).removeClass('d-none');
 }
 
 function sectionToggleCheckbox() {
-	var showOnChecked = $(this).data("show-on-checked");
-	if ($(this).is(":checked")) {
-		$(showOnChecked).removeClass("d-none");
+	var showOnChecked = $(this).data('show-on-checked');
+	if ($(this).is(':checked')) {
+		$(showOnChecked).removeClass('d-none');
 	} else {
-		$(showOnChecked).addClass("d-none");
+		$(showOnChecked).addClass('d-none');
 	}
 }
 
 function setSegmentAssignee() {
-	var segment = $(this).data("target-segment");
-	var assignee = $(this).find(":selected").text();
+	var segment = $(this).data('target-segment');
+	var assignee = $(this).find(':selected').text();
 	if (assignee) {
-		$(segment).find(".assignee").removeClass("d-none").find(".name").text(assignee);
+		$(segment).find('.assignee').removeClass('d-none').find('.name').text(assignee);
 	} else {
-		$(segment).find(".assignee").addClass("d-none").find(".name").text("");
+		$(segment).find('.assignee').addClass('d-none').find('.name').text('');
 	}
 }
 
 function toggleBlockDisplay() {
-	let target = $(this).data("target");
-	$(target).toggleClass("d-none");
+    let target = $(this).data('target');
+    $(target).toggleClass('d-none');
 
-	var toggleIcon = $(this).data("toggle-icon");
-	if (toggleIcon) {
-		$(".toggle-icon").toggleClass("d-none");
-	}
+    var toggleIcon = $(this).data('toggle-icon');
+    if (toggleIcon) {
+        $('.toggle-icon').toggleClass('d-none');
+    }
 }
 
 
 function toggleApplicantMailEditor() {
-	let target = $(this).data("target");
-	$(target).toggleClass("d-none");
+	let target = $(this).data('target');
+	$(target).toggleClass('d-none');
 }
-
+ 
 
 function loadTemplateMail(status, successCallback) {
 	// make query to load current template
-	let applicationRoundId = $("#current_applicationround_id").val();
+	let applicationRoundId = $('#current_applicationround_id').val();
 	$.post({
 		url: `/hr/recruitment/applicationround/${applicationRoundId}/mail-content/${status}`,
-		method: "post",
+		method: 'post',
 		success: successCallback,
 		error: (err) => {
 			console.log(err);
@@ -976,30 +979,30 @@ function loadTemplateMail(status, successCallback) {
 }
 
 function saveFollowUp() {
-	var form = $(this).closest("form");
-	if ($("#followUpAndReject").is(":checked")) {
-		var followUpComments = form.find("[name=\"comments\"]").val();
-		$(document).find("#followUpCommentForReject").val(followUpComments);
-		$(this).closest(".modal").modal("hide");
-		$(document).find("#rejectApplication").trigger("click");
-	} else {
-		$(this).attr("disabled", "disabled").addClass("disabled c-disabled");
-		form.submit();
-	}
+    var form = $(this).closest('form');
+    if ($('#followUpAndReject').is(':checked')) {
+        var followUpComments = form.find('[name="comments"]').val();
+        $(document).find('#followUpCommentForReject').val(followUpComments);
+        $(this).closest('.modal').modal('hide');
+        $(document).find('#rejectApplication').trigger('click');
+    } else {
+        $(this).attr('disabled', 'disabled').addClass('disabled c-disabled');
+        form.submit();
+    }
 }
 
-$(function(){
+function datePickerChart(){
 	$("#EndDate").change(function () {
-		var startDate = document.getElementById("StartDate").value;
-		var endDate = document.getElementById("EndDate").value;
-		if ((Date.parse(endDate) <= Date.parse(startDate))) {
-		alert("End date should be greater than Start date");
-		document.getElementById("EndDate").value = "";
-		}
+	  var startDate = document.getElementById("StartDate").value;
+	  var endDate = document.getElementById("EndDate").value;
+	  if ((Date.parse(endDate) <= Date.parse(startDate))) {
+	  alert("End date should be greater than Start date");
+	  document.getElementById("EndDate").value = "";
+	  }
 	});
-});
+}
 
-$(function(){
+function lineChart(){
 	var cData = value;
 	var ctx = $("#line-chart");
 
@@ -1054,15 +1057,15 @@ $(function(){
 	  data: data,
 	  options: options
 	});
- });
+  }
 
 /*
  * HR Module JS code end
  */
 
 // fix for tinymce and bootstrap modal
-$(document).on("focusin", function(e) {
-	if ($(event.target).closest(".mce-window").length) {
+$(document).on('focusin', function(e) {
+	if ($(event.target).closest('.mce-window').length) {
 		e.stopImmediatePropagation();
 	}
 });
