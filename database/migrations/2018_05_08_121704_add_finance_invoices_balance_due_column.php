@@ -27,7 +27,7 @@ class AddFinanceInvoicesBalanceDueColumn extends Migration
     public function down()
     {
         Schema::table('finance_invoices', function (Blueprint $table) {
-            $table->dropColumn([ 'due_amount', 'currency_due_amount' ]);
+            $table->dropColumn(['due_amount', 'currency_due_amount']);
         });
     }
 }

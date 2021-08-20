@@ -77,10 +77,8 @@ Route::middleware('auth')->group(function () {
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
-
         });
 
         Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
     });
-
 });

@@ -20,6 +20,7 @@ class ClientController extends Controller
     public function index()
     {
         $this->authorize('list', Client::class);
+
         return view('client.index')->with([
             'clients' => Client::select('id', 'name', 'emails', 'phone', 'is_active')->with('projects')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);
@@ -100,6 +101,7 @@ class ClientController extends Controller
             'address' => $validated['address'],
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
+
         return redirect("/clients/$client->id/edit")->with('status', 'Client updated succesfully!');
     }
 
@@ -115,7 +117,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Get all the projects for a client
+     * Get all the projects for a client.
      *
      * @param  \App\Models\Client $client
      * @return \Illuminate\Database\Eloquent\Collection

@@ -9,7 +9,6 @@ use Modules\User\Entities\User;
 
 class TaskService implements TaskServiceContract
 {
-
     public function store($data)
     {
         return Task::create($data);
@@ -44,6 +43,7 @@ class TaskService implements TaskServiceContract
             $task->note = $task->comment ? 'View Note' : 'Add Note';
             $task->class = '';
         }
+
         return $tasks;
     }
 
@@ -60,7 +60,7 @@ class TaskService implements TaskServiceContract
     }
     public function getAddTask()
     {
-        return (object) array(
+        return (object) [
             'name' => '',
             'type' => '',
             'estimated_effort' => '',
@@ -73,6 +73,6 @@ class TaskService implements TaskServiceContract
             'btn_text' => '',
             'comment' => '',
             'note' => 'Add Note',
-        );
+        ];
     }
 }

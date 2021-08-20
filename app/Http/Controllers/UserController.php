@@ -15,6 +15,7 @@ class UserController extends Controller
         $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetch(auth()->user()->email);
         $this->updateEmployeeDetailsFromGSuite($gsuiteUserService->getUsers());
+
         return redirect()->back();
     }
 
@@ -24,6 +25,7 @@ class UserController extends Controller
         $gsuiteUserService = new GSuiteUserService();
         $gsuiteUserService->fetchAll();
         $this->updateEmployeeDetailsFromGSuite($gsuiteUserService->getUsers());
+
         return redirect()->back();
     }
 

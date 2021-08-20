@@ -21,29 +21,29 @@
 </template>
 
 <script>
-    export default {
-        props: [],
-        data() {
-            return {
-                books:[]
-            }
-        },
+export default {
+	props: [],
+	data() {
+		return {
+			books:[]
+		};
+	},
 
-        methods: {
-            async getWishListBooks() {
-                let response = await axios.get('/user/wishlist-books');
-                this.books =  response.data;
+	methods: {
+		async getWishListBooks() {
+			let response = await axios.get("/user/wishlist-books");
+			this.books =  response.data;
 
-            }
-        },
+		}
+	},
 
-        mounted() {
-            this.getWishListBooks();
-        }
+	mounted() {
+		this.getWishListBooks();
+	}
 
 
 
-    }
+};
 
 
 </script>

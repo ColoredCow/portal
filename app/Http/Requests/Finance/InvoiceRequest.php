@@ -37,6 +37,7 @@ class InvoiceRequest extends FormRequest
         if ($this->method() === 'POST') {
             $rules['invoice_file'] = 'required|file';
         }
+
         return $rules;
     }
 

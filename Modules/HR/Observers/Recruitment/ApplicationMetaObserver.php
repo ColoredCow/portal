@@ -9,7 +9,7 @@ use Modules\HR\Entities\ApplicationMeta;
 class ApplicationMetaObserver
 {
     /**
-     * Listen to the ApplicationMeta create event
+     * Listen to the ApplicationMeta create event.
      * @param  ApplicationMeta $applicationMeta
      * @return void
      */
@@ -21,7 +21,7 @@ class ApplicationMetaObserver
             case config('constants.hr.status.no-show.label'):
                 //$application->markNoShowReminded();
                 Mail::send(new NoShow($applicationMeta));
-                
+
                 break;
         }
     }

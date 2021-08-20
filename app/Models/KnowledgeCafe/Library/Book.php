@@ -23,6 +23,7 @@ class Book extends Model
     public static function getList($filteredString = false)
     {
         $query = self::with(['categories', 'readers', 'borrowers']);
+
         return $query
             ->where(function ($query) use ($filteredString) {
                 if ($filteredString) {
@@ -48,7 +49,7 @@ class Book extends Model
 
     public static function getByCategoryName($categoryName)
     {
-        if (!$categoryName) {
+        if (! $categoryName) {
             return false;
         }
 
@@ -66,12 +67,14 @@ class Book extends Model
     {
         $this->readers()->attach(auth()->user());
         $this->wishers()->detach(auth()->user());
+
         return true;
     }
 
     public function markAsUnRead()
     {
         $this->readers()->detach(auth()->user());
+
         return true;
     }
 
@@ -98,6 +101,7 @@ class Book extends Model
     public function addToWishlist()
     {
         $this->wishers()->attach(auth()->user());
+
         return true;
     }
 
@@ -149,6 +153,7 @@ class Book extends Model
     {
         $startOfYear = today()->startOfYear();
         $endOfYear = today()->endOfYear();
+
         return BookAMonth::where([
             'user_id' => auth()->user()->id,
             'library_book_id' => $this->id,

@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +12,6 @@ use Illuminate\Http\Request;
 */
 
 Route::prefix('/hr')->group(function () {
-	Route::resource('/jobs', 'Recruitment\JobController')->only(['store']);
-	Route::resource('/applicants', 'Recruitment\ApplicantController')->only(['store']);
+    Route::resource('/jobs', 'Recruitment\JobController')->only(['store']);
+    Route::resource('/applicants', 'Recruitment\ApplicantController')->only(['store']);
 });

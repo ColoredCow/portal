@@ -34,6 +34,7 @@ class NDAMailTemplateController extends Controller
     public function store(Request $request)
     {
         $legalDocumentTemplate = LegalDocumentMailTemplate::create($request->all());
+
         return redirect(route('legal-document.nda.index'));
     }
 
@@ -45,6 +46,7 @@ class NDAMailTemplateController extends Controller
     public function show($id)
     {
         $template = LegalDocumentMailTemplate::find($id);
+
         return view('legaldocument::nda.templates.show', compact('template'));
     }
 
@@ -67,6 +69,7 @@ class NDAMailTemplateController extends Controller
     public function update(Request $request, $id)
     {
         $legalDocumentTemplate = LegalDocumentMailTemplate::find($id)->update($request->all());
+
         return redirect(route('legal-document.nda.index'));
     }
 
@@ -93,6 +96,7 @@ class NDAMailTemplateController extends Controller
         $finalData = array_merge($data, request()->all());
         $pdf = app('snappy.pdf.wrapper');
         $pdf->loadHTML($template->parse($finalData));
+
         return $pdf->inline();
     }
 }

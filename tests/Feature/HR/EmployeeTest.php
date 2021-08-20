@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\HR;
 
-use App\Models\HR\Employee;
 use App\User;
 use Illuminate\Auth\AuthenticationException;
 use Tests\Feature\FeatureTest;

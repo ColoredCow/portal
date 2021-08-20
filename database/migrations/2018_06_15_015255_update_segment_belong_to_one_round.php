@@ -34,7 +34,7 @@ class UpdateSegmentBelongToOneRound extends Migration
             $table->dropForeign(['round_id']);
             $table->dropColumn('round_id');
         });
-        
+
         Schema::create('hr_round_segment', function (Blueprint $table) {
             $table->integer('segment_id')->unsigned();
             $table->integer('round_id')->unsigned();

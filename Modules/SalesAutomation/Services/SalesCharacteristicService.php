@@ -6,15 +6,16 @@ use Modules\SalesAutomation\Entities\SalesCharacteristic;
 
 class SalesCharacteristicService
 {
-	public function index(array $filters = [])
+    public function index(array $filters = [])
     {
         $salesCharacteristicQuery = $this->getsalesCharacteristicFilterQuery($filters);
         $salesCharacteristics = $salesCharacteristicQuery->paginate(config('salesautomation.sales-characteristic.paginate'));
         $responseData = [
             'salesCharacteristics' => $salesCharacteristics,
             'filters' => $filters,
-            'filterDepth' => sizeof($filters),
+            'filterDepth' => count($filters),
         ];
+
         return $responseData;
     }
 
@@ -28,6 +29,7 @@ class SalesCharacteristicService
                     break;
             }
         }
+
         return $salesCharacteristicQuery;
     }
 
@@ -37,6 +39,7 @@ class SalesCharacteristicService
             'name' => $data['name'],
             'type' => $data['type'],
         ]);
+
         return $salesCharacteristic;
     }
 
@@ -46,6 +49,7 @@ class SalesCharacteristicService
             'name' => $data['name'],
             'type' => $data['type'],
         ]);
+
         return $salesCharacteristic;
     }
 

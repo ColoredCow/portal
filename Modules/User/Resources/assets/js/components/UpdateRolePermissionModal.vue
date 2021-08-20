@@ -36,62 +36,62 @@
 </template>
 
 <script>
-    export default {
+export default {
        
-       props:['role', 'permissions', 'updateRoute'],
+	props:["role", "permissions", "updateRoute"],
 
-        data(){
-            return { 
-                permissionInputs:[]
-            }  
-        },
+	data(){
+		return { 
+			permissionInputs:[]
+		};  
+	},
 
-        methods: {
+	methods: {
           
-            setupUserPermissions: function() {
-                let permissions = this.role.permissions;
-                if(!permissions) {
-                    return false;
-                }
+		setupUserPermissions: function() {
+			let permissions = this.role.permissions;
+			if(!permissions) {
+				return false;
+			}
 
-                let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
-                let allPermissionInputs = permissionInputContainer.querySelectorAll('input[type="checkbox"]');
-                allPermissionInputs.forEach((checkbox) => {this.permissionInputs[checkbox.value] = checkbox; console.log('checkbox.value')});
-                this.permissionInputs.map((checkbox) => checkbox.checked = false);
-                permissions.forEach((permission) => this.permissionInputs[permission.id].checked =  true );
-            },
+			let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
+			let allPermissionInputs = permissionInputContainer.querySelectorAll("input[type='checkbox']");
+			allPermissionInputs.forEach((checkbox) => {this.permissionInputs[checkbox.value] = checkbox; console.log("checkbox.value");});
+			this.permissionInputs.map((checkbox) => checkbox.checked = false);
+			permissions.forEach((permission) => this.permissionInputs[permission.id].checked =  true );
+		},
 
-            updatePermissions() {
-                let selectedPermissions = [];
-                let roleID = this.role.id;
+		updatePermissions() {
+			let selectedPermissions = [];
+			let roleID = this.role.id;
 
-                this.permissionInputs.forEach(function(checkbox) {
-                    if(checkbox.checked) {
-                        selectedPermissions.push({
-                            name:checkbox.dataset.permission,
-                            id:checkbox.value
-                        });
-                    }
-                });
-                let route = `${this.updateRoute}/${roleID}`;
-                axios.put(route, {
-                    permissions: JSON.parse(JSON.stringify(selectedPermissions)),
-                    roleID: roleID
-                });
+			this.permissionInputs.forEach(function(checkbox) {
+				if(checkbox.checked) {
+					selectedPermissions.push({
+						name:checkbox.dataset.permission,
+						id:checkbox.value
+					});
+				}
+			});
+			let route = `${this.updateRoute}/${roleID}`;
+			axios.put(route, {
+				permissions: JSON.parse(JSON.stringify(selectedPermissions)),
+				roleID: roleID
+			});
 
-                document.getElementById('update_role_permissions_modal').click();
+			document.getElementById("update_role_permissions_modal").click();
 
-                this.$emit('rolePermissionsUpdated', selectedPermissions);
+			this.$emit("rolePermissionsUpdated", selectedPermissions);
 
 
-           }
-        },
+		}
+	},
 
-        watch: { 
-            role: function(selectedRole) { 
-                this.setupUserPermissions()
-            }
-        },
+	watch: { 
+		role: function(selectedRole) { 
+			this.setupUserPermissions();
+		}
+	},
 
-    }
+};
 </script>

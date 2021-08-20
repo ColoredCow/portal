@@ -9,13 +9,14 @@ class UniversityAliasRequest extends FormRequest
     public function rules()
     {
         $rules = ['name' => 'required|string'];
-         switch($this->method()) {
+        switch ($this->method()) {
             case 'POST':
                 $rules['hr_university_id'] = 'required|exists:hr_universities,id';
                 break;
             default:
                 break;
         }
+
         return $rules;
     }
 

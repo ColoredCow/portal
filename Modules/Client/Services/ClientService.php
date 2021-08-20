@@ -27,7 +27,7 @@ class ClientService implements ClientServiceContract
             return $value->isTopLevel();
         });
 
-        /** Filter all the status (active/Inactive clients which
+        /* Filter all the status (active/Inactive clients which
          * does not have a parent with different status) */
 
         foreach ($topLevel as $client) {
@@ -49,7 +49,7 @@ class ClientService implements ClientServiceContract
 
     public function edit($client, $section)
     {
-        if (!$section || $section == 'client-details') {
+        if (! $section || $section == 'client-details') {
             return [
                 'channelPartners' => $this->getChannelPartners(),
                 'parentOrganisations' => $this->getParentOrganisations(),
@@ -85,9 +85,6 @@ class ClientService implements ClientServiceContract
             ];
         }
     }
-
-
-
 
     public function update($data, $client)
     {
@@ -138,6 +135,7 @@ class ClientService implements ClientServiceContract
     public function store($data)
     {
         $data['status'] = 'active';
+
         return Client::create($data);
     }
 
@@ -145,6 +143,7 @@ class ClientService implements ClientServiceContract
     {
         $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
         $data['has_departments'] = $data['has_departments'] ?? false;
+
         return $client->update($data);
     }
 
@@ -170,6 +169,7 @@ class ClientService implements ClientServiceContract
             ->each(function ($contactPerson) {
                 $contactPerson->delete();
             });
+
         return true;
     }
 
@@ -213,6 +213,7 @@ class ClientService implements ClientServiceContract
     {
         $client->update(['key_account_manager_id' => $data['key_account_manager_id']]);
         ClientBillingDetail::updateOrCreate(['client_id' => $client->id], $data);
+
         return true;
     }
 
@@ -230,7 +231,7 @@ class ClientService implements ClientServiceContract
     {
         $addresses = $client->addresses()->with('country')->get();
         if ($addresses->isEmpty()) {
-            return null;
+            return;
         }
 
         $billingAddress = $addresses->where('type', 'billing-address')->first();

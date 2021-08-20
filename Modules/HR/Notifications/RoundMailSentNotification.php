@@ -46,7 +46,7 @@ class RoundMailSentNotification extends Notification
         $conductedPerson = $this->applicationRound->getPreviousApplicationRound()->conductedPerson;
 
         return (new MailMessage)
-                    ->subject(config('app.name') . " – HR application round assigned to you")
+                    ->subject(config('app.name') . ' – HR application round assigned to you')
                     ->line("{$conductedPerson->name} has assigned you an HR application for {$this->applicationRound->round->name}.")
                     ->line("Candidate name: {$applicant->name}")
                     ->line('A confirmation email has been sent to the candidate. We will notify you when the applicant will confirm the interview slot.')

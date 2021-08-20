@@ -11,9 +11,11 @@ use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\Applicant;
 use Modules\HR\Observers\EmployeeObserver;
 use Modules\HR\Observers\Recruitment\ApplicationMetaObserver;
 use Modules\HR\Observers\Recruitment\ApplicationRoundObserver;
+use Modules\HR\Observers\Recruitment\ApplicantObserver;
 use Modules\HR\Observers\Recruitment\JobObserver;
 use Modules\HR\Services\ApplicationService;
 use Modules\HR\Services\UniversityService;
@@ -21,12 +23,12 @@ use Modules\HR\Services\UniversityService;
 class HRServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'HR';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'hr';
 
@@ -116,7 +118,7 @@ class HRServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -139,17 +141,18 @@ class HRServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), ApplicationServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), ApplicationServiceContract::class)) {
             $this->app->bind(ApplicationServiceContract::class, function () {
                 return new ApplicationService();
             });
         }
-        if (!Arr::has($this->app->getBindings(), UniversityServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), UniversityServiceContract::class)) {
             $this->app->bind(UniversityServiceContract::class, function () {
                 return new UniversityService();
             });
@@ -184,5 +187,6 @@ class HRServiceProvider extends ServiceProvider
         ApplicationRound::observe(ApplicationRoundObserver::class);
         ApplicationMeta::observe(ApplicationMetaObserver::class);
         Employee::observe(EmployeeObserver::class);
+        Applicant::observe(ApplicantObserver::class);
     }
 }

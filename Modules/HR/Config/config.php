@@ -23,13 +23,17 @@ return [
             'design' => 'Design',
             'marketing' => 'Marketing'
         ],
-    
+
     ],
 
     'opportunities-status' => [
         'draft' => 'Draft',
         'published' => 'Published',
         'closed' => 'Closed'
+    ],
+
+    'post-type' => [
+        'career' => 'Career',
     ],
 
     'template-variables' => [

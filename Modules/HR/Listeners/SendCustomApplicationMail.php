@@ -3,8 +3,6 @@
 namespace Modules\HR\Listeners;
 
 use App\Helpers\ContentHelper;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\Recruitment\Application\CustomApplicationMail;
 use Modules\HR\Entities\ApplicationMeta;
@@ -29,7 +27,7 @@ class SendCustomApplicationMail
      */
     public function handle($event)
     {
-        if (!isset($event->data['action'], $event->data['mail_subject'], $event->data['mail_body'], $event->data['mail_sender_name'])) {
+        if (! isset($event->data['action'], $event->data['mail_subject'], $event->data['mail_body'], $event->data['mail_sender_name'])) {
             return;
         }
 

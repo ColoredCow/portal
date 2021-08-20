@@ -13,14 +13,14 @@ class JobChanged extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Application instance for which job has changed
+     * Application instance for which job has changed.
      *
      * @var Application
      */
     public $application;
 
     /**
-     * Application meta that tracks the job change details
+     * Application meta that tracks the job change details.
      *
      * @var ApplicationMeta
      */

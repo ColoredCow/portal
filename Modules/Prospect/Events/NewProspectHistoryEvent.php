@@ -15,7 +15,6 @@ class NewProspectHistoryEvent
      *
      * @return void
      */
-
     public $prospect;
     public $data;
 

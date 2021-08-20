@@ -11,12 +11,12 @@ use Modules\Communication\Contracts\CalendarMeetingContract;
 class CommunicationServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Communication';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'communication';
 
@@ -102,7 +102,7 @@ class CommunicationServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -125,12 +125,13 @@ class CommunicationServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), CalendarMeetingContract::class)) {
+        if (! Arr::has($this->app->getBindings(), CalendarMeetingContract::class)) {
             $this->app->bind(CalendarMeetingContract::class, function () {
                 return new CalendarMeetingService();
             });

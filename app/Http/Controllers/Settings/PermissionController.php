@@ -27,6 +27,7 @@ class PermissionController extends Controller
                 break;
         }
         $attr['settings'] = Setting::where('module', $module)->get()->keyBy('setting_key');
+
         return view("settings.permissions.$module")->with($attr);
     }
 
@@ -34,7 +35,7 @@ class PermissionController extends Controller
     {
         $this->authorize('settings.update', Permission::class);
         $validatedData = $request->validated();
-        if (!isset($validatedData['roles'])) {
+        if (! isset($validatedData['roles'])) {
             return response()->json([
                 'isUpdated' => false,
             ]);
@@ -42,6 +43,7 @@ class PermissionController extends Controller
         $user = User::find($validatedData['userID']);
         $roles = array_pluck($validatedData['roles'], 'id');
         $isUpdated = $user->syncRoles($roles);
+
         return response()->json(['isUpdated' => $isUpdated]);
     }
 
@@ -49,7 +51,7 @@ class PermissionController extends Controller
     {
         $this->authorize('settings.update', Permission::class);
         $validatedData = $request->validated();
-        if (!isset($validatedData['permissions'])) {
+        if (! isset($validatedData['permissions'])) {
             return response()->json([
                 'isUpdated' => false,
             ]);
@@ -57,6 +59,7 @@ class PermissionController extends Controller
         $role = Role::find($validatedData['roleID']);
         $permissions = array_pluck($validatedData['permissions'], 'id');
         $isUpdated = $role->syncPermissions($permissions);
+
         return response()->json(['isUpdated' => $isUpdated]);
     }
 }
