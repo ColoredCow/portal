@@ -11,12 +11,12 @@ use Modules\EffortTracking\Services\TaskService;
 class EffortTrackingServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'EffortTracking';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'efforttracking';
 
@@ -56,7 +56,8 @@ class EffortTrackingServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 
@@ -101,7 +102,7 @@ class EffortTrackingServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -124,12 +125,13 @@ class EffortTrackingServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), TaskServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), TaskServiceContract::class)) {
             $this->app->bind(TaskServiceContract::class, function () {
                 return new TaskService();
             });

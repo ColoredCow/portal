@@ -20,7 +20,7 @@ class Project extends Model
     }
 
     /**
-     * Get details to list projects
+     * Get details to list projects.
      *
      * @return self
      */

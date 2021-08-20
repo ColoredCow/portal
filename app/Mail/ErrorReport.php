@@ -1,7 +1,7 @@
 <?php
+
 namespace App\Mail;
 
-use Modules\User\Entities\User;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -24,13 +24,13 @@ class ErrorReport extends Mailable
         if (Auth::check()) {
             $user = Auth::user();
             $userDetails = [
-                "name" => $user->name,
-                "email" => $user->email,
+                'name' => $user->name,
+                'email' => $user->email,
             ];
         } else {
             $userDetails = [
-                "name" => 'System Generated',
-                "email" => '',
+                'name' => 'System Generated',
+                'email' => '',
             ];
         }
         $this->exception = $exception;

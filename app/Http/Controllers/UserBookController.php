@@ -11,6 +11,7 @@ class UserBookController extends Controller
     {
         $userId = request('user_id', null);
         $user = $userId ? User::find($userId) : Auth::user();
+
         return $user->books;
     }
 
@@ -18,6 +19,7 @@ class UserBookController extends Controller
     {
         $userId = request('user_id', null);
         $user = $userId ? User::find($userId) : Auth::user();
+
         return $user->booksInWishlist;
     }
 }

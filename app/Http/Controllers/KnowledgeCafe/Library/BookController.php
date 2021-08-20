@@ -29,6 +29,7 @@ class BookController extends Controller
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $books = Book::getList($searchString);
         $categories = BookCategory::orderBy('name')->get();
+
         return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
 
@@ -53,7 +54,8 @@ class BookController extends Controller
         $validatedData = $request->validated();
         $ISBN = isset($validatedData['isbn']) ? $validatedData['isbn'] : null;
         $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
-        return response()->json(['error' => !$stored]);
+
+        return response()->json(['error' => ! $stored]);
     }
 
     /**
@@ -70,6 +72,7 @@ class BookController extends Controller
             ->where('user_id', auth()->user()->id)
             ->get()
             ->isNotEmpty();
+
         return view('knowledgecafe.library.books.show', compact('book', 'isBookAMonth'));
     }
 
@@ -86,13 +89,16 @@ class BookController extends Controller
         if (isset($validatedData['number_of_copies'])) {
             $book->number_of_copies = $validatedData['number_of_copies'];
             $book->save();
+
             return response()->json(['isUpdated' => $book]);
         }
         if (isset($validatedData['categories'])) {
             $categories = array_pluck($validatedData['categories'], 'id');
             $isUpdated = $book->categories()->sync($categories);
+
             return response()->json(['isUpdated' => $isUpdated]);
         }
+
         return response()->json(['isUpdated' => false]);
     }
 
@@ -125,7 +131,7 @@ class BookController extends Controller
             $ISBN = $validated['isbn'];
         }
 
-        if (!$ISBN || strlen($ISBN) < 13) {
+        if (! $ISBN || strlen($ISBN) < 13) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : ' . $ISBN,
@@ -143,7 +149,7 @@ class BookController extends Controller
 
         $book = BookServices::getBookDetails($ISBN);
 
-        if (!isset($book['items'])) {
+        if (! isset($book['items'])) {
             return response()->json([
                 'error' => true,
                 'message' => 'Invalid ISBN : ' . $ISBN,
@@ -160,8 +166,8 @@ class BookController extends Controller
     }
 
     /**
-     * @param  Array  $book
-     * @return Array
+     * @param  array  $book
+     * @return array
      */
     public function formatBookData($book)
     {
@@ -175,6 +181,7 @@ class BookController extends Controller
         $data['categories'] = implode($info->get('categories', []));
         $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
         $data['self_link'] = $book->get('self_link');
+
         return $data;
     }
 
@@ -184,6 +191,7 @@ class BookController extends Controller
         $read = $request->is_read;
         $book = Book::find($bookID);
         $isMarked = ($book) ? $book->markBook($read) : false;
+
         return response()->json([
             'isMarked' => $isMarked,
             'readers' => $book->readers,
@@ -193,6 +201,7 @@ class BookController extends Controller
     public function markAsBorrowed(Book $book)
     {
         $book->markAsBorrowed();
+
         return response()->json([
             'isBorrowed' => true,
             'borrowers' => $book->borrowers,
@@ -202,6 +211,7 @@ class BookController extends Controller
     public function putBackToLibrary(Book $book)
     {
         $book->putBackToLibrary();
+
         return response()->json([
             'isBorrowed' => true,
             'borrowers' => $book->borrowers,
@@ -223,6 +233,7 @@ class BookController extends Controller
         }
 
         $data['categories'] = BookCategory::has('books')->pluck('name')->toArray();
+
         return response()->json($data);
     }
 
@@ -231,6 +242,7 @@ class BookController extends Controller
         $bookID = request()->book_id;
         $book = Book::find($bookID);
         $isAdded = $book ? $book->addToWishlist() : false;
+
         return response()->json([
             'isAdded' => $isAdded,
         ]);
@@ -239,24 +251,28 @@ class BookController extends Controller
     public function disableSuggestion()
     {
         session(['disable_book_suggestion' => true]);
+
         return redirect()->back()->with('status', 'Book suggestions has been disabled.');
     }
 
     public function enableSuggestion()
     {
         session(['disable_book_suggestion' => false]);
+
         return redirect()->back()->with('status', 'Book suggestions has been enabled.');
     }
 
     public function selectBookForCurrentMonth(Book $book)
     {
         $book->selectBookForCurrentMonth();
+
         return response()->json(['isBookAMonth' => true]);
     }
 
     public function unselectBookFromCurrentMonth(Book $book)
     {
         $book->unselectBookFromCurrentMonth();
+
         return response()->json(['isBookAMonth' => false]);
     }
 

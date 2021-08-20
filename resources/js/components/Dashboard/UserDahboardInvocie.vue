@@ -17,23 +17,23 @@
 
 <script>
 export default {
-  props: [],
-  data() {
-    return {
-      sentInvoiceCount: 0,
-    };
-  },
+	props: [],
+	data() {
+		return {
+			sentInvoiceCount: 0,
+		};
+	},
 
-  methods: {
-    async getDashboardData() {
-      let response = await axios.get("/invoice/dashboard");
-      let sentInvoices = response.data;
-      this.sentInvoiceCount = sentInvoices.length;
-    },
-  },
+	methods: {
+		async getDashboardData() {
+			let response = await axios.get("/invoice/dashboard");
+			let sentInvoices = response.data;
+			this.sentInvoiceCount = sentInvoices.length;
+		},
+	},
 
-  mounted() {
-    this.getDashboardData();
-  },
+	mounted() {
+		this.getDashboardData();
+	},
 };
 </script>

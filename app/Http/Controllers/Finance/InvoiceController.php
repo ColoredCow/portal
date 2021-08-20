@@ -76,6 +76,7 @@ class InvoiceController extends Controller
         if (isset($validated['request_from_billing']) && $validated['request_from_billing']) {
             return redirect()->back()->with('status', 'Billing invoice created successfully!');
         }
+
         return redirect()->route('invoices.edit', $invoice)->with('status', 'Invoice created successfully!');
     }
 
@@ -89,6 +90,7 @@ class InvoiceController extends Controller
     {
         $clients = Client::getInvoicableClients(collect($invoice->projectStageBillings)->pluck('id')->toArray());
         $invoice->load('projectStageBillings', 'projectStageBillings.projectStage', 'projectStageBillings.projectStage.project');
+
         return view('finance.invoice.edit')->with([
             'invoice' => $invoice,
             'clients' => $clients,
@@ -108,6 +110,7 @@ class InvoiceController extends Controller
         $args = self::prepareAttributes($validated);
         $invoice->update($args);
         self::handleBillings($validated['billings'], $invoice);
+
         return redirect()->route('invoices.edit', $invoice)->with('status', 'Invoice updated successfully!');
     }
 
@@ -123,6 +126,7 @@ class InvoiceController extends Controller
         if ($fileName) {
             return $file->storeAs(FileHelper::getCurrentStorageDirectory(), $fileName);
         }
+
         return $file->store(FileHelper::getCurrentStorageDirectory());
     }
 
@@ -132,21 +136,23 @@ class InvoiceController extends Controller
      * @param  string $year  uploaded year of the invoice file
      * @param  string $month uploaded month of the invoice file
      * @param  string $file  invoice file name
-     * @param  bool|boolean $inline download/view invoice file
+     * @param  bool|bool $inline download/view invoice file
      * @return mixed
      */
     public function download(string $year, string $month, string $file, bool $inline = true)
     {
         $filePath = FileHelper::getFilePath($year, $month, $file);
-        if (!$filePath) {
+        if (! $filePath) {
             return false;
         }
         if ($inline) {
             $headers = [
                 'content-type' => 'application/pdf',
             ];
+
             return Response::make(Storage::get($filePath), 200, $headers);
         }
+
         return Storage::download($filePath);
     }
 
@@ -154,7 +160,7 @@ class InvoiceController extends Controller
      * Prepare attributes to store or update the resource.
      *
      * @param  array        $validated
-     * @param  bool|boolean $uploadFile
+     * @param  bool|bool $uploadFile
      * @return array
      */
     protected static function prepareAttributes(array $validated, bool $uploadFile = false)
@@ -175,6 +181,7 @@ class InvoiceController extends Controller
         if (isset($validated['due_on'])) {
             $args['due_on'] = DateHelper::formatDateToSave($validated['due_on']);
         }
+
         return $args;
     }
 
@@ -192,6 +199,7 @@ class InvoiceController extends Controller
             foreach ($billings as $billing) {
                 ProjectStageBilling::where('id', $billing)->update(['invoice_id' => $invoice->id]);
             }
+
             return;
         }
 
@@ -199,7 +207,7 @@ class InvoiceController extends Controller
         // Before updating the new billings, we need to detach the billings that were removed.
         $invoiceBillings = $invoice->projectStageBillings->keyBy('id');
         foreach ($invoiceBillings as $id => $billing) {
-            if (!array_key_exists($id, $billings)) {
+            if (! array_key_exists($id, $billings)) {
                 $billing->update(['invoice_id' => null]);
             }
         }
@@ -207,7 +215,7 @@ class InvoiceController extends Controller
         foreach ($billings as $billing) {
             // There may be some billings which are not removed. Hence we can reduce database
             // calls by checking if they're already present in the existing billings.
-            if (!array_key_exists($billing, $invoiceBillings)) {
+            if (! array_key_exists($billing, $invoiceBillings)) {
                 ProjectStageBilling::where('id', $billing)->update(['invoice_id' => $invoice->id]);
             }
         }

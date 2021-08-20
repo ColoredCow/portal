@@ -95,8 +95,9 @@
                             placeholder="Amount Received" required="required" step=".01" min="0" v-on:input="changePaidAmountListener">
                             <div class="input-group-prepend">
                                 <select name="currency_transaction_charge" v-model="currency_transaction_charge" id="currency_transaction_charge" class="input-group-text" required="required">
-                                    <option value="INR">INR</option>
-                                    <option value="USD">USD</option>
+                                @foreach($countries as $country)
+                                    <option value="{{$country->currency}}">{{$country->currency}}</option>
+                                @endforeach    
                                 </select>
                             </div>
                     </div>
@@ -106,7 +107,7 @@
                     <label for="receivable_date" class="field-required mr-8 pt-1">Payment date</label>
                     <input type="date" class="form-control flex-1" name="payment_date" id="payment_date" 
                     required="required"
-                    value="{{ $invoice->payment_date ? $invoice->payment_date->format('Y-m-d') : date('Y-m-d') }}">
+                    value="{{ $invoice->payment_at ? $invoice->payment_at->format('Y-m-d') : date('Y-m-d') }}">
                 </div>
 
                 <div class="form-group" v-if="this.client.type == 'indian'">
@@ -132,8 +133,8 @@
 
                 <div class="form-group" v-if="this.client.type != 'indian'">
                     <div class="d-flex">
-                        <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate:</label>
-                        <input type="text" class = "form-control w-272 ml-auto" name="conversion_rate" v-model = 'conversion_rate'required="required">
+                        <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate Diff:</label>
+                        <input type="text" class = "form-control w-272 ml-auto" name="conversion_rate_diff" v-model = 'conversion_rate_diff'required="required">
                     </div>
                 </div>
 
@@ -179,7 +180,7 @@
         },
 
         updateTds() {
-            this.tds = this.amount - this.amount_paid
+            this.tds = this.amount - this.amount_paid + (this.amount * 0.18)
             this.tds_percentage = (this.tds/this.amount) * 100
         },
 

@@ -22,12 +22,14 @@ class InfrastructureController extends Controller
     public function index()
     {
         $storageBuckets = $this->service->getStorageBuckets();
+
         return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
     }
 
     public function getInstances()
     {
         $instances = $this->service->getServersInstances();
+
         return view('infrastructure::instances')->with('instances', $instances);
     }
 

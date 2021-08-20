@@ -13,12 +13,12 @@ use Modules\AppointmentSlots\Services\AppointmentSlotsService;
 class AppointmentSlotsServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'AppointmentSlots';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'appointmentslots';
 
@@ -106,7 +106,7 @@ class AppointmentSlotsServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -129,12 +129,13 @@ class AppointmentSlotsServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), AppointmentSlotsServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), AppointmentSlotsServiceContract::class)) {
             $this->app->bind(AppointmentSlotsServiceContract::class, function () {
                 return new AppointmentSlotsService();
             });

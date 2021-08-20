@@ -13,12 +13,12 @@ use Modules\Invoice\Contracts\CurrencyServiceContract;
 class InvoiceServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Invoice';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'invoice';
 
@@ -105,7 +105,7 @@ class InvoiceServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -140,18 +140,19 @@ class InvoiceServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+
         return $paths;
     }
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), InvoiceServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), InvoiceServiceContract::class)) {
             $this->app->bind(InvoiceServiceContract::class, function () {
                 return new InvoiceService();
             });
         }
 
-        if (!Arr::has($this->app->getBindings(), CurrencyServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), CurrencyServiceContract::class)) {
             $this->app->bind(CurrencyServiceContract::class, function () {
                 return new CurrencyService();
             });

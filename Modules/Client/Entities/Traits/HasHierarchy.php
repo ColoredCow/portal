@@ -5,8 +5,7 @@ namespace Modules\Client\Entities\Traits;
 trait HasHierarchy
 {
     /**
-     * Scopes
-     *
+     * Scopes.
      */
     public function scopeOnTopLevel($query)
     {
@@ -14,9 +13,8 @@ trait HasHierarchy
     }
 
     /**
-    * End scopes
-    *
-    */
+     * End scopes.
+     */
     public function channelPartner()
     {
         return $this->belongsTo(self::class);
@@ -39,6 +37,6 @@ trait HasHierarchy
 
     public function isTopLevel()
     {
-        return !($this->channel_partner_id || $this->parent_organisation_id);
+        return ! ($this->channel_partner_id || $this->parent_organisation_id);
     }
 }

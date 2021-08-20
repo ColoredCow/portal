@@ -10,7 +10,7 @@
                     <div class="form-group w-25p mb-0" v-show="editMode">
                         <div class="d-flex align-items-center">
                             <label for="name" class="mb-0 mr-3 field-required">Name</label>
-                            <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name" required="required" v-model="stage.name">
+                            <input type="text" class="form-control d-inline" name="name" id="name" placeholder="Stage name" required="required" v-model="name">
                         </div>
                     </div>
                     <div class="card-edit icon-pencil" @click="editMode = !editMode" v-show="!editMode"><i class="fa fa-pencil"></i></div>
@@ -55,18 +55,18 @@
                                 <div class="form-group col-md-8">
                                     <label for="name" class="field-required">Type</label>
                                     <select name="type" id="type" class="form-control" required="required" v-model="stageType">
-                                        <option v-for="(displayName, type) in configs.projectTypes" :value="type">
+                                        <option v-for="(displayName, type) in configs.projectTypes" :value="type" :key="type">
                                             {{ displayName }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="start_date">Start date</label>
-                                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="dd/mm/yy" v-model="stage.start_date">
+                                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="dd/mm/yy" v-model="start_date">
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="end_date">End date</label>
-                                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="dd/mm/yy" v-model="stage.end_date">
+                                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="dd/mm/yy" v-model="end_date">
                                 </div>
                             </div>
                             <br>
@@ -178,129 +178,129 @@
 </template>
 
 <script>
-    import ProjectStageBillingComponent from './ProjectStageBillingComponent.vue';
+import ProjectStageBillingComponent from "./ProjectStageBillingComponent.vue";
 
-    export default {
-        props: ['stage', 'csrfToken', 'projectId', 'configs', 'client', 'stageRoute'],
-        data() {
-            return {
-                editMode: Object.keys(this.stage).length ? false : true,
-                inputStageCost: this.stage.hasOwnProperty('cost') ? parseFloat(this.stage.cost) : null,
-                inputStageCurrency: this.stage.hasOwnProperty('currency_cost') ? this.stage.currency_cost : this.configs.countries[this.client.country].currency,
-                inputStageCostIncludeGst: this.stage.hasOwnProperty('cost_include_gst') ? this.stage.cost_include_gst : false,
-                stageBillings: this.stage.hasOwnProperty('billings') ? this.stage.billings : [],
-                stageType: this.stage.hasOwnProperty('type') ? this.stage.type : 'fixed_budget',
-                clientCountryGstApplicable: this.client.country == 'india' ? true : false,
-                selectedPaymentType: '',
-                selectedChequeStatus: '',
-                status: 'unpaid',
-                sentOn: this.formatDate(new Date()),
-            }
-        },
-        components: {
-            'project-stage-billing-component': ProjectStageBillingComponent,
-        },
-        computed: {
-            dueOn() {
-                let sentOn = new Date(this.sentOn);
-                sentOn.setDate(sentOn.getDate() + 10);
-                return this.formatDate(sentOn);
-            },
-            stageCurrencySymbol : function() {
-                return this.configs.currencies[this.inputStageCurrency].symbol;
-            },
-            stageCostWithGst: function() {
-                if (this.inputStageCostIncludeGst) {
-                    return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : parseFloat(this.inputStageCost).toFixed(2);
-                }
-                return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2);
-            },
-            gstAmount: function() {
-                if (this.clientCountryGstApplicable) {
-                    let gst = 0;
-                    let configGst = parseFloat(this.configs.gst);
-                    if (this.inputStageCostIncludeGst) {
-                        gst = (configGst/(100 + configGst)) * this.inputStageCost;
-                    } else {
-                        gst = (configGst/100) * this.inputStageCost;
-                    }
-                    return parseFloat(gst).toFixed(2);
-                }
-                return 0;
-            },
-            stageCostWithoutGst: function() {
-                if (this.inputStageCostIncludeGst) {
-                    return this.inputStageCost ==='' || this.inputStageCost == null ? parseFloat(0).toFixed(2) : (this.inputStageCost - this.gstAmount).toFixed(2);
-                }
-                return this.inputStageCost === '' || this.inputStageCost == null ? parseFloat(0).toFixed(2) : parseFloat(this.inputStageCost).toFixed(2);
-            },
-        },
-        methods: {
-            async storeStages() {
-                let newBillings = [];
-                let billings = [];
-                for (let index in this.stageBillings) {
-                    let billing = this.stageBillings[index];
-                    if (billing.isNew) {
-                        newBillings.push(billing.percentage);
-                    } else {
-                        billings.push({[billing.id] : billing.percentage});
-                    }
-                }
-                let formData = ({
-                    name: this.stage.name,
-                    cost: this.inputStageCost,
-                    currency_cost: this.inputStageCurrency,
-                    cost_include_gst: this.inputStageCostIncludeGst,
-                    start_date: this.stage.start_date,
-                    end_date: this.stage.end_date,
-                    type: this.stageType,
-                    project_id: this.projectId,
-                    billing: billings,
-                    new_billing: newBillings,
-                });
+export default {
+	props: ["stage", "csrfToken", "projectId", "configs", "client", "stageRoute"],
+	data() {
+		return {
+			editMode: Object.keys(this.stage).length ? false : true,
+			inputStageCost: this.stage.hasOwnProperty("cost") ? parseFloat(this.stage.cost) : null,
+			inputStageCurrency: this.stage.hasOwnProperty("currency_cost") ? this.stage.currency_cost : this.configs.countries[this.client.country].currency,
+			inputStageCostIncludeGst: this.stage.hasOwnProperty("cost_include_gst") ? this.stage.cost_include_gst : false,
+			stageBillings: this.stage.hasOwnProperty("billings") ? this.stage.billings : [],
+			stageType: this.stage.hasOwnProperty("type") ? this.stage.type : "fixed_budget",
+			clientCountryGstApplicable: this.client.country == "india" ? true : false,
+			selectedPaymentType: "",
+			selectedChequeStatus: "",
+			status: "unpaid",
+			sentOn: this.formatDate(new Date()),
+		};
+	},
+	components: {
+		"project-stage-billing-component": ProjectStageBillingComponent,
+	},
+	computed: {
+		dueOn() {
+			let sentOn = new Date(this.sentOn);
+			sentOn.setDate(sentOn.getDate() + 10);
+			return this.formatDate(sentOn);
+		},
+		stageCurrencySymbol : function() {
+			return this.configs.currencies[this.inputStageCurrency].symbol;
+		},
+		stageCostWithGst: function() {
+			if (this.inputStageCostIncludeGst) {
+				return this.inputStageCost === "" || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : parseFloat(this.inputStageCost).toFixed(2);
+			}
+			return this.inputStageCost === "" || this.inputStageCost == null ? parseFloat(0).toFixed(2)  : (parseFloat(this.inputStageCost) + parseFloat(this.gstAmount)).toFixed(2);
+		},
+		gstAmount: function() {
+			if (this.clientCountryGstApplicable) {
+				let gst = 0;
+				let configGst = parseFloat(this.configs.gst);
+				if (this.inputStageCostIncludeGst) {
+					gst = (configGst/(100 + configGst)) * this.inputStageCost;
+				} else {
+					gst = (configGst/100) * this.inputStageCost;
+				}
+				return parseFloat(gst).toFixed(2);
+			}
+			return 0;
+		},
+		stageCostWithoutGst: function() {
+			if (this.inputStageCostIncludeGst) {
+				return this.inputStageCost ==="" || this.inputStageCost == null ? parseFloat(0).toFixed(2) : (this.inputStageCost - this.gstAmount).toFixed(2);
+			}
+			return this.inputStageCost === "" || this.inputStageCost == null ? parseFloat(0).toFixed(2) : parseFloat(this.inputStageCost).toFixed(2);
+		},
+	},
+	methods: {
+		async storeStages() {
+			let newBillings = [];
+			let billings = [];
+			for (let index in this.stageBillings) {
+				let billing = this.stageBillings[index];
+				if (billing.isNew) {
+					newBillings.push(billing.percentage);
+				} else {
+					billings.push({[billing.id] : billing.percentage});
+				}
+			}
+			let formData = ({
+				name: this.stage.name,
+				cost: this.inputStageCost,
+				currency_cost: this.inputStageCurrency,
+				cost_include_gst: this.inputStageCostIncludeGst,
+				start_date: this.stage.start_date,
+				end_date: this.stage.end_date,
+				type: this.stageType,
+				project_id: this.projectId,
+				billing: billings,
+				new_billing: newBillings,
+			});
 
-                let methodName = 'post';
-                let url = this.stageRoute;
+			let methodName = "post";
+			let url = this.stageRoute;
 
-                if(this.stage.id){
-                    methodName = 'put';
-                    url = this.stageRoute +'/' + this.stage.id;
-                };
+			if(this.stage.id){
+				methodName = "put";
+				url = this.stageRoute +"/" + this.stage.id;
+			};
 
-                let response = await axios({method: methodName, url: url, data:formData});
-                alert(response.data.status);
-            },
-            addBilling() {
-                this.stageBillings.push({
-                    'percentage': null,
-                    'isNew' : true
-                });
-            },
-            addInvoice(args) {
-                document.getElementById('new_invoice_billing_id').value = args.billingId;
-                document.getElementById('amount').value = args.invoiceAmount;
-                if (document.getElementById('gst')) {
-                    document.getElementById('gst').value = args.gst;
-                }
-            },
-            formatDate(date) {
-                var d = new Date(date),
-                month = (d.getMonth() + 1).toString(),
-                day = d.getDate().toString(),
-                year = d.getFullYear();
+			let response = await axios({method: methodName, url: url, data:formData});
+			alert(response.data.status);
+		},
+		addBilling() {
+			this.stageBillings.push({
+				"percentage": null,
+				"isNew" : true
+			});
+		},
+		addInvoice(args) {
+			document.getElementById("new_invoice_billing_id").value = args.billingId;
+			document.getElementById("amount").value = args.invoiceAmount;
+			if (document.getElementById("gst")) {
+				document.getElementById("gst").value = args.gst;
+			}
+		},
+		formatDate(date) {
+			var d = new Date(date),
+				month = (d.getMonth() + 1).toString(),
+				day = d.getDate().toString(),
+				year = d.getFullYear();
 
-                if (month.length < 2) {
-                    month = '0' + month;
-                }
-                if (day.length < 2) {
-                    day = '0' + day;
-                }
-                return [year, month, day].join('-');
-            },
-            toggleInputStageCostIncludeGst() {
-                this.inputStageCostIncludeGst = !this.inputStageCostIncludeGst;
-            }
-        }
-    }
+			if (month.length < 2) {
+				month = "0" + month;
+			}
+			if (day.length < 2) {
+				day = "0" + day;
+			}
+			return [year, month, day].join("-");
+		},
+		toggleInputStageCostIncludeGst() {
+			this.inputStageCostIncludeGst = !this.inputStageCostIncludeGst;
+		}
+	}
+};
 </script>

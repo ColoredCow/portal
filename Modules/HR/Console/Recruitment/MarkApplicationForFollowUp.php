@@ -4,8 +4,6 @@ namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Application;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class MarkApplicationForFollowUp extends Command
 {

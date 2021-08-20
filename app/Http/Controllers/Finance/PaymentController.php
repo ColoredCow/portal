@@ -118,6 +118,7 @@ class PaymentController extends Controller
                 'tds' => $validated['tds'],
             ];
         }
+
         return array_merge($args, $countryTransactionDetails);
     }
 
@@ -159,9 +160,11 @@ class PaymentController extends Controller
         // Else, delete the previous mode and create a new one.
         if ($payment->mode->type == $validated['mode']) {
             $payment->mode->update($attr);
+
             return $payment->mode;
         } else {
             $payment->mode->delete();
+
             return $model::create($attr);
         }
     }

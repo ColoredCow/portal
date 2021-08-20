@@ -1,321 +1,243 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
 class BookCategoriesTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('book_categories')->delete();
-        
-        \DB::table('book_categories')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('book_categories')->insert([
+            0 => [
                 'name' => 'Science',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'name' => 'Entrepreneurship',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'name' => 'Ability',
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'name' => 'Advertising campaigns',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'name' => 'Afghanistan',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'name' => 'Alcoholics',
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'name' => 'Amyotrophic lateral sclerosis',
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'name' => 'Biography',
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'name' => 'Biography & Autobiography',
-            ),
-            9 => 
-            array (
+            ],
+            9 => [
                 'name' => 'Body, Mind & Spirit',
-            ),
-            10 => 
-            array (
+            ],
+            10 => [
                 'name' => 'Bullying in the workplace',
-            ),
-            11 => 
-            array (
+            ],
+            11 => [
                 'name' => 'Business',
-            ),
-            12 => 
-            array (
+            ],
+            12 => [
                 'name' => 'Business & Economics',
-            ),
-            13 => 
-            array (
+            ],
+            13 => [
                 'name' => 'Business ethics',
-            ),
-            14 => 
-            array (
+            ],
+            14 => [
                 'name' => 'Business excellence',
-            ),
-            15 => 
-            array (
+            ],
+            15 => [
                 'name' => 'Businesspeople',
-            ),
-            16 => 
-            array (
+            ],
+            16 => [
                 'name' => 'Cancer',
-            ),
-            17 => 
-            array (
+            ],
+            17 => [
                 'name' => 'Character',
-            ),
-            18 => 
-            array (
+            ],
+            18 => [
                 'name' => 'Child psychology',
-            ),
-            19 => 
-            array (
+            ],
+            19 => [
                 'name' => 'Cognition',
-            ),
-            20 => 
-            array (
+            ],
+            20 => [
                 'name' => 'Communication',
-            ),
-            21 => 
-            array (
+            ],
+            21 => [
                 'name' => 'Computer software',
-            ),
-            22 => 
-            array (
+            ],
+            22 => [
                 'name' => 'Computers',
-            ),
-            23 => 
-            array (
+            ],
+            23 => [
                 'name' => 'Conduct of life',
-            ),
-            24 => 
-            array (
+            ],
+            24 => [
                 'name' => 'Consumers',
-            ),
-            25 => 
-            array (
+            ],
+            25 => [
                 'name' => 'Cooks',
-            ),
-            26 => 
-            array (
+            ],
+            26 => [
                 'name' => 'Corporate reorganizations',
-            ),
-            27 => 
-            array (
+            ],
+            27 => [
                 'name' => 'Decision making',
-            ),
-            28 => 
-            array (
+            ],
+            28 => [
                 'name' => 'Design',
-            ),
-            29 => 
-            array (
+            ],
+            29 => [
                 'name' => 'Detective and mystery stories',
-            ),
-            30 => 
-            array (
+            ],
+            30 => [
                 'name' => 'Drama',
-            ),
-            31 => 
-            array (
+            ],
+            31 => [
                 'name' => 'Education',
-            ),
-            32 => 
-            array (
+            ],
+            32 => [
                 'name' => 'Electronic books',
-            ),
-            33 => 
-            array (
+            ],
+            33 => [
                 'name' => 'Emotions',
-            ),
-            34 => 
-            array (
+            ],
+            34 => [
                 'name' => 'English language',
-            ),
-            35 => 
-            array (
+            ],
+            35 => [
                 'name' => 'Explanation',
-            ),
-            36 => 
-            array (
+            ],
+            36 => [
                 'name' => 'Family & Relationships',
-            ),
-            37 => 
-            array (
+            ],
+            37 => [
                 'name' => 'Fiction',
-            ),
-            38 => 
-            array (
+            ],
+            38 => [
                 'name' => 'Finance, Personal',
-            ),
-            39 => 
-            array (
+            ],
+            39 => [
                 'name' => 'Geopolitics',
-            ),
-            40 => 
-            array (
+            ],
+            40 => [
                 'name' => 'Happiness',
-            ),
-            41 => 
-            array (
+            ],
+            41 => [
                 'name' => 'Health & Fitness',
-            ),
-            42 => 
-            array (
+            ],
+            42 => [
                 'name' => 'History',
-            ),
-            43 => 
-            array (
+            ],
+            43 => [
                 'name' => 'india',
-            ),
-            44 => 
-            array (
+            ],
+            44 => [
                 'name' => 'Industrial design',
-            ),
-            45 => 
-            array (
+            ],
+            45 => [
                 'name' => 'Language Arts & Disciplines',
-            ),
-            46 => 
-            array (
+            ],
+            46 => [
                 'name' => 'Leadership',
-            ),
-            47 => 
-            array (
+            ],
+            47 => [
                 'name' => 'Literary Collections',
-            ),
-            48 => 
-            array (
+            ],
+            48 => [
             'name' => 'Love stories, Indic (English)',
-            ),
-            49 => 
-            array (
+            ],
+            49 => [
                 'name' => 'Mathematics',
-            ),
-            50 => 
-            array (
+            ],
+            50 => [
             'name' => 'Motivation (Psychology)',
-            ),
-            51 => 
-            array (
+            ],
+            51 => [
                 'name' => 'Persistence',
-            ),
-            52 => 
-            array (
+            ],
+            52 => [
                 'name' => 'Philosophy',
-            ),
-            53 => 
-            array (
+            ],
+            53 => [
                 'name' => 'Physicians',
-            ),
-            54 => 
-            array (
+            ],
+            54 => [
                 'name' => 'Political Science',
-            ),
-            55 => 
-            array (
+            ],
+            55 => [
                 'name' => 'Psychology',
-            ),
-            56 => 
-            array (
+            ],
+            56 => [
                 'name' => 'Reference',
-            ),
-            57 => 
-            array (
+            ],
+            57 => [
                 'name' => 'Religion',
-            ),
-            58 => 
-            array (
+            ],
+            58 => [
                 'name' => 'Science',
-            ),
-            59 => 
-            array (
+            ],
+            59 => [
             'name' => 'Self-actualization (Psychology)',
-            ),
-            60 => 
-            array (
+            ],
+            60 => [
                 'name' => 'Self-Help',
-            ),
-            61 => 
-            array (
+            ],
+            61 => [
                 'name' => 'Social Science',
-            ),
-            62 => 
-            array (
+            ],
+            62 => [
                 'name' => 'Sports & Recreation',
-            ),
-            63 => 
-            array (
+            ],
+            63 => [
                 'name' => 'Technology & Engineering',
-            ),
-            64 => 
-            array (
+            ],
+            64 => [
                 'name' => 'Violence',
-            ),
-            65 => 
-            array (
+            ],
+            65 => [
                 'name' => 'Human Resource',
-            ),
-            66 => 
-            array (
+            ],
+            66 => [
                 'name' => 'Testing',
-            ),
-            67 => 
-            array (
+            ],
+            67 => [
                 'name' => 'Software Engineering',
-            ),
-            68 => 
-            array (
+            ],
+            68 => [
                 'name' => 'Product Manager',
-            ),
-            69 => 
-            array (
+            ],
+            69 => [
                 'name' => 'Project Manager',
-            ),
-            70 => 
-            array (
+            ],
+            70 => [
                 'name' => 'Entrepreneurship',
-            ),
-            71 => 
-            array (
+            ],
+            71 => [
                 'name' => 'Marketing',
-            ),
-            72 => 
-            array (
+            ],
+            72 => [
                 'name' => 'Code',
-            ),
-            73 => 
-            array (
+            ],
+            73 => [
                 'name' => 'Fantasy',
-            ),
-        ));
-        
-        
+            ],
+        ]);
     }
 }

@@ -38,7 +38,7 @@ class CalendarMeetingService implements CalendarMeetingContract
 
     public function setDetails($details)
     {
-        if (!isset($details['summary'], $details['attendees'], $details['start'], $details['end'])) {
+        if (! isset($details['summary'], $details['attendees'], $details['start'], $details['end'])) {
             throw new Exception('Invalid data for calendar creation');
         }
 
@@ -76,7 +76,7 @@ class CalendarMeetingService implements CalendarMeetingContract
             $this->setDetails($details);
         }
 
-        if (!$this->isDetailsSet) {
+        if (! $this->isDetailsSet) {
             throw new Exception('You need to provide details first.');
         }
 
@@ -151,6 +151,7 @@ class CalendarMeetingService implements CalendarMeetingContract
         foreach ($this->attendees as $attendee) {
             array_push($attendees, $attendee['email']);
         }
+
         return $attendees;
     }
 
@@ -169,7 +170,7 @@ class CalendarMeetingService implements CalendarMeetingContract
     }
 
     /**
-     * Returns an array that is expected by the Google Calendar API
+     * Returns an array that is expected by the Google Calendar API.
      * @param  string $dateTime
      * @param  string $timeZone
      *
@@ -178,6 +179,7 @@ class CalendarMeetingService implements CalendarMeetingContract
     protected static function getCalendarDateTime($dateTime, $timeZone)
     {
         $timeZone = $timeZone ?? config('app.timezone');
+
         return [
             'dateTime' => Carbon::parse($dateTime)->format(config('constants.calendar_datetime_format')),
             'timeZone' => $timeZone,
@@ -185,10 +187,10 @@ class CalendarMeetingService implements CalendarMeetingContract
     }
 
     /**
-     * Returns an array with formats expected by Employee Portal modules
+     * Returns an array with formats expected by Portal modules.
      *
      * @param  string $eventDateTime
-     * @param  boolean $withTimeZone    defines whether to return the calendar event timeZone or not
+     * @param  bool $withTimeZone    defines whether to return the calendar event timeZone or not
      *
      * @return array
      */
@@ -198,6 +200,7 @@ class CalendarMeetingService implements CalendarMeetingContract
         if ($withTimeZone) {
             $start['timeZone'] = $eventDateTime['timeZone'];
         }
+
         return $dateTime;
     }
 

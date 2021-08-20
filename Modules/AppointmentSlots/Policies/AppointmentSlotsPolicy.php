@@ -30,6 +30,7 @@ class AppointmentSlotsPolicy
         if ($appointmentSlot->user_id != auth()->id()) {
             return $user->hasPermissionTo('employee_appointmentslots.update');
         }
+
         return true;
     }
 
@@ -38,6 +39,7 @@ class AppointmentSlotsPolicy
         if ($appointmentSlot->user_id != auth()->id()) {
             return $user->hasPermissionTo('employee_appointmentslots.delete');
         }
+
         return true;
     }
 }

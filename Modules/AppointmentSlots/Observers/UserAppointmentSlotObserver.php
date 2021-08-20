@@ -9,13 +9,13 @@ use Modules\AppointmentSlots\Entities\AppointmentSlot;
 class UserAppointmentSlotObserver
 {
     /**
-     * Listen to the ApplicationMeta create event
+     * Listen to the ApplicationMeta create event.
      * @param  ApplicationMeta $applicationMeta
      * @return void
      */
     public function created(AppointmentSlot $userAppointmentSlot)
     {
-        if (!$userAppointmentSlot->parent()->exists()) {
+        if (! $userAppointmentSlot->parent()->exists()) {
             $startTime = $userAppointmentSlot->start_time;
             $endTime = $userAppointmentSlot->end_time;
             $repeatTill = new Carbon(request('repeat_till'));

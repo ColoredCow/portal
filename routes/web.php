@@ -15,6 +15,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
     }
+
     return redirect('login');
 });
 
@@ -32,8 +33,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('hr')->namespace('HR')->group(function () {
-        Route::get('/', 'HRController@index')->name('hr');
-
         Route::prefix('volunteers')->namespace('Volunteers')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('volunteers.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('volunteers.campaigns');
@@ -48,7 +47,6 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('applications')->namespace('Applications')->group(function () {
-
             Route::get('volunteer/{application}/offer-letter', 'VolunteerApplicationController@viewOfferLetter')->name('applications.volunteer.offer-letter');
 
             Route::resource('volunteer', 'VolunteerApplicationController')
@@ -84,7 +82,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('payments', 'PaymentController')
             ->except(['show', 'destroy'])
             ->names([
-                'index' => 'payment.index',
+                'index' => 'payments.index',
                 'create' => 'payments.create',
                 'store' => 'payments.store',
                 'edit' => 'payments.edit',
@@ -119,7 +117,7 @@ Route::middleware('auth')->group(function () {
 
             Route::get('{module}', 'PermissionController@index')->name('permissions.module.index');
             Route::put('users/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
-            Route::put('roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.update');
+            Route::put('roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.update-role');
         });
 
         Route::prefix('hr')->group(function () {

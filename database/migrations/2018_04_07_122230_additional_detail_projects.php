@@ -13,8 +13,6 @@ class AdditionalDetailProjects extends Migration
      */
     public function up()
     {
-
-
         Schema::table('finance_invoices', function (Blueprint $table) {
             $table->decimal('tds', 10, 2)->nullable()->after('currency_paid_amount');
             $table->string('currency_tds')->default('INR')->after('tds');
@@ -28,7 +26,6 @@ class AdditionalDetailProjects extends Migration
      */
     public function down()
     {
-
         Schema::table('finance_invoices', function (Blueprint $table) {
             $table->dropColumn([
                 'tds',

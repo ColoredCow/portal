@@ -25,16 +25,17 @@ class Employee extends Model
     public function getEmploymentDurationAttribute()
     {
         if (is_null($this->user_id)) {
-            return null;
+            return;
         } else {
             $now = now();
+
             return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, true);
         }
     }
 
     /**
-    * Get the projects for the employees.
-    */
+     * Get the projects for the employees.
+     */
     public function projects()
     {
         return $this->belongsToMany(Project::class)->withPivot('contribution_type');

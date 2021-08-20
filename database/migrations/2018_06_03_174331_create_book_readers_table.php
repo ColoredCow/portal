@@ -25,7 +25,6 @@ class CreateBookReadersTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *

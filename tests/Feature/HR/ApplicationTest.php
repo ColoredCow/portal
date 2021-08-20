@@ -3,7 +3,6 @@
 namespace Tests\Feature\HR;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\HR\Applicant;
 use App\Models\HR\Job;

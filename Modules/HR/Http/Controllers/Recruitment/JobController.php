@@ -12,7 +12,7 @@ use Modules\User\Entities\User;
 class JobController extends Controller
 {
     use AuthorizesRequests;
-    
+
     public function __construct()
     {
         $this->authorizeResource(Job::class, null, [
@@ -69,12 +69,16 @@ class JobController extends Controller
 
         $opportunity = Job::create([
             'title' => $validated['title'],
+            'domain' => $validated['domain'],
             'description' => $validated['description'] ?? null, // null needed for backward compatibility
             'type' => $validated['type'],
             'posted_by' => $validated['by'] ?? null,
             'link' => $validated['link'] ?? null,
+            'start_date' => $validated['start_date'] ?? null,
+            'end_date' => $validated['end_date'] ?? null,
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
+
         return redirect($route)->with('status', "Successfully updated $opportunity->title!");
     }
 
@@ -98,6 +102,7 @@ class JobController extends Controller
     public function edit(Job $opportunity)
     {
         $opportunity->load('postedBy');
+
         return view('hr.job.edit')->with([
             'job' => $opportunity,
             'interviewers' => User::interviewers()->get(),
@@ -117,6 +122,7 @@ class JobController extends Controller
         $opportunity->_update($validated);
 
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
+
         return redirect($route)->with('status', "Successfully updated $opportunity->title!");
     }
 
@@ -130,6 +136,7 @@ class JobController extends Controller
     {
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities') : route('recruitment.opportunities');
         $opportunity->delete();
+
         return redirect($route)->with('status', "Successfully deleted $opportunity->title!");
     }
 }

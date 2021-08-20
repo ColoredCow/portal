@@ -7,7 +7,7 @@ use Tests\TestCase;
 class InvoiceControllerTest extends TestCase
 {
     /**
-     * Test case for Finance\InvoiceController@store
+     * Test case for Finance\InvoiceController@store.
      *
      * @return void
      */
@@ -17,7 +17,7 @@ class InvoiceControllerTest extends TestCase
     }
 
     /**
-     * Test case for Finance\InvoiceController@update
+     * Test case for Finance\InvoiceController@update.
      *
      * @return void
      */

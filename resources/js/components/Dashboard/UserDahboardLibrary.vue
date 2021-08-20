@@ -45,27 +45,27 @@
 
 <script>
 export default {
-  props: [],
-  data() {
-    return {
-      activeTile: "wishlist",
-    };
-  },
+	props: [],
+	data() {
+		return {
+			activeTile: "wishlist",
+		};
+	},
 
-  methods: {
-    async getReadBooks() {
-      let response = await axios.get("/user/read-books");
-      this.books = response.data;
-    },
-    setActiveTile(tile) {
-      this.activeTile = tile;
-      document.querySelector(".active").classList.remove("active");
-      document.querySelector(`#${tile}`).classList.add("active");
-    },
-  },
+	methods: {
+		async getReadBooks() {
+			let response = await axios.get("/user/read-books");
+			this.books = response.data;
+		},
+		setActiveTile(tile) {
+			this.activeTile = tile;
+			document.querySelector(".active").classList.remove("active");
+			document.querySelector(`#${tile}`).classList.add("active");
+		},
+	},
 
-  mounted() {
-    this.getReadBooks();
-  },
+	mounted() {
+		this.getReadBooks();
+	},
 };
 </script>

@@ -32,6 +32,7 @@ class SalaryController extends Controller
     {
         $user = User::find(4);
         $salaryCalculation = new SalaryCalculationService(28169);
+
         return view('salary::employee.index', ['user' => $user, 'salaryCalculation' => $salaryCalculation]);
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -24,10 +25,13 @@ class RoleHasPermissionsTableSeeder extends Seeder
             'weeklydoses.view',
         ])->get());
 
-        Role::create(['name' => 'accountant']);
-
-
         $accountant = Role::where(['name' => 'accountant'])->first();
         $accountant->givePermissionTo('finance_reports.view');
+
+        $projectManager = Role::where(['name' => 'project-manager'])->first();
+        $projectManager->givePermissionTo([
+            'projects.view',
+            'clients.view'
+        ]);
     }
 }

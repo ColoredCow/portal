@@ -44,7 +44,7 @@ class GSuiteUserService
         $this->setUsers($users);
     }
 
-    public function create($name, $email, $password, $params = array())
+    public function create($name, $email, $password, $params = [])
     {
         $user = new Google_Service_Directory_User;
         $userName = new Google_Service_Directory_UserName;
@@ -76,7 +76,7 @@ class GSuiteUserService
                 $this->setDesignation($params['designation']);
             }
         } catch (Google_IO_Exception $gioe) {
-            echo "Error in connection: " . $gioe->getMessage();
+            echo 'Error in connection: ' . $gioe->getMessage();
         } catch (Google_Service_Exception $gse) {
             echo $gse->getMessage();
         }

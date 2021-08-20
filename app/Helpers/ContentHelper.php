@@ -2,8 +2,6 @@
 
 namespace App\Helpers;
 
-use Carbon\Carbon;
-
 class ContentHelper
 {
     /**

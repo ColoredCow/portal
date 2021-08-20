@@ -3,7 +3,6 @@
 namespace Modules\HR\Notifications\Recruitment;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Modules\HR\Entities\ApplicationRound;
@@ -16,7 +15,7 @@ class ApplicationRoundScheduled extends Notification
      * The application round that has been scheduled.
      */
     protected $applicationRound;
-    
+
     /**
      * Create a new notification instance.
      *
@@ -49,6 +48,7 @@ class ApplicationRoundScheduled extends Notification
         $application = $this->applicationRound->application;
         $applicant = $application->applicant;
         $job = $application->job;
+
         return (new MailMessage)
             ->subject(config('app.name') . ": {$this->applicationRound->round->name} scheduled")
             ->line('You have been assigned an application round.')

@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use App\Helpers\ContentHelper;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -29,11 +28,12 @@ class ApplicationRoundController extends Controller
         }
 
         $routeName = $round->application->job->type == 'internship' ? 'applications.internship.index' : 'applications.job.index';
+
         return redirect()->route($routeName)->with('status', 'Application updated successfully!');
     }
 
     /**
-     * Send email to the applicant for current round
+     * Send email to the applicant for current round.
      *
      * @param  ApplicantRoundMailRequest $request
      * @param  ApplicationRound            $applicationRound
@@ -73,6 +73,7 @@ class ApplicationRoundController extends Controller
         $application = $applicationRound->application;
         $templateType = $status == 'confirm' ? 'confirmed_mail_template' : 'rejected_mail_template';
         $template = $applicationRound->round->{$templateType};
+
         return [
             'subject' => $template['subject'] ?? '',
             'body' => isset($template['body']) ? TemplateHelper::parse($template['body'], [
@@ -90,6 +91,7 @@ class ApplicationRoundController extends Controller
             'comments' => $request->get('comments'),
             'conducted_by' => auth()->id(),
         ]);
+
         return redirect()->back()->with('status', 'Follow up successful!');
     }
 }

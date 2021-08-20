@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use App\Models\HR\Employee;
@@ -16,7 +17,7 @@ class ExistingEmployeesSeeder extends Seeder
     {
         $users = User::all();
         foreach ($users as $user) {
-            if (!$user->isActiveEmployee) {
+            if (! $user->isActiveEmployee) {
                 continue;
             }
             Employee::create([

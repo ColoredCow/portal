@@ -35,7 +35,7 @@ class Invoice extends Model
     }
 
     /**
-     * Get details to list invoices
+     * Get details to list invoices.
      *
      * @return self
      */
@@ -46,7 +46,7 @@ class Invoice extends Model
     }
 
     /**
-     * Get invoices that were sent in the date range
+     * Get invoices that were sent in the date range.
      *
      * @param  string $startDate
      * @param  string $endDate
@@ -62,10 +62,10 @@ class Invoice extends Model
     }
 
     /**
-     * Get invoices that were sent or paid in the date range
+     * Get invoices that were sent or paid in the date range.
      * @param  string  $start
      * @param  string  $end
-     * @param  boolean $paginated
+     * @param  bool $paginated
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function filterByDates($start, $end, $paginated = false)

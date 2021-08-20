@@ -24,7 +24,7 @@ class InvoiceController extends Controller
     {
         $filters = $request->all();
 
-        if (!$filters) {
+        if (! $filters) {
             return redirect(route('invoice.index', $this->service->defaultFilters()));
         }
 
@@ -48,6 +48,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $invoice = $this->service->store($request->all());
+
         return redirect(route('invoice.index'));
     }
 
@@ -80,6 +81,7 @@ class InvoiceController extends Controller
     public function update(Request $request, $id)
     {
         $this->service->update($request->all(), $id);
+
         return redirect(route('invoice.index'));
     }
 
@@ -101,5 +103,23 @@ class InvoiceController extends Controller
     public function dashboard()
     {
         return $this->service->dashboard();
+    }
+
+    public function taxReport(Request $request)
+    {
+        $filters = $request->all();
+
+        if (! $filters) {
+            return redirect(route('invoice.tax-report', $this->service->defaultTaxReportFilters()));
+        }
+
+        return view('invoice::tax-report', $this->service->taxReport($filters));
+    }
+
+    public function taxReportExport(Request $request)
+    {
+        $filters = $request->all();
+
+        return $this->service->taxReportExport($filters);
     }
 }

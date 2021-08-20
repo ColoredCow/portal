@@ -24,7 +24,7 @@ class AddUniversityIdToApplicantsTableTableSeeder extends Seeder
         foreach ($applicants as $applicant) {
             $university = $this->findUniversity($applicant, $universities);
 
-            if (!$university) {
+            if (! $university) {
                 continue;
             }
 
@@ -32,7 +32,8 @@ class AddUniversityIdToApplicantsTableTableSeeder extends Seeder
         }
     }
 
-    private function findUniversity($applicant, $universities) {
+    private function findUniversity($applicant, $universities)
+    {
         $key = $universities->search(function ($university) use ($applicant) {
             return strtolower($university->name) === strtolower($applicant->college);
         });

@@ -15,6 +15,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::active()->orderBy('name')->get();
+
         return view('hr.employees.index', compact('employees'));
     }
 
@@ -24,7 +25,7 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Display the project details of an Employee
+     * Display the project details of an Employee.
      *
      * @param  \App\Models\Employee $employee
      * @return \Illuminate\Http\Response
