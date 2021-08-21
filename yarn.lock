@@ -18,7 +18,7 @@
     "invariant" "^2.2.4"
     "semver" "^5.5.0"
 
-"@babel/core@^7.0.0-beta.49", "@babel/core@^7.2.0":
+"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-beta.49", "@babel/core@^7.2.0":
   "integrity" "sha512-kWc7L0fw1xwvI0zi8OKVBuxRVefwGOrKSQMvrQ3dW+bIIavBY3/NpXmpjMy7bQnLgwgzWQZ8TlM57YHpHNHz4w=="
   "resolved" "https://registry.npmjs.org/@babel/core/-/core-7.9.0.tgz"
   "version" "7.9.0"
@@ -1060,7 +1060,7 @@
   "resolved" "https://registry.npmjs.org/ajv-keywords/-/ajv-keywords-3.4.1.tgz"
   "version" "3.4.1"
 
-"ajv@^6.1.0", "ajv@^6.10.0", "ajv@^6.10.2", "ajv@^6.12.0":
+"ajv@^6.1.0", "ajv@^6.10.0", "ajv@^6.10.2", "ajv@^6.12.0", "ajv@^6.9.1", "ajv@>=5.0.0":
   "integrity" "sha512-D6gFiFA0RRLyUbvijN74DWAjXSFxWKaWP7mldxkVhyhAV3+SWA9HEJPHQ2c9soIeTFJqcSdFDGFgdqs1iUU2Hw=="
   "resolved" "https://registry.npmjs.org/ajv/-/ajv-6.12.0.tgz"
   "version" "6.12.0"
@@ -2296,7 +2296,7 @@
     "postcss" "^7.0.1"
     "timsort" "^0.3.0"
 
-"css-loader@^1.0.1":
+"css-loader@*", "css-loader@^1.0.1":
   "integrity" "sha512-+ZHAZm/yqvJ2kDtPne3uX0C+Vr3Zn5jFn2N4HywtS5ujwvsVkyg0VArEXpl3BgczDA8anieki1FIzhchX4yrDw=="
   "resolved" "https://registry.npmjs.org/css-loader/-/css-loader-1.0.1.tgz"
   "version" "1.0.1"
@@ -4143,7 +4143,7 @@
     "blueimp-canvas-to-blob" "^3.14.0"
     "is-blob" "^1.0.0"
 
-"imagemin@^6.0.0":
+"imagemin@^5.0.0 || ^6.0.0", "imagemin@^6.0.0":
   "integrity" "sha512-8ryJBL1CN5uSHpiBMX0rJw79C9F9aJqMnjGnrd/1CafegpNuA81RBAAru/jQQEOWlOJJlpRnlcVFF6wq+Ist0A=="
   "resolved" "https://registry.npmjs.org/imagemin/-/imagemin-6.1.0.tgz"
   "version" "6.1.0"
@@ -4650,7 +4650,7 @@
   "resolved" "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.12.1.tgz"
   "version" "1.12.1"
 
-"jquery@^3.5.1":
+"jquery@^3.5.1", "jquery@1.9.1 - 3":
   "integrity" "sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg=="
   "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.5.1.tgz"
   "version" "3.5.1"
@@ -4731,7 +4731,7 @@
   "integrity" "sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss="
   "resolved" "https://registry.npmjs.org/jsonfile/-/jsonfile-4.0.0.tgz"
   "version" "4.0.0"
-  dependencies:
+  optionalDependencies:
     "graceful-fs" "^4.1.6"
 
 "killable@^1.0.1":
@@ -6104,7 +6104,7 @@
   dependencies:
     "semver-compare" "^1.0.0"
 
-"popper.js@^1.16.1":
+"popper.js@^1.16.0", "popper.js@^1.16.1":
   "integrity" "sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ=="
   "resolved" "https://registry.npmjs.org/popper.js/-/popper.js-1.16.1.tgz"
   "version" "1.16.1"
@@ -7014,7 +7014,7 @@
     "schema-utils" "^2.6.1"
     "semver" "^6.3.0"
 
-"sass@^1.26.3":
+"sass@^1.26.3", "sass@^1.3.0":
   "integrity" "sha512-5NMHI1+YFYw4sN3yfKjpLuV9B5l7MqQ6FlkTcC4FT+oHbBRUZoSjHrrt/mE0nFXJyY2kQtU9ou9HxvFVjLFuuw=="
   "resolved" "https://registry.npmjs.org/sass/-/sass-1.26.3.tgz"
   "version" "1.26.3"
@@ -8322,7 +8322,7 @@
     "source-list-map" "^2.0.0"
     "source-map" "~0.6.1"
 
-"webpack@^4.0.0 || ^5.0.0", "webpack@^4.36.1":
+"webpack@^2.0.0 || ^3.0.0 || ^4.0.0", "webpack@^3.0.0 || ^4.0.0", "webpack@^3.0.0 || ^4.1.0 || ^5.0.0-0", "webpack@^4.0.0", "webpack@^4.0.0 || ^5.0.0", "webpack@^4.36.0 || ^5.0.0", "webpack@^4.36.1", "webpack@>=2", "webpack@4.x.x":
   "integrity" "sha512-SGfYMigqEfdGchGhFFJ9KyRpQKnipvEvjc1TwrXEPCM6H5Wywu10ka8o3KGrMzSMxMQKt8aCHUFh5DaQ9UmyRg=="
   "resolved" "https://registry.npmjs.org/webpack/-/webpack-4.42.1.tgz"
   "version" "4.42.1"
