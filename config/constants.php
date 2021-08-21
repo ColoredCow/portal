@@ -3,7 +3,7 @@
 return [
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
-        'client-hd' => env('GOOGLE_CLIENT_HD', ''),
+        'client-hd' => env('GOOGLE_CLIENT_HD', 'gmail.com'),
         'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS')
     ],
     'google' => [

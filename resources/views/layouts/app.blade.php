@@ -61,7 +61,7 @@
                                     @endif
                                     @if(auth()->user()->isSuperAdmin())
                                         <a class="dropdown-item" href="{{ route('profile.gsuite-sync-all') }}">Sync all users</a>
-                                        @endif
+                                    @endif
                                     @if(auth()->user()->canAccessWebsite())
                                         <a target="_blank" class="dropdown-item" href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to website</a>
                                     @endif
@@ -69,7 +69,7 @@
                                         {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
+                                    @csrf
                                     </form>
                                 </div>
                             </li>
