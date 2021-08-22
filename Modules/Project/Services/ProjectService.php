@@ -52,6 +52,11 @@ class ProjectService implements ProjectServiceContract
         return $project->resources;
     }
 
+    public function getProjectRepositories(Project $project)
+    {
+        return $project->repositories;
+    }
+
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
@@ -66,6 +71,10 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_resources':
                 return $this->updateProjectResources($data, $project);
+            break;
+
+            case 'project_repositories':
+                return $this->updateProjectRepositories($data, $project);
             break;
         }
     }
@@ -87,11 +96,22 @@ class ProjectService implements ProjectServiceContract
         $resources = [];
 
         foreach ($projectResources as $projectResource) {
-            //dd($projectResource);
             $resources[$projectResource['resource_id']] = ['designation' => $projectResource['designation']];
         }
 
         return $project->resources()->sync($resources);
+    }
+
+    private function updateProjectRepositories($data, $project)
+    {
+        $projectRepositories = $data['projectRepository'];
+        $repositories = [];
+
+        foreach ($projectRepositories as $projectRepository) {
+           $repositories[$projectRepository['project_id']] = ['url' => $projectRepository['url']];
+        }
+
+        return $project->repositories()->sync($repositories);
     }
 
     private function getClientProjectID($clientID)

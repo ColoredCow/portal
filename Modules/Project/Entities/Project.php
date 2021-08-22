@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\User\Entities\User;
+use Modules\Project\Entities\Project;
 
 class Project extends Model
 {
@@ -17,6 +18,11 @@ class Project extends Model
     {
         return $this->belongsToMany(User::class, 'project_resources', 'project_id', 'resource_id')
             ->withPivot('designation')->withTimestamps();
+    }
+    public function repositories()
+    {
+        return $this->belongsToMany(Project::class, 'project_repositories', 'project_id')
+            ->withPivot('url')->withTimestamps();
     }
 
     public function client()

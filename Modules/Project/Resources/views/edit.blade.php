@@ -11,8 +11,12 @@
             @include('project::subviews.edit-project-details')
         </div>
 
-        <div>
+        <div class="mb-5">
             @include('project::subviews.edit-project-resources')
+        </div>
+
+         <div class="mb-5">
+            @include('project::subviews.edit-project-repository')
         </div>
 
     </div>
@@ -30,6 +34,7 @@ new Vue({
         return {
             project: @json($project),
             projectResources:@json($projectResources),
+            projectRepositories:@json($projectRepositories),
             allRsources:@json($resources),
             resourcesDesignations:@json($resourcesDesignations)
         }
@@ -48,6 +53,14 @@ new Vue({
                 }
             }
         },
+        defaultProjectRepository() {
+            return {
+                id: new Date().getTime(),
+                pivot:{
+                    
+                }
+            }
+        },
 
         updateProjectForm: async function(formId) {
             let formData = new FormData(document.getElementById(formId));
@@ -58,10 +71,16 @@ new Vue({
         addNewProjectResource() {
             this.projectResources.push(this.defaultProjectResource());
         },
+        addNewProjectRepository() {
+            this.projectRepositories.push(this.defaultProjectRepository());
+        },
 
         removeProjectResource(index) {
             this.projectResources.splice(index, 1);
-        }
+        },
+        removeProjectRepository(index) {
+            this.projectRepositories.splice(index, 1);
+        },
     }, 
 
     mounted() {
