@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\AppointmentSlots\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -13,6 +14,7 @@ class MaximumSlotsController extends Controller
      * @return \Illuminate\View\View
      */
     public function index()
+        
     {  
         $max_slot = DB::table('user_meta')->select('max_appointments_per_day')->orderBy('id', 'desc')->first();
         return view('appointmentslots::index', ['max-slots' => $max_slot]);
