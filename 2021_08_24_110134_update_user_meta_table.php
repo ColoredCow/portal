@@ -13,7 +13,7 @@ class UpdateUserMetaTable extends Migration
      */
     public function up()
     {
-        Schema::table('user_meta', function(Blueprint $table) {
+        Schema::table('user_meta', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
         });
@@ -26,7 +26,7 @@ class UpdateUserMetaTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_meta', function(Blueprint $table) {
+        Schema::table('user_meta', function (Blueprint $table) {
             $table->dropForeign('user_meta_user_id_foreign');
             $table->dropColumn('user_id');
         });
