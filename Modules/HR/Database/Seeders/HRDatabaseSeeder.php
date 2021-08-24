@@ -18,7 +18,7 @@ class HRDatabaseSeeder extends Seeder
         $this->call(HRPermissionsTableSeeder::class);
         $this->call(HRRoleHasPermissionsTableSeeder::class);
         $this->call(VolunteersModuleSeeder::class);
-        $this->call(HrRoundsTableSeeder::class);
+        $this->call(HRRoundsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(AddPreparatoryRoundsSeeder::class);
     }

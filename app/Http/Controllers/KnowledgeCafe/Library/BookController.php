@@ -46,8 +46,7 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\BookRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  BookRequest  $request
      */
     public function store(BookRequest $request)
     {
@@ -106,7 +105,6 @@ class BookController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\KnowledgeCafe\Library\Book  $book
-     * @return void
      */
     public function destroy(Book $book)
     {
@@ -116,7 +114,7 @@ class BookController extends Controller
     /**
      * Fetch the book info.
      *
-     * @param  \App\Http\Requests\BookRequest  $request
+     * @param  BookRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function fetchBookInfo(BookRequest $request)

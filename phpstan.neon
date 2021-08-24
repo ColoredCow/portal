@@ -7,10 +7,32 @@ parameters:
         - app
         - Modules
 
+    excludePaths:
+        - Modules/*/vendor/composer/ClassLoader.php
+        - app/Exceptions/Handler.php
+        - Modules/*/Providers/*ServiceProvider.php
+        - Modules/*/Services/*Service.php
+        - Modules/Invoice/Entities/Invoice.php
+        - Modules\HR\Observers\Recruitment\JobObserver.php
+
     # The level 8 is the highest level
     level: 5
 
     ignoreErrors:
-        - '#Unsafe usage of new static#'
-
+        - '#Access to an undefined property [a-zA-Z0-9\\_\|\<]+>|[a-zA-Z0-9\\_]+::\$[a-zA-Z0-9\\_]+#'
+        - '#Call to an undefined method [a-zA-Z0-9\\_\<\>]+::[a-zA-Z]+\(\)#'
+        - '#Variable \$[a-zA-Z0-9_]+ might not be defined#'   
+        - '#Static method [a-zA-Z0-9\\_]+::[a-zA-Z]+\(\) invoked with [0-9]+ [a-zA-Z]+, [0-9\-]+ required#'
+        - '#Cannot access property \$[a-zA-Z0-9\\_]+ on string#'
+        - "#Offset ['a-zA-Z]+ does not exist on string#"
+        - '#Caught class Google_IO_Exception not found#'
+        - '#Call to method getMessage\(\) on an unknown class Google_IO_Exception#'
+        - '#Unreachable statement - code above always terminates#'
+        - '#Negated boolean expression is always false#'
+        - '#Left side of && is always true#'
+        - '#Parameter \#[0-9]+ \$[a-zA-z]+ of function [a-zA-z\_]+ expects [a-zA-Z0-9\\_\|\<\>\-]+, [a-zA-Z]+ given#'
+        - '#Parameter \#[0-9]+ \$[a-zA-z]+ of method [a-zA-Z0-9\\_\|\<\>\,]+::[a-zA-Z]+\(\) expects [a-zA-Z\|]+, [a-zA-Z0-9\\_\|\<\>]+ given#'
+        - '#Parameter \#[0-9]+ \$[a-zA-z]+ of static method [a-zA-Z0-9\\_\|\<\>\,]+::[a-zA-Z]+\(\) expects [a-zA-Z\]+, [a-zA-Z0-9\\_\|\<\>]+ given#'
+        - '#Parameter \#[0-9]+ \$[a-zA-z0-9]+ of function array_multisort is passed by reference, so it expects variables only#'
+    
     checkMissingIterableValueType: false
