@@ -1,6 +1,6 @@
 ## ColoredCow Portal
 ![GitHub issues](https://img.shields.io/github/issues/coloredcow/portal)
-[![Coding Standards](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml/badge.svg?branch=master)](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml)
+[![Coding Standards](https://github.com/coloredcow/portal/actions/workflows/coding-standards.yml/badge.svg?branch=master)](https://github.com/ColoredCow-Portal/portal/actions/workflows/coding-standards.yml)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/coloredcow/portal/Deploy%20to%20staging?label=Staging%20Build)
 
 ### Introduction
