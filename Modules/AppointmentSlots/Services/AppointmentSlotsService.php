@@ -214,7 +214,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         });
 
         $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) {
-            return $value >= config('hr.daily-appointment-slots.max-reserved-allowed', 3);
+            return $value >= config('hr.daily-appointment-slots.max-reserved-allowed', 'max-slots');
         })->keys()->all();
 
         $freeSlots = $slots->where('status', 'free')->reject(function ($slot) use ($datesToRemove) {
