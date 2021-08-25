@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header p-1">
             <h3 class="text-center">
-                <a href="/projects">My Projects</a>
+                <a href="/projects">My projects</a>
             </h3>
         </div>
         <div class="card-body pt-3 h-320">
