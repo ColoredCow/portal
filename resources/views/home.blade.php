@@ -22,8 +22,14 @@
         @endif
 
         @if(Module::checkStatus('Invoice') && auth()->user()->can('invoice.view'))
-        <div class="min-w-389">
+        <div class="mr-5 min-w-389">
             <user-dashboard-invoice />
+        </div>
+        @endif
+
+        @if(Module::checkStatus('Project') && auth()->user()->can('project.view'))
+        <div class="min-w-389">
+            <user-dashboard-projects />
         </div>
         @endif
 
