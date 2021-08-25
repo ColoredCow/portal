@@ -16,7 +16,7 @@ class ProjectService implements ProjectServiceContract
                 ->get();
         } else {
             return auth()->user()->projects()->where('status', request()->input('status', 'active'))
-            ->get();
+                ->get();
         }
     }
 

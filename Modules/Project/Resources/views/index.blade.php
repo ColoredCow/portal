@@ -4,9 +4,9 @@
 <div class="container" id="vueContainer">
     @include('project::menu_header')
     <br>
-    <div class="d-flex justify-content-between mb-2">
-       <span class="d-md-flex">
-            <h4 class="mb-1 pb-1">{{ config('project.status')[request()->input('status', 'active')] }} Projects
+    <div class="d-flex justify-content-between mb-2 align-items-center">
+       <div class="d-md-flex">
+            <h4 class="">{{ config('project.status')[request()->input('status', 'active')] }} Projects
                 ({{ $projects ? $projects->count() : ''}})</h4>
             <form class="mx-md-3" action="{{ route('project.index', ['status' => 'active'])  }}">
                 <input type="hidden" name="status" value="{{ request()->input('status', 'active') }}">
@@ -18,7 +18,7 @@
                         {{ __('All Projects') }} </option>
                 </select>
             </form>
-        </span>
+        </div>
         <span>
             <a  href= "{{ route('project.create') }}" class="btn btn-info text-white"> Add new project</a>
         </span>
