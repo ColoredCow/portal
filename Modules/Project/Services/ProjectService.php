@@ -73,9 +73,9 @@ class ProjectService implements ProjectServiceContract
                 return $this->updateProjectResources($data, $project);
             break;
 
-			case 'project_repository':
-				return $this->updateProjectRepositories( $data, $project );
-			break;
+            case 'project_repository':
+                return $this->updateProjectRepositories( $data, $project );
+            break;
         }
     }
 
