@@ -5,7 +5,7 @@
                 <a href="/projects">My projects</a>
             </h3>
         </div>
-        <div class="card-body pt-3 h-320">
+        <div class="card-body pt-3 h-320 overflow-y-scroll">
 			<div v-if="this.projects.length > 0" class="list list-group unstyled-list">
 				<div v-for="(project, index) in this.projects" :key="index">
 					<div class="row" >
