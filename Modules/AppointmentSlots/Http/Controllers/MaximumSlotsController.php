@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 
 class MaximumSlotsController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      * @return \Illuminate\View\View
      */
