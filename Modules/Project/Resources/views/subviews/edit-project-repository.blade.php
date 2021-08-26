@@ -8,14 +8,15 @@
             @csrf
             <input type="hidden" value="project_repository" name="update_section"> 
             <div class="card-body">
-                <div class="form-row" v-for="(projectRepository, index) in projectRepositories" :key="projectRepository.id">
+                <div class="form-row" v-for="(projectRepository, index) in projectRepositories" >
                     <div class="form-group col-md-6">
                         <label for="name" class="field-required">Url</label>
                         <input type="url" class="form-control"
+                            v-model="projectRepository.url"
                             :name="`url[${index}]`"
                             placeholder="Enter project repository url" 
                             required="required"
-                            :value="projectRepository.url">
+                            :key="projectRepository.id">
                     </div>
                     <div class="col-4">
                         <button v-on:click="removeProjectRepository(index)" type="button" class="btn btn-danger btn-sm mt-6 ml-2"> - </button>

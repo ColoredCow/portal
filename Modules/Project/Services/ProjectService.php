@@ -53,10 +53,9 @@ class ProjectService implements ProjectServiceContract
         return $project->resources;
     }
 
-    public function getProjectRepositories(Project $project)
-    {
-        return $project->repositories;
-    }
+	public function getProjectRepositories( Project $project ) {
+		return $project->repositories;
+	}
 
     public function updateProjectData($data, $project)
     {
@@ -74,9 +73,9 @@ class ProjectService implements ProjectServiceContract
                 return $this->updateProjectResources($data, $project);
             break;
 
-            case 'project_repository':
-                return $this->updateProjectRepositories($data, $project);
-            break;
+			case 'project_repository':
+				return $this->updateProjectRepositories( $data, $project );
+			break;
         }
     }
 
@@ -103,25 +102,25 @@ class ProjectService implements ProjectServiceContract
         return $project->resources()->sync($resources);
     }
 
-    private function updateProjectRepositories($data, $project)
-    {
-        if (!isset($data['url'])) {
-            return;
-        }
+	private function updateProjectRepositories( $data, $project ) {
+		if ( ! isset( $data['url'] ) ) {
+			return;
+		}
 
-        $projectRepositoriesUrl = $data['url'];
-        $url_ids = array();
-        foreach ($projectRepositoriesUrl as $url) {
-            $url_ids[] = $url;
-            ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $url_ids)->delete();
-            ProjectRepository::updateOrCreate(
-                [
-                    'project_id' => $project->id,
-                    'url' => $url,
-                ],
-            );
-        }
-    }
+		$project_repositories_url = $data['url'];
+		$url_ids                  = array();
+		foreach ( $project_repositories_url as $url ) {
+            dd($data);
+			$url_ids[] = $url;
+			ProjectRepository::where( 'project_id', $project->id )->whereNotIn( 'url', $url_ids )->delete();
+			ProjectRepository::updateOrCreate(
+				array(
+					'project_id' => $project->id,
+					'url'        => $url,
+				),
+			);
+		}
+	}
 
     private function getClientProjectID($clientID)
     {
