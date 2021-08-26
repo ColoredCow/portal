@@ -12,7 +12,7 @@
  */
 
 Route::prefix('appointmentslots')->group(function () {
-    Route::get('/', 'AppointmentSlotsController@index');  
+    Route::get('/', 'AppointmentSlotsController@index');
 });
 
 Route::get('appointment-slots/select/{user_id}', 'AppointmentSlotsController@showAppointments')->name('select-appointments');
