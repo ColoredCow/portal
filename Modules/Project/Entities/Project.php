@@ -21,8 +21,9 @@ class Project extends Model
             ->withPivot('designation')->withTimestamps();
     }
     
-	public function repositories() {
-		return $this->hasMany( ProjectRepository::class );
+	public function repositories()
+    {
+		return $this->hasMany(ProjectRepository::class);
 	}
 
     public function client()

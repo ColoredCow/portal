@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectRepositoriesTable extends Migration {
+class CreateProjectRepositoriesTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -14,12 +15,13 @@ class CreateProjectRepositoriesTable extends Migration {
 	public function up() {
 		Schema::create(
 			'project_repositories',
-			function ( Blueprint $table ) {
+			function ( Blueprint $table )
+            {
 				$table->id();
-				$table->unsignedBigInteger( 'project_id' );
-				$table->string( 'url' );
+				$table->unsignedBigInteger('project_id');
+				$table->string('url');
 				$table->timestamps();
-				$table->foreign( 'project_id' )->references( 'id' )->on( 'projects' );
+				$table->foreign('project_id')->references('id')->on('projects');
 			}
 		);
 	}
@@ -29,7 +31,8 @@ class CreateProjectRepositoriesTable extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down() {
-		Schema::dropIfExists( 'project_repositories' );
+	public function down()
+    {
+		Schema::dropIfExists('project_repositories');
 	}
 }

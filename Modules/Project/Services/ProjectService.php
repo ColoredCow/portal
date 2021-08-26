@@ -53,7 +53,8 @@ class ProjectService implements ProjectServiceContract
         return $project->resources;
     }
 
-	public function getProjectRepositories( Project $project ) {
+	public function getProjectRepositories(Project $project)
+    {
 		return $project->repositories;
 	}
 
@@ -74,7 +75,7 @@ class ProjectService implements ProjectServiceContract
             break;
 
             case 'project_repository':
-                return $this->updateProjectRepositories( $data, $project );
+                return $this->updateProjectRepositories($data, $project);
             break;
         }
     }
@@ -102,17 +103,18 @@ class ProjectService implements ProjectServiceContract
         return $project->resources()->sync($resources);
     }
 
-	private function updateProjectRepositories( $data, $project ) {
-		if ( ! isset( $data['url'] ) ) {
+	private function updateProjectRepositories($data, $project)
+    {
+		if (! isset($data['url'])) {
 			return;
 		}
 
 		$project_repositories_url = $data['url'];
 		$url_ids                  = array();
-		foreach ( $project_repositories_url as $url ) {
+		foreach ($project_repositories_url as $url) {
             dd($data);
 			$url_ids[] = $url;
-			ProjectRepository::where( 'project_id', $project->id )->whereNotIn( 'url', $url_ids )->delete();
+			ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $url_ids)->delete();
 			ProjectRepository::updateOrCreate(
 				array(
 					'project_id' => $project->id,
