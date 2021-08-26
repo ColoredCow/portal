@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Modules\User\Entities\User;
+use Illuminate\Support\Facades\Auth;
 use App\Services\GSuiteUserService;
 
 class UserController extends Controller
@@ -42,5 +43,12 @@ class UserController extends Controller
                 'designation' => $gsuiteUser->getOrganizations()[0]['title'],
             ]);
         }
+    }
+
+    public function projects()
+    {
+        $userProjects = Auth::user()->projects;
+
+        return $userProjects;
     }
 }
