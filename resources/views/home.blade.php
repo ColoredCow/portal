@@ -15,9 +15,9 @@
         </div>
         @endif
 
-        @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.view'))
+        @if(Module::checkStatus('Project') && auth()->user()->can('project.view'))
         <div class="min-w-389">
-            <user-dashboard-infrastructure />
+            <user-dashboard-projects />
         </div>
         @endif
 
@@ -27,14 +27,12 @@
         </div>
         @endif
 
-        @if(Module::checkStatus('Project') && auth()->user()->can('project.view'))
+        @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.view'))
         <div class="min-w-389">
-            <user-dashboard-projects />
+            <user-dashboard-infrastructure />
         </div>
         @endif
 
-    </div>
-    <div>
     </div>
 </div>
 @includeWhen($book, 'knowledgecafe.library.books.show_nudge_modal')
