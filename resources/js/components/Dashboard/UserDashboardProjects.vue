@@ -27,24 +27,24 @@
 
 <script>
 export default {
-    props: [],
-    data() {
-        return {
-            projects:[]
-        };
-    },
+	props: [],
+	data() {
+		return {
+			projects:[]
+		};
+	},
 
-    methods: {
-        async getProjects() {
-            let response = await axios.get("/user/projects");
-            this.projects =  response.data;
+	methods: {
+		async getProjects() {
+			let response = await axios.get("/user/projects");
+			this.projects =  response.data;
 
-        }
-    },
+		}
+	},
 
-    mounted() {
-        this.getProjects();
-    },
+	mounted() {
+		this.getProjects();
+	},
 
 };
 
