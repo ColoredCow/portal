@@ -8,10 +8,10 @@ use Modules\Project\Entities\Project;
 class ProjectRepository extends Model
 {
 
-	protected $guarded = array();
+    protected $guarded = array();
 
-	public function project()
+    public function project()
     {
-		return $this->belongsTo(Project::class);
-	}
+        return $this->belongsTo(Project::class);
+    }
 }

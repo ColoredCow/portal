@@ -23,8 +23,8 @@ class Project extends Model
     
 	public function repositories()
     {
-		return $this->hasMany(ProjectRepository::class);
-	}
+        return $this->hasMany(ProjectRepository::class);
+    }
 
     public function client()
     {

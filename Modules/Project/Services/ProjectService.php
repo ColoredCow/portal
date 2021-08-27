@@ -58,10 +58,10 @@ class ProjectService implements ProjectServiceContract
         return $project->resources;
     }
 
-	public function getProjectRepositories(Project $project)
+    public function getProjectRepositories(Project $project)
     {
-		return $project->repositories;
-	}
+        return $project->repositories;
+    }
 
     public function updateProjectData($data, $project)
     {
@@ -110,24 +110,24 @@ class ProjectService implements ProjectServiceContract
 
 	private function updateProjectRepositories($data, $project)
     {
-		if (! isset($data['url'])) {
-			return;
-		}
+        if (! isset($data['url'])) {
+            return;
+        }
 
-		$project_repositories_url = $data['url'];
-		$url_ids                  = array();
-		foreach ($project_repositories_url as $url) {
+        $project_repositories_url = $data['url'];
+        $url_ids                  = array();
+        foreach ($project_repositories_url as $url) {
             dd($data);
-			$url_ids[] = $url;
-			ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $url_ids)->delete();
-			ProjectRepository::updateOrCreate(
-				array(
-					'project_id' => $project->id,
-					'url'        => $url,
-				),
-			);
-		}
-	}
+            $url_ids[] = $url;
+            ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $url_ids)->delete();
+            ProjectRepository::updateOrCreate(
+                array(
+                    'project_id' => $project->id,
+                    'url'        => $url,
+                ),
+            );
+        }
+    }
 
     private function getClientProjectID($clientID)
     {
