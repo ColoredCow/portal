@@ -56,9 +56,6 @@ new Vue({
         defaultProjectRepository() {
             return {
                 id: new Date().getTime(),
-                pivot:{
-                    
-                }
             }
         },
 

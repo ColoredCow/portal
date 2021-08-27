@@ -114,17 +114,16 @@ class ProjectService implements ProjectServiceContract
             return;
         }
 
-        $project_repositories_url = $data['url'];
-        $url_ids                  = array();
-        foreach ($project_repositories_url as $url) {
-            dd($data);
-            $url_ids[] = $url;
-            ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $url_ids)->delete();
+        $projectRepositoriesUrl = $data['url'];
+        $urlIds = [];
+        foreach ($projectRepositoriesUrl as $url) {
+            $urlIds[] = $url;
+            ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $urlIds)->delete();
             ProjectRepository::updateOrCreate(
-                array(
+                [
                     'project_id' => $project->id,
-                    'url'        => $url,
-                ),
+                    'url' => $url,
+                ],
             );
         }
     }

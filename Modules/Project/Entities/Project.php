@@ -20,7 +20,7 @@ class Project extends Model
         return $this->belongsToMany(User::class, 'project_resources', 'project_id', 'resource_id')
             ->withPivot('designation')->withTimestamps();
     }
-    
+
     public function repositories()
     {
         return $this->hasMany(ProjectRepository::class);

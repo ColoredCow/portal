@@ -10,9 +10,10 @@
             <div class="card-body">
                 <div class="form-row" v-for="(projectRepository, index) in projectRepositories" >
                     <div class="form-group col-md-6">
-                        <label for="name" class="field-required">Url</label>
+                        <label for="projectRepository.id" class="field-required">Url</label>
                         <input type="url" class="form-control"
                             v-model="projectRepository.url"
+                            id="projectRepository.id"
                             :name="`url[${index}]`"
                             placeholder="Enter project repository url" 
                             required="required"
