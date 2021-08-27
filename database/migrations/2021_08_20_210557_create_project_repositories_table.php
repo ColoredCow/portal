@@ -16,7 +16,7 @@ class CreateProjectRepositoriesTable extends Migration
     {
         Schema::create(
             'project_repositories',
-            function ( Blueprint $table ) {
+            function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('project_id');
                 $table->string('url');
