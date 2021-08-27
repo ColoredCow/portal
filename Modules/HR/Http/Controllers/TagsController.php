@@ -14,7 +14,8 @@ class TagsController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   $attr['tags'] = Tag::orderBy('tname')->get();
+    {
+        $attr['tags'] = Tag::orderBy('tname')->get();
         return view('hr::tags.index')->with($attr);
     }
 
@@ -34,7 +35,7 @@ class TagsController extends Controller
         return view('hr::tags\edit')->with($attr);
     }
 
-    public function update(Request $request,int $id)
+    public function update(Request $request, int $id)
     {
         $tag = Tag::find($id);
         $tag->update([
