@@ -13,7 +13,7 @@ class TagsController extends Controller
      */
     public function index()
     {
-        $attr['tags'] = Tag::orderBy('tname')->get();
+        $attr['tags'] = Tag::orderBy('tag_name')->get();
 
         return view('hr::tags.index')->with($attr);
     }
@@ -21,9 +21,9 @@ class TagsController extends Controller
     public function store(Request $request)
     {
         $tag = Tag::create([
-            'tname'=>$request['name'],
-            'description'=>$request['description'] ?? null,
-            'background_color'=>$request['color']
+            'tag_name' => $request['name'],
+            'description' => $request['description'] ?? null,
+            'background_color' => $request['color']
         ]);
 
         return redirect(route('hr.tags.index'))->with('status', 'Tag created successfully!');
@@ -40,9 +40,9 @@ class TagsController extends Controller
     {
         $tag = Tag::find($id);
         $tag->update([
-            'tname'=>$request['name'],
-            'description'=>$request['description'] ?? null,
-            'background_color'=>$request['color']
+            'tag_name' => $request['name'],
+            'description' => $request['description'] ?? null,
+            'background_color' => $request['color']
         ]);
 
         return redirect(route('hr.tags.index'))->with('status', 'Tag updated successfully!');

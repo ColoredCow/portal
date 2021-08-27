@@ -14,7 +14,7 @@ class RenameNameInTagsTable extends Migration
     public function up()
     {
         Schema::table('tags', function (Blueprint $table) {
-            $table->renameColumn('name', 'tname');
+            $table->renameColumn('name', 'tag_name');
         });
     }
 
@@ -26,7 +26,7 @@ class RenameNameInTagsTable extends Migration
     public function down()
     {
         Schema::table('tags', function (Blueprint $table) {
-            $table->renameColumn('tname', 'name');
+            $table->renameColumn('tag_name', 'name');
         });
     }
 }
