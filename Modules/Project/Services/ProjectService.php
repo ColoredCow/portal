@@ -108,7 +108,7 @@ class ProjectService implements ProjectServiceContract
         return $project->resources()->sync($resources);
     }
 
-	private function updateProjectRepositories($data, $project)
+    private function updateProjectRepositories($data, $project)
     {
         if (! isset($data['url'])) {
             return;

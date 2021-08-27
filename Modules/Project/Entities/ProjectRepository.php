@@ -7,7 +7,6 @@ use Modules\Project\Entities\Project;
 
 class ProjectRepository extends Model
 {
-
     protected $guarded = array();
 
     public function project()

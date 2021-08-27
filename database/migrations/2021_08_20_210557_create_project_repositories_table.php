@@ -12,11 +12,11 @@ class CreateProjectRepositoriesTable extends Migration
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         Schema::create(
             'project_repositories',
-            function ( Blueprint $table )
-            {
+            function ( Blueprint $table ) {
                 $table->id();
                 $table->unsignedBigInteger('project_id');
                 $table->string('url');
