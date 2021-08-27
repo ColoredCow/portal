@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\User\Entities\User;
-use Modules\Project\Entities\Project;
-use Modules\Project\Entities\ProjectRepository;
 
 class Project extends Model
 {
