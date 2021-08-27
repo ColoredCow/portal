@@ -54,5 +54,3 @@ class TagsController extends Controller
 
         return redirect(route('hr.tags.index'))->with('status', 'Tag deleted successfully!');
     }
-
-}
