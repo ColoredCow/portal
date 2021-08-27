@@ -51,8 +51,7 @@ class TagsController extends Controller
     public function destroy($id)
     {
         Tag::destroy($id);
-        
+
         return redirect(route('hr.tags.index'))->with('status', 'Tag deleted successfully!');
     }
-
 }
