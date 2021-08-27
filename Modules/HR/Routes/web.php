@@ -39,6 +39,12 @@ Route::middleware('auth')->group(function () {
             'names' => 'universities.aliases',
         ])->only(['update', 'destroy', 'store']);
 
+        Route::get('tags', 'TagsController@index')->name('hr.tags.index');
+        Route::post('tags/store', 'TagsController@store')->name('hr.tags.store');
+        Route::get('tags/edit/{id}', 'TagsController@edit')->name('hr.tags.edit');
+        Route::post('tags/update/{id}', 'TagsController@update')->name('hr.tags.update');
+        Route::delete('tags/delete/{id}', 'TagsController@destroy')->name('hr.tags.delete');
+
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
