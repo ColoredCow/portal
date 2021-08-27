@@ -22,12 +22,24 @@ There are some topics and tools you need to know to prior to work in portal so p
 - [Git, GitHub and Development](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
 ### 4. PHP :running:
-PHP v7.3 or higher is needed.
+PHP v7.3 or v7.4 is needed.
 
 You can install it with the following ways:
 1. XAMPP
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
     - If you already have XAMPP installed, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
+    - If user face any issues or make any changes in the project, should restart the Apache services.
+2. WAMP
+    - If you prefer using WAMP, you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits).
+   A possible error that may arise with openSSL extension. It should be enabled from your 'php.ini' file. To enable it, use the following steps:
+   - Edit the system environment variables and set the path of your selected PHP version.
+   - In 'php.ini', uncomment the ";extension=openSSL" by removing ";" before it.
+   - The WAMP users have to right click on the server icon in the toolbar, and choose ‘Restart all services’ after making changes to the 'php.ini' file.
+   - Run this command in the root directory of your project:
+      ```sh
+      composer update
+      ```
+   - If the user is working in VSCode, possible errors may arise because of path, as may not be able to access the selected PHP version from its terminal.
 
 ### 5. Composer :running:
 

@@ -50,6 +50,14 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-md-3 form-group">
+                        <label for="start_date" class="fz-14 leading-none text-secondary mb-1">Start Date</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ old('start_date') }}">
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="end_date" class="fz-14 leading-none text-secondary mb-1">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ old('end_date') }}">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="description" class="fz-14 leading-none text-secondary mb-1">Description<strong class="text-danger">*</strong></label>

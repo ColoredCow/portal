@@ -19,7 +19,6 @@ class Applicant extends Model
      * Custom create method that creates an applicant and fires specific events.
      *
      * @param  array $attr  fillables to be stored
-     * @return this
      */
     public static function _create($attr)
     {
@@ -125,8 +124,6 @@ class Applicant extends Model
 
     /**
      * Get the applicant's university.
-     *
-     * @return Modules\HR\Entities\University|null
      */
     public function university()
     {

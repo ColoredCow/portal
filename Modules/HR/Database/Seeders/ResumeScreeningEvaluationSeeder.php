@@ -3,7 +3,7 @@
 namespace Modules\HR\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\HR\Entities\EvaluationParameter;
+use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Round;
 
 class ResumeScreeningEvaluationSeeder extends Seeder
@@ -182,7 +182,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
 
         $round->evaluationParameters()->createMany($evaluationParametersList);
 
-        $evaluationParameters = EvaluationParameter::all();
+        $evaluationParameters = Parameter::all();
 
         foreach ($evaluationParameters as $evaluationParameter) {
             $evaluationParameter->options()->createMany($evaluationParametersOptions);

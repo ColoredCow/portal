@@ -28,20 +28,7 @@ class ApplicantController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @return void
-     */
-    public function index(ApplicantRequest $request)
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
-     *
-     * @return void
      */
     public function create()
     {
@@ -53,8 +40,7 @@ class ApplicantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  ApplicantRequest  $request
      */
     public function store(ApplicantRequest $request)
     {
@@ -67,8 +53,7 @@ class ApplicantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
      */
     public function importExcel(Request $request)
     {
@@ -79,56 +64,10 @@ class ApplicantController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \Modules\HR\Entities\Applicant  $applicant
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Applicant $applicant)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Modules\HR\Entities\Applicant  $applicant
-     * @return void
-     */
-    public function edit(Applicant $applicant)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\HR\ApplicantRequest  $request
-     * @param  \Modules\HR\Entities\Applicant  $applicant
-     * @return void
-     */
-    public function update(ApplicantRequest $request, Applicant $applicant)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Modules\HR\Entities\Applicant  $applicant
-     * @return void
-     */
-    public function destroy(Applicant $applicant)
-    {
-        //
-    }
-
-    /**
      * To update applicant university.
      *
      * @param Applicant $applicant
      * @param Request $request
-     * @return Response
      */
     public function updateUniversity(Applicant $applicant, Request $request)
     {

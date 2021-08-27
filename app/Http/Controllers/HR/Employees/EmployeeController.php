@@ -9,8 +9,6 @@ class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -27,8 +25,7 @@ class EmployeeController extends Controller
     /**
      * Display the project details of an Employee.
      *
-     * @param  \App\Models\Employee $employee
-     * @return \Illuminate\Http\Response
+     * @param  Employee $employee
      */
     public function showProjects(Employee $employee)
     {

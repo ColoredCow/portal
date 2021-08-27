@@ -17,7 +17,6 @@ class FileHelper
      * @param  string $year  year directory of the file
      * @param  string $month month directory of the file
      * @param  string $file  invoice file name
-     * @return string
      */
     public static function getFilePath($year, $month, $file)
     {

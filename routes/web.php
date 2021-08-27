@@ -82,7 +82,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('payments', 'PaymentController')
             ->except(['show', 'destroy'])
             ->names([
-                'index' => 'payment.index',
+                'index' => 'payments.index',
                 'create' => 'payments.create',
                 'store' => 'payments.store',
                 'edit' => 'payments.edit',
@@ -117,7 +117,7 @@ Route::middleware('auth')->group(function () {
 
             Route::get('{module}', 'PermissionController@index')->name('permissions.module.index');
             Route::put('users/{id}', 'PermissionController@updateUserRoles')->name('permissions.module.update');
-            Route::put('roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.update');
+            Route::put('roles/{id}', 'PermissionController@updateRolePermissions')->name('permissions.module.update-role');
         });
 
         Route::prefix('hr')->group(function () {
@@ -174,4 +174,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('user/read-books', 'UserBookController@index');
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
+    Route::get('user/projects', 'UserController@projects');
 });

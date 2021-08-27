@@ -41,7 +41,6 @@ class SalesAreaController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
      */
     public function store(Request $request)
     {
@@ -53,7 +52,6 @@ class SalesAreaController extends Controller
     /**
      * Show the specified resource.
      * @param SalesArea $salesArea
-     * @return Renderable
      */
     public function show(SalesArea $salesArea)
     {
@@ -63,7 +61,6 @@ class SalesAreaController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param SalesArea $salesArea
-     * @return Renderable
      */
     public function edit(SalesArea $salesArea)
     {
@@ -74,7 +71,6 @@ class SalesAreaController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param SalesArea $salesArea
-     * @return Renderable
      */
     public function update(Request $request, SalesArea $salesArea)
     {
@@ -86,7 +82,6 @@ class SalesAreaController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param SalesArea $salesArea
-     * @return Renderable
      */
     public function destroy(SalesArea $salesArea)
     {
