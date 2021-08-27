@@ -6,6 +6,7 @@ use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Entities\ProjectRepository;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -57,6 +58,11 @@ class ProjectService implements ProjectServiceContract
         return $project->resources;
     }
 
+    public function getProjectRepositories(Project $project)
+    {
+        return $project->repositories;
+    }
+
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
@@ -71,6 +77,10 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_resources':
                 return $this->updateProjectResources($data, $project);
+            break;
+
+            case 'project_repository':
+                return $this->updateProjectRepositories($data, $project);
             break;
         }
     }
@@ -92,11 +102,30 @@ class ProjectService implements ProjectServiceContract
         $resources = [];
 
         foreach ($projectResources as $projectResource) {
-            //dd($projectResource);
             $resources[$projectResource['resource_id']] = ['designation' => $projectResource['designation']];
         }
 
         return $project->resources()->sync($resources);
+    }
+
+    private function updateProjectRepositories($data, $project)
+    {
+        if (! isset($data['url'])) {
+            return;
+        }
+
+        $projectRepositoriesUrl = $data['url'];
+        $urlIds = [];
+        foreach ($projectRepositoriesUrl as $url) {
+            $urlIds[] = $url;
+            ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $urlIds)->delete();
+            ProjectRepository::updateOrCreate(
+                [
+                    'project_id' => $project->id,
+                    'url' => $url,
+                ],
+            );
+        }
     }
 
     private function getClientProjectID($clientID)
