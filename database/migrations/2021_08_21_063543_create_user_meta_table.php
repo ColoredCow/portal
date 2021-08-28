@@ -14,9 +14,14 @@ class CreateUserMetaTable extends Migration
     public function up()
     {
         Schema::create('user_meta', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
+            $table->unsignedInteger('user_id');
             $table->integer('max_appointments_per_day')->unsigned();
             $table->timestamps();
+        });
+
+        Schema::table('user_meta', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -26,7 +31,11 @@ class CreateUserMetaTable extends Migration
      * @return void
      */
     public function down()
-    {
+    {   
+        Schema::table('user_meta', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+        
         Schema::dropIfExists('user_meta');
     }
 }
