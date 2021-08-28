@@ -47,6 +47,17 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="effort_sheet_url">{{ __('Effort-Sheet Url') }}</label>
+                        @if($project->effort_sheet_url)
+                            <a class="badge badge-primary p-1 ml-2 text-light" target="_blank" href="{{ $project->effort_sheet_url }}">{{ __('view') }}</a>
+                        @endif
+                        <input type="url" class="form-control" 
+                        name="effort_sheet_url" 
+                        id="effort_sheet_url" 
+                        placeholder="Enter Effortsheet url" 
+                        value="{{ old('effort_sheet_url') ?: $project->effort_sheet_url }}">
+                    </div>
                 </div>
             </div>
             <div class="card-footer">

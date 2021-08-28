@@ -77,7 +77,7 @@ class ProjectController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      */
-    public function update(Request $request, Project $project)
+    public function update(ProjectRequest $request, Project $project)
     {
         return $this->service->updateProjectData($request->all(), $project);
     }
