@@ -31,7 +31,7 @@ class CreateUserMetaTable extends Migration
      * @return void
      */
     public function down()
-    {   
+    {
         Schema::table('user_meta', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
         });
