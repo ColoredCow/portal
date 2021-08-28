@@ -9,7 +9,7 @@ class UserMetaTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
-     * 
+     *
      *
      * @return void
      */
@@ -17,7 +17,7 @@ class UserMetaTableSeeder extends Seeder
     {
         DB::table('user_meta')->updateorInsert(
             ['user_id' => 1],
-            ['max_appointments_per_day' => 2]            
-        );  
+            ['max_appointments_per_day' => 2]       
+        );
     }
 }
