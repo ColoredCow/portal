@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddingConversionRateColumn extends Migration
+class AddConversionRateColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddingConversionRateColumn extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->string('conversion_rate');
+            $table->decimal('conversion_rate' 10, 2)->nullable();
         });
     }
 
