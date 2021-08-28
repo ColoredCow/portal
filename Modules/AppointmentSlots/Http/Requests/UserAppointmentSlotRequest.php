@@ -13,6 +13,8 @@ class UserAppointmentSlotRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [];
+
         if ($this->method() === 'POST') {
             $rules = [
                 'start_time' => 'required|date',
@@ -29,6 +31,7 @@ class UserAppointmentSlotRequest extends FormRequest
                 'edit_end_time' => 'required|date|after:edit_start_time',
             ];
         }
+
         return $rules;
     }
 

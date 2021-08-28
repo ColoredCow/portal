@@ -5,7 +5,6 @@ namespace Modules\HR\Entities;
 use Modules\HR\Entities\Evaluation\Parameter as EvaluationParameter;
 use Modules\HR\Entities\Evaluation\Segment as EvaluationSegment;
 use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Entities\Job;
 
 class Round extends Model
 {
@@ -23,12 +22,14 @@ class Round extends Model
         'rejected_mail_template' => 'array',
     ];
 
-    public function isTrialRound(){
+    public function isTrialRound()
+    {
         return $this->name == 'Trial Program';
     }
 
-    public function inPreparatoryRounds(){
-        return Round::whereIn('name', ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])->pluck('id')->contains($this->id);
+    public function inPreparatoryRounds()
+    {
+        return self::whereIn('name', ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])->pluck('id')->exists();
     }
 
     public function jobs()

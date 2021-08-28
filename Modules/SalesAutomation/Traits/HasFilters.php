@@ -9,6 +9,7 @@ trait HasFilters
         foreach ($columns as $column) {
             $query->where($this->getTable() . ".$column", 'like', "%$value%");
         }
+
         return $query;
     }
 
@@ -17,6 +18,7 @@ trait HasFilters
         foreach ($columns as $column) {
             $query->orWhere($this->getTable() . ".$column", 'like', "%$value%");
         }
+
         return $query;
     }
 }

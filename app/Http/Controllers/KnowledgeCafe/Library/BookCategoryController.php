@@ -21,6 +21,7 @@ class BookCategoryController extends Controller
     public function index()
     {
         $categories = BookCategory::withCount('books')->orderBy('name')->get();
+
         return view('knowledgecafe.library.categories.index')
         ->with('categories', $this->formatCategoryData($categories));
     }
@@ -38,8 +39,7 @@ class BookCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest  $request
-     *  @return void
+     * @param  BookCategoryRequest  $request
      */
     public function store(BookCategoryRequest $request)
     {
@@ -47,37 +47,15 @@ class BookCategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     *  @return void
-     */
-    public function show(BookCategory $bookCategory)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     * @return void
-     */
-    public function edit(BookCategory $bookCategory)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\KnowledgeCafe\Library\BookCategoryRequest  $request
-     * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     * @return \Illuminate\Http\Response
+     * @param  BookCategoryRequest  $request
+     * @param  BookCategory  $bookCategory
      */
     public function update(BookCategoryRequest $request, BookCategory $bookCategory)
     {
         return response()->json(
-            ['isUpdated' => $bookCategory->update($request->validated()) ]
+            ['isUpdated' => $bookCategory->update($request->validated())]
         );
     }
 
@@ -85,17 +63,15 @@ class BookCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\KnowledgeCafe\Library\BookCategory  $bookCategory
-     * @return void
      */
     public function destroy(BookCategory $bookCategory)
     {
-        return response()->json(['isDeleted' => $bookCategory->delete() ]);
+        return response()->json(['isDeleted' => $bookCategory->delete()]);
     }
 
     /**
-    * @param  Array  $categories
-    * @return Array
-    */
+     * @param  array  $categories
+     */
     public function formatCategoryData($categories)
     {
         $data = [];
@@ -106,6 +82,7 @@ class BookCategoryController extends Controller
                 'assign_books_count' => $category->books_count
             ];
         }
+
         return $data;
     }
 }

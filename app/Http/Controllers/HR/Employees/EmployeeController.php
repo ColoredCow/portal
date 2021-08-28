@@ -9,12 +9,11 @@ class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $employees = Employee::active()->orderBy('name')->get();
+
         return view('hr.employees.index', compact('employees'));
     }
 
@@ -24,10 +23,9 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Display the project details of an Employee
+     * Display the project details of an Employee.
      *
-     * @param  \App\Models\Employee $employee
-     * @return \Illuminate\Http\Response
+     * @param  Employee $employee
      */
     public function showProjects(Employee $employee)
     {

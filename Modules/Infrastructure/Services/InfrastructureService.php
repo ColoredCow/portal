@@ -22,6 +22,7 @@ class InfrastructureService implements InfrastructureServiceContract
         $completeSynchronously = $s3Client->listBucketsAsync()->wait();
         $s3Data = $completeSynchronously->toArray();
         $s3buckets = $s3Data['Buckets'];
+
         return $s3buckets;
     }
 
@@ -29,12 +30,14 @@ class InfrastructureService implements InfrastructureServiceContract
     {
         $ec2Client = $this->sdk->createEc2();
         $instances = $ec2Client->DescribeInstances()->toArray()['Reservations'];
+
         return $instances;
     }
 
     public function getBillingDetails()
     {
         $seconds = 1 * 60 * 60 * 24;
+
         return Cache::remember('aws_billing_datas', $seconds, function () {
             return $this->getAWSBillingDetails();
         });

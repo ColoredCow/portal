@@ -18,14 +18,14 @@
           >
             <option
               v-for="activeClient in clients"
-              :value="activeClient.id"
+              :key="activeClient.id"
               v-text="activeClient.name"
             ></option>
           </select>
         </div>
       </div>
 
-      <div v-for="(billing, index) in billings">
+      <div v-for="(billing, index) in billings" :key="billing.id">
         <invoice-project-component
           :client="client"
           :billing="billing"
@@ -170,74 +170,74 @@
 import InvoiceProjectComponent from "../InvoiceProjectComponent.vue";
 
 export default {
-  props: ["clients", "invoice"],
-  components: {
-    "invoice-project-component": InvoiceProjectComponent,
-  },
-  data() {
-    return {
-      client: this.clients[0],
-      clientId: this.invoice ? this.invoice.client.id : this.clients[0].id,
-      projectInvoiceId: this.invoice ? this.invoice.project_invoice_id : null,
-      sentOn: this.invoice
-        ? this.getDateFromTimestamp(this.invoice.sent_on)
-        : null,
-      amount: this.invoice ? this.invoice.amount : null,
-      gst: this.invoice ? this.invoice.gst : null,
-      comments: this.invoice ? this.invoice.comments : null,
-      invoiceFile: null,
-      billings: this.invoice ? this.invoice.project_stage_billings : [],
-      file: this.invoice ? this.invoice.file_path : null,
-      currency: this.invoice ? this.invoice.currency : this.clients[0].currency,
-    };
-  },
-  computed: {
-    dueOn() {
-      if (this.invoice) {
-        return this.getDateFromTimestamp(this.invoice.due_on);
-      }
-      if (!this.sentOn) {
-        return null;
-      }
-      let sentOn = new Date(this.sentOn);
-      sentOn.setDate(sentOn.getDate() + 10);
-      return this.getDateFromTimestamp(sentOn);
-    },
-  },
-  methods: {
-    updateClientDetails() {
-      for (var item = 0; item < this.clients.length; item++) {
-        let client = this.clients[item];
-        if (client.id == this.clientId) {
-          this.client = client;
-          this.currency = client.currency;
-          break;
-        }
-      }
-    },
-    getDateFromTimestamp(timestamp) {
-      var d = new Date(timestamp),
-        month = (d.getMonth() + 1).toString(),
-        day = d.getDate().toString(),
-        year = d.getFullYear();
+	props: ["clients", "invoice"],
+	components: {
+		"invoice-project-component": InvoiceProjectComponent,
+	},
+	data() {
+		return {
+			client: this.clients[0],
+			clientId: this.invoice ? this.invoice.client.id : this.clients[0].id,
+			projectInvoiceId: this.invoice ? this.invoice.project_invoice_id : null,
+			sentOn: this.invoice
+				? this.getDateFromTimestamp(this.invoice.sent_on)
+				: null,
+			amount: this.invoice ? this.invoice.amount : null,
+			gst: this.invoice ? this.invoice.gst : null,
+			comments: this.invoice ? this.invoice.comments : null,
+			invoiceFile: null,
+			billings: this.invoice ? this.invoice.project_stage_billings : [],
+			file: this.invoice ? this.invoice.file_path : null,
+			currency: this.invoice ? this.invoice.currency : this.clients[0].currency,
+		};
+	},
+	computed: {
+		dueOn() {
+			if (this.invoice) {
+				return this.getDateFromTimestamp(this.invoice.due_on);
+			}
+			if (!this.sentOn) {
+				return null;
+			}
+			let sentOn = new Date(this.sentOn);
+			sentOn.setDate(sentOn.getDate() + 10);
+			return this.getDateFromTimestamp(sentOn);
+		},
+	},
+	methods: {
+		updateClientDetails() {
+			for (var item = 0; item < this.clients.length; item++) {
+				let client = this.clients[item];
+				if (client.id == this.clientId) {
+					this.client = client;
+					this.currency = client.currency;
+					break;
+				}
+			}
+		},
+		getDateFromTimestamp(timestamp) {
+			var d = new Date(timestamp),
+				month = (d.getMonth() + 1).toString(),
+				day = d.getDate().toString(),
+				year = d.getFullYear();
 
-      if (month.length < 2) {
-        month = "0" + month;
-      }
-      if (day.length < 2) {
-        day = "0" + day;
-      }
-      return [year, month, day].join("-");
-    },
-    addProject() {
-      this.billings.push({});
-    },
-    removeProject(index) {
-      this.billings.splice(index, 1);
-    },
-  },
-  mounted() {
-    this.updateClientDetails();
-  },
+			if (month.length < 2) {
+				month = "0" + month;
+			}
+			if (day.length < 2) {
+				day = "0" + day;
+			}
+			return [year, month, day].join("-");
+		},
+		addProject() {
+			this.billings.push({});
+		},
+		removeProject(index) {
+			this.billings.splice(index, 1);
+		},
+	},
+	mounted() {
+		this.updateClientDetails();
+	},
 };
 </script>

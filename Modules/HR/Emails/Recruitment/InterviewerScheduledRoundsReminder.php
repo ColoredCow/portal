@@ -11,14 +11,14 @@ class InterviewerScheduledRoundsReminder extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Application rounds scheduled for the user
+     * Application rounds scheduled for the user.
      * @var array
      */
     public $applicationRounds;
 
     /**
      * Create a new message instance.
-     * @param array $applicationRound
+     * @param array $applicationRounds
      */
     public function __construct($applicationRounds)
     {

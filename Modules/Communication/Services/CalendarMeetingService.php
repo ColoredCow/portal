@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Google_Service_Calendar_ConferenceData;
 use Modules\Communication\Entities\CalendarMeeting;
 use Modules\Communication\Contracts\CalendarMeetingContract;
+use Exception;
 
 class CalendarMeetingService implements CalendarMeetingContract
 {

@@ -6,22 +6,19 @@ use App\Services\GSuiteUserService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Modules\HR\Entities\Job;
-use Modules\HR\Entities\University;
 
 class Applicant extends Model
 {
     use Notifiable;
-    
+
     protected $guarded = [];
 
     protected $table = 'hr_applicants';
 
     /**
-     * Custom create method that creates an applicant and fires specific events
+     * Custom create method that creates an applicant and fires specific events.
      *
      * @param  array $attr  fillables to be stored
-     * @return this
      */
     public static function _create($attr)
     {
@@ -54,11 +51,12 @@ class Applicant extends Model
         }
 
         $applicant->wasRecentlyCreated ? $application->tag('new-application') : null;
+
         return $applicant;
     }
 
     /**
-     * Get all applications for the applicant which are new and in-progress
+     * Get all applications for the applicant which are new and in-progress.
      */
     public function openApplications()
     {
@@ -71,7 +69,7 @@ class Applicant extends Model
     }
 
     /**
-     * Get the timeline for an applicant
+     * Get the timeline for an applicant.
      *
      * @return array
      */
@@ -92,13 +90,14 @@ class Applicant extends Model
         array_multisort(array_map(function ($element) {
             return $element['date'];
         }, $timeline), SORT_ASC, $timeline);
+
         return $timeline;
     }
 
     /**
-     * Determines if the applicant has graduated or not
+     * Determines if the applicant has graduated or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasGraduated()
     {
@@ -116,6 +115,7 @@ class Applicant extends Model
         $name = trim($this->name);
         $lastName = (strpos($name, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
         $firstName = trim(preg_replace('#' . $lastName . '#', '', $name));
+
         return [
             'firstName' => $firstName,
             'lastName' => $lastName,
@@ -124,8 +124,6 @@ class Applicant extends Model
 
     /**
      * Get the applicant's university.
-     *
-     * @return Modules\HR\Entities\University|null
      */
     public function university()
     {

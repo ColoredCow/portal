@@ -18,7 +18,7 @@
         <div class="card-body pt-3">
             <div>
                 <div v-if="state == 'edit'">
-                    <textarea v-model="comment.body" class="form-control"> </textarea>
+                    <textarea v-model="body" class="form-control"> </textarea>
                     <span class="float-right">
                         <button class="btn btn-sm btn-success mt-2 mx-3" @click="updateComment()">Save</button>
                         <button class="btn btn-sm btn-secondary mt-2" @click="disableEditMode()">Cancel</button>
@@ -34,36 +34,36 @@
 </template>
 
 <script>
-    export default {
-        props: ['comment', 'editable', 'bookIndex'],
-        data() {
-            return {
-                state:'view'
-            }
-        },
+export default {
+	props: ["comment", "editable", "bookIndex"],
+	data() {
+		return {
+			state:"view"
+		};
+	},
         
-        methods: {
-            enableEditMode() {
-                this.state = 'edit';
-            },
+	methods: {
+		enableEditMode() {
+			this.state = "edit";
+		},
 
-            disableEditMode() {
-                this.state = 'view';
-            },
+		disableEditMode() {
+			this.state = "view";
+		},
 
-            async updateComment(){
-                let response = await axios.put(`/comments/${this.comment.id}`, {comment:this.comment.body});
-                this.disableEditMode();
-            },
+		async updateComment(){
+			let response = await axios.put(`/comments/${this.comment.id}`, {comment:this.comment.body});
+			this.disableEditMode();
+		},
 
-            async deleteComment() {
-                if(!confirm('Are you sure ?')) {
-                    return false
-                }
+		async deleteComment() {
+			if(!confirm("Are you sure ?")) {
+				return false;
+			}
 
-                let response = await axios.delete(`/comments/${this.comment.id}`);
-                this.$emit('onDeleteComment', { index:this.bookIndex, comment:this.comment} );
-            }
-        }
-    }
+			let response = await axios.delete(`/comments/${this.comment.id}`);
+			this.$emit("onDeleteComment", { index:this.bookIndex, comment:this.comment} );
+		}
+	}
+};
 </script>

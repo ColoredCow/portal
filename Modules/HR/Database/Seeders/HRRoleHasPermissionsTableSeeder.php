@@ -17,7 +17,7 @@ class HRRoleHasPermissionsTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        $hrManager=Role::where(['name'=>'hr-manager'])->first();
-        $hrManager->syncPermissions(Permission::where('name', 'LIKE', "hr_%")->get());
+        $hrManager = Role::where(['name'=>'hr-manager'])->first();
+        $hrManager->syncPermissions(Permission::where('name', 'LIKE', 'hr_%')->get());
     }
 }

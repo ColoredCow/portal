@@ -12,18 +12,17 @@ use niklasravnsborg\LaravelPdf\Pdf as PdfFile;
 class FileHelper
 {
     /**
-     * Retrieve file path based upon year and month
+     * Retrieve file path based upon year and month.
      *
      * @param  string $year  year directory of the file
      * @param  string $month month directory of the file
      * @param  string $file  invoice file name
-     * @return string
      */
     public static function getFilePath($year, $month, $file)
     {
         $filePath = $year . '/' . $month . '/' . $file;
 
-        if (!Storage::exists($filePath)) {
+        if (! Storage::exists($filePath)) {
             return false;
         }
 
@@ -31,13 +30,14 @@ class FileHelper
     }
 
     /**
-     * Retrieve storage directory based upon current year and month
+     * Retrieve storage directory based upon current year and month.
      *
      * @return string
      */
     public static function getCurrentStorageDirectory()
     {
         $now = now();
+
         return $now->format('Y') . '/' . $now->format('m');
     }
 
@@ -45,6 +45,7 @@ class FileHelper
     {
         $dashedApplicantName = str_replace(' ', '-', $applicant->name);
         $timestamp = now()->format('Ymd');
+
         return "$dashedApplicantName-$timestamp.pdf";
     }
 
@@ -64,6 +65,7 @@ class FileHelper
         $application->update([
             'offer_letter' => $filePath,
         ]);
+
         return $application->offer_letter;
     }
 }

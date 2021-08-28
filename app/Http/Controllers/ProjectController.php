@@ -29,6 +29,7 @@ class ProjectController extends Controller
         } else {
             $projects = Project::getList();
         }
+
         return view('project.index')->with([
             'projects' => $projects,
         ]);
@@ -62,6 +63,7 @@ class ProjectController extends Controller
             'status' => $validated['status'],
             'invoice_email' => $validated['invoice_email'],
         ]);
+
         return redirect(route('projects.edit', $project->id))->with('status', 'Project created successfully!');
     }
 
@@ -69,7 +71,6 @@ class ProjectController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Project  $project
-     * @return void
      */
     public function show(Project $project)
     {
@@ -116,6 +117,7 @@ class ProjectController extends Controller
             'invoice_email' => $validated['invoice_email'],
             'gst_applicable' => isset($validated['gst_applicable']) ? true : false,
         ]);
+
         return redirect(route('projects.edit', $project->id))->with('status', 'Project updated successfully!');
     }
 
@@ -132,7 +134,7 @@ class ProjectController extends Controller
 
     /**
      * Add Employees to this Project.
- *
+     *
      * @param  \App\Models\Project  $project
      * @param  \App\Http\Requests\ProjectRequest  $request
      * @return \Illuminate\Http\RedirectResponse

@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Employee;
@@ -15,11 +14,11 @@ class EvaluationController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function index()
     {
         $segments = Segment::all();
+
         return view('hr::evaluation.index', [
             'segments' => $segments
         ]);
@@ -27,11 +26,11 @@ class EvaluationController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function segmentParameters(Request $request, $segmentID)
     {
         $segment = Segment::find($segmentID);
+
         return view('hr::evaluation.segment-parameters', [
             'segment' => $segment,
             'parameters' => $segment->parameters()->with('options')->get(),
@@ -41,22 +40,22 @@ class EvaluationController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function createSegment(Request $request)
     {
         $segment = Segment::create(['name' => $request->name]);
+
         return redirect(route('hr.evaluation'));
     }
 
     /**
      * Display a listing of the resource.
-     * @return Response
      */
     public function updateSegment(Request $request, $segmentID)
     {
         $segment = Segment::find($segmentID);
         $segment->update(['name' => $request->name]);
+
         return redirect(route('hr.evaluation'));
     }
 
@@ -120,10 +119,11 @@ class EvaluationController extends Controller
     public function updateSegmentParameterParent(Request $request, $segmentID, $parameterID)
     {
         $parameter = Parameter::find($parameterID);
-        if($request->parent_parent_id == $parameterID) {
+        if ($request->parent_parent_id == $parameterID) {
             return redirect(route('hr.evaluation.segment-parameters', $segmentID));
         }
         $parameter->update(['parent_id' => $request->parent_parent_id, 'parent_option_id' => $request->parent_option_id]);
+
         return redirect(route('hr.evaluation.segment-parameters', $segmentID));
     }
 
@@ -230,8 +230,8 @@ class EvaluationController extends Controller
 
     private function getParameterInfo($parameter)
     {
-        if (!$parameter) {
-            return null;
+        if (! $parameter) {
+            return;
         }
 
         $parameterDetails = self::getParameterGeneralInfo($parameter);
@@ -278,6 +278,7 @@ class EvaluationController extends Controller
         foreach ($segmentApplicationEvaluations as $segmentApplicationEvaluation) {
             $comments = $segmentApplicationEvaluation->comments;
         }
+
         return [
             'comments' => $comments,
         ];
@@ -316,6 +317,7 @@ class EvaluationController extends Controller
             $scores['score'] += $scores[$segment['round_id']][$segment['id']]['score'];
             $scores['max'] += $scores[$segment['round_id']][$segment['id']]['max'];
         }
+
         return $scores;
     }
 }

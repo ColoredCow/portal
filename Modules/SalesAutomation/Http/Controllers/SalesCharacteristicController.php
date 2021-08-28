@@ -10,7 +10,6 @@ use Modules\SalesAutomation\Services\SalesCharacteristicService;
 
 class SalesCharacteristicController extends Controller
 {
-
     protected $service;
 
     public function __construct(SalesCharacteristicService $service)
@@ -26,6 +25,7 @@ class SalesCharacteristicController extends Controller
     {
         $filters = request()->has('filters') ? request()->get('filters') : [];
         $data = $this->service->index($filters);
+
         return view('salesautomation::sales-characteristic.index')->with($data);
     }
 
@@ -41,11 +41,11 @@ class SalesCharacteristicController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
      */
     public function store(Request $request)
     {
         $salesCharacteristic = $this->service->store($request->all());
+
         return redirect()->route('sales-characteristic.index')->with('status', 'Sales Characteristic added successfully!');
     }
 
@@ -73,22 +73,22 @@ class SalesCharacteristicController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param SalesCharacteristic $salesCharacteristic
-     * @return Renderable
      */
     public function update(Request $request, SalesCharacteristic $salesCharacteristic)
     {
         $this->service->update($request->all(), $salesCharacteristic);
+
         return redirect()->route('sales-characteristic.index')->with('status', 'Sales Characteristic updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      * @param SalesCharacteristic $salesCharacteristic
-     * @return Renderable
      */
     public function destroy(SalesCharacteristic $salesCharacteristic)
     {
         $this->service->destroy($salesCharacteristic);
+
         return redirect()->route('sales-characteristic.index')->with('status', 'Sales Characteristic deleted successfully!');
     }
 }

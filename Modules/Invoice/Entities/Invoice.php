@@ -36,7 +36,7 @@ class Invoice extends Model
     public function scopeCountry($query, $country)
     {
         return $query
-            ->whereHas('client.addresses.country', function ($subQuery) use($country) {
+            ->whereHas('client.addresses.country', function ($subQuery) use ($country) {
                 $subQuery->where('name', 'LIKE', "%{$country}%");
             });
     }
@@ -44,12 +44,13 @@ class Invoice extends Model
     public function scopeRegion($query, $region)
     {
         return $query
-            ->whereHas('client.addresses.country', function ($subQuery) use($region) {
-                $operator =  $region == "indian" ?  'LIKE' : 'NOT LIKE';
-                return $subQuery->where('name', $operator, "%India%");
+            ->whereHas('client.addresses.country', function ($subQuery) use ($region) {
+                $operator = $region == 'indian' ? 'LIKE' : 'NOT LIKE';
+
+                return $subQuery->where('name', $operator, '%India%');
             });
     }
-    
+
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -63,6 +64,7 @@ class Invoice extends Model
     public function getDisplayAmountAttribute()
     {
         $country = optional($this->client)->country;
+
         return $this->amount . ' ' . optional($country)->currency_symbol;
     }
 

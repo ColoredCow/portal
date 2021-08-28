@@ -6,13 +6,19 @@ use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Entities\ProjectRepository;
 
 class ProjectService implements ProjectServiceContract
 {
     public function index()
     {
-        return Project::where('status', request()->input('status', 'active'))
-            ->get();
+        if (request()->get('projects') == 'all-projects') {
+            return Project::where('status', request()->input('status', 'active'))
+                ->get();
+        } else {
+            return auth()->user()->projects()->where('status', request()->input('status', 'active'))
+                ->get();
+        }
     }
 
     public function create()
@@ -52,10 +58,15 @@ class ProjectService implements ProjectServiceContract
         return $project->resources;
     }
 
+    public function getProjectRepositories(Project $project)
+    {
+        return $project->repositories;
+    }
+
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
-        if (!$updateSection) {
+        if (! $updateSection) {
             return false;
         }
 
@@ -66,6 +77,10 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_resources':
                 return $this->updateProjectResources($data, $project);
+            break;
+
+            case 'project_repository':
+                return $this->updateProjectRepositories($data, $project);
             break;
         }
     }
@@ -87,11 +102,30 @@ class ProjectService implements ProjectServiceContract
         $resources = [];
 
         foreach ($projectResources as $projectResource) {
-            //dd($projectResource);
             $resources[$projectResource['resource_id']] = ['designation' => $projectResource['designation']];
         }
 
         return $project->resources()->sync($resources);
+    }
+
+    private function updateProjectRepositories($data, $project)
+    {
+        if (! isset($data['url'])) {
+            return;
+        }
+
+        $projectRepositoriesUrl = $data['url'];
+        $urlIds = [];
+        foreach ($projectRepositoriesUrl as $url) {
+            $urlIds[] = $url;
+            ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $urlIds)->delete();
+            ProjectRepository::updateOrCreate(
+                [
+                    'project_id' => $project->id,
+                    'url' => $url,
+                ],
+            );
+        }
     }
 
     private function getClientProjectID($clientID)
@@ -99,6 +133,7 @@ class ProjectService implements ProjectServiceContract
         $client = Client::find($clientID);
         $clientProjectsCount = $client->projects->count() ?: 0;
         $clientProjectsCount = $clientProjectsCount + 1;
+
         return sprintf('%03s', $clientProjectsCount);
     }
 }

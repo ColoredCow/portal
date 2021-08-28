@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -20,6 +21,6 @@ class BookCategoriesPermissionsSeeder extends Seeder
         Permission::create(['name' => 'library_book_category.delete']);
 
         $superAdmin = Role::where(['name' => 'super-admin'])->first();
-        $superAdmin->syncPermissions(Permission::where('name', 'LIKE', "%library_book_category%")->get());
+        $superAdmin->syncPermissions(Permission::where('name', 'LIKE', '%library_book_category%')->get());
     }
 }

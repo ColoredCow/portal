@@ -36,19 +36,19 @@ class MappingOfJobsAndHrRounds extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return void
      */
     public function handle()
-    {  
-        foreach(Job::get() as $job){
-            foreach(Round::get() as $round){
+    {
+        foreach (Job::get() as $job) {
+            foreach (Round::get() as $round) {
                 HRJobsRounds::updateOrCreate(
                     [
-                        'hr_job_id' => $job->id, 
+                        'hr_job_id' => $job->id,
                         'hr_round_id' => $round->id,
                     ]
                 );
-            } 
+            }
         }
     }
 }

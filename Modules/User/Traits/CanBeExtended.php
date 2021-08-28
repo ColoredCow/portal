@@ -8,9 +8,10 @@ trait CanBeExtended
 
     public function getExtendedAttribute()
     {
-        if (!$this->isExtended) {
+        if (! $this->isExtended) {
             $this->isExtended = app('USER_EXTENDED', ['context' => $this]);
         }
+
         return $this->isExtended;
     }
 }

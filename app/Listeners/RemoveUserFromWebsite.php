@@ -26,13 +26,12 @@ class RemoveUserFromWebsite
     public function handle($event)
     {
         $wpUser = WPUser::where('user_email', $event->user->email)->first();
-        if (!$wpUser) {
+        if (! $wpUser) {
             return;
         }
 
-
         $admin = WPUser::where('user_login', config('website.admin_login_name'))->first();
-        if (!$wpUser) {
+        if (! $wpUser) {
             return;
         }
 

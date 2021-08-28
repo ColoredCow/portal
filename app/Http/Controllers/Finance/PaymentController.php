@@ -40,7 +40,7 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param App\Http\Requests\Finance\PaymentRequest $request
+     * @param PaymentRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(PaymentRequest $request)
@@ -118,6 +118,7 @@ class PaymentController extends Controller
                 'tds' => $validated['tds'],
             ];
         }
+
         return array_merge($args, $countryTransactionDetails);
     }
 
@@ -159,9 +160,11 @@ class PaymentController extends Controller
         // Else, delete the previous mode and create a new one.
         if ($payment->mode->type == $validated['mode']) {
             $payment->mode->update($attr);
+
             return $payment->mode;
         } else {
             $payment->mode->delete();
+
             return $model::create($attr);
         }
     }

@@ -7,7 +7,7 @@ use Tests\TestCase;
 class WeeklyDoseControllerTest extends TestCase
 {
     /**
-     * Test case for WeeklyDoseController@store
+     * Test case for WeeklyDoseController@store.
      *
      * @return void
      */

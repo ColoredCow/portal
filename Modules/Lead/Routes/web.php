@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('lead')->group(function() {
+Route::prefix('lead')->group(function () {
     Route::get('/', 'LeadController@index');
 });

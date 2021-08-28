@@ -14,11 +14,11 @@ class MoveApplicantToApplicationTables extends Migration
     public function up()
     {
         Schema::table('hr_applicants_rounds', function (Blueprint $table) {
-            $table->dropForeign([ 'hr_applicant_id' ]);
+            $table->dropForeign(['hr_applicant_id']);
             $table->unsignedInteger('hr_applicant_id')->nullable()->change();
         });
         Schema::table('hr_applicant_reviews', function (Blueprint $table) {
-            $table->dropForeign([ 'hr_applicant_round_id' ]);
+            $table->dropForeign(['hr_applicant_round_id']);
             $table->unsignedInteger('hr_applicant_round_id')->nullable()->change();
         });
 
@@ -44,13 +44,13 @@ class MoveApplicantToApplicationTables extends Migration
     public function down()
     {
         Schema::table('hr_application_reviews', function (Blueprint $table) {
-            $table->dropForeign([ 'hr_application_round_id' ]);
-            $table->dropColumn([ 'hr_application_round_id' ]);
+            $table->dropForeign(['hr_application_round_id']);
+            $table->dropColumn(['hr_application_round_id']);
         });
 
         Schema::table('hr_application_round', function (Blueprint $table) {
-            $table->dropForeign([ 'hr_application_id' ]);
-            $table->dropColumn([ 'hr_application_id' ]);
+            $table->dropForeign(['hr_application_id']);
+            $table->dropColumn(['hr_application_id']);
         });
 
         Schema::rename('hr_application_round', 'hr_applicants_rounds');

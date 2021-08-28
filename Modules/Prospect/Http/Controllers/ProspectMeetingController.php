@@ -18,6 +18,7 @@ class ProspectMeetingController extends Controller
     public function store(Request $request, $prospect)
     {
         $this->service->schedule($request->all(), $prospect);
+
         return redirect()->back();
     }
 }

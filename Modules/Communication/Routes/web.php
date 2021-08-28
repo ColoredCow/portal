@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('communication')->group(function() {
+Route::prefix('communication')->group(function () {
     Route::get('/', 'CommunicationController@index');
 });

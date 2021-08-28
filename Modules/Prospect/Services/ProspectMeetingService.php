@@ -28,6 +28,7 @@ class ProspectMeetingService implements ProspectMeetingServiceContract
         $calendarMeeting = $calendarMeetingService->getCalendarMeeting();
         $prospect->calendarMeetings()->attach([$calendarMeeting->id]);
         event(new NewProspectHistoryEvent($prospect, ['description' => 'New meeting schedule']));
+
         return true;
     }
 }

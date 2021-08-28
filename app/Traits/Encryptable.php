@@ -18,6 +18,7 @@ trait Encryptable
 
             return $value;
         }
+
         return $value;
     }
 

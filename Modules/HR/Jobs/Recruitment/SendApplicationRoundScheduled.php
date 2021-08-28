@@ -22,7 +22,7 @@ class SendApplicationRoundScheduled implements ShouldQueue
      * @var int
      */
     public $timeout = 120;
-    
+
     /**
      * Create a new job instance.
      *

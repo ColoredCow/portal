@@ -14,7 +14,7 @@ class ProspectHistoryService implements ProspectHistoryServiceContract
 
     public function __construct()
     {
-        $this->prospectService = app(ProspectServiceContract::class) ;
+        $this->prospectService = app(ProspectServiceContract::class);
     }
 
     public function store($data, $prospectId)

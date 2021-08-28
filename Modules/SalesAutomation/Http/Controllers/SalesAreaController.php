@@ -10,7 +10,6 @@ use Modules\SalesAutomation\Services\SalesAreaService;
 
 class SalesAreaController extends Controller
 {
-
     protected $service;
 
     public function __construct(SalesAreaService $service)
@@ -26,6 +25,7 @@ class SalesAreaController extends Controller
     {
         $filters = request()->has('filters') ? request()->get('filters') : [];
         $data = $this->service->index($filters);
+
         return view('salesautomation::sales-area.index')->with($data);
     }
 
@@ -41,18 +41,17 @@ class SalesAreaController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
      */
     public function store(Request $request)
     {
         $salesArea = $this->service->store($request->all());
+
         return redirect()->route('sales-area.index')->with('status', 'Sales Area added successfully!');
     }
 
     /**
      * Show the specified resource.
      * @param SalesArea $salesArea
-     * @return Renderable
      */
     public function show(SalesArea $salesArea)
     {
@@ -62,7 +61,6 @@ class SalesAreaController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param SalesArea $salesArea
-     * @return Renderable
      */
     public function edit(SalesArea $salesArea)
     {
@@ -73,22 +71,22 @@ class SalesAreaController extends Controller
      * Update the specified resource in storage.
      * @param Request $request
      * @param SalesArea $salesArea
-     * @return Renderable
      */
     public function update(Request $request, SalesArea $salesArea)
     {
         $this->service->update($request->all(), $salesArea);
+
         return redirect()->route('sales-area.index')->with('status', 'Sales Area updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      * @param SalesArea $salesArea
-     * @return Renderable
      */
     public function destroy(SalesArea $salesArea)
     {
         $this->service->destroy($salesArea);
+
         return redirect()->route('sales-area.index')->with('status', 'Sales Area deleted successfully!');
     }
 }

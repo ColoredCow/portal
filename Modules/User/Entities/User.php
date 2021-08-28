@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
+use Modules\Project\Entities\Project;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
@@ -42,9 +43,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Checks if the user is super admin
+     * Checks if the user is super admin.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuperAdmin()
     {
@@ -53,7 +54,7 @@ class User extends Authenticatable
 
     public static function scopeInterviewers($query)
     {
-        return $query->whereHas('roles', function($query){
+        return $query->whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         });
     }
@@ -104,5 +105,10 @@ class User extends Authenticatable
     public function appointmentSlots()
     {
         return $this->hasMany(AppointmentSlot::class, 'user_id');
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_resources', 'resource_id', 'project_id');
     }
 }

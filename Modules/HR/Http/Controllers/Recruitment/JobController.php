@@ -2,6 +2,7 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
+use Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\Job;
@@ -12,7 +13,7 @@ use Modules\User\Entities\User;
 class JobController extends Controller
 {
     use AuthorizesRequests;
-    
+
     public function __construct()
     {
         $this->authorizeResource(Job::class, null, [
@@ -46,8 +47,6 @@ class JobController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return void
      */
     public function create()
     {
@@ -60,8 +59,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\HR\JobRequest  $request
-     * @return \Modules\HR\Entities\Job
+     * @param  JobRequest  $request
      */
     public function store(JobRequest $request)
     {
@@ -74,20 +72,12 @@ class JobController extends Controller
             'type' => $validated['type'],
             'posted_by' => $validated['by'] ?? null,
             'link' => $validated['link'] ?? null,
+            'start_date' => $validated['start_date'] ?? null,
+            'end_date' => $validated['end_date'] ?? null,
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
-        return redirect($route)->with('status', "Successfully updated $opportunity->title!");
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Modules\HR\Entities\Job  $opportunity
-     * @return void
-     */
-    public function show(Job $opportunity)
-    {
-        //
+        return redirect($route)->with('status', "Successfully updated $opportunity->title!");
     }
 
     /**
@@ -99,6 +89,7 @@ class JobController extends Controller
     public function edit(Job $opportunity)
     {
         $opportunity->load('postedBy');
+
         return view('hr.job.edit')->with([
             'job' => $opportunity,
             'interviewers' => User::interviewers()->get(),
@@ -108,9 +99,8 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\HR\JobRequest  $request
-     * @param  \Modules\HR\Entities\Job  $opportunity
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  JobRequest  $request
+     * @param  Job  $opportunity
      */
     public function update(JobRequest $request, Job $opportunity)
     {
@@ -118,6 +108,7 @@ class JobController extends Controller
         $opportunity->_update($validated);
 
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
+
         return redirect($route)->with('status', "Successfully updated $opportunity->title!");
     }
 
@@ -125,12 +116,12 @@ class JobController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Modules\HR\Entities\Job  $opportunity
-     * @return void
      */
     public function destroy(Job $opportunity)
     {
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities') : route('recruitment.opportunities');
         $opportunity->delete();
+
         return redirect($route)->with('status', "Successfully deleted $opportunity->title!");
     }
 }
