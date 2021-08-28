@@ -52,9 +52,9 @@ new Vue({
             }
         },
 
-        updateProjectForm: function(formId) {
+        updateProjectForm: async function(formId) {
             let formData = new FormData(document.getElementById(formId));
-            axios.post('{{ route('project.update', $project) }}', formData)
+            await axios.post('{{ route('project.update', $project) }}', formData)
             .then((response) => {
                 $('#edit-project-errors').addClass('d-none')
                 alert('Project information updated successfully');
