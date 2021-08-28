@@ -22,16 +22,16 @@
             </tr>
             @foreach ($tags as $tag)
             <tr>
-                <th><div class="rounded w-13 h-13 d-inline-block mr-1" style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>{{ $tag->tag_name }}</th>
-                <th>{{ $tag->description }}</th>
-                <th>
+                <td><div class="rounded w-13 h-13 d-inline-block mr-1" style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>{{ $tag->tag_name }}</td>
+                <td>{{ $tag->description }}</td>
+                <td>
                     <form action="{{ route('hr.tags.delete', $tag->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <a title="Edit" class="pr-1 btn btn-link" href="{{ route('hr.tags.edit',$tag->id) }}"><i class="text-success fa fa-edit fa-lg"></i></a>
                         <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
                     </form>
-                </th>
+                </td>
             </tr>
             @endforeach
         </table>
