@@ -28,7 +28,7 @@ class ProjectRequest extends FormRequest
             'client_id' => 'required|integer',
             'status' => 'sometimes|string',
             'project_manager' => 'nullable|string',
-            'effort_sheet_url' => 'nullable|active_url|max:255',
+            'effort_sheet_url' => 'nullable|active_url|max:191',
         ];
     }
 
