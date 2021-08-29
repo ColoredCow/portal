@@ -29,16 +29,13 @@ class TagsController extends Controller
         return redirect(route('hr.tags.index'))->with('status', 'Tag created successfully!');
     }
 
-    public function edit(int $id)
+    public function edit(Tag $tag)
     {
-        $attr['tags'] = Tag::find($id);
-
-        return view('hr::tags\edit')->with($attr);
+        return view('hr::tags\edit')->with(['tag' => $tag]);
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, Tag $tag)
     {
-        $tag = Tag::find($id);
         $tag->update([
             'tag_name' => $request['name'],
             'description' => $request['description'] ?? null,
@@ -48,9 +45,9 @@ class TagsController extends Controller
         return redirect(route('hr.tags.index'))->with('status', 'Tag updated successfully!');
     }
 
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        Tag::destroy($id);
+        $tag->delete();
 
         return redirect(route('hr.tags.index'))->with('status', 'Tag deleted successfully!');
     }
