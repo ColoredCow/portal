@@ -22,4 +22,3 @@ class DatabaseSeeder extends Seeder
         $this->call(UserMetaTableSeeder::class);
     }
 }
- 
