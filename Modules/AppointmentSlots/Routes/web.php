@@ -13,9 +13,9 @@
 
 Route::prefix('appointmentslots')->group(function () {
     Route::get('/', 'AppointmentSlotsController@index');
-    Route::get('/', 'MaximumSlotsController@index');
 });
 
+Route::get('appointment-slots/select/{user_id}','MaximumSlotsController@index')->name('select-appointments');
 Route::get('appointment-slots/select/{user_id}', 'AppointmentSlotsController@showAppointments')->name('select-appointments');
 Route::post('appointment-slots/selected', 'AppointmentSlotsController@appointmentSelected');
 

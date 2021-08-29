@@ -8,17 +8,16 @@ use Illuminate\Support\Facades\DB;
 class UserMetaTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Auto generated seed file.
+     * 
      *
      * @return void
      */
     public function run()
     {
-        DB::table('user_meta')->insert([
-            [
-                'id' => 1,
-                'max_appointments_per_day' => 2,
-            ]
-        ]);
+        DB::table('user_meta')->updateorInsert(
+            ['user_id' => 1],
+            ['max_appointments_per_day' => 2]            
+        );  
     }
 }
