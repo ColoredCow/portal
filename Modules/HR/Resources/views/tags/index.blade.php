@@ -28,7 +28,7 @@
                     <form action="{{ route('hr.tags.delete', $tag->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <a title="Edit" class="pr-1 btn btn-link" href="{{ route('hr.tags.edit',$tag->id) }}"><i class="text-success fa fa-edit fa-lg"></i></a>
+                        <a title="Edit" class="pr-1 btn btn-link" href="{{ route('hr.tags.edit',$tag) }}"><i class="text-success fa fa-edit fa-lg"></i></a>
                         <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
                     </form>
                 </td>
