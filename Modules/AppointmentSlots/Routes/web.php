@@ -13,10 +13,10 @@
 
 Route::prefix('appointmentslots')->group(function () {
     Route::get('/', 'AppointmentSlotsController@index');
-    Route::get('/', 'MaximumSlotsController@index');
 });
 
 Route::get('appointment-slots/select/{user_id}', 'AppointmentSlotsController@showAppointments')->name('select-appointments');
+Route::get('appointment-slots/select/{user_id}', 'MaximumSlotsController@index');
 Route::post('appointment-slots/selected', 'AppointmentSlotsController@appointmentSelected');
 
 Route::middleware('auth')->group(function () {
