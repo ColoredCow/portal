@@ -57,6 +57,13 @@ new Vue({
             await axios.post('{{ route('project.update', $project) }}', formData)
             .then((response) => {
                 $('#edit-project-errors').addClass('d-none')
+                let url = $('#effort_sheet_url').val()
+                if (url) {
+                    $('#view_effort_sheet_badge').removeClass('d-none')
+                    $('#view_effort_sheet_badge').attr('href', url)
+                } else {
+                    $('#view_effort_sheet_badge').addClass('d-none')
+                }
                 alert('Project information updated successfully');
             })
             .catch((error) => {
