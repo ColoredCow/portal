@@ -1072,7 +1072,6 @@ function lineChart(){
 	   options: options
 	 });
 }
-
 /*
   * HR Module JS code end
   */
