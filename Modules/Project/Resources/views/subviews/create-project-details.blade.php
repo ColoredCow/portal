@@ -22,7 +22,7 @@
             <input type="url" class="form-control" 
             name="effort_sheet_url" 
             id="effort_sheet_url" 
-            placeholder="Enter Effortsheet url" 
+            placeholder="Enter Effort-Sheet url" 
             value="{{ old('effort_sheet_url') }}">
         </div>
     </div>

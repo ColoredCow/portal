@@ -43,8 +43,8 @@ class ProjectRequest extends FormRequest
             'client_project_id.required' => 'Project ID is required',
             'client_project_id.integer' => 'Project ID should be a valid number',
             'invoice_email.email' => 'Email for invoice should a valid email address',
-            'effort_sheet_url.max' => 'Url must be less than 191 character',
-            'effort_sheet_url.active_url' => 'Input url is not valid'
+            'effort_sheet_url.max' => 'Url must be less than 191 characters',
+            'effort_sheet_url.active_url' => 'Effortsheet url is not valid'
         ];
     }
 }
