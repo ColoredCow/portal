@@ -48,12 +48,12 @@
                         </select>
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="effort_sheet_url">{{ __('Effort-Sheet Url') }}</label>
+                        <label for="effort_sheet_url">{{ __('Effort Sheet URL') }}</label>
                         <a id="view_effort_sheet_badge" class="badge badge-primary p-1 ml-2 text-light {{ $project->effort_sheet_url ? '' : 'd-none' }}" target="_blank" href="{{ $project->effort_sheet_url }}">{{ __('view') }}</a>
                         <input type="url" class="form-control" 
                         name="effort_sheet_url" 
                         id="effort_sheet_url" 
-                        placeholder="Enter Effortsheet url" 
+                        placeholder="Enter Effort Sheet URL" 
                         value="{{ old('effort_sheet_url') ?: $project->effort_sheet_url }}">
                     </div>
                 </div>
