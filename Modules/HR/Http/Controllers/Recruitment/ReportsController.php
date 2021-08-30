@@ -26,7 +26,7 @@ class ReportsController extends Controller
             ->where('created_at', '>', Carbon::today()->subDay(7))
             ->groupBY('date')
             ->orderBy('date', 'ASC')
-            ->get();       
+            ->get();
 
         $data = [];
 
