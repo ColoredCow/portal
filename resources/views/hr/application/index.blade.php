@@ -46,102 +46,130 @@
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $query_filters = $hr_job_id . $search
     @endphp
-    <div class="d-flex align-items-center justify-content-between">
-        <ul class="nav nav-pills mb-2">
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status ? 'text-info' : 'active bg-info text-white' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}> <i
-                    class="fa fa-clipboard"></i>&nbsp;
-                    Open
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status ? 'bg-info text-white' : 'active bg-white text-info' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
-                    </span>
+    <div class="d-flex bg-white ">
+        <ul class="nav mb-2 d-flex justify-content-between">
+            <li class="nav-item mr-5">
+                <a class=" nav-item nav-link text-theme-orange d-flex flex-column align-items-center px-0 {{ $status ? 'text-red' : 'active text-yellow' }}"
+                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}>
+                    <div class="position-relative">
+
+                        <span
+                            class="ml-1 d-inline-block py-0{{ $status ? ' text-#C4C4C4' : 'active text-#969281' }}"
+                            style="font-size: 10px;font-weight: 700;position: absolute;top: -10px;right: -1px;;">
+                            {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
+                        </span>
+                        <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
+                    </div>
+                    <span class="{{ $status ? 'border-bottom-10' : 'active border-bottom-2' }}">Open</span>
+                      
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.in-progress.label') ? 'active bg-info text-white' : 'text-info' }}"
+            <li class="nav-item mr-5">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.in-progress.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program>
-                    <i class="fa fa-clipboard"></i>&nbsp;
-                    Trial Program
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ request()->get('round')=='Trial-Program' ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$trialProgramCount}}
-                    </span>
+                    <div class="position-relative">
+                        <span
+                            class="ml-1 d-inline-block py-0 {{ request()->get('round')=='Trial-Program' ? 'active text-#969281' : 'text-#C4C4C4' }}"
+                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            {{$trialProgramCount}}
+                        </span>
+                        <span>
+                            <i class="fa fa-angle-left fa-2x" aria-hidden="true"></i>
+                            <i class="fa fa-angle-right fa-2x" aria-hidden="true"></i>
+                        </span> 
+                    </div>
+                    <span>Trial Program</span>
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}"
+            <li class="nav-item mr-5">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
                     href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
-                    <i class="fa fa-file-text-o"></i>&nbsp;
-                    {{ config('constants.hr.status.on-hold.title') }}
+                    <div class="position-relative">
                     <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+                        class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+                        style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
                         {{$onHoldApplicationsCount}}
                     </span>
+                    <i class="fa fa-pause-circle-o fa-2x" aria-hidden="true"></i>
+                    </div> 
+                    {{ config('constants.hr.status.on-hold.title') }}
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}"
+            <li class="nav-item mr-5">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
-                    <i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
-                    </span>
+                    <div class="position-relative">
+                        <span
+                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
+                        </span>
+                        <i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>
+                    </div>
+                    {{ config('constants.hr.status.no-show.title') }}
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}"
+            <li class="nav-item mr-5">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
-                    <i class="fa fa-times-circle"></i>&nbsp;
-                    Closed
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$rejectedApplicationsCount}}
-                    </span>
+                    <div class="position-relative">
+                        <span
+                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+                            style="font-size: 10px;font-weight: 700;position: absolute;top: -10px;right :0;">
+                            {{$rejectedApplicationsCount}}
+                        </span>
+                        <i class="fa fa-times fa-2x"></i>
+                    </div>
+                    <span>Closed</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}"
+            <li class="nav-item mr-5">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
                     href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
-                    <i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$sentForApprovalApplicationsCount}}
-                    </span>
+                    <div class="position-relative">
+                        <span
+                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            {{$sentForApprovalApplicationsCount}}
+                        </span>
+                        <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
+                    </div>
+                    
+                    <span>To approve</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.approved.label') ? 'active bg-info text-white' : 'text-info' }}"
+            <li class="nav-item mr-5">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.approved.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
-                    <i class="fa fa-check-square"></i>&nbsp;
-                    Approved
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.approved.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$approvedApplicationsCount}}
-                    </span>
+                    <div class="position-relative">
+                        <span
+                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.approved.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            {{$approvedApplicationsCount}}
+                        </span>
+                        <span class="fa-stack">
+                            <i class="fa fa-user-o fa-stack-2x" aria-hidden="true"></i>
+                            <i class="fa fa-check fa-stack-lg pl-5" aria-hidden="true"></i>
+                        </span> 
+                    </div>
+                    
+                    <span> Approved</span>  
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.onboarded.label') ? 'active bg-info text-white' : 'text-info' }}"
+            <li class="nav-item mr-5">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
-                    <i class="fa fa-certificate"></i>&nbsp;
-                    Onboard
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$onboardedApplicationsCount}}
-                    </span>
+                    <div class="position-relative">
+                        <span
+                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            {{$onboardedApplicationsCount}}
+                        </span>
+                        <i class="fa fa-clipboard fa-2x" aria-hidden="true"></i>
+                    </div>
+                    <span>Onboard</span> 
                 </a>
             </li>
         </ul>
