@@ -69,6 +69,7 @@ class ProjectController extends Controller
             'clients' => $this->service->getClients(),
             'resources' => $this->service->getResources(),
             'projectResources' => $this->service->getProjectResources($project),
+            'projectRepositories' => $this->service->getProjectRepositories($project),
             'resourcesDesignations' => $this->service->getResourcesDesignations(),
         ]);
     }
