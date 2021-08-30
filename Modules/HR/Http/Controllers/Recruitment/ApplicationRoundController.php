@@ -18,7 +18,6 @@ class ApplicationRoundController extends Controller
      * Update the specified resource in storage.
      * @param  ApplicationRoundRequest $request
      * @param  ApplicationRound        $round
-     * @return \Illuminate\Http\Response
      */
     public function update(ApplicationRoundRequest $request, ApplicationRound $round)
     {

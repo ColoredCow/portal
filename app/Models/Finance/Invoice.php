@@ -36,8 +36,6 @@ class Invoice extends Model
 
     /**
      * Get details to list invoices.
-     *
-     * @return self
      */
     public static function getList()
     {
@@ -48,8 +46,8 @@ class Invoice extends Model
     /**
      * Get invoices that were sent in the date range.
      *
-     * @param  string $startDate
-     * @param  string $endDate
+     * @param  string $start
+     * @param  string $end
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function filterBySentDate($start, $end, $paginated = false)

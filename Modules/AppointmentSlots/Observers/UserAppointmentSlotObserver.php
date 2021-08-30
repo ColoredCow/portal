@@ -9,8 +9,8 @@ use Modules\AppointmentSlots\Entities\AppointmentSlot;
 class UserAppointmentSlotObserver
 {
     /**
-     * Listen to the ApplicationMeta create event.
-     * @param  ApplicationMeta $applicationMeta
+     * Listen to the AppointmentSlot create event.
+     * @param  AppointmentSlot $userAppointmentSlot
      * @return void
      */
     public function created(AppointmentSlot $userAppointmentSlot)
