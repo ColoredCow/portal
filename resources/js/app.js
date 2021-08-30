@@ -1069,4 +1069,3 @@
 		 e.stopImmediatePropagation();
 	 }
  });
- 
