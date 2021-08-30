@@ -35,6 +35,7 @@ class ProjectService implements ProjectServiceContract
             'status' => 'active',
             'start_date' => date('Y-m-d'),
             'end_date' => date('Y-m-d'),
+            'effort_sheet_url' => $data['effort_sheet_url'] ?? null
         ]);
     }
 
@@ -93,6 +94,7 @@ class ProjectService implements ProjectServiceContract
             'status' => $data['status'],
             'start_date' => date('Y-m-d'),
             'end_date' => date('Y-m-d'),
+            'effort_sheet_url' => $data['effort_sheet_url'] ?? null
         ]);
     }
 
