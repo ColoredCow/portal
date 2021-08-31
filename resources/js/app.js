@@ -1005,11 +1005,11 @@ function datePickerChart(){
 var date = new Date();
 var tdate = date.getDate();
 if (tdate < 10) {
-    tdate = "0" + tdate;
+	tdate = "0" + tdate;
 }
 var month = date.getMonth() + 1;
 if (month < 10) {
-    month = "0" + month;
+	month = "0" + month;
 }
 var year = date.getUTCFullYear();
 var minDate = year + "-" + month + "-" + tdate;
