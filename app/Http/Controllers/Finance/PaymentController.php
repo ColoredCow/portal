@@ -110,7 +110,7 @@ class PaymentController extends Controller
         if ($validated['currency'] != 'INR') {
             $countryTransactionDetails = [
                 'bank_charges' => $validated['bank_charges'],
-                'conversion_rate' => $validated['conversion_rate'],
+                'conversion_rate_diff' => $validated['conversion_rate_diff'],
                 'bank_service_tax_forex' => $validated['bank_service_tax_forex'],
             ];
         } else {

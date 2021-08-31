@@ -15,7 +15,7 @@ class Invoice extends Model
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at'];
 
     protected $encryptable = [
-        'amount', 'gst', 'amount_paid', 'bank_charges', 'tds'
+        'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds'
     ];
 
     public function scopeStatus($query, $status)
