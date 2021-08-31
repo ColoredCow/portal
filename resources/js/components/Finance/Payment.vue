@@ -44,9 +44,9 @@
                     </div>
                 </div>
                 <div class="form-group col-md-3" v-if="currency != 'INR'">
-                    <label for="conversion_rate">Conversion rate</label>
+                    <label for="conversion_rate_diff">Conversion rate</label>
                     <div class="d-flex flex-column">
-                        <input type="number" class="form-control" name="conversion_rate" id="conversion_rate" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate">
+                        <input type="number" class="form-control" name="conversion_rate_diff" id="conversion_rate_diff" placeholder="conversion rate" step="0.01" min="0" v-model="conversionRate">
                         <div class="mt-3 mb-0">
                             <p class="m-0">Payment amount after conversion&nbsp;&nbsp;</p>
                             <h4 class="m-0">INR {{ convertedAmount }}</h4>
@@ -121,7 +121,7 @@ export default {
 			tds: !this.isNew ? this.payment.tds : null,
 			bankCharges: !this.isNew ? this.payment.bank_charges : null,
 			bankServiceTaxForex: !this.isNew ? this.payment.bank_service_tax_forex : null,
-			conversionRate: !this.isNew ? this.payment.conversion_rate : null,
+			conversionRate: !this.isNew ? this.payment.conversion_rate_diff : null,
 			mode: !this.isNew ? this.payment.mode.type : "wire-transfer",
 			invoiceId: !this.isNew ? this.payment.invoice.id : this.unpaidInvoices[0].id,
 			chequeStatus: !this.isNew && this.payment.mode.type == "cheque" ? this.payment.mode.status : "received",
