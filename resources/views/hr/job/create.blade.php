@@ -97,6 +97,7 @@
 </div>
 @endsection
 
+<<<<<<< HEAD
 @section('js_scripts')
 <script>
     var date = new Date();
@@ -114,3 +115,6 @@
     document.getElementById("end_date").setAttribute('min',minDate);
 </script>
 @endsection
+=======
+
+>>>>>>> parent of dd68b90 (Merge branch 'feature/update/start_date' of https://github.com/ColoredCow/portal into feature/update/start_date)

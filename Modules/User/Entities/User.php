@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
-use Modules\Project\Entities\Project;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
@@ -105,10 +104,5 @@ class User extends Authenticatable
     public function appointmentSlots()
     {
         return $this->hasMany(AppointmentSlot::class, 'user_id');
-    }
-
-    public function projects()
-    {
-        return $this->belongsToMany(Project::class, 'project_resources', 'resource_id', 'project_id');
     }
 }
