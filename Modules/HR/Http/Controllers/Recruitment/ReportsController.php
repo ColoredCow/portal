@@ -16,7 +16,7 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $todayCount = Applicant::whereDate('created_at', '=', now())
+        $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
             ->count();
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
@@ -42,7 +42,7 @@ class ReportsController extends Controller
 
     public function searchBydate(Request $req)
     {
-        $todayCount = Applicant::whereDate('created_at', '=', now())
+        $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
             ->count();
 
         $record = Applicant::select(

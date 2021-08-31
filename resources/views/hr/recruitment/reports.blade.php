@@ -21,6 +21,9 @@
         <div class="card-body">
           <canvas id="line-chart"></canvas>
         </div>
+        <script type="text/javascript">
+          var value = {!! $chart_data !!};
+        </script>
       </div>
    </div> 
  </div>
