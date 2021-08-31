@@ -16,14 +16,14 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
+        $todayCount = Applicant::whereDate('created_at', '=', now())
             ->count();
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
             \DB::raw('MONTHNAME(created_at) as month'),
             \DB::raw('DATE(created_at) as date')
         )
-            ->where('created_at', '>', Carbon::today()->subDay(7))
+            ->where('created_at', '>', Carbon::now()->subDay(7))
             ->groupBY('date')
             ->orderBy('date', 'ASC')
             ->get();
