@@ -46,32 +46,34 @@
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $query_filters = $hr_job_id . $search
     @endphp
-    <div class="d-flex bg-white ">
+    <div class="d-flex bg-white status-icons ">
         <ul class="nav mb-2 d-flex justify-content-between">
-            <li class="nav-item mr-5">
-                <a class=" nav-item nav-link text-theme-orange d-flex flex-column align-items-center px-0 {{ $status ? 'text-red' : 'active text-yellow' }}"
+            <li class="nav-item mx-3">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{!$status || $status === config('constants.hr.status.new.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}>
                     <div class="position-relative">
 
                         <span
-                            class="ml-1 d-inline-block py-0{{ $status ? ' text-#C4C4C4' : 'active text-#969281' }}"
-                            style="font-size: 10px;font-weight: 700;position: absolute;top: -10px;right: -1px;;">
+                            class=" d-inline-block py-0"
+                            style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
                             {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                         </span>
                         <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
                     </div>
-                    <span class="{{ $status ? 'border-bottom-10' : 'active border-bottom-2' }}">Open</span>
+                    <span style="font-family: 'Mulish', sans-serif;">
+                    Open
+                    </span>
                       
                 </a>
             </li>
 
-            <li class="nav-item mr-5">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.in-progress.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+            <li class="nav-item mx-3">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.in-progress.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program>
                     <div class="position-relative">
                         <span
-                            class="ml-1 d-inline-block py-0 {{ request()->get('round')=='Trial-Program' ? 'active text-#969281' : 'text-#C4C4C4' }}"
-                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            class="ml-1 d-inline-block py-0"
+                            style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
                             {{$trialProgramCount}}
                         </span>
                         <span>
@@ -79,74 +81,84 @@
                             <i class="fa fa-angle-right fa-2x" aria-hidden="true"></i>
                         </span> 
                     </div>
-                    <span>Trial Program</span>
+                    <span style="font-family: 'Mulish', sans-serif;">
+                    Trial Program
+                    </span>
                 </a>
             </li>
 
-            <li class="nav-item mr-5">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+            <li class="nav-item mx-3">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.on-hold.label') ?  'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
                     href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
                     <div class="position-relative">
-                    <span
-                        class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
-                        style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
-                        {{$onHoldApplicationsCount}}
-                    </span>
-                    <i class="fa fa-pause-circle-o fa-2x" aria-hidden="true"></i>
+                        <span
+                            class="ml-1 d-inline-block py-0"
+                            style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
+                            {{$onHoldApplicationsCount}}
+                        </span>
+                        <i class="fa fa-pause-circle-o fa-2x" aria-hidden="true"></i>
                     </div> 
-                    {{ config('constants.hr.status.on-hold.title') }}
+                    <span style="font-family: 'Mulish', sans-serif;">
+                    On hold
+                    </span>
                 </a>
             </li>
-            <li class="nav-item mr-5">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+            <li class="nav-item mx-3">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.no-show.label') ?  'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
                     <div class="position-relative">
                         <span
-                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
-                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            class="ml-1 d-inline-block py-0"
+                            style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
                             {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                         </span>
                         <i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>
                     </div>
-                    {{ config('constants.hr.status.no-show.title') }}
+                    <span style="font-family: 'Mulish', sans-serif;">
+                    No show
+                    </span>
                 </a>
             </li>
-            <li class="nav-item mr-5">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+            <li class="nav-item mx-3">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
                     <div class="position-relative">
                         <span
-                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
-                            style="font-size: 10px;font-weight: 700;position: absolute;top: -10px;right :0;">
+                            class="ml-1 d-inline-block py-0"
+                            style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
                             {{$rejectedApplicationsCount}}
                         </span>
                         <i class="fa fa-times fa-2x"></i>
                     </div>
-                    <span>Closed</span>
+                    <span style="font-family: 'Mulish', sans-serif;">
+                    Closed
+                    </span>
                 </a>
             </li>
-            <li class="nav-item mr-5">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+            <li class="nav-item mx-3">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
                     href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
                     <div class="position-relative">
                         <span
-                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
-                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            class="ml-1 d-inline-block py-0"
+                            style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
                             {{$sentForApprovalApplicationsCount}}
                         </span>
                         <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
                     </div>
                     
-                    <span>To approve</span>
+                    <span style="font-family: 'Mulish', sans-serif;">
+                    To approve
+                    </span>
                 </a>
             </li>
-            <li class="nav-item mr-5">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.approved.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+            <li class="nav-item mx-3">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.approved.label') ?  'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
                     <div class="position-relative">
                         <span
-                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.approved.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
-                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            class="ml-1 d-inline-block py-0"
+                            style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
                             {{$approvedApplicationsCount}}
                         </span>
                         <span class="fa-stack">
@@ -154,22 +166,25 @@
                             <i class="fa fa-check fa-stack-lg pl-5" aria-hidden="true"></i>
                         </span> 
                     </div>
-                    
-                    <span> Approved</span>  
+                    <span style="font-family: 'Mulish', sans-serif;">
+                    Approved
+                    </span>  
                 </a>
             </li>
-            <li class="nav-item mr-5">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
+            <li class="nav-item mx-3">
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
                     <div class="position-relative">
                         <span
-                            class="ml-1 d-inline-block py-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active text-#969281' : 'text-#C4C4C4' }}"
-                            style="font-size: 10px;font-weight: 700;position: absolute;top:-10px;right:0;">
+                            class="ml-1 d-inline-block py-0"
+                            style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
                             {{$onboardedApplicationsCount}}
                         </span>
                         <i class="fa fa-clipboard fa-2x" aria-hidden="true"></i>
                     </div>
-                    <span>Onboard</span> 
+                    <span style="font-family: 'Mulish', sans-serif;">
+                    Onboard
+                    </span> 
                 </a>
             </li>
         </ul>
