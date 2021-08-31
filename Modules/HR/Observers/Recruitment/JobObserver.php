@@ -16,7 +16,7 @@ class JobObserver
      */
     public function created(Job $job)
     {
-        $job->rounds()->attach(Round::all()->pluck('id')->toArray());
+        $job->rounds()->attach(Round::pluck('id')->toArray());
         $data = request()->all();
 
         $Corcel = new Corcel();

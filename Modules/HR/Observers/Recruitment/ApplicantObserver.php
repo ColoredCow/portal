@@ -11,7 +11,7 @@ class ApplicantObserver
     /**
      * Listen to the Applicant create event.
      *
-     * @param  \Modules\HR\Entities\Applicant  $Applicant
+     * @param  Applicant $applicant
      * @return void
      */
     public function created(Applicant $applicant)
