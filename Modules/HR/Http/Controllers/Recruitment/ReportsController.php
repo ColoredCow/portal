@@ -23,7 +23,7 @@ class ReportsController extends Controller
             \DB::raw('MONTHNAME(created_at) as month'),
             \DB::raw('DATE(created_at) as date')
         )
-            ->where('created_at', '>', Carbon::now()->subDay(7))
+            ->where('created_at', '>', Carbon::now()->subDays(7))
             ->groupBY('date')
             ->orderBy('date', 'ASC')
             ->get();
