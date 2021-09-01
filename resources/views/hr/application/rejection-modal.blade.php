@@ -41,6 +41,43 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <br>
+            <script type="text/javascript">
+                    //     function EnableDisableTextBox1(rejectReason2) {
+                    //         var txtReasonRejected = document.getElementById("rejectReason2");
+                    //         var textbox = document.getElementById("txtReasonRejected")
+                    //         if (txtReasonRejected.checked == true) {
+                    //             textbox.style.display="block";
+                    //         } else{
+                    //             textbox.style.display="none";
+                    //         }
+                    //     }
+                    //     function EnableDisableTextBox2(rejectReason5) {
+                    //         var txtReasonRejected = document.getElementById("rejectReason5");
+                    //         var textbox = document.getElementById("reasonRejectedTxt")
+                    //         if (txtReasonRejected.checked == true) {
+                    //             textbox.style.display="block";
+                    //         } else{
+                    //             textbox.style.display="none";
+                    //         }
+                    //     }
+                    // </script>
+                <div class="form-check">
+                    <form action="#" class="textbox">
+                        <h5><b> Select Reasons: </b></h5>
+                        <input type="checkbox" id="rejectReason1"> No responce <br>
+                        <label for="rejectReason2">
+                            <input type="checkbox" id="rejectReason2" onchange="EnableDisableTextBox1(this)"> Skills mismatch <br>
+                        </label>
+                        <input type="text" id="txtReasonRejected" style="display:none"><br>
+                        <input type="checkbox" id="rejectReason3"> Culture mismatch <br>
+                        <input type="checkbox" id="rejectReason4"> Salary  expectation mismatch <br>
+                        <label for="rejectReason5">
+                            <input type="checkbox" id="rejectReason5" onchange="EnableDisableTextBox2(this)"> Not enough knowledge/inclination for ColoredCow<br>
+                        </label>
+                        <input type="text" id="reasonRejectedTxt" style="display:none"/>
+                    </form>    
+                </div>
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col-md-12 d-flex align-items-center">
