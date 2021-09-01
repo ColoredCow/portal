@@ -25,7 +25,7 @@ class JobObserver
         $Corcel->post_title = $data['title'];
         $Corcel->post_content = $data['description'];
         $Corcel->post_type = config('hr.post-type.career');
-        $Corcel->post_name = str_replace(" ", "-", strtolower($data['title']));
+        $Corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         if ($data['status'] != 'published') {
             $Corcel->post_status = 'draft';
         }
@@ -55,7 +55,7 @@ class JobObserver
         $Corcel->post_content = $data['description'];
         $Corcel->post_type = config('hr.post-type.career');
         $Corcel->post_status = $data['status'] == 'published' ? 'publish' : 'draft';
-        $Corcel->post_name = str_replace(" ", "-", strtolower($data['title']));
+        $Corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         $Corcel->update();
         $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
         $relation = TermRelationship::where(['object_id' => $post->ID])->update(['term_taxonomy_id' => $term->term_id]);
