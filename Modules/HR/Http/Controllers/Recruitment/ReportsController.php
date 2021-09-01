@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
