@@ -6,7 +6,7 @@
     <div class="chart-container" align="center">
         <div class="line-chart-container">
             <h2 align="left">Analytics</h2>
-            <form action="/hr/recruitment/rports" method="POST" align="right">
+            <form action="/hr/recruitment/reports" method="POST" align="right">
                 {{csrf_field()}}
                 <input type="date" name="from" id='StartDate'> to
                 <input type="date" name="to" id="EndDate">
