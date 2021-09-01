@@ -122,7 +122,7 @@ class ReportsController extends Controller
                 $report['paidAmount'][$payment->currency]['default'] += $paidAmount;
 
                 if ($payment->currency != 'INR') {
-                    $conversionRate = $payment->conversion_rate ?? 1;
+                    $conversionRate = $payment->conversion_rate_diff ?? 1;
                     $paidAmount = $payment->amount * $conversionRate;
                     $report['paidAmount'][$payment->currency]['converted'] += $paidAmount;
                 }
