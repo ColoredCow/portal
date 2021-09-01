@@ -7,7 +7,7 @@
     <br>
     <div class="row">
         <div class="col-md-6">
-            <h1>Applications dsgrggfdsg</h1>
+            <h1>Applications</h1>
         </div>
 
         <div class="col-md-6 text-right">

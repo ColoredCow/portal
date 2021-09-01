@@ -46,10 +46,10 @@
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $query_filters = $hr_job_id . $search
     @endphp
-    <div class="d-flex bg-white status-icons ">
+    <div class="d-flex bg-white application-status-bar ">
         <ul class="nav mb-2 d-flex justify-content-between">
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{!$status || $status === config('constants.hr.status.new.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{!$status || $status === config('constants.hr.status.new.label') ? 'active': '' }}"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}>
                     <div class="position-relative">
 
@@ -68,7 +68,7 @@
             </li>
 
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.in-progress.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.in-progress.label') ? 'active' : '' }}"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program>
                     <div class="position-relative">
                         <span
@@ -88,7 +88,7 @@
             </li>
 
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.on-hold.label') ?  'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.on-hold.label') ?  'active' : '' }}"
                     href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
                     <div class="position-relative">
                         <span
@@ -104,7 +104,7 @@
                 </a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.no-show.label') ?  'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.no-show.label') ?  'active' : '' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
                     <div class="position-relative">
                         <span
@@ -120,7 +120,7 @@
                 </a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active' : '' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
                     <div class="position-relative">
                         <span
@@ -136,7 +136,7 @@
                 </a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active' : '' }}"
                     href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
                     <div class="position-relative">
                         <span
@@ -153,7 +153,7 @@
                 </a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.approved.label') ?  'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.approved.label') ?  'active' : '' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
                     <div class="position-relative">
                         <span
@@ -172,7 +172,7 @@
                 </a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active text-theme-gray-dark' : 'text-theme-gray-light' }}"
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active' : '' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
                     <div class="position-relative">
                         <span

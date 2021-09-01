@@ -711,3 +711,46 @@ input[type="radio"].toggle-button:checked + label.thumb > i.fa {
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 // @import 'utilities';
+.application-status-bar{
+	ul {
+		list-style-type: none;
+	  }
+	  
+	  a {
+		position: relative;
+		color: #C4C4C4;
+		text-decoration: none;
+	  }
+	  
+	  a:hover {
+		color: #969281;
+		text-decoration: none;
+	  }
+	  
+	  a:before {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 4px;
+		bottom: -2px;
+		left: 0;
+		background-color: #969281;
+		visibility: hidden;
+		-webkit-transform: scaleX(0);
+		transform: scaleX(0);
+		-webkit-transition: all 0.3s ease-in-out 0s;
+		transition: all 0.3s ease-in-out 0s;
+	  }
+	  
+	  .active{
+		color: #969281;
+	  }
+
+	  .active a:before,
+	  a:hover:before {
+		visibility: visible;
+		-webkit-transform: scaleX(1);
+		transform: scaleX(1);
+		
+	  }
+}
