@@ -1002,20 +1002,12 @@ function datePickerChart(){
 	 });
 }
 
-var date = new Date();
-var tdate = date.getDate();
-if (tdate < 10) {
-	tdate = "0" + tdate;
+if ( document.getElementById("start_date") && document.getElementById("end_date") ){
+	var today = new Date().toISOString().split('T')[0];
+    	document.getElementsByName("start_date")[0].setAttribute("min", today);
+	document.getElementsByName("end_date")[0].setAttribute("min", today);
 }
-var month = date.getMonth() + 1;
-if (month < 10) {
-	month = "0" + month;
-}
-var year = date.getUTCFullYear();
-var minDate = year + "-" + month + "-" + tdate;
-document.getElementById("start_date").setAttribute("min", minDate);
-document.getElementById("end_date").setAttribute("min", minDate);
- 
+
 function lineChart(){
 	 var cData = value;
 	 var ctx = $("#line-chart");
