@@ -702,6 +702,17 @@ input[type="radio"].toggle-button:checked + label.thumb > i.fa {
         @extend .text-danger;
     }
 }
+
+.line-chart-container{
+	width : 1000px;
+}
+
+span.chartHeading{
+	font-size: 35px;
+}
+span.totalChartCount{
+	font-size: 20px;
+}
 // End Custom
 
 [v-cloak] { display: none; }

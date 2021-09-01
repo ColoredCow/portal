@@ -8,7 +8,9 @@
 
 2. Install dependencies
    ```sh
-   composer install
+   composer install 
+   ```
+   ```
    npm install
    ```
 
@@ -31,6 +33,7 @@
 
 
 4. Copy `.env.example` as `.env`
+
 
 5. Run the following command to add a key
    ```sh
