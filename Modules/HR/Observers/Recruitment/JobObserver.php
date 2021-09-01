@@ -5,6 +5,8 @@ namespace Modules\HR\Observers\Recruitment;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Corcel\Model\Post as Corcel;
+use Corcel\Model\TermRelationship as TermRelationship;
+use Corcel\Model\Term as Term;
 
 class JobObserver
 {
@@ -23,11 +25,18 @@ class JobObserver
         $Corcel->post_title = $data['title'];
         $Corcel->post_content = $data['description'];
         $Corcel->post_type = config('hr.post-type.career');
+        $Corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         if ($data['status'] != 'published') {
             $Corcel->post_status = 'draft';
         }
         $Corcel->save();
         $Corcel->saveMeta('hr_id', $job['id']);
+        $post = Corcel::hasMeta('hr_id', $job['id'])->first();
+        $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
+        $relation = new TermRelationship();
+        $relation->object_id = $post->ID;
+        $relation->term_taxonomy_id = $term->term_id;
+        $relation->save();
     }
 
     /**
@@ -46,7 +55,10 @@ class JobObserver
         $Corcel->post_content = $data['description'];
         $Corcel->post_type = config('hr.post-type.career');
         $Corcel->post_status = $data['status'] == 'published' ? 'publish' : 'draft';
+        $Corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         $Corcel->update();
+        $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
+        $relation = TermRelationship::where(['object_id' => $post->ID])->update(['term_taxonomy_id' => $term->term_id]);
     }
 
     /**
