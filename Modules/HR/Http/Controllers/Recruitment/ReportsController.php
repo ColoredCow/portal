@@ -2,6 +2,8 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
@@ -35,7 +37,7 @@ class ReportsController extends Controller
             $data['label'][] = $row->date;
         }
 
-        $data['chart_data'] = json_encode($data);
+        $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
     }
@@ -63,7 +65,7 @@ class ReportsController extends Controller
             $data['data'][] = (int) $row->count;
         }
 
-        $data['chart_data'] = json_encode($data);
+        $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
     }
