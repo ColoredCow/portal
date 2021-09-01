@@ -9,7 +9,6 @@
         <div class="col-md-6">
             <h1>Applications</h1>
         </div>
-
         <div class="col-md-6 text-right">
             <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
             <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
@@ -19,13 +18,11 @@
         <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">  
             <input type="hidden" name="status" class="form-control" id="search"
                 value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
-
             <input type="hidden" name="round" class="form-control" id="search"
-                value=@if(request()->has('round')){{request()->get('round')}}@endif>
-
+                value=@if(request()->has('round')){{ request()->get('round') }}@endif>
             <input 
                 type="text" name="search" class="form-control" id="search" placeholder="Name, email, phone, or university"
-                value=@if(request()->has('search')){{request()->get('search')}}@endif>
+                value=@if(request()->has('search')){{ request()->get('search') }}@endif>
             <button class="btn btn-info ml-2">Search</button>
         </form>
     </div>
@@ -33,7 +30,7 @@
     <div class="row mt-3 mb-2">
         <div class="col-6">
             <a class="text-muted c-pointer"
-                href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}{{request()->has('round')?'&round='.request('round'):''}}">
+                href="/{{ Request::path() }}{{ request()->has('status')?'?status='.request('status'):'' }}{{ request()->has('round')?'&round='.request('round'):'' }}">
                 <i class="fa fa-times"></i>
                 <span>Clear current search and filters</span>
             </a>
@@ -49,32 +46,29 @@
     <div class="d-flex bg-white application-status-bar ">
         <ul class="nav mb-2 d-flex justify-content-between">
             <li class="nav-item mx-3">
-                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{!$status || $status === config('constants.hr.status.new.label') ? 'active': '' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}>
+                <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ !$status || $status === config('constants.hr.status.new.label') ? 'active': '' }}"
+                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{ $query_filters }}>
                     <div class="position-relative">
-
                         <span
                             class=" d-inline-block py-0"
                             style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
-                            {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
+                            {{ $newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount }}
                         </span>
                         <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
                     </div>
                     <span style="font-family: 'Mulish', sans-serif;">
                     Open
-                    </span>
-                      
+                    </span>                    
                 </a>
             </li>
-
             <li class="nav-item mx-3">
                 <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.in-progress.label') ? 'active' : '' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program>
+                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{ $query_filters }}&round=Trial-Program>
                     <div class="position-relative">
                         <span
                             class="ml-1 d-inline-block py-0"
                             style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
-                            {{$trialProgramCount}}
+                            {{ $trialProgramCount }}
                         </span>
                         <span>
                             <i class="fa fa-angle-left fa-2x" aria-hidden="true"></i>
@@ -86,15 +80,14 @@
                     </span>
                 </a>
             </li>
-
             <li class="nav-item mx-3">
                 <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.on-hold.label') ?  'active' : '' }}"
-                    href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
+                    href=/{{ Request::path() .'?status='. config('constants.hr.status.on-hold.label') }}{{ $query_filters }}>
                     <div class="position-relative">
                         <span
                             class="ml-1 d-inline-block py-0"
                             style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
-                            {{$onHoldApplicationsCount}}
+                            {{ $onHoldApplicationsCount }}
                         </span>
                         <i class="fa fa-pause-circle-o fa-2x" aria-hidden="true"></i>
                     </div> 
@@ -105,12 +98,12 @@
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.no-show.label') ?  'active' : '' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
+                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{ $query_filters }}>
                     <div class="position-relative">
                         <span
                             class="ml-1 d-inline-block py-0"
                             style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
-                            {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
+                            {{ $noShowApplicationsCount+$noShowRemindedApplicationsCount }}
                         </span>
                         <i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>
                     </div>
@@ -121,12 +114,12 @@
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active' : '' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
+                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{ $query_filters }}>
                     <div class="position-relative">
                         <span
                             class="ml-1 d-inline-block py-0"
                             style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
-                            {{$rejectedApplicationsCount}}
+                            {{ $rejectedApplicationsCount }}
                         </span>
                         <i class="fa fa-times fa-2x"></i>
                     </div>
@@ -137,12 +130,12 @@
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active' : '' }}"
-                    href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
+                    href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label') }}{{ $query_filters }}>
                     <div class="position-relative">
                         <span
                             class="ml-1 d-inline-block py-0"
                             style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
-                            {{$sentForApprovalApplicationsCount}}
+                            {{ $sentForApprovalApplicationsCount }}
                         </span>
                         <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
                     </div>
@@ -154,12 +147,12 @@
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.approved.label') ?  'active' : '' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
+                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{ $query_filters }}>
                     <div class="position-relative">
                         <span
                             class="ml-1 d-inline-block py-0"
                             style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
-                            {{$approvedApplicationsCount}}
+                            {{ $approvedApplicationsCount }}
                         </span>
                         <span class="fa-stack">
                             <i class="fa fa-user-o fa-stack-2x" aria-hidden="true"></i>
@@ -173,12 +166,12 @@
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-item nav-link d-flex flex-column align-items-center px-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active' : '' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
+                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{ $query_filters }}>
                     <div class="position-relative">
                         <span
                             class="ml-1 d-inline-block py-0"
                             style="font-family: 'Mulish', sans-serif; font-size: 10px;font-weight:700;line-height:12px;position: absolute;top: -10px;right: -1px;">
-                            {{$onboardedApplicationsCount}}
+                            {{ $onboardedApplicationsCount }}
                         </span>
                         <i class="fa fa-clipboard fa-2x" aria-hidden="true"></i>
                     </div>
@@ -231,7 +224,7 @@
                         <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
                             <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
                             <div class="rounded w-13 h-13 d-inline-block mr-1"
-                                style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
+                                style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"></div>
                             <span>{{ $tag->name }}</span>
                         </a>
                     @endforeach
