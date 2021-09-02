@@ -29,7 +29,7 @@ class PaymentRequest extends FormRequest
             'amount' => 'required|numeric',
             'currency' => 'required|string',
             'tds' => 'nullable|string',
-            'conversion_rate' => 'nullable|string',
+            'conversion_rate_diff' => 'nullable|string',
             'bank_charges' => 'nullable|string',
             'bank_service_tax_forex' => 'nullable|string',
             'mode' => 'required|string',
