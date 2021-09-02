@@ -29,7 +29,7 @@ class Round extends Model
 
     public function inPreparatoryRounds()
     {
-        return self::whereIn('name', ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])->pluck('id')->contains($this->id);
+        return self::whereIn('name', ['Preparatory-1', 'Preparatory-2', 'Preparatory-3', 'Preparatory-4', 'Warmup'])->where('id', $this->id)->exists();
     }
 
     public function jobs()
