@@ -66,7 +66,7 @@ class MigrateFinanceInvoiceToInvoice extends Seeder
             'bank_charges' => $invoice->transaction_charge,
             'bank_service_tax_forex' => $invoice->transaction_tax,
             'tds' => $invoice->tds,
-            'conversion_rate' => $invoice->conversion_rate,
+            'conversion_rate_diff' => $invoice->conversion_rate_diff,
             'mode_id' => $mode->id,
             'mode_type' => $model,
             'created_at' => $invoice->created_at,
