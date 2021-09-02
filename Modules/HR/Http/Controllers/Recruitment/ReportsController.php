@@ -24,7 +24,7 @@ class ReportsController extends Controller
             \DB::raw('DATE(created_at) as date_created_at')
         )
             ->where('created_at', '>', Carbon::now()->subDays(7))
-            ->groupBY('date_created_at','month_created_at')
+            ->groupBy('date_created_at','month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
@@ -52,7 +52,7 @@ class ReportsController extends Controller
         )         
             ->where('created_at', '>=', $req->from)
             ->where('created_at', '<=', $req->to)
-            ->groupBY('date_created_at','month_created_at')
+            ->groupBy('date_created_at','month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
