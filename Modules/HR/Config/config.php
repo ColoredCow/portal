@@ -33,7 +33,7 @@ return [
     ],
 
     'post-type' => [
-        'career' => 'Career',
+        'career' => 'career',
     ],
 
     'template-variables' => [
