@@ -49,7 +49,7 @@ class ReportsController extends Controller
             \DB::raw('COUNT(*) as count'),
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
             \DB::raw('DATE(created_at) as date_created_at')
-        )         
+        )
             ->where('created_at', '>=', $req->from)
             ->where('created_at', '<=', $req->to)
             ->groupBy('date_created_at', 'month_created_at')
