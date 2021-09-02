@@ -20,19 +20,19 @@ class ReportsController extends Controller
             ->count();
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
-            \DB::raw('MONTHNAME(created_at) as month'),
-            \DB::raw('DATE(created_at) as date')
+            \DB::raw('MONTHNAME(created_at) as month_created_at'),
+            \DB::raw('DATE(created_at) as date_created_at')
         )
             ->where('created_at', '>', Carbon::now()->subDays(7))
-            ->groupBY('date')
-            ->orderBy('date', 'ASC')
+            ->groupBY('date_created_at', 'month_created_at')
+            ->orderBy('date_created_at', 'ASC')
             ->get();
 
         $data = [];
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
-            $data['label'][] = $row->date;
+            $data['label'][] = $row->date_created_at;
         }
 
         $data['chartData'] = json_encode($data);
@@ -47,19 +47,19 @@ class ReportsController extends Controller
 
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
-            \DB::raw('MONTHNAME(created_at) as month'),
-            \DB::raw('DATE(created_at) as date')
+            \DB::raw('MONTHNAME(created_at) as month_created_at'),
+            \DB::raw('DATE(created_at) as date_created_at')
         )
             ->where('created_at', '>=', $req->from)
             ->where('created_at', '<=', $req->to)
-            ->groupBy('date')
-            ->orderBy('date', 'ASC')
+            ->groupBY('date_created_at', 'month_created_at')
+            ->orderBy('date_created_at', 'ASC')
             ->get();
 
         $data = [];
 
         foreach ($record as $row) {
-            $data['label'][] = $row->date;
+            $data['label'][] = $row->date_created_at;
             $data['data'][] = (int) $row->count;
         }
 
