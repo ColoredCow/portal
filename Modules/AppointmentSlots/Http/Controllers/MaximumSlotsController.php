@@ -11,7 +11,7 @@ use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
 
 class MaximumSlotsController extends Controller
-{   
+{
     protected $service;
 
     public function __construct(AppointmentSlotsServiceContract $service)
@@ -27,7 +27,7 @@ class MaximumSlotsController extends Controller
     {
         $userData = MaximumSlots::getUserData();
         
-        return view('appointmentslots::index')->with("userData",$userData);
+        return view('appointmentslots::index')->with("userData", $userData);
     }
     
     /**
