@@ -5,20 +5,31 @@ namespace Modules\AppointmentSlots\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\HR\Entities\MaximumSlots;
+use Modules\AppointmentSlots;
+use Modules\AppointmentSlots\Entities\AppointmentSlot;
+use Modules\AppointmentSlots\Contracts\AppointmentSlotsServiceContract;
 
 class MaximumSlotsController extends Controller
-{
+{   
+    protected $service;
+
+    public function __construct(AppointmentSlotsServiceContract $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $max_slot = DB::table('user_meta')->select('max_appointments_per_day')->orderBy('id', 'desc')->first();
-
-        return view('appointmentslots::index', ['max-slots' => $max_slot]);
+        $userData = MaximumSlots::getUserData();
+        
+        return view('appointmentslots::index')->with("userData",$userData);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
