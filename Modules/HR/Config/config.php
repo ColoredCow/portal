@@ -124,7 +124,6 @@ return [
     ],
     'daily-appointment-slots' => [
         'total' => 6,
-        'max-reserved-allowed' => 'max-slots',
     ],
     'offer-letters-dir' => 'offer-letters',
 ];
