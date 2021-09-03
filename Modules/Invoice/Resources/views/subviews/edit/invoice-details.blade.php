@@ -205,7 +205,7 @@
             due_on:"{{ $invoice->due_on->format('Y-m-d') }}",
             amount_paid: "{{ $invoice->amount_paid }}",
             bank_charges: "{{ $invoice->bank_charges }}",
-            conversion_rate: "{{ $invoice->conversion_rate }}",
+            conversion_rate_diff: "{{ $invoice->conversion_rate_diff }}",
             tds: "{{ $invoice->tds }}",
             tds_percentage: "{{ $invoice->tds_percentage }}",
         }
