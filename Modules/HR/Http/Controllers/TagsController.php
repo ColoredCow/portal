@@ -2,6 +2,7 @@
 
 namespace Modules\HR\Http\Controllers;
 
+use Modules\HR\Http\Requests\TagRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tag;
@@ -34,8 +35,9 @@ class TagsController extends Controller
         return view('hr::tags\edit')->with(['tag' => $tag]);
     }
 
-    public function update(Request $request, Tag $tag)
+    public function update(TagRequest $request, Tag $tag)
     {
+        $validated = $request->validated();
         $tag->update([
             'tag_name' => $request['name'],
             'description' => $request['description'] ?? null,

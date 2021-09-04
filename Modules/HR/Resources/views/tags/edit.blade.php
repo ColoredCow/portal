@@ -1,6 +1,7 @@
 @extends('hr::layouts.master')
 @section('content')
 <div class="row d-flex justify-content-center text-center">
+@include('status', ['errors' => $errors->all()])
     <br>
     <div class="col-md-12">
         <h1> {{ __('Update Tags') }} </h1>
@@ -8,10 +9,11 @@
     <br>
     <form action="{{route('hr.tags.update', $tag->id)}}" method="POST" id="update-form">
         @csrf
+        @method('PUT')
         <div class="col-md-12">
             <div class="mb-3">
                 <label for="label" class="form-label"> {{ __('Label name') }} <strong class="text-danger">*</strong></label>
-                <input type="text" class="form-control" id="label" name="name" value="{{ $tag->tag_name }}" required>
+                <input type="text" class="form-control" id="label" name="name" value="{{ $tag->tag_name }}" >
             </div>
         </div>
         <div class="col-md-12">
