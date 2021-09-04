@@ -17,7 +17,7 @@ class TagRequest extends FormRequest
             'name' => 'required|string',
             'description' => 'nullable',
             'color' => 'required'
-        ];        
+        ];
     }
 
     /**
