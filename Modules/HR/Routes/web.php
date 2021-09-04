@@ -40,8 +40,8 @@ Route::middleware('auth')->group(function () {
         ])->only(['update', 'destroy', 'store']);
 
         Route::resource('tags', 'TagsController')
-            ->only(['index', 'edit', 'update', 'store' , 'destroy'])
-            ->names(['index' => 'hr.tags.index', 'edit' => 'hr.tags.edit', 'update' => 'hr.tags.update', 'store' => 'hr.tags.store' , 'destroy' => 'hr.tags.delete']);
+            ->only(['index', 'edit', 'update', 'store', 'destroy'])
+            ->names(['index' => 'hr.tags.index', 'edit' => 'hr.tags.edit', 'update' => 'hr.tags.update', 'store' => 'hr.tags.store', 'destroy' => 'hr.tags.delete']);
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
