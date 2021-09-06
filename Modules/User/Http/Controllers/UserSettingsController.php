@@ -25,4 +25,5 @@ class UserSettingsController extends ModuleBaseController
     
     return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');      
   }
+} 
   
