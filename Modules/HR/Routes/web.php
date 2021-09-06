@@ -39,6 +39,10 @@ Route::middleware('auth')->group(function () {
             'names' => 'universities.aliases',
         ])->only(['update', 'destroy', 'store']);
 
+        Route::resource('tags', 'TagsController')
+            ->only(['index', 'edit', 'update', 'store', 'destroy'])
+            ->names(['index' => 'hr.tags.index', 'edit' => 'hr.tags.edit', 'update' => 'hr.tags.update', 'store' => 'hr.tags.store', 'destroy' => 'hr.tags.delete']);
+
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
