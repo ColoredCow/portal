@@ -9,21 +9,21 @@ use Modules\HR\Entities\MaximumSlot;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserSettingsController extends ModuleBaseController 
-{     
-  public function index()
-  {         
-    return view('user::user-settings.index');
-  }           
+class UserSettingsController extends ModuleBaseController
+{
+    public function index()
+    {
+      return view('user::user-settings.index');
+    }
   
-  public function storeData(Request $request)     
-  {         
-    DB::table('user_meta')->insert([             
-      'user_id' => Auth::user()->id,             
-      'max_appointments_per_day'=>$request->max_appointments_per_day,             
-    ]);
+    public function storeData(Request $request)    
+    {         
+      DB::table('user_meta')->insert([           
+        'user_id' => Auth::user()->id,       
+        'max_appointments_per_day'=>$request->max_appointments_per_day,   
+      ]);
     
-    return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');      
-  }
-} 
+      return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
+    }
+}
   
