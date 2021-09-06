@@ -41,27 +41,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <br>
-            <script type="text/javascript">
-                    //     function EnableDisableTextBox1(rejectReason2) {
-                    //         var txtReasonRejected = document.getElementById("rejectReason2");
-                    //         var textbox = document.getElementById("txtReasonRejected")
-                    //         if (txtReasonRejected.checked == true) {
-                    //             textbox.style.display="block";
-                    //         } else{
-                    //             textbox.style.display="none";
-                    //         }
-                    //     }
-                    //     function EnableDisableTextBox2(rejectReason5) {
-                    //         var txtReasonRejected = document.getElementById("rejectReason5");
-                    //         var textbox = document.getElementById("reasonRejectedTxt")
-                    //         if (txtReasonRejected.checked == true) {
-                    //             textbox.style.display="block";
-                    //         } else{
-                    //             textbox.style.display="none";
-                    //         }
-                    //     }
-                    // </script>
                 <div class="form-check">
                     <form action="#" class="textbox">
                         <h5><b> Select Reasons: </b></h5>

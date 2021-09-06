@@ -106,8 +106,6 @@ $(document).ready(() => {
 		 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 	 });
  
-	 datePickerChart();
-	 lineChart();
 	 EnableDisableTextBox1();
 	 EnableDisableTextBox2();
 });
@@ -993,83 +991,14 @@ function saveFollowUp() {
 	 }
 }
  
-function datePickerChart(){
-	 $("#EndDate").change(function () {
-	   var startDate = document.getElementById("StartDate").value;
-	   var endDate = document.getElementById("EndDate").value;
-	   if ((Date.parse(endDate) <= Date.parse(startDate))) {
-	   alert("End date should be greater than Start date");
-	   document.getElementById("EndDate").value = "";
-	   }
-	 });
-}
- 
-function lineChart(){
-	 var cData = value;
-	 var ctx = $("#line-chart");
- 
-	 var data = {
-	   labels: cData.label,
-	   datasets: [
-	   {
-		 label: "Count",
-		 data: cData.data,
-		 backgroundColor: "#67A7E2",
-		 borderColor:"#67A7E2",
-		 borderWidth: 1,
-		 pointHoverRadius: 7
-	   }
-	   ]
-	 };
-	 var options = {
-	   responsive: true,
-	   tooltips:{
-		 displayColors:false,
-		 bodyFontSize: 20,
-		 bodyFontStyle: "bold",
-		 backgroundColor:"#E5E5E5",
-		 bodyFontColor:"#E0DEDE",
-		 cornerRadius:0,
-		 borderWidth:2
-	   },
-	   title: {
-		 display: false,
-	   },
-	   legend: {
-		 display: false,
-	   }, 
-	   scales: {
-		 yAxes: [{
-				ticks: {stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5},
-		 }]
-	   },  
-	   elements: {
-		 line: {
-				fill: false,
-				tension: 0
-		 },
-		 point:{
-				radius:0
-		 }
-	   }
-	 };
- 
-	 var charts = new Chart(ctx, {
-	   type: "line",
-	   data: data,
-	   options: options
-	 });
-}
-
 function EnableDisableTextBox1() {
-	alert("Hello");
-	// var txtReasonRejected = document.getElementById("rejectReason2");
-	// var textbox = document.getElementById("txtReasonRejected")
-	// if (txtReasonRejected.checked == true) {
-	// 	textbox.style.display="block";
-	// } else{
-	// 	textbox.style.display="none";
-	// }
+	var txtReasonRejected = document.getElementById("rejectReason2");
+	var textbox = document.getElementById("txtReasonRejected");
+	if (txtReasonRejected.checked == true) {
+		textbox.style.display="block";
+	} else{
+		textbox.style.display="none";
+	}
 }
 function EnableDisableTextBox2(id) {
 	var txtReasonRejected = document.getElementById("rejectReason5");
