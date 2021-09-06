@@ -1080,7 +1080,7 @@ $(function () {
 		if ($(this).is(":checked")) {
 			$("#txtReasonRejected2").show();
 		} else {
-			$("#txtReasonRejected1").hide();
+			$("#txtReasonRejected2").hide();
 		}
 	});
 });
