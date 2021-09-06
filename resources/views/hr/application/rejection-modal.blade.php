@@ -45,17 +45,23 @@
                     <form action="#" class="textbox">
                         <h5><b> Select Reasons: </b></h5>
                         <input type="checkbox" id="rejectReason1"> No responce <br>
-                        <label for="rejectReason2">
-                            <input type="checkbox" id="rejectReason2" onchange="EnableDisableTextBox1(this)"> Skills mismatch <br>
+                        <label for="Rejection">
+                            <input type="checkbox" id="rejectReason2" /> Skills mismatch
                         </label>
-                        <input type="text" id="txtReasonRejected" style="display:none"><br>
+                        <br />
+                        <div id="txtReasonRejected1" style="display: none">
+                            <input type="text" id="Reasons1" />
+                        </div>
                         <input type="checkbox" id="rejectReason3"> Culture mismatch <br>
                         <input type="checkbox" id="rejectReason4"> Salary  expectation mismatch <br>
-                        <label for="rejectReason5">
-                            <input type="checkbox" id="rejectReason5" onchange="EnableDisableTextBox2(this)"> Not enough knowledge/inclination for ColoredCow<br>
+                        <label for="Rejection">
+                            <input type="checkbox" id="rejectReason5" /> Not enough knowledge/inclination for ColoredCow
                         </label>
-                        <input type="text" id="reasonRejectedTxt" style="display:none"/>
-                    </form>    
+                        <br />
+                        <div id="txtReasonRejected2" style="display: none">
+                            <input type="text" id="Reasons2" />
+                        </div>
+                    </form>
                 </div>
             <div class="modal-body">
                 <div class="form-row">

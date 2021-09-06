@@ -105,9 +105,6 @@ $(document).ready(() => {
 		 var fileName = $(this).val().split("\\").pop();
 		 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 	 });
- 
-	 EnableDisableTextBox1();
-	 EnableDisableTextBox2();
 });
  
 if (document.getElementById("page_hr_applicant_edit")) {
@@ -990,26 +987,48 @@ function saveFollowUp() {
 		 form.submit();
 	 }
 }
+
+$(function () {
+	$("#rejectReason2").click(function () {
+		if ($(this).is(":checked")) {
+			$("#txtReasonRejected1").show();
+		} else {
+			$("#txtReasonRejected1").hide();
+		}
+	});
+});
+
+$(function () {
+	$("#rejectReason5").click(function () {
+		if ($(this).is(":checked")) {
+			$("#txtReasonRejected2").show();
+		} else {
+			$("#txtReasonRejected2").hide();
+		}
+	});
+});
  
-function EnableDisableTextBox1() {
-	var txtReasonRejected = document.getElementById("rejectReason2");
-	var textbox = document.getElementById("txtReasonRejected");
-	if (txtReasonRejected.checked == true) {
-		textbox.style.display="block";
-	} else{
-		textbox.style.display="none";
-	}
-}
-function EnableDisableTextBox2(id) {
-	var txtReasonRejected = document.getElementById("rejectReason5");
-	var textbox = document.getElementById("reasonRejectedTxt");
-	if (txtReasonRejected.checked == true) {
-		textbox.style.display="block";
-	} else{
-		textbox.style.display="none";
-	}
-}
- 
+// function EnableDisableTextBox1() {
+// 	var txtReasonRejected = document.getElementById("rejectReason2");
+// 	var textbox = document.getElementById("txtReasonRejected");
+// 	alert("hello");
+// 	if (txtReasonRejected.checked == true) {
+// 		textbox.style.display="block";
+// 		console.log('Bye');
+// 	} else{
+// 		textbox.style.display="none";
+// 	}
+// }
+// function EnableDisableTextBox2() {
+// 	var txtReasonRejected = document.getElementById("rejectReason5");
+// 	var textbox = document.getElementById("reasonRejectedTxt");
+// 	if (txtReasonRejected.checked == true) {
+// 		textbox.style.display="block";
+// 	} else{
+// 		textbox.style.display="none";
+// 	}
+// }
+
 /*
   * HR Module JS code end
   */
