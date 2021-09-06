@@ -1064,27 +1064,27 @@ function lineChart(){
 		options: options
 	  });
 }
- 
+
 $(function () {
-	 $("#rejectReason2").click(function () {
-		 if ($(this).is(":checked")) {
-			 $("#txtReasonRejected1").show();
-		 } else {
-			 $("#txtReasonRejected1").hide();
-		 }
-	 });
+	$("#rejectReason2").click(function () {
+		if ($(this).is(":checked")) {
+			$("#txtReasonRejected1").show();
+		} else {
+			$("#txtReasonRejected1").hide();
+		}
+	});
 });
- 
+
 $(function () {
-	 $("#rejectReason5").click(function () {
-		 if ($(this).is(":checked")) {
-			 $("#txtReasonRejected2").show();
-		 } else {
-			 $("#txtReasonRejected1").hide();
-		 }
-	 });
+	$("#rejectReason5").click(function () {
+		if ($(this).is(":checked")) {
+			$("#txtReasonRejected2").show();
+		} else {
+			$("#txtReasonRejected1").hide();
+		}
+	});
 });
-  
+   
 /*
    * HR Module JS code end
    */
