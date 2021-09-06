@@ -12,6 +12,5 @@ class MaximumSlot extends Model
         $max_slot = DB::table('user_meta')->select('max_appointments_per_day')->orderBy('id', 'desc')->first()->max_appointments_per_day;
 
         return $max_slot;
-        
     }
 }
