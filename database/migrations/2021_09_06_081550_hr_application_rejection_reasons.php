@@ -13,11 +13,11 @@ class HrApplicationRejectionReasons extends Migration
      */
     public function up()
     {
-        Schema::create('hr_application_rejection_reasons', function(Blueprint $table){
+        Schema::create('hr_application_rejection_reasons', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('hr_application_round_id')->unsigned();
             $table->foreign('hr_application_round_id')->references('id')->on('hr_application_round');
-            $table->string('reason_title',255);
+            $table->string('reason_title', 255);
             $table->text('reason_comment');
             $table->timestamps();
         });
