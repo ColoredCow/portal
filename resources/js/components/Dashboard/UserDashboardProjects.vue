@@ -2,11 +2,25 @@
     <div class="card">
         <div class="card-header p-1">
             <h3 class="text-center">
-                <a href="/projects">Projects</a>
+                <a href="/projects">My projects</a>
             </h3>
         </div>
-        <div class="card-body pt-3" style="height: 21em;overflow: auto;">
-           <h5>No Project yet.</h5>
+        <div class="card-body pt-3 h-320 overflow-y-scroll">
+            <div v-if="this.projects.length > 0" class="list list-group unstyled-list">
+                <div v-for="(project, index) in this.projects" :key="index">
+                    <div class="row" >
+                        <div class="col-9 text-left d-flex align-items-center">
+                            <div class="w-250">
+                                <a :href="'/projects/'+project.id+'/edit/'">{{ project.name }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mt-1">
+                </div>
+            </div>
+            <div v-else>
+                <p>Fetching latest data...</p>
+            </div>
         </div>
     </div>
 </template>
@@ -16,16 +30,20 @@ export default {
 	props: [],
 	data() {
 		return {
-			books:[]
+			projects:[]
 		};
 	},
 
 	methods: {
-		async getReadBooks() {
-			let response = await axios.get("/user/read-books");
-			this.books =  response.data;
+		async getProjects() {
+			let response = await axios.get("/user/projects");
+			this.projects =  response.data;
 
 		}
+	},
+
+	mounted() {
+		this.getProjects();
 	},
 
 };

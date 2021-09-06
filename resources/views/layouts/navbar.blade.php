@@ -24,6 +24,7 @@
                     <a class="dropdown-item" href="{{ route('universities.index') }}">Universities</a>
                 @endcan
                 <a class="dropdown-item" href="{{route('userappointmentslots.show',auth()->id())}}">Appointment Slots</a>
+                <a class="dropdown-item" href="{{ route('hr.tags.index') }}">{{ __('Manage Tags') }}</a>
             </div>
         </li>
     @endif

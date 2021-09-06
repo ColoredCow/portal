@@ -128,10 +128,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
     });
 
-    // Route::resource('project/stages', 'ProjectStageController')->only(['store', 'update'])
-    //     ->names(['store' => 'project.stage',
-    //         'update' => 'project.stage.update']);
-
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
         Route::get('/', 'KnowledgeCafeController@index')->name('knowledgecafe');
         Route::prefix('library')->namespace('Library')->group(function () {
@@ -174,4 +170,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('user/read-books', 'UserBookController@index');
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
+    Route::get('user/projects', 'UserController@projects');
 });
