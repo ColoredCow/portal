@@ -11,7 +11,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UserSettingsController extends ModuleBaseController
 {
-    public function index{
+    public function index()
+    {
 
         return view('user::user-settings.index');
     }
