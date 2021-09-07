@@ -715,13 +715,19 @@ span.totalChartCount{
 }
 
 //hr application
+.opened{
+	position: absolute;
+    left: 140px;
+	top: 234px;
+
+}
 
 .open{
 	position: absolute;
 	width: 44px;
 	height: 20px;
 	left: 128px;
-	top: 250px;
+	top: 270px;
 	font-family: sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -735,7 +741,7 @@ span.totalChartCount{
  	width: 12px;
  	height: 12px;
  	left: 146px;
- 	top: 208px;
+ 	top: 222px;
  	font-family: Mulish sans-serif;
  	font-style: normal;
  	font-weight: bold;
@@ -746,8 +752,8 @@ span.totalChartCount{
 }
 .trial{
 	position: absolute;
-    left: 248px;
-	top: 216px;
+    left: 240px;
+	top: 234px;
 
 }
 .trial-program{
@@ -755,7 +761,7 @@ span.totalChartCount{
 	width: 44px;
 	height: 20px;
 	left: 208px;
-	top: 250px;
+	top: 270px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -766,7 +772,7 @@ span.totalChartCount{
 .head1{
 	position: absolute;
 	left: 262px;
-	top: 208px;
+	top: 222px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -777,7 +783,7 @@ span.totalChartCount{
 .hold{
 	position: absolute;
     left: 374px;
-	top: 216px;
+	top: 234px;
 	color:#C4C4C4;
 
 }
@@ -786,7 +792,7 @@ span.totalChartCount{
 	width: 44px;
 	height: 20px;
 	left: 358px;
-	top: 250px;
+	top: 270px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -797,7 +803,7 @@ span.totalChartCount{
 .head2{
 	position: absolute;
 	left: 394px;
-	top: 208px;
+	top: 222px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -808,7 +814,7 @@ span.totalChartCount{
 .no{
 	position: absolute;
     left: 484px;
-	top: 216px;
+	top: 234px;
 	color: #C4C4C4;
 }
 .no-show{
@@ -816,7 +822,7 @@ span.totalChartCount{
 	width: 44px;
 	height: 20px;
 	left: 468px;
-	top: 250px;
+	top: 270px;
 	font-family: Muslish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -827,7 +833,7 @@ span.totalChartCount{
 .head3{
 	position: absolute;
 	left: 504px;
-	top: 208px;
+	top: 222px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -838,7 +844,7 @@ span.totalChartCount{
 .approve{
 	position: absolute;
     left: 606px;
-	top: 216px;
+	top: 234px;
 	color: #C4C4C4;
 }
 .toapprove{
@@ -846,7 +852,7 @@ span.totalChartCount{
 	width: 44px;
 	height: 20px;
 	left: 578px;
-	top: 250px;
+	top: 270px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -857,7 +863,7 @@ span.totalChartCount{
 .head4{
 	position: absolute;
 	left: 626px;
-	top: 208px;
+	top: 222px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -868,7 +874,7 @@ span.totalChartCount{
 .approval{
 	position: absolute;
     left: 736px;
-	top: 216px;
+	top: 234px;
 	color: #C4C4C4;
 }
 .approved{
@@ -876,7 +882,7 @@ span.totalChartCount{
 	width: 44px;
 	height: 20px;
 	left: 706px;
-	top: 250px;
+	top: 270px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -887,7 +893,7 @@ span.totalChartCount{
 .head5{
 	position: absolute;
 	left: 756px;
-	top: 208px;
+	top: 222px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -898,7 +904,7 @@ span.totalChartCount{
 .onboard{
 	position: absolute;
     left: 862px;
-	top: 216px;
+	top: 234px;
 	color: #C4C4C4;
 }
 .onboarded{
@@ -906,7 +912,7 @@ span.totalChartCount{
 	width: 44px;
 	height: 20px;
 	left: 836px;
-	top: 250px;
+	top: 270px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -917,13 +923,22 @@ span.totalChartCount{
 .head6{
 	position: absolute;
 	left: 882px;
-	top: 208px;
+	top: 222px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
 	font-size: 20px;
 	line-height: 16px;
 	color: #C4C4C4;
+}
+.table1{
+	top: 350px;
+}
+.search{
+	width: 480px;
+}
+.searchbtn{
+	top: 160px;
 }
 
 
