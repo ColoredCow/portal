@@ -1,9 +1,9 @@
 {
-  "baseUrl": "https://uat.employee.coloredcow.com",
+  "baseUrl": "http://127.0.0.1:8000",
   "$schema": "https://on.cypress.io/cypress.schema.json",
   "env": {
-    "phone": "7834811114",
-    "password": "secret1234"
+    "username": "user@coloredcow.com",
+    "password": "12345678"
   },
   "projectId": "4dgmnb",
   "retries": {

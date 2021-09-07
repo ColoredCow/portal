@@ -19,10 +19,10 @@ jobs:
         env:
           MYSQL_USER: homestead
           MYSQL_PASSWORD: secret
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: homestead
         ports:
-          - 33306:3306
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -34,7 +34,7 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress
+        run: composer install
       - name: Generate key
         run: php artisan key:generate
       - name: Directory Permissions
@@ -42,7 +42,18 @@ jobs:
       - name: Run migration
         run: |
           php artisan migrate
+      - name: Run seed data
+        run: |
+          php artisan db:seed
       - name: Compile assets
         run: |
           npm install
-          npm run production
+          npm run dev
+      - name: Open server
+        run: |
+          php artisan serve &
+      - name: Run cypress
+        run: |
+          cp cypress.json.example cypress.json
+          npm run cypress-record 91313d13-c3e1-4c21-b0ee-b290ce7dc720
+
