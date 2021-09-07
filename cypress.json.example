@@ -1,0 +1,12 @@
+{
+  "baseUrl": "https://uat.employee.coloredcow.com",
+  "$schema": "https://on.cypress.io/cypress.schema.json",
+  "env": {
+    "phone": "7834811114",
+    "password": "secret1234"
+  },
+  "projectId": "4dgmnb",
+  "retries": {
+    "runMode": 2
+  }
+}
