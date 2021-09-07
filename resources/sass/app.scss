@@ -715,9 +715,7 @@ span.totalChartCount{
 }
 
 //hr application
-.appli{
-	top:236px;
-}
+
 .open{
 	position: absolute;
 	width: 44px;
@@ -729,7 +727,8 @@ span.totalChartCount{
 	font-weight: 50;
 	font-size: 20px;
 	line-height: 16px;
-	color: #0a0a0a;
+	color: #C4C4C4;
+
 }
 .head{
  	position: absolute;
@@ -737,17 +736,17 @@ span.totalChartCount{
  	height: 12px;
  	left: 146px;
  	top: 208px;
- 	font-family: Mulish;
+ 	font-family: Mulish sans-serif;
  	font-style: normal;
  	font-weight: bold;
  	font-size: 10px;
  	line-height: 12px;
     /* identical to box height, or 120% */
-	color: #070705;
+	color: #C4C4C4;
 }
 .trial{
 	position: absolute;
-    left: 228px;
+    left: 248px;
 	top: 216px;
 
 }
@@ -755,56 +754,176 @@ span.totalChartCount{
 	position: absolute;
 	width: 44px;
 	height: 20px;
-	left: 198px;
+	left: 208px;
 	top: 250px;
-	font-family: sans-serif;
+	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
 	font-size: 20px;
 	line-height: 16px;
-	color: #0a0a0a;
+	color: #C4C4C4;
 }
 .head1{
 	position: absolute;
-	left: 242px;
+	left: 262px;
 	top: 208px;
-	font-family: sans-serif;
+	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
 	font-size: 20px;
 	line-height: 16px;
-	color: #0a0a0a;
+	color: #C4C4C4;
 }
 .hold{
 	position: absolute;
-    left: 348px;
+    left: 374px;
 	top: 216px;
-	color: #0a0a0a;
+	color:#C4C4C4;
 
 }
 .on-hold{
 	position: absolute;
 	width: 44px;
 	height: 20px;
-	left: 348px;
+	left: 358px;
 	top: 250px;
-	font-family: sans-serif;
+	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
 	font-size: 20px;
 	line-height: 16px;
-	color: #0a0a0a;
+	color: #C4C4C4;
 }
 .head2{
 	position: absolute;
-	left: 260px;
+	left: 394px;
 	top: 208px;
-	font-family: sans-serif;
+	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
 	font-size: 20px;
 	line-height: 16px;
-	color: #0a0a0a;
+	color: #C4C4C4;
+}
+.no{
+	position: absolute;
+    left: 484px;
+	top: 216px;
+	color: #C4C4C4;
+}
+.no-show{
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	left: 468px;
+	top: 250px;
+	font-family: Muslish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #C4C4C4;
+}
+.head3{
+	position: absolute;
+	left: 504px;
+	top: 208px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #C4C4C4;
+}
+.approve{
+	position: absolute;
+    left: 606px;
+	top: 216px;
+	color: #C4C4C4;
+}
+.toapprove{
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	left: 578px;
+	top: 250px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #C4C4C4;
+}
+.head4{
+	position: absolute;
+	left: 626px;
+	top: 208px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #C4C4C4;
+}
+.approval{
+	position: absolute;
+    left: 736px;
+	top: 216px;
+	color: #C4C4C4;
+}
+.approved{
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	left: 706px;
+	top: 250px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #C4C4C4;
+}
+.head5{
+	position: absolute;
+	left: 756px;
+	top: 208px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #C4C4C4;
+}
+.onboard{
+	position: absolute;
+    left: 862px;
+	top: 216px;
+	color: #C4C4C4;
+}
+.onboarded{
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	left: 836px;
+	top: 250px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #C4C4C4;
+}
+.head6{
+	position: absolute;
+	left: 882px;
+	top: 208px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #C4C4C4;
 }
 
 
