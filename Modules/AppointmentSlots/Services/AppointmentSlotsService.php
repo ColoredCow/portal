@@ -219,9 +219,8 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
 
         $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) 
         {
-            $user_id = Auth::user()->id;
-            $max_slot = Maxslot::select('max_interviews_per_day')->where('user_id', '=', $user_id)->get();
-            return $value>=$max_slot;
+            $userData = Maxslot::getUserData();
+            return $value >= $userData;
         })->keys()->all();
 
         $freeSlots = $slots->where('status', 'free')->reject(function ($slot) use ($datesToRemove) {
