@@ -217,13 +217,8 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             return $date->format(config('constants.date_format', 'Y-m-d'));
         });
 
-        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) {
-
-            // $max_slot=DB::table('maxslots')->select([
-            //         'user_id' => Auth::user()->id,
-            //         'max_interviews_per_day'=> max_interviews_per_day,   
-            // ]).value();
-
+        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) 
+        {
             $user_id = Auth::user()->id;
             $max_slot = Maxslot::select('max_interviews_per_day')->where('user_id', '=', $user_id)->get();
              return $value>=$max_slot;
