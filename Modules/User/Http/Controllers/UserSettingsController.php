@@ -20,7 +20,7 @@ class UserSettingsController extends ModuleBaseController
 
     public function storeData(Request $request)
     {
-        DB::table('maxslots')->insert([
+        DB::table('maxslots')->updateorInsert([
             'user_id' => Auth::user()->id,
             'max_interviews_per_day'=>$request->max_interviews_per_day,    
         ]);
@@ -35,10 +35,15 @@ class UserSettingsController extends ModuleBaseController
         
         return view('user::user-settings.hr-save');//->with('maxinterviews',$maxinterviews);
     }
-
-    // public function update()
+    
+    // public function update(Request $request)
     // {
+    //      DB::table('maxslots')->update([
+    //         'user_id' => Auth::user()->id,
+    //         'max_interviews_per_day'=>$request->max_interviews_per_day,    
+    //     ]);
 
+    //      return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
     // }
 
 }
