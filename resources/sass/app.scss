@@ -713,6 +713,98 @@ span.chartHeading{
 span.totalChartCount{
 	font-size: 20px;
 }
+
+//hr application
+.open{
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	left: 128px;
+	top: 250px;
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #0a0a0a;
+}
+.head{
+ 	position: absolute;
+ 	width: 12px;
+ 	height: 12px;
+ 	left: 146px;
+ 	top: 208px;
+ 	font-family: Mulish;
+ 	font-style: normal;
+ 	font-weight: bold;
+ 	font-size: 10px;
+ 	line-height: 12px;
+    /* identical to box height, or 120% */
+	color: #070705;
+}
+.trial{
+	position: absolute;
+    left: 228px;
+	top: 216px;
+
+}
+.trial-program{
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	left: 198px;
+	top: 250px;
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #0a0a0a;
+}
+.head1{
+	position: absolute;
+	left: 238px;
+	top: 208px;
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #0a0a0a;
+}
+.hold{
+	position: absolute;
+    left: 308px;
+	top: 216px;
+	color: #0a0a0a;
+
+}
+.on-hold{
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	left: 318px;
+	top: 250px;
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #0a0a0a;
+}
+.head2{
+	position: absolute;
+	left: 258px;
+	top: 208px;
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+	line-height: 16px;
+	color: #0a0a0a;
+}
+
+
 // End Custom
 
 [v-cloak] { display: none; }

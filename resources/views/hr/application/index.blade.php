@@ -15,7 +15,7 @@
             <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
         </div>
     </div>
-    <div class="row mt-4">
+    <!-- <div class="row mt-4">
         <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">  
             <input type="hidden" name="status" class="form-control" id="search"
                 value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
@@ -45,82 +45,83 @@
         $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $query_filters = $hr_job_id . $search
-    @endphp
-    <div class="d-flex align-items-center justify-content-between">
+    @endphp -->
+    <div class="d-flex align-items-center justify-content-between navigate">
         <ul class="nav nav-pills mb-2">
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status ? 'text-info' : 'active bg-info text-white' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}> <i
-                    class="fa fa-clipboard"></i>&nbsp;
-                    Open
+            <li class="nav-item">    
+                <a class="nav-item nav-link d-flex align-items-center {{ $status ? 'text-info' : 'bg-info text-white' }}"
+                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="" class="bi bi-people" color="black" viewBox="0 0 16 16"><path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>&nbsp;
+                    <h1 class="open">Open</h1>
+                    </svg>&nbsp;
                     <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status ? 'bg-info text-white' : 'active bg-white text-info' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+                        class="ml-1 d-inline-block px-2 py-0 head {{ $status ? ' bg-transparent text-info' : 'bg-transparent text-dark' }}"
+                        style="border-radius: 20px; font-size:16px; font-weight: 700; font-color:black;">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.in-progress.label') ? 'active bg-info text-white' : 'text-info' }}"
+                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.in-progress.label') ? 'bg-info text-white' : 'text-info' }}"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program>
-                    <i class="fa fa-clipboard"></i>&nbsp;
-                    Trial Program
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="" class="bi bi-code trial" viewBox="0 0 16 16"><path d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8l-3.147-3.146z"/></svg>
+                    <h2 class="trial-program">TrialProgram</h2>
                     <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ request()->get('round')=='Trial-Program' ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+                        class="ml-1 d-inline-block head1{{ request()->get('round')=='Trial-Program' ? 'bg-white text-info' : '' }}"
+                        style="border-radius: 20px;font-size: 16px;font-weight: 700;">
                         {{$trialProgramCount}}
                     </span>
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}"
+            <!-- <li class="nav-item hold">
+                <a class="nav-item nav-link d-flex align-items-center{{ $status === config('constants.hr.status.on-hold.label') ? 'bg-info text-white' : 'text-info' }}"
                     href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
-                    <i class="fa fa-file-text-o"></i>&nbsp;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z"/></svg>
                     {{ config('constants.hr.status.on-hold.title') }}
                     <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
+                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-white text-info' : '' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$onHoldApplicationsCount}}
                     </span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!--<li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
                     <i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}
                     <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
+                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : '' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
                     <i class="fa fa-times-circle"></i>&nbsp;
                     Closed
                     <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
+                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-white text-info' : '' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$rejectedApplicationsCount}}
                     </span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}"
                     href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
                     <i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}
                     <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
+                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-white text-info' : '' }}"
                         style="border-radius: 20px;font-size: 12px;font-weight: 700;">
                         {{$sentForApprovalApplicationsCount}}
                     </span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.approved.label') ? 'active bg-info text-white' : 'text-info' }}"
                     href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
                     <i class="fa fa-check-square"></i>&nbsp;
@@ -143,9 +144,9 @@
                         {{$onboardedApplicationsCount}}
                     </span>
                 </a>
-            </li>
+            </li> -->
         </ul>
-        @if( isset($openJobsCount, $openApplicationsCount) )
+        <!-- @if( isset($openJobsCount, $openApplicationsCount) )
         <div class="alert alert-info mb-2 p-2">
             <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $newApplicationsCount }}</b> open
                 applications</span>
@@ -206,7 +207,7 @@
         </tbody>
     </table>
     {{ $applications->links() }} 
-</div>
+</div>-->
 
 @include('hr.application.excel-import')
 @endsection
