@@ -69,7 +69,7 @@
                     <h2 class="trial-program">TrialProgram</h2>
                     <span
                         class="ml-1 d-inline-block head1{{ request()->get('round')=='Trial-Program' ? 'bg-white text-info' : '' }}"
-                        style="border-radius: 20px;font-size: 16px;font-weight: 700;">
+                        style="border-radius: 20px;font-size: 16px;font-weight: 700; font-color:black;">
                         {{$trialProgramCount}}
                     </span>
                 </a>
@@ -83,7 +83,7 @@
                     <h3 class="on-hold">OnHold</h3>
                     <span
                         class="ml-1 d-inline-block {{ $status === config('constants.hr.status.on-hold.label') ? 'bg-white text-info' : '' }}"
-                        style="border-radius: 20px;font-size: 16px;font-weight: 700;">
+                        style="border-radius: 20px;font-size: 16px;font-weight: 700; font color:black;">
                         {{$onHoldApplicationsCount}}
                     </span>
                 </a>
