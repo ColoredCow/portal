@@ -75,11 +75,12 @@
                 </a>
             </li>
 
-            <li class="nav-item hold">
+            <li class="nav-item">
                 <a class="nav-item nav-link d-flex align-items-center{{ $status === config('constants.hr.status.on-hold.label') ? 'bg-info text-white' : 'text-info' }}"
                     href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="" class="bi bi-pause-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z"/></svg>
-                    {{ config('constants.hr.status.on-hold.title') }}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="" class="bi bi-pause-circle hold" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z"/></svg>
+                    <!-- {{ config('constants.hr.status.on-hold.title') }} -->
+                    <h3 class="on-hold">OnHold</h3>
                     <span
                         class="ml-1 d-inline-block {{ $status === config('constants.hr.status.on-hold.label') ? 'bg-white text-info' : '' }}"
                         style="border-radius: 20px;font-size: 16px;font-weight: 700;">
