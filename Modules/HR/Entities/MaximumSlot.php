@@ -15,7 +15,8 @@ class UserMeta extends Model
 
     public static function getUserData()
     {
-        $maxslots=DB::table('user_meta')->select('max_appointments_per_day')->where('user_id', 'users.id')->orderByDesc('created_at')->first();
+        $userId = Auth::User('id');
+        $maxslots = DB::table('user_meta')->select('max_appointments_per_day')->where('user_id', $userId)->orderByDesc('created_at')->first();
         
         return $maxslots;
     }
