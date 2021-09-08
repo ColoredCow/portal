@@ -87,7 +87,7 @@ class User extends Authenticatable
 
     public function maxslot()
     {
-        return $this->hasOne(Maxslot::class, 'user_id', 'id');
+        return $this->hasMany(Maxslot::class, 'user_id', 'id');
     }
 
 }
