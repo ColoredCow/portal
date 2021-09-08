@@ -10,9 +10,9 @@ Steps to run cypress:
 2. Run the following command to run cypress 
     - Headless mode  
         ```
-        yarn run cypress
+        npm run cypress
         ```
     - GUI mode 
         ```
-        yarn run cypress open
+        npm run cypress-open
         ```
