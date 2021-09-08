@@ -7,7 +7,7 @@ use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
 use App\Services\CalendarEventService;
 use Modules\HR\Entities\ApplicationRound;
-use Modules\HR\Entities\MaximumSlot;
+use Modules\HR\Entities\UserMeta;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\Communication\Contracts\CalendarMeetingContract;
 use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
@@ -214,7 +214,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         });
 
         $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) {
-            $userData = MaximumSlot::getUserData();
+            $userData = UserMeta::getUserData();
 
             return $value >= $userData;
         })->keys()->all();
