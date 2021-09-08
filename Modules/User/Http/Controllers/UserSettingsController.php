@@ -3,11 +3,8 @@ namespace Modules\User\Http\Controllers;
 
 use DB;
 use Auth;
-use Illuminate\Database\Eloquent\Model;
-use App\Http\Controllers\Controller;
 use Modules\HR\Entities\UserMeta;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Http\FormRequest;
 
 class UserSettingsController extends ModuleBaseController
 {
