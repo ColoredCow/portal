@@ -1,7 +1,6 @@
 @extends('user::layouts.master')
 @section('content')
 
-
 <div class="container">
     <div class="col-6">
         <label class="user-settings">User Settings</label>
@@ -19,6 +18,6 @@
     </div>
     <div class="card-body d2">
         <h5 class="card-title max">Maximum interviews in a day:</h5>
-        <input type="number" class="quantity" name="quantity" value=''></input>
+        <input type="number" class="quantity" name="quantity" value="{{old('max_interviews_per_day', $maxinterviews->quantity)}}"></input>
     </div>
 </div>

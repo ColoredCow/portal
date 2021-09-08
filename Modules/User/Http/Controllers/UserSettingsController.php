@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
 use Modules\HR\Entities\Maxslot;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +23,8 @@ class UserSettingsController extends ModuleBaseController
     {
         DB::table('maxslots')->Insert([
             'user_id' => Auth::user()->id,
-            'max_interviews_per_day'=>$request->max_interviews_per_day,    
+            'max_interviews_per_day'=>$request->max_interviews_per_day,
+            'created_at'=>  \Carbon\Carbon::now(),
         ]);
 
         return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
@@ -30,20 +32,10 @@ class UserSettingsController extends ModuleBaseController
     }
 
       public function save()
-    {   
-        $maxinterviews=DB::table('maxslots')->select('max_interviews_per_day')->orderBy('id', 'DESC')->first();
-        
-        return view('user::user-settings.hr-save');//->with('maxinterviews',$maxinterviews);
-    }
+    {
+        $maxinterviews = new Maxslot;
     
-    // public function update(Request $request)
-    // {
-    //       DB::table('maxslots')->update([
-    //          'user_id' => Auth::user()->id,
-    //          'max_interviews_per_day'=>$request->max_interviews_per_day,    
-    //      ]);
-
-    //       return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
-    // }
+        return view('user::user-settings.hr-save', compact('maxinterviews'));
+    }
 
 }
