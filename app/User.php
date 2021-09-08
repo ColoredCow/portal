@@ -84,7 +84,7 @@ class User extends Authenticatable
     {
         return $query->where('email', $email);
     }
-    
+
     public function maxslot()
     {
         return $this->hasMany(UserMeta::class, 'user_id', 'id');
