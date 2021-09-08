@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Integration testing
 
 # Controls when the action will run.
 on:
@@ -33,27 +33,35 @@ jobs:
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
       - name: Install Dependencies
         run: composer install
+
       - name: Generate key
         run: php artisan key:generate
+
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
-      - name: Run migration
+
+      - name: Run migrations
         run: |
           php artisan migrate
-      - name: Run seed data
+
+      - name: Run seeders
         run: |
           php artisan db:seed
+
       - name: Compile assets
         run: |
           npm install
           npm run dev
-      - name: Open server
+
+      - name: Run local server
         run: |
           php artisan serve &
+
       - name: Run cypress
         run: |
           cp cypress.json.example cypress.json
-          npm run cypress-record 91313d13-c3e1-4c21-b0ee-b290ce7dc720
+          npm run cypress-record ${{ secrets.CYPRESS_DASHBOARD_KEY }}
 

@@ -1,15 +1,18 @@
-## Testing Guidelines :mag_right:
-Portal uses Cypress to test the code
+## Testing Guidelines 🧪
+Portal uses Cypress for automated testing.
 
-Copy cypress.json.example to cypress.json and add  configuration for cypress. For configuration options please refer [here](https://docs.cypress.io/guides/references/configuration#cypress-json) 
+Steps to run cypress:
 
-1. Run the following command to load cypress in GUI mode 
-    ```
-    yarn run cypress open
-    ```
+1. Copy `cypress.json.example` as `cypress.json`.
+ For more configuration options please refer [here](https://docs.cypress.io/guides/references/configuration#cypress-json) 
 
 
-1. Run the following command to load cypress in headless mode mode 
-    ```
-    yarn run cypress
-    ```
+2. Run the following command to run cypress 
+    - Headless mode  
+        ```
+        yarn run cypress
+        ```
+    - GUI mode 
+        ```
+        yarn run cypress open
+        ```
