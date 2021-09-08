@@ -15,17 +15,18 @@ class UserSettingsController extends ModuleBaseController
     {
         return view('user::user-settings.index');
     }
-  
+
     public function storeData(Request $request)
     {
         DB::table('user_meta')->insert([
             'user_id' => Auth::user()->id,
             'max_appointments_per_day'=>$request->max_appointments_per_day,
       ]);
-            
+
         return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
     }
-          public function save()
+
+    public function save()
     {
         $maxinterviews = new UserMeta;
 
