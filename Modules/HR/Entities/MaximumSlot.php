@@ -2,15 +2,22 @@
 
 namespace Modules\HR\Entities;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class MaximumSlot extends Model
+class UserMeta extends Model
 {
-    public static function getUserData()
-    {
-        $max_slot = DB::table('user_meta')->select('max_appointments_per_day')->orderBy('id', 'desc')->first()->max_appointments_per_day;
+    public function user()
+    {   
+        return  $this->belongsTo (User::class);
+    }
 
-        return $max_slot;
+     public static function getUserData()
+    {
+        $maxslots=DB::table('maxslots')->select('max_interviews_per_day')->where('user_id', 'users.id')->orderByDesc('created_at')->first();
+        
+        return $maxslots;
+
     }
 }
