@@ -6,6 +6,7 @@ use App\Models\KnowledgeCafe\Library\Book;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\HR\Entities\Employee;
+use Modules\HR\Entities\UserMeta;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -82,5 +83,10 @@ class User extends Authenticatable
     public function scopeFindByEmail($query, $email)
     {
         return $query->where('email', $email);
+    }
+    
+    public function maxslot()
+    {
+        return $this->hasMany(UserMeta::class, 'user_id', 'id');
     }
 }
