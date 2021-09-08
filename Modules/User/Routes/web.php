@@ -24,4 +24,5 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('/profile', 'ProfileController@index')->name('user.profile');
     Route::get('/user-settings', 'UserSettingsController@index')->name('user.settings');
     Route::post('/user-settings/hr', 'UserSettingsController@storeData')->name('user.settings-hr');
+    Route::get('/user-settings/hr', 'UserSettingsController@save')->name('user.settings-hr');
 });
