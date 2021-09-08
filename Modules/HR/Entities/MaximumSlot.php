@@ -18,6 +18,5 @@ class UserMeta extends Model
         $maxslots=DB::table('user_meta')->select('max_appointments_per_day')->where('user_id', 'users.id')->orderByDesc('created_at')->first();
         
         return $maxslots;
-
     }
 }
