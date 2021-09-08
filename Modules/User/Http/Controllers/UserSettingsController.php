@@ -5,7 +5,7 @@ use DB;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
-use Modules\HR\Entities\MaximumSlot;
+use Modules\HR\Entities\UserMeta;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,5 +24,11 @@ class UserSettingsController extends ModuleBaseController
       ]);
             
         return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
+    }
+          public function save()
+    {
+        $maxinterviews = new UserMeta;
+
+        return view('user::user-settings.hr-save', compact('maxinterviews'));
     }
 }
