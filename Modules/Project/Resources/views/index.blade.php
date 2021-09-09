@@ -48,6 +48,9 @@
                                 @endforeach
                             </ul>
                         </td>
+                        <td>
+                            <a href="">Click Here</a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
