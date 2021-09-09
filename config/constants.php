@@ -212,9 +212,13 @@ return [
         11 => 'November',
         12 => 'December',
     ],
+    'project_type' => [
+        'monthly' => 'Monthly',
+        'fixed-budget' => 'Fixed Budget',
+    ],
 
     'google_application_credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
 
     'website_url' => env('WEBSITE_URL', 'https://coloredcow.com'),
-    'website_upload_dir' => env('WEBSITE_UPLOAD_DIR')
+    'website_upload_dir' => env('WEBSITE_UPLOAD_DIR'),
 ];
