@@ -35,13 +35,13 @@
             </select>
         </div>
         <div class="form-group col-md-5">
-            <label for="type">{{ __('Total Estimated Hours') }}</label>
-            <input type="text" class="form-control" name="total_estimated_hours" id="total_estimated_hours"
+            <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
+            <input type="number" class="form-control" name="total_estimated_hours" id="total_estimated_hours"
                 placeholder="Enter total estimated hours" value="{{ old('total_estimated_hours') }}">
         </div>
         <div class="form-group offset-md-1 col-md-5">
-            <label for="type">{{ __('Monthly Estimated Hours') }}</label>
-            <input type="url" class="form-control" name="monthly_estimated_hours" id="monthly_estimated_hours"
+            <label for="monthly_estimated_hours">{{ __('Monthly Estimated Hours') }}</label>
+            <input type="number" class="form-control" name="monthly_estimated_hours" id="monthly_estimated_hours"
                 placeholder="Enter monthly estimated hours" value="{{ old('monthly_estimated_hours') }}">
         </div>
     </div>
