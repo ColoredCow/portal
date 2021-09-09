@@ -10,28 +10,22 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-4">
                         Resources
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         Designations
-                    </div>
-                    <div class="col-2">
-                        Current Hours
-                    </div>
-                     <div class="col-2">
-                        Expected Hours
                     </div>
                 </div>
 
                 <div class="row mb-3" v-for="(projectResource, index) in projectResources" :key="projectResource.id">
-                    <div class="col-2">
+                    <div class="col-4">
                         <select v-model="projectResource.id" :name="`projectResource[${index}][resource_id]`" class="form-control">
                             <option value="">Select Resource</option>
                             <option v-for="(resource) in allResources" :value="resource.id" :key="resource.id">@{{ resource.name }}</option>
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <select v-model="projectResource.pivot.designation" :name="`projectResource[${index}][designation]`" class="form-control">
                             <option value="">Select Designations</option>
 
@@ -39,15 +33,7 @@
                         </select>
                     </div>
 
-                    <div class="col-2">
-
-                    </div>
-
-                    <div class="col-2">
-
-                    </div>
-
-                    <div class="col-2">
+                    <div class="col-4">
                         <button v-on:click="removeProjectResource(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2"> - </button>
                     </div>
                 </div>
