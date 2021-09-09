@@ -5,6 +5,7 @@ namespace Modules\Project\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Project\Entities\Project;
 
 class ProjectEffortTrackingController extends Controller
 {
@@ -29,12 +30,12 @@ class ProjectEffortTrackingController extends Controller
 
     /**
      * Show the specified resource.
-     * @param int $id
+     * @param Project $project
      * @return Renderable
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        return view('project::effort-tracking.show');
+        return view('project::effort-tracking.show')->with('project', $project);
     }
 
     /**
