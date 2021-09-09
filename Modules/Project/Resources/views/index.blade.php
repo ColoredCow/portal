@@ -49,7 +49,7 @@
                             </ul>
                         </td>
                         <td>
-                            <a href="">Click Here</a>
+                            <a href="{{route('project.effort-tracking', $project )}}">Click Here</a>
                         </td>
                     </tr>
                 @empty
