@@ -25,7 +25,7 @@ class ProjectEffortTrackingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -56,7 +56,7 @@ class ProjectEffortTrackingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -66,6 +66,6 @@ class ProjectEffortTrackingController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
