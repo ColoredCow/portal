@@ -221,7 +221,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             } else {
                 $maxInterviewsPerDay = config('hr.daily-appointment-slots.max-reserved-allowed', 3);
             }
-            
+
             return $value >= $maxInterviewsPerDay;
         })->keys()->all();
 
