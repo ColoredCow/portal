@@ -19,15 +19,13 @@ class UserSettingsController extends ModuleBaseController
         return view('user::user-settings.index');
     }
 
-      public function update(Request $request)
+    public function update(Request $request)
     {
-
         DB::table('user_meta')->updateOrInsert(
             ['user_id' => Auth::user()->id,],
             ['max_interviews_per_day'=>$request->max_interviews_per_day,]
-            );
+        );
 
         return redirect('/user/user-settings')->with('status', 'Saved Successfully!');
     }
-
 }
