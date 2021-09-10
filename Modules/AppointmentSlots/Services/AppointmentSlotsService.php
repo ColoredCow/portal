@@ -2,17 +2,16 @@
 
 namespace Modules\AppointmentSlots\Services;
 
+use DB;
+use Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Modules\User\Entities\User;
 use Modules\HR\Entities\Applicant;
+use Illuminate\Database\Eloquent\Scope;
 use Modules\HR\Entities\Application;
 use App\Services\CalendarEventService;
 use Modules\HR\Entities\ApplicationRound;
-use Modules\HR\Entities\Maxslot;
-use Illuminate\Http\Request;
-use DB;
-use Modules\User\Entities\User;
-use Illuminate\Database\Eloquent\Scope;
-use Auth;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\Communication\Contracts\CalendarMeetingContract;
 use Modules\HR\Jobs\Recruitment\SendApplicationRoundScheduled;
@@ -221,7 +220,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use($userId)
         {
             $userMeta = User::find($userId)->meta;
-            
+
             if($userMeta)
             {
                 $maxInterviewsPerDay = $userMeta->max_interviews_per_day;
@@ -232,8 +231,6 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
                 $maxInterviewsPerDay = config('hr.daily-appointment-slots.max-reserved-allowed', 3);
             }
             return $value >= $maxInterviewsPerDay;
-              
-            
         })->keys()->all();
 
         $freeSlots = $slots->where('status', 'free')->reject(function ($slot) use ($datesToRemove) {

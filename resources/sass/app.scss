@@ -749,7 +749,7 @@ span.totalChartCount{
 	background: #FDFDFD;
 	box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.07);
 }
- .d2{
+.d2{
 
  	position: absolute;
  	width: 1218px;
@@ -772,13 +772,10 @@ span.totalChartCount{
 	font-style: normal;
 	font-weight: 600;
 	font-size: 18px;
-	//line-height: 20px;
 	text-align: center;
 	color: #969281;
 	outline-offset: 0px;
     outline: none;
-
-
 }
 .down{
 	position: absolute;
@@ -796,24 +793,13 @@ span.totalChartCount{
 	position: absolute;
     width: 82px;
 	height: 44px;
-    left: 72px;
+    left: 132px;
     top: 100px;
     background: #6CB2EB;
     border-radius: 8px;
 }
-.reset{
-	position: absolute;
-    width: 82px;
-	height: 44px;
-    left: 180px;
-    top: 100px;
-    background: #8a8b8b;
-    border-radius: 8px;
-	text-align: center;
-}
 .max{
 	position: absolute;
-
     width: 248px;
     height: 20px;
     left: 72px;
@@ -824,8 +810,6 @@ span.totalChartCount{
     font-size: 18px;
     line-height: 20px;
     color: #969281;
-
-
 }
 
 // End Custom

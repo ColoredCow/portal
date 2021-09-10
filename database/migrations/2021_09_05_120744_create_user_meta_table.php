@@ -30,7 +30,6 @@ class CreateUserMetaTable extends Migration
      */
     public function down()
     {
-        
         Schema::dropIfExists('user_meta');
     }
 }
