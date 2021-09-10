@@ -126,14 +126,12 @@ class ApplicationRound extends Model
                 foreach ($attr['reject_reason'] as $rejectReason) {
                     if (isset($rejectReason['title'])) {
                         HRRejectionReason::create([
-                            'hr_application_round_id' => 1,
+                            'hr_application_round_id' => $this->id,
                             'reason_title' => $rejectReason['title'],
                             'reason_comment' => $rejectReason['comment'] ?? null,
                         ]);
                     }
                 }
-                // if there are reason for rejections
-                // save them into the database
                 break;
 
             case 'refer':
