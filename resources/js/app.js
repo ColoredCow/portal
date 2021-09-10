@@ -1064,23 +1064,46 @@ function lineChart(){
 		options: options
 	  });
 }
+ 
 
 $(function () {
-	$("#rejectReason2").click(function () {
+	$("#rejectReason1").click(function () {
 		if ($(this).is(":checked")) {
 			$("#txtReasonRejected1").show();
 		} else {
 			$("#txtReasonRejected1").hide();
 		}
 	});
-});
 
-$(function () {
-	$("#rejectReason5").click(function () {
+	$("#rejectReason2").click(function () {
 		if ($(this).is(":checked")) {
 			$("#txtReasonRejected2").show();
 		} else {
 			$("#txtReasonRejected2").hide();
+		}
+	});
+
+	$("#rejectReason3").click(function () {
+		if ($(this).is(":checked")) {
+			$("#txtReasonRejected3").show();
+		} else {
+			$("#txtReasonRejected3").hide();
+		}
+	});
+
+	$("#rejectReason4").click(function () {
+		if ($(this).is(":checked")) {
+			$("#txtReasonRejected4").show();
+		} else {
+			$("#txtReasonRejected4").hide();
+		}
+	});
+
+	$("#rejectReason5").click(function () {
+		if ($(this).is(":checked")) {
+			$("#txtReasonRejected5").show();
+		} else {
+			$("#txtReasonRejected5").hide();
 		}
 	});
 });
