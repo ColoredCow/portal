@@ -17,13 +17,8 @@ class HrApplicationRejectionReasons extends Migration
             $table->increments('id');
             $table->integer('hr_application_round_id')->unsigned();
             $table->foreign('hr_application_round_id')->references('id')->on('hr_application_round');
-<<<<<<< Updated upstream
-            $table->string('reason_title', 255);
-            $table->text('reason_comment');
-=======
             $table->string('reason_title');
             $table->text('reason_comment')->nullable();
->>>>>>> Stashed changes
             $table->timestamps();
         });
     }

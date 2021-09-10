@@ -51,6 +51,7 @@ class ApplicationRoundRequest extends FormRequest
                 $rules['mail_to_applicant.confirm.body'] = 'nullable|string|required_with:send_mail_to_applicant';
             }
         } elseif (request()->input('action') == 'reject') {
+            $rules['reject_reason'] = 'nullable|array';
             if (request()->input('send_mail_to_applicant.reject') == 'on') {
                 $rules['mail_to_applicant.reject.subject'] = 'nullable|string|required_with:send_mail_to_applicant';
                 $rules['mail_to_applicant.reject.body'] = 'nullable|string|required_with:send_mail_to_applicant';
