@@ -9,15 +9,19 @@ use App\Http\Controllers\Controller;
 use Modules\HR\Entities\Maxslot;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Modules\User\Entities\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserSettingsController extends ModuleBaseController
 {
     public function index()
     {
+        // $user= User::find(2);
+        // dd($user);
+        // dd($user->maxslots->max_interviews_per_day)
+        // dd($user->maxSlots ?? config);
         return view('user::user-settings.index');
-    }
-    
+    }    
 
     public function storeData(Request $request)
     {
@@ -31,7 +35,17 @@ class UserSettingsController extends ModuleBaseController
 
     }
 
-      public function save()
+     public function update(Request $request)
+    {
+        DB::table('maxslots')->update([
+            'max_interviews_per_day'=>$request->max_interviews_per_day,
+            'created_at'=>  \Carbon\Carbon::now(),
+        ]);
+
+          return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
+    }
+    
+     public function save()
     {
         $maxinterviews = new Maxslot;
     

@@ -8,6 +8,7 @@ use Modules\HR\Entities\Application;
 use App\Services\CalendarEventService;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Maxslot;
+use Illuminate\Http\Request;
 use DB;
 use App\User;
 use Illuminate\Database\Eloquent\Scope;
@@ -218,10 +219,11 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         });
 
         $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) 
-        {
+        {    
             {
-                $userData = Maxslot::getUserData();
-                return $value >= $userData;
+                $userData = Maxslot::getUserData(1);
+
+                return $userData;
             }  
             
         })->keys()->all();
