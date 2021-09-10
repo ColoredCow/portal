@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\HR\Entities;
+namespace Modules\User\Entities;
 
 use Modules\User\Entities\User;
 use Auth;

@@ -12,6 +12,7 @@ use Modules\Project\Entities\Project;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
+use Modules\User\Entities\UserMeta;
 
 class User extends Authenticatable
 {
@@ -110,5 +111,10 @@ class User extends Authenticatable
     public function projects()
     {
         return $this->belongsToMany(Project::class, 'project_resources', 'resource_id', 'project_id');
+    }
+
+    public function meta()
+    {
+        return $this->hasOne(UserMeta::class, 'user_id');
     }
 }

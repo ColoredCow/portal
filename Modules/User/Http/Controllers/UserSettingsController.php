@@ -6,7 +6,7 @@ use DB;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
-use Modules\HR\Entities\UserMeta;
+use Modules\User\Entities\UserMeta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Modules\User\Entities\User;

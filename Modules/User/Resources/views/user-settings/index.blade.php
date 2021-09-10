@@ -20,9 +20,8 @@
     </div>
     <div class="card-body d2" id="body">
         <h5 class="card-title max">Maximum interviews in a day:</h5>
-            <input type="number" class="quantity" id="quantity" name="max_interviews_per_day" min="0" max="4" value="{{ old ('max_interviews_per_day') }}"></input>
+            <input type="number" class="quantity" id="quantity" name="max_interviews_per_day" min="0" max="4" value="{{ old ('max_interviews_per_day', optional(Auth::user()->meta)->max_interviews_per_day) }}"></input>
             <input type="submit" class="btn btn-secondary save" value="Save">
-        <a href="{{ route('user.settings') }}" class="btn btn-secondary reset" id="reset">Reset</a>
     </div>
 </div>
 </form>
