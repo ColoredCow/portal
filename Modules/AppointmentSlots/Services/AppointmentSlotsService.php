@@ -2,13 +2,9 @@
 
 namespace Modules\AppointmentSlots\Services;
 
-use DB;
-use Auth;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Modules\User\Entities\User;
 use Modules\HR\Entities\Applicant;
-use Illuminate\Database\Eloquent\Scope;
 use Modules\HR\Entities\Application;
 use App\Services\CalendarEventService;
 use Modules\HR\Entities\ApplicationRound;
@@ -225,6 +221,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             } else {
                 $maxInterviewsPerDay = config('hr.daily-appointment-slots.max-reserved-allowed', 3);
             }
+
             return $value >= $maxInterviewsPerDay;
         })->keys()->all();
 
