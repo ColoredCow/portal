@@ -2,7 +2,6 @@
 
 namespace Modules\User\Services;
 
-use Illuminate\Http\Response;
 use Modules\User\Entities\User;
 use OfficeSuite\OfficeSuiteFacade;
 use Modules\User\Events\UserRemovedEvent;

@@ -6,7 +6,6 @@ use App\Helpers\DateHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Finance\Invoice;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class ReportsController extends Controller
 {
