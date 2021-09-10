@@ -30,10 +30,6 @@ class HrApplicationRejectionReasons extends Migration
      */
     public function down()
     {
-<<<<<<< Updated upstream
-        Schema::dropIfExits('hr_application_rejection_reasons');
-=======
         Schema::dropIfExists('hr_application_rejection_reasons');
->>>>>>> Stashed changes
     }
 }
