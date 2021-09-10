@@ -10,7 +10,7 @@ use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Maxslot;
 use Illuminate\Http\Request;
 use DB;
-use App\User;
+use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Scope;
 use Auth;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
@@ -217,17 +217,21 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $reservedSlotsCount = $slots->where('status', 'reserved')->pluck('start_time')->countBy(function ($date) {
             return $date->format(config('constants.date_format', 'Y-m-d'));
         });
-        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) {
-            return $value >= config('hr.daily-appointment-slots.max-reserved-allowed', 3);
-        })->keys()->all();
-        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) 
-        {
-            
-            
-                return $value >= config('hr.daily-appointment-slots.max-reserved-allowed', 3);
-                $userData = Maxslot::getUserData();
 
-                return $userData;
+        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use($userId)
+        {
+            $userMeta = User::find($userId)->meta;
+            
+            if($userMeta)
+            {
+                $maxInterviewsPerDay = $userMeta->max_interviews_per_day;
+            }
+
+            else
+            {
+                $maxInterviewsPerDay = config('hr.daily-appointment-slots.max-reserved-allowed', 3);
+            }
+            return $value >= $maxInterviewsPerDay;
               
             
         })->keys()->all();
