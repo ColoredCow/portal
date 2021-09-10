@@ -217,7 +217,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             return $date->format(config('constants.date_format', 'Y-m-d'));
         });
 
-        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use($userId) {
+        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use ($userId) {
 
             $userMeta = User::find($userId)->meta;
 
