@@ -8,11 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
+use Modules\User\Entities\UserMeta;
 use Modules\Project\Entities\Project;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
-use Modules\User\Entities\UserMeta;
 
 class User extends Authenticatable
 {
