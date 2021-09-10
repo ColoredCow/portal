@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Modules\AppointmentSlots\Services\AppointmentSlotsService;
 
-class Maxslot extends Model
+class UserMeta extends Model
 {
     //use SoftDeletes;
-    protected $table = 'maxslots';
+    protected $table = 'user_meta';
     protected $fillable = ['max_interviews_per_day',];
     //protected $hidden = ['created_at', 'updated_at',];
 
@@ -29,8 +29,8 @@ class Maxslot extends Model
         // $id = json_decode(decrypt($data['id']), true);
         // $decryptedParams = json_decode(decrypt($id), true);
         // $userId = $decryptedParams['user_id'];
-        $user=User::decrpyt()->request()->user('id');
-        dd($user);
+        // $user=User::decrpyt()->request()->user('id');
+        // dd($user);
         //$userId= User::select('id')->first()->id;
         // $user = Maxslot::select('user_id')->first()->user_id;
         // if($userId == $user)

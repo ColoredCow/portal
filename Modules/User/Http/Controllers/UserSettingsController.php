@@ -6,7 +6,7 @@ use DB;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
-use Modules\HR\Entities\Maxslot;
+use Modules\HR\Entities\UserMeta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Modules\User\Entities\User;
@@ -25,29 +25,32 @@ class UserSettingsController extends ModuleBaseController
 
     public function storeData(Request $request)
     {
-        DB::table('maxslots')->Insert([
+        
+        DB::table('user_meta')->Insert([
             'user_id' => Auth::user()->id,
             'max_interviews_per_day'=>$request->max_interviews_per_day,
             'created_at'=>  \Carbon\Carbon::now(),
         ]);
 
-        return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
+        return redirect('/user/user-settings')->with('status', 'Saved Successfully!');
 
     }
 
-     public function update(Request $request)
+      public function update(Request $request)
     {
-        DB::table('maxslots')->update([
-            'max_interviews_per_day'=>$request->max_interviews_per_day,
-            'created_at'=>  \Carbon\Carbon::now(),
-        ]);
+        
+         DB::table('user_meta')->updateOrInsert(
+            ['user_id' => Auth::user()->id,],
 
-          return redirect('/user/user-settings/hr')->with('status', 'Saved Successfully!');
+            ['max_interviews_per_day'=>$request->max_interviews_per_day,]
+            );
+
+           return redirect('/user/user-settings')->with('status', 'Saved Successfully!');
     }
     
      public function save()
     {
-        $maxinterviews = new Maxslot;
+        $maxinterviews = new UserMeta;
     
         return view('user::user-settings.hr-save', compact('maxinterviews'));
     }

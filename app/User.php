@@ -8,7 +8,6 @@ use Illuminate\Notifications\Notifiable;
 use Modules\HR\Entities\Employee;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
-use Modules\HR\Entities\Maxslot;
 
 class User extends Authenticatable
 {
@@ -85,9 +84,6 @@ class User extends Authenticatable
         return $query->where('email', $email);
     }
 
-    public function maxSlots()
-    {
-        return $this->hasOne(Maxslot::class, 'user_id');
-    }
+    
 
 }

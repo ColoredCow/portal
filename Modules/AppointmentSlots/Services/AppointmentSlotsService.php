@@ -217,14 +217,18 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $reservedSlotsCount = $slots->where('status', 'reserved')->pluck('start_time')->countBy(function ($date) {
             return $date->format(config('constants.date_format', 'Y-m-d'));
         });
-
+        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) {
+            return $value >= config('hr.daily-appointment-slots.max-reserved-allowed', 3);
+        })->keys()->all();
         $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) 
-        {    
-            {
-                $userData = Maxslot::getUserData(1);
+        {
+            
+            
+                return $value >= config('hr.daily-appointment-slots.max-reserved-allowed', 3);
+                $userData = Maxslot::getUserData();
 
                 return $userData;
-            }  
+              
             
         })->keys()->all();
 
