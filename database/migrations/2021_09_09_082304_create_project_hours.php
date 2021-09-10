@@ -14,7 +14,7 @@ class CreateProjectHours extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('type')->nullable()->after('effort_sheet_url');
+            $table->string('project_type')->nullable()->after('effort_sheet_url');
             $table->float('total_estimated_hours')->nullable();
             $table->float('monthly_estimated_hours')->nullable();
         });

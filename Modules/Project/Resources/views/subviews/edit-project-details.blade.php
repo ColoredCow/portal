@@ -78,6 +78,20 @@
                         value="{{ old('monthly_estimated_hours') ?: $project->monthly_estimated_hours }}">
                     </div>
                 </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="name" class="field-required">Select project type</label>
+                        <select name="project_type" id="project_type" class="form-control" required="required">
+                            @foreach (config('constants.project_type') as $key => $project_type)
+                            @php
+                            $selected = $project->project_type == $project_type ? 'selected' : '';
+                            @endphp
+                            <option value="{{ $key }}" {{ $selected }}>{{ $project_type }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <div data-id="he" type="button"  v-on:click="updateProjectForm('form_update_project_details')" class="btn btn-primary">Update details</div>
