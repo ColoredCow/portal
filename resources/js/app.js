@@ -270,9 +270,9 @@ if (document.getElementById("finance_report")) {
 }
   
 $("#page_hr_applicant_edit .applicant-round-form").on("click", ".round-submit", function() {
-	  let button = $(this);
-	  let form = $(this).closest(".applicant-round-form");
-	  let selectedAction = $(this).data("action");
+	  let button = $(this); // reject button
+	  let form = $(this).closest(".applicant-round-form"); // <form element with class "applicant-round-form" >
+	  let selectedAction = $(this).data("action"); // reject
 	  const actions = [ "confirm", "send-for-approval", "onboard", "approve" ];
 	  if (actions.includes(selectedAction)) {
 		  if (!form[0].checkValidity()) {
@@ -280,9 +280,10 @@ $("#page_hr_applicant_edit .applicant-round-form").on("click", ".round-submit", 
 			  return false;
 		  }
 	  }
-	  form.find("[name=\"action\"]").val(selectedAction);
-	  button.prop("disabled", "disabled").addClass("disabled");
-	  form.submit();
+	  
+	  form.find("[name=\"action\"]").val(selectedAction); // setting name="action" input inside form to "reject"
+	  button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
+	  form.submit(); // submitting the form
 });
   
 $(".date-field").datepicker({
