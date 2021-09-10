@@ -57,6 +57,27 @@
                         value="{{ old('effort_sheet_url') ?: $project->effort_sheet_url }}">
                     </div>
                 </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
+                        <a id="view_effort_sheet_badge" class="badge badge-primary p-1 ml-2 text-light {{ $project->total_estimated_hours ? '' : 'd-none' }}" target="_blank" href="{{ $project->total_estimated_hours }}">{{ __('view') }}</a>
+                        <input type="number" class="form-control" 
+                        name="total_estimated_hours" 
+                        id="total_estimated_hours" 
+                        placeholder="Enter total estimated hours" 
+                        value="{{ old('total_estimated_hours') ?: $project->total_estimated_hours }}">
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="monthly_estimated_hours">{{ __('Monthly Estimated Hours') }}</label>
+                        <a id="view_effort_sheet_badge" class="badge badge-primary p-1 ml-2 text-light {{ $project->monthly_estimated_hours ? '' : 'd-none' }}" target="_blank" href="{{ $project->monthly_estimated_hours }}">{{ __('view') }}</a>
+                        <input type="number" class="form-control" 
+                        name="monthly_estimated_hours" 
+                        id="monthly_estimated_hours" 
+                        placeholder="Enter monthly estimated hours" 
+                        value="{{ old('monthly_estimated_hours') ?: $project->monthly_estimated_hours }}">
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <div data-id="he" type="button"  v-on:click="updateProjectForm('form_update_project_details')" class="btn btn-primary">Update details</div>
