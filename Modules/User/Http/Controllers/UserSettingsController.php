@@ -12,10 +12,13 @@ use Illuminate\Http\Request;
 use Modules\User\Entities\User;
 use Illuminate\Foundation\Http\FormRequest;
 
+
+
 class UserSettingsController extends ModuleBaseController
 {
     public function index()
     {
+
         // $user= User::find(2);
         // dd($user);
         // dd($user->maxslots->max_interviews_per_day)
@@ -54,5 +57,4 @@ class UserSettingsController extends ModuleBaseController
     
         return view('user::user-settings.hr-save', compact('maxinterviews'));
     }
-
 }
