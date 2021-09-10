@@ -218,7 +218,6 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         });
 
         $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use ($userId) {
-
             $userMeta = User::find($userId)->meta;
 
             if ($userMeta) {
