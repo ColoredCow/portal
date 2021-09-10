@@ -83,5 +83,4 @@ class User extends Authenticatable
     {
         return $query->where('email', $email);
     }
-
 }
