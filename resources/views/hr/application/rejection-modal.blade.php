@@ -43,40 +43,40 @@
             </div>
                 <div class="form-check">
                     <h5><b> Select Reasons: </b></h5>
-                    <label for="Rejection">
-                        <input type="checkbox" id="rejectReason1" name='reason[1][title]' value='No response'> No response <br>
-                    </label>
-                    <br />
-                    <div id="txtReasonRejected1" style="display: none">
-                        <input type="text" id="Reasons1" name='reason[1][comment]' />
-                    </div> 
-                    <label for="Rejection">
-                        <input type="checkbox" id="rejectReason2" name='reason[2][title]' value='Skills mismatch'> Skills mismatch
-                    </label>
-                    <br />
-                    <div id="txtReasonRejected2" style="display: none">
-                        <input type="text" id="Reasons2" name='reason[2][comment]' />
+                    <div class="rejection-reason-block">
+                        <label for="reasonTitle1">
+                            <input type="checkbox" class="reject-reason" id="reasonTitle1" name='reason[1][title]' value='No response'>No response <br>
+                        </label>
+                        <br />
+                        <input type="text" name='reason[1][comment]' style="display: none" />
                     </div>
-                    <label for="Rejection">
-                        <input type="checkbox" id="rejectReason3" name='reason[3][title]' value='Culture mismatch'> Culture mismatch 
-                    </label>
-                    <br />
-                    <div id="txtReasonRejected3" style="display: none">
-                        <input type="text" id="Reasons3" name='reason[3][comment]' />
+                    <div class="rejection-reason-block">
+                        <label for="reasonTitle2">
+                            <input type="checkbox" class="reject-reason" id="reasonTitle2" name='reason[2][title]' value='Skills mismatch'> Skills mismatch
+                        </label>
+                        <br />
+                        <input type="text" name='reason[2][comment]' style="display: none" />
                     </div>
-                    <label for="Rejection">
-                        <input type="checkbox" id="rejectReason4" name='reason[4][title]' value='Salary  expectation mismatch'> Salary  expectation mismatch 
-                    </label>
-                    <br />
-                    <div id="txtReasonRejected4" style="display: none">
-                        <input type="text" id="Reasons4" name='reason[4][comment]' />
+                    <div class="rejection-reason-block">
+                        <label for="reasonTitle3">
+                            <input type="checkbox" class="reject-reason" id="reasonTitle3" name='reason[3][title]' value='Culture mismatch'> Culture mismatch 
+                        </label>
+                        <br />
+                        <input type="text" name='reason[3][comment]' style="display: none" />
                     </div>
-                    <label for="Rejection">
-                        <input type="checkbox" id="rejectReason5" name='reason[5][title]' value='Not enough knowledge/inclination for ColoredCow'> Not enough knowledge/inclination for ColoredCow
-                    </label>
-                    <br />
-                    <div id="txtReasonRejected5" style="display: none">
-                        <input type="text" id="Reasons5" name='reason[5][comment]' />
+                    <div class="rejection-reason-block">
+                        <label for="reasonTitle4">
+                            <input type="checkbox" class="reject-reason" id="reasonTitle4" name='reason[4][title]' value='Salary  expectation mismatch'> Salary  expectation mismatch 
+                        </label>
+                        <br />
+                        <input type="text" name='reason[4][comment]' style="display: none" />
+                    </div>
+                    <div class="rejection-reason-block">
+                        <label for="reasonTitle5">
+                            <input type="checkbox" class="reject-reason" id="reasonTitle5" name='reason[5][title]' value='Not enough knowledge/inclination for ColoredCow'> Not enough knowledge/inclination for ColoredCow
+                        </label>
+                        <br />
+                        <input type="text" name='reason[5][comment]' style="display: none" />
                     </div>
                 </div>
                     <div class="modal-body">

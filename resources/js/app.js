@@ -1068,43 +1068,13 @@ function lineChart(){
  
 
 $(function () {
-	$("#rejectReason1").click(function () {
-		if ($(this).is(":checked")) {
-			$("#txtReasonRejected1").show();
+	$(".reject-reason").on("click", function () {
+		let reasonCheckboxInput = $(this);
+		let reasonCommentInput = reasonCheckboxInput.closest(".rejection-reason-block").find("input[type=\"text\"]");
+		if (reasonCheckboxInput.is(":checked")) {
+			reasonCommentInput.show().focus();
 		} else {
-			$("#txtReasonRejected1").hide();
-		}
-	});
-
-	$("#rejectReason2").click(function () {
-		if ($(this).is(":checked")) {
-			$("#txtReasonRejected2").show();
-		} else {
-			$("#txtReasonRejected2").hide();
-		}
-	});
-
-	$("#rejectReason3").click(function () {
-		if ($(this).is(":checked")) {
-			$("#txtReasonRejected3").show();
-		} else {
-			$("#txtReasonRejected3").hide();
-		}
-	});
-
-	$("#rejectReason4").click(function () {
-		if ($(this).is(":checked")) {
-			$("#txtReasonRejected4").show();
-		} else {
-			$("#txtReasonRejected4").hide();
-		}
-	});
-
-	$("#rejectReason5").click(function () {
-		if ($(this).is(":checked")) {
-			$("#txtReasonRejected5").show();
-		} else {
-			$("#txtReasonRejected5").hide();
+			reasonCommentInput.hide();
 		}
 	});
 });
