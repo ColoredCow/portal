@@ -3,7 +3,6 @@
 namespace Modules\AppointmentSlots\Observers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 
 class UserAppointmentSlotObserver

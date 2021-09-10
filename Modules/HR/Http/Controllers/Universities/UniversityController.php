@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Http\Controllers\Universities;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\UniversityRequest;
