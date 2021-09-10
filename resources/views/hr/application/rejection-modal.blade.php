@@ -41,77 +41,51 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                <div class="form-check">
-                    <h5><b> Select Reasons: </b></h5>
+            <div class="form-check mt-3">
+                <p class="font-weight-bold">Select Reasons</p>
+                @foreach (config('hr.reasons-for-rejections') as $index => $reasonForRejection)
                     <div class="rejection-reason-block">
-                        <label for="reasonTitle1">
-                            <input type="checkbox" class="reject-reason" id="reasonTitle1" name='reject_reason[1][title]' value='No response'>No response <br>
+                        <label for="reasonTitle{{ $index }}">
+                            <input type="checkbox" class="reject-reason mr-1" id="reasonTitle{{ $index }}" name='reject_reason[{{ $index }}][title]' value='{{ $reasonForRejection }}'>{{ $reasonForRejection }}<br>
                         </label>
                         <br />
-                        <input type="text" name='reject_reason[1][comment]' style="display: none" />
+                        <input type="text" class="form-control w-half mb-3" name='reject_reason[{{ $index }}][comment]' style="display: none" placeholder="Reason for {{ $reasonForRejection }}" />
                     </div>
-                    <div class="rejection-reason-block">
-                        <label for="reasonTitle2">
-                            <input type="checkbox" class="reject-reason" id="reasonTitle2" name='reject_reason[2][title]' value='Skills mismatch'> Skills mismatch
-                        </label>
-                        <br />
-                        <input type="text" name='reject_reason[2][comment]' style="display: none" />
-                    </div>
-                    <div class="rejection-reason-block">
-                        <label for="reasonTitle3">
-                            <input type="checkbox" class="reject-reason" id="reasonTitle3" name='reject_reason[3][title]' value='Culture mismatch'> Culture mismatch 
-                        </label>
-                        <br />
-                        <input type="text" name='reject_reason[3][comment]' style="display: none" />
-                    </div>
-                    <div class="rejection-reason-block">
-                        <label for="reasonTitle4">
-                            <input type="checkbox" class="reject-reason" id="reasonTitle4" name='reject_reason[4][title]' value='Salary  expectation mismatch'> Salary  expectation mismatch 
-                        </label>
-                        <br />
-                        <input type="text" name='reject_reason[4][comment]' style="display: none" />
-                    </div>
-                    <div class="rejection-reason-block">
-                        <label for="reasonTitle5">
-                            <input type="checkbox" class="reject-reason" id="reasonTitle5" name='reject_reason[5][title]' value='Not enough knowledge/inclination for ColoredCow'> Not enough knowledge/inclination for ColoredCow
-                        </label>
-                        <br />
-                        <input type="text" name='reject_reason[5][comment]' style="display: none" />
-                    </div>
-                </div>
-                    <div class="modal-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-12 d-flex align-items-center">
-                                <div class="py-0.67">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" name="send_mail_to_applicant[reject]" class="custom-control-input send-mail-to-applicant" id="rejectSendMailToApplicant" data-target="#previewMailToApplicant" checked>
-                                        <label class="custom-control-label" for="rejectSendMailToApplicant">Send email</label>
-                                    </div>
-                                </div>
-                                <div class="toggle-block-display c-pointer rounded-circle bg-theme-gray-lightest hover-bg-theme-gray-lighter px-1 py-0.67 ml-1" id="previewMailToApplicant" data-target="#rejectMailToApplicantBlock" data-toggle-icon="true">
-                                    <i class="fa fa-eye toggle-icon d-none" aria-hidden="true"></i>
-                                    <i class="fa fa-eye-slash toggle-icon" aria-hidden="true"></i>
-                                </div>
+                @endforeach
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-12 d-flex align-items-center">
+                        <div class="py-0.67">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" name="send_mail_to_applicant[reject]" class="custom-control-input send-mail-to-applicant" id="rejectSendMailToApplicant" data-target="#previewMailToApplicant" checked>
+                                <label class="custom-control-label" for="rejectSendMailToApplicant">Send email</label>
                             </div>
                         </div>
-                        <div class="form-row d-none" id="rejectMailToApplicantBlock">
-                            <div class="form-group col-md-12">
-                                <label for="rejectMailToApplicantSubject">Subject</label>
-                                <input type="text" name="mail_to_applicant[reject][subject]" id="rejectMailToApplicantSubject"
-                                    class="form-control">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="rejectMailToApplicantBody">Body</label>
-                                <textarea name="mail_to_applicant[reject][body]" id="rejectMailToApplicantBody" class="form-control richeditor"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-row mt-2">
-                            <div class="form-group col-md-12">
-                                <input type="hidden" name="follow_up_comment_for_reject" id="followUpCommentForReject" />
-                                <button type="save" class="btn btn-danger px-4 round-submit" data-action="reject">Reject</button>
-                            </div>
+                        <div class="toggle-block-display c-pointer rounded-circle bg-theme-gray-lightest hover-bg-theme-gray-lighter px-1 py-0.67 ml-1" id="previewMailToApplicant" data-target="#rejectMailToApplicantBlock" data-toggle-icon="true">
+                            <i class="fa fa-eye toggle-icon d-none" aria-hidden="true"></i>
+                            <i class="fa fa-eye-slash toggle-icon" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
+                <div class="form-row d-none" id="rejectMailToApplicantBlock">
+                    <div class="form-group col-md-12">
+                        <label for="rejectMailToApplicantSubject">Subject</label>
+                        <input type="text" name="mail_to_applicant[reject][subject]" id="rejectMailToApplicantSubject"
+                            class="form-control">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="rejectMailToApplicantBody">Body</label>
+                        <textarea name="mail_to_applicant[reject][body]" id="rejectMailToApplicantBody" class="form-control richeditor"></textarea>
+                    </div>
+                </div>
+                <div class="form-row mt-2">
+                    <div class="form-group col-md-12">
+                        <input type="hidden" name="follow_up_comment_for_reject" id="followUpCommentForReject" />
+                        <button type="save" class="btn btn-danger px-4 round-submit" data-action="reject">Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

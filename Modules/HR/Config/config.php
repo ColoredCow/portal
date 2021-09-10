@@ -127,4 +127,11 @@ return [
         'max-reserved-allowed' => 3,
     ],
     'offer-letters-dir' => 'offer-letters',
+    'reasons-for-rejections' => [
+        'No response',
+        'Skills mismatch',
+        'Culture mismatch',
+        'Salary expectation mismatch',
+        'Not enough knowledge/inclination for ColoredCow'
+    ],
 ];
