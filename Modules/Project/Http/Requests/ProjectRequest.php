@@ -29,9 +29,9 @@ class ProjectRequest extends FormRequest
             'status' => 'sometimes|string',
             'project_manager' => 'nullable|string',
             'effort_sheet_url' => 'nullable|active_url|max:191',
-            'type' => 'required|string',
-            'total_estimated_hours' => 'nullable|float',
-            'monthly_estimated_hours' => 'nullable|float',
+            'type' => 'nullable|string',
+            'total_estimated_hours' => 'numeric|between:0,9999.99',
+            'monthly_estimated_hours' => 'numeric|between:0,9999.99',
         ];
     }
 

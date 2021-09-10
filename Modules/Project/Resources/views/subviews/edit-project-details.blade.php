@@ -61,7 +61,6 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
-                        <a id="view_effort_sheet_badge" class="badge badge-primary p-1 ml-2 text-light {{ $project->total_estimated_hours ? '' : 'd-none' }}" target="_blank" href="{{ $project->total_estimated_hours }}">{{ __('view') }}</a>
                         <input type="number" class="form-control" 
                         name="total_estimated_hours" 
                         id="total_estimated_hours" 
@@ -70,7 +69,6 @@
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="monthly_estimated_hours">{{ __('Monthly Estimated Hours') }}</label>
-                        <a id="view_effort_sheet_badge" class="badge badge-primary p-1 ml-2 text-light {{ $project->monthly_estimated_hours ? '' : 'd-none' }}" target="_blank" href="{{ $project->monthly_estimated_hours }}">{{ __('view') }}</a>
                         <input type="number" class="form-control" 
                         name="monthly_estimated_hours" 
                         id="monthly_estimated_hours" 
@@ -85,7 +83,7 @@
                         <select name="project_type" id="project_type" class="form-control" required="required">
                             @foreach (config('constants.project_type') as $key => $project_type)
                             @php
-                            $selected = $project->project_type == $project_type ? 'selected' : '';
+                            $selected = $project->project_type == $key ? 'selected' : '';
                             @endphp
                             <option value="{{ $key }}" {{ $selected }}>{{ $project_type }}</option>
                             @endforeach

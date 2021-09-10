@@ -2,11 +2,11 @@
 
 namespace Modules\Project\Services;
 
-use Modules\User\Entities\User;
 use Modules\Client\Entities\Client;
-use Modules\Project\Entities\Project;
 use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectRepository;
+use Modules\User\Entities\User;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -35,7 +35,7 @@ class ProjectService implements ProjectServiceContract
             'status' => 'active',
             'start_date' => date('Y-m-d'),
             'end_date' => date('Y-m-d'),
-            'effort_sheet_url' => $data['effort_sheet_url'] ?? null
+            'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
     }
 
@@ -74,15 +74,15 @@ class ProjectService implements ProjectServiceContract
         switch ($updateSection) {
             case 'project_details':
                 return $this->updateProjectDetails($data, $project);
-            break;
+                break;
 
             case 'project_resources':
                 return $this->updateProjectResources($data, $project);
-            break;
+                break;
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
-            break;
+                break;
         }
     }
 
@@ -92,9 +92,12 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'status' => $data['status'],
+            'project_type' => $data['project_type'],
+            'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
+            'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'start_date' => date('Y-m-d'),
             'end_date' => date('Y-m-d'),
-            'effort_sheet_url' => $data['effort_sheet_url'] ?? null
+            'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
     }
 
