@@ -12,6 +12,7 @@
         "ext-gd": "*",
         "aws/aws-sdk-php": "^3.121",
         "barryvdh/laravel-snappy": "^0.4.7",
+        "bordoni/phpass": "dev-main",
         "codegreencreative/laravel-samlidp": "^5.0",
         "consoletvs/charts": "7.*",
         "doctrine/dbal": "^2.10",
