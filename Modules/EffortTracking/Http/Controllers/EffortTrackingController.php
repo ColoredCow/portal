@@ -3,15 +3,17 @@
 namespace Modules\EffortTracking\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Modules\Project\Entities\Project;
 
 class EffortTrackingController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param Project $project
      */
-    public function index()
+    public function index(Project $project)
     {
-        return view('efforttracking::index');
+        return view('efforttracking::index')->with('project', $project);
     }
 
     /**
@@ -24,11 +26,11 @@ class EffortTrackingController extends Controller
 
     /**
      * Show the specified resource.
-     * @param int $id
+     * @param Project $project
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        return view('efforttracking::show');
+        return view('efforttracking::show')->with('project', $project);
     }
 
     /**
