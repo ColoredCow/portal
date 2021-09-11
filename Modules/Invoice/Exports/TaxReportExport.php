@@ -2,7 +2,6 @@
 
 namespace Modules\Invoice\Exports;
 
-use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;

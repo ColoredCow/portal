@@ -18,6 +18,7 @@ Use our [installation guidelines](./docs/installation.md) to set up the project 
 ## Contributing
 - [Development Guide](./docs/development.md)
 - [Deployment Guide](./docs/deployment.md)
+- [Testing Guide](./docs/testing.md)
 - [Branch Naming Convention](./docs/branch-naming-convention.md)
 - [Coding Standards](./docs/coding-standards.md)
 - [Authorization](./docs/authorization.md)
