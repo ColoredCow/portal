@@ -21,5 +21,5 @@ class UserSettingsController extends ModuleBaseController
         );
 
         return redirect()->back()->with('status', 'Saved Successfully!');
-     }
+    }
 }
