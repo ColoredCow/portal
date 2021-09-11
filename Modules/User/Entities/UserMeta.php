@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserMeta extends Model
 {
     protected $table = 'user_meta';
-    protected $fillable = ['max_interviews_per_day'];
+    protected $fillable = ['user_id', 'max_interviews_per_day'];
 
     public function user()
     {
