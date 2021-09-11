@@ -131,7 +131,7 @@ return [
         'no-response' => 'No response',
         'skills-mismatch' => 'Skills mismatch',
         'culture-mismatch' => 'Culture mismatch',
-        'salary-expectation' => 'Salary expectation mismatch',
-        'not-enough-knowladge-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
+        'salary-expectation-mismatch' => 'Salary expectation mismatch',
+        'not-enough-knowledge-inclination-for-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
     ],
 ];
