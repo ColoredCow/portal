@@ -6,8 +6,6 @@ use Carbon\Carbon;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
 use App\Services\GSuiteUserService;
-use Modules\User\Entities\UserMeta;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -54,18 +52,4 @@ class UserController extends Controller
         return $userProjects;
     }
 
-    public function index()
-    {
-        return view('user::user-settings.index');
-    }
-
-    public function update(Request $request)
-    {
-        UserMeta::updateOrCreate(
-            ['user_id' => Auth::user()->id],
-            ['max_interviews_per_day' => $request->max_interviews_per_day]
-        );
-
-        return redirect()->back()->with('status', 'Saved Successfully!');
-    }
 }
