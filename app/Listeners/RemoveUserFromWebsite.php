@@ -24,7 +24,7 @@ class RemoveUserFromWebsite
      * @return void
      */
     public function handle($event)
-    {   
+    {
         if (env('WORDPRESS_ENABLED') == true) {
             $wpUser = WPUser::where('user_email', $event->user->email)->first();
             if (! $wpUser) {
