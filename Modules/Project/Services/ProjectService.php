@@ -100,7 +100,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectResources($data, $project)
     {
-        $projectResources = $data['projectResource'];
+        $projectResources = $data['projectResource'] ?? [];
         $resources = [];
 
         foreach ($projectResources as $projectResource) {
@@ -113,6 +113,8 @@ class ProjectService implements ProjectServiceContract
     private function updateProjectRepositories($data, $project)
     {
         if (! isset($data['url'])) {
+            $project->repositories()->delete();
+
             return;
         }
 
