@@ -4,7 +4,7 @@ namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HRRejectionReason extends Model
+class HrRejectionReason extends Model
 {
     protected $table = 'hr_application_rejection_reasons';
 
