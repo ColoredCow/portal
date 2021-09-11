@@ -53,7 +53,7 @@ class UserController extends Controller
 
         return $userProjects;
     }
-    
+
     public function index()
     {
         return view('user::user-settings.index');
