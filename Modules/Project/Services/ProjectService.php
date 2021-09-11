@@ -100,7 +100,8 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectTeamMembers($data, $project)
     {
-        $projectTeamMembers = $data['projectTeamMember'];
+        $projectTeamMembers = $data['project_team_member'] ?? [];
+
         $teamMembers = [];
 
         foreach ($projectTeamMembers as $projectTeamMember) {
@@ -113,6 +114,8 @@ class ProjectService implements ProjectServiceContract
     private function updateProjectRepositories($data, $project)
     {
         if (! isset($data['url'])) {
+            $project->repositories()->delete();
+
             return;
         }
 

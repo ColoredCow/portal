@@ -20,13 +20,13 @@
 
                 <div class="row mb-3" v-for="(projectTeamMember, index) in projectTeamMembers" :key="projectTeamMember.id">
                     <div class="col-4">
-                        <select v-model="projectTeamMember.id" :name="`projectTeamMember[${index}][team_member_id]`" class="form-control">
+                        <select v-model="projectTeamMember.id" :name="`project_team_member[${index}][team_member_id]`" class="form-control">
                             <option value="">Select team member</option>
                             <option v-for="(teamMember) in allTeamMembers" :value="teamMember.id" :key="teamMember.id">@{{ teamMember.name }}</option>
                         </select>
                     </div>
                     <div class="col-4">
-                        <select v-model="projectTeamMember.pivot.designation" :name="`projectTeamMember[${index}][designation]`" class="form-control">
+                        <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="form-control">
                             <option value="">Select Designations</option>
 
                             <option v-for="(teamMemberDesignation, key) in teamMembersDesignations" :value="key">@{{ teamMembersDesignation }}</option>
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="col-4">
-                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2"> - </button>
+                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
                     </div>
                 </div>
 

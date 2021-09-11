@@ -12,7 +12,7 @@ return [
         'designer' => 'Designer',
     ],
     'type' => [
-        'monthly' => 'Monthly',
+        'monthly-billing' => 'Monthly Billing',
         'fixed-budget' => 'Fixed Budget'
     ]
 ];
