@@ -100,7 +100,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectResources($data, $project)
     {
-        $projectResources = $data['projectResource'] ?? [];
+        $projectResources = $data['project_resource'] ?? [];
         $resources = [];
 
         foreach ($projectResources as $projectResource) {
