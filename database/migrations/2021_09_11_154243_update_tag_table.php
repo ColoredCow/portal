@@ -25,6 +25,5 @@ class UpdateTagTable extends Migration
      */
     public function down()
     {
-
     }
 }
