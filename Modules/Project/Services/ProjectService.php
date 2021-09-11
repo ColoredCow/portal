@@ -104,7 +104,7 @@ class ProjectService implements ProjectServiceContract
         $teamMembers = [];
 
         foreach ($projectTeamMembers as $projectTeamMember) {
-            $teamMembers[$projectTeamMember['team_member_id']] = ['designation' => $projectTeamMembers['designation']];
+            $teamMembers[$projectTeamMember['team_member_id']] = ['designation' => $projectTeamMember['designation']];
         }
 
         return $project->teamMembers()->sync($teamMembers);
