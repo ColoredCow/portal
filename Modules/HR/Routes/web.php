@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
             Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
 
-            Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
+            Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update', 'storeReason']);
             Route::post('/applicationround/{applicationRound}/mail-content/{status}', 'ApplicationRoundController@getMailContent');
             Route::post('/applicationround/{applicationRound}/follow-up', 'ApplicationRoundController@storeFollowUp')->name('hr.application-round.follow-up.store');
             Route::post('/application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
@@ -74,8 +74,8 @@ Route::middleware('auth')->group(function () {
             Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
 
             Route::resource('job', 'JobApplicationController')
-                ->only(['index', 'edit', 'update'])
-                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update']);
+                ->only(['index', 'edit', 'update', 'store'])
+                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
 
