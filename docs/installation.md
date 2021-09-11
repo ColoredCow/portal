@@ -66,10 +66,10 @@
 
     4. ColoredCow Website Configurations
 
-        In case you want to use website integration functionality, then you need to enable `WORDPRESS_ENABLED` as `true`.
+        In case you want to use website integration functionality, then you need to enable `WORDPRESS_ENABLED` as `true` and add wordpress database configurations.
 
     ```
-    WORDPRESS_ENABLED=true
+    DB_WORDPRESS_DATABASE, DB_WORDPRESS_USERNAME, DB_WORDPRESS_PASSWORD, DB_WORDPRESS_PREFIX, WORDPRESS_ENABLED=true
     ```
 
 7. Run migrations
