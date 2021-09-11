@@ -2,7 +2,6 @@
 
 namespace Modules\User\Http\Controllers;
 
-use DB;
 use Auth;
 use Illuminate\Http\Request;
 use Modules\User\Entities\UserMeta;
