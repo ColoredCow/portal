@@ -7,6 +7,7 @@ use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
 use App\Services\GSuiteUserService;
 
+
 class UserController extends Controller
 {
     public function syncWithGSuite()
