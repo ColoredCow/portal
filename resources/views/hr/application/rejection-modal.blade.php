@@ -43,10 +43,10 @@
             </div>
             <div class="form-check mt-3">
                 <p class="font-weight-bold">Select Reasons</p>
-                @foreach (config('hr.reasons-for-rejections') as $index => $reasonForRejection)
+                @foreach(config('hr.reasons-for-rejections') as $index => $reasonForRejection)
                     <div class="rejection-reason-block">
                         <label for="reasonTitle{{ $index }}">
-                            <input type="checkbox" class="reject-reason mr-1" id="reasonTitle{{ $index }}" name='reject_reason[{{ $index }}][title]' value='{{ $reasonForRejection }}'>{{ $reasonForRejection }}<br>
+                            <input type="checkbox" class="reject-reason mr-1" id="reasonTitle{{ $index }}" name='reject_reason[{{ $index }}][title]' value='{{ $index }}'>{{ $reasonForRejection }}<br>
                         </label>
                         <br />
                         <input type="text" class="form-control w-half mb-3" name='reject_reason[{{ $index }}][comment]' style="display: none" placeholder="Reason for {{ $reasonForRejection }}" />

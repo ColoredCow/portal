@@ -128,10 +128,10 @@ return [
     ],
     'offer-letters-dir' => 'offer-letters',
     'reasons-for-rejections' => [
-        'No response',
-        'Skills mismatch',
-        'Culture mismatch',
-        'Salary expectation mismatch',
-        'Not enough knowledge/inclination for ColoredCow'
+        'no-response' => 'No response',
+        'skills-mismatch' => 'Skills mismatch',
+        'culture-mismatch' => 'Culture mismatch',
+        'salary-expectation' => 'Salary expectation mismatch',
+        'not-eniugh-knowladge-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
     ],
 ];
