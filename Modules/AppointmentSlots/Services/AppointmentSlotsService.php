@@ -213,8 +213,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             return $date->format(config('constants.date_format', 'Y-m-d'));
         });
 
-        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use ($userId) 
-        {
+        $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use ($userId) {
             $userMeta = UserMeta::where('user_id',$userId)->first();
 
             $maxInterviewsPerDay = $userMeta ? $userMeta->max_interviews_per_day : config('hr.daily-appointment-slots.max-reserved-allowed', 3);
