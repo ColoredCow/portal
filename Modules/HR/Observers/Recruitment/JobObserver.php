@@ -19,7 +19,7 @@ class JobObserver
     public function created(Job $job)
     {
         $job->rounds()->attach(Round::pluck('id')->toArray());
-        if(env('WORDPRESS_ENABLED') == true) {
+        if (env('WORDPRESS_ENABLED') == true) {
             $data = request()->all();
             $Corcel = new Corcel();
             $Corcel->post_title = $data['title'];
@@ -48,7 +48,7 @@ class JobObserver
      */
     public function updated(Job $job)
     {
-        if(env('WORDPRESS_ENABLED') == true) {
+        if (env('WORDPRESS_ENABLED') == true) {
             $data = request()->all();
             $post = Corcel::hasMeta('hr_id', $job['id'])->first();
             $Corcel = Corcel::find($post->ID);
@@ -71,7 +71,7 @@ class JobObserver
      */
     public function deleted(Job $job)
     {
-        if(env('WORDPRESS_ENABLED') == true) {
+        if (env('WORDPRESS_ENABLED') == true) {
             Corcel::where(['post_type' => 'career', 'post_title' => $job['title']])->delete();
         }
     }
