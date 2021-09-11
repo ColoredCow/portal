@@ -132,6 +132,6 @@ return [
         'skills-mismatch' => 'Skills mismatch',
         'culture-mismatch' => 'Culture mismatch',
         'salary-expectation' => 'Salary expectation mismatch',
-        'not-eniugh-knowladge-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
+        'not-enough-knowladge-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
     ],
 ];
