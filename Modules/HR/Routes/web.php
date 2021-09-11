@@ -66,7 +66,6 @@ Route::middleware('auth')->group(function () {
             Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
 
             Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update', 'storeReason']);
-            // Route::post('/applicationround/{applicationRound}/store', 'ApplicationRoundController@storeReason')->name('reasons.post');
             Route::post('/applicationround/{applicationRound}/mail-content/{status}', 'ApplicationRoundController@getMailContent');
             Route::post('/applicationround/{applicationRound}/follow-up', 'ApplicationRoundController@storeFollowUp')->name('hr.application-round.follow-up.store');
             Route::post('/application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
