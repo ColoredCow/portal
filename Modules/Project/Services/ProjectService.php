@@ -101,7 +101,6 @@ class ProjectService implements ProjectServiceContract
     private function updateProjectTeamMembers($data, $project)
     {
         $projectTeamMembers = $data['project_team_member'] ?? [];
-
         $teamMembers = [];
 
         foreach ($projectTeamMembers as $projectTeamMember) {
