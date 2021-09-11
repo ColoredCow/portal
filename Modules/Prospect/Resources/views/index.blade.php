@@ -17,7 +17,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Resources</th>
-                    <th>Requirnments</th
+                    <th>Requirements</th
                 </tr>
             </thead>
             <tbody>
