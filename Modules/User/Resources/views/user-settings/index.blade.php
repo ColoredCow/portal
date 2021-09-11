@@ -1,7 +1,7 @@
 @extends('user::layouts.master')
 @section('content')
 
-<form action ="{{ route('user.settings-hr') }}" method = "POST">
+<form action ="{{ route('user.settings') }}" method = "POST">
 @csrf
 <div class="container">
     <div class="col-6">
@@ -11,10 +11,10 @@
     <div class="card-header d33">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link" href="/user/user-settings">HR</a>  
+                <a class="nav-link" href="{{ route ('user.settings') }}">HR</a>  
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="true" href="#">Finance</a>     
+                <a class="nav-link disabled" aria-current="true" href="#">Finance(coming soon)</a>     
             </li>
         </ul>
     </div>
