@@ -2,9 +2,9 @@
 
 namespace Modules\User\Http\Controllers;
 
-use DB;
 use Auth;
 use Illuminate\Http\Request;
+use Modules\User\Entities\UserMeta;
 
 class UserSettingsController extends ModuleBaseController
 {
@@ -15,11 +15,11 @@ class UserSettingsController extends ModuleBaseController
 
     public function update(Request $request)
     {
-        DB::table('user_meta')->updateOrInsert(
+        UserMeta::updateOrCreate(
             ['user_id' => Auth::user()->id],
             ['max_interviews_per_day' => $request->max_interviews_per_day]
         );
 
-        return redirect('/user/user-settings')->with('status', 'Saved Successfully!');
+        return redirect()->back()->with('status', 'Saved Successfully!');
     }
 }
