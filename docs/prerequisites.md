@@ -57,16 +57,16 @@ This project uses Laravel Modules, so a basic understanding of the commands is r
 
 ### 8. Code Formatter :butterfly:
 
-Add some of code formatter for automatic code styling:
+Add the plugins mentioned below for automatic code styling:
 
 - Visual Studio Code Editor:
-  - [Prettier - for JS,CSS,HTML files](https://prettier.io/)
-  - [Laravel Blade Snippets for Balde files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
+  - [Prettier - for JS, CSS, HTML files](https://prettier.io/)
+  - [Laravel Blade Snippets for Blade files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
   - [Laravel Extra Intellisense](https://marketplace.visualstudio.com/items?itemName=amiralizadeh9480.laravel-extra-intellisense)
   - [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)
-  - [PHP cs fixer](https://marketplace.visualstudio.com/items?itemName=junstyle.php-cs-fixer)
+  - [PHP CS Fixer](https://marketplace.visualstudio.com/items?itemName=junstyle.php-cs-fixer)
 
 - Sublime Code Editor:
   - [PHP formatting - PHPfmt](https://packagecontrol.io/packages/phpfmt)
-  - [Laravel Blade Snippets for Balde files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
-  - [Prettier - for JS,CSS,HTML files](https://prettier.io/)
+  - [Laravel Blade Snippets for Blade files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
+  - [Prettier - for JS, CSS, HTML files](https://prettier.io/)
