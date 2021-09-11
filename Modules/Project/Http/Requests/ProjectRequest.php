@@ -23,13 +23,35 @@ class ProjectRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string',
-            'client_id' => 'required|integer',
-            'status' => 'sometimes|string',
-            'project_manager' => 'nullable|string',
-            'effort_sheet_url' => 'nullable|active_url|max:191',
-        ];
+        $rules = [];
+        switch ($this->update_section) {
+            case 'project_details':
+                $rules = [
+                    'name' => 'required|string',
+                    'client_id' => 'required|integer',
+                    'status' => 'sometimes|string',
+                    'project_manager' => 'nullable|string',
+                    'effort_sheet_url' => 'nullable|active_url|max:191',
+                ];
+                break;
+
+            case 'project_resources':
+                if ($this->project_resource) {
+                    $rules = [
+                        'project_resource' => 'array'
+                    ];
+                }
+                break;
+
+            case 'project_repository':
+                if ($this->url) {
+                    $rules = [
+                        'url' => 'array'
+                    ];
+                }
+        }
+
+        return $rules;
     }
 
     /**

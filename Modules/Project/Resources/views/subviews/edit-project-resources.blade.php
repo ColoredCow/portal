@@ -20,13 +20,13 @@
 
                 <div class="row mb-3" v-for="(projectResource, index) in projectResources" :key="projectResource.id">
                     <div class="col-4">
-                        <select v-model="projectResource.id" :name="`projectResource[${index}][resource_id]`" class="form-control">
+                        <select v-model="projectResource.id" :name="`project_resource[${index}][resource_id]`" class="form-control">
                             <option value="">Select Resource</option>
                             <option v-for="(resource) in allResources" :value="resource.id" :key="resource.id">@{{ resource.name }}</option>
                         </select>
                     </div>
                     <div class="col-4">
-                        <select v-model="projectResource.pivot.designation" :name="`projectResource[${index}][designation]`" class="form-control">
+                        <select v-model="projectResource.pivot.designation" :name="`project_resource[${index}][designation]`" class="form-control">
                             <option value="">Select Designations</option>
 
                             <option v-for="(resourcesDesignation, key) in resourcesDesignations" :value="key">@{{ resourcesDesignation }}</option>
@@ -51,4 +51,3 @@
     </div>
    
 </div>
-
