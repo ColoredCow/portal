@@ -16,7 +16,7 @@ class CreateUserMetaTable extends Migration
         Schema::create('user_meta', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id');
-            $table->integer('max_interviews_per_day')->unsigned();
+            $table->unsignedInteger('max_interviews_per_day')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

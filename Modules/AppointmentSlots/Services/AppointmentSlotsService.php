@@ -4,6 +4,7 @@ namespace Modules\AppointmentSlots\Services;
 
 use Carbon\Carbon;
 use Modules\User\Entities\User;
+use Modules\User\Entities\UserMeta;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
 use App\Services\CalendarEventService;
@@ -214,13 +215,9 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         });
 
         $datesToRemove = $reservedSlotsCount->filter(function ($value, $key) use ($userId) {
-            $userMeta = User::find($userId)->meta;
+            $userMeta = UserMeta::where('user_id',$userId)->first();
 
-            if ($userMeta) {
-                $maxInterviewsPerDay = $userMeta->max_interviews_per_day;
-            } else {
-                $maxInterviewsPerDay = config('hr.daily-appointment-slots.max-reserved-allowed', 3);
-            }
+            $maxInterviewsPerDay = $userMeta ? $userMeta->max_interviews_per_day : config('hr.daily-appointment-slots.max-reserved-allowed', 3);
 
             return $value >= $maxInterviewsPerDay;
         })->keys()->all();
