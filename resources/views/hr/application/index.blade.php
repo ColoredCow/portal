@@ -189,11 +189,3 @@
 @include('hr.application.excel-import')
 
 @endsection
-@section('js_scripts')
-<script>
-    var all = document.getElementsByClassName('list-styling');
-    for (var i = 0; i < all.length; i++) {
-    all[i].className += " red"; 
-    }
-</script>    
-@endsection
