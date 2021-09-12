@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles, SoftDeletes, HasWebsiteUser, CanBeExtended;
+    use Notifiable, SoftDeletes, HasRoles,  HasWebsiteUser, CanBeExtended;
 
     /**
      * The attributes that are mass assignable.
@@ -110,5 +110,10 @@ class User extends Authenticatable
     public function projects()
     {
         return $this->belongsToMany(Project::class, 'project_resources', 'resource_id', 'project_id');
+    }
+
+    public function meta()
+    {
+        return $this->hasOne(UserMeta::class, 'user_id');
     }
 }
