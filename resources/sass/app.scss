@@ -713,6 +713,48 @@ span.chartHeading{
 span.totalChartCount{
 	font-size: 20px;
 }
+//user-settings css
+.user-settings{
+	font-size: 26px;
+	line-height: 30px;
+}	
+.search-user-settings{
+ 	width: 300px;
+ 	height: 44px;
+ 	background: #FFFFFF;
+        border-radius: 12px;
+ }
+ .user-settings-contents{
+	top: 36px;
+	border-radius: 12px;
+}
+.quantity{
+ 	width: 60px;
+	left:100px;
+ 	height: 42px;
+ 	background: #FFFFFF;
+ 	border-radius: 12px;
+ 	font-family: Mulish;
+ 	font-style: normal;
+ 	font-weight: 600;
+ 	font-size: 18px;
+ 	text-align: center;
+ 	color: #969281;
+ 	outline-offset: 0px;
+        outline: none;
+}
+.save{
+        width: 82px;
+        height: 44px;
+        background: #6CB2EB;
+        border-radius: 8px;
+}
+.max{
+        font-weight: 600;
+        font-size: 20px;
+        font-weight: 400;
+        color: #969281;
+}
 // End Custom
 
 [v-cloak] { display: none; }
