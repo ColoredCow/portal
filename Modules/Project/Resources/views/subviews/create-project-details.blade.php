@@ -27,7 +27,7 @@
             <label for="project_type" class="field-required">{{ __('Project Type') }}</label>
             <select name="project_type" id="project_type" class="form-control" required>
                 <option value="">Select project type</option>
-                @foreach (config('constants.project_type') as $key => $project_type)
+                @foreach (config('project.type') as $key => $project_type)
                 @php
                 $selected = old('project_type') == $project_type ? 'selected' : '';
                 @endphp

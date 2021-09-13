@@ -81,7 +81,7 @@
                     <div class="form-group col-md-5">
                         <label for="name" class="field-required">Select project type</label>
                         <select name="project_type" id="project_type" class="form-control" required="required">
-                            @foreach (config('constants.project_type') as $key => $project_type)
+                            @foreach (config('project.type') as $key => $project_type)
                             @php
                             $selected = $project->type == $key ? 'selected' : '';
                             @endphp
