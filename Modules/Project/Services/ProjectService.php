@@ -44,19 +44,19 @@ class ProjectService implements ProjectServiceContract
         return Client::where('status', 'active')->get();
     }
 
-    public function getResources()
+    public function getTeamMembers()
     {
         return User::all();
     }
 
-    public function getResourcesDesignations()
+    public function getDesignations()
     {
-        return config('project.resource_designations');
+        return config('project.designations');
     }
 
-    public function getProjectResources(Project $project)
+    public function getProjectTeamMembers(Project $project)
     {
-        return $project->resources;
+        return $project->teamMembers;
     }
 
     public function getProjectRepositories(Project $project)
@@ -76,9 +76,9 @@ class ProjectService implements ProjectServiceContract
                 return $this->updateProjectDetails($data, $project);
                 break;
 
-            case 'project_resources':
-                return $this->updateProjectResources($data, $project);
-                break;
+            case 'project_team_members':
+                return $this->updateProjectTeamMembers($data, $project);
+            break;
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
@@ -101,21 +101,23 @@ class ProjectService implements ProjectServiceContract
         ]);
     }
 
-    private function updateProjectResources($data, $project)
+    private function updateProjectTeamMembers($data, $project)
     {
-        $projectResources = $data['projectResource'];
-        $resources = [];
+        $projectTeamMembers = $data['project_team_member'] ?? [];
+        $teamMembers = [];
 
-        foreach ($projectResources as $projectResource) {
-            $resources[$projectResource['resource_id']] = ['designation' => $projectResource['designation']];
+        foreach ($projectTeamMembers as $projectTeamMember) {
+            $teamMembers[$projectTeamMember['team_member_id']] = ['designation' => $projectTeamMember['designation']];
         }
 
-        return $project->resources()->sync($resources);
+        return $project->teamMembers()->sync($teamMembers);
     }
 
     private function updateProjectRepositories($data, $project)
     {
         if (! isset($data['url'])) {
+            $project->repositories()->delete();
+
             return;
         }
 

@@ -2,7 +2,6 @@
 
 namespace Modules\EffortTracking\Http\Controllers;
 
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\EffortTracking\Contracts\TaskServiceContract;
 use Modules\EffortTracking\Entities\Task;

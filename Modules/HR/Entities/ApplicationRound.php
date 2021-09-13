@@ -6,7 +6,6 @@ use App\Helpers\FileHelper;
 use App\Traits\HasTags;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\Communication\Traits\HasCalendarMeetings;

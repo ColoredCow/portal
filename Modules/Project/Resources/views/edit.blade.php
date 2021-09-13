@@ -15,7 +15,7 @@
         </div>
 
         <div class="mb-5">
-            @include('project::subviews.edit-project-resources')
+            @include('project::subviews.edit-project-team-members')
         </div>
 
          <div class="mb-5">
@@ -36,10 +36,10 @@ new Vue({
     data() {
         return {
             project: @json($project),
-            projectResources:@json($projectResources),
+            projectTeamMembers:@json($projectTeamMembers),
             projectRepositories:@json($projectRepositories),
-            allResources:@json($resources->sortBy('name')->values()),
-            resourcesDesignations:@json($resourcesDesignations)
+            allUsers:@json($users->sortBy('name')->values()),
+            designations:@json($designations)
         }
     },
 
@@ -48,7 +48,7 @@ new Vue({
             alert("Hello Hii");
         },
 
-        defaultProjectResource() {
+        defaultProjectTeamMember() {
             return {
                 id: new Date().getTime(),
                 pivot:{
@@ -86,15 +86,15 @@ new Vue({
             })
         },
 
-        addNewProjectResource() {
-            this.projectResources.push(this.defaultProjectResource());
+        addNewProjectTeamMember() {
+            this.projectTeamMembers.push(this.defaultProjectTeamMember());
         },
         addNewProjectRepository() {
             this.projectRepositories.push(this.defaultProjectRepository());
         },
 
-        removeProjectResource(index) {
-            this.projectResources.splice(index, 1);
+        removeProjectTeamMember(index) {
+            this.projectTeamMembers.splice(index, 1);
         },
         removeProjectRepository(index) {
             this.projectRepositories.splice(index, 1);

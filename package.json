@@ -1,6 +1,9 @@
 {
     "private": true,
     "scripts": {
+        "cypress": "node_modules/.bin/cypress run",
+        "cypress-open": "node_modules/.bin/cypress open",
+        "cypress-record": "node_modules/.bin/cypress run --record --key",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -33,9 +36,10 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.2",
         "chart.js": "^3.5.0",
         "clipboard": "^2.0.6",
+        "cypress": "^8.3.1",
         "image-compressor.js": "^1.1.3"
     },
     "lint-staged": {
