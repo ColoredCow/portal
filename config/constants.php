@@ -213,7 +213,7 @@ return [
         12 => 'December',
     ],
     'project_type' => [
-        'monthly' => 'Monthly',
+        'monthly-billing' => 'Monthly',
         'fixed-budget' => 'Fixed Budget',
     ],
 
