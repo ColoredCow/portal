@@ -24,7 +24,9 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        switch ($this->update_section) {
+        $request = isset($this->create_project) ? $this->create_project : $this->update_section;
+        switch ($request) {
+            case 'create':
             case 'project_details':
                 $rules = [
                     'name' => 'required|string',
