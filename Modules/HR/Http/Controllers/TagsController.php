@@ -32,7 +32,7 @@ class TagsController extends Controller
 
     public function edit(Tag $tag)
     {
-        return view('hr::tags\edit')->with(['tag' => $tag]);
+        return view('hr::tags.edit')->with(['tag' => $tag]);
     }
 
     public function update(TagRequest $request, Tag $tag)
