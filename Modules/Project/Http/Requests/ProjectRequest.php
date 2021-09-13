@@ -29,7 +29,7 @@ class ProjectRequest extends FormRequest
                 $rules = [
                     'name' => 'required|string',
                     'client_id' => 'required|integer',
-                    'status' => 'sometimes|string',
+                    'status' => 'required|string',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
                 ];
