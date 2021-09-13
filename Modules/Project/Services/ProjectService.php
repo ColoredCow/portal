@@ -49,9 +49,9 @@ class ProjectService implements ProjectServiceContract
         return User::all();
     }
 
-    public function getTeamMembersDesignations()
+    public function getDesignations()
     {
-        return config('project.team_member_designations');
+        return config('project.designations');
     }
 
     public function getProjectTeamMembers(Project $project)

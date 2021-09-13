@@ -22,14 +22,14 @@
                     <div class="col-4">
                         <select v-model="projectTeamMember.id" :name="`project_team_member[${index}][team_member_id]`" class="form-control">
                             <option value="">Select team member</option>
-                            <option v-for="(teamMember) in allTeamMembers" :value="teamMember.id" :key="teamMember.id">@{{ teamMember.name }}</option>
+                            <option v-for="(teamMember) in allUsers" :value="teamMember.id" :key="teamMember.id">@{{ teamMember.name }}</option>
                         </select>
                     </div>
                     <div class="col-4">
                         <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="form-control">
                             <option value="">Select Designations</option>
 
-                            <option v-for="(teamMemberDesignation, key) in teamMembersDesignations" :value="key">@{{ teamMembersDesignation }}</option>
+                            <option v-for="(designation, key) in designations" :value="key">@{{ designation }}</option>
                         </select>
                     </div>
 

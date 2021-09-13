@@ -6,7 +6,7 @@ return [
         'active' => 'Active',
         'inactive' => 'Inactive',
     ],
-    'team_member_designations' => [
+    'designations' => [
         'project_manager' => 'Project Manager',
         'developer' => 'Developer',
         'designer' => 'Designer',

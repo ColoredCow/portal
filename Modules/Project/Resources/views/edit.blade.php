@@ -38,8 +38,8 @@ new Vue({
             project: @json($project),
             projectTeamMembers:@json($projectTeamMembers),
             projectRepositories:@json($projectRepositories),
-            allTeamMembers:@json($teamMembers->sortBy('name')->values()),
-            teamMembersDesignations:@json($teamMembersDesignations)
+            allUsers:@json($users->sortBy('name')->values()),
+            designations:@json($designations)
         }
     },
 
