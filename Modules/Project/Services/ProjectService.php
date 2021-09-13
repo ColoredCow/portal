@@ -36,6 +36,9 @@ class ProjectService implements ProjectServiceContract
             'start_date' => date('Y-m-d'),
             'end_date' => date('Y-m-d'),
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'type' => $data['project_type'],
+            'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
+            'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
     }
 
@@ -78,7 +81,7 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_team_members':
                 return $this->updateProjectTeamMembers($data, $project);
-            break;
+                break;
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
