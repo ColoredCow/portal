@@ -83,7 +83,7 @@
                         <select name="project_type" id="project_type" class="form-control" required="required">
                             @foreach (config('constants.project_type') as $key => $project_type)
                             @php
-                            $selected = $project->project_type == $key ? 'selected' : '';
+                            $selected = $project->type == $key ? 'selected' : '';
                             @endphp
                             <option value="{{ $key }}" {{ $selected }}>{{ $project_type }}</option>
                             @endforeach

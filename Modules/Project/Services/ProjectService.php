@@ -92,7 +92,7 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'status' => $data['status'],
-            'project_type' => $data['project_type'],
+            'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
             'start_date' => date('Y-m-d'),
