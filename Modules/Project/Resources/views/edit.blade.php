@@ -38,15 +38,13 @@ new Vue({
             project: @json($project),
             projectTeamMembers:@json($projectTeamMembers),
             projectRepositories:@json($projectRepositories),
-            allUsers:@json($users->sortBy('name')->values()),
+            users:@json($teamMembers->sortBy('name')->values()),
             designations:@json($designations)
         }
     },
 
     methods: {
-        showAlert() {
-            alert("Hello Hii");
-        },
+        showAlert() {},
 
         defaultProjectTeamMember() {
             return {

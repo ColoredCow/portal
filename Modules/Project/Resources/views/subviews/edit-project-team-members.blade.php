@@ -22,7 +22,7 @@
                     <div class="col-4">
                         <select v-model="projectTeamMember.id" :name="`project_team_member[${index}][team_member_id]`" class="form-control">
                             <option value="">Select team member</option>
-                            <option v-for="(teamMember) in allUsers" :value="teamMember.id" :key="teamMember.id">@{{ teamMember.name }}</option>
+                            <option v-for="(teamMember) in users" :value="teamMember.id" :key="teamMember.id">@{{ teamMember.name }}</option>
                         </select>
                     </div>
                     <div class="col-4">
