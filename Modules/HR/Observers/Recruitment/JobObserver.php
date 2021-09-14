@@ -19,24 +19,25 @@ class JobObserver
     public function created(Job $job)
     {
         $job->rounds()->attach(Round::pluck('id')->toArray());
-        $data = request()->all();
-
-        $Corcel = new Corcel();
-        $Corcel->post_title = $data['title'];
-        $Corcel->post_content = $data['description'];
-        $Corcel->post_type = config('hr.post-type.career');
-        $Corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
-        if ($data['status'] != 'published') {
-            $Corcel->post_status = 'draft';
+        if (env('WORDPRESS_ENABLED') == true) {
+            $data = request()->all();
+            $Corcel = new Corcel();
+            $Corcel->post_title = $data['title'];
+            $Corcel->post_content = $data['description'];
+            $Corcel->post_type = config('hr.post-type.career');
+            $Corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
+            if ($data['status'] != 'published') {
+                $Corcel->post_status = 'draft';
+            }
+            $Corcel->save();
+            $Corcel->saveMeta('hr_id', $job['id']);
+            $post = Corcel::hasMeta('hr_id', $job['id'])->first();
+            $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
+            $relation = new TermRelationship();
+            $relation->object_id = $post->ID;
+            $relation->term_taxonomy_id = $term->term_id;
+            $relation->save();
         }
-        $Corcel->save();
-        $Corcel->saveMeta('hr_id', $job['id']);
-        $post = Corcel::hasMeta('hr_id', $job['id'])->first();
-        $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
-        $relation = new TermRelationship();
-        $relation->object_id = $post->ID;
-        $relation->term_taxonomy_id = $term->term_id;
-        $relation->save();
     }
 
     /**
@@ -47,18 +48,19 @@ class JobObserver
      */
     public function updated(Job $job)
     {
-        $data = request()->all();
-
-        $post = Corcel::hasMeta('hr_id', $job['id'])->first();
-        $Corcel = Corcel::find($post->ID);
-        $Corcel->post_title = $data['title'];
-        $Corcel->post_content = $data['description'];
-        $Corcel->post_type = config('hr.post-type.career');
-        $Corcel->post_status = $data['status'] == 'published' ? 'publish' : 'draft';
-        $Corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
-        $Corcel->update();
-        $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
-        $relation = TermRelationship::where(['object_id' => $post->ID])->update(['term_taxonomy_id' => $term->term_id]);
+        if (env('WORDPRESS_ENABLED') == true) {
+            $data = request()->all();
+            $post = Corcel::hasMeta('hr_id', $job['id'])->first();
+            $Corcel = Corcel::find($post->ID);
+            $Corcel->post_title = $data['title'];
+            $Corcel->post_content = $data['description'];
+            $Corcel->post_type = config('hr.post-type.career');
+            $Corcel->post_status = $data['status'] == 'published' ? 'publish' : 'draft';
+            $Corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
+            $Corcel->update();
+            $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
+            $relation = TermRelationship::where(['object_id' => $post->ID])->update(['term_taxonomy_id' => $term->term_id]);
+        }
     }
 
     /**
@@ -69,6 +71,8 @@ class JobObserver
      */
     public function deleted(Job $job)
     {
-        Corcel::where(['post_type' => 'career', 'post_title' => $job['title']])->delete();
+        if (env('WORDPRESS_ENABLED') == true) {
+            Corcel::where(['post_type' => 'career', 'post_title' => $job['title']])->delete();
+        }
     }
 }
