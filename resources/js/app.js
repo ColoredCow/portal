@@ -1008,6 +1008,18 @@ if ( document.getElementById("job_start_date") && document.getElementById("job_e
 	document.getElementsByName("end_date")[0].setAttribute("min", today);
 }
 
+var btnConatiner = document.getElementById("navbar");
+var btns = btnConatiner.getElementsByClassName("btn");
+
+for(var i=0; i<=btns.length; i++) {
+	btns[i].addEventListener("click",function() {
+		var current = document.getElementsByClassName("active");
+		current[0].className = current[0].className.replace(" active");
+		this.className += " active";
+	});
+ 
+}
+
 function lineChart(){
 	 var cData = value;
 	 var ctx = $("#line-chart");

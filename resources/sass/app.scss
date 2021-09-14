@@ -719,25 +719,21 @@ span.totalChartCount{
 	background-color:#F3F2EC;
 	box-shadow: 0px 0px 0px;
 }
-.menu_wrapper > .navbar > .list-styling > a .active{
+.menu_wrapper .navbar li .active{
 	color: rgb(77, 75, 75);
 }
-// .menu_wrapper > .navbar > .active > a .head1{
-// 	left: 44px;
-// 	font-family: Mulish sans-serif;
-// 	font-style: normal;
-// 	font-weight: 50;
-// 	font-size: 20px;
-// }
-.menu_wrapper > .navbar > .list-styling >a{
+.menu_wrapper .navbar li a{
 	color: #C4C4C4;
 }
-.menu_wrapper > .navbar > .list-styling >a .head1{
+.menu_wrapper .navbar li .head1{
 	left: 44px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
 	font-size: 20px;
+}
+.menu_wrapper .navbar li:hover{
+	color: rgb(77, 75, 75);
 }
 #list-styling{
 	list-style: none;
