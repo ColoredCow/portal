@@ -205,9 +205,9 @@ class InvoiceService implements InvoiceServiceContract
         return $invoices->map(function ($invoice) {
             return [
                 'Project' => $invoice->project->name,
-                'Amount' => $invoice->display_amount,
+                'Amount' => (float) str_replace(['$', '₹'], '', $invoice->display_amount),
                 'GST' => $invoice->gst,
-                'Amount (+GST)' => $invoice->invoiceAmount(),
+                'Amount (+GST)' => (float) str_replace(['$', '₹'], '', $invoice->invoiceAmount()),
                 'Received amount' => $invoice->amount_paid,
                 'TDS' => $invoice->tds,
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
