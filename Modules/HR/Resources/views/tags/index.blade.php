@@ -37,5 +37,5 @@
         </table>
     </div>
 </div>
-@include('hr::tags\create-tag-modal')
+@include('hr::tags.create-tag-modal')
 @endsection
