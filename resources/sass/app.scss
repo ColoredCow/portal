@@ -716,121 +716,31 @@ span.totalChartCount{
 
 //hr application
 .menu_wrapper .navbar{
-	background-color: #F1F1F1;
+	background-color:#F3F2EC;
 	box-shadow: 0px 0px 0px;
 }
-
-a:active{
-	color:#413E41
+.menu_wrapper > .navbar > .list-styling > a .active{
+	color: rgb(77, 75, 75);
 }
-
+// .menu_wrapper > .navbar > .active > a .head1{
+// 	left: 44px;
+// 	font-family: Mulish sans-serif;
+// 	font-style: normal;
+// 	font-weight: 50;
+// 	font-size: 20px;
+// }
+.menu_wrapper > .navbar > .list-styling >a{
+	color: #C4C4C4;
+}
+.menu_wrapper > .navbar > .list-styling >a .head1{
+	left: 44px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+	font-size: 20px;
+}
 #list-styling{
 	list-style: none;
-}
-.opened{
-	color:#C4C4C4;
-}
-.open{
- 	font-size: 20px;
-	color: #C4C4C4;;
-}
-.head{
-	left: 44px;
- 	font-weight: 100;
-	font-style: normal;
- 	font-size: 18px;
-	font-family: Mulish sans-serif;
-	color: #C4C4C4;
-}
-.trial{
- 	color: #C4C4C4;
-}
- .trial-program{
-	font-size: 20px;
- 	color: #C4C4C4;
-}
- .head1{
-    font-family: Mulish sans-serif;
- 	font-style: normal;
-	left: 42px;
- 	font-weight: 50;
- 	font-size: 20px;
- 	color: #C4C4C4;
-}
-.hold{
- 	color:#C4C4C4;
-}
-.on-hold{
-    font-size: 20px;
-	color: #C4C4C4;
-}
-.head2{
- 	left: 44px;
- 	font-family: Mulish sans-serif;
- 	font-style: normal;
- 	font-weight: 50;
-	font-size: 20px;
- 	color: #C4C4C4;
-}
-.no{
- 	color: #C4C4C4;
-}
-.no-show{
- 	font-size: 20px;
- 	color: #C4C4C4;
-}
-.head3{
- 	left: 44px;
- 	font-family: Mulish sans-serif;
- 	font-style: normal;
- 	font-weight: 50;
- 	font-size: 20px;
- 	color: #C4C4C4;
-}
-.approve{
-	color: #C4C4C4;
-}
-.toapprove{
- 	font-size: 20px;
- 	color: #C4C4C4;
-}
-.head4{
- 	left: 44px;
- 	font-family: Mulish sans-serif;
- 	font-style: normal;
- 	font-weight: 50;
- 	font-size: 20px;
- 	color: #C4C4C4;
-}
-.approval{
- 	color: #C4C4C4;
-}
-.approved{
- 	font-size: 20px;
- 	color: #C4C4C4;
-}
-.head5{
- 	left: 44px;
- 	font-family: Mulish sans-serif;
- 	font-style: normal;
- 	font-weight: 50;
- 	font-size: 20px;
- 	color: #C4C4C4;
-}
-.onboard{
- 	color: #C4C4C4;
-}
-.onboarded{
- 	font-size: 20px;
- 	color: #C4C4C4;
-}
-.head6{
- 	left: 44px;
- 	font-family: Mulish sans-serif;
- 	font-style: normal;
- 	font-weight: 50;
- 	font-size: 20px;
- 	color: #C4C4C4;
 }
 
 // End Custom
