@@ -24,7 +24,10 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-        switch ($this->update_section) {
+        $request = $this->create_project ?? $this->update_section;
+
+        switch ($request) {
+            case 'create_project':
             case 'project_details':
                 $rules = [
                     'name' => 'required|string',
@@ -35,10 +38,10 @@ class ProjectRequest extends FormRequest
                 ];
                 break;
 
-            case 'project_resources':
-                if ($this->project_resource) {
+            case 'project_team_members':
+                if ($this->project_team_member) {
                     $rules = [
-                        'project_resource' => 'array'
+                        'project_team_member' => 'array'
                     ];
                 }
                 break;
