@@ -48,7 +48,7 @@
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
-                <a class="btn active"{{ $status ? 'text-info' : 'active bg-info text-white' }}
+                <a class="btn"{{ $status}}
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
                     <sup class="head1">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}

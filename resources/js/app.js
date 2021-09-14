@@ -1007,17 +1007,15 @@ if ( document.getElementById("job_start_date") && document.getElementById("job_e
     	document.getElementsByName("start_date")[0].setAttribute("min", today);
 	document.getElementsByName("end_date")[0].setAttribute("min", today);
 }
+//Job application js codes for change of icons color on clicking
 
-var btnConatiner = document.getElementById("navbar");
-var btns = btnConatiner.getElementsByClassName("btn");
-
-for(var i=0; i<=btns.length; i++) {
-	btns[i].addEventListener("click",function() {
-		var current = document.getElementsByClassName("active");
-		current[0].className = current[0].className.replace(" active");
-		this.className += " active";
-	});
- 
+const currentLocation = location.href;
+const menuItem  = document.querySelectorAll("a");
+const menuLength = menuItem.length;
+for(let i=0; i<menuLength; i++){
+	if(menuItem[i].href === currentLocation){
+		menuItem[i].className = "active";
+	}
 }
 
 function lineChart(){
