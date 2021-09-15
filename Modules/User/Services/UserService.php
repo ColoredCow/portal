@@ -22,7 +22,9 @@ class UserService implements UserServiceContract
     public function delete(User $user)
     {
         $user->delete();
-        event(new UserRemovedEvent($user));
+        if (env('WORDPRESS_ENABLED') == true) {
+            event(new UserRemovedEvent($user));
+        }
 
         return OfficeSuiteFacade::removeUser();
         ///TODO:: Fire an event for all the communication and API integrations

@@ -1,4 +1,5 @@
 <div class="card-body">
+    <input type="hidden" name="create_project" value="create_project">
     <div class="form-row">
         <div class="form-group col-md-5">
             <label for="name" class="field-required">Name</label>

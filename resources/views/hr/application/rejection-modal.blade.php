@@ -41,6 +41,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div class="form-check mt-3">
+                <p class="font-weight-bold">Select Reasons</p>
+                @foreach(config('hr.reasons-for-rejections') as $index => $reasonForRejection)
+                    <div class="rejection-reason-block">
+                        <label for="reasonTitle{{ $index }}">
+                            <input type="checkbox" class="reject-reason mr-1" id="reasonTitle{{ $index }}" name='reject_reason[{{ $index }}][title]' value='{{ $index }}'>{{ $reasonForRejection }}<br>
+                        </label>
+                        <br />
+                        <input type="text" class="form-control w-half mb-3" name='reject_reason[{{ $index }}][comment]' style="display: none" placeholder="Reason for {{ $reasonForRejection }}" />
+                    </div>
+                @endforeach
+            </div>
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group col-md-12 d-flex align-items-center">
@@ -70,7 +82,7 @@
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">
                         <input type="hidden" name="follow_up_comment_for_reject" id="followUpCommentForReject" />
-                        <button type="button" class="btn btn-danger px-4 round-submit" data-action="reject">Reject</button>
+                        <button type="save" class="btn btn-danger px-4 round-submit" data-action="reject">Reject</button>
                     </div>
                 </div>
             </div>
