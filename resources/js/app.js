@@ -106,8 +106,10 @@ $(document).ready(() => {
 		  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 	  });
   
-	  datePickerChart();
-	  lineChart();
+	  if (value != null) {
+		datePickerChart();
+		lineChart();
+	}
 });
   
 if (document.getElementById("page_hr_applicant_edit")) {
@@ -1010,6 +1012,7 @@ if ( document.getElementById("job_start_date") && document.getElementById("job_e
 }
  
 function lineChart(){
+	var value = $(".chartdata").data("target");
 	  var cData = value;
 	  var ctx = $("#line-chart");
   

@@ -18,11 +18,8 @@
                 <div class="card-header" align='left'>
                     <span class="chartHeading">Application Received</span> &emsp;&emsp; <span class="totalChartCount">Today's Count:<?php echo $todayCount ?></span>
                 </div>
-                <div class="card-body">
+                <div class="card-body chartdata" data-target="{{ $chartData }}" >
                     <canvas id="line-chart"></canvas>
-                    <script type="text/javascript">
-                        var value = {!!$chartData!!}
-                    </script>
                 </div>
             </div>
         </div>
