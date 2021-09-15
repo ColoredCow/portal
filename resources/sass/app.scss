@@ -725,20 +725,16 @@ span.totalChartCount{
 .menu_wrapper .navbar li a{
 	color: #C4C4C4;
 }
-.menu_wrapper .navbar li .head1{
+.menu_wrapper .navbar li .application-menu-options-title{
 	left: 44px;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
 	font-size: 20px;
 }
-.menu_wrapper .navbar li:hover{
-	color: rgb(77, 75, 75);
-}
 #list-styling{
 	list-style: none;
 }
-
 // End Custom
 
 [v-cloak] { display: none; }
