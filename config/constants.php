@@ -4,7 +4,7 @@ return [
     'gsuite' => [
         'service-account-impersonate' => env('GOOGLE_SERVICE_ACCOUNT_IMPERSONATE'),
         'client-hd' => env('GOOGLE_CLIENT_HD', ''),
-        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS'),
+        'config-path' => env('GOOGLE_APPLICATION_CREDENTIALS')
     ],
     'google' => [
         'vision-api-key' => env('GOOGLE_VISION_API_KEY'),
@@ -212,8 +212,9 @@ return [
         11 => 'November',
         12 => 'December',
     ],
+    
     'google_application_credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
 
     'website_url' => env('WEBSITE_URL', 'https://coloredcow.com'),
-    'website_upload_dir' => env('WEBSITE_UPLOAD_DIR'),
+    'website_upload_dir' => env('WEBSITE_UPLOAD_DIR')
 ];
