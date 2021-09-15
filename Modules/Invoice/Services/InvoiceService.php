@@ -215,9 +215,9 @@ class InvoiceService implements InvoiceServiceContract
         return $invoices->map(function ($invoice) {
             return [
                 'Project' => $invoice->project->name,
-                'Amount' => (float) str_replace(['$', '₹'], '', $invoice->display_amount),
+                'Amount' => $invoice->display_amount,
                 'GST' => $invoice->gst,
-                'Amount (+GST)' => (float) str_replace(['$', '₹'], '', $invoice->invoiceAmount()),
+                'Amount (+GST)' => $invoice->invoiceAmount(),
                 'Received amount' => $invoice->amount_paid,
                 'TDS' => $invoice->tds,
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
@@ -232,7 +232,7 @@ class InvoiceService implements InvoiceServiceContract
         return $invoices->map(function ($invoice) {
             return [
                 'Project' => $invoice->project->name,
-                'Amount' => (float) str_replace(['$', '₹'], '', $invoice->display_amount),
+                'Amount' => $invoice->display_amount,
                 'Received amount' => $invoice->amount_paid,
                 'Bank Charges' => $invoice->bank_charges,
                 'Conversion Rate Diff' => $invoice->conversion_rate_diff,
