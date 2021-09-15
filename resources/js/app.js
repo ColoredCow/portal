@@ -1004,17 +1004,18 @@ function datePickerChart(){
 
 if ( document.getElementById("job_start_date") && document.getElementById("job_end_date") ){
 	var today = new Date().toISOString().split("T")[0];
-    	document.getElementsByName("start_date")[0].setAttribute("min", today);
+	document.getElementsByName("start_date")[0].setAttribute("min", today);
 	document.getElementsByName("end_date")[0].setAttribute("min", today);
 }
 //Job application js codes for change of icons color on clicking
-
-const currentLocation = location.href;
-const menuItem  = document.querySelectorAll("a");
-const menuLength = menuItem.length;
-for(let i=0; i<menuLength; i++){
-	if(menuItem[i].href === currentLocation){
-		menuItem[i].className = "active";
+if ( document.getElementById("list-styling") ){
+	const currentLocation = location.href;
+	const menuItem  = document.querySelectorAll("#job-application-listings");
+	const menuLength = menuItem.length;
+	for(let i=0; i<menuLength; i++){
+		if(menuItem[i].href === currentLocation){
+			menuItem[i].className = "job-application-status";
+		}
 	}
 }
 

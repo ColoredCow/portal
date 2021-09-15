@@ -48,7 +48,7 @@
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
-                <a class="btn"{{ $status}}
+                <a class="btn" id="job-application-listings"{{ $status}}
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
                     <sup class="head1">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a  class="btn" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
+                <a  class="btn" id="job-application-listings" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
                     <sup class = "head1">
                         {{$trialProgramCount}}
                     </sup>
@@ -68,7 +68,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
+                <a class="btn" id="job-application-listings" href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
                     <sup class ="head1">
                         {{$onHoldApplicationsCount}}
                     </sup>
@@ -78,7 +78,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
+                <a class="btn" id="job-application-listings" href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
                     <sup class="head1">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
@@ -87,7 +87,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
+                <a class="btn" id="job-application-listings" href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
                     <sup class="head1">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
@@ -96,7 +96,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
+                <a class="btn" id="job-application-listings" href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
                     <sup class = "head1">
                         {{$approvedApplicationsCount}}
                     </sup>
@@ -105,7 +105,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
+                <a class="btn" id="job-application-listings" href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
                     <sup class = "head1">
                         {{$onboardedApplicationsCount}}
                     </sup>
@@ -114,7 +114,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
+                <a class="btn" id="job-application-listings" href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
                     <sup class = "head1">
                         {{$rejectedApplicationsCount}}    
                     </sup>
