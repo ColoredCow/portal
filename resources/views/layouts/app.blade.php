@@ -18,7 +18,7 @@
     @yield('css_scripts')
     
     <!-- Reports -->
-    <script type="text/javascript" src="{{ URL::asset('resource/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('resources/js/app.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 
     <!-- JQuery -->
