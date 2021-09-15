@@ -54,7 +54,7 @@ class ProjectService implements ProjectServiceContract
 
     public function getDesignations()
     {
-        return config('project.designations');
+        return config('project.designation');
     }
 
     public function getProjectTeamMembers(Project $project)

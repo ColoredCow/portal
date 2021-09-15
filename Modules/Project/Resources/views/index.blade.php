@@ -43,7 +43,7 @@
                         <td>
                             <ul class="ml-0 pl-3">
                                 @foreach($project->teamMembers ?:[] as $teamMember)
-                                <li>{{ $teamMember->name }} - {{ config('project.designations')[$teamMember->pivot->designation] }}</li>
+                                <li>{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}</li>
                                 @endforeach
                             </ul>
                         </td>
