@@ -47,7 +47,7 @@
                         <td>{{ $invoice->gst }}</td>
                         <td>{{ $invoice->invoiceAmount() }}</td>
                         <td>{{ $invoice->amount_paid }}</td>
-                        <td>{{ $invoice->tds }}</td>
+                        <td>{!! number_format((float)($invoice->tds), 2) !!}</td>
                         <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                         <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
                         @if($invoice->status == 'paid')
@@ -127,7 +127,7 @@
                         <td>{{ $invoice->amount_paid }}</td>
                         <td>{{ $invoice->bank_charges }}</td>
                         <td>{{ $invoice->conversion_rate_diff }}</td>
-                        <td>{{ $invoice->tds }}</td>
+                        <td>{!! number_format((float)($invoice->tds), 2) !!}</td>
                         <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                         <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
                         @if($invoice->status == 'paid')
