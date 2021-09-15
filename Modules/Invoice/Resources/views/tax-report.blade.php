@@ -50,7 +50,11 @@
                         <td>{{ $invoice->tds }}</td>
                         <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                         <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
-                        <td> {{ Str::studly($invoice->status) }}</td>
+                        @if($invoice->status == 'paid')
+                            <td><p class="text-success">{{ Str::studly($invoice->status) }}</p></td>
+                        @else
+                            <td> {{ Str::studly($invoice->status) }}</td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -83,7 +87,11 @@
                         <td>{{ $invoice->conversion_rate_diff }}</td>
                         <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                         <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
-                        <td> {{ Str::studly($invoice->status) }}</td>
+                        @if($invoice->status == 'paid')
+                            <td><b><p class="text-success">{{ Str::studly($invoice->status) }}</p></b></td>
+                        @else
+                            <td> {{ Str::studly($invoice->status) }}</td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -122,7 +130,11 @@
                         <td>{{ $invoice->tds }}</td>
                         <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                         <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
-                        <td>{{ Str::studly($invoice->status) }}</td>
+                        @if($invoice->status == 'paid')
+                            <td><b><p class="text-success">{{ Str::studly($invoice->status) }}</p></b></td>
+                        @else
+                            <td> {{ Str::studly($invoice->status) }}</td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

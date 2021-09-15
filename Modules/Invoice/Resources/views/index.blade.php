@@ -51,7 +51,11 @@
                     <td class = '{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : ''}}'>
                         {{ $invoice->receivable_date->format(config('invoice.default-date-format'))  }}
                     </td>
-                    <td> {{ Str::studly($invoice->status)  }}</td>
+                    @if($invoice->status == 'paid')
+                        <td><b><p class="text-success">{{ Str::studly($invoice->status) }}</p></b></td>
+                    @else
+                        <td> {{ Str::studly($invoice->status) }}</td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
