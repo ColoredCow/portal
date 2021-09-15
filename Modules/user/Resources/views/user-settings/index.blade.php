@@ -27,7 +27,7 @@
             </div>
             <div class="card-body">
                 <h5 class="max">Maximum interviews in a day:
-                <input type="number" class="quantity" id="quantity" name="max_interviews_per_day" min="0" max="4" value="{{ old ('max_interviews_per_day', optional(Auth::user()->meta)->max_interviews_per_day) }}">
+                    <input type="number" class="quantity" id="quantity" name="max_interviews_per_day" min="0" max="4" value="{{ old ('max_interviews_per_day', optional(Auth::user()->meta)->max_interviews_per_day) }}">
                 </h5>        
                 <input type="submit" class="btn btn-secondary save" value="Save">
             </div>    
