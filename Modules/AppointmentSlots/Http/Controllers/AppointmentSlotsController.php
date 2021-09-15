@@ -42,6 +42,10 @@ class AppointmentSlotsController extends Controller
         return $this->service->appointmentSelected($request->all());
     }
 
+    // public function showErrorMessage()
+    // {
+    //     return view('appointmentslots::select_appointments.error_message');
+    // }
     /**
      * Store a newly created resource in storage.
      * @param Request $request
