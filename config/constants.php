@@ -212,7 +212,6 @@ return [
         11 => 'November',
         12 => 'December',
     ],
-    
     'google_application_credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
 
     'website_url' => env('WEBSITE_URL', 'https://coloredcow.com'),
