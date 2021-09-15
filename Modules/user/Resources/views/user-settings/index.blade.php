@@ -18,7 +18,7 @@
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link" href = "{{ route ('user.settings') }}">HR</a>
+                        <a class="nav-link" href="{{ route ('user.settings') }}">HR</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">Finance(Coming soon)</a>
