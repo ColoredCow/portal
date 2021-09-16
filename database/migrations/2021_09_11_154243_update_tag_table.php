@@ -25,5 +25,8 @@ class UpdateTagTable extends Migration
      */
     public function down()
     {
+        Schema::table('tags', function (Blueprint $table) {
+            $table->renameColumn('name', 'tag_name');
+        });
     }
 }
