@@ -8,7 +8,7 @@ trait HasWebsiteUser
 {
     public function getWebsiteUserAttribute()
     {
-        if (! class_exists('Corcel\Laravel\Auth\AuthUserProvider')) {
+        if (! class_exists('Corcel\Laravel\Auth\AuthUserProvider') || ! config('database.connections.wordpress.enabled')) {
             return;
         }
 

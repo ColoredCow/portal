@@ -31,7 +31,7 @@
                     <th>Name</th>
                     <th>Reference Id</th>
                     <th>Client</th>
-                    <th>Resources</th>
+                    <th>Team Members</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,8 +42,8 @@
                         <td>{{ $project->client->name }}</td>
                         <td>
                             <ul class="ml-0 pl-3">
-                                @foreach($project->resources ?:[] as $projectResource)
-                                <li>{{ $projectResource->name }} - {{ config('project.resource_designations')[$projectResource->pivot->designation] }}</li>
+                                @foreach($project->teamMembers ?:[] as $teamMember)
+                                <li>{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}</li>
                                 @endforeach
                             </ul>
                         </td>

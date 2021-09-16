@@ -108,7 +108,7 @@ abstract class ApplicationController extends Controller
             ->count();
         }
         $attr['jobs'] = Job::all();
-        $attr['tags'] = Tag::orderBy('tag_name')->get();
+        $attr['tags'] = Tag::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->get();

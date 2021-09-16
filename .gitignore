@@ -40,3 +40,8 @@ Modules/*/node_modules
 
 # github workflow
 post_build_script.sh
+
+# cypress
+cypress.json
+cypress/videos
+cypress/screenshots
