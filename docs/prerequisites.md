@@ -12,10 +12,11 @@ Portal uses PHP v7.3 or v7.4 is needed. You can install it with the following wa
 
 1. XAMPP (Windows and Linux)
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
-    - If you already have XAMPP installed, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
-    - If user face any issues or make any changes in the project, should restart the Apache services.
+    - If you already have XAMPP installed for Windows, refer [this link](https://stackoverflow.com/questions/45790160/is-there-way-to-use-two-php-versions-in-xampp) for switching to the correct PHP version.
+    - If you already have XAMPP installed for Ubuntu, refer [this link](http://www.facweb.iitkgp.ac.in/dashboard/docs/use-different-php-version.html)for switching to the correct PHP version.
+   
 2. WAMP (Windows)
-    - If you prefer using WAMP, you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits).
+    - If you prefer using WAMP Windows(64-bit and 32-bit), you can download from [this link](https://www.wampserver.com/en/download-wampserver-64bits).
    A possible error that may arise with openSSL extension. It should be enabled from your 'php.ini' file. To enable it, use the following steps:
    - Edit the system environment variables and set the path of your selected PHP version.
    - In 'php.ini', uncomment the ";extension=openSSL" by removing ";" before it.
@@ -25,16 +26,20 @@ Portal uses PHP v7.3 or v7.4 is needed. You can install it with the following wa
       composer update
       ```
    - If the user is working in VSCode, possible errors may arise because of path, as may not be able to access the selected PHP version from its terminal.
-3. MAMP (macOS)
-    - TODO: Add installation steps 
+3. MAMP (Windows and MacOS)
+    - If you prefer using MAMP, you can download with all the PHP version from [this link](https://www.mamp.info/en/downloads/)this link for Windows and MacOS.
+    -To use the MAMP php as main php, refer[this link](https://stackoverflow.com/questions/4262006/how-to-use-mamps-version-of-php-instead-of-the-default-on-osx) for switching into the MAMP php
 
 ### 3. Composer :running:
 
-For macOS and Linux distros
+For MacOS:
 - [Composer v2.0](https://getcomposer.org/download)
 
-For Windows
-- https://getcomposer.org/doc/00-intro.md#installation-windows
+For Windows:
+- [Composer v2.0](https://getcomposer.org/doc/00-intro.md#installation-windows)
+
+For Linux:
+- [Composer v2.0](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
 
 After you've successfully installed, you can verify the installation using:
 ```sh
@@ -44,8 +49,30 @@ composer --version
 ```
 
 ### 4. Nodejs :running:
+For (Windows, Ubuntu, MacOS)
+- [Nodejs v14 or higher](https://nodejs.org/en/download/).
+After you've successfully installed, you can verify the installation using:
+```sh
+npm -v
+# output should be something like
+# 6.14.15
 
-- [Nodejs v14 or higher](https://nodejs.org/en/download)
+node -v
+#output should be somthing like
+#v14.17.6
+```
+
+### 4. PHP :running:
+PHP comes with your XAMPP,WAPP,MAMP
+If you need to change 
+```sh
+php -v
+# output should be something like
+# PHP 7.4.21 (cli) (built: Aug  5 2021 15:34:00) ( NTS )
+#Copyright (c) The PHP Group
+#Zend Engine v3.4.0, Copyright (c) Zend Technologies   
+```
+Note: The PHP Version should be only 7.3 or 7.4
 
 ### 5. Code Formatter :butterfly:
 
