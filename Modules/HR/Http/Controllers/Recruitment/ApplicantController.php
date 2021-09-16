@@ -5,7 +5,6 @@ namespace Modules\HR\Http\Controllers\Recruitment;
 use App\Imports\ApplicationImport;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Contracts\ApplicationServiceContract;

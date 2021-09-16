@@ -10,8 +10,10 @@ class WebsiteUserService
 
     public function __construct()
     {
-        $userProvider = new AuthUserProvider;
-        $this->user = $userProvider->retrieveByCredentials(['email' => auth()->user()->email]);
+        if (env('WORDPRESS_ENABLED') == true) {
+            $userProvider = new AuthUserProvider;
+            $this->user = $userProvider->retrieveByCredentials(['email' => auth()->user()->email]);
+        }
     }
 
     public function get()

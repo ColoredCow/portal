@@ -22,7 +22,7 @@
             </tr>
             @foreach ($tags as $tag)
             <tr>
-                <td><div class="rounded w-13 h-13 d-inline-block mr-1" style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"></div>{{ $tag->tag_name }}</td>
+                <td><div class="rounded w-13 h-13 d-inline-block mr-1" style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"></div>{{ $tag->name }}</td>
                 <td>{{ $tag->description }}</td>
                 <td>
                     <form action="{{ route('hr.tags.delete', $tag->id) }}" method="POST">
@@ -37,5 +37,5 @@
         </table>
     </div>
 </div>
-@include('hr::tags\create-tag-modal')
+@include('hr::tags.create-tag-modal')
 @endsection

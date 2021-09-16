@@ -20,7 +20,7 @@
                             :key="projectRepository.id">
                     </div>
                     <div class="col-4">
-                        <button v-on:click="removeProjectRepository(index)" type="button" class="btn btn-danger btn-sm mt-6 ml-2"> - </button>
+                        <button v-on:click="removeProjectRepository(index)" type="button" class="btn btn-danger btn-sm mt-6 ml-2 text-white fz-14">Remove</button>
                     </div>
                 </div>
                 <div>

@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Http\Controllers\Universities;
 
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\UniversityAlias;
 use Modules\HR\Http\Requests\UniversityAliasRequest;
