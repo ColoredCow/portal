@@ -1,5 +1,5 @@
 describe("Recruitment", () => {
-    it("opens up the job page", () => {
+    it("Add new application", () => {
         const username = Cypress.env("username");
         const password = Cypress.env("password");
         cy.visit("/login");
