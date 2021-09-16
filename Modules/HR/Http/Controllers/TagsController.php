@@ -14,7 +14,7 @@ class TagsController extends Controller
      */
     public function index()
     {
-        $attr['tags'] = Tag::orderBy('tag_name')->get();
+        $attr['tags'] = Tag::orderBy('name')->get();
 
         return view('hr::tags.index')->with($attr);
     }
@@ -22,7 +22,7 @@ class TagsController extends Controller
     public function store(Request $request)
     {
         $tag = Tag::create([
-            'tag_name' => $request['name'],
+            'name' => $request['name'],
             'description' => $request['description'] ?? null,
             'background_color' => $request['color']
         ]);
@@ -32,14 +32,14 @@ class TagsController extends Controller
 
     public function edit(Tag $tag)
     {
-        return view('hr::tags\edit')->with(['tag' => $tag]);
+        return view('hr::tags.edit')->with(['tag' => $tag]);
     }
 
     public function update(TagRequest $request, Tag $tag)
     {
         $validated = $request->validated();
         $tag->update([
-            'tag_name' => $request['name'],
+            'name' => $request['name'],
             'description' => $request['description'] ?? null,
             'background_color' => $request['color']
         ]);

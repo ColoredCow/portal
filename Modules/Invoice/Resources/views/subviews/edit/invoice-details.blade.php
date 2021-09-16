@@ -104,8 +104,8 @@
                 </div>
 
                 <div class="form-group-inline d-flex mb-2">
-                    <label for="receivable_date" class="field-required mr-8 pt-1">Payment date</label>
-                    <input type="date" class="form-control flex-1" name="payment_date" id="payment_date" 
+                    <label for="payment_at" class="field-required mr-8 pt-1">Payment date</label>
+                    <input type="date" class="form-control flex-1" name="payment_at" id="payment_at" 
                     required="required"
                     value="{{ $invoice->payment_at ? $invoice->payment_at->format('Y-m-d') : date('Y-m-d') }}">
                 </div>

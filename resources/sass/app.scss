@@ -713,6 +713,105 @@ span.chartHeading{
 span.totalChartCount{
 	font-size: 20px;
 }
+
+//user-settings css
+.user-settings{
+	position: absolute;
+	width: 147px;
+	height: 30px;
+	left: 10px;
+	top: 83px;
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: 300;
+	font-size: 24px;
+	line-height: 30px;
+	color: #302e2e;
+}
+.search{
+	position: absolute;
+	width: 316px;
+	height: 44px;
+	left: 828px;
+	top: 76px;
+	background: #FFFFFF;
+	box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.16);
+	border-radius: 12px;
+}
+.d33{
+
+    position: absolute;
+
+	width: 1218px;
+	height: 56px;
+	left: 56px;
+	top: 144px;
+	background: #FDFDFD;
+	box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.07);
+}
+.d2{
+
+ 	position: absolute;
+ 	width: 1218px;
+ 	height: 693px;
+ 	left: 56px;
+ 	top: 200px;
+	background: #F8F7F4;
+ 	box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.07);
+}
+.quantity{
+	position: absolute;
+	width: 60px;
+	height: 46px;
+	left: 344px;
+	top: 32px;
+	background: #FFFFFF;
+	box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.16);
+	border-radius: 12px;
+	font-family: Mulish;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 18px;
+	text-align: center;
+	color: #969281;
+	outline-offset: 0px;
+    outline: none;
+}
+.down{
+	position: absolute;
+	left: 32.27%;
+	right: 67.03%;
+	border: #FFFFFF;
+}
+.up{
+	position: absolute;
+	top: 32px;
+	left:32.27%;
+	border: #FFFFFF;
+}
+.save{
+	position: absolute;
+    width: 82px;
+	height: 44px;
+    left: 132px;
+    top: 100px;
+    background: #6CB2EB;
+    border-radius: 8px;
+}
+.max{
+	position: absolute;
+    width: 248px;
+    height: 20px;
+    left: 72px;
+    top: 46px;
+    font-family: Mulish;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 20px;
+    color: #969281;
+}
+
 // End Custom
 
 [v-cloak] { display: none; }
