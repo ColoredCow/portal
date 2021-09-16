@@ -106,7 +106,7 @@ $(document).ready(() => {
 		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 	});
 
-	if (value != null) {
+	if ($(".chart-data").length) {
 		datePickerChart();
 		lineChart();
 	}
@@ -1012,7 +1012,7 @@ if ( document.getElementById("job_start_date") && document.getElementById("job_e
 }
  
 function lineChart(){
-	var value = $(".chartdata").data("target");
+	  var value = $(".chart-data").data("target");
 	  var cData = value;
 	  var ctx = $("#line-chart");
   
