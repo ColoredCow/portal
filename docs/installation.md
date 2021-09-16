@@ -122,3 +122,45 @@ php artisan migrate
             ```
 
        - Restart XAMPP. Next, open this url in your browser: http://portal.test
+    
+    2. For MAMP(Mac OS)
+       - Go to `etc/hosts` file or edit this in the terminal use the following command
+            ```
+            sudo nano /etc/hosts
+            ```
+            Add
+
+       - Go to `httpd.conf` file or edit this file in the terminal itself use this command
+            ```
+            sudo nano /etc/apache2/httpd.conf
+            ```
+            And search for ‘vhosts‘ and uncomment line like this
+            ```
+            # Virtual hosts
+            #Include /private/etc/apache2/extra/httpd-vhosts.conf
+            ```
+            Change this to this
+            ```
+                # Virtual hosts
+                Include /private/etc/apache2/extra/httpd-vhosts.conf
+            ```
+        - And the Go to Vhost file in the terminal 
+            ```
+            sudo nano /etc/apache2/extra/httpd-vhosts.conf
+            ```
+            Add the following line at the end of the file: 
+            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`.
+
+                ```apacheconf
+                <VirtualHost *:80>
+                    ServerName portal.test
+                    DocumentRoot "/path/to/your/project"
+                    <Directory "/path/to/your/project">
+                        DirectoryIndex index.php
+                        AllowOverride All
+                        Order allow,deny
+                        Allow from all
+                    </Directory>
+                </VirtualHost>
+                ```
+          - Restart MAMP. Next, open this url in your browser: http://portal.test
