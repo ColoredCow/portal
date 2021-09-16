@@ -15,7 +15,7 @@
 
         <div class="card">
             <div class="card-header" align='left'>
-                <span class="chart-heading">Application Received</span> &emsp;&emsp; <span class="total-chart-count">Today's Count:<?php echo $todayCount ?></span>
+                <span class="chart-heading">Application Received</span><span class="total-chart-count">Today's Count:<?php echo $todayCount ?></span>
             </div>
             <div class="card-body chart-data" data-target="{{ $chartData }}" >
                 <canvas id="line-chart"></canvas>
