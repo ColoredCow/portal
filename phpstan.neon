@@ -14,6 +14,8 @@ parameters:
         - Modules/*/Services/*Service.php
         - Modules/Invoice/Entities/Invoice.php
         - Modules\HR\Observers\Recruitment\JobObserver.php
+        - Modules/*/Database/factories/*.php
+        - Modules/*/Database/Seeders/*.php
 
     # The level 8 is the highest level
     level: 5
