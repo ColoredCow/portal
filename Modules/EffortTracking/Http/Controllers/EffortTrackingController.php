@@ -3,6 +3,7 @@
 namespace Modules\EffortTracking\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Modules\EffortTracking\Services\EffortTrackingService;
 
 class EffortTrackingController extends Controller
 {
@@ -38,5 +39,13 @@ class EffortTrackingController extends Controller
     public function edit($id)
     {
         return view('efforttracking::edit');
+    }
+
+    public function sync()
+    {
+        EffortTrackingService::sync();
+        dd('Inside sync');
+
+        return view('efforttracking::show');
     }
 }
