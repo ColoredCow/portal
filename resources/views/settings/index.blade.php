@@ -27,15 +27,13 @@
             </div>
         @endif
 
-        @if(auth()->user()->hasAnyPermission(['finance_invoices.create']))
-            <div class="col-md-4">
-                <div class="card h-75 mx-4 mt-3 mb-5 ">
-                    <a class="card-body no-transition" href="{{ route('settings.finance') }}">
-                        <br><h2 class="text-center">Finance</h2><br>
-                    </a>
-                </div>
+        <div class="col-md-4">
+            <div class="card h-75 mx-4 mt-3 mb-5 ">
+                <a class="card-body no-transition" href="{{ route('settings.finance') }}">
+                    <br><h2 class="text-center">Finance</h2><br>
+                </a>
             </div>
-        @endif
+        </div>
     
     </div>
 </div>
