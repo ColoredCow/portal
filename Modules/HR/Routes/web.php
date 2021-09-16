@@ -39,9 +39,14 @@ Route::middleware('auth')->group(function () {
             'names' => 'universities.aliases',
         ])->only(['update', 'destroy', 'store']);
 
+        Route::resource('tags', 'TagsController')
+            ->only(['index', 'edit', 'update', 'store', 'destroy'])
+            ->names(['index' => 'hr.tags.index', 'edit' => 'hr.tags.edit', 'update' => 'hr.tags.update', 'store' => 'hr.tags.store', 'destroy' => 'hr.tags.delete']);
+
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
+            Route::post('reports', 'ReportsController@searchBydate')->name('recruitment.reports');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
                 ->only(['index', 'create', 'store', 'update', 'edit', 'destroy'])
@@ -60,7 +65,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
             Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
 
-            Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update']);
+            Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update', 'storeReason']);
             Route::post('/applicationround/{applicationRound}/mail-content/{status}', 'ApplicationRoundController@getMailContent');
             Route::post('/applicationround/{applicationRound}/follow-up', 'ApplicationRoundController@storeFollowUp')->name('hr.application-round.follow-up.store');
             Route::post('/application-round/{applicationRound}/sendmail', 'ApplicationRoundController@sendMail');
@@ -69,8 +74,8 @@ Route::middleware('auth')->group(function () {
             Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
 
             Route::resource('job', 'JobApplicationController')
-                ->only(['index', 'edit', 'update'])
-                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update']);
+                ->only(['index', 'edit', 'update', 'store'])
+                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
 

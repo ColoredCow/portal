@@ -2,7 +2,6 @@
 
 namespace Modules\User\Services;
 
-use Illuminate\Http\Response;
 use Modules\User\Entities\User;
 use OfficeSuite\OfficeSuiteFacade;
 use Modules\User\Events\UserRemovedEvent;
@@ -23,7 +22,9 @@ class UserService implements UserServiceContract
     public function delete(User $user)
     {
         $user->delete();
-        event(new UserRemovedEvent($user));
+        if (config('database.connections.wordpress.enabled')) {
+            event(new UserRemovedEvent($user));
+        }
 
         return OfficeSuiteFacade::removeUser();
         ///TODO:: Fire an event for all the communication and API integrations

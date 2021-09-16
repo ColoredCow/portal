@@ -6,7 +6,6 @@ use App\Helpers\FileHelper;
 use App\Traits\HasTags;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\Communication\Traits\HasCalendarMeetings;
@@ -123,6 +122,15 @@ class ApplicationRound extends Model
                 }
                 foreach ($applicant->applications as $applicantApplication) {
                     $applicantApplication->reject();
+                }
+                foreach ($attr['reject_reason'] as $rejectReason) {
+                    if (isset($rejectReason['title'])) {
+                        HRRejectionReason::create([
+                            'hr_application_round_id' => $this->id,
+                            'reason_title' => $rejectReason['title'],
+                            'reason_comment' => $rejectReason['comment'] ?? null,
+                        ]);
+                    }
                 }
                 break;
 

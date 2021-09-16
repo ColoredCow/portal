@@ -8,7 +8,9 @@
 
 2. Install dependencies
    ```sh
-   composer install
+   composer install 
+   ```
+   ```
    npm install
    ```
 
@@ -31,6 +33,7 @@
 
 
 4. Copy `.env.example` as `.env`
+
 
 5. Run the following command to add a key
    ```sh
@@ -59,6 +62,14 @@
     3. Google configurations _(optional)_
     ```
     GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_CALLBACK, GOOGLE_CLIENT_HD, GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SERVICE_ACCOUNT_IMPERSONATE
+    ```
+
+    4. ColoredCow Website Configurations
+
+        In case you want to use website integration functionality, then you need to enable `WORDPRESS_ENABLED` as `true` and add wordpress database configurations.
+
+    ```
+    DB_WORDPRESS_DATABASE, DB_WORDPRESS_USERNAME, DB_WORDPRESS_PASSWORD, DB_WORDPRESS_PREFIX, WORDPRESS_ENABLED=true
     ```
 
 7. Run migrations

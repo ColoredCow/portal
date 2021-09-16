@@ -1,4 +1,5 @@
 <div class="card-body">
+    <input type="hidden" name="create_project" value="create_project">
     <div class="form-row">
         <div class="form-group col-md-5">
             <label for="name" class="field-required">Name</label>
@@ -17,11 +18,17 @@
                 @endforeach
             </select>
         </div>
+        <div class="form-group col-md-5">
+            <label for="effort_sheet_url">{{ __('Effort-Sheet Url') }}</label>
+            <input type="url" class="form-control" 
+            name="effort_sheet_url" 
+            id="effort_sheet_url" 
+            placeholder="Enter Effort-Sheet url" 
+            value="{{ old('effort_sheet_url') }}">
+        </div>
     </div>
     <br>
 </div>
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Create</button>
 </div>
-
-

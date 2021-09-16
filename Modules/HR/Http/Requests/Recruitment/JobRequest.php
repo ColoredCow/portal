@@ -24,8 +24,8 @@ class JobRequest extends FormRequest
                 'status' => 'required|string',
                 'by' => 'nullable|string', // Todo: remove this. not needed anymore.
                 'link' => 'nullable|url', // Todo: remove this. not needed anymore.
-                'start_date' => 'required|date',
-                'end_date' => 'required|date',
+                'start_date' => 'nullable|date',
+                'end_date' => 'nullable|date',
             ];
         }
 
@@ -36,8 +36,8 @@ class JobRequest extends FormRequest
                 'description' => 'required|string',
                 'type' => 'required|string|in:job,internship,volunteer',
                 'status' => 'required|string',
-                'start_date' => 'required|date',
-                'end_date' => 'required|date',
+                'start_date' => 'nullable|date',
+                'end_date' => 'nullable|date',
                 'facebook_post' => 'nullable|url',
                 'instagram_post' => 'nullable|url',
                 'twitter_post' => 'nullable|url',
