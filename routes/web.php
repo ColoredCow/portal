@@ -126,6 +126,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
+        Route::get('/finance', 'FinanceController@index')->name('settings.finance');
     });
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
