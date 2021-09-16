@@ -8,6 +8,8 @@ describe("Login", () => {
     cy.get('[type="submit"]')
       .first()
       .click();
+    cy.get('[class="close"]')
+      .click();
     cy.get("h3")
       .first()
       .should("have.text", "Dashboard");
