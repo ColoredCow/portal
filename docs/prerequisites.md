@@ -3,11 +3,16 @@
 For all the beginners that are starting on the portal, this is for you to get started.
 
 ### 1. Git :cat:
+For Windows only:
+  - [this link](https://git-scm.com/download/win)
+    Linux and MacOS comes pre installed
+After you've successfully installed, you can verify the installation using:
+  - ```sh
+      git --version
+    # git version 2.33.0.windows.2
+    ```
 
-TODO: Add installation steps
-
-
-### 2. PHP :running:
+### 2. PHP,MYSQL,APACHE :running:
 Portal uses PHP v7.3 or v7.4 is needed. You can install it with the following ways:
 
 1. XAMPP (Windows and Linux)
@@ -28,7 +33,15 @@ Portal uses PHP v7.3 or v7.4 is needed. You can install it with the following wa
    - If the user is working in VSCode, possible errors may arise because of path, as may not be able to access the selected PHP version from its terminal.
 3. MAMP (Windows and MacOS)
     - If you prefer using MAMP, you can download with all the PHP version from [this link](https://www.mamp.info/en/downloads/)this link for Windows and MacOS.
-    -To use the MAMP php as main php, refer[this link](https://stackoverflow.com/questions/4262006/how-to-use-mamps-version-of-php-instead-of-the-default-on-osx) for switching into the MAMP php
+    -To use the MAMP php as main php, refer[this link](https://stackoverflow.com/questions/4262006/how-to-use-mamps-version-of-php-instead-of-the-default-on-osx) for switching into the MAMP php.
+4. After you've successfully installed, you can verify the installation using:
+   - ```sh
+      php -v
+      # output should be something like
+      # PHP 7.4.21 (cli) (built: Aug  5 2021 15:34:00) ( NTS )
+      #Copyright (c) The PHP Group
+      #Zend Engine v3.4.0, Copyright (c) Zend Technologies   
+      ```   
 
 ### 3. Composer :running:
 
@@ -61,18 +74,6 @@ node -v
 #output should be somthing like
 #v14.17.6
 ```
-
-### 4. PHP :running:
-PHP comes with your XAMPP,WAPP,MAMP
-If you need to change 
-```sh
-php -v
-# output should be something like
-# PHP 7.4.21 (cli) (built: Aug  5 2021 15:34:00) ( NTS )
-#Copyright (c) The PHP Group
-#Zend Engine v3.4.0, Copyright (c) Zend Technologies   
-```
-Note: The PHP Version should be only 7.3 or 7.4
 
 ### 5. Code Formatter :butterfly:
 
