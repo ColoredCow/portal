@@ -7,8 +7,8 @@
         <h2 align="left">Analytics</h2>
         <form action="{{route('recruitment.reports')}}" method="POST" align="right">
             {{csrf_field()}}
-            <input type="date" name="from" id='StartDate'> to
-            <input type="date" name="to" id="EndDate">
+            <input type="date" name="report_start_date" id='StartDate'> to
+            <input type="date" name="report_end_date" id="EndDate">
             <input type="submit" value="View">
         </form>
         <br>
