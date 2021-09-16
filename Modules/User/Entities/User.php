@@ -3,6 +3,7 @@
 namespace Modules\User\Entities;
 
 use App\Models\KnowledgeCafe\Library\Book;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,7 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes, HasRoles,  HasWebsiteUser, CanBeExtended;
+    use Notifiable, SoftDeletes, HasRoles,  HasWebsiteUser, CanBeExtended, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -43,7 +44,7 @@ class User extends Authenticatable
         return self::where('email', $email)->first();
     }
 
-    protected static function factory()
+    protected static function newFactory()
     {
         return UserFactory::new();
     }

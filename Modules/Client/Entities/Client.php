@@ -2,6 +2,7 @@
 
 namespace Modules\Client\Entities;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Modules\Client\Entities\Scopes\ClientGlobalScope;
 
 class Client extends Model
 {
-    use HasHierarchy;
+    use HasHierarchy, HasFactory;
 
     protected $fillable = ['name', 'email', 'key_account_manager_id', 'status', 'country', 'state', 'phone', 'phone', 'address', 'pincode', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id'];
 
@@ -22,7 +23,7 @@ class Client extends Model
         static::addGlobalScope(new ClientGlobalScope);
     }
 
-    protected static function factory()
+    protected static function newFactory()
     {
         return ClientFactory::new();
     }
