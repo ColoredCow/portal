@@ -5,6 +5,7 @@ namespace Modules\Client\Entities;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
 
@@ -19,6 +20,11 @@ class Client extends Model
     protected static function booted()
     {
         static::addGlobalScope(new ClientGlobalScope);
+    }
+
+    protected static function factory()
+    {
+        return ClientFactory::new();
     }
 
     public function scopeStatus($query, $status)

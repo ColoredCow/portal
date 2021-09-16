@@ -3,7 +3,8 @@
 namespace Modules\Project\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
+use Modules\Client\Entities\Client;
+use Modules\Project\Entities\Project;
 
 class ProjectDatabaseSeeder extends Seeder
 {
@@ -14,8 +15,11 @@ class ProjectDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        $client = Client::factory()->create();
 
-        // $this->call("OthersTableSeeder");
+        Project::factory()
+        ->count(3)
+        ->for($client)
+        ->create();
     }
 }

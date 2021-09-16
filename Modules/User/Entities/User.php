@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\Project;
+use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
@@ -40,6 +41,11 @@ class User extends Authenticatable
     public static function findByEmail($email)
     {
         return self::where('email', $email)->first();
+    }
+
+    protected static function factory()
+    {
+        return UserFactory::new();
     }
 
     /**

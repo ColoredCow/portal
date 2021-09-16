@@ -5,6 +5,7 @@ namespace Modules\Project\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
+use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 
 class Project extends Model
@@ -12,6 +13,11 @@ class Project extends Model
     protected $guarded = [];
 
     protected $dates = ['start_date', 'end_date'];
+
+    protected static function factory()
+    {
+        return ProjectFactory::new();
+    }
 
     public function teamMembers()
     {
