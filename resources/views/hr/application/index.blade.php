@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a  class="btn" id="job-application-listings" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
+                <a class="btn" id="job-application-listings" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
                     <sup class = "application-menu-options-title" >
                         {{$trialProgramCount}}
                     </sup>
