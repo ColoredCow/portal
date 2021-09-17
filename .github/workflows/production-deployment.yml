@@ -36,14 +36,13 @@ jobs:
           php artisan migrate
 
           echo "Running composer"
-          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader --no-dev
 
           echo "Running npm"
           npm install
           npm run production
 
           echo "Optimizing Laravel app"
-          composer install --optimize-autoloader --no-dev
           php artisan config:cache
           php artisan route:cache
           php artisan view:cache

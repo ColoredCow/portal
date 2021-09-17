@@ -22,4 +22,6 @@ Route::prefix('user')->middleware('auth')->group(function () {
      * User Profile
     */
     Route::get('/profile', 'ProfileController@index')->name('user.profile');
+    Route::get('/user-settings', 'UserSettingsController@index')->name('user.settings');
+    Route::post('/user-settings', 'UserSettingsController@update')->name('user.settings.update');
 });
