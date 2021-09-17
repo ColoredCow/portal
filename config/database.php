@@ -97,9 +97,10 @@ return [
             'password' => env('DB_WORDPRESS_PASSWORD', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix' => env('DB_WORDPRESS_PRIFIX', 'wp_'),
+            'prefix' => env('DB_WORDPRESS_PREFIX', 'wp_'),
             'strict' => false,
             'engine' => null,
+            'enabled' => env('WORDPRESS_ENABLED', false)
         ],
     ],
 
