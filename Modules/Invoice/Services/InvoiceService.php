@@ -185,16 +185,14 @@ class InvoiceService implements InvoiceServiceContract
 
     public function taxReportExport($filters)
     {
+        $invoices = $this->taxReportInvoices($filters);
         if (count($filters) > 3) {
             if ($filters['region'] == 'indian') {
-                $invoices = $this->taxReportInvoices($filters);
                 $invoices = $this->formatInvoicesForExportIndian($invoices);
             } else {
-                $invoices = $this->taxReportInvoices($filters);
                 $invoices = $this->formatInvoicesForExportInternational($invoices);
             }
         } else {
-            $invoices = $this->taxReportInvoices($filters);
             $invoices = $this->formatInvoicesForExportAll($invoices);
         }
 
@@ -215,7 +213,7 @@ class InvoiceService implements InvoiceServiceContract
         return $invoices->map(function ($invoice) {
             return [
                 'Project' => $invoice->project->name,
-                'Amount' => $invoice->display_amount,
+                'Amount' => $invoice->amount,
                 'GST' => $invoice->gst,
                 'Amount (+GST)' => $invoice->invoiceAmount(),
                 'Received amount' => $invoice->amount_paid,
@@ -232,7 +230,7 @@ class InvoiceService implements InvoiceServiceContract
         return $invoices->map(function ($invoice) {
             return [
                 'Project' => $invoice->project->name,
-                'Amount' => $invoice->display_amount,
+                'Amount' => $invoice->amount,
                 'Received amount' => $invoice->amount_paid,
                 'Bank Charges' => $invoice->bank_charges,
                 'Conversion Rate Diff' => $invoice->conversion_rate_diff,
