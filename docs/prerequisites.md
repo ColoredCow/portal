@@ -1,4 +1,4 @@
-## Prerequisites and Learnning :book:
+## Prerequisites and Learning :book:
 
 For all the beginners that are starting on the portal this is for you to get started.
 
