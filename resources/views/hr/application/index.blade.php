@@ -53,7 +53,7 @@
                     <sup class = "application-menu-options-title">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
-                    {!! file_get_contents(public_path('icons/people.svg')) !!}
+                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/people.svg')) !!}</svg>
                     <h5 class="open" id="text2">Open</h5>
                 </a>
             </li>
@@ -62,7 +62,7 @@
                     <sup class = "application-menu-options-title" >
                         {{$trialProgramCount}}
                     </sup>
-                    {!! file_get_contents(public_path('icons/code.svg')) !!}
+                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/code.svg')) !!}</svg>
                     <h5 class="trial-program" id="text1">Trial Program</h5>
                     {{ request()->get('round')=='Trial-Program' ? '' : '' }}
                 </a>
@@ -72,7 +72,7 @@
                     <sup class = "application-menu-options-title">
                         {{$onHoldApplicationsCount}}
                     </sup>
-                    {!! file_get_contents(public_path('icons/pause-circle.svg')) !!}
+                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</svg>
                     <h5 class="on-hold">On Hold</h5>
                     {{ $status === config('constants.hr.status.on-hold.label') ? '' : '' }}
                 </a>
@@ -82,7 +82,7 @@
                     <sup class = "application-menu-options-title">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
-                    {!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}
+                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</svg>
                     <h5 class="no-show">No Show</h5>
                 </a>
             </li>
@@ -91,7 +91,7 @@
                     <sup class = "application-menu-options-title">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
-                    {!! file_get_contents(public_path('icons/clipboard.svg')) !!}
+                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</svg>
                     <h5 class="toapprove">To Approve</h5>
                 </a>
             </li>
@@ -100,7 +100,7 @@
                     <sup class = "application-menu-options-title">
                         {{$approvedApplicationsCount}}
                     </sup>
-                    {!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}
+                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</svg>
                     <h5 class="approved">Approved</h5>
                 </a>
             </li>
@@ -109,7 +109,7 @@
                     <sup class = "application-menu-options-title" >
                         {{$onboardedApplicationsCount}}
                     </sup>
-                    {!! file_get_contents(public_path('icons/person-check.svg')) !!}
+                    <svg class="job-application-icons"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </svg>
                     <h5 class="onboarded">On Boarded</h5>
                 </a>
             </li>
@@ -118,7 +118,7 @@
                     <sup class = "application-menu-options-title" >
                         {{$rejectedApplicationsCount}}    
                     </sup>
-                    {!! file_get_contents(public_path('icons/x-circle.svg')) !!}
+                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</svg>
                     <h5 class="onboarded">Closed</h5>
                 </a>
             </li>
