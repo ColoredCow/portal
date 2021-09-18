@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
 use Spatie\Permission\Traits\HasRoles;
@@ -115,5 +116,10 @@ class User extends Authenticatable
     public function meta()
     {
         return $this->hasOne(UserMeta::class, 'user_id');
+    }
+
+    public function projectTeamMembers()
+    {
+        return $this->hasMany(ProjectTeamMember::class, 'team_member_id');
     }
 }

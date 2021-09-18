@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('application:no-show')->everyThirtyMinutes();
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
+        $schedule->command('sync:effortsheet')->dailyAt('22:00');
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
