@@ -49,7 +49,9 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             // if already rejected
             if ($application->isRejected() || $application->latestApplicationRound->scheduled_date) {
                 //abort(404);
-                return view('appointmentslots::select_appointments.error_message');
+                //$error_message = view('appointmentslots::select_appointments.error-message');
+                //$obj= (object)(array_merge((array) $error_message), (array) $data));
+                //return $error_message;
             }
         } else {
             // old method. Kept for backward compatibility. Deprecated.
