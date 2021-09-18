@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
-/* @phpstan-ignore-next-line */
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 
@@ -20,6 +19,7 @@ class Project extends Model
 
     protected static function newFactory()
     {
+        /* @phpstan-ignore-next-line */
         return new ProjectFactory();
     }
 
