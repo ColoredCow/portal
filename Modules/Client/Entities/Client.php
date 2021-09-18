@@ -25,7 +25,7 @@ class Client extends Model
 
     protected static function newFactory()
     {
-        return ClientFactory::new();
+        return new ClientFactory();
     }
 
     public function scopeStatus($query, $status)

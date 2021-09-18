@@ -19,7 +19,7 @@ class Project extends Model
 
     protected static function newFactory()
     {
-        return ProjectFactory::new();
+        return new ProjectFactory();
     }
 
     public function teamMembers()

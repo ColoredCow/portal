@@ -14,6 +14,6 @@ class ProjectTeamMember extends Model
 
     protected static function newFactory()
     {
-        return ProjectTeamMemberFactory::new();
+        return new ProjectTeamMemberFactory();
     }
 }
