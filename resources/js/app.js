@@ -1008,7 +1008,7 @@ if ( document.getElementById("job_start_date") && document.getElementById("job_e
 	document.getElementsByName("start_date")[0].setAttribute("min", today);
 	document.getElementsByName("end_date")[0].setAttribute("min", today);
 }
-	 
+
 function lineChart(){
 	  var cData = value;
 	  var ctx = $("#line-chart");
