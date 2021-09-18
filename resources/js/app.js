@@ -1008,19 +1008,7 @@ if ( document.getElementById("job_start_date") && document.getElementById("job_e
 	document.getElementsByName("start_date")[0].setAttribute("min", today);
 	document.getElementsByName("end_date")[0].setAttribute("min", today);
 }
-
-//Job application js codes for change of icons color on clicking
-// if ( document.getElementById("list-styling") ){
-// 	const currentLocation = location.href;
-// 	const menuItem  = document.querySelectorAll("#job-application-listings");
-// 	const menuLength = menuItem.length;
-// 	for(let i=0; i<menuLength; i++){
-// 		if(menuItem[i].href === currentLocation){
-// 			menuItem[i].className = "job-application-status";
-// 		}
-// 	}
-// }	
- 
+	 
 function lineChart(){
 	  var cData = value;
 	  var ctx = $("#line-chart");

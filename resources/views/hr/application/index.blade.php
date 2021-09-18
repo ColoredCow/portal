@@ -48,7 +48,7 @@
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
-                <a class="btn" id="job-application-listings"{{ $status}}
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : '' }} btn"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
                     <sup class = "application-menu-options-title">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a id="job-application-listings" class="{{ request()->get('round') == config('hr.hr-rounds.trial-program') ? 'job-application-status' : '' }} btn" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
+                <a id="job-application-listings" class="{{ request()->get('round') === config('hr.hr-rounds.trial-program') ? 'job-application-status' : '' }} btn" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
                     <sup class = "application-menu-options-title" >
                         {{$trialProgramCount}}
                     </sup>
@@ -67,17 +67,18 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" id="job-application-listings" href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
+                <a class="{{ $status === config('constants.hr.status.on-hold.label') ? 'job-application-status' : '' }} btn" id="job-application-listings" 
+                href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
                     <sup class = "application-menu-options-title">
                         {{$onHoldApplicationsCount}}
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</svg>
                     <h5 class="on-hold">On Hold</h5>
-                    {{ $status === config('constants.hr.status.on-hold.label') ? '' : '' }}
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" id="job-application-listings" href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.no-show.label') ? 'job-application-status':'' }} btn"
+                href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
                     <sup class = "application-menu-options-title">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
@@ -86,7 +87,8 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" id="job-application-listings" href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.sent-for-approval.label') ? 'job-application-status' : '' }} btn"
+                href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
                     <sup class = "application-menu-options-title">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
@@ -95,7 +97,8 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" id="job-application-listings" href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.approved.label') ? 'job-application-status' : '' }} btn"
+                href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
                     <sup class = "application-menu-options-title">
                         {{$approvedApplicationsCount}}
                     </sup>
@@ -104,7 +107,8 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" id="job-application-listings" href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.onboarded.label') ? 'job-application-status' : '' }} btn"
+                href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
                     <sup class = "application-menu-options-title" >
                         {{$onboardedApplicationsCount}}
                     </sup>
@@ -113,12 +117,13 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" id="job-application-listings" href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.rejected.label') ? 'job-application-status':'' }} btn"
+                href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
                     <sup class = "application-menu-options-title" >
                         {{$rejectedApplicationsCount}}    
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</svg>
-                    <h5 class="onboarded">Closed</h5>
+                    <h5 class="closed">Closed</h5>
                 </a>
             </li>
         </div>
