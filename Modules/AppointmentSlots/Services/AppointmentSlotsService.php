@@ -48,6 +48,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             $userId = $application->latestApplicationRound->scheduled_person_id;
             // if already rejected
             if ($application->isRejected() || $application->latestApplicationRound->scheduled_date) {
+                //abort(404);
                 return view('appointmentslots::select_appointments.error_message');
             }
         } else {

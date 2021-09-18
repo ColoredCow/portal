@@ -3,6 +3,7 @@
 @section('content')
 
 <div>
+    <div style ="text-align: center;" >{!! file_get_contents(public_path('icons/exclamation-circle.svg')) !!}</div>
     <h1 class="error-heading" style ="text-align: center;">Page Not found</h1><br>
 
     <p class="error-message" style ="text-align: center; font-size: 20px;">
@@ -15,4 +16,3 @@
 </div>
 
 @endsection
-

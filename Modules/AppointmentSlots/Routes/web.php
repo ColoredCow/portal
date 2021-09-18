@@ -17,7 +17,7 @@ Route::prefix('appointmentslots')->group(function () {
 
 Route::get('appointment-slots/select/{user_id}', 'AppointmentSlotsController@showAppointments')->name('select-appointments');
 Route::post('appointment-slots/selected', 'AppointmentSlotsController@appointmentSelected');
-//Route::get('appointment-slots/select/{user_id}', 'AppointmentSlotsController@showErrorMessage')->name('error-message');
+//Route::get('appointment-slots/select/{user_id}', 'AppointmentSlotsController@showErrorMessage');
 
 Route::middleware('auth')->group(function () {
     Route::get('userappointmentslots/{user}', 'UserAppointmentSlotsController@show')->name('userappointmentslots.show');
