@@ -134,4 +134,7 @@ return [
         'salary-expectation-mismatch' => 'Salary expectation mismatch',
         'not-enough-knowledge-inclination-for-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
     ],
+    'hr-rounds' => [
+        'trial-program' => 'Trial-Program'
+    ]
 ];

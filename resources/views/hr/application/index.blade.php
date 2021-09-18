@@ -58,13 +58,12 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a class="btn" id="job-application-listings" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
+                <a id="job-application-listings" class="{{ request()->get('round') == config('hr.hr-rounds.trial-program') ? 'job-application-status' : '' }} btn" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
                     <sup class = "application-menu-options-title" >
                         {{$trialProgramCount}}
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/code.svg')) !!}</svg>
-                    <h5 class="trial-program" id="text1">Trial Program</h5>
-                    {{ request()->get('round')=='Trial-Program' ? '' : '' }}
+                    <h5 class="trial-program" id="text1">Trial Program</h5>    
                 </a>
             </li>
             <li id="list-styling">
