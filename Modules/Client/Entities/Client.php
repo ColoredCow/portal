@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
+/* @phpstan-ignore-next-line */
 use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
