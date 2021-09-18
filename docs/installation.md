@@ -5,14 +5,18 @@
    git clone https://github.com/coloredcow-portal/portal
    cd portal
    ```
+   If you have installed the XAMPP/MAMP/WAMP before hand jsut copy and paste the project into this location `C:\XAMPP\htdocs\` then paste your project into the htdocs folder.
+   If you have not then you may install XAMPP/WAMP/MAMP then paste the files later.
 
 2. Install dependencies
    ```sh
    composer install 
    ```
+   Example:
    ```
    npm install
    ```
+   Example:
 
 3. npm build
    ```sh
@@ -99,7 +103,7 @@ php artisan migrate
 
 9. Setup Virtual Host
     1. For XAMPP:
-         - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
+        - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
 
              ```
              127.0.0.1      portal.test
