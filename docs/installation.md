@@ -6,17 +6,21 @@
    cd portal
    ```
    If you have installed the XAMPP/MAMP/WAMP before hand jsut copy and paste the project into this location `C:\XAMPP\htdocs\` then paste your project into the htdocs folder.
+   
    If you have not then you may install XAMPP/WAMP/MAMP then paste the files later.
 
 2. Install dependencies
    ```sh
    composer install 
    ```
-   Example:
+   It looks like this after installing:
+   Example:![image](https://user-images.githubusercontent.com/73119570/133890390-1df193bc-dd3a-4604-a990-852b7cfe30eb.png)
    ```
    npm install
    ```
-   Example:
+   It looks like this after installing:
+   Example:<img width="873" alt="Screenshot 2021-09-18 at 6 28 36 PM" src="https://user-images.githubusercontent.com/73119570/133890806-4d2804f5-4b07-4365-810d-e063c76e629d.png">
+
 
 3. npm build
    ```sh
