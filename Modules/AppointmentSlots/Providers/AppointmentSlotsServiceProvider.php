@@ -35,7 +35,6 @@ class AppointmentSlotsServiceProvider extends ServiceProvider
         $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         $this->loadService();
-        $this->registerCommands();
         AppointmentSlot::observe(UserAppointmentSlotObserver::class);
     }
 
@@ -141,17 +140,5 @@ class AppointmentSlotsServiceProvider extends ServiceProvider
                 return new AppointmentSlotsService();
             });
         }
-    }
-
-    /**
-     * Register the commands for the module.
-     *
-     * @return void
-     */
-    protected function registerCommands()
-    {
-        $this->commands([
-            \Modules\AppointmentSlots\Console\CreateUserAppointmentSlots::class,
-        ]);
     }
 }
