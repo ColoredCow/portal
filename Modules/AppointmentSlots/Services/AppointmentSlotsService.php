@@ -55,10 +55,10 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
             $userId = $decryptedParams['user_id'];
         }
 
-        $freeSlots = $this->getUserFreeSlots($userId);
+        $freeSlots = self::getUserFreeSlots($userId);
 
         if ($freeSlots->isEmpty()) {
-            $this->fillScheduleForTheDay($userId);
+            $this->fillUserSchedule($userId);
         }
 
         $freeSlots = $this->formatForFullCalender($freeSlots);
@@ -105,17 +105,19 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         return ['error' => false, 'message' => ''];
     }
 
-    public function fillScheduleForTheDay($userId, $startDate = null)
+    public static function fillUserSchedule($userId, $startDate = null)
     {
         if (! $startDate) {
             $startDate = Carbon::createFromTimeString('11:00:00');
         }
         $slots = [];
-        $numberOfSlots = config('hr.daily-appointment-slots.total', 6);
+        $maxSlotsDaily = config('hr.daily-appointment-slots.total', 6);
 
+        // run from today till 20 days
         for ($j = 0; $j < 20; $j++) {
             $nextDay = (clone $startDate)->addDays(1);
-            for ($i = 0; $i < $numberOfSlots; $i++) {
+            // for every day, create the appointment slots
+            for ($i = 0; $i < $maxSlotsDaily; $i++) {
                 $slots[] = [
                     'user_id' => $userId,
                     'start_time' => (clone $startDate),
@@ -123,17 +125,20 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-                // for 15 minutes padding.
+                // there should be 15-min gap between every slot.
                 $startDate->addMinutes(45);
             }
 
+            // run the loop for next day now.
             $startDate = $nextDay;
         }
 
         foreach ($slots as $slot) {
+            // skip for Saturday and Sunday
             if ($slot['start_time']->dayOfWeek == 0 || $slot['start_time']->dayOfWeek == 6) {
                 continue;
             }
+            // create appointment slot if doesn't exist for that time
             if (! AppointmentSlot::where('user_id', $userId)
                 ->where('start_time', $slot['start_time'])
                 ->exists()) {
@@ -206,7 +211,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
      *
      * @param  int  $userId
      */
-    private function getUserFreeSlots($userId)
+    public static function getUserFreeSlots($userId)
     {
         $slots = AppointmentSlot::user($userId)->future()->get();
 
