@@ -58,9 +58,15 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $freeSlots = $this->getUserFreeSlots($userId);
 
         if ($freeSlots->count() < 15) {
-            // next day 11am from the last slot time
-            $startDateTime = $freeSlots->last()->start_time->addDays(1)->setTime(11, 0);
-            $this->createAppointmentSlots($userId, $startDateTime);
+            if ($freeSlots->isEmpty()) {
+                $this->createAppointmentSlots($userId);
+            } else {
+                // next day 11am from the last slot time
+                $startDateTime = $freeSlots->last()->start_time->addDays(1)->setTime(11, 0);
+                $this->createAppointmentSlots($userId, $startDateTime);
+            }
+            // refetch free slots after they're created
+            $freeSlots = $this->getUserFreeSlots($userId);
         }
 
         $freeSlots = $this->formatForFullCalender($freeSlots);
