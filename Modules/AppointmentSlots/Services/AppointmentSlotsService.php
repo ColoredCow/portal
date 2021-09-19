@@ -57,7 +57,8 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
 
         $freeSlots = $this->getUserFreeSlots($userId);
 
-        if ($freeSlots->count() < 15) {
+        $freeSlotsThreshold = config('appointmentslots.recreate-threshold', 15);
+        if ($freeSlots->count() < $freeSlotsThreshold) {
             if ($freeSlots->isEmpty()) {
                 $this->createAppointmentSlots($userId);
             } else {
@@ -120,21 +121,24 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         }
         $slots = [];
         $maxSlotsDaily = config('hr.daily-appointment-slots.total', 6);
+        $slotDuration = config('appointmentslots.slot-duration-minutes', 30);
+        $gapBetweenSlots = config('appointmentslots.gap-between-slots-minutes', 15);
+        $createSlotsForDays = config('appointmentslots.auto-create-slots-for-days', 20);
 
-        // run from today till 20 days
-        for ($j = 0; $j < 20; $j++) {
+        // start from today till 20 days
+        for ($day = 0; $day < $createSlotsForDays; $day++) {
             $nextDay = (clone $startDate)->addDays(1);
             // for every day, create the appointment slots
-            for ($i = 0; $i < $maxSlotsDaily; $i++) {
+            for ($slotCount = 0; $slotCount < $maxSlotsDaily; $slotCount++) {
                 $slots[] = [
                     'user_id' => $userId,
                     'start_time' => (clone $startDate),
-                    'end_time' => (clone $startDate)->addMinutes(30),
+                    'end_time' => (clone $startDate)->addMinutes($slotDuration),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
                 // there should be 15-min gap between every slot.
-                $startDate->addMinutes(45);
+                $startDate->addMinutes($slotDuration + $gapBetweenSlots);
             }
 
             // run the loop for next day now.
