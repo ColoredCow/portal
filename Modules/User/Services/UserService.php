@@ -22,7 +22,7 @@ class UserService implements UserServiceContract
     public function delete(User $user)
     {
         $user->delete();
-        if (env('WORDPRESS_ENABLED') == true) {
+        if (config('database.connections.wordpress.enabled')) {
             event(new UserRemovedEvent($user));
         }
 
