@@ -43,11 +43,16 @@ class CreateUserAppointmentSlots extends Command
         $userId = $this->argument('user');
         $user = User::find($userId);
         $freeSlots = AppointmentSlotsService::getUserFreeSlots($userId);
-        dd($freeSlots);
 
         if ($freeSlots->isEmpty()) {
-            $this->fillUserSchedule($userId);
+            $this->info('No free slots available. Creating new ones.');
+            AppointmentSlotsService::fillUserSchedule($userId);
+        } elseif ($freeSlots->count() < 15) {
+            $this->info('Free slots less than 15. Creating new ones.');
+            $startDateTime = $freeSlots->last()->start_time->addDays(1)->setTime(11, 0);
+            AppointmentSlotsService::fillUserSchedule($userId, $startDateTime);
         }
+        $this->info('All done!');
     }
 
     /**
