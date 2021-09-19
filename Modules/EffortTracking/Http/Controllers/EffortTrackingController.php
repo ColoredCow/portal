@@ -30,7 +30,20 @@ class EffortTrackingController extends Controller
      */
     public function show(Project $project)
     {
-        return view('efforttracking::show')->with('project', $project);
+        $teamMembers = $project->getTeamMembers()->get();
+        $teamMembersEffort = [];
+        foreach ($teamMembers as $teamMember) {
+            $userDetails = $teamMember->getUserDetails;
+            $efforts = $teamMember->getMemberEffort()->get();
+            foreach ($efforts as $effort) {
+                $teamMembersEffort['team_member_id'] = $teamMember->id;
+                $teamMembersEffort['name'] = $userDetails->name;
+                $teamMembersEffort['actual_effort'] = $effort->actual_effort;
+                $teamMembersEffort['total_effort_in_effortsheet'] = $effort->total_effort_in_effortsheet;
+            }
+        }
+
+        return view('efforttracking::show')->with(['project' => $project, 'teamMembersEffort' => json_encode($teamMembersEffort)]);
     }
 
     /**

@@ -27,15 +27,15 @@ $(document).on("submit", ".task-form", (e) => {
 		form.find(".remove_button").toggleClass("d-none");
 		form.find(".btn-update").val("update");
 		form.find(".btn-text").text("Update");
-		if(task.comment){
-			form.find("#show_comment").text("View Note");    
+		if (task.comment) {
+			form.find("#show_comment").text("View Note");
 		}
-		form.find("form").attr("action",`/efforttracking/task/${task.id}`);
+		form.find("form").attr("action", `/efforttracking/task/${task.id}`);
 		form.find(".task-form")
 			.find("input")
 			.map((key, val) => {
-				if(val.name!=="_token"&&val.name!=="_method"){
-					val.value=task[val.name];
+				if (val.name !== "_token" && val.name !== "_method") {
+					val.value = task[val.name];
 				}
 			});
 		form.find(".task-form").find(".type").val(task.type);
@@ -62,14 +62,12 @@ $(document).on("submit", ".task-form", (e) => {
 				form.find(".icon,.btn-text").toggleClass("d-none");
 				button.prop("disabled", false);
 			}, 2000);
-            
+
 			if (button.val() == "add") {
 				form.closest(".update-card").remove();
 				addUpdateForm(response.data);
-			}
-			else
-			{
-				if(response.data.comment){
+			} else {
+				if (response.data.comment) {
 					form.find("#show_comment").text("View Note");
 				}
 			}
@@ -107,7 +105,49 @@ $(document).on("click", ".delete-form", (e) => {
 	});
 });
 
-$(document).on("click","#show_comment",(e)=>{
+$(document).on("click", "#show_comment", (e) => {
 	let addNoteBtn = $(e.target);
 	addNoteBtn.parent().find(".comment_toggle").toggleClass("d-none");
 });
+
+if ($('.effort-tracking-data').find('canvas').length) {
+	effortTrackingChart();
+}
+
+function effortTrackingChart() {
+	var effortDetails = JSON.parse( $("input[name='team_members_effort']").val() );
+	const labels = [effortDetails.name]
+	const data = {
+		labels: labels,
+		datasets: [{
+			label: 'Dataset 1',
+			data: '8',
+			borderColor: '#FFB2C1',
+			backgroundColor: '#FFB2C1',
+		}, {
+			label: 'Dataset 2',
+			data: '10',
+			borderColor: '#A0D0F5',
+			backgroundColor: '#A0D0F5',
+		}]
+	};
+	var options = {
+		responsive: true,
+		plugins: {
+			legend: {
+				position: 'top',
+			},
+			title: {
+				display: true,
+				text: 'Sample True',
+			}
+		}
+	};
+	var ctx = $("#effortTrackingGraph");
+	var ctx = 'effortTrackingGraph';
+	var charts = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: options
+	});
+}

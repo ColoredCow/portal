@@ -14,7 +14,10 @@
                 <h2 class="fz-18 leading-22">Previous Month FTE: <span class="text-success">1</span></h2>
                 <a class="fz-18 leading-22" href="{{route('project.effort-tracking-history', $project )}}">Historical Data</a>
             </div>
-            <div>Graph</div>
+            <div class="effort-tracking-data">
+                <input type="hidden" name="team_members_effort" value="{{$teamMembersEffort}}">
+                <canvas id="effortTrackingGraph"></canvas>
+            </div>
         </div>
     </div>
 </div>
