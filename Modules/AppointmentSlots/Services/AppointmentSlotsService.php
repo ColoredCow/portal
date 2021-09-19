@@ -58,11 +58,11 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         $freeSlots = $this->getUserFreeSlots($userId);
 
         if ($freeSlots->isEmpty()) {
-            $this->fillUserSchedule($userId);
+            $this->createAppointmentSlots($userId);
         } elseif ($freeSlots->count() < 15) {
             // next day 11am from the last slot time
             $startDateTime = $freeSlots->last()->start_time->addDays(1)->setTime(11, 0);
-            $this->fillUserSchedule($userId, $startDateTime);
+            $this->createAppointmentSlots($userId, $startDateTime);
         }
 
         $freeSlots = $this->formatForFullCalender($freeSlots);
@@ -109,7 +109,7 @@ class AppointmentSlotsService implements AppointmentSlotsServiceContract
         return ['error' => false, 'message' => ''];
     }
 
-    public function fillUserSchedule($userId, $startDate = null)
+    public function createAppointmentSlots($userId, $startDate = null)
     {
         if (! $startDate) {
             $startDate = Carbon::createFromTimeString('11:00:00');
