@@ -21,7 +21,7 @@ return [
         'domains' => [
             'engineering' => 'Engineering',
             'design' => 'Design',
-            'marketing' => 'Marketing'
+            'marketing' => 'Marketing',
             'data-researcher' => 'Data Researcher',
             'people-operations' => 'People Operations',
             'project-management' => 'Project Management'
