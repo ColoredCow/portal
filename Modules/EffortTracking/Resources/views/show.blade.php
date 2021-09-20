@@ -42,8 +42,8 @@
                     @php $users = json_decode($users) @endphp
                     @foreach($users as $user)
                         <tr>
-                            <th scope="row">{{$user->name}}</th>
-                            <td class="text-danger">{{$user->actual_effort}}</td>
+                            <th scope="row" style="color: <?php echo $user->color; ?>">{{$user->name}}</th>
+                            <td>{{$user->actual_effort}}</td>
                             <td>40</td>
                             <td class="text-danger">0.8</td>
                         </tr>

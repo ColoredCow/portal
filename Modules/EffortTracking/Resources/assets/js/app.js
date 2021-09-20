@@ -126,7 +126,7 @@ function effortTrackingChart() {
 			data:[6, 3, 2, 2, 7, 0, 16],
 			borderColor: users[i].color,
 			backgroundColor: users[i].color,
-			stacked: "combined",
+			stack: "combined"
 		}
 	}
 	datasetValue[users.length] = {
@@ -136,13 +136,12 @@ function effortTrackingChart() {
 		fill: false,
 		borderColor: '#4BC0C0',
 		backgroundColor: '#4BC0C0',
-		stack: "combined",
+		stack: "combined"
 	}
 	const data = {
 		labels: workingDays,
 		datasets: datasetValue,
 	};
-	console.log(datasetValue)
 	var options = {
 		plugins: {
 			title: {
@@ -157,7 +156,7 @@ function effortTrackingChart() {
 				offset: true,
 				time: {
 					unit: 'day'
-				}
+				},
 			},
 			y: {
 				stacked: true,
