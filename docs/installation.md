@@ -130,3 +130,5 @@ php artisan migrate
             ```
 
        - Restart XAMPP. Next, open this url in your browser: http://portal.test
+
+10. Then it shows a login page. To get login credentials go to your database or got to this link `http://localhost/phpmyadmin/index.php`. Search for users table you can find the login credentials. 
