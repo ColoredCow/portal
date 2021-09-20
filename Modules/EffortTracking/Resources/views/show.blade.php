@@ -16,7 +16,9 @@
             </div>
             <div class="effort-tracking-data">
                 <input type="hidden" name="team_members_effort" value="{{$teamMembersEffort}}">
-                <canvas id="effortTrackingGraph"></canvas>
+                <input type="hidden" name="workingDays" value="{{$workingDays}}">
+                <input type="hidden" name="users" value="{{$users}}">
+                <canvas id="effortTrackingGraph" style="width:100%;"></canvas>
             </div>
         </div>
     </div>
@@ -37,10 +39,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $users = json_decode($users) @endphp
                     @foreach($users as $user)
                         <tr>
-                            <th scope="row">{{$user['name']}}</th>
-                            <td class="text-danger">{{$user['actual_effort']}}</td>
+                            <th scope="row">{{$user->name}}</th>
+                            <td class="text-danger">{{$user->actual_effort}}</td>
                             <td>40</td>
                             <td class="text-danger">0.8</td>
                         </tr>

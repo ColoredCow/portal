@@ -115,33 +115,54 @@ if ($('.effort-tracking-data').find('canvas').length) {
 }
 
 function effortTrackingChart() {
-	var effortDetails = JSON.parse( $("input[name='team_members_effort']").val() );
-	const labels = [effortDetails.name]
-	const data = {
-		labels: labels,
-		datasets: [{
-			label: 'Dataset 1',
-			data: '8',
-			borderColor: '#FFB2C1',
-			backgroundColor: '#FFB2C1',
-		}, {
-			label: 'Dataset 2',
-			data: '10',
-			borderColor: '#A0D0F5',
-			backgroundColor: '#A0D0F5',
-		}]
-	};
-	var options = {
-		responsive: true,
-		plugins: {
-			legend: {
-				position: 'top',
-			},
-			title: {
-				display: true,
-				text: 'Sample True',
-			}
+	var effortDetails = JSON.parse($("input[name='team_members_effort']").val());
+	var workingDays = JSON.parse($("input[name='workingDays']").val());
+	var users = JSON.parse($("input[name='users']").val());
+	const datasetValue = [];
+	for (var i = users.length - 1; i >= 0; i--) {
+		datasetValue[i] = {
+			type: "bar",
+			label: users[i].name,
+			data:[6, 3, 2, 2, 7, 0, 16],
+			borderColor: users[i].color,
+			backgroundColor: users[i].color,
+			stacked: "combined",
 		}
+	}
+	datasetValue[users.length] = {
+		type: "line",
+		label: 'Expected Hours',
+		data: [86, 114, 106, 106, 107, 111, 133],
+		fill: false,
+		borderColor: '#4BC0C0',
+		backgroundColor: '#4BC0C0',
+		stack: "combined",
+	}
+	const data = {
+		labels: workingDays,
+		datasets: datasetValue,
+	};
+	console.log(datasetValue)
+	var options = {
+		plugins: {
+			title: {
+				text: 'Chart.js Combo Time Scale',
+				display: true
+			}
+		},
+		scales: {
+			x: {
+				type: 'time',
+				display: true,
+				offset: true,
+				time: {
+					unit: 'day'
+				}
+			},
+			y: {
+				stacked: true,
+			}
+		},
 	};
 	var ctx = $("#effortTrackingGraph");
 	var ctx = 'effortTrackingGraph';
