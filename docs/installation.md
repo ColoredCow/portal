@@ -5,7 +5,7 @@
    git clone https://github.com/coloredcow-portal/portal
    cd portal
    ```
-   If you have installed the XAMPP/MAMP/WAMP before hand jsut copy and paste the project into this location `C:\XAMPP\htdocs\` then paste your project into the htdocs folder.
+   If you have installed the XAMPP/MAMP/WAMP before hand just copy and paste the project into this location `C:\XAMPP\htdocs\` then paste your project into the htdocs folder.
    
    If you have not then you may install XAMPP/WAMP/MAMP then paste the files later.
 
