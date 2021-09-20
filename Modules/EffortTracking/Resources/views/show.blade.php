@@ -37,18 +37,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">Kuldeep Upreti</th>
-                        <td class="text-danger">32</td>
-                        <td>40</td>
-                        <td class="text-danger">0.8</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Abhishek Pokhriyal</th>
-                        <td class="text-success">40</td>
-                        <td>40</td>
-                        <td class="text-success">1</td>
-                    </tr>
+                    @foreach($users as $user)
+                        <tr>
+                            <th scope="row">{{$user['name']}}</th>
+                            <td class="text-danger">{{$user['actual_effort']}}</td>
+                            <td>40</td>
+                            <td class="text-danger">0.8</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

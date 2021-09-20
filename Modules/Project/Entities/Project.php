@@ -13,7 +13,7 @@ class Project extends Model
 
     protected $dates = ['start_date', 'end_date'];
 
-    public function users()
+    public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
             ->withPivot('designation')->withTimestamps();
