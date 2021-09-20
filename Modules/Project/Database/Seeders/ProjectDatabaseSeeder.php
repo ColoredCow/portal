@@ -21,5 +21,8 @@ class ProjectDatabaseSeeder extends Seeder
         ->count(3)
         ->for($client)
         ->create();
+
+        $this->call(ProjectTeamMemberDatabaseSeeder::class);
+        $this->call(ProjectTeamMemberEffortDatabaseSeeder::class);
     }
 }
