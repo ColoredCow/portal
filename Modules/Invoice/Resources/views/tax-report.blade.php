@@ -26,12 +26,12 @@
                     <th>Project</th>
                     <th>Amount</th>
                     <th>Received amount</th>
-                    @if (request()->input('region') == 'indian' )
+                    @if (request()->input('region') == config('invoice.indian'))
                         <th>Amount (+GST)</th>
                         <th>GST</th>
                         <th>TDS</th>
                     @endif
-                    @if (request()->input('region') == 'international' )
+                    @if (request()->input('region') == config('invoice.international'))
                         <th>Bank Charges</th>
                         <th>Conversion Rate Difference</th>
                     @endif
@@ -58,7 +58,7 @@
                         </td>
                         <td>{{ $invoice->display_amount }}</td>
                         <td>{{ $invoice->amount_paid }}</td>
-                        @if (request()->input('region') == 'indian' )
+                        @if (request()->input('region') == config('invoice.indian'))
                             <td>{{ $invoice->invoiceAmount() }}</td>
                             <td>{{ $invoice->gst }}</td>
                             <td>{{ $invoice->tds }}</td>

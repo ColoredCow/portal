@@ -187,11 +187,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $invoices = $this->taxReportInvoices($filters);
         if (isset($filters->region)) {
-            if ($filters['region'] == 'indian') {
-                $invoices = $this->formatInvoicesForExportIndian($invoices);
-            } else {
-                $invoices = $this->formatInvoicesForExportInternational($invoices);
-            }
+            $invoices = $filters['region'] == 'indian' ? $this->formatInvoicesForExportIndian($invoices) : $this->formatInvoicesForExportInternational($invoices);
         } else {
             $invoices = $this->formatInvoicesForExportAll($invoices);
         }
