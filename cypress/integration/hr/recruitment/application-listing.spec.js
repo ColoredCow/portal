@@ -12,7 +12,7 @@ describe("Recruitment", () => {
         .first()
         .should("have.text", "Dashboard");
         cy.visit("/hr/recruitment/job");
-        cy.get("[class='w-25p']");
+        cy.get(':nth-child(1) > .w-25p');
     });
 });
   
