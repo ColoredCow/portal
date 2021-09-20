@@ -22,6 +22,9 @@ return [
             'engineering' => 'Engineering',
             'design' => 'Design',
             'marketing' => 'Marketing'
+            'data-researcher' => 'Data Researcher',
+            'people-operations' => 'People Operations',
+            'project-management' => 'Project Management'
         ],
 
     ],
