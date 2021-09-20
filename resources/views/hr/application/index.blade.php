@@ -50,7 +50,7 @@
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : '' }} btn"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
-                    <sup class = "application-menu-options-title">
+                    <sup class = "application-menu-options-title fz-20">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/people.svg')) !!}</svg>
@@ -58,8 +58,9 @@
                 </a>
             </li>
             <li id="list-styling">
-                <a id="job-application-listings" class="{{ request()->get('round') === config('hr.hr-rounds.trial-program') ? 'job-application-status' : '' }} btn" href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program data-spy="affix" data-offset-top="197">
-                    <sup class = "application-menu-options-title" >
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.in-progress.label') ? 'job-application-status' : '' }} btn" 
+                href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}>
+                    <sup class = "application-menu-options-title fz-20">
                         {{$trialProgramCount}}
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/code.svg')) !!}</svg>
@@ -69,7 +70,7 @@
             <li id="list-styling">
                 <a class="{{ $status === config('constants.hr.status.on-hold.label') ? 'job-application-status' : '' }} btn" id="job-application-listings" 
                 href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
-                    <sup class = "application-menu-options-title">
+                    <sup class = "application-menu-options-title fz-20">
                         {{$onHoldApplicationsCount}}
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</svg>
@@ -79,7 +80,7 @@
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.no-show.label') ? 'job-application-status':'' }} btn"
                 href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
-                    <sup class = "application-menu-options-title">
+                    <sup class = "application-menu-options-title fz-20">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</svg>
@@ -89,7 +90,7 @@
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.sent-for-approval.label') ? 'job-application-status' : '' }} btn"
                 href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
-                    <sup class = "application-menu-options-title">
+                    <sup class = "application-menu-options-title fz-20">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</svg>
@@ -99,7 +100,7 @@
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.approved.label') ? 'job-application-status' : '' }} btn"
                 href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
-                    <sup class = "application-menu-options-title">
+                    <sup class = "application-menu-options-title fz-20">
                         {{$approvedApplicationsCount}}
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</svg>
@@ -109,7 +110,7 @@
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.onboarded.label') ? 'job-application-status' : '' }} btn"
                 href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
-                    <sup class = "application-menu-options-title" >
+                    <sup class = "application-menu-options-title fz-20" >
                         {{$onboardedApplicationsCount}}
                     </sup>
                     <svg class="job-application-icons"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </svg>
@@ -119,7 +120,7 @@
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.rejected.label') ? 'job-application-status':'' }} btn"
                 href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
-                    <sup class = "application-menu-options-title" >
+                    <sup class = "application-menu-options-title fz-20" >
                         {{$rejectedApplicationsCount}}    
                     </sup>
                     <svg class="job-application-icons">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</svg>
