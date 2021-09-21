@@ -42,6 +42,6 @@ class CurrencyService implements CurrencyServiceContract
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        return round($data, 2);
+        return round($data['quotes']['USDINR'], 2);
     }
 }
