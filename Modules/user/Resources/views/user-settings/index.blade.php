@@ -9,7 +9,7 @@
         <div class="col-6">
             <label class="user-settings fz-24">User Settings</label>
         </div>
-        <div class=".col-6 .offset-md-3">
+        <div>
             <input type="text" class="form-control search-user-settings" placeholder="Search Settings">
         </div>
     </div>
