@@ -7,13 +7,13 @@
 <div class="container">
     <div class="row justify-content-around">
         <div class="col-6">
-            <label class="user-settings" style="font-size:24px;">User Settings</label>
+            <label class="user-settings fz-24">User Settings</label>
         </div>
         <div class=".col-6 .offset-md-3">
             <input type="text" class="form-control search-user-settings" placeholder="Search Settings">
         </div>
     </div>
-    <div class="col" style="top: 28px;">
+    <div class="col" id="user-settings-content">
         <div class= "user-settings-menu">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -26,8 +26,8 @@
                 </ul>
             </div>
             <div class="card-body">
-                <h5 class="max fz-20">Maximum interviews in a day:
-                    <input type="number" class="col-xs text-center quantity" id="quantity" name="max_interviews_per_day" min="0" max="4" value="{{ old ('max_interviews_per_day', optional(Auth::user()->meta)->max_interviews_per_day) }}">
+                <h5 class="max-interview-heading fz-20">Maximum interviews in a day:
+                    <input type="number" class="col-xs text-center outline-none h-40 w-72 rounded-12 quantity" id="quantity" name="max_interviews_per_day" min="0" max="4" value="{{ old ('max_interviews_per_day', optional(Auth::user()->meta)->max_interviews_per_day) }}">
                 </h5>        
                 <input type="submit" class="btn btn-primary" value="Save">
             </div>    
