@@ -53,7 +53,7 @@
                     <sup class = "application-menu-options-title fz-20">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
-                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/people.svg')) !!}</svg>
+                    <span class="d-block h-24 w-24">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
                     <h5 class="open" id="text2">Open</h5>
                 </a>
             </li>
@@ -63,7 +63,7 @@
                     <sup class = "application-menu-options-title fz-20">
                         {{$trialProgramCount}}
                     </sup>
-                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/code.svg')) !!}</svg>
+                    <span class="d-block h-24 w-24">{!! file_get_contents(public_path('icons/code.svg')) !!}</span>
                     <h5 class="trial-program" id="text1">Trial Program</h5>    
                 </a>
             </li>
@@ -73,7 +73,7 @@
                     <sup class = "application-menu-options-title fz-20">
                         {{$onHoldApplicationsCount}}
                     </sup>
-                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</svg>
+                    <span class="d-block h-24 w-24">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</span>
                     <h5 class="on-hold">On Hold</h5>
                 </a>
             </li>
@@ -83,7 +83,7 @@
                     <sup class = "application-menu-options-title fz-20">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
-                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</svg>
+                    <span class="d-block h-24 w-24">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</span>
                     <h5 class="no-show">No Show</h5>
                 </a>
             </li>
@@ -93,7 +93,7 @@
                     <sup class = "application-menu-options-title fz-20">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
-                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</svg>
+                    <span class="d-block h-24 w-24">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</span>
                     <h5 class="toapprove">To Approve</h5>
                 </a>
             </li>
@@ -103,7 +103,7 @@
                     <sup class = "application-menu-options-title fz-20">
                         {{$approvedApplicationsCount}}
                     </sup>
-                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</svg>
+                    <span class="d-block h-24 w-24">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
                     <h5 class="approved">Approved</h5>
                 </a>
             </li>
@@ -113,7 +113,7 @@
                     <sup class = "application-menu-options-title fz-20" >
                         {{$onboardedApplicationsCount}}
                     </sup>
-                    <svg class="job-application-icons"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </svg>
+                    <span class="d-block h-24 w-24"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
                     <h5 class="onboarded">On Boarded</h5>
                 </a>
             </li>
@@ -123,7 +123,7 @@
                     <sup class = "application-menu-options-title fz-20" >
                         {{$rejectedApplicationsCount}}    
                     </sup>
-                    <svg class="job-application-icons">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</svg>
+                    <span class="d-block h-24 w-24">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
                     <h5 class="closed">Closed</h5>
                 </a>
             </li>
