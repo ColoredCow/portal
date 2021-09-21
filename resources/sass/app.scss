@@ -716,13 +716,9 @@ span.total-chart-count{
 .max{
 	color: #969281;
 }
-.quantity{
-	height: 40px;
- 	border-radius: 12px;
- 	font-family: Mulish;
-	outline-offset: 0px;
-        outline: none;
-}
+#user-settings-content{
+ 	top: 26px;
+}	
 // End Custom
 
 [v-cloak] { display: none; }
