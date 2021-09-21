@@ -73,9 +73,9 @@
     ```
 
 7. Run migrations
-```sh
-php artisan migrate
-```
+    ```sh
+    php artisan migrate
+    ```
 
 8. Run seeders
     1. Portal
