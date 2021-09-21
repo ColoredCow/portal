@@ -1,4 +1,4 @@
-## Prerequisites and Learnning :book:
+## Prerequisites and Learning :book:
 
 For all the beginners that are starting on the portal this is for you to get started.
 
@@ -54,3 +54,19 @@ You can install it with the following ways:
 This project uses Laravel Modules, so a basic understanding of the commands is recommended:
 
 - [Laravel Module Utility Commands](https://nwidart.com/laravel-modules/v1/advanced-tools/artisan-commands)
+
+### 8. Code Formatter :butterfly:
+
+Add the plugins mentioned below for automatic code styling:
+
+- Visual Studio Code Editor:
+  - [Prettier - for JS, CSS, HTML files](https://prettier.io/)
+  - [Laravel Blade Snippets for Blade files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
+  - [Laravel Extra Intellisense](https://marketplace.visualstudio.com/items?itemName=amiralizadeh9480.laravel-extra-intellisense)
+  - [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)
+  - [PHP CS Fixer](https://marketplace.visualstudio.com/items?itemName=junstyle.php-cs-fixer)
+
+- Sublime Code Editor:
+  - [PHP formatting - PHPfmt](https://packagecontrol.io/packages/phpfmt)
+  - [Laravel Blade Snippets for Blade files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
+  - [Prettier - for JS, CSS, HTML files](https://prettier.io/)

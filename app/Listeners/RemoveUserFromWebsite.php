@@ -25,16 +25,15 @@ class RemoveUserFromWebsite
      */
     public function handle($event)
     {
+        if (! config('database.connections.wordpress.enabled')) {
+            return;
+        }
+
         $wpUser = WPUser::where('user_email', $event->user->email)->first();
-        if (! $wpUser) {
-            return;
-        }
-
         $admin = WPUser::where('user_login', config('website.admin_login_name'))->first();
-        if (! $wpUser) {
-            return;
-        }
 
-        WPPost::where('post_author', $wpUser->ID)->update(['post_author' => $admin->ID]);
+        if ($wpUser && $admin) {
+            WPPost::where('post_author', $wpUser->ID)->update(['post_author' => $admin->ID]);
+        }
     }
 }
