@@ -17,7 +17,8 @@ return [
         ]
     ],
 
-    'indian' => 'indian',
-    'international' => 'international',
-
+    'region' => [
+        'indian' => 'indian',
+        'international' => 'international',
+    ]
 ];
