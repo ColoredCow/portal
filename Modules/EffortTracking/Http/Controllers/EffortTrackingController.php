@@ -50,9 +50,10 @@ class EffortTrackingController extends Controller
                 'color' => self::random_color(),
             ];
         }
-        $workingDays = self::countWorkingDays();
+        $workingDays = self::countWorkingDays(now()->startOfMonth(), now());
+        $totalWorkingDays = count(self::countWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
 
-        return view('efforttracking::show')->with(['project' => $project, 'teamMembersEffort' => json_encode($teamMembersEffort), 'users' => json_encode($users), 'workingDays' => json_encode($workingDays)]);
+        return view('efforttracking::show')->with(['project' => $project, 'teamMembersEffort' => json_encode($teamMembersEffort), 'users' => json_encode($users), 'workingDays' => json_encode($workingDays), 'totalWorkingDays' => $totalWorkingDays]);
     }
 
     /**
@@ -64,9 +65,9 @@ class EffortTrackingController extends Controller
         return view('efforttracking::edit');
     }
 
-    public static function countWorkingDays()
+    public static function countWorkingDays($startDate, $endDate)
     {
-        $period = CarbonPeriod::create(now()->startOfMonth(), now());
+        $period = CarbonPeriod::create($startDate, $endDate);
         $dates = [];
         foreach ($period as $date) {
             if ($date->format('l') !== 'Saturday' && $date->format('l') !== 'Sunday') {

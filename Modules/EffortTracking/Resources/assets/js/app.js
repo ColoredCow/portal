@@ -110,7 +110,7 @@ $(document).on("click", "#show_comment", (e) => {
 	addNoteBtn.parent().find(".comment_toggle").toggleClass("d-none");
 });
 
-if ($('.effort-tracking-data').find('canvas').length) {
+if ($(".effort-tracking-data").find("canvas").length) {
 	effortTrackingChart();
 }
 
@@ -118,7 +118,13 @@ function effortTrackingChart() {
 	var effortDetails = JSON.parse($("input[name='team_members_effort']").val());
 	var workingDays = JSON.parse($("input[name='workingDays']").val());
 	var users = JSON.parse($("input[name='users']").val());
+	var totalWorkingDays = $("input[name='totalWorkingDays']").val();
+	var estimatedHours = $("#projectHours").find("span").html();
 	const datasetValue = [];
+	const hoursPerDay = [];
+	for (var i = 1; i <= totalWorkingDays; i++) {
+		hoursPerDay.push((estimatedHours/totalWorkingDays) * i);
+	}
 	for (var i = users.length - 1; i >= 0; i--) {
 		datasetValue[i] = {
 			type: "bar",
@@ -126,17 +132,17 @@ function effortTrackingChart() {
 			data:[6, 3, 2, 2, 7, 0, 16],
 			borderColor: users[i].color,
 			backgroundColor: users[i].color,
-			stack: "combined"
+			stack: "combined",
 		}
 	}
 	datasetValue[users.length] = {
 		type: "line",
-		label: 'Expected Hours',
-		data: [86, 114, 106, 106, 107, 111, 133],
+		label: "Expected Hours",
+		data: hoursPerDay,
 		fill: false,
-		borderColor: '#4BC0C0',
-		backgroundColor: '#4BC0C0',
-		stack: "combined"
+		borderColor: "#4BC0C0",
+		backgroundColor: "#4BC0C0",
+		stack: "combined",
 	}
 	const data = {
 		labels: workingDays,
@@ -145,17 +151,17 @@ function effortTrackingChart() {
 	var options = {
 		plugins: {
 			title: {
-				text: 'Chart.js Combo Time Scale',
-				display: true
+				text: "Chart.js Combo Time Scale",
+				display: true,
 			}
 		},
 		scales: {
 			x: {
-				type: 'time',
+				type: "time",
 				display: true,
 				offset: true,
 				time: {
-					unit: 'day'
+					unit: "day",
 				},
 			},
 			y: {
@@ -164,10 +170,10 @@ function effortTrackingChart() {
 		},
 	};
 	var ctx = $("#effortTrackingGraph");
-	var ctx = 'effortTrackingGraph';
+	var ctx = "effortTrackingGraph";
 	var charts = new Chart(ctx, {
 		type: "bar",
 		data: data,
-		options: options
+		options: options,
 	});
 }
