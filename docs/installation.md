@@ -5,22 +5,14 @@
    git clone https://github.com/coloredcow-portal/portal
    cd portal
    ```
-   If you have installed the XAMPP/MAMP/WAMP before hand just copy and paste the project into this location `C:\XAMPP\htdocs\` then paste your project into the htdocs folder.
-   
-   If you have not then you may install XAMPP/WAMP/MAMP then paste the files later.
 
 2. Install dependencies
    ```sh
    composer install 
    ```
-   It looks like this after installing:
-   Example:![image](https://user-images.githubusercontent.com/73119570/133890390-1df193bc-dd3a-4604-a990-852b7cfe30eb.png)
    ```
    npm install
    ```
-   It looks like this after installing:
-   Example:<img width="873" alt="Screenshot 2021-09-18 at 6 28 36 PM" src="https://user-images.githubusercontent.com/73119570/133890806-4d2804f5-4b07-4365-810d-e063c76e629d.png">
-
 
 3. npm build
    ```sh
@@ -81,9 +73,9 @@
     ```
 
 7. Run migrations
-```sh
-php artisan migrate
-```
+    ```sh
+    php artisan migrate
+    ```
 
 8. Run seeders
     1. Portal
@@ -107,7 +99,7 @@ php artisan migrate
 
 9. Setup Virtual Host
     1. For XAMPP:
-        - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
+         - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
 
              ```
              127.0.0.1      portal.test
@@ -130,5 +122,48 @@ php artisan migrate
             ```
 
        - Restart XAMPP. Next, open this url in your browser: http://portal.test
+    
+    2. For MAMP(Mac OS)
+       - Go to `etc/hosts` file or edit this in the terminal use the following command
+            ```
+            sudo nano /etc/hosts
+            ```
+            Add this line 
+            ```
+            127.0.0.1   portal.test
+            ```
 
-10. Then it shows a login page. To get login credentials go to your database or got to this link `http://localhost/phpmyadmin/index.php`. Search for users table you can find the login credentials. 
+       - Go to `httpd.conf` file or edit this file in the terminal itself use this command
+            ```
+            sudo nano /etc/apache2/httpd.conf
+            ```
+            And search for ‘vhosts‘ and uncomment line like this
+            ```
+            # Virtual hosts
+            #Include /private/etc/apache2/extra/httpd-vhosts.conf
+            ```
+            Change this to this
+            ```
+            # Virtual hosts
+            Include /private/etc/apache2/extra/httpd-vhosts.conf
+            ```
+        - And the Go to Vhost file in the terminal 
+            ```
+            sudo nano /etc/apache2/extra/httpd-vhosts.conf
+            ```
+            Add the following line at the end of the file: 
+            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`.
+
+                ```apacheconf
+                <VirtualHost *:80>
+                    ServerName portal.test
+                    DocumentRoot "/path/to/your/project"
+                    <Directory "/path/to/your/project">
+                        DirectoryIndex index.php
+                        AllowOverride All
+                        Order allow,deny
+                        Allow from all
+                    </Directory>
+                </VirtualHost>
+                ```
+          - Restart MAMP. Next, open this url in your browser: http://portal.test
