@@ -128,7 +128,10 @@ php artisan migrate
             ```
             sudo nano /etc/hosts
             ```
-            Add
+            Add this line 
+            ```
+            127.0.0.1   portal.test
+            ```
 
        - Go to `httpd.conf` file or edit this file in the terminal itself use this command
             ```
