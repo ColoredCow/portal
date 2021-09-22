@@ -712,13 +712,20 @@ span.chart-heading{
 span.total-chart-count{
 	font-size: 20px;
 }
+
 //user-settings css
 .max-interview-heading{
 	color: #969281;
 }
 #user-settings-content{
  	top: 26px;
-}	
+}
+
+//interview_schedule_error_message
+.exclamation-icon{ 
+	color: #d44950;
+}
+
 // End Custom
 
 [v-cloak] { display: none; }
