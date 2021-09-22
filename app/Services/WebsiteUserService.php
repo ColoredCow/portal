@@ -10,8 +10,10 @@ class WebsiteUserService
 
     public function __construct()
     {
-        $userProvider = new AuthUserProvider;
-        $this->user = $userProvider->retrieveByCredentials(['email' => auth()->user()->email]);
+        if (config('database.connections.wordpress.enabled')) {
+            $userProvider = new AuthUserProvider;
+            $this->user = $userProvider->retrieveByCredentials(['email' => auth()->user()->email]);
+        }
     }
 
     public function get()

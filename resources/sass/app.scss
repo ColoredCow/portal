@@ -707,11 +707,36 @@ input[type="radio"].toggle-button:checked + label.thumb > i.fa {
 	width : 1000px;
 }
 
-span.chartHeading{
+span.chart-heading{
 	font-size: 35px;
 }
-span.totalChartCount{
+span.total-chart-count{
 	font-size: 20px;
+}
+
+//hr application
+.menu_wrapper .navbar{
+	background-color:#F3F2EC;
+	box-shadow: 0px 0px 0px;
+}
+.menu_wrapper .navbar li .job-application-status{
+	color: #413E41;
+}
+.menu_wrapper .navbar li a{
+	color: #C4C4C4;
+}
+.menu_wrapper .navbar li .application-menu-options-title{
+	left: 44px;
+	font-family: Mulish sans-serif;
+	font-style: normal;
+	font-weight: 50;
+}
+#list-styling{
+	list-style: none;
+}
+//interview_schedule_error_message
+.exclamation-icon{ 
+	color: #d44950;
 }
 // End Custom
 

@@ -6,10 +6,13 @@ return [
         'active' => 'Active',
         'inactive' => 'Inactive',
     ],
-
-    'resource_designations' => [
+    'designation' => [
         'project_manager' => 'Project Manager',
         'developer' => 'Developer',
         'designer' => 'Designer',
+    ],
+    'type' => [
+        'monthly-billing' => 'Monthly Billing',
+        'fixed-budget' => 'Fixed Budget'
     ]
 ];

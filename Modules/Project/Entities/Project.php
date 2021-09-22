@@ -13,9 +13,9 @@ class Project extends Model
 
     protected $dates = ['start_date', 'end_date'];
 
-    public function resources()
+    public function teamMembers()
     {
-        return $this->belongsToMany(User::class, 'project_resources', 'project_id', 'resource_id')
+        return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
             ->withPivot('designation')->withTimestamps();
     }
 

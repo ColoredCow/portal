@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <div class="mb-3">
                 <label for="label" class="form-label"> {{ __('Label name') }} <strong class="text-danger">*</strong></label>
-                <input type="text" class="form-control" id="label" name="name" value="{{ $tag->tag_name }}" >
+                <input type="text" class="form-control" id="label" name="name" value="{{ $tag->name }}" >
             </div>
         </div>
         <div class="col-md-12">

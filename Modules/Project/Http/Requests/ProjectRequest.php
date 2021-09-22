@@ -23,13 +23,41 @@ class ProjectRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string',
-            'client_id' => 'required|integer',
-            'status' => 'sometimes|string',
-            'project_manager' => 'nullable|string',
-            'effort_sheet_url' => 'nullable|active_url|max:191',
-        ];
+        $rules = [];
+        $request = $this->create_project ?? $this->update_section;
+
+        switch ($request) {
+            case 'create_project':
+            case 'project_details':
+                $rules = [
+                    'name' => 'required|string',
+                    'client_id' => 'required|integer',
+                    'status' => 'sometimes|string',
+                    'project_manager' => 'nullable|string',
+                    'effort_sheet_url' => 'nullable|active_url|max:191',
+                    'project_type' => 'required|string|in:monthly-billing,fixed-budget',
+                    'total_estimated_hours' => 'numeric|between:0,9999.99',
+                    'monthly_estimated_hours' => 'numeric|between:0,9999.99'
+                ];
+                break;
+
+            case 'project_team_members':
+                if ($this->project_team_member) {
+                    $rules = [
+                        'project_team_member' => 'array'
+                    ];
+                }
+                break;
+
+            case 'project_repository':
+                if ($this->url) {
+                    $rules = [
+                        'url' => 'array'
+                    ];
+                }
+        }
+
+        return $rules;
     }
 
     /**
@@ -44,7 +72,8 @@ class ProjectRequest extends FormRequest
             'client_project_id.integer' => 'Project ID should be a valid number',
             'invoice_email.email' => 'Email for invoice should a valid email address',
             'effort_sheet_url.max' => 'Url must be less than 191 characters',
-            'effort_sheet_url.active_url' => 'Effortsheet url is not valid'
+            'effort_sheet_url.active_url' => 'Effortsheet url is not valid',
+            'type.required' => 'Project type is required'
         ];
     }
 }
