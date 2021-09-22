@@ -10,7 +10,7 @@ class WebsiteUserService
 
     public function __construct()
     {
-        if (env('WORDPRESS_ENABLED') == true) {
+        if (config('database.connections.wordpress.enabled')) {
             $userProvider = new AuthUserProvider;
             $this->user = $userProvider->retrieveByCredentials(['email' => auth()->user()->email]);
         }

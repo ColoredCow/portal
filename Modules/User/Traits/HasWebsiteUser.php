@@ -8,18 +8,16 @@ trait HasWebsiteUser
 {
     public function getWebsiteUserAttribute()
     {
-        if (env('WORDPRESS_ENABLED') == true) {
-            if (! class_exists('Corcel\Laravel\Auth\AuthUserProvider')) {
-                return;
-            }
+        if (! class_exists('Corcel\Laravel\Auth\AuthUserProvider') || ! config('database.connections.wordpress.enabled')) {
+            return;
+        }
 
-            $userProvider = new \Corcel\Laravel\Auth\AuthUserProvider;
+        $userProvider = new \Corcel\Laravel\Auth\AuthUserProvider;
 
-            try {
-                return $userProvider->retrieveByCredentials(['email' => $this->email]);
-            } catch (\Throwable $th) {
-                return;
-            }
+        try {
+            return $userProvider->retrieveByCredentials(['email' => $this->email]);
+        } catch (\Throwable $th) {
+            return;
         }
     }
 
