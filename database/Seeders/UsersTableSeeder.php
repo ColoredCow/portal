@@ -28,7 +28,6 @@ class UsersTableSeeder extends Seeder
                     'provider_id' => 'default'
                      ]
                 ]);
-
         }
 
         if (User::where('email', '=', 'john@example.com')->doesntExist()) {
