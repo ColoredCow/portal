@@ -18,9 +18,9 @@ class ProjectDatabaseSeeder extends Seeder
         $client = Client::factory()->create();
 
         Project::factory()
-        ->count(3)
-        ->for($client)
-        ->create();
+            ->count(3)
+            ->for($client)
+            ->create();
 
         $this->call(ProjectTeamMemberDatabaseSeeder::class);
         $this->call(ProjectTeamMemberEffortDatabaseSeeder::class);

@@ -15,7 +15,7 @@ class ProjectTeamMemberDatabaseSeeder extends Seeder
     public function run()
     {
         ProjectTeamMember::factory()
-        ->count(2)
-        ->create();
+            ->count(2)
+            ->create();
     }
 }
