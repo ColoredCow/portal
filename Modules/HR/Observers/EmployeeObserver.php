@@ -17,7 +17,7 @@ class EmployeeObserver
      */
     public function created(Employee $employee)
     {
-        if (app()->environment('testing') or app()->environment('local')) {
+        if (app()->environment('testing') || app()->environment('local')) {
             return;
         }
 
