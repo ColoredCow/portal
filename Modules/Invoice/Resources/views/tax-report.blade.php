@@ -61,7 +61,7 @@
                         @if (request()->input('region') == config('region.invoice.indian'))
                             <td>{{ $invoice->invoiceAmount() }}</td>
                             <td>{{ $invoice->gst }}</td>
-                            <td>{{ $invoice->tds }}</td>
+                            <td>{{ number_format($invoice->tds, 2) }}</td>
                         @endif
                         @if (request()->input('region') == config('region.invoice.international'))
                             <td>{{ $invoice->bank_charges }}</td>
@@ -70,7 +70,7 @@
                         @if(request()->input('region') == '')
                             <td>{{ $invoice->invoiceAmount() }}</td>
                             <td>{{ $invoice->gst }}</td>
-                            <td>{{ $invoice->tds }}</td>
+                            <td>{{ number_format($invoice->tds, 2) }}</td>
                             <td>{{ $invoice->bank_charges }}</td>
                             <td>{{ $invoice->conversion_rate_diff }}</td>
                         @endif

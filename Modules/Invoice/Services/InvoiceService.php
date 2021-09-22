@@ -213,7 +213,7 @@ class InvoiceService implements InvoiceServiceContract
                 'GST' => $invoice->gst,
                 'Amount (+GST)' => (float) str_replace(['$', '₹'], '', $invoice->invoiceAmount()),
                 'Received amount' => $invoice->amount_paid,
-                'TDS' => number_format(($invoice->tds), 2),
+                'TDS' => number_format($invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)
@@ -248,7 +248,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Received amount' => $invoice->amount_paid,
                 'Bank Charges' => $invoice->bank_charges,
                 'Conversion Rate Diff' => $invoice->conversion_rate_diff,
-                'TDS' => number_format(($invoice->tds), 2),
+                'TDS' => number_format($invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)
