@@ -76,7 +76,7 @@
                         @endif
                         <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                         <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
-                        <td> {{ Str::studly($invoice->status) }}</td>
+                        <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">{{ Str::studly($invoice->status) }}</td>
                     </td>
                 </tr>
                 @endforeach
