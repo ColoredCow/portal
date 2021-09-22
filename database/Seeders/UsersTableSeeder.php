@@ -18,8 +18,7 @@ class UsersTableSeeder extends Seeder
     {
 
         //if (\DB::table('users')->where('email', 'user@coloredcow.com')->doesntExist())
-        if(User::where('email','=', 'user@coloredcow.com')->doesntExist())
-          {
+        if (User::where('email', '=', 'user@coloredcow.com')->doesntExist()) {
             \DB::table('users')->insert([
                 0 => [
                     'email' => 'user@coloredcow.com',
@@ -29,10 +28,10 @@ class UsersTableSeeder extends Seeder
                     'provider_id' => 'default'
                      ]
                 ]);
-           }
 
-        if(User::where('email','=', 'john@example.com')->doesntExist())
-          {
+         }
+
+        if (User::where('email', '=', 'john@example.com')->doesntExist()) {
             \DB::table('users')->insert([
                 0 => [
                     'email' => 'john@example.com',
@@ -42,7 +41,7 @@ class UsersTableSeeder extends Seeder
                     'provider_id' => 'default'
                      ]
                 ]);
-           }
+        }
 
         $this->assignRoles();
     }
