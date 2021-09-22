@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                      ]
                 ]);
 
-         }
+        }
 
         if (User::where('email', '=', 'john@example.com')->doesntExist()) {
             \DB::table('users')->insert([
