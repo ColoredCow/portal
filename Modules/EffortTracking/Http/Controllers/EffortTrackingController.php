@@ -34,6 +34,9 @@ class EffortTrackingController extends Controller
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersEffort = [];
         $users = [];
+        $totalEffort = 0;
+        $workingDays = self::countWorkingDays(now()->startOfMonth(), now());
+        $totalWorkingDays = count(self::countWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->getMemberEffort()->get();
@@ -48,12 +51,18 @@ class EffortTrackingController extends Controller
                 'name' => $userDetails->name,
                 'actual_effort' => end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'],
                 'color' => self::random_color(),
+                'expected_effort' => self::getExpectedHours(count($workingDays)),
+                'FTE' => self::getFTE(end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'], self::getExpectedHours(count($workingDays))),
             ];
         }
-        $workingDays = self::countWorkingDays(now()->startOfMonth(), now());
-        $totalWorkingDays = count(self::countWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
+        foreach ($teamMembersEffort as $key => $teamMemberEffort) {
+            $totalTeamMemberEffort = end($teamMemberEffort)['total_effort_in_effortsheet'];
+            $totalEffort += $totalTeamMemberEffort;
+        }
+        $expectedHours = self::getExpectedHours(count($workingDays));
+        $projectFTE = self::getFTE($totalEffort, $expectedHours);
 
-        return view('efforttracking::show')->with(['project' => $project, 'teamMembersEffort' => json_encode($teamMembersEffort), 'users' => json_encode($users), 'workingDays' => json_encode($workingDays), 'totalWorkingDays' => $totalWorkingDays]);
+        return view('efforttracking::show')->with(['project' => $project, 'teamMembersEffort' => json_encode($teamMembersEffort), 'users' => json_encode($users), 'workingDays' => json_encode($workingDays), 'totalWorkingDays' => $totalWorkingDays, 'totalEffort' => $totalEffort, 'projectFTE' => $projectFTE]);
     }
 
     /**
@@ -86,5 +95,15 @@ class EffortTrackingController extends Controller
     public static function random_color()
     {
         return '#' . self::random_color_part() . self::random_color_part() . self::random_color_part();
+    }
+
+    public static function getFTE($currentHours, $expectedHours)
+    {
+        return round($currentHours / $expectedHours, 2);
+    }
+
+    public static function getExpectedHours($numberOfDays)
+    {
+        return config('efforttracking.minimum_expected_hours') * $numberOfDays;
     }
 }
