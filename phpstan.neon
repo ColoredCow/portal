@@ -13,7 +13,7 @@ parameters:
         - Modules/*/Providers/*ServiceProvider.php
         - Modules/*/Services/*Service.php
         - Modules/Invoice/Entities/Invoice.php
-        - Modules\HR\Observers\Recruitment\JobObserver.php
+        - Modules/HR/Observers/Recruitment/JobObserver.php
         - Modules/*/Database/factories/*.php
         - Modules/*/Database/Seeders/*.php
 

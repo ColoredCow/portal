@@ -5,15 +5,16 @@ namespace Modules\Project\Database\Factories;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Project\Entities\ProjectTeamMembersEffort;
 
-class ProjectTeamMemberEffortFactory extends Factory
+class ProjectTeamMembersEffortFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = self::class;
+    protected $model = ProjectTeamMembersEffort::class;
 
     /**
      * Define the model's default state.
@@ -28,7 +29,7 @@ class ProjectTeamMemberEffortFactory extends Factory
             },
             'actual_effort' => array_rand(config('project.designation')),
             'total_effort_in_effortsheet' => '8',
-            'added_on' => Carbon::today()->subDays(rand(25, 60))
+            'added_on' => Carbon::today()->subDays(11)
         ];
     }
 }

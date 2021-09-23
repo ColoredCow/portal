@@ -5,9 +5,9 @@ namespace Modules\Project\Database\Seeders;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Entities\ProjectTeamMemberEffort;
+use Modules\Project\Entities\ProjectTeamMembersEffort;
 
-class ProjectTeamMemberEffortDatabaseSeeder extends Seeder
+class ProjectTeamMembersEffortDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +22,7 @@ class ProjectTeamMemberEffortDatabaseSeeder extends Seeder
         for ($count = 0; $count < 10; $count++) {
             $actualEffort = rand(6, 9);
             $totalEffort += $actualEffort;
-            ProjectTeamMemberEffort::create([
+            ProjectTeamMembersEffort::create([
                 'project_team_member_id' => $projectTeamMember->id,
                 'actual_effort' => $actualEffort,
                 'total_effort_in_effortsheet' => $totalEffort,

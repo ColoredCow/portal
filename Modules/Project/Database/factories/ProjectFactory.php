@@ -28,7 +28,7 @@ class ProjectFactory extends Factory
             'client_id' => function () {
                 return Client::factory()->create()->id;
             },
-            'type' => 'monthly',
+            'type' => 'monthly-billing',
             'client_project_id' => rand(1, 100),
             'status' => 'active',
             'effort_sheet_url' => $this->faker->url,

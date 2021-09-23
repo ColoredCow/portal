@@ -23,6 +23,6 @@ class ProjectDatabaseSeeder extends Seeder
             ->create();
 
         $this->call(ProjectTeamMemberDatabaseSeeder::class);
-        $this->call(ProjectTeamMemberEffortDatabaseSeeder::class);
+        $this->call(ProjectTeamMembersEffortDatabaseSeeder::class);
     }
 }
