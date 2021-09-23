@@ -123,7 +123,7 @@ function effortTrackingChart() {
 	const datasetValue = [];
 	const hoursPerDay = [];
 	for (var i = 1; i <= totalWorkingDays; i++) {
-		hoursPerDay.push((estimatedHours/totalWorkingDays) * i);
+		hoursPerDay.push(estimatedHours/totalWorkingDays);
 	}
 	for (var i = users.length - 1; i >= 0; i--) {
 		datasetValue[i] = {
