@@ -716,7 +716,7 @@ span.total-chart-count{
 
 //user-settings css
 .max-interview-heading{
-	color: #969281;
+	color: $theme-gray;
 }
 #user-settings-content{
  	top: 26px;
@@ -745,7 +745,7 @@ span.total-chart-count{
 
 //interview_schedule_error_message
 .exclamation-icon{ 
-	color: #d44950;
+	color: $theme-red;
 }
 // End Custom
 
