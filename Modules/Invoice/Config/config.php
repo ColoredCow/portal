@@ -9,7 +9,7 @@ return [
     ],
 
     'default-date-format' => 'd M Y',
-
+    
     'mail' => [
         'unpaid-invoice' => [
             'email' => env('INVOICE_UNPAID_LIST_EMAIL', 'finance@coloredcow.com'),
