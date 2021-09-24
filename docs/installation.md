@@ -34,6 +34,11 @@
    ```sh
    php artisan key:generate
    ```
+   Note- Make sure that the 'php.ini' file in XAMPP/WAMP has this code uncommented/written
+
+
+    `extension=gd`
+
 
 6. Add the following settings in `.env` file:
     1. Laravel app configurations
@@ -55,7 +60,11 @@
     DB_USERNAME=
     DB_PASSWORD=
     ```
-
+        Note- Use the default values for MySQL database in .env file
+    ```
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
 
     3. _(Optional)_ Google configurations.
     ```sh
@@ -79,12 +88,12 @@
     WORDPRESS_ENABLED=true
     ```
 
-7. Run migrations
+8. Run migrations
     ```sh
     php artisan migrate
     ```
 
-8. Run seeders
+9. Run seeders
     1. Portal
         ```sh
         php artisan db:seed
@@ -102,60 +111,15 @@
         php artisan module:seed MODULE_NAME
         ```
 
-9. Setup Virtual Host
-    1. For XAMPP:
-        - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
-            ```
-            127.0.0.1      portal.test
-            ```
+10. Setup Virtual Host
+     1. For XAMPP:
+         - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
+             ```
+             127.0.0.1      portal.test
+             ```
 
-        - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:/xampp/htdocs/portal/public`.
-            ```apacheconf
-            <VirtualHost *:80>
-                ServerName portal.test
-                DocumentRoot "/path/to/your/project"
-                <Directory "/path/to/your/project">
-                    DirectoryIndex index.php
-                    AllowOverride All
-                    Order allow,deny
-                    Allow from all
-                </Directory>
-            </VirtualHost>
-            ```
-        - Restart XAMPP. Next, open this url in your browser: http://portal.test
-    
-    2. For MAMP(Mac OS)
-        - Go to `etc/hosts` file or edit this in the terminal use the following command.
-            ```sh
-            sudo nano /etc/hosts
-            ```
-        - Add this line 
-            ```
-            127.0.0.1   portal.test
-            ```
-
-        - Go to `httpd.conf` file or edit this file in the terminal itself use this command
-            ```sh
-            sudo nano /etc/apache2/httpd.conf
-            ```
-            And search for `vhosts` and uncomment line like this
-            ```sh
-            # Virtual hosts
-            # Include /private/etc/apache2/extra/httpd-vhosts.conf
-            ```
-            Change above to:
-            ```sh
-            # Virtual hosts
-            Include /private/etc/apache2/extra/httpd-vhosts.conf
-            ```
-          - And the go to vhost file in the terminal 
-            ```sh
-            sudo nano /etc/apache2/extra/httpd-vhosts.conf
-            ```
-            Add the following line at the end of the file: 
-            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`.
-
-            ```apacheconf
+         - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:/xampp/htdocs/portal/public`.
+             ```apacheconf
              <VirtualHost *:80>
                  ServerName portal.test
                  DocumentRoot "/path/to/your/project"
@@ -166,7 +130,70 @@
                      Allow from all
                  </Directory>
              </VirtualHost>
-            ```
-          - Restart MAMP. Next, open this url in your browser: http://portal.test
-          
+             ```
+         - Restart XAMPP. Next, open this url in your browser: http://portal.test
+    
+     2. For MAMP(Mac OS)
+         - Go to `etc/hosts` file or edit this in the terminal use the following command.
+             ```sh
+             sudo nano /etc/hosts
+             ```
+         - Add this line 
+             ```
+             127.0.0.1   portal.test
+             ```
+
+         - Go to `httpd.conf` file or edit this file in the terminal itself use this command
+             ```sh
+             sudo nano /etc/apache2/httpd.conf
+             ```
+             And search for `vhosts` and uncomment line like this
+             ```sh
+             # Virtual hosts
+             # Include /private/etc/apache2/extra/httpd-vhosts.conf
+             ```
+             Change above to:
+             ```sh
+             # Virtual hosts
+             Include /private/etc/apache2/extra/httpd-vhosts.conf
+             ```
+           - And the go to vhost file in the terminal 
+             ```sh
+             sudo nano /etc/apache2/extra/httpd-vhosts.conf
+             ```
+             Add the following line at the end of the file: 
+             Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`.
+
+             ```apacheconf
+              <VirtualHost *:80>
+                  ServerName portal.test
+                  DocumentRoot "/path/to/your/project"
+                  <Directory "/path/to/your/project">
+                      DirectoryIndex index.php
+                      AllowOverride All
+                      Order allow,deny
+                      Allow from all
+                  </Directory>
+              </VirtualHost>
+             ```
+           - Restart MAMP. Next, open this url in your browser: http://portal.test
+
+        - In case you face a 403 Forbidden error in Apache, try this instead-
+
+
+                    <Directory>
+                     #...
+                       Order allow,deny
+                      Allow from all
+                    </Directory>
+
+Change To-
+
+
+                    <Directory>
+                      #...
+                         Require all granted
+                    </Directory>
+
+
 10. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
