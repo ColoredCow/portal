@@ -12,7 +12,7 @@
         {{ __('Looks like your interview is already scheduled. Please check your inbox for confirmation.') }}<br>
 
         {{ __('If you are not able to find the email, please check in your spam folder. If it\'s there, mark it as "Not Spam".') }}<br>
-        
+
         {{ __('If you are still facing issues, please write to us at careers@coloredcow.com') }}
     </p>
 </div>
