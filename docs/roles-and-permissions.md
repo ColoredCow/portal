@@ -1,6 +1,6 @@
 ## Roles and Permissions
 
-#Naming Convention
+# Naming Convention
 5 basic operations - viewAny, view, create, update, delete
 and permissions will be like module.model.operation
 
