@@ -181,7 +181,7 @@
           - In case you see a 403 Forbidden error in Apache, try this instead:
             ```apacheconf
             <Directory>
-            #...
+                # some code above
                 Order allow,deny
                 Allow from all
             </Directory>
