@@ -60,7 +60,7 @@
     DB_USERNAME=
     DB_PASSWORD=
     ```
-        Note- Use the default values for MySQL database in .env file
+    **Note:** Use the default values for MySQL database in `.env` file
     ```
     DB_USERNAME=root
     DB_PASSWORD=
