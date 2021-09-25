@@ -33,8 +33,8 @@ class CurrencyService implements CurrencyServiceContract
 
     private function fetchExchangeRateInINR()
     {
-        if(!config('services.currencylayer.access_key')){
-            return round(config('services.currencylayer.default_rate'),2);
+        if(!config('services.currencylayer.access_key')) {
+            return round(config('services.currencylayer.default_rate'), 2);
         }
 
         $response = $this->client->get('live', [
