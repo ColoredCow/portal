@@ -179,21 +179,18 @@
            - Restart MAMP. Next, open this url in your browser: http://portal.test
 
         - In case you face a 403 Forbidden error in Apache, try this instead-
-
-
-                    <Directory>
-                     #...
-                       Order allow,deny
-                      Allow from all
-                    </Directory>
-
-Change To-
-
-
-                    <Directory>
-                      #...
-                         Require all granted
-                    </Directory>
-
-
+        ```apacheconf
+             <Directory>
+             #...
+                 Order allow,deny
+                 Allow from all
+             </Directory>
+        ```
+    Change To-
+        ```apacheconf
+             <Directory>
+             #...
+                  Require all granted
+             </Directory>
+        ```    
 10. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
