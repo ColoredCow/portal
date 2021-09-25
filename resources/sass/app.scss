@@ -28,6 +28,8 @@ body,
 .custom-select {
 	font-size: 12px;
 	line-height: 16px;
+	outline: none !important;
+        box-shadow: none !important;
 
 	&::-webkit-input-placeholder,
 	&:-moz-placeholder,
