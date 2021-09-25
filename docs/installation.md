@@ -186,7 +186,7 @@
                 Allow from all
             </Directory>
             ```
-            Change To-
+            Change to:
             ```apacheconf
             <Directory>
             #...
