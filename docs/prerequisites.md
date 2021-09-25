@@ -89,7 +89,6 @@ Install the following extensions and packages based on the code editor you use:
   - [Laravel Blade Snippets for Blade files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
   - [Prettier - for JS, CSS, HTML files](https://prettier.io/)
 
-### 6.Automated Testing :computer:
 
 
 
@@ -121,3 +120,12 @@ in portal so please make sure to check this out.
 This project uses Laravel Modules, so a basic understanding of the commands is recommended:
 
 - [Laravel Module Utility Commands](https://nwidart.com/laravel-modules/v1/advanced-tools/artisan-commands)
+
+### 8. Automated Testing :computer:
+
+This project uses Cypress for automated testing, so a basic understanding of the writing test cases is recommended:
+
+- [Introduction to Cypress](https://github.com/ColoredCow/portal/blob/master/docs/testing.md)
+- [Writing Your First Test](https://docs.cypress.io/guides/getting-started/writing-your-first-test)
+- [Testing Your App](https://docs.cypress.io/guides/getting-started/testing-your-app#Step-1-Start-your-server)
+

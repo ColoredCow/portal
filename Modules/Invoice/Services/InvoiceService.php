@@ -186,8 +186,8 @@ class InvoiceService implements InvoiceServiceContract
     public function taxReportExport($filters)
     {
         $invoices = $this->taxReportInvoices($filters);
-        if (isset($filters->region)) {
-            $invoices = $filters['region'] == 'indian' ? $this->formatInvoicesForExportIndian($invoices) : $this->formatInvoicesForExportInternational($invoices);
+        if (isset($filters['region'])) {
+            $invoices = $filters['region'] == config('invoice.region.indian') ? $this->formatInvoicesForExportIndian($invoices) : $this->formatInvoicesForExportInternational($invoices);
         } else {
             $invoices = $this->formatInvoicesForExportAll($invoices);
         }
@@ -211,9 +211,9 @@ class InvoiceService implements InvoiceServiceContract
                 'Project' => $invoice->project->name,
                 'Amount' => $invoice->amount,
                 'GST' => $invoice->gst,
-                'Amount (+GST)' => $invoice->invoiceAmount(),
+                'Amount (+GST)' => (float) str_replace(['$', '₹'], '', $invoice->invoiceAmount()),
                 'Received amount' => $invoice->amount_paid,
-                'TDS' => $invoice->tds,
+                'TDS' => number_format($invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)
@@ -242,13 +242,13 @@ class InvoiceService implements InvoiceServiceContract
         return $invoices->map(function ($invoice) {
             return [
                 'Project' => $invoice->project->name,
-                'Amount' => $invoice->display_amount,
+                'Amount' => $invoice->amount,
                 'GST' => $invoice->gst,
-                'Amount (+GST)' => $invoice->invoiceAmount(),
+                'Amount (+GST)' => (float) str_replace(['$', '₹'], '', $invoice->invoiceAmount()),
                 'Received amount' => $invoice->amount_paid,
                 'Bank Charges' => $invoice->bank_charges,
                 'Conversion Rate Diff' => $invoice->conversion_rate_diff,
-                'TDS' => $invoice->tds,
+                'TDS' => number_format($invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)

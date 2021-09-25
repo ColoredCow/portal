@@ -26,12 +26,12 @@
                     <th>Project</th>
                     <th>Amount</th>
                     <th>Received amount</th>
-                    @if (request()->input('region') == config('region.invoice.indian'))
+                    @if (request()->input('region') == config('invoice.region.indian'))
                         <th>Amount (+GST)</th>
                         <th>GST</th>
                         <th>TDS</th>
                     @endif
-                    @if (request()->input('region') == config('region.invoice.international'))
+                    @if (request()->input('region') == config('invoice.region.international'))
                         <th>Bank Charges</th>
                         <th>Conversion Rate Difference</th>
                     @endif
@@ -58,25 +58,25 @@
                         </td>
                         <td>{{ $invoice->display_amount }}</td>
                         <td>{{ $invoice->amount_paid }}</td>
-                        @if (request()->input('region') == config('region.invoice.indian'))
+                        @if (request()->input('region') == config('invoice.region.indian'))
                             <td>{{ $invoice->invoiceAmount() }}</td>
                             <td>{{ $invoice->gst }}</td>
-                            <td>{{ $invoice->tds }}</td>
+                            <td>{{ number_format($invoice->tds, 2) }}</td>
                         @endif
-                        @if (request()->input('region') == config('region.invoice.international'))
+                        @if (request()->input('region') == config('invoice.region.international'))
                             <td>{{ $invoice->bank_charges }}</td>
                             <td>{{ $invoice->conversion_rate_diff }}</td>
                         @endif
                         @if(request()->input('region') == '')
                             <td>{{ $invoice->invoiceAmount() }}</td>
                             <td>{{ $invoice->gst }}</td>
-                            <td>{{ $invoice->tds }}</td>
+                            <td>{{ number_format($invoice->tds, 2) }}</td>
                             <td>{{ $invoice->bank_charges }}</td>
                             <td>{{ $invoice->conversion_rate_diff }}</td>
                         @endif
                         <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                         <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
-                        <td> {{ Str::studly($invoice->status) }}</td>
+                        <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">{{ Str::studly($invoice->status) }}</td>
                     </td>
                 </tr>
                 @endforeach
