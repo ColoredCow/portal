@@ -15,7 +15,7 @@
     <br><br>
     @include('status', ['errors' => $errors->all()])
     <h2 class="mb-3">Edit Opportunity</h2>
-    <form action="{{ $formAction }}" method="POST" id="update-form">
+    <form action="{{ $formAction }}" method="POST" id="update-form" novalidate>
         @csrf
         @method('PATCH')
         <div class="card mb-3">
