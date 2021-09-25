@@ -1,8 +1,15 @@
 ## Installation Guidelines :rocket:
 
+Before you start following the guidelines, make sure to go through the [prerequisites](./docs/prerequisites.md) to get started.
+
+0. Navigate to the right diretory where your project will be locally saved
+    - For WAMP: `C:\wamp64\www\`
+    - For XAMPP: `C:/xampp/htdocs/`
+    - For MAMP(Mac OS): `/Application/MAMP/htdocs/`
+
 1. Clone this repository and move to `portal` directory
    ```sh
-   git clone https://github.com/coloredcow-portal/portal
+   git clone git clone https://github.com/coloredcow/portal
    cd portal
    ```
 
@@ -17,7 +24,7 @@
    npm run dev
    ```
     A possible error may arise with `cross-env`. So try running the following commands.
-   - To clear a cache in npm, we need to run the npm cache command in our terminal and install cross-env.
+    - To clear a cache in npm, we need to run the npm cache command in our terminal and install cross-env.
    ```sh
    npm cache clear --force
    npm install cross-env
@@ -27,10 +34,12 @@
    ```
 
 
-4. Copy `.env.example` as `.env`
+4. Copy and paste `.env.example` file as `.env` file there itself
+     ```sh
+    cp .env.example .env
+    ```
 
-
-5. Run the following command to add a key
+5. Run the following command to add a key:
    ```sh
    php artisan key:generate
    ```
@@ -45,14 +54,14 @@
     ```
 
     2. Database configurations
-     Make sure you have a database created in your local server. For more info check this [link](https://www.youtube.com/watch?v=4geOENi3--M).
+     Make sure you have a database created in your local server. For more info check this [link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog)(skip to 0:21) for creating an empty database and this [link](https://www.youtube.com/watch?v=4geOENi3--M)(relevant timestamp periods : 2:00-2:42 & 4:20-5:40) to continue with the database configuration.
 
     ```sh
-    DB_CONNECTION=
-    DB_HOST=
-    DB_PORT=
-    DB_DATABASE=
-    DB_USERNAME=
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=homestead
+    DB_USERNAME=root
     DB_PASSWORD=
     ```
 
@@ -89,7 +98,7 @@
         ```sh
         php artisan db:seed
         ```
-        In case you want to run a specific seeder class, use the ```--class``` option:
+        _(Optional)_In case you want to run a specific seeder class, use the ```--class``` option:
         ```sh
         php artisan db:seed --class=CLASSNAME
         ```
@@ -97,14 +106,34 @@
         ```sh
         php artisan module:seed
         ```
-        In case you want to run seeders inside a specific module, run:
+        _(Optional)_In case you want to run seeders inside a specific module, run:
         ```sh
         php artisan module:seed MODULE_NAME
         ```
 
 9. Setup Virtual Host
-    1. For XAMPP:
-        - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` file in notepad (run as administrator). Add the following line at the end:
+    1. For WAMP:
+        - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` (not the one with ICS extension) file in notepad (run as administrator). Add the following line at the end:
+            ```
+            127.0.0.1      portal.test
+            ```
+        - Go to `C:\wamp64\bin\apache\apache2.4.46\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:\wamp64\www\portal\public`.
+            ```apacheconf
+            <VirtualHost *:80>
+                ServerName portal.test
+                DocumentRoot "/path/to/your/project"
+                <Directory "/path/to/your/project">
+                    DirectoryIndex index.php
+                    AllowOverride All
+                    Order allow,deny
+                    Allow from all
+                </Directory>
+            </VirtualHost>
+            ```
+        - Restart WAMP. Next, open this url in your browser: http://portal.test
+
+    2. For XAMPP:
+        - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` (not the one with ICS extension) file in notepad (run as administrator). Add the following line at the end:
             ```
             127.0.0.1      portal.test
             ```
@@ -124,7 +153,7 @@
             ```
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
     
-    2. For MAMP(Mac OS)
+    3. For MAMP(Mac OS):
         - Go to `etc/hosts` file or edit this in the terminal use the following command.
             ```sh
             sudo nano /etc/hosts
