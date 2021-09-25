@@ -157,7 +157,7 @@
              # Virtual hosts
              Include /private/etc/apache2/extra/httpd-vhosts.conf
              ```
-           - And the go to vhost file in the terminal 
+           - Go to vhost file in the terminal 
              ```sh
              sudo nano /etc/apache2/extra/httpd-vhosts.conf
              ```
