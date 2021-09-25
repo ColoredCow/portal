@@ -189,7 +189,7 @@
             Change to:
             ```apacheconf
             <Directory>
-            #...
+                 # some code above
                  Require all granted
             </Directory>
            ```    
