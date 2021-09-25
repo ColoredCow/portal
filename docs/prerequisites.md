@@ -3,17 +3,16 @@
 For all the beginners that are starting on the portal, this is for you to get started.
 
 ### 1. Git :cat:
-For Windows only:
-  - [this link](https://git-scm.com/download/win)
-    Linux and MacOS comes pre installed
+Git should come pre-installed in Linux and macOS. For Windows, use [this link](https://git-scm.com/download/win)
 After you've successfully installed, you can verify the installation using:
-  - ```sh
-      git --version
-    # git version 2.33.0.windows.2
-    ```
 
-### 2. PHP,MYSQL,APACHE :running:
-Portal uses PHP v7.3 or v7.4 is needed. You can install it with the following ways:
+```sh
+git --version
+# git version 2.33.0.windows.2
+```
+
+### 2. PHP, MySQL, Apache:running:
+Portal uses PHP v7.4. You can install it using one of the following ways:
 
 1. XAMPP (Windows and Linux)
     - If you prefer using XAMPP, you can download the full stack with right PHP version from [this link](https://www.apachefriends.org/download.html)
@@ -31,17 +30,16 @@ Portal uses PHP v7.3 or v7.4 is needed. You can install it with the following wa
       composer update
       ```
    - If the user is working in VSCode, possible errors may arise because of path, as may not be able to access the selected PHP version from its terminal.
-3. MAMP (Windows and MacOS)
+3. MAMP (macOS)
     - If you prefer using MAMP, you can download with all the PHP version from [this link](https://www.mamp.info/en/downloads/)this link for Windows and MacOS.
     -To use the MAMP php as main php, refer[this link](https://stackoverflow.com/questions/4262006/how-to-use-mamps-version-of-php-instead-of-the-default-on-osx) for switching into the MAMP php.
 4. After you've successfully installed, you can verify the installation using:
-   - ```sh
-      php -v
-      # output should be something like
-      # PHP 7.4.21 (cli) (built: Aug  5 2021 15:34:00) ( NTS )
-      #Copyright (c) The PHP Group
-      #Zend Engine v3.4.0, Copyright (c) Zend Technologies   
-      ```   
+
+```sh
+php -v
+# output should be something like
+# PHP 7.4.21 (cli) (built: Aug  5 2021 15:34:00) ( NTS )
+```
 
 ### 3. Composer :running:
 
@@ -62,7 +60,7 @@ composer --version
 ```
 
 ### 4. Nodejs :running:
-For (Windows, Ubuntu, MacOS)
+For (Windows, Ubuntu, macOS)
 - [Nodejs v14 or higher](https://nodejs.org/en/download/).
 After you've successfully installed, you can verify the installation using:
 ```sh
@@ -91,11 +89,14 @@ Install the following extensions and packages based on the code editor you use:
   - [Laravel Blade Snippets for Blade files](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)
   - [Prettier - for JS, CSS, HTML files](https://prettier.io/)
 
+### 6.Automated Testing :computer:
+
 
 
 ## Learning :book:
 
-There are some topics and tools you need to know to prior to work in portal so please make sure to check this out.
+There are some topics and tools you need to know to prior to work 
+in portal so please make sure to check this out.
 
 
 ### 1. Version Control System :computer:
