@@ -1,25 +1,35 @@
 ## Installation Guidelines :rocket:
 
-Before you start following the guidelines, make sure to go through the [prerequisites](./docs/prerequisites.md) to get started.
+Before you start following the guidelines, make sure to go through the [prerequisites guide](./docs/prerequisites.md) to install the required tools and packages on your machine.
 
-0. Navigate to the right diretory where your project will be locally saved
-    - For WAMP: `C:\wamp64\www\`
-    - For XAMPP: `C:/xampp/htdocs/`
-    - For MAMP(Mac OS): `/Application/MAMP/htdocs/`
 
-1. Clone this repository and move to `portal` directory
+1. Navigate to the right diretory where your project will be locally saved
+    - For WAMP: 
+        ```sh
+        cd C:\wamp64\www\
+        ```
+    - For XAMPP: 
+        ```sh
+        cd C:\xampp\htdocs\
+        ```
+    - For MAMP(macOS): 
+        ```sh
+        cd /Application/MAMP/htdocs/
+        ```
+
+2. Clone this repository and move to `portal` directory
    ```sh
-   git clone git clone https://github.com/coloredcow/portal
+   git clone https://github.com/coloredcow/portal
    cd portal
    ```
 
-2. Install dependencies
+3. Install dependencies
    ```sh
    composer install
    npm install
    ```
 
-3. npm build
+4. npm build
    ```sh
    npm run dev
    ```
@@ -34,17 +44,17 @@ Before you start following the guidelines, make sure to go through the [prerequi
    ```
 
 
-4. Copy and paste `.env.example` file as `.env` file there itself
+5. Make a copy of the `.env.example` file in the same directory and save it as `.env`:
      ```sh
     cp .env.example .env
     ```
 
-5. Run the following command to add a key:
+6. Run the following command to add the Laravel application key:
    ```sh
    php artisan key:generate
    ```
 
-6. Add the following settings in `.env` file:
+7. Add the following settings in `.env` file:
     1. Laravel app configurations
     ```sh
     APP_NAME="ColoredCow Portal"
@@ -54,13 +64,14 @@ Before you start following the guidelines, make sure to go through the [prerequi
     ```
 
     2. Database configurations
-     Make sure you have a database created in your local server. For more info check this [link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog)(skip to 0:21) for creating an empty database and this [link](https://www.youtube.com/watch?v=4geOENi3--M)(relevant timestamp periods : 2:00-2:42 & 4:20-5:40) to continue with the database configuration.
+    - Create a database in your local server. Check out [this link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog) and skip to 0:21.
+    - Configure your Laravel app with the right DB settings. Check out [this link](https://www.youtube.com/watch?v=4geOENi3--M). Relevant parts are 2:00-2:42 and 4:20-5:40.
 
     ```sh
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=homestead
+    DB_DATABASE=portal
     DB_USERNAME=root
     DB_PASSWORD=
     ```
@@ -88,12 +99,12 @@ Before you start following the guidelines, make sure to go through the [prerequi
     WORDPRESS_ENABLED=true
     ```
 
-7. Run migrations
+8. Run migrations
     ```sh
     php artisan migrate
     ```
 
-8. Run seeders
+9. Run seeders
     1. Portal
         ```sh
         php artisan db:seed
@@ -111,7 +122,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
         php artisan module:seed MODULE_NAME
         ```
 
-9. Setup Virtual Host
+10. Setup Virtual Host
     1. For WAMP:
         - Go to `C:\WINDOWS\system32\drivers\etc\` and open the `hosts` (not the one with ICS extension) file in notepad (run as administrator). Add the following line at the end:
             ```
@@ -138,7 +149,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
             127.0.0.1      portal.test
             ```
 
-        - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:/xampp/htdocs/portal/public`.
+        - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:\xampp\htdocs\portal\public`.
             ```apacheconf
             <VirtualHost *:80>
                 ServerName portal.test
@@ -153,7 +164,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
             ```
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
     
-    3. For MAMP(Mac OS):
+    3. For MAMP(macOS):
         - Go to `etc/hosts` file or edit this in the terminal use the following command.
             ```sh
             sudo nano /etc/hosts
@@ -198,4 +209,4 @@ Before you start following the guidelines, make sure to go through the [prerequi
             ```
           - Restart MAMP. Next, open this url in your browser: http://portal.test
           
-10. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
+11. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
