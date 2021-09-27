@@ -15,7 +15,7 @@ class HrApplicationsSeeder extends Seeder
     public function run()
     {
         DB::table('hr_applications')->insert([
-            'hr_applicant_id' => '100',
+            'hr_applicant_id' => '1',
             'hr_job_id' => '1089',
             'status' => 'In Review',
             'offer_letter' => 'Pending',
