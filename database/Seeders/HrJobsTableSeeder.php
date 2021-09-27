@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class HrJobsTableSeeder extends Seeder
 {
     /**
@@ -13,9 +14,9 @@ class HrJobsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('hr_jobs') -> insert([
-            'title'=>'Design',
-            'domain'=>'Product Designing'
+        DB::table('hr_jobs')->insert([
+            'title' => 'Design',
+            'domain' => 'Product Designing'
         ]);
     }
 }
