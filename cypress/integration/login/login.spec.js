@@ -11,6 +11,7 @@ describe("Login", () => {
     cy.get("h3")
       .first()
       .should("have.text", "Dashboard");
-    cy.get('#navbarDropdown').select('Logout');
+    cy.get('#navbarDropdown').click();
+    cy.get('[href="http://portal.in/logout"]').click();
   });
 });
