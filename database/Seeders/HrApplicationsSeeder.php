@@ -16,10 +16,9 @@ class HrApplicationsSeeder extends Seeder
     {
         DB::table('hr_applications')->insert([
             'hr_applicant_id' => '1',
-            'hr_job_id' => '1089',
+            'hr_job_id' => '1',
             'status' => 'In Review',
             'offer_letter' => 'Pending',
-            'pending_approval_from' => 'CTO',
             'resume' => 'abc_resume.pdf',
             'autoresponder_subject' => 'Thank you for applying!',
             'autoresponder_body' => 'We are reviewing your profile and checking if it is a good fit for the job! All the best!',

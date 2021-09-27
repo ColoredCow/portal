@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(HrApplicantsTableSeeder::class);
         $this->call(HrApplicationsSeeder::class);
         $this->call(HrApplicationRoundTableSeeder::class);
+        $this->call(HrJobsTableSeeder::class);
     }
 }
