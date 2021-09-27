@@ -11,5 +11,6 @@ describe("Login", () => {
     cy.get("h3")
       .first()
       .should("have.text", "Dashboard");
+    cy.get('#navbarDropdown').select('Logout');
   });
 });
