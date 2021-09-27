@@ -3,7 +3,8 @@
 namespace Modules\User\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
+use Modules\User\Entities\User;
+use Spatie\Permission\Models\Role;
 
 class UserDatabaseSeeder extends Seeder
 {
@@ -14,8 +15,13 @@ class UserDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        $role = Role::where('name', 'super-admin')->first();
+        $users = User::factory()
+            ->count(3)
+            ->create();
 
-        // $this->call("OthersTableSeeder");
+        foreach ($users as $user) {
+            $user->assignRole($role);
+        }
     }
 }
