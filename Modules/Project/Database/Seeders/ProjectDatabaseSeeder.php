@@ -15,14 +15,14 @@ class ProjectDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $client = Client::factory()->create();
+        $client = Client::factory()->create();
 
-        // Project::factory()
-        //     ->count(3)
-        //     ->for($client)
-        //     ->create();
+        Project::factory()
+            ->count(3)
+            ->for($client)
+            ->create();
 
-        // $this->call(ProjectTeamMemberDatabaseSeeder::class);
-        // $this->call(ProjectTeamMembersEffortDatabaseSeeder::class);
+        $this->call(ProjectTeamMemberDatabaseSeeder::class);
+        $this->call(ProjectTeamMembersEffortDatabaseSeeder::class);
     }
 }
