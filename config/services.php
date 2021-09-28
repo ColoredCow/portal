@@ -42,6 +42,7 @@ return [
     ],
 
     'currencylayer' => [
-        'access_key' => env('CURRENCYLAYER_API_KEY')
+        'access_key' => env('CURRENCYLAYER_API_KEY'),
+        'default_rate' => env('DEFAULT_RATE_USDINR')
     ]
 ];
