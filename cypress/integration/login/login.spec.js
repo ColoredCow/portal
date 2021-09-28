@@ -12,6 +12,6 @@ describe("Login", () => {
       .first()
       .should("have.text", "Dashboard");
     cy.get('#navbarDropdown').click();
-    cy.get('[href="http://portal.in/logout"]').click();
+    cy.get('[href="http://127.0.0.1:8000/logout"]').click();
   });
 });
