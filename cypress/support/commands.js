@@ -25,3 +25,17 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import 'cypress-file-upload';
+
+Cypress.Commands.add('Login', (user) => {
+    cy.get('input[name=email]').type(user.email)
+  
+    cy.get('input[name=password]').type(user.password)
+
+    cy.get('[type="submit"]').first().click();
+  })
+
+  Cypress.Commands.add('Logout', () => {
+    cy.get('#navbarDropdown').click();
+
+    cy.get('[href="http://portal.in/logout"]').click();
+  })
