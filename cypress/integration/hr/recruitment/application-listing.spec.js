@@ -3,14 +3,8 @@ describe("Recruitment", () => {
         const username = Cypress.env("username");
         const password = Cypress.env("password");
         cy.visit("/login");
-        cy.get('[name="email"]').type(username);
-        cy.get('[name="password"]').type(password);
-        cy.get('[type="submit"]')
-            .first()
-            .click();
-        cy.get("h3")
-        .first()
-        .should("have.text", "Dashboard");
+        cy.Login({ email: username, password: password })
+        cy.Logout();
         cy.visit("/hr/recruitment/job");
         cy.get(':nth-child(1) > .w-25p');
         cy.get(':nth-child(3) > .w-25p > :nth-child(1) > a.mr-1').click();
