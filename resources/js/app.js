@@ -1063,7 +1063,7 @@ function lineChart(){
 	  };
   
 	  var charts = new Chart(ctx, {
-		type: "line",
+		type: "bar",
 		data: data,
 		options: options
 	  });
