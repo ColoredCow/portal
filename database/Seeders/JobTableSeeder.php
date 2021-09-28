@@ -15,10 +15,24 @@ class JobTableSeeder extends Seeder
     public function run()
     {
         DB::table('hr_jobs')->insert([
+            [
                 'id' => 1,
-                'title' => 'India',
+                'title' => 'Software Developer',
                 'type' => 'job',
-                'domain' => 'engineering',
+                'domain' => 'engineering'
+            ],
+            [
+                'id' => 2,
+                'title' => 'Product Designer',
+                'type' => 'job',
+                'domain' => 'designer'
+            ],
+            [
+                'id' => 3,
+                'title' => 'Data Researcher',
+                'type' => 'job',
+                'domain' => 'marketing'
+            ]
             ]);
     }
 }
