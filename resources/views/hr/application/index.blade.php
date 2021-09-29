@@ -59,8 +59,8 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.in-progress.label') ? 'job-application-status' : '' }} btn" 
-                href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program>
-                    <sup class = "application-menu-options-title fz-20" {{ request()->get('round')=='Trial-Program'}} >
+                href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=trial-program>
+                    <sup class = "application-menu-options-title fz-20">
                         {{$trialProgramCount}}
                     </sup>
                     <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/code.svg')) !!}</span>
