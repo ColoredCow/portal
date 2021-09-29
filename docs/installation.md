@@ -4,15 +4,15 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
 
 1. Navigate to the right diretory where your project will be locally saved
-    - For WAMP: 
+    - For WAMP:
         ```sh
         cd C:\wamp64\www\
         ```
-    - For XAMPP: 
+    - For XAMPP:
         ```sh
         cd C:\xampp\htdocs\
         ```
-    - For MAMP(macOS): 
+    - For MAMP(macOS):
         ```sh
         cd /Application/MAMP/htdocs/
         ```
@@ -38,7 +38,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
    ```sh
    npm cache clear --force
    npm install cross-env
-   
+
    npm install
    npm run dev
    ```
@@ -116,7 +116,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         php artisan db:seed
         ```
-        _(Optional)_In case you want to run a specific seeder class, use the ```--class``` option:
+        _(Optional)_ In case you want to run a specific seeder class, use the ```--class``` option:
         ```sh
         php artisan db:seed --class=CLASSNAME
         ```
@@ -124,7 +124,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         php artisan module:seed
         ```
-        _(Optional)_In case you want to run seeders inside a specific module, run:
+        _(Optional)_ In case you want to run seeders inside a specific module, run:
         ```sh
         php artisan module:seed MODULE_NAME
         ```
@@ -170,13 +170,13 @@ Before you start following the guidelines, make sure to go through the [prerequi
             </VirtualHost>
             ```
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
-    
+
     3. For MAMP(macOS):
         - Go to `etc/hosts` file or edit this in the terminal use the following command.
             ```sh
             sudo nano /etc/hosts
             ```
-        - Add this line 
+        - Add this line
             ```
             127.0.0.1   portal.test
             ```
@@ -195,11 +195,11 @@ Before you start following the guidelines, make sure to go through the [prerequi
             # Virtual hosts
             Include /private/etc/apache2/extra/httpd-vhosts.conf
             ```
-          - Open the `vhost` file in the terminal 
+          - Open the `vhost` file in the terminal
             ```sh
             sudo nano /etc/apache2/extra/httpd-vhosts.conf
             ```
-            Add the following line at the end of the file: 
+            Add the following line at the end of the file:
             Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`.
 
             ```apacheconf
@@ -228,6 +228,6 @@ Before you start following the guidelines, make sure to go through the [prerequi
                  # some code above
                  Require all granted
             </Directory>
-           ```
+            ```
            - Restart MAMP. Next, open this url in your browser: http://portal.test
 10. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
