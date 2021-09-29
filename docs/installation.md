@@ -176,7 +176,7 @@
             ```
           - Restart MAMP. Next, open this url in your browser: http://portal.test
 
-          - In case you see a 403 Forbidden error in Apache, try this instead:
+          - In case you are using Apache version 2.4 or above, the above code will give you a 403 Forbidden error. Make the following changes:
             ```apacheconf
             <Directory>
                 # some code above
