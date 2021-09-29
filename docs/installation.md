@@ -35,8 +35,6 @@
    php artisan key:generate
    ```
    **Note:** Make sure that the 'php.ini' file in XAMPP/WAMP has this code uncommented/written
-
-
     `extension=gd`
 
 
