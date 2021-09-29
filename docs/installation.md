@@ -34,6 +34,9 @@
    ```sh
    php artisan key:generate
    ```
+   **Note:** Make sure that the 'php.ini' file in XAMPP/WAMP has this code uncommented/written
+    `extension=gd`
+
 
 6. Add the following settings in `.env` file:
     1. Laravel app configurations
@@ -55,7 +58,11 @@
     DB_USERNAME=
     DB_PASSWORD=
     ```
-
+    **Note:** Use the default values for MySQL database in `.env` file
+    ```
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
 
     3. _(Optional)_ Google configurations.
     ```sh
@@ -148,7 +155,7 @@
             # Virtual hosts
             Include /private/etc/apache2/extra/httpd-vhosts.conf
             ```
-          - And the go to vhost file in the terminal 
+          - Open the `vhost` file in the terminal 
             ```sh
             sudo nano /etc/apache2/extra/httpd-vhosts.conf
             ```
@@ -168,5 +175,20 @@
              </VirtualHost>
             ```
           - Restart MAMP. Next, open this url in your browser: http://portal.test
-          
+
+          - In case you are using Apache version 2.4 or above, the above code will give you a 403 Forbidden error. Make the following changes:
+            ```apacheconf
+            <Directory>
+                # some code above
+                Order allow,deny
+                Allow from all
+            </Directory>
+            ```
+            Change to:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Require all granted
+            </Directory>
+           ```    
 10. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
