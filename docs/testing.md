@@ -33,7 +33,7 @@ Cypress can test anything that runs in a browser.
     8. Find the `h1 tag`, ensure it contains the text `"My First Post"`.
     
 - Your test case look like:
-    ```
+    ```js
     describe('Post Resource', () => {
         it('Creating a New Post', () => {
             cy.visit('/posts/new') // 1.
@@ -52,16 +52,19 @@ Cypress can test anything that runs in a browser.
     ```
 
 ### Steps to run cypress:
-1. Copy `cypress.json.example` as `cypress.json`.
- For more configuration options please refer [here](https://docs.cypress.io/guides/references/configuration#cypress-json) 
+1. Copy `cypress.json.example` as `cypress.json` in the same directory.
+    ```sh
+    cp cypress.json.example cypress.json
+    ```
+    For more configuration options please refer [here](https://docs.cypress.io/guides/references/configuration#cypress-json).
 
 
 2. Run the following command to run cypress 
     - Headless mode  
-        ```
+        ```sh
         npm run cypress
         ```
     - GUI mode 
-        ```
+        ```sh
         npm run cypress-open
         ```
