@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
-use Modules\Project\Database\factories\ProjectFactory;
+use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 
 class Project extends Model
