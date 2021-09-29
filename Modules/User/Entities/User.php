@@ -46,7 +46,6 @@ class User extends Authenticatable
 
     protected static function newFactory()
     {
-        /* @phpstan-ignore-next-line */
         return new UserFactory();
     }
 
