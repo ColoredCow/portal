@@ -14,7 +14,6 @@ class ProjectTeamMember extends Model
 
     protected static function newFactory()
     {
-        /* @phpstan-ignore-next-line */
         return new ProjectTeamMemberFactory();
     }
 }

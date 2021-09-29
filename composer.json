@@ -63,7 +63,7 @@
             "App\\": "app/",
             "Modules\\": "Modules/",
             "OfficeSuite\\": "OfficeSuite/",
-            "Database\\Factories\\": "database/factories/",
+            "Database\\Factories\\": "database/Factories/",
             "Database\\Seeders\\": "database/Seeders/"
         }
     },
