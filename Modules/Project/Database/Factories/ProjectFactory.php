@@ -26,7 +26,7 @@ class ProjectFactory extends Factory
         return [
             'name' => $this->faker->name,
             'client_id' => function () {
-                return Client::factory()->create()->id;
+                return Client::Factory()->create()->id;
             },
             'type' => 'monthly-billing',
             'client_project_id' => rand(1, 100),
