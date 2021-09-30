@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action ="{{ route('user.settings') }}" method = "POST">
+<form action="{{ route('user.settings') }}" method="POST">
 @csrf
     <div class="container">
         <div class="row justify-content-around">
