@@ -36,7 +36,9 @@ class EffortTrackingController extends Controller
         $users = [];
         $totalEffort = 0;
         $workingDays = self::countWorkingDays(now()->startOfMonth(), now());
-        $totalWorkingDays = count(self::countWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
+        $startDate = now()->startOfMonth();
+        $endDate = now()->endOfMonth();
+        $totalWorkingDays = count(self::countWorkingDays($startDate, $endDate));
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->getMemberEffort()->get();
@@ -62,7 +64,17 @@ class EffortTrackingController extends Controller
         $expectedHours = self::getExpectedHours(count($workingDays));
         $projectFTE = self::getFTE($totalEffort, $expectedHours);
 
-        return view('efforttracking::show')->with(['project' => $project, 'teamMembersEffort' => json_encode($teamMembersEffort), 'users' => json_encode($users), 'workingDays' => json_encode($workingDays), 'totalWorkingDays' => $totalWorkingDays, 'totalEffort' => $totalEffort, 'projectFTE' => $projectFTE]);
+        return view('efforttracking::show')->with([
+            'project' => $project,
+            'teamMembersEffort' => json_encode($teamMembersEffort),
+            'users' => json_encode($users),
+            'workingDays' => json_encode($workingDays),
+            'totalWorkingDays' => $totalWorkingDays,
+            'totalEffort' => $totalEffort,
+            'projectFTE' => $projectFTE,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+        ]);
     }
 
     /**

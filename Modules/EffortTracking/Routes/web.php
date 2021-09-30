@@ -18,7 +18,6 @@ Route::middleware('auth')->group(function () {
         Route::post('task', 'TasksController@store')->name('task.store');
         Route::put('task/{task}', 'TasksController@update')->name('task.update');
         Route::delete('task/{task}', 'TasksController@destroy')->name('task.destroy');
-        Route::get('/{project}', 'EffortTrackingController@show')->name('project.effort-tracking');
-        Route::get('/history/{project}', 'EffortTrackingController@index')->name('project.effort-tracking-history');
+        Route::get('project/{project}', 'EffortTrackingController@show')->name('project.effort-tracking');
     });
 });
