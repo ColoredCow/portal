@@ -707,12 +707,20 @@ input[type="radio"].toggle-button:checked + label.thumb > i.fa {
 .line-chart-container{
 	width : 1000px;
 }
-
 span.chart-heading{
 	font-size: 35px;
 }
 span.total-chart-count{
 	font-size: 20px;
+}
+
+
+//user-settings css
+.max-interview-heading{
+	color: $theme-gray;
+}
+#user-settings-content{
+ 	top: 26px;
 }
 
 //hr application
@@ -735,9 +743,10 @@ span.total-chart-count{
 #list-styling{
 	list-style: none;
 }
+
 //interview_schedule_error_message
 .exclamation-icon{ 
-	color: #d44950;
+	color: $theme-red;
 }
 // End Custom
 
