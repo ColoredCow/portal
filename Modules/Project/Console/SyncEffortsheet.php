@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Console;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Modules\Project\Entities\Project;
 use Modules\User\Entities\User;
@@ -52,54 +53,75 @@ class SyncEffortsheet extends Command
             $effortSheetURL = $project->effort_sheet_url;
 
             // check if we have set the effortsheet url
-            if ($effortSheetURL) {
+            if (! $effortSheetURL) {
+                return;
+            }
 
-                // $spreadSheetId = '1g4kGalUsI-78MNJo1EyPbok5-P28fbbc2vjB-fK1XOo'; // need to get from project efforstsheet url
+            // $spreadSheetId = '1g4kGalUsI-78MNJo1EyPbok5-P28fbbc2vjB-fK1XOo'; // need to get from project efforstsheet url
 
-                $matchesId = [];
-                $matchesSheetId = [];
-                preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetURL, $matchesId);
-                preg_match('/gid=([0-9]+)/', $effortSheetURL, $matchesSheetId);
+            $matchesId = [];
+            $matchesSheetId = [];
+            preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetURL, $matchesId);
+            preg_match('/gid=([0-9]+)/', $effortSheetURL, $matchesSheetId);
 
-                $sheetId = $matchesId[1];
-                // $subSheetID = '756414304'; // get from efforstsheet url
-                $subSheetID = $matchesSheetId[1];
+            $sheetId = $matchesId[1];
+            // $subSheetID = '756414304'; // get from efforstsheet url
+            $subSheetID = $matchesSheetId[1];
 
-                $sheet = new Sheets();
+            $sheet = new Sheets();
 
-                $projectMembersCount = $project->teamMembers()->count();
+            $projectMembersCount = $project->teamMembers()->count();
 
-                $range = 'C2:G' . ($projectMembersCount + 1); // this will depend on the number of people on the project
+            $range = 'C2:G' . ($projectMembersCount + 1); // this will depend on the number of people on the project
 
-                $sheets = $sheet->spreadsheet($sheetId)
-                                ->sheetById($subSheetID)
-                                ->range($range)
-                                ->get();
+            $sheets = $sheet->spreadsheet($sheetId)
+                            ->sheetById($subSheetID)
+                            ->range($range)
+                            ->get();
 
-                // loop over each person in the project and add his hours in the database
-                foreach ($sheets as $user) {
-                    $userNickname = $user[0];
+            // loop over each person in the project and add his hours in the database
+            foreach ($sheets as $user) {
+                $userNickname = $user[0];
 
-                    $portalUser = $users->where('nickname', $userNickname)->first();
+                $portalUser = $users->where('nickname', $userNickname)->first();
 
-                    // check if we have a user in the portal with the given nickname
-                    if ($portalUser) {
-                        $projectTeamMember = $portalUser->projectTeamMembers()->where('project_id', $project->id)->first();
+                // check if we have a user in the portal with the given nickname
+                if (! $portalUser) {
+                    continue;
+                }
 
-                        if ($projectTeamMember) {
-                            $projectTeamMemberId = $projectTeamMember->id;
+                $projectTeamMember = $portalUser->projectTeamMembers()->where('project_id', $project->id)->first();
 
-                            // need to check if we alreay have this member's entry for this project on a particular day
+                if ($projectTeamMember) {
+                    $projectTeamMemberId = $projectTeamMember->id;
 
-                            // finally create an entry for effort
-                            ProjectTeamMemberEffort::create([
-                                'project_team_member_id' => $projectTeamMemberId,
-                                'actual_effort' => 8,
-                                'total_effort_in_effortsheet' => $user[4],
-                                'added_on' => now(),
-                            ]);
-                        }
-                    }
+                    $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()->orderBy('added_on', 'DESC')->first();
+
+                    dd(Carbon::now()->timezone('Asia/Kolkata'));
+
+                    // need to check if we alreay have this member's entry previously
+                    // $projectTeamMemberss=ProjectTeamMemberEffort::where('project_team_member_id', $projectTeamMemberId)->first();
+
+                    // if yes,
+
+                    // check if month changed for last entry then
+                    // actual effort will be the total effort
+
+                    // otherwise check if we have for current date
+                    // if not then fill the data
+
+                    // if no
+                    // actual effort will be the total effort
+
+                    // $daysSinceLastFilled = $projectTeamMemberss->created_at->diffInDays(Carbon::now());
+
+                    // finally create an entry for effort
+                    ProjectTeamMemberEffort::create([
+                        'project_team_member_id' => $projectTeamMemberId,
+                        'actual_effort' => 8,
+                        'total_effort_in_effortsheet' => $user[4],
+                        'added_on' => now(),
+                    ]);
                 }
             }
         }
