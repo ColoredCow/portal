@@ -1014,7 +1014,7 @@ if ( document.getElementById("job_start_date") && document.getElementById("job_e
 function barChart(){
 	  var value = $(".chart-data").data("target");
 	  var cData = value;
-	  var ctx = $("#bar-chart");
+	  var ctx = $("#barChart");
 
 	  var data = {
 		labels: cData.label,

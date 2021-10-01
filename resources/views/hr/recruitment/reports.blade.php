@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="chart-container" align="center">
-    <div class="line-chart-container">
+    <div class="bar-chart-container">
         <h2 align="left">Analytics</h2>
         <form action="{{route('recruitment.reports')}}" method="POST" align="right">
             {{csrf_field()}}
@@ -18,7 +18,7 @@
                 <span class="chart-heading mr-5">Application Received</span><span class="total-chart-count">Today's Count:<?php echo $todayCount ?></span>
             </div>
             <div class="card-body chart-data" data-target="{{ $chartData }}" >
-                <canvas id="bar-chart"></canvas>
+                <canvas id="barChart"></canvas>
             </div>
         </div>
     </div>
