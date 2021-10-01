@@ -65,49 +65,51 @@ if (document.getElementById("vueContainer")) {
 }
   
 $(document).ready(() => {
-	  setTimeout(function() {
-		  $("#statusAlert").alert("close");
-	  }, 2000);
-  
-	  if ($(".form-create-invoice").length) {
-		  let form = $(".form-create-invoice");
-		  let client_id = form.find("#client_id").val();
-		  if (client_id) {
-			  updateClientProjects(form, client_id);
-		  }
-	  }
-	  $("[data-toggle=\"tooltip\"]").tooltip();
-  
-	  $(".status-close").on("click", function() {
-		  let wrapper = $(this).closest(".alert");
-		  wrapper.fadeOut(500);
-	  });
-  
-	  $(".client_edit_form_submission_btn").on("click", function() {
-		  if (!$("#edit_client_info_form")[0].checkValidity()) {
-			  $("#edit_client_info_form")[0].reportValidity();
-			  return false;
-		  }
-		  $("#submit_action_input").val($(this).attr("data-submit-action"));
-		  $("#edit_client_info_form").submit();
-	  });
-  
-	  $(".prospect_edit_form_submission_btn").on("click", function() {
-		  if (!$("#edit_prospect_info_form")[0].checkValidity()) {
-			  $("#edit_prospect_info_form")[0].reportValidity();
-			  return false;
-		  }
-		  $("#submit_action_input").val($(this).attr("data-submit-action"));
-		  $("#edit_prospect_info_form").submit();
-	  });
-  
-	  $("body").on("change", ".custom-file-input", function() {
-		  var fileName = $(this).val().split("\\").pop();
-		  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-	  });
-  
-	  datePickerChart();
-	  lineChart();
+	setTimeout(function() {
+		$("#statusAlert").alert("close");
+	}, 2000);
+
+	if ($(".form-create-invoice").length) {
+		let form = $(".form-create-invoice");
+		let client_id = form.find("#client_id").val();
+		if (client_id) {
+			updateClientProjects(form, client_id);
+		}
+	}
+	$("[data-toggle=\"tooltip\"]").tooltip();
+
+	$(".status-close").on("click", function() {
+		let wrapper = $(this).closest(".alert");
+		wrapper.fadeOut(500);
+	});
+
+	$(".client_edit_form_submission_btn").on("click", function() {
+		if (!$("#edit_client_info_form")[0].checkValidity()) {
+			$("#edit_client_info_form")[0].reportValidity();
+			return false;
+		}
+		$("#submit_action_input").val($(this).attr("data-submit-action"));
+		$("#edit_client_info_form").submit();
+	});
+
+	$(".prospect_edit_form_submission_btn").on("click", function() {
+		if (!$("#edit_prospect_info_form")[0].checkValidity()) {
+			$("#edit_prospect_info_form")[0].reportValidity();
+			return false;
+		}
+		$("#submit_action_input").val($(this).attr("data-submit-action"));
+		$("#edit_prospect_info_form").submit();
+	});
+
+	$("body").on("change", ".custom-file-input", function() {
+		var fileName = $(this).val().split("\\").pop();
+		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	});
+
+	if ($(".chart-data").length) {
+		datePickerChart();
+		barChart();
+	}
 });
   
 if (document.getElementById("page_hr_applicant_edit")) {
@@ -1004,15 +1006,16 @@ function datePickerChart(){
 }
  
 if ( document.getElementById("job_start_date") && document.getElementById("job_end_date") ){
-	 var today = new Date().toISOString().split("T")[0];
-		 document.getElementsByName("start_date")[0].setAttribute("min", today);
-	 document.getElementsByName("end_date")[0].setAttribute("min", today);
+	var today = new Date().toISOString().split("T")[0];
+	document.getElementsByName("start_date")[0].setAttribute("min", today);
+	document.getElementsByName("end_date")[0].setAttribute("min", today);
 }
- 
-function lineChart(){
+
+function barChart(){
+	  var value = $(".chart-data").data("target");
 	  var cData = value;
-	  var ctx = $("#line-chart");
-  
+	  var ctx = $("#barChart");
+
 	  var data = {
 		labels: cData.label,
 		datasets: [
@@ -1047,7 +1050,8 @@ function lineChart(){
 		  yAxes: [{
 				 ticks: {stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5},
 		  }]
-		},  
+		},
+
 		elements: {
 		  line: {
 				 fill: false,
@@ -1060,7 +1064,7 @@ function lineChart(){
 	  };
   
 	  var charts = new Chart(ctx, {
-		type: "line",
+		type: "bar",
 		data: data,
 		options: options
 	  });

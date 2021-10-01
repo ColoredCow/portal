@@ -9,7 +9,6 @@
         <div class="col-md-6">
             <h1>Applications</h1>
         </div>
-
         <div class="col-md-6 text-right">
             <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
             <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
@@ -46,167 +45,153 @@
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $query_filters = $hr_job_id . $search
     @endphp
-    <div class="d-flex align-items-center justify-content-between">
-        <ul class="nav nav-pills mb-2">
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status ? 'text-info' : 'active bg-info text-white' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}> <i
-                    class="fa fa-clipboard"></i>&nbsp;
-                    Open
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status ? 'bg-info text-white' : 'active bg-white text-info' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+    <div class="menu_wrapper">
+        <div class ="navbar"  id="navbar">
+            <li id="list-styling">
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : '' }} btn"
+                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
+                    <sup class = "application-menu-options-title fz-20">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
-                    </span>
+                    </sup>
+                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
+                    <h5>Open</h5>
                 </a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.in-progress.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=Trial-Program>
-                    <i class="fa fa-clipboard"></i>&nbsp;
-                    Trial Program
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ request()->get('round')=='Trial-Program' ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+            <li id="list-styling">
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.in-progress.label') ? 'job-application-status' : '' }} btn" 
+                href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=trial-program>
+                    <sup class = "application-menu-options-title fz-20">
                         {{$trialProgramCount}}
-                    </span>
+                    </sup>
+                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/code.svg')) !!}</span>
+                    <h5>Trial Program</h5>    
                 </a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
-                    <i class="fa fa-file-text-o"></i>&nbsp;
-                    {{ config('constants.hr.status.on-hold.title') }}
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.on-hold.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+            <li id="list-styling">
+                <a class="{{ $status === config('constants.hr.status.on-hold.label') ? 'job-application-status' : '' }} btn" 
+                href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
+                    <sup class = "application-menu-options-title fz-20">
                         {{$onHoldApplicationsCount}}
-                    </span>
+                    </sup>
+                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</span>
+                    <h5>On Hold</h5>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
-                    <i class="fa fa-warning"></i>&nbsp;{{ config('constants.hr.status.no-show.title') }}
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.no-show.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+            <li id="list-styling">
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.no-show.label') ? 'job-application-status':'' }} btn"
+                href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
+                    <sup class = "application-menu-options-title fz-20">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
-                    </span>
+                    </sup>
+                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</span>
+                    <h5>No Show</h5>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
-                    <i class="fa fa-times-circle"></i>&nbsp;
-                    Closed
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.rejected.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
-                        {{$rejectedApplicationsCount}}
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
-                    <i class="fa fa-clock-o"></i>&nbsp;{{ config('constants.hr.status.sent-for-approval.title') }}
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+            <li id="list-styling">
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.sent-for-approval.label') ? 'job-application-status' : '' }} btn"
+                href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
+                    <sup class = "application-menu-options-title fz-20">
                         {{$sentForApprovalApplicationsCount}}
-                    </span>
+                    </sup>
+                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</span>
+                    <h5>To Approve</h5>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.approved.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
-                    <i class="fa fa-check-square"></i>&nbsp;
-                    Approved
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.approved.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+            <li id="list-styling">
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.approved.label') ? 'job-application-status' : '' }} btn"
+                href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
+                    <sup class = "application-menu-options-title fz-20">
                         {{$approvedApplicationsCount}}
-                    </span>
+                    </sup>
+                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
+                    <h5>Approved</h5>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-item nav-link d-flex align-items-center {{ $status === config('constants.hr.status.onboarded.label') ? 'active bg-info text-white' : 'text-info' }}"
-                    href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
-                    <i class="fa fa-certificate"></i>&nbsp;
-                    Onboard
-                    <span
-                        class="ml-1 d-inline-block px-2 py-0 {{ $status === config('constants.hr.status.onboarded.label') ? 'active bg-white text-info' : 'bg-info text-white' }}"
-                        style="border-radius: 20px;font-size: 12px;font-weight: 700;">
+            <li id="list-styling">
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.onboarded.label') ? 'job-application-status' : '' }} btn"
+                href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
+                    <sup class = "application-menu-options-title fz-20" >
                         {{$onboardedApplicationsCount}}
-                    </span>
+                    </sup>
+                    <span class="d-inline-block h-24 w-24"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
+                    <h5>On Boarded</h5>
                 </a>
             </li>
-        </ul>
-        @if( isset($openJobsCount, $openApplicationsCount) )
-        <div class="alert alert-info mb-2 p-2">
-            <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $newApplicationsCount }}</b> open
-                applications</span>
+            <li id="list-styling">
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.rejected.label') ? 'job-application-status':'' }} btn"
+                href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
+                    <sup class = "application-menu-options-title fz-20" >
+                        {{$rejectedApplicationsCount}}    
+                    </sup>
+                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
+                    <h5>Closed</h5>
+                </a>
+            </li>
         </div>
-        @endif
+    </div>    
+    @if( isset($openJobsCount, $openApplicationsCount) )
+    <div class="alert alert-info mb-2 p-2">
+        <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $newApplicationsCount }}</b> open
+            applications</span>
     </div>
-    <table class="table table-striped table-bordered" id="applicants_table">
-        <thead>
-            <th>Name</th>
-            <th>Details</th>
-            <th>
-                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="assigneeDropdown">Assignee</span>
-                <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
-                    <span class="dropdown-item-text fz-12">Filter by assignee</span>
-                    @foreach ($assignees as $assignee)
-                        @php
-                            $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
-                            $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
-                        @endphp
-                        <a class="dropdown-item" href="{{ $target }}">
-                            <i class="fa fa-check fz-12 {{ $class }}"></i>
-                            <img src="{{ $assignee->avatar }}" alt="{{ $assignee->name }}"
-                                class="w-20 h-20 rounded-circle mr-1">
-                            <span>{{ $assignee->name }}</span>
-                        </a>
-                    @endforeach
-                </div>
-            </th>
-            <th>
-                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Status</span>
-                <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <span class="dropdown-item-text fz-12">Filter by status</span>
-                    @foreach ($tags as $tag)
-                        @php
-                            $target = request()->fullUrlWithQuery(['tags' => [
-                            $tag->id
-                            ]]);
-                            $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
-                        @endphp
-                        <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
-                            <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
-                            <div class="rounded w-13 h-13 d-inline-block mr-1"
-                                style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
-                            <span>{{ $tag->name }}</span>
-                        </a>
-                    @endforeach
-                </div>
-            </th>
-        </thead>
-        <tbody>
-            @forelse ($applications as $application)
-                @include('hr::application.render-application-row')
-            @empty
-            <tr>
-                <td colspan="100%" class="text-center">No application found for this filter.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
-    {{ $applications->links() }} 
+    @endif
+    <div class="table">
+        <table class="table table-striped" id="applicants_table">
+            <thead>
+                <th class="name">Name</th>
+                <th class="details">Details</th>
+                <th>
+                    <span class="dropdown-toggle c-pointer assignee" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="assigneeDropdown">Assignee</span>
+                    <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
+                        <span class="dropdown-item-text fz-12">Filter by assignee</span>
+                        @foreach ($assignees as $assignee)
+                            @php
+                                $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
+                                $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
+                            @endphp
+                            <a class="dropdown-item" href="{{ $target }}">
+                                <i class="fa fa-check fz-12 {{ $class }}"></i>
+                                <img src="{{ $assignee->avatar }}" alt="{{ $assignee->name }}"
+                                    class="w-20 h-20 rounded-circle mr-1">
+                                <span>{{ $assignee->name }}</span>
+                            </a>
+                        @endforeach
+                    </div>
+                </th>
+                <th>
+                    <span class="dropdown-toggle c-pointer status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Status</span>
+                    <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                        <span class="dropdown-item-text fz-12">Filter by status</span>
+                        @foreach ($tags as $tag)
+                            @php
+                                $target = request()->fullUrlWithQuery(['tags' => [$tag->id]]);
+                                $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
+                            @endphp
+                            <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                                <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
+                                <div class="rounded w-13 h-13 d-inline-block mr-1"
+                                    style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
+                                <span>{{ $tag->tag_name }}</span>
+                            </a>
+                        @endforeach
+                    </div>
+                </th>
+            </thead>
+            <tbody>
+                @forelse ($applications as $application)
+                    @include('hr::application.render-application-row')
+                @empty
+                <tr>
+                    <td colspan="100%" class="text-center">No application found for this filter.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+        {{ $applications->links() }} 
+    </div>
 </div>
 
 @include('hr.application.excel-import')
+
 @endsection
+

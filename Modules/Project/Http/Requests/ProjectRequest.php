@@ -35,6 +35,9 @@ class ProjectRequest extends FormRequest
                     'status' => 'sometimes|string',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
+                    'project_type' => 'required|string|in:monthly-billing,fixed-budget',
+                    'total_estimated_hours' => 'numeric|between:0,9999.99',
+                    'monthly_estimated_hours' => 'numeric|between:0,9999.99'
                 ];
                 break;
 
@@ -69,7 +72,8 @@ class ProjectRequest extends FormRequest
             'client_project_id.integer' => 'Project ID should be a valid number',
             'invoice_email.email' => 'Email for invoice should a valid email address',
             'effort_sheet_url.max' => 'Url must be less than 191 characters',
-            'effort_sheet_url.active_url' => 'Effortsheet url is not valid'
+            'effort_sheet_url.active_url' => 'Effortsheet url is not valid',
+            'type.required' => 'Project type is required'
         ];
     }
 }

@@ -2,14 +2,18 @@
 
 namespace Modules\Project\Entities;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Project\Database\Factories\ProjectTeamMemberFactory;
 
 class ProjectTeamMember extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
-    public function projectTeamMemberEffort()
+    protected static function newFactory()
     {
-        return $this->hasMany(ProjectTeamMemberEffort::class);
+        return new ProjectTeamMemberFactory();
     }
 }
