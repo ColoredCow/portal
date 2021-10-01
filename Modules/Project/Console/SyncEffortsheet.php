@@ -42,22 +42,15 @@ class SyncEffortsheet extends Command
      */
     public function handle()
     {
-        // fetch all active projects
-
         $projects = Project::where('status', 'active')->get();
-
         $users = User::with('projectTeamMembers');
 
-        // loop over each project
         foreach ($projects as $project) {
             $effortSheetURL = $project->effort_sheet_url;
 
-            // check if we have set the effortsheet url
             if (! $effortSheetURL) {
-                return;
+                continue;
             }
-
-            // $spreadSheetId = '1g4kGalUsI-78MNJo1EyPbok5-P28fbbc2vjB-fK1XOo'; // need to get from project efforstsheet url
 
             $matchesId = [];
             $matchesSheetId = [];
@@ -65,64 +58,48 @@ class SyncEffortsheet extends Command
             preg_match('/gid=([0-9]+)/', $effortSheetURL, $matchesSheetId);
 
             $sheetId = $matchesId[1];
-            // $subSheetID = '756414304'; // get from efforstsheet url
             $subSheetID = $matchesSheetId[1];
-
             $sheet = new Sheets();
-
             $projectMembersCount = $project->teamMembers()->count();
-
             $range = 'C2:G' . ($projectMembersCount + 1); // this will depend on the number of people on the project
-
             $sheets = $sheet->spreadsheet($sheetId)
                             ->sheetById($subSheetID)
                             ->range($range)
                             ->get();
 
-            // loop over each person in the project and add his hours in the database
             foreach ($sheets as $user) {
                 $userNickname = $user[0];
-
                 $portalUser = $users->where('nickname', $userNickname)->first();
 
-                // check if we have a user in the portal with the given nickname
                 if (! $portalUser) {
                     continue;
                 }
 
                 $projectTeamMember = $portalUser->projectTeamMembers()->where('project_id', $project->id)->first();
 
-                if ($projectTeamMember) {
-                    $projectTeamMemberId = $projectTeamMember->id;
-
-                    $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()->orderBy('added_on', 'DESC')->first();
-
-                    dd(Carbon::now()->timezone('Asia/Kolkata'));
-
-                    // need to check if we alreay have this member's entry previously
-                    // $projectTeamMemberss=ProjectTeamMemberEffort::where('project_team_member_id', $projectTeamMemberId)->first();
-
-                    // if yes,
-
-                    // check if month changed for last entry then
-                    // actual effort will be the total effort
-
-                    // otherwise check if we have for current date
-                    // if not then fill the data
-
-                    // if no
-                    // actual effort will be the total effort
-
-                    // $daysSinceLastFilled = $projectTeamMemberss->created_at->diffInDays(Carbon::now());
-
-                    // finally create an entry for effort
-                    ProjectTeamMemberEffort::create([
-                        'project_team_member_id' => $projectTeamMemberId,
-                        'actual_effort' => 8,
-                        'total_effort_in_effortsheet' => $user[4],
-                        'added_on' => now(),
-                    ]);
+                if (! $projectTeamMember) {
+                    continue;
                 }
+
+                $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()->orderBy('added_on', 'DESC')->first();
+                $actual_effort = $user[4];
+
+                if ($latestProjectTeamMemberEffort) {
+                    $previous_effort_date = Carbon::parse($latestProjectTeamMemberEffort->added_on);
+
+                    if ($previous_effort_date->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
+                        continue;
+                    } elseif ($previous_effort_date->format('Y-m') == Carbon::now()->format('Y-m')) {
+                        $actual_effort = $user[4] - $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
+                    }
+                }
+
+                ProjectTeamMemberEffort::create([
+                    'project_team_member_id' => $projectTeamMember->id,
+                    'actual_effort' => $actual_effort,
+                    'total_effort_in_effortsheet' => $user[4],
+                    'added_on' => now(),
+                ]);
             }
         }
     }
