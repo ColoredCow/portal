@@ -32,7 +32,7 @@ class ReportsController extends Controller
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
-            $data['label'][] = $row->date_created_at;
+            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
         }
 
         $data['chartData'] = json_encode($data);
@@ -59,7 +59,7 @@ class ReportsController extends Controller
         $data = [];
 
         foreach ($record as $row) {
-            $data['label'][] = $row->date_created_at;
+            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
         }
 
