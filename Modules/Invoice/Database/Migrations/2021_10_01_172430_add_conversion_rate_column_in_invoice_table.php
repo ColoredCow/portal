@@ -14,7 +14,7 @@ class AddConversionRateColumnInInvoiceTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->decimal('conversion_rate',10,2)->nullable()->after('conversion_rate_diff');
+            $table->decimal('conversion_rate', 10, 2)->nullable()->after('conversion_rate_diff');
         });
     }
 
