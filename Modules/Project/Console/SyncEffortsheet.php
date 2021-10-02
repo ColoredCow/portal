@@ -90,7 +90,7 @@ class SyncEffortsheet extends Command
                     if ($previous_effort_date->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
                         continue;
                     } elseif ($previous_effort_date->format('Y-m') == Carbon::now()->format('Y-m')) {
-                        $actual_effort = $user[4] - $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
+                        $actual_effort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
                     }
                 }
 
