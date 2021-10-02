@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class AddConversionRateColumnInInvoicesTable extends Migration
+class AddConversionRateColumnInInvoiceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddConversionRateColumnInInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->text('conversion_rate')->nullable()->after('conversion_rate_diff');
+            $table->decimal('conversion_rate',10,2)->nullable()->after('conversion_rate_diff');
         });
     }
 
