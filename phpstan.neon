@@ -13,7 +13,9 @@ parameters:
         - Modules/*/Providers/*ServiceProvider.php
         - Modules/*/Services/*Service.php
         - Modules/Invoice/Entities/Invoice.php
-        - Modules\HR\Observers\Recruitment\JobObserver.php
+        - Modules/HR/Observers/Recruitment/JobObserver.php
+        - Modules/*/Database/Factories/*.php
+        - Modules/*/Database/Seeders/*.php
 
     # The level 8 is the highest level
     level: 5
@@ -34,5 +36,5 @@ parameters:
         - '#Parameter \#[0-9]+ \$[a-zA-z]+ of method [a-zA-Z0-9\\_\|\<\>\,]+::[a-zA-Z]+\(\) expects [a-zA-Z\|]+, [a-zA-Z0-9\\_\|\<\>]+ given#'
         - '#Parameter \#[0-9]+ \$[a-zA-z]+ of static method [a-zA-Z0-9\\_\|\<\>\,]+::[a-zA-Z]+\(\) expects [a-zA-Z\]+, [a-zA-Z0-9\\_\|\<\>]+ given#'
         - '#Parameter \#[0-9]+ \$[a-zA-z0-9]+ of function array_multisort is passed by reference, so it expects variables only#'
-    
+
     checkMissingIterableValueType: false
