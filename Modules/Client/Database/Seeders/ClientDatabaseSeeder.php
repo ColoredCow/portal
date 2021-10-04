@@ -17,8 +17,8 @@ class ClientDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-           Client::factory()
-               ->count(3)
-               ->create();
+        Client::factory()
+            ->count(3)
+            ->create();
     }
 }
