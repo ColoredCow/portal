@@ -1005,11 +1005,6 @@ function datePickerChart(){
 	  });
 }
  
-if ( document.getElementById("job_start_date") && document.getElementById("job_end_date") ){
-	var today = new Date().toISOString().split("T")[0];
-	document.getElementsByName("start_date")[0].setAttribute("min", today);
-	document.getElementsByName("end_date")[0].setAttribute("min", today);
-}
 
 function lineChart(){
 	  var value = $(".chart-data").data("target");
