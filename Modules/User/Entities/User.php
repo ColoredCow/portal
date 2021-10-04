@@ -123,4 +123,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserMeta::class, 'user_id');
     }
+
+    public function metaValue($metaKey)
+    {
+        return optional($this->meta()->key($metaKey)->first())->meta_value;
+    }
 }

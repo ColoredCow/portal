@@ -13,4 +13,15 @@ class UserMeta extends Model
     {
         return  $this->belongsTo(User::class);
     }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeKey($query, $metaKey)
+    {
+        return $query->where('meta_key', $metaKey);
+    }
 }
