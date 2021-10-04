@@ -121,6 +121,6 @@ class User extends Authenticatable
 
     public function meta()
     {
-        return $this->hasOne(UserMeta::class, 'user_id');
+        return $this->hasMany(UserMeta::class, 'user_id');
     }
 }
