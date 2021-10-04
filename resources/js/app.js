@@ -1081,6 +1081,14 @@ $(function () {
 		}
 	});
 });
+$('#job_start_date').on('change', function() {
+ 	let startDate = $('#job_start_date').val();
+	$("#job_end_date").attr('min', startDate);
+})
+$('#job_end_date').on('change', function(){
+	let endDate = $('#job_end_date').val();
+	$("#job_start_date").attr('max', endDate);
+})
    
 /*
    * HR Module JS code end
