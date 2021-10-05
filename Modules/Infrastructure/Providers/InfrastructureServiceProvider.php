@@ -134,6 +134,7 @@ class InfrastructureServiceProvider extends ServiceProvider
             return true;
         }
 
+        // @phpstan-ignore-next-line
         return $this->app->bind(InfrastructureServiceContract::class, function () {
             return new InfrastructureService();
         });

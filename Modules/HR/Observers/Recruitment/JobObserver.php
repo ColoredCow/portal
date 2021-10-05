@@ -34,7 +34,7 @@ class JobObserver
         }
         $corcel->save();
         $corcel->saveMeta('hr_id', $job['id']);
-        $post = Corcel::hasMeta('hr_id', $job['id'])->first();
+        $post = $corcel->hasMeta('hr_id', $job['id'])->first();
         $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
         $relation = new TermRelationship();
         $relation->object_id = $post->ID;
@@ -55,8 +55,9 @@ class JobObserver
         }
 
         $data = request()->all();
-        $post = Corcel::hasMeta('hr_id', $job['id'])->first();
-        $corcel = Corcel::find($post->ID);
+        $corcel = new Corcel();
+        $post = $corcel->hasMeta('hr_id', $job['id'])->first();
+        $corcel = $corcel->find($post->ID);
         $corcel->post_title = $data['title'];
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');

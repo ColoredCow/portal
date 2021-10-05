@@ -91,7 +91,7 @@ class CalendarMeetingService implements CalendarMeetingContract
 
         $event->setConferenceData(new Google_Service_Calendar_ConferenceData([
                 'createRequest' => [
-                    'requestId' => md5(time()),
+                    'requestId' => md5(time()),  // @phpstan-ignore-line
                     'conferenceSolutionKey' => [
                         'type' => 'hangoutsMeet',
                     ]

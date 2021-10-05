@@ -9,13 +9,8 @@ parameters:
 
     excludePaths:
         - Modules/*/vendor/composer/ClassLoader.php
-        - app/Exceptions/Handler.php
-        - Modules/*/Providers/*ServiceProvider.php
-        - Modules/*/Services/*Service.php
-        - Modules/Invoice/Entities/Invoice.php
-        - Modules/HR/Observers/Recruitment/JobObserver.php
-        - Modules/*/Database/Factories/*.php
-        - Modules/*/Database/Seeders/*.php
+        - Modules/*/Database/Factories/*.php   # Ignore Error occurring due to Laravel factories
+        - Modules/*/Database/Seeders/*.php   # Ignore Error occurring due to Laravel factories
 
     # The level 8 is the highest level
     level: 5
