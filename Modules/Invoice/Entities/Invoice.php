@@ -2,20 +2,18 @@
 
 namespace Modules\Invoice\Entities;
 
-use App\Traits\Encryptable;  // @phpstan-ignore-line
+use App\Traits\Encryptable;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    /* @phpstan-ignore-next-line */
     use Encryptable;
 
     protected $fillable = ['client_id', 'project_id', 'status', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at'];
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at'];
 
-    /** @phpstan-ignore-next-line */
     protected $encryptable = [
         'amount', 'gst', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds'
     ];
