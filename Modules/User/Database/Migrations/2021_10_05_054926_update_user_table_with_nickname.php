@@ -13,7 +13,7 @@ class UpdateUserTableWithNickname extends Migration
      */
     public function up()
     {
-        Schema::table('', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->string('nickname')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class UpdateUserTableWithNickname extends Migration
      */
     public function down()
     {
-        Schema::table('', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('nickname');
         });
     }
