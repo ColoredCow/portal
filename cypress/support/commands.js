@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('Login', (user) => {
+    cy.get('input[name=email]').type(user.email)
+    cy.get('input[name=password]').type(user.password)
+    cy.get('[type="submit"]').first().click();
+  })
+
+Cypress.Commands.add('Logout', () => {
+    cy.get('#navbarDropdown').click();
+    cy.get('[href="https://uat.employee.coloredcow.com/logout"]').click();
+  })
