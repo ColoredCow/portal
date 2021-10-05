@@ -16,4 +16,9 @@ class ProjectTeamMember extends Model
     {
         return new ProjectTeamMemberFactory();
     }
+
+    public function projectTeamMemberEffort()
+    {
+        return $this->hasMany(ProjectTeamMemberEffort::class);
+    }
 }
