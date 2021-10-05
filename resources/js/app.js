@@ -1035,8 +1035,8 @@ function barChart(){
 		  displayColors:false,
 		  bodyFontSize: 20,
 		  bodyFontStyle: "bold",
-		  backgroundColor:"#E5E5E5",
-		  bodyFontColor:"#E0DEDE",
+		  backgroundColor:"#282828",
+		  bodyFontColor:"#ffffff",
 		  cornerRadius:0,
 		  borderWidth:2
 		},
