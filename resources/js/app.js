@@ -108,7 +108,7 @@ $(document).ready(() => {
 
 	if ($(".chart-data").length) {
 		datePickerChart();
-		lineChart();
+		barChart();
 	}
 });
   
@@ -1005,17 +1005,12 @@ function datePickerChart(){
 	  });
 }
  
-if ( document.getElementById("job_start_date") && document.getElementById("job_end_date") ){
-	var today = new Date().toISOString().split("T")[0];
-	document.getElementsByName("start_date")[0].setAttribute("min", today);
-	document.getElementsByName("end_date")[0].setAttribute("min", today);
-}
 
-function lineChart(){
+function barChart(){
 	  var value = $(".chart-data").data("target");
 	  var cData = value;
-	  var ctx = $("#line-chart");
-  
+	  var ctx = $("#barChart");
+
 	  var data = {
 		labels: cData.label,
 		datasets: [
@@ -1035,8 +1030,8 @@ function lineChart(){
 		  displayColors:false,
 		  bodyFontSize: 20,
 		  bodyFontStyle: "bold",
-		  backgroundColor:"#E5E5E5",
-		  bodyFontColor:"#E0DEDE",
+		  backgroundColor:"#282828",
+		  bodyFontColor:"#ffffff",
 		  cornerRadius:0,
 		  borderWidth:2
 		},
@@ -1050,7 +1045,8 @@ function lineChart(){
 		  yAxes: [{
 				 ticks: {stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5},
 		  }]
-		},  
+		},
+
 		elements: {
 		  line: {
 				 fill: false,
@@ -1063,7 +1059,7 @@ function lineChart(){
 	  };
   
 	  var charts = new Chart(ctx, {
-		type: "line",
+		type: "bar",
 		data: data,
 		options: options
 	  });
@@ -1081,7 +1077,17 @@ $(function () {
 		}
 	});
 });
-   
+
+$("#job_start_date").on("change", function() {
+ 	let startDate = $("#job_start_date").val();
+	$("#job_end_date").attr("min", startDate);
+});
+
+$("#job_end_date").on("change", function(){
+	let endDate = $("#job_end_date").val();
+	$("#job_start_date").attr("max", endDate);
+});
+
 /*
    * HR Module JS code end
    */

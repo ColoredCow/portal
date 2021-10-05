@@ -18,13 +18,12 @@ class ProjectTeamMember extends Model
         return new ProjectTeamMemberFactory();
     }
 
-    public function getMemberEffort()
-    {
-        return $this->hasMany(ProjectTeamMemberEffort::class);
-    }
-
     public function getUserDetails()
     {
         return $this->belongsTo(User::class, 'team_member_id', 'id');
+    }
+    public function projectTeamMemberEffort()
+    {
+        return $this->hasMany(ProjectTeamMemberEffort::class);
     }
 }

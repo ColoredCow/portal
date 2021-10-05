@@ -30,6 +30,7 @@ class ProjectServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
+        $this->registerCommands();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         $this->loadService();
     }
@@ -76,6 +77,18 @@ class ProjectServiceProvider extends ServiceProvider
         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
+    }
+
+    /**
+     * Register the commands for the module.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        $this->commands([
+            \Modules\Project\Console\SyncEffortsheet::class,
+        ]);
     }
 
     /**
