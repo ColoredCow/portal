@@ -190,7 +190,7 @@ class CalendarMeetingService implements CalendarMeetingContract
     /**
      * Returns an array with formats expected by Portal modules.
      *
-     * @param  string $eventDateTime
+     * @param  mixed $eventDateTime
      * @param  bool $withTimeZone    defines whether to return the calendar event timeZone or not
      *
      * @return array
@@ -207,7 +207,7 @@ class CalendarMeetingService implements CalendarMeetingContract
 
     public function getStartDateTime($withTimeZone = false)
     {
-        return self::getDateTime($this->startDateTime);
+        return self::getDateTime($this->startDateTime, $withTimeZone);
     }
 
     public function setStartDateTime($dateTime, $timeZone = null)
@@ -217,7 +217,7 @@ class CalendarMeetingService implements CalendarMeetingContract
 
     public function getEndDateTime($timeZone = false)
     {
-        return self::getDateTime($this->endDateTime);
+        return self::getDateTime($this->endDateTime, $timeZone);
     }
 
     public function setEndDateTime($dateTime, $timeZone = null)

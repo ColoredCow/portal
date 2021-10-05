@@ -55,7 +55,6 @@ class SalesAreaController extends Controller
      */
     public function show(SalesArea $salesArea)
     {
-        return view('salesautomation::show');
     }
 
     /**

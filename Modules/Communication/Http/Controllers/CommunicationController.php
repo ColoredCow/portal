@@ -19,7 +19,6 @@ class CommunicationController extends Controller
      */
     public function create()
     {
-        return view('communication::create');
     }
 
     /**
@@ -28,7 +27,6 @@ class CommunicationController extends Controller
      */
     public function show($id)
     {
-        return view('communication::show');
     }
 
     /**
@@ -37,6 +35,5 @@ class CommunicationController extends Controller
      */
     public function edit($id)
     {
-        return view('communication::edit');
     }
 }

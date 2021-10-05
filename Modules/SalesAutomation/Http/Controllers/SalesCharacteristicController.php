@@ -52,11 +52,9 @@ class SalesCharacteristicController extends Controller
     /**
      * Show the specified resource.
      * @param SalesCharacteristic $salesCharacteristic
-     * @return Renderable
      */
     public function show(SalesCharacteristic $salesCharacteristic)
     {
-        return view('salesautomation::show');
     }
 
     /**
