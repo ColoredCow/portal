@@ -54,7 +54,7 @@
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
                     <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
-                    <h5>Open</h5>
+                    <h5 class="application-menu-headings fz-20">Open</h5>
                 </a>
             </li>
             <li id="list-styling">
@@ -64,7 +64,7 @@
                         {{$trialProgramCount}}
                     </sup>
                     <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/code.svg')) !!}</span>
-                    <h5>Trial Program</h5>    
+                    <h5 class="application-menu-headings fz-20">Trial Program</h5>    
                 </a>
             </li>
             <li id="list-styling">
@@ -74,7 +74,7 @@
                         {{$onHoldApplicationsCount}}
                     </sup>
                     <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</span>
-                    <h5>On Hold</h5>
+                    <h5 class="application-menu-headings fz-20">On Hold</h5>
                 </a>
             </li>
             <li id="list-styling">
@@ -84,7 +84,7 @@
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
                     <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</span>
-                    <h5>No Show</h5>
+                    <h5 class="application-menu-headings fz-20">No Show</h5>
                 </a>
             </li>
             <li id="list-styling">
@@ -94,7 +94,7 @@
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
                     <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</span>
-                    <h5>To Approve</h5>
+                    <h5 class="application-menu-headings fz-20">To Approve</h5>
                 </a>
             </li>
             <li id="list-styling">
@@ -104,7 +104,7 @@
                         {{$approvedApplicationsCount}}
                     </sup>
                     <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
-                    <h5>Approved</h5>
+                    <h5 class="application-menu-headings fz-20">Approved</h5>
                 </a>
             </li>
             <li id="list-styling">
@@ -114,7 +114,7 @@
                         {{$onboardedApplicationsCount}}
                     </sup>
                     <span class="d-inline-block h-24 w-24"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
-                    <h5>On Boarded</h5>
+                    <h5 class="application-menu-headings fz-20">On Boarded</h5>
                 </a>
             </li>
             <li id="list-styling">
@@ -124,7 +124,7 @@
                         {{$rejectedApplicationsCount}}    
                     </sup>
                     <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
-                    <h5>Closed</h5>
+                    <h5 class="application-menu-headings fz-20">Closed</h5>
                 </a>
             </li>
         </div>
