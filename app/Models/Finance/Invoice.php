@@ -48,7 +48,7 @@ class Invoice extends Model
      *
      * @param  string $start
      * @param  string $end
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return mixed
      */
     public static function filterBySentDate($start, $end, $paginated = false)
     {

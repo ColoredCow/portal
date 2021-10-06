@@ -38,7 +38,6 @@ class RoundController extends Controller
                 ]);
 
                 return $guidelines;
-                break;
         }
 
         return redirect()->back()->with('status', 'Round updated successfully!');

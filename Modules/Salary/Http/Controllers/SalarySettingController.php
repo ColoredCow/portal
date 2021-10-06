@@ -24,7 +24,6 @@ class SalarySettingController extends Controller
      */
     public function create()
     {
-        return view('salary::create');
     }
 
     /**
@@ -33,7 +32,6 @@ class SalarySettingController extends Controller
      */
     public function show($id)
     {
-        return view('salary::show');
     }
 
     /**
@@ -42,7 +40,6 @@ class SalarySettingController extends Controller
      */
     public function edit($id)
     {
-        return view('salary::edit');
     }
 
     /**

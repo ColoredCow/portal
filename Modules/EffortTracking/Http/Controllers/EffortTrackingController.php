@@ -19,7 +19,6 @@ class EffortTrackingController extends Controller
      */
     public function create()
     {
-        return view('efforttracking::create');
     }
 
     /**
@@ -28,7 +27,6 @@ class EffortTrackingController extends Controller
      */
     public function show($id)
     {
-        return view('efforttracking::show');
     }
 
     /**
@@ -37,6 +35,5 @@ class EffortTrackingController extends Controller
      */
     public function edit($id)
     {
-        return view('efforttracking::edit');
     }
 }

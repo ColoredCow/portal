@@ -47,10 +47,10 @@ class InfrastructureService implements InfrastructureServiceContract
     {
         $costExplorerClient = $this->sdk->createCostExplorer();
         $currentDate = Carbon::now();
-        $lastYear = (clone $currentDate)->subYear(1);
+        $lastYear = (clone $currentDate)->subYear();
         $last12MonthCost = $costExplorerClient->getCostAndUsage(['Metrics' => ['AMORTIZED_COST'], 'Granularity' => 'MONTHLY', 'TimePeriod' => ['Start' => $lastYear->format('Y-m-d'), 'End' => $currentDate->format('Y-m-d')]])->toArray();
         $results = $this->formatCostByMonth($last12MonthCost['ResultsByTime']);
-        $lastMonthCostData = $results[(clone $currentDate)->subMonth(1)->format('Y-m')];
+        $lastMonthCostData = $results[(clone $currentDate)->subMonth()->format('Y-m')];
         $lastMonthAmount = $lastMonthCostData['To_Display'];
 
         $currentCostData = $results[$currentDate->format('Y-m')] ?? $lastMonthCostData;
@@ -60,8 +60,8 @@ class InfrastructureService implements InfrastructureServiceContract
             'Metric' => 'AMORTIZED_COST',
             'Granularity' => 'MONTHLY',
             'TimePeriod' => [
-                'Start' => (clone $currentDate)->addDay(1)->format('Y-m-d'),
-                'End' => (clone $currentDate)->addDay(2)->format('Y-m-d')]])
+                'Start' => (clone $currentDate)->addDay()->format('Y-m-d'),
+                'End' => (clone $currentDate)->addDays(2)->format('Y-m-d')]])
             ->toArray();
 
         $currentMonthForCastData = $monthlyForCast['Total'];

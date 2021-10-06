@@ -147,6 +147,7 @@ class ProjectServiceProvider extends ServiceProvider
             return true;
         }
 
+        // @phpstan-ignore-next-line
         return $this->app->bind(ProjectServiceContract::class, function () {
             return new ProjectService();
         });
