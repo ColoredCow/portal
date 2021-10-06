@@ -115,25 +115,42 @@ if ($(".effort-tracking-data").find("canvas").length) {
 }
 
 function effortTrackingChart() {
-	var effortDetails = JSON.parse($("input[name='team_members_effort']").val());
-	var workingDays = JSON.parse($("input[name='workingDays']").val());
-	var users = JSON.parse($("input[name='users']").val());
-	var totalWorkingDays = $("input[name='totalWorkingDays']").val();
-	var estimatedHours = $("#projectHours").find("span").html();
-	const datasetValue = [];
+	const effortDetails = JSON.parse($("input[name='team_members_effort']").val()),
+		  workingDays = JSON.parse($("input[name='workingDays']").val()),
+	      users = JSON.parse($("input[name='users']").val()),
+	      totalWorkingDays = $("input[name='totalWorkingDays']").val(),
+	      estimatedHours = $("#projectHours").find("span").html(),
+	      datasetValue = [];
+
+
 	const hoursPerDay = [];
 	for (var i = 1; i <= totalWorkingDays; i++) {
 		hoursPerDay.push(estimatedHours/totalWorkingDays);
 	}
-	for (var i = users.length - 1; i >= 0; i--) {
+
+	for (let i = users.length - 1; i >= 0; i--) {
+		const userId = users[i].id;
+		const userData = effortDetails[userId];
+		const userDataKeys = Object.keys(userData);
+		const userDates= userDataKeys.map((key) =>  ({effort:userData[key].actual_effort,addedOn:userData[key].added_on}));
+		const data = workingDays.map((workingDay)=>{
+			for(let i = 0; i <= userDates.length-1; i++) {
+				if(userDates[i].addedOn === workingDay){
+					return userDates[i].effort
+				}
+			}
+			return 0;
+		})
+		const userColor=`rgb(${255-i*35},0,0)`;
 		datasetValue[i] = {
 			type: "bar",
 			label: users[i].name,
-			data:[6, 3, 2, 2, 7, 0, 16],
-			borderColor: users[i].color,
-			backgroundColor: users[i].color,
+			data,
+			borderColor: userColor,
+			backgroundColor: userColor,
 			stack: "combined",
 		}
+		document.querySelector(`#user-name${userId}`).style.color=userColor;
 	}
 	datasetValue[users.length] = {
 		type: "line",
@@ -149,12 +166,6 @@ function effortTrackingChart() {
 		datasets: datasetValue,
 	};
 	var options = {
-		plugins: {
-			title: {
-				text: "Chart.js Combo Time Scale",
-				display: true,
-			}
-		},
 		scales: {
 			x: {
 				type: "time",
@@ -169,11 +180,11 @@ function effortTrackingChart() {
 			}
 		},
 	};
-	var ctx = $("#effortTrackingGraph");
-	var ctx = "effortTrackingGraph";
-	var charts = new Chart(ctx, {
+
+	const canvasElementId = "effortTrackingGraph";
+	new Chart(canvasElementId, {
 		type: "bar",
-		data: data,
-		options: options,
+		data,
+		options,
 	});
 }
