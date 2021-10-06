@@ -48,7 +48,7 @@
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
-                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : '' }} btn"
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : ( $status === NULL ? 'job-application-status' : '' ) }} btn"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
                     <sup class = "application-menu-options-title fz-20">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
