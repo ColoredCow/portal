@@ -116,32 +116,34 @@ if ($(".effort-tracking-data").find("canvas").length) {
 
 function effortTrackingChart() {
 	const effortDetails = JSON.parse($("input[name='team_members_effort']").val()),
-		  workingDays = JSON.parse($("input[name='workingDays']").val()),
-	      users = JSON.parse($("input[name='users']").val()),
-	      totalWorkingDays = $("input[name='totalWorkingDays']").val(),
-	      estimatedHours = $("#projectHours").find("span").html(),
-	      datasetValue = [];
+		workingDays = JSON.parse($("input[name='workingDays']").val()),
+		users = JSON.parse($("input[name='users']").val()),
+		totalWorkingDays = $("input[name='totalWorkingDays']").val(),
+		estimatedHours = $("#projectHours").find("span").html(),
+		datasetValue = [],
+		hoursPerDay = [];
 
-
-	const hoursPerDay = [];
 	for (var i = 1; i <= totalWorkingDays; i++) {
-		hoursPerDay.push(estimatedHours/totalWorkingDays);
+		hoursPerDay.push(estimatedHours / totalWorkingDays);
 	}
 
 	for (let i = users.length - 1; i >= 0; i--) {
-		const userId = users[i].id;
-		const userData = effortDetails[userId];
-		const userDataKeys = Object.keys(userData);
-		const userDates= userDataKeys.map((key) =>  ({effort:userData[key].actual_effort,addedOn:userData[key].added_on}));
-		const data = workingDays.map((workingDay)=>{
-			for(let i = 0; i <= userDates.length-1; i++) {
-				if(userDates[i].addedOn === workingDay){
-					return userDates[i].effort
+		const userId = users[i].id,
+			userData = effortDetails[userId],
+			userDataKeys = Object.keys(userData),
+			userDates = userDataKeys.map((key) => ({
+				effort: userData[key].actual_effort,
+				addedOn: userData[key].added_on
+			})),
+			data = workingDays.map((workingDay) => {
+				for (let i = 0; i <= userDates.length - 1; i++) {
+					if (userDates[i].addedOn === workingDay) {
+						return userDates[i].effort;
+					}
 				}
-			}
-			return 0;
-		})
-		const userColor=`rgb(${255-i*35},0,0)`;
+				return 0;
+			}),
+			userColor = `rgb(${255-i*35},0,0)`;
 		datasetValue[i] = {
 			type: "bar",
 			label: users[i].name,
@@ -149,8 +151,8 @@ function effortTrackingChart() {
 			borderColor: userColor,
 			backgroundColor: userColor,
 			stack: "combined",
-		}
-		document.querySelector(`#user-name${userId}`).style.color=userColor;
+		};
+		document.querySelector(`#user-name${userId}`).style.color = userColor;
 	}
 	datasetValue[users.length] = {
 		type: "line",
@@ -160,7 +162,7 @@ function effortTrackingChart() {
 		borderColor: "#4BC0C0",
 		backgroundColor: "#4BC0C0",
 		stack: "combined",
-	}
+	};
 	const data = {
 		labels: workingDays,
 		datasets: datasetValue,
