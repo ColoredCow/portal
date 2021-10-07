@@ -85,6 +85,8 @@ class EffortTrackingService
      */
     public function getTeamMembersDetails($teamMembers)
     {
+        $teamMembersEffort = [];
+        $users = [];
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
