@@ -16,15 +16,6 @@ class EffortTrackingController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     * @param Project $project
-     */
-    public function index(Project $project)
-    {
-        return view('efforttracking::index')->with('project', $project);
-    }
-
-    /**
      * Show the specified resource.
      * @param Project $project
      */
