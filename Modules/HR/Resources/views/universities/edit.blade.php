@@ -40,7 +40,6 @@
     <div class="mt-5">
 
         <h5>University Aliases</h5>
-        <button type="button" class="btn btn-outline-primary add-aliases mb-3" id="add_contact_btn"><i class="fa fa-plus"></i>Add University Aliases</button>
         <div id="update_alias_form_list">
             <div class="d-none alias-clone">
                 @include('hr::universities.add-aliases')
@@ -52,6 +51,7 @@
         <div id="create_alias_form_list">
            {{-- For inserting dynamic add alias form --}}
         </div>
+        <button type="button" class="btn btn-outline-primary add-aliases mb-3" id="add_contact_btn"><i class="fa fa-plus"></i> Add University Aliases</button>
     </div>
 
     <div class="mt-5">

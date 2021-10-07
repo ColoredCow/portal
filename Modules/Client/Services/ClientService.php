@@ -61,7 +61,7 @@ class ClientService implements ClientServiceContract
         if ($section == 'contact-persons') {
             return  [
                 'client' => $client,
-                'section' => $section ?: config('client.default-client-form-stage'),
+                'section' => $section,
                 'contactPersons' => $client->contactPersons
             ];
         }
@@ -70,7 +70,7 @@ class ClientService implements ClientServiceContract
             return  [
                 'client' => $client,
                 'countries' => Country::all(),
-                'section' => $section ?: config('client.default-client-form-stage'),
+                'section' => $section,
                 'addresses' => $client->addresses
             ];
         }
@@ -78,7 +78,7 @@ class ClientService implements ClientServiceContract
         if ($section == 'billing-details') {
             return  [
                 'client' => $client,
-                'section' => $section ?: config('client.default-client-form-stage'),
+                'section' => $section,
                 'clientBillingAddress' => $this->getClientBillingAddress($client),
                 'keyAccountManagers' => $this->getKeyAccountManagers(),
                 'clientBillingDetail' => $client->billingDetails,

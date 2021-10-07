@@ -25,7 +25,6 @@ class PaymentSettingController extends Controller
      */
     public function show($id)
     {
-        return view('payment::show');
     }
 
     /**
@@ -34,7 +33,6 @@ class PaymentSettingController extends Controller
      */
     public function edit($id)
     {
-        return view('payment::edit');
     }
 
     /**

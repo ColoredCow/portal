@@ -19,7 +19,6 @@ class LeadController extends Controller
      */
     public function create()
     {
-        return view('lead::create');
     }
 
     /**
@@ -28,7 +27,6 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-        return view('lead::show');
     }
 
     /**
@@ -37,6 +35,5 @@ class LeadController extends Controller
      */
     public function edit($id)
     {
-        return view('lead::edit');
     }
 }
