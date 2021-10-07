@@ -19,7 +19,6 @@ class LegalDocumentController extends Controller
      */
     public function create()
     {
-        return view('legaldocument::create');
     }
 
     /**
@@ -28,7 +27,6 @@ class LegalDocumentController extends Controller
      */
     public function show($id)
     {
-        return view('legaldocument::show');
     }
 
     /**
@@ -37,6 +35,5 @@ class LegalDocumentController extends Controller
      */
     public function edit($id)
     {
-        return view('legaldocument::edit');
     }
 }

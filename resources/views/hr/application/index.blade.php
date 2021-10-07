@@ -50,81 +50,81 @@
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : '' }} btn"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
-                    <sup class = "application-menu-options-title fz-20">
+                    <sup class = "application-menu-options-title fz-18">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
-                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
-                    <h5>Open</h5>
+                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.new.label') ? 'text-underline' : '' }}">Open</h5>
                 </a>
             </li>
             <li id="list-styling">
-                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.in-progress.label') ? 'job-application-status' : '' }} btn" 
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.in-progress.label') ? 'job-application-status text-underline' : '' }} btn" 
                 href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=trial-program>
-                    <sup class = "application-menu-options-title fz-20">
+                    <sup class = "application-menu-options-title fz-18">
                         {{$trialProgramCount}}
                     </sup>
-                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/code.svg')) !!}</span>
-                    <h5>Trial Program</h5>    
+                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/code.svg')) !!}</span>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.in-progress.label') ? 'text-underline' : '' }}">Trial Program</h5>    
                 </a>
             </li>
             <li id="list-styling">
-                <a class="{{ $status === config('constants.hr.status.on-hold.label') ? 'job-application-status' : '' }} btn" 
+                <a class="{{ $status === config('constants.hr.status.on-hold.label') ? 'job-application-status text-underline' : '' }} btn" 
                 href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
-                    <sup class = "application-menu-options-title fz-20">
+                    <sup class = "application-menu-options-title fz-18">
                         {{$onHoldApplicationsCount}}
                     </sup>
-                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</span>
-                    <h5>On Hold</h5>
+                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</span>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.on-hold.label') ? 'text-underline' : '' }}">On Hold</h5>
                 </a>
             </li>
             <li id="list-styling">
-                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.no-show.label') ? 'job-application-status':'' }} btn"
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.no-show.label') ? 'job-application-status text-underline':'' }} btn"
                 href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
-                    <sup class = "application-menu-options-title fz-20">
+                    <sup class = "application-menu-options-title fz-18">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
-                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</span>
-                    <h5>No Show</h5>
+                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</span>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.no-show.label') ? 'text-underline':'' }}">No Show</h5>
                 </a>
             </li>
             <li id="list-styling">
-                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.sent-for-approval.label') ? 'job-application-status' : '' }} btn"
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.sent-for-approval.label') ? 'job-application-status text-underline' : '' }} btn"
                 href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
-                    <sup class = "application-menu-options-title fz-20">
+                    <sup class = "application-menu-options-title fz-18">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
-                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</span>
-                    <h5>To Approve</h5>
+                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</span>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'text-underline' : '' }}">To Approve</h5>
                 </a>
             </li>
             <li id="list-styling">
-                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.approved.label') ? 'job-application-status' : '' }} btn"
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.approved.label') ? 'job-application-status text-underline' : '' }} btn"
                 href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
-                    <sup class = "application-menu-options-title fz-20">
+                    <sup class = "application-menu-options-title fz-18">
                         {{$approvedApplicationsCount}}
                     </sup>
-                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
-                    <h5>Approved</h5>
+                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.approved.label') ? 'text-underline' : '' }}">Approved</h5>
                 </a>
             </li>
             <li id="list-styling">
-                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.onboarded.label') ? 'job-application-status' : '' }} btn"
+                <a id="job-application-listings" class="{{ $status === config('constants.hr.status.onboarded.label') ? 'job-application-status text-underline' : '' }} btn"
                 href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
-                    <sup class = "application-menu-options-title fz-20" >
+                    <sup class = "application-menu-options-title fz-18" >
                         {{$onboardedApplicationsCount}}
                     </sup>
-                    <span class="d-inline-block h-24 w-24"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
-                    <h5>On Boarded</h5>
+                    <span class="d-inline-block h-26 w-26"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.onboarded.label') ? 'text-underline' : '' }}">On Boarded</h5>
                 </a>
             </li>
             <li id="list-styling">
-                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.rejected.label') ? 'job-application-status':'' }} btn"
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.rejected.label') ? 'job-application-status text-underline':'' }} btn"
                 href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
-                    <sup class = "application-menu-options-title fz-20" >
+                    <sup class = "application-menu-options-title fz-18" >
                         {{$rejectedApplicationsCount}}    
                     </sup>
-                    <span class="d-inline-block h-24 w-24">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
-                    <h5>Closed</h5>
+                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.rejected.label') ? 'text-underline':'' }}">Closed</h5>
                 </a>
             </li>
         </div>
@@ -171,7 +171,7 @@
                                 <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
                                 <div class="rounded w-13 h-13 d-inline-block mr-1"
                                     style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
-                                <span>{{ $tag->tag_name }}</span>
+                                <span>{{ $tag->name }}</span>
                             </a>
                         @endforeach
                     </div>
