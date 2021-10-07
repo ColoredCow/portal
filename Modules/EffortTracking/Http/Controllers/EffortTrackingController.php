@@ -23,7 +23,6 @@ class EffortTrackingController extends Controller
      */
     public function create()
     {
-        return view('efforttracking::create');
     }
 
     /**
@@ -84,7 +83,6 @@ class EffortTrackingController extends Controller
      */
     public function edit($id)
     {
-        return view('efforttracking::edit');
     }
 
     public static function countWorkingDays($startDate, $endDate)

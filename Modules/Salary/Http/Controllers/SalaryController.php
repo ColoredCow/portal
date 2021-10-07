@@ -21,7 +21,6 @@ class SalaryController extends Controller
      */
     public function create()
     {
-        return view('salary::create');
     }
 
     public function employee()
@@ -38,7 +37,6 @@ class SalaryController extends Controller
      */
     public function show($id)
     {
-        return view('salary::show');
     }
 
     /**
@@ -47,6 +45,5 @@ class SalaryController extends Controller
      */
     public function edit($id)
     {
-        return view('salary::edit');
     }
 }

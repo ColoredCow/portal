@@ -54,7 +54,6 @@ class NDATemplateController extends Controller
      */
     public function edit($id)
     {
-        return view('legaldocument::nda.edit');
     }
 
     /**

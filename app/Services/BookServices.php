@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use File;
 use GuzzleHttp\Client;
 use Vision\Feature;
 use Vision\Request\Image\LocalImage;
@@ -41,7 +40,7 @@ class BookServices
     /**
      * Fetch ISBN form book image.
      *
-     * @param File $file
+     * @param mixed $file
      * @return string
      */
     public static function getISBN($file)

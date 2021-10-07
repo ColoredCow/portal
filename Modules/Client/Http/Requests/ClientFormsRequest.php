@@ -57,23 +57,18 @@ class ClientFormsRequest extends FormRequest
         switch ($section) {
             case 'client-details':
                 return $this->clientDetailsValidation();
-                break;
 
             case 'contact-persons':
                 return $this->contactPersonsValidation();
-                break;
 
             case 'address':
                 return $this->addressValidation();
-                break;
 
             case 'billing-details':
                 return $this->billingDetailsValidation();
-                break;
 
             case 'default':
                 return [];
-                break;
         }
     }
     /**

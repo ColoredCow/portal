@@ -39,6 +39,7 @@ class Handler extends ExceptionHandler
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param  \Exception  $exception
+     * @return mixed
      */
     public function report(Throwable $exception)
     {
@@ -55,6 +56,7 @@ class Handler extends ExceptionHandler
             parent::report($e);
         }
 
+        // @phpstan-ignore-next-line
         return parent::report($exception);
     }
 

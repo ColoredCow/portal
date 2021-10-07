@@ -19,7 +19,6 @@ class ModuleChecklistController extends Controller
      */
     public function create()
     {
-        return view('modulechecklist::create');
     }
 
     /**
@@ -28,7 +27,6 @@ class ModuleChecklistController extends Controller
      */
     public function show($id)
     {
-        return view('modulechecklist::show');
     }
 
     /**
@@ -37,6 +35,5 @@ class ModuleChecklistController extends Controller
      */
     public function edit($id)
     {
-        return view('modulechecklist::edit');
     }
 }

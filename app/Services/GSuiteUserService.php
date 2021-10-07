@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use Google_Client;
-use Google_IO_Exception;
+use Google_Exception;
 use Google_Service_Directory;
 use Google_Service_Directory_User;
 use Google_Service_Directory_UserName;
@@ -75,7 +75,7 @@ class GSuiteUserService
             if (isset($params['designation'])) {
                 $this->setDesignation($params['designation']);
             }
-        } catch (Google_IO_Exception $gioe) {
+        } catch (Google_Exception $gioe) {
             echo 'Error in connection: ' . $gioe->getMessage();
         } catch (Google_Service_Exception $gse) {
             echo $gse->getMessage();

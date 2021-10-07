@@ -157,8 +157,7 @@ abstract class ApplicationController extends Controller
 
     public static function getOfferLetter(Application $application, Request $request)
     {
-        $offerLetterTemplate = Setting::getOfferLetterTemplate();
-        $pdf = FileHelper::generateOfferLetter($application, $offerLetterTemplate['body'], true);
+        $pdf = FileHelper::generateOfferLetter($application, true);
 
         return response()->json([
             'pdf' => $pdf,
@@ -184,7 +183,6 @@ abstract class ApplicationController extends Controller
                 Mail::send(new JobChanged($application, $changeJobMeta));
 
                 return redirect()->route('applications.internship.edit', $id)->with('status', 'Application updated successfully!');
-                break;
             case config('constants.hr.application-meta.keys.no-show'):
                 $roundNotConductedMeta = ApplicationMeta::create([
                     'hr_application_id' => $application->id,
@@ -200,7 +198,6 @@ abstract class ApplicationController extends Controller
                 Mail::send(new RoundNotConducted($application, $roundNotConductedMeta));
 
                 return redirect()->back()->with('status', 'Application updated successfully!');
-                break;
         }
 
         return redirect()->back()->with('No changes were done to the application. Please make sure your are submitting valid data.');

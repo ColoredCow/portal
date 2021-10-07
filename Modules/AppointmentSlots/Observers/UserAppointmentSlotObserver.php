@@ -20,6 +20,7 @@ class UserAppointmentSlotObserver
             $repeatTill = new Carbon(request('repeat_till'));
             $repeatTill = $repeatTill->addDay();
             $userId = request('user_id');
+            $duration = '';
 
             switch ($userAppointmentSlot->recurrence) {
                 case 'daily':
