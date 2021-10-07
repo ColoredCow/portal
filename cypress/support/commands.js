@@ -31,5 +31,5 @@ Cypress.Commands.add('Login', (user) => {
 
 Cypress.Commands.add('Logout', () => {
     cy.get('#navbarDropdown').click();
-    cy.get('[href="https://uat.employee.coloredcow.com/logout"]').click();
+    cy.get('#logout').click();
   })
