@@ -11,7 +11,7 @@
 
     <div class="card">
         <div class="card-header d-flex flex-row justify-content-between">
-            <h2>{{$project->name}} - Effort Details for September</h4>
+            <h2>{{$project->name}} - Effort Details for {{$currentMonth}}</h4>
             <div>
             <h2 class="fz-18 leading-22">Current Hours: <span>{{$totalEffort}}</span></h2>
             <h2 class="fz-18 leading-22" id="projectHours">Expected Hours: <span>{{$project->monthly_estimated_hours}}</span></h2>
@@ -34,7 +34,7 @@
                 <input type="hidden" name="workingDays" value="{{$workingDays}}">
                 <input type="hidden" name="users" value="{{$users}}">
                 <input type="hidden" name="totalWorkingDays" value="{{$totalWorkingDays}}">
-                <canvas id="effortTrackingGraph" style="width:100%;"></canvas>
+                <canvas class="w-full" id="effortTrackingGraph"></canvas>
             </div>
         </div>
     </div>
