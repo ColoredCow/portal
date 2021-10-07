@@ -15,7 +15,7 @@
         </div>
         @endif
 
-        @if(Module::checkStatus('Project') && auth()->user()->can('project.view'))
+        @if(Module::checkStatus('Project') && auth()->user()->can('projects.view'))
         <div class="min-w-389">
             <user-dashboard-projects />
         </div>
