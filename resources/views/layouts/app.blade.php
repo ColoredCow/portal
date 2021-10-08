@@ -72,7 +72,7 @@
                                         <a target="_blank" class="dropdown-item" href="{{ config('constants.website_url') . '/wp/wp-admin/' }}">Go to website</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('user.settings') }}">User Settings</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" id="logout" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
