@@ -24,9 +24,11 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add('Login', (user) => {
-    cy.get('input[name=email]').type(user.email)
+    cy.visit("/login");
+    cy.get('input[name=email]').type(user.username)
     cy.get('input[name=password]').type(user.password)
     cy.get('[type="submit"]').first().click();
+    cy.get("h3").first().should("have.text", "Dashboard");
   })
 
 Cypress.Commands.add('Logout', () => {
