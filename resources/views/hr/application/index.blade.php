@@ -48,13 +48,13 @@
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
-                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : '' }} btn"
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : ( isset($status) ? '' : 'job-application-status' ) }} btn"
                     href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
                     <sup class = "application-menu-options-title fz-18">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
                     <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
-                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.new.label') ? 'text-underline' : '' }}">Open</h5>
+                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.new.label') ? 'text-underline' : ( isset($status) ? '' : 'text-underline' ) }}">Open</h5>
                 </a>
             </li>
             <li id="list-styling">
