@@ -5,7 +5,6 @@ namespace Modules\HR\Http\Controllers;
 use Modules\HR\Http\Requests\TagRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Models\Tag;
 
 class TagsController extends Controller
