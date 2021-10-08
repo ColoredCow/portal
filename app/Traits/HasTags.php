@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Tag;
-use Illuminate\Support\Str;
 
 trait HasTags
 {

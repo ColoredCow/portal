@@ -9,6 +9,11 @@ class Tag extends Model
 {
     protected $guarded = [];
 
+    public function scopeSlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
+    }
+
     public function getTextColorAttribute($hexColor)
     {
         $hexColor = str_replace('#', '', $this->background_color);
