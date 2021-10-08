@@ -50,6 +50,7 @@ jobs:
       - name: Run seeders
         run: |
           php artisan db:seed
+          php artisan module:seed
 
       - name: Compile assets
         run: |
