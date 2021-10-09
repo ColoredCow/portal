@@ -3,7 +3,7 @@
 Before you start following the guidelines, make sure to go through the [prerequisites guide](./prerequisites.md) to install the required tools and packages on your machine.
 
 
-1. Navigate to the right diretory where your project will be locally saved
+1. Navigate to the right directory where your project will be locally saved
     - For WAMP:
         ```sh
         cd C:\wamp64\www\
@@ -16,6 +16,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         cd /Application/MAMP/htdocs/
         ```
+note- phpMyAdmin/php, apache and mySql comes preinstalled with the  WAMP, XAMPP package, that is going to be used later on in this project, so no need to install these files 
+separately. 
 
 2. Clone this repository and move to `portal` directory
    ```sh
