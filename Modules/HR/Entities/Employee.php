@@ -29,7 +29,7 @@ class Employee extends Model
         } else {
             $now = now();
 
-            return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, true);
+            return ($this->joined_on->diff($now)->days < 1) ? '0 days' : $this->joined_on->diffForHumans($now, 1);
         }
     }
 

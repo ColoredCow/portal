@@ -54,7 +54,7 @@ class BookController extends Controller
         $ISBN = isset($validatedData['isbn']) ? $validatedData['isbn'] : null;
         $stored = Book::firstOrCreate(['isbn' => $ISBN], $validatedData);
 
-        return response()->json(['error' => ! $stored]);
+        return response()->json(['error' => false]);
     }
 
     /**
@@ -121,6 +121,7 @@ class BookController extends Controller
     {
         $validated = $request->validated();
         $method = $validated['add_method'];
+        $ISBN = null;
 
         if ($method === 'from_image' && $request->hasFile('book_image')) {
             $file = $request->file('book_image');
@@ -279,7 +280,7 @@ class BookController extends Controller
         $booksCollection = BookAMonth::all()
             ->groupBy(function ($item) {
                 return Carbon::parse($item->created_at)->format('Y');
-            }, 'desc')
+            }, true)
             ->transform(function ($item) {
                 return $item->groupBy(function ($item) {
                     return Carbon::parse($item->created_at)->format('n');

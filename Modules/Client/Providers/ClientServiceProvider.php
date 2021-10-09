@@ -154,6 +154,7 @@ class ClientServiceProvider extends ServiceProvider
             return true;
         }
 
+        // @phpstan-ignore-next-line
         return $this->app->bind(ClientServiceContract::class, function () {
             return new ClientService();
         });

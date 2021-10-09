@@ -23,7 +23,13 @@ class ClientFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'status' => 'active',
+            'status' => 'inactive',
+            'key_account_manager_id' => $this->faker->unique($reset = true)->randomDigitNotNull,
+            'created_at' => now(),
+            'updated_at' => now(),
+            'is_channel_partner' => 0,
+            'has_departments' => 0,
+            'address' => $this->faker->address,
         ];
     }
 }
