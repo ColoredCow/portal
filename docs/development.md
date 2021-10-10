@@ -21,16 +21,16 @@ When you are working in specified module, create migrations/seeders in the speci
 ## Coding Guidelines and Conventions
 
 1. Naming Conventions
-    1. [Controllers](https://www.laravelbestpractices.com/#controllers)
-    2. [Models](https://www.laravelbestpractices.com/#models)
+    1. [Controllers](https://laravel.com/docs/8.x/controllers)
+    2. [Models](https://laravel.com/docs/8.x/eloquent)
     3. [Functions](https://www.laravelbestpractices.com/#functions)
-    4. [Routes](https://www.laravelbestpractices.com/#routes)
-    5. [Variables](https://www.laravelbestpractices.com/#variables)
-    6. [Views](https://www.laravelbestpractices.com/#variables)
+    4. [Routes](https://laravel.com/docs/8.x/routing)
+    5. [Variables](https://laravel.com/docs/8.x/blade)
+    6. [Views](https://laravel.com/docs/8.x/views)
 
 2. Database conventions
-    1. [Table and Fields Naming](https://www.laravelbestpractices.com/#table-fields-naming)
-    2. [Database Alterations](https://www.laravelbestpractices.com/#database-alterations)
+    1. [Table and Fields Naming](https://www.geeksforgeeks.org/database-table-and-column-naming-conventions/)
+    2. [Database Alterations](https://www.w3resource.com/sql/sql-basic/basic-create-database.php)
 
 3. Formatting
     1. [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/)
