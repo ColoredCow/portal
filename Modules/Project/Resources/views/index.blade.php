@@ -37,14 +37,14 @@
                 </tr>
             </thead>
             <tbody>
-                @if (auth()->user()->can('projects.view'))
+                @can('projects.view')
                 @forelse($projects as $project)
                     <tr>
-                        @if (auth()->user()->can('projects.edit'))
+                        @can('projects.edit')
                         <td> <a href="{{ route('project.edit', $project) }}">{{ $project->name }}</a> </td>
                         @else
                         <td> {{ $project->name }} </td>
-                        @endif
+                        @endcan
                         <td> {{ $project->client_project_id }} </td>
                         <td>{{ $project->client->name }}</td>
                         <td>
@@ -68,7 +68,7 @@
                         <p class="my-4 text-left"> You don't have permission to see projects.</p>  
                     <td>
                 </tr>
-                @endif
+                @endcan
             </tbody>
         </table>
 
