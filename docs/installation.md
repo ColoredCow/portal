@@ -16,8 +16,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
         ```sh
         cd /Application/MAMP/htdocs/
         ```
-note- phpMyAdmin/php, apache and mySql comes preinstalled with the  WAMP, XAMPP package, that is going to be used later on in this project, so no need to install these files 
-separately. 
+    Note- phpMyAdmin/PHP, apache, and MySQL comes preinstalled with the  WAMP, XAMPP package, that is going 
+    to be used later on in this project, so no need to install these files separately. 
 
 2. Clone this repository and move to `portal` directory
    ```sh
