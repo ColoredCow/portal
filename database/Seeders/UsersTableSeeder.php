@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Modules\User\Entities\User;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'ColoredCow User',
                 'password' => Hash::make('12345678'),
                 'provider' => 'default',
-                'provider_id' => 'default'
+                'provider_id' => 'default',
             ],
         ]);
 
