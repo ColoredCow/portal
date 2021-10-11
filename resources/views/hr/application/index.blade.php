@@ -14,20 +14,76 @@
             <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
         </div>
     </div>
-    <div class="row mt-4">
-        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">  
-            <input type="hidden" name="status" class="form-control" id="search"
-                value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
-
-            <input type="hidden" name="round" class="form-control" id="search"
-                value=@if(request()->has('round')){{request()->get('round')}}@endif>
-
-            <input 
-                type="text" name="search" class="form-control" id="search" placeholder="Name, email, phone, or university"
-                value=@if(request()->has('search')){{request()->get('search')}}@endif>
-            <button class="btn btn-info ml-2">Search</button>
-        </form>
-    </div>
+        <div class="input-group col-md-6 align-self-center">
+            <form method="GET" action="/{{ Request::path() }}">  
+                <input type="hidden" name="status" class="form-control" id="search"
+                    value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
+    
+                <input type="hidden" name="round" class="form-control" id="search"
+                    value=@if(request()->has('round')){{request()->get('round')}}@endif>
+                    {{-- <div class="input-group-prepend">
+                        <span>{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+                    </div> --}}
+                    <input
+                        type="text" name="search" class="form-control w-300" id="search" placeholder="Enter a keyword"
+                        value= @if(request()->has('search')){{request()->get('search')}}@endif>
+                    {{-- <div class="input-group-append">
+                        <span>{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+                    </div>  --}}
+            </form>
+            {{-- <div class="input-group-append">
+                <span>{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+            </div> --}}
+            <div class="col-md-2 align-self-center">    
+                <button class="btn btn-info ml-2">Search</button>
+            </div>
+            <div class="input-group-append">
+                <span class="funnel-icon" data-toggle="modal" data-target="#myModal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+            </div> 
+        </div>
+  
+  <!-- The Modal -->
+    <div class="modal job-application-modal" id="myModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Filter By</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Status:</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="sel1">
+                                <option>New application</option>
+                                <option>In progress</option>
+                                <option>Awaiting confirmation</option>
+                                <option>Need follow up</option>
+                                <option>Sent for approval</option>
+                                <option>Approved</option>
+                                <option>No show reminded</option>
+                                <option>Onboarded</option>
+                                <option>Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>     
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Apply</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+            </div>
+    
+        </div>
+        </div>
+  </div>
     @if(request()->has('search') || request()->has('tags'))
     <div class="row mt-3 mb-2">
         <div class="col-6">
