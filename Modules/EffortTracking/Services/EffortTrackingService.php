@@ -19,7 +19,7 @@ class EffortTrackingService
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
         foreach ($teamMembersDetails['teamMembersEffort'] as $key => $teamMemberEffort) {
-            $totalTeamMemberEffort = end($teamMemberEffort)['total_effort_in_effortsheet'];
+            $totalTeamMemberEffort = end($teamMemberEffort)['total_effort_in_effortsheet'] ?? 0;
             $totalEffort += $totalTeamMemberEffort;
         }
         $expectedHours = $this->getExpectedHours(count($workingDays));
@@ -87,22 +87,26 @@ class EffortTrackingService
     {
         $teamMembersEffort = [];
         $users = [];
+        $startDate = now()->startOfMonth()->toDateString();
+        $endDate = now()->endOfMonth()->toDateString();
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
             foreach ($efforts as $effort) {
                 $effortAddedOn = new Carbon($effort->added_on);
                 $teamMembersEffort[$userDetails->id][$effort->id]['name'] = $userDetails->name;
-                $teamMembersEffort[$userDetails->id][$effort->id]['actual_effort'] = $effort->actual_effort;
-                $teamMembersEffort[$userDetails->id][$effort->id]['total_effort_in_effortsheet'] = $effort->total_effort_in_effortsheet;
-                $teamMembersEffort[$userDetails->id][$effort->id]['added_on'] = $effortAddedOn->format('Y-m-d');
+                if ($startDate <= $effortAddedOn && $effortAddedOn <= $endDate) {
+                    $teamMembersEffort[$userDetails->id][$effort->id]['actual_effort'] = $effort->actual_effort;
+                    $teamMembersEffort[$userDetails->id][$effort->id]['total_effort_in_effortsheet'] = $effort->total_effort_in_effortsheet;
+                    $teamMembersEffort[$userDetails->id][$effort->id]['added_on'] = $effortAddedOn->format('Y-m-d');
+                }
             }
             $users[] = [
                 'id' => $userDetails->id,
                 'name' => $userDetails->name,
-                'actual_effort' => end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'],
+                'actual_effort' => end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'] ?? 0,
                 'expected_effort' => $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now()))),
-                'FTE' => $this->getFTE(end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'], $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now())))),
+                'FTE' => $this->getFTE(end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'] ?? 0, $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now())))),
             ];
         }
 
