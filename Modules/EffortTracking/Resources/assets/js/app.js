@@ -27,15 +27,15 @@ $(document).on("submit", ".task-form", (e) => {
 		form.find(".remove_button").toggleClass("d-none");
 		form.find(".btn-update").val("update");
 		form.find(".btn-text").text("Update");
-		if(task.comment){
-			form.find("#show_comment").text("View Note");    
+		if (task.comment) {
+			form.find("#show_comment").text("View Note");
 		}
-		form.find("form").attr("action",`/efforttracking/task/${task.id}`);
+		form.find("form").attr("action", `/efforttracking/task/${task.id}`);
 		form.find(".task-form")
 			.find("input")
 			.map((key, val) => {
-				if(val.name!=="_token"&&val.name!=="_method"){
-					val.value=task[val.name];
+				if (val.name !== "_token" && val.name !== "_method") {
+					val.value = task[val.name];
 				}
 			});
 		form.find(".task-form").find(".type").val(task.type);
@@ -62,14 +62,12 @@ $(document).on("submit", ".task-form", (e) => {
 				form.find(".icon,.btn-text").toggleClass("d-none");
 				button.prop("disabled", false);
 			}, 2000);
-            
+
 			if (button.val() == "add") {
 				form.closest(".update-card").remove();
 				addUpdateForm(response.data);
-			}
-			else
-			{
-				if(response.data.comment){
+			} else {
+				if (response.data.comment) {
 					form.find("#show_comment").text("View Note");
 				}
 			}
@@ -107,7 +105,88 @@ $(document).on("click", ".delete-form", (e) => {
 	});
 });
 
-$(document).on("click","#show_comment",(e)=>{
+$(document).on("click", "#show_comment", (e) => {
 	let addNoteBtn = $(e.target);
 	addNoteBtn.parent().find(".comment_toggle").toggleClass("d-none");
 });
+
+if ($(".effort-tracking-data").find("canvas").length) {
+	effortTrackingChart();
+}
+
+function effortTrackingChart() {
+	const effortDetails = JSON.parse($("input[name='team_members_effort']").val()),
+		workingDays = JSON.parse($("input[name='workingDays']").val()),
+		users = JSON.parse($("input[name='users']").val()),
+		totalWorkingDays = $("input[name='totalWorkingDays']").val(),
+		estimatedHours = $("#projectHours").find("span").html(),
+		datasetValue = [],
+		hoursPerDay = [];
+
+	for (var i = 1; i <= totalWorkingDays; i++) {
+		hoursPerDay.push(estimatedHours / totalWorkingDays);
+	}
+
+	for (let i = users.length - 1; i >= 0; i--) {
+		const userId = users[i].id,
+			userData = effortDetails[userId],
+			userDataKeys = Object.keys(userData),
+			userDates = userDataKeys.map((key) => ({
+				effort: userData[key].actual_effort,
+				addedOn: userData[key].added_on
+			})),
+			data = workingDays.map((workingDay) => {
+				for (let i = 0; i <= userDates.length - 1; i++) {
+					if (userDates[i].addedOn === workingDay) {
+						return userDates[i].effort;
+					}
+				}
+				return 0;
+			}),
+			userColor = `rgb(${255-i*35},0,0)`;
+		datasetValue[i] = {
+			type: "bar",
+			label: users[i].name,
+			data,
+			borderColor: userColor,
+			backgroundColor: userColor,
+			stack: "combined",
+		};
+		document.querySelector(`#user-name${userId}`).style.color = userColor;
+	}
+	datasetValue[users.length] = {
+		type: "line",
+		label: "Expected Hours",
+		data: hoursPerDay,
+		fill: false,
+		borderColor: "#4BC0C0",
+		backgroundColor: "#4BC0C0",
+		stack: "combined",
+	};
+	const data = {
+		labels: workingDays,
+		datasets: datasetValue,
+	};
+	var options = {
+		scales: {
+			x: {
+				type: "time",
+				display: true,
+				offset: true,
+				time: {
+					unit: "day",
+				},
+			},
+			y: {
+				stacked: true,
+			}
+		},
+	};
+
+	const canvasElementId = "effortTrackingGraph";
+	new Chart(canvasElementId, {
+		type: "bar",
+		data,
+		options,
+	});
+}

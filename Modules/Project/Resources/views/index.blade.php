@@ -32,6 +32,7 @@
                     <th>Reference Id</th>
                     <th>Client</th>
                     <th>Team Members</th>
+                    <th>FTE</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,11 +48,14 @@
                                 @endforeach
                             </ul>
                         </td>
+                        <td>
+                            <a href="{{route('project.effort-tracking', $project )}}">Click Here</a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3"> 
-                            <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>  
+                        <td colspan="3">
+                            <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>
                         <td>
                     </tr>
                 @endforelse
@@ -59,7 +63,7 @@
         </table>
 
     </div>
-    
+
 </div>
 
 
