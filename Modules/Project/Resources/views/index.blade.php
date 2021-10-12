@@ -19,11 +19,11 @@
                 </select>
             </form>
         </div>
-        @if(auth()->user()->can('projects.create'))
+        @can(auth()->user()->can('projects.create'))
         <span>
             <a  href= "{{ route('project.create') }}" class="btn btn-info text-white"> Add new project</a>
         </span>
-        @endif
+        @endcan
     </div>
 
     <div>
