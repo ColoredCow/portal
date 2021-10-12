@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'EffortTracking'
+    'name' => 'EffortTracking',
+    'minimum_expected_hours' => 8,
 ];

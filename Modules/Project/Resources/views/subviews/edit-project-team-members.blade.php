@@ -6,7 +6,7 @@
     <div id="project_team_member_form" class="collapse hide">
         <form  action="{{ route('project.update', $project) }}" method="POST" id="update_project_team_member_form">
             @csrf
-            <input type="hidden" value="project_team_members" name="update_section"> 
+            <input type="hidden" value="project_team_members" name="update_section">
 
             <div class="card-body">
                 <div class="row">
@@ -43,11 +43,11 @@
                 </div>
 
             </div>
-    
+
             <div class="card-footer">
                 <button type="button" class="btn btn-primary" v-on:click="updateProjectForm('update_project_team_member_form')">Update team members</button>
             </div>
         </form>
     </div>
-   
+
 </div>

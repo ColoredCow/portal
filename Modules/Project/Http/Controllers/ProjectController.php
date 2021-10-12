@@ -3,9 +3,9 @@
 namespace Modules\Project\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
-use Modules\Project\Contracts\ProjectServiceContract;
 
 class ProjectController extends Controller
 {
