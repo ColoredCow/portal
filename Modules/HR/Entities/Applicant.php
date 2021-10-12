@@ -6,10 +6,13 @@ use App\Services\GSuiteUserService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Modules\HR\Database\Factories\HrApplicantsFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Applicant extends Model
 {
-    use Notifiable;
+    //use Notifiable;
+    use HasFactory;
 
     protected $guarded = [];
 
@@ -53,6 +56,10 @@ class Applicant extends Model
         $applicant->wasRecentlyCreated ? $application->tag('new-application') : null;
 
         return $applicant;
+    }
+
+    public static function newFactory() {
+        return new HrApplicantsFactory();
     }
 
     /**
