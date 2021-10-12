@@ -59,11 +59,11 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="start_date" class="fz-14 leading-none text-secondary mb-1">Start Date</label>
-                        <input type="date" class="form-control" id="job_start_date" name="start_date" value="{{ old('start_date', $job->start_date) }}">     
+                        <input type="date" class="form-control" id="job_start_date" name="start_date" min="{{ old('start_date', $job->start_date) }}" max="{{ old('end_date', $job->end_date) }}" value="{{ old('start_date', $job->start_date) }}">     
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="end_date" class="fz-14 leading-none text-secondary mb-1">End Date</label>
-                        <input type="date" class="form-control" id="job_end_date" name="end_date" value="{{ old('end_date', $job->end_date) }}">
+                        <input type="date" class="form-control" id="job_end_date" name="end_date" min="{{ old('start_date', $job->start_date) }}" value="{{ old('end_date', $job->end_date) }}">
                     </div>
                 </div>
                 <div class="form-group">
