@@ -21,7 +21,6 @@ class HrApplicationsFactory extends Factory
      * @return array
      */
     public function definition()
-    
     {
         return [
             'hr_applicant_id' => function () {

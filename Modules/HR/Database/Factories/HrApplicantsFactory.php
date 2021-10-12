@@ -21,7 +21,6 @@ class HrApplicantsFactory extends Factory
      * @return array
      */
     public function definition()
-    
     {
         return [
             'name' => $this->faker->name,

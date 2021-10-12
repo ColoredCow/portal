@@ -58,7 +58,8 @@ class Applicant extends Model
         return $applicant;
     }
 
-    public static function newFactory() {
+    public static function newFactory()
+    {
         return new HrApplicantsFactory();
     }
 
