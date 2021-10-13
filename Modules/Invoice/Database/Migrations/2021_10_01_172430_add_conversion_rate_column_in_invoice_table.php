@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateInvoiceTableForEncryption extends Migration
+class AddConversionRateColumnInInvoiceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class UpdateInvoiceTableForEncryption extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->text('amount')->change();
-            $table->text('gst')->change();
+            $table->decimal('conversion_rate', 10, 2)->nullable()->after('conversion_rate_diff');
         });
     }
 
@@ -27,8 +26,7 @@ class UpdateInvoiceTableForEncryption extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->decimal('amount', 10, 2)->change();
-            $table->decimal('gst', 10, 2)->change();
+            $table->dropColumn(['conversion_rate']);
         });
     }
 }

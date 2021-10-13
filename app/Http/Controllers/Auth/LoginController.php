@@ -52,11 +52,9 @@ class LoginController extends Controller
                     ->with(['access_type' => 'offline',  'hd' => config('constants.gsuite.client-hd'), 'prompt' => 'consent select_account'])
                     ->scopes([Google_Service_Calendar::CALENDAR])
                     ->redirect();
-                break;
 
             default:
                 return Socialite::driver($provider)->redirect();
-                break;
         }
     }
 
@@ -71,7 +69,7 @@ class LoginController extends Controller
         $user = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
 
-        if ($authUser && $authUser->trashed()) {
+        if ($authUser->trashed()) {
             return redirect('login');
         }
 

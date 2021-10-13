@@ -41,7 +41,6 @@ class InfrastructureController extends Controller
      */
     public function create()
     {
-        return view('infrastructure::create');
     }
 
     /**
@@ -50,7 +49,6 @@ class InfrastructureController extends Controller
      */
     public function show($id)
     {
-        return view('infrastructure::show');
     }
 
     /**
@@ -59,6 +57,5 @@ class InfrastructureController extends Controller
      */
     public function edit($id)
     {
-        return view('infrastructure::edit');
     }
 }

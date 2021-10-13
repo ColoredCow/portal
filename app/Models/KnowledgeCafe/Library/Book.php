@@ -115,11 +115,9 @@ class Book extends Model
         switch ($size) {
             case 'medium':
                 return str_replace_first('zoom=1', 'zoom=2', $this->thumbnail);
-                break;
 
             case 'large':
                 return str_replace_first('zoom=1', 'zoom=3', $this->thumbnail);
-                break;
 
             default:
                 return $this->thumbnail;

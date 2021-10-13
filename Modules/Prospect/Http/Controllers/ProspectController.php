@@ -53,7 +53,7 @@ class ProspectController extends Controller
     {
         return redirect(route('prospect.edit', [$id, 'overview']));
 
-        return view('prospect::show', $this->service->show($id, $section));
+        // return view('prospect::show', $this->service->show($id, $section));
     }
 
     /**
