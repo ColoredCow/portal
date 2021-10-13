@@ -128,4 +128,11 @@ class User extends Authenticatable
     {
         return optional($this->meta()->key($metaKey)->first())->meta_value;
     }
+
+    public static function scopeWantsEffortSummary($query)
+    {
+        return $query->whereHas('meta', function ($query) {
+            $query->where('meta_key', 'receive_daily_effort_summary')->where('meta_value', 'yes');
+        });
+    }
 }
