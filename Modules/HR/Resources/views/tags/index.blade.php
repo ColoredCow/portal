@@ -29,7 +29,13 @@
                         @csrf
                         @method('DELETE')
                         <a title="Edit" class="pr-1 btn btn-link" href="{{ route('hr.tags.edit', $tag) }}"><i class="text-success fa fa-edit fa-lg"></i></a>
-                        <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
+                        @if($tag->name==config('hr.tags.need-follow-up') or $tag->name==config('hr.tags.no-show') or $tag->name==config('hr.tags.no-show-reminded') or $tag->name==config('hr.tags.in-progress') or $tag->name==config('hr.tags.awaiting-confirmation') or $tag->name==config('hr.tags.new-application'))
+                        <span class="tooltip-wrapper" title="You cannot delete a tag used by the system">
+                            <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')" disabled><i class="text-danger fa fa-trash fa-lg"></i></button>
+                        </span>
+                        @else    
+                            <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
+                        @endif
                     </form>
                 </td>
             </tr>
