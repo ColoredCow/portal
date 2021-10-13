@@ -148,14 +148,17 @@
                             @php
                                 $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
                                 $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
+                                $assigneeSorted = $assignee::all()->sortBy('name');
                             @endphp
+                               @endforeach
+                            @foreach ( $assigneeSorted as $assigneeSorted)
                             <a class="dropdown-item" href="{{ $target }}">
                                 <i class="fa fa-check fz-12 {{ $class }}"></i>
-                                <img src="{{ $assignee->avatar }}" alt="{{ $assignee->name }}"
+                                <img src="{{ $assignee->avatar }}" alt="{{ $assigneeSorted->name }}"
                                     class="w-20 h-20 rounded-circle mr-1">
-                                <span>{{ $assignee->name }}</span>
+                                <span>{{ $assigneeSorted->name }}</span>
                             </a>
-                        @endforeach
+                            @endforeach 
                     </div>
                 </th>
                 <th>
