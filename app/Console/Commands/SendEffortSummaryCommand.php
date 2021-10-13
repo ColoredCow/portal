@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\DailyEffortSummary;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 use Modules\User\Entities\User;
 
 class SendEffortSummaryCommand extends Command
@@ -38,7 +40,11 @@ class SendEffortSummaryCommand extends Command
      */
     public function handle()
     {
-        $recipients = User::wantsEffortSummary()->pluck('email');
+        $recipients = User::wantsEffortSummary()->get();
+
+        foreach ($recipients as $recipient) {
+            Mail::to($recipient->email)->send(new DailyEffortSummary($recipient));
+        }
 
         $this->info('Effort summary sent successfully.');
 
