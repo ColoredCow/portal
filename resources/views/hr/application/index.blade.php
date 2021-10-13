@@ -158,7 +158,7 @@
                                     class="w-20 h-20 rounded-circle mr-1">
                                 <span>{{ $assigneeSorted->name }}</span>
                             </a>
-                            @endforeach 
+                            @endforeach  
                     </div>
                 </th>
                 <th>
