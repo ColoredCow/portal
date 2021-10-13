@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Storage;
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\HR\Events\Recruitment\ApplicationCreated;
 use Modules\User\Entities\User;
+use Modules\HR\Database\Factories\HrApplicationsFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Application extends Model
 {
     use HasTags;
+    use HasFactory;
 
     protected $guarded = ['id'];
 
@@ -85,6 +88,10 @@ class Application extends Model
         event(new ApplicationCreated($application));
 
         return $application;
+    }
+    public static function newFactory()
+    {
+        return new HrApplicationsFactory();
     }
 
     /**

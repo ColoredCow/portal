@@ -4,9 +4,8 @@ namespace Modules\HR\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Entities\Application;
 
-class HrApplicationsTableSeeder extends Seeder
+class HrJobsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,8 +14,8 @@ class HrApplicationsTableSeeder extends Seeder
      */
     public function run()
     {
-        Application::factory()
-            ->count(2)
-            ->create();
+        Model::unguard();
+
+        // $this->call("OthersTableSeeder");
     }
 }

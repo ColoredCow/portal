@@ -14,13 +14,9 @@ class HrApplicantsTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        //Model::unguard();
-        
+    { 
         Applicant::factory()
             ->count(2)
             ->create();
-
-        //Model::reguard();
     }
 }
