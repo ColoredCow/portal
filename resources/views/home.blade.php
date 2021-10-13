@@ -15,11 +15,11 @@
         </div>
         @endif
 
-        @if(Module::checkStatus('Project') && auth()->user()->can('projects.view'))
+        @can('projects.view')
         <div class="min-w-389">
             <user-dashboard-projects />
         </div>
-        @endif
+        @endcan
 
         @if(Module::checkStatus('Invoice') && auth()->user()->can('invoice.view'))
         <div class="mr-5 min-w-389">
