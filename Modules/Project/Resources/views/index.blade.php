@@ -19,9 +19,11 @@
                 </select>
             </form>
         </div>
+        @can('projects.create')
         <span>
             <a  href= "{{ route('project.create') }}" class="btn btn-info text-white"> Add new project</a>
         </span>
+        @endcan
     </div>
 
     <div>
@@ -36,9 +38,14 @@
                 </tr>
             </thead>
             <tbody>
+                @can('projects.view')
                 @forelse($projects as $project)
                     <tr>
+                        @can('projects.edit')
                         <td> <a href="{{ route('project.edit', $project) }}">{{ $project->name }}</a> </td>
+                        @else
+                        <td> {{ $project->name }} </td>
+                        @endcan
                         <td> {{ $project->client_project_id }} </td>
                         <td>{{ $project->client->name }}</td>
                         <td>
@@ -59,6 +66,13 @@
                         <td>
                     </tr>
                 @endforelse
+                @else
+                <tr>
+                    <td colspan="3"> 
+                        <p class="my-4 text-left"> You don't have permission to see projects.</p>  
+                    <td>
+                </tr>
+                @endcan
             </tbody>
         </table>
 
