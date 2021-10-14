@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Project\Console;
+namespace App\Console\Commands;
 
 use App\Mail\DailyEffortSummary;
 use Illuminate\Console\Command;

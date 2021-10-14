@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Project\Console\SyncEffortsheet;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        SyncEffortsheet::class,
+        SendEffortSummaryCommand::class
     ];
 
     /**
@@ -27,6 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('application:no-show')->everyThirtyMinutes();
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
         $schedule->command('sync:effortsheet')->weekdays()->timezone(config('constants.timezone.indian'))->at('20:00');
+        $schedule->command('effort-summary:send')->weekdays()->timezone(config('constants.timezone.indian'))->at('20:00');
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');

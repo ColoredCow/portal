@@ -3,6 +3,7 @@
 namespace Modules\User\Entities;
 
 use App\Models\KnowledgeCafe\Library\Book;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -140,5 +141,24 @@ class User extends Authenticatable
     public function projectTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id');
+    }
+
+    public function getMonthTotalEffortAttribute()
+    {
+        if (! $this->projectTeamMembers->first()) {
+            return false;
+        }
+
+        $totalEffort = 0;
+
+        foreach ($this->projectTeamMembers as $projectTeamMember) {
+            $projectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()->orderBy('added_on', 'desc')->first();
+
+            if ($projectTeamMemberEffort and Carbon::parse($projectTeamMemberEffort->added_on)->format('Y-m') == Carbon::now()->format('Y-m')) {
+                $totalEffort += $projectTeamMemberEffort->total_effort_in_effortsheet;
+            }
+        }
+
+        return $totalEffort;
     }
 }
