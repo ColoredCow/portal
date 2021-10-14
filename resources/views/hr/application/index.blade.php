@@ -57,19 +57,8 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Status:</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="sel1">
-                                <option>New application</option>
-                                <option>In progress</option>
-                                <option>Awaiting confirmation</option>
-                                <option>Need follow up</option>
-                                <option>Sent for approval</option>
-                                <option>Approved</option>
-                                <option>No show reminded</option>
-                                <option>Onboarded</option>
-                                <option>Closed</option>
-                            </select>
+                            <job-application-component :options="options"></job-application-component>    
                         </div>
                     </div>
                 </form>     
