@@ -29,13 +29,17 @@
                     <input type="date" name="end_date" disabled="disabled" value="{{ $endDate->toDateString() }}">
                 </div>
             </div>
-            <div class="mt-4">
-                <input type="hidden" name="team_members_effort" value="{{$teamMembersEffort}}">
-                <input type="hidden" name="workingDays" value="{{$workingDays}}">
-                <input type="hidden" name="users" value="{{$users}}">
-                <input type="hidden" name="totalWorkingDays" value="{{$totalWorkingDays}}">
-                <canvas class="w-full" id="effortTrackingGraph"></canvas>
-            </div>
+            @if($teamMembersEffort === 0)
+                <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>
+            @else
+                <div class="mt-4">
+                    <input type="hidden" name="team_members_effort" value="{{$teamMembersEffort}}">
+                    <input type="hidden" name="workingDays" value="{{$workingDays}}">
+                    <input type="hidden" name="users" value="{{$users}}">
+                    <input type="hidden" name="totalWorkingDays" value="{{$totalWorkingDays}}">
+                    <canvas class="w-full" id="effortTrackingGraph"></canvas>
+                </div>
+            @endif
         </div>
     </div>
 </div>
