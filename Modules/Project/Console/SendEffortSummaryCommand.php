@@ -46,7 +46,7 @@ class SendEffortSummaryCommand extends Command
             if ($recipient->month_total_effort === false) {
                 continue;
             }
-            Mail::to($recipient->email)->send(new DailyEffortSummary($recipient));
+            Mail::to($recipient->email)->queue(new DailyEffortSummary($recipient));
         }
 
         $this->info('Effort summary sent successfully.');
