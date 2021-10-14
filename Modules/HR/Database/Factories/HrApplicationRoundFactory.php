@@ -3,19 +3,19 @@
 namespace Modules\HR\Database\Factories;
 
 use Carbon\Carbon;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Application;
-use Modules\HR\Entities\Applicant;
-use Modules\HR\Entities\Job;
+use Modules\HR\Entities\Round;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class HrApplicationsFactory extends Factory
+class HrApplicationRoundFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Application::class;
+    protected $model = ApplicationRound::class;
 
     /**
      * Define the model's default state.
@@ -25,13 +25,12 @@ class HrApplicationsFactory extends Factory
     public function definition()
     {
         return [
-            'hr_applicant_id' => function () {
-                return Applicant::factory()->create()->id;
+            'hr_application_id' => function () {
+                return Application::factory()->create()->id;
             },
-            'hr_job_id' => function () {
-                return Job::factory()->create()->id;
-            },
-            'status' => array_rand(config('hr.status'))
+            'hr_round_id' =>  function () {
+                return Round::first()->id;
+            }
         ];
     }
 }

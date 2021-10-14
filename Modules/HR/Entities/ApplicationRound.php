@@ -13,10 +13,13 @@ use Modules\HR\Emails\Recruitment\SendForApproval;
 use Modules\HR\Emails\Recruitment\SendOfferLetter;
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\User\Entities\User;
+use Modules\HR\Database\Factories\HrApplicationRoundFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationRound extends Model
 {
     use HasTags, HasCalendarMeetings;
+    use HasFactory;
 
     protected $guarded = [];
 
@@ -29,6 +32,11 @@ class ApplicationRound extends Model
         'conducted_date',
     ];
 
+    public static function newFactory()
+    {
+        return new HrApplicationRoundFactory();
+    }
+    
     public function _update($attr)
     {
         // TODO: the fillable definition below need to be put somewhere else.
