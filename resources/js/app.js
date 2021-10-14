@@ -1088,6 +1088,15 @@ $("#job_end_date").on("change", function(){
 	$("#job_start_date").attr("max", endDate);
 });
 
+$(document).ready(function(){
+	var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+	removeItemButton: true,
+	maxItemCount:9,
+	searchResultLimit:9,
+	renderChoiceLimit:9
+	});
+});
+
 /*
    * HR Module JS code end
    */
