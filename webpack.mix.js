@@ -17,6 +17,8 @@ mix.mergeManifest();
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
 mix.js('Modules/HR/Resources/assets/js/app.js', 'public/js/hr.js')
-    .sass('Modules/HR/Resources/assets/sass/app.scss', 'public/css/hr.css');
+   .sass('Modules/HR/Resources/assets/sass/app.scss', 'public/css/hr.css');
+mix.js('Modules/EffortTracking/Resources/assets/js/app.js', 'public/js/efforttracking.js')
+   .sass('Modules/EffortTracking/Resources/assets/sass/app.scss', 'public/css/efforttracking.css');
 
 mix.version();
