@@ -35,5 +35,3 @@ class HrApplicationsFactory extends Factory
         ];
     }
 }
-
-

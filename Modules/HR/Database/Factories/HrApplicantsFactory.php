@@ -33,4 +33,3 @@ class HrApplicantsFactory extends Factory
         ];
     }
 }
-

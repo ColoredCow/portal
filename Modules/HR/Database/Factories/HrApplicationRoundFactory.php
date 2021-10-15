@@ -34,5 +34,3 @@ class HrApplicationRoundFactory extends Factory
         ];
     }
 }
-
-

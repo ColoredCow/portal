@@ -14,7 +14,7 @@ class HrApplicantsTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    { 
+    {
         Applicant::factory()
             ->count(2)
             ->create();

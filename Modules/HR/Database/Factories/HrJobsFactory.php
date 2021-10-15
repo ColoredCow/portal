@@ -30,5 +30,3 @@ class HrJobsFactory extends Factory
         ];
     }
 }
-
-
