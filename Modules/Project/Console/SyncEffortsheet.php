@@ -54,8 +54,13 @@ class SyncEffortsheet extends Command
 
             $matchesId = [];
             $matchesSheetId = [];
-            preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetURL, $matchesId);
-            preg_match('/gid=([0-9]+)/', $effortSheetURL, $matchesSheetId);
+
+            $matchesSheetId = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetURL, $matchesId);
+            $matchesSubsheetId = preg_match('/gid=([0-9]+)/', $effortSheetURL, $matchesSheetId);
+
+            if (! $matchesSheetId || ! $matchesSubsheetId) {
+                continue;
+            }
 
             $sheetId = $matchesId[1];
             $subSheetID = $matchesSheetId[1];
