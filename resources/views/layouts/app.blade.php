@@ -13,8 +13,9 @@
     <link rel="icon" href="{{ asset('favicon.png') }}" sizes="32x32" />
 
     <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('css_scripts')
     
     <!-- Reports -->
@@ -122,6 +123,5 @@
             }
         });
     </script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 </body>
 </html>
