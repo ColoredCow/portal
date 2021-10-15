@@ -29,6 +29,4 @@ class HrJobsFactory extends Factory
             'status' => array_rand(config('hr.status')),
         ];
     }
-
-
 }
