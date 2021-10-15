@@ -5,7 +5,7 @@
 <div class="chart-container" align="center">
     <div class="bar-chart-container">
         <h2 align="left">Analytics</h2>
-        <form action="{{route('recruitment.reports')}}" method="POST" align="right">
+        <form action="{{route('recruitment.report')}}" method="POST" align="right">
             {{csrf_field()}}
             <input type="date" name="report_start_date" id='StartDate'> to
             <input type="date" name="report_end_date" id="EndDate">

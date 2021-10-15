@@ -3,37 +3,26 @@
 namespace Modules\EffortTracking\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Modules\EffortTracking\Services\EffortTrackingService;
+use Modules\Project\Entities\Project;
 
 class EffortTrackingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return view('efforttracking::index');
-    }
+    protected $service;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function __construct(EffortTrackingService $service)
     {
+        $this->service = $service;
     }
 
     /**
      * Show the specified resource.
-     * @param int $id
+     * @param Project $project
      */
-    public function show($id)
+    public function show(Project $project)
     {
-    }
+        $data = $this->service->show($project);
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     */
-    public function edit($id)
-    {
+        return view('efforttracking::show')->with($data);
     }
 }

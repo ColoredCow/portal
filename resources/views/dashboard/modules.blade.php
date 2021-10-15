@@ -53,9 +53,9 @@
                 @if(Module::checkStatus('Client') && auth()->user()->can('clients.view'))
                     <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
                 @endif
-                @if(Module::checkStatus('Project') && auth()->user()->can('project.view'))
+                @can('projects.view')
                     <a class="dropdown-item" href="{{ route('project.index') }}">Projects</a>
-                @endif
+                @endcan
             </div>
         </li>
     @endif
