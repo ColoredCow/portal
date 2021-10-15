@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Round;
+use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HrApplicationRoundFactory extends Factory
@@ -30,7 +31,11 @@ class HrApplicationRoundFactory extends Factory
             },
             'hr_round_id' =>  function () {
                 return Round::first()->id;
-            }
+            },
+            'scheduled_person_id' =>  function () {
+                return User::first()->id;
+            },
         ];
     }
+
 }

@@ -32,4 +32,5 @@ class HrApplicantsFactory extends Factory
             'linkedin' => $this->faker->url
         ];
     }
+    
 }
