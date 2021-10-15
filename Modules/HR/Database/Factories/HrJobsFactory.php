@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Carbon\Carbon;
 use Modules\HR\Entities\Job;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

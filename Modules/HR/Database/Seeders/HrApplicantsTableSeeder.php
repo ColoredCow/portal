@@ -3,7 +3,6 @@
 namespace Modules\HR\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Entities\Applicant;
 
 class HrApplicantsTableSeeder extends Seeder

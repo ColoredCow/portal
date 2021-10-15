@@ -35,8 +35,7 @@ class ApplicationRound extends Model
     public static function newFactory()
     {
         return new HrApplicationRoundFactory();
-    }
-    
+    } 
     public function _update($attr)
     {
         // TODO: the fillable definition below need to be put somewhere else.
