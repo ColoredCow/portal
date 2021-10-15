@@ -25,7 +25,7 @@
                     <input v-model="contactPerson.email" autocomplete="nope"  class="form-control" type="email" :name="`client_contact_persons[${index}][email]`">
                 </div>
                 <div class="col-2">
-                    <input v-model="contactPerson.phone"  class="form-control" type="tel" :name="`client_contact_persons[${index}][phone]`">
+                    <input v-model="contactPerson.phone"  class="form-control" type="tel" :name="`client_contact_persons[${index}][phone]`" pattern="[6-9]{1}[0-9]{9}" title="The phone must be valid 10 digit, starting with 6,7 or 9">
                 </div>
                 <div class="col-4 d-flex justify-content-between">
                     <div class="mr-3 w-full">
