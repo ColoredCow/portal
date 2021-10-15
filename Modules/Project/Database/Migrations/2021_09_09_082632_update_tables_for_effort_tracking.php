@@ -22,6 +22,7 @@ class UpdateTablesForEffortTracking extends Migration
         Schema::rename('project_resources', 'project_team_members');
 
         Schema::table('project_team_members', function (Blueprint $table) {
+            $table->dropForeign('project_resources_resource_id_foreign');
             $table->renameColumn('resource_id', 'team_member_id');
             $table->timestamp('started_on')->after('designation');
             $table->timestamp('ended_on')->nullable()->after('started_on');
