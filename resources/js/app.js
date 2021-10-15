@@ -1094,8 +1094,8 @@ $(document).ready(function(){
 		maxItemCount:9,
 		searchResultLimit:9,
 		renderChoiceLimit:9
-		});
 	});
+});
 
 /*
    * HR Module JS code end
