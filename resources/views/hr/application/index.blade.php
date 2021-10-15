@@ -1,59 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="vueContainer">
     <br>
     @include('hr.menu')
     <br>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
             <h1>Applications</h1>
-        </div>
-        <div class="col-md-6 text-right">
-            <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
-            <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
-        </div>
-    </div>
-        <div class="input-group col-md-6 align-self-center">
+        </div>   
+        <div class="input-group mb-3 col-md-6" style="display: flex;">
             <form method="GET" action="/{{ Request::path() }}">  
                 <input type="hidden" name="status" class="form-control" id="search"
                     value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
     
                 <input type="hidden" name="round" class="form-control" id="search"
                     value=@if(request()->has('round')){{request()->get('round')}}@endif>
-                    {{-- <div class="input-group-prepend">
-                        <span>{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
-                    </div> --}}
-                    <input
-                        type="text" name="search" class="form-control w-300" id="search" placeholder="Enter a keyword"
-                        value= @if(request()->has('search')){{request()->get('search')}}@endif>
-                    {{-- <div class="input-group-append">
-                        <span>{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
-                    </div>  --}}
+                    <input type="text" name="search" class="form-control w-300" id="search" placeholder="Enter a keyword"
+                    value= @if(request()->has('search')){{request()->get('search')}}@endif>
             </form>
-            {{-- <div class="input-group-append">
-                <span>{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
-            </div> --}}
-            <div class="col-md-2 align-self-center">    
+            <div class="input-group-append">
+                <button class="funnel-icon-button">
+                <span class="funnel-icon" data-toggle="modal" data-target="#myModal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+                </button>
+            </div>   
+            <div class="col-md-2 align-self-center">   
                 <button class="btn btn-info ml-2">Search</button>
             </div>
-            <div class="input-group-append">
-                <span class="funnel-icon" data-toggle="modal" data-target="#myModal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
-            </div> 
         </div>
-  
-  <!-- The Modal -->
+        <div class="text-right">
+            <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
+        </div>
+        <div class="row mt-4">
+            <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">  
+                <input type="hidden" name="status" class="form-control" id="search"
+                    value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
+            </form>
+        </div>
     <div class="modal job-application-modal" id="myModal">
         <div class="modal-dialog">
-        <div class="modal-content">
-    
-            <!-- Modal Header -->
-            <div class="modal-header">
-            <h4 class="modal-title">Filter By</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-    
-            <!-- Modal body -->
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title">Filter By</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
@@ -63,33 +53,28 @@
                     </div>
                 </form>     
             </div>
-    
-            <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Apply</button>
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-primary" disabled data-dismiss="modal">Apply(Coming Soon)</button>
+                <button type="button" class="btn btn-outline-danger" disabled data-dismiss="modal">Close(Coming Soon)</button>
             </div>
-    
-        </div>
-        </div>
-  </div>
-    @if(request()->has('search') || request()->has('tags'))
-    <div class="row mt-3 mb-2">
-        <div class="col-6">
-            <a class="text-muted c-pointer"
-                href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}{{request()->has('round')?'&round='.request('round'):''}}">
-                <i class="fa fa-times"></i>
-                <span>Clear current search and filters</span>
-            </a>
         </div>
     </div>
-    @endif
-    <br>
-    @php
-        $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
-        $search = request()->has('search') ? '&search=' . request('search') : '';
-        $query_filters = $hr_job_id . $search
-    @endphp
+</div>
+@if(request()->has('search') || request()->has('tags'))
+<div class="row mt-3 mb-2">
+    <div class="col-6">
+        <a class="text-muted c-pointer"
+            href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}{{request()->has('round')?'&round='.request('round'):''}}">
+        </a>
+    </div>
+</div>
+@endif
+<br>
+@php
+    $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
+    $search = request()->has('search') ? '&search=' . request('search') : '';
+    $query_filters = $hr_job_id . $search
+@endphp
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
