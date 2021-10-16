@@ -3,7 +3,7 @@
 Before you start following the guidelines, make sure to go through the [prerequisites guide](./prerequisites.md) to install the required tools and packages on your machine.
 
 
-1. Navigate to the right diretory where your project will be locally saved
+1. Navigate to the right directory where your project will be locally saved
     - For WAMP:
         ```sh
         cd C:\wamp64\www\
