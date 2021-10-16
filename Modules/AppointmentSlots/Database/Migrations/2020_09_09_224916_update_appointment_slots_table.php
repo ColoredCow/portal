@@ -29,7 +29,7 @@ class UpdateAppointmentSlotsTable extends Migration
     public function down()
     {
         Schema::table('appointment_slots', function (Blueprint $table) {
-            $table->dropForeign('appointment_slots_parent_appointment_slot_id_foreign');
+            $table->dropForeign(['parent_appointment_slot_id']);
             $table->dropColumn(['recurrence', 'parent_appointment_slot_id', 'deleted_at']);
         });
     }
