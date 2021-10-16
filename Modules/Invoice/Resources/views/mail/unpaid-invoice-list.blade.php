@@ -4,7 +4,7 @@
     <p>Total unpaid invoices: {{ $unpaidInvoices->count() }}</p>
 
     <div>
-        <table style = "border: 1px solid #000; border-collapse: collapse;">
+        <table style="border: 1px solid #000; border-collapse: collapse;">
             <thead>
                 <th>Project name</th>
                 <th>Sent on</th>
@@ -13,10 +13,10 @@
 
             <tbody>
                 @foreach($unpaidInvoices as $invoice)
-                    <tr style = "{{ $invoice->shouldHighlighted()? 'color: red; border-top: 1px solid #000' : 'border-top: 1px solid #000' }}">
-                        <td style = "padding-right: 10px;">{{ $invoice->project->name }}</td>
-                        <td style = "padding-right: 10px;">{{ $invoice->created_at->format(config('invoice.default-date-format')) }}</td>
-                        <td style = "padding-right: 10px;">{{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}</td> 
+                    <tr style='border-top: 1px solid #000'>
+                        <td style="padding-right: 10px;">{{ $invoice->project->name }}</td>
+                        <td style="padding-right: 10px;">{{ $invoice->created_at->format(config('invoice.default-date-format')) }}</td>
+                        <td style="padding-right: 10px; {{ $invoice->shouldHighlighted()? 'color: red; border-top: 1px solid #000' : 'border-top: 1px solid #000' }}">{{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}</td>
                     </tr>
                 @endforeach
             </tbody>
