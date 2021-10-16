@@ -86,9 +86,30 @@
         <div class="modal-body">
             <form>
                 <div class="form-group row">
-
+                    <label class="col-sm-2 col-form-label">Country:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="Country">
+                    </div>
                 </div>
-            </form>     
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Intials:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Currency:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Symbols:</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    </div>
+                </div>    
+            </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Save</button>
