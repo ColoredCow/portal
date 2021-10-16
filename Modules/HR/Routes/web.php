@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
-            Route::post('reports', 'ReportsController@searchBydate')->name('recruitment.reports');
+            Route::post('reports', 'ReportsController@searchBydate')->name('recruitment.report');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
                 ->only(['index', 'create', 'store', 'update', 'edit', 'destroy'])

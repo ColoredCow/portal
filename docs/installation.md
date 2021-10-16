@@ -15,9 +15,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
     - For MAMP(macOS):
         ```sh
         cd /Application/MAMP/htdocs/
-        ```
-note- phpMyAdmin/php, apache and mySql comes preinstalled with the  WAMP, XAMPP package, that is going to be used later on in this project, so no need to install these files 
-separately. 
+    ```
+    Note- phpMyAdmin/PHP, apache, and MySQL comes preinstalled with the  WAMP, XAMPP package, that is going to be used later on in this project, so no need to install these files separately. 
 
 2. Clone this repository and move to `portal` directory
    ```sh
@@ -71,6 +70,7 @@ separately.
     2. Database configurations
     - Create a database in your local server. Check out [this link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog) and skip to 0:21.
     - Configure your Laravel app with the right DB settings. Check out [this link](https://www.youtube.com/watch?v=4geOENi3--M). Relevant parts are 2:00-2:42 and 4:20-5:40.
+    - Read [the story](https://docs.google.com/document/d/1sWj0F2uXkSE9oHBkChv-yC2L7P7qazsPY5sNPC1PIp4/edit) about how the team discussed which video should be in the docs
 
     ```sh
     DB_CONNECTION=mysql

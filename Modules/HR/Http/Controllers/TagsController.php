@@ -23,6 +23,7 @@ class TagsController extends Controller
     {
         $tag = Tag::create([
             'name' => $request['name'],
+            'slug' => str_slug($request['name'], '-'),
             'description' => $request['description'] ?? null,
             'background_color' => $request['color']
         ]);
@@ -40,6 +41,7 @@ class TagsController extends Controller
         $validated = $request->validated();
         $tag->update([
             'name' => $request['name'],
+            'slug' => str_slug($request['name'], '-'),
             'description' => $request['description'] ?? null,
             'background_color' => $request['color']
         ]);
