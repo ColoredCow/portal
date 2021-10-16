@@ -53,17 +53,17 @@ class SyncEffortsheet extends Command
             }
 
             $matchesId = [];
-            $matchesSheetId = [];
-            preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetURL, $matchesId);
-            preg_match('/gid=([0-9]+)/', $effortSheetURL, $matchesSheetId);
+            $matchesSheetId = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetURL, $matchesId);
+
+            if (! $matchesSheetId) {
+                continue;
+            }
 
             $sheetId = $matchesId[1];
-            $subSheetID = $matchesSheetId[1];
             $sheet = new Sheets();
             $projectMembersCount = $project->teamMembers()->count();
             $range = 'C2:G' . ($projectMembersCount + 1); // this will depend on the number of people on the project
             $sheets = $sheet->spreadsheet($sheetId)
-                            ->sheetById($subSheetID)
                             ->range($range)
                             ->get();
 
@@ -72,6 +72,13 @@ class SyncEffortsheet extends Command
                 $portalUser = $users->where('nickname', $userNickname)->first();
 
                 if (! $portalUser) {
+                    continue;
+                }
+
+                $projectMonth = Carbon::create($user[1])->month;
+                $currentMonth = now()->month;
+
+                if ($projectMonth !== $currentMonth) {
                     continue;
                 }
 
