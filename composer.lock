@@ -8594,12 +8594,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:coloredcow-admin/php-whatsappservice.git",
-                "reference": "a4e9212538540b721b0ef461c19dbdaa25cfe5e2"
+                "reference": "1baa6d969838f6fefff30806ef91c8550f4e121f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coloredcow-admin/php-whatsappservice/zipball/a4e9212538540b721b0ef461c19dbdaa25cfe5e2",
-                "reference": "a4e9212538540b721b0ef461c19dbdaa25cfe5e2",
+                "url": "https://api.github.com/repos/coloredcow-admin/php-whatsappservice/zipball/1baa6d969838f6fefff30806ef91c8550f4e121f",
+                "reference": "1baa6d969838f6fefff30806ef91c8550f4e121f",
                 "shasum": ""
             },
             "require": {
@@ -8619,7 +8619,10 @@
                 "laravel": {
                     "providers": [
                         "ColoredCow\\PhpWhatsAppServices\\WhatsAppServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "WhatsAppService": "ColoredCow\\PhpWhatsAppServices\\Facade"
+                    }
                 }
             },
             "autoload": {
@@ -8646,7 +8649,7 @@
                 "source": "https://github.com/coloredcow-admin/php-whatsappservice/tree/fork/laravel",
                 "issues": "https://github.com/coloredcow-admin/php-whatsappservice/issues"
             },
-            "time": "2021-10-17T16:46:23+00:00"
+            "time": "2021-10-17T17:05:04+00:00"
         },
         {
             "name": "composer/ca-bundle",
