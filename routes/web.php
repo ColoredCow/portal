@@ -11,6 +11,8 @@
 |
  */
 
+Route::gupshupWebhook('/gupshup');
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
@@ -62,7 +64,7 @@ Route::middleware('auth')->group(function () {
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
-        ]);
+            ]);
 
         Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
 

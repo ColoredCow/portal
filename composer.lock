@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd2c02776df72f8f879b532743da5524",
+    "content-hash": "883f8bc416ea8adcdbe32412945ebeb2",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -8589,6 +8589,66 @@
             "time": "2021-06-14T14:29:26+00:00"
         },
         {
+            "name": "coloredcow/php-whats-app-services",
+            "version": "dev-fork/laravel",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:coloredcow-admin/php-whatsappservice.git",
+                "reference": "a4e9212538540b721b0ef461c19dbdaa25cfe5e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coloredcow-admin/php-whatsappservice/zipball/a4e9212538540b721b0ef461c19dbdaa25cfe5e2",
+                "reference": "a4e9212538540b721b0ef461c19dbdaa25cfe5e2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/container": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/contracts": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/database": "^5.8|^6.0|^7.0|^8.0",
+                "php": "^7.2.5|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.8|^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "predis/predis": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ColoredCow\\PhpWhatsAppServices\\WhatsAppServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ColoredCow\\PhpWhatsAppServices\\": "src/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pankaj Agrawal",
+                    "email": "pankaj@coloredcow.com"
+                }
+            ],
+            "description": "A package to integrate whatsApp services with your Laravel projects",
+            "support": {
+                "source": "https://github.com/coloredcow-admin/php-whatsappservice/tree/fork/laravel",
+                "issues": "https://github.com/coloredcow-admin/php-whatsappservice/issues"
+            },
+            "time": "2021-10-17T16:46:23+00:00"
+        },
+        {
             "name": "composer/ca-bundle",
             "version": "1.2.10",
             "source": {
@@ -12308,7 +12368,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "bordoni/phpass": 20
+        "bordoni/phpass": 20,
+        "coloredcow/php-whats-app-services": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
