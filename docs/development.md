@@ -21,7 +21,7 @@ When you are working in specified module, create migrations/seeders in the speci
 ## Coding Guidelines and Conventions
 
 1. Naming Conventions
-    1. [Reference 1 ](https://xqsit.github.io/laravel-coding-guidelines/docs/naming-conventions/) 
+    1. [Reference 1](https://xqsit.github.io/laravel-coding-guidelines/docs/naming-conventions/) 
     2. [Reference 2](https://webdevetc.com/blog/laravel-naming-conventions)
 
 2. Database conventions
