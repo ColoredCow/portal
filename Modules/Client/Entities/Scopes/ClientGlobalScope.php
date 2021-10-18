@@ -26,17 +26,6 @@ class ClientGlobalScope implements Scope
                 return method_exists($model, $item);
             });
 
-        $builder->with($relationships->toArray());
-
-        // Skip the authentication if running in the console command.
-        if (app()->runningInConsole()) {
-            return $builder;
-        }
-
-        if (auth()->user()->isSuperAdmin() || auth()->user()->hasRole('client-manager')) {
-            return $builder;
-        }
-
-        return $builder->where('key_account_manager_id', auth()->user()->id);
+        return $builder->with($relationships->toArray());
     }
 }

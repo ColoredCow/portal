@@ -9,8 +9,7 @@
     @include('status', ['errors' => $errors->all()])
     <div class="card">
         <form action="{{ route('projects.store') }}" method="POST" id="form_project">
-
-            {{ csrf_field() }}
+            @csrf
 
             <div class="card-header">
                 <span>Project Details</span>
