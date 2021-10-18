@@ -16,11 +16,11 @@
     
                 <input type="hidden" name="round" class="form-control" id="search"
                     value=@if(request()->has('round')){{request()->get('round')}}@endif>
-                    <input type="text" name="search" class="form-control w-300" id="search" placeholder="Enter a keyword"
+                    <input type="text" name="search" class="form-control w-300" id="search border-right-0 rounded-left" placeholder="Enter a keyword"
                     value= @if(request()->has('search')){{request()->get('search')}}@endif>
             </form>
             <div class="input-group-append">
-                <button class="funnel-icon-button bg-white">
+                <button class="funnel-icon-button bg-white border-left-0 rounded-right">
                 <span class="funnel-icon" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
                 </button>
             </div>   
