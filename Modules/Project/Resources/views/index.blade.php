@@ -41,7 +41,7 @@
                 @can('projects.view')
                 @forelse($projects as $project)
                     <tr>
-                        @can('projects.edit')
+                        @can('projects.update')
                         <td> <a href="{{ route('project.edit', $project) }}">{{ $project->name }}</a> </td>
                         @else
                         <td> {{ $project->name }} </td>
