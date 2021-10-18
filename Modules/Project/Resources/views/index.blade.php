@@ -47,7 +47,7 @@
                         <td> {{ $project->name }} </td>
                         @endcan
                         <td> {{ $project->client_project_id }} </td>
-                        <td>{{ optional($project->client)->name }}</td>
+                        <td>{{ $project->client->name }}</td>
                         <td>
                             <ul class="ml-0 pl-3">
                                 @foreach($project->teamMembers ?:[] as $teamMember)
