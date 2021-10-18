@@ -1,5 +1,5 @@
 <div class="container" id="vueContainer">   
-    <div class="modal job-application-modal" id="myModal">
+    <div class="modal job-application-modal" id="application-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
