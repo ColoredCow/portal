@@ -21,7 +21,7 @@
             </form>
             <div class="input-group-append">
                 <button class="funnel-icon-button">
-                <span class="funnel-icon" data-toggle="modal" data-target="#myModal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+                <span class="funnel-icon" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
                 </button>
             </div>   
             <div class="col-md-2 align-self-center">   
