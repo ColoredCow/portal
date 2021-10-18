@@ -41,13 +41,13 @@
                 @can('projects.view')
                 @forelse($projects as $project)
                     <tr>
-                        @can('projects.edit')
+                        @can('projects.update')
                         <td> <a href="{{ route('project.edit', $project) }}">{{ $project->name }}</a> </td>
                         @else
                         <td> {{ $project->name }} </td>
                         @endcan
                         <td> {{ $project->client_project_id }} </td>
-                        <td>{{ $project->client->name }}</td>
+                        <td>{{ optional($project->client)->name }}</td>
                         <td>
                             <ul class="ml-0 pl-3">
                                 @foreach($project->teamMembers ?:[] as $teamMember)
