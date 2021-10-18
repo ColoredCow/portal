@@ -20,7 +20,7 @@
                     value= @if(request()->has('search')){{request()->get('search')}}@endif>
             </form>
             <div class="input-group-append">
-                <button class="funnel-icon-button">
+                <button class="funnel-icon-button bg-white">
                 <span class="funnel-icon" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
                 </button>
             </div>   
