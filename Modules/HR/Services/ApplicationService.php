@@ -2,9 +2,8 @@
 
 namespace Modules\HR\Services;
 
-use Module;
+//use Module;
 use App\Models\Tag;
-use App\User as AppUser;
 use Modules\HR\Entities\Job;
 use Modules\User\Entities\User;
 use Modules\HR\Entities\Applicant;
