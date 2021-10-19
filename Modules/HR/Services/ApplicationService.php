@@ -73,7 +73,7 @@ class ApplicationService implements ApplicationServiceContract
         $attr['jobs'] = Job::all();
         $attr['tags'] = Tag::orderBy('name')->get();
 
-        if (AppUser::has('User')) {
+        if (User::has('User')) {
             $attr['assignees'] = User::orderBy('name', 'asc')->get();
         }
 
