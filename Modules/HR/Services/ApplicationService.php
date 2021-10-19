@@ -75,6 +75,9 @@ class ApplicationService implements ApplicationServiceContract
         if (User::has('User')) {
             $attr['assignees'] = User::orderBy('name', 'asc')->get();
         }
+        else {
+            return;
+        }
 
         return $attr;
     }
