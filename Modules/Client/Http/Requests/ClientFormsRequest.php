@@ -90,4 +90,17 @@ class ClientFormsRequest extends FormRequest
     {
         return true;
     }
+    
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'client_contact_persons.*.phone.required' => 'Please enter a valid phone number.',
+            'client_contact_persons.*.email.required' => 'Please enter a valid mailing-address.',
+        ];
+    }
 }
