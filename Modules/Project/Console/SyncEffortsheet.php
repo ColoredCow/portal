@@ -3,6 +3,7 @@
 namespace Modules\Project\Console;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
 use Modules\Project\Entities\Project;
 use Modules\User\Entities\User;
@@ -63,9 +64,14 @@ class SyncEffortsheet extends Command
             $sheet = new Sheets();
             $projectMembersCount = $project->teamMembers()->count();
             $range = 'C2:G' . ($projectMembersCount + 1); // this will depend on the number of people on the project
-            $sheets = $sheet->spreadsheet($sheetId)
-                            ->range($range)
-                            ->get();
+
+            try {
+                $sheets = $sheet->spreadsheet($sheetId)
+                                ->range($range)
+                                ->get();
+            } catch (Exception $e) {
+                continue;
+            }
 
             foreach ($sheets as $user) {
                 $userNickname = $user[0];
