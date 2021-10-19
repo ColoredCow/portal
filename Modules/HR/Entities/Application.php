@@ -10,6 +10,8 @@ use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\HR\Events\Recruitment\ApplicationCreated;
 use Modules\User\Entities\User;
 
+use function Complex\asec;
+
 class Application extends Model
 {
     use HasTags;

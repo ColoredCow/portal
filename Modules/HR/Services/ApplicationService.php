@@ -4,6 +4,7 @@ namespace Modules\HR\Services;
 
 use Module;
 use App\Models\Tag;
+use App\User as AppUser;
 use Modules\HR\Entities\Job;
 use Modules\User\Entities\User;
 use Modules\HR\Entities\Applicant;
@@ -72,8 +73,8 @@ class ApplicationService implements ApplicationServiceContract
         $attr['jobs'] = Job::all();
         $attr['tags'] = Tag::orderBy('name')->get();
 
-        if (Module::has('User')) {
-            $attr['assignees'] = User::orderBy('name')->get();
+        if (AppUser::has('User')) {
+            $attr['assignees'] = User::orderBy('name', 'asc')->get();
         }
 
         return $attr;
