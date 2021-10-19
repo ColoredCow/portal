@@ -24,12 +24,8 @@ class HrApplicationsFactory extends Factory
     public function definition()
     {
         return [
-            'hr_applicant_id' => function () {
-                return Applicant::factory()->create()->id;
-            },
-            'hr_job_id' => function () {
-                return Job::factory()->create()->id;
-            },
+            'hr_applicant_id' => Applicant::factory()->create()->id,
+            'hr_job_id' => Job::factory()->create()->id,
             'status' => array_rand(config('hr.status'))
         ];
     }

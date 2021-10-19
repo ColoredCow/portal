@@ -15,9 +15,9 @@ class HRDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        //$this->call(HRPermissionsTableSeeder::class);
+        $this->call(HRPermissionsTableSeeder::class);
         $this->call(HRRoleHasPermissionsTableSeeder::class);
-        //$this->call(VolunteersModuleSeeder::class);
+        $this->call(VolunteersModuleSeeder::class);
         $this->call(HRRoundsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(AddPreparatoryRoundsSeeder::class);

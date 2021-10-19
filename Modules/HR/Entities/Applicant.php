@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Applicant extends Model
 {
-    //use Notifiable;
     use HasFactory;
 
     protected $guarded = [];

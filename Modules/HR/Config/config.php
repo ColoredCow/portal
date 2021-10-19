@@ -130,11 +130,7 @@ return [
         'max-reserved-allowed' => 3,
     ],
     'offer-letters-dir' => [
-        'offer-letters'=> [
-            'pending' => 'Pending',
-            'generated' => 'Generated',
-            'sent' => 'Sent',
-        ],
+        'offer-letters',
         'reasons-for-rejections' => [
             'no-response' => 'No response',
             'skills-mismatch' => 'Skills mismatch',

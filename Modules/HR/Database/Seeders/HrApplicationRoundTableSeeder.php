@@ -17,8 +17,5 @@ class HrApplicationRoundTableSeeder extends Seeder
         ApplicationRound::factory()
             ->count(2)
             ->create();
-
-        $this->call(HrApplicantsTableSeeder::class);
-        $this->call(HrApplicationsTableSeeder::class);
     }
 }

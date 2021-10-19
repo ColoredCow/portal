@@ -11,8 +11,7 @@ use Modules\HR\Database\Factories\HrJobsFactory;
 
 class Job extends Model
 {
-    use SoftDeletes;
-    use HasFactory;
+    use SoftDeletes,HasFactory;
 
     protected $fillable = ['title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post'];
 

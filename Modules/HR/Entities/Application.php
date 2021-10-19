@@ -14,8 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Application extends Model
 {
-    use HasTags;
-    use HasFactory;
+    use HasTags,HasFactory;
 
     protected $guarded = ['id'];
 

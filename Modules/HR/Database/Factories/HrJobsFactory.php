@@ -24,6 +24,8 @@ class HrJobsFactory extends Factory
         return [
             'domain' => array_rand(config('hr.opportunities.domains')),
             'status' => array_rand(config('hr.status')),
+            'type' => config('hr.opportunities.job.type'),
+            'title' =>  config('hr.opportunities.job.title')
         ];
     }
 }

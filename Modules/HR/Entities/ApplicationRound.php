@@ -18,8 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationRound extends Model
 {
-    use HasTags, HasCalendarMeetings;
-    use HasFactory;
+    use HasTags, HasCalendarMeetings,HasFactory;
 
     protected $guarded = [];
 
