@@ -5,7 +5,6 @@ namespace Modules\HR\Entities;
 use App\Services\GSuiteUserService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Modules\HR\Database\Factories\HrApplicantsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
