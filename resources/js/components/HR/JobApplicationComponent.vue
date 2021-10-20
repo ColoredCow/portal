@@ -12,7 +12,7 @@
 </template>
 
 <script>
-	export default {
+export default {
 	data() {
 		return {
 			selected: null,
@@ -26,8 +26,8 @@
 				{ id: "7", name: "No Show Reminded"},
 				{ id: "8", name: "OnBoard"},
 				{ id: "9", name: "Closed"}
-				]
-			};
-		}
-	};
+			]
+		};
+	}
+};
 </script>
