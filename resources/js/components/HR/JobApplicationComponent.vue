@@ -25,7 +25,7 @@
 				{ id: "6", name: "No Show"},
 				{ id: "7", name: "No Show Reminded"},
 				{ id: "8", name: "OnBoard"},
-				{ id: "9", name: "Closed"
+				{ id: "9", name: "Closed"}
 				]
 			};
 		}
