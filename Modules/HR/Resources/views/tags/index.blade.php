@@ -29,13 +29,9 @@
                         @csrf
                         @method('DELETE')
                         <a title="Edit" class="pr-1 btn btn-link" href="{{ route('hr.tags.edit', $tag) }}"><i class="text-success fa fa-edit fa-lg"></i></a>
-                        @if(in_array($tag->name,config('hr.tags')))
-                        <span class="tooltip-wrapper" title="You cannot delete a tag used by the system">
-                            <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')" disabled><i class="text-danger fa fa-trash fa-lg"></i></button>
+                        <span class="tooltip-wrapper" data-toggle="tooltip" title={{ in_array($tag->name,config('hr.tags')) ? 'You cannot delete a tag used by the system' : 'Delete' }}>
+                            <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"  {{ in_array($tag->name,config('hr.tags')) ? 'disabled' : '' }}><i class="text-danger fa fa-trash fa-lg"></i></button>
                         </span>
-                        @else    
-                            <button type="submit" class="pl-1 btn btn-link" onclick="return confirm('Are you sure you want to delete?')"><i class="text-danger fa fa-trash fa-lg"></i></button>
-                        @endif
                     </form>
                 </td>
             </tr>
