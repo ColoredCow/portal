@@ -75,7 +75,8 @@ class SyncEffortsheet extends Command
 
             foreach ($sheets as $user) {
                 $userNickname = $user[0];
-                $portalUser = $users->where('nickname', $userNickname)->first();
+                $portalUsers = clone $users;
+                $portalUser = $portalUsers->where('nickname', $userNickname)->first();
 
                 if (! $portalUser) {
                     continue;
