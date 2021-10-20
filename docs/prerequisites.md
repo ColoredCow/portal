@@ -40,8 +40,83 @@ php -v
 # output should be something like
 # PHP 7.4.21 (cli) (built: Aug  5 2021 15:34:00) ( NTS )
 ```
+### 3. Steps on how to connect to MySQL database in your PHPMyAdmin:running:
+Before you start building PHP connection to MySQL database you need to know what PHPMyAdmin is. It’s a control panel from where you can manage the database that you’ve created. 
 
-### 3. Composer :running:
+1. Open your browser and go to localhost/PHPMyAdmin.
+
+2. When you first installed XAMPP/WAMP, it only created the username for it to be accessed, you now have to add a password to it by yourself. For this, you have to go to User account.
+
+3. Now click Edit privileges and go to Change Admin password, type your password there and save it. Remember this password as it will be used to connect to your Database.
+
+Note: It is not necessary to change the password to access databases on the localhost. It is a good practice and that is why we have used a password.(For this poject, it is not necessary to have one).
+
+4. Create Database - 
+Now return to the homepage of PHPMyAdmin. Click the New button to create a new database.
+
+5. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
+
+6. The newly created database will be empty now, as there are no tables in it.
+
+7. Create a Folder in htdocs -
+Now, locate the folder where you installed XAMPP and open the htdocs folder (usually c:/xampp). Create a new folder inside c:/xampp/htdocs/ and name it “portal” we will place web files in this folder. 
+
+- Why we have created a folder in htdocs? 
+  - XAMPP uses folders in htdocs to execute and run your PHP sites.
+
+- For WAMP - Add your practice folder in c:/wamp/www folder.
+
+8. Open the .env file in your project and you will see the following code
+    sh
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=portal
+    DB_USERNAME=root
+    DB_PASSWORD=
+    
+    *Note:* Use the default values for MySQL database in `.env` file
+    
+    DB_USERNAME=root
+    DB_PASSWORD=
+    
+  1. DB_HOST will be the host where your server is running it is usually localhost.
+  2. DB_USERNAME will be the username i.e. root and DB_PASSWORD will be the password which is the same that you used to access your PHPMyAdmin. By default, the password field will be empty when you will first start your PHPMyAdmin.
+  3. DB_DATABAS will be the name of your database which we have created in this project.
+
+9. For both XAMP and WAMP:
+  If you’re asked to log in into your PHPMyAdmin, use the username “root” and enter your root password. If you haven’t set one yet, you can leave it blank.
+  
+  For MAMP: 
+  Name: This is the host name. The default host is ‘localhost’.
+
+  Username: This is your MySQL username. Your MySQL username will be ‘root’ if you have not changed the default username setup in MAMP PRO.
+
+  Password: This is your MySQL password.Your MySQL username password will be ‘root’ if you have not changed the default password setup in MAMP PRO.
+
+### 4. (Optional) If you are using TablePlus :running:
+
+TablePlus is an easy-to-use database manager for Windows and Mac.
+
+1. Download and Install TablePlus.
+  - For Mac - [Download TablePlus](https://tableplus.com/release/osx/tableplus_latest)
+  - For Windows - [Download TablePlus](https://tableplus.com/release/windows/tableplus_latest)
+
+2. Find Local Database Information -
+We’ll need to copy several lines of information from Local into TablePlus. Open the site you want to connect to and click on the Database tab.
+
+Note: Make sure you have started the site in Local in order for TablePlus to properly connect. Keep Local running while you’re using TablePlus.
+
+3. Create a New Connection - 
+Choose “Create a new connection…” then pick MySQL and click Create.
+
+4. Copy the host, socket, database name, username, and password into the MySQL Connection window.
+
+5. Check “Use socket” before copying the socket details.
+
+6. After copying your site details from Local, click “Test”. You should see several green fields if the connection was established successfully. If so, click “Connect” and start editing!
+
+### 5. Composer :running:
 
 For MacOS:
 - [Composer v2.0](https://getcomposer.org/download)
@@ -59,7 +134,7 @@ composer --version
 # Composer version 2.1.6 2021-08-19 17:11:08
 ```
 
-### 4. Nodejs :running:
+### 6. Nodejs :running:
 For (Windows, Ubuntu, macOS)
 - [Nodejs v14 or higher](https://nodejs.org/en/download/).
 After you've successfully installed, you can verify the installation using:
@@ -73,7 +148,7 @@ node -v
 #v14.17.6
 ```
 
-### 5. Code Formatter :butterfly:
+### 7. Code Formatter :butterfly:
 
 Install the following extensions and packages based on the code editor you use:
 
