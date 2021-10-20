@@ -45,6 +45,7 @@ Vue.component(
 	  require("./components/Dashboard/UserDahboardInfrastructure.vue").default
 );
 Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDahboardInvocie.vue").default);
+Vue.component("job-application-component",require("./components/HR/JobApplicationComponent.vue").default);
   
 if (Vue) {
 	  Vue.filter("str_limit", function(value, size) {
