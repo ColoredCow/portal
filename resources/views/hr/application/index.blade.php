@@ -10,22 +10,21 @@
             <h1>Applications</h1>
         </div>   
         <div class="input-group mb-3 col-md-6">
-            <form method="GET" action="/{{ Request::path() }}">  
-                <input type="hidden" name="status" class="form-control" id="search"
-                    value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
-    
-                <input type="hidden" name="round" class="form-control" id="search"
-                    value=@if(request()->has('round')){{request()->get('round')}}@endif>
-                    <input type="text" name="search" class="form-control w-300" id="search border-right-0 rounded-left" placeholder="Enter a keyword"
-                    value= @if(request()->has('search')){{request()->get('search')}}@endif>
-            </form>
-            <div class="input-group-append">
-                <button class="funnel-icon-button bg-white border-left-0 rounded-right">
-                <span class="funnel-icon" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+        <form method="GET" action="/{{ Request::path() }}">
+            <input type="hidden" name="status" class="form-control" id="search"
+            value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
+            <input type="hidden" name="round" class="form-control" id="search"
+            value=@if(request()->has('round')){{request()->get('round')}}@endif>
+            <div class="input-group mb-3 col-md-12">
+                <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-label="Recipient's username" aria-describedby="button-addon2"
+                value= @if(request()->has('search')){{request()->get('search')}}@endif>
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                    <span class="funnel-icon" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
                 </button>
-            </div>   
-            <div class="col-md-2 align-self-center">   
-                <button class="btn btn-info ml-2">Search</button>
+            </div>
+        </form>
+            <div class="col-lg-2 align-self-center">    
+                <button class="btn btn-info">Search</button>
             </div>
         </div>
         <div class="text-right">
