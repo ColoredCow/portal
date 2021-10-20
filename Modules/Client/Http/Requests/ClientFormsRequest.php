@@ -99,8 +99,8 @@ class ClientFormsRequest extends FormRequest
     public function messages()
     {
         return [
-            'client_contact_persons.*.phone.required' => 'Please enter a valid phone number.',
-            'client_contact_persons.*.email.required' => 'Please enter a valid mailing-address.',
+            'client_contact_persons.*.phone.*' => 'Please enter a valid phone number.',
+            'client_contact_persons.*.email.*' => 'Please enter a valid mailing-address.',
         ];
     }
 }
