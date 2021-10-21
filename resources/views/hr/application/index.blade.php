@@ -14,7 +14,7 @@
             <input type="hidden" name="status" class="form-control" id="search"
             value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
             <input type="hidden" name="round" class="form-control" id="search"
-            value=@if(request()->has('round')){{request()->get('round')}}@endif>
+            value= @if(request()->has('round')){{request()->get('round')}}@endif>
             <div class="input-group mb-3 col-md-12">
                 <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-label="Recipient's username" aria-describedby="button-addon2"
                 value= @if(request()->has('search')){{request()->get('search')}}@endif>
