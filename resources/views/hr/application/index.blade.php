@@ -19,7 +19,7 @@
                 <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-label="Recipient's username" aria-describedby="button-addon2"
                 value= @if(request()->has('search')){{request()->get('search')}}@endif>
                 <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-                    <span class="funnel-icon" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+                    <span class="funnel-icon d-inline" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
                 </button>
             </div>
         </form>
