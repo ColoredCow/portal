@@ -105,7 +105,15 @@ class EffortTrackingService
                     }
                 }
             }
-            $total_effort_in_effortsheet = empty($teamMembersEffort) ? 0 : end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'];
+            if (empty($teamMembersEffort)) {
+                $total_effort_in_effortsheet = 0;
+            } else {
+                if (array_key_exists($userDetails->id, $teamMembersEffort) && is_array($teamMembersEffort[$userDetails->id])) {
+                    $total_effort_in_effortsheet = end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'];
+                } else {
+                    $total_effort_in_effortsheet = 0;
+                }
+            }
             $users[] = [
                 'id' => $userDetails->id,
                 'name' => $userDetails->name,
