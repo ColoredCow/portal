@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationRound extends Model
 {
-    use HasTags, HasCalendarMeetings,HasFactory;
+    use HasTags, HasCalendarMeetings, HasFactory;
 
     protected $guarded = [];
 
@@ -35,6 +35,7 @@ class ApplicationRound extends Model
     {
         return new HrApplicationRoundFactory();
     }
+    
     public function _update($attr)
     {
         // TODO: the fillable definition below need to be put somewhere else.
