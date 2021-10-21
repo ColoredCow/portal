@@ -82,7 +82,7 @@ Now, locate the folder where you installed XAMPP and open the htdocs folder (usu
     
   1. DB_HOST will be the host where your server is running it is usually localhost.
   2. DB_USERNAME will be the username i.e. root and DB_PASSWORD will be the password which is the same that you used to access your PHPMyAdmin. By default, the password field will be empty when you will first start your PHPMyAdmin.
-  3. DB_DATABAS will be the name of your database which we have created in this project.
+  3. DB_DATABASE will be the name of your database which we have created in this project.
 
 9. For both XAMP and WAMP:
   If you’re asked to log in into your PHPMyAdmin, use the username “root” and enter your root password. If you haven’t set one yet, you can leave it blank.
@@ -90,9 +90,9 @@ Now, locate the folder where you installed XAMPP and open the htdocs folder (usu
   For MAMP: 
   Name: This is the host name. The default host is ‘localhost’.
 
-  Username: This is your MySQL username. Your MySQL username will be ‘root’ if you have not changed the default username setup in MAMP PRO.
+  Username: This is your MySQL username. Your MySQL username will be ‘root’ if you have not changed the default username setup in MAMP.
 
-  Password: This is your MySQL password.Your MySQL username password will be ‘root’ if you have not changed the default password setup in MAMP PRO.
+  Password: This is your MySQL password.Your MySQL username password will be ‘root’ if you have not changed the default password setup in MAMP.
 
 ### 4. (Optional) If you are using TablePlus :running:
 
