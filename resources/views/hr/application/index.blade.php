@@ -216,5 +216,4 @@
     {{ $applications->links() }}
 </div>
 
-@include('hr.application.excel-import')
 @endsection
