@@ -15,6 +15,5 @@ class CountryController extends ModuleBaseController
         $country = Country::create($request->all());
 
         return redirect()->back()->with('status', 'Country saved Successfully!');
-
     }
 }
