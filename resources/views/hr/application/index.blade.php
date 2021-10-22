@@ -1,46 +1,58 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="vueContainer">
     <br>
     @include('hr.menu')
     <br>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
             <h1>Applications</h1>
+        </div> 
+        <div class="input-group mb-3 col-md-6" style="display: flex;">
+            <form method="GET" action="/{{ Request::path() }}">  
+                <input type="hidden" name="status" class="form-control" id="search"
+                    value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
+                <input type="hidden" name="round" class="form-control" id="search"
+                    value=@if(request()->has('round')){{request()->get('round')}}@endif>
+                <div class="input-group mb-3 col-md-12">
+                    <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-label="Recipient's username" aria-describedby="button-addon2"
+                    value= @if(request()->has('search')){{request()->get('search')}}@endif>
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                        <span class="funnel-icon d-inline" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
+                    </button>
+                </div>
+            </form>
+            <div class="col-lg-2 align-self-center application-search">    
+                <button class="btn btn-info ">Search</button>
+            </div>
         </div>
-
-        <div class="col-md-6 text-right">
-            <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
-            <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
-        </div>
+    <div class="text-right">
+        <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
     </div>
     <div class="row mt-4">
-        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
+        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">  
             <input type="hidden" name="status" class="form-control" id="search"
-                value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
-
-            <input type="hidden" name="round" class="form-control" id="search"
-                value=@if(request()->has('round')){{request()->get('round')}}@endif>
-
-            <input
-                type="text" name="search" class="form-control" id="search" placeholder="Name, email, phone, or university"
-                value=@if(request()->has('search')){{request()->get('search')}}@endif>
-            <button class="btn btn-info ml-2">Search</button>
+            value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
         </form>
     </div>
-    @if(request()->has('search') || request()->has('tags'))
-    <div class="row mt-3 mb-2">
-        <div class="col-6">
-            <a class="text-muted c-pointer"
-                href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}{{request()->has('round')?'&round='.request('round'):''}}">
-                <i class="fa fa-times"></i>
-                <span>Clear current search and filters</span>
-            </a>
-        </div>
+</div>
+@include('hr.application.filter-modal')
+@if(request()->has('search') || request()->has('tags'))
+<div class="row mt-3 mb-2">
+    <div class="col-6">
+        <a class="text-muted c-pointer"
+            href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}{{request()->has('round')?'&round='.request('round'):''}}">
+        </a>
     </div>
-    @endif
-    <br>
+</div>
+@endif
+<br>
+@php
+    $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
+    $search = request()->has('search') ? '&search=' . request('search') : '';
+    $query_filters = $hr_job_id . $search
+@endphp
     <div class="d-flex align-items-center justify-content-between">
         <ul class="nav nav-pills mb-2">
             <li class="nav-item">
