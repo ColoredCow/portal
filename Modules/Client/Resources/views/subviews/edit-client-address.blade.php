@@ -76,7 +76,6 @@
         </div>
     </div>
 </div>
-@include('client::subviews.client-address-modal')
 @section('js_scripts')
 <script>
     new Vue({
