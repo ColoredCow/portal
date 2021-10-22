@@ -6,7 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CountryRequest extends FormRequest
 {
-    public function rules(){
+    public function rules()
+    {
         $rules = [];
 
         if ($this->method() === 'POST') {
