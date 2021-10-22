@@ -19,9 +19,11 @@
                 </select>
             </form>
         </div>
+        @can('projects.create')
         <span>
             <a  href= "{{ route('project.create') }}" class="btn btn-info text-white"> Add new project</a>
         </span>
+        @endcan
     </div>
 
     <div>
@@ -32,12 +34,18 @@
                     <th>Reference Id</th>
                     <th>Client</th>
                     <th>Team Members</th>
+                    <th>FTE</th>
                 </tr>
             </thead>
             <tbody>
+                @can('projects.view')
                 @forelse($projects as $project)
                     <tr>
+                        @can('projects.update')
                         <td> <a href="{{ route('project.edit', $project) }}">{{ $project->name }}</a> </td>
+                        @else
+                        <td> {{ $project->name }} </td>
+                        @endcan
                         <td> {{ $project->client_project_id }} </td>
                         <td>{{ $project->client->name }}</td>
                         <td>
@@ -47,19 +55,29 @@
                                 @endforeach
                             </ul>
                         </td>
+                        <td>
+                            <a href="{{route('project.effort-tracking', $project )}}">Click Here</a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3"> 
-                            <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>  
+                        <td colspan="3">
+                            <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>
                         <td>
                     </tr>
                 @endforelse
+                @else
+                <tr>
+                    <td colspan="3"> 
+                        <p class="my-4 text-left"> You don't have permission to see projects.</p>  
+                    <td>
+                </tr>
+                @endcan
             </tbody>
         </table>
 
     </div>
-    
+
 </div>
 
 

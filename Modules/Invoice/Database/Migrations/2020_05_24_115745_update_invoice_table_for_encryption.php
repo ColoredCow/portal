@@ -27,8 +27,8 @@ class UpdateInvoiceTableForEncryption extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->decimal('amount', 10, 2)->charset(null)->change();
-            $table->decimal('gst', 10, 2)->charset(null)->change();
+            $table->decimal('amount', 10, 2)->change();
+            $table->decimal('gst', 10, 2)->change();
         });
     }
 }

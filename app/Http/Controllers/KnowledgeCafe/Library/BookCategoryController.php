@@ -70,7 +70,7 @@ class BookCategoryController extends Controller
     }
 
     /**
-     * @param  array  $categories
+     * @param mixed $categories
      */
     public function formatCategoryData($categories)
     {

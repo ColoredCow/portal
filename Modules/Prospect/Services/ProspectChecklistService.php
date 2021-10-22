@@ -79,7 +79,7 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
         $ndaMeta->authoriser_id = $data['authorizer_id'];
         $ndaMeta->mail_template_id = $data['mail_template_id'];
         $ndaMeta->nda_template_id = $data['nda_template_id'];
-        $ndaMeta->nda_contact_persons = json_encode($data['nda_contact_persons'], true);
+        $ndaMeta->nda_contact_persons = json_encode($data['nda_contact_persons'], 1);
         $ndaMeta->due_date = $data['due_date'];
         $ndaMeta->enable_reminder = $data['should_send_reminder'];
         $ndaMeta->save();

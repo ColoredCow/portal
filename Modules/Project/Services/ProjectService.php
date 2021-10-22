@@ -77,15 +77,12 @@ class ProjectService implements ProjectServiceContract
         switch ($updateSection) {
             case 'project_details':
                 return $this->updateProjectDetails($data, $project);
-                break;
 
             case 'project_team_members':
                 return $this->updateProjectTeamMembers($data, $project);
-                break;
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
-                break;
         }
     }
 

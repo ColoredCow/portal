@@ -54,7 +54,6 @@ class ClientController extends ModuleBaseController
      */
     public function show($id)
     {
-        return view('client::show');
     }
 
     /**

@@ -30,7 +30,6 @@ class UpdateProjectResourceTable extends Migration
     public function down()
     {
         Schema::table('project_resources', function (Blueprint $table) {
-            $table->dropForeign('project_resources_resource_id_foreign');
             $table->dropIndex('project_resources_resource_id_foreign');
             $table->dropForeign('project_resources_project_id_foreign');
             $table->dropIndex('project_resources_project_id_foreign');

@@ -31,7 +31,6 @@ class UserController extends ModuleBaseController
      */
     public function create()
     {
-        return view('user::create');
     }
 
     /**
@@ -40,7 +39,6 @@ class UserController extends ModuleBaseController
      */
     public function show($id)
     {
-        return view('user::show');
     }
 
     /**
@@ -49,7 +47,6 @@ class UserController extends ModuleBaseController
      */
     public function edit($id)
     {
-        return view('user::edit');
     }
 
     public function updateUserRoles(UpdateUserRolesRequest $request)

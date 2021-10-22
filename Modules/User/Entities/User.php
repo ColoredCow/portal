@@ -3,6 +3,7 @@
 namespace Modules\User\Entities;
 
 use App\Models\KnowledgeCafe\Library\Book;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectTeamMember;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
@@ -17,7 +19,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes, HasRoles,  HasWebsiteUser, CanBeExtended, HasFactory;
+    use Notifiable, SoftDeletes, HasRoles, HasWebsiteUser, CanBeExtended, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -121,6 +123,42 @@ class User extends Authenticatable
 
     public function meta()
     {
-        return $this->hasOne(UserMeta::class, 'user_id');
+        return $this->hasMany(UserMeta::class, 'user_id');
+    }
+
+    public function metaValue($metaKey)
+    {
+        return optional($this->meta()->key($metaKey)->first())->meta_value;
+    }
+
+    public static function scopeWantsEffortSummary($query)
+    {
+        return $query->whereHas('meta', function ($query) {
+            $query->where('meta_key', 'receive_daily_effort_summary')->where('meta_value', 'yes');
+        });
+    }
+
+    public function projectTeamMembers()
+    {
+        return $this->hasMany(ProjectTeamMember::class, 'team_member_id');
+    }
+
+    public function getMonthTotalEffortAttribute()
+    {
+        if (! $this->projectTeamMembers->first()) {
+            return false;
+        }
+
+        $totalEffort = 0;
+
+        foreach ($this->projectTeamMembers as $projectTeamMember) {
+            $projectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()->orderBy('added_on', 'desc')->first();
+
+            if ($projectTeamMemberEffort and Carbon::parse($projectTeamMemberEffort->added_on)->format('Y-m') == Carbon::now()->format('Y-m')) {
+                $totalEffort += $projectTeamMemberEffort->total_effort_in_effortsheet;
+            }
+        }
+
+        return $totalEffort;
     }
 }
