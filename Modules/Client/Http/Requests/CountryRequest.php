@@ -18,6 +18,7 @@ class CountryRequest extends FormRequest
                 'currency_symbol' => 'nullable',
             ];
         }
+
         return $rules;
     }
 
