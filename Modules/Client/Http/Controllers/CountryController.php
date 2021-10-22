@@ -8,7 +8,7 @@ use App\Http\Requests\ClientRequest;
 use Modules\Client\Http\Requests\CountryRequest;
 
 class CountryController extends ModuleBaseController
-{  
+{
     public function store(CountryRequest $request)
     {
         $validated = $request->validated();
