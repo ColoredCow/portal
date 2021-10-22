@@ -8,5 +8,5 @@ class Country extends Model
 {
     protected $table = 'countries';
 
-    protected $fillable =['name','initials','currency','currency_symbol'];
+    protected $fillable = ['name', 'initials', 'currency', 'currency_symbol'];
 }
