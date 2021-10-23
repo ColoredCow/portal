@@ -12,7 +12,7 @@ class CountryRequest extends FormRequest
                 'name' => 'required|string',
                 'initials' => 'required|string',
                 'currency' => 'required|string',
-                'currency_symbol' => 'nullable',
+                'currency_symbol' => 'nullable|string',
             ];
 
         return $rules;
