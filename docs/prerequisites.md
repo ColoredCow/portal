@@ -103,9 +103,7 @@ TablePlus is an easy-to-use database manager for Windows and Mac.
   - For Windows - [Download TablePlus](https://tableplus.com/release/windows/tableplus_latest)
 
 2. Find Local Database Information -
-We’ll need to copy several lines of information from Local into TablePlus. Open the site you want to connect to and click on the Database tab.
-
-Note: Make sure you have started the site in Local in order for TablePlus to properly connect. Keep Local running while you’re using TablePlus.
+You can find the information regarding to your database in the .env folder in the root folder of your project.
 
 3. Create a New Connection - 
 Choose “Create a new connection…” then pick MySQL and click Create.
