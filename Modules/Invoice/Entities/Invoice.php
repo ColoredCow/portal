@@ -11,7 +11,7 @@ class Invoice extends Model
 {
     use Encryptable;
 
-    protected $fillable = ['client_id', 'project_id', 'status', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at'];
+    protected $fillable = ['client_id', 'project_id', 'status', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at'];
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at'];
 
     protected $encryptable = [
@@ -82,7 +82,7 @@ class Invoice extends Model
             $amount = $this->amount + $this->gst;
         }
 
-        return $amount . ' ' . optional($country)->currency_symbol;
+        return trim(optional($country)->currency_symbol . ' ' . $amount);
     }
 
     public function shouldHighlighted()

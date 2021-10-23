@@ -45,3 +45,5 @@ post_build_script.sh
 cypress.json
 cypress/videos
 cypress/screenshots
+
+google_service_credentials.json

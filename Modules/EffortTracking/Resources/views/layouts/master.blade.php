@@ -1,9 +1,7 @@
 @extends('layouts.app')
-
-@section('css_scripts')
-	<link href="{{ mix('/css/efforttracking.css') }}" rel="stylesheet">
+@section('js_scripts')
+<script src="{{ mix('/js/efforttracking.js') }}"></script>
 @endsection
 
-@section('js_scripts')
-	<script src="{{ mix('/js/efforttracking.js') }}"></script>
+@section('css_scripts')
 @endsection

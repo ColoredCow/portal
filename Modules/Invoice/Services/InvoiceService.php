@@ -230,6 +230,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Received amount' => $invoice->amount_paid,
                 'Bank Charges' => $invoice->bank_charges,
                 'Conversion Rate Diff' => $invoice->conversion_rate_diff,
+                'Conversion Rate' => $invoice->conversion_rate,
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)
@@ -248,6 +249,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Received amount' => $invoice->amount_paid,
                 'Bank Charges' => $invoice->bank_charges,
                 'Conversion Rate Diff' => $invoice->conversion_rate_diff,
+                'Conversion Rate' => $invoice->conversion_rate,
                 'TDS' => number_format($invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
