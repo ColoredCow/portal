@@ -17,5 +17,5 @@ Route::prefix('client')->middleware('auth')->group(function () {
     Route::get('/{client}/edit/{section?}', 'ClientController@edit')->name('client.edit');
     Route::post('/', 'ClientController@store')->name('client.store');
     Route::post('/{client}/update', 'ClientController@update')->name('client.update');
-    Route::post('/edit/address', 'CountryController@store')->name('country.store');
+    Route::post('/create/country', 'CountryController@store')->name('country.store');
 });
