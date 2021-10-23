@@ -30,7 +30,7 @@
                                 </select>
                             </div>
                             <div class="mt-2">
-                                <button type="button" style="text-decoration: underline;" class="btn btn-sm">Add new country</button>
+                                <button type="button" style="text-decoration: underline;" data-toggle="modal" data-target="#myModalClientCountry" class="btn btn-sm">Add new country</button>
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,9 +76,6 @@
         </div>
     </div>
 </div>
-
-
-
 @section('js_scripts')
 <script>
     new Vue({
