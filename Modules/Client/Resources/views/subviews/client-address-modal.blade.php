@@ -26,10 +26,9 @@
                     <label class="col-sm-2 col-form-label">Symbols</label>
                     <div class="col-sm-4">
                         <select id="currency_symbol" name="currency_symbol" class="form-control">
-                            <option id="option_for_currency_symbol">₹</option>
-                            <option id="option_for_currency_symbol">$</option>
-                            <option id="option_for_currency_symbol">€</option>
-                            <option id="option_for_currency_symbol">none</option>
+                            @foreach(config('client.currency-symbols') as $key => $value)
+                            <option value="{{ $key }}">{{implode($value)}}</option>
+                            @endforeach
                         </select>
                     </div>
             </div>     
