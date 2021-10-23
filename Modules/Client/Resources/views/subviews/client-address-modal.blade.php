@@ -24,13 +24,13 @@
                         <input type="text" id ="currency" name="currency" class="form-control" placeholder="Currency" required>
                     </div>
                     <label class="col-sm-2 col-form-label">Symbols</label>
-                    <div class="col-sm-4">
-                        <select id="currency_symbol" name="currency_symbol" class="form-control">
-                            @foreach(config('client.currency-symbols') as $key => $value)
-                            <option value="{{ $key }}">{{implode($value)}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                        <div class="col-sm-4">
+                            <select id="currency_symbol" name="currency_symbol" class="form-control">
+                                @foreach(config('client.currency-symbols') as $key => $value)
+                                <option value="{{ $key }}">{{implode($value)}}</option>
+                                @endforeach
+                            </select>
+                        </div>
             </div>     
         </div>
             <div class="modal-footer">
