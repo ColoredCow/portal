@@ -88,7 +88,7 @@ class Application extends Model
 
         return $application;
     }
-    
+
     public static function newFactory()
     {
         return new HrApplicationsFactory();
