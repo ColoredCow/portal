@@ -8,16 +8,12 @@ class CountryRequest extends FormRequest
 {
     public function rules()
     {
-        $rules = [];
-
-        if ($this->method() === 'POST') {
             $rules = [
                 'name' => 'required|string',
-                'intials' => 'required|string',
+                'initials' => 'required|string',
                 'currency' => 'required|string',
                 'currency_symbol' => 'nullable',
             ];
-        }
 
         return $rules;
     }
