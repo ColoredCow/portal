@@ -66,25 +66,7 @@ Now, locate the folder where you installed XAMPP and open the htdocs folder (usu
 
 - For WAMP - Add your practice folder in c:/wamp/www folder.
 
-8. Open the .env file in your project and you will see the following code
-    sh
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=portal
-    DB_USERNAME=root
-    DB_PASSWORD=
-    
-    *Note:* Use the default values for MySQL database in `.env` file
-    
-    DB_USERNAME=root
-    DB_PASSWORD=
-    
-  1. DB_HOST will be the host where your server is running it is usually localhost.
-  2. DB_USERNAME will be the username i.e. root and DB_PASSWORD will be the password which is the same that you used to access your PHPMyAdmin. By default, the password field will be empty when you will first start your PHPMyAdmin.
-  3. DB_DATABASE will be the name of your database which we have created in this project.
-
-9. For both XAMP and WAMP:
+8. For both XAMP and WAMP:
   If you’re asked to log in into your PHPMyAdmin, use the username “root” and enter your root password. If you haven’t set one yet, you can leave it blank.
   
   For MAMP: 
@@ -102,17 +84,14 @@ TablePlus is an easy-to-use database manager for Windows and Mac.
   - For Mac - [Download TablePlus](https://tableplus.com/release/osx/tableplus_latest)
   - For Windows - [Download TablePlus](https://tableplus.com/release/windows/tableplus_latest)
 
-2. Find Local Database Information -
-You can find the information regarding to your database in the .env folder in the root folder of your project.
-
-3. Create a New Connection - 
+2. Create a New Connection - 
 Choose “Create a new connection…” then pick MySQL and click Create.
 
-4. Copy the host, socket, database name, username, and password into the MySQL Connection window.
+3. Copy the host, socket, database name, username, and password into the MySQL Connection window from the .env file in the root folder of your project.
 
-5. Check “Use socket” before copying the socket details.
+4. Check “Use socket” before copying the socket details.
 
-6. After copying your site details from Local, click “Test”. You should see several green fields if the connection was established successfully. If so, click “Connect” and start editing!
+5. After copying your site details from Local, click “Test”. You should see several green fields if the connection was established successfully. If so, click “Connect” and start editing!
 
 ### 5. Composer :running:
 
