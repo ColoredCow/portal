@@ -8,7 +8,7 @@ class CountryRequest extends FormRequest
 {
     public function rules()
     {
-            $rules = [
+        $rules = [
                 'name' => 'required|string',
                 'initials' => 'required|string',
                 'currency' => 'required|string',
