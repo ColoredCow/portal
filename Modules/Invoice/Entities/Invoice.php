@@ -82,7 +82,7 @@ class Invoice extends Model
             $amount = $this->amount + $this->gst;
         }
 
-        return optional($country)->currency_symbol . ' ' . $amount;
+        return trim(optional($country)->currency_symbol . ' ' . $amount);;
     }
 
     public function shouldHighlighted()
