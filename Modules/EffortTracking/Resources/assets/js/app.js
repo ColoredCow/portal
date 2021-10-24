@@ -130,10 +130,10 @@ function effortTrackingChart() {
 	for (let i = users.length - 1; i >= 0; i--) {
 		const userId = users[i].id;
 		const userData = effortDetails[userId];
-		let data=[]
+		let data=[];
 		if(userData){
-			const userDataKeys = Object.keys(userData),
-			userDates = userDataKeys.map((key) => ({
+			const userDataKeys = Object.keys(userData);
+			const userDates = userDataKeys.map((key) => ({
 				effort: userData[key].actual_effort,
 				addedOn: userData[key].added_on
 			}));
