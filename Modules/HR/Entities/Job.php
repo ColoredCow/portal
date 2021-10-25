@@ -63,6 +63,7 @@ class Job extends Model
 
         return $updated;
     }
+
     public static function newFactory()
     {
         return new HrJobsFactory();
