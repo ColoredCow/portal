@@ -7,6 +7,8 @@ use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPUnit\Framework\isNull;
+
 class Invoice extends Model
 {
     use Encryptable;
@@ -65,7 +67,11 @@ class Invoice extends Model
     {
         $country = optional($this->client)->country;
 
-        return $this->amount . ' ' . optional($country)->currency_symbol;
+        if(optional($country))
+        return optional($country)->currency_symbol.' '.$this->amount;
+        else
+        return trim(optional($country)->currency_symbol.' '.$this->amount);
+        
     }
 
     public function isAmountInINR()
@@ -82,7 +88,7 @@ class Invoice extends Model
             $amount = $this->amount + $this->gst;
         }
 
-        return $amount . ' ' . optional($country)->currency_symbol;
+        return optional($country)->currency_symbol.' '.$amount;
     }
 
     public function shouldHighlighted()
