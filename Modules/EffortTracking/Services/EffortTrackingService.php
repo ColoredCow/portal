@@ -105,7 +105,7 @@ class EffortTrackingService
                     }
                 }
             }
-            $total_effort_in_effortsheet = empty($teamMembersEffort) ? 0 : end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'];
+            $total_effort_in_effortsheet = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'] : 0;
             $users[] = [
                 'id' => $userDetails->id,
                 'name' => $userDetails->name,
