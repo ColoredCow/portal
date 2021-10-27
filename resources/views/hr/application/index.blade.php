@@ -8,9 +8,9 @@
     <div class="row">
         <div class="col-md-3">
             <h1>Applications</h1>
-        </div> 
+        </div>
         <div class="input-group mb-3 col-md-6" style="display: flex;">
-            <form method="GET" action="/{{ Request::path() }}">  
+            <form method="GET" action="/{{ Request::path() }}">
                 <input type="hidden" name="status" class="form-control" id="search"
                     value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
                 <input type="hidden" name="round" class="form-control" id="search"
@@ -18,12 +18,14 @@
                 <div class="input-group mb-3 col-md-12">
                     <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-label="Recipient's username" aria-describedby="button-addon2"
                     value= @if(request()->has('search')){{request()->get('search')}}@endif>
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-                        <span class="funnel-icon d-inline" data-toggle="modal" data-target="#application-modal">{!! file_get_contents(public_path('icons/funnel-fill.svg')) !!}</span>
-                    </button>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center" type="button" id="button-addon2" data-toggle="modal" data-target="#application-modal">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                      </button>
+                    </div>
                 </div>
             </form>
-            <div class="col-lg-2 align-self-center application-search">    
+            <div class="col-lg-2 align-self-center application-search">
                 <button class="btn btn-info ">Search</button>
             </div>
         </div>
@@ -31,7 +33,7 @@
         <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
     </div>
     <div class="row mt-4">
-        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">  
+        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
             <input type="hidden" name="status" class="form-control" id="search"
             value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
         </form>

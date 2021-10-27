@@ -1,6 +1,6 @@
 <template id="my-application">
 	<div class="filter form-group-row-sm-10" style="display: flex;">
-		<label style= "margin-top: 0.5rem;">>Status: </label>
+		<label style= "margin-top: 0.5rem;">Status: </label>
 		<div class="row justify-content-center mt-100" style="width: 120%;">
 			<div class="col-sm-10">
 				<select class="job-application-filters" id="choices-multiple-remove-button" placeholder="Select one or more status"  multiple>
