@@ -67,11 +67,11 @@ class Invoice extends Model
     {
         $country = optional($this->client)->country;
 
-        if(optional($country))
-        return optional($country)->currency_symbol.' '.$this->amount;
-        else
-        return trim(optional($country)->currency_symbol.' '.$this->amount);
-        
+        if (optional($country)) {
+            return optional($country)->currency_symbol . ' ' . $this->amount;
+        } else {
+            return trim(optional($country)->currency_symbol . ' ' . $this->amount);
+        }
     }
 
     public function isAmountInINR()
