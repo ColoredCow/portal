@@ -19,11 +19,11 @@
     </div>
 
     <div class="font-muli-bold my-4">
-        Current Exchange rates (1 USD) : &nbsp;  {{  $currencyService->getCurrentRatesInINR() }} INR
+        Current Exchange rates ($1) : &nbsp; ₹{{  $currencyService->getCurrentRatesInINR() }}
     </div>
 
     <div class="font-muli-bold my-4">
-        Receivable amount (for current filters): &nbsp; {{ $totalReceivableAmount }} INR
+        Receivable amount (for current filters): &nbsp; ₹{{ $totalReceivableAmount }} 
     </div>
 
     <div>
