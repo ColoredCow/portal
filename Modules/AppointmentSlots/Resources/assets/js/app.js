@@ -1,8 +1,18 @@
 var moment = require("moment");
+
 $(document).ready(() => {
-	if (document.getElementById("create_slots")) {
-		showRepeatTillInput();
-	}
+
+	// if (document.getElementById("#createSlotsModal")) {
+    $('#recurrence').on('change', function(){
+      console.log("HEllo");
+      if (this.checked) {
+        let startTimeInput = document.getElementById("start_time");
+	      let recurrenceInput = document.getElementById("recurrence");
+	      startTimeInput.addEventListener("blur", setEndTime);
+	       recurrenceInput.addEventListener("click", showRepeatTillInput());
+            showRepeatTillInput();
+      }
+    });
 
 	if (document.getElementById("show_slots")) {
 		showSlots();
@@ -10,33 +20,29 @@ $(document).ready(() => {
 	if(document.getElementById("show_create_modal")){
 		$("#createSlotsModal").modal("show");
 	}
-});
-
+}
 /**
  * UserAppointmentSlots
  *
  */
 
-if (document.getElementById("create_slots")) {
-	let startTimeInput = document.getElementById("start_time");
-	let recurrenceInput = document.getElementById("recurrence");
-	startTimeInput.addEventListener("blur", setEndTime);
-	recurrenceInput.addEventListener("click", showRepeatTillInput);
+// if (document.getElementById("create_slots")) {
+
+// }
+function showRepeatTillInput() {
+  let repeatTillInput = document.getElementById("repeat_date_field");
+  let recurrenceInput = document.getElementById("recurrence");
+  if (recurrenceInput.value == "none") {
+    repeatTillInput.classList.add("d-none");
+  } else {
+    repeatTillInput.classList.remove("d-none");
+  }
 }
+
 
 function setEndTime(e) {
 	let endTimeInput = document.getElementById("end_time");
 	endTimeInput.value = moment(e.target.value).add(30, "m").format("YYYY-MM-DDTHH:mm");
-}
-
-function showRepeatTillInput() {
-	let repeatTillInput = document.getElementById("repeat_date_field");
-	let recurrenceInput = document.getElementById("recurrence");
-	if (recurrenceInput.value == "none") {
-		repeatTillInput.classList.add("d-none");
-	} else {
-		repeatTillInput.classList.remove("d-none");
-	}
 }
 
 function showSlots() {
@@ -83,6 +89,6 @@ function showSlots() {
 			meridiem: "short",
 		}
 	});
-	calendar.render();  
+	calendar.render();
 }
 
