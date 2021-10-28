@@ -23,6 +23,8 @@ class RoleHasPermissionsTableSeeder extends Seeder
             'hr_employees.view',
             'library_books.view',
             'weeklydoses.view',
+            'clients.view',
+            'projects.view'
         ])->get());
 
         $accountant = Role::where(['name' => 'accountant'])->first();
