@@ -3,7 +3,7 @@ $(document).ready(() => {
 
 	if (document.getElementById("create_slots")) {
 		let recurrence = document.getElementById("recurrence");
-		recurrence.addEventListener("change",function(){
+		recurrence.addEventListener("change", function() {
 			showRepeatTillInput();
 		});
 	}
