@@ -3,8 +3,8 @@ $(document).ready(() => {
 
 	if (document.getElementById("create_slots")) {
 		let recurrence = document.getElementById("recurrence");
-		recurrence.addEventListener('change',function(){
-		showRepeatTillInput();
+		recurrence.addEventListener("change",function(){
+			showRepeatTillInput();
 		});
 	}
 
@@ -35,7 +35,7 @@ function setEndTime(e) {
 
 function showRepeatTillInput() {
 	let repeatTillInput = document.getElementById("repeat_date_field");
-        let recurrenceInput = document.getElementById("recurrence");
+	let recurrenceInput = document.getElementById("recurrence");
 	if (recurrenceInput.value == "none") {
 		repeatTillInput.classList.add("d-none");
 	} else {
