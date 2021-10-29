@@ -22,10 +22,10 @@ $(document).ready(() => {
  */
 
 if (document.getElementById("create_slots")) {
- 	let startTimeInput = document.getElementById("start_time");
- 	let recurrenceInput = document.getElementById("recurrence");
- 	startTimeInput.addEventListener("blur", setEndTime);
- 	recurrenceInput.addEventListener("click", showRepeatTillInput);
+	let startTimeInput = document.getElementById("start_time");
+	let recurrenceInput = document.getElementById("recurrence");
+	startTimeInput.addEventListener("blur", setEndTime);
+	recurrenceInput.addEventListener("click", showRepeatTillInput);
 }
 
 function setEndTime(e) {
