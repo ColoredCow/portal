@@ -45,6 +45,7 @@ Vue.component(
 	  require("./components/Dashboard/UserDahboardInfrastructure.vue").default
 );
 Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDahboardInvocie.vue").default);
+Vue.component("job-application-component",require("./components/HR/JobApplicationComponent.vue").default);
   
 if (Vue) {
 	  Vue.filter("str_limit", function(value, size) {
@@ -1086,6 +1087,15 @@ $("#job_start_date").on("change", function() {
 $("#job_end_date").on("change", function(){
 	let endDate = $("#job_end_date").val();
 	$("#job_start_date").attr("max", endDate);
+});
+
+$(document).ready(function(){
+	var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
+		removeItemButton: true,
+		maxItemCount:9,
+		searchResultLimit:9,
+		renderChoiceLimit:9
+	});
 });
 
 /*

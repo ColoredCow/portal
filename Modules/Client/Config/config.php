@@ -70,5 +70,19 @@ return [
             'id' => 5,
             'name' => 'Based on project terms',
         ],
+    ],
+
+    'currency-symbols' =>[
+        [
+            'rupee' => '₹'
+        ],
+
+        [
+            'dollar' => '$'
+        ],
+
+        [
+            'pound' => '€'
+        ],
     ]
 ];
