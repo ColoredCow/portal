@@ -5,26 +5,26 @@
         </div>
          <div class="card-body pt-3" style="height: 18em;overflow: auto;">
             <ul v-if="this.billingDetails.current_amount" class="list list-group unstyled-list">
-                <li class="d-flex justify-content-between" style="font-size:16px;">
-                    <span> Unbilled amount till today </span> 
+                <li style="font-size:16px;">
+                    <span class="d-block"> Unbilled amount till today </span> 
                     <div :class="'cost badge p-2 ' + this.currentAmountClass "> {{ this.billingDetails.current_amount }} </div> 
                 </li>
                 <hr class="mt-1 w-full">
 
-                <li class="d-flex justify-content-between" style="font-size:16px;">
-                    <span> Forcast for this month </span> 
+                <li style="font-size:16px;">
+                    <span class="d-block"> Forcast for this month </span> 
                     <div class="cost badge badge-info p-2">{{ this.billingDetails.forcast_amount }}</div> 
                 </li>
                 <hr class="mt-1 w-full">
 
-                <li class="d-flex justify-content-between" style="font-size:16px;">
-                    <span> Last Month amount </span> 
+                <li style="font-size:16px;">
+                    <span class="d-block"> Last Month amount </span> 
                     <div class="cost badge badge-info p-2">{{ this.billingDetails.last_month_amount }}</div> 
                 </li>
                 <hr class="mt-1 w-full">
 
-                <li class="d-flex justify-content-between" style="font-size:16px;">
-                    <span> Average <span class="fz-12">(Based on last year data)</span> </span> 
+                <li style="font-size:16px;">
+                    <div class="d-block"><span> Average <span class="fz-12">(Based on last year data)</span> </span></div>
                     <div class="cost badge badge-warning p-2">{{ this.billingDetails.avg_by_last_year }}</div> 
                 </li>
                 <hr class="mt-1 w-full">
