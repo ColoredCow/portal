@@ -29,18 +29,18 @@
         </li>
     @endif
 
-    @if(Module::checkStatus('Client') || Module::checkStatus('Project'))
+    @if((Module::checkStatus('Client') && auth()->user()->can('clients.view')) || (Module::checkStatus('Project') && auth()->user()->can('projects.view')) )
         <li class="nav-item dropdown">
             <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Project Management <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
-                @if(Module::checkStatus('Client') && auth()->user()->can('clients.view'))
+                @can('clients.view')
                     <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
-                @endif
-                @if(Module::checkStatus('Project') && auth()->user()->can('projects.view'))
+                @endcan
+                @can('projects.view')
                     <a class="dropdown-item" href="{{ route('project.index') }}">Projects</a>
-                @endif
+                @endcan    
             </div>
         </li>
     @endif
