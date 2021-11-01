@@ -35,8 +35,12 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Project Management <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
+                @can('clients.view')
                     <a class="dropdown-item" href="{{ route('client.index') }}">Clients</a>
+                @endcan
+                @can('projects.view')
                     <a class="dropdown-item" href="{{ route('project.index') }}">Projects</a>
+                @endcan    
             </div>
         </li>
     @endif
