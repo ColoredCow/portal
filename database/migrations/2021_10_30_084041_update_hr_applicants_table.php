@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class UpdateHrApplicantsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('hr_applicants', function (Blueprint $table) {
@@ -18,11 +13,6 @@ class UpdateHrApplicantsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('hr_applicants', function (Blueprint $table) {
