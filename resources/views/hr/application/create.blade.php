@@ -65,16 +65,10 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="form-group ">
-                                <label for="resume" class="field-required">Resume</label>
-                                <div class="d-flex">
-                                    <div class="custom-file mb-3">
-                                        <input type="text" id="resume" name="resume" class="custom-file-input" required="required" accept="application/pdf">
-                                        <label for="resume" class="custom-file-label">Choose file</label>
-                                    </div>
-                                </div>
-                            </div> --}}
-
+                            <div class="form-group">
+                                <label for="name">Whatsapp Optin At</label>
+                                <input type="time" id="wa_optin_at" class="form-control" name="wa_optin_at" placeholder="Whatsapp Optin At" value={{old('wa_optin_at')}}>
+                            </div>
                         </div>
                     
                         <div class="col-md-5 offset-md-1">
@@ -107,7 +101,7 @@
                                 <textarea type="text" class="form-control" rows="5" name="form_data[Why Should We Pick You?]"
                                     placeholder="Reason For Eligibility">{{ old('form_data[Why Should We Pick You?]') }}</textarea>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="name">Reference</label>
                                 <input type="text" class="form-control" name="reference" id="reference" placeholder="reference"
