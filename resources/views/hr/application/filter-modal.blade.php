@@ -10,7 +10,7 @@
                 <form>
                     <div class="form-group row">
                         <div class="col-sm-10">
-                            <job-application-component :options="options"></job-application-component>    
+                            <job-application-component value="options"></job-application-component>    
                         </div>
                     </div>
                 </form>     
