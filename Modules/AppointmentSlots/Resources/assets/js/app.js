@@ -1,7 +1,11 @@
 var moment = require("moment");
 $(document).ready(() => {
+
 	if (document.getElementById("create_slots")) {
-		showRepeatTillInput();
+		let recurrence = document.getElementById("recurrence");
+		recurrence.addEventListener("change", function() {
+			showRepeatTillInput();
+		});
 	}
 
 	if (document.getElementById("show_slots")) {
@@ -85,4 +89,3 @@ function showSlots() {
 	});
 	calendar.render();  
 }
-

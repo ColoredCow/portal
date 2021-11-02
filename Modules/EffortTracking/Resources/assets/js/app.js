@@ -128,13 +128,15 @@ function effortTrackingChart() {
 	}
 
 	for (let i = users.length - 1; i >= 0; i--) {
-		const userId = users[i].id,
-			userData = effortDetails[userId],
-			userDataKeys = Object.keys(userData),
-			userDates = userDataKeys.map((key) => ({
+		const userId = users[i].id;
+		const userData = effortDetails[userId];
+		let data=[];
+		if(userData){
+			const userDataKeys = Object.keys(userData);
+			const userDates = userDataKeys.map((key) => ({
 				effort: userData[key].actual_effort,
 				addedOn: userData[key].added_on
-			})),
+			}));
 			data = workingDays.map((workingDay) => {
 				for (let i = 0; i <= userDates.length - 1; i++) {
 					if (userDates[i].addedOn === workingDay) {
@@ -142,8 +144,9 @@ function effortTrackingChart() {
 					}
 				}
 				return 0;
-			}),
-			userColor = `rgb(${255-i*35},0,0)`;
+			});
+		}
+		const userColor = `rgb(${255-i*35},0,0)`;
 		datasetValue[i] = {
 			type: "bar",
 			label: users[i].name,

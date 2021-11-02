@@ -22,7 +22,7 @@ class ClientFormsRequest extends FormRequest
         return [
             'client_contact_persons.*.name' => 'nullable|max:120',
             'client_contact_persons.*.email' => 'required|email',
-            'client_contact_persons.*.phone' => 'nullable',
+            'client_contact_persons.*.phone' => 'required|digits_between:4,10|integer',
         ];
     }
 
@@ -89,5 +89,18 @@ class ClientFormsRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'client_contact_persons.*.phone.*' => 'Please enter a valid phone number.',
+            'client_contact_persons.*.email.*' => 'Please enter a valid mailing-address.',
+        ];
     }
 }
