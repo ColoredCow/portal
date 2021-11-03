@@ -21,7 +21,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        if (auth()->user() -> hasPermissionTo('projects.view')) {
+        if (auth()->user()->hasPermissionTo('projects.view')) {
             $projects = $this->service->index();
             return view('project::index')->with('projects', $projects);
         } else {
