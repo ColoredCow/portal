@@ -5,11 +5,13 @@ namespace Modules\HR\Entities;
 use App\Services\GSuiteUserService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Modules\HR\Database\Factories\HrApplicantsFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
 class Applicant extends Model
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     protected $guarded = [];
 
@@ -53,6 +55,11 @@ class Applicant extends Model
         $applicant->wasRecentlyCreated ? $application->tag('new-application') : null;
 
         return $applicant;
+    }
+
+    public static function newFactory()
+    {
+        return new HrApplicantsFactory();
     }
 
     /**

@@ -41,7 +41,7 @@
                 @can('projects.view')
                 @forelse($projects as $project)
                     <tr>
-                        @can('projects.edit')
+                        @can('projects.update')
                         <td> <a href="{{ route('project.edit', $project) }}">{{ $project->name }}</a> </td>
                         @else
                         <td> {{ $project->name }} </td>
@@ -49,11 +49,11 @@
                         <td> {{ $project->client_project_id }} </td>
                         <td>{{ $project->client->name }}</td>
                         <td>
-                            <ul class="ml-0 pl-3">
-                                @foreach($project->teamMembers ?:[] as $teamMember)
-                                <li>{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}</li>
-                                @endforeach
-                            </ul>
+                            @foreach($project->teamMembers ?:[] as $teamMember)
+                                <span class="tooltip-wrapper" data-toggle="tooltip" title="{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}">
+                                    <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1">
+                                </span>
+                            @endforeach 
                         </td>
                         <td>
                             <a href="{{route('project.effort-tracking', $project )}}">Click Here</a>

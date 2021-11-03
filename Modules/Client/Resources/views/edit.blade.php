@@ -20,6 +20,7 @@
                     @includeWhen( $section == 'billing-details' ,'client::subviews.edit-client-billing-details')
                     @includeWhen( $section == 'client-type' ,'client::subviews.edit-client-type-info')
                 </form>
+                @include('client::subviews.client-address-modal')
             </div>
     </div>
 </div>

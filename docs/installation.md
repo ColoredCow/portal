@@ -86,6 +86,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
     DB_PASSWORD=
     ```
 
+    These credentials will be used when you will connect to MySQL Server whether you use XAMPP, WAMP, MAMP (PhpMyadmin) or TablePlus, the proper steps you can find here in the [prerequisites guide](./docs/prerequisites.md).
+
     3. _(Optional)_ Google configurations.
     ```sh
     GOOGLE_CLIENT_ID=
