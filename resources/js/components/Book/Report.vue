@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-4">
+    <!-- <div class="row"> -->
+      <!-- <div class="col-sm-4">
         <query-builder :cubejs-api="cubejsApi" :query="usersQuery">
           <template v-slot="{ loading, resultSet }">
             <Chart
@@ -12,8 +12,8 @@
             />
           </template>
         </query-builder>
-      </div>
-      <div class="col-sm-4">
+      </div> -->
+      <!-- <div class="col-sm-4">
         <query-builder :cubejs-api="cubejsApi" :query="totalOrdersQuery">
           <template v-slot="{ loading, resultSet }">
             <Chart
@@ -24,8 +24,8 @@
             />
           </template>
         </query-builder>
-      </div>
-      <div class="col-sm-4">
+      </div> -->
+      <!-- <div class="col-sm-4">
         <query-builder :cubejs-api="cubejsApi" :query="shippedOrdersQuery">
           <template v-slot="{ loading, resultSet }">
             <Chart
@@ -36,12 +36,12 @@
             />
           </template>
         </query-builder>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div>
     <br />
-    <br />
+    <br /> -->
     <div class="row">
-      <div class="col-sm-6">
+      <!-- <div class="col-sm-6">
         <query-builder :cubejs-api="cubejsApi" :query="lineQuery">
           <template v-slot="{ loading, resultSet }">
             <Chart
@@ -52,12 +52,12 @@
             />
           </template>
         </query-builder>
-      </div>
-      <div class="col-sm-6">
+      </div> -->
+      <div class="col-sm">
         <query-builder :cubejs-api="cubejsApi" :query="barQuery">
           <template v-slot="{ loading, resultSet }">
             <Chart
-              title="Orders by Status Over time"
+              title="Monthly project hours"
               type="stackedBar"
               :loading="loading"
               :result-set="resultSet"
@@ -76,10 +76,8 @@ import { QueryBuilder } from "@cubejs-client/vue";
 import Chart from "./components/Chart";
 
 const cubejsApi = cubejs(
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTQ2NjY4OTR9.0fdi5cuDZ2t3OSrPOMoc3B1_pwhnWj4ZmM3FHEX7Aus",
   {
-    apiUrl:
-      "https://awesome-ecom.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1",
+    apiUrl: "http://localhost:4000/cubejs-api/v1",
   }
 );
 
@@ -92,36 +90,42 @@ export default {
   data() {
     return {
       cubejsApi,
-      usersQuery: { measures: ["Users.count"] },
-      totalOrdersQuery: { measures: ["Orders.count"] },
-      shippedOrdersQuery: {
-        measures: ["Orders.count"],
-        filters: [
-          {
-            dimension: "Orders.status",
-            operator: "equals",
-            values: ["shipped"],
-          },
-        ],
-      },
+      // usersQuery: { measures: ["Users.count"] },
+      // totalOrdersQuery: { measures: ["Orders.count"] },
+      // shippedOrdersQuery: {
+      //   measures: ["Orders.count"],
+      //   filters: [
+      //     {
+      //       dimension: "Orders.status",
+      //       operator: "equals",
+      //       values: ["shipped"],
+      //     },
+      //   ],
+      // },
       lineQuery: {
         measures: ["Users.count"],
         timeDimensions: [
           {
             dimension: "Users.createdAt",
-            dateRange: ["2019-01-01", "2020-12-31"],
+            dateRange: ["2019-01-01", "2020-12-01"],
             granularity: "month",
           },
         ],
       },
       barQuery: {
-        measures: ["Orders.count"],
-        dimensions: ["Orders.status"],
+        measures: ["ProjectTeamMembersEffort.project_monthly_hours"],
         timeDimensions: [
           {
-            dimension: "Orders.createdAt",
-            dateRange: ["2019-01-01", "2020-12-31"],
+            dimension: "ProjectTeamMembersEffort.createdAt",
+            dateRange: ["2021-07-01", "2021-11-30"],
             granularity: "month",
+          },
+        ],
+        filters: [
+          {
+            dimension: "ProjectTeamMembersEffort.project_id",
+            operator: "equals",
+            values: ["7"],
           },
         ],
       },
