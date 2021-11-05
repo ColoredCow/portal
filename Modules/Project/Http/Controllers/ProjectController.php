@@ -23,7 +23,7 @@ class ProjectController extends Controller
     {
         if (auth()->user()->hasPermissionTo('projects.view')) {
             $projects = $this->service->index();
-            
+
             return view('project::index')->with('projects', $projects);
         } else {
             return view('errors/403');
