@@ -1,10 +1,10 @@
 <template>
   <la-cartesian autoresize narrow stacked :data="values" :colors="colors" :padding="[0, 0, 5, 0]">
     <template v-for="metric in metrics">
-      <la-bar :prop="metric" v-bind:key="metric" :width="6" :label="metric.split(',')[0]"></la-bar>
+      <la-bar :prop="metric" v-bind:key="metric" :width="50" :label="'Total Hours'"></la-bar>
     </template>
     <la-y-axis :nbTicks="2"></la-y-axis>
-    <la-x-axis prop="x" :format="dateFormatter" :interval="6"></la-x-axis>
+    <la-x-axis prop="x" :format="dateFormatter" :interval="1"></la-x-axis>
     <la-tooltip/>
   </la-cartesian>
 </template>
