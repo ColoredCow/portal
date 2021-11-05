@@ -1,8 +1,8 @@
 ## Guideline For Variable Naming Convention
 
 ### JavaScript:
-className - snake-case
-idName - camelCase
+class name - snake-case
+id name - camelCase
 
 ### PHP:
 variable name - camelCase
@@ -11,5 +11,5 @@ class name - TitleCase
 
 ### Blade:
 variable name - camelCase
-className - snake-case
-idName - camelCase
+class name - snake-case
+id name - camelCase
