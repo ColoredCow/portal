@@ -11,6 +11,9 @@ import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
   
 window.Vue = require("vue");
+import { Laue } from "laue";
+ 
+Vue.use(Laue);
   
 /**
    * Next, we will create a fresh Vue application instance and attach it to

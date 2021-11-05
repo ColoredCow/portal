@@ -43,11 +43,11 @@ export default {
   },
   computed: {
     values: function() {
-      if (this.loading) return [];
+      if (this.loading || this.resultSet=== undefined) return [];
       return this.resultSet.chartPivot();
     },
     metrics: function() {
-      if (this.loading) return [""];
+      if (this.loading || this.resultSet=== undefined ) return [];
       return this.resultSet.seriesNames().map(x => x.key);
     }
   },
