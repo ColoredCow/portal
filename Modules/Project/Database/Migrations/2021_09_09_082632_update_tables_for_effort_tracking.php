@@ -16,7 +16,7 @@ class UpdateTablesForEffortTracking extends Migration
         Schema::table('projects', function (Blueprint $table) {
             $table->string('type')->after('id')->default(array_keys(config('project.type'))[0]);
             $table->float('total_estimated_hours')->nullable()->after('effort_sheet_url');
-            $table->float('monthly_estimated_hours')->nullable()->after('total_estimated_hours');
+            $table->float('monthly_estimated_hours')->after('total_estimated_hours');
         });
 
         Schema::table('project_resources', function (Blueprint $table) {
