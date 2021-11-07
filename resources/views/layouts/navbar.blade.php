@@ -57,7 +57,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
-                @can('finance_reports.view')
+                @can('finance_invoices.view')
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
                 @endcan    
                     <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly tax report</a>
