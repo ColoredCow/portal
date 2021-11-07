@@ -34,7 +34,7 @@ class ApplicantRequest extends FormRequest
                 'last_name' => 'required|string',
                 'email' => 'required|email',
                 'phone' => 'nullable|string',
-                'wa_optin_at' => 'nullable|regex:/(\d+\:\d+)/',
+                'wa_optin_at' => 'nullable|date_format:H:i',
                 'college' => 'nullable|string',
                 'graduation_year' => 'nullable|numeric',
                 'course' => 'nullable|string',
