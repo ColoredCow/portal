@@ -102,5 +102,20 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'library_book_category.view']);
         Permission::create(['name' => 'library_book_category.update']);
         Permission::create(['name' => 'library_book_category.delete']);
+        
+        Permission::create(['name' => 'infrastructure.billings.create']);
+        Permission::create(['name' => 'infrastructure.billings.view']);
+        Permission::create(['name' => 'infrastructure.billings.update']);
+        Permission::create(['name' => 'infrastructure.billings.delete']);
+
+        Permission::create(['name' => 'infrastructure.backups.create']);
+        Permission::create(['name' => 'infrastructure.backups.view']);
+        Permission::create(['name' => 'infrastructure.backups.update']);
+        Permission::create(['name' => 'infrastructure.backups.delete']);
+
+        Permission::create(['name' => 'infrastructure.ec2-instances.create']);
+        Permission::create(['name' => 'infrastructure.ec2-instances.view']);
+        Permission::create(['name' => 'infrastructure.ec2-instances.update']);
+        Permission::create(['name' => 'infrastructure.ec2-instances.delete']);
     }
 }
