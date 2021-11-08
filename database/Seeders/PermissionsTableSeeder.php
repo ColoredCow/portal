@@ -102,7 +102,7 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'library_book_category.view']);
         Permission::create(['name' => 'library_book_category.update']);
         Permission::create(['name' => 'library_book_category.delete']);
-        
+
         Permission::create(['name' => 'infrastructure.billings.create']);
         Permission::create(['name' => 'infrastructure.billings.view']);
         Permission::create(['name' => 'infrastructure.billings.update']);
