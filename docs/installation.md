@@ -187,7 +187,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
         - Go to `httpd.conf` file or edit this file in the terminal itself use this command
             ```sh
-            sudo nano /etc/apache2/httpd.conf
+            sudo nano /Applications/MAMP/conf/apache/httpd.conf
             ```
             And search for `vhosts` and uncomment line like this
             ```sh
