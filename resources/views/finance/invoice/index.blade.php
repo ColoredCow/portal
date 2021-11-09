@@ -6,8 +6,10 @@
     @include('finance.menu', ['active' => 'invoices'])
     <br><br>
     <div class="row">
-        <div class="col-md-6"><h1>Invoices</h1></div>
-        <div class="col-md-6"><a href="{{ route('invoices.create') }}" class="btn btn-success float-right">Create Invoice</a></div>
+        @can('finance_invoices.create')
+            <div class="col-md-6"><h1>Invoices</h1></div>
+            <div class="col-md-6"><a href="{{ route('invoices.create') }}" class="btn btn-success float-right">Create Invoice</a></div>
+        @endcan
     </div>
     <form action="/finance/invoices" method="GET" class="form-inline mt-4 mb-4 d-flex justify-content-end">
         <div class="form-group">
