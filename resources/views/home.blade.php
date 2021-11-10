@@ -4,7 +4,7 @@
 
 <div class="container" id="home_page">
     <div class="m-3">
-        <h3>Dashboard</h3>
+        <strong>Dashboard</strong>
     </div>
 
     <div class="dashboard_view d-flex flex-wrap justify-content-start ml-3">

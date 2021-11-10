@@ -38,5 +38,9 @@
                 <option {{ request()->input('status') == 'paid' ? "selected=selected" : '' }} value="paid">Paid</option>
             </select>
         </div>
+
+        <span>
+        <a href="#" class="btn btn-info text-white"> Email Invoice</a>
+        </span>
     </div>
 </form>
