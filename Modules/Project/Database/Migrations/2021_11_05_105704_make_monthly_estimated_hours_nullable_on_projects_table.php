@@ -26,7 +26,7 @@ class MakeMonthlyEstimatedHoursNullableOnProjectsTable extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->float('monthly_estimated_hours');
+            $table->dropColumn(['monthly_estimated_hours']);
         });
     }
 }
