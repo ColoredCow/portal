@@ -67,7 +67,7 @@
 
                             <div class="form-group">
                                 <label for="name">Whatsapp Optin At</label>
-                                <input type="time" id="wa_optin_at" class="form-control" name="wa_optin_at" placeholder="Whatsapp Optin At" value={{old('wa_optin_at')}}>
+                                <input type="datetime-local" id="wa_optin_at" class="form-control" name="wa_optin_at" placeholder="Whatsapp Optin At" value={{old('wa_optin_at')}}>
                             </div>
                         </div>
                     
