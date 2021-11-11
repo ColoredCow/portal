@@ -2,7 +2,15 @@
 @section('content')
 
 <div class="container" id="view_edit_project">
-    <br> <h4 clss="c-pointer" v-on:click="counter += 1">{{ $project->name }} ({{ $project->client_project_id }})</h4>
+    <br>  
+    <a href="{{URL::previous()}}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-inline-flex align-items-center">
+        <span class="mr-1 w-8 h-15 w-xl-12 h-xl-12">
+            {!! file_get_contents(public_path('icons/prev-icon.svg')) !!}
+        </span><span class="mr-3 w-26 h-15 w-xl-10 h-xl-10">Back</span>
+    </a>
+    <h4 clss="c-pointer" class="ml-3 mt-1 d-inline-flex" v-on:click="counter += 1">  
+    {{ $project->name }} ({{ $project->client_project_id }})
+    </h4>
     <br>
     <div class="text-danger d-none" id="edit-project-errors">
         <div>Error in the Input:</div>
