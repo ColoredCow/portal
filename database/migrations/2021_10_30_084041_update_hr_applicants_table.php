@@ -14,7 +14,7 @@ class UpdateHrApplicantsTable extends Migration
     public function up()
     {
         Schema::table('hr_applicants', function (Blueprint $table) {
-            $table->time('wa_optin_at')->after('phone')->nullable();
+            $table->timestamp('wa_optin_at')->after('phone')->nullable();
         });
     }
 
