@@ -29,7 +29,7 @@ class Applicant extends Model
         ], [
             'name' => $attr['name'],
             'phone' => isset($attr['phone']) ? $attr['phone'] : null,
-            'wa_optin_at' => isset($attr['wa_optin_at']) ? $attr['wa_optin_at'] : null,
+            'wa_optin_at' => isset($attr['wa_optin_at']),
             'college' => isset($attr['college']) ? $attr['college'] : null,
             'graduation_year' => isset($attr['graduation_year']) ? $attr['graduation_year'] : null,
             'course' => isset($attr['course']) ? $attr['course'] : null,
