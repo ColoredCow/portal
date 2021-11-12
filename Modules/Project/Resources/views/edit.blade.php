@@ -8,7 +8,7 @@
             {!! file_get_contents(public_path('icons/prev-icon.svg')) !!}
         </span><span class="mr-3 w-26 h-15 w-xl-10 h-xl-10">Back</span>
     </a>
-    <h4 clss="c-pointer" class="ml-3 mt-1 d-inline-flex" v-on:click="counter += 1">  
+    <h4 clss="c-pointer" v-on:click="counter += 1">  
     {{ $project->name }} ({{ $project->client_project_id }})
     </h4>
     <br>
