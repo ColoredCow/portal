@@ -9,7 +9,7 @@
         </span><span class="mr-3 w-26 h-15 w-xl-10 h-xl-10">Back</span>
     </a>
     <h4 clss="c-pointer" v-on:click="counter += 1">  
-    {{ $project->name }} ({{ $project->client_project_id }})
+        {{ $project->name }} ({{ $project->client_project_id }})
     </h4>
     <br>
     <div class="text-danger d-none" id="edit-project-errors">
