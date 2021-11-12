@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mt-3" >
     <div class="card-header" data-toggle="collapse" data-target="#project_detail_form">
         <h4>Project details</h4>
     </div>

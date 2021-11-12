@@ -3,7 +3,7 @@
 
 <div class="container" id="view_edit_project">
     <br><h4 clss="c-pointer" class="d-inline-block" v-on:click="counter += 1">{{ $project->name }} ({{ $project->client_project_id }})</h4>
-    <a id="view_effort_sheet_badge" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
+    <a id="view_effort_sheet_badge" target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
     <br>
     <div class="text-danger d-none" id="edit-project-errors">
         <div>Error in the Input:</div>
