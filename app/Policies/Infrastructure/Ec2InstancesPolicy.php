@@ -14,7 +14,6 @@ class BackupsPolicy
      * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
-
     public function view(User $user)
     {
         return $user->hasPermissionTo('infrastructure.ec2-instances.view');
