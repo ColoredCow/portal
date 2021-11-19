@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Policies\ClientPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Modules\Infrastructure\Http\Controllers;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,10 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Http\Controllers\UserController' => 'App\Policies\UserPolicy',
         // 'Modules\Infrastructure\Http\Controllers' => ['App\Policies\Infrastructure\BackupsPolicy','App\Policies\Infrastructure\BillingsPolicy',
         // 'App\Policies\Infrastructure\Ec2InstancesPolicy']
+        InfrastructureController::class => BackupsPolicy::class,
+        InfrastructureController::class => BillingsPolicy::class,
+        InfrastructureController::class => Ec2InstancesPolicy::class,
+        
     ];
 
     /**
