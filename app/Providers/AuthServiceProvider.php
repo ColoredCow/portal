@@ -7,6 +7,7 @@ use App\Policies\ClientPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Modules\Infrastructure\Http\Controllers;
+use App\Policies\Infrastructure;
 
 class AuthServiceProvider extends ServiceProvider
 {
