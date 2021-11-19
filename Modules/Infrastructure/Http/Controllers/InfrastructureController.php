@@ -26,7 +26,7 @@ class InfrastructureController extends Controller
             return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
         } else {
             abort('403');
-        }   
+        }
     }
 
     public function getInstances()
