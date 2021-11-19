@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class BackupsPolicy
 {
     use HandlesAuthorization;
-        /**
+    /**
      * Determine whether the user can view the backups.
      *
      * @param  \Modules\User\Entities\User  $user
