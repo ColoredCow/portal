@@ -4,7 +4,9 @@ namespace Modules\Infrastructure\Http\Controllers;
 
 use Aws\Sdk;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
+
 
 class InfrastructureController extends Controller
 {
@@ -19,22 +21,45 @@ class InfrastructureController extends Controller
 
     public function index()
     {
-        $storageBuckets = $this->service->getStorageBuckets();
+        if(Auth::user()->can('infrastructure.backups.view'))
+        {
+            $storageBuckets = $this->service->getStorageBuckets();
 
-        return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
+            return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
+        }
+        else
+        {
+            abort('403');
+        }
+        
     }
 
     public function getInstances()
     {
-        $instances = $this->service->getServersInstances();
+        if(Auth::user()->can('infrastructure.ec2-instances.view'))
+        {
+            $instances = $this->service->getServersInstances();
 
-        return view('infrastructure::instances')->with('instances', $instances);
+            return view('infrastructure::instances')->with('instances', $instances);
+        }
+        else
+        {
+            abort('403');
+        }
+        
     }
 
     public function getBillingDetails()
     {
-        return $this->service->getBillingDetails();
-    }
+        if(Auth::user()->can('infrastructure.billings.view'))
+        {
+            return $this->service->getBillingDetails();
+        }
+        else
+        {
+            abort('403');
+        }
+     }
 
     /**
      * Show the form for creating a new resource.
