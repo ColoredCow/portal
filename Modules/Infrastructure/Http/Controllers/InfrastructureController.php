@@ -21,14 +21,11 @@ class InfrastructureController extends Controller
 
     public function index()
     {
-        if(Auth::user()->can('infrastructure.backups.view'))
-        {
+        if(Auth::user()->can('infrastructure.backups.view')) {
             $storageBuckets = $this->service->getStorageBuckets();
 
             return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
-        }
-        else
-        {
+        } else {
             abort('403');
         }
         
@@ -36,14 +33,11 @@ class InfrastructureController extends Controller
 
     public function getInstances()
     {
-        if(Auth::user()->can('infrastructure.ec2-instances.view'))
-        {
+        if(Auth::user()->can('infrastructure.ec2-instances.view')) {
             $instances = $this->service->getServersInstances();
 
             return view('infrastructure::instances')->with('instances', $instances);
-        }
-        else
-        {
+        } else {
             abort('403');
         }
         
@@ -51,12 +45,9 @@ class InfrastructureController extends Controller
 
     public function getBillingDetails()
     {
-        if(Auth::user()->can('infrastructure.billings.view'))
-        {
+        if(Auth::user()->can('infrastructure.billings.view')) {
             return $this->service->getBillingDetails();
-        }
-        else
-        {
+        } else {
             abort('403');
         }
      }
