@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class BillingsPolicy
 {
     use HandlesAuthorization;
-        /**
+    /**
      * Determine whether the user can view the .
      *
      * @param  \Modules\User\Entities\User  $user
