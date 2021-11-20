@@ -17,21 +17,15 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Client::class => ClientPolicy::class,
-        // 'App\Models\Finance\Invoice' => 'App\Policies\Finance\InvoicePolicy',
-        // 'App\Models\Project' => 'App\Policies\ProjectPolicy',
-        // 'App\Models\KnowledgeCafe\WeeklyDose' => 'App\Policies\KnowledgeCafe\WeeklyDosePolicy',
-        // 'App\Models\KnowledgeCafe\Library\Book' => 'App\Policies\KnowledgeCafe\Library\BookPolicy',
-        // 'App\Models\KnowledgeCafe\Library\BookCategory' => 'App\Policies\KnowledgeCafe\Library\BookCategoryPolicy',
-        // 'App\Models\Setting' => 'App\Policies\SettingPolicy',
-        // 'App\Http\Controllers\Finance\ReportsController' => 'App\Policies\Finance\ReportPolicy',
-        // 'App\Http\Controllers\UserController' => 'App\Policies\UserPolicy',
-        // 'Modules\Infrastructure\Http\Controllers' => ['App\Policies\Infrastructure\BackupsPolicy','App\Policies\Infrastructure\BillingsPolicy',
-        // 'App\Policies\Infrastructure\Ec2InstancesPolicy']
-        InfrastructureController::class => BackupsPolicy::class,
-        InfrastructureController::class => BillingsPolicy::class,
-        InfrastructureController::class => Ec2InstancesPolicy::class,
-        
+        'App\Models\Finance\Invoice' => 'App\Policies\Finance\InvoicePolicy',
+        'App\Models\Project' => 'App\Policies\ProjectPolicy',
+        'App\Models\KnowledgeCafe\WeeklyDose' => 'App\Policies\KnowledgeCafe\WeeklyDosePolicy',
+        'App\Models\KnowledgeCafe\Library\Book' => 'App\Policies\KnowledgeCafe\Library\BookPolicy',
+        'App\Models\KnowledgeCafe\Library\BookCategory' => 'App\Policies\KnowledgeCafe\Library\BookCategoryPolicy',
+        'App\Models\Setting' => 'App\Policies\SettingPolicy',
+        'App\Http\Controllers\Finance\ReportsController' => 'App\Policies\Finance\ReportPolicy',
+        'App\Http\Controllers\UserController' => 'App\Policies\UserPolicy',
+        'Modules\Infrastructure\Http\Controllers\InfrastructureController' =>'App\Policies\Infrastructure\BillingsPolicy'
     ];
 
     /**
