@@ -39,7 +39,7 @@ class InfrastructureController extends Controller
     public function getBillingDetails()
     {
         $this->authorize('Ec2Instancesview');
-        return $this->service->getBillingDetails();    
+        return $this->service->getBillingDetails();
     }
 
     /**
