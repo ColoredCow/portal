@@ -20,7 +20,6 @@ class InfrastructureController extends Controller
     {
         $this->service = $service;
         $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1']);
-
     }
 
     public function index()
@@ -35,14 +34,12 @@ class InfrastructureController extends Controller
         $this->authorize('Billingview');
         $instances = $this->service->getServersInstances();
         return view('infrastructure::instances')->with('instances', $instances);
-
     }
 
     public function getBillingDetails()
     {
         $this->authorize('Ec2Instancesview');
-        return $this->service->getBillingDetails();
-        
+        return $this->service->getBillingDetails();    
     }
 
     /**
