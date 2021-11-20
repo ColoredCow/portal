@@ -4,49 +4,45 @@ namespace Modules\Infrastructure\Http\Controllers;
 
 use Aws\Sdk;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use app\policies\Infrastruture\BillingsPolicy;
 
 class InfrastructureController extends Controller
 {
     protected $sdk;
     protected $service;
+    use AuthorizesRequests;
+
 
     public function __construct(InfrastructureServiceContract $service)
     {
         $this->service = $service;
         $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1']);
+
     }
 
     public function index()
     {
-        if (Auth::user()->can('infrastructure.backups.view')) {
-            $storageBuckets = $this->service->getStorageBuckets();
-
-            return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
-        } else {
-            abort('403');
-        }
+        $this->authorize('Backupview');
+        $storageBuckets = $this->service->getStorageBuckets();
+        return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
     }
 
     public function getInstances()
     {
-        if (Auth::user()->can('infrastructure.ec2-instances.view')) {
-            $instances = $this->service->getServersInstances();
+        $this->authorize('Billingview');
+        $instances = $this->service->getServersInstances();
+        return view('infrastructure::instances')->with('instances', $instances);
 
-            return view('infrastructure::instances')->with('instances', $instances);
-        } else {
-            abort('403');
-        }
     }
 
     public function getBillingDetails()
     {
-        if (Auth::user()->can('infrastructure.billings.view')) {
-            return $this->service->getBillingDetails();
-        } else {
-            abort('403');
-        }
+        $this->authorize('Ec2Instancesview');
+        return $this->service->getBillingDetails();
+        
     }
 
     /**
