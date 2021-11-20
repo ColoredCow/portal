@@ -21,25 +21,22 @@ class InfrastructureController extends Controller
 
     public function index()
     {
-        $this->authorize('Backupview');
+        $this->authorize('Backupview', $this);
         $storageBuckets = $this->service->getStorageBuckets();
-
         return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
     }
 
     public function getInstances()
     {
-        $this->authorize('Billingview');
+        $this->authorize('Ec2Instancesview', $this);
         $instances = $this->service->getServersInstances();
-
         return view('infrastructure::instances')->with('instances', $instances);
     }
 
     public function getBillingDetails()
     {
-        $this->authorize('Ec2Instancesview');
-
-        return $this->service->getBillingDetails();
+        $this->authorize('Billingview', $this);
+        return $this->service->getBillingDetails(); 
     }
 
     /**
