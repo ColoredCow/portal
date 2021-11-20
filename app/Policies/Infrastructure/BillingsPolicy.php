@@ -14,17 +14,14 @@ class BillingsPolicy
      * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
-
     public function Backupview(User $user)
     {
         return $user->hasPermissionTo('infrastructure.backups.view');
     }
-
     public function Billingview(User $user)
     {
         return $user->hasPermissionTo('infrastructure.billings.view');
     }
-    
     public function Ec2Instancesview(User $user)
     {
         return $user->hasPermissionTo('infrastructure.ec2-instances.view');
