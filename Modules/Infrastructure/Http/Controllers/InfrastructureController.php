@@ -5,16 +5,13 @@ namespace Modules\Infrastructure\Http\Controllers;
 use Aws\Sdk;
 use Illuminate\Routing\Controller;
 use Modules\Infrastructure\Contracts\InfrastructureServiceContract;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use app\policies\Infrastruture\BillingsPolicy;
 
 class InfrastructureController extends Controller
 {
     protected $sdk;
     protected $service;
     use AuthorizesRequests;
-
 
     public function __construct(InfrastructureServiceContract $service)
     {
@@ -26,6 +23,7 @@ class InfrastructureController extends Controller
     {
         $this->authorize('Backupview');
         $storageBuckets = $this->service->getStorageBuckets();
+
         return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
     }
 
@@ -33,12 +31,14 @@ class InfrastructureController extends Controller
     {
         $this->authorize('Billingview');
         $instances = $this->service->getServersInstances();
+
         return view('infrastructure::instances')->with('instances', $instances);
     }
 
     public function getBillingDetails()
     {
         $this->authorize('Ec2Instancesview');
+
         return $this->service->getBillingDetails();
     }
 
