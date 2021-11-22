@@ -1,13 +1,13 @@
 function getcurrency(){
-    var currency = document.getElementById('currency').value;
+    var currency = document.getElementById("currency").value;
 
     return currency;
 }
 function number2text(value) {
     var curr = getcurrency();
-    var value = document.getElementById('amount').value;
+    var value = document.getElementById("amount").value;
     switch (curr) {
-  case 'INR':
+    case "INR":
     value = value * 0.18 + 1 * value;
     var fraction = Math.round(frac(value)*100);
     var f_text  = "";
@@ -16,7 +16,7 @@ function number2text(value) {
     }
     var output = convert_number(value)+" RUPEE "+f_text+" ONLY";
     break;
-  case 'USD':
+    case "USD":
     var fraction = Math.round(frac(value)*100);
     var f_text  = "";
     if(fraction > 0) {
@@ -25,7 +25,7 @@ function number2text(value) {
     var output = convert_number(value)+" DOLLAR "+f_text+" ONLY";
     break;
   }
-	document.getElementById('container').innerHTML = output;
+	document.getElementById("container").innerHTML = output;
 }
 
 function frac(f) {
