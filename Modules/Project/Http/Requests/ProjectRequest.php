@@ -36,8 +36,8 @@ class ProjectRequest extends FormRequest
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',
-                    'total_estimated_hours' => 'numeric|between:0,9999.99',
-                    'monthly_estimated_hours' => 'numeric|between:0,9999.99'
+                    'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
+                    'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99'
                 ];
                 break;
 
