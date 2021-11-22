@@ -155,5 +155,5 @@
 });
 
 </script>
-<script src="{{ asset('js/numberToWords.js') }}"></script>
+<script src="{{ asset('js/numbertowords.js') }}"></script>
 @endsection

@@ -20,5 +20,6 @@ mix.js('Modules/HR/Resources/assets/js/app.js', 'public/js/hr.js')
    .sass('Modules/HR/Resources/assets/sass/app.scss', 'public/css/hr.css');
 mix.js('Modules/EffortTracking/Resources/assets/js/app.js', 'public/js/efforttracking.js')
    .sass('Modules/EffortTracking/Resources/assets/sass/app.scss', 'public/css/efforttracking.css');
+mix.js('resources/js/finance/numbertowords.js', 'public/js');
 
 mix.version();
