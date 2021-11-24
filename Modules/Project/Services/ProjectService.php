@@ -7,6 +7,8 @@ use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\User\Entities\User;
+use Barryvdh\Debugbar\Facade as Debugbar;
+
 
 class ProjectService implements ProjectServiceContract
 {
@@ -67,12 +69,19 @@ class ProjectService implements ProjectServiceContract
         return $project->repositories;
     }
 
+    public function getProjectContracts(Project $project)
+    {
+        return $project->contracts;
+    }
+
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
-        if (! $updateSection) {
+        if (!$updateSection) {
             return false;
         }
+
+        
 
         switch ($updateSection) {
             case 'project_details':
@@ -83,6 +92,8 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
+            case 'project_contracts':
+                return $this->updateProjectContracts($data, $project);
         }
     }
 
@@ -101,6 +112,12 @@ class ProjectService implements ProjectServiceContract
         ]);
     }
 
+    private function updateProjectContracts($data, $project){
+        Debugbar::info($data['contract_file']);
+        $contract_ref = "C:\xampp\tmp\example.php"
+        return $contract_ref;
+    }
+
     private function updateProjectTeamMembers($data, $project)
     {
         $projectTeamMembers = $data['project_team_member'] ?? [];
@@ -115,7 +132,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectRepositories($data, $project)
     {
-        if (! isset($data['url'])) {
+        if (!isset($data['url'])) {
             $project->repositories()->delete();
 
             return;

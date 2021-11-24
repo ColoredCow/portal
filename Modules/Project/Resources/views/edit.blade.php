@@ -23,6 +23,10 @@
         </div>
 
         <div class="mb-5">
+            @include('project::subviews.edit-project-contracts')
+        </div>
+
+        <div class="mb-5">
             @include('project::subviews.edit-project-team-members')
         </div>
 
@@ -67,6 +71,12 @@ new Vue({
                 id: new Date().getTime(),
             }
         },
+        defaultProjectContract() {
+            return {
+                id: new Date().getTime(),
+            }
+        },
+
 
         updateProjectForm: async function(formId) {
             let formData = new FormData(document.getElementById(formId));
@@ -98,12 +108,18 @@ new Vue({
         addNewProjectRepository() {
             this.projectRepositories.push(this.defaultProjectRepository());
         },
+        addNewProjectContract() {
+            this.projectContracts.push(this.defaultProjectContract());
+        },
 
         removeProjectTeamMember(index) {
             this.projectTeamMembers.splice(index, 1);
         },
         removeProjectRepository(index) {
             this.projectRepositories.splice(index, 1);
+        },
+        removeProjectContract(index) {
+            this.projectContracts.splice(index, 1);
         },
     }, 
 

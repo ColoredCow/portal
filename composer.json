@@ -36,7 +36,7 @@
         "spatie/laravel-permission": "^3.3"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.2",
+        "barryvdh/laravel-debugbar": "^3.6",
         "facade/ignition": "^2.3.6",
         "filp/whoops": "^2.5",
         "friendsofphp/php-cs-fixer": "^3.0",
