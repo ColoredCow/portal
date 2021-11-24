@@ -155,5 +155,5 @@
 });
 
 </script>
-<script src="{{ asset('js/numbertowords.js') }}"></script>
+<script src="{{ URL::asset('/js/app.js') }}"></script>
 @endsection
