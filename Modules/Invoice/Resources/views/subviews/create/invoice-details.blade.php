@@ -148,7 +148,7 @@
             let total = this.amount * 0.18 + 1 * this.amount;
             return (total);
         },
-        amt: function (){
+        amt: function () {
             return (this.amount);
         },
     }

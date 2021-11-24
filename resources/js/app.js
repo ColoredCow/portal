@@ -1116,32 +1116,32 @@ function getcurrency() {
 	return currency;
 }
 function number2text(value) {
-	var curr = getcurrency();
+	var currency = getcurrency();
 	var value = document.getElementById("amount").value;
-	switch (curr) {
+	switch (currency) {
 	case "INR":
 		value = value * 0.18 + 1 * value;
 		var fraction = Math.round(frac(value) * 100);
-		var f_text = "";
+		var fraction_text = "";
 		if (fraction > 0) {
-			f_text = "AND " + convert_number(fraction) + " PAISE";
+			fraction_text = "AND " + convert_number(fraction) + " PAISE";
 		}
-		var output = convert_number(value) + " RUPEE " + f_text + " ONLY";
+		var output = convert_number(value) + " RUPEE " + fraction_text + " ONLY";
 		break;
 	case "USD":
 		var fraction = Math.round(frac(value) * 100);
-		var f_text = "";
+		var fraction_text = "";
 		if (fraction > 0) {
-			f_text = "AND " + convert_number(fraction) + " CENTS";
+			fraction_text = "AND " + convert_number(fraction) + " CENTS";
 		}
-		var output = convert_number(value) + " DOLLAR " + f_text + " ONLY";
+		var output = convert_number(value) + " DOLLAR " + fraction_text + " ONLY";
 		break;
 	}
 	document.getElementById("container").innerHTML = output;
 }
 
-function frac(f) {
-	return f % 1;
+function frac(value) {
+	return value % 1;
 }
 
 function convert_number(number) {
@@ -1166,8 +1166,7 @@ function convert_number(number) {
 		result += (result == "" ? "" : " ") + convert_number(lakhs) + " LAKH";
 	}
 	if (thousand > 0) {
-		result +=
-        (result == "" ? "" : " ") + convert_number(thousand) + " THOUSAND";
+		result += (result == "" ? "" : " ") + convert_number(thousand) + " THOUSAND";
 	}
 	if (hundred) {
 		result += (result == "" ? "" : " ") + convert_number(hundred) + " HUNDRED";
