@@ -38,6 +38,7 @@ class InfrastructureController extends Controller
     public function getBillingDetails()
     {
         $this->authorize('Billingview', $this);
+
         return $this->service->getBillingDetails();
     }
 
