@@ -33,6 +33,11 @@ class Project extends Model
         return $this->hasMany(ProjectRepository::class);
     }
 
+    public function contracts()
+    {
+        return $this->hasMany(ProjectContract::class);
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);
