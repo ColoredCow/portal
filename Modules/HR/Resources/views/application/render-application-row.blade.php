@@ -4,7 +4,7 @@
             <a href="/{{ Request::path() }}/{{ $application->id }}/edit"
                 class="mr-1">{{ $application->applicant->name }}
             </a>
-            <button style="outline: none;border: none; background-color: transparent;" title="Assign labels" data-toggle="modal" data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
+            <button class="assignlabels" title="Assign labels" data-toggle="modal" data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
 
             @php
             $formData = $application->applicationMeta()->formData()->first();
