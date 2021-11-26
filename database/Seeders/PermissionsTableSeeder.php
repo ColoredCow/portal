@@ -102,5 +102,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'library_book_category.view']);
         Permission::create(['name' => 'library_book_category.update']);
         Permission::create(['name' => 'library_book_category.delete']);
+
+        Permission::create(['name' => 'knowledgecafe.create']);
+        Permission::create(['name' => 'knowledgecafe.view']);
+        Permission::create(['name' => 'knowledgecafe.update']);
+        Permission::create(['name' => 'knowledgecafe.delete']);
+
     }
 }
