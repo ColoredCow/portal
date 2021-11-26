@@ -771,6 +771,10 @@ span.total-chart-count{
 .exclamation-icon{
 	color: $theme-red;
 }
+.assignlabels{
+	border: none;
+	background-color: transparent;
+}
 // End Custom
 
 [v-cloak] { display: none; }
