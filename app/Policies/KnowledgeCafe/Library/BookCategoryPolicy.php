@@ -28,7 +28,7 @@ class BookCategoryPolicy
      * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, BookCategory $bookCategory)
     {
         return $user->hasPermissionTo('library_book_category.create');
     }
@@ -63,7 +63,7 @@ class BookCategoryPolicy
      * @param  \Modules\User\Entities\User  $user
      * @return mixed
      */
-    public function list(User $user)
+    public function list(User $user, BookCategory $bookCategory)
     {
         return $user->hasPermissionTo('library_book_category.view');
     }
