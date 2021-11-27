@@ -6,9 +6,9 @@ use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectRepository;
+use Modules\Project\Entities\ProjectContract;
 use Modules\User\Entities\User;
 use Barryvdh\Debugbar\Facade as Debugbar;
-
 
 class ProjectService implements ProjectServiceContract
 {
@@ -77,11 +77,9 @@ class ProjectService implements ProjectServiceContract
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
-        if (!$updateSection) {
+        if (! $updateSection) {
             return false;
         }
-
-        
 
         switch ($updateSection) {
             case 'project_details':
@@ -92,6 +90,7 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
+
             case 'project_contracts':
                 return $this->updateProjectContracts($data, $project);
         }
@@ -112,10 +111,19 @@ class ProjectService implements ProjectServiceContract
         ]);
     }
 
-    private function updateProjectContracts($data, $project){
+    private function updateProjectContracts($data, $project)
+    {
         Debugbar::info($data['contract_file']);
-        $contract_ref = "C:\xampp\tmp\example.php"
-        return $contract_ref;
+        //Debugbar:info($project);
+        $cpath = 'C:/xampp/tmp/example.php';
+        ProjectContract::updateOrCreate(
+            [
+                'project_id' => $project->id,
+                'contract_path' => $cpath,
+            ],
+        );
+
+        return $project;
     }
 
     private function updateProjectTeamMembers($data, $project)
@@ -132,7 +140,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectRepositories($data, $project)
     {
-        if (!isset($data['url'])) {
+        if (! isset($data['url'])) {
             $project->repositories()->delete();
 
             return;
