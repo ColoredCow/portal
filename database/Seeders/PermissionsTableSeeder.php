@@ -107,6 +107,5 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'knowledgecafe.view']);
         Permission::create(['name' => 'knowledgecafe.update']);
         Permission::create(['name' => 'knowledgecafe.delete']);
-
     }
 }
