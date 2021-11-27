@@ -1115,30 +1115,33 @@ function getcurrency() {
 	var currency = document.getElementById("currency").value;
 	return currency;
 }
-function number2text(value) {
-	var currency = getcurrency();
-	var value = document.getElementById("amount").value;
-	switch (currency) {
-	case "INR":
-		value = value * 0.18 + 1 * value;
-		var fraction = Math.round(frac(value) * 100);
-		var fraction_text = "";
-		if (fraction > 0) {
-			fraction_text = "AND " + convert_number(fraction) + " PAISE";
+
+$(document).ready(function(){
+	$("#amount").on("keyup", function(){
+		var currency = getcurrency();
+		var value = document.getElementById("amount").value;
+		switch (currency) {
+		case "INR":
+			value = value * 0.18 + 1 * value;
+			var fraction = Math.round(frac(value) * 100);
+			var fraction_text = "";
+			if (fraction > 0) {
+				fraction_text = "AND " + convert_number(fraction) + " PAISE";
+			}
+			var output = convert_number(value) + " RUPEE " + fraction_text + " ONLY";
+			break;
+		case "USD":
+			var fraction = Math.round(frac(value) * 100);
+			var fraction_text = "";
+			if (fraction > 0) {
+				fraction_text = "AND " + convert_number(fraction) + " CENTS";
+			}
+			var output = convert_number(value) + " DOLLAR " + fraction_text + " ONLY";
+			break;
 		}
-		var output = convert_number(value) + " RUPEE " + fraction_text + " ONLY";
-		break;
-	case "USD":
-		var fraction = Math.round(frac(value) * 100);
-		var fraction_text = "";
-		if (fraction > 0) {
-			fraction_text = "AND " + convert_number(fraction) + " CENTS";
-		}
-		var output = convert_number(value) + " DOLLAR " + fraction_text + " ONLY";
-		break;
-	}
-	document.getElementById("container").innerHTML = output;
-}
+		document.getElementById("container").innerHTML = output;
+	});
+});
 
 function frac(value) {
 	return value % 1;

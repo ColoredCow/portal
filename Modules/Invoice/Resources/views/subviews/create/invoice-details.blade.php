@@ -63,7 +63,7 @@
                             @endforeach 
                         </select>
                     </div>
-                    <input onkeyup="number2text();"
+                    <input
                      v-model="amount" type="number" class="form-control" name="amount" id="amount"
                         placeholder="Invoice Amount" required="required" step=".01" min="0">
                 </div>
@@ -155,5 +155,5 @@
 });
 
 </script>
-<script src="{{ URL::asset('/js/app.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 @endsection
