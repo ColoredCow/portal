@@ -21,6 +21,10 @@
          <div class="mb-5">
             @include('project::subviews.edit-project-repository')
         </div>
+         
+        <div class="mb-5">
+            @include('project::subviews.show-project-hours')
+        </div>
 
     </div>
 </div>

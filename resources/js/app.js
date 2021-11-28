@@ -35,7 +35,7 @@ Vue.component("project-stage-billing-component", require("./components/ProjectSt
 Vue.component("applicant-round-action-component", require("./components/HR/ApplicantRoundActionComponent.vue").default);
 Vue.component("project-details-component", require("./components/ProjectDetailsComponent.vue").default);
 Vue.component("books-comments-component", require("./components/Book/BooksCommentsComponent.vue").default);
-Vue.component("effort-component", require("./components/Book/Report.vue").default);
+Vue.component("effort-component", require("./components/Project/Report.vue").default);
 Vue.component("comment", require("./components/CommentItem.vue").default);
 Vue.component("user-dashboard-read-books", require("./components/Dashboard/UserDashboardReadBooks.vue").default);
 Vue.component(
