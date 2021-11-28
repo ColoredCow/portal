@@ -1,58 +1,6 @@
 <template>
   <div class="container-fluid">
-    <!-- <div class="row"> -->
-      <!-- <div class="col-sm-4">
-        <query-builder :cubejs-api="cubejsApi" :query="usersQuery">
-          <template v-slot="{ loading, resultSet }">
-            <Chart
-              title="Total Users"
-              type="number"
-              :loading="loading"
-              :result-set="resultSet"
-            />
-          </template>
-        </query-builder>
-      </div> -->
-      <!-- <div class="col-sm-4">
-        <query-builder :cubejs-api="cubejsApi" :query="totalOrdersQuery">
-          <template v-slot="{ loading, resultSet }">
-            <Chart
-              title="Total Orders"
-              type="number"
-              :loading="loading"
-              :result-set="resultSet"
-            />
-          </template>
-        </query-builder>
-      </div> -->
-      <!-- <div class="col-sm-4">
-        <query-builder :cubejs-api="cubejsApi" :query="shippedOrdersQuery">
-          <template v-slot="{ loading, resultSet }">
-            <Chart
-              title="Shipped Users"
-              type="number"
-              :loading="loading"
-              :result-set="resultSet"
-            />
-          </template>
-        </query-builder>
-      </div> -->
-    <!-- </div>
-    <br />
-    <br /> -->
     <div class="row">
-      <!-- <div class="col-sm-6">
-        <query-builder :cubejs-api="cubejsApi" :query="lineQuery">
-          <template v-slot="{ loading, resultSet }">
-            <Chart
-              title="New Users Over Time"
-              type="line"
-              :loading="loading"
-              :result-set="resultSet"
-            />
-          </template>
-        </query-builder>
-      </div> -->
       <div class="col-sm">
         <query-builder :cubejs-api="cubejsApi" :query="barQuery">
           <template v-slot="{ loading, resultSet }">
@@ -90,18 +38,6 @@ export default {
   data() {
     return {
       cubejsApi,
-      // usersQuery: { measures: ["Users.count"] },
-      // totalOrdersQuery: { measures: ["Orders.count"] },
-      // shippedOrdersQuery: {
-      //   measures: ["Orders.count"],
-      //   filters: [
-      //     {
-      //       dimension: "Orders.status",
-      //       operator: "equals",
-      //       values: ["shipped"],
-      //     },
-      //   ],
-      // },
       lineQuery: {
         measures: ["Users.count"],
         timeDimensions: [
