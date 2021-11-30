@@ -51,18 +51,19 @@
         </li>
     @endif
 
-    @if(Module::checkStatus('Invoice') || Module::checkStatus('LegalDocument'))
+    @if((Module::checkStatus('Invoice') && auth()->user()->can('finance_invoices.view')) || (Module::checkStatus('LegalDocument') && auth()->user()->can('legal-document.view') ))
         <li class="nav-item dropdown">
             <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
-                @if(Module::checkStatus('Invoice') && auth()->user()->can('invoice.view'))
+                @can('finance_invoices.view')
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
+                @endcan    
                     <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly tax report</a>
                     <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
                     <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>
-                @endif
+                
                 @if(Module::checkStatus('LegalDocument') && auth()->user()->can('legal-document.view'))
                 <a class="dropdown-item disabled" href="{{ route('legal-document.index') }}">Legal Documents</a>
                 @endif
@@ -105,9 +106,19 @@
         </li>
     @endif
 
-    @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.view'))
-        <li class="nav-item">
-            <a class="nav-item nav-link" href="{{ route('infrastructure.index') }}">Infrastructure</a>
+    @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.billings.view'))
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Infrastructure<span class="caret"></span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+            @can('infrastructure.backups.view')
+                <a class="dropdown-item" href="{{ route('infrastructure.index') }}">Backups</a>
+            @endcan
+            @can('infrastructure.ec2-instances.view')
+                <a class="dropdown-item" href="{{ route('infrastructure.get-instances') }}">EC2 Instances</a>
+            @endcan
+        </div>
         </li>
     @endif
 
