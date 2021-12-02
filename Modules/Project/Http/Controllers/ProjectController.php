@@ -21,13 +21,12 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->hasPermissionTo('projects.view')) {
-            $projects = $this->service->index();
+        // dd("jkkhkh");
+        $this->authorize('view', Project::class);
 
-            return view('project::index')->with('projects', $projects);
-        } else {
-            return view('errors/403');
-        }
+        $projects = $this->service->index();
+
+        return view('project::index')->with('projects', $projects);
     }
 
     /**
