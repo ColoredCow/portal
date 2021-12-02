@@ -3,7 +3,7 @@
 namespace Modules\Project\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Modules\User\Entities\User; 
+use Modules\User\Entities\User;
 
 class ProjectPolicy
 {
