@@ -9,6 +9,7 @@ use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectContract;
 use Modules\User\Entities\User;
 use Barryvdh\Debugbar\Facade as Debugbar;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -113,13 +114,14 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectContracts($data, $project)
     {
-        Debugbar::info($data['contract_file']);
-        //Debugbar:info($project);
-        $cpath = 'C:/xampp/tmp/example.php';
+        $path = Storage::putFile('contractStorage', $data['contract_file']);
+
+        Debugbar::info($path);
+
         ProjectContract::updateOrCreate(
             [
                 'project_id' => $project->id,
-                'contract_path' => $cpath,
+                'contract_path' => $path,
             ],
         );
 
