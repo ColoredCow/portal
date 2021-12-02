@@ -13,5 +13,4 @@ class ProjectPolicy
     {
         return $user->hasPermissionTo('projects.view');
     }
-
 }
