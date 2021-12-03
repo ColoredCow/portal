@@ -4,6 +4,7 @@
             <a href="/{{ Request::path() }}/{{ $application->id }}/edit"
                 class="mr-1">{{ $application->applicant->name }}
             </a>
+            <button class="assignlabels outline-none " title="Assign labels" data-toggle="modal" data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
 
             @php
             $formData = $application->applicationMeta()->formData()->first();
@@ -27,6 +28,7 @@
             @endif
             @endif
         </div>
+        @include('hr.application.assignlabels-modal')
         <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
             <span class="mr-1 text-truncate">
                 <i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>

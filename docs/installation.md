@@ -86,6 +86,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
     DB_PASSWORD=
     ```
 
+    These credentials will be used when you will connect to MySQL Server whether you use XAMPP, WAMP, MAMP (PhpMyadmin) or TablePlus, the proper steps you can find here in the [prerequisites guide](./docs/prerequisites.md).
+
     3. _(Optional)_ Google configurations.
     ```sh
     GOOGLE_CLIENT_ID=
@@ -185,30 +187,30 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
         - Go to `httpd.conf` file or edit this file in the terminal itself use this command
             ```sh
-            sudo nano /etc/apache2/httpd.conf
+            sudo nano /Applications/MAMP/conf/apache/httpd.conf
             ```
             And search for `vhosts` and uncomment line like this
             ```sh
             # Virtual hosts
-            # Include /private/etc/apache2/extra/httpd-vhosts.conf
+            # Include Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
             ```
             Change above to:
             ```sh
             # Virtual hosts
-            Include /private/etc/apache2/extra/httpd-vhosts.conf
+            Include Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
             ```
           - Open the `vhost` file in the terminal
             ```sh
             sudo nano /etc/apache2/extra/httpd-vhosts.conf
             ```
             Add the following line at the end of the file:
-            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`.
+            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`. Make sure you type '/public' at the end after your project path.
 
             ```apacheconf
              <VirtualHost *:80>
                  ServerName portal.test
-                 DocumentRoot "/path/to/your/project"
-                 <Directory "/path/to/your/project">
+                 DocumentRoot "/path/to/your/project/public"
+                 <Directory "/path/to/your/project/public">
                      DirectoryIndex index.php
                      AllowOverride All
                      Order allow,deny

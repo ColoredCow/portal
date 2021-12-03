@@ -21,12 +21,12 @@ When you are working in specified module, create migrations/seeders in the speci
 ## Coding Guidelines and Conventions
 
 1. Naming Conventions
-    1. [Controllers](https://laravel.com/docs/8.x/controllers)
-    2. [Models](https://laravel.com/docs/8.x/eloquent)
-    3. [Functions](https://www.w3schools.com/php/php_functions.asp )
-    4. [Routes](https://laravel.com/docs/8.x/routing)
-    5. [Variables](https://laravel.com/docs/8.x/blade)
-    6. [Views](https://laravel.com/docs/8.x/views)
+    1. [Controllers](https://webdevetc.com/blog/laravel-naming-conventions#section_naming-controllers)
+    2. [Models](https://webdevetc.com/blog/laravel-naming-conventions#section_naming-conventions-for-models)
+    3. [Functions/Method](https://xqsit.github.io/laravel-coding-guidelines/docs/naming-conventions/)
+    4. [Routes](https://xqsit.github.io/laravel-coding-guidelines/docs/naming-conventions/)
+    5. [Variables](https://webdevetc.com/blog/laravel-naming-conventions#section_variables)
+    6. [Views](https://webdevetc.com/blog/laravel-naming-conventions#section_blade-view-files)
 
 2. Database conventions
     1. [Table and Fields Naming](https://www.geeksforgeeks.org/database-table-and-column-naming-conventions/)
@@ -34,6 +34,9 @@ When you are working in specified module, create migrations/seeders in the speci
 
 3. Formatting
     1. [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/)
+
+4. Variable Naming Conventions in Employee Portal
+    1. [Variables Naming Conventions](./variable-naming-convention.md)
 
 ### References
 1. [Laravel Guidelines](https://github.com/ColoredCow/resources/tree/master/laravel)
