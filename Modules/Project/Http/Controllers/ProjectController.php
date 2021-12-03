@@ -40,6 +40,7 @@ class ProjectController extends Controller
     {
         return view('project::project-detail', [
             'project' => $project,
+            
         ]);     
     }
 
