@@ -36,6 +36,13 @@ class ProjectController extends Controller
         return view('project::create')->with('clients', $clients);
     }
 
+    public function projectDetail(Project $project)
+    {
+        return view('project::project-detail', [
+            'project' => $project,
+        ]);     
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param ProjectRequest $request
