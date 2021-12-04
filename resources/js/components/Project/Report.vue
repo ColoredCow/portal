@@ -23,37 +23,28 @@ import { QueryBuilder } from "@cubejs-client/vue";
 
 import Chart from "./components/Chart";
 
-const cubejsApi = cubejs(
-  {
-    apiUrl: "http://localhost:4000/cubejs-api/v1",
-  }
-);
-
 export default {
   name: "Report",
   components: {
     Chart,
     QueryBuilder,
   },
+  props: ["project", "cube_js_url"],
   data() {
+  
+  const cubejsApi = cubejs(
+  {
+    apiUrl: this.cube_js_url,
+  }
+);
     return {
       cubejsApi,
-      lineQuery: {
-        measures: ["Users.count"],
-        timeDimensions: [
-          {
-            dimension: "Users.createdAt",
-            dateRange: ["2019-01-01", "2020-12-01"],
-            granularity: "month",
-          },
-        ],
-      },
       barQuery: {
         measures: ["ProjectTeamMembersEffort.project_monthly_hours"],
         timeDimensions: [
           {
             dimension: "ProjectTeamMembersEffort.createdAt",
-            dateRange: ["2021-07-01", "2021-11-30"],
+            dateRange: ["2021-10-01", "2022-04-30"],
             granularity: "month",
           },
         ],
@@ -61,7 +52,7 @@ export default {
           {
             dimension: "ProjectTeamMembersEffort.project_id",
             operator: "equals",
-            values: ["7"],
+            values: [this.project],
           },
         ],
       },
