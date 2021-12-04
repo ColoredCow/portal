@@ -25,45 +25,45 @@ import LineChart from "./LineChart";
 import BarChart from "./BarChart";
 
 export default {
-  components: {
-    LineChart,
-    BarChart
-  },
-  name: "Chart",
-  props: {
-    resultSet: Object,
-    loading: Boolean,
-    title: String,
-    type: String
-  },
-  methods: {
-    dateFormatter: function(value) {
-      return moment(value).format("MMM YY");
-    }
-  },
-  computed: {
-    values: function() {
-      if (this.loading || this.resultSet=== undefined) return [];
-      return this.resultSet.chartPivot();
-    },
-    metrics: function() {
-      if (this.loading || this.resultSet=== undefined ) return [];
-      return this.resultSet.seriesNames().map(x => x.key);
-    }
-  },
-  data() {
-    return {
-      colors: [
-        "#7DB3FF",
-        "#49457B",
-        "#FF7C78",
-        "#FED3D0",
-        "#6F76D9",
-        "#9ADFB4",
-        "#2E7987"
-      ]
-    };
-  }
+	components: {
+		LineChart,
+		BarChart
+	},
+	name: "Chart",
+	props: {
+		resultSet: Object,
+		loading: Boolean,
+		title: String,
+		type: String
+	},
+	methods: {
+		dateFormatter: function(value) {
+			return moment(value).format("MMM YY");
+		}
+	},
+	computed: {
+		values: function() {
+			if (this.loading || this.resultSet=== undefined) return [];
+			return this.resultSet.chartPivot();
+		},
+		metrics: function() {
+			if (this.loading || this.resultSet=== undefined ) return [];
+			return this.resultSet.seriesNames().map(x => x.key);
+		}
+	},
+	data() {
+		return {
+			colors: [
+				"#7DB3FF",
+				"#49457B",
+				"#FF7C78",
+				"#FED3D0",
+				"#6F76D9",
+				"#9ADFB4",
+				"#2E7987"
+			]
+		};
+	}
 };
 </script>
 

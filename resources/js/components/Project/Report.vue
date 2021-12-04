@@ -24,40 +24,40 @@ import { QueryBuilder } from "@cubejs-client/vue";
 import Chart from "./components/Chart";
 
 export default {
-  name: "Report",
-  components: {
-    Chart,
-    QueryBuilder,
-  },
-  props: ["project", "cube_js_url"],
-  data() {
+	name: "Report",
+	components: {
+		Chart,
+		QueryBuilder,
+	},
+	props: ["project", "cube_js_url"],
+	data() {
   
-  const cubejsApi = cubejs(
-  {
-    apiUrl: this.cube_js_url,
-  }
-);
-    return {
-      cubejsApi,
-      barQuery: {
-        measures: ["ProjectTeamMembersEffort.project_monthly_hours"],
-        timeDimensions: [
-          {
-            dimension: "ProjectTeamMembersEffort.createdAt",
-            dateRange: ["2021-10-01", "2022-04-30"],
-            granularity: "month",
-          },
-        ],
-        filters: [
-          {
-            dimension: "ProjectTeamMembersEffort.project_id",
-            operator: "equals",
-            values: [this.project],
-          },
-        ],
-      },
-    };
-  },
+		const cubejsApi = cubejs(
+			{
+				apiUrl: this.cube_js_url,
+			}
+		);
+		return {
+			cubejsApi,
+			barQuery: {
+				measures: ["ProjectTeamMembersEffort.project_monthly_hours"],
+				timeDimensions: [
+					{
+						dimension: "ProjectTeamMembersEffort.createdAt",
+						dateRange: ["2021-10-01", "2022-04-30"],
+						granularity: "month",
+					},
+				],
+				filters: [
+					{
+						dimension: "ProjectTeamMembersEffort.project_id",
+						operator: "equals",
+						values: [this.project],
+					},
+				],
+			},
+		};
+	},
 };
 </script>
 
