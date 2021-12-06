@@ -14,7 +14,7 @@
 Route::prefix('projects')->middleware('auth')->group(function () {
     Route::get('/', 'ProjectController@index')->name('project.index');
     Route::get('/{project}/edit', 'ProjectController@edit')->name('project.edit');
-    Route::get('/{project}/project-detail', 'ProjectController@projectDetail')->name('project.project-detail');
+    Route::get('/{project}/show', 'ProjectController@show')->name('project.show');
     Route::get('/create', 'ProjectController@create')->name('project.create');
     Route::post('/', 'ProjectController@store')->name('project.store');
     Route::post('/{project}/update', 'ProjectController@update')->name('project.update');
