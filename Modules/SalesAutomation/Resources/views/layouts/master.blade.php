@@ -21,10 +21,10 @@
 @endsection
 
 @section('css_scripts')
-    <link href="{{ mix('/css/salesautomation.css') }}" rel="stylesheet">
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 @endsection
 
 @section('js_scripts')
-    <script src="{{ mix('/js/salesautomation.js') }}"></script>
+    <script src="{{ mix('/js/app.js') }}"></script>
 @endsection
 
