@@ -25,7 +25,6 @@ class InvoiceController extends Controller
         if (! $filters) {
             return redirect(route('invoice.index', $this->service->defaultFilters()));
         }
-
         return view('invoice::index', $this->service->index($filters));
     }
 

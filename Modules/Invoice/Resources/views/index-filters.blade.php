@@ -53,22 +53,23 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route("")}}" method ="POST">
+                    <form method ="POST" id ="myForm">
                         @csrf
                         <div class="form-group row">
                             <label for="recipient-email" class="col-sm-4 col-form-label">Recipient-Email:   </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="recipient-email" placeholder="Recipient Email">
+                                <input type="email" class="form-control" id="recipient-email" placeholder="Recipient Email">
                             </div>
                         </div>
                     </form>    
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Email</button>
+                    <button type="submit" class="btn btn-outline-primary" onclick="myFunction()">Email</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
  
