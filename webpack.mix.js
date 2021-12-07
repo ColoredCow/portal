@@ -18,6 +18,10 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
 mix.js('Modules/HR/Resources/assets/js/app.js', 'public/js/hr.js')
    .sass('Modules/HR/Resources/assets/sass/app.scss', 'public/css/hr.css');
+mix.js('Modules/User/Resources/assets/js/app.js', 'public/js/user.js')
+   .sass('Modules/User/Resources/assets/sass/app.scss', 'public/css/user.css');
+mix.js('Modules/SalesAutomation/Resources/assets/js/app.js', 'public/js/salesautomation.js')
+   .sass('Modules/SalesAutomation/Resources/assets/sass/app.scss', 'public/css/salesautomation.css');
 mix.js('Modules/EffortTracking/Resources/assets/js/app.js', 'public/js/efforttracking.js')
    .sass('Modules/EffortTracking/Resources/assets/sass/app.scss', 'public/css/efforttracking.css');
 
