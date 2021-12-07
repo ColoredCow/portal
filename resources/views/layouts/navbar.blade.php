@@ -41,6 +41,7 @@
                 @can('projects.view')
                     <a class="dropdown-item" href="{{ route('project.index') }}">Projects</a>
                 @endcan    
+                <a class="dropdown-item" href="{{ route('crm') }}">CRM</a>
             </div>
         </li>
     @endif
@@ -106,9 +107,19 @@
         </li>
     @endif
 
-    @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.view'))
-        <li class="nav-item">
-            <a class="nav-item nav-link" href="{{ route('infrastructure.index') }}">Infrastructure</a>
+    @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.billings.view'))
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Infrastructure<span class="caret"></span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+            @can('infrastructure.backups.view')
+                <a class="dropdown-item" href="{{ route('infrastructure.index') }}">Backups</a>
+            @endcan
+            @can('infrastructure.ec2-instances.view')
+                <a class="dropdown-item" href="{{ route('infrastructure.get-instances') }}">EC2 Instances</a>
+            @endcan
+        </div>
         </li>
     @endif
 
