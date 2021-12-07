@@ -38,37 +38,5 @@
                 <option {{ request()->input('status') == 'paid' ? "selected=selected" : '' }} value="paid">Paid</option>
             </select>
         </div>
-        
-        <div>
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#emailinvoicesmodal">Email Invoices</button>
-        </div>
     </div>
 </form>
-<div class="container" id="vueContainer">   
-    <div class="modal" id="emailinvoicesmodal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Email Invoices</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route("")}}" method ="POST">
-                        @csrf
-                        <div class="form-group row">
-                            <label for="recipient-email" class="col-sm-4 col-form-label">Recipient-Email:   </label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="recipient-email" placeholder="Recipient Email">
-                            </div>
-                        </div>
-                    </form>    
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Email</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
- 
