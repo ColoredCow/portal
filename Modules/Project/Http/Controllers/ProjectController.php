@@ -50,7 +50,7 @@ class ProjectController extends Controller
 
     /**
      * Show the specified resource.
-     * @param int $id
+     * @param Project $project
      */
     public function show(Project $project)
     {

@@ -2,19 +2,14 @@
 @section('content')
 
 <div class="container" id="vueContainer">
-    <br> <h4 clss="c-pointer" class="d-inline-block" v-on:click="counter += 1">{{ $project->name }}</h4>
-    <a  id="view_effort_sheet_badge" target="_self" href= "{{route('project.edit', $project )}}" class="btn btn-info text-white ml-2">{{ _('Edit') }}</a>
-
-    <div class="mt-3">
-        @include('status', ['errors' => $errors->all()])
-        <div class="card">
-            <form action="{{ route('project.store') }}" method="POST" id="form_project">
-                @csrf 
-                <div class="card-header">
-                    <span>Project Details</span>
-                </div>
-            </form>
-        </div>
+    <br>
+    <div class="d-flex">
+        <h4 clss="c-pointer" class="d-inline-block" v-on:click="counter += 1">{{ $project->name }}</h4>
+        <a  id="view_effort_sheet_badge" target="_self" href= "{{route('project.edit', $project )}}" class="btn btn-primary text-white ml-auto">{{ _('Edit') }}</a>
+    </div> 
+    <div class="card mt-3" >
+    <div class="card-header" data-toggle="collapse" data-target="#project_detail_form">
+        <h4>Project details <span>(Coming soon...)</span></h4>
     </div>
 
 </div>
