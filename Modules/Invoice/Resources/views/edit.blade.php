@@ -5,7 +5,7 @@
     <br>
     
     <div class="d-flex justify-content-between mb-2">
-    @can('finance_invoices.update')
+    @if(auth()->user()->can('finance_invoices.update'))
             <h4>Invoice Information</h4>
             <span>
                 <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" onclick="alert('Will add this soon')" href="#">Duplicate this invoice</a>
@@ -18,8 +18,10 @@
                 @include('status', ['errors' => $errors->all()])
                 @include('invoice::subviews.edit.invoice-details')
             </div>
-        </form>
-    @endcan
+        </form>    
+    @else
+        @include('errors.403')
+    @endif
 </div>
 
 @endsection

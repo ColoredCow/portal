@@ -3,7 +3,7 @@
 
 <div class="container">
     <br>
-    @can('finance_invoices.create')
+    @if(auth()->user()->can('finance_invoices.create'))
         <h4>Add new Invoice</h4>
         <form method="POST" action="{{ route('invoice.store') }}" enctype="multipart/form-data">
             @csrf
@@ -12,7 +12,8 @@
                 @include('invoice::subviews.create.invoice-details')
             </div>
         </form>
-    @endcan
+    @else
+        @include('errors.403')
+    @endif
 </div>
-
 @endsection
