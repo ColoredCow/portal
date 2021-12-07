@@ -95,11 +95,7 @@
         :user = "{{ auth()->user() }}"
         />
     </div>
-    <div class="mt-3 w-75">
-        <effort-component/>
-    </div>
 </div>
 
 
 @endsection
-
