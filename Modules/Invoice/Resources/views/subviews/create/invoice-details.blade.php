@@ -104,7 +104,7 @@
 
 
 
-@section('js_scripts')
+@section('scripts')
 <script>
     
     new Vue({

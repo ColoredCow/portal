@@ -1,7 +1,7 @@
 /*
    * Finance - Invoices module JS code
    */
-
+//console.log("in app.js");
 $(document).ready(function(){
 	$("#amount").on("keyup", function(){
         console.log("inside invoice/app.js");
