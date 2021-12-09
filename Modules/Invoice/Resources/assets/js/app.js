@@ -1,10 +1,8 @@
 /*
    * Finance - Invoices module JS code
    */
-//console.log("in app.js");
 $(document).ready(function(){
 	$("#amount").on("keyup", function(){
-        console.log("inside invoice/app.js");
 		var currency = document.getElementById("currency").value;
 		var value = document.getElementById("amount").value;
 		switch (currency) {
