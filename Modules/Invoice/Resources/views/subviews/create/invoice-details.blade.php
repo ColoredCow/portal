@@ -63,7 +63,8 @@
                             @endforeach 
                         </select>
                     </div>
-                    <input v-model="amount" type="number" class="form-control" name="amount" id="amount"
+                    <input
+                     v-model="amount" type="number" class="form-control" name="amount" id="amount"
                         placeholder="Invoice Amount" required="required" step=".01" min="0">
                 </div>
             </div>
@@ -78,6 +79,9 @@
                         step=".01" min="0">
                 </div>
             </div>
+            <p class="text-danger" v-if="currency == 'INR' " >Total Amount : @{{tot}}</p>
+            <p class="text-danger" v-if="currency == 'USD' " >Total Amount : @{{amt}}</p>
+            <div class="text-danger" id="container"></div><br/>
 
             <div class="form-group">
                 <label for="sent_on" class="field-required">Sent on</label>
@@ -100,8 +104,9 @@
 
 
 
-@section('js_scripts')
+@section('scripts')
 <script>
+    
     new Vue({
     el:'#create_invoice_details_form',
 
@@ -112,7 +117,7 @@
             clientId:"",
             client:null,
             currency:'',
-            amount:''
+            amount:'',
         }
     },
 
@@ -138,7 +143,14 @@
     computed: {
         gst: function () {
             return (this.amount * 0.18).toFixed(2);
-        }
+        },
+        tot: function () {
+            let total = this.amount * 0.18 + 1 * this.amount;
+            return (total);
+        },
+        amt: function () {
+            return (this.amount);
+        },
     }
 });
 

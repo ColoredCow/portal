@@ -24,5 +24,7 @@ mix.js('Modules/SalesAutomation/Resources/assets/js/app.js', 'public/js/salesaut
    .sass('Modules/SalesAutomation/Resources/assets/sass/app.scss', 'public/css/salesautomation.css');
 mix.js('Modules/EffortTracking/Resources/assets/js/app.js', 'public/js/efforttracking.js')
    .sass('Modules/EffortTracking/Resources/assets/sass/app.scss', 'public/css/efforttracking.css');
+mix.js('Modules/Invoice/Resources/assets/js/app.js', 'public/js/invoice.js')
+   .sass('Modules/Invoice/Resources/assets/sass/app.scss', 'public/css/invoice.css');
 
 mix.version();
