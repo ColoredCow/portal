@@ -21,12 +21,12 @@ class EmailInvoiceController extends Controller
         $user->email = 'finance@coloredcow.com';
         Mail::send(
             'invoice::mail.invoices-list',
-            ['user' => $user, 'invoices' =>$invoices] ,
-            function ($m) use ($user){
-            $m->from('finance@coloredcow.com');
+            ['user' => $user, 'invoices' =>$invoices],
+            function ($m) use ($user) {
+                $m->from('finance@coloredcow.com');
 
-            $m->to($user->email)->subject('List Of Invoices Sent');
-        }
+                $m->to($user->email)->subject('List Of Invoices Sent');
+            }
         );
         return redirect()->back();
     }
