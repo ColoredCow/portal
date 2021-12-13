@@ -15,7 +15,7 @@ class CreateProjectHealthTable extends Migration
     {
         Schema::create('project_health', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
-            $table->foreignId('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->string('staging_url')->nullable();
             $table->string('onboarding_documents_url')->nullable();
             $table->boolean('has_issue_templates')->default(false);
@@ -25,6 +25,7 @@ class CreateProjectHealthTable extends Migration
             $table->boolean('has_error_logging')->default(false);
             $table->boolean('has_error_reporting')->default(false);
 
+            $table->foreign('project_id')->references('id')->on('projects');
             $table->timestamps();
         });
     }
