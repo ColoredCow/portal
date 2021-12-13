@@ -173,4 +173,4 @@ Route::middleware('auth')->group(function () {
     Route::get('user/projects', 'UserController@projects');
 });
 
-Route::post('/','EmailInvoiceController@handle')->name('email-invoice.handle');
+Route::post('/', 'EmailInvoiceController@handle')->name('email-invoice.handle');
