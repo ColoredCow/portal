@@ -234,4 +234,25 @@ Before you start following the guidelines, make sure to go through the [prerequi
             </Directory>
             ```
            - Restart MAMP. Next, open this url in your browser: http://portal.test
-10. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
+11. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
+
+12. _(Optional)_ Setup Email configuration:  
+
+    1. Open [Mailtrap](https://mailtrap.io/) and signup/login.  
+
+    2. Create an inbox.  
+
+    3. Open inbox setting and choose Laravel 7+ from Ingredients.  
+
+    4. Open .env file and add the following  
+
+        ```sh
+        MAIL_DRIVER=smtp
+        MAIL_HOST=smtp.mailtrap.io
+        MAIL_PORT=yourPortNumber
+        MAIL_USERNAME=yourMailtrapUsername
+        MAIL_PASSWORD=yourMailtrapPassword
+        MAIL_ENCRYPTION=tls
+        MAIL_FROM_ADDRESS=senderEmailAddress
+        MAIL_FROM_NAME="${APP_NAME}"
+        ```
