@@ -27,7 +27,7 @@
         </div>
         @endif
 
-        @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.view'))
+        @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.billings.view'))
         <div class="min-w-389">
             <user-dashboard-infrastructure />
         </div>

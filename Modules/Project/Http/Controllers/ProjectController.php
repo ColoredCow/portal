@@ -50,10 +50,13 @@ class ProjectController extends Controller
 
     /**
      * Show the specified resource.
-     * @param int $id
+     * @param Project $project
      */
-    public function show($id)
+    public function show(Project $project)
     {
+        return view('project::show', [
+            'project' => $project,
+        ]);
     }
 
     /**

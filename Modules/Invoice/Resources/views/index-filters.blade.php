@@ -38,7 +38,6 @@
                 <option {{ request()->input('status') == 'paid' ? "selected=selected" : '' }} value="paid">Paid</option>
             </select>
         </div>
-        
         <div>
             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#emailinvoicesmodal">Email Invoices</button>
         </div>
