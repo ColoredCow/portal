@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
+use DB;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -15,8 +16,10 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('permissions')->delete();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        \DB::table('permissions')->truncate();
         Artisan::call('permission:cache-reset');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         Permission::create(['name' => 'finance_reports.view']);
 
