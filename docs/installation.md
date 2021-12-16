@@ -242,7 +242,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
     2. Create an inbox.  
 
-    3. Open inbox setting and choose Laravel 7+ from Ingredients.  
+    3. Open inbox setting and choose Laravel 7+ from Integrations.  
 
     4. Open .env file and add the following  
 
