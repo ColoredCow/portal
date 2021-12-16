@@ -6,18 +6,12 @@
             <table style="border: 1px solid #000; border-collapse: collapse;">
                 <thead>
                     <th style="padding-right: 10px;">Project name</th>
-                    <th style="padding-right: 10px;">Sent on</th>
-                    <th style="padding-right: 10px;">Receivable Date</th>
-                    <th style="padding-right: 10px;">Status</th>
                 </thead>
             
                 <tbody>
                     @foreach($invoices as $invoice)
                         <tr style='border-top: 1px solid #000'>
                             <td style="padding-right: 10px;">{{ $invoice->project->name}}</td>
-                            <td style="padding-right: 10px;">{{ $invoice->sent_on }}</td>
-                            <td style="padding-right: 10px;">{{ $invoice->receivable_date}}</td>
-                            <td style="padding-right: 10px;">{{ $invoice->status }}</td>
                         </tr>
                     @endforeach   
                 </tbody>
