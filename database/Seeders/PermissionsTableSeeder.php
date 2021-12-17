@@ -94,7 +94,6 @@ class PermissionsTableSeeder extends Seeder
 
         Permission::updateOrCreate(['name' => 'weeklydoses.view']);
 
-
         Permission::updateOrCreate(['name' => 'library_books.create']);
         Permission::updateOrCreate(['name' => 'library_books.view']);
         Permission::updateOrCreate(['name' => 'library_books.update']);
