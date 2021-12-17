@@ -187,30 +187,30 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
         - Go to `httpd.conf` file or edit this file in the terminal itself use this command
             ```sh
-            sudo nano /etc/apache2/httpd.conf
+            sudo nano /Applications/MAMP/conf/apache/httpd.conf
             ```
             And search for `vhosts` and uncomment line like this
             ```sh
             # Virtual hosts
-            # Include /private/etc/apache2/extra/httpd-vhosts.conf
+            # Include Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
             ```
             Change above to:
             ```sh
             # Virtual hosts
-            Include /private/etc/apache2/extra/httpd-vhosts.conf
+            Include Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
             ```
           - Open the `vhost` file in the terminal
             ```sh
             sudo nano /etc/apache2/extra/httpd-vhosts.conf
             ```
             Add the following line at the end of the file:
-            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`.
+            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`. Make sure you type '/public' at the end after your project path.
 
             ```apacheconf
              <VirtualHost *:80>
                  ServerName portal.test
-                 DocumentRoot "/path/to/your/project"
-                 <Directory "/path/to/your/project">
+                 DocumentRoot "/path/to/your/project/public"
+                 <Directory "/path/to/your/project/public">
                      DirectoryIndex index.php
                      AllowOverride All
                      Order allow,deny
@@ -234,4 +234,25 @@ Before you start following the guidelines, make sure to go through the [prerequi
             </Directory>
             ```
            - Restart MAMP. Next, open this url in your browser: http://portal.test
-10. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
+11. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
+
+12. _(Optional)_ Setup Email configuration:  
+
+    1. Open [Mailtrap](https://mailtrap.io/) and signup/login.  
+
+    2. Create an inbox.  
+
+    3. Open inbox setting and choose Laravel 7+ from Integrations.  
+
+    4. Open .env file and add the following  
+
+        ```sh
+        MAIL_DRIVER=smtp
+        MAIL_HOST=smtp.mailtrap.io
+        MAIL_PORT=yourPortNumber
+        MAIL_USERNAME=yourMailtrapUsername
+        MAIL_PASSWORD=yourMailtrapPassword
+        MAIL_ENCRYPTION=tls
+        MAIL_FROM_ADDRESS=senderEmailAddress
+        MAIL_FROM_NAME="${APP_NAME}"
+        ```

@@ -35,6 +35,9 @@ When you are working in specified module, create migrations/seeders in the speci
 3. Formatting
     1. [PSR-2 coding standard](https://www.php-fig.org/psr/psr-2/)
 
+4. Variable Naming Conventions in Employee Portal
+    1. [Variables Naming Conventions](./variable-naming-convention.md)
+
 ### References
 1. [Laravel Guidelines](https://github.com/ColoredCow/resources/tree/master/laravel)
 2. [Laravel Modules](https://nwidart.com/laravel-modules/v6/introduction)

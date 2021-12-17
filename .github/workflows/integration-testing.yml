@@ -28,6 +28,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # cypress setup
+      - name: Setup PHP v7.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
       - name: Setup cypress-testing
         uses: actions/checkout@v2
 
@@ -65,4 +70,3 @@ jobs:
         run: |
           cp cypress.json.example cypress.json
           npm run cypress-record ${{ secrets.CYPRESS_DASHBOARD_KEY }}
-

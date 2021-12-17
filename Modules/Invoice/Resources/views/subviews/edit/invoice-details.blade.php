@@ -155,7 +155,11 @@
     </div>
     <div class="card-footer">
         <button type="submit" class="btn btn-primary mr-4">Save</button>
-        <span class="btn btn-danger" @click="deleteInvoice()" >Delete</span>
+        @if(auth()->user()->can('finance_invoices.delete'))
+            <span class="btn btn-danger" @click="deleteInvoice()" >Delete</span>   
+        @else
+            @include('errors.403')
+        @endif    
     </div>
 </div>
 
