@@ -16,7 +16,7 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('permissions')->delete();
+        DB::table('permissions');
         Artisan::call('permission:cache-reset');
 
         Permission::updateOrCreate(['name' => 'finance_reports.view']);
