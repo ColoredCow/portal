@@ -2,18 +2,15 @@
 @section('content')
 
 <div class="container" id="view_edit_project">
-    <br>
-    <a href="{{URL::previous()}}"
-        class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-inline-flex align-items-center">
+    <br>  
+    <a href="{{URL::previous()}}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-inline-flex align-items-center">
         <span class="mr-1 w-8 h-15 w-xl-12 h-xl-12">
             {!! file_get_contents(public_path('icons/prev-icon.svg')) !!}
         </span><span class="mr-3 w-26 h-15 w-xl-10 h-xl-10">Back</span>
     </a>
     <br>
-    <h4 class="c-pointer d-inline-block" v-on:click="counter += 1">{{ $project->name }} ({{ $project->client_project_id
-        }})</h4>
-    <a id="view_effort_sheet_badge" target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 "
-        target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
+    <h4 class="c-pointer d-inline-block"  v-on:click="counter += 1">{{ $project->name }} ({{ $project->client_project_id }})</h4>
+    <a id="view_effort_sheet_badge" target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
     <br>
     <div class="text-danger d-none" id="edit-project-errors">
         <div>Error in the Input:</div>
@@ -29,7 +26,7 @@
             @include('project::subviews.edit-project-team-members')
         </div>
 
-        <div class="mb-5">
+         <div class="mb-5">
             @include('project::subviews.edit-project-repository')
         </div>
 
@@ -41,7 +38,7 @@
 
 @section('js_scripts')
 <script>
-    new Vue({ 
+new Vue({ 
     el: '#view_edit_project',
 
     data() {
