@@ -3,6 +3,7 @@
 namespace Modules\Project\Console;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
 use Modules\Project\Entities\Project;
 use Modules\User\Entities\User;
@@ -53,30 +54,38 @@ class SyncEffortsheet extends Command
             }
 
             $matchesId = [];
-            $matchesSheetId = [];
-
             $matchesSheetId = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetURL, $matchesId);
-            $matchesSubsheetId = preg_match('/gid=([0-9]+)/', $effortSheetURL, $matchesSheetId);
 
-            if (! $matchesSheetId || ! $matchesSubsheetId) {
+            if (! $matchesSheetId) {
                 continue;
             }
 
             $sheetId = $matchesId[1];
-            $subSheetID = $matchesSheetId[1];
             $sheet = new Sheets();
             $projectMembersCount = $project->teamMembers()->count();
             $range = 'C2:G' . ($projectMembersCount + 1); // this will depend on the number of people on the project
-            $sheets = $sheet->spreadsheet($sheetId)
-                            ->sheetById($subSheetID)
-                            ->range($range)
-                            ->get();
+
+            try {
+                $sheets = $sheet->spreadsheet($sheetId)
+                                ->range($range)
+                                ->get();
+            } catch (Exception $e) {
+                continue;
+            }
 
             foreach ($sheets as $user) {
                 $userNickname = $user[0];
-                $portalUser = $users->where('nickname', $userNickname)->first();
+                $portalUsers = clone $users;
+                $portalUser = $portalUsers->where('nickname', $userNickname)->first();
 
                 if (! $portalUser) {
+                    continue;
+                }
+
+                $projectMonth = Carbon::create($user[1])->month;
+                $currentMonth = now()->month;
+
+                if ($projectMonth !== $currentMonth) {
                     continue;
                 }
 
