@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Client\Entities\Client;
+use Modules\Prospect\Entities\Prospect;
 
 class CRM extends Model
 {
