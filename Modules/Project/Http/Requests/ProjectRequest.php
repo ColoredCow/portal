@@ -55,6 +55,13 @@ class ProjectRequest extends FormRequest
                         'url' => 'array'
                     ];
                 }
+
+            case 'project_contracts':
+                if ($this->contract_file) {
+                    $rules = [
+                        'contract_file' => 'required|mimetypes:application/pdf'
+                    ];
+                }
         }
 
         return $rules;
