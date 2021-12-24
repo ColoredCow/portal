@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClientsCrmDetailsTable extends Migration
+class CreateClientCrmDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateClientsCrmDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('clients_crm_details', function (Blueprint $table) {
+        Schema::create('client_crm_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('clients_id');
-            $table->foreign('clients_id')->references('id')->on('clients');
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->unsignedBigInteger('prospect_id')->nullable();
             $table->foreign('prospect_id')->references('id')->on('prospects');
-            $table->unsignedBigInteger('client_addresses_id')->nullable();
-            $table->foreign('client_addresses_id')->references('id')->on('client_addresses');
-            $table->unsignedBigInteger('client_contact_persons_id')->nullable();
-            $table->foreign('client_contact_persons_id')->references('id')->on('client_contact_persons');
+            $table->unsignedBigInteger('client_address_id')->nullable();
+            $table->foreign('client_address_id')->references('id')->on('client_addresses');
+            $table->unsignedBigInteger('client_contact_person_id')->nullable();
+            $table->foreign('client_contact_person_id')->references('id')->on('client_contact_persons');
             $table->timestamp('last_connected');
             $table->string('last_interaction')->nullable();
             $table->string('next_step')->nullable();
@@ -40,6 +40,6 @@ class CreateClientsCrmDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients_crm_details');
+        Schema::dropIfExists('client_crm_details');
     }
 }

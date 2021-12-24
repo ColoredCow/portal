@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
 use Modules\Prospect\Entities\Prospect;
 
-class CRM extends Model
+class ClientCrmDetails extends Model
 {
+    protected $table = 'client_crm_details';
+
     public function clients()
     {
         return $this->hasMany(Client::class);
