@@ -10,7 +10,7 @@ class CrmServices
 {
     public function getListData()
     {
-        return[
+        return [
             'clients'     => Client::all(),
             'prospectes'  => Prospect::all(),
             'crm_details' => ClientCrmDetails::all(),
