@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container">
-    @dd($data);
     <div class="d-flex justify-content-start row flex-wrap">
     <br>
     <?php foreach ($data['prospectes'] as $prospectes) : ?>
