@@ -167,7 +167,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('comments', 'CommentController')->only(['update', 'destroy']);
 
-    Route::get('/crm', 'CRM\CRMController@index')->name('crm');
+    Route::get('/crm', 'Crm\CrmController@index')->name('crm');
 
     Route::get('user/read-books', 'UserBookController@index');
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
