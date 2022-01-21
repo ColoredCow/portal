@@ -10,13 +10,71 @@
     </div>
     <div class="card mt-3">
         <div class="card-header" data-toggle="collapse" data-target="#project_detail_form">
-            <h4>Project details <span>(Coming soon...)</span></h4>
+            <h4>Project details</h4>
         </div>
-    </div>
-    <br>
-    <div class="mb-5">
-        @include('project::subviews.show-project-hours')
-    </div>
+        <div id="project_detail_form" class="collapse show">
+        <form action="{{ route('project.update', $project) }}" method="POST" id="form_update_project_details">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Name:</label>
+                            <span class="text-capitalize ml-2">{{ $project->name }}</span>
+                        </h4>
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Current FTE:</label>
+                            @php $users = json_decode($users) @endphp
+                            @foreach($users as $user)
+                             <span class="text-danger">{{$user->FTE}}</span>
+                             <a id="view_effort_sheet_badge" target="_blank" href= "{{route('project.effort-tracking', $project )}}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded">{{ _('Check FTE') }}</a>
+                            @endforeach
+                        </h4> 
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Project Type:</label>
+                            <span class="text-capitalize ml-2">{{ $project->type }}</span>
+                        </h4>    
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Status:</label>
+                            <span class="text-capitalize ml-2">{{ $project->status }}</span>
+                        </h4>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Effortsheet:</label>
+                            @if($project->effort_sheet_url)
+                            <a id="view_effort_sheet_badge" href= "{{ $project->effort_sheet_url }}" class="btn btn-primary btn-sm text-white ml-2 text-light" target="_blank">{{ _('Open Sheet') }}</a>
+                            @else
+                            <span class="ml-2">Not Available</span>
+                            @endif
+                        </h4>    
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Team Members:</label><br><br>
+                            @foreach($project->teamMembers ?:[] as $teamMember)
+                            <span class="text-capitalize ml-2">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</span>
+                            @endforeach
+                        </h4>    
+                    </div>
+                </div>
+           </div>       
+        </form>            
+    </div>    
 </div>
 
 @endsection
