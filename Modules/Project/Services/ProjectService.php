@@ -119,6 +119,7 @@ class ProjectService implements ProjectServiceContract
     public function getWorkingDays($startDate, $endDate)
     {
         $period = CarbonPeriod::create($startDate, $endDate);
+        $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
             if (! in_array($date->format('l'), $weekend)) {
@@ -136,6 +137,8 @@ class ProjectService implements ProjectServiceContract
      */
     public function getTeamMembersDetails($teamMembers)
     {
+        $teamMembersEffort = [];
+        $users = [];
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
