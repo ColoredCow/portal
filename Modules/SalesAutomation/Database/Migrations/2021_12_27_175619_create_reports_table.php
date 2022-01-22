@@ -17,8 +17,8 @@ class CreateReportsTable extends Migration
             $table->id();
             $table->string('name')->nullable(false)->change();
             $table->text('description')->nullable();
-            $table->string('url');
-            $table->string('type');
+            $table->string('url')->nullable(false)->change();
+            $table->string('type')->nullable(false)->change();
             $table->timestamps();
         });
     }
