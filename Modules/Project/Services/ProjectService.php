@@ -7,6 +7,7 @@ use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\User\Entities\User;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
 class ProjectService implements ProjectServiceContract
@@ -139,6 +140,8 @@ class ProjectService implements ProjectServiceContract
     {
         $teamMembersEffort = [];
         $users = [];
+        $startDate = now()->startOfMonth()->toDateString();
+        $endDate = now()->endOfMonth()->toDateString();
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
