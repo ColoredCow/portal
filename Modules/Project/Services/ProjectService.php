@@ -44,31 +44,6 @@ class ProjectService implements ProjectServiceContract
         ]);
     }
 
-    public function getClients()
-    {
-        return Client::where('status', 'active')->get();
-    }
-
-    public function getTeamMembers()
-    {
-        return User::all();
-    }
-
-    public function getDesignations()
-    {
-        return config('project.designation');
-    }
-
-    public function getProjectTeamMembers(Project $project)
-    {
-        return $project->teamMembers;
-    }
-
-    public function getProjectRepositories(Project $project)
-    {
-        return $project->repositories;
-    }
-
     public function getUsers()
     {
         return User::all();
@@ -77,16 +52,25 @@ class ProjectService implements ProjectServiceContract
     public function show($project)
     {
         $teamMembers = $project->getTeamMembers()->get();
+        $teamMembersEffort = [];
         $totalEffort = 0;
+        $totalFTE = 0;
         $workingDays = $this->getWorkingDays(now()->startOfMonth(), now());
         $startDate = now()->startOfMonth();
         $endDate = now()->endOfMonth();
-        $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
+        if (is_array($teamMembersDetails['teamMembersEffort'])) {
+            foreach ($teamMembersDetails['teamMembersEffort'] as $key => $teamMemberEffort) {
+                $totalTeamMemberEffort = end($teamMemberEffort)['total_effort_in_effortsheet'] ?? 0;
+                $totalEffort += $totalTeamMemberEffort;
+            }
+        }
         $expectedHours = $this->getExpectedHours(count($workingDays));
+        $totalFTE = ($totalEffort / $expectedHours);
 
         return [
-            'users' => json_encode($teamMembersDetails['users']),
+            'project' => $project,
+            'totalFTE' => $totalFTE,
         ];
     }
 
@@ -140,10 +124,7 @@ class ProjectService implements ProjectServiceContract
     {
         $teamMembersEffort = [];
         $users = [];
-        $startDate = now()->startOfMonth()->toDateString();
-        $endDate = now()->endOfMonth()->toDateString();
         foreach ($teamMembers as $teamMember) {
-            $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
             if ($efforts->isNotEmpty()) {
                 foreach ($efforts as $effort) {
@@ -158,13 +139,40 @@ class ProjectService implements ProjectServiceContract
             }
             $total_effort_in_effortsheet = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'] : 0;
             $users[] = [
-                    'FTE' => $this->getFTE($total_effort_in_effortsheet, $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now())))),
+                'actual_effort' => $total_effort_in_effortsheet,
+                'expected_effort' => $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now()))),
             ];
         }
 
         return [
+            'teamMembersEffort' => empty($teamMembersEffort) ? 0 : $teamMembersEffort,
             'users' => $users,
         ];
+    }
+
+    public function getClients()
+    {
+        return Client::where('status', 'active')->get();
+    }
+
+    public function getTeamMembers()
+    {
+        return User::all();
+    }
+
+    public function getDesignations()
+    {
+        return config('project.designation');
+    }
+
+    public function getProjectTeamMembers(Project $project)
+    {
+        return $project->teamMembers;
+    }
+
+    public function getProjectRepositories(Project $project)
+    {
+        return $project->repositories;
     }
 
     public function updateProjectData($data, $project)

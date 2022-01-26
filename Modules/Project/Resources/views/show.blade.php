@@ -16,26 +16,23 @@
         <form action="{{ route('project.update', $project) }}" method="POST" id="form_update_project_details">
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-6 pl-5 mt-3">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Name:</label>
                             <span class="text-capitalize ml-2">{{ $project->name }}</span>
                         </h4>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 col-md-5 mt-3">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Current FTE:</label>
-                            @php $users = json_decode($users) @endphp
-                            @foreach($users as $user)
-                             <span class="text-danger">{{$user->FTE}}</span>
-                             <a id="view_effort_sheet_badge" target="_blank" href= "{{route('project.effort-tracking', $project )}}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded">{{ _('Check FTE') }}</a>
-                            @endforeach
+                            <label for="name" class="font-weight-bold">Current FTE:</label>                        
+                             <span class="text-danger"> {{$totalFTE}} </span>
+                             <a id="view_effort_sheet_badge" target="_self" href= "{{route('project.effort-tracking', $project )}}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded">{{ _('Check FTE') }}</a>
                         </h4> 
                     </div>
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-6 pl-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Project Type:</label>
                             <span class="text-capitalize ml-2">{{ $project->type }}</span>
@@ -50,7 +47,7 @@
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-6 pl-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Effortsheet:</label>
                             @if($project->effort_sheet_url)
@@ -63,12 +60,14 @@
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-12 pl-5">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Team Members:</label><br><br>
-                            @foreach($project->teamMembers ?:[] as $teamMember)
-                            <span class="text-capitalize ml-2">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</span>
-                            @endforeach
+                            <label for="name" class="font-weight-bold">Team Members:</label>
+                            <div class="row">
+                                @foreach($project->teamMembers ?:[] as $teamMember)
+                                <span class="text-capitalize pl-5 py-2 col-md-6">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</span>
+                                @endforeach 
+                            </div> 
                         </h4>    
                     </div>
                 </div>
