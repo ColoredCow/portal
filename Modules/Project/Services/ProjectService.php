@@ -53,11 +53,13 @@ class ProjectService implements ProjectServiceContract
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersEffort = [];
+        $users = [];
         $totalEffort = 0;
         $totalFTE = 0;
         $workingDays = $this->getWorkingDays(now()->startOfMonth(), now());
         $startDate = now()->startOfMonth();
         $endDate = now()->endOfMonth();
+        $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
         if (is_array($teamMembersDetails['teamMembersEffort'])) {
             foreach ($teamMembersDetails['teamMembersEffort'] as $key => $teamMemberEffort) {
@@ -124,7 +126,10 @@ class ProjectService implements ProjectServiceContract
     {
         $teamMembersEffort = [];
         $users = [];
+        $startDate = now()->startOfMonth()->toDateString();
+        $endDate = now()->endOfMonth()->toDateString();
         foreach ($teamMembers as $teamMember) {
+            $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
             if ($efforts->isNotEmpty()) {
                 foreach ($efforts as $effort) {
