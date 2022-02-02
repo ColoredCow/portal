@@ -29,4 +29,8 @@ Use our [installation guidelines](./docs/installation.md) to set up the project 
 - [Coding Standards](./docs/coding-standards.md)
 - [Authorization](./docs/authorization.md)
 - [Define permissions](./docs/roles-and-permissions.md)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)  
+  
+## New Contributor?  
+  
+If you are a new contributor, visit our [Contributing Guidelines](./docs/Contributing.md) to get started.
