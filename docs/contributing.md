@@ -1,61 +1,51 @@
-## Contributing Guidelines :   
-  
-1.  For create a new git branch  
-    ```sh
-    $ git branch <new-branch>
-    ```  
-    For more details click on this [link](https://www.git-tower.com/learn/git/faq/create-branch/)  
+## Contributing Guidelines :
 
-2.  i) For Check the status of the repository 
+1. **Branch** : Use a branch to isolate development work without affecting other branches in the repository. For more details click on this [link](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches)
+
+   Create a new git branch
+
+   ```sh
+   $ git branch <new-branch>
+   ```
+
+2)  **Status**: The status API allows external services to mark commits with an error, failure, pending, or success state, which is then reflected in pull requests involving those commits. For know more details click on this [link](https://docs.github.com/en/rest/reference/commits#commit-statuses)
+
+    Check the status of the repository
+
     ```sh
     $ git status
-    ```  
-    ii) For switching the branch  
-    ```sh
-    $ git checkout <switch-branch-name>
-    ```    
-    iii) For create and switching the branch at a time 
-    ```sh
-    $ git checkout -b <switch-branch-name>
-    ```    
-3.  When you making changes in some file then you need to staged them.  
+    ```
 
-    i) For staging the changes  
+3)  **Staged** :To stage a changed or modified file, run
     ```sh
-    $ git add <file-path>
-    ```  
-    ii) If you staging the changes for many files at a time.             
+    git add <file_path>.<ext>
+    ```
+    To stage all modified files, run
     ```sh
-    $ git add .
-    ```  
-    iii) Should you decide not to commit the change.
+    git add .
+    ```
+    For more details click on this [link](http://archaeogeek.github.io/foss4gukdontbeafraid/git/stages.html)
+4)  **Commit** : The commits API allows you to list, view, and compare commits in a repository. You can also interact with commit comments and commit statuses.
+
+    For commiting the changes.
+
     ```sh
-    $ git reset 
-    ```  
-      
-4.  Commiting and push the branch  
+    $ git commit -m "<your message here>"
+    ```
 
-    i) For commiting the changes.
+    For more details click on this [link](http://archaeogeek.github.io/foss4gukdontbeafraid/git/stages.html#:~:text=output%20has%20changed%3A-,Commit,-The%20final%20stage)
+
+    **Pushing commits to a remote repository**
+
     ```sh
-    $ git commit -m "<your message here>" 
-    ```  
-    ii) For push the branch.  
-    ```sh
-    $ git push <repo name> <branch name> 
-    ```  
-    For more details click on this [link](https://dev.to/mrfrontend/git-101--step-2-add-stage-commit--push-3p3p)  
-  
-5.  For create the pull request.
+    $ git push  <REMOTENAME> <BRANCHNAME>
+    ```
 
-    i) On GitHub.com, navigate to the main page of the repository.  
-    ii) In the "Branch" menu, choose the branch that contains your commits.   
-    iii) Above the list of files, click  Pull request.  
-    iv) Use the base branch dropdown menu to select the branch you'd like to merge your changes into, then use the compare branch drop-down menu to choose the topic branch you made your changes in.   
-    v) Type a title and description for your pull request.  
-    vi) To create a pull request that is ready for review, click Create Pull Request.    
-    For more details click on this [link](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)  
-      
+    For more details click on this [link](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository)
 
-            
+5)  **Pull requests** : Tell others about changes you've pushed to a branch in a repository on GitHub. For more details click on this [link](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
 
+    (i) **For how to create the pull request** click on this [link](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
 
+    (ii) **Creating a pull request from a fork** : You can create a pull request to propose changes you've made to a fork of an upstream repository.  
+    For know how to create a pull request from a fork click on this [link](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)
