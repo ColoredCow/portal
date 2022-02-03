@@ -25,7 +25,7 @@
                     <div class="form-group offset-md-1 col-md-5 mt-3">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Current FTE:</label>                        
-                             <span class="text-danger"> {{$totalFTE}} </span>
+                             <span class="text-danger">{{ $project->Fte }}</span>
                              <a id="view_effort_sheet_badge" target="_self" href= "{{route('project.effort-tracking', $project )}}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded">{{ _('Check FTE') }}</a>
                         </h4> 
                     </div>
@@ -59,13 +59,18 @@
                     </div>
                 </div>
                 <br>
-                <div class="form-row">
-                    <div class="form-group col-md-12 pl-5">
-                        <h4 class="d-inline-block">
+                <div class="form-row ">
+                    <div class="form-group col-lg-12 pl-5">
+                        <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members:</label>
-                            <div class="row">
+                            <div class="row gy-5">
                                 @foreach($project->teamMembers ?:[] as $teamMember)
-                                <span class="text-capitalize pl-5 py-2 col-md-6">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</span>
+                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
+                                <!-- <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
+                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
+                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
+                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
+                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div> -->
                                 @endforeach 
                             </div> 
                         </h4>    

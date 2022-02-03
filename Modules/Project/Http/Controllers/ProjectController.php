@@ -54,11 +54,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $data = $this->service->show($project);
-
         return view('project::show', [
             'project' => $project,
-        ])->with($data);
+        ]);
     }
 
     /**
