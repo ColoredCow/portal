@@ -13,7 +13,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return view('report::index');
+        //
     }
 
     /**
@@ -21,7 +21,7 @@ class ReportController extends Controller
      */
     public function create()
     {
-        return view('report::create');
+        //
     }
 
     /**
@@ -39,7 +39,7 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        return view('report::show');
+        //
     }
 
     /**
@@ -48,7 +48,7 @@ class ReportController extends Controller
      */
     public function edit($id)
     {
-        return view('report::edit');
+        //
     }
 
     /**
