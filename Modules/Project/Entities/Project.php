@@ -18,10 +18,6 @@ class Project extends Model
 
     protected $dates = ['start_date', 'end_date'];
 
-    protected $casts = [
-        'monthly_estimated_hours' => 'integer',
-    ];
-
     protected static function newFactory()
     {
         return new ProjectFactory();
