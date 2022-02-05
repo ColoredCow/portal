@@ -28,7 +28,7 @@ class SendPendingInvoiceMail extends Mailable
     public function build()
     {
         return $this
-        ->to(config('invoice.mail.pending-invoice.email'), config('invoice.mail.pending-invoice.name'))
+        ->to(config('invoice.pending-invoice-mail.pending-invoice.email'), config('invoice.pending-invoice-mail.pending-invoice.name'))
         ->subject('Mail of pending invoices.')
         ->view('invoice::mail.pending-invoice')
         ->with([
