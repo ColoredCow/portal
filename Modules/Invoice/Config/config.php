@@ -17,6 +17,13 @@ return [
         ]
     ],
 
+    'mail' => [
+        'pending-invoice' => [
+            'email' => env('INVOICE_UNPAID_LIST_EMAIL', 'finance@coloredcow.com'),
+            'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance')
+        ]
+    ],
+
     'region' => [
         'indian' => 'indian',
         'international' => 'international',
