@@ -16,13 +16,13 @@
         <form action="{{ route('project.update', $project) }}" method="POST" id="form_update_project_details">
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-5 mt-3">
+                    <div class="form-group col-md-6 pl-4 mt-3">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Name:</label>
                             <span class="text-capitalize ml-2">{{ $project->name }}</span>
                         </h4>
                     </div>
-                    <div class="form-group offset-md-1 col-md-5 mt-3">
+                    <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Current FTE:</label>                        
                              <span class="text-danger">{{ $project->Fte }}</span>
@@ -32,13 +32,13 @@
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-5">
+                    <div class="form-group col-md-6 pl-4 mt-3">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Project Type:</label>
                             <span class="text-capitalize ml-2">{{ $project->type }}</span>
                         </h4>    
                     </div>
-                    <div class="form-group offset-md-1 col-md-5">
+                    <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Status:</label>
                             <span class="text-capitalize ml-2">{{ $project->status }}</span>
@@ -47,7 +47,7 @@
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-5">
+                    <div class="form-group col-md-6 pl-4 mt-3">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Effortsheet:</label>
                             @if($project->effort_sheet_url)
@@ -60,17 +60,12 @@
                 </div>
                 <br>
                 <div class="form-row ">
-                    <div class="form-group col-lg-12 pl-5">
+                    <div class="form-group col-lg-12 pl-4 mt-3">
                         <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members:</label>
                             <div class="row gy-5">
                                 @foreach($project->teamMembers ?:[] as $teamMember)
                                 <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
-                                <!-- <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
-                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
-                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
-                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div>
-                                <div class="col-xs-6 py-2"><div class="text-capitalize pl-8 pr-5">{{$project->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div></div> -->
                                 @endforeach 
                             </div> 
                         </h4>    
