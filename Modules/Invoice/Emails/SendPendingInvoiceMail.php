@@ -32,7 +32,7 @@ class SendPendingInvoiceMail extends Mailable
         ->subject('Mail of pending invoices.')
         ->view('invoice::mail.pending-invoice')
         ->with([
-            'name' => 'Pending envoice',
+            'name' => 'Pending invoice',
         ]);
     }
 }
