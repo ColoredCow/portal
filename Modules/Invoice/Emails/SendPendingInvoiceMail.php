@@ -10,14 +10,16 @@ class SendPendingInvoiceMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $invoice;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($invoice)
     {
-        //
+        $this->invoice = $invoice;
     }
 
     /**
@@ -29,10 +31,8 @@ class SendPendingInvoiceMail extends Mailable
     {
         return $this
         ->to(config('invoice.pending-invoice-mail.pending-invoice.email'), config('invoice.pending-invoice-mail.pending-invoice.name'))
-        ->subject('Mail of pending invoices.')
+        ->subject($this->invoice->project->name . ' invoice ')
         ->view('invoice::mail.pending-invoice')
-        ->with([
-            'name' => 'Pending invoice',
-        ]);
+        ->with(['invoice' => $this->invoice]);
     }
 }

@@ -41,7 +41,7 @@
                     @endif
                 </tr>
             </thead>
-
+            
             <tbody>
                 @foreach ($invoices as $invoice)
                 <tr>
@@ -65,7 +65,7 @@
                                             <button type="button" class="btn-close ml-auto" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                                         </div>
                                         <div class="modal-body">
-                                           <form  method="post">  
+                                           <form action="{{ route('invoice.sendEmail', $invoice) }}" method="post">  
                                              @csrf
                                                 <label for="invoice_email" class="field-required">Email for Pending invoice</label>
                                                 <input type="email" class="form-control mt-2" name="invoice_email" id="invoice_email" placeholder="Email for pending invoice" required="required">

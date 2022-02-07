@@ -5,6 +5,7 @@ namespace Modules\Invoice\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Invoice\Entities\Invoice;
 use Mail;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
 
@@ -116,9 +117,9 @@ class InvoiceController extends Controller
         return $this->service->taxReportExport($filters);
     }
 
-    public function sendEmail(Request $request)
+    public function sendEmail(Request $request, Invoice $invoice)
     {
-        Mail::to($request->invoice_email)->send(new SendPendingInvoiceMail());
+        Mail::to($request->invoice_email)->send(new SendPendingInvoiceMail($invoice));
 
         return redirect(route('invoice.index'));
     }
