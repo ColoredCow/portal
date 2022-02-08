@@ -31,7 +31,10 @@
                             <div class="form-group">
                                 <label for="type" class="col-sm-2 col-form-label">Type</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="type" id="type" value="Sales and Marketing">
+                                    <select class="form-control">
+                                        <option value="">Select Type</option>
+                                        <option value="">Sales and Marketing</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
