@@ -9,6 +9,7 @@ use Modules\Client\Entities\ClientContactPerson;
 use Modules\Invoice\Entities\Invoice;
 use Mail;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
+use Modules\Invoice\Rules\EmailValidation;
 
 class InvoiceController extends Controller
 {
@@ -121,34 +122,14 @@ class InvoiceController extends Controller
     public function sendEmail(Request $request, Invoice $invoice, ClientContactPerson $client)
     {
         $emails = $request->invoice_email;
-        // $input = $request->all();
 
-        // $validator = $request->validate([
-        //   'invoice_email' => 'email:rfc,dns',
-        // ]);
-
-        // $email = array(
-        //     'invoice_email' => $request->invoice_email,
-        // );
-
-        // $validator = $request->validate([
-        //   'invoice_email' => [new EmailValidation()],
-        // ]);
-
-        $cc = explode(',', rtrim($emails));
-        foreach ($cc as $value) {
-            $validator = $request->validate([
-                'invoice_email' => 'email',
-            ]);
-            echo $validator;
-        }
-        dd($cc);
-        // $cc = $this->merge(['invoice_email' => explode(',', rtrim( $email , ','))]);
+        $validator = $request->validate([
+          'invoice_email' => new EmailValidation(),
+        ]);
 
         $message = Mail::to('ayush@gmail.com');
-        // ->cc($request->invoice_email ?: [])
-        if ($cc) {
-            $message->cc($cc)
+        if (count((array) $emails) > 0) {
+            $message->cc($validator)
         ->send(new SendPendingInvoiceMail($invoice));
         }
 
