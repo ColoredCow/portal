@@ -18,6 +18,7 @@
         @include('invoice::index-filters')
     </div>
 
+    <div class="text-danger mt-2">@error('invoice_email'){{ $message }} @enderror </div>
     <div class="font-muli-bold my-4">
         Current Exchange rates ($1) : &nbsp; ₹{{  $currencyService->getCurrentRatesInINR() }}
     </div>
@@ -65,11 +66,13 @@
                                             <button type="button" class="btn-close ml-auto" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                                         </div>
                                         <div class="modal-body">
-                                           <form action="{{ route('invoice.sendEmail', $invoice) }}" method="post">  
-                                             @csrf
-                                                <label for="invoice_email" class="field-required">Email for Pending invoice</label>
-                                                <input type="email" class="form-control mt-2" name="invoice_email" id="invoice_email" placeholder="Email for pending invoice" required="required">
-                                                <button type="submit" class="btn btn-primary mt-4">Send</button>
+                                            <form action="{{ route('invoice.sendEmail', $invoice) }}" method="post">  
+                                                    @csrf
+                                                    <label for="sender_invoice_email">Sender's email adress</label>
+                                                    <input type="email" class="form-control mt-2" name="sender_invoice_email" id="sender_invoice_email" value="{{ config('invoice.pending-invoice-mail.pending-invoice.email') }}">
+                                                    <label for="invoice_email" class="mt-4">CC Email</label>
+                                                    <input type="email" multiple class="form-control mt-2" name="invoice_email" id="invoice_email" placeholder="CC Email" data-toggle="tooltip" data-placement="bottom" title="Please enter a email in comma seprated">
+                                                    <button type="submit" class="btn btn-primary mt-4">Send</button>
                                             </form>
                                         </div>
                                     </div>

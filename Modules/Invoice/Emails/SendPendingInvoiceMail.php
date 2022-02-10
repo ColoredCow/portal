@@ -5,6 +5,7 @@ namespace Modules\Invoice\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Http\Request;
 
 class SendPendingInvoiceMail extends Mailable
 {
@@ -27,10 +28,10 @@ class SendPendingInvoiceMail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(Request $request)
     {
         return $this
-        ->from(config('invoice.pending-invoice-mail.pending-invoice.email'), config('invoice.pending-invoice-mail.pending-invoice.name'))
+        ->from($request->sender_invoice_email)
         ->subject($this->invoice->project->name . ' invoice ')
         ->view('invoice::mail.pending-invoice')
         ->with(['invoice' => $this->invoice]);

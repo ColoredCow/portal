@@ -5,6 +5,7 @@ namespace Modules\Invoice\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Client\Entities\ClientContactPerson;
 use Modules\Invoice\Entities\Invoice;
 use Mail;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
@@ -117,9 +118,39 @@ class InvoiceController extends Controller
         return $this->service->taxReportExport($filters);
     }
 
-    public function sendEmail(Request $request, Invoice $invoice)
+    public function sendEmail(Request $request, Invoice $invoice, ClientContactPerson $client)
     {
-        Mail::to($request->invoice_email)->send(new SendPendingInvoiceMail($invoice));
+        $emails = $request->invoice_email;
+        // $input = $request->all();
+
+        // $validator = $request->validate([
+        //   'invoice_email' => 'email:rfc,dns',
+        // ]);
+
+        // $email = array(
+        //     'invoice_email' => $request->invoice_email,
+        // );
+
+        // $validator = $request->validate([
+        //   'invoice_email' => [new EmailValidation()],
+        // ]);
+
+        $cc = explode(',', rtrim($emails));
+        foreach ($cc as $value) {
+            $validator = $request->validate([
+                'invoice_email' => 'email',
+            ]);
+            echo $validator;
+        }
+        dd($cc);
+        // $cc = $this->merge(['invoice_email' => explode(',', rtrim( $email , ','))]);
+
+        $message = Mail::to('ayush@gmail.com');
+        // ->cc($request->invoice_email ?: [])
+        if ($cc) {
+            $message->cc($cc)
+        ->send(new SendPendingInvoiceMail($invoice));
+        }
 
         return redirect(route('invoice.index'));
     }
