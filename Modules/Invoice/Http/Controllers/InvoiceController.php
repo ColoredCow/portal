@@ -127,11 +127,21 @@ class InvoiceController extends Controller
           'invoice_email' => new EmailValidation(),
         ]);
 
-        $message = Mail::to('ayush@gmail.com');
-        if (count((array) $emails) > 0) {
-            $message->cc($validator)
-        ->send(new SendPendingInvoiceMail($invoice));
+        if (count([$emails]) > 0) {
+            $validate = preg_split('/[,]/', $emails);
+            Mail::to('ayush@gmail.com')
+            ->cc($validate)
+            ->send(new SendPendingInvoiceMail($invoice));
+        } else {
+            Mail::to('ayush@gmail.com')
+            ->cc([])
+            ->send(new SendPendingInvoiceMail($invoice));
         }
+        // dd($validate);
+
+        // if (count($validate) > 0){ $message->cc($validate)
+        // ->send(new SendPendingInvoiceMail($invoice));
+        // }
 
         return redirect(route('invoice.index'));
     }
