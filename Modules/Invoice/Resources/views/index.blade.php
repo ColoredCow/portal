@@ -68,6 +68,8 @@
                                         <div class="modal-body">
                                             <form action="{{ route('invoice.sendEmail', $invoice) }}" method="post">  
                                                     @csrf
+                                                    <input type="hidden" name="month" value="{{ $_GET['month'] }}">
+                                                    <input type="hidden" name="year" value="{{ $_GET['year'] }}">
                                                     <label for="sender_invoice_email">Sender's email adress</label>
                                                     <input type="email" class="form-control mt-2" name="sender_invoice_email" id="sender_invoice_email" value="{{ config('invoice.pending-invoice-mail.pending-invoice.email') }}">
                                                     <label for="invoice_email" class="mt-4">CC Email</label>

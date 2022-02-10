@@ -26,12 +26,8 @@ class EmailValidation implements Rule
      */
     public function passes($attribute, $values)
     {
-        // dd($attribute, $values);
-        // $rules = [
-        //     'invoice_email' => 'email',
-        // ];
-        $b = preg_split('/[,]/', $values);
-        foreach ($b as $index=>$value) {
+        $validate = preg_split('/[,]/', $values);
+        foreach ($validate as $index=>$value) {
             $validator = Validator::make(['email' => $value], [
                     'email'=> 'email:rfc,dns',
                 ]);
