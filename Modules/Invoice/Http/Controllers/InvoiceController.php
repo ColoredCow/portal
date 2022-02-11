@@ -121,6 +121,7 @@ class InvoiceController extends Controller
 
     public function sendEmail(Request $request, Invoice $invoice, Client $client)
     {
+        $senderEmail = $invoice->client->contactPersons()->get('email');
         $emails = $request->invoice_email;
 
         $validator = $request->validate([
@@ -129,11 +130,11 @@ class InvoiceController extends Controller
 
         if ($emails != '') {
             $validate = preg_split('/[,]/', $emails);
-            Mail::to($invoice->client->email)
+            Mail::to($senderEmail)
             ->cc($validate)
             ->send(new SendPendingInvoiceMail($invoice));
         } else {
-            Mail::to($invoice->client->email)
+            Mail::to($senderEmail)
             ->send(new SendPendingInvoiceMail($invoice));
         }
 
