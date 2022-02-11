@@ -124,12 +124,12 @@ class InvoiceController extends Controller
         $emails = $request->invoice_email;
 
         $validator = $request->validate([
-          'invoice_email' => new EmailValidation(),
+        'invoice_email' => new EmailValidation(),
         ]);
 
         if ($emails != '') {
             $validate = preg_split('/[,]/', $emails);
-            Mail::to('ayush@gmail.com')
+            Mail::to($invoice->client->email)
             ->cc($validate)
             ->send(new SendPendingInvoiceMail($invoice));
         } else {
