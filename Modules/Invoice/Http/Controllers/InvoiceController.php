@@ -133,7 +133,7 @@ class InvoiceController extends Controller
             ->cc($validate)
             ->send(new SendPendingInvoiceMail($invoice));
         } else {
-            Mail::to('ayush@gmail.com')
+            Mail::to($invoice->client->email)
             ->send(new SendPendingInvoiceMail($invoice));
         }
 

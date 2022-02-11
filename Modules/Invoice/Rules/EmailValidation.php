@@ -26,6 +26,7 @@ class EmailValidation implements Rule
      */
     public function passes($attribute, $values)
     {
+        $validator = [];
         $validate = preg_split('/[,]/', $values);
         foreach ($validate as $index=>$value) {
             $validator = Validator::make(['email' => $value], [
