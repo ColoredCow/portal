@@ -5,7 +5,7 @@ namespace Modules\Invoice\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
-use Modules\Client\Entities\ClientContactPerson;
+use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
 use Mail;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
@@ -119,7 +119,7 @@ class InvoiceController extends Controller
         return $this->service->taxReportExport($filters);
     }
 
-    public function sendEmail(Request $request, Invoice $invoice, ClientContactPerson $client)
+    public function sendEmail(Request $request, Invoice $invoice, Client $client)
     {
         $emails = $request->invoice_email;
 
@@ -127,21 +127,15 @@ class InvoiceController extends Controller
           'invoice_email' => new EmailValidation(),
         ]);
 
-        if (count([$emails]) > 0) {
+        if ($emails != '') {
             $validate = preg_split('/[,]/', $emails);
             Mail::to('ayush@gmail.com')
             ->cc($validate)
             ->send(new SendPendingInvoiceMail($invoice));
         } else {
             Mail::to('ayush@gmail.com')
-            ->cc([])
             ->send(new SendPendingInvoiceMail($invoice));
         }
-        // dd($validate);
-
-        // if (count($validate) > 0){ $message->cc($validate)
-        // ->send(new SendPendingInvoiceMail($invoice));
-        // }
 
         return redirect(route('invoice.index'));
     }
