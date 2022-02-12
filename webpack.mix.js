@@ -26,5 +26,7 @@ mix.js('Modules/EffortTracking/Resources/assets/js/app.js', 'public/js/efforttra
    .sass('Modules/EffortTracking/Resources/assets/sass/app.scss', 'public/css/efforttracking.css');
 mix.js('Modules/Invoice/Resources/assets/js/app.js', 'public/js/invoice.js')
    .sass('Modules/Invoice/Resources/assets/sass/app.scss', 'public/css/invoice.css');
-
+mix.js('Modules/Report/Resources/assets/js/app.js', 'public/js/report.js')
+   .sass('Modules/Report/Resources/assets/sass/app.scss', 'public/css/report.css');
+   
 mix.version();

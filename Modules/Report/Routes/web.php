@@ -13,4 +13,5 @@
 
 Route::prefix('report')->group(function () {
     Route::get('/', 'ReportController@index');
+    Route::post('/', 'ReportController@store')->name('report.store');
 });

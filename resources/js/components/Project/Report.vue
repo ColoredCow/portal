@@ -59,6 +59,7 @@ export default {
 		};
 	},
 };
+console.log("hello");
 </script>
 
 <style>
