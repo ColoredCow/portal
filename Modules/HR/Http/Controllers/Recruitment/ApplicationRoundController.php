@@ -46,8 +46,7 @@ class ApplicationRoundController extends Controller
 
         $mail_body = ContentHelper::editorFormat($validated['mail_body']);
         $mail_body = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $mail_body);
-        $mail_body = str_replace(config('constants.hr.template-variables.job-title'), $job->title, $mail_body);
-        $mail_body = str_replace(config('constants.hr.template-variables.job-domain'), $job->domain, $mail_body);
+        $mail_body = str_replace(config('constants.hr.template-variables.job-title'), "<a href='{$job->link}'>{$job->title}</a>", $mail_body);
 
         $applicationRound->load('application', 'application.job', 'application.applicant');
         $applicationRound->update([
