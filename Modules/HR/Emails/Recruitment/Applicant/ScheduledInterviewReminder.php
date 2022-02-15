@@ -50,6 +50,7 @@ class ScheduledInterviewReminder extends Mailable
             $body
         );
         $body = str_replace(config('hr.template-variables.job-title'), $job->title, $body);
+        $body = str_replace(config('hr.template-variables.job-domain'), $job->domain, $body);
 
         return $this->to($application->applicant->email, $application->applicant->name)
             ->from(config('hr.default.email'), config('hr.default.name'))

@@ -63,6 +63,7 @@ return [
             'applicant-name' => '|*applicant_name*|',
             'interview-time' => '|*interview_time*|',
             'job-title' => '|*job_title*|',
+            'job-domain' => '|*job_domain*|',
         ],
 
         'default' => [

@@ -68,6 +68,7 @@ class ApplicationNoShow extends Command
                 $body = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body);
                 $body = str_replace(config('constants.hr.template-variables.interview-time'), $applicationRound->scheduled_date->format(config('constants.hr.interview-time-format')), $body);
                 $body = str_replace(config('constants.hr.template-variables.job-title'), $job->title, $body);
+                $body = str_replace(config('constants.hr.template-variables.job-domain'), $job->domain, $body);
 
                 if ($application->status != config('constants.hr.application-meta.keys.no-show')) {
                     $application->markNoShowReminded();
