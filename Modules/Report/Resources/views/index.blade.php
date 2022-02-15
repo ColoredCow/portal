@@ -1,6 +1,6 @@
 @extends('report::layouts.master')
 @section('content')
-<div class="container" id="vueContainer">
+<div class="container">
     <br>
     <div class="d-flex">
         <h4 class="d-inline-block">Sales & Marketing Reports</h4>
@@ -78,5 +78,4 @@
         </div>
     </div>
 </div>
-
 @endsection

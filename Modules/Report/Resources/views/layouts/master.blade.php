@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('js_script')
+@section('js_scripts')
 <script src="{{ mix('js/report.js') }}"></script>
 @endsection
-@section('css_script')
+@section('css_scripts')
 @endsection
