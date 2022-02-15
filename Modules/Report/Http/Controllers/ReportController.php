@@ -42,6 +42,7 @@ class ReportController extends Controller
             'description' => $validator['desc'],
             'url' => $validator['embedded_url'],
         ]);
+        
         return back()->with('success', 'Report add successfully.');
     }
 
