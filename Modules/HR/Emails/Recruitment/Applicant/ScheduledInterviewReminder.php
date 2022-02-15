@@ -49,7 +49,7 @@ class ScheduledInterviewReminder extends Mailable
             $this->applicationRound->scheduled_date->format(config('hr.interview-time-format')),
             $body
         );
-        $body = str_replace(config('hr.template-variables.job-title'), $job->title, $body);
+        $body = str_replace(config('hr.template-variables.job-title'), "<a href='{$job->link}'>{$job->title}</a>", $body);
 
         return $this->to($application->applicant->email, $application->applicant->name)
             ->from(config('hr.default.email'), config('hr.default.name'))
