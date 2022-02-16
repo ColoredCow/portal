@@ -15,6 +15,7 @@ class ReportController extends Controller
     {
         $reports = Report::all();
         $data = compact('reports');
+
         return view('report::index')->with($data);
     }
 
@@ -44,7 +45,7 @@ class ReportController extends Controller
             'description' => $validator['desc'],
             'url' => $validator['embedded_url'],
         ]);
-        
+
         return back()->with('success', 'Report add successfully.');
     }
 
@@ -56,6 +57,7 @@ class ReportController extends Controller
     {
         $report = Report::find($id);
         $data = compact('report');
+
         return view('report::show')->with($data);
     }
 
