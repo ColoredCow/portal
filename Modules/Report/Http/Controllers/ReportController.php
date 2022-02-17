@@ -2,7 +2,6 @@
 
 namespace Modules\Report\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Report\Entities\Report;
 use Modules\Report\Http\Requests\ReportRequest;
