@@ -6,6 +6,7 @@ use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectRepository;
+use Modules\Project\Entities\ProjectHealth;
 use Modules\User\Entities\User;
 
 class ProjectService implements ProjectServiceContract
@@ -14,7 +15,7 @@ class ProjectService implements ProjectServiceContract
     {
         if (request()->get('projects') == 'all-projects') {
             return Project::where('status', request()->input('status', 'active'))
-                ->get();
+            ->get();
         } else {
             return auth()->user()->projects()->where('status', request()->input('status', 'active'))
                 ->get();
@@ -67,6 +68,11 @@ class ProjectService implements ProjectServiceContract
         return $project->repositories;
     }
 
+    public function getProjectHealth(Project $project)
+    {
+        return $project->projectHealthDetails;
+    }
+
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
@@ -83,6 +89,9 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
+
+            case 'project_health':
+                return $this->updateProjectHealthDetails($data, $project);
         }
     }
 
@@ -127,12 +136,27 @@ class ProjectService implements ProjectServiceContract
             $urlIds[] = $url;
             ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $urlIds)->delete();
             ProjectRepository::updateOrCreate(
-                [
-                    'project_id' => $project->id,
-                    'url' => $url,
-                ],
-            );
+            [
+                'project_id' => $project->id,
+                'url' => $url,
+            ],
+        );
         }
+    }
+
+    private function updateProjectHealthDetails($data, $project)
+    {
+        ProjectHealth::updateOrCreate([
+            'project_id' => $project->id,
+            'staging_url' => $data['staging_url'],
+            'onboarding_documents_url' => $data['onboarding_documents_url'],
+            'has_issue_templates' => $data['has_issue_templates'],
+            'has_unit_testing' => $data['has_unit_testing'],
+            'has_ci_check' => $data['has_ci_check'],
+            'has_site_monitoring' => $data['has_site_monitoring'],
+            'has_error_logging' => $data['has_error_logging'],
+            'has_error_reporting' => $data['has_error_reporting'],
+        ]);
     }
 
     private function getClientProjectID($clientID)

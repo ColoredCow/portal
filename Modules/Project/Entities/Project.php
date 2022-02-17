@@ -47,4 +47,9 @@ class Project extends Model
     {
         return $this->hasMany(ProjectTeamMember::class);
     }
+
+    public function projectHealthDetails()
+    {
+        return $this->hasMany(ProjectHealth::class);
+    }
 }

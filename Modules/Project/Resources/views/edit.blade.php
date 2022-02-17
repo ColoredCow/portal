@@ -26,10 +26,13 @@
             @include('project::subviews.edit-project-team-members')
         </div>
 
-         <div class="mb-5">
+        <div class="mb-5">
             @include('project::subviews.edit-project-repository')
         </div>
 
+        <div class="mb-5">
+            @include('project::subviews.create-project-health-details')
+        </div>
     </div>
 </div>
 
@@ -71,7 +74,7 @@ new Vue({
         updateProjectForm: async function(formId) {
             let formData = new FormData(document.getElementById(formId));
             await axios.post('{{ route('project.update', $project) }}', formData)
-            .then((response) => {
+            .then((response) => {   
                 $('#edit-project-errors').addClass('d-none')
                 let url = $('#effort_sheet_url').val()
                 if (url) {
