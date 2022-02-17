@@ -88,72 +88,9 @@
             </div>
             @can('report.edit')
             <div class="card-footer">
-                    <a href="{{route('report.edit', ['id' => $report->id]) }}">
-                        <button type="button" class="btn btn-primary report" data-bs-toggle="modal" data-bs-target="#EditModal"> Edit </button>
-                    </a>
-                <!-- <div class="modal @if(count($errors->all()) > 0) show-modal @endif" id="EditModal" role="dialog" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Edit Report</h4>
-                                <button type="button" class="btn-close ml-auto" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="post" action="{{ route('report.update', ['id' => $report->id]) }}">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="name" class="col-sm-4 col-form-label">Name<span class="text-danger">*</span></label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{$report->name}}">
-                                            <span class="text-danger">
-                                                @error('name')
-                                                <strong>{{ $message }}</strong>
-                                                @enderror
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="textarea" class="col-sm-4 col-form-label">Description</label>
-                                        <div class="col-sm-10">
-                                            <textarea name="desc" class="form-control" id="textarea" rows="3" placeholder="Description">{{ $report->description }}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="type" class="col-sm-4 col-form-label">Type<span class="text-danger">*</span></label>
-                                        <div class="col-sm-10">
-                                            <select name="type" id="type" class="form-control">
-                                                <option value="">Select Type</option>
-                                                <option value="sales_and_marketing" {{ $report->type == "sales_and_marketing" ? 'selected' : '' }}> {{ config('report.report_type.sales_and_marketing') }} </option>
-                                            </select>
-                                            <span class="text-danger">
-                                                @error('type')
-                                                <strong>{{ $message }}</strong>
-                                                @enderror
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="embedded_url" class="col-sm-6 col-form-label">
-                                            Embedded URL<span class="text-danger">*</span>
-                                        </label>
-                                        <div class="col-sm-10">
-                                            <input type="url" name="embedded_url" class="form-control" id="embedded_url" placeholder="Embedded URL" value="{{ $report->url }}">
-                                            <span class="text-danger">
-                                                @error('embedded_url')
-                                                <strong>{{ $message }}</strong>
-                                                @enderror
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary mr-auto">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
+                <a href="{{route('report.edit', ['id' => $report->id]) }}">
+                    <button type="button" class="btn btn-primary report" data-bs-toggle="modal" data-bs-target="#EditModal"> Edit </button>
+                </a>
             </div>
             @endcan
         </div>
