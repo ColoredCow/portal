@@ -30,7 +30,7 @@ class ReportController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
+     * @param ReportRequest $request
      */
     public function store(ReportRequest $request)
     {
@@ -71,7 +71,7 @@ class ReportController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param ReportRequest $request
      * @param int $id
      */
     public function update(ReportRequest $request, $id)
