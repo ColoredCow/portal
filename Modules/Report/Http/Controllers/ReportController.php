@@ -5,6 +5,7 @@ namespace Modules\Report\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Report\Entities\Report;
+use Modules\Report\Http\Requests\ReportRequest;
 
 class ReportController extends Controller
 {
@@ -31,19 +32,14 @@ class ReportController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function store(Request $request)
+    public function store(ReportRequest $request)
     {
-        $validator = $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-            'desc' => 'nullable|string',
-            'embedded_url' => 'required',
-        ]);
+        $validated = $request->validated();
         Report::create([
-            'name' => $validator['name'],
-            'type' => $validator['type'],
-            'description' => $validator['desc'],
-            'url' => $validator['embedded_url'],
+            'name' => $validated['name'],
+            'type' => $validated['type'],
+            'description' => $validated['desc'],
+            'url' => $validated['embedded_url'],
         ]);
 
         return back()->with('success', 'Report add successfully.');
@@ -78,19 +74,14 @@ class ReportController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function update(Request $request, $id)
+    public function update(ReportRequest $request, $id)
     {
         $report = Report::find($id);
-        $validator = $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-            'desc' => 'nullable|string',
-            'embedded_url' => 'required',
-        ]);
-        $report->name = $validator['name'];
-        $report->type = $validator['type'];
-        $report->description = $validator['desc'];
-        $report->url = $validator['embedded_url'];
+        $validated = $request->validated();
+        $report->name = $validated['name'];
+        $report->type = $validated['type'];
+        $report->description = $validated['desc'];
+        $report->url = $validated['embedded_url'];
         $report->save();
 
         return redirect('/report');

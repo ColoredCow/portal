@@ -10,7 +10,7 @@
         <div class="form-group">
             <label for="name" class="col-sm-4 col-form-label">Name<span class="text-danger">*</span></label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{$report->name}}">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{$report->name}}" required="required">
                 <span class="text-danger">
                     @error('name')
                     <strong>{{ $message }}</strong>
@@ -28,7 +28,6 @@
             <label for="type" class="col-sm-4 col-form-label">Type<span class="text-danger">*</span></label>
             <div class="col-sm-10">
                 <select name="type" id="type" class="form-control">
-                    <option value="">Select Type</option>
                     <option value="sales_and_marketing" {{ $report->type == "sales_and_marketing" ? 'selected' : '' }}> {{ config('report.report_type.sales_and_marketing') }} </option>
                 </select>
                 <span class="text-danger">
@@ -43,7 +42,7 @@
                 Embedded URL<span class="text-danger">*</span>
             </label>
             <div class="col-sm-10">
-                <input type="url" name="embedded_url" class="form-control" id="embedded_url" placeholder="Embedded URL" value="{{ $report->url }}">
+                <input type="url" name="embedded_url" class="form-control" id="embedded_url" placeholder="Embedded URL" value="{{ $report->url }}" required="required">
                 <span class="text-danger">
                     @error('embedded_url')
                     <strong>{{ $message }}</strong>

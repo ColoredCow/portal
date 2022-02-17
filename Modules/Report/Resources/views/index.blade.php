@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 col-form-label">Name<span class="text-danger">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ old('name') }}">
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ old('name') }}" required="required">
                                     <span class="text-danger">
                                         @error('name')
                                         <strong>{{ $message }}</strong>
@@ -38,8 +38,7 @@
                             <div class="form-group">
                                 <label for="type" class="col-sm-2 col-form-label">Type<span class="text-danger">*</span></label>
                                 <div class="col-sm-10">
-                                    <select name="type" id="type" class="form-control">
-                                        <option value="">Select Type</option>
+                                    <select name="type" id="type" class="form-control" required="required">
                                         <option value="sales_and_marketing" {{ old('type') == "sales_and_marketing" ? 'selected' : '' }}> {{ config('report.report_type.sales_and_marketing') }} </option>
                                     </select>
                                     <span class="text-danger">
@@ -54,7 +53,7 @@
                                     Embedded URL<span class="text-danger">*</span>
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="url" name="embedded_url" class="form-control" id="embedded_url" placeholder="Embedded URL" value="{{ old('embedded_url') }}">
+                                    <input type="url" name="embedded_url" class="form-control" id="embedded_url" placeholder="Embedded URL" value="{{ old('embedded_url') }}" required="required">
                                     <span class="text-danger">
                                         @error('embedded_url')
                                         <strong>{{ $message }}</strong>
