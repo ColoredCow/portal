@@ -135,12 +135,10 @@ class ProjectService implements ProjectServiceContract
         foreach ($projectRepositoriesUrl as $url) {
             $urlIds[] = $url;
             ProjectRepository::where('project_id', $project->id)->whereNotIn('url', $urlIds)->delete();
-            ProjectRepository::updateOrCreate(
-            [
+            ProjectRepository::updateOrCreate([
                 'project_id' => $project->id,
                 'url' => $url,
-            ],
-        );
+            ]);
         }
     }
 
