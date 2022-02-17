@@ -67,7 +67,10 @@ class ReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        $report = Report::find($id);
+        $data = compact('report');
+
+        return view('report::edit')->with($data);
     }
 
     /**
@@ -77,7 +80,20 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $report = Report::find($id);
+        $validator = $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+            'desc' => 'nullable|string',
+            'embedded_url' => 'required',
+        ]);
+        $report->name = $validator['name'];
+        $report->type = $validator['type'];
+        $report->description = $validator['desc'];
+        $report->url = $validator['embedded_url'];
+        $report->save();
+
+        return redirect('/report');
     }
 
     /**
