@@ -153,7 +153,7 @@ class ProjectService implements ProjectServiceContract
             'has_ci_check' => $data['has_ci_check'],
             'has_site_monitoring' => $data['has_site_monitoring'],
             'has_error_logging' => $data['has_error_logging'],
-            'has_error_reporting' => $data['has_error_reporting'],]
+            'has_error_reporting' => $data['has_error_reporting']]
         );
     }
 
