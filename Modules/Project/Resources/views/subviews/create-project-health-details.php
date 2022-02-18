@@ -4,7 +4,7 @@
     </div>
 
     <div id="project_health_form" class="collapse hide">
-        <form action="{{ route('project.update', $project) }}" method="POST" id="update_project_health_form">
+        <form action="{{ route('project.update', $project) }}" method="post" id="update_project_health_form">
             <input type="hidden" value="project_health" name="update_section"> 
             <div class="card-body">
                 <div class="form-row">
