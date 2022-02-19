@@ -40,10 +40,10 @@ php -v
 # output should be something like
 # PHP 7.4.21 (cli) (built: Aug  5 2021 15:34:00) ( NTS )
 ```
-### 3. Steps on how to connect to MySQL database in your PHPMyAdmin:running:
-Before you start building PHP connection to MySQL database you need to know what PHPMyAdmin is. It’s a control panel from where you can manage the database that you’ve created. 
+### 3. Steps on how to connect to MySQL database in your phpMyAdmin:running:
+Before you start building PHP connection to MySQL database you need to know what phpMyAdmin is. It’s a control panel from where you can manage the database that you’ve created. 
 
-1. Open your browser and go to localhost/PHPMyAdmin.
+1. Open your browser and go to localhost/phpMyAdmin.
 
 2. When you first installed XAMPP/WAMP, it only created the username for it to be accessed, you now have to add a password to it by yourself. For this, you have to go to User account.
 
@@ -52,7 +52,7 @@ Before you start building PHP connection to MySQL database you need to know what
 Note: It is not necessary to change the password to access databases on the localhost. It is a good practice and that is why we have used a password.(For this poject, it is not necessary to have one).
 
 4. Create Database - 
-Now return to the homepage of PHPMyAdmin. Click the New button to create a new database.
+Now return to the homepage of phpMyAdmin. Click the New button to create a new database.
 
 5. In the new window, name your database as per your need, we are naming it “portal”. Now select Collation as utf8_general_ci. Now click on Create and your database will be created.
 
@@ -67,7 +67,7 @@ Now, locate the folder where you installed XAMPP and open the htdocs folder (usu
 - For WAMP - Add your practice folder in c:/wamp/www folder.
 
 8. For both XAMP and WAMP:
-  If you’re asked to log in into your PHPMyAdmin, use the username “root” and enter your root password. If you haven’t set one yet, you can leave it blank.
+  If you’re asked to log in into your phpMyAdmin, use the username “root” and enter your root password. If you haven’t set one yet, you can leave it blank.
   
   For MAMP: 
   Name: This is the host name. The default host is ‘localhost’.
