@@ -20,7 +20,6 @@ class JobObserver
     {
         if (! config('database.connections.wordpress.enabled')) {
             return;
-
         }
         $isArchived = false;
         $job->rounds()->attach(Round::pluck('id')->toArray());
@@ -100,5 +99,4 @@ class JobObserver
         }
         Corcel::where(['post_type' => 'career', 'post_title' => $job['title']])->delete();
     }
-
 }
