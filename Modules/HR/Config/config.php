@@ -41,7 +41,8 @@ return [
     'opportunities-status' => [
         'draft' => 'Draft',
         'published' => 'Published',
-        'closed' => 'Closed'
+        'closed' => 'Closed',
+        'archived' => 'Archived'
     ],
 
     'post-type' => [
