@@ -20,7 +20,8 @@ class JobObserver
     {
         if (! config('database.connections.wordpress.enabled')) {
             return;
-        }    
+
+        }
         $isArchived = false;
         $job->rounds()->attach(Round::pluck('id')->toArray());
         $data = request()->all();
@@ -29,9 +30,9 @@ class JobObserver
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
-        if($data['status'] == 'published') {
+        if ($data['status'] == 'published') {
             $corcel->post_status = 'publish';
-        } else if ($data['status'] == 'archived') {
+        } elseif ($data['status'] == 'archived') {
             $corcel->post_status = 'archived';
             $isArchived = true;
         } else {
@@ -40,9 +41,9 @@ class JobObserver
         $corcel->save();
         $corcel->saveMeta('hr_id', $job['id']);
         if ($isArchived) {
-        $corcel->saveMeta('status', 'archived');
+            $corcel->saveMeta('status', 'archived');
         }
-        $post = $corcel->hasMeta('hr_id', $job['id'])->first();       
+        $post = $corcel->hasMeta('hr_id', $job['id'])->first();
         $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
         $relation = new TermRelationship();
         $relation->object_id = $post->ID;
@@ -69,9 +70,9 @@ class JobObserver
         $corcel->post_title = $data['title'];
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');
-        if($data['status'] == 'published') {
+        if ($data['status'] == 'published') {
             $corcel->post_status = 'publish';
-        } else if ($data['status'] == 'archived') {
+        } elseif ($data['status'] == 'archived') {
             $corcel->post_status = 'archived';
             $isArchived = true;
         } else {
@@ -80,7 +81,7 @@ class JobObserver
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         $corcel->update();
         if ($isArchived) {
-        $corcel->saveMeta('status', 'archived');
+            $corcel->saveMeta('status', 'archived');
         }
         $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
         $relation = TermRelationship::where(['object_id' => $post->ID])->update(['term_taxonomy_id' => $term->term_id]);
@@ -99,4 +100,5 @@ class JobObserver
         }
         Corcel::where(['post_type' => 'career', 'post_title' => $job['title']])->delete();
     }
+
 }
