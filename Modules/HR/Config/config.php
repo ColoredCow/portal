@@ -42,7 +42,8 @@ return [
         'draft' => 'Draft',
         'published' => 'Published',
         'closed' => 'Closed',
-        'archived' => 'Archived'
+        'archived' => 'Archived',
+        'pending review' => 'Pending Review'
     ],
 
     'post-type' => [

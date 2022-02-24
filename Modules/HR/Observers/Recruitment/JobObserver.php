@@ -21,7 +21,6 @@ class JobObserver
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-        $isArchived = false;
         $job->rounds()->attach(Round::pluck('id')->toArray());
         $data = request()->all();
         $corcel = new Corcel();
@@ -33,15 +32,13 @@ class JobObserver
             $corcel->post_status = 'publish';
         } elseif ($data['status'] == 'archived') {
             $corcel->post_status = 'archived';
-            $isArchived = true;
+        } elseif ($data['status'] == 'pending review') {
+            $corcel->post_status = 'Pending';
         } else {
             $corcel->post_status = 'draft';
         }
         $corcel->save();
         $corcel->saveMeta('hr_id', $job['id']);
-        if ($isArchived) {
-            $corcel->saveMeta('status', 'archived');
-        }
         $post = $corcel->hasMeta('hr_id', $job['id'])->first();
         $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
         $relation = new TermRelationship();
@@ -61,7 +58,6 @@ class JobObserver
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-        $isArchived = false;
         $data = request()->all();
         $corcel = new Corcel();
         $post = $corcel->hasMeta('hr_id', $job['id'])->first();
@@ -73,15 +69,13 @@ class JobObserver
             $corcel->post_status = 'publish';
         } elseif ($data['status'] == 'archived') {
             $corcel->post_status = 'archived';
-            $isArchived = true;
+        } elseif ($data['status'] == 'pending review') {
+            $corcel->post_status = 'Pending';
         } else {
             $corcel->post_status = 'draft';
         }
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         $corcel->update();
-        if ($isArchived) {
-            $corcel->saveMeta('status', 'archived');
-        }
         $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
         $relation = TermRelationship::where(['object_id' => $post->ID])->update(['term_taxonomy_id' => $term->term_id]);
     }
