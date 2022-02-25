@@ -138,4 +138,13 @@ class Applicant extends Model
     {
         return $this->hasOne(University::class, 'id', 'hr_university_id');
     }
+
+    public function getLinkedinAttribute($value)
+    {
+        if (strpos($value, 'http') !== 0) {
+            return 'https://' . $value;
+        } else {
+            return $value;
+        }
+    }
 }
