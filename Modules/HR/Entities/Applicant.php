@@ -143,8 +143,8 @@ class Applicant extends Model
     {
         if (strpos($value, 'http') !== 0) {
             return 'https://' . $value;
-        } else {
-            return $value;
         }
+
+        return $value;
     }
 }
