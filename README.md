@@ -33,4 +33,4 @@ Use our [installation guidelines](./docs/installation.md) to set up the project 
   
 ## New Contributor?  
   
-If you are a new contributor, visit our [Contributing Guidelines](./docs/Contributing.md) to get started.
+If you are a new contributor, visit our [Contributing Guidelines](./docs/contributing.md) to get started.
