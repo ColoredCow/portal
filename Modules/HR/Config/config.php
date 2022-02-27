@@ -43,7 +43,14 @@ return [
         'published' => 'Published',
         'closed' => 'Closed',
         'archived' => 'Archived',
-        'pending review' => 'Pending Review'
+        'pending review' => 'Pending Review',
+    ],
+
+    'opportunities-status-mapping' => [
+        'published' => 'publish',
+        'archived' => 'archived',
+        'draft' => 'draft',
+        'pending review' => 'pending'
     ],
 
     'post-type' => [

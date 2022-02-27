@@ -28,14 +28,10 @@ class JobObserver
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
-        if ($data['status'] == 'published') {
-            $corcel->post_status = 'publish';
-        } elseif ($data['status'] == 'archived') {
-            $corcel->post_status = 'archived';
-        } elseif ($data['status'] == 'pending review') {
-            $corcel->post_status = 'Pending';
-        } else {
-            $corcel->post_status = 'draft';
+        foreach (config('hr.opportunities-status-mapping') as $status => $label) {
+            if ($data['status'] == $status) {
+                $corcel->post_status = $label;
+            }
         }
         $corcel->save();
         $corcel->saveMeta('hr_id', $job['id']);
@@ -65,14 +61,10 @@ class JobObserver
         $corcel->post_title = $data['title'];
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');
-        if ($data['status'] == 'published') {
-            $corcel->post_status = 'publish';
-        } elseif ($data['status'] == 'archived') {
-            $corcel->post_status = 'archived';
-        } elseif ($data['status'] == 'pending review') {
-            $corcel->post_status = 'Pending';
-        } else {
-            $corcel->post_status = 'draft';
+        foreach (config('hr.opportunities-status-mapping') as $status => $label) {
+            if ($data['status'] == $status) {
+                $corcel->post_status = $label;
+            }
         }
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         $corcel->update();
