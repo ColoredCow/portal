@@ -50,7 +50,8 @@ return [
         'published' => 'publish',
         'archived' => 'archived',
         'draft' => 'draft',
-        'pending review' => 'pending'
+        'pending review' => 'pending',
+        'closed' => 'closed'
     ],
 
     'post-type' => [
