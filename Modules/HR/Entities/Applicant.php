@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrApplicantsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Corcel\Model\Post as Post;
 
 class Applicant extends Model
 {
@@ -35,8 +36,8 @@ class Applicant extends Model
             'course' => isset($attr['course']) ? $attr['course'] : null,
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
         ]);
-
-        $job = Job::where('title', $attr['job_title'])->first();
+        $opportunity_id = Post::select('ID')->where(['post_title' => $attr['job_title']])->first()->ID;
+        $job = Job::where('opportunity_id', $opportunity_id)->first();
         $application = Application::_create([
             'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,

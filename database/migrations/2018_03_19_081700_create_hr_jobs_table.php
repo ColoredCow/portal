@@ -15,6 +15,7 @@ class CreateHrJobsTable extends Migration
     {
         Schema::create('hr_jobs', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('opportunity_id')->unsigned();
             $table->string('title');
             $table->string('posted_by');
             $table->string('link')->nullable();

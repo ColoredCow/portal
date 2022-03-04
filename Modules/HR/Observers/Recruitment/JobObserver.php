@@ -7,6 +7,7 @@ use Modules\HR\Entities\Round;
 use Corcel\Model\Post as Corcel;
 use Corcel\Model\TermRelationship as TermRelationship;
 use Corcel\Model\Term as Term;
+use Corcel\Model\Post as Post;
 
 class JobObserver
 {
@@ -40,6 +41,9 @@ class JobObserver
         $relation->object_id = $post->ID;
         $relation->term_taxonomy_id = $term->term_id;
         $relation->save();
+        $opportunity_id = Post::select('ID')->where(['post_title' => $data['title']])->first()->ID;
+        $job->opportunity_id = $opportunity_id;
+        $job->save();
     }
 
     /**
