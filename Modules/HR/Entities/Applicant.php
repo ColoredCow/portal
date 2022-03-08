@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrApplicantsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Corcel\Model\Post as Post;
 
 class Applicant extends Model
 {
