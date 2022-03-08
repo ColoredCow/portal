@@ -13,7 +13,7 @@ class Job extends Model
 {
     use SoftDeletes, HasFactory;
 
-    protected $fillable = ['title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post'];
+    protected $fillable = ['opportunity_id', 'title', 'type', 'domain', 'start_date', 'description', 'posted_by', 'link', 'end_date', 'status', 'facebook_post', 'instagram_post', 'twitter_post', 'linkedin_post'];
 
     protected $table = 'hr_jobs';
 
