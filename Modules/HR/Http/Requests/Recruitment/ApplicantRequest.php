@@ -29,7 +29,7 @@ class ApplicantRequest extends FormRequest
 
         if ($this->method() === 'POST') {
             $rules = [
-                'job_title' => 'required|string',
+                'opportunity_id' => 'required|numeric',
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
                 'email' => 'required|email',

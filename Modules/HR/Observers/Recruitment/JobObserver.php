@@ -41,8 +41,7 @@ class JobObserver
         $relation->object_id = $post->ID;
         $relation->term_taxonomy_id = $term->term_id;
         $relation->save();
-        $opportunity_id = Post::select('ID')->where(['post_title' => $data['title']])->first()->ID;
-        $job->opportunity_id = $opportunity_id;
+        $job->opportunity_id = $post->ID;
         $job->save();
     }
 
