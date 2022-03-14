@@ -32,7 +32,7 @@
             </ul>
 
             <div v-else>
-                 <p>Fetching latest data...</p>
+                <p>Fetching latest data...</p>
             </div>
         </div>
     </div>
