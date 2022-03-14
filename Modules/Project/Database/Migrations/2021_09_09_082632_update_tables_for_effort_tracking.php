@@ -19,6 +19,10 @@ class UpdateTablesForEffortTracking extends Migration
             $table->float('monthly_estimated_hours')->after('total_estimated_hours');
         });
 
+        Schema::table('project_resources', function (Blueprint $table) {
+            $table->dropForeign(['resource_id']);
+        });
+
         Schema::rename('project_resources', 'project_team_members');
 
         Schema::table('project_team_members', function (Blueprint $table) {

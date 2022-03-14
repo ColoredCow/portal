@@ -62,7 +62,7 @@ return [
         'template-variables' => [
             'applicant-name' => '|*applicant_name*|',
             'interview-time' => '|*interview_time*|',
-            'job-title' => '|*job_title*|',
+            'job-title' => '|*job_title*|'
         ],
 
         'default' => [
@@ -216,6 +216,7 @@ return [
     'google_application_credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
 
     'website_url' => env('WEBSITE_URL', 'https://coloredcow.com'),
+    'cube_js_url' => env('CUBE_JS_URL', 'http://localhost:4000/cubejs-api/v1'),
     'website_upload_dir' => env('WEBSITE_UPLOAD_DIR'),
     'timezone' => [
         'indian' => 'Asia/Kolkata',

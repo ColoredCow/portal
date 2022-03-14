@@ -3,7 +3,7 @@
 Before you start following the guidelines, make sure to go through the [prerequisites guide](./prerequisites.md) to install the required tools and packages on your machine.
 
 
-1. Navigate to the right diretory where your project will be locally saved
+1. Navigate to the right directory where your project will be locally saved
     - For WAMP:
         ```sh
         cd C:\wamp64\www\
@@ -15,7 +15,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
     - For MAMP(macOS):
         ```sh
         cd /Application/MAMP/htdocs/
-        ```
+    ```
+    Note- phpMyAdmin/PHP, apache, and MySQL comes preinstalled with the  WAMP, XAMPP package, that is going to be used later on in this project, so no need to install these files separately. 
 
 2. Clone this repository and move to `portal` directory
    ```sh
@@ -69,6 +70,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
     2. Database configurations
     - Create a database in your local server. Check out [this link](https://www.youtube.com/watch?v=k9yJR_ZJbvI&ab_channel=1BestCsharpblog) and skip to 0:21.
     - Configure your Laravel app with the right DB settings. Check out [this link](https://www.youtube.com/watch?v=4geOENi3--M). Relevant parts are 2:00-2:42 and 4:20-5:40.
+    - Read [the story](https://docs.google.com/document/d/1sWj0F2uXkSE9oHBkChv-yC2L7P7qazsPY5sNPC1PIp4/edit) about how the team discussed which video should be in the docs
 
     ```sh
     DB_CONNECTION=mysql
@@ -83,6 +85,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
     DB_USERNAME=root
     DB_PASSWORD=
     ```
+
+    These credentials will be used when you will connect to MySQL Server whether you use XAMPP, WAMP, MAMP (PhpMyadmin) or TablePlus, the proper steps you can find here in the [prerequisites guide](./docs/prerequisites.md).
 
     3. _(Optional)_ Google configurations.
     ```sh
@@ -183,30 +187,30 @@ Before you start following the guidelines, make sure to go through the [prerequi
 
         - Go to `httpd.conf` file or edit this file in the terminal itself use this command
             ```sh
-            sudo nano /etc/apache2/httpd.conf
+            sudo nano /Applications/MAMP/conf/apache/httpd.conf
             ```
             And search for `vhosts` and uncomment line like this
             ```sh
             # Virtual hosts
-            # Include /private/etc/apache2/extra/httpd-vhosts.conf
+            # Include Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
             ```
             Change above to:
             ```sh
             # Virtual hosts
-            Include /private/etc/apache2/extra/httpd-vhosts.conf
+            Include Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
             ```
           - Open the `vhost` file in the terminal
             ```sh
             sudo nano /etc/apache2/extra/httpd-vhosts.conf
             ```
             Add the following line at the end of the file:
-            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`.
+            Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `/Application/MAMP/htdocs/portal/public`. Make sure you type '/public' at the end after your project path.
 
             ```apacheconf
              <VirtualHost *:80>
                  ServerName portal.test
-                 DocumentRoot "/path/to/your/project"
-                 <Directory "/path/to/your/project">
+                 DocumentRoot "/path/to/your/project/public"
+                 <Directory "/path/to/your/project/public">
                      DirectoryIndex index.php
                      AllowOverride All
                      Order allow,deny
@@ -230,4 +234,25 @@ Before you start following the guidelines, make sure to go through the [prerequi
             </Directory>
             ```
            - Restart MAMP. Next, open this url in your browser: http://portal.test
-10. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
+11. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
+
+12. _(Optional)_ Setup Email configuration:  
+
+    1. Open [Mailtrap](https://mailtrap.io/) and signup/login.  
+
+    2. Create an inbox.  
+
+    3. Open inbox setting and choose Laravel 7+ from Integrations.  
+
+    4. Open .env file and add the following  
+
+        ```sh
+        MAIL_DRIVER=smtp
+        MAIL_HOST=smtp.mailtrap.io
+        MAIL_PORT=yourPortNumber
+        MAIL_USERNAME=yourMailtrapUsername
+        MAIL_PASSWORD=yourMailtrapPassword
+        MAIL_ENCRYPTION=tls
+        MAIL_FROM_ADDRESS=senderEmailAddress
+        MAIL_FROM_NAME="${APP_NAME}"
+        ```

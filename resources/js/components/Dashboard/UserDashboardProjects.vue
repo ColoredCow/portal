@@ -11,7 +11,7 @@
                     <div class="row" >
                         <div class="col-9 text-left d-flex align-items-center">
                             <div class="w-250">
-                                <a :href="'/projects/'+project.id+'/edit/'">{{ project.name }}</a>
+                                <a :href="'/projects/'+project.id+'/show/'">{{ project.name }}</a>
                             </div>
                         </div>
                     </div>

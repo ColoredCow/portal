@@ -11,6 +11,9 @@ import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
   
 window.Vue = require("vue");
+import { Laue } from "laue";
+ 
+Vue.use(Laue);
   
 /**
    * Next, we will create a fresh Vue application instance and attach it to
@@ -32,6 +35,7 @@ Vue.component("project-stage-billing-component", require("./components/ProjectSt
 Vue.component("applicant-round-action-component", require("./components/HR/ApplicantRoundActionComponent.vue").default);
 Vue.component("project-details-component", require("./components/ProjectDetailsComponent.vue").default);
 Vue.component("books-comments-component", require("./components/Book/BooksCommentsComponent.vue").default);
+Vue.component("effort-component", require("./components/Project/Report.vue").default);
 Vue.component("comment", require("./components/CommentItem.vue").default);
 Vue.component("user-dashboard-read-books", require("./components/Dashboard/UserDashboardReadBooks.vue").default);
 Vue.component(
@@ -45,6 +49,7 @@ Vue.component(
 	  require("./components/Dashboard/UserDahboardInfrastructure.vue").default
 );
 Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDahboardInvoice.vue").default);
+Vue.component("job-application-component",require("./components/HR/JobApplicationComponent.vue").default);
   
 if (Vue) {
 	  Vue.filter("str_limit", function(value, size) {
@@ -1086,6 +1091,15 @@ $("#job_start_date").on("change", function() {
 $("#job_end_date").on("change", function(){
 	let endDate = $("#job_end_date").val();
 	$("#job_start_date").attr("max", endDate);
+});
+
+$(document).ready(function(){
+	var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
+		removeItemButton: true,
+		maxItemCount:9,
+		searchResultLimit:9,
+		renderChoiceLimit:9
+	});
 });
 
 /*

@@ -736,7 +736,9 @@ span.total-chart-count{
 	color: #C4C4C4;
 }
 .menu_wrapper .navbar li .application-menu-options-title{
-	left: 44px;
+	left: 15px;
+	top: 13px;
+	margin-left: 31px !important;
 	font-family: Mulish sans-serif;
 	font-style: normal;
 	font-weight: 50;
@@ -744,10 +746,36 @@ span.total-chart-count{
 #list-styling{
 	list-style: none;
 }
+.funnel-icon{
+	color: $theme-info;
+}
+.funnel-icon-button{
+	border-width: 1px;
+}
+.choices__list--multiple .choices__item {
+	background-color: #E4E4E4;
+	border: #E4E4E4;
+	font-weight: bold;
+	color: #413E41;
 
+}
+.choices[data-type*=select-multiple] .choices__button, .choices[data-type*=text] .choices__button {
+	border-left: 1px solid #E4E4E4;
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0yLjU5Mi4wNDRsMTguMzY0IDE4LjM2NC0yLjU0OCAyLjU0OEwuMDQ0IDIuNTkyeiIvPjxwYXRoIGQ9Ik0wIDE4LjM2NEwxOC4zNjQgMGwyLjU0OCAyLjU0OEwyLjU0OCAyMC45MTJ6Ii8+PC9nPjwvc3ZnPg==");
+}
+.choices__inner {
+	border-radius: 5px;
+}
+.application-search{
+	padding-bottom: 1pc;
+}
 //interview_schedule_error_message
-.exclamation-icon{ 
+.exclamation-icon{
 	color: $theme-red;
+}
+.assignlabels{
+	border: none;
+	background-color: transparent;
 }
 // End Custom
 

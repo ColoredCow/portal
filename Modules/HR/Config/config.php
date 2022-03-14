@@ -29,6 +29,15 @@ return [
 
     ],
 
+    'tags' => [
+        'in-progress' => 'In progress',
+        'need-follow-up' => 'Need follow up',
+        'awaiting-confirmation' => 'Awaiting confirmation',
+        'new-application' => 'New application',
+        'no-show' => 'No show',
+        'no-show-reminded' => 'No show reminded'
+    ],
+
     'opportunities-status' => [
         'draft' => 'Draft',
         'published' => 'Published',
@@ -42,7 +51,7 @@ return [
     'template-variables' => [
         'applicant-name' => '|*applicant_name*|',
         'interview-time' => '|*interview_time*|',
-        'job-title' => '|*job_title*|',
+        'job-title' => '|*job_title*|'
     ],
 
     'default' => [

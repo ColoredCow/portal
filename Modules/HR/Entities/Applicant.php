@@ -5,11 +5,13 @@ namespace Modules\HR\Entities;
 use App\Services\GSuiteUserService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Modules\HR\Database\Factories\HrApplicantsFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
 class Applicant extends Model
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     protected $guarded = [];
 
@@ -27,6 +29,7 @@ class Applicant extends Model
         ], [
             'name' => $attr['name'],
             'phone' => isset($attr['phone']) ? $attr['phone'] : null,
+            'wa_optin_at' => isset($attr['wa_optin_at']),
             'college' => isset($attr['college']) ? $attr['college'] : null,
             'graduation_year' => isset($attr['graduation_year']) ? $attr['graduation_year'] : null,
             'course' => isset($attr['course']) ? $attr['course'] : null,
@@ -53,6 +56,11 @@ class Applicant extends Model
         $applicant->wasRecentlyCreated ? $application->tag('new-application') : null;
 
         return $applicant;
+    }
+
+    public static function newFactory()
+    {
+        return new HrApplicantsFactory();
     }
 
     /**
@@ -129,5 +137,14 @@ class Applicant extends Model
     public function university()
     {
         return $this->hasOne(University::class, 'id', 'hr_university_id');
+    }
+
+    public function getLinkedinAttribute($value)
+    {
+        if (strpos($value, 'http') !== 0) {
+            return 'https://' . $value;
+        }
+
+        return $value;
     }
 }
