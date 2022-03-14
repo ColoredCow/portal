@@ -30,8 +30,8 @@
                     <div class="form-group col-md-6">
                         <label for="projectRepository.id">Upload File</label>
                         <div class="custom-file mb-3">
-                            <input type="file" id="document_file" name="document_file" class="custom-file-input">
-                            <label for="file" class="custom-file-label">Choose file</label>
+                            <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
+                            <label for="contract" class="custom-file-label">Choose file</label>
                         </div>
                     </div>
                 </div>
