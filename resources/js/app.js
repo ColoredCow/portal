@@ -44,7 +44,7 @@ Vue.component(
 	  "user-dashboard-infrastructure",
 	  require("./components/Dashboard/UserDahboardInfrastructure.vue").default
 );
-Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDahboardInvocie.vue").default);
+Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDahboardInvoice.vue").default);
   
 if (Vue) {
 	  Vue.filter("str_limit", function(value, size) {
