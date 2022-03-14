@@ -26,6 +26,15 @@
                 <div>
                     <span v-on:click="addNewProjectRepository()" style="text-decoration: underline;" class="text-underline btn" >Add new repository</span>
                 </div>
+                <div class="form-row mt-5">
+                    <div class="form-group col-md-6">
+                        <label for="projectRepository.id">Upload File</label>
+                        <div class="custom-file mb-3">
+                            <input type="file" id="document_file" name="document_file" class="custom-file-input">
+                            <label for="file" class="custom-file-label">Choose file</label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-primary" v-on:click="updateProjectForm('update_project_repository_form')">Update repository details</button>
