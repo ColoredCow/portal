@@ -57,7 +57,6 @@ class ProjectController extends Controller
     {
         $contractFilePath = storage_path('app/' . ProjectContract::where('project_id', $project->id)->first()->contract_file_path);
         $contractFileName = pathinfo($contractFilePath)['filename'];
-        
         return view('project::show', [
             'project' => $project,
             'contractFilePath' => $contractFilePath,
@@ -65,10 +64,6 @@ class ProjectController extends Controller
         ]);
     }
 
-    /**
-     * Show the contract PDF.
-     * @param $contractFileName
-     */
     public static function showPdf($contractFileName)
     {
         $filePath = storage_path('app/contract/2022/03/' . $contractFileName . '.pdf');
