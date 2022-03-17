@@ -65,8 +65,8 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     * @param $contractFilePath
+     * Show the contract PDF.
+     * @param $contractFileName
      */
     public static function showPdf($contractFileName)
     {
