@@ -20,8 +20,8 @@
                         </h4>
                         <div class="row gy-5">
                             <div class="col-xs-6 py-2">
-                                <div class="text-capitalize d-inline ml-2 fz-lg-22"> {{$contractFileName}} </div>
-                                <a href="{{route('pdf.show', ['contractFileName' => $contractFileName])}}" target="_blank" class="btn btn-primary text-white ml-4">View</a>
+                                <div class="text-capitalize d-inline ml-2 fz-lg-20"> {{$contractFileName}} </div>
+                                <a href="{{route('pdf.show', ['contractFileName' => $contractFileName])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
                             </div>
                         </div>
                     </div>
