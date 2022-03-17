@@ -57,6 +57,7 @@ class ProjectController extends Controller
     {
         $contractFilePath = storage_path('app/' . ProjectContract::where('project_id', $project->id)->first()->contract_file_path);
         $contractFileName = pathinfo($contractFilePath)['filename'];
+        
         return view('project::show', [
             'project' => $project,
             'contractFilePath' => $contractFilePath,
@@ -70,7 +71,8 @@ class ProjectController extends Controller
         $content = file_get_contents($filePath);
 
         return response($content)->withHeaders([
-            'content-type' => mime_content_type($filePath)
+            'content-type' => mime_content_type($filePath),
+            'contractFileName' => $contractFileName
         ]);
     }
 
