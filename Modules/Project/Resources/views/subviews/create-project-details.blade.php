@@ -41,16 +41,16 @@
             <label for="monthly_estimated_hours">{{ __('Monthly Estimated Hours') }}</label>
             <input type="number" class="form-control" name="monthly_estimated_hours" id="monthly_estimated_hours" placeholder="Enter monthly estimated hours" value="{{ old('monthly_estimated_hours') }}">
         </div>
-        <div class="form-row col-12" v-for="(contractFile, index) in contractFiles" :key="index">
+        <div class="form-row col-12" id="upload_contract_file">
             <div class="form-group col-md-5">
                 <label for="contract_file">Upload File</label>
                 <div class="custom-file mb-3">
-                    <input type="text" id="contract_file" name="contract_file" class="custom-file-input" v-model="contractFile.contract_file">
+                    <input type="text" id="contract_file" name="contract_file" class="custom-file-input">
                     <label for="contract" class="custom-file-label">Choose file</label>
                 </div>
             </div>
             <div class="col-4">
-                <button v-on:click="removeContractFile(index)" type="button" class="btn btn-danger btn-sm mt-6 ml-2 text-white fz-14">Remove</button>
+                <button type="button" class="btn btn-danger btn-sm mt-6 ml-2 text-white fz-14" id="remove_contract_file">Remove</button>
             </div>
         </div>
     </div>
