@@ -44,14 +44,15 @@ class ProjectService implements ProjectServiceContract
         ]);
 
         if ($data['contract_file']) {
-            $file = $data['contract_file'];
             $folder = '/contract/' . date('Y') . '/' . date('m');
-            $fileName = $file->getClientOriginalName();
-            $filePath = Storage::putFileAs($folder, $file, $fileName);
-            ProjectContract::create([
-                'project_id' => $project->id,
-                'contract_file_path' => $filePath
-            ]);
+            foreach ($data['contract_file'] as $index => $file) {
+                $fileName = $file->getClientOriginalName();
+                $filePath = Storage::putFileAs($folder, $file, $fileName);
+                ProjectContract::create([
+                    'project_id' => $project->id,
+                    'contract_file_path' => $filePath
+                ]);
+            }
         }
     }
 
