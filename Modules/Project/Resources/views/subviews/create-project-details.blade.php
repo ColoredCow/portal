@@ -1,6 +1,6 @@
 <div class="card-body">
     <input type="hidden" name="create_project" value="create_project">
-    <div class="form-row">
+    <div class="form-row" id="create_project">
         <div class="form-group col-md-5">
             <label for="name" class="field-required">Name</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="Enter project name" required="required" value="{{ old('name') }}">
@@ -41,11 +41,16 @@
             <label for="monthly_estimated_hours">{{ __('Monthly Estimated Hours') }}</label>
             <input type="number" class="form-control" name="monthly_estimated_hours" id="monthly_estimated_hours" placeholder="Enter monthly estimated hours" value="{{ old('monthly_estimated_hours') }}">
         </div>
-        <div class="form-group col-md-5">
-            <label for="contract_file">Upload File</label>
-            <div class="custom-file mb-3">
-                <input type="file" id="contract_file" name="contract_file" class="custom-file-input" multiple>
-                <label for="contract" class="custom-file-label">Choose file</label>
+        <div class="form-row col-12" v-for="(contractFile, index) in contractFiles" :key="index">
+            <div class="form-group col-md-5">
+                <label for="contract_file">Upload File</label>
+                <div class="custom-file mb-3">
+                    <input type="text" id="contract_file" name="contract_file" class="custom-file-input" v-model="contractFile.contract_file">
+                    <label for="contract" class="custom-file-label">Choose file</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <button v-on:click="removeContractFile(index)" type="button" class="btn btn-danger btn-sm mt-6 ml-2 text-white fz-14">Remove</button>
             </div>
         </div>
     </div>

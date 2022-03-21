@@ -19,6 +19,26 @@
     </div>
     
 </div>
+@section('js_script')
+<script>
+    new Vue({
+    el: '#create_project',
+    data: {
+        contractFiles: [
+            {
+                contract_file: ''
+            }
+        ]
+    },
+    methods: {
+        removeContractFile(index) {
+            this.contractFiles.splice(index, 1);
+        }
+    }
+});
+</script>
+
+@endsection
 
 @endsection
 
