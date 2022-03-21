@@ -45,7 +45,7 @@
             <div class="form-group col-md-5">
                 <label for="contract_file">Upload File</label>
                 <div class="custom-file mb-3">
-                    <input type="text" id="contract_file" name="contract_file" class="custom-file-input">
+                    <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
                     <label for="contract" class="custom-file-label">Choose file</label>
                 </div>
             </div>
