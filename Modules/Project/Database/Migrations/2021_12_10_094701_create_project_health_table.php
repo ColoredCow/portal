@@ -14,7 +14,7 @@ class CreateProjectHealthTable extends Migration
     public function up()
     {
         Schema::create('project_health', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->unsignedBigInteger('id');
             $table->unsignedBigInteger('project_id');
             $table->string('staging_url')->nullable();
             $table->string('onboarding_documents_url')->nullable();
