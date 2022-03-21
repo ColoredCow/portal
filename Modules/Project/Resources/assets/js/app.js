@@ -1,12 +1,12 @@
-$("#remove_contract_file").on("click", function() {
-	$("#upload_contract_file").remove();
+$(document).on("click", "#remove_contract_file", function() {
+	$(this).closest("#upload_contract_file").remove();
 });
 
 $("#add_contract_file").on("click", function() {
 	var addContractFile = `<div class="form-row col-12" id="upload_contract_file">
 		<div class="form-group col-md-5">
 			<div class="custom-file mb-3">
-				<input type="text" id="contract_file" name="contract_file" class="custom-file-input">
+				<input type="file" id="contract_file" name="contract_file[]" class="custom-file-input">
 				<label for="contract" class="custom-file-label">Choose file</label>
 			</div>
 		</div>
