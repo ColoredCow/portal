@@ -53,8 +53,11 @@
                 <button type="button" class="btn btn-danger btn-sm mt-6 ml-2 text-white fz-14" id="remove_contract_file">Remove</button>
             </div>
         </div>
+        <div>
+            <span id="add_contract_file" style="text-decoration: underline;" class="text-underline btn">Add new contract file</span>
+        </div>
     </div>
-<br>
+    <br>
 </div>
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Create</button>
