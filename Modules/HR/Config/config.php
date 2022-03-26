@@ -43,14 +43,15 @@ return [
         'published' => 'Published',
         'closed' => 'Closed',
         'archived' => 'Archived',
-        'pending review' => 'Pending Review',
+        'pending-review' => 'Pending Review',
     ],
 
-    'opportunities-status-mapping' => [
+    'opportunities-status-wp-mapping' => [
+        // 'laravel-key' => 'wordpress-key'
         'published' => 'publish',
         'archived' => 'archived',
         'draft' => 'draft',
-        'pending review' => 'pending',
+        'pending-review' => 'pending',
         'closed' => 'closed'
     ],
 

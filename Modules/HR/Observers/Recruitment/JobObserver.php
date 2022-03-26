@@ -28,11 +28,7 @@ class JobObserver
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
-        foreach (config('hr.opportunities-status-mapping') as $status => $label) {
-            if ($data['status'] == $status) {
-                $corcel->post_status = $label;
-            }
-        }
+        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$data['status']];
         $corcel->save();
         $corcel->saveMeta('hr_id', $job['id']);
         $post = $corcel->hasMeta('hr_id', $job['id'])->first();
@@ -61,11 +57,7 @@ class JobObserver
         $corcel->post_title = $data['title'];
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');
-        foreach (config('hr.opportunities-status-mapping') as $status => $label) {
-            if ($data['status'] == $status) {
-                $corcel->post_status = $label;
-            }
-        }
+        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$data['status']];
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         $corcel->update();
         $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
