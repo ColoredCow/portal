@@ -21,7 +21,6 @@ class JobObserver
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-
         $job->rounds()->attach(Round::pluck('id')->toArray());
         $data = request()->all();
         $corcel = new Corcel();
@@ -29,9 +28,7 @@ class JobObserver
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
-        if ($data['status'] != 'published') {
-            $corcel->post_status = 'draft';
-        }
+        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$data['status']];
         $corcel->save();
         $corcel->saveMeta('hr_id', $job['id']);
         $post = $corcel->hasMeta('hr_id', $job['id'])->first();
@@ -53,7 +50,6 @@ class JobObserver
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-
         $data = request()->all();
         $corcel = new Corcel();
         $post = $corcel->hasMeta('hr_id', $job['id'])->first();
@@ -61,7 +57,7 @@ class JobObserver
         $corcel->post_title = $data['title'];
         $corcel->post_content = $data['description'];
         $corcel->post_type = config('hr.post-type.career');
-        $corcel->post_status = $data['status'] == 'published' ? 'publish' : 'draft';
+        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$data['status']];
         $corcel->post_name = str_replace(' ', '-', strtolower($data['title']));
         $corcel->update();
         $term = Term::select('term_id')->where(['name' => $data['domain']])->first();
@@ -79,7 +75,6 @@ class JobObserver
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-
         Corcel::where(['post_type' => 'career', 'post_title' => $job['title']])->delete();
     }
 }

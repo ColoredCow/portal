@@ -8,7 +8,7 @@
     <div class="">
         @include('status', ['errors' => $errors->all()])
         <div class="card">
-            <form action="{{ route('project.store') }}" method="POST" id="form_project">
+            <form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data" id="form_project">
                 @csrf 
                 <div class="card-header">
                     <span>Project Details</span>

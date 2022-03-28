@@ -41,7 +41,18 @@ return [
     'opportunities-status' => [
         'draft' => 'Draft',
         'published' => 'Published',
-        'closed' => 'Closed'
+        'closed' => 'Closed',
+        'archived' => 'Archived',
+        'pending-review' => 'Pending Review',
+    ],
+
+    'opportunities-status-wp-mapping' => [
+        // 'laravel-key' => 'wordpress-key'
+        'published' => 'publish',
+        'archived' => 'archived',
+        'draft' => 'draft',
+        'pending-review' => 'pending',
+        'closed' => 'closed'
     ],
 
     'post-type' => [
