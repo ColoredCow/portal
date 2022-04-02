@@ -43,12 +43,12 @@ Vue.component(
 	  require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
 );
 Vue.component("user-dashboard-projects", require("./components/Dashboard/UserDashboardProjects.vue").default);
-Vue.component("user-dashboard-library", require("./components/Dashboard/UserDahboardLibrary.vue").default);
+Vue.component("user-dashboard-library", require("./components/Dashboard/UserDashboardLibrary.vue").default);
 Vue.component(
 	  "user-dashboard-infrastructure",
-	  require("./components/Dashboard/UserDahboardInfrastructure.vue").default
+	  require("./components/Dashboard/UserDashboardInfrastructure.vue").default
 );
-Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDahboardInvocie.vue").default);
+Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDashboardInvoice.vue").default);
 Vue.component("job-application-component",require("./components/HR/JobApplicationComponent.vue").default);
   
 if (Vue) {
