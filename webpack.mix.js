@@ -22,9 +22,11 @@ mix.js('Modules/User/Resources/assets/js/app.js', 'public/js/user.js')
    .sass('Modules/User/Resources/assets/sass/app.scss', 'public/css/user.css');
 mix.js('Modules/SalesAutomation/Resources/assets/js/app.js', 'public/js/salesautomation.js')
    .sass('Modules/SalesAutomation/Resources/assets/sass/app.scss', 'public/css/salesautomation.css');
+mix.js('Modules/Report/Resources/assets/js/app.js', 'public/js/report.js')
+   .sass('Modules/Report/Resources/assets/sass/app.scss', 'public/css/report.css');
 mix.js('Modules/EffortTracking/Resources/assets/js/app.js', 'public/js/efforttracking.js')
    .sass('Modules/EffortTracking/Resources/assets/sass/app.scss', 'public/css/efforttracking.css');
 mix.js('Modules/Invoice/Resources/assets/js/app.js', 'public/js/invoice.js')
    .sass('Modules/Invoice/Resources/assets/sass/app.scss', 'public/css/invoice.css');
-
+   
 mix.version();

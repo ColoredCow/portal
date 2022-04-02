@@ -29,4 +29,15 @@ Use our [installation guidelines](./docs/installation.md) to set up the project 
 - [Coding Standards](./docs/coding-standards.md)
 - [Authorization](./docs/authorization.md)
 - [Define permissions](./docs/roles-and-permissions.md)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)  
+  
+## New Contributor?  
+  
+If you are a new contributor, visit our [Contributing Guidelines](./docs/contributing.md) to get started.
+
+## Blogs
+
+1. [Employee Portal: Getting Hands-on](https://coloredcow.com/employee-portal-getting-hands-on)
+2. [Employee Portal – Even small businesses should have it – Part 1](https://coloredcow.com/employee-portal-even-small-businesses-part-1)
+
+

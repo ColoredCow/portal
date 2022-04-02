@@ -66,9 +66,4 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-body {
-  padding-top: 30px;
-  padding-bottom: 30px;
-  background: #f5f6f7;
-}
 </style>
