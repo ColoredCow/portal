@@ -10,13 +10,13 @@
                 <div class="form-row">
                     <div class="form-group col-md-12 d-flex mt-2">
                         <label for="staging_url"><h4>Staging URL</h4></label>
-                        <input type="url" class="form-control col-md-6 ml-5" name="staging_url" id="staging_url">
+                        <input type="url" class="form-control col-md-6 ml-5" name="staging_url" id="staging_url" value="{{ old('staging_url') }}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12 d-flex mt-3">
                         <label for="documents_url" class="lb-md"><h4>Training & Onboarding Documents</h4></label>
-                        <input type="url" class="form-control col-md-6 ml-5" name="onboarding_documents_url" id="documents_url">
+                        <input type="url" class="form-control col-md-6 ml-5" name="onboarding_documents_url" id="documents_url" value="{{ old('onboarding_documents_url') }}">
                     </div>
                 </div>
                 <div class="form-row">

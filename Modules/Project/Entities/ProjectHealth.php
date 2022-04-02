@@ -9,7 +9,7 @@ class ProjectHealth extends Model
     protected $guarded = [];
     protected $table = 'project_health';
 
-    public function ProjectHealthDetails()
+    public function project()
     {
         return $this->belongsTo(Project::class);
     }

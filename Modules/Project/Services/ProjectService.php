@@ -68,11 +68,6 @@ class ProjectService implements ProjectServiceContract
         return $project->repositories;
     }
 
-    public function getProjectHealth(Project $project)
-    {
-        return $project->projectHealthDetails;
-    }
-
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
@@ -142,18 +137,19 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    private function updateProjectHealthDetails($data, $project)
+    private function updateProjectHealthDetails($data)
     {
         ProjectHealth::updateOrCreate(
-            ['project_id' => $project->id],
-            ['staging_url' => $data['staging_url'],
-            'onboarding_documents_url' => $data['onboarding_documents_url'],
-            'has_issue_templates' => $data['has_issue_templates'],
-            'has_unit_testing' => $data['has_unit_testing'],
-            'has_ci_check' => $data['has_ci_check'],
-            'has_site_monitoring' => $data['has_site_monitoring'],
-            'has_error_logging' => $data['has_error_logging'],
-            'has_error_reporting' => $data['has_error_reporting']]
+            [
+                'staging_url' => $data['staging_url'],
+                'onboarding_documents_url' => $data['onboarding_documents_url'],
+                'has_issue_templates' => $data['has_issue_templates'],
+                'has_unit_testing' => $data['has_unit_testing'],
+                'has_ci_check' => $data['has_ci_check'],
+                'has_site_monitoring' => $data['has_site_monitoring'],
+                'has_error_logging' => $data['has_error_logging'],
+                'has_error_reporting' => $data['has_error_reporting']
+            ]
         );
     }
 
