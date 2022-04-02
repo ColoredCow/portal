@@ -4,6 +4,7 @@ namespace Modules\Report\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Report\Entities\Report;
 
 class ReportController extends Controller
 {
@@ -29,7 +30,20 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+            'desc' => 'nullable|string',
+            'embedded_url' => 'required',
+        ]);
+        Report::create([
+            'name' => $validator['name'],
+            'type' => $validator['type'],
+            'description' => $validator['desc'],
+            'url' => $validator['embedded_url'],
+        ]);
+        
+        return back()->with('success', 'Report add successfully.');
     }
 
     /**

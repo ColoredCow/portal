@@ -1,5 +1,8 @@
 <?php
 
 return [
-    'name' => 'Report'
+    'name' => 'Report',
+    'report_type' => [
+        'sales_and_marketing' => 'Sales and Marketing'
+    ]
 ];
