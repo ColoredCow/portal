@@ -37,6 +37,8 @@ class JobObserver
         $relation->object_id = $post->ID;
         $relation->term_taxonomy_id = $term->term_id;
         $relation->save();
+        $job->opportunity_id = $post->ID;
+        $job->save();
     }
 
     /**
