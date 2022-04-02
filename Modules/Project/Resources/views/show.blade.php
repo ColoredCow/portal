@@ -23,16 +23,70 @@
                                 <div class="text-capitalize d-inline ml-2 fz-lg-20"> {{$contractFileName}} </div>
                                 <a href="{{route('pdf.show', ['contractFileName' => $contractFileName])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
                             </div>
+                        </div>     
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-6 pl-4">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold mt-3">Name:</label>
+                        </h4>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->name }}</span>
+                    </div>
+                    <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Current FTE:</label>
+                        </h4>
+                        <span class="text-danger fz-lg-22">{{ $project->Fte }}</span>
+                        <a id="view_effort_sheet_badge" target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded">{{ _('Check FTE') }}</a>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-6 pl-4">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Project Type:</label>
+                        </h4>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
+                    </div>
+                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Status:</label>
+                        </h4>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->status }}</span>
+                    </div>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-6 pl-4">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Effortsheet:</label>
+                        </h4>
+                        @if($project->effort_sheet_url)
+                        <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded" target="_blank">{{ _('Open Sheet') }}</a>
+                        @else
+                        <span class="ml-2 fz-lg-22">Not Available</span>
+                        @endif
+                    </div>
+                </div>
+                <br>
+                <div class="form-row ">
+                    <div class="form-group col-lg-12 pl-4">
+                        <h4 class="d-inline-block ">
+                            <label for="name" class="font-weight-bold">Team Members:</label>
+                        </h4>
+                        <div class="row gy-5">
+                            @foreach($project->teamMembers ?:[] as $teamMember)
+                            <div class="col-xs-6 py-2">
+                                <div class="text-capitalize pl-8 pr-5 fz-lg-22">{{$teamMember->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <br>
-    <div class="mb-5">
-        @include('project::subviews.show-project-hours')
-    </div>
-</div>
 
-@endsection
+    @endsection

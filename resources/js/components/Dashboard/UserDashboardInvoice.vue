@@ -6,8 +6,8 @@
     <div class="card-body pt-3" style="height: 18em;overflow: auto;">
       <ul class="list list-group unstyled-list">
         <li style="font-size:16px;">
-          <div> Pending invoices </div>
-          <div class="'cost badge  cost p-2 '" v-text="sentInvoiceCount"></div>
+          <div class="text-secondary"> Pending invoices </div>
+          <h4 v-text="sentInvoiceCount"></h4>
         </li>
         <hr class="mt-1 w-full" />
       </ul>

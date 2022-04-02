@@ -6,26 +6,26 @@
          <div class="card-body pt-3" style="height: 18em;overflow: auto;">
             <ul v-if="this.billingDetails.current_amount" class="list list-group unstyled-list">
                 <li style="font-size:16px;">
-                    <div> Unbilled amount till today </div> 
-                    <div :class="'cost badge p-2 ' + this.currentAmountClass "> {{ this.billingDetails.current_amount }} </div> 
+                    <div class="d-inline-block text-secondary"> Unbilled amount till today </div>
+                    <h4><span class="'cost badge p-2 ml-4 ' + this.currentAmountClass ">{{ this.billingDetails.current_amount }}</span></h4> 
                 </li>
                 <hr class="mt-1 w-full">
 
                 <li style="font-size:16px;">
-                    <div> Forcast for this month </div> 
-                    <div class="cost badge badge-info p-2">{{ this.billingDetails.forcast_amount }}</div> 
+                    <div class="d-inline-block text-secondary"> Forcast for this month </div>
+                    <h4><span class="cost badge badge-info p-2 ml-4">{{ this.billingDetails.forcast_amount }}</span></h4> 
                 </li>
                 <hr class="mt-1 w-full">
 
                 <li style="font-size:16px;">
-                    <div> Last Month amount </div> 
-                    <div class="cost badge badge-info p-2">{{ this.billingDetails.last_month_amount }}</div> 
+                    <div class="d-inline-block text-secondary"> Last Month amount </div> 
+                    <h4><span class="cost badge badge-info p-2 ml-4">{{ this.billingDetails.last_month_amount }}</span></h4> 
                 </li>
                 <hr class="mt-1 w-full">
 
                 <li style="font-size:16px;">
-                    <div><span> Average <span class="fz-12">(Based on last year data)</span> </span></div>
-                    <div class="cost badge badge-warning p-2">{{ this.billingDetails.avg_by_last_year }}</div> 
+                    <div class="d-inline-block text-secondary"> Average <span class="fz-12 ">(Based on last year data)</span></div>
+                    <h4><span class="cost badge badge-warning p-2 ml-4">{{ this.billingDetails.avg_by_last_year }}</span></h4> 
                 </li>
                 <hr class="mt-1 w-full">
 

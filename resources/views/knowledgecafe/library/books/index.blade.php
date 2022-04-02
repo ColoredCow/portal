@@ -26,7 +26,7 @@
         </div>
         @if(session('disable_book_suggestion'))
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
-                <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dasboard</a>
+                <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dashboard</a>
             </div>
         @endif
     </div>
