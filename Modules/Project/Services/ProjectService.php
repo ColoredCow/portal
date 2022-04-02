@@ -5,8 +5,10 @@ namespace Modules\Project\Services;
 use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\User\Entities\User;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -28,7 +30,7 @@ class ProjectService implements ProjectServiceContract
 
     public function store($data)
     {
-        return Project::create([
+        $project = Project::create([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
@@ -40,6 +42,17 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
+
+        if ($data['contract_file']) {
+            $file = $data['contract_file'];
+            $folder = '/contract/' . date('Y') . '/' . date('m');
+            $fileName = $file->getClientOriginalName();
+            $filePath = Storage::putFileAs($folder, $file, $fileName);
+            ProjectContract::create([
+                'project_id' => $project->id,
+                'contract_file_path' => $filePath
+            ]);
+        }
     }
 
     public function getClients()
