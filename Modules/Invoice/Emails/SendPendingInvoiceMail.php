@@ -5,6 +5,8 @@ namespace Modules\Invoice\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SendPendingInvoiceMail extends Mailable
 {
@@ -27,11 +29,13 @@ class SendPendingInvoiceMail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(Request $request)
     {
+        $month = Carbon::now($request->month)->format('F');
+
         return $this
-        ->from(config('invoice.pending-invoice-mail.pending-invoice.email'), config('invoice.pending-invoice-mail.pending-invoice.name'))
-        ->subject($this->invoice->project->name . ' invoice ')
+        ->from($request->sender_invoice_email)
+        ->subject($this->invoice->project->name . ' invoice ' . '-' . ' ' . $month . ' ' . $request->year)
         ->view('invoice::mail.pending-invoice')
         ->with(['invoice' => $this->invoice]);
     }
