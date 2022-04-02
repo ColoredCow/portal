@@ -52,7 +52,8 @@ class Project extends Model
     public function project()
     {
         return $this->hasMany(ProjectHealth::class);
-
+    }
+  
     public function projectContracts()
     {
         return $this->hasMany(ProjectContract::class);

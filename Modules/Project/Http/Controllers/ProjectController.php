@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
+use Modules\Project\Entities\ProjectContract;
 
 class ProjectController extends Controller
 {
@@ -54,8 +55,24 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $contractFilePath = storage_path('app/' . ProjectContract::where('project_id', $project->id)->first()->contract_file_path);
+        $contractFileName = pathinfo($contractFilePath)['filename'];
+
         return view('project::show', [
             'project' => $project,
+            'contractFilePath' => $contractFilePath,
+            'contractFileName' => $contractFileName
+        ]);
+    }
+
+    public static function showPdf($contractFileName)
+    {
+        $filePath = storage_path('app/contract/2022/03/' . $contractFileName . '.pdf');
+        $content = file_get_contents($filePath);
+
+        return response($content)->withHeaders([
+            'content-type' => mime_content_type($filePath),
+            'contractFileName' => $contractFileName
         ]);
     }
 
