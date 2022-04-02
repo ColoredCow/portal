@@ -2,9 +2,9 @@
 
 namespace Modules\Report\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Report\Entities\Report;
+use Modules\Report\Http\Requests\ReportRequest;
 
 class ReportController extends Controller
 {
@@ -29,21 +29,16 @@ class ReportController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
+     * @param ReportRequest $request
      */
-    public function store(Request $request)
+    public function store(ReportRequest $request)
     {
-        $validator = $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-            'desc' => 'nullable|string',
-            'embedded_url' => 'required',
-        ]);
+        $validated = $request->validated();
         Report::create([
-            'name' => $validator['name'],
-            'type' => $validator['type'],
-            'description' => $validator['desc'],
-            'url' => $validator['embedded_url'],
+            'name' => $validated['name'],
+            'type' => $validated['type'],
+            'description' => $validated['desc'],
+            'url' => $validated['embedded_url'],
         ]);
 
         return back()->with('success', 'Report add successfully.');
@@ -67,17 +62,28 @@ class ReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        $report = Report::find($id);
+        $data = compact('report');
+
+        return view('report::edit')->with($data);
     }
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param ReportRequest $request
      * @param int $id
      */
-    public function update(Request $request, $id)
+    public function update(ReportRequest $request, $id)
     {
-        //
+        $report = Report::find($id);
+        $validated = $request->validated();
+        $report->name = $validated['name'];
+        $report->type = $validated['type'];
+        $report->description = $validated['desc'];
+        $report->url = $validated['embedded_url'];
+        $report->save();
+
+        return redirect('/report');
     }
 
     /**
