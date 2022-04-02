@@ -53,7 +53,7 @@ class Project extends Model
     {
         return $this->hasMany(ProjectHealth::class);
     }
-  
+
     public function projectContracts()
     {
         return $this->hasMany(ProjectContract::class);

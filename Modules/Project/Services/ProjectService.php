@@ -150,7 +150,7 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    private function updateProjectHealthDetails($data)
+    private function updateProjectHealthDetails($data, $project)
     {
         ProjectHealth::updateOrCreate(
             [
