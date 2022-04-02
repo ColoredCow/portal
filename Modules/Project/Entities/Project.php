@@ -8,6 +8,7 @@ use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
+use Modules\EffortTracking\Services\EffortTrackingService;
 
 class Project extends Model
 {
@@ -51,5 +52,20 @@ class Project extends Model
     public function project()
     {
         return $this->hasMany(ProjectHealth::class);
+
+    public function projectContracts()
+    {
+        return $this->hasMany(ProjectContract::class);
+    }
+
+    public function getFteAttribute()
+    {
+        $effortTracking = new EffortTrackingService;
+        $teamMembers = $this->getTeamMembers()->get();
+        $teamMembersDetails = $effortTracking->getTeamMembersDetails($teamMembers);
+        $totalEffort = $effortTracking->getTotalEffort($teamMembersDetails);
+        $monthlyEstimatedHours = $this->monthly_estimated_hours;
+
+        return round($totalEffort / $monthlyEstimatedHours, 2);
     }
 }
