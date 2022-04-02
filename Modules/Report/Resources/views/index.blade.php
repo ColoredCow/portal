@@ -3,7 +3,7 @@
 <div class="container">
     <br>
     <div class="d-flex">
-        <h4 class="d-inline-block">Sales & Marketing Reports</h4>
+        <h4 class="d-inline-block font-weight-bold">Sales & Marketing Reports</h4>
         @can('report.edit')
         <button type="button" class="btn btn-primary ml-auto report" data-bs-toggle="modal" data-bs-target="#Modal">
             Add Report
@@ -72,10 +72,27 @@
         </div>
         @endcan
     </div>
-    <div class="card mt-3">
-        <div class="card-header" data-toggle="collapse">
-            <h4>Sales and Marketing Reports <span>(Coming soon...)</span></h4>
+
+    @foreach($reports as $report)
+    @if($report->type == "sales_and_marketing")
+    <div class="card mt-4">
+        <div class="card-header d-flex c-pointer" data-toggle="collapse" data-target="#report_id_{{ $report->id }}" aria-expanded="true" aria-controls="report-bar">
+            <div>
+                <h4 class="font-weight-bold"> {{ $report->name }} </h4>
+            </div>
+            <a href="{{ route('report.show', ['id' => $report->id]) }}" target="_self" class="btn btn-primary ml-auto"> View </a>
+        </div>
+        <div id="report_id_{{$report->id}}" class="collapse">
+            <div class="card-body">
+                <span class="font-weight-bold"> Description </span>
+                <div> {{ $report->description }} </div>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary report" data-bs-toggle="modal" data-bs-target="#Modal"> Edit </button>
+            </div>
         </div>
     </div>
+    @endif
+    @endforeach
 </div>
 @endsection
