@@ -152,7 +152,8 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectHealthDetails($data, $project)
     {
-        ProjectHealth::updateOrCreate(
+        return ProjectHealth::updateOrCreate(
+            ['project_id' => $project->id],
             [
                 'staging_url' => $data['staging_url'],
                 'onboarding_documents_url' => $data['onboarding_documents_url'],
