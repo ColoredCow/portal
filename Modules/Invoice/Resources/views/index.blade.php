@@ -36,9 +36,12 @@
                     <th>Sent on</th>
                     <th>Receivable date</th>
                     <th>Status</th>
+                    @if(request()->input('status') == 'sent' || request()->input('status') == '' )
+                        <th>Email</th>
+                    @endif
                 </tr>
             </thead>
-
+            
             <tbody>
                 @foreach ($invoices as $invoice)
                 <tr>
@@ -52,7 +55,29 @@
                         {{ $invoice->receivable_date->format(config('invoice.default-date-format'))  }}
                     </td>
                     <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">{{ Str::studly($invoice->status) }}</td>
-                </tr>
+                    @if(Str::studly($invoice->status) == 'Sent')
+                        <td><button type="button" class="btn btn-primary ml-auto" data-bs-toggle="modal" data-bs-target="#Modal">Send Mail</button>
+                            <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h4> Pending Invoice Mail</h4>
+                                            <button type="button" class="btn-close ml-auto" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                           <form action="{{ route('invoice.sendEmail', $invoice) }}" method="post">  
+                                             @csrf
+                                                <label for="invoice_email" class="field-required">Email for Pending invoice</label>
+                                                <input type="email" class="form-control mt-2" name="invoice_email" id="invoice_email" placeholder="Email for pending invoice" required="required">
+                                                <button type="submit" class="btn btn-primary mt-4">Send</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    @endif
+                    </tr>
                 @endforeach
             </tbody>
         </table>
