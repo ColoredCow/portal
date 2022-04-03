@@ -33,6 +33,7 @@
         "niklasravnsborg/laravel-pdf": "^4.1",
         "nwidart/laravel-modules": "^7.0",
         "revolution/laravel-google-sheets": "^5.6",
+        "sentry/sentry-laravel": "^2.11",
         "spatie/laravel-permission": "^3.3"
     },
     "require-dev": {

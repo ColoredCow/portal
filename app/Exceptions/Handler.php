@@ -43,6 +43,8 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        parent::report($exception);
+
         $timeOfException = Carbon::now()->format(config('constants.display_datetime_format'));
         foreach ($this->dontReport as $dontReport) {
             if ($exception instanceof $dontReport) {
@@ -58,6 +60,15 @@ class Handler extends ExceptionHandler
 
         // @phpstan-ignore-next-line
         return parent::report($exception);
+    }
+
+    public function register()
+    {
+        $this->reportable(function (Throwable $e) {
+            if (app()->bound('sentry')) {
+                app('sentry')->captureException($e);
+            }
+        });
     }
 
     /**
