@@ -10,20 +10,14 @@ class EffortTrackingService
     public function show($project)
     {
         $teamMembers = $project->getTeamMembers()->get();
+        $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
         $teamMembersEffort = [];
         $users = [];
-        $totalEffort = 0;
+        $totalEffort = $this->getTotalEffort($teamMembersDetails);
         $workingDays = $this->getWorkingDays(now()->startOfMonth(), now());
         $startDate = now()->startOfMonth();
         $endDate = now()->endOfMonth();
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
-        $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
-        if (is_array($teamMembersDetails['teamMembersEffort'])) {
-            foreach ($teamMembersDetails['teamMembersEffort'] as $key => $teamMemberEffort) {
-                $totalTeamMemberEffort = end($teamMemberEffort)['total_effort_in_effortsheet'] ?? 0;
-                $totalEffort += $totalTeamMemberEffort;
-            }
-        }
         $expectedHours = $this->getExpectedHours(count($workingDays));
 
         return [
@@ -37,6 +31,19 @@ class EffortTrackingService
             'endDate' => $endDate,
             'currentMonth' => now()->format('F'),
         ];
+    }
+
+    public function getTotalEffort($teamMembersDetails)
+    {
+        $totalEffort = 0;
+        if (is_array($teamMembersDetails['teamMembersEffort'])) {
+            foreach ($teamMembersDetails['teamMembersEffort'] as $key => $teamMemberEffort) {
+                $totalTeamMemberEffort = end($teamMemberEffort)['total_effort_in_effortsheet'] ?? 0;
+                $totalEffort += $totalTeamMemberEffort;
+            }
+        }
+
+        return $totalEffort;
     }
 
     /**

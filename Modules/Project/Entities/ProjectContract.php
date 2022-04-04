@@ -8,7 +8,7 @@ class ProjectContract extends Model
 {
     protected $fillable = ['project_id', 'contract_file_path'];
 
-    public function ProjectContract()
+    public function project()
     {
         return $this->belongsTo(Project::class);
     }
