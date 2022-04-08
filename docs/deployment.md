@@ -4,7 +4,12 @@ Portal uses GitHub action to deploy the portal on staging server.
 ### Staging Deployment
 Staging builds are configured using GitHub Actions. The file `.github/workflows/deploy-staging.yml` contains the commands to deploy the portal. Production builds happen when code is pushed to `master` branch.
 
-To set up the deployment workflow, follow the steps below.
+Currently the build process for staging deploymnet is automated. For more information, check out [staging-deployment.yml](../.github/workflows/staging-deployment.yml).
+
+### Production Deployment
+Production builds are configured using GitHub Actions. The file `.github/workflows/production-deployment.yml` contains the commands to deploy the portal. Production builds happen when new releases are published. For example `v1.1.2`.
+
+To set up the production deployment workflow, follow the same steps as staging. Make sure to update the keys and environment variables accordingly.
 
 1. Generate an SSH key pair.
     ```sh
@@ -45,12 +50,5 @@ To set up the deployment workflow, follow the steps below.
    2.  `SSH_USERNAME`: The username of the staging server. If you have followed the user creation steps above, it would be `githubaction`.
    3.  `SSH_PRIVATE_KEY`: Paste the private key content from step 4.
    4.  `SSH_BUILD_DIRECTORY`: The directory where the project is located.
-
-For more information, check out [staging-deployment.yml](../.github/workflows/staging-deployment.yml).
-
-### Production Deployment
-Production builds are configured using GitHub Actions. The file `.github/workflows/deploy-staging.yml` contains the commands to deploy the portal. Production builds happen when new releases are published. For example `v1.1.2`.
-
-To set up the production deployment workflow, follow the same steps as staging. Make sure to update the keys and environment variables accordingly.
 
 For more information, check out [production-deployment.yml](../.github/workflows/production-deployment.yml).
