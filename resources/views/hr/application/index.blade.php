@@ -56,7 +56,7 @@
                             <option value="" {{ request()->has('start-year') ? '' : 'selected' }}>
                                 {!! __('All year') !!}
                             </option>
-                            @for ($i=2000; $i <= date('Y'); $i++)
+                            @for ($i=2000; $i <= ((int) date('Y') + 10); $i++)
                             <option value="{{ $i }}" {{ request()->get('start-year') == $i ? 'selected' : '' }}>
                                 {{ $i }} </option>
                             @endfor
@@ -69,7 +69,7 @@
                             <option value="" {{ request()->has('start-year') ? '' : 'selected' }}>
                                 {!! __('All Years') !!}
                             </option>
-                            @for ($i=2000; $i <= date('Y'); $i++)
+                            @for ($i=2000; $i <= ((int) date('Y') + 10); $i++)
                             <option value="{{ $i }}" {{ request()->get('end-year') == $i ? 'selected' : '' }}>
                                 {{ $i }} </option>
                             @endfor
