@@ -48,13 +48,13 @@
     <div class="row d-flex flex-md-row-reverse mr-md-4 ml-4 ml-md-3 mt-sm-2 mt-md-0">
         <form class="form" action="/{{ Request::path() }}">
             <div class="d-sm-flex flex-row">
-                <div class="d-flex">
-                    <div class="mr-2">
+                <div class="d-flex mt-2 mt-md-0">
+                    <div class="mr-2 form-group">
                         <label id="start-year">{!! __('Start Year') !!}</label><br>
-                        <select class="fz-14 fz-lg-16 p-1 bg-info text-white rounded border-0" name="start-year" id="start-year"
+                        <select class="fz-14 fz-lg-16 p-1 w-100 w-md-150 form-control rounded border-0" name="start-year" id="start-year"
                             onchange="this.form.submit()">
                             <option value="" {{ request()->has('start-year') ? '' : 'selected' }}>
-                                {!! __('All year') !!}
+                                {!! __('All Years') !!}
                             </option>
                             @for ($i=2000; $i <= ((int) date('Y') + 10); $i++)
                             <option value="{{ $i }}" {{ request()->get('start-year') == $i ? 'selected' : '' }}>
@@ -62,9 +62,9 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="mr-2">
+                    <div class="mr-2 form-group">
                         <label id="end-year">{!! __('End Year') !!}</label><br>
-                        <select class="fz-14 fz-lg-16 p-1 bg-info text-white rounded border-0" name="end-year" id="start-year"
+                        <select class="fz-14 fz-lg-16 p-1 w-100 w-md-150 form-control rounded border-0" name="end-year" id="start-year"
                             onchange="this.form.submit()">
                             <option value="" {{ request()->has('start-year') ? '' : 'selected' }}>
                                 {!! __('All Years') !!}
@@ -76,9 +76,9 @@
                         </select>
                     </div>
                 </div>
-                <div class="mr-2 mt-1 mt-sm-0">
+                <div class="mr-2 mt-2 mt-md-0 form-group">
                     <label id="job">{!! __('Jobs') !!}</label><br>
-                    <select class="fz-14 fz-lg-16 p-1 bg-info text-white rounded border-0" name="hr_job_id" id="job"
+                    <select class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="hr_job_id" id="job"
                         onchange="this.form.submit()">
                         <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
                             {!! __('All Jobs') !!}
