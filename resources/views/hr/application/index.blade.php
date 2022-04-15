@@ -21,19 +21,21 @@
                     value=@if(request()->has('hr_job_id')){{request()->get('hr_job_id')}}@endif>
                 <input type="hidden" name="round" class="form-control" id="search"
                     value=@if(request()->has('round')){{request()->get('round')}}@endif>
-                <div class="input-group mb-3 col-md-12">
-                    <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-label="Recipient's username" aria-describedby="button-addon2"
-                    value= @if(request()->has('search')){{request()->get('search')}}@endif>
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center" type="button" id="button-addon2" data-toggle="modal" data-target="#application-modal">
-                        <i class="fa fa-filter" aria-hidden="true"></i>
-                      </button>
+                <div class="d-flex">
+                    <div class="input-group mb-3 col-md-9">
+                        <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-label="Recipient's username" aria-describedby="button-addon2"
+                        value= @if(request()->has('search')){{request()->get('search')}}@endif>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center" type="button" id="button-addon2" data-toggle="modal" data-target="#application-modal">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 align-self-center application-search">
+                        <button class="btn btn-info ">Search</button>
                     </div>
                 </div>
             </form>
-            <div class="col-lg-2 align-self-center application-search">
-                <button class="btn btn-info ">Search</button>
-            </div>
         </div>
         <div class="text-right ml-5 ml-md-0">
             <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
@@ -45,50 +47,55 @@
             </form>
         </div>
     </div>
-    <div class="row d-flex flex-md-row-reverse mr-md-4 ml-4 ml-md-3 mt-sm-2 mt-md-0">
+    <div class="md-row d-md-flex flex-md-row-reverse ml-4 ml-md-3 mt-sm-2 mt-md-0">
         <form class="form" action="/{{ Request::path() }}">
-            <div class="d-sm-flex flex-row">
+            <input type="hidden" name="status" class="form-control" id="search"
+            value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
+            <input type="hidden" name="hr_job_id" class="form-control" id="search"
+                value=@if(request()->has('hr_job_id')){{request()->get('hr_job_id')}}@endif>
+            <input type="hidden" name="round" class="form-control" id="search"
+                value=@if(request()->has('round')){{request()->get('round')}}@endif>
+            <input type="hidden" name="search" class="form-control" id="search"
+                value=@if(request()->has('search')){{request()->get('search')}}@endif>
+            <div class="d-flex flex-row">
                 <div class="d-flex mt-2 mt-md-0">
                     <div class="mr-2 form-group">
                         <label id="start-year">{!! __('Start Year') !!}</label><br>
-                        <select class="fz-14 fz-lg-16 p-1 w-100 w-md-150 form-control rounded border-0" name="start-year" id="start-year"
-                            onchange="this.form.submit()">
-                            <option value="" {{ request()->has('start-year') ? '' : 'selected' }}>
-                                {!! __('All Years') !!}
-                            </option>
-                            @for ($i=2000; $i <= ((int) date('Y') + 10); $i++)
-                            <option value="{{ $i }}" {{ request()->get('start-year') == $i ? 'selected' : '' }}>
-                                {{ $i }} </option>
-                            @endfor
-                        </select>
+                        <input id="start-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="start-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('start-year', request()->get('start-year')) }}">
                     </div>
                     <div class="mr-2 form-group">
                         <label id="end-year">{!! __('End Year') !!}</label><br>
-                        <select class="fz-14 fz-lg-16 p-1 w-100 w-md-150 form-control rounded border-0" name="end-year" id="start-year"
-                            onchange="this.form.submit()">
-                            <option value="" {{ request()->has('start-year') ? '' : 'selected' }}>
-                                {!! __('All Years') !!}
-                            </option>
-                            @for ($i=2000; $i <= ((int) date('Y') + 10); $i++)
-                            <option value="{{ $i }}" {{ request()->get('end-year') == $i ? 'selected' : '' }}>
-                                {{ $i }} </option>
-                            @endfor
-                        </select>
+                        <input id="end-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="end-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('end-year', request()->get('end-year')) }}">
                     </div>
                 </div>
-                <div class="mr-2 mt-2 mt-md-0 form-group">
-                    <label id="job">{!! __('Jobs') !!}</label><br>
-                    <select class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="hr_job_id" id="job"
-                        onchange="this.form.submit()">
-                        <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
-                            {!! __('All Jobs') !!}
-                        </option>
-                        @foreach ($jobs as $job)
-                        <option value="{{ $job->id }}" {{ request()->get('hr_job_id') == $job->id ? 'selected' : '' }}>
-                            {{ $job->title }} </option>
-                        @endforeach
-                    </select>
-                </div>
+                <button class="btn h-40 mt-6 mt-md-4 mt-xl-5 w-md-50 mr-md-2 theme-shadow-dark border pt-1">
+                    <i class="fa fa-search c-pointer fz-20" aria-hidden="true"></i>
+                </button>
+            </div>
+        </form>
+        <form class="form" action="/{{ Request::path() }}">
+            <div class="mr-2 mt-2 mt-md-0 form-group">
+                <label id="job">{!! __('Jobs') !!}</label><br>
+                <input type="hidden" name="status" class="form-control" id="search"
+                value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
+                <input type="hidden" name="start-year" class="form-control" id="search"
+                    value=@if(request()->has('start-year')){{request()->get('start-year')}}@endif>
+                <input type="hidden" name="end-year" class="form-control" id="search"
+                    value=@if(request()->has('end-year')){{request()->get('end-year')}}@endif>
+                <input type="hidden" name="round" class="form-control" id="search"
+                    value=@if(request()->has('round')){{request()->get('round')}}@endif>
+                <input type="hidden" name="search" class="form-control" id="search"
+                    value=@if(request()->has('search')){{request()->get('search')}}@endif>
+                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0" name="hr_job_id" id="job"
+                    onchange="this.form.submit()">
+                    <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
+                        {!! __('All Jobs') !!}
+                    </option>
+                    @foreach ($jobs as $job)
+                    <option value="{{ $job->id }}" {{ request()->get('hr_job_id') == $job->id ? 'selected' : '' }}>
+                        {{ $job->title }} </option>
+                    @endforeach
+                </select>
             </div>
         </form>
     </div>
