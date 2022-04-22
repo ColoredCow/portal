@@ -68,9 +68,32 @@ abstract class ApplicationController extends Controller
         $applications = Application::join('hr_application_round', function ($join) {
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
-        })
-            ->with(['applicant', 'job', 'tags', 'latestApplicationRound'])
-            ->whereHas('latestApplicationRound')
+        })->with(['applicant', 'job', 'tags', 'latestApplicationRound']);
+        foreach (array_keys(request()->all()) as $filterKeys) {
+            switch ($filterKeys) {
+                case 'start-year':
+                    $startYear = request()->all()['start-year'] ? (int) request()->all()['start-year'] : null;
+                    if ($startYear != null) {
+                        $applications = $applications->whereHas('applicant', function ($query) use ($startYear) {
+                            $query->where('graduation_year', '>=', $startYear);
+                        });
+                    }
+                    break;
+                case 'end-year':
+                    $endYear = request()->get('end-year') ? (int) request()->get('end-year') : null;
+                    if ($endYear != null) {
+                        $applications = $applications->whereHas('applicant', function ($query) use ($endYear) {
+                            $query->where('graduation_year', '<=', $endYear)
+                            ->orWhereNull('graduation_year');
+                        });
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        $applications = $applications->whereHas('latestApplicationRound')
             ->applyFilter($filters)
             ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
             ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
