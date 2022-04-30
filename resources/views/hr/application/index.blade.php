@@ -85,8 +85,10 @@
                     <sup class = "application-menu-options-title fz-18">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
-                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
-                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.new.label') ? 'text-underline' : '' }}">Open</h5>
+                    <div>
+                        <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
+                        <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.new.label') ? 'text-underline' : '' }}">Open&nbsp</h5>
+                    </div>
                 </a>
             </li>
             <li id="list-styling">
@@ -95,8 +97,10 @@
                     <sup class = "application-menu-options-title fz-18">
                         {{$trialProgramCount}}
                     </sup>
+                    <div>
                     <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/code.svg')) !!}</span>
                     <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.in-progress.label') ? 'text-underline' : '' }}">Trial Program</h5>    
+                    </div>
                 </a>
             </li>
             <li id="list-styling">
@@ -105,8 +109,10 @@
                     <sup class = "application-menu-options-title fz-18">
                         {{$onHoldApplicationsCount}}
                     </sup>
-                    <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</span>
-                    <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.on-hold.label') ? 'text-underline' : '' }}">On Hold</h5>
+                    <div>
+                        <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/pause-circle.svg')) !!}</span>
+                        <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.on-hold.label') ? 'text-underline' : '' }}">On Hold</h5>
+                    </div>
                 </a>
             </li>
             <li id="list-styling">
@@ -115,8 +121,10 @@
                     <sup class = "application-menu-options-title fz-18">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
+                    <div>
                     <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/exclamation-octagon-fill.svg')) !!}</span>
                     <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.no-show.label') ? 'text-underline':'' }}">No Show</h5>
+                    </div>
                 </a>
             </li>
             <li id="list-styling">
@@ -125,8 +133,10 @@
                     <sup class = "application-menu-options-title fz-18">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
+                    <div>
                     <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/clipboard.svg')) !!}</span>
                     <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.sent-for-approval.label') ? 'text-underline' : '' }}">To Approve</h5>
+                    </div>
                 </a>
             </li>
             <li id="list-styling">
@@ -135,8 +145,10 @@
                     <sup class = "application-menu-options-title fz-18">
                         {{$approvedApplicationsCount}}
                     </sup>
+                    <div>
                     <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/clipboard-check.svg')) !!}</span>
                     <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.approved.label') ? 'text-underline' : '' }}">Approved</h5>
+                    </div>
                 </a>
             </li>
             <li id="list-styling">
@@ -145,8 +157,10 @@
                     <sup class = "application-menu-options-title fz-18" >
                         {{$onboardedApplicationsCount}}
                     </sup>
+                    <div>
                     <span class="d-inline-block h-26 w-26"> {!! file_get_contents(public_path('icons/person-check.svg')) !!} </span>
                     <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.onboarded.label') ? 'text-underline' : '' }}">On Boarded</h5>
+                    </div>
                 </a>
             </li>
             <li id="list-styling">
@@ -155,8 +169,10 @@
                     <sup class = "application-menu-options-title fz-18" >
                         {{$rejectedApplicationsCount}}    
                     </sup>
+                    <div>
                     <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/x-circle.svg')) !!}</span>
                     <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.rejected.label') ? 'text-underline':'' }}">Closed</h5>
+                    </div>
                 </a>
             </li>
         </div>
