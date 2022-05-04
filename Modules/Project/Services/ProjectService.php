@@ -16,10 +16,10 @@ class ProjectService implements ProjectServiceContract
     {
         if (request()->get('projects') == 'all-projects') {
             return Project::where('status', request()->input('status', 'active'))
-                ->get();
+                ->orderBy('name')->get();
         } else {
             return auth()->user()->projects()->where('status', request()->input('status', 'active'))
-                ->get();
+                ->orderBy('name')->get();
         }
     }
 
