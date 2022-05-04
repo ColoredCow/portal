@@ -43,7 +43,7 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
 
-        if ($data['contract_file']) {
+        if ($data['contract_file'] ?? null) {
             $file = $data['contract_file'];
             $folder = '/contract/' . date('Y') . '/' . date('m');
             $fileName = $file->getClientOriginalName();

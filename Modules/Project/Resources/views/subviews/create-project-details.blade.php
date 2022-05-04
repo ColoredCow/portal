@@ -42,7 +42,7 @@
             <input type="number" class="form-control" name="monthly_estimated_hours" id="monthly_estimated_hours" placeholder="Enter monthly estimated hours" value="{{ old('monthly_estimated_hours') }}">
         </div>
         <div class="form-group col-md-5">
-            <label for="contract_file">Upload File</label>
+            <label for="contract_file"> {{ __('Upload File') }}</label>
             <div class="custom-file mb-3">
                 <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
                 <label for="contract" class="custom-file-label">Choose file</label>
