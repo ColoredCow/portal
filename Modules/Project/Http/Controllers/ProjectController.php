@@ -55,8 +55,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $contractFilePath = storage_path('app/' . ProjectContract::where('project_id', $project->id)->first()->contract_file_path);
-        $contractFileName = pathinfo($contractFilePath)['filename'];
+        $contractFilePath = ProjectContract::where('project_id', $project->id)->first() ? storage_path('app/' . ProjectContract::where('project_id', $project->id)->first()->contract_file_path) : null;
+        $contractFileName = $contractFilePath ? pathinfo($contractFilePath)['filename'] : null;
 
         return view('project::show', [
             'project' => $project,

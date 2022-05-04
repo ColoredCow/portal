@@ -62,6 +62,6 @@ class Project extends Model
         $totalEffort = $effortTracking->getTotalEffort($teamMembersDetails);
         $monthlyEstimatedHours = $this->monthly_estimated_hours;
 
-        return round($totalEffort / $monthlyEstimatedHours, 2);
+        return $monthlyEstimatedHours ? round($totalEffort / $monthlyEstimatedHours, 2) : 0;
     }
 }
