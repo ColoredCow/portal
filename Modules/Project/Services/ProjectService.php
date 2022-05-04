@@ -14,12 +14,17 @@ class ProjectService implements ProjectServiceContract
 {
     public function index()
     {
+        $filters['status'] = request()->input('status', 'active');
+        if (request()->get('name')) {
+            $filters['name'] = request()->get('name');
+        }
+
         if (request()->get('projects') == 'all-projects') {
-            return Project::where('status', request()->input('status', 'active'))
+            return Project::applyFilter($filters)
                 ->orderBy('name')->get();
         } else {
-            return auth()->user()->projects()->where('status', request()->input('status', 'active'))
-                ->orderBy('name')->get();
+            return auth()->user()->projects()->applyFilter($filters)
+            ->orderBy('name')->get();
         }
     }
 
