@@ -19,7 +19,7 @@
                             <h4 class="d-inline-block ">
                                 <label for="name" class="font-weight-bold">Project Contract:</label>
                             </h4>
-                            <div class="row gy-5">
+                            <div class="row">
                                 <div class="col-xs-6 py-2">
                                     <div class="text-capitalize d-inline ml-2 fz-lg-20"> {{pathinfo($contractFilePath)['filename']}} </div>
                                     <a href="{{route('pdf.show', ['contract' => $contract])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
@@ -78,12 +78,17 @@
                         <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
-                        <div class="row gy-5">
-                            @foreach($project->teamMembers ?:[] as $teamMember)
-                            <div class="col-xs-6 py-2">
-                                <div class="text-capitalize pl-8 pr-5 fz-lg-22">{{$teamMember->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div>
+                        <div>
+                            <div class="d-flex flex-wrap py-2">
+                                @foreach($project->teamMembers ?:[] as $teamMember)
+                                    <div class="text-capitalize w-33p fz-lg-22 my-2">
+                                        <span>
+                                            <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
+                                        </span>
+                                        {{$teamMember->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}
+                                    </div>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
                     </div>
                 </div>
