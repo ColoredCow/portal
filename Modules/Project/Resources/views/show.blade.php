@@ -13,20 +13,22 @@
         </div>
         <div id="project_detail_form" class="collapse show">
             <div class="card-body">
-                <div class="form-row ">
-                    <div class="form-group col-md-6 pl-4 mt-2">
-                        <h4 class="d-inline-block ">
-                            <label for="name" class="font-weight-bold">Project Contract:</label>
-                        </h4>
-                        <div class="row gy-5">
-                            <div class="col-xs-6 py-2">
-                                <div class="text-capitalize d-inline ml-2 fz-lg-20"> {{$contractFileName}} </div>
-                                <a href="{{route('pdf.show', ['contractFileName' => $contractFileName])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
+                @if($contractFilePath)
+                    <div class="form-row ">
+                        <div class="form-group col-md-6 pl-4 mt-2">
+                            <h4 class="d-inline-block ">
+                                <label for="name" class="font-weight-bold">Project Contract:</label>
+                            </h4>
+                            <div class="row gy-5">
+                                <div class="col-xs-6 py-2">
+                                    <div class="text-capitalize d-inline ml-2 fz-lg-20"> {{pathinfo($contractFilePath)['filename']}} </div>
+                                    <a href="{{route('pdf.show', ['contract' => $contract])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
+                                </div>
                             </div>
-                        </div>     
+                        </div>
                     </div>
-                </div>
-                <br>
+                    <br>
+                @endif
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
                         <h4 class="d-inline-block">

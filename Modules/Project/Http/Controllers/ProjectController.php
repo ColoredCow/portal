@@ -55,20 +55,21 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $contractFilePath = storage_path('app/' . ProjectContract::where('project_id', $project->id)->first()->contract_file_path);
-        $contractFileName = pathinfo($contractFilePath)['filename'];
+        $contract = ProjectContract::where('project_id', $project->id)->first();
+        $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
 
         return view('project::show', [
             'project' => $project,
+            'contract' => $contract,
             'contractFilePath' => $contractFilePath,
-            'contractFileName' => $contractFileName
         ]);
     }
 
-    public static function showPdf($contractFileName)
+    public static function showPdf(ProjectContract $contract)
     {
-        $filePath = storage_path('app/contract/2022/03/' . $contractFileName . '.pdf');
+        $filePath = storage_path('app/' . $contract->contract_file_path);
         $content = file_get_contents($filePath);
+        $contractFileName = pathinfo($contract->contract_file_path)['filename'];
 
         return response($content)->withHeaders([
             'content-type' => mime_content_type($filePath),
