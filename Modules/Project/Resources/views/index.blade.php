@@ -6,7 +6,7 @@
         @include('project::menu_header')
         @can('projects.create')
             <span class='mt-4'>
-                <a href= "{{ route('project.create') }}" class="btn btn-info text-white"> Add new project</a>
+                <a href= "{{ route('project.create') }}" class="btn btn-info text-white">{{ __('Add new project') }}</a>
             </span>
         @endcan
     </div>
@@ -34,7 +34,7 @@
     <div class='d-md-none mb-2'>
         @can('projects.create')
             <div class="d-flex flex-row-reverse">
-                <a href= "{{ route('project.create') }}" class="btn btn-info text-white"> Add new project</a>
+                <a href= "{{ route('project.create') }}" class="btn btn-info text-white">{{ __('Add new project') }}</a>
             </div>
         @endcan
         @include('project::menu_header')
