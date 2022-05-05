@@ -14,10 +14,10 @@ class ProjectService implements ProjectServiceContract
 {
     public function index()
     {
-        $filters['status'] = request()->input('status', 'active');
-        if (request()->get('name')) {
-            $filters['name'] = request()->get('name');
-        }
+        $filters = [
+            'status' => request()->input('status', 'active'),
+            'name' => request()->get('name')
+        ];
 
         if (request()->get('projects') == 'all-projects') {
             return Project::applyFilter($filters)
