@@ -19,8 +19,7 @@ class ClientService implements ClientServiceContract
             return $subQuery->status($status);
         }, 'linkedAsDepartment' => function ($subQuery) use ($status) {
             return $subQuery->status($status);
-        }])
-            ->get();
+        }])->orderBy('name')->get();
         $count = $clients->count();
 
         $topLevel = $clients->filter(function ($value) {
@@ -82,6 +81,14 @@ class ClientService implements ClientServiceContract
                 'clientBillingAddress' => $this->getClientBillingAddress($client),
                 'keyAccountManagers' => $this->getKeyAccountManagers(),
                 'clientBillingDetail' => $client->billingDetails,
+            ];
+        }
+
+        if ($section == 'projects') {
+            return  [
+                'client' => $client,
+                'section' => $section,
+                'projects' => $client->projects,
             ];
         }
     }
