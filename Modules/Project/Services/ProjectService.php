@@ -21,10 +21,14 @@ class ProjectService implements ProjectServiceContract
 
         if (request()->get('projects') == 'all-projects') {
             return Project::applyFilter($filters)
-                ->orderBy('name')->get();
+                ->get()->sortBy(function ($query) {
+                    return $query->client->name;
+                });
         } else {
             return auth()->user()->projects()->applyFilter($filters)
-            ->orderBy('name')->get();
+                ->get()->sortBy(function ($query) {
+                    return $query->client->name;
+                });
         }
     }
 

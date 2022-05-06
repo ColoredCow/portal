@@ -44,7 +44,6 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
-                    <th>Reference Id</th>
                     <th>Client</th>
                     <th>Team Members</th>
                     <th>FTE</th>
@@ -59,7 +58,6 @@
                         @else
                         <td> {{ $project->name }} </td>
                         @endcan
-                        <td> {{ $project->client_project_id }} </td>
                         <td>{{ $project->client->name }}</td>
                         <td>
                             @foreach($project->teamMembers ?:[] as $teamMember)
