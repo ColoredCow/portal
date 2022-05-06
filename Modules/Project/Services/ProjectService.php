@@ -14,12 +14,21 @@ class ProjectService implements ProjectServiceContract
 {
     public function index()
     {
+        $filters = [
+            'status' => request()->input('status', 'active'),
+            'name' => request()->get('name')
+        ];
+
         if (request()->get('projects') == 'all-projects') {
-            return Project::where('status', request()->input('status', 'active'))
-                ->get();
+            return Project::applyFilter($filters)
+                ->get()->sortBy(function ($query) {
+                    return $query->client->name;
+                });
         } else {
-            return auth()->user()->projects()->where('status', request()->input('status', 'active'))
-                ->get();
+            return auth()->user()->projects()->applyFilter($filters)
+                ->get()->sortBy(function ($query) {
+                    return $query->client->name;
+                });
         }
     }
 
@@ -43,7 +52,7 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
 
-        if ($data['contract_file']) {
+        if ($data['contract_file'] ?? null) {
             $file = $data['contract_file'];
             $folder = '/contract/' . date('Y') . '/' . date('m');
             $fileName = $file->getClientOriginalName();

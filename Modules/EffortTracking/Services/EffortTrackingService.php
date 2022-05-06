@@ -54,6 +54,10 @@ class EffortTrackingService
      */
     public function getFTE($currentHours, $expectedHours)
     {
+        if ($expectedHours === 0) {
+            return 0;
+        }
+
         return round($currentHours / $expectedHours, 2);
     }
 
@@ -112,13 +116,14 @@ class EffortTrackingService
                     }
                 }
             }
-            $total_effort_in_effortsheet = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'] : 0;
+            $teamMembersEffortUserDetails = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id]) : [];
+            $totalEffortInEffortsheet = array_key_exists('total_effort_in_effortsheet', $teamMembersEffortUserDetails) ? $teamMembersEffortUserDetails['total_effort_in_effortsheet'] : 0;
             $users[] = [
                 'id' => $userDetails->id,
                 'name' => $userDetails->name,
-                'actual_effort' => $total_effort_in_effortsheet,
+                'actual_effort' => $totalEffortInEffortsheet,
                 'expected_effort' => $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now()))),
-                'FTE' => $this->getFTE($total_effort_in_effortsheet, $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now())))),
+                'FTE' => $this->getFTE($totalEffortInEffortsheet, $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now())))),
             ];
         }
 
