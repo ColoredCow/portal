@@ -33,10 +33,10 @@ jobs:
           echo "Pulling latest code"
           git checkout -f
           git pull origin release
-          php artisan migrate
+          php artisan migrate --force
 
           echo "Running composer"
-          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader --no-dev
+          composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader --no-dev
 
           echo "Running npm"
           npm install
