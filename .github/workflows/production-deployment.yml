@@ -32,7 +32,7 @@ jobs:
 
           echo "Pulling latest code"
           git checkout -f
-          git pull origin master
+          git pull origin release
           php artisan migrate
 
           echo "Running composer"
