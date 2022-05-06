@@ -26,7 +26,7 @@
             </div>
             <div class="d-flex align-items-center">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Project name"
-                value=@if(request()->has('name')){{request()->get('name')}}@endif>
+                value={{request()->get('name')}}>
                 <button class="btn btn-info ml-2 text-white">Search</button> 
             </div>
         </form>
