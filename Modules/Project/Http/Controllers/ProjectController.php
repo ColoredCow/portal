@@ -85,7 +85,7 @@ class ProjectController extends Controller
     {
         return view('project::edit', [
             'project' => $project,
-            'clients' => $this->service->getClients(),
+            'clients' => $this->service->getAllClients(),
             'teamMembers' => $this->service->getTeamMembers(),
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),

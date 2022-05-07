@@ -150,8 +150,13 @@ class ClientService implements ClientServiceContract
     {
         $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
         $data['has_departments'] = $data['has_departments'] ?? false;
+        $is_data_updated = $client->update($data);
 
-        return $client->update($data);
+        if ($data['status'] == 'inactive') {
+            $client->projects()->update(['status' => 'inactive']);
+        }
+
+        return $is_data_updated;
     }
 
     private function updateClientContactPersons($data, $client)

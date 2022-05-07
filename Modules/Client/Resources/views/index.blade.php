@@ -6,9 +6,11 @@
     <br>
     <div class="d-flex justify-content-between mb-2">
         <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients ({{ $count }})</h4>
+        @can('clients.create')
         <span>
             <a  href= "{{ route('client.create') }}" class="btn btn-info text-white"> Add new client</a>
         </span>
+        @endcan
     </div>
     
     <div>

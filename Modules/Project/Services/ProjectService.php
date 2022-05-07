@@ -52,6 +52,8 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
 
+        $project->client->update(['status' => 'active']);
+
         if ($data['contract_file'] ?? null) {
             $file = $data['contract_file'];
             $folder = '/contract/' . date('Y') . '/' . date('m');
@@ -67,6 +69,11 @@ class ProjectService implements ProjectServiceContract
     public function getClients()
     {
         return Client::where('status', 'active')->get();
+    }
+
+    public function getAllClients()
+    {
+        return Client::get();
     }
 
     public function getTeamMembers()
@@ -110,7 +117,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectDetails($data, $project)
     {
-        return $project->update([
+        $is_project_updated = $project->update([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'status' => $data['status'],
@@ -121,6 +128,14 @@ class ProjectService implements ProjectServiceContract
             'end_date' => date('Y-m-d'),
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
+
+        if ($project->client->projects()->where('status', 'active')->count()) {
+            $project->client->update(['status' => 'active']);
+        } else {
+            $project->client->update(['status' => 'inactive']);
+        }
+
+        return $is_project_updated;
     }
 
     private function updateProjectTeamMembers($data, $project)

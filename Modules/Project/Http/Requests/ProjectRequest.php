@@ -27,7 +27,6 @@ class ProjectRequest extends FormRequest
         $request = $this->create_project ?? $this->update_section;
 
         switch ($request) {
-            case 'create_project':
             case 'project_details':
                 $rules = [
                     'name' => 'required|string',
@@ -38,10 +37,12 @@ class ProjectRequest extends FormRequest
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
-                    'contract_file' => 'required|mimes:pdf'
                 ];
+            case 'create_project':
+                if ($request == 'create_project') {
+                    $rules['contract_file'] = 'required|mimes:pdf';
+                }
                 break;
-
             case 'project_team_members':
                 if ($this->project_team_member) {
                     $rules = [
