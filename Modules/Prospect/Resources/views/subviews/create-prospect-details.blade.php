@@ -63,13 +63,20 @@
 
 </div>
 <div class="card-footer">
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="button" class="btn btn-primary" onclick= saveProspect(this)">Create</button>
 </div>
-
-
 
 @section('js_scripts')
 <script>
+    const saveProspect = (button) => {
+        button.disabled = true;
+        if (!button.form.checkValidity()) {
+          button.disabled = false;
+          button.form.reportValidity();
+          return;
+        }
+            button.form.submit();
+    }
 new Vue({
     el:'#create_prospect_details_form',
 
