@@ -5,7 +5,9 @@ namespace Modules\User\Providers;
 use Exception;
 use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Gate;
+use Modules\User\Policies\RolePolicy;
 use Modules\User\Policies\UserPolicy;
 use Modules\User\Services\UserService;
 use Illuminate\Support\ServiceProvider;
@@ -29,6 +31,7 @@ class UserServiceProvider extends ServiceProvider
 
     protected $policies = [
         User::class => UserPolicy::class,
+        Role::class => RolePolicy::class,
     ];
 
     /**
