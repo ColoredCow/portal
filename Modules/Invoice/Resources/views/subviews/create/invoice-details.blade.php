@@ -99,60 +99,69 @@
     </div>
 </div>
 <div class="card-footer">
-    <button type="submit" class="btn btn-primary" onclick="this.form.submit();this.disabled = true;" >Create</button>
+    <button type="button" class="btn btn-primary" onclick="saveInvoice(this)">Create</button>
 </div>
 
 
 
 @section('scripts')
 <script>
+    const saveInvoice = (button) => {
+        button.disabled = true;
+        if (!button.form.checkValidity()) {
+            button.disabled = false;
+            button.form.reportValidity();
+            return;
+        }
+        button.form.submit();
+    }
     
     new Vue({
-    el:'#create_invoice_details_form',
+        el:'#create_invoice_details_form',
 
-    data() {
-        return {
-            clients: @json($clients),
-            projects:{},
-            clientId:"",
-            client:null,
-            currency:'',
-            amount:'',
-        }
-    },
-
-    methods: {
-        updateClientDetails: function() {
-            this.projects =  {};
-            for (var i in this.clients) {
-                let client = this.clients[i];
-                if (client.id == this.clientId) {
-                    this.client = client;
-                    this.currency = client.currency;
-                    this.projects = client.projects;
-                    break;
-                }
+        data() {
+            return {
+                clients: @json($clients),
+                projects:{},
+                clientId:"",
+                client:null,
+                currency:'',
+                amount:'',
             }
+        },
 
+        methods: {
+            updateClientDetails: function() {
+                this.projects =  {};
+                for (var i in this.clients) {
+                    let client = this.clients[i];
+                    if (client.id == this.clientId) {
+                        this.client = client;
+                        this.currency = client.currency;
+                        this.projects = client.projects;
+                        break;
+                    }
+                }
+
+            }
+        },
+
+        mounted() {
+        },
+
+        computed: {
+            gst: function () {
+                return (this.amount * 0.18).toFixed(2);
+            },
+            tot: function () {
+                let total = this.amount * 0.18 + 1 * this.amount;
+                return (total);
+            },
+            amt: function () {
+                return (this.amount);
+            },
         }
-    },
-
-    mounted() {
-    },
-
-    computed: {
-        gst: function () {
-            return (this.amount * 0.18).toFixed(2);
-        },
-        tot: function () {
-            let total = this.amount * 0.18 + 1 * this.amount;
-            return (total);
-        },
-        amt: function () {
-            return (this.amount);
-        },
-    }
-});
+    });
 
 </script>
 
