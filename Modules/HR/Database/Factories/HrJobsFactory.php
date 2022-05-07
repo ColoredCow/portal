@@ -29,6 +29,7 @@ class HrJobsFactory extends Factory
             'status' => array_rand(config('hr.opportunities-status')),
             'type' => config('hr.opportunities.job.type'),
             'title' => $faker->jobTitle,
+            'description' => $faker->text(),
         ];
     }
 }
