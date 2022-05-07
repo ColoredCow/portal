@@ -124,9 +124,9 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
 
-        if ($project->client->projects()->where('status', 'active')->count()) {
+        if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
-        } else {
+        } elseif (! $project->client->projects()->where('status', 'active')->exists()) {
             $project->client->update(['status' => 'inactive']);
         }
 
