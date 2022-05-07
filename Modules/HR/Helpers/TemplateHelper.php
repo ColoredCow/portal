@@ -16,7 +16,7 @@ class TemplateHelper
         ];
 
         foreach ($availableVariables as $variable) {
-            $search = "{{$variable}}";
+            $search = "|*$variable*|";
             $replace = $values[$variable] ?? '';
             $parsedContent = str_replace($search, $replace, $parsedContent);
         }

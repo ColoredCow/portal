@@ -12,14 +12,23 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectService implements ProjectServiceContract
 {
-    public function index()
+    public function index(array $data = [])
     {
-        if (request()->get('projects') == 'all-projects') {
-            return Project::where('status', request()->input('status', 'active'))
-                ->get();
+        $filters = [
+            'status' => $data['status'] ?? 'active',
+            'name' => $data['name'] ?? null,
+        ];
+
+        if ($data['projects'] ?? 'all-projects' == 'all-projects') {
+            return Project::applyFilter($filters)
+                ->get()->sortBy(function ($query) {
+                    return $query->client->name;
+                });
         } else {
-            return auth()->user()->projects()->where('status', request()->input('status', 'active'))
-                ->get();
+            return auth()->user()->projects()->applyFilter($filters)
+                ->get()->sortBy(function ($query) {
+                    return $query->client->name;
+                });
         }
     }
 
@@ -43,7 +52,9 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
 
-        if ($data['contract_file']) {
+        $project->client->update(['status' => 'active']);
+
+        if ($data['contract_file'] ?? null) {
             $file = $data['contract_file'];
             $folder = '/contract/' . date('Y') . '/' . date('m');
             $fileName = $file->getClientOriginalName();
@@ -101,7 +112,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectDetails($data, $project)
     {
-        return $project->update([
+        $isProjectUpdated = $project->update([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'status' => $data['status'],
@@ -112,6 +123,14 @@ class ProjectService implements ProjectServiceContract
             'end_date' => date('Y-m-d'),
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
+
+        if ($data['status'] == 'active') {
+            $project->client->update(['status' => 'active']);
+        } elseif (! $project->client->projects()->where('status', 'active')->exists()) {
+            $project->client->update(['status' => 'inactive']);
+        }
+
+        return $isProjectUpdated;
     }
 
     private function updateProjectTeamMembers($data, $project)

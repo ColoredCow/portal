@@ -17,13 +17,16 @@ class UserDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        $role = Role::where('name', 'super-admin')->first();
-        $users = User::factory()
-            ->count(3)
-            ->create();
 
-        foreach ($users as $user) {
-            $user->assignRole($role);
+        if (! app()->environment('production')) {
+            $role = Role::where('name', 'super-admin')->first();
+            $users = User::factory()
+                ->count(3)
+                ->create();
+
+            foreach ($users as $user) {
+                $user->assignRole($role);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Entities;
 
+use App\Traits\Filters;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
@@ -12,7 +13,7 @@ use Modules\EffortTracking\Services\EffortTrackingService;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, Filters;
 
     protected $guarded = [];
 
@@ -62,6 +63,6 @@ class Project extends Model
         $totalEffort = $effortTracking->getTotalEffort($teamMembersDetails);
         $monthlyEstimatedHours = $this->monthly_estimated_hours;
 
-        return round($totalEffort / $monthlyEstimatedHours, 2);
+        return $monthlyEstimatedHours ? round($totalEffort / $monthlyEstimatedHours, 2) : 0;
     }
 }

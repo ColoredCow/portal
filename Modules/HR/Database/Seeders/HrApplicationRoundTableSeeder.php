@@ -14,8 +14,10 @@ class HrApplicationRoundTableSeeder extends Seeder
      */
     public function run()
     {
-        ApplicationRound::factory()
-            ->count(2)
-            ->create();
+        if (! app()->environment('production')) {
+            ApplicationRound::factory()
+                ->count(2)
+                ->create();
+        }
     }
 }
