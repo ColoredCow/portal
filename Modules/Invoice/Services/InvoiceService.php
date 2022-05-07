@@ -71,7 +71,9 @@ class InvoiceService implements InvoiceServiceContract
         $data['receivable_date'] = $data['due_on'];
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
-        // Todo: We need to update the logic for this.
+        // Todo: We need to update the logic to set invoice numbers. It should get
+        // generated using a combination of invoice id, project id, and client id.
+        // We can also move this to observer if this function does not have lot of code.
         $this->setInvoiceNumber($invoice);
 
         return $invoice;
