@@ -67,5 +67,10 @@ class HRPermissionsTableSeeder extends Seeder
         Permission::updateOrCreate(['name' => 'hr_volunteers_campaigns.view']);
         Permission::updateOrCreate(['name' => 'hr_volunteers_campaigns.update']);
         Permission::updateOrCreate(['name' => 'hr_volunteers_campaigns.delete']);
+
+        Permission::updateOrCreate(['name' => 'hr_tags.create']);
+        Permission::updateOrCreate(['name' => 'hr_tags.view']);
+        Permission::updateOrCreate(['name' => 'hr_tags.update']);
+        Permission::updateOrCreate(['name' => 'hr_tags.delete']);
     }
 }
