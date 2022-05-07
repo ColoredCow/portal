@@ -30,7 +30,7 @@
                         @endforeach 
                     </div>
                     <div class="w-20p ml-2">
-                        <h5 class="">{{ config('project.status')[$project->status] }}</h5>
+                        <h5>{{ config('project.status')[$project->status] }}</h5>
                     </div>
                 </div>
             @endforeach
