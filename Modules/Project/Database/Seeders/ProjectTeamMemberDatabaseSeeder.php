@@ -14,8 +14,10 @@ class ProjectTeamMemberDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        ProjectTeamMember::factory()
+        if (! app()->environment('production')) {
+            ProjectTeamMember::factory()
             ->count(2)
             ->create();
+        }
     }
 }
