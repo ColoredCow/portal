@@ -25,5 +25,8 @@ class ReportRoleHasPermissionTableSeeder extends Seeder
                 'report.edit',
             ])->get());
         }
+
+        $accountant = Role::where(['name' => 'accountant'])->first();
+        $accountant->givePermissionTo('finance_reports.view');
     }
 }
