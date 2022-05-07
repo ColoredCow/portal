@@ -3,6 +3,7 @@
 namespace Modules\Project\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
@@ -22,7 +23,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = $this->service->index();
+        $projects = $this->service->index(request()->all());
 
         return view('project::index')->with('projects', $projects);
     }
@@ -85,7 +86,7 @@ class ProjectController extends Controller
     {
         return view('project::edit', [
             'project' => $project,
-            'clients' => $this->service->getClients(),
+            'clients' => Client::all(),
             'teamMembers' => $this->service->getTeamMembers(),
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),

@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectService implements ProjectServiceContract
 {
-    public function index()
+    public function index(array $data = [])
     {
         $filters = [
-            'status' => request()->input('status', 'active'),
-            'name' => request()->get('name')
+            'status' => $data['status'] ?? 'active',
+            'name' => $data['name'] ?? null,
         ];
 
-        if (request()->get('projects') == 'all-projects') {
+        if ($data['projects'] ?? 'all-projects' == 'all-projects') {
             return Project::applyFilter($filters)
                 ->get()->sortBy(function ($query) {
                     return $query->client->name;
@@ -51,6 +51,8 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
+
+        $project->client->update(['status' => 'active']);
 
         if ($data['contract_file'] ?? null) {
             $file = $data['contract_file'];
@@ -110,7 +112,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectDetails($data, $project)
     {
-        return $project->update([
+        $isProjectUpdated = $project->update([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'status' => $data['status'],
@@ -121,6 +123,14 @@ class ProjectService implements ProjectServiceContract
             'end_date' => date('Y-m-d'),
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
+
+        if ($data['status'] == 'active') {
+            $project->client->update(['status' => 'active']);
+        } elseif (! $project->client->projects()->where('status', 'active')->exists()) {
+            $project->client->update(['status' => 'inactive']);
+        }
+
+        return $isProjectUpdated;
     }
 
     private function updateProjectTeamMembers($data, $project)

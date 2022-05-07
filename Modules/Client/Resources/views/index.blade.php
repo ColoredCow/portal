@@ -2,15 +2,32 @@
 @section('content')
 
 <div class="container" id="vueContainer">
-    @include('client::menu_header')
-    <br>
-    <div class="d-flex justify-content-between mb-2">
-        <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients ({{ $count }})</h4>
-        <span>
-            <a  href= "{{ route('client.create') }}" class="btn btn-info text-white"> Add new client</a>
-        </span>
+    @can('clients.create')
+    <div class="d-none d-md-flex justify-content-between my-2">
+        @include('client::menu_header')
+        <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
     </div>
-    
+    @endcan
+    <div class="d-md-flex justify-content-between mt-5 mb-2">
+        <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients ({{ $count }})</h4>
+        <div>
+            <form action="{{ route('client.index') }}" method="GET">
+                <div class="d-flex align-items-center">
+                    <input type="hidden" name="status" value="{{ request()->get('status', 'active') }}">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Client name" value={{request()->get('name')}}>
+                    <button class="btn btn-info ml-2 text-white">Search</button> 
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class='d-md-none mb-2'>
+        @can('clients.create')
+            <div class="d-flex flex-row-reverse">
+                <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
+            </div>
+        @endcan
+        @include('client::menu_header')
+    </div>
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
