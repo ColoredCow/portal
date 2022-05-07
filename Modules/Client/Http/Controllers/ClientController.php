@@ -32,13 +32,6 @@ class ClientController extends ModuleBaseController
     public function create()
     {
         $this->authorize('create', Client::class);
-        // $client = Client :: where('name',  $request->name)->exists();
-        // if ($client)
-        // {
-        //     echo("Name exists");
-        // }
-        // else
-        // {
 
         return view('client::create', $this->service->create());
     }
@@ -82,12 +75,11 @@ class ClientController extends ModuleBaseController
 
         return view('client::edit', $this->service->edit($client, $section));
     }
-
     /**
      * Update the specified resource in storage.
      * @param ClientFormsRequest $request
      */
-    public function update(ClientFormsRequest $request, Client $client, $section = null)
+    public function update(ClientFormsRequest $request, Client $client)
     {
         $this->authorize('update', $client);
         $data = $this->service->update($request->all(), $client);
