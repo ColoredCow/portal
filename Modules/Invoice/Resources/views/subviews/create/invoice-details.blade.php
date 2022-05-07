@@ -118,6 +118,7 @@
     
     new Vue({
     el:'#create_invoice_details_form',
+
     data() {
         return {
             clients: @json($clients),
@@ -128,6 +129,7 @@
             amount:'',
         }
     },
+
     methods: {
         updateClientDetails: function() {
             this.projects =  {};
@@ -142,8 +144,10 @@
             }
         }
     },
+
     mounted() {
     },
+
     computed: {
         gst: function () {
             return (this.amount * 0.18).toFixed(2);
@@ -157,6 +161,7 @@
         },
     }
 });
+
 </script>
 
 @endsection
