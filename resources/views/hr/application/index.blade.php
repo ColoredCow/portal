@@ -5,56 +5,78 @@
     <br>
     @include('hr.menu')
     <br>
-    <div class="row">
-        <div class="col-md-3">
-            <h1>Applications</h1>
-        </div>
-        <div class="input-group mb-3 col-md-6" style="display: flex;">
-            <form method="GET" action="/{{ Request::path() }}">
-                <input type="hidden" name="status" class="form-control" id="search"
-                    value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
-                <input type="hidden" name="round" class="form-control" id="search"
-                    value=@if(request()->has('round')){{request()->get('round')}}@endif>
-                <div class="input-group mb-3 col-md-12">
-                    <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-label="Recipient's username" aria-describedby="button-addon2"
-                    value= @if(request()->has('search')){{request()->get('search')}}@endif>
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center" type="button" id="button-addon2" data-toggle="modal" data-target="#application-modal">
-                        <i class="fa fa-filter" aria-hidden="true"></i>
-                      </button>
+    <form class="form" action="/{{ Request::path() }}">
+        <div class="row">
+            <div class="col-md-3">
+                <h1>Applications</h1>
+            </div>
+            <div class="input-group mb-1 col-md-6" style="display: flex;">
+                <div class="d-flex">
+                    <div class="input-group mb-3 col-md-9">
+                        <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-describedby="button-addon2"
+                        name="search" value= @if(request()->has('search')){{request()->get('search')}}@endif>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center" type="button" id="button-addon2" data-toggle="modal" data-target="#application-modal">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 align-self-center application-search">
+                        <button class="btn btn-info ">Search</button>
                     </div>
                 </div>
-            </form>
-            <div class="col-lg-2 align-self-center application-search">
-                <button class="btn btn-info ">Search</button>
+            </div>
+            <div class="text-right ml-5 ml-md-0">
+                <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
             </div>
         </div>
-    <div class="text-right">
-        <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
-    </div>
-    <div class="row mt-4">
-        <form class="col-md-5 d-flex justify-content-end align-items-center" method="GET" action="/{{ Request::path() }}">
-            <input type="hidden" name="status" class="form-control" id="search"
-            value="{{ config('constants.hr.status.' . request("status") . '.label') }}">
-        </form>
-    </div>
-</div>
-@include('hr.application.filter-modal')
-@if(request()->has('search') || request()->has('tags'))
-<div class="row mt-3 mb-2">
-    <div class="col-6">
-        <a class="text-muted c-pointer"
-            href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}{{request()->has('round')?'&round='.request('round'):''}}">
-        </a>
-    </div>
-</div>
-@endif
-<br>
-@php
-    $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
-    $search = request()->has('search') ? '&search=' . request('search') : '';
-    $query_filters = $hr_job_id . $search
-@endphp
+        <div class="md-row d-md-flex flex-md-row-reverse ml-4 ml-md-3 mt-sm-2 mt-md-0">
+            <div class="d-flex flex-row">
+                <div class="d-flex mt-2 mt-md-0">
+                    <div class="mr-2 form-group">
+                        <label id="start-year">{!! __('Start Year') !!}</label><br>
+                        <input id="start-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="start-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('start-year', request()->get('start-year')) }}">
+                    </div>
+                    <div class="mr-2 form-group">
+                        <label id="end-year">{!! __('End Year') !!}</label><br>
+                        <input id="end-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="end-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('end-year', request()->get('end-year')) }}">
+                    </div>
+                </div>
+                <button class="btn h-40 mt-6 mt-md-4 mt-xl-5 w-md-50 mr-md-2 theme-shadow-dark border pt-1">
+                    <i class="fa fa-search c-pointer fz-20" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="mr-2 mt-2 mt-md-0 form-group">
+                <label id="job">{!! __('Jobs') !!}</label><br>
+                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0" name="hr_job_id" id="job"
+                    onchange="this.form.submit()">
+                    <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
+                        {!! __('All Jobs') !!}
+                    </option>
+                    @foreach ($jobs as $job)
+                    <option value="{{ $job->id }}" {{ request()->get('hr_job_id') == $job->id ? 'selected' : '' }}>
+                        {{ $job->title }} </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </form>
+    @include('hr.application.filter-modal')
+    @if(request()->has('search') || request()->has('tags'))
+        <div class="row mt-3 mb-2">
+            <div class="col-6">
+                <a class="text-muted c-pointer"
+                    href="/{{ Request::path() }}{{request()->has('status')?'?status='.request('status'):''}}{{request()->has('round')?'&round='.request('round'):''}}">
+                </a>
+            </div>
+        </div>
+    @endif
+    <br>
+    @php
+        $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
+        $search = request()->has('search') ? '&search=' . request('search') : '';
+        $query_filters = $hr_job_id . $search
+    @endphp
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
@@ -155,13 +177,12 @@
             </li>
         </div>
     </div>
-        @if( isset($openJobsCount, $openApplicationsCount) )
+    @if( isset($openJobsCount, $openApplicationsCount) )
         <div class="alert alert-info mb-2 p-2">
             <span>There are <b>{{ $openJobsCount }}</b> open jobs and <b>{{ $newApplicationsCount }}</b> open
                 applications</span>
         </div>
-        @endif
-    </div>
+    @endif
 
     <table class="table table-striped table-bordered" id="applicants_table">
         <thead>

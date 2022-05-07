@@ -1,7 +1,7 @@
 name: Production Deployment
 on:
-  release:
-    types: [published]
+  push:
+    branches: [release]
 
 jobs:
   build:
@@ -32,11 +32,11 @@ jobs:
 
           echo "Pulling latest code"
           git checkout -f
-          git pull origin master
-          php artisan migrate
+          git pull origin release
+          php artisan migrate --force
 
           echo "Running composer"
-          composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader --no-dev
+          composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --optimize-autoloader --no-dev
 
           echo "Running npm"
           npm install
