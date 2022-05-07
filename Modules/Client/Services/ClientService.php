@@ -12,13 +12,16 @@ use Modules\Client\Contracts\ClientServiceContract;
 
 class ClientService implements ClientServiceContract
 {
-    public function index()
+    public function index(array $data = [])
     {
-        $status = request()->input('status', 'active');
-        $clients = Client::status($status)->with(['linkedAsPartner' => function ($subQuery) use ($status) {
-            return $subQuery->status($status);
-        }, 'linkedAsDepartment' => function ($subQuery) use ($status) {
-            return $subQuery->status($status);
+        $filters = [
+            'status' => $data['status'] ?? 'active',
+            'name' => $data['name'] ?? null,
+        ];
+        $clients = Client::applyFilter($filters)->with(['linkedAsPartner' => function ($subQuery) use ($filters) {
+            return $subQuery->applyFilter($filters)->orderBy('name');
+        }, 'linkedAsDepartment' => function ($subQuery) use ($filters) {
+            return $subQuery->applyFilter($filters)->orderBy('name');
         }])->orderBy('name')->get();
         $count = $clients->count();
 
@@ -150,8 +153,13 @@ class ClientService implements ClientServiceContract
     {
         $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
         $data['has_departments'] = $data['has_departments'] ?? false;
+        $isDataUpdated = $client->update($data);
 
-        return $client->update($data);
+        if ($data['status'] ?? 'active' == 'inactive') {
+            $client->projects()->update(['status' => 'inactive']);
+        }
+
+        return $isDataUpdated;
     }
 
     private function updateClientContactPersons($data, $client)

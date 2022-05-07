@@ -8,13 +8,18 @@ class ClientFormsRequest extends FormRequest
 {
     private function clientDetailsValidation()
     {
-        return [
+        $rules = [
             'name' => 'required|string',
-            'status' => 'required|string',
             'is_channel_partner' => 'nullable|string',
             'channel_partner_id' => 'nullable|string',
             'parent_organisation_id' => 'nullable|string',
         ];
+
+        if (request()->has('status')) {
+            $rules['status'] = 'required|string|in:inactive';
+        }
+
+        return $rules;
     }
 
     private function contactPersonsValidation()
