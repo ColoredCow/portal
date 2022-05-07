@@ -2,6 +2,7 @@
 
 namespace Modules\Client\Entities;
 
+use App\Traits\Filters;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\Project;
@@ -12,7 +13,7 @@ use Modules\Client\Entities\Scopes\ClientGlobalScope;
 
 class Client extends Model
 {
-    use HasHierarchy, HasFactory;
+    use HasHierarchy, HasFactory, Filters;
 
     protected $fillable = ['name', 'email', 'key_account_manager_id', 'status', 'country', 'state', 'phone', 'phone', 'address', 'pincode', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id'];
 
@@ -81,30 +82,5 @@ class Client extends Model
     public function getCurrencyAttribute()
     {
         return $this->type == 'indian' ? 'INR' : 'USD';
-    }
-
-    public function scopeFilterByStatus($query, $status)
-    {
-        return $query->where('status', $status);
-    }
-
-    public function scopeFilterByName($query, $name)
-    {
-        return $query->where('name', 'LIKE', "%$name%");
-    }
-
-    public function scopeApplyFilter($query, array $filters)
-    {
-        foreach (array_filter($filters) as $type => $value) {
-            switch ($type) {
-                case 'status':
-                    $query->filterByStatus($value);
-                    break;
-                case 'name':
-                    $query->filterByName($value);
-            }
-        }
-
-        return $query;
     }
 }
