@@ -24,47 +24,6 @@ class PermissionsTableSeeder extends Seeder
         Permission::updateOrCreate(['name' => 'settings.update']);
         Permission::updateOrCreate(['name' => 'settings.delete']);
 
-        Permission::updateOrCreate(['name' => 'hr_recruitment_applicants.create']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_applicants.view']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_applicants.update']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_applicants.delete']);
-
-        Permission::updateOrCreate(['name' => 'hr_recruitment_applications.create']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_applications.view']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_applications.update']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_applications.delete']);
-
-        Permission::updateOrCreate(['name' => 'hr_recruitment_jobs.create']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_jobs.view']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_jobs.update']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_jobs.delete']);
-
-        Permission::updateOrCreate(['name' => 'hr_recruitment_reports.view']);
-
-        Permission::updateOrCreate(['name' => 'hr_recruitment_campaigns.create']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_campaigns.view']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_campaigns.update']);
-        Permission::updateOrCreate(['name' => 'hr_recruitment_campaigns.delete']);
-
-        Permission::updateOrCreate(['name' => 'hr_employees.create']);
-        Permission::updateOrCreate(['name' => 'hr_employees.view']);
-        Permission::updateOrCreate(['name' => 'hr_employees.update']);
-        Permission::updateOrCreate(['name' => 'hr_employees.delete']);
-
-        Permission::updateOrCreate(['name' => 'hr_employees_reports.view']);
-
-        Permission::updateOrCreate(['name' => 'hr_volunteers_applications.create']);
-        Permission::updateOrCreate(['name' => 'hr_volunteers_applications.view']);
-        Permission::updateOrCreate(['name' => 'hr_volunteers_applications.update']);
-        Permission::updateOrCreate(['name' => 'hr_volunteers_applications.delete']);
-
-        Permission::updateOrCreate(['name' => 'hr_volunteers_reports.view']);
-
-        Permission::updateOrCreate(['name' => 'hr_volunteers_campaigns.create']);
-        Permission::updateOrCreate(['name' => 'hr_volunteers_campaigns.view']);
-        Permission::updateOrCreate(['name' => 'hr_volunteers_campaigns.update']);
-        Permission::updateOrCreate(['name' => 'hr_volunteers_campaigns.delete']);
-
         Permission::updateOrCreate(['name' => 'crm_talent.create']);
         Permission::updateOrCreate(['name' => 'crm_talent.view']);
         Permission::updateOrCreate(['name' => 'crm_talent.update']);

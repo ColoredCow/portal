@@ -93,5 +93,15 @@ class HRRoundsTableSeeder extends Seeder
             'rejected_mail_template' => null,
             'in_trial_round' => 0,
         ]);
+
+        Round::updateOrCreate([
+            'name' => 'Trial Program',
+        ], [
+            'guidelines' => null,
+            'reminder_enabled' => 0,
+            'confirmed_mail_template' => null,
+            'rejected_mail_template' => null,
+            'in_trial_round' => 0,
+        ]);
     }
 }
