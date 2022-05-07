@@ -32,6 +32,13 @@ class ClientController extends ModuleBaseController
     public function create()
     {
         $this->authorize('create', Client::class);
+        // $client = Client :: where('name',  $request->name)->exists();
+        // if ($client)
+        // {
+        //     echo("Name exists");
+        // }
+        // else
+        // {
 
         return view('client::create', $this->service->create());
     }
@@ -43,9 +50,19 @@ class ClientController extends ModuleBaseController
     public function store(ClientRequest $request)
     {
         $this->authorize('create', Client::class);
-        $client = $this->service->store($request->all());
+        // Code to validate
+        $client = Client :: where('name', $request->name)->exists();
+        if ($client) {
 
-        return redirect(route('client.edit', [$client, 'contact-persons']));
+        // PHP program to pop an alert
+            echo '<script>alert("A client with that name already exist. Please try another name")</script>';
+
+            return view('client::create', $this->service->create());
+        } else {
+            $client = $this->service->store($request->all());
+
+            return redirect(route('client.edit', [$client, 'contact-persons']));
+        }
     }
 
     /**
@@ -70,7 +87,7 @@ class ClientController extends ModuleBaseController
      * Update the specified resource in storage.
      * @param ClientFormsRequest $request
      */
-    public function update(ClientFormsRequest $request, Client $client)
+    public function update(ClientFormsRequest $request, Client $client, $section = null)
     {
         $this->authorize('update', $client);
         $data = $this->service->update($request->all(), $client);
