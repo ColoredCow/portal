@@ -99,7 +99,7 @@
     </div>
 </div>
 <div class="card-footer">
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary" onclick="this.form.submit();this.disabled = true;" >Create</button>
 </div>
 
 
