@@ -4,11 +4,12 @@ namespace Modules\Invoice\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Invoice\Contracts\InvoiceServiceContract;
-use Modules\Client\Entities\Client;
-use Modules\Invoice\Entities\Invoice;
+use Illuminate\Support\Facades\App;
 use Mail;
+use Modules\Client\Entities\Client;
+use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
+use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Rules\EmailValidation;
 
 class InvoiceController extends Controller
@@ -125,19 +126,30 @@ class InvoiceController extends Controller
         $emails = $request->invoice_email;
 
         $validator = $request->validate([
-        'invoice_email' => new EmailValidation(),
+            'invoice_email' => new EmailValidation(),
         ]);
 
         if ($emails != '') {
             $validate = preg_split('/[,]/', $emails);
             Mail::to($senderEmail)
-            ->cc($validate)
-            ->send(new SendPendingInvoiceMail($invoice));
+                ->cc($validate)
+                ->send(new SendPendingInvoiceMail($invoice));
         } else {
             Mail::to($senderEmail)
-            ->send(new SendPendingInvoiceMail($invoice));
+                ->send(new SendPendingInvoiceMail($invoice));
         }
 
         return redirect(route('invoice.index'));
+    }
+
+    public function previewInvoice()
+    {
+        $pdf = App::make('snappy.pdf.wrapper');
+        $html = view('invoice::render.render', [
+            'data' => 'hey',
+        ]);
+        $pdf->loadHTML($html);
+
+        return $pdf->download();
     }
 }

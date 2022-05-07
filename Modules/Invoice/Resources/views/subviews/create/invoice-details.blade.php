@@ -26,16 +26,6 @@
             </div>
 
             <div class="form-group ">
-                <label for="project_invoice_id" class="field-required">Upload file</label>
-                <div class="d-flex">
-                    <div class="custom-file mb-3">
-                        <input type="file" id="invoice_file" name="invoice_file" class="custom-file-input" required="required">
-                        <label for="customFile0" class="custom-file-label">Choose file</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group ">
                 <label for="comments">Comments</label>
                 <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
             </div>
@@ -60,7 +50,7 @@
                             required="required">
                             @foreach($countries as $country)
                                 <option value="{{$country->currency}}">{{$country->currency}}</option>
-                            @endforeach 
+                            @endforeach
                         </select>
                     </div>
                     <input
@@ -106,7 +96,7 @@
 
 @section('scripts')
 <script>
-    
+
     new Vue({
     el:'#create_invoice_details_form',
 

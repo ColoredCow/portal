@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/', 'InvoiceController@index')->name('invoice.index');
@@ -23,4 +23,5 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::post('/{invoiceId}/update', 'InvoiceController@update')->name('invoice.update');
     Route::delete('/{invoiceId}/delete', 'InvoiceController@destroy')->name('invoice.delete');
     Route::post('/{invoice}', 'InvoiceController@sendEmail')->name('invoice.sendEmail');
+    Route::get('invoice/{invoice}/previewInvoice', 'InvoiceController@previewInvoice')->name('invoice.previewInvoice');
 });

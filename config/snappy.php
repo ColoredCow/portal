@@ -30,7 +30,7 @@ return [
     |
     |    The environment variables to set while running the wkhtmltopdf process.
     |
-    */
+     */
 
     'pdf' => [
         'enabled' => true,
@@ -41,6 +41,7 @@ return [
             'margin-left' => '20mm',
             'margin-right' => '20mm',
             'zoom' => 1.2,
+            'enable-local-file-access' => true,
         ],
         'env' => [],
     ],

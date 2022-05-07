@@ -4,14 +4,14 @@ namespace Modules\Invoice\Services;
 
 use App\Models\Country;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
-use Modules\Invoice\Entities\Invoice;
-use Illuminate\Support\Facades\Storage;
-use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Client\Contracts\ClientServiceContract;
-use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Exports\TaxReportExport;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -179,7 +179,7 @@ class InvoiceService implements InvoiceServiceContract
     public function taxReport($filters)
     {
         return [
-            'invoices' => $this->taxReportInvoices($filters)
+            'invoices' => $this->taxReportInvoices($filters),
         ];
     }
 
@@ -216,7 +216,7 @@ class InvoiceService implements InvoiceServiceContract
                 'TDS' => number_format($invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => Str::studly($invoice->status)
+                'Status' => Str::studly($invoice->status),
             ];
         });
     }
@@ -233,7 +233,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Conversion Rate' => $invoice->conversion_rate,
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => Str::studly($invoice->status)
+                'Status' => Str::studly($invoice->status),
             ];
         });
     }
@@ -253,7 +253,7 @@ class InvoiceService implements InvoiceServiceContract
                 'TDS' => number_format($invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
-                'Status' => Str::studly($invoice->status)
+                'Status' => Str::studly($invoice->status),
             ];
         });
     }
