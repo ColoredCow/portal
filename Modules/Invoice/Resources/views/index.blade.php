@@ -88,7 +88,7 @@
                                                         <input type="email" multiple class="form-control mt-2"
                                                             name="invoice_email" id="invoice_email" placeholder="CC Email"
                                                             data-toggle="tooltip" data-placement="bottom"
-                                                            title="Please enter a email in comma seprated">
+                                                            title="Please enter comma separated emails">
                                                         <button type="submit" class="btn btn-primary mt-4">Send</button>
                                                     </form>
                                                 </div>
