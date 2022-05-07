@@ -42,7 +42,7 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'no_show_mail_body',
-            'setting_value' => '<div>Hi {{applicant_name}},</div><div> </div><div>We couldn\'t talk today at {{interview_time}}. We are sure there must be a reason why you couldn\'t be present. You were missed though!</div><div> </div><div>As we said earlier ColoredCow is in an interesting phase of growth and offer the chance for hands-on learning and an opportunity to take your career in the direction of your dreams. If you are still interested in exploring the opportunities with us, let us know via email.</div><div> </div><div>We are sure you are going to do great and would love to be in touch. Visit our FB page to know all the happening, be it work, opportunities, or anything else. Here is the link for your convenience</div><div><a href="https://www.facebook.com/ColoredCowConsulting/">https://www.facebook.com/ColoredCowConsulting/</a></div><div> </div><div>We wish you very best for your future.</div><div> </div><div>Thanks</div><div>HR Team,</div><div>ColoredCow</div>',
+            'setting_value' => '<div>Hi |*applicant_name*|,</div><div> </div><div>We couldn\'t talk today at |*interview_time*|. We are sure there must be a reason why you couldn\'t be present. You were missed though!</div><div> </div><div>As we said earlier ColoredCow is in an interesting phase of growth and offer the chance for hands-on learning and an opportunity to take your career in the direction of your dreams. If you are still interested in exploring the opportunities with us, let us know via email.</div><div> </div><div>We are sure you are going to do great and would love to be in touch. Visit our FB page to know all the happening, be it work, opportunities, or anything else. Here is the link for your convenience</div><div><a href="https://www.facebook.com/ColoredCowConsulting/">https://www.facebook.com/ColoredCowConsulting/</a></div><div> </div><div>We wish you very best for your future.</div><div> </div><div>Thanks</div><div>HR Team,</div><div>ColoredCow</div>',
         ]);
         Setting::updateOrCreate([
             'module' => 'hr',
@@ -52,7 +52,7 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'applicant_interview_reminder_body',
-            'setting_value' => '<div>Hello {{applicant_name}},</div><div> </div><div>We thought to nudge you about our talk today at {{interview_time}}.</div><div> </div><div>Also, if you haven\'t accepted the Google calendar invite, which we\'ve sent you earlier, please do so now. That will help. Ignore if you\'ve already done so.</div><div> </div><div>Talk to you soon!</div><div> </div><div>HR Team</div><div>ColoredCow</div>',
+            'setting_value' => '<div>Hello |*applicant_name*|,</div><div> </div><div>We thought to nudge you about our talk today at |*interview_time*|.</div><div> </div><div>Also, if you haven\'t accepted the Google calendar invite, which we\'ve sent you earlier, please do so now. That will help. Ignore if you\'ve already done so.</div><div> </div><div>Talk to you soon!</div><div> </div><div>HR Team</div><div>ColoredCow</div>',
         ]);
     }
 }
