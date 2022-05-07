@@ -16,15 +16,15 @@ class HRPermissionsTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        Permission::create(['name' => 'hr_universities.create']);
-        Permission::create(['name' => 'hr_universities.view']);
-        Permission::create(['name' => 'hr_universities.update']);
-        Permission::create(['name' => 'hr_universities.delete']);
-        Permission::create(['name' => 'hr_universities_reports.view']);
+        Permission::updateOrCreate(['name' => 'hr_universities.create']);
+        Permission::updateOrCreate(['name' => 'hr_universities.view']);
+        Permission::updateOrCreate(['name' => 'hr_universities.update']);
+        Permission::updateOrCreate(['name' => 'hr_universities.delete']);
+        Permission::updateOrCreate(['name' => 'hr_universities_reports.view']);
 
-        Permission::create(['name' => 'hr_applicants.view']);
-        Permission::create(['name' => 'hr_applicants.create']);
-        Permission::create(['name' => 'hr_applicants.update']);
-        Permission::create(['name' => 'hr_applicants.delete']);
+        Permission::updateOrCreate(['name' => 'hr_applicants.view']);
+        Permission::updateOrCreate(['name' => 'hr_applicants.create']);
+        Permission::updateOrCreate(['name' => 'hr_applicants.update']);
+        Permission::updateOrCreate(['name' => 'hr_applicants.delete']);
     }
 }

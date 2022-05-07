@@ -15,10 +15,10 @@ class VolunteersModuleSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'hr_volunteers_jobs.create']);
-        Permission::create(['name' => 'hr_volunteers_jobs.view']);
-        Permission::create(['name' => 'hr_volunteers_jobs.update']);
-        Permission::create(['name' => 'hr_volunteers_jobs.delete']);
+        Permission::updateOrCreate(['name' => 'hr_volunteers_jobs.create']);
+        Permission::updateOrCreate(['name' => 'hr_volunteers_jobs.view']);
+        Permission::updateOrCreate(['name' => 'hr_volunteers_jobs.update']);
+        Permission::updateOrCreate(['name' => 'hr_volunteers_jobs.delete']);
 
         $volunteerManager = Role::where(['name' => 'volunteer-manager'])->first();
         $volunteerManager->syncPermissions(Permission::where('name', 'LIKE', 'hr_volunteers%')->get());

@@ -20,7 +20,7 @@ class ReportRoleHasPermissionTableSeeder extends Seeder
         $roles = ['super-admin', 'admin', 'Finance', 'Accountant'];
         foreach ($roles as $key) {
             $role = Role::where(['name' => $key])->first();
-            $role->syncPermission(Permission::whereIn('name', [
+            $role->syncPermissions(Permission::whereIn('name', [
                 'report.view',
                 'report.edit',
             ])->get());
