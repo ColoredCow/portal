@@ -11,7 +11,7 @@
         body {
             color: #012840;
             font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
+            font-weight: 400;
             margin: 0;
             padding: 0;
             height: 100%;
@@ -183,10 +183,6 @@
             margin-bottom: 0px !important;
         }
 
-        {
-            margin-top: -2px;
-        }
-
         .page-break-before {
             page-break-before: always;
         }
@@ -227,6 +223,10 @@
         td p {
             margin: 0px !important;
         }
+        table {
+            border-collapse: separate;
+            border-spacing: 0 1em;
+        }
     </style>
     </head>
     <body>
@@ -234,7 +234,7 @@
             <div style="width:100%;">
                 <table>
                     <tr>
-                        <td align="center" style="font-size: 20px; line-height: 24px;">INVOICE</td>
+                        <td align="center" class="fz-20">INVOICE</td>
                     </tr>
                     <tbody>
                         <tr valign="top">
@@ -252,7 +252,7 @@
                                 <p>CIN No. U72900HR2019PTC081234</p>
                             </td>
                         </tr>
-                        <tr style="width:100%; padding:0;">
+                        <tr style="width:100%;">
                             <td align="left">
                                 <p>Bill To</p>
                                 <p>Rakhee Gupta</p>
