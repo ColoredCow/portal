@@ -13,7 +13,7 @@
         <div>
             <form action="{{ route('client.index') }}" method="GET">
                 <div class="d-flex align-items-center">
-                    <input type=""hidden name="status" value="{{ request()->get('status') ?? 'active' }}">
+                    <input type="hidden" name="status" value="{{ request()->get('status') ?? 'active' }}">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Client name"
                     value={{request()->get('name')}}>
                     <button class="btn btn-info ml-2 text-white">Search</button> 
@@ -24,7 +24,7 @@
     <div class='d-md-none mb-2'>
         @can('clients.create')
             <div class="d-flex flex-row-reverse">
-                <a  href= "{{ route('client.create') }}" class="btn btn-info text-white"> Add new client</a>
+                <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add new client</a>
             </div>
         @endcan
         @include('client::menu_header')
