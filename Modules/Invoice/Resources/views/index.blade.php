@@ -5,7 +5,7 @@
         <br>
 
         <div class="d-flex justify-content-between mb-2">
-            <h4 class="mb-1 pb-1"> Invoices</h4>
+            <h4 class="mb-1 pb-1">Invoices</h4>
             <span>
                 <a href="{{ route('invoice.create') }}" class="btn btn-info text-white">Add Invoice</a>
             </span>
