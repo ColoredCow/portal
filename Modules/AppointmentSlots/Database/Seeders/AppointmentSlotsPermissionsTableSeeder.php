@@ -16,9 +16,10 @@ class AppointmentSlotsPermissionsTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        Permission::create(['name' => 'employee_appointmentslots.view']);
-        Permission::create(['name' => 'employee_appointmentslots.create']);
-        Permission::create(['name' => 'employee_appointmentslots.update']);
-        Permission::create(['name' => 'employee_appointmentslots.delete']);
+
+        Permission::updateOrCreate(['name' => 'employee_appointmentslots.view']);
+        Permission::updateOrCreate(['name' => 'employee_appointmentslots.create']);
+        Permission::updateOrCreate(['name' => 'employee_appointmentslots.update']);
+        Permission::updateOrCreate(['name' => 'employee_appointmentslots.delete']);
     }
 }

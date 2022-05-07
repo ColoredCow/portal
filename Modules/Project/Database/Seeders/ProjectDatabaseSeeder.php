@@ -5,6 +5,7 @@ namespace Modules\Project\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
+use Spatie\Permission\Models\Permission;
 
 class ProjectDatabaseSeeder extends Seeder
 {
@@ -15,12 +16,18 @@ class ProjectDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $client = Client::factory()->create();
+        Permission::updateOrCreate(['name' => 'projects.create']);
+        Permission::updateOrCreate(['name' => 'projects.view']);
+        Permission::updateOrCreate(['name' => 'projects.update']);
+        Permission::updateOrCreate(['name' => 'projects.delete']);
 
-        Project::factory()
-            ->count(3)
-            ->for($client)
-            ->create();
+        if (! app()->environment('production')) {
+            $client = Client::factory()->create();
+            Project::factory()
+                ->count(3)
+                ->for($client)
+                ->create();
+        }
 
         $this->call(ProjectTeamMemberDatabaseSeeder::class);
         $this->call(ProjectTeamMembersEffortDatabaseSeeder::class);
