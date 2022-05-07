@@ -152,7 +152,7 @@ class ClientService implements ClientServiceContract
         $data['has_departments'] = $data['has_departments'] ?? false;
         $is_data_updated = $client->update($data);
 
-        if ($data['status'] == 'inactive') {
+        if ($data['status'] ?? 'active' == 'inactive') {
             $client->projects()->update(['status' => 'inactive']);
         }
 
