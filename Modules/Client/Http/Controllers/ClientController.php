@@ -23,7 +23,7 @@ class ClientController extends ModuleBaseController
     {
         $this->authorize('viewAny', Client::class);
 
-        return view('client::index', $this->service->index());
+        return view('client::index', $this->service->index(request()->all()));
     }
 
     /**

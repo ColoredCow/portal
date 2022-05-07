@@ -31,7 +31,7 @@ class ProjectRequest extends FormRequest
                 $rules = [
                     'name' => 'required|string',
                     'client_id' => 'required|integer',
-                    'status' => 'sometimes|string',
+                    'status' => 'required|string',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',
@@ -44,7 +44,6 @@ class ProjectRequest extends FormRequest
                 $rules = [
                     'name' => 'required|string',
                     'client_id' => 'required|integer',
-                    'status' => 'sometimes|string',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',

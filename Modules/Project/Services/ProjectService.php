@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectService implements ProjectServiceContract
 {
-    public function index()
+    public function index(array $data = [])
     {
         $filters = [
-            'status' => request()->input('status', 'active'),
-            'name' => request()->get('name')
+            'status' => $data['status'] ?? 'active',
+            'name' => $data['name'] ?? null,
         ];
 
-        if (request()->get('projects') == 'all-projects') {
+        if ($data['projects'] ?? 'all-projects' == 'all-projects') {
             return Project::applyFilter($filters)
                 ->get()->sortBy(function ($query) {
                     return $query->client->name;
@@ -71,11 +71,6 @@ class ProjectService implements ProjectServiceContract
         return Client::where('status', 'active')->get();
     }
 
-    public function getAllClients()
-    {
-        return Client::get();
-    }
-
     public function getTeamMembers()
     {
         return User::all();
@@ -117,7 +112,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectDetails($data, $project)
     {
-        $is_project_updated = $project->update([
+        $isProjectUpdated = $project->update([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'status' => $data['status'],
@@ -135,7 +130,7 @@ class ProjectService implements ProjectServiceContract
             $project->client->update(['status' => 'inactive']);
         }
 
-        return $is_project_updated;
+        return $isProjectUpdated;
     }
 
     private function updateProjectTeamMembers($data, $project)
