@@ -9,21 +9,21 @@ class RolePolicy
 {
     public function viewAny(User $user)
     {
-        return $user->can('role.view');
+        return $user->isSuperAdmin();
     }
 
     public function create(User $user, Role $role)
     {
-        return $user->can('role.create');
+        return $user->isSuperAdmin();
     }
 
     public function update(User $user, Role $role)
     {
-        return $user->can('role.update');
+        return $user->isSuperAdmin();
     }
 
     public function destroy(User $user, Role $role)
     {
-        return $user->can('role.delete');
+        return $user->isSuperAdmin();
     }
 }
