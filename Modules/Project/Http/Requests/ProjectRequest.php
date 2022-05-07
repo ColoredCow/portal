@@ -38,11 +38,22 @@ class ProjectRequest extends FormRequest
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                 ];
-            case 'create_project':
-                if ($request == 'create_project') {
-                    $rules['contract_file'] = 'required|mimes:pdf';
-                }
                 break;
+
+            case 'create_project':
+                $rules = [
+                    'name' => 'required|string',
+                    'client_id' => 'required|integer',
+                    'status' => 'sometimes|string',
+                    'project_manager' => 'nullable|string',
+                    'effort_sheet_url' => 'nullable|active_url|max:191',
+                    'project_type' => 'required|string|in:monthly-billing,fixed-budget',
+                    'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
+                    'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
+                    'contract_file' => 'required|mimes:pdf'
+                ];
+                break;
+
             case 'project_team_members':
                 if ($this->project_team_member) {
                     $rules = [
