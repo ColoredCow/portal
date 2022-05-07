@@ -14,11 +14,14 @@ class ClientService implements ClientServiceContract
 {
     public function index()
     {
-        $status = request()->input('status', 'active');
-        $clients = Client::status($status)->with(['linkedAsPartner' => function ($subQuery) use ($status) {
-            return $subQuery->status($status)->orderBy('name');
-        }, 'linkedAsDepartment' => function ($subQuery) use ($status) {
-            return $subQuery->status($status)->orderBy('name');
+        $filters = [
+            'status' => request()->input('status', 'active'),
+            'name' => request()->get('name'),
+        ];
+        $clients = Client::applyFilter($filters)->with(['linkedAsPartner' => function ($subQuery) use ($filters) {
+            return $subQuery->applyFilter($filters)->orderBy('name');
+        }, 'linkedAsDepartment' => function ($subQuery) use ($filters) {
+            return $subQuery->applyFilter($filters)->orderBy('name');
         }])->orderBy('name')->get();
         $count = $clients->count();
 
