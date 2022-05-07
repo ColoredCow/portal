@@ -71,8 +71,8 @@ class InvoiceService implements InvoiceServiceContract
     public function store($data)
     {
         $data['receivable_date'] = $data['due_on'];
-		$invoice_number = $this->getInvoiceNumber($data['client_id'], $data['project_id']);
-		$data = Arr::add($data, 'invoice_no', $invoice_number);
+        $invoice_number = $this->getInvoiceNumber($data['client_id'], $data['project_id']);
+        $data = Arr::add($data, 'invoice_no', $invoice_number);
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
 
@@ -264,15 +264,15 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getInvoiceNumber($client_id, $project_id)
     {
-		$client = ClientAddress::where('client_id', $client_id)->first();
-		$client_project_id = Project::find($project_id)->client_project_id;
-		if ($client->country_id == 1) {
-			$client_type = "IN";
-		} else {
-			$client_type = "EX";
-		}
-        $invoice_sequence = Invoice::where([ ['client_id', $client_id], ['project_id', $project_id] ])->count() + 1;
-		$invoice_number = $client_type . '-' . sprintf("%03s", $client_id) . '-' . sprintf("%03s", $client_project_id) . '-' . sprintf("%06s", $invoice_sequence);
+        $client = ClientAddress::where('client_id', $client_id)->first();
+        $client_project_id = Project::find($project_id)->client_project_id;
+        if ($client->country_id == 1) {
+            $client_type = 'IN';
+        } else {
+            $client_type = 'EX';
+        }
+        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
+        $invoice_number = $client_type . '-' . sprintf('%03s', $client_id) . '-' . sprintf('%03s', $client_project_id) . '-' . sprintf('%06s', $invoice_sequence);
 
         return $invoice_number;
     }
