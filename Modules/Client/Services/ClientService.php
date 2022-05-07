@@ -16,9 +16,9 @@ class ClientService implements ClientServiceContract
     {
         $status = request()->input('status', 'active');
         $clients = Client::status($status)->with(['linkedAsPartner' => function ($subQuery) use ($status) {
-            return $subQuery->status($status);
+            return $subQuery->status($status)->orderBy('name');
         }, 'linkedAsDepartment' => function ($subQuery) use ($status) {
-            return $subQuery->status($status);
+            return $subQuery->status($status)->orderBy('name');
         }])->orderBy('name')->get();
         $count = $clients->count();
 
