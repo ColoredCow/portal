@@ -72,7 +72,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $data['receivable_date'] = $data['due_on'];
         $invoice_number = $this->getInvoiceNumber($data['client_id'], $data['project_id']);
-        $data = Arr::add($data, 'invoice_no', $invoice_number);
+        $data = Arr::add($data, 'invoice_number', $invoice_number);
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         // Todo: We need to update the logic to set invoice numbers. It should get
@@ -276,9 +276,9 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getInvoiceNumber($client_id, $project_id)
     {
-        $client = ClientAddress::where('client_id', $client_id)->first();
+        $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
         $client_project_id = Project::find($project_id)->client_project_id;
-        $client_type = ($client->country_id == 1) ? 'IN' : 'EX';
+        $client_type = ($country_id == 1) ? 'IN' : 'EX';
         $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
         $invoice_number = $client_type . '-' . sprintf('%03s', $client_id) . '-' . $client_project_id . '-' . sprintf('%06s', $invoice_sequence);
 
