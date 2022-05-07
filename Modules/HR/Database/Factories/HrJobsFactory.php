@@ -26,7 +26,7 @@ class HrJobsFactory extends Factory
 
         return [
             'domain' => array_rand(config('hr.opportunities.domains')),
-            'status' => array_rand(array_keys(config('hr.opportunities-status'))),
+            'status' => array_rand(config('hr.opportunities-status')),
             'type' => config('hr.opportunities.job.type'),
             'title' => $faker->jobTitle,
         ];
