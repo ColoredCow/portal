@@ -106,7 +106,7 @@
 
 @section('scripts')
 <script>
-    const saveInvoice = (button) => {
+     const saveInvoice = (button) => {
         button.disabled = true;
         if (!button.form.checkValidity()) {
             button.disabled = false;
@@ -117,52 +117,46 @@
     }
     
     new Vue({
-        el:'#create_invoice_details_form',
-
-        data() {
-            return {
-                clients: @json($clients),
-                projects:{},
-                clientId:"",
-                client:null,
-                currency:'',
-                amount:'',
-            }
-        },
-
-        methods: {
-            updateClientDetails: function() {
-                this.projects =  {};
-                for (var i in this.clients) {
-                    let client = this.clients[i];
-                    if (client.id == this.clientId) {
-                        this.client = client;
-                        this.currency = client.currency;
-                        this.projects = client.projects;
-                        break;
-                    }
-                }
-
-            }
-        },
-
-        mounted() {
-        },
-
-        computed: {
-            gst: function () {
-                return (this.amount * 0.18).toFixed(2);
-            },
-            tot: function () {
-                let total = this.amount * 0.18 + 1 * this.amount;
-                return (total);
-            },
-            amt: function () {
-                return (this.amount);
-            },
+    el:'#create_invoice_details_form',
+    data() {
+        return {
+            clients: @json($clients),
+            projects:{},
+            clientId:"",
+            client:null,
+            currency:'',
+            amount:'',
         }
-    });
-
+    },
+    methods: {
+        updateClientDetails: function() {
+            this.projects =  {};
+            for (var i in this.clients) {
+                let client = this.clients[i];
+                if (client.id == this.clientId) {
+                    this.client = client;
+                    this.currency = client.currency;
+                    this.projects = client.projects;
+                    break;
+                }
+            }
+        }
+    },
+    mounted() {
+    },
+    computed: {
+        gst: function () {
+            return (this.amount * 0.18).toFixed(2);
+        },
+        tot: function () {
+            let total = this.amount * 0.18 + 1 * this.amount;
+            return (total);
+        },
+        amt: function () {
+            return (this.amount);
+        },
+    }
+});
 </script>
 
 @endsection
