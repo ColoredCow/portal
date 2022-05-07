@@ -16,11 +16,9 @@
             @foreach ($projects as $project)
                 <div class="d-flex px-5 mt-5">
                     <div class="w-33p ml-2">
-                        <h5 class="card-title">
-                            <a href="{{route('project.show', $project )}}">
-                                {{ $project->name }}
-                            </a>
-                        </h5>
+                        <a href="{{route('project.show', $project )}}">
+                            {{ $project->name }}
+                        </a>
                     </div>
                     <div class="w-33p w-md-40p ml-2">
                         @foreach($project->teamMembers ?:[] as $teamMember)
