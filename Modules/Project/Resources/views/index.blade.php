@@ -67,7 +67,7 @@
                             @endforeach 
                         </td>
                         <td>
-                            <a href="{{route('project.effort-tracking', $project )}}">Click Here</a>
+                            <a href="{{route('project.effort-tracking', $project )}}">FTE</a>
                         </td>
                     </tr>
                 @empty

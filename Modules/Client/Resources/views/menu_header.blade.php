@@ -1,9 +1,18 @@
-<ul class="nav nav-pills my-3">
+<ul class="nav nav-pills">
+    @php
+        $request = request()->all();
+    @endphp
     <li class="nav-item mr-3">
-        <a class="nav-link {{ (request()->input('status', 'active') == 'active') ? 'active' : '' }}" href="{{ route('client.index', ['status' => 'active'])  }}">Active Clients</a>
+        @php
+            $request['status'] = 'active';
+        @endphp
+        <a class="nav-link {{ (request()->input('status', 'active') == 'active')  ? 'active' : '' }}" href="{{ route('client.index', $request)  }}">Active Clients</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ (request()->input('status', 'active') == 'inactive') ? 'active' : '' }}"  href="{{ route('client.index', ['status' => 'inactive'])  }}">Inactive Clients</a>
+        @php
+            $request['status'] = 'inactive';
+        @endphp
+        <a class="nav-link {{ (request()->input('status', 'active') == 'inactive') ? 'active' : '' }}"  href="{{ route('client.index', $request)  }}">Inactive Clients</a>
     </li>
 </ul>

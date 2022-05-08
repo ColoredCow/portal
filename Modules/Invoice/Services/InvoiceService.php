@@ -71,6 +71,10 @@ class InvoiceService implements InvoiceServiceContract
         $data['receivable_date'] = $data['due_on'];
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
+        // Todo: We need to update the logic to set invoice numbers. It should get
+        // generated using a combination of invoice id, project id, and client id.
+        // We can also move this to observer if this function does not have lot of code.
+        $this->setInvoiceNumber($invoice);
 
         return $invoice;
     }
@@ -81,6 +85,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice->update($data);
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
+            $this->setInvoiceNumber($invoice);
         }
 
         return $invoice;
@@ -136,6 +141,13 @@ class InvoiceService implements InvoiceServiceContract
     public function dashboard()
     {
         return Invoice::status('sent')->get();
+    }
+
+    private function setInvoiceNumber($invoice)
+    {
+        $invoice->invoice_number = pathinfo($invoice->file_path, PATHINFO_FILENAME);
+
+        return $invoice->save();
     }
 
     private function applyFilters($query, $filters)
