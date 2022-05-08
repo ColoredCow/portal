@@ -71,8 +71,6 @@ class InvoiceService implements InvoiceServiceContract
     public function store($data)
     {
         $data['receivable_date'] = $data['due_on'];
-        $invoice_number = $this->getInvoiceNumber($data['client_id'], $data['project_id']);
-        $data = Arr::add($data, 'invoice_number', $invoice_number);
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         // Todo: We need to update the logic to set invoice numbers. It should get
@@ -149,7 +147,7 @@ class InvoiceService implements InvoiceServiceContract
 
     private function setInvoiceNumber($invoice)
     {
-        $invoice->invoice_number = pathinfo($invoice->file_path, PATHINFO_FILENAME);
+        $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id);
 
         return $invoice->save();
     }
