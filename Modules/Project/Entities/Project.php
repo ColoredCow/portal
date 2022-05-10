@@ -27,7 +27,7 @@ class Project extends Model
     public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
-            ->withPivot('designation')->withTimestamps();
+            ->withPivot('designation', 'ended_on', 'id')->withTimestamps()->whereNull('project_team_members.ended_on');
     }
 
     public function repositories()
@@ -47,7 +47,7 @@ class Project extends Model
 
     public function getTeamMembers()
     {
-        return $this->hasMany(ProjectTeamMember::class);
+        return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
     }
 
     public function projectContracts()
