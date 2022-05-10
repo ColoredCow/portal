@@ -112,7 +112,11 @@ class InvoiceService implements InvoiceServiceContract
 
     public function saveInvoiceFile($invoice, $file)
     {
-        $folder = '/invoice/' . date('Y') . '/' . date('m');
+        $year = $invoice->sent_on->format('Y');
+        $month = $invoice->sent_on->format('m');
+
+        $folder = '/invoice/' . $year . '/' . $month;
+
         $fileName = $file->getClientOriginalName();
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
         $invoice->update(['file_path' => $file]);
