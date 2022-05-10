@@ -119,7 +119,6 @@ class InvoiceService implements InvoiceServiceContract
 
         return Storage::download($invoice->file_path, basename($invoice->file_path), [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline;',
         ]);
     }
 
