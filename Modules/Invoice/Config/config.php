@@ -27,5 +27,11 @@ return [
     'region' => [
         'indian' => 'indian',
         'international' => 'international',
+    ],
+
+    'invoice-details' => [
+        'igst' => '18%',
+        'cgst' => '9%',
+        'sgst' => '9%'
     ]
 ];

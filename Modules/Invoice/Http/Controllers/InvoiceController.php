@@ -43,6 +43,16 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Show the.
+     */
+    public function invoiceDetails()
+    {
+        $invoices = Invoice::all();
+
+        return view('invoice::invoice-details-listing', compact('invoices'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      * @param Request $request
      */

@@ -62,6 +62,7 @@
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
                 @endcan    
                     <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly tax report</a>
+                    <a class="dropdown-item" href="{{ route('invoice.invoice-details') }}"> Invoice details listing</a>
                     <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
                     <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>
                 
