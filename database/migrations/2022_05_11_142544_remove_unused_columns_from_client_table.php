@@ -14,7 +14,7 @@ class RemoveUnusedColumnsFromClientTable extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-			$table->dropColumn(['country', 'state', 'phone', 'address', 'pincode']);
+            $table->dropColumn(['country', 'state', 'phone', 'address', 'pincode']);
         });
     }
 
@@ -25,6 +25,5 @@ class RemoveUnusedColumnsFromClientTable extends Migration
      */
     public function down()
     {
-        
     }
 }
