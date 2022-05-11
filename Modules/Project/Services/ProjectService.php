@@ -140,10 +140,10 @@ class ProjectService implements ProjectServiceContract
         $projectTeamMembers = $project->getTeamMembers;
         $teamMembersData = $data['project_team_member'] ?? [];
         foreach ($projectTeamMembers as $member) {
-            $flag = False;
+            $flag = false;
             foreach ($teamMembersData as $teamMemberData) {
                 if ($member->id == $teamMemberData['project_team_member_id']) {
-                    $flag = True;
+                    $flag = true;
                     $tempArray = $teamMemberData;
                     unset($tempArray['project_team_member_id']);
                     $member->update($tempArray);
@@ -164,7 +164,6 @@ class ProjectService implements ProjectServiceContract
                 ]);
             }
         }
-
     }
 
     private function updateProjectRepositories($data, $project)
