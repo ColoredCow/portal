@@ -19,11 +19,14 @@ class ReportRoleHasPermissionTableSeeder extends Seeder
         Model::unguard();
         $roles = ['super-admin', 'admin', 'Finance', 'Accountant'];
         foreach ($roles as $key) {
-            $Role = Role::where(['name' => $key])->first();
-            $Role->syncPermission(Permission::whereIn('name', [
+            $role = Role::where(['name' => $key])->first();
+            $role->syncPermissions(Permission::whereIn('name', [
                 'report.view',
                 'report.edit',
             ])->get());
         }
+
+        $accountant = Role::where(['name' => 'accountant'])->first();
+        $accountant->givePermissionTo('finance_reports.view');
     }
 }

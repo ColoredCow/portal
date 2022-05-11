@@ -71,6 +71,10 @@ class InvoiceService implements InvoiceServiceContract
         $data['receivable_date'] = $data['due_on'];
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
+        // Todo: We need to update the logic to set invoice numbers. It should get
+        // generated using a combination of invoice id, project id, and client id.
+        // We can also move this to observer if this function does not have lot of code.
+        $this->setInvoiceNumber($invoice);
 
         return $invoice;
     }
@@ -81,6 +85,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice->update($data);
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
+            $this->setInvoiceNumber($invoice);
         }
 
         return $invoice;
@@ -107,7 +112,11 @@ class InvoiceService implements InvoiceServiceContract
 
     public function saveInvoiceFile($invoice, $file)
     {
-        $folder = '/invoice/' . date('Y') . '/' . date('m');
+        $year = $invoice->sent_on->format('Y');
+        $month = $invoice->sent_on->format('m');
+
+        $folder = '/invoice/' . $year . '/' . $month;
+
         $fileName = $file->getClientOriginalName();
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
         $invoice->update(['file_path' => $file]);
@@ -136,6 +145,13 @@ class InvoiceService implements InvoiceServiceContract
     public function dashboard()
     {
         return Invoice::status('sent')->get();
+    }
+
+    private function setInvoiceNumber($invoice)
+    {
+        $invoice->invoice_number = pathinfo($invoice->file_path, PATHINFO_FILENAME);
+
+        return $invoice->save();
     }
 
     private function applyFilters($query, $filters)
@@ -213,7 +229,7 @@ class InvoiceService implements InvoiceServiceContract
                 'GST' => $invoice->gst,
                 'Amount (+GST)' => (float) str_replace(['$', '₹'], '', $invoice->invoiceAmount()),
                 'Received amount' => $invoice->amount_paid,
-                'TDS' => number_format($invoice->tds, 2),
+                'TDS' => number_format((float) $invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)
@@ -250,7 +266,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Bank Charges' => $invoice->bank_charges,
                 'Conversion Rate Diff' => $invoice->conversion_rate_diff,
                 'Conversion Rate' => $invoice->conversion_rate,
-                'TDS' => number_format($invoice->tds, 2),
+                'TDS' => number_format((float) $invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)
