@@ -14,6 +14,7 @@ use Modules\Client\Entities\ClientAddress;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 use Modules\Project\Entities\Project;
+use Carbon\Carbon;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -278,7 +279,7 @@ class InvoiceService implements InvoiceServiceContract
         $client_project_id = Project::find($project_id)->client_project_id;
         $client_type = ($country_id == 1) ? 'IN' : 'EX';
         $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
-        $invoice_number = $client_type . '-' . sprintf('%03s', $client_id) . '-' . $client_project_id . '-' . sprintf('%06s', $invoice_sequence);
+        $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . sprintf('%02s', Carbon::now()->month) . Carbon::now()->year;
 
         return $invoice_number;
     }
