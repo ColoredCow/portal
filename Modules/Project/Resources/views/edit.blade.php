@@ -19,13 +19,13 @@
     <div class="mt-2">
         <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" data-bs-toggle="pill" data-bs-target="#project-details" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Project details</a>
+              <a class="nav-link active" data-bs-toggle="pill" data-bs-target="#project-details" type="button" role="tab" aria-selected="true">Project details</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-team-members" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Project team members</a>
+              <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-team-members" type="button" role="tab" aria-selected="false">Project team members</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-repository" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Project repositories</a>
+              <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-repository" type="button" role="tab" aria-selected="false">Project repositories</a>
             </li>
         </ul>
         @include('status', ['errors' => $errors->all()])
