@@ -161,7 +161,7 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                     'team_member_id' => $teamMemberData['team_member_id'],
                     'designation' => $teamMemberData['designation'],
-                    'daily_expected_effort' =>$teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
+                    'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
                 ]);
             }
         }
