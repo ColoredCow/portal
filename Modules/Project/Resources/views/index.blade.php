@@ -20,7 +20,7 @@
                     onchange="this.form.submit()">
                     <option value="my-projects" {{ request()->get('projects') == 'my-projects' ? 'selected' : '' }}>
                         {{ __('My Projects') }} </option>
-                    <option value="all-projects" {{ (request()->get('projects') == 'all-projects' OR !request()->has('projects')) ? 'selected' : '' }}>
+                    <option value="all-projects" {{ (request()->get('projects') == 'all-projects' || !request()->has('projects')) ? 'selected' : '' }}>
                         {{ __('All Projects') }} </option>
                 </select>
             </div>
