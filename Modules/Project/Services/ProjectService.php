@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Services;
 
+use Carbon\Carbon;
 use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
@@ -9,6 +10,7 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Storage;
+use Modules\Project\Entities\ProjectTeamMember;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -135,14 +137,33 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectTeamMembers($data, $project)
     {
-        $projectTeamMembers = $data['project_team_member'] ?? [];
-        $teamMembers = [];
-
-        foreach ($projectTeamMembers as $projectTeamMember) {
-            $teamMembers[$projectTeamMember['team_member_id']] = ['designation' => $projectTeamMember['designation']];
+        $projectTeamMembers = $project->getTeamMembers;
+        $teamMembersData = $data['project_team_member'] ?? [];
+        foreach ($projectTeamMembers as $member) {
+            $flag = false;
+            foreach ($teamMembersData as $teamMemberData) {
+                if ($member->id == $teamMemberData['project_team_member_id']) {
+                    $flag = true;
+                    $tempArray = $teamMemberData;
+                    unset($tempArray['project_team_member_id']);
+                    $member->update($tempArray);
+                }
+            }
+            if (! $flag) {
+                $member->update(['ended_on' => Carbon::now()]);
+            }
         }
 
-        return $project->teamMembers()->sync($teamMembers);
+        foreach ($teamMembersData as $teamMemberData) {
+            if ($teamMemberData['project_team_member_id'] == null) {
+                ProjectTeamMember::create([
+                    'project_id' => $project->id,
+                    'team_member_id' => $teamMemberData['team_member_id'],
+                    'designation' => $teamMemberData['designation'],
+                    'daily_expected_effort' => config('efforttracking.minimum_expected_hours'),
+                ]);
+            }
+        }
     }
 
     private function updateProjectRepositories($data, $project)
