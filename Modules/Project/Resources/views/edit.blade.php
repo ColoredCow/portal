@@ -19,17 +19,17 @@
     <div class="mt-2">
         <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#project-details" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Project details</a>
+              <a class="nav-link active" data-bs-toggle="pill" data-bs-target="#project-details" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Project details</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#project-team-members" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Project team members</a>
+              <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-team-members" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Project team members</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#project-repository" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Project repositories</a>
+              <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-repository" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Project repositories</a>
             </li>
         </ul>
         @include('status', ['errors' => $errors->all()])
-        <div class="tab-content" id="pills-tabContent">
+        <div class="tab-content">
             <div class="tab-pane fade show active mb-5" id="project-details" role="tabpanel">
                 @include('project::subviews.edit-project-details')
             </div>
