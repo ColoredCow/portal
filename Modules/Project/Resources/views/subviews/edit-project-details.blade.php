@@ -1,9 +1,8 @@
-<div class="card mt-3" >
-    <div class="card-header" data-toggle="collapse" data-target="#project_detail_form">
-        <h4>Project details</h4>
+<div class="card" >
+    <div class="card-header">
     </div>
 
-    <div id="project_detail_form" class="collapse show">
+    <div id="project_detail_form">
         <form action="{{ route('project.update', $project) }}" method="POST" id="form_update_project_details">
             @csrf
             <input type="hidden" value="project_details" name="update_section">    
