@@ -51,12 +51,10 @@ class InvoiceController extends Controller
         $invoices = Invoice::all();
         foreach ($invoices as $invoice) :
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
-        if (isset(ClientAddress::select('*')->where('id', $invoice->client_id)->first()->type)) :
-                $c[] = ClientAddress::select('*')->where('id', $invoice->client_id)->first()->type;
-        endif;
+        $clientAddress[] = ClientAddress::select('*')->where('id', $invoice->client_id)->first();
         endforeach;
 
-        return view('invoice::invoice-details-listing', compact('invoices', 'clients', 'c'));
+        return view('invoice::invoice-details-listing', compact('invoices', 'clients', 'clientAddress'));
     }
 
     /**

@@ -37,13 +37,16 @@
 
             <tbody>
                 @foreach($invoices as $key => $invoice) <!-- 0, 1, 2 3 -->
-                @dd($c);
                     <tr>
                         <td>
                             {{ $loop->iteration }} 
                             <td>{{ $invoice->sent_on->toDateString() }}</td>
                                 <td>{{ $clients[$key]->name }}</td>
-                                <td>{{ $c }}</td>
+                                @if(isset($clientAddress[$key]->type))
+                                    <td>{{ $clientAddress[$key]->type }}</td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td></td>
                                 <td></td>
                                 <td></td>
