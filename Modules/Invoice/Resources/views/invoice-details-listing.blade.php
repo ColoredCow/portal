@@ -6,7 +6,10 @@
     <br>
 
     <div class="d-flex justify-content-between mb-2">
-        <h4 class="mb-1 pb-1">              Invoice Details</h4>
+        <h4 class="mb-1 pb-1">Invoice Details</h4>
+        <span>
+            <a href="" class="btn btn-info text-white"> Export To Excel</a>
+        </span>
     </div>
     <br>
     <br>
@@ -33,34 +36,35 @@
             </thead>
 
             <tbody>
-                @foreach($invoices as $invoice)
-                <tr>
-                    <td>
-                        {{ $loop->iteration }} 
-                        <td>{{ $invoice->sent_on->toDateString() }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        @if($invoice->currency == "USD")
-                            <td>{{ config('invoice.invoice-details.igst') }}</td>
-                        @else
+                @foreach($invoices as $key => $invoice) <!-- 0, 1, 2 3 -->
+                @dd($c);
+                    <tr>
+                        <td>
+                            {{ $loop->iteration }} 
+                            <td>{{ $invoice->sent_on->toDateString() }}</td>
+                                <td>{{ $clients[$key]->name }}</td>
+                                <td>{{ $c }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                @if($invoice->currency == "USD")
+                                <td>{{ config('invoice.invoice-details.igst') }}</td>
+                                @else
+                                <td></td>
+                                @endif
+                                @if($invoice->currency == "INR")
+                                <td>{{ config('invoice.invoice-details.cgst') }}</td>
+                                <td>{{ config('invoice.invoice-details.sgst') }}</td>
+                                @else
                             <td></td>
-                        @endif
-                        @if($invoice->currency == "INR")
-                            <td>{{ config('invoice.invoice-details.cgst') }}</td>
-                            <td>{{ config('invoice.invoice-details.sgst') }}</td>
-                        @else
-                        <td></td>
-                        <td></td>
-                        @endif
-                        <td></td>
-                    </td>
-                </tr>
+                            <td></td>
+                            @endif
+                            <td></td>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
 
