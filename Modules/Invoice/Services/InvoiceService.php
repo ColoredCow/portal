@@ -87,7 +87,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice->update($data);
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
-            $this->setInvoiceNumber($invoice);
+            $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
 
         return $invoice;
