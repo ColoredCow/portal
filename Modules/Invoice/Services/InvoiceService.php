@@ -14,7 +14,6 @@ use Modules\Client\Entities\ClientAddress;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 use Modules\Project\Entities\Project;
-use Carbon\Carbon;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -77,7 +76,7 @@ class InvoiceService implements InvoiceServiceContract
         // Todo: We need to update the logic to set invoice numbers. It should get
         // generated using a combination of invoice id, project id, and client id.
         // We can also move this to observer if this function does not have lot of code.
-        $this->setInvoiceNumber($invoice);
+        $this->setInvoiceNumber($invoice, $data['sent_on']);
 
         return $invoice;
     }
@@ -150,9 +149,9 @@ class InvoiceService implements InvoiceServiceContract
         return Invoice::status('sent')->get();
     }
 
-    private function setInvoiceNumber($invoice)
+    private function setInvoiceNumber($invoice, $receivable_date)
     {
-        $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id);
+        $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id, $receivable_date);
 
         return $invoice->save();
     }
@@ -277,13 +276,13 @@ class InvoiceService implements InvoiceServiceContract
         });
     }
 
-    public function getInvoiceNumber($client_id, $project_id)
+    public function getInvoiceNumber($client_id, $project_id, $receivable_date)
     {
         $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
         $client_project_id = Project::find($project_id)->client_project_id;
         $client_type = ($country_id == 1) ? 'IN' : 'EX';
         $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
-        $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . sprintf('%02s', Carbon::now()->month) . Carbon::now()->format('y');
+        $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . sprintf('%02s', date('m', strtotime($receivable_date))) . sprintf('%02s', date('y', strtotime($receivable_date)));
 
         return $invoice_number;
     }
