@@ -149,9 +149,9 @@ class InvoiceService implements InvoiceServiceContract
         return Invoice::status('sent')->get();
     }
 
-    private function setInvoiceNumber($invoice, $receivable_date)
+    private function setInvoiceNumber($invoice, $sent_date)
     {
-        $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id, $receivable_date);
+        $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id, $sent_date);
 
         return $invoice->save();
     }
@@ -276,13 +276,13 @@ class InvoiceService implements InvoiceServiceContract
         });
     }
 
-    public function getInvoiceNumber($client_id, $project_id, $receivable_date)
+    public function getInvoiceNumber($client_id, $project_id, $sent_date)
     {
         $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
         $client_project_id = Project::find($project_id)->client_project_id;
         $client_type = ($country_id == 1) ? 'IN' : 'EX';
         $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
-        $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . date('m', strtotime($receivable_date)) . date('y', strtotime($receivable_date));
+        $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . date('m', strtotime($sent_date)) . date('y', strtotime($sent_date));
 
         return $invoice_number;
     }
