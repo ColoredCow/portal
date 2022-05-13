@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <div data-id="he" type="button"  v-on:click="updateProjectForm('form_update_project_details')" class="btn btn-primary">Update details</div>
+                <div data-id="he" type="button"  v-on:click="updateProjectForm('form_update_project_details')" class="btn btn-primary save-btn">Save</div>
             </div>
         </form>
     </div>

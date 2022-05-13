@@ -9,8 +9,8 @@
         </span><span class="mr-3 w-26 h-15 w-xl-10 h-xl-10">Back</span>
     </a>
     <br>
-    <h4 class="c-pointer d-inline-block"  v-on:click="counter += 1">{{ $project->name }} ({{ $project->client_project_id }})</h4>
-    <a id="view_effort_sheet_badge" target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
+    <h4 class="c-pointer d-inline-block"  v-on:click="counter += 1">{{ $project->name }}</h4>
+    <a target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
     <br>
     <div class="text-danger d-none" id="edit-project-errors">
         <div>Error in the Input:</div>
@@ -81,7 +81,9 @@ new Vue({
         },
 
         updateProjectForm: async function(formId) {
+            $('.save-btn').attr('disabled', true);
             let formData = new FormData(document.getElementById(formId));
+            $('.save-btn').removeClass('btn-primary').addClass('btn-dark');
             await axios.post('{{ route('project.update', $project) }}', formData)
             .then((response) => {
                 $('#edit-project-errors').addClass('d-none')
@@ -92,6 +94,8 @@ new Vue({
                 } else {
                     $('#view_effort_sheet_badge').addClass('d-none')
                 }
+                $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
+                $('.save-btn').attr('disabled', false);
                 alert('Project information updated successfully');
             })
             .catch((error) => {

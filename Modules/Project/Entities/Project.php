@@ -3,6 +3,8 @@
 namespace Modules\Project\Entities;
 
 use App\Traits\Filters;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
@@ -62,7 +64,31 @@ class Project extends Model
         $teamMembersDetails = $effortTracking->getTeamMembersDetails($teamMembers);
         $totalEffort = $effortTracking->getTotalEffort($teamMembersDetails);
         $monthlyEstimatedHours = $this->monthly_estimated_hours;
+        $updateDateCountAfterCount = '18:00:00';
+        $currentDate = Carbon::now(config('constants.timezone.indian'));
 
-        return $monthlyEstimatedHours ? round($totalEffort / $monthlyEstimatedHours, 2) : 0;
+        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterCount) {
+            $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
+        }
+
+        $totalWorkingDaysInMonth = count($this->getWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
+        $daysTillToday = count($this->getWorkingDays(now()->startOfMonth(), $currentDate));
+        $currentExpectedEffort = ($monthlyEstimatedHours / $totalWorkingDaysInMonth) * $daysTillToday;
+
+        return $monthlyEstimatedHours ? round($totalEffort / $currentExpectedEffort, 2) : 0;
+    }
+
+    public function getWorkingDays($startDate, $endDate)
+    {
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $dates = [];
+        $weekend = ['Saturday', 'Sunday'];
+        foreach ($period as $date) {
+            if (! in_array($date->format('l'), $weekend)) {
+                $dates[] = $date->format('Y-m-d');
+            }
+        }
+
+        return $dates;
     }
 }

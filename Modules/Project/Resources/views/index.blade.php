@@ -67,7 +67,8 @@
                             @endforeach 
                         </td>
                         <td>
-                            <a href="{{route('project.effort-tracking', $project )}}">FTE</a>
+                            <a class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 c-pointer fa fa-external-link-square"></i></a>
+                            <a class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->fte }}</a>
                         </td>
                     </tr>
                 @empty

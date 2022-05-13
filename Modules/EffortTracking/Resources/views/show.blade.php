@@ -15,8 +15,8 @@
             <div>
             <h2 class="fz-18 leading-22">Current Hours: <span>{{$totalEffort}}</span></h2>
             <h2 class="fz-18 leading-22" id="projectHours">Expected Hours: <span>{{$project->monthly_estimated_hours}}</span></h2>
+            <h2 class="fz-18 leading-22" id="projectHours">FTE: <span>{{$project->fte}}</span></h2>
             </div>
-
         </div>
         <div class="effort-tracking-data">
             <div class="d-flex flex-row p-5 d-flex justify-content-center">
