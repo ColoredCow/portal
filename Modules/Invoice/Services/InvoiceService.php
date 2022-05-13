@@ -9,9 +9,11 @@ use Maatwebsite\Excel\Facades\Excel;
 use Modules\Invoice\Entities\Invoice;
 use Illuminate\Support\Facades\Storage;
 use Modules\Invoice\Exports\TaxReportExport;
+use Modules\Invoice\Exports\MonthlyReportExport;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+use Modules\Client\Entities\Client;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -193,6 +195,33 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         return Excel::download(new TaxReportExport($invoices), 'TaxReportExport.xlsx');
+    }
+
+    public function monthlyReportExport($filters)
+    {
+        $invoices = $this->monthlyReportInvoices($filters);
+        $invoices = $this->formatMonthlyInvoicesForExportAll($invoices);
+
+        return Excel::download(new MonthlyReportExport($invoices), 'MonthlyReportExport.xlsx');
+    }
+
+    private function monthlyReportInvoices($filters)
+    {
+        $query = Invoice::query();
+
+        return $this
+            ->applyFilters($query, $filters)
+            ->get() ?: [];
+    }
+
+    private function formatMonthlyInvoicesForExportAll($invoices)
+    {
+        return $invoices->map(function ($invoice) {
+            return [
+                'Date' =>   $invoice->sent_on->toDateString(),
+                'Particular' => Client::select('*')->where('id', $invoice->client_id)->first()->name,
+            ];
+        });
     }
 
     private function taxReportInvoices($filters)

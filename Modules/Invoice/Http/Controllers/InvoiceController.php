@@ -57,6 +57,13 @@ class InvoiceController extends Controller
         return view('invoice::invoice-details-listing', compact('invoices', 'clients', 'clientAddress'));
     }
 
+    public function monthlyReportExport(Request $request)
+    {
+        $filters = $request->all();
+
+        return $this->service->monthlyReportExport($filters);
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request
