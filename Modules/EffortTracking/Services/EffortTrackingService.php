@@ -68,7 +68,7 @@ class EffortTrackingService
     /**
      * Get expected hours.
      * @param  int $numberOfDays Number of days.
-     * @param float $expectedHours Expected daily hours.
+     * @param float $expectedDailyHours Expected daily hours.
      * @return int|float         Expected hours.
      */
     public function getExpectedHours($expectedDailyHours, $numberOfDays)
