@@ -42,7 +42,7 @@
                         <th>Receivable date</th>
                         <th>Status</th>
                         @if (request()->input('status') == 'sent' || request()->input('status') == '')
-                            <th>Email</th>
+                            <th class="d-none">Email</th>
                         @endif
                     </tr>
                 </thead>
@@ -63,7 +63,7 @@
                             <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
                                 {{ Str::studly($invoice->status) }}</td>
                             @if (Str::studly($invoice->status) == 'Sent')
-                                <td><button type="button" class="btn btn-primary ml-auto" data-bs-toggle="modal"
+                                <td class="d-none" ><button type="button" class="btn btn-primary ml-auto" data-bs-toggle="modal"
                                         data-bs-target="#Modal">Send Mail</button>
                                     <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                         aria-hidden="true">
