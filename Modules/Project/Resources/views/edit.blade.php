@@ -12,10 +12,6 @@
     <h4 class="c-pointer d-inline-block"  v-on:click="counter += 1">{{ $project->name }}</h4>
     <a target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
     <br>
-    <div class="text-danger d-none" id="edit-project-errors">
-        <div>Error in the Input:</div>
-        <ul id="edit-project-error-list"></ul>
-    </div>
     <div class="mt-2">
         <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -43,6 +39,7 @@
             </div>
         </div>
     </div>
+    @include('project::subviews.modal-success')
 </div>
 
 @endsection
@@ -96,15 +93,17 @@ new Vue({
                 }
                 $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
                 $('.save-btn').attr('disabled', false);
-                alert('Project information updated successfully');
+                $('#modal-success').modal('show');
             })
             .catch((error) => {
+                $('#project-details-update-message').addClass('d-none')
                 let errors = error.response.data.errors;
                 $('#edit-project-error-list').empty()
                 for (error in errors) {
                     $('#edit-project-error-list').append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
                 }
                 $('#edit-project-errors').removeClass('d-none')
+                $('#modal-success').modal('show');
             })
         },
 

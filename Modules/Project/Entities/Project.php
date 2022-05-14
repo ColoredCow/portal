@@ -64,10 +64,10 @@ class Project extends Model
         $teamMembersDetails = $effortTracking->getTeamMembersDetails($teamMembers);
         $totalEffort = $effortTracking->getTotalEffort($teamMembersDetails);
         $monthlyEstimatedHours = $this->monthly_estimated_hours;
-        $updateDateCountAfterCount = '18:00:00';
+        $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
         $currentDate = Carbon::now(config('constants.timezone.indian'));
 
-        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterCount) {
+        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
             $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
         }
 
