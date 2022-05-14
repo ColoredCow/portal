@@ -67,7 +67,7 @@ export default {
 			roleInputs: [],
 			allUsers: this.users,
 			selectedUser:{},
-			search: ''
+			search: ""
 		};  
 	},
 
@@ -114,7 +114,7 @@ export default {
 		filteredUsers: function() {
 			return this.allUsers.filter((user) => {
 				return user.name.match(this.search.charAt(0).toUpperCase() + this.search.slice(1));
-			})
+			});
 		}
 	}
 };
