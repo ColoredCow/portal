@@ -40,8 +40,8 @@
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Current FTE:</label>
                         </h4>
-                        <span class="text-danger fz-lg-22">{{ $project->Fte }}</span>
-                        <a id="view_effort_sheet_badge" target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded">{{ _('Check FTE') }}</a>
+                        <span class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->fte }}</span>
+                        <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
                 </div>
                 <br>

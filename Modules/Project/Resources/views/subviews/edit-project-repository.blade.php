@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="button" class="btn btn-primary" v-on:click="updateProjectForm('update_project_repository_form')">Update repository details</button>
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_repository_form')">Save</button>
             </div>
         </form>
     </div>
