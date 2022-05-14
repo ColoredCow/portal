@@ -2,6 +2,9 @@
 
 namespace Modules\Project\Entities;
 
+use App\Traits\Filters;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
@@ -12,7 +15,7 @@ use Modules\EffortTracking\Services\EffortTrackingService;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, Filters;
 
     protected $guarded = [];
 
@@ -26,7 +29,7 @@ class Project extends Model
     public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
-            ->withPivot('designation')->withTimestamps();
+            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort')->withTimestamps()->whereNull('project_team_members.ended_on');
     }
 
     public function repositories()
@@ -46,7 +49,7 @@ class Project extends Model
 
     public function getTeamMembers()
     {
-        return $this->hasMany(ProjectTeamMember::class);
+        return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
     }
 
     public function projectContracts()
@@ -61,32 +64,31 @@ class Project extends Model
         $teamMembersDetails = $effortTracking->getTeamMembersDetails($teamMembers);
         $totalEffort = $effortTracking->getTotalEffort($teamMembersDetails);
         $monthlyEstimatedHours = $this->monthly_estimated_hours;
+        $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
+        $currentDate = Carbon::now(config('constants.timezone.indian'));
 
-        return $monthlyEstimatedHours ? round($totalEffort / $monthlyEstimatedHours, 2) : 0;
+        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
+            $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
+        }
+
+        $totalWorkingDaysInMonth = count($this->getWorkingDaysList(now()->startOfMonth(), now()->endOfMonth()));
+        $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));
+        $currentExpectedEffort = ($monthlyEstimatedHours / $totalWorkingDaysInMonth) * $daysTillToday;
+
+        return $monthlyEstimatedHours ? round($totalEffort / $currentExpectedEffort, 2) : 0;
     }
 
-    public function scopeFilterByStatus($query, $status)
+    public function getWorkingDaysList($startDate, $endDate)
     {
-        return $query->where('status', $status);
-    }
-
-    public function scopeFilterByName($query, $name)
-    {
-        return $query->where('name', 'LIKE', "%$name%");
-    }
-
-    public function scopeApplyFilter($query, array $filters)
-    {
-        foreach (array_filter($filters) as $type => $value) {
-            switch ($type) {
-                case 'status':
-                    $query->filterByStatus($value);
-                    break;
-                case 'name':
-                    $query->filterByName($value);
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $dates = [];
+        $weekend = ['Saturday', 'Sunday'];
+        foreach ($period as $date) {
+            if (! in_array($date->format('l'), $weekend)) {
+                $dates[] = $date->format('Y-m-d');
             }
         }
 
-        return $query;
+        return $dates;
     }
 }

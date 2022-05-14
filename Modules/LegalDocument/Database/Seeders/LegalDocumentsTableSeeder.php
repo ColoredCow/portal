@@ -3,6 +3,7 @@
 namespace Modules\LegalDocument\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\LegalDocument\Entities\LegalDocument;
 
 class LegalDocumentsTableSeeder extends Seeder
 {
@@ -13,17 +14,13 @@ class LegalDocumentsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('legal_documents')->delete();
-
-        \DB::table('legal_documents')->insert([
-            0 => [
-                'slug' => 'nda',
-                'name' => 'NDA',
-            ],
-            1 => [
-                'slug' => 'contracts',
-                'name' => 'Contracts',
-            ],
+        LegalDocument::updateOrCreate([
+            'slug' => 'nda',
+            'name' => 'NDA',
+        ]);
+        LegalDocument::updateOrCreate([
+            'slug' => 'contracts',
+            'name' => 'Contracts',
         ]);
     }
 }
