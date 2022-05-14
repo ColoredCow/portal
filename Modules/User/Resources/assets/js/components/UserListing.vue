@@ -1,5 +1,8 @@
 <template>
     <div>
+		<div class="my-2">
+			<input type="text" class="form-control" v-model="search" placeholder="Search User Name">
+		</div>
         <table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -9,7 +12,7 @@
 				</tr>
 			</thead>
             <tbody>
-                <tr v-for="(user,index) in this.allUsers" :key="index">
+                <tr v-for="(user,index) in filteredUsers" :key="index">
                     <td>
                         <span class="align-items-center d-flex justify-content-start">
                             <div style="width:30px;" class="mr-2">
@@ -63,7 +66,8 @@ export default {
 			currentUserIndex: 0,
 			roleInputs: [],
 			allUsers: this.users,
-			selectedUser:{}
+			selectedUser:{},
+			search: ''
 		};  
 	},
 
@@ -103,6 +107,14 @@ export default {
 			let route = `/user/${user.id}/delete`;
 			let response = await axios.delete(route);
 			this.$delete(this.allUsers, index);
+		}
+	},
+
+	computed: {
+		filteredUsers: function() {
+			return this.allUsers.filter((user) => {
+				return user.name.match(this.search.charAt(0).toUpperCase() + this.search.slice(1));
+			})
 		}
 	}
 };
