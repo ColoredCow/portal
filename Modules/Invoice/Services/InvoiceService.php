@@ -40,11 +40,11 @@ class InvoiceService implements InvoiceServiceContract
 
         foreach ($invoices as $invoice) {
             if ($invoice->isAmountInINR()) {
-                $totalAmount += $invoice->amount;
+                $totalAmount += (int) $invoice->amount;
                 continue;
             }
 
-            $invoiceAmount = $currentRates * $invoice->amount;
+            $invoiceAmount = $currentRates * (int) $invoice->amount;
             $totalAmount += $invoiceAmount;
         }
 
