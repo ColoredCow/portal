@@ -23,6 +23,6 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::post('/{invoiceId}/update', 'InvoiceController@update')->name('invoice.update');
     Route::delete('/{invoiceId}/delete', 'InvoiceController@destroy')->name('invoice.delete');
     Route::post('/{invoice}', 'InvoiceController@sendEmail')->name('invoice.sendEmail');
-    Route::get('/invoice-details-listing', 'InvoiceController@invoiceDetails')->name('invoice.invoice-details');
+    Route::get('/invoice-details-listing', 'InvoiceController@invoiceDetails')->name('invoice.details');
     Route::get('/monthly-report-export', 'InvoiceController@monthlyReportExport')->name('invoice.monthly-report-export');
 });

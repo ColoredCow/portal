@@ -39,18 +39,18 @@
                 @foreach($invoices as $key => $invoice)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-						<td>{{ $invoice->sent_on->toDateString() }}</td>
+						<td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
 						<td>{{ $clients[$key]->name }}</td>
 						<td>{{ ($clientAddress[$key]->country_id == 1 ) ? 'India' : 'Export for international invoice'}}</td>
 						<td>{{ $invoice->invoice_number }}</td>
 						<td>{{ ($clientAddress[$key]->country_id == 1 ) ? !empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice' }}</td>
 						<td>{{ $invoice->invoiceAmount() }}</td>
 						<td>{{ $currentRates }}</td>
-						<td>{{ $totalReceivableAmount }}</td>
+						<td>{{ ($clientAddress[$key]->country_id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount() }}</td>
 						<td>{{ $invoice->amount }}</td>
-						<td>{{ ($invoice->currency == "USD") ? ( $invoice->amount * (int) config('invoice.invoice-details.igst') ) / 100 : '' }}</td>
-						<td>{{ ($invoice->currency == "INR") ? ( $invoice->amount * (int) config('invoice.invoice-details.cgst') ) / 100 : '' }}</td>
-						<td>{{ ($invoice->currency == "INR") ? ( $invoice->amount * (int) config('invoice.invoice-details.sgst') ) / 100 : '' }}</td>
+						<td>{{ ($invoice->currency == "USD") ? $igst[$key] : '' }}</td>
+						<td>{{ ($invoice->currency == "INR") ? $cgst[$key] : '' }}</td>
+						<td>{{ ($invoice->currency == "INR") ? $sgst[$key] : '' }}</td>
 						<td>{{-- HSN CODE --}}</td>
                     </tr>
                 @endforeach

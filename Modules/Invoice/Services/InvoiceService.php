@@ -226,6 +226,10 @@ class InvoiceService implements InvoiceServiceContract
         foreach ($invoices as $invoice) :
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
         $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
+        $igst[] = ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100;
+        $cgst[] = ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100;
+        $sgst[] = ($invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        $totalReceivableAmount = (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR();
         endforeach;
 
         return [
@@ -233,7 +237,10 @@ class InvoiceService implements InvoiceServiceContract
             'clients' => $clients,
             'clientAddress' => $clientAddress,
             'currentRates' => $this->currencyService()->getCurrentRatesInINR(),
-            'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
+            'totalReceivableAmount' => $totalReceivableAmount,
+            'igst' => $igst,
+            'cgst' => $cgst,
+            'sgst' => $sgst
         ];
     }
 
@@ -247,8 +254,6 @@ class InvoiceService implements InvoiceServiceContract
 
     private function monthlyReportInvoices($filters)
     {
-        echo $this->currencyService()->getCurrentRatesInINR();
-        die();
         $query = Invoice::query();
 
         return $this
@@ -260,18 +265,18 @@ class InvoiceService implements InvoiceServiceContract
     {
         return $invoices->map(function ($invoice) {
             return [
-                'Date' =>   $invoice->sent_on->toDateString(),
+                'Date' =>   $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Particular' => Client::select('*')->where('id', $invoice->client_id)->first()->name,
-                'Type' => 'India',
+                'Type' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 1) ? 'India' : 'Export for international invoice',
                 'INVOICE.' => $invoice->invoice_number,
                 'GST' => (float) str_replace(['$', '₹'], '', ($invoice)->first()->invoiceAmount()),
                 'INVOICE VALUE' => $invoice->invoiceAmount(),
                 'RATE' => $this->currencyService()->getCurrentRatesInINR(),
-                'RECEIVABLE AMOUNT' => $invoice->amount_paid,
+                'RECEIVABLE AMOUNT' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount(),
                 'TAXABLE AMOUNT' => $invoice->amount,
-                'IGST' => ($invoice->amount * 18) / 100,
-                'CGST' => ($invoice->amount * 9) / 100,
-                'SGST' => ($invoice->amount * 9) / 100,
+                'IGST' => ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100,
+                'CGST' => ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100,
+                'SGST' => ($invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100,
                 'HSN CODE' => '',
             ];
         });
