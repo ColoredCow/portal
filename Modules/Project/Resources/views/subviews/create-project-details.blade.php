@@ -52,5 +52,5 @@
 <br>
 </div>
 <div class="card-footer">
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
 </div>

@@ -63,27 +63,24 @@
 
 </div>
 <div class="card-footer">
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
 </div>
-
-
 
 @section('js_scripts')
 <script>
-new Vue({
-    el:'#create_prospect_details_form',
+    new Vue({
+        el:'#create_prospect_details_form',
 
-    data() {
-        return {
-            comingFrom: 'marketing'
+        data() {
+            return {
+                comingFrom: 'marketing'
+            }
+        },
+
+        mounted() {
+        
         }
-    },
-
-    mounted() {
-     
-    }
-});
-
+    });
 </script>
 
 @endsection
