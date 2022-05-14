@@ -115,6 +115,16 @@ $(document).ready(() => {
 		datePickerChart();
 		barChart();
 	}
+
+	$("#save-btn-action").on("click", function() {
+		this.disabled = true;
+		if (!this.form.checkValidity()) {
+			this.disabled = false;
+			this.form.reportValidity();
+			return;
+		}
+		this.form.submit();
+	});
 });
   
 if (document.getElementById("page_hr_applicant_edit")) {

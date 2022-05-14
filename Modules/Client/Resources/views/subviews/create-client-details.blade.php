@@ -59,17 +59,5 @@
 
 </div>
 <div class="card-footer">
-    <button type="button" class="btn btn-primary" onclick="saveClient(this)">Create</button>
+    <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
 </div>
-
-<script>
-    const saveClient = (button) => {
-        button.disabled = true;
-        if (!button.form.checkValidity()) {
-            button.disabled = false;
-            button.form.reportValidity();
-            return;
-        }
-        button.form.submit();
-    }
-</script>
