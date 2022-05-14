@@ -4,18 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source Sans Pro:400,500,600,700,800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <!-- Styles -->
         <style>
         html,
         body {
             color: #012840;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
+            font-family: 'Source Sans Pro', 'sans-serif';
+            font-weight: normal;
             margin: 0;
             padding: 0;
             height: 100%;
             background-size: 100% 100%;
+            font-size: 12px;
         }
 
         .full-height {
@@ -59,30 +61,6 @@
             letter-spacing: .1rem;
             text-decoration: none;
             text-transform: uppercase;
-        }
-
-        .font-bold {
-            font-weight: bold
-        }
-
-        .font-montserrat-regular {
-            font-family: 'Montserrat';
-            font-weight: 400;
-        }
-
-        .font-montserrat-medium {
-            font-family: 'Montserrat';
-            font-weight: 500;
-        }
-
-        .font-montserrat-semibold {
-            font-family: 'Montserrat';
-            font-weight: 600;
-        }
-
-        .font-montserrat-bold {
-            font-family: 'Montserrat';
-            font-weight: 700;
         }
 
         .fz-20 {
@@ -227,21 +205,26 @@
             border-collapse: separate;
             border-spacing: 0 1em;
         }
+        .fw-bold {
+            font-weight: bold !important;
+        }
+        tr, td{
+            padding: 0 !important;
+            margin: 0 !important;
+        }
     </style>
     </head>
     <body>
         <header>
             <div style="width:100%;">
+                <h2 style="text-align: center; font-weight: bold;">INVOICE</h2>
                 <table>
-                    <tr>
-                        <td align="center" class="fz-20">INVOICE</td>
-                    </tr>
                     <tbody>
                         <tr valign="top">
                             <td>
                                 <img src="{{public_path() . '/images/coloredcow.png'}}" alt="" height="50" width="200">
                             </td>
-                            <td>
+                            <td style="color: grey;" align="right">
                                 <p>F-61, Suncity, Sector - 54</p>
                                 <p>Gurgaon, Haryana, 122003, India</p>
                                 <p>finance@coloredcow.com</p>
@@ -254,82 +237,152 @@
                         </tr>
                         <tr style="width:100%;">
                             <td align="left">
-                                <p>Bill To</p>
-                                <p>Rakhee Gupta</p>
+                                <p class="fw-bold">Bill To</p>
+                                <p>{{$keyAccountManager->name}}</p>
                                 <p>Confederation of Indian Industry</p>
                                 <p>rakhee.gupta@cii.in</p>
+                                <p>The Mantosh Sondhi Centre</p>
+                                <p>Institutional Area, Lodi Road, Delhi -110003</p>
+                                <p>GSTIN : 07AAATC0188R1ZB</p>
                             </td>
-                            <td align="right">
-                                <p>Details</p>
-                                <p>Invoice Number :IN033-016-000002</p>
-                                <p>Issue Date :April 2, 2022</p>
-                                <p>Due Date :April 12, 2022</p>
+                            <td>
+                                <p class="fw-bold">Details</p>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <p>Invoice Number :</p>
+                                            <p>Issue Date :</p>
+                                            <p>Due Date :</p>
+                                        </td>
+                                        <td align="right">
+                                            <p>IN033-016-000002</p>
+                                            <p>April 2, 2022</p>
+                                            <p>April 12, 2022</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
-                        <tr>
-                            <td align="left">
+                        <tr valign="top">
+                            <td align="left" class="fw-bold">
                                 <p>Client Name: Confederation of Indian Industry</p>
                                 <p>Client ID: 033</p>
                                 <p>Project Name: 17th Africa Conclave</p>
                                 <p>Project ID: 016</p>
                                 <p>Category : Web Application Development</p>
-                            </td align="right">
-                            <td>Total Amount Due: ₹53,100.00</td>
+                            </td>
+                            <td align="right">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <p>Total Amount Due :</p>
+                                        </td>
+                                        <td align="right">
+                                            <p><strong>₹53,100.00</strong></p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                <table>
-                    <thead>
-                        <th>Description</th>
-                        <th>Cost</th>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Description</th>
+                            <th scope="col">Cost</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>17th Africa Conclave website development (50% Advance)</td>
                             <td>₹45,000.00</td>
                         </tr>
-                        <tr>
-                           <td align="right">
-                               <p>Total ₹45,000.00</p>
-                               <p>GST in INR 18.00% ₹8,100.00</p>
-                               <p>Current Payable ₹53,100.00</p>
-                               <p>Amount Paid ₹0.00</p>
-                               <p>Current Amount Due in INR ₹53,100.00</p>
-                           </td>
-                        </tr>
                     </tbody>
                 </table>
-                <table>
-                    <thead>
-                        <th>Transaction Details</th>
-                    </thead>
-                    <tbody>
+                <div>
+                    <table class="table" style="margin-left: auto;width:50%;">
                         <tr>
-                            <td>
-                                <p>Transaction Method :Bank Transfer</p>
-                                <p>Bank Name :Citibank N.A. Delhi, India</p>
-                                <p>Swift Code :CITIINBX</p>
-                                <p>Bank/IFCI Code :CITI0000002</p>
-                                <p>Account Number :0077793224</p>
-                                <p>A/C Holder Name :ColoredCow Consulting Pvt. Ltd.</p>
-                                <p>Phone :91-9818571035</p>
-                            </td>
+                            <td>Total</td>
+                            <td></td>
+                            <td>₹45,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>GST in INR</td>
+                            <td>18.00%</td>
+                            <td>₹8,100.00</td>
+                        </tr>
+                        <tr>
+                            <td>Current Payable</td>
+                            <td></td>
+                            <td>₹53,100.00</td>
+                        </tr>
+                        <tr>
+                            <td>Amount Paid</td>
+                            <td></td>
+                            <td>₹0.00</td>
                         </tr>
                         <tr>
                             <td>
-                                Thank you for your business. It’s a pleasure to work with you on your project.
+                                <strong>Current Amount Due in INR</strong>
                             </td>
+                            <td></td>
+                            <td><strong>₹53,100.00</strong></td>
                         </tr>
-                        <tr>
-                            <td>
-                                <p>Sincerely,</p>
-                                <p>ColoredCow Consulting Pvt. Ltd.</p>
-                                <p>F-61, Suncity, Sector - 54 </p>
-                                <p>Gurgaon, Haryana, 122003, India</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    </table>
+                </div>
+                <div>
+                    <table class="table table-borderless" style="width: 50%; margin-right: auto;">
+                        <thead>
+                            <tr>
+                                <th scope="col">Transaction Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="width: 40%;">Transaction Method:</td>
+                                <td>Bank Transfer</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%;">Bank Name:</td>
+                                <td>Citibank N.A. Delhi, India</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%;">Swift Code:</td>
+                                <td>CITIINBX</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%;">Bank/IFCI Code:</td>
+                                <td>CITI0000002</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%;">Account Number:</td>
+                                <td>0077793224</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%;">A/C Holder Name:</td>
+                                <td>ColoredCow Consulting Pvt. Ltd.</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%;">Phone:</td>
+                                <td>91-9818571035</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    Thank you for your business. It’s a pleasure to work with you on your project.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Sincerely,</p>
+                                    <p>ColoredCow Consulting Pvt. Ltd.</p>
+                                    <p>F-61, Suncity, Sector - 54 </p>
+                                    <p>Gurgaon, Haryana, 122003, India</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </header>
     </body>

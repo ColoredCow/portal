@@ -142,11 +142,15 @@ class InvoiceController extends Controller
         return redirect(route('invoice.index'));
     }
 
-    public function previewInvoice()
+    public function previewInvoice(Invoice $invoice)
     {
+        $client = $invoice->client()->first();
+        $keyAccountManager = $client->keyAccountManager()->first();
         $pdf = App::make('snappy.pdf.wrapper');
         $html = view('invoice::render.render', [
-            'data' => 'hey',
+            'invoice' => $invoice,
+            'client' => $client,
+            'keyAccountManager' => $keyAccountManager,
         ]);
         $pdf->loadHTML($html);
 
