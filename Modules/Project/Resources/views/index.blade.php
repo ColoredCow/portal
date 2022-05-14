@@ -18,9 +18,9 @@
                 <input type="hidden" name="status" value="{{ request()->input('status', 'active') }}">
                 <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                     onchange="this.form.submit()">
-                    <option value="my-projects" {{ request()->get('projects') == 'all-projects' ? '' : 'selected' }}>
+                    <option value="my-projects" {{ request()->get('projects') == 'my-projects' ? 'selected' : '' }}>
                         {{ __('My Projects') }} </option>
-                    <option value="all-projects" {{ request()->get('projects') == 'all-projects' ? 'selected' : '' }}>
+                    <option value="all-projects" {{ (request()->get('projects') == 'all-projects' || !request()->has('projects')) ? 'selected' : '' }}>
                         {{ __('All Projects') }} </option>
                 </select>
             </div>
@@ -67,7 +67,8 @@
                             @endforeach 
                         </td>
                         <td>
-                            <a href="{{route('project.effort-tracking', $project )}}">FTE</a>
+                            <a class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 c-pointer fa fa-external-link-square"></i></a>
+                            <a class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->fte }}</a>
                         </td>
                     </tr>
                 @empty

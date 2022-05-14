@@ -9,28 +9,37 @@
         </span><span class="mr-3 w-26 h-15 w-xl-10 h-xl-10">Back</span>
     </a>
     <br>
-    <h4 class="c-pointer d-inline-block"  v-on:click="counter += 1">{{ $project->name }} ({{ $project->client_project_id }})</h4>
-    <a id="view_effort_sheet_badge" target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
+    <h4 class="c-pointer d-inline-block"  v-on:click="counter += 1">{{ $project->name }}</h4>
+    <a target="_self" class="badge badge-primary p-1 ml-2 text-light pl-3 pr-3 " target="blank" href="{{route('project.effort-tracking', $project )}}">{{ _('FTE') }}</a>
     <br>
-    <div class="text-danger d-none" id="edit-project-errors">
-        <div>Error in the Input:</div>
-        <ul id="edit-project-error-list"></ul>
-    </div>
-    <div>
+    <div class="mt-2">
+        <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" data-bs-toggle="pill" data-bs-target="#project-details" type="button" role="tab" aria-selected="true">Project details</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-team-members" type="button" role="tab" aria-selected="false">Project team members</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-repository" type="button" role="tab" aria-selected="false">Project repositories</a>
+            </li>
+        </ul>
         @include('status', ['errors' => $errors->all()])
-        <div class="mb-5">
-            @include('project::subviews.edit-project-details')
-        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade show active mb-5" id="project-details" role="tabpanel">
+                @include('project::subviews.edit-project-details')
+            </div>
 
-        <div class="mb-5">
-            @include('project::subviews.edit-project-team-members')
-        </div>
+            <div class="tab-pane fade mb-5" id="project-team-members" role="tabpanel">
+                @include('project::subviews.edit-project-team-members')
+            </div>
 
-         <div class="mb-5">
-            @include('project::subviews.edit-project-repository')
+            <div class="tab-pane fade mb-5" id="project-repository" role="tabpanel">
+                @include('project::subviews.edit-project-repository')
+            </div>
         </div>
-
     </div>
+    @include('project::subviews.modal-success')
 </div>
 
 @endsection
@@ -69,7 +78,9 @@ new Vue({
         },
 
         updateProjectForm: async function(formId) {
+            $('.save-btn').attr('disabled', true);
             let formData = new FormData(document.getElementById(formId));
+            $('.save-btn').removeClass('btn-primary').addClass('btn-dark');
             await axios.post('{{ route('project.update', $project) }}', formData)
             .then((response) => {
                 $('#edit-project-errors').addClass('d-none')
@@ -80,15 +91,19 @@ new Vue({
                 } else {
                     $('#view_effort_sheet_badge').addClass('d-none')
                 }
-                alert('Project information updated successfully');
+                $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
+                $('.save-btn').attr('disabled', false);
+                $('#modal-success').modal('show');
             })
             .catch((error) => {
+                $('#project-details-update-message').addClass('d-none')
                 let errors = error.response.data.errors;
                 $('#edit-project-error-list').empty()
                 for (error in errors) {
                     $('#edit-project-error-list').append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
                 }
                 $('#edit-project-errors').removeClass('d-none')
+                $('#modal-success').modal('show');
             })
         },
 
