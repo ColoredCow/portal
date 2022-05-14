@@ -43,8 +43,8 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>Name</th>
-                    <th>Client</th>
+                    <th class="w-33p">Name</th>
+                    <th class="w-33p">Client</th>
                     <th>Team Members</th>
                     <th>FTE</th>
                 </tr>
@@ -54,11 +54,11 @@
                 @forelse($projects as $project)
                     <tr>
                         @can('projects.update')
-                        <td> <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a> </td>
+                        <td class="w-33p"> <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a> </td>
                         @else
-                        <td> {{ $project->name }} </td>
+                        <td class="w-33p"> {{ $project->name }} </td>
                         @endcan
-                        <td>{{ $project->client->name }}</td>
+                        <td class="w-33p">{{ $project->client->name }}</td>
                         <td>
                             @foreach($project->teamMembers ?:[] as $teamMember)
                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}">
