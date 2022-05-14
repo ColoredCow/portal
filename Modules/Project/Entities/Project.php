@@ -71,14 +71,14 @@ class Project extends Model
             $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
         }
 
-        $totalWorkingDaysInMonth = count($this->getWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
-        $daysTillToday = count($this->getWorkingDays(now()->startOfMonth(), $currentDate));
+        $totalWorkingDaysInMonth = count($this->getWorkingDaysList(now()->startOfMonth(), now()->endOfMonth()));
+        $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));
         $currentExpectedEffort = ($monthlyEstimatedHours / $totalWorkingDaysInMonth) * $daysTillToday;
 
         return $monthlyEstimatedHours ? round($totalEffort / $currentExpectedEffort, 2) : 0;
     }
 
-    public function getWorkingDays($startDate, $endDate)
+    public function getWorkingDaysList($startDate, $endDate)
     {
         $period = CarbonPeriod::create($startDate, $endDate);
         $dates = [];

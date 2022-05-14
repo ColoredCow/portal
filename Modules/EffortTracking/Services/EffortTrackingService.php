@@ -11,10 +11,9 @@ class EffortTrackingService
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
-        $updateDateCountAfterCount = '18:00:00';
         $currentDate = Carbon::now(config('constants.timezone.indian'));
 
-        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterCount) {
+        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
         }
 
@@ -123,10 +122,9 @@ class EffortTrackingService
                 }
             }
 
-            $updateDateCountAfterCount = '18:00:00';
             $currentDate = Carbon::now(config('constants.timezone.indian'));
 
-            if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterCount) {
+            if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
                 $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
             }
 
