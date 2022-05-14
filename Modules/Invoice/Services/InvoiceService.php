@@ -222,6 +222,12 @@ class InvoiceService implements InvoiceServiceContract
 
     public function invoiceDetails()
     {
+        $igst = [];
+        $cgst = [];
+        $sgst = [];
+        $clients = [];
+        $clientAddress = [];
+        $totalReceivableAmount = [];
         $invoices = Invoice::all();
         foreach ($invoices as $invoice) :
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
