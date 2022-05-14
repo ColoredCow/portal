@@ -14,8 +14,10 @@ class HrApplicationsTableSeeder extends Seeder
      */
     public function run()
     {
-        Application::factory()
+        if (! app()->environment('production')) {
+            Application::factory()
             ->count(2)
             ->create();
+        }
     }
 }

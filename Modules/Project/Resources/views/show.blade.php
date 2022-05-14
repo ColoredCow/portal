@@ -13,20 +13,22 @@
         </div>
         <div id="project_detail_form" class="collapse show">
             <div class="card-body">
-                <div class="form-row ">
-                    <div class="form-group col-md-6 pl-4 mt-2">
-                        <h4 class="d-inline-block ">
-                            <label for="name" class="font-weight-bold">Project Contract:</label>
-                        </h4>
-                        <div class="row gy-5">
-                            <div class="col-xs-6 py-2">
-                                <div class="text-capitalize d-inline ml-2 fz-lg-20"> {{$contractFileName}} </div>
-                                <a href="{{route('pdf.show', ['contractFileName' => $contractFileName])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
+                @if($contractFilePath)
+                    <div class="form-row ">
+                        <div class="form-group col-md-6 pl-4 mt-2">
+                            <h4 class="d-inline-block ">
+                                <label for="name" class="font-weight-bold">Project Contract:</label>
+                            </h4>
+                            <div class="row">
+                                <div class="col-xs-6 py-2">
+                                    <div class="text-capitalize d-inline ml-2 fz-lg-20"> {{pathinfo($contractFilePath)['filename']}} </div>
+                                    <a href="{{route('pdf.show', ['contract' => $contract])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
+                                </div>
                             </div>
-                        </div>     
+                        </div>
                     </div>
-                </div>
-                <br>
+                    <br>
+                @endif
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
                         <h4 class="d-inline-block">
@@ -38,8 +40,8 @@
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Current FTE:</label>
                         </h4>
-                        <span class="text-danger fz-lg-22">{{ $project->Fte }}</span>
-                        <a id="view_effort_sheet_badge" target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded">{{ _('Check FTE') }}</a>
+                        <span class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->fte }}</span>
+                        <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
                 </div>
                 <br>
@@ -76,12 +78,17 @@
                         <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
-                        <div class="row gy-5">
-                            @foreach($project->teamMembers ?:[] as $teamMember)
-                            <div class="col-xs-6 py-2">
-                                <div class="text-capitalize pl-8 pr-5 fz-lg-22">{{$teamMember->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}</div>
+                        <div>
+                            <div class="d-flex flex-wrap py-2">
+                                @foreach($project->teamMembers ?:[] as $teamMember)
+                                    <div class="text-capitalize w-33p fz-lg-22 my-2">
+                                        <span>
+                                            <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
+                                        </span>
+                                        {{$teamMember->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}
+                                    </div>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
                     </div>
                 </div>

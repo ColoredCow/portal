@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Client\Entities\Client;
-use Modules\Client\Entities\ClientAddress;
 use Modules\Invoice\Entities\Invoice;
 use Mail;
 use Modules\Invoice\Emails\SendPendingInvoiceMail;
@@ -48,13 +47,7 @@ class InvoiceController extends Controller
      */
     public function invoiceDetails()
     {
-        $invoices = Invoice::all();
-        foreach ($invoices as $invoice) :
-            $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
-        $clientAddress[] = ClientAddress::select('*')->where('id', $invoice->client_id)->first();
-        endforeach;
-
-        return view('invoice::invoice-details-listing', compact('invoices', 'clients', 'clientAddress'));
+        return view('invoice::invoice-details-listing', $this->service->invoiceDetails());
     }
 
     public function monthlyReportExport(Request $request)

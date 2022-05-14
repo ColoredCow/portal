@@ -89,7 +89,7 @@ class SyncEffortsheet extends Command
                     continue;
                 }
 
-                $projectTeamMember = $portalUser->projectTeamMembers()->where('project_id', $project->id)->first();
+                $projectTeamMember = $portalUser->projectTeamMembers()->active()->where('project_id', $project->id)->first();
 
                 if (! $projectTeamMember) {
                     continue;

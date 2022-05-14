@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Invoice\Exports\MonthlyReportExport;
 use Modules\Client\Contracts\ClientServiceContract;
+use Modules\Client\Entities\ClientAddress;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 use Modules\Client\Entities\Client;
-use Modules\Client\Entities\ClientAddress;
+use Modules\Project\Entities\Project;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -41,11 +42,11 @@ class InvoiceService implements InvoiceServiceContract
 
         foreach ($invoices as $invoice) {
             if ($invoice->isAmountInINR()) {
-                $totalAmount += $invoice->amount;
+                $totalAmount += (int) $invoice->amount;
                 continue;
             }
 
-            $invoiceAmount = $currentRates * $invoice->amount;
+            $invoiceAmount = $currentRates * (int) $invoice->amount;
             $totalAmount += $invoiceAmount;
         }
 
@@ -74,6 +75,10 @@ class InvoiceService implements InvoiceServiceContract
         $data['receivable_date'] = $data['due_on'];
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
+        // Todo: We need to update the logic to set invoice numbers. It should get
+        // generated using a combination of invoice id, project id, and client id.
+        // We can also move this to observer if this function does not have lot of code.
+        $this->setInvoiceNumber($invoice, $data['sent_on']);
 
         return $invoice;
     }
@@ -84,6 +89,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice->update($data);
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
+            $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
 
         return $invoice;
@@ -110,7 +116,11 @@ class InvoiceService implements InvoiceServiceContract
 
     public function saveInvoiceFile($invoice, $file)
     {
-        $folder = '/invoice/' . date('Y') . '/' . date('m');
+        $year = $invoice->sent_on->format('Y');
+        $month = $invoice->sent_on->format('m');
+
+        $folder = '/invoice/' . $year . '/' . $month;
+
         $fileName = $file->getClientOriginalName();
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
         $invoice->update(['file_path' => $file]);
@@ -144,6 +154,13 @@ class InvoiceService implements InvoiceServiceContract
     public function dashboard()
     {
         return Invoice::status('sent')->get();
+    }
+
+    private function setInvoiceNumber($invoice, $sent_date)
+    {
+        $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id, $sent_date);
+
+        return $invoice->save();
     }
 
     private function applyFilters($query, $filters)
@@ -278,7 +295,7 @@ class InvoiceService implements InvoiceServiceContract
                 'GST' => $invoice->gst,
                 'Amount (+GST)' => (float) str_replace(['$', '₹'], '', $invoice->invoiceAmount()),
                 'Received amount' => $invoice->amount_paid,
-                'TDS' => number_format($invoice->tds, 2),
+                'TDS' => number_format((float) $invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)
@@ -315,11 +332,22 @@ class InvoiceService implements InvoiceServiceContract
                 'Bank Charges' => $invoice->bank_charges,
                 'Conversion Rate Diff' => $invoice->conversion_rate_diff,
                 'Conversion Rate' => $invoice->conversion_rate,
-                'TDS' => number_format($invoice->tds, 2),
+                'TDS' => number_format((float) $invoice->tds, 2),
                 'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Status' => Str::studly($invoice->status)
             ];
         });
+    }
+
+    public function getInvoiceNumber($client_id, $project_id, $sent_date)
+    {
+        $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
+        $client_project_id = Project::find($project_id)->client_project_id;
+        $client_type = ($country_id == 1) ? 'IN' : 'EX';
+        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
+        $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . date('m', strtotime($sent_date)) . date('y', strtotime($sent_date));
+
+        return $invoice_number;
     }
 }

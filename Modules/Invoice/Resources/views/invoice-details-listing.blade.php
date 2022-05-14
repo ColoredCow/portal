@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-between mb-2">
         <h4 class="mb-1 pb-1">Invoice Details</h4>
         <span>
-            <a href="{{ route('invoice.monthly-report-export', request()->all()) }}" class="btn btn-info text-white"> Export To Excel</a>
+            <a href="{{ route('invoice.monthly-report-export', request()->all()) }}" class="btn btn-info text-white">Export To Excel</a>
         </span>
     </div>
     <br>
@@ -36,37 +36,22 @@
             </thead>
 
             <tbody>
-                @foreach($invoices as $key => $invoice) <!-- 0, 1, 2 3 -->
+                @foreach($invoices as $key => $invoice)
                     <tr>
-                        <td>
-                            {{ $loop->iteration }} 
-                            <td>{{ $invoice->sent_on->toDateString() }}</td>
-                                <td>{{ $clients[$key]->name }}</td>
-                                @if(isset($clientAddress[$key]->type))
-                                    <td>{{ $clientAddress[$key]->type }}</td>
-                                @else
-                                    <td></td>
-                                @endif
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                @if($invoice->currency == "USD")
-                                <td>{{ config('invoice.invoice-details.igst') }}</td>
-                                @else
-                                <td></td>
-                                @endif
-                                @if($invoice->currency == "INR")
-                                <td>{{ config('invoice.invoice-details.cgst') }}</td>
-                                <td>{{ config('invoice.invoice-details.sgst') }}</td>
-                                @else
-                            <td></td>
-                            <td></td>
-                            @endif
-                            <td></td>
-                        </td>
+                        <td>{{ $loop->iteration }}</td>
+						<td>{{ $invoice->sent_on->toDateString() }}</td>
+						<td>{{ $clients[$key]->name }}</td>
+						<td>{{ ($clientAddress[$key]->country_id == 1 ) ? 'India' : 'Export for international invoice'}}</td>
+						<td>{{ $invoice->invoice_number }}</td>
+						<td>{{ ($clientAddress[$key]->country_id == 1 ) ? !empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice' }}</td>
+						<td>{{ $invoice->invoiceAmount() }}</td>
+						<td>{{ $currentRates }}</td>
+						<td>{{ $totalReceivableAmount }}</td>
+						<td>{{ $invoice->amount }}</td>
+						<td>{{ ($invoice->currency == "USD") ? ( $invoice->amount * (int) config('invoice.invoice-details.igst') ) / 100 : '' }}</td>
+						<td>{{ ($invoice->currency == "INR") ? ( $invoice->amount * (int) config('invoice.invoice-details.cgst') ) / 100 : '' }}</td>
+						<td>{{ ($invoice->currency == "INR") ? ( $invoice->amount * (int) config('invoice.invoice-details.sgst') ) / 100 : '' }}</td>
+						<td>{{-- HSN CODE --}}</td>
                     </tr>
                 @endforeach
             </tbody>

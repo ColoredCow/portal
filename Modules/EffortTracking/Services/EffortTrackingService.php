@@ -11,14 +11,17 @@ class EffortTrackingService
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
-        $teamMembersEffort = [];
-        $users = [];
+        $currentDate = Carbon::now(config('constants.timezone.indian'));
+
+        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
+        }
+
         $totalEffort = $this->getTotalEffort($teamMembersDetails);
-        $workingDays = $this->getWorkingDays(now()->startOfMonth(), now());
-        $startDate = now()->startOfMonth();
-        $endDate = now()->endOfMonth();
+        $workingDays = $this->getWorkingDays(now()->startOfMonth(), $currentDate);
+        $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
+        $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
-        $expectedHours = $this->getExpectedHours(count($workingDays));
 
         return [
             'project' => $project,
@@ -54,17 +57,22 @@ class EffortTrackingService
      */
     public function getFTE($currentHours, $expectedHours)
     {
+        if ($expectedHours == 0) {
+            return 0;
+        }
+
         return round($currentHours / $expectedHours, 2);
     }
 
     /**
      * Get expected hours.
      * @param  int $numberOfDays Number of days.
+     * @param float $expectedDailyHours Expected daily hours.
      * @return int|float         Expected hours.
      */
-    public function getExpectedHours($numberOfDays)
+    public function getExpectedHours($expectedDailyHours, $numberOfDays)
     {
-        return config('efforttracking.minimum_expected_hours') * $numberOfDays;
+        return $expectedDailyHours * $numberOfDays;
     }
 
     /**
@@ -101,6 +109,11 @@ class EffortTrackingService
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
+
+            if (! $userDetails) {
+                continue;
+            }
+
             if ($efforts->isNotEmpty()) {
                 foreach ($efforts as $effort) {
                     $effortAddedOn = new Carbon($effort->added_on);
@@ -112,13 +125,22 @@ class EffortTrackingService
                     }
                 }
             }
-            $total_effort_in_effortsheet = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id])['total_effort_in_effortsheet'] : 0;
+
+            $currentDate = Carbon::now(config('constants.timezone.indian'));
+
+            if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+                $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
+            }
+
+            $teamMembersEffortUserDetails = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id]) : [];
+            $totalEffortInEffortsheet = array_key_exists('total_effort_in_effortsheet', $teamMembersEffortUserDetails) ? $teamMembersEffortUserDetails['total_effort_in_effortsheet'] : 0;
+            $expectedEffort = $this->getExpectedHours($teamMember->daily_expected_effort, count($this->getWorkingDays(now()->startOfMonth(), $currentDate)));
             $users[] = [
                 'id' => $userDetails->id,
                 'name' => $userDetails->name,
-                'actual_effort' => $total_effort_in_effortsheet,
-                'expected_effort' => $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now()))),
-                'FTE' => $this->getFTE($total_effort_in_effortsheet, $this->getExpectedHours(count($this->getWorkingDays(now()->startOfMonth(), now())))),
+                'actual_effort' => $totalEffortInEffortsheet,
+                'expected_effort' => $expectedEffort,
+                'FTE' => $this->getFTE($totalEffortInEffortsheet, $expectedEffort),
             ];
         }
 

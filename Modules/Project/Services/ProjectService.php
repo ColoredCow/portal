@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Services;
 
+use Carbon\Carbon;
 use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
@@ -9,17 +10,28 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Storage;
+use Modules\Project\Entities\ProjectTeamMember;
 
 class ProjectService implements ProjectServiceContract
 {
-    public function index()
+    public function index(array $data = [])
     {
-        if (request()->get('projects') == 'all-projects') {
-            return Project::where('status', request()->input('status', 'active'))
-                ->get();
+        $filters = [
+            'status' => $data['status'] ?? 'active',
+            'name' => $data['name'] ?? null,
+        ];
+        $data['projects'] = $data['projects'] ?? 'all-projects';
+
+        if ($data['projects'] == 'all-projects') {
+            return Project::applyFilter($filters)
+                ->get()->sortBy(function ($query) {
+                    return $query->client->name;
+                });
         } else {
-            return auth()->user()->projects()->where('status', request()->input('status', 'active'))
-                ->get();
+            return auth()->user()->projects()->applyFilter($filters)
+                ->get()->sortBy(function ($query) {
+                    return $query->client->name;
+                });
         }
     }
 
@@ -43,7 +55,9 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
 
-        if ($data['contract_file']) {
+        $project->client->update(['status' => 'active']);
+
+        if ($data['contract_file'] ?? null) {
             $file = $data['contract_file'];
             $folder = '/contract/' . date('Y') . '/' . date('m');
             $fileName = $file->getClientOriginalName();
@@ -101,7 +115,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectDetails($data, $project)
     {
-        return $project->update([
+        $isProjectUpdated = $project->update([
             'name' => $data['name'],
             'client_id' => $data['client_id'],
             'status' => $data['status'],
@@ -112,18 +126,45 @@ class ProjectService implements ProjectServiceContract
             'end_date' => date('Y-m-d'),
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
+
+        if ($data['status'] == 'active') {
+            $project->client->update(['status' => 'active']);
+        } elseif (! $project->client->projects()->where('status', 'active')->exists()) {
+            $project->client->update(['status' => 'inactive']);
+        }
+
+        return $isProjectUpdated;
     }
 
     private function updateProjectTeamMembers($data, $project)
     {
-        $projectTeamMembers = $data['project_team_member'] ?? [];
-        $teamMembers = [];
-
-        foreach ($projectTeamMembers as $projectTeamMember) {
-            $teamMembers[$projectTeamMember['team_member_id']] = ['designation' => $projectTeamMember['designation']];
+        $projectTeamMembers = $project->getTeamMembers;
+        $teamMembersData = $data['project_team_member'] ?? [];
+        foreach ($projectTeamMembers as $member) {
+            $flag = false;
+            foreach ($teamMembersData as $teamMemberData) {
+                if ($member->id == $teamMemberData['project_team_member_id']) {
+                    $flag = true;
+                    $tempArray = $teamMemberData;
+                    unset($tempArray['project_team_member_id']);
+                    $member->update($tempArray);
+                }
+            }
+            if (! $flag) {
+                $member->update(['ended_on' => Carbon::now()]);
+            }
         }
 
-        return $project->teamMembers()->sync($teamMembers);
+        foreach ($teamMembersData as $teamMemberData) {
+            if ($teamMemberData['project_team_member_id'] == null) {
+                ProjectTeamMember::create([
+                    'project_id' => $project->id,
+                    'team_member_id' => $teamMemberData['team_member_id'],
+                    'designation' => $teamMemberData['designation'],
+                    'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
+                ]);
+            }
+        }
     }
 
     private function updateProjectRepositories($data, $project)

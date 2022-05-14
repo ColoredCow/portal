@@ -10,10 +10,11 @@
                 </div>
                 <div class="form-group col-md-5 offset-md-1">
                     <label for="status" class="field-required">Status</label>
+                    <span class="ml-2" data-toggle="tooltip" data-placement="right" title="If mark inactive then all the projects associated to the client will be marked as inactive."><i class="fa fa-question-circle"></i>&nbsp;</span>
                     <select name="status" id="status" class="form-control" required="required">
                         <option value="">Select status</option>
                         @foreach (config('client.status') as $status => $label)
-                        <option {{ ($status == $client->status) ? 'selected=selected' : '' }} value="{{ $status }}">
+                        <option {{ ($status == $client->status) ? 'selected=selected' : '' }} value="{{ $status }}" {{ $label == config('client.status.active') ? 'disabled' : '' }}>
                             {{ $label }}</option>
                         @endforeach
                     </select>
