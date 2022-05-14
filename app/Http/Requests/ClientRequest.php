@@ -25,11 +25,7 @@ class ClientRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'emails' => 'nullable|string',
-            'phone' => 'nullable|string',
-            'country' => 'nullable|string',
             'is_active' => 'nullable|boolean',
-            'address' => 'nullable|string',
             'gst_num' => 'nullable|string',
         ];
     }
@@ -43,7 +39,6 @@ class ClientRequest extends FormRequest
     {
         return [
             'name.required' => 'Client name is required',
-            'email.email' => 'Client email should be a valid email address',
         ];
     }
 }
