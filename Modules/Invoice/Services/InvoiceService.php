@@ -274,7 +274,7 @@ class InvoiceService implements InvoiceServiceContract
                 'INVOICE VALUE' => $invoice->invoiceAmount(),
                 'RATE' => $this->currencyService()->getCurrentRatesInINR(),
                 'RECEIVABLE AMOUNT' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount(),
-                'TAXABLE AMOUNT' =>(ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 1) ? '₹' . $invoice->amount : $invoice->invoiceAmount(),
+                'TAXABLE AMOUNT' => '₹' . $invoice->amount,
                 'IGST' => ! (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100 : '',
                 'CGST' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100 : '',
                 'SGST' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100 : '',
