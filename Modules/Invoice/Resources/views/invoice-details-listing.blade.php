@@ -47,10 +47,10 @@
 						<td>{{ $invoice->invoiceAmount() }}</td>
 						<td>{{ $currentRates }}</td>
 						<td>{{ ($clientAddress[$key]->country_id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount() }}</td>
-						<td>{{ $invoice->amount }}</td>
-						<td>{{ ($clientAddress[$key]->country_id == 2) ? $igst[$key] : '' }}</td>
-						<td>{{ ($clientAddress[$key]->country_id == 1) ? $cgst[$key] : '' }}</td>
-						<td>{{ ($clientAddress[$key]->country_id == 1) ? $sgst[$key] : '' }}</td>
+						<td>{{ ($clientAddress[$key]->country_id == 1 ) ?  "₹" . $invoice->amount : $invoice->invoiceAmount() }}</td>
+						<td>{{ !($clientAddress[$key]->state == 'Haryana') ? $igst[$key] : '' }}</td>
+						<td>{{ ($clientAddress[$key]->state == 'Haryana') ? $cgst[$key] : '' }}</td>
+						<td>{{ ($clientAddress[$key]->state == 'Haryana') ? $sgst[$key] : '' }}</td>
 						<td>{{-- HSN CODE --}}</td>
                     </tr>
                 @endforeach
