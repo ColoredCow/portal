@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class MonthlyReportExport implements FromCollection, WithHeadings, ShouldAutoSize, WithTitle
+class MonthlyGSTTaxReportExport implements FromCollection, WithHeadings, ShouldAutoSize, WithTitle
 {
     protected $invoices;
 
@@ -35,6 +35,6 @@ class MonthlyReportExport implements FromCollection, WithHeadings, ShouldAutoSiz
 
     public function title(): string
     {
-        return 'Monthly invoice report';
+        return 'Monthly GST Tax Report';
     }
 }

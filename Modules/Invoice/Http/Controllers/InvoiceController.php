@@ -50,11 +50,11 @@ class InvoiceController extends Controller
         return view('invoice::invoice-details-listing', $this->service->invoiceDetails());
     }
 
-    public function monthlyReportExport(Request $request)
+    public function monthlyGSTTaxReportExport(Request $request)
     {
         $filters = $request->all();
 
-        return $this->service->monthlyReportExport($filters);
+        return $this->service->monthlyGSTTaxReportExport($filters);
     }
 
     /**

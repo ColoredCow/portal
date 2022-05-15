@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-between mb-2">
         <h4 class="mb-1 pb-1">Invoice Details</h4>
         <span>
-            <a href="{{ route('invoice.monthly-report-export', request()->all()) }}" class="btn btn-info text-white">Export To Excel</a>
+            <a href="{{ route('invoice.monthly-tax-report-export', request()->all()) }}" class="btn btn-info text-white">Export To Excel</a>
         </span>
     </div>
     <br>
@@ -48,9 +48,9 @@
 						<td>{{ $currentRates }}</td>
 						<td>{{ ($clientAddress[$key]->country_id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount() }}</td>
 						<td>{{ $invoice->amount }}</td>
-						<td>{{ ($invoice->currency == "USD") ? $igst[$key] : '' }}</td>
-						<td>{{ ($invoice->currency == "INR") ? $cgst[$key] : '' }}</td>
-						<td>{{ ($invoice->currency == "INR") ? $sgst[$key] : '' }}</td>
+						<td>{{ ($clientAddress[$key]->country_id == 2) ? $igst[$key] : '' }}</td>
+						<td>{{ ($clientAddress[$key]->country_id == 1) ? $cgst[$key] : '' }}</td>
+						<td>{{ ($clientAddress[$key]->country_id == 1) ? $sgst[$key] : '' }}</td>
 						<td>{{-- HSN CODE --}}</td>
                     </tr>
                 @endforeach
