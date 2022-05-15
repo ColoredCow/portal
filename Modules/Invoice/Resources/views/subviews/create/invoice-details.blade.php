@@ -140,17 +140,7 @@
                         if (client.id == this.clientId) {
                             this.client = client;
                             this.currency = client.currency;
-                            this.projects = client.projects.sort((project1, project2) => {
-                                let projectName1 = project1.name.toLowerCase(), projectName2 = project2.name.toLowerCase();
-                                if (projectName1 < projectName2) {
-                                    return -1
-                                }
-                                if (projectName1 > projectName2) {
-                                    return 1
-                                }
-                                return 0
-                            });
-                            break;
+                            this.projects = _.orderBy(client.projects, 'name', 'asc');
                         }
                     }
 

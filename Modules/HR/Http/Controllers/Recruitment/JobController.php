@@ -63,15 +63,13 @@ class JobController extends Controller
      */
     public function store(JobRequest $request)
     {
-        $validated = $request->validated();
+		$validated = $request->validated();
 
         $opportunity = Job::create([
             'title' => $validated['title'],
             'domain' => $validated['domain'],
             'description' => $validated['description'] ?? null, // null needed for backward compatibility
             'type' => $validated['type'],
-            'posted_by' => $validated['by'] ?? null,
-            'link' => $validated['link'] ?? null,
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
         ]);
