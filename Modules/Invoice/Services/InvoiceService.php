@@ -270,7 +270,7 @@ class InvoiceService implements InvoiceServiceContract
                 'Particular' => $invoice->client->name,
                 'Type' => ($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice',
                 'INVOICE.' => $invoice->invoice_number,
-                'GST' => (float) str_replace(['$', '₹'], '', ($invoice)->first()->invoiceAmount()),
+                'GST' => ($invoice->client->country->id == 1) ? ! empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice',
                 'INVOICE VALUE' => $invoice->invoiceAmount(),
                 'RATE' => $this->currencyService()->getCurrentRatesInINR(),
                 'RECEIVABLE AMOUNT' => ($invoice->client->country->id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount(),
