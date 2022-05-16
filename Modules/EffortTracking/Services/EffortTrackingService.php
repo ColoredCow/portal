@@ -110,6 +110,10 @@ class EffortTrackingService
             $userDetails = $teamMember->getUserDetails;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
 
+            if (! $userDetails) {
+                continue;
+            }
+
             if ($efforts->isNotEmpty()) {
                 foreach ($efforts as $effort) {
                     $effortAddedOn = new Carbon($effort->added_on);

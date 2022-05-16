@@ -29,7 +29,6 @@ class ClientFactory extends Factory
             'updated_at' => now(),
             'is_channel_partner' => 0,
             'has_departments' => 0,
-            'address' => $this->faker->address,
         ];
     }
 }

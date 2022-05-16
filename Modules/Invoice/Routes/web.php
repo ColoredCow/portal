@@ -23,4 +23,6 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::post('/{invoiceId}/update', 'InvoiceController@update')->name('invoice.update');
     Route::delete('/{invoiceId}/delete', 'InvoiceController@destroy')->name('invoice.delete');
     Route::post('/{invoice}', 'InvoiceController@sendEmail')->name('invoice.sendEmail');
+    Route::get('/monthly-gst-report', 'InvoiceController@invoiceDetails')->name('invoice.details');
+    Route::get('/monthly-GST-Tax-report-export', 'InvoiceController@monthlyGSTTaxReportExport')->name('invoice.monthly-tax-report-export');
 });

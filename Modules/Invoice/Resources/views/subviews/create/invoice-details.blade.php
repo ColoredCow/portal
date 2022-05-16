@@ -140,8 +140,7 @@
                         if (client.id == this.clientId) {
                             this.client = client;
                             this.currency = client.currency;
-                            this.projects = _.orderBy(arrays, 'name', 'asc');
-                            break;
+                            this.projects = _.orderBy(client.projects, 'name', 'asc');
                         }
                     }
 
