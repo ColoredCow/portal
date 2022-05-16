@@ -6,7 +6,7 @@
     <br>
 
     <div class="d-flex justify-content-between mb-2">
-        <h4 class="mb-1 pb-1">Invoice Details</h4>
+        <h4 class="mb-1 pb-1">Monthly Gst Report</h4>
         <span>
             <a href="{{ route('invoice.monthly-tax-report-export', request()->all()) }}" class="btn btn-info text-white">Export To Excel</a>
         </span>
@@ -40,13 +40,13 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
 						<td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
-						<td>{{ $clients[$key]->name }}</td>
-						<td>{{ ($clientAddress[$key]->country_id == 1 ) ? 'India' : 'Export for international invoice'}}</td>
+						<td>{{ $invoice->client->name }}</td>
+						<td>{{ ($invoice->client->country->id == 1 ) ? 'India' : 'Export for international invoice'}}</td>
 						<td>{{ $invoice->invoice_number }}</td>
-						<td>{{ ($clientAddress[$key]->country_id == 1 ) ? !empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice' }}</td>
+						<td>{{ ($invoice->client->country->id == 1 ) ? !empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice' }}</td>
 						<td>{{ $invoice->invoiceAmount() }}</td>
 						<td>{{ $currentRates }}</td>
-						<td>{{ ($clientAddress[$key]->country_id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount() }}</td>
+						<td>{{ ($invoice->client->country->id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount() }}</td>
 						<td>{{ "₹" . $invoice->amount }}</td>
 						<td>{{ !($clientAddress[$key]->state == 'Haryana') ? $igst[$key] : '' }}</td>
 						<td>{{ ($clientAddress[$key]->state == 'Haryana') ? $cgst[$key] : '' }}</td>
