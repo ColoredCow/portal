@@ -1,8 +1,6 @@
 @extends('project::layouts.master')
 @section('content')
 <div class="container" id="vueContainer">
-    @include('client::menu_header')
-    <br>
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -11,7 +9,13 @@
             </button>
         </div>
     @endif
-    <div class="d-flex justify-content-between mb-2">
+    @can('clients.create')
+        <div class="d-none d-md-flex justify-content-between my-2">
+            @include('client::menu_header')
+            <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
+        </div>
+    @endcan
+    <div class="d-md-flex justify-content-between mt-5 mb-2">
         <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients ({{ $count }})</h4>
         <div>
             <form action="{{ route('client.index') }}" method="GET">
