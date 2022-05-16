@@ -10,6 +10,8 @@
 </div>
 @endif
 <div class="container" id="vueContainer">
+    @include('client::menu_header')
+    <br>
     @can('clients.create')
     <div class="d-none d-md-flex justify-content-between my-2">
         @include('client::menu_header')
