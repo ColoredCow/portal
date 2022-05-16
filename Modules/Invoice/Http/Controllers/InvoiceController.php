@@ -43,6 +43,21 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Show the.
+     */
+    public function invoiceDetails()
+    {
+        return view('invoice::invoice-details-listing', $this->service->invoiceDetails());
+    }
+
+    public function monthlyGSTTaxReportExport(Request $request)
+    {
+        $filters = $request->all();
+
+        return $this->service->monthlyGSTTaxReportExport($filters);
+    }
+
+    /**
      * Store a newly created resource in storage.
      * @param Request $request
      */
