@@ -9,12 +9,12 @@
             </button>
         </div>
     @endif
-    @can('clients.create')
-        <div class="d-none d-md-flex justify-content-between my-2">
-            @include('client::menu_header')
+    <div class="d-none d-md-flex justify-content-between my-2">
+        @include('client::menu_header')
+        @can('clients.create')
             <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
-        </div>
-    @endcan
+        @endcan
+    </div>
     <div class="d-md-flex justify-content-between mt-5 mb-2">
         <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients ({{ $count }})</h4>
         <div>
