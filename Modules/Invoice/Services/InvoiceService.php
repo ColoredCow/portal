@@ -267,13 +267,13 @@ class InvoiceService implements InvoiceServiceContract
         return $invoices->map(function ($invoice) {
             return [
                 'Date' =>   $invoice->sent_on->format(config('invoice.default-date-format')),
-                'Particular' => Client::select('*')->where('id', $invoice->client_id)->first()->name,
-                'Type' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 1) ? 'India' : 'Export for international invoice',
+                'Particular' => $invoice->client->name,
+                'Type' => ($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice',
                 'INVOICE.' => $invoice->invoice_number,
-                'GST' => (float) str_replace(['$', '₹'], '', ($invoice)->first()->invoiceAmount()),
+                'GST' => ($invoice->client->country->id == 1) ? ! empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice',
                 'INVOICE VALUE' => $invoice->invoiceAmount(),
                 'RATE' => $this->currencyService()->getCurrentRatesInINR(),
-                'RECEIVABLE AMOUNT' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount(),
+                'RECEIVABLE AMOUNT' => ($invoice->client->country->id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount(),
                 'TAXABLE AMOUNT' => '₹' . $invoice->amount,
                 'IGST' => ! (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100 : '',
                 'CGST' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100 : '',
@@ -351,7 +351,7 @@ class InvoiceService implements InvoiceServiceContract
         $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
         $client_project_id = Project::find($project_id)->client_project_id;
         $client_type = ($country_id == 1) ? 'IN' : 'EX';
-        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
+        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count();
         $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . date('m', strtotime($sent_date)) . date('y', strtotime($sent_date));
 
         return $invoice_number;
