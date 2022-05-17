@@ -3,6 +3,7 @@
 namespace Modules\Project\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\Project\Rules\ProjectNameExist;
 
 class ProjectRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class ProjectRequest extends FormRequest
         switch ($request) {
             case 'project_details':
                 $rules = [
-                    'name' => 'required|string',
+                    'name' => ['required', 'string', new ProjectNameExist],
                     'client_id' => 'required|integer',
                     'status' => 'required|string',
                     'project_manager' => 'nullable|string',
@@ -42,7 +43,7 @@ class ProjectRequest extends FormRequest
 
             case 'create_project':
                 $rules = [
-                    'name' => 'required|string',
+                    'name' => ['required', 'string', new ProjectNameExist],
                     'client_id' => 'required|integer',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',

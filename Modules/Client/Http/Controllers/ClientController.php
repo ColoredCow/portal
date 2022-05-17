@@ -42,10 +42,16 @@ class ClientController extends ModuleBaseController
      */
     public function store(ClientRequest $request)
     {
-        $this->authorize('create', Client::class);
-        $client = $this->service->store($request->all());
+		$this->authorize('create', Client::class);
 
-        return redirect(route('client.edit', [$client, 'contact-persons']));
+		if (Client::where('name', $request->name)->exists())
+		{
+            return view('client::create', $this->service->create())->withErrors('A client with that name already exist. Please try another name');
+		}
+
+		$client = $this->service->store($request->all());
+
+		return redirect(route('client.edit', [$client, 'contact-persons']));
     }
 
     /**
@@ -72,6 +78,10 @@ class ClientController extends ModuleBaseController
      */
     public function update(ClientFormsRequest $request, Client $client)
     {
+		if (Client::where('name', $client->name)->exists())
+		{
+            return view('client::create', $this->service->create())->withErrors('A client with that name already exist. Please try another name');
+		}
         $this->authorize('update', $client);
         $data = $this->service->update($request->all(), $client);
 
