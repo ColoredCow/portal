@@ -2,6 +2,14 @@
 @section('content')
 
 <div class="container" id="vueContainer">
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class='d-none d-md-flex justify-content-between'>
         @include('project::menu_header')
         @can('projects.create')
@@ -43,8 +51,8 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>Name</th>
-                    <th>Client</th>
+                    <th class="w-33p">Name</th>
+                    <th class="w-33p">Client</th>
                     <th>Team Members</th>
                     <th>FTE</th>
                 </tr>
@@ -54,11 +62,11 @@
                 @forelse($projects as $project)
                     <tr>
                         @can('projects.update')
-                        <td> <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a> </td>
+                        <td class="w-33p"> <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a> </td>
                         @else
-                        <td> {{ $project->name }} </td>
+                        <td class="w-33p"> {{ $project->name }} </td>
                         @endcan
-                        <td>{{ $project->client->name }}</td>
+                        <td class="w-33p">{{ $project->client->name }}</td>
                         <td>
                             @foreach($project->teamMembers ?:[] as $teamMember)
                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}">
@@ -67,7 +75,8 @@
                             @endforeach 
                         </td>
                         <td>
-                            <a href="{{route('project.effort-tracking', $project )}}">FTE</a>
+                            <a class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 c-pointer fa fa-external-link-square"></i></a>
+                            <a class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->fte }}</a>
                         </td>
                     </tr>
                 @empty

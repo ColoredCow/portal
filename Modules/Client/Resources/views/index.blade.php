@@ -1,13 +1,20 @@
 @extends('project::layouts.master')
 @section('content')
-
 <div class="container" id="vueContainer">
-    @can('clients.create')
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class="d-none d-md-flex justify-content-between my-2">
         @include('client::menu_header')
-        <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
+        @can('clients.create')
+            <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
+        @endcan
     </div>
-    @endcan
     <div class="d-md-flex justify-content-between mt-5 mb-2">
         <h4 class="mb-1 pb-1">{{ config('client.status')[request()->input('status', 'active')] }} Clients ({{ $count }})</h4>
         <div>

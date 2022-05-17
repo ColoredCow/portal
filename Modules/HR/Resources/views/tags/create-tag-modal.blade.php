@@ -23,8 +23,20 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="create-form">Create</button>
+                <button type="button" class="btn btn-primary" form="create-form" id="save-btn-action">Create</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const saveTag = (button) => {
+        button.disabled = true;
+        if (!button.form.checkValidity()) {
+            button.disabled = false;
+            button.form.reportValidity();
+            return;
+        }
+        button.form.submit();
+    }
+</script>

@@ -22,12 +22,13 @@ class JobObserver
             return;
         }
         $job->rounds()->attach(Round::pluck('id')->toArray());
+        $job_status = request()->status;
         $corcel = new Corcel();
         $corcel->post_title = $job->title;
         $corcel->post_content = $job->description;
         $corcel->post_type = config('hr.post-type.career');
         $corcel->post_name = str_replace(' ', '-', strtolower($job->title));
-        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$job->status];
+        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$job_status];
         $corcel->save();
         $corcel->saveMeta('hr_id', $job->id);
         $post = $corcel->hasMeta('hr_id', $job->id)->first();
@@ -54,12 +55,13 @@ class JobObserver
             return;
         }
         $corcel = new Corcel();
+        $job_status = request()->status;
         $post = $corcel->hasMeta('hr_id', $job->id)->first();
         $corcel = $corcel->find($post->ID);
         $corcel->post_title = $job->title;
         $corcel->post_content = $job->description;
         $corcel->post_type = config('hr.post-type.career');
-        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$job->status];
+        $corcel->post_status = config('hr.opportunities-status-wp-mapping')[$job_status];
         $corcel->post_name = str_replace(' ', '-', strtolower($job->title));
         $corcel->update();
         $term = Term::select('term_id')->where(['name' => $job->domain])->first();

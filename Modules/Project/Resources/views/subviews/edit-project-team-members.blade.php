@@ -50,7 +50,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="button" class="btn btn-primary" v-on:click="updateProjectForm('update_project_team_member_form')">Update team members</button>
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')">Save</button>
             </div>
         </form>
     </div>

@@ -22,7 +22,7 @@ class ClientController extends Controller
         $this->authorize('list', Client::class);
 
         return view('client.index')->with([
-            'clients' => Client::select('id', 'name', 'emails', 'phone', 'is_active')->with('projects')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
+            'clients' => Client::select('id', 'name', 'is_active')->with('projects')->orderBy('id', 'desc')->paginate(config('constants.pagination_size')),
         ]);
     }
 
@@ -47,11 +47,7 @@ class ClientController extends Controller
         $validated = $request->validated();
         $client = Client::create([
             'name' => $validated['name'],
-            'emails' => $validated['emails'],
-            'phone' => $validated['phone'],
-            'country' => $validated['country'],
             'is_active' => isset($validated['is_active']) ? true : false,
-            'address' => $validated['address'],
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
 
@@ -94,11 +90,7 @@ class ClientController extends Controller
         $validated = $request->validated();
         $updated = $client->update([
             'name' => $validated['name'],
-            'emails' => $validated['emails'],
-            'phone' => $validated['phone'],
-            'country' => $validated['country'],
             'is_active' => isset($validated['is_active']) ? true : false,
-            'address' => $validated['address'],
             'gst_num' => array_key_exists('gst_num', $validated) ? $validated['gst_num'] : null,
         ]);
 

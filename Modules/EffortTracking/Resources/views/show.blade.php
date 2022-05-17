@@ -15,8 +15,8 @@
             <div>
             <h2 class="fz-18 leading-22">Current Hours: <span>{{$totalEffort}}</span></h2>
             <h2 class="fz-18 leading-22" id="projectHours">Expected Hours: <span>{{$project->monthly_estimated_hours}}</span></h2>
+            <h2 class="fz-18 leading-22" id="projectHours">FTE: <span>{{$project->fte}}</span></h2>
             </div>
-
         </div>
         <div class="effort-tracking-data">
             <div class="d-flex flex-row p-5 d-flex justify-content-center">
@@ -65,7 +65,7 @@
                             <th scope="row" id="user-name<?php echo $user->id; ?>">{{$user->name}}</th>
                             <td>{{$user->actual_effort}}</td>
                             <td>{{$user->expected_effort}}</td>
-                            <td class="text-danger">{{$user->FTE}}</td>
+                            <td class="{{ $user->FTE >= 1 ? 'text-success' : 'text-danger' }}">{{$user->FTE}}</td>
                         </tr>
                     @endforeach
                 </tbody>

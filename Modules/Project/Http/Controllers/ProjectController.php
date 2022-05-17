@@ -47,7 +47,7 @@ class ProjectController extends Controller
         $validated = $request->validated();
         $this->service->store($validated);
 
-        return redirect(route('project.index'));
+        return redirect(route('project.index'))->with('success', 'Project has been created successfully!');
     }
 
     /**

@@ -75,6 +75,6 @@ class ClientController extends ModuleBaseController
         $this->authorize('update', $client);
         $data = $this->service->update($request->all(), $client);
 
-        return redirect($data['route']);
+        return redirect($data['route'])->with('success', 'Client has been created/updated successfully!');
     }
 }

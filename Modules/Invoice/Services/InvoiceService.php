@@ -9,10 +9,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use Modules\Invoice\Entities\Invoice;
 use Illuminate\Support\Facades\Storage;
 use Modules\Invoice\Exports\TaxReportExport;
+use Modules\Invoice\Exports\MonthlyGSTTaxReportExport;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Entities\ClientAddress;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 
 class InvoiceService implements InvoiceServiceContract
@@ -40,11 +42,11 @@ class InvoiceService implements InvoiceServiceContract
 
         foreach ($invoices as $invoice) {
             if ($invoice->isAmountInINR()) {
-                $totalAmount += $invoice->amount;
+                $totalAmount += (int) $invoice->amount;
                 continue;
             }
 
-            $invoiceAmount = $currentRates * $invoice->amount;
+            $invoiceAmount = $currentRates * (int) $invoice->amount;
             $totalAmount += $invoiceAmount;
         }
 
@@ -213,6 +215,74 @@ class InvoiceService implements InvoiceServiceContract
         return Excel::download(new TaxReportExport($invoices), 'TaxReportExport.xlsx');
     }
 
+    public function invoiceDetails()
+    {
+        $igst = [];
+        $cgst = [];
+        $sgst = [];
+        $clients = [];
+        $clientAddress = [];
+        $totalReceivableAmount = [];
+        $invoices = Invoice::all();
+        foreach ($invoices as $invoice) :
+            $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
+        $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
+        $igst[] = ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100;
+        $cgst[] = ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100;
+        $sgst[] = ($invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        $totalReceivableAmount = (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR();
+        endforeach;
+
+        return [
+            'invoices' => $invoices,
+            'clients' => $clients,
+            'clientAddress' => $clientAddress,
+            'currentRates' => $this->currencyService()->getCurrentRatesInINR(),
+            'totalReceivableAmount' => $totalReceivableAmount,
+            'igst' => $igst,
+            'cgst' => $cgst,
+            'sgst' => $sgst
+        ];
+    }
+
+    public function monthlyGSTTaxReportExport($filters)
+    {
+        $invoices = $this->monthlyReportInvoices($filters);
+        $invoices = $this->formatMonthlyInvoicesForExportAll($invoices);
+
+        return Excel::download(new MonthlyGSTTaxReportExport($invoices), 'MonthlyGSTTaxReportExport.xlsx');
+    }
+
+    private function monthlyReportInvoices($filters)
+    {
+        $query = Invoice::query();
+
+        return $this
+            ->applyFilters($query, $filters)
+            ->get() ?: [];
+    }
+
+    private function formatMonthlyInvoicesForExportAll($invoices)
+    {
+        return $invoices->map(function ($invoice) {
+            return [
+                'Date' =>   $invoice->sent_on->format(config('invoice.default-date-format')),
+                'Particular' => $invoice->client->name,
+                'Type' => ($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice',
+                'INVOICE.' => $invoice->invoice_number,
+                'GST' => ($invoice->client->country->id == 1) ? ! empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice',
+                'INVOICE VALUE' => $invoice->invoiceAmount(),
+                'RATE' => $this->currencyService()->getCurrentRatesInINR(),
+                'RECEIVABLE AMOUNT' => ($invoice->client->country->id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount(),
+                'TAXABLE AMOUNT' => '₹' . $invoice->amount,
+                'IGST' => ! (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100 : '',
+                'CGST' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100 : '',
+                'SGST' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100 : '',
+                'HSN CODE' => '',
+            ];
+        });
+    }
+
     private function taxReportInvoices($filters)
     {
         $query = Invoice::query();
@@ -281,7 +351,7 @@ class InvoiceService implements InvoiceServiceContract
         $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
         $client_project_id = Project::find($project_id)->client_project_id;
         $client_type = ($country_id == 1) ? 'IN' : 'EX';
-        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
+        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count();
         $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . date('m', strtotime($sent_date)) . date('y', strtotime($sent_date));
 
         return $invoice_number;

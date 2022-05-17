@@ -15,7 +15,7 @@ class Client extends Model
 {
     use HasHierarchy, HasFactory, Filters;
 
-    protected $fillable = ['name', 'email', 'key_account_manager_id', 'status', 'country', 'state', 'phone', 'phone', 'address', 'pincode', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id'];
+    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id'];
 
     protected $appends = ['type', 'currency'];
 
