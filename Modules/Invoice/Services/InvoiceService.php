@@ -351,7 +351,7 @@ class InvoiceService implements InvoiceServiceContract
         $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
         $client_project_id = Project::find($project_id)->client_project_id;
         $client_type = ($country_id == 1) ? 'IN' : 'EX';
-        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count() + 1;
+        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count();
         $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . date('m', strtotime($sent_date)) . date('y', strtotime($sent_date));
 
         return $invoice_number;
