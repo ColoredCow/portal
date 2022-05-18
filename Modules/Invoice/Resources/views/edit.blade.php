@@ -1,6 +1,9 @@
 @extends('invoice::layouts.master')
 @section('content')
-
+@php
+$invoice_file_path=$invoice->file_path;
+$filename=basename($invoice_file_path);
+@endphp
 <div class="container">
     <br>
     
@@ -9,7 +12,7 @@
             <h4>Invoice Information</h4>
             <span>
                 <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" onclick="alert('Will add this soon')" href="#">Duplicate this invoice</a>
-                <a class="btn btn-sm btn-info text-white font-weight-bold" target="_blank" href="{{ route('invoice.get-file', $invoice->id) }}">View invoice PDF</a>
+                <a class="btn btn-sm btn-info text-white font-weight-bold" target="_blank" href="{{ route('invoice.get-file', [$invoice->id, $filename]) }}">View invoice PDF</a>
             </span>
         </div>
         <form method="POST" action="{{ route('invoice.update', $invoice) }}" enctype="multipart/form-data">
