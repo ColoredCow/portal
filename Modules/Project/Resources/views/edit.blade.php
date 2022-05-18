@@ -96,6 +96,7 @@
                             }
                             $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
                             $('.save-btn').attr('disabled', false);
+							$('#project-details-update-message').addClass('d-block');
                             $('#modal-success').modal('show');
                         })
                         .catch((error) => {
