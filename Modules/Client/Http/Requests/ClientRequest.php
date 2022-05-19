@@ -14,7 +14,7 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:clients',
             'channel_partner_id' => 'nullable|integer',
             'parent_organisation_id' => 'nullable|integer',
         ];

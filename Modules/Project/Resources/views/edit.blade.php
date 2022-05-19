@@ -86,28 +86,30 @@
                     $('.save-btn').removeClass('btn-primary').addClass('btn-dark');
                     await axios.post('{{ route('project.update', $project) }}', formData)
                         .then((response) => {
-                            $('#edit-project-errors').addClass('d-none')
-                            let url = $('#effort_sheet_url').val()
+                            $('#edit-project-errors').addClass('d-none');
+                            let url = $('#effort_sheet_url').val();
                             if (url) {
-                                $('#view_effort_sheet_badge').removeClass('d-none')
-                                $('#view_effort_sheet_badge').attr('href', url)
+                                $('#view_effort_sheet_badge').removeClass('d-none');
+                                $('#view_effort_sheet_badge').attr('href', url);
                             } else {
-                                $('#view_effort_sheet_badge').addClass('d-none')
+                                $('#view_effort_sheet_badge').addClass('d-none');
                             }
                             $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
                             $('.save-btn').attr('disabled', false);
-							$('#project-details-update-message').addClass('d-block');
+                            $('#project-details-update-message').addClass('d-block');
+                            $('#project-details-update-message').removeClass('d-none');
                             $('#modal-success').modal('show');
                         })
                         .catch((error) => {
-                            $('#project-details-update-message').addClass('d-none')
+                            $('#project-details-update-message').removeClass('d-block');
+                            $('#project-details-update-message').addClass('d-none');
                             let errors = error.response.data.errors;
-                            $('#edit-project-error-list').empty()
+                            $('#edit-project-error-list').empty();
                             for (error in errors) {
                                 $('#edit-project-error-list').append("<li class='text-danger ml-2'>" +
                                     errors[error] + "</li>");
                             }
-                            $('#edit-project-errors').removeClass('d-none')
+                            $('#edit-project-errors').removeClass('d-none');
                             $('#modal-success').modal('show');
                         })
                 },

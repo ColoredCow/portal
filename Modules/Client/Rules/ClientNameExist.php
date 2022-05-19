@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Project\Rules;
+namespace Modules\Client\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Modules\Project\Entities\Project;
+use Modules\Client\Entities\Client;
 
-class ProjectNameExist implements Rule
+class ClientNameExist implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,7 +26,7 @@ class ProjectNameExist implements Rule
      */
     public function passes($attribute, $value)
     {
-        return ! (Project::where($attribute, $value)->exists());
+        return ! (Client::where($attribute, $value)->exists());
     }
 
     /**
@@ -36,6 +36,6 @@ class ProjectNameExist implements Rule
      */
     public function message()
     {
-        return 'A project with that :attribute already exist. Please try another :attribute';
+        return 'A client with that :attribute already exist. Please try another :attribute';
     }
 }

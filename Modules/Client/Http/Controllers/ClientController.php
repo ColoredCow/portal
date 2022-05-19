@@ -6,6 +6,7 @@ use Modules\Client\Entities\Client;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Http\Requests\ClientFormsRequest;
 use Modules\Client\Http\Requests\ClientRequest;
+use Modules\Client\Rules\ClientNameExist;
 
 class ClientController extends ModuleBaseController
 {
@@ -43,11 +44,6 @@ class ClientController extends ModuleBaseController
     public function store(ClientRequest $request)
     {
         $this->authorize('create', Client::class);
-
-        if (Client::where('name', $request->name)->exists()) {
-            return view('client::create', $this->service->create())->withErrors(['name' => 'A client with that name already exist. Please try another name']);
-        }
-
         $client = $this->service->store($request->all());
 
         return redirect(route('client.edit', [$client, 'contact-persons']));
@@ -77,8 +73,8 @@ class ClientController extends ModuleBaseController
      */
     public function update(ClientFormsRequest $request, Client $client)
     {
-        if (Client::where('name', $client->name)->exists()) {
-            return view('client::create', $this->service->create())->withErrors(['name' => 'A client with that name already exist. Please try another name']);
+        if ($request->name != $client->name) {
+            $request->validate(['name' => new ClientNameExist()]);
         }
         $this->authorize('update', $client);
         $data = $this->service->update($request->all(), $client);

@@ -8,6 +8,7 @@ use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Rules\ProjectNameExist;
 
 class ProjectController extends Controller
 {
@@ -100,6 +101,10 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
+        if ($request->name != $project->name) {
+            $request->validate(['name' => new ProjectNameExist()]);
+        }
+
         return $this->service->updateProjectData($request->all(), $project);
     }
 }
