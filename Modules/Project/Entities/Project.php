@@ -66,6 +66,7 @@ class Project extends Model
         $monthlyEstimatedHours = $this->monthly_estimated_hours;
         $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
         $currentDate = Carbon::now(config('constants.timezone.indian'));
+        
 
         if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
             $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
