@@ -6,6 +6,7 @@ use Modules\Client\Entities\Client;
 use Modules\Client\Contracts\ClientServiceContract;
 use Modules\Client\Http\Requests\ClientFormsRequest;
 use Modules\Client\Http\Requests\ClientRequest;
+use Modules\Client\Rules\ClientNameExist;
 
 class ClientController extends ModuleBaseController
 {
@@ -72,6 +73,9 @@ class ClientController extends ModuleBaseController
      */
     public function update(ClientFormsRequest $request, Client $client)
     {
+        if ($request->name != $client->name) {
+            $request->validate(['name' => new ClientNameExist()]);
+        }
         $this->authorize('update', $client);
         $data = $this->service->update($request->all(), $client);
 
