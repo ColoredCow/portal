@@ -42,21 +42,21 @@ class ProjectRequest extends FormRequest
 
             case 'create_project':
                 $rules = [
-                    'name' => 'required|string',
+                    'name' => 'required|string|unique:projects',
                     'client_id' => 'required|integer',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
-                    'contract_file' => 'required|mimes:pdf'
+                    'contract_file' => 'required|mimes:pdf',
                 ];
                 break;
 
             case 'project_team_members':
                 if ($this->project_team_member) {
                     $rules = [
-                        'project_team_member' => 'array'
+                        'project_team_member' => 'array',
                     ];
                 }
                 break;
@@ -64,7 +64,7 @@ class ProjectRequest extends FormRequest
             case 'project_repository':
                 if ($this->url) {
                     $rules = [
-                        'url' => 'array'
+                        'url' => 'array',
                     ];
                 }
         }
@@ -85,7 +85,7 @@ class ProjectRequest extends FormRequest
             'invoice_email.email' => 'Email for invoice should a valid email address',
             'effort_sheet_url.max' => 'Url must be less than 191 characters',
             'effort_sheet_url.active_url' => 'Effortsheet url is not valid',
-            'type.required' => 'Project type is required'
+            'type.required' => 'Project type is required',
         ];
     }
 }
