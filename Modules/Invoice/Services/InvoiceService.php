@@ -227,9 +227,9 @@ class InvoiceService implements InvoiceServiceContract
         foreach ($invoices as $invoice) :
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
         $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-        $igst[] = ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100;
-        $cgst[] = ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100;
-        $sgst[] = ($invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        $igst[] = ((int) $invoice->amount * (int) config('invoice.invoice-details.igst')) / 100;
+        $cgst[] = ((int) $invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100;
+        $sgst[] = ((int) $invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100;
         $totalReceivableAmount = (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR();
         endforeach;
 
@@ -265,12 +265,16 @@ class InvoiceService implements InvoiceServiceContract
     private function formatMonthlyInvoicesForExportAll($invoices)
     {
         return $invoices->map(function ($invoice) {
+            $clientType = ($invoice->client->country->id == null) ? '' : (($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice');
+            $clientGST = ($invoice->client->country->id == null) ? '' : (($invoice->client->country->id == 1) ? ! empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice');
+            $clientReceivabbleAMOUNT = ($invoice->client->country->id == null) ? '' : (($invoice->client->country->id == 1) ? ! empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice');
+
             return [
                 'Date' =>   $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Particular' => $invoice->client->name,
-                'Type' => ($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice',
+                'Type' => $clientType,
                 'INVOICE.' => $invoice->invoice_number,
-                'GST' => ($invoice->client->country->id == 1) ? ! empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice',
+                'GST' => $clientGST,
                 'INVOICE VALUE' => $invoice->invoiceAmount(),
                 'RATE' => $this->currencyService()->getCurrentRatesInINR(),
                 'RECEIVABLE AMOUNT' => ($invoice->client->country->id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount(),
