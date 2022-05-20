@@ -75,7 +75,7 @@ class ProjectController extends Controller
 
         return response($content)->withHeaders([
             'content-type' => mime_content_type($filePath),
-            'contractFileName' => $contractFileName
+            'contractFileName' => $contractFileName,
         ]);
     }
 

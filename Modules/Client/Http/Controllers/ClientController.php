@@ -73,9 +73,9 @@ class ClientController extends ModuleBaseController
      */
     public function update(ClientFormsRequest $request, Client $client)
     {
-		$request->merge([
-			'name' => trim(preg_replace('/\s\s+/', ' ', str_replace("\n", ' ', $request->name))),
-		]);
+        $request->merge([
+            'name' => trim(preg_replace('/\s\s+/', ' ', str_replace("\n", ' ', $request->name))),
+        ]);
         if ($request->name != $client->name) {
             $request->validate(['name' => new ClientNameExist()]);
         }

@@ -26,7 +26,7 @@ class ClientNameExist implements Rule
      */
     public function passes($attribute, $value)
     {
-        return ! (Client::where($attribute, $value)->exists());
+        return !Client::where($attribute, $value)->exists();
     }
 
     /**
