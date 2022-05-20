@@ -12,7 +12,7 @@
                     <div class="form-group col-md-5">
                         <label for="name" class="field-required">Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter project name"
-                            required="required" value="{{ $project->name }}">
+                            required="required" value="{{ old('name') ?: $project->name }}">
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="client_id" class="field-required">Client</label>
@@ -20,7 +20,7 @@
                             <option value="">Select Client</option>
                             @foreach ($clients as $client)
                                 @php
-                                    $selected = $client->id == $project->client_id ? 'selected="selected"' : '';
+                                    $selected = ($client->id == $project->client_id || old('client_id') == $client->id) ? 'selected' : '';
                                 @endphp
                                 <option value="{{ $client->id }}" {{ $selected }}>{{ $client->name }}</option>
                             @endforeach
@@ -33,8 +33,8 @@
                         <label for="name" class="field-required">Status</label>
                         <select name="status" id="status" class="form-control" required="required">
                             @foreach (config('project.status') as $status => $display_name)
-                                @if ($project->status == $status)
-                                    <option selected="selected" value="{{ $status }}">{{ $display_name }}
+                                @if ($project->status == $status || old('status') == $status)
+                                    <option selected value="{{ $status }}">{{ $display_name }}
                                     </option>
                                 @else
                                     <option value="{{ $status }}">{{ $display_name }}</option>
@@ -74,7 +74,7 @@
                         <select name="project_type" id="project_type" class="form-control" required="required">
                             @foreach (config('project.type') as $key => $project_type)
                                 @php
-                                    $selected = $project->type == $key ? 'selected' : '';
+                                    $selected = ($project->type == $key || old('project_type') == $key) ? 'selected' : '';
                                 @endphp
                                 <option value="{{ $key }}" {{ $selected }}>{{ $project_type }}
                                 </option>
