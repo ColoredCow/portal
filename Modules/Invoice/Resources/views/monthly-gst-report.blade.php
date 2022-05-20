@@ -36,26 +36,25 @@
             </thead>
 
             <tbody>
-                @foreach($invoices as $key => $invoice)
+				@foreach($invoices as $key => $invoice)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
 						<td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
 						<td>{{ $invoice->client->name }}</td>
-						<td>{{ ($invoice->client->country->id == 1 ) ? 'India' : 'Export for international invoice'}}</td>
+						<td>{{$clientAddress[$key] ? ($invoice->client->country->id) ? 'India' : 'Export for international invoice' : '' }}</td>
 						<td>{{ $invoice->invoice_number }}</td>
-						<td>{{ ($invoice->client->country->id == 1 ) ? !empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice' }}</td>
-						<td>{{ $invoice->invoiceAmount() }}</td>
+						<td>{{ $clientAddress[$key] ? ($invoice->client->country->id == 1 ) ? !empty($invoice->gst_number) ? $invoice->gst_number : 'B2C' : 'Export for international invoice' : '' }}</td>
+						<td>{{ $invoice->isInvoiceAmount() }}</td>
 						<td>{{ $currentRates }}</td>
-						<td>{{ ($invoice->client->country->id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount() }}</td>
-						<td>{{ "₹" . $invoice->amount }}</td>
-						<td>{{ !($clientAddress[$key]->state == 'Haryana') ? $igst[$key] : '' }}</td>
-						<td>{{ ($clientAddress[$key]->state == 'Haryana') ? $cgst[$key] : '' }}</td>
-						<td>{{ ($clientAddress[$key]->state == 'Haryana') ? $sgst[$key] : '' }}</td>
+						<td>{{ $clientAddress[$key] ? ($invoice->client->country->id == 2 ) ? $totalReceivableAmount : $invoice->IsinvoiceAmount() : '' }}</td>
+						<td>{{ $invoice->isInvoiceAmount() }}</td>
+						<td>{{ $clientAddress[$key] ? !($clientAddress[$key]->state == 'Haryana') ? $igst[$key] : '' : '' }}</td>
+						<td>{{ $clientAddress[$key] ? ($clientAddress[$key]->state == 'Haryana') ? $cgst[$key] : '' : '' }}</td>
+						<td>{{ $clientAddress[$key] ? ($clientAddress[$key]->state == 'Haryana') ? $sgst[$key] : '' : '' }}</td>
 						<td>{{-- HSN CODE --}}</td>
                     </tr>
                 @endforeach
             </tbody>
-
         </table>
     </div>
 </div>

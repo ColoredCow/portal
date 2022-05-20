@@ -86,6 +86,14 @@ class Invoice extends Model
         return trim(optional($country)->currency_symbol . ' ' . $amount);
     }
 
+    public function isInvoiceAmount()
+    {
+        $country = optional($this->client)->country;
+        $amount = (int) $this->amount;
+
+        return trim(optional($country)->currency_symbol . ' ' . $amount);
+    }
+
     public function shouldHighlighted()
     {
         if ($this->status == 'paid') {

@@ -33,7 +33,7 @@ class ClientFormsRequest extends FormRequest
 
     private function addressValidation()
     {
-        return  [
+        return [
             'address.*.country_id' => 'required|string',
             'address.*.address' => 'required|string',
             'address.*.state' => 'nullable|string',
@@ -45,7 +45,7 @@ class ClientFormsRequest extends FormRequest
 
     private function billingDetailsValidation()
     {
-        return  [
+        return [
             'key_account_manager_id' => 'required|string',
             'service_rates' => 'nullable|string',
             'service_rate_term' => 'nullable|string',

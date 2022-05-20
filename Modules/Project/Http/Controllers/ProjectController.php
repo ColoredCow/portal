@@ -8,6 +8,7 @@ use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Rules\ProjectNameExist;
 
 class ProjectController extends Controller
 {
@@ -74,7 +75,7 @@ class ProjectController extends Controller
 
         return response($content)->withHeaders([
             'content-type' => mime_content_type($filePath),
-            'contractFileName' => $contractFileName
+            'contractFileName' => $contractFileName,
         ]);
     }
 
@@ -100,6 +101,13 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
+        $request->merge([
+            'name' => trim(preg_replace('/\s\s+/', ' ', str_replace("\n", ' ', $request->name))),
+        ]);
+        if ($request->name != $project->name) {
+            $request->validate(['name' => new ProjectNameExist()]);
+        }
+
         return $this->service->updateProjectData($request->all(), $project);
     }
 }

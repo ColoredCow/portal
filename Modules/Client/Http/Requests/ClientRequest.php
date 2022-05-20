@@ -14,7 +14,7 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:clients',
             'channel_partner_id' => 'nullable|integer',
             'parent_organisation_id' => 'nullable|integer',
         ];
@@ -28,5 +28,17 @@ class ClientRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.unique' => 'A client with that name already exist. Please try another name',
+        ];
     }
 }

@@ -12,8 +12,6 @@ npm-debug.log
 yarn-error.log
 .env
 
-
-
 # compiled assets
 /public/mix-manifest.json
 /public/build
