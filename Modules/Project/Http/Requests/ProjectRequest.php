@@ -80,6 +80,7 @@ class ProjectRequest extends FormRequest
     public function messages()
     {
         return [
+            'name.unique' => 'A project with that name already exist. Please try another name',
             'client_project_id.required' => 'Project ID is required',
             'client_project_id.integer' => 'Project ID should be a valid number',
             'invoice_email.email' => 'Email for invoice should a valid email address',

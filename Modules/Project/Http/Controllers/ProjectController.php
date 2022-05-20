@@ -75,7 +75,7 @@ class ProjectController extends Controller
 
         return response($content)->withHeaders([
             'content-type' => mime_content_type($filePath),
-            'contractFileName' => $contractFileName
+            'contractFileName' => $contractFileName,
         ]);
     }
 
@@ -101,6 +101,9 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
+        $request->merge([
+            'name' => trim(preg_replace('/\s\s+/', ' ', str_replace("\n", ' ', $request->name))),
+        ]);
         if ($request->name != $project->name) {
             $request->validate(['name' => new ProjectNameExist()]);
         }

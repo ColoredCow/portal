@@ -29,4 +29,16 @@ class ClientRequest extends FormRequest
     {
         return true;
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.unique' => 'A client with that name already exist. Please try another name',
+        ];
+    }
 }
