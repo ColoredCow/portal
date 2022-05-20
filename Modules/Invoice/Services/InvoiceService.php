@@ -275,9 +275,9 @@ class InvoiceService implements InvoiceServiceContract
                 'RATE' => $this->currencyService()->getCurrentRatesInINR(),
                 'RECEIVABLE AMOUNT' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? (($invoice->client->country->id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount()) : '',
                 'TAXABLE AMOUNT' => $invoice->amount,
-                'IGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100 : '') : '',
-                'CGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state != 'Haryana') ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100 : '') : '',
-                'SGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state != 'Haryana') ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100 : '') : '',
+                'IGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state != 'Haryana') ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100 : '') : '',
+                'CGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100 : '') : '',
+                'SGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100 : '') : '',
                 'HSN CODE' => '',
             ];
         });
