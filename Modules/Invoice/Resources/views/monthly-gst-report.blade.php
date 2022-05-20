@@ -41,16 +41,15 @@
                         <td>{{ $loop->iteration }}</td>
 						<td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
 						<td>{{ $invoice->client->name }}</td>
-						<td>{{$clientAddress[$key] ? (($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice') : '' }}</td>
+						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice') : '' }}</td>
 						<td>{{ $invoice->invoice_number }}</td>
-						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1 ) ? (isset($invoice->gst) ? $invoice->gst : 'B2C') : 'Export') : ''}}</td>
+						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1 ) ? (isset($invoice->gst) ? $invoice->gst : 'B2C') : 'Export') : '' }}</td>
 						<td>{{ $invoice->invoiceAmount() }}</td>
 						<td>{{ $currentRates }}</td>
 						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount()) : '' }}</td>
 						<td>{{ $invoice->display_amount }}</td>
 						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == 'Haryana' ) ? $igst[$key] : '') : ''}}</td>
-						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != 'Haryana') ? $cgst[$key] : '') : '' }}</td>
-
+						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == 'Haryana') ? $cgst[$key] : '') : '' }}</td>
 						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != 'Haryana') ? $sgst[$key] : '') : '' }}</td>
 						<td>{{-- HSN CODE --}}</td>
                     </tr>
