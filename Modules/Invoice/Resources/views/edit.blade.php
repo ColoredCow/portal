@@ -1,8 +1,7 @@
 @extends('invoice::layouts.master')
 @section('content')
 @php
-$invoice_file_path=$invoice->file_path;
-$filename=basename($invoice_file_path);
+$filename=basename($invoice->file_path);
 @endphp
 <div class="container">
     <br>
