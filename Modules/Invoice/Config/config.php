@@ -30,6 +30,7 @@ return [
     ],
 
     'invoice-details' => [
+        'billing-state' => 'Haryana',
         'igst' => '18%',
         'cgst' => '9%',
         'sgst' => '9%'
