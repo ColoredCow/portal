@@ -79,9 +79,9 @@
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
                         <div>
-                            <div class="flex-column flex-md-row d-flex flex-wrap col-12 px-0 ml-3">
+                            <div class="flex-column flex-md-row d-flex flex-wrap col-md-12 px-0 ml-3">
                                 @foreach($project->teamMembers ?:[] as $teamMember)
-                                    <div class="fz-lg-22 my-2 px-0 col-6">
+                                    <div class="fz-lg-22 my-2 px-0 col-md-6">
                                         <span>
                                             <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
                                         </span>
