@@ -48,9 +48,9 @@
 						<td>{{ $currentRates }}</td>
 						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount()) : '' }}</td>
 						<td>{{ $invoice->display_amount }}</td>
-						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != 'Haryana' ) ? $igst[$key] : '') : ''}}</td>
-						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == 'Haryana') ? $cgst[$key] : '') : '' }}</td>
-						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == 'Haryana') ? $sgst[$key] : '') : '' }}</td>
+						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != config('invoice.invoice-details.billing-state')) ? $igst[$key] : '') : ''}}</td>
+						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $cgst[$key] : '') : '' }}</td>
+						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $sgst[$key] : '') : '' }}</td>
 						<td>{{-- HSN CODE --}}</td>
                     </tr>
                 @endforeach
