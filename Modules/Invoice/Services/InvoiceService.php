@@ -126,9 +126,9 @@ class InvoiceService implements InvoiceServiceContract
         $invoice->update(['file_path' => $file]);
     }
 
-    public function getInvoiceFile($invoiceID)
+    public function getInvoiceFile($invoiceId)
     {
-        $invoice = Invoice::find($invoiceID);
+        $invoice = Invoice::find($invoiceId);
 
         return Storage::download($invoice->file_path, basename($invoice->file_path), [
             'Content-Type' => 'application/pdf',
