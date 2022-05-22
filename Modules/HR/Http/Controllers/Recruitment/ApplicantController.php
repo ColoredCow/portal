@@ -11,6 +11,7 @@ use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Job;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
+use Modules\HR\Entities\Application;
 
 class ApplicantController extends Controller
 {
@@ -78,4 +79,13 @@ class ApplicantController extends Controller
             'status' => $status,
         ]);
     }
+
+	public function show($applicationID) {
+		$application = Application::find($applicationID);
+		$application->status = "in-progress";
+		$application->save();
+		$applicant = Applicant::find($application->hr_applicant_id);
+        
+		return view('hr.application.details', ['application' => $application, 'applicant' => $applicant]);
+	}
 }

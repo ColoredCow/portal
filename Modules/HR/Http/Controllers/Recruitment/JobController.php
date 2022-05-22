@@ -122,4 +122,12 @@ class JobController extends Controller
 
         return redirect($route)->with('status', "Successfully deleted $opportunity->title!");
     }
+
+	public function show ($opportunity) {
+		$opportunity->load('postedBy');
+
+        return view('hr.job.show')->with([
+            'job' => $opportunity,
+        ]);
+	}
 }
