@@ -12,6 +12,7 @@ use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Job;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\University;
 
 class ApplicantController extends Controller
 {
@@ -85,7 +86,8 @@ class ApplicantController extends Controller
 		$application->status = "in-progress";
 		$application->save();
 		$applicant = Applicant::find($application->hr_applicant_id);
-        
-		return view('hr.application.details', ['application' => $application, 'applicant' => $applicant]);
+        $universities = University::find($applicant->hr_university_id)->get();
+
+		return view('hr.application.details', ['application' => $application, 'applicant' => $applicant, 'universities' => $universities]);
 	}
 }
