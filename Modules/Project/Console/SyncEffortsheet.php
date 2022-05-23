@@ -86,7 +86,7 @@ class SyncEffortsheet extends Command
                 $billingEndDate = Carbon::create($user[2]);
                 $currentDate = now(config('constants.timezone.indian'))->today();
 
-                if($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
+                if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
                     continue;
                 }
 
