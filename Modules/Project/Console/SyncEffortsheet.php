@@ -82,10 +82,11 @@ class SyncEffortsheet extends Command
                     continue;
                 }
 
-                $projectMonth = Carbon::create($user[1])->month;
-                $currentMonth = now()->month;
+                $billingStartDate = Carbon::create($user[1]);
+                $billingEndDate = Carbon::create($user[2]);
+                $currentDate = now(config('constants.timezone.indian'))->today();
 
-                if ($projectMonth !== $currentMonth) {
+                if($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
                     continue;
                 }
 
@@ -95,25 +96,28 @@ class SyncEffortsheet extends Command
                     continue;
                 }
 
-                $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()->orderBy('added_on', 'DESC')->first();
+                $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
+                    ->where('added_on', '<', Carbon::now(config('constants.timezone.indian'))->format('Y-m-d'))
+                    ->orderBy('added_on', 'DESC')->first();
                 $actual_effort = $user[4];
 
                 if ($latestProjectTeamMemberEffort) {
                     $previous_effort_date = Carbon::parse($latestProjectTeamMemberEffort->added_on);
-
-                    if ($previous_effort_date->format('Y-m-d') == Carbon::now()->format('Y-m-d')) {
-                        continue;
-                    } elseif ($previous_effort_date->format('Y-m') == Carbon::now()->format('Y-m')) {
+                    if ($previous_effort_date->format('Y-m-d') >= $billingStartDate && $previous_effort_date->format('Y-m-d') <= $billingEndDate) {
                         $actual_effort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
                     }
                 }
 
-                ProjectTeamMemberEffort::create([
-                    'project_team_member_id' => $projectTeamMember->id,
-                    'actual_effort' => $actual_effort,
-                    'total_effort_in_effortsheet' => $user[4],
-                    'added_on' => now(),
-                ]);
+                ProjectTeamMemberEffort::updateOrCreate(
+                    [
+                        'project_team_member_id' => $projectTeamMember->id,
+                        'added_on' => Carbon::now(config('constants.timezone.indian'))->format('Y-m-d'),
+                    ],
+                    [
+                        'actual_effort' => $actual_effort,
+                        'total_effort_in_effortsheet' => $user[4],
+                    ]
+                );
             }
         }
     }
