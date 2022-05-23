@@ -23,7 +23,7 @@
                     <th>Particular</th>
                     <th>Type</th>
                     <th>INVOICE NO.</th>
-                    <th>GST</th>
+                    <th>GST NO.</th>
                     <th>INVOICE VALUE</th>
                     <th>RATE</th>
                     <th>RECEIVABLE AMOUNT</th>
@@ -36,26 +36,25 @@
             </thead>
 
             <tbody>
-                @foreach($invoices as $key => $invoice)
+				@foreach($invoices as $key => $invoice)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
 						<td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
 						<td>{{ $invoice->client->name }}</td>
-						<td>{{ ($invoice->client->country->id == 1 ) ? 'India' : 'Export for international invoice'}}</td>
+						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice') : '' }}</td>
 						<td>{{ $invoice->invoice_number }}</td>
-						<td>{{ ($invoice->client->country->id == 1 ) ? !empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice' }}</td>
+						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1 ) ? (isset($invoice->gst) ? $invoice->gst : 'B2C') : 'Export') : '' }}</td>
 						<td>{{ $invoice->invoiceAmount() }}</td>
 						<td>{{ $currentRates }}</td>
-						<td>{{ ($invoice->client->country->id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount() }}</td>
-						<td>{{ "₹" . $invoice->amount }}</td>
-						<td>{{ !($clientAddress[$key]->state == 'Haryana') ? $igst[$key] : '' }}</td>
-						<td>{{ ($clientAddress[$key]->state == 'Haryana') ? $cgst[$key] : '' }}</td>
-						<td>{{ ($clientAddress[$key]->state == 'Haryana') ? $sgst[$key] : '' }}</td>
+						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount()) : '' }}</td>
+						<td>{{ $invoice->display_amount }}</td>
+						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != config('invoice.invoice-details.billing-state')) ? $igst[$key] : '') : ''}}</td>
+						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $cgst[$key] : '') : '' }}</td>
+						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $sgst[$key] : '') : '' }}</td>
 						<td>{{-- HSN CODE --}}</td>
                     </tr>
                 @endforeach
             </tbody>
-
         </table>
     </div>
 </div>

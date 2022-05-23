@@ -227,9 +227,9 @@ class InvoiceService implements InvoiceServiceContract
         foreach ($invoices as $invoice) :
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
         $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-        $igst[] = ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100;
-        $cgst[] = ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100;
-        $sgst[] = ($invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
+        $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
+        $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
         $totalReceivableAmount = (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR();
         endforeach;
 
@@ -268,16 +268,16 @@ class InvoiceService implements InvoiceServiceContract
             return [
                 'Date' =>   $invoice->sent_on->format(config('invoice.default-date-format')),
                 'Particular' => $invoice->client->name,
-                'Type' => ($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice',
-                'INVOICE.' => $invoice->invoice_number,
-                'GST' => ($invoice->client->country->id == 1) ? ! empty($invoice->gst) ? $invoice->gst : 'B2C' : 'Export for international invoice',
+                'Type' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? (($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice') : '',
+                'INVOICE NO.' => $invoice->invoice_number,
+                'GST NO.' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? (($invoice->client->country->id == 1) ? (isset($invoice->gst) ? $invoice->gst : 'B2C') : 'Export') : '',
                 'INVOICE VALUE' => $invoice->invoiceAmount(),
                 'RATE' => $this->currencyService()->getCurrentRatesInINR(),
-                'RECEIVABLE AMOUNT' => ($invoice->client->country->id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount(),
-                'TAXABLE AMOUNT' => '₹' . $invoice->amount,
-                'IGST' => ! (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.igst')) / 100 : '',
-                'CGST' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.cgst')) / 100 : '',
-                'SGST' => (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == 'Haryana') ? ($invoice->amount * (int) config('invoice.invoice-details.sgst')) / 100 : '',
+                'RECEIVABLE AMOUNT' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? (($invoice->client->country->id == 2) ? (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR() : $invoice->invoiceAmount()) : '',
+                'TAXABLE AMOUNT' => $invoice->amount,
+                'IGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state != config('invoice.invoice-details.billing-state')) ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100 : '') : '',
+                'CGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == config('invoice.invoice-details.billing-state')) ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100 : '') : '',
+                'SGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == config('invoice.invoice-details.billing-state')) ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100 : '') : '',
                 'HSN CODE' => '',
             ];
         });
