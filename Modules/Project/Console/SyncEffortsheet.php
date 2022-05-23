@@ -103,7 +103,8 @@ class SyncEffortsheet extends Command
 
                 if ($latestProjectTeamMemberEffort) {
                     $previous_effort_date = Carbon::parse($latestProjectTeamMemberEffort->added_on);
-                    if ($previous_effort_date->format('Y-m-d') >= $billingStartDate && $previous_effort_date->format('Y-m-d') <= $billingEndDate) {
+
+                    if ($previous_effort_date->format('Y-m-d') >= $billingStartDate->format('Y-m-d') && $previous_effort_date->format('Y-m-d') <= $billingEndDate->format('Y-m-d')) {
                         $actual_effort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
                     }
                 }
