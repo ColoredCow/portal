@@ -100,13 +100,13 @@ class SyncEffortsheet extends Command
                     $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
                         ->where('added_on', '<', Carbon::now(config('constants.timezone.indian'))->format('Y-m-d'))
                         ->orderBy('added_on', 'DESC')->first();
-                    $actual_effort = $user[4];
+                    $actualEffort = $user[4];
 
                     if ($latestProjectTeamMemberEffort) {
-                        $previous_effort_date = Carbon::parse($latestProjectTeamMemberEffort->added_on);
+                        $previousEffortDate = Carbon::parse($latestProjectTeamMemberEffort->added_on);
 
-                        if ($previous_effort_date->format('Y-m-d') >= $billingStartDate->format('Y-m-d') && $previous_effort_date->format('Y-m-d') <= $billingEndDate->format('Y-m-d')) {
-                            $actual_effort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
+                        if ($previousEffortDate->format('Y-m-d') >= $billingStartDate->format('Y-m-d') && $previousEffortDate->format('Y-m-d') <= $billingEndDate->format('Y-m-d')) {
+                            $actualEffort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
                         }
                     }
 
@@ -116,7 +116,7 @@ class SyncEffortsheet extends Command
                             'added_on' => Carbon::now(config('constants.timezone.indian'))->format('Y-m-d'),
                         ],
                         [
-                            'actual_effort' => $actual_effort,
+                            'actual_effort' => $actualEffort,
                             'total_effort_in_effortsheet' => $user[4],
                         ]
                     );
