@@ -50,16 +50,15 @@ class SyncEffortsheet extends Command
             try {
                 $effortSheetUrl = $project->effort_sheet_url;
 
-                if (!$effortSheetUrl) {
+                if (! $effortSheetUrl) {
                     continue;
                 }
 
                 $correctedEffortsheetUrl = [];
-                
-                // This preg match is used to filter the gid form the google sheet url so that we always get the first sheet from the google sheet
+
                 $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
 
-                if (!$isSyntaxMatching) {
+                if (! $isSyntaxMatching) {
                     continue;
                 }
 
@@ -81,7 +80,7 @@ class SyncEffortsheet extends Command
                     $portalUsers = clone $users;
                     $portalUser = $portalUsers->where('nickname', $userNickname)->first();
 
-                    if (!$portalUser) {
+                    if (! $portalUser) {
                         continue;
                     }
 
@@ -95,7 +94,7 @@ class SyncEffortsheet extends Command
 
                     $projectTeamMember = $portalUser->projectTeamMembers()->active()->where('project_id', $project->id)->first();
 
-                    if (!$projectTeamMember) {
+                    if (! $projectTeamMember) {
                         continue;
                     }
 
