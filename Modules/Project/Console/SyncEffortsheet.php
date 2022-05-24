@@ -55,6 +55,8 @@ class SyncEffortsheet extends Command
                 }
 
                 $correctedEffortsheetUrl = [];
+                
+                // This preg match is used to filter the gid form the google sheet url so that we always get the first sheet from the google sheet
                 $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
 
                 if (! $isSyntaxMatching) {
@@ -67,15 +69,15 @@ class SyncEffortsheet extends Command
                 $range = 'C2:G' . ($projectMembersCount + 1); // this will depend on the number of people on the project
 
                 try {
-                    $sheets = $sheet->spreadsheet($sheetId)
+                    $usersData = $sheet->spreadsheet($sheetId)
                                     ->range($range)
                                     ->get();
                 } catch (Exception $e) {
                     continue;
                 }
 
-                foreach ($sheets as $user) {
-                    $userNickname = $user[0];
+                foreach ($usersData as $sheetUser) {
+                    $userNickname = $sheetUser[0];
                     $portalUsers = clone $users;
                     $portalUser = $portalUsers->where('nickname', $userNickname)->first();
 
@@ -83,8 +85,8 @@ class SyncEffortsheet extends Command
                         continue;
                     }
 
-                    $billingStartDate = Carbon::create($user[1]);
-                    $billingEndDate = Carbon::create($user[2]);
+                    $billingStartDate = Carbon::create($sheetUser[1]);
+                    $billingEndDate = Carbon::create($sheetUser[2]);
                     $currentDate = now(config('constants.timezone.indian'))->today();
 
                     if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
@@ -98,14 +100,14 @@ class SyncEffortsheet extends Command
                     }
 
                     $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
-                        ->where('added_on', '<', Carbon::now(config('constants.timezone.indian'))->format('Y-m-d'))
+                        ->where('added_on', '<', $currentDate)
                         ->orderBy('added_on', 'DESC')->first();
-                    $actualEffort = $user[4];
+                    $actualEffort = $sheetUser[4];
 
                     if ($latestProjectTeamMemberEffort) {
                         $previousEffortDate = Carbon::parse($latestProjectTeamMemberEffort->added_on);
 
-                        if ($previousEffortDate->format('Y-m-d') >= $billingStartDate->format('Y-m-d') && $previousEffortDate->format('Y-m-d') <= $billingEndDate->format('Y-m-d')) {
+                        if ($previousEffortDate >= $billingStartDate && $previousEffortDate <= $billingEndDate) {
                             $actualEffort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
                         }
                     }
@@ -113,11 +115,11 @@ class SyncEffortsheet extends Command
                     ProjectTeamMemberEffort::updateOrCreate(
                         [
                             'project_team_member_id' => $projectTeamMember->id,
-                            'added_on' => $currentDate->format('Y-m-d'),
+                            'added_on' => $currentDate,
                         ],
                         [
                             'actual_effort' => $actualEffort,
-                            'total_effort_in_effortsheet' => $user[4],
+                            'total_effort_in_effortsheet' => $sheetUser[4],
                         ]
                     );
                 }
