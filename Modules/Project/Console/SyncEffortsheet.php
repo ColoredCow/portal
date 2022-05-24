@@ -48,20 +48,20 @@ class SyncEffortsheet extends Command
 
         foreach ($projects as $project) {
             try {
-                $effortSheetURL = $project->effort_sheet_url;
+                $effortSheetUrl = $project->effort_sheet_url;
 
-                if (! $effortSheetURL) {
+                if (! $effortSheetUrl) {
                     continue;
                 }
 
-                $matchesId = [];
-                $matchesSheetId = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetURL, $matchesId);
+                $correctedEffortsheetUrl = [];
+                $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
 
-                if (! $matchesSheetId) {
+                if (! $isSyntaxMatching) {
                     continue;
                 }
 
-                $sheetId = $matchesId[1];
+                $sheetId = $correctedEffortsheetUrl[1];
                 $sheet = new Sheets();
                 $projectMembersCount = $project->teamMembers()->count();
                 $range = 'C2:G' . ($projectMembersCount + 1); // this will depend on the number of people on the project
@@ -113,7 +113,7 @@ class SyncEffortsheet extends Command
                     ProjectTeamMemberEffort::updateOrCreate(
                         [
                             'project_team_member_id' => $projectTeamMember->id,
-                            'added_on' => Carbon::now(config('constants.timezone.indian'))->format('Y-m-d'),
+                            'added_on' => $currentDate->format('Y-m-d'),
                         ],
                         [
                             'actual_effort' => $actualEffort,
