@@ -41,7 +41,7 @@
                         <td>{{ $loop->iteration }}</td>
 						<td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
 						<td>{{ $invoice->client->name }}</td>
-						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice') : '' }}</td>
+						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1) ? 'India' : 'Export') : '' }}</td>
 						<td>{{ $invoice->invoice_number }}</td>
 						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1 ) ? (isset($invoice->client->gst_num) ? $invoice->client->gst_num : 'B2C') : 'Export') : '' }}</td>
 						<td>{{ $invoice->invoiceAmount() }}</td>
