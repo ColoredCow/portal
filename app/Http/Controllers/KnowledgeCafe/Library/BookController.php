@@ -219,10 +219,14 @@ class BookController extends Controller
 
     public function getBookList()
     {
+        try {
+            $pageNumber = ((int) request()->get('page', 1)) > 0 ? ((int) request()->get('page', 1)) : 1;
+        } catch (\Exception $e) {
+            $pageNumber = 1;
+        }
         $books = (request()->has('cat')) ?
-        Book::getByCategoryName(request()->input('cat')) :
-        Book::with(['categories'])->orderBy('title')
-            ->get();
+            Book::getByCategoryName(request()->input('cat')) : 
+            Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
         $data = [];
         foreach ($books as $index => $book) {
