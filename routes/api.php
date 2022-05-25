@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {
     Route::prefix('library')->namespace('Library')->group(function () {
         Route::get('book/getList', 'BookController@getBookList');
+        Route::get('book/getCount', 'BookController@getBooksCount');
     });
     Route::resource('weeklydoses', 'WeeklyDoseController')->only(['store']);
 });
