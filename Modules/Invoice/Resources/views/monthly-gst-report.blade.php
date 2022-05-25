@@ -15,6 +15,10 @@
     <br>
 
     <div>
+        @include('invoice::subviews.gst-report.filters')
+    </div>
+
+    <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
