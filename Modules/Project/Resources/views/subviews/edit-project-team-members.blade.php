@@ -7,7 +7,7 @@
             @csrf
             <input type="hidden" value="project_team_members" name="update_section">
 
-            <div class="card-body">
+            <div class="card-body form-body">
                 <div class="row mb-2">
                     <div class="col-3">
                         Team Members
@@ -15,8 +15,11 @@
                     <div class="col-3">
                         Designations
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         Expected Daily Effort
+                    </div>
+                    <div class="col-2">
+                        Expected Weekly Effort
                     </div>
                 </div>
 
@@ -35,8 +38,12 @@
                             <option v-for="(designation, key) in designations" :value="key">@{{ designation }}</option>
                         </select>
                     </div>
-                    <div class="col-3">
-                        <input type="number" :name="`project_team_member[${index}][daily_expected_effort]`" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control">
+                    <div class="col-2 daily-effort-div" >
+                        <input type="number" :name="`project_team_member[${index}][daily_expected_effort]`" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
+                    </div>
+
+                    <div class="col-2 weekly-effort-div">
+                        <input type="number" :value="projectTeamMember.pivot.daily_expected_effort*5" class="form-control weekly-effort">
                     </div>
                     <div class="col-2">
                         <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
