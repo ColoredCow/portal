@@ -9,10 +9,10 @@
 
             <div class="card-body form-body">
                 <div class="row mb-2">
-                    <div class="col-2">
+                    <div class="col-3">
                         Team Members
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         Designations
                     </div>
                     <div class="col-2">
@@ -23,15 +23,15 @@
                     </div>
                 </div>
 
-                <div class="row mb-2" v-for="(projectTeamMember, index) in projectTeamMembers" :key="projectTeamMember.id">
+                <div class="row mb-3" v-for="(projectTeamMember, index) in projectTeamMembers" :key="projectTeamMember.id">
                     <input hidden type="text" :name="`project_team_member[${index}][project_team_member_id]`" :value="projectTeamMember.pivot.id" class="form-control">
-                    <div class="col-2">
+                    <div class="col-3">
                         <select v-model="projectTeamMember.id" :name="`project_team_member[${index}][team_member_id]`" class="form-control">
                             <option value="">Select team member</option>
                             <option v-for="(teamMember) in users" :value="teamMember.id" :key="teamMember.id">@{{ teamMember.name }}</option>
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="form-control">
                             <option value="">Select Designations</option>
 
