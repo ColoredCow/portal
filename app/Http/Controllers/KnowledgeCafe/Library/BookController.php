@@ -225,7 +225,7 @@ class BookController extends Controller
             $pageNumber = 1;
         }
         $books = (request()->has('cat')) ?
-            Book::getByCategoryName(request()->input('cat')) : 
+            Book::getByCategoryName(request()->input('cat')):
             Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
         $data = [];
