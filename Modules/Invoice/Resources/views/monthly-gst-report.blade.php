@@ -43,7 +43,7 @@
 						<td>{{ $invoice->client->name }}</td>
 						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 1) ? 'India' : 'Export') : '' }}</td>
 						<td>{{ $invoice->invoice_number }}</td>
-						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 1 ) ? (isset($clientAddress[$key]->gst_number) ? $clientAddress[$key]->gst_number : 'B2C') : 'Export') : '' }}</td>
+						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 1 ) ? (isset($clientAddress[$key]->gst_number)  ? $clientAddress[$key]->gst_number : 'B2C') : 'Export') : '' }}</td>
 						<td>{{ $invoice->invoiceAmount() }}</td>
 						<td>{{ $currentRates }}</td>
 						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount()) : '' }}</td>
