@@ -221,7 +221,7 @@ class BookController extends Controller
     {
         $books = (request()->has('cat')) ?
             Book::getByCategoryName(request()->input('cat'))->count() :
-            Book::all()->count();
+            Book::count();
 
         return $books;
     }
