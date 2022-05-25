@@ -217,6 +217,15 @@ class BookController extends Controller
         ]);
     }
 
+    public function getBooksCount()
+    {
+        $books = (request()->has('cat')) ?
+            Book::getByCategoryName(request()->input('cat'))->count() :
+            Book::count();
+
+        return $books;
+    }
+
     public function getBookList()
     {
         try {
