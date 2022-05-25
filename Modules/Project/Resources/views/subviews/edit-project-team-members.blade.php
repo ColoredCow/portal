@@ -51,7 +51,7 @@
                 </div>
 
                 <div>
-                    <span v-on:click="addNewProjectTeamMember()" style="text-decoration: underline;" class="text-underline" >Add new team member</span>
+                    <span v-on:click="addNewProjectTeamMember()" style="text-decoration: underline;" class="text-underline btn" >Add new team member</span>
                 </div>
 
             </div>
