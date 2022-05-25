@@ -48,7 +48,7 @@
 @endsection
 
 
-@section('js_scripts')
+@section('vue_scripts')
     <script>
         new Vue({
             el: '#view_edit_project',
