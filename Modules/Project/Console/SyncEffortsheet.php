@@ -72,7 +72,7 @@ class SyncEffortsheet extends Command
                 $projectsInSheet = array();
 
                 try {
-                    while(true) {
+                    while (true) {
                         $range = 'C1:' . ++$endColumn . '1';
                         $sheets = $sheet->spreadsheet($sheetId)
                             ->range($range)
@@ -81,9 +81,9 @@ class SyncEffortsheet extends Command
                         if (isset($sheets[0]) && sizeof($sheets[0]) == ++$columnIndex) {
                             $subProjectName = $sheets[0][sizeof($sheets[0]) - 1];
                             $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
-                            if($subProject) {
+                            if ($subProject) {
                                 $projectsInSheet[] = [
-                                    'id' => $subProject->id, 
+                                    'id' => $subProject->id,
                                     'name' => $subProjectName,
                                     'sheetIndex' => $columnIndex - 1
                                 ];
@@ -104,7 +104,7 @@ class SyncEffortsheet extends Command
                 $sheetIndexForTeamMemberName = $this->getColumnIndex($sheetColumnsName['team_member_name'], $sheets[0]);
                 $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheets[0]);
                 $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheets[0]);
-                $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheets[0]);   
+                $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheets[0]);
                 
                 if ($sheetIndexForTeamMemberName && $sheetIndexForTotalBillableEffort && $sheetIndexForStartDate && $sheetIndexForEndDate === false) {
                     continue;
@@ -112,7 +112,7 @@ class SyncEffortsheet extends Command
 
                 if (sizeof($projectsInSheet) == 0) {
                     $projectsInSheet[] = [
-                        'id' => $project->id, 
+                        'id' => $project->id,
                         'name' => $project->name,
                         'sheetIndex' => $sheetIndexForTotalBillableEffort
                     ];
@@ -178,7 +178,7 @@ class SyncEffortsheet extends Command
         return false;
     }
 
-    public function updateEffort(array $effortData) 
+    public function updateEffort(array $effortData)
     {
         $currentDate = now(config('constants.timezone.indian'))->today();
         $projectTeamMember = $effortData['portal_user']->projectTeamMembers()->active()->where('project_id', $effortData['sheet_project']['id'])->first();
