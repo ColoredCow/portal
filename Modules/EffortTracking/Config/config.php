@@ -11,6 +11,6 @@ return [
         'actual_effort' => 'actual effort',
         'billable_effort' => 'billable effort',
     ],
-    'default_end_column_in_effort_sheet' => 'G',
+    'default_last_column_in_effort_sheet' => 'G',
     'default_start_column_in_effort_sheet' => 'C',
 ];

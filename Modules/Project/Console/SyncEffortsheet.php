@@ -67,13 +67,13 @@ class SyncEffortsheet extends Command
                 $sheetId = $correctedEffortsheetUrl[1];
                 $sheet = new Sheets();
                 $projectMembersCount = $project->teamMembers()->count();
-                $endColumn = config('efforttracking.default_end_column_in_effort_sheet');
+                $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
                 $columnIndex = 5;
                 $projectsInSheet = array();
 
                 try {
                     while (true) {
-                        $range = 'C1:' . ++$endColumn . '1';
+                        $range = 'C1:' . ++$lastColumn . '1';
                         $sheets = $sheet->spreadsheet($sheetId)
                             ->range($range)
                             ->get();
@@ -91,7 +91,7 @@ class SyncEffortsheet extends Command
                             continue;
                         }
                         
-                        $endColumn = chr(ord($endColumn) - 1);
+                        $lastColumn = chr(ord((string)$lastColumn) - 1);
                         $columnIndex--;
                         break;
                     }
@@ -99,7 +99,7 @@ class SyncEffortsheet extends Command
                     continue;
                 }
 
-                $range = config('efforttracking.default_start_column_in_effort_sheet') . ':2' . $endColumn . ($projectMembersCount + 1); // this will depend on the number of people on the project
+                $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . $lastColumn . ($projectMembersCount + 1); // this will depend on the number of people on the project
 
                 $sheetIndexForTeamMemberName = $this->getColumnIndex($sheetColumnsName['team_member_name'], $sheets[0]);
                 $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheets[0]);
@@ -117,7 +117,6 @@ class SyncEffortsheet extends Command
                         'sheetIndex' => $sheetIndexForTotalBillableEffort
                     ];
                 }
-
                 try {
                     $usersData = $sheet->spreadsheet($sheetId)
                         ->range($range)
@@ -162,7 +161,7 @@ class SyncEffortsheet extends Command
                     }
                 }
             } catch (Exception $e) {
-                continue;
+                dd($e);
             }
         }
     }
