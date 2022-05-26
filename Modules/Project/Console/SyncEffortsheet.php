@@ -74,12 +74,12 @@ class SyncEffortsheet extends Command
                 try {
                     while (true) {
                         $range = 'C1:' . ++$lastColumn . '1';
-                        $sheets = $sheet->spreadsheet($sheetId)
+                        $sheet = $sheet->spreadsheet($sheetId)
                             ->range($range)
                             ->get();
 
-                        if (isset($sheets[0]) && count($sheets[0]) == ++$columnIndex) {
-                            $subProjectName = $sheets[0][count($sheets[0]) - 1];
+                        if (isset($sheet[0]) && count($sheet[0]) == ++$columnIndex) {
+                            $subProjectName = $sheet[0][count($sheet[0]) - 1];
                             $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
                             if ($subProject) {
                                 $projectsInSheet[] = [
@@ -101,10 +101,10 @@ class SyncEffortsheet extends Command
 
                 $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . $lastColumn . ($projectMembersCount + 1); // this will depend on the number of people on the project
 
-                $sheetIndexForTeamMemberName = $this->getColumnIndex($sheetColumnsName['team_member_name'], $sheets[0]);
-                $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheets[0]);
-                $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheets[0]);
-                $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheets[0]);
+                $sheetIndexForTeamMemberName = $this->getColumnIndex($sheetColumnsName['team_member_name'], $sheet[0]);
+                $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheet[0]);
+                $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheet[0]);
+                $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheet[0]);
 
                 if ($sheetIndexForTeamMemberName && $sheetIndexForTotalBillableEffort && $sheetIndexForStartDate && $sheetIndexForEndDate === false) {
                     continue;
@@ -161,7 +161,7 @@ class SyncEffortsheet extends Command
                     }
                 }
             } catch (Exception $e) {
-                dd($e);
+                continue;
             }
         }
     }

@@ -5,7 +5,7 @@ return [
     'minimum_expected_hours' => 8,
     'update_date_count_after_time' => '18:00:00',
     'columns_name' => [
-        'team_member_name' => 'individual effort',
+        'team_member_name' => 'team member name',
         'start_date' => 'start date',
         'end_date' => 'end date',
         'actual_effort' => 'actual effort',
