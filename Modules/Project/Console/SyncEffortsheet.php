@@ -65,7 +65,7 @@ class SyncEffortsheet extends Command
                 }
 
                 $sheetId = $correctedEffortsheetUrl[1];
-                $sheet = new Sheets();
+                $sheets = new Sheets();
                 $projectMembersCount = $project->teamMembers()->count();
                 $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
                 $columnIndex = 5;
@@ -74,7 +74,7 @@ class SyncEffortsheet extends Command
                 try {
                     while (true) {
                         $range = 'C1:' . ++$lastColumn . '1';
-                        $sheet = $sheet->spreadsheet($sheetId)
+                        $sheet = $sheets->spreadsheet($sheetId)
                             ->range($range)
                             ->get();
 
@@ -118,7 +118,7 @@ class SyncEffortsheet extends Command
                     ];
                 }
                 try {
-                    $usersData = $sheet->spreadsheet($sheetId)
+                    $usersData = $sheets->spreadsheet($sheetId)
                         ->range($range)
                         ->get();
                 } catch (Exception $e) {
