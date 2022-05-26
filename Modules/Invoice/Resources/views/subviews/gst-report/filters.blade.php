@@ -1,10 +1,10 @@
-<form action="{{ route('invoice.details')  }}" id="invoiceFilterForm">
+<form action="{{ route('invoice.details') }}" id="invoiceFilterForm" >
     <div class="d-flex">
         <div class='form-group mr-4 w-168'>
             <select class="form-control bg-light" name="clients" onchange="document.getElementById('invoiceFilterForm').submit();">
                 <option {{ request()->input('clients') == '' ? "selected=selected" : '' }} value="">All clients</option>
                 @foreach($invoices as $invoice)
-                <option request()->input('clients') == $invoice->client->name ? "selected=selected" : '' }} value="{{ $invoice->client->name }}">{{ $invoice->client->name }}</option>
+                    <option {{ request()->input('clients') == $invoice->client->name ? "selected=selected" : '' }} value={{request()->get('clients')}}>{{ $invoice->client->name }}</option>
                 @endforeach
             </select>
         </div>
