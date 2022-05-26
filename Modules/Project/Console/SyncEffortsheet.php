@@ -69,7 +69,7 @@ class SyncEffortsheet extends Command
                 $projectMembersCount = $project->teamMembers()->count();
                 $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
                 $columnIndex = 5;
-                $projectsInSheet = array();
+                $projectsInSheet = [];
 
                 try {
                     while (true) {
@@ -77,9 +77,9 @@ class SyncEffortsheet extends Command
                         $sheets = $sheet->spreadsheet($sheetId)
                             ->range($range)
                             ->get();
-                
-                        if (isset($sheets[0]) && sizeof($sheets[0]) == ++$columnIndex) {
-                            $subProjectName = $sheets[0][sizeof($sheets[0]) - 1];
+
+                        if (isset($sheets[0]) && count($sheets[0]) == ++$columnIndex) {
+                            $subProjectName = $sheets[0][count($sheets[0]) - 1];
                             $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
                             if ($subProject) {
                                 $projectsInSheet[] = [
@@ -90,8 +90,8 @@ class SyncEffortsheet extends Command
                             }
                             continue;
                         }
-                        
-                        $lastColumn = chr(ord((string)$lastColumn) - 1);
+
+                        $lastColumn = chr(ord((string) $lastColumn) - 1);
                         $columnIndex--;
                         break;
                     }
@@ -105,12 +105,12 @@ class SyncEffortsheet extends Command
                 $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheets[0]);
                 $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheets[0]);
                 $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheets[0]);
-                
+
                 if ($sheetIndexForTeamMemberName && $sheetIndexForTotalBillableEffort && $sheetIndexForStartDate && $sheetIndexForEndDate === false) {
                     continue;
                 }
 
-                if (sizeof($projectsInSheet) == 0) {
+                if (count($projectsInSheet) == 0) {
                     $projectsInSheet[] = [
                         'id' => $project->id,
                         'name' => $project->name,
@@ -142,14 +142,14 @@ class SyncEffortsheet extends Command
                         continue;
                     }
 
-                    $effortData = array(
+                    $effortData = [
                         'portal_user' => $portalUser,
                         'sheet_user' => $sheetUser,
                         'project' => $project,
                         'billing_start_date' => $billingStartDate,
                         'billing_end_date' => $billingEndDate,
                         'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
-                    );
+                    ];
 
                     foreach ($projectsInSheet as $sheetProject) {
                         try {
