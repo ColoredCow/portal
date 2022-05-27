@@ -62,6 +62,7 @@ class Project extends Model
         $effortTracking = new EffortTrackingService;
         $teamMembers = $this->getTeamMembers()->get();
         $teamMembersDetails = $effortTracking->getTeamMembersDetails($teamMembers);
+
         return $effortTracking->getTotalEffort($teamMembersDetails);
     }
 
@@ -95,7 +96,7 @@ class Project extends Model
         }
 
         $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));
-        
+
         $currentExpectedEffort = 0;
 
         foreach ($teamMembers as $teamMember) {

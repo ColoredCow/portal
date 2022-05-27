@@ -37,11 +37,12 @@ class ProjectTeamMember extends Model
     {
         return $this->projectTeamMemberEffort()->where('added_on', '>=', now(config('constants.timezone.indian'))->startOfMonth())->sum('actual_effort');
     }
-    
+
     public function getCurrentExpectedEffortAttribute()
     {
         $project = new Project;
         $daysTillToday = count($project->getWorkingDaysList(now(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))));
+
         return $this->daily_expected_effort * $daysTillToday;
     }
 
