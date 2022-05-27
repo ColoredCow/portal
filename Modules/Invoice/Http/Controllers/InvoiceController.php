@@ -48,7 +48,6 @@ class InvoiceController extends Controller
     public function invoiceDetails(Request $request)
     {
         $filters = $request->all();
-        
         if (! $filters) {
             return redirect(route('invoice.details', $this->service->defaultGstReportFilters()));
         }
