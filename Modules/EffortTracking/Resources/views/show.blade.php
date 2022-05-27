@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="project-effort-tracking-container container py-10">
-    <a href="{{route('project.index')}}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-flex align-items-center">
+    <a href="{{ URL::previous() }}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-flex align-items-center">
         <span class="mr-1 d-inline-flex w-8 h-8 w-xl-12 h-xl-12">
             {!! file_get_contents(public_path('icons/prev-icon.svg')) !!}
         </span>
@@ -14,7 +14,7 @@
             <h2>{{$project->name}} - Effort Details for {{$currentMonth}}</h4>
             <div>
             <h2 class="fz-18 leading-22">Current Hours: <span>{{$totalEffort}}</span></h2>
-            <h2 class="fz-18 leading-22" id="projectHours">Expected Hours: <span>{{$project->monthly_estimated_hours}}</span></h2>
+            <h2 class="fz-18 leading-22" id="projectHours">Expected Hours: <span>{{$project->current_expected_hours}}</span></h2>
             <h2 class="fz-18 leading-22" id="projectHours">FTE: <span>{{$project->fte}}</span></h2>
             </div>
         </div>
@@ -36,7 +36,6 @@
                     <input type="hidden" name="team_members_effort" value="{{$teamMembersEffort}}">
                     <input type="hidden" name="workingDays" value="{{$workingDays}}">
                     <input type="hidden" name="users" value="{{$users}}">
-                    <input type="hidden" name="totalWorkingDays" value="{{$totalWorkingDays}}">
                     <canvas class="w-full" id="effortTrackingGraph"></canvas>
                 </div>
             @endif
@@ -59,13 +58,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $users = json_decode($users) @endphp
-                    @foreach($users as $user)
+                    @foreach($project->getTeamMembers as $teamMember)
                         <tr>
-                            <th scope="row" id="user-name<?php echo $user->id; ?>">{{$user->name}}</th>
-                            <td>{{$user->actual_effort}}</td>
-                            <td>{{$user->expected_effort}}</td>
-                            <td class="{{ $user->FTE >= 1 ? 'text-success' : 'text-danger' }}">{{$user->FTE}}</td>
+                            <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{$teamMember->user->name}}</th>
+                            <td>{{$teamMember->current_actual_effort}}</td>
+                            <td>{{$teamMember->current_expected_effort}}</td>
+                            <td class="{{ $teamMember->current_fte >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->current_fte}}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -55,21 +55,6 @@
                 <br>
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
-                        <input type="number" class="form-control" name="total_estimated_hours"
-                            id="total_estimated_hours" placeholder="Enter total estimated hours"
-                            value="{{ old('total_estimated_hours') ?: $project->total_estimated_hours }}">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5">
-                        <label for="monthly_estimated_hours">{{ __('Monthly Estimated Hours') }}</label>
-                        <input type="number" class="form-control" name="monthly_estimated_hours"
-                            id="monthly_estimated_hours" placeholder="Enter monthly estimated hours"
-                            value="{{ old('monthly_estimated_hours') ?: $project->monthly_estimated_hours }}">
-                    </div>
-                </div>
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
                         <label for="name" class="field-required">Project Type</label>
                         <select name="project_type" id="project_type" class="form-control" required="required">
                             @foreach (config('project.type') as $key => $project_type)
