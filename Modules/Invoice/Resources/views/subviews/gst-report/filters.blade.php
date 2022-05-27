@@ -1,17 +1,7 @@
-<form action="{{ route('invoice.details') }}" id="invoiceFilterForm" >
+<form action="{{ route('invoice.details') }}" id="invoiceFilterForm">
     <div class="d-flex">
         <div class='form-group mr-4 w-168'>
-            <select class="form-control bg-light" name="clients" onchange="document.getElementById('invoiceFilterForm').submit();">
-                <option {{ request()->input('clients') == '' ? "selected=selected" : '' }} value="">All clients</option>
-                @foreach($invoices as $invoice)
-                    <option {{ request()->input('clients') == $invoice->client->name ? "selected=selected" : '' }} value={{request()->get('clients')}}>{{ $invoice->client->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class='form-group mr-4 w-168'>
-            <select class="form-control bg-light" name="month"
-                onchange="document.getElementById('invoiceFilterForm').submit();">
+            <select class="form-control bg-light" name="month" onchange="document.getElementById('invoiceFilterForm').submit();">
                 <option {{ request()->input('month') == '' ? "selected=selected" : '' }} value="">All Months</option>
                 <option {{ request()->input('month') == '01' ? "selected=selected" : '' }} value="01">January</option>
                 <option {{ request()->input('month') == '02' ? "selected=selected" : '' }} value="02">February</option>

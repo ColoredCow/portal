@@ -58,12 +58,12 @@ class InvoiceService implements InvoiceServiceContract
         $totalAmount = 0;
         $currentRates = $this->currencyService()->getCurrentRatesInINR();
 
-            if ($invoice->isAmountInINR()) {
-                $totalAmount += (int) $invoice->amount;
-            }
+        if ($invoice->isAmountInINR()) {
+            $totalAmount += (int) $invoice->amount;
+        }
 
-            $invoiceAmount = $currentRates * (int) $invoice->amount;
-            $totalAmount += $invoiceAmount;
+        $invoiceAmount = $currentRates * (int) $invoice->amount;
+        $totalAmount += $invoiceAmount;
 
         return round($totalAmount, 2);
     }
@@ -215,11 +215,11 @@ class InvoiceService implements InvoiceServiceContract
     {
         // $invoices = Invoice::all();
         // return $invoices->map(function ($invoice) {
-            return [
-                // 'clients' => $invoice->client->name,
-                'year' => now()->format('Y'),
-                'month' => now()->format('m'),
-            ];
+        return [
+            // 'clients' => $invoice->client->name,
+            'year' => now()->format('Y'),
+            'month' => now()->format('m'),
+        ];
         // });
     }
 
@@ -249,18 +249,6 @@ class InvoiceService implements InvoiceServiceContract
         $invoices = $this
             ->applyFilters($query, $filters)
             ->get() ?: [];
-
-        // $test = [
-        //     'clients' => $filters['clients'] ?? null,
-        // ];
-        // $invoices = Invoice::applyFilters($test)->with(['linkedAsParticular' => function ($subQuery) use ($test) {
-        //     return $subQuery->applyFilters($filters)->orderBy('clients');
-        // }])->orderBy('clients')->get();
-        // $count = $invoices->count();
-
-        // $topLevel = $invoices->filter(function ($value) {
-        //     return $value->isTopLevel();
-        // });
 
         $igst = [];
         $cgst = [];
