@@ -45,7 +45,7 @@ class ProjectTeamMember extends Model
         return $this->daily_expected_effort * $daysTillToday;
     }
 
-    public function getCurrentFteAttribute() 
+    public function getCurrentFteAttribute()
     {
         return $this->current_expected_effort ? round($this->current_actual_effort / $this->current_expected_effort, 2) : 0;
     }

@@ -84,7 +84,8 @@ class Project extends Model
         return $dates;
     }
 
-    public function getCurrentExpectedHoursAttribute() {
+    public function getCurrentExpectedHoursAttribute()
+    {
         $teamMembers = $this->getTeamMembers()->get();
         $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
         $currentDate = Carbon::now(config('constants.timezone.indian'));
@@ -104,7 +105,8 @@ class Project extends Model
         return round($currentExpectedEffort, 2);
     }
 
-    public function getExpectedMonthlyHoursAttribute() {
+    public function getExpectedMonthlyHoursAttribute()
+    {
         $teamMembers = $this->getTeamMembers()->get();
         $effortTracking = new EffortTrackingService;
         $workingDaysCount = count($effortTracking->getWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
