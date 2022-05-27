@@ -290,6 +290,7 @@ class InvoiceService implements InvoiceServiceContract
     private function formatMonthlyInvoicesForExportAll($invoices)
     {
         $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
+
         return $invoices->map(function ($invoice) use ($totalReceivableAmount) {
             return [
                 'Date' =>   $invoice->sent_on->format(config('invoice.default-date-format')),
