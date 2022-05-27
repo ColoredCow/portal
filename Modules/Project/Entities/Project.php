@@ -98,7 +98,7 @@ class Project extends Model
         
         $currentExpectedEffort = 0;
 
-        foreach($teamMembers as $teamMember) {
+        foreach ($teamMembers as $teamMember) {
             $currentExpectedEffort += $teamMember->daily_expected_effort * $daysTillToday;
         }
 
