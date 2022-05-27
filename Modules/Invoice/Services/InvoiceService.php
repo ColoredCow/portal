@@ -213,14 +213,10 @@ class InvoiceService implements InvoiceServiceContract
 
     public function defaultGstReportFilters()
     {
-        // $invoices = Invoice::all();
-        // return $invoices->map(function ($invoice) {
         return [
-            // 'clients' => $invoice->client->name,
             'year' => now()->format('Y'),
             'month' => now()->format('m'),
         ];
-        // });
     }
 
     public function taxReport($filters)
@@ -257,12 +253,12 @@ class InvoiceService implements InvoiceServiceContract
         $clientAddress = [];
         $totalReceivableAmount = [];
         foreach ($invoices as $invoice) :
-            $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
-            $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-            $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
-            $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
-            $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
-            $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
+        $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
+        $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
+        $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
+        $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
+        $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
         endforeach;
 
         return [
