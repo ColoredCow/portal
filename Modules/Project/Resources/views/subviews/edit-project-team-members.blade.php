@@ -8,18 +8,18 @@
             <input type="hidden" value="project_team_members" name="update_section">
 
             <div class="card-body form-body">
-                <div class="row mb-3">
+                <div class="row mb-1">
                     <div class="col-3">
                     </div>
                     <div class="col-3">
                     </div>
-                    <div class="text-center">
-                        <div class="col-10">
+                    <div class="col-3">
+                        <div class="text-center fz-16 font-weight-bold">
                             Expected Efforts In Hours
-                         </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 fz-16 font-weight-bold">
                     <div class="col-3">
                         Team Members
                     </div>
