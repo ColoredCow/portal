@@ -32,6 +32,7 @@ class InvoiceService implements InvoiceServiceContract
             'clients' => $this->getClientsForInvoice(),
             'currencyService' => $this->currencyService(),
             'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
+            'filters' => $filters,
         ];
     }
 
