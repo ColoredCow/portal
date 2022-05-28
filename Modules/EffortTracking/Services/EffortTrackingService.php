@@ -107,7 +107,7 @@ class EffortTrackingService
         $startDate = now()->startOfMonth()->toDateString();
         $endDate = now()->endOfMonth()->toDateString();
         foreach ($teamMembers as $teamMember) {
-            $userDetails = $teamMember->getUserDetails;
+            $userDetails = $teamMember->user;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
 
             if (! $userDetails) {

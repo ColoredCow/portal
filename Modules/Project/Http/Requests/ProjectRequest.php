@@ -49,7 +49,7 @@ class ProjectRequest extends FormRequest
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
-                    'contract_file' => 'required|mimes:pdf',
+                    'contract_file' => 'nullable|mimes:pdf',
                 ];
                 break;
 
