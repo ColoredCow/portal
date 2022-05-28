@@ -89,10 +89,10 @@ class Project extends Model
     {
         $teamMembers = $this->getTeamMembers()->get();
         $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
-        $currentDate = Carbon::now(config('constants.timezone.indian'));
+        $currentDate = now(config('constants.timezone.indian'));
 
-        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
-            $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
+            $currentDate = $currentDate->subDay();
         }
 
         $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));

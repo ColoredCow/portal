@@ -51,9 +51,9 @@
                             <label for="name" class="font-weight-bold">Effortsheet:</label>
                         </h4>
                         @if($project->effort_sheet_url)
-                        <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded" target="_blank">{{ _('Open Sheet') }}</a>
+                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded" target="_blank">{{ _('Open Sheet') }}</a>
                         @else
-                        <span class="ml-2 fz-lg-22">Not Available</span>
+                            <span class="ml-2 fz-lg-22">Not Available</span>
                         @endif
                     </div>
                 </div>
