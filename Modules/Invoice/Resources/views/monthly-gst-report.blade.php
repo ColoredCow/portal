@@ -50,7 +50,7 @@
                     <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 1 ) ? (isset($clientAddress[$key]->gst_number)  ? $clientAddress[$key]->gst_number : 'B2C') : 'Export') : '' }}</td>
                     <td>{{ $invoice->invoiceAmount() }}</td>
                     <td>{{ $currentRates }}</td>
-                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount()) : '' }}</td>
+                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 2 ) ? "₹". $totalReceivableAmount : $invoice->invoiceAmount()) : '' }}</td>
                     <td>{{ $invoice->display_amount }}</td>
                     <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != config('invoice.invoice-details.billing-state')) ? $igst[$key] : '0') : ''}}</td>
                     <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $cgst[$key] : '0') : '' }}</td>
