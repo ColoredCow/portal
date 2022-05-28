@@ -45,9 +45,15 @@ class InvoiceController extends Controller
     /**
      * Show the.
      */
-    public function invoiceDetails()
+    public function invoiceDetails(Request $request)
     {
-        return view('invoice::monthly-gst-report', $this->service->invoiceDetails());
+        $filters = $request->all();
+
+        if (! $filters) {
+            return redirect(route('invoice.details', $this->service->defaultGstReportFilters()));
+        }
+
+        return view('invoice::monthly-gst-report', $this->service->invoiceDetails($filters));
     }
 
     public function monthlyGSTTaxReportExport(Request $request)
