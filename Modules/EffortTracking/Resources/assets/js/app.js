@@ -1,24 +1,24 @@
 $(function () {
-	$(".fa-refresh").on('click', function () {
+	$(".fa-refresh").on("click", function () {
 		let button = $(this).prop("disabled", true);
-		button.toggleClass('d-none');
-		button.siblings('.fa-spinner').toggleClass('d-none');
+		button.toggleClass("d-none");
+		button.siblings(".fa-spinner").toggleClass("d-none");
 		
 		$.ajax({
-			url: button.data('url'),
-			type: 'POST',
+			url: button.data("url"),
+			type: "POST",
 			success: function(response) {
 				setTimeout(() => {
 					button.prop("disabled", false);
-					button.toggleClass('d-none');
-					button.siblings('.fa-spinner').toggleClass('d-none');
+					button.toggleClass("d-none");
+					button.siblings(".fa-spinner").toggleClass("d-none");
 					window.location.href = window.location.href;
 				}, 3000);
 			},
 			error: function(response) {
 				button.prop("disabled", true);
-				button.toggleClass('d-none');
-				button.siblings('.fa-spinner').toggleClass('d-none');
+				button.toggleClass("d-none");
+				button.siblings(".fa-spinner").toggleClass("d-none");
 			},
 		});
 	});;
@@ -141,10 +141,10 @@ if ($(".effort-tracking-data").find("canvas").length) {
 }
 
 function effortTrackingChart() {
-	const effortDetails = JSON.parse($("input[name='team_members_effort']").val()),
-		workingDays = JSON.parse($("input[name='workingDays']").val()),
-		users = JSON.parse($("input[name='users']").val()),
-		totalWorkingDays = $("input[name='totalWorkingDays']").val(),
+	const effortDetails = JSON.parse($("input[name="team_members_effort"]").val()),
+		workingDays = JSON.parse($("input[name="workingDays"]").val()),
+		users = JSON.parse($("input[name="users"]").val()),
+		totalWorkingDays = $("input[name="totalWorkingDays"]").val(),
 		estimatedHours = $("#projectHours").find("span").html(),
 		datasetValue = [],
 		hoursPerDay = [];
