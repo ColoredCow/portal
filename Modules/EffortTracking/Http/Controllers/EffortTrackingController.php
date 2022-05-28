@@ -35,7 +35,7 @@ class EffortTrackingController extends Controller
         if ($this->service->refreshEfforts($project)) {
             return response()->json(['message' => 'Effort updated successfully'], 200);
         }
-        
+
         return response()->json(['message' => 'Error occurred'], 404);
     }
 }
