@@ -5,8 +5,8 @@ $(document).ready(function () {
 
 	$(".form-body").on("keyup", ".daily-effort", function() {
 		var dailyEffort=$(this).val();
-		const objdays = document.getElementById('working_days_in_month');
-		const daysInMonth = objdays.getAttribute('data-days-count');
+		const objdays = document.getElementById("working_days_in_month");
+		const daysInMonth = objdays.getAttribute("data-days-count");
 		if (dailyEffort== "") {
 			$(this).parent(".daily-effort-div").siblings(".weekly-effort-div").children(".weekly-effort").val("");
 			$(this).parent(".daily-effort-div").siblings(".monthly-effort-div").children(".monthly-effort").val("");
@@ -18,8 +18,8 @@ $(document).ready(function () {
 
 	$(".form-body").on("keyup", ".weekly-effort", function() {
 		var weeklyEffort=$(this).val();
-		const objdays = document.getElementById('working_days_in_month');
-		const daysInMonth = objdays.getAttribute('data-days-count');
+		const objdays = document.getElementById("working_days_in_month");
+		const daysInMonth = objdays.getAttribute("data-days-count");
 		var weeks = daysInMonth/5;
 		if (weeklyEffort=="") {
 			$(this).parent(".weekly-effort-div").siblings(".daily-effort-div").children(".daily-effort").val("");
@@ -33,8 +33,8 @@ $(document).ready(function () {
 
 	$(".form-body").on("keyup", ".monthly-effort", function() {
 		var monthlyEffort=$(this).val();
-		const objdays = document.getElementById('working_days_in_month');
-		const daysInMonth = objdays.getAttribute('data-days-count');
+		const objdays = document.getElementById("working_days_in_month");
+		const daysInMonth = objdays.getAttribute("data-days-count");
 		var weeks = daysInMonth/5;
 		if (monthlyEffort=="") {
 			$(this).parent(".monthly-effort-div").siblings(".daily-effort-div").children(".daily-effort").val("");

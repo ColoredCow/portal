@@ -198,8 +198,8 @@ class ProjectService implements ProjectServiceContract
 
         return sprintf('%03s', $clientProjectsCount);
     }
-    public function getWorkingDays() 
-    {   
+    public function getWorkingDays()
+    {
         $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
         $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
         $period = CarbonPeriod::create($startDate, $endDate);
@@ -210,7 +210,7 @@ class ProjectService implements ProjectServiceContract
                 $numberOfWorkingDays++;
             }
         }
-        
+
         return $numberOfWorkingDays;    
     }
 }
