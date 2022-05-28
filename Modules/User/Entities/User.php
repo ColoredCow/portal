@@ -118,7 +118,7 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project_team_members', 'team_member_id', 'project_id');
+        return $this->belongsToMany(Project::class, 'project_team_members', 'team_member_id', 'project_id')->wherePivot('ended_on', NULL);
     }
 
     public function meta()

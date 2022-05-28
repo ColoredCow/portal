@@ -3,7 +3,13 @@
 namespace Modules\EffortTracking\Services;
 
 use Carbon\Carbon;
+use Exception;
 use Carbon\CarbonPeriod;
+use Modules\Project\Entities\Project;
+use Modules\User\Entities\User;
+use Revolution\Google\Sheets\Sheets;
+use Illuminate\Support\Str;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
 
 class EffortTrackingService
 {
@@ -11,16 +17,16 @@ class EffortTrackingService
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
-        $currentDate = Carbon::now(config('constants.timezone.indian'));
+        $currentDate = now(config('constants.timezone.indian'));
 
-        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-            $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
 
         $totalEffort = $this->getTotalEffort($teamMembersDetails);
         $workingDays = $this->getWorkingDays(now()->startOfMonth(), $currentDate);
-        $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
-        $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
+        $startDate = now(config('constants.timezone.indian'))->startOfMonth();
+        $endDate = now(config('constants.timezone.indian'))->endOfMonth();
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
 
         return [
@@ -126,10 +132,10 @@ class EffortTrackingService
                 }
             }
 
-            $currentDate = Carbon::now(config('constants.timezone.indian'));
+            $currentDate = now(config('constants.timezone.indian'));
 
-            if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-                $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
+            if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+                $currentDate = now(config('constants.timezone.indian'))->subDay();
             }
 
             $teamMembersEffortUserDetails = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id]) : [];
@@ -148,5 +154,171 @@ class EffortTrackingService
             'teamMembersEffort' => empty($teamMembersEffort) ? 0 : $teamMembersEffort,
             'users' => $users,
         ];
+    }
+
+    public function refreshEfforts($project)
+    {
+        $users = User::with('projectTeamMembers');
+        $sheetColumnsName = config('efforttracking.columns_name');
+        try {
+            $effortSheetUrl = $project->effort_sheet_url;
+
+            if (! $effortSheetUrl) {
+                return false;
+            }
+
+            $correctedEffortsheetUrl = [];
+
+            $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
+
+            if (! $isSyntaxMatching) {
+                return false;
+            }
+
+            $sheetId = $correctedEffortsheetUrl[1];
+            $sheets = new Sheets();
+            $projectMembersCount = $project->teamMembers()->count();
+            $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
+            $columnIndex = 5;
+            $projectsInSheet = [];
+
+            try {
+                while (true) {
+                    $range = 'C1:' . ++$lastColumn . '1';
+                    $sheet = $sheets->spreadsheet($sheetId)
+                        ->range($range)
+                        ->get();
+
+                    if (isset($sheet[0]) && count($sheet[0]) == ++$columnIndex) {
+                        $subProjectName = $sheet[0][count($sheet[0]) - 1];
+                        $subProject = Project::where(['name' => $subProjectName, 'status' => 'active'])->first();
+                        if ($subProject) {
+                            $projectsInSheet[] = [
+                                'id' => $subProject->id,
+                                'name' => $subProjectName,
+                                'sheetIndex' => $columnIndex - 1
+                            ];
+                        }
+                        continue;
+                    }
+
+                    $lastColumn = chr(ord((string) $lastColumn) - 1);
+                    $columnIndex--;
+                    break;
+                }
+            } catch (Exception $e) {
+                return false;
+            }
+
+            $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . $lastColumn . ($projectMembersCount + 1); // this will depend on the number of people on the project
+            $sheetIndexForTeamMemberName = $this->getColumnIndex($sheetColumnsName['team_member_name'], $sheet[0]);
+            $sheetIndexForTotalBillableEffort = $this->getColumnIndex($sheetColumnsName['billable_effort'], $sheet[0]);
+            $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheet[0]);
+            $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheet[0]);
+
+            if ($sheetIndexForTeamMemberName && $sheetIndexForTotalBillableEffort && $sheetIndexForStartDate && $sheetIndexForEndDate === false) {
+                return false;
+            }
+
+            if (count($projectsInSheet) == 0) {
+                $projectsInSheet[] = [
+                    'id' => $project->id,
+                    'name' => $project->name,
+                    'sheetIndex' => $sheetIndexForTotalBillableEffort
+                ];
+            }
+
+            try {
+                $usersData = $sheets->spreadsheet($sheetId)
+                    ->range($range)
+                    ->get();
+            } catch (Exception $e) {
+                return false;
+            }
+
+            foreach ($usersData as $sheetUser) {
+                $userNickname = $sheetUser[$sheetIndexForTeamMemberName];
+                $portalUsers = clone $users;
+                $portalUser = $portalUsers->where('nickname', $userNickname)->first();
+
+                if (! $portalUser) {
+                    continue;
+                }
+
+                $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
+                $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
+                $currentDate = now(config('constants.timezone.indian'))->today();
+
+                if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
+                    continue;
+                }
+
+                $effortData = [
+                    'portal_user' => $portalUser,
+                    'sheet_user' => $sheetUser,
+                    'project' => $project,
+                    'billing_start_date' => $billingStartDate,
+                    'billing_end_date' => $billingEndDate,
+                    'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
+                ];
+
+                foreach ($projectsInSheet as $sheetProject) {
+                    try {
+                        $effortData['sheet_project'] = $sheetProject;
+                        $this->updateEffort($effortData);
+                    } catch (Exception $e) {
+                        continue;
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getColumnIndex($columnName, $sheetColumns)
+    {
+        foreach ($sheetColumns as $columnIndex => $sheetColumn) {
+            if (Str::lower($sheetColumn) == $columnName) {
+                return $columnIndex;
+            }
+        }
+
+        return false;
+    }
+
+    public function updateEffort(array $effortData)
+    {
+        $currentDate = now(config('constants.timezone.indian'))->today();
+        $projectTeamMember = $effortData['portal_user']->projectTeamMembers()->active()->where('project_id', $effortData['sheet_project']['id'])->first();
+
+        if (! $projectTeamMember) {
+            return;
+        }
+        $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
+            ->where('added_on', '<', $currentDate)
+            ->orderBy('added_on', 'DESC')->first();
+
+        $billableEffort = $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']];
+
+        if ($latestProjectTeamMemberEffort) {
+            $previousEffortDate = Carbon::parse($latestProjectTeamMemberEffort->added_on);
+            if ($previousEffortDate >= $effortData['billing_start_date'] && $previousEffortDate <= $effortData['billing_end_date']) {
+                $billableEffort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
+            }
+        }
+
+        ProjectTeamMemberEffort::updateOrCreate(
+            [
+                'project_team_member_id' => $projectTeamMember->id,
+                'added_on' => $currentDate,
+            ],
+            [
+                'actual_effort' => $billableEffort,
+                'total_effort_in_effortsheet' => $effortData['sheet_user'][$effortData['sheet_project']['sheetIndex']],
+            ]
+        );
     }
 }

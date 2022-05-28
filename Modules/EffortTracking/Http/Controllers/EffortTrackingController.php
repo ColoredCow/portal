@@ -25,4 +25,17 @@ class EffortTrackingController extends Controller
 
         return view('efforttracking::show')->with($data);
     }
+
+    /**
+     * Refresh the efforts of the project team members.
+     * @param Project $project
+     */
+    public function refreshEfforts(Project $project)
+    {
+        if($this->service->refreshEfforts($project)) {
+            return response()->json(['message' => 'Effort updated successfully'], 200);
+        }
+        
+        return response()->json(['message' => 'Error occurred'], 404);
+    }
 }

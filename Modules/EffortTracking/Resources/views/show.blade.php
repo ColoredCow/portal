@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="project-effort-tracking-container container py-10">
-    <a href="{{ URL::previous() }}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-flex align-items-center">
+    <a href="{{ route('project.index') }}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-flex align-items-center">
         <span class="mr-1 d-inline-flex w-8 h-8 w-xl-12 h-xl-12">
             {!! file_get_contents(public_path('icons/prev-icon.svg')) !!}
         </span>
@@ -45,7 +45,9 @@
 <div class="project-resource-effort-tracking-container container mt-4 pb-10">
     <div class="card">
         <div class="card-header">
-            <h4>{{$project->name}} - Members</h4>
+            <div>
+                <h4>{{$project->name}} - Members <i class="fa fa-spinner fa-spin ml-2 d-none"></i> <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true" data-url="{{ route('effort-tracking.refresh', $project) }}"></i></h4>
+            </div>
         </div>
         <div class="table-responsive">
             <table class="table">
