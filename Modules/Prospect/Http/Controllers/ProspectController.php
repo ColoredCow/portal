@@ -74,7 +74,7 @@ class ProspectController extends Controller
     {
         $data = $this->service->update($request->all(), $id);
 
-        return redirect($data['route'])->with('status', 'Prospect created/updated  succesfully!');
+        return redirect($data['route'])->with('status', 'Prospect created/updated succesfully!');
     }
 
     public function newProgressStage(Request $request)
