@@ -3,6 +3,7 @@
 namespace Modules\Project\Services;
 
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
@@ -196,5 +197,20 @@ class ProjectService implements ProjectServiceContract
         $clientProjectsCount = $clientProjectsCount + 1;
 
         return sprintf('%03s', $clientProjectsCount);
+    }
+    public function getWorkingDays()
+    {
+        $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
+        $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $numberOfWorkingDays = 0;
+        $weekend = ['Saturday', 'Sunday'];
+        foreach ($period as $date) {
+            if (! in_array($date->format('l'), $weekend)) {
+                $numberOfWorkingDays++;
+            }
+        }
+
+        return $numberOfWorkingDays;
     }
 }

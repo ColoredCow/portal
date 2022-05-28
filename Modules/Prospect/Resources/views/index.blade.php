@@ -4,6 +4,14 @@
 <div class="container" id="">
     {{-- @include('prospect::menu_header') --}}
     <br>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class="d-flex justify-content-between mb-2">
         <h4 class="mb-1 pb-1">{{ config('prospect.status')[request()->input('status', 'active')] }} Prospects ({{ $count?? 0 }})</h4>
         <span>
