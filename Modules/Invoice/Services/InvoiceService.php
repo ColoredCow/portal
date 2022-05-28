@@ -256,7 +256,7 @@ class InvoiceService implements InvoiceServiceContract
         $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
         $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
         $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
-        $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
+        $totalReceivableAmount = (int) $invoice->invoiceAmount() * $this->currencyService()->getCurrentRatesInINR();
         endforeach;
 
         return [
@@ -287,8 +287,6 @@ class InvoiceService implements InvoiceServiceContract
 
     private function formatMonthlyInvoicesForExportAll($invoices)
     {
-        $totalReceivableAmount = $this->getTotalReceivableAmountInINR($invoices);
-
         return $invoices->map(function ($invoice) {
             return [
                 'Date' =>   $invoice->sent_on->format(config('invoice.default-date-format')),
