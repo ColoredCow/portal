@@ -75,9 +75,6 @@ class InvoiceService implements InvoiceServiceContract
         $data['receivable_date'] = $data['due_on'];
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
-        // Todo: We need to update the logic to set invoice numbers. It should get
-        // generated using a combination of invoice id, project id, and client id.
-        // We can also move this to observer if this function does not have lot of code.
         $this->setInvoiceNumber($invoice, $data['sent_on']);
 
         return $invoice;
@@ -348,11 +345,14 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getInvoiceNumber($client_id, $project_id, $sent_date)
     {
+        $client = Client::find($client_id);
         $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
-        $client_project_id = Project::find($project_id)->client_project_id;
         $client_type = ($country_id == 1) ? 'IN' : 'EX';
-        $invoice_sequence = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->count();
-        $invoice_number = $client_type . sprintf('%03s', $client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . date('m', strtotime($sent_date)) . date('y', strtotime($sent_date));
+        $client_project_id = Project::find($project_id)->client_project_id;
+        $last_invoice = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->orderBy('id', 'DESC')->get()->offsetGet(1);
+        $invoice_sequence = (int) Str::substr($last_invoice->invoice_number, 8, 6) + 1;
+
+        $invoice_number = $client_type . sprintf('%03s', $client->client_id) . $client_project_id . sprintf('%06s', $invoice_sequence) . date('m', strtotime($sent_date)) . date('y', strtotime($sent_date));
 
         return $invoice_number;
     }
