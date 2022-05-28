@@ -203,7 +203,7 @@ class ProjectService implements ProjectServiceContract
         $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
         $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
         $period = CarbonPeriod::create($startDate, $endDate);
-        $numberOfWorkingDays = 0; 
+        $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
             if (! in_array($date->format('l'), $weekend)) {
@@ -211,6 +211,6 @@ class ProjectService implements ProjectServiceContract
             }
         }
 
-        return $numberOfWorkingDays;    
+        return $numberOfWorkingDays;
     }
 }
