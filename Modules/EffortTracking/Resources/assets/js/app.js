@@ -12,7 +12,7 @@ $(function () {
 					button.prop("disabled", false);
 					button.toggleClass("d-none");
 					button.siblings(".fa-spinner").toggleClass("d-none");
-					window.location.href = window.location.href;
+					location.reload()
 				}, 3000);
 			},
 			error: function(response) {
