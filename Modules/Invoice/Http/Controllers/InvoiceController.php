@@ -25,11 +25,7 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = $request->all();
-
-        if (! $filters) {
-            return redirect(route('invoice.index', $this->service->defaultFilters()));
-        }
+        $filters = $request->all() ?: $this->service->defaultFilters();
 
         return view('invoice::index', $this->service->index($filters));
     }
@@ -65,7 +61,7 @@ class InvoiceController extends Controller
     {
         $invoice = $this->service->store($request->all());
 
-        return redirect(route('invoice.index'));
+        return redirect(route('invoice.index'))->with('success', 'Invoice created successfully!');
     }
 
     /**
@@ -94,7 +90,7 @@ class InvoiceController extends Controller
     {
         $this->service->update($request->all(), $id);
 
-        return redirect(route('invoice.index'));
+        return redirect(route('invoice.index'))->with('success', 'Invoice updated successfully!');
     }
 
     /**
