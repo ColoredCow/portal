@@ -118,7 +118,7 @@ class InvoiceService implements InvoiceServiceContract
 
         $folder = '/invoice/' . $year . '/' . $month;
 
-        $fileName = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id, $invoice->sent_on) . '.pdf';
+        $fileName = $file->getClientOriginalName();
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
         $invoice->update(['file_path' => $file]);
     }
