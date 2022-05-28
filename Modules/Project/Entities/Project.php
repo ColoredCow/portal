@@ -68,7 +68,7 @@ class Project extends Model
 
     public function getFteAttribute()
     {
-        return $this->current_expected_hours ? round($this->current_hours_for_month/$this->current_expected_hours, 2) : 0;
+        return $this->current_expected_hours ? round($this->current_hours_for_month / $this->current_expected_hours, 2) : 0;
     }
 
     public function getWorkingDaysList($startDate, $endDate)
