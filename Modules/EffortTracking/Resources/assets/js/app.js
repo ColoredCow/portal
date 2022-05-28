@@ -141,10 +141,10 @@ if ($(".effort-tracking-data").find("canvas").length) {
 }
 
 function effortTrackingChart() {
-	const effortDetails = JSON.parse($("input[name="team_members_effort"]").val()),
-		workingDays = JSON.parse($("input[name="workingDays"]").val()),
-		users = JSON.parse($("input[name="users"]").val()),
-		totalWorkingDays = $("input[name="totalWorkingDays"]").val(),
+	const effortDetails = JSON.parse($("input[name='team_members_effort']").val()),
+		workingDays = JSON.parse($("input[name='workingDays']").val()),
+		users = JSON.parse($("input[name='users']").val()),
+		totalWorkingDays = $("input[name='totalWorkingDays']").val(),
 		estimatedHours = $("#projectHours").find("span").html(),
 		datasetValue = [],
 		hoursPerDay = [];
