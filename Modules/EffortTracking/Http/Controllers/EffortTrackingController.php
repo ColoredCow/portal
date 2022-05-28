@@ -32,7 +32,7 @@ class EffortTrackingController extends Controller
      */
     public function refreshEfforts(Project $project)
     {
-        if($this->service->refreshEfforts($project)) {
+        if ($this->service->refreshEfforts($project)) {
             return response()->json(['message' => 'Effort updated successfully'], 200);
         }
         
