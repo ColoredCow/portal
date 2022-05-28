@@ -12,7 +12,7 @@ $(function () {
 					button.prop("disabled", false);
 					button.toggleClass("d-none");
 					button.siblings(".fa-spinner").toggleClass("d-none");
-					location.reload()
+					location.reload();
 				}, 3000);
 			},
 			error: function(response) {
@@ -22,7 +22,7 @@ $(function () {
 			},
 		});
 	});;
-})
+});
 
 $(document).on("click", "#add_task", (e) => {
 	let form = $("#add_form")
