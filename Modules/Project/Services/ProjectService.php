@@ -198,20 +198,19 @@ class ProjectService implements ProjectServiceContract
 
         return sprintf('%03s', $clientProjectsCount);
     }
-    
     public function getWorkingDays() 
     {   
         $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
         $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
         $period = CarbonPeriod::create($startDate, $endDate);
-        $dates = [];
-        $numberOfWorkingDays=0; 
+        $numberOfWorkingDays = 0; 
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
             if (! in_array($date->format('l'), $weekend)) {
                 $numberOfWorkingDays++;
             }
         }
+        
         return $numberOfWorkingDays;    
     }
 }
