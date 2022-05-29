@@ -15,6 +15,10 @@
     <br>
 
     <div>
+        @include('invoice::subviews.gst-report.filters')
+    </div>
+
+    <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
@@ -36,23 +40,23 @@
             </thead>
 
             <tbody>
-				@foreach($invoices as $key => $invoice)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-						<td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
-						<td>{{ $invoice->client->name }}</td>
-						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1) ? 'India' : 'Export for international invoice') : '' }}</td>
-						<td>{{ $invoice->invoice_number }}</td>
-						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 1 ) ? (isset($invoice->client->gst_num) ? $invoice->client->gst_num : 'B2C') : 'Export') : '' }}</td>
-						<td>{{ $invoice->invoiceAmount() }}</td>
-						<td>{{ $currentRates }}</td>
-						<td>{{ $clientAddress[$key] ? (($invoice->client->country->id == 2 ) ? $totalReceivableAmount : $invoice->invoiceAmount()) : '' }}</td>
-						<td>{{ $invoice->display_amount }}</td>
-						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != config('invoice.invoice-details.billing-state')) ? $igst[$key] : '') : ''}}</td>
-						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $cgst[$key] : '') : '' }}</td>
-						<td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $sgst[$key] : '') : '' }}</td>
-						<td>{{-- HSN CODE --}}</td>
-                    </tr>
+                @foreach($invoices as $key => $invoice)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
+                    <td>{{ $invoice->client->name }}</td>
+                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 1) ? 'India' : 'Export') : '' }}</td>
+                    <td>{{ $invoice->invoice_number }}</td>
+                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 1 ) ? (isset($clientAddress[$key]->gst_number)  ? $clientAddress[$key]->gst_number : 'B2C') : 'Export') : '' }}</td>
+                    <td>{{ $invoice->invoiceAmount() }}</td>
+                    <td>{{ $currentRates }}</td>
+                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 2 ) ? "₹". $totalReceivableAmount : $invoice->invoiceAmount()) : '' }}</td>
+                    <td>{{ $invoice->display_amount }}</td>
+                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != config('invoice.invoice-details.billing-state')) ? $igst[$key] : '0') : ''}}</td>
+                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $cgst[$key] : '0') : '' }}</td>
+                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) ? $sgst[$key] : '0') : '' }}</td>
+                    <td>{{-- HSN CODE --}}</td>
+                </tr>
                 @endforeach
             </tbody>
         </table>

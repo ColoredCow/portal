@@ -58,6 +58,7 @@
                     project: @json($project),
                     projectTeamMembers: @json($projectTeamMembers),
                     projectRepositories: @json($projectRepositories),
+                    workingDaysInMonth: @json($workingDaysInMonth),
                     users: @json($teamMembers->sortBy('name')->values()),
                     designations: @json($designations)
                 }

@@ -3,7 +3,6 @@
 namespace Modules\Project\Entities;
 
 use App\Traits\Filters;
-use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -57,25 +56,18 @@ class Project extends Model
         return $this->hasMany(ProjectContract::class);
     }
 
-    public function getFteAttribute()
+    public function getCurrentHoursForMonthAttribute()
     {
         $effortTracking = new EffortTrackingService;
         $teamMembers = $this->getTeamMembers()->get();
         $teamMembersDetails = $effortTracking->getTeamMembersDetails($teamMembers);
-        $totalEffort = $effortTracking->getTotalEffort($teamMembersDetails);
-        $monthlyEstimatedHours = $this->monthly_estimated_hours;
-        $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
-        $currentDate = Carbon::now(config('constants.timezone.indian'));
 
-        if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
-            $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
-        }
+        return $effortTracking->getTotalEffort($teamMembersDetails);
+    }
 
-        $totalWorkingDaysInMonth = count($this->getWorkingDaysList(now()->startOfMonth(), now()->endOfMonth()));
-        $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));
-        $currentExpectedEffort = ($monthlyEstimatedHours / $totalWorkingDaysInMonth) * $daysTillToday;
-
-        return $monthlyEstimatedHours ? round($totalEffort / $currentExpectedEffort, 2) : 0;
+    public function getFteAttribute()
+    {
+        return $this->current_expected_hours ? round($this->current_hours_for_month / $this->current_expected_hours, 2) : 0;
     }
 
     public function getWorkingDaysList($startDate, $endDate)
@@ -90,5 +82,40 @@ class Project extends Model
         }
 
         return $dates;
+    }
+
+    public function getCurrentExpectedHoursAttribute()
+    {
+        $teamMembers = $this->getTeamMembers()->get();
+        $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
+        $currentDate = now(config('constants.timezone.indian'));
+
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
+            $currentDate = $currentDate->subDay();
+        }
+
+        $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));
+
+        $currentExpectedEffort = 0;
+
+        foreach ($teamMembers as $teamMember) {
+            $currentExpectedEffort += $teamMember->daily_expected_effort * $daysTillToday;
+        }
+
+        return round($currentExpectedEffort, 2);
+    }
+
+    public function getExpectedMonthlyHoursAttribute()
+    {
+        $teamMembers = $this->getTeamMembers()->get();
+        $effortTracking = new EffortTrackingService;
+        $workingDaysCount = count($effortTracking->getWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
+        $expectedMonthlyHours = 0;
+
+        foreach ($teamMembers as $teamMember) {
+            $expectedMonthlyHours += $teamMember->daily_expected_effort * $workingDaysCount;
+        }
+
+        return round($expectedMonthlyHours, 2);
     }
 }

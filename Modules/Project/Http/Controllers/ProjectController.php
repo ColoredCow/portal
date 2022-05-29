@@ -92,6 +92,7 @@ class ProjectController extends Controller
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),
             'designations' => $this->service->getDesignations(),
+            'workingDaysInMonth' => $this->service->getWorkingDays(),
         ]);
     }
 
