@@ -75,7 +75,7 @@ class SyncEffortsheet extends Command
                 $sheet = $sheets->spreadsheet($sheetId)
                     ->range($range)
                     ->get();
-                
+
                 foreach ($sheet as $rows) {
                     if (count($rows) == 0) {
                         break;
