@@ -145,6 +145,7 @@ class ClientService implements ClientServiceContract
     public function store($data)
     {
         $data['status'] = 'active';
+        $data['client_id'] = Client::max('client_id') + 1;
 
         return Client::create($data);
     }

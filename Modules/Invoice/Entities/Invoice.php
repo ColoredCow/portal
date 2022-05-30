@@ -86,12 +86,16 @@ class Invoice extends Model
         return trim(optional($country)->currency_symbol . ' ' . $amount);
     }
 
-    public function isInvoiceAmount()
+    public function invoiceAmounts()
     {
         $country = optional($this->client)->country;
         $amount = (int) $this->amount;
 
-        return trim(optional($country)->currency_symbol . ' ' . $amount);
+        if ($this->client->type == 'indian') {
+            $amount = (int) $this->amount + (int) $this->gst;
+        }
+
+        return $amount;
     }
 
     public function shouldHighlighted()

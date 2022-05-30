@@ -66,9 +66,9 @@
                             <label for="name" class="font-weight-bold">Effortsheet:</label>
                         </h4>
                         @if($project->effort_sheet_url)
-                        <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded" target="_blank">{{ _('Open Sheet') }}</a>
+                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded" target="_blank">{{ _('Open Sheet') }}</a>
                         @else
-                        <span class="ml-2 fz-lg-22">Not Available</span>
+                            <span class="ml-2 fz-lg-22">Not Available</span>
                         @endif
                     </div>
                 </div>
@@ -79,9 +79,9 @@
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
                         <div>
-                            <div class="d-flex flex-wrap py-2">
+                            <div class="flex-column flex-md-row d-flex flex-wrap col-md-12 px-0 ml-3">
                                 @foreach($project->teamMembers ?:[] as $teamMember)
-                                    <div class="text-capitalize w-33p fz-lg-22 my-2">
+                                    <div class="fz-lg-22 my-2 px-0 col-md-6">
                                         <span>
                                             <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
                                         </span>
