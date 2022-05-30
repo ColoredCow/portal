@@ -35,14 +35,9 @@
                 placeholder="Enter total estimated hours" value="{{ old('total_estimated_hours') }}">
         </div>
         <div class="form-group offset-md-1 col-md-5">
-            <label for="monthly_estimated_hours">{{ __('Monthly Estimated Hours') }}</label>
-            <input type="number" class="form-control" name="monthly_estimated_hours" id="monthly_estimated_hours"
-                placeholder="Enter monthly estimated hours" value="{{ old('monthly_estimated_hours') }}">
-        </div>
-        <div class="form-group col-md-5">
-            <label for="contract_file" class="field-required"> {{ __('Upload Contract File') }}</label>
+            <label for="contract_file"> {{ __('Upload Contract File') }}</label>
             <div class="custom-file mb-3">
-                <input type="file" id="contract_file" name="contract_file" class="custom-file-input" required>
+                <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
                 <label for="contract" class="custom-file-label">Choose file</label>
             </div>
         </div>

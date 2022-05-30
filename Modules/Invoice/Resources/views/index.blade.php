@@ -3,7 +3,14 @@
     <div class="container" id="vueContainer">
         <br>
         <br>
-
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1">Invoices</h4>
             <span>
@@ -78,8 +85,8 @@
                                                     <form action="{{ route('invoice.sendEmail', $invoice) }}"
                                                         method="post">
                                                         @csrf
-                                                        <input type="hidden" name="month" value="{{ $_GET['month'] }}">
-                                                        <input type="hidden" name="year" value="{{ $_GET['year'] }}">
+                                                        <input type="hidden" name="month" value="{{ $filters['month'] }}">
+                                                        <input type="hidden" name="year" value="{{ $filters['year'] }}">
                                                         <label for="sender_invoice_email">Sender's email adress</label>
                                                         <input type="email" class="form-control mt-2"
                                                             name="sender_invoice_email" id="sender_invoice_email"

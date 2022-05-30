@@ -48,7 +48,7 @@
 @endsection
 
 
-@section('js_scripts')
+@section('vue_scripts')
     <script>
         new Vue({
             el: '#view_edit_project',
@@ -58,6 +58,7 @@
                     project: @json($project),
                     projectTeamMembers: @json($projectTeamMembers),
                     projectRepositories: @json($projectRepositories),
+                    workingDaysInMonth: @json($workingDaysInMonth),
                     users: @json($teamMembers->sortBy('name')->values()),
                     designations: @json($designations)
                 }
