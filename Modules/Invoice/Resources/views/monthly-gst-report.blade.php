@@ -49,8 +49,8 @@
                     <td>{{ $invoice->invoice_number }}</td>
                     <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 1 ) ? (isset($clientAddress[$key]->gst_number)  ? $clientAddress[$key]->gst_number : 'B2C') : 'Export') : '' }}</td>
                     <td>{{ $invoice->invoiceAmount() }}</td>
-                    <td>{{ $currentRates }}</td>
-                    <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->country_id == 2 ) ? "₹". ' ' . $invoice->invoiceAmounts() * $currentRates : $invoice->invoiceAmount()) : '' }}</td>
+                    <td></td>
+                    <td>{{ $clientAddress[$key] ? $invoice->amount_paid : '' }}</td>
                     <td>{{ $invoice->display_amount }}</td>
                     <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state != config('invoice.invoice-details.billing-state')) && ($clientAddress[$key]->country_id == 1 )  ? $igst[$key] : '0') : ''}}</td>
                     <td>{{ $clientAddress[$key] ? (($clientAddress[$key]->state == config('invoice.invoice-details.billing-state')) && ($clientAddress[$key]->country_id == 1 ) ? $cgst[$key] : '0') : '' }}</td>
@@ -61,6 +61,7 @@
             </tbody>
         </table>
     </div>
+    {!! $invoices->links() !!}
 </div>
 
 @endsection
