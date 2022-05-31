@@ -26,11 +26,12 @@ class TeamMemberDesignationRule implements Rule
     public function passes($attribute, $value)
     {
         foreach ($value as $memberData) {
-            $memberDesignation=($memberData['designation']);
+            $memberDesignation = ($memberData['designation']);
             if ($memberDesignation == null) {
                 return false;
             }
         }
+        
         return true;
     }
 
