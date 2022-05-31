@@ -17,7 +17,7 @@ class EffortTrackingService
             $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
         }
 
-        $totalEffort = $this->getTotalEffort($teamMembersDetails);
+        $totalEffort = $project->current_hours_for_month;
         $workingDays = $this->getWorkingDays(now()->startOfMonth(), $currentDate);
         $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
         $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
@@ -34,19 +34,6 @@ class EffortTrackingService
             'endDate' => $endDate,
             'currentMonth' => now()->format('F'),
         ];
-    }
-
-    public function getTotalEffort($teamMembersDetails)
-    {
-        $totalEffort = 0;
-        if (is_array($teamMembersDetails['teamMembersEffort'])) {
-            foreach ($teamMembersDetails['teamMembersEffort'] as $key => $teamMemberEffort) {
-                $totalTeamMemberEffort = end($teamMemberEffort)['total_effort_in_effortsheet'] ?? 0;
-                $totalEffort += $totalTeamMemberEffort;
-            }
-        }
-
-        return $totalEffort;
     }
 
     /**
@@ -104,8 +91,10 @@ class EffortTrackingService
     {
         $teamMembersEffort = [];
         $users = [];
-        $startDate = now()->startOfMonth()->toDateString();
-        $endDate = now()->endOfMonth()->toDateString();
+        $currentDate = now(config('constants.timezone.indian'));
+        $startDate = $currentDate->startOfMonth()->toDateString();
+        $endDate = $currentDate->endOfMonth()->toDateString();
+
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->user;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
@@ -126,10 +115,8 @@ class EffortTrackingService
                 }
             }
 
-            $currentDate = Carbon::now(config('constants.timezone.indian'));
-
-            if (Carbon::now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-                $currentDate = Carbon::now(config('constants.timezone.indian'))->subDay();
+            if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+                $currentDate = now(config('constants.timezone.indian'))->subDay();
             }
 
             $teamMembersEffortUserDetails = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id]) : [];
