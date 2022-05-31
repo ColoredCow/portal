@@ -62,7 +62,7 @@ class Project extends Model
         $totalEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [now()->startOfMonth(), now()->endOfMonth()])->sum('actual_effort');
+            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [now(config('constants.timezone.indian'))->startOfMonth(), now(config('constants.timezone.indian'))->endOfMonth()])->sum('actual_effort');
         }
 
         return $totalEffort;
@@ -91,13 +91,13 @@ class Project extends Model
     {
         $teamMembers = $this->getTeamMembers()->get();
         $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
-        $currentDate = now(config('constants.timezone.indian'));
+        $currentDate = today(config('constants.timezone.indian'));
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));
+        $daysTillToday = count($this->getWorkingDaysList($currentDate->startOfMonth(), $currentDate));
 
         $currentExpectedEffort = 0;
 

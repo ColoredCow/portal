@@ -41,7 +41,13 @@ class ProjectTeamMember extends Model
     public function getCurrentExpectedEffortAttribute()
     {
         $project = new Project;
-        $daysTillToday = count($project->getWorkingDaysList(now(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))));
+        $currentDate = today(config('constants.timezone.indian'));
+
+        if ($currentDate->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = $currentDate->subDay();
+        }
+
+        $daysTillToday = count($project->getWorkingDaysList(now(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
