@@ -92,12 +92,13 @@ class Project extends Model
         $teamMembers = $this->getTeamMembers()->get();
         $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
         $currentDate = today(config('constants.timezone.indian'));
+        $endDate = $currentDate->clone();
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
-            $currentDate = $currentDate->subDay();
+            $endDate = $endDate->subDay();
         }
 
-        $daysTillToday = count($this->getWorkingDaysList($currentDate->startOfMonth(), $currentDate));
+        $daysTillToday = count($this->getWorkingDaysList($currentDate->startOfMonth(), $endDate));
 
         $currentExpectedEffort = 0;
 
@@ -111,8 +112,7 @@ class Project extends Model
     public function getExpectedMonthlyHoursAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $effortTracking = new EffortTrackingService;
-        $workingDaysCount = count($effortTracking->getWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
+        $workingDaysCount = count($this->getWorkingDaysList(now(config('constants.timezone.indian'))->startOfMonth(), now(config('constants.timezone.indian'))->endOfMonth()));
         $expectedMonthlyHours = 0;
 
         foreach ($teamMembers as $teamMember) {
