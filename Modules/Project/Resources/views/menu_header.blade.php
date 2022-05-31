@@ -11,6 +11,13 @@
 
     <li class="nav-item">
         @php
+            $request['status'] = 'halted';
+        @endphp
+        <a class="nav-link {{ (request()->input('status', 'active') == 'halted') ? 'active' : '' }}" href="{{ route('project.index', $request)  }}">Halted Projects</a>
+    </li>
+
+    <li class="nav-item">
+        @php
             $request['status'] = 'inactive';
         @endphp
         <a class="nav-link {{ (request()->input('status', 'active') == 'inactive') ? 'active' : '' }}"  href="{{ route('project.index', $request)  }}">Inactive Projects</a>
