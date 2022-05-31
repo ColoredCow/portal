@@ -90,15 +90,8 @@ class Project extends Model
     public function getCurrentExpectedHoursAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
         $currentDate = now(config('constants.timezone.indian'));
-
-        if (now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
-            $currentDate = $currentDate->subDay();
-        }
-
         $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));
-
         $currentExpectedEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
