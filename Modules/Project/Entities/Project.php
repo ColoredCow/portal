@@ -10,7 +10,6 @@ use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
-use Modules\EffortTracking\Services\EffortTrackingService;
 
 class Project extends Model
 {
