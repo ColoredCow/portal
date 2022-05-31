@@ -58,7 +58,7 @@ class ProjectRequest extends FormRequest
             case 'project_team_members':
                 if ($this->project_team_member) {
                     $rules = [
-                        'project_team_member' => [ 'array',
+                        'project_team_member' => ['array',
                         new TeamMemberDesignationRule(),
                         new TeamMemberRule(),
                         ]
