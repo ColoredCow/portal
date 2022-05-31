@@ -31,7 +31,7 @@ class TeamMemberDesignationRule implements Rule
                 return false;
             }
         }
-        
+
         return true;
     }
 
