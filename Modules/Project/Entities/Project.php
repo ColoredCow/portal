@@ -58,11 +58,14 @@ class Project extends Model
 
     public function getCurrentHoursForMonthAttribute()
     {
-        $effortTracking = new EffortTrackingService;
         $teamMembers = $this->getTeamMembers()->get();
-        $teamMembersDetails = $effortTracking->getTeamMembersDetails($teamMembers);
+        $totalEffort = 0;
 
-        return $effortTracking->getTotalEffort($teamMembersDetails);
+        foreach ($teamMembers as $teamMember) {
+            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [now()->startOfMonth(), now()->endOfMonth()])->sum('actual_effort');
+        }
+
+        return $totalEffort;
     }
 
     public function getFteAttribute()
