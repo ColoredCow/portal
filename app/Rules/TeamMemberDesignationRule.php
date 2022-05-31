@@ -27,14 +27,12 @@ class TeamMemberDesignationRule implements Rule
     {
         foreach ($value as $memberData) {  
             $memberDesignation=($memberData['designation']);
-            if($memberDesignation==null)
-                {
-                    return 0;
-                }  
-            if($memberDesignation!=null)
-                {
-                    return 1;
-                }
+            if ($memberDesignation==null) {
+                return 0;
+            }  
+            if ($memberDesignation!=null) {
+                return 1;
+            }
         }
     }
 
