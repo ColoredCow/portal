@@ -29,6 +29,9 @@ class TeamMemberRule implements Rule
             if (isset($memberExist['team_member_id']) == false) {
                 return false;
             }
+            elseif ($memberExist['team_member_id'] == null) {
+                return false;
+            }
         }
         return true;
     }
