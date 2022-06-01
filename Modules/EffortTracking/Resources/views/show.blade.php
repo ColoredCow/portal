@@ -29,7 +29,7 @@
                     <input type="date" name="end_date" disabled="disabled" value="{{ $endDate->toDateString() }}">
                 </div>
             </div>
-            @if($teamMembersEffort === 0)
+            @if($project->current_hours_for_month === 0)
                 <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>
             @else
                 <div class="mt-4">
