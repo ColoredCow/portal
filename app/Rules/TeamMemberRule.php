@@ -28,11 +28,11 @@ class TeamMemberRule implements Rule
         foreach ($value as $memberExist) {
             if (isset($memberExist['team_member_id']) == false) {
                 return false;
-            }
-            elseif ($memberExist['team_member_id'] == null) {
+            } elseif ($memberExist['team_member_id'] == null) {
                 return false;
             }
         }
+        
         return true;
     }
 
