@@ -32,7 +32,7 @@ class TeamMemberRule implements Rule
                 return false;
             }
         }
-        
+
         return true;
     }
 
