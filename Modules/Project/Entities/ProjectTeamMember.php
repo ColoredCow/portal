@@ -42,13 +42,7 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
-        $endDate = $currentDate->clone();
-
-        if ($currentDate->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-            $endDate = $endDate->subDay();
-        }
-
-        $daysTillToday = count($project->getWorkingDaysList($currentDate->startOfMonth(), $endDate));
+        $daysTillToday = count($project->getWorkingDaysList($currentDate->startOfMonth(), $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
