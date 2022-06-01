@@ -42,7 +42,7 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
-        $daysTillToday = count($project->getWorkingDaysList($currentDate->startOfMonth(), $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
