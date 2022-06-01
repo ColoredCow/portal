@@ -27,7 +27,7 @@ class TeamMemberDesignationRule implements Rule
     {
         foreach ($value as $memberData) {
             $memberDesignation = ($memberData['designation']);
-            if ($memberDesignation == null) {
+            if ($memberDesignation == null || isset($memberData['designation']) == false) {
                 return false;
             }
         }

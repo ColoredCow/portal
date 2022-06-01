@@ -26,12 +26,10 @@ class TeamMemberRule implements Rule
     public function passes($attribute, $value)
     {
         foreach ($value as $memberExist) {
-            $teamMember = ($memberExist['team_member_id']);
-            if ($teamMember == null) {
+            if (isset($memberExist['team_member_id']) == false) {
                 return false;
             }
         }
-
         return true;
     }
 
