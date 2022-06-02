@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectMeta extends Model
 {
-    protected $fillable = [];
+    protected $table = 'project_meta';
+    protected $guarded = [];
 }
