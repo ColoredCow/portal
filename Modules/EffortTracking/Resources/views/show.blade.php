@@ -65,7 +65,7 @@
                             <td>{{$teamMember->current_actual_effort}}</td>
                             <td>{{$teamMember->current_expected_effort}}</td>
                             <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
-                            <td>{{$teamMember->user->fte}}</td>
+                            <td>{{$teamMember->fte}}</td>
                         </tr>
                     @endforeach
                 </tbody>
