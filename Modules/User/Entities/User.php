@@ -161,4 +161,15 @@ class User extends Authenticatable
 
         return $totalEffort;
     }
+
+    public function getFteAttribute()
+    {
+        $fte = 0;
+
+        foreach ($this->projectTeamMembers as $projectTeamMember) {
+            $fte += $projectTeamMember->fte;
+        }
+
+        return $fte;
+    }
 }

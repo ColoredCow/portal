@@ -38,9 +38,9 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Current FTE:</label>
+                            <label for="name" class="font-weight-bold">Current Velocity:</label>
                         </h4>
-                        <span class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->fte }}</span>
+                        <span class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->velocity }}</span>
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
                 </div>
