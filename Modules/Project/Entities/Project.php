@@ -67,7 +67,7 @@ class Project extends Model
         return $totalEffort;
     }
 
-    public function getFteAttribute()
+    public function getVelocityAttribute()
     {
         return $this->current_expected_hours ? round($this->current_hours_for_month / $this->current_expected_hours, 2) : 0;
     }

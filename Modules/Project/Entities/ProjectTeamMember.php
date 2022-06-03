@@ -47,8 +47,16 @@ class ProjectTeamMember extends Model
         return $this->daily_expected_effort * $daysTillToday;
     }
 
-    public function getCurrentFteAttribute()
+    public function getVelocityAttribute()
     {
         return $this->current_expected_effort ? round($this->current_actual_effort / $this->current_expected_effort, 2) : 0;
+    }
+
+    public function getFteAttribute()
+    {
+        $project = new Project;
+        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))));
+
+        return round($this->current_actual_effort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 }
