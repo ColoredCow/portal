@@ -57,6 +57,6 @@ class ProjectTeamMember extends Model
         $project = new Project;
         $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))));
 
-        return round($this->current_actual_effort/($daysTillToday * config('efforttracking.minimum_expected_hours')), 2) ;
+        return round($this->current_actual_effort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 }
