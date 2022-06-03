@@ -10,7 +10,6 @@ use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
-use Modules\EffortTracking\Services\EffortTrackingService;
 
 class Project extends Model
 {
@@ -58,11 +57,14 @@ class Project extends Model
 
     public function getCurrentHoursForMonthAttribute()
     {
-        $effortTracking = new EffortTrackingService;
         $teamMembers = $this->getTeamMembers()->get();
-        $teamMembersDetails = $effortTracking->getTeamMembersDetails($teamMembers);
+        $totalEffort = 0;
 
-        return $effortTracking->getTotalEffort($teamMembersDetails);
+        foreach ($teamMembers as $teamMember) {
+            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [now(config('constants.timezone.indian'))->startOfMonth()->subDay(), now(config('constants.timezone.indian'))->endOfMonth()])->sum('actual_effort');
+        }
+
+        return $totalEffort;
     }
 
     public function getFteAttribute()
@@ -87,15 +89,8 @@ class Project extends Model
     public function getCurrentExpectedHoursAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $updateDateCountAfterTime = config('efforttracking.update_date_count_after_time');
-        $currentDate = now(config('constants.timezone.indian'));
-
-        if (now(config('constants.timezone.indian'))->format('H:i:s') < $updateDateCountAfterTime) {
-            $currentDate = $currentDate->subDay();
-        }
-
-        $daysTillToday = count($this->getWorkingDaysList(now()->startOfMonth(), $currentDate));
-
+        $currentDate = today(config('constants.timezone.indian'));
+        $daysTillToday = count($this->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
         $currentExpectedEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
@@ -108,8 +103,7 @@ class Project extends Model
     public function getExpectedMonthlyHoursAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $effortTracking = new EffortTrackingService;
-        $workingDaysCount = count($effortTracking->getWorkingDays(now()->startOfMonth(), now()->endOfMonth()));
+        $workingDaysCount = count($this->getWorkingDaysList(now(config('constants.timezone.indian'))->startOfMonth(), now(config('constants.timezone.indian'))->endOfMonth()));
         $expectedMonthlyHours = 0;
 
         foreach ($teamMembers as $teamMember) {

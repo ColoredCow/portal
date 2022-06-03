@@ -66,10 +66,22 @@ class SyncEffortsheet extends Command
 
                 $sheetId = $correctedEffortsheetUrl[1];
                 $sheets = new Sheets();
-                $projectMembersCount = $project->teamMembers()->count();
+                $projectMembersCount = 0;
                 $lastColumn = config('efforttracking.default_last_column_in_effort_sheet');
                 $columnIndex = 5;
                 $projectsInSheet = [];
+
+                $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . config('efforttracking.default_start_column_in_effort_sheet');
+                $sheet = $sheets->spreadsheet($sheetId)
+                    ->range($range)
+                    ->get();
+
+                foreach ($sheet as $rows) {
+                    if (count($rows) == 0) {
+                        break;
+                    }
+                    $projectMembersCount++;
+                }
 
                 try {
                     while (true) {

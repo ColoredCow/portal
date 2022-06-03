@@ -11,11 +11,11 @@
 
     <div class="card">
         <div class="card-header d-flex flex-row justify-content-between">
-            <h2>{{$project->name}} - Effort Details for {{$currentMonth}}</h4>
+            <h2>{{ $project->name }} - Effort Details for {{ $currentMonth }}</h4>
             <div>
-            <h2 class="fz-18 leading-22">Current Hours: <span>{{$totalEffort}}</span></h2>
-            <h2 class="fz-18 leading-22" id="projectHours">Expected Hours: <span>{{$project->current_expected_hours}}</span></h2>
-            <h2 class="fz-18 leading-22" id="projectHours">FTE: <span>{{$project->fte}}</span></h2>
+            <h2 class="fz-18 leading-22">Current Hours: <span>{{ $project->current_hours_for_month }}</span></h2>
+            <h2 class="fz-18 leading-22" id="projectHours">Expected Hours: <span>{{ $project->current_expected_hours }}</span></h2>
+            <h2 class="fz-18 leading-22" id="projectHours">FTE: <span>{{ $project->fte }}</span></h2>
             </div>
         </div>
         <div class="effort-tracking-data">
@@ -29,7 +29,7 @@
                     <input type="date" name="end_date" disabled="disabled" value="{{ $endDate->toDateString() }}">
                 </div>
             </div>
-            @if($teamMembersEffort === 0)
+            @if($project->current_hours_for_month === 0)
                 <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>
             @else
                 <div class="mt-4">
