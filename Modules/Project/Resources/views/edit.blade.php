@@ -82,9 +82,9 @@
                 },
 
                 updateProjectForm: async function(formId) {
-                    $('.save-btn').attr('disabled', true);
+                    $('.save-btn').attr('enable', true);
                     let formData = new FormData(document.getElementById(formId));
-                    $('.save-btn').removeClass('btn-primary').addClass('btn-dark');
+                    $('.save-btn').removeClass('btn-primary').addClass('btn-primary');
                     await axios.post('{{ route('project.update', $project) }}', formData)
                         .then((response) => {
                             $('#edit-project-errors').addClass('d-none');
