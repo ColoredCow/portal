@@ -12,6 +12,7 @@
             <th>Designation</th>
             <th>Joined on</th>
             <th>Projects</th>
+            <th>Current FTE</th>
         </tr>
 
         @foreach ($employees as $employee)
@@ -38,6 +39,7 @@
             <td>
                 <a href="">{{ "View Projects" }}</a>
             </td>
+            <td class="{{ optional($employee->user)->fte ? ($employee->user->fte > 1 ? 'text-success' : 'text-danger') :'text-secondary' }} font-weight-bold">{{ optional($employee->user)->fte ?:'NA' }}</td>
         </tr>
         @endforeach
     </table>
