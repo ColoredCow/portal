@@ -8,6 +8,7 @@
                     <select class="form-control ml-4 flex-1" name="status" v-model="status">
                         <option value="sent">Sent</option>
                         <option value="paid">Paid</option>
+                        <option value="disputed">Disputed</option>
                     </select>
                 </div>
             </div>
@@ -150,6 +151,12 @@
                     <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
                 </div>
 
+            </div>
+            <div class="col-md-5 offset-md-1" v-if="status == 'disputed'">
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
+                </div>
             </div>
         </div>
     </div>
