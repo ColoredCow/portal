@@ -106,9 +106,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                @endif
-                            </tr>
+                                    </div>
+                                </td>
+                            @endif
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

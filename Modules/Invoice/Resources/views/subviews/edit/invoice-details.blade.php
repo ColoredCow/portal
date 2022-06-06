@@ -6,9 +6,9 @@
                 <div class="form-group d-flex">
                     <label for="project_invoice_id" class="pt-2"><b>Status</b></label>
                     <select class="form-control ml-4 flex-1" name="status" v-model="status">
-                        <option value="sent">Sent</option>
-                        <option value="paid">Paid</option>
-                        <option value="disputed">Disputed</option>
+                        @foreach(config('invoice.status') as $label => $status)
+                            <option value="{{ $label }}">{{ $status }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
