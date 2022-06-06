@@ -55,10 +55,9 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($invoices as $key => $invoice)
-                        @if ($invoice->status != 'disputed')
+                    @foreach ($invoices as $invoice)
                             <tr>
-                                <td>{{ ++$key }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>
                                     <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->project->name }}</a>
                                 </td>
@@ -106,7 +105,6 @@
                                     </td>
                                 @endif
                             </tr>
-                        @endif
                     @endforeach
                 </tbody>
             </table>

@@ -152,7 +152,7 @@
                 </div>
 
             </div>
-            <div class="col-md-5 offset-md-1" v-if="status == 'disputed'">
+            <div class="col-md-5 offset-md-1 mt-auto" v-if="status == 'disputed'">
                 <div class="form-group">
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
