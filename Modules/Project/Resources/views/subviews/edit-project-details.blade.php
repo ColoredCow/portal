@@ -69,11 +69,11 @@
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="contract_file"> {{ __('Upload Contract File') }}</label>
                         @if($project->projectContracts->isEmpty() == false)
-                        <a id="contract_file"
-                            class="badge badge-primary p-1 ml-2 text-light {{ $project->projectContracts ? '' : 'd-none' }}"
-                            target="_blank" href="{{route('pdf.show', $project->projectContracts->first())}}">
-                            {{ __('view') }}
-                        </a>
+                            <a id="contract_file"
+                                class="badge badge-primary p-1 ml-2 text-light {{ $project->projectContracts ? '' : 'd-none' }}"
+                                target="_blank" href="{{route('pdf.show', $project->projectContracts->first())}}">
+                                {{ __('view') }}
+                            </a>
                         @endif
                         <div class="custom-file mb-3">
                             <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
