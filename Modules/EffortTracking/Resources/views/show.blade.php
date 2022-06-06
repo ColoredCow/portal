@@ -15,7 +15,7 @@
             <div>
             <h2 class="fz-18 leading-22">Current Hours: <span>{{ $project->current_hours_for_month }}</span></h2>
             <h2 class="fz-18 leading-22" id="projectHours">Expected Hours: <span>{{ $project->current_expected_hours }}</span></h2>
-            <h2 class="fz-18 leading-22" id="projectHours">FTE: <span>{{ $project->fte }}</span></h2>
+            <h2 class="fz-18 leading-22" id="projectHours">Velocity: <span>{{ $project->velocity }}</span></h2>
             </div>
         </div>
         <div class="effort-tracking-data">
@@ -54,7 +54,8 @@
                         <th scope="col">Name</th>
                         <th scope="col">Actual Effort</th>
                         <th scope="col">Expected Effort</th>
-                        <th scope="col">FTE</th>
+                        <th scope="col">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                        <th scope="col">FTE <span data-toggle="tooltip" data-placement="right" title="{{ __('This is portion of the overall FTE that contributed to this projects by employee till ') . today(config('constants.timezone.indian'))->format('d M') . "." }}"  ><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,7 +64,8 @@
                             <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{$teamMember->user->name}}</th>
                             <td>{{$teamMember->current_actual_effort}}</td>
                             <td>{{$teamMember->current_expected_effort}}</td>
-                            <td class="{{ $teamMember->current_fte >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->current_fte}}</td>
+                            <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
+                            <td>{{$teamMember->fte}}</td>
                         </tr>
                     @endforeach
                 </tbody>
