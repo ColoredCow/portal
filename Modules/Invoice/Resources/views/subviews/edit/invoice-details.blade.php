@@ -6,8 +6,9 @@
                 <div class="form-group d-flex">
                     <label for="project_invoice_id" class="pt-2"><b>Status</b></label>
                     <select class="form-control ml-4 flex-1" name="status" v-model="status">
-                        <option value="sent">Sent</option>
-                        <option value="paid">Paid</option>
+                        @foreach(config('invoice.status') as $label => $status)
+                            <option value="{{ $label }}">{{ $status }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -150,6 +151,12 @@
                     <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
                 </div>
 
+            </div>
+            <div class="col-md-5 offset-md-1 mt-auto" v-if="status == 'disputed'">
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
+                </div>
             </div>
         </div>
     </div>
