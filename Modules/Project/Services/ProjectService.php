@@ -57,17 +57,7 @@ class ProjectService implements ProjectServiceContract
         ]);
 
         $project->client->update(['status' => 'active']);
-
-        if ($data['contract_file'] ?? null) {
-            $file = $data['contract_file'];
-            $folder = '/contract/' . date('Y') . '/' . date('m');
-            $fileName = $file->getClientOriginalName();
-            $filePath = Storage::putFileAs($folder, $file, $fileName);
-            ProjectContract::create([
-                'project_id' => $project->id,
-                'contract_file_path' => $filePath
-            ]);
-        }
+        $this->saveOrUpdateProjectContract($data, $project);
     }
 
     public function getClients()
