@@ -82,9 +82,9 @@
                 },
 
                 updateProjectForm: async function(formId) {
-                    $('.save-btn').attr('enable', true);
+                    $('.save-btn').attr('disabled', false);
                     let formData = new FormData(document.getElementById(formId));
-                    $('.save-btn').removeClass('btn-primary').addClass('btn-primary');
+                    $('.save-btn').removeClass('btn-primary').addClass('btn-dark');
                     await axios.post('{{ route('project.update', $project) }}', formData)
                         .then((response) => {
                             $('#edit-project-errors').addClass('d-none');
@@ -96,7 +96,7 @@
                                 $('#view_effort_sheet_badge').addClass('d-none');
                             }
                             $('.save-btn').removeClass('btn-dark').addClass('btn-primary');
-                            $('.save-btn').attr('disabled', false);
+                            $('.save-btn').attr('disable', false);
                             $('#project-details-update-message').addClass('d-block');
                             $('#project-details-update-message').removeClass('d-none');
                             $('#modal-success').modal('show');
@@ -111,6 +111,7 @@
                                     errors[error] + "</li>");
                             }
                             $('#edit-project-errors').removeClass('d-none');
+                            $('.save-btn').attr('disable', false);
                             $('#modal-success').modal('show');
                         })
                 },
