@@ -3,7 +3,7 @@
     </div>
 
     <div id="project_detail_form">
-        <form action="{{ route('project.update', $project) }}" method="POST" id="form_update_project_details">
+        <form action="{{ route('project.update', $project) }}" method="POST" id="form_update_project_details" enctype="multipart/form-data">
             @csrf
             <input type="hidden" value="project_details" name="update_section">
 
@@ -65,6 +65,20 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group offset-md-1 col-md-5">
+                        <label for="contract_file"> {{ __('Upload Contract File') }}</label>
+                        @if($project->projectContracts->isEmpty() == false)
+                            <a id="contract_file"
+                                class="badge badge-primary p-1 ml-2 text-light {{ $project->projectContracts ? '' : 'd-none' }}"
+                                target="_blank" href="{{route('pdf.show', $project->projectContracts->first())}}">
+                                {{ __('view') }}
+                            </a>
+                        @endif
+                        <div class="custom-file mb-3">
+                            <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
+                            <label for="contract" class="custom-file-label">Upload New Contract</label>
+                        </div>
                     </div>
                 </div>
             </div>
