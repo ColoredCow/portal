@@ -46,7 +46,8 @@
                         <th>Invoice Number</th>
                         <th>Amount ( + taxes)</th>
                         <th>Sent on</th>
-                        <th>Receivable date</th>
+                        <th>Due on</th>
+                        <th>Paid on</th>
                         <th>Status</th>
                         @if (request()->input('status') == 'sent' || request()->input('status') == '')
                             <th class="d-none">Email</th>
@@ -56,49 +57,52 @@
 
                 <tbody>
                     @foreach ($invoices as $invoice)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->project->name }}</a>
-                                </td>
-                                <td>{{ $invoice->invoice_number }}</td>
-                                <td>{{ $invoice->invoiceAmount() }}</td>
-                                <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
-                                <td class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }}'>
-                                    {{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}
-                                </td>
-                                <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
-                                    {{ Str::studly($invoice->status) }}</td>
-                                @if (Str::studly($invoice->status) == 'Sent')
-                                    <td class="d-none" ><button type="button" class="btn btn-primary ml-auto" data-bs-toggle="modal"
-                                            data-bs-target="#Modal">Send Mail</button>
-                                        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4> Pending Invoice Mail</h4>
-                                                        <button type="button" class="btn-close ml-auto" data-bs-dismiss="modal"
-                                                            aria-label="Close">&times;</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="{{ route('invoice.sendEmail', $invoice) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="month" value="{{ $filters['month'] }}">
-                                                            <input type="hidden" name="year" value="{{ $filters['year'] }}">
-                                                            <label for="sender_invoice_email">Sender's email adress</label>
-                                                            <input type="email" class="form-control mt-2"
-                                                                name="sender_invoice_email" id="sender_invoice_email"
-                                                                value="{{ config('invoice.pending-invoice-mail.pending-invoice.email') }}">
-                                                            <label for="invoice_email" class="mt-4">CC Email</label>
-                                                            <input type="email" multiple class="form-control mt-2"
-                                                                name="invoice_email" id="invoice_email" placeholder="CC Email"
-                                                                data-toggle="tooltip" data-placement="bottom"
-                                                                title="Please enter comma separated emails">
-                                                            <button type="submit" class="btn btn-primary mt-4">Send</button>
-                                                        </form>
-                                                    </div>
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>
+                                <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->project->name }}</a>
+                            </td>
+                            <td>{{ $invoice->invoice_number }}</td>
+                            <td>{{ $invoice->invoiceAmount() }}</td>
+                            <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
+                            <td class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }}'>
+                                {{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}
+                            </td>
+                            <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
+                                {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
+                            </td>
+                            <td class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}'>
+                                {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
+                            </td>
+                            @if (Str::studly($invoice->status) == 'Sent')
+                                <td class="d-none" ><button type="button" class="btn btn-primary ml-auto" data-bs-toggle="modal"
+                                        data-bs-target="#Modal">Send Mail</button>
+                                    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4> Pending Invoice Mail</h4>
+                                                    <button type="button" class="btn-close ml-auto" data-bs-dismiss="modal"
+                                                        aria-label="Close">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('invoice.sendEmail', $invoice) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="month" value="{{ $filters['month'] }}">
+                                                        <input type="hidden" name="year" value="{{ $filters['year'] }}">
+                                                        <label for="sender_invoice_email">Sender's email adress</label>
+                                                        <input type="email" class="form-control mt-2"
+                                                            name="sender_invoice_email" id="sender_invoice_email"
+                                                            value="{{ config('invoice.pending-invoice-mail.pending-invoice.email') }}">
+                                                        <label for="invoice_email" class="mt-4">CC Email</label>
+                                                        <input type="email" multiple class="form-control mt-2"
+                                                            name="invoice_email" id="invoice_email" placeholder="CC Email"
+                                                            data-toggle="tooltip" data-placement="bottom"
+                                                            title="Please enter comma separated emails">
+                                                        <button type="submit" class="btn btn-primary mt-4">Send</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
