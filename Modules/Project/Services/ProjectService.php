@@ -57,17 +57,7 @@ class ProjectService implements ProjectServiceContract
         ]);
 
         $project->client->update(['status' => 'active']);
-
-        if ($data['contract_file'] ?? null) {
-            $file = $data['contract_file'];
-            $folder = '/contract/' . date('Y') . '/' . date('m');
-            $fileName = $file->getClientOriginalName();
-            $filePath = Storage::putFileAs($folder, $file, $fileName);
-            ProjectContract::create([
-                'project_id' => $project->id,
-                'contract_file_path' => $filePath
-            ]);
-        }
+        $this->saveOrUpdateProjectContract($data, $project);
     }
 
     public function getClients()
@@ -127,7 +117,7 @@ class ProjectService implements ProjectServiceContract
             'end_date' => date('Y-m-d'),
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
-
+        $this->saveOrUpdateProjectContract($data, $project);
         if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
         } elseif (! $project->client->projects()->where('status', 'active')->exists()) {
@@ -212,5 +202,18 @@ class ProjectService implements ProjectServiceContract
         }
 
         return $numberOfWorkingDays;
+    }
+    public function saveOrUpdateProjectContract($data, $project)
+    {
+        if ($data['contract_file'] ?? null) {
+            $file = $data['contract_file'];
+            $folder = '/contract/' . date('Y') . '/' . date('m');
+            $fileName = $file->getClientOriginalName();
+            $filePath = Storage::putFileAs($folder, $file, $fileName);
+            ProjectContract::updateOrCreate(
+                ['project_id' => $project->id],
+                ['contract_file_path' => $filePath]
+            );
+        }
     }
 }

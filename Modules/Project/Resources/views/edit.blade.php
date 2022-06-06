@@ -111,6 +111,7 @@
                                     errors[error] + "</li>");
                             }
                             $('#edit-project-errors').removeClass('d-none');
+                            $('.save-btn').attr('disabled', false);
                             $('#modal-success').modal('show');
                         })
                 },
