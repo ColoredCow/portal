@@ -1,121 +1,134 @@
-<div class="card-body" id="create_invoice_details_form">
-    <div class="form-row mb-4">
-        <div class="col-md-5">
-            <div class="form-group">
-                <div class="d-flex justify-content-between">
-                    <label for="client_id" class="field-required">Client</label>
-                    <a href="{{ route('client.create') }}" for="client_id" class="text-underline">Add new client</a>
+<div id="create_invoice_details_form">
+    <div class="card-body">
+        <div class="form-row mb-4">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <label for="client_id" class="field-required">Client</label>
+                        <a href="{{ route('client.create') }}" for="client_id" class="text-underline">Add new client</a>
+                    </div>
+                    <select name="client_id" id="client_id" class="form-control" required="required"
+                        @change="updateClientDetails()" v-model="clientId">
+                        <option value="">Select Client</option>
+                        <option v-for="client in clients" :value="client.id" v-text="client.name"
+                            :key="client.id"></option>
+                    </select>
                 </div>
-                <select name="client_id" id="client_id" class="form-control" required="required"
-                    @change="updateClientDetails()" v-model="clientId">
-                    <option value="">Select Client</option>
-                    <option v-for="client in clients" :value="client.id" v-text="client.name"
-                        :key="client.id"></option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <div class="d-flex justify-content-between">
-                    <label for="client_id" class="field-required">Project</label>
-                    <a href="{{ route('project.create') }}" class="text-underline">Add new project</a>
+                <div class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <label for="invoice_level" class="field-required mr-2">Invoice Level</label>
+                            <span data-toggle="tooltip" data-placement="right" title="{{ __('In Client level the invoice will be generated for all the projects of client.') }}"  >
+                                <i class="fa fa-question-circle"></i>&nbsp;
+                            </span>
+                        </div>
+                    </div>
+                    <select @change="setInvoiceLevel($event)" id="invoice_level" name="invoice_level" class="form-control" required="required">
+                        <option value="client">Client Level</option>
+                        <option value="project">Project Level</option>
+                    </select>
                 </div>
-                <select name="project_id" id="project_id" class="form-control" required="required">
-                    <option value="">Select project</option>
-                    <option v-for="project in projects" :value="project.id" v-text="project.name"
-                        :key="project.id">
-                    </option>
-                </select>
-            </div>
-
-            <div class="form-group ">
-                <label for="project_invoice_id" class="field-required">Upload file</label>
-                <div class="d-flex">
-                    <div class="custom-file mb-3">
-                        <input type="file" id="invoice_file" name="invoice_file" class="custom-file-input"
-                            required="required">
-                        <label for="customFile0" class="custom-file-label">Choose file</label>
+                <div v-if="invoiceLevel=='project'" class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <label for="client_id" class="field-required">Project</label>
+                    </div>
+                    <select name="project_id" @change="updateGenerateInvoiceLink($event)" id="project_id" class="form-control" required="required">
+                        <option value="">Select project</option>
+                        <option v-for="project in projects" :value="project.id" v-text="project.name"
+                            :key="project.id">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group ">
+                    <label for="project_invoice_id" class="field-required">Upload file</label>
+                    <div class="d-flex">
+                        <div class="custom-file mb-3">
+                            <input type="file" id="invoice_file" name="invoice_file" class="custom-file-input"
+                                required="required">
+                            <label for="customFile0" class="custom-file-label">Choose file</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group ">
-                <label for="comments">Comments</label>
-                <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
-            </div>
-
-        </div>
-
-        <div class="col-md-5 offset-md-1">
-            <div class="form-group">
-                <label for="project_invoice_id" class="field-required">Status</label>
-                <select class="form-control" name="status">
-                    {{-- <option value="pending">Pending</option> --}}
-                    <option value="sent">Sent</option>
-                    <option value="paid">Paid</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="amount" class="field-required">Amount</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <select name="currency" v-model="currency" id="currency" class="input-group-text"
-                            required="required">
-                            @foreach ($countries as $country)
-                                <option value="{{ $country->currency }}">{{ $country->currency }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <input v-model="amount" type="number" class="form-control" name="amount" id="amount"
-                        placeholder="Invoice Amount" required="required" step=".01" min="0">
+                <div class="form-group ">
+                    <label for="comments">Comments</label>
+                    <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
                 </div>
             </div>
-
-            <div class="form-group" v-if="currency == 'INR'">
-                <label for="gst">GST</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">INR</span>
+            <div class="col-md-5 offset-md-1">
+                <div class="form-group">
+                    <label for="project_invoice_id" class="field-required">Status</label>
+                    <select class="form-control" name="status">
+                        {{-- <option value="pending">Pending</option> --}}
+                        <option value="sent">Sent</option>
+                        <option value="paid">Paid</option>
+                    </select>
+                </div>
+                <div class="form-group mb-0">
+                    <label for="amount" class="field-required">Amount</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <select name="currency" v-model="currency" id="currency" class="input-group-text"
+                                required="required">
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->currency }}">{{ $country->currency }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input v-model="amount" type="number" class="form-control" name="amount" id="amount"
+                            placeholder="Invoice Amount" required="required" step=".01" min="0">
                     </div>
-                    <input v-model="gst" type="number" class="form-control" name="gst" id="gst" placeholder="GST"
-                        step=".01" min="0">
+                </div>
+                <div class="form-group" v-if="currency == 'INR'">
+                    <label for="gst">GST</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">INR</span>
+                        </div>
+                        <input v-model="gst" type="number" class="form-control" name="gst" id="gst" placeholder="GST"
+                            step=".01" min="0">
+                    </div>
+                </div>
+                <p class="text-danger" v-if="currency == 'INR' ">Total Amount : @{{ tot }}</p>
+                <p class="text-danger" v-if="currency == 'USD' ">Total Amount : @{{ amt }}</p>
+                <div class="text-danger" id="container"></div><br />
+                <div class="form-group">
+                    <label for="sent_on" class="field-required">Sent on</label>
+                    <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"
+                        value="{{ now()->format('Y-m-d') }}">
+                </div>
+                <div class="form-group">
+                    <label for="due_on" class="field-required">Due date</label>
+                    <input type="date" class="form-control" name="due_on" id="due_on" required="required"
+                        value="{{ now()->addDays(6)->format('Y-m-d') }}">
                 </div>
             </div>
-            <p class="text-danger" v-if="currency == 'INR' ">Total Amount : @{{ tot }}</p>
-            <p class="text-danger" v-if="currency == 'USD' ">Total Amount : @{{ amt }}</p>
-            <div class="text-danger" id="container"></div><br />
-
-            <div class="form-group">
-                <label for="sent_on" class="field-required">Sent on</label>
-                <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"
-                    value="{{ now()->format('Y-m-d') }}">
-            </div>
-
-            <div class="form-group">
-                <label for="due_on" class="field-required">Due date</label>
-                <input type="date" class="form-control" name="due_on" id="due_on" required="required"
-                    value="{{ now()->addDays(6)->format('Y-m-d') }}">
-            </div>
-
         </div>
     </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-primary" onclick="saveInvoice(this)">Create</button>
+        <a class="btn btn-secondary" v-if="showGenerateInvoiceLink" id="generate_invoice_link" @click.prevent="generateInvoice($event)" href="">Generate Invoice</a>
+    </div>
 </div>
-<div class="card-footer">
-    <button type="button" class="btn btn-primary" onclick="saveInvoice(this)">Create</button>
-</div>
-
 
 
 @section('scripts')
     <script>
         const saveInvoice = (button) => {
             button.disabled = true;
-            if (!button.form.checkValidity()) {
+            if (!validateFormData(button.form)) {
                 button.disabled = false;
-                button.form.reportValidity();
                 return;
             }
             button.form.submit();
+        }
+        
+        const validateFormData = (form) => {
+            console.log(form)
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return false;
+            }
+            return true;
         }
 
         new Vue({
@@ -125,10 +138,13 @@
                 return {
                     clients: @json($clients),
                     projects: {},
-                    clientId: "",
+                    groups: {},
+                    clientId: '',
                     client: null,
                     currency: '',
                     amount: '',
+                    invoiceLevel: 'client',
+                    showGenerateInvoiceLink: false,
                 }
             },
 
@@ -143,8 +159,59 @@
                             this.projects = _.orderBy(client.projects, 'name', 'asc');
                         }
                     }
+                    if ($('#client_id').val() > '' && this.invoiceLevel == 'client') {
+                        this.showGenerateInvoiceLink = true;
+                    } else {
+                        this.showGenerateInvoiceLink = false;
+                    }
 
-                }
+                },
+
+                updateGenerateInvoiceLink: function(event) {
+                    if (event.target.value >= 0) {
+                        this.showGenerateInvoiceLink = true;
+                    } else {
+                        this.showGenerateInvoiceLink = false;
+                    }
+                },
+
+                setInvoiceLevel: function(event) {
+                    if (event.target.value == 'project') {
+                        this.invoiceLevel = 'project';
+                        this.showGenerateInvoiceLink = false;
+                    } else {
+                        this.invoiceLevel = 'client';
+                        if ($('#client_id').val() > 0) {
+                            this.showGenerateInvoiceLink = true;
+                        } else {
+                            this.showGenerateInvoiceLink = false;
+                        }
+                    }
+                },
+
+                generateInvoice: function(event) {
+                    if(this.checkValidity()) {
+                        var element = $("#generate_invoice_link");
+                        element.attr("disabled", true);
+                        var form = $("#invoice_form");
+                        var oldUrl = form.attr("action");
+                        var url = "{{ route('invoice.generate-invoice') }}";
+                        form.attr("target", "_blank");
+                        form.attr("action", url);
+                        form.submit();
+                        form.attr("action", oldUrl);
+                        form.removeAttr("target");
+                        element.attr("disabled", false);
+                    }
+                },
+
+                checkValidity: function() {
+                    $("#invoice_file").attr("required", false);
+                    var isValidated = validateFormData(document.getElementById('invoice_form'));
+                    $("#invoice_file").attr("required", true);
+                    
+                    return isValidated;
+                },
             },
 
             mounted() {},

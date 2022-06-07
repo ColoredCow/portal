@@ -41,6 +41,7 @@ return [
             'margin-left' => '20mm',
             'margin-right' => '20mm',
             'zoom' => 1.2,
+            'enable-local-file-access' => true,
         ],
         'env' => [],
     ],

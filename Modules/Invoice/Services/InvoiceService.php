@@ -379,4 +379,16 @@ class InvoiceService implements InvoiceServiceContract
 
         return $invoice_number;
     }
+
+    public function generateInvoice(array $data)
+    {
+        $client = Client::find($data['client_id']);
+
+        return [
+            'client' => $client,
+            'projects' => $client->billableProjects,
+            'keyAccountManager' => $client->keyAccountManager()->first(),
+            'invoiceNumber' => 'IN0010010000010422'
+        ];
+    }
 }
