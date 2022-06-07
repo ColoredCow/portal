@@ -6,6 +6,7 @@ return [
         'sent' => 'Sent',
         'paid' => 'Paid',
         'pending' => 'Pending',
+        'disputed' => 'Disputed'
     ],
 
     'default-date-format' => 'd M Y',
