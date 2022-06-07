@@ -60,7 +60,7 @@
         editSegment(segment) {
             this.updateRoute = this.updateRoute.replace('SEGMENT_ID', segment.id);
             this.segmentName = segment.name;
-            $('#editSegmentModal').modal('show');
+            $('#editSegmentModal').modal('show');  
         }
     }
 });

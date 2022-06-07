@@ -1,5 +1,4 @@
-<div class="modal fade" id="round_confirm" tabindex="-1" role="dialog" aria-labelledby="round_confirm"
-    aria-hidden="true" v-if="selectedAction == 'round'">
+<div class="modal fade" id="round_confirm" tabindex="-1" role="dialog" aria-labelledby="round_confirm" aria-hidden="true" v-if="selectedAction == 'round'">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +7,7 @@
                     <h6 class="text-secondary">{{ $applicationRound->application->applicant->name }} &mdash;
                         {{ $applicationRound->application->applicant->email }}</h6>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -47,13 +46,12 @@
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span>{{ __('Assignee') }}</span>
                         </label>
-                        <select name="next_scheduled_person_id" id="next_scheduled_person_id" class="form-control"
-                            required="required">
+                        <select name="next_scheduled_person_id" id="next_scheduled_person_id" class="form-control" required="required">
                             @foreach ($interviewers as $interviewer)
-                                @php
-                                    $selected = $interviewer->id == auth()->id() ? 'selected' : '';
-                                @endphp
-                                <option value="{{ $interviewer->id }}" {{ $selected }}>{{ $interviewer->name }}</option>
+                            @php
+                            $selected = $interviewer->id == auth()->id() ? 'selected' : '';
+                            @endphp
+                            <option value="{{ $interviewer->id }}" {{ $selected }}>{{ $interviewer->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -75,8 +73,7 @@
                 <div class="form-row d-none" id="confirmMailToApplicantBlock">
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="confirmMailToApplicantSubject">Subject</label>
-                        <input type="text" name="mail_to_applicant[confirm][subject]" id="confirmMailToApplicantSubject"
-                            class="form-control">
+                        <input type="text" name="mail_to_applicant[confirm][subject]" id="confirmMailToApplicantSubject" class="form-control">
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="confirmMailToApplicantBody">Body</label>

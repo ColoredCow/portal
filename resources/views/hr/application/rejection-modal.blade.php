@@ -14,21 +14,20 @@
                     @foreach($allApplications as $application)
                         @if ($application->id != $currentApplication->id)
                             <option value="{{ $application->id }}">{{ $application->job->title }}</option>
-                        @endif
-                    @endforeach
-            		</select>
-            		<button class="btn btn-primary ml-2 px-4 round-submit" data-action="refer">GO</button>
-                </div>
-                <h3 class="my-4 pl-1">OR</h3>
-                <div class="d-flex align-items-center">
-                    <button type="button" class="btn btn-outline-danger round-submit" data-action="reject">Reject this candidate for all jobs</button>
-                </div>
-            </div>
-        </div>
-    </div>
+@endif
+@endforeach
+</select>
+<button class="btn btn-primary ml-2 px-4 round-submit" data-action="refer">GO</button>
+</div>
+<h3 class="my-4 pl-1">OR</h3>
+<div class="d-flex align-items-center">
+    <button type="button" class="btn btn-outline-danger round-submit" data-action="reject">Reject this candidate for all jobs</button>
+</div>
+</div>
+</div>
+</div>
 </div> --}}
-<div class="modal fade" id="application_reject_modal" tabindex="-1" role="dialog" aria-labelledby="application_reject_modal"
-    aria-hidden="true" v-if="selectedAction == 'round'">
+<div class="modal fade" id="application_reject_modal" tabindex="-1" role="dialog" aria-labelledby="application_reject_modal" aria-hidden="true" v-if="selectedAction == 'round'">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -37,20 +36,20 @@
                     <h6 class="text-secondary">{{ $applicationRound->application->applicant->name }} &mdash;
                         {{ $applicationRound->application->applicant->email }}</h6>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="form-check mt-3">
                 <p class="font-weight-bold">Select Reasons</p>
                 @foreach(config('hr.reasons-for-rejections') as $index => $reasonForRejection)
-                    <div class="rejection-reason-block">
-                        <label for="reasonTitle{{ $index }}">
-                            <input type="checkbox" class="reject-reason mr-1" id="reasonTitle{{ $index }}" name='reject_reason[{{ $index }}][title]' value='{{ $index }}'>{{ $reasonForRejection }}<br>
-                        </label>
-                        <br />
-                        <input type="text" class="form-control w-half mb-3" name='reject_reason[{{ $index }}][comment]' style="display: none" placeholder="Reason for {{ $reasonForRejection }}" />
-                    </div>
+                <div class="rejection-reason-block">
+                    <label for="reasonTitle{{ $index }}">
+                        <input type="checkbox" class="reject-reason mr-1" id="reasonTitle{{ $index }}" name='reject_reason[{{ $index }}][title]' value='{{ $index }}'>{{ $reasonForRejection }}<br>
+                    </label>
+                    <br />
+                    <input type="text" class="form-control w-half mb-3" name='reject_reason[{{ $index }}][comment]' style="display: none" placeholder="Reason for {{ $reasonForRejection }}" />
+                </div>
                 @endforeach
             </div>
             <div class="modal-body">
@@ -71,8 +70,7 @@
                 <div class="form-row d-none" id="rejectMailToApplicantBlock">
                     <div class="form-group col-md-12">
                         <label for="rejectMailToApplicantSubject">Subject</label>
-                        <input type="text" name="mail_to_applicant[reject][subject]" id="rejectMailToApplicantSubject"
-                            class="form-control">
+                        <input type="text" name="mail_to_applicant[reject][subject]" id="rejectMailToApplicantSubject" class="form-control">
                     </div>
                     <div class="form-group col-md-12">
                         <label for="rejectMailToApplicantBody">Body</label>

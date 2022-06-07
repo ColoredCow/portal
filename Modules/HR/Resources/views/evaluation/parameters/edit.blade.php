@@ -1,26 +1,23 @@
-<div class="modal fade" id="updateParameterModal" tabindex="-1" role="dialog"
-    aria-labelledby="updateParameterModal" aria-hidden="true">
+<div class="modal fade" id="updateParameterModal" tabindex="-1" role="dialog" aria-labelledby="updateParameterModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="updateParameterForm" method="Post" :action="updateRoute">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="createSegmentModal" v-text="selectedParameter.name"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="field-required">Parameter name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Name"
-                            required="required" v-model="selectedParameter.name">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" v-model="selectedParameter.name">
                     </div>
 
                     <div class="form-group">
                         <label for="name" class="field-required">Parameter marks</label>
-                        <input type="text" class="form-control" name="marks" id="marks" placeholder="Marks"
-                            required="required" v-model="selectedParameter.marks">
+                        <input type="text" class="form-control" name="marks" id="marks" placeholder="Marks" required="required" v-model="selectedParameter.marks">
                     </div>
 
                     <br>
@@ -37,22 +34,17 @@
                         </div>
                     </div>
 
-                    <div class="row my-1" v-for="(updateParameterOption, index ) in this.updateParameterOptions"
-                        :key="updateParameterOption.id">
+                    <div class="row my-1" v-for="(updateParameterOption, index ) in this.updateParameterOptions" :key="updateParameterOption.id">
                         <div class="col-5">
-                            <input v-if="!updateParameterOption.new" class="form-control" :name="`parameter_options[${index}][id]`"
-                                type="hidden" :value="updateParameterOption.id">
-                            <input v-model="updateParameterOption.value" class="form-control"
-                                :name="`parameter_options[${index}][label]`" text="text">
+                            <input v-if="!updateParameterOption.new" class="form-control" :name="`parameter_options[${index}][id]`" type="hidden" :value="updateParameterOption.id">
+                            <input v-model="updateParameterOption.value" class="form-control" :name="`parameter_options[${index}][label]`" text="text">
                         </div>
                         <div class="col-4">
-                            <input v-model="updateParameterOption.marks" class="form-control"
-                                :name="`parameter_options[${index}][marks]`" type="number">
+                            <input v-model="updateParameterOption.marks" class="form-control" :name="`parameter_options[${index}][marks]`" type="number">
                         </div>
 
                         <div class="col-3">
-                            <button v-on:click="removeUpdateParameterOption(index)" type="button"
-                                class="btn btn-sm text-danger">
+                            <button v-on:click="removeUpdateParameterOption(index)" type="button" class="btn btn-sm text-danger">
                                 remove
                             </button>
                         </div>
