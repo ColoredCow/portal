@@ -46,7 +46,7 @@ class Client extends Model
     
     public function billableProjects()
     {
-        return $this->hasMany(Project::class)->where('status', '!=' , 'inactive');
+        return $this->hasMany(Project::class)->where('status', '!=', 'inactive');
     }
 
     public function getReferenceIdAttribute()
