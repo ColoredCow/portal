@@ -7,8 +7,10 @@
                     <label for="project_invoice_id" class="pt-2"><b>Status</b></label>
                     <select class="form-control ml-4 flex-1" name="status" v-model="status">
                         @foreach(config('invoice.status') as $label => $status)
-                            <option value="{{ $label }}">{{ $status }}</option>
-                        @endforeach
+                            @if($label != "pending")
+                                <option value="{{ $label }}">{{ $status }}</option>
+                            @endif
+                        @endforeach 
                     </select>
                 </div>
             </div>
