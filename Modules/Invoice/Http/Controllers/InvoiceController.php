@@ -76,11 +76,7 @@ class InvoiceController extends Controller
         $data = $this->service->generateInvoice($request->all());
 
         $pdf = App::make('snappy.pdf.wrapper');
-        $html = view('invoice::render.render', [
-            'projects' => $data['projects'],
-            'client' => $data['client'],
-            'keyAccountManager' => $data['keyAccountManager'],
-        ]);
+        $html = view('invoice::render.render', $data);
         $pdf->loadHTML($html);
 
         return $pdf->inline($data['invoiceNumber'] . '.pdf');

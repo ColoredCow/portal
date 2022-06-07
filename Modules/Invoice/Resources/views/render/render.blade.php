@@ -207,10 +207,10 @@
                             <td align="left">
                                 <p class="fw-bold">Bill To</p>
                                 <p>{{$keyAccountManager->name}}</p>
-                                <p>Confederation of Indian Industry</p>
+                                <p>{{$client->name}}</p>
                                 <p>rakhee.gupta@cii.in</p>
-                                <p>The Mantosh Sondhi Centre</p>
-                                <p>Institutional Area, Lodi Road, Delhi -110003</p>
+                                <p>{{$client->addresses->first()->address}}</p>
+                                <p>{{$client->addresses->first()->state . '-' .$client->addresses->first()->area_code}}</p>
                                 <p>GSTIN : 07AAATC0188R1ZB</p>
                             </td>
                             <td>
@@ -224,8 +224,8 @@
                                         </td>
                                         <td align="right">
                                             <p>IN033-016-000002</p>
-                                            <p>April 2, 2022</p>
-                                            <p>April 12, 2022</p>
+                                            <p>{{date('F d, Y', strtotime($invoiceData['sent_on']))}}</p>
+                                            <p>{{date('F d, Y', strtotime($invoiceData['due_on']))}}</p>
                                         </td>
                                     </tr>
                                 </table>
@@ -233,8 +233,8 @@
                         </tr>
                         <tr valign="top">
                             <td align="left" class="fw-bold">
-                                <p>Client Name: Confederation of Indian Industry</p>
-                                <p>Client ID: 033</p>
+                                <p>Client Name: {{$client->name}}</p>
+                                <p>Client ID: {{$client->client_id}}</p>
                                 <p>Project Name: 17th Africa Conclave</p>
                                 <p>Project ID: 016</p>
                                 <p>Category : Web Application Development</p>
