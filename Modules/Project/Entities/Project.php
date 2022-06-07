@@ -88,8 +88,23 @@ class Project extends Model
 
     public function getCurrentExpectedHoursAttribute()
     {
-        $teamMembers = $this->getTeamMembers()->get();
         $currentDate = today(config('constants.timezone.indian'));
+
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = $currentDate->subDay();
+        }
+
+        return $this->getExpectedHours($currentDate);
+    }
+
+    public function getExpectedHoursTillTodayAttribute()
+    {
+        return $this->getExpectedHours(today(config('constants.timezone.indian')));
+    }
+
+    public function getExpectedHours($currentDate)
+    {
+        $teamMembers = $this->getTeamMembers()->get();
         $daysTillToday = count($this->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
         $currentExpectedEffort = 0;
 
