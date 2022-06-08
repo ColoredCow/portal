@@ -473,7 +473,7 @@
                                         {{ $applicationRound->round->name }}
                                         <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
                                             <i class="fa fa-info-circle fa-lg"></i>
-											<span class="ml-2">Assigned to<img class="ml-2 w-25 h-25 rounded-circle" src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" data-toggle="tooltip" data-placement="top" title="{{ Auth::user()->name }}"></span>
+											<span class="ml-2">Assigned to<img class="ml-2 w-25 h-25 rounded-circle" src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" data-toggle="tooltip" data-placement="top" title="{{ $applicationRound->scheduledPerson->name }}"></span>
                                         </span>
                                     </div>
                                     @if ($applicationRound->round_status)
