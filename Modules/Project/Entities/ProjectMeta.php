@@ -11,6 +11,6 @@ class ProjectMeta extends Model
 
     public function meta()
     {
-        return $this->belongsTo(Projects::class);
+        return $this->belongsTo(Project::class);
     }
 }
