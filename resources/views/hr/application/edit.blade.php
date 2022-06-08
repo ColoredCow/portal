@@ -473,7 +473,7 @@
                                         {{ $applicationRound->round->name }}
                                         <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
                                             <i class="fa fa-info-circle fa-lg"></i>
-											{{-- <p class="d-inline-block ml-2">Assigned to<span><img src=""></img></span></p> --}}
+											<span class="ml-2">Assigned to<img class="ml-2 w-25 h-25 rounded-circle" src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" data-toggle="tooltip" data-placement="top" title="{{ Auth::user()->name }}"></span>
                                         </span>
                                     </div>
                                     @if ($applicationRound->round_status)
@@ -505,8 +505,8 @@
                                     {{ method_field('PATCH') }}
                                     <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $loop->last ? 'show' : '' }}">
                                         <div class="card-body">
-											<div class="card mb-2">
-												<div class="card-header">
+											<div class="card mb-2 border-0">
+												<div class="card-header border-0">
 													<div class="d-flex justify-content-between">
 														<div>Applicant Details</div>
 														@foreach ($application->tags as $tag)
@@ -553,43 +553,38 @@
 															<div>{{ $applicant->email }}</div>
 														</div>
 														<div class="form-group col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">
-																College
-																<span class="badge badge-danger d-none university-update-failure">Failed to update</span>
-																<span class="badge badge-success d-none university-update-success">Updated successfully!</span>
-															</label>
-															@if(!$applicant->hr_university_id)
-																<div id="applicant_college">{{ $applicant->college ?? '-' }}</div>
-															@endif
-															@if ($universities->isNotEmpty())
-																<select name="university_id"
-																	id="application_university_id"
-																	class="form-control form-control-sm pr-md-7"
-																	data-applicant-id="{{ $applicant->id }}">
-																	<option value="">Select</option>
-																	@foreach ($universities as $university)
-																		@php
-																			$selected = $applicant->hr_university_id == $university->id ? 'selected="selected"' : '';
-																		@endphp
-																		<option value="{{ $university->id }}" {{ $selected }}>
-																			{{ $university->name }}
-																		</option>
-																	@endforeach
-																</select>
-															@endif
+															<label class="text-secondary fz-14 leading-none mb-0.16">College</label>
+															<div class="mt-2 evaluation-score">
+																<input type="radio" class="toggle-button" name="college" id="college_evaluation_1">
+																<label for="college_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																<input type="radio" class="toggle-button" name="college" id="college_evaluation_2">
+																<label for="college_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+															</div>
 														</div>
 														<div class="form-group offset-md-1 col-md-5">
 															<label class="text-secondary fz-14 leading-none mb-0.16">Course</label>
 															<div>{{ $applicant->course ?? '-' }}</div>
+															<div class="mt-2 evaluation-score">
+																<input type="radio" class="toggle-button" name="course" id="course_evaluation_1">
+																<label for="course_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																<input type="radio" class="toggle-button" name="course" id="course_evaluation_2">
+																<label for="course_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+															</div>
 														</div>
 														<div class="form-group col-md-5">
 															<label class="text-secondary fz-14 leading-none mb-0.16">Resume</label>
 															<div>
-															@if ($application->resume)
-																@include('hr.application.inline-resume', ['resume' => $application->resume])
-															@else
-																–
-															@endif
+																@if ($application->resume)
+																	@include('hr.application.inline-resume', ['resume' => $application->resume])
+																@else
+																	–
+																@endif
+																<div class="mt-2 evaluation-score">
+																	<input type="radio" class="toggle-button" name="resume" id="resume_evaluation_1">
+																	<label for="resume_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																	<input type="radio" class="toggle-button" name="resume" id="resume_evaluation_2">
+																	<label for="resume_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																</div>
 															</div>
 														</div>
 														<div class="form-group offset-md-1 col-md-5">
@@ -597,6 +592,12 @@
 															<div>
 																{{ $applicant->graduation_year ?? '-' }}&nbsp;
 																@includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
+																<div class="mt-2 evaluation-score">
+																	<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_1">
+																	<label for="graduation_year_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																	<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_2">
+																	<label for="graduation_year_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																</div>
 															</div>
 														</div>
 														@if (isset($applicant->reference))
@@ -610,6 +611,12 @@
 																<div class="form-group col-md-12">
 																	<label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
 																	<div>{{ $value }}</div>
+																	<div class="mt-2 evaluation-score">
+																		<input type="radio" class="toggle-button" name="{{ $field }}" id="reason_for_eligibility_evaluation_1">
+																		<label for="reason_for_eligibility_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																		<input type="radio" class="toggle-button" name="{{ $field }}" id="reason_for_eligibility_evaluation_2">
+																		<label for="reason_for_eligibility_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																	</div>
 																</div>
 															@endforeach
 														@endif

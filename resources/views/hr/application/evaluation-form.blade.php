@@ -1,7 +1,7 @@
-<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
+<form id="applicationEvaluation" method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
 	@method('PATCH')
     @csrf
-    <div class="row mb-3 d-none evaluation-result">
+    {{-- <div class="row mb-3 d-none evaluation-result">
         <div class="col-12">
             <h4>
                 <span>Result: </span>
@@ -12,7 +12,7 @@
                 @endif
             </h4>
         </div>
-    </div>
+    </div> --}}
     {{-- this depends on the application round. currently hard-coded for resume-screening --}}
     <div class="evaluation-stage" id="evaluationStage1">
         @include('hr::evaluation.evaluation-form.resume-screening.feeling')
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="col-4 d-none my-1" id="assignSendForReview">
-                <select class="custom-select custom-select-sm fz-14">
+                <select name="reviewer" class="custom-select custom-select-sm fz-14">
                     <option selected>Select reviewer</option>
                     @foreach ($employees as $employee)
                         <option value="{{ $employee->id }}">{{ $employee->name }}</option>
@@ -44,7 +44,7 @@
         </div>
         <div class="row py-4">
             <div class="col-12">
-                {{-- TODO: save form on click using AJAX --}}
+				{{-- TODO: save form on click using AJAX --}}
                 <button type="button" class="btn btn-light border mr-2 show-evaluation-stage" data-target="#evaluationStage1">Back</button>
                 <button type="submit" class="btn btn-success">Submit</button>
             </div>

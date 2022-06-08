@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-row mt-2">
                     <div class="form-group col-md-12">
-                        <button type="button" class="btn btn-success px-4 round-submit" data-action="send-for-approval">Confirm</button>
+                        <button type="submit" class="btn btn-success px-4 round-submit" data-action="send-for-approval">Confirm</button>
                     </div>
                 </div>
             </div>
