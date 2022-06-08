@@ -10,6 +10,8 @@ use Modules\Project\Entities\Project;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Revolution\Google\Sheets\Sheets;
+use Modules\Project\Entities\ProjectMeta;
+
 class SyncEffortsheet extends Command
 {
     /**
