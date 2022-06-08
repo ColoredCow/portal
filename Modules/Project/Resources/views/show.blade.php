@@ -80,7 +80,7 @@
                         </h4>
                         <div>
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
-                                <div class="table-responsive">
+                                <div class="table">
                                     <table class="table">
                                         <thead>
                                             <tr class="bg-theme-gray text-light">
@@ -96,23 +96,28 @@
                                                 <th scope="col" class="pb-md-3 pb-xl-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach($project->getTeamMembers ?:[] as $teamMember)
-                                                <tr>
-                                                    <th scope="row" class="fz-lg-20 my-2 px-5 col-md-6 font-weight-normal"> 
-                                                        <span>
-                                                            <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
-                                                            <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
-                                                        </span>
-                                                        {{$teamMember->user->name}}
-                                                    </th>
-                                                    <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
-                                                    <td>{{$teamMember->current_expected_effort}}</td>
-                                                    <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                        @if($project->TeamMembers->first() == null)
+                                            </table>
+                                            <div class="fz-lg-28 text-center mt-4">No member in the project</div>
+                                        @else
+                                            <tbody>
+                                                @foreach($project->getTeamMembers ?:[] as $teamMember)
+                                                    <tr>
+                                                        <th scope="row" class="fz-lg-20 my-2 px-5 col-md-6 font-weight-normal"> 
+                                                            <span>
+                                                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
+                                                                <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
+                                                            </span>
+                                                            {{$teamMember->user->name}}
+                                                        </th>
+                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
+                                                        <td>{{$teamMember->current_expected_effort}}</td>
+                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                            </table>
+                                        @endif
                                 </div>
                             </div>
                         </div>
