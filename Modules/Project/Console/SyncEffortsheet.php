@@ -52,11 +52,10 @@ class SyncEffortsheet extends Command
         foreach ($projects as $project) {
             ProjectMeta::updateOrCreate([
                 'key' => 'last_updated_at', 'project_id' => $project->id,
-                ] ,[
+                ], [
                     'value' => now()
                 ]);
             try {
- //               dd($project->meta()->where('key', 'last_updated_at')->first());
                 $effortSheetUrl = $project->effort_sheet_url;
 
                 if (! $effortSheetUrl) {
