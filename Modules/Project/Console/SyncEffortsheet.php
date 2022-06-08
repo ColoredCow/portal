@@ -10,6 +10,7 @@ use Modules\Project\Entities\Project;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Revolution\Google\Sheets\Sheets;
+use Modules\Project\Entities\ProjectMeta;
 
 class SyncEffortsheet extends Command
 {
@@ -49,7 +50,13 @@ class SyncEffortsheet extends Command
         $sheetColumnsName = config('efforttracking.columns_name');
 
         foreach ($projects as $project) {
+            ProjectMeta::updateOrCreate([
+                'key' => 'last_updated_at', 'project_id' => $project->id,
+                ] ,[
+                    'value' => now()
+                ]);
             try {
+ //               dd($project->meta()->where('key', 'last_updated_at')->first());
                 $effortSheetUrl = $project->effort_sheet_url;
 
                 if (! $effortSheetUrl) {
