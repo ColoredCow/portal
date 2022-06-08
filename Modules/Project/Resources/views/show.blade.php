@@ -1,6 +1,10 @@
 @php
- $teamMember=$project->getTeamMembers->first();
- $currentWorkingDaysInMonth=($teamMember->current_expected_effort/$teamMember->daily_expected_effort);
+        $currentDate = today(config('constants.timezone.indian'));
+
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = $currentDate->subDay();
+        }
+        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
 @endphp
 @extends('project::layouts.master')
 @section('content')
@@ -91,9 +95,11 @@
                                                 <th scope="col" class="pb-md-3 pb-xl-4 px-9">Name</th>
                                                 <th scope="col" class="pb-md-3 pb-xl-4">Hours Booked</th>
                                                 <th scope="col" class="pb-lg-1">Expected Hours
+                                                    
                                                     <div class="ml-md-3 ml-xl-6 font-weight-bold fz-12"> 
-                                                        ({{$currentWorkingDaysInMonth}} Days)
+                                                        ({{$daysTillToday}} Days)
                                                     </div>
+
                                                 </th>
                                                 <th scope="col" class="pb-md-3 pb-xl-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
