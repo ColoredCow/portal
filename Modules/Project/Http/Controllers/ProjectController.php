@@ -59,11 +59,18 @@ class ProjectController extends Controller
     {
         $contract = ProjectContract::where('project_id', $project->id)->first();
         $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
+        $currentDate = today(config('constants.timezone.indian'));
+
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = $currentDate->subDay();
+        }
+        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
 
         return view('project::show', [
             'project' => $project,
             'contract' => $contract,
             'contractFilePath' => $contractFilePath,
+            'daysTillToday' => $daysTillToday,
         ]);
     }
 
