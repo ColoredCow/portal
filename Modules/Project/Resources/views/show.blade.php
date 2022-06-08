@@ -1,10 +1,3 @@
-@php
-    $currentDate = today(config('constants.timezone.indian'));
-    if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-        $currentDate = $currentDate->subDay();
-    }
-    $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
-@endphp
 @extends('project::layouts.master')
 @section('content')
 
@@ -113,7 +106,7 @@
                                                         </span>
                                                         {{$teamMember->user->name}}
                                                     </th>
-                                                    <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : ($teamMember->current_actual_effort < $teamMember->current_expected_effort ? 'text-danger' : '') }}">{{$teamMember->current_actual_effort}}</td>
+                                                    <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
                                                     <td>{{$teamMember->current_expected_effort}}</td>
                                                     <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
                                                 </tr>
