@@ -20,13 +20,12 @@ $(document).ready(function () {
 		var weeklyEffort=$(this).val();
 		const objdays = document.getElementById("working_days_in_month");
 		const daysInMonth = objdays.getAttribute("data-days-count");
-		var weeks = daysInMonth/5;
 		if (weeklyEffort=="") {
 			$(this).parent(".weekly-effort-div").siblings(".daily-effort-div").children(".daily-effort").val("");
 			$(this).parent(".weekly-effort-div").siblings(".monthly-effort-div").children(".monthly-effort").val("");
 		} else {
 			$(this).parent(".weekly-effort-div").siblings(".daily-effort-div").children(".daily-effort").val(weeklyEffort/5);
-			$(this).parent(".weekly-effort-div").siblings(".monthly-effort-div").children(".monthly-effort").val(weeklyEffort*weeks);
+			$(this).parent(".weekly-effort-div").siblings(".monthly-effort-div").children(".monthly-effort").val((weeklyEffort/5)*daysInMonth);
 		}
 		
 	});
@@ -35,13 +34,12 @@ $(document).ready(function () {
 		var monthlyEffort=$(this).val();
 		const objdays = document.getElementById("working_days_in_month");
 		const daysInMonth = objdays.getAttribute("data-days-count");
-		var weeks = daysInMonth/5;
 		if (monthlyEffort=="") {
 			$(this).parent(".monthly-effort-div").siblings(".daily-effort-div").children(".daily-effort").val("");
 			$(this).parent(".monthly-effort-div").siblings(".weekly-effort-div").children(".weekly-effort").val("");
 		} else {
 			$(this).parent(".monthly-effort-div").siblings(".daily-effort-div").children(".daily-effort").val(monthlyEffort/daysInMonth);
-			$(this).parent(".monthly-effort-div").siblings(".weekly-effort-div").children(".weekly-effort").val(monthlyEffort/weeks);	
+			$(this).parent(".monthly-effort-div").siblings(".weekly-effort-div").children(".weekly-effort").val(monthlyEffort/daysInMonth * 5);	
 		}
 	});
 });
