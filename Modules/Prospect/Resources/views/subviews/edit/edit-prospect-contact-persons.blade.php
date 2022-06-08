@@ -73,7 +73,7 @@
                     name:'',
                     email:'',
                     phone:'',
-                    type:'biiling-contact'
+                    type:'billing-contact'
                 }
             },
 

@@ -35,5 +35,11 @@ return [
         'igst' => '18%',
         'cgst' => '9%',
         'sgst' => '9%'
-    ]
+    ],
+
+    'tax-details' => [
+        'igst' => 0.18,
+        'cgst' => 0.09,
+        'sgst' => 0.09
+    ],
 ];

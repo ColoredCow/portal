@@ -88,9 +88,13 @@
                             step=".01" min="0">
                     </div>
                 </div>
-                <p class="text-danger" v-if="currency == 'INR' ">Total Amount : @{{ tot }}</p>
-                <p class="text-danger" v-if="currency == 'USD' ">Total Amount : @{{ amt }}</p>
-                <div class="text-danger" id="container"></div><br />
+                <div class="text-danger fz-14" v-if="currency == 'INR' ">Total Amount : @{{ tot }}</div>
+                <div class="text-danger fz-14" v-if="currency == 'USD' ">Total Amount : @{{ amt }}</div>
+                <div class="text-danger fz-14 my-0" id="container"></div>
+                <div class="form-group mt-2">
+                    <label for="term" class="field-required">Invoice for term</label>
+                    <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', '') }}'>
+                </div>
                 <div class="form-group">
                     <label for="sent_on" class="field-required">Sent on</label>
                     <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"

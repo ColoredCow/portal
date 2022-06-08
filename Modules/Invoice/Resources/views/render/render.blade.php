@@ -8,179 +8,182 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <!-- Styles -->
         <style>
-        html,
-        body {
-            color: #012840;
-            font-family: 'Source Sans Pro', 'sans-serif';
-            font-weight: normal;
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-size: 100% 100%;
-            font-size: 12px;
-        }
-        .full-height {
-            height: 100vh;
-        }
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-        .content {
-            text-align: center;
-        }
-        .title {
-            font-size: 44px !important;
-            color: #2E3091;
-        }
-        .flex-row {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: flex;
-            flex-direction: row;
-        }
-        .flex-column {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: flex;
-            flex-direction: column;
-        }
-        .links>a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-        .fz-20 {
-            font-size: 20px;
-        }
-        .fz-24 {
-            font-size: 24px;
-        }
-        .fz-16 {
-            font-size: 16px;
-        }
-        .fz-60 {
-            font-size: 60px;
-        }
-        .ml-auto {
-            margin-left: auto;
-        }
-        .mr-auto {
-            margin-right: auto;
-        }
-        .mr-100 {
-            margin-right: 100px;
-        }
-        .ml-100 {
-            margin-left: 100px;
-        }
-        .mt-40 {
-            margin-top: 40px;
-        }
-        .mt-10 {
-            margin-top: 10px;
-        }
-        .mr-80 {
-            margin-right: 80px;
-        }
-        .pt-20 {
-            padding-top: 20px;
-        }
-        .h-200 {
-            height: 200px;
-        }
-        .w-500 {
-            width: 500px;
-        }
-        .w-850 {
-            width: 850px;
-        }
-        .pt-100 {
-            padding-top: 100px;
-        }
-        .ml-150 {
-            margin-left: 150px;
-        }
-        .bg-title-blue {
-            background-color: #40A3E4;
-        }
-        .bg-theme-blue {
-            background-color: #014B7B;
-        }
-        .text-white {
-            color: white;
-        }
-        .px-10 {
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-        .px-30 {
-            padding-left: 30px;
-            padding-right: 30px;
-        }
-        .mt-20 {
-            margin-top: 20px;
-        }
-        .mb-0 {
-            margin-bottom: 0px !important;
-        }
-        .page-break-before {
-            page-break-before: always;
-        }
-        .ml-200 {
-            margin-left: 200px;
-        }
-        .px-10 {
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-        table {
-            width: 100%;
-        }
-        .w-full {
-            width: 100%;
-        }
-        .w-30p {
-            width: 30%;
-        }
-        .w-70p {
-            width: 70%;
-        }
-        .mt-80 {
-            margin-top: 80px;
-        }
-        .w-13p {
-            width: 12.5%;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .w-25p {
-            width: 25%;
-        }
-        .w-33 {
-            width: 33%;
-        }
-        td p {
-            margin: 0px !important;
-        }
-        table {
-            border-collapse: separate;
-            border-spacing: 0 1em;
-        }
-        .fw-bold {
-            font-weight: bold !important;
-        }
-        tr, td{
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-    </style>
+            html,
+            body {
+                color: #012840;
+                font-family: 'Source Sans Pro', 'sans-serif';
+                font-weight: normal;
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                background-size: 100% 100%;
+                font-size: 12px;
+            }
+            .full-height {
+                height: 100vh;
+            }
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+            .content {
+                text-align: center;
+            }
+            .title {
+                font-size: 44px !important;
+                color: #2E3091;
+            }
+            .flex-row {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+                flex-direction: row;
+            }
+            .flex-column {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+                flex-direction: column;
+            }
+            .links>a {
+                color: #636b6f;
+                padding: 0 25px;
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+            .fz-20 {
+                font-size: 20px;
+            }
+            .fz-24 {
+                font-size: 24px;
+            }
+            .fz-16 {
+                font-size: 16px;
+            }
+            .fz-60 {
+                font-size: 60px;
+            }
+            .ml-auto {
+                margin-left: auto;
+            }
+            .mr-auto {
+                margin-right: auto;
+            }
+            .mr-100 {
+                margin-right: 100px;
+            }
+            .ml-100 {
+                margin-left: 100px;
+            }
+            .ml-1em {
+                margin-left: 1em;
+            }
+            .mt-40 {
+                margin-top: 40px;
+            }
+            .mt-10 {
+                margin-top: 10px;
+            }
+            .mr-80 {
+                margin-right: 80px;
+            }
+            .pt-20 {
+                padding-top: 20px !important;
+            }
+            .h-200 {
+                height: 200px;
+            }
+            .w-500 {
+                width: 500px;
+            }
+            .w-850 {
+                width: 850px;
+            }
+            .pt-100 {
+                padding-top: 100px;
+            }
+            .ml-150 {
+                margin-left: 150px;
+            }
+            .bg-title-blue {
+                background-color: #40A3E4;
+            }
+            .bg-theme-blue {
+                background-color: #014B7B;
+            }
+            .text-white {
+                color: white;
+            }
+            .px-10 {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .px-30 {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+            .mt-20 {
+                margin-top: 20px;
+            }
+            .mb-0 {
+                margin-bottom: 0px !important;
+            }
+            .mt-0 {
+                margin-top: 0px !important;
+            }
+            .page-break-before {
+                page-break-before: always;
+            }
+            .ml-200 {
+                margin-left: 200px;
+            }
+            .px-10 {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            table {
+                width: 100%;
+            }
+            .w-full {
+                width: 100%;
+            }
+            .w-30p {
+                width: 30%;
+            }
+            .w-70p {
+                width: 70%;
+            }
+            .mt-80 {
+                margin-top: 80px;
+            }
+            .w-13p {
+                width: 12.5%;
+            }
+            .text-center {
+                text-align: center;
+            }
+            .w-25p {
+                width: 25%;
+            }
+            .w-33 {
+                width: 33%;
+            }
+            .fw-bold {
+                font-weight: bold !important;
+            }
+            td p {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            tr, td{
+                padding: 0.2em 0 0.2em 1em !important;
+                margin: 0.2em 0 0.2em 1em !important;
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -190,7 +193,7 @@
                     <tbody>
                         <tr valign="top">
                             <td>
-                                <img src="{{public_path() . '/images/coloredcow.png'}}" alt="" height="50" width="200">
+                                <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" height="50" width="200">
                             </td>
                             <td style="color: grey;" align="right">
                                 <p>F-61, Suncity, Sector - 54</p>
@@ -206,26 +209,28 @@
                         <tr style="width:100%;">
                             <td align="left">
                                 <p class="fw-bold">Bill To</p>
-                                <p>{{$keyAccountManager->name}}</p>
-                                <p>{{$client->name}}</p>
-                                <p>rakhee.gupta@cii.in</p>
-                                <p>{{$client->addresses->first()->address}}</p>
-                                <p>{{$client->addresses->first()->state . '-' .$client->addresses->first()->area_code}}</p>
-                                <p>GSTIN : 07AAATC0188R1ZB</p>
+                                <p>{{ $client->billing_contact->name }}</p>
+                                <p>{{ $client->name }}</p>
+                                <p>{{ $client->billing_contact->email }}</p>
+                                <p>{{ $client->addresses->first()->address }}</p>
+                                <p>{{ $client->addresses->first()->state . ' ' .$client->addresses->first()->area_code }}</p>
+                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN : 07AAATC0188R1ZB') : '' }}</p>
                             </td>
                             <td>
-                                <p class="fw-bold">Details</p>
+                                <p class="fw-bold ml-1em">Details</p>
                                 <table>
                                     <tr>
                                         <td>
+                                            <p>Term :</p>
                                             <p>Invoice Number :</p>
                                             <p>Issue Date :</p>
                                             <p>Due Date :</p>
                                         </td>
                                         <td align="right">
+                                            <p>{{ $monthName }}</p>
                                             <p>IN033-016-000002</p>
-                                            <p>{{date('F d, Y', strtotime($invoiceData['sent_on']))}}</p>
-                                            <p>{{date('F d, Y', strtotime($invoiceData['due_on']))}}</p>
+                                            <p>{{ date('F d, Y', strtotime($invoiceData['sent_on'])) }}</p>
+                                            <p>{{ date('F d, Y', strtotime($invoiceData['due_on'])) }}</p>
                                         </td>
                                     </tr>
                                 </table>
@@ -233,10 +238,10 @@
                         </tr>
                         <tr valign="top">
                             <td align="left" class="fw-bold">
-                                <p>Client Name: {{$client->name}}</p>
-                                <p>Client ID: {{$client->client_id}}</p>
-                                <p>Project Name: 17th Africa Conclave</p>
-                                <p>Project ID: 016</p>
+                                <p>Client Name: {{ $client->name }}</p>
+                                <p>Client ID: {{ sprintf('%03s', $client->client_id) }}</p>
+                                <p>Project Name: {{ $client->primary_project->name }}</p>
+                                <p>Project ID: {{ $client->primary_project->client_project_id }}</p>
                                 <p>Category : Web Application Development</p>
                             </td>
                             <td align="right">
@@ -246,7 +251,7 @@
                                             <p>Total Amount Due :</p>
                                         </td>
                                         <td align="right">
-                                            <p><strong>₹53,100.00</strong></p>
+                                            <p><strong>{{ $client->country->currency_symbol }}53,100.00</strong></p>
                                         </td>
                                     </tr>
                                 </table>
@@ -254,48 +259,35 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Description</th>
-                            <th scope="col">Cost</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>17th Africa Conclave website development (50% Advance)</td>
-                            <td>₹45,000.00</td>
-                        </tr>
-                    </tbody>
-                </table>
+                @include('invoice::render.international-hourly-billing-template')
                 <div>
                     <table class="table" style="margin-left: auto;width:50%;">
                         <tr>
                             <td>Total</td>
                             <td></td>
-                            <td>₹45,000.00</td>
+                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year) }}</td>
                         </tr>
                         <tr>
-                            <td>GST in INR</td>
-                            <td>18.00%</td>
-                            <td>₹8,100.00</td>
+                            <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
+                            <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
+                            <td>{{ $client->country->currency_symbol . $client->getTaxAmountForTerm($monthNumber, $year) }}</td>
                         </tr>
                         <tr>
                             <td>Current Payable</td>
                             <td></td>
-                            <td>₹53,100.00</td>
+                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year) + $client->getTaxAmountForTerm($monthNumber, $year) }}</td>
                         </tr>
                         <tr>
                             <td>Amount Paid</td>
                             <td></td>
-                            <td>₹0.00</td>
+                            <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthNumber, $year) }}</td>
                         </tr>
                         <tr>
                             <td>
-                                <strong>Current Amount Due in INR</strong>
+                                <strong>Current Amount Due in {{ $client->country->initials . ' ' . $client->country->currency_symbol }}</strong>
                             </td>
                             <td></td>
-                            <td><strong>₹53,100.00</strong></td>
+                            <td><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year) }}</strong></td>
                         </tr>
                     </table>
                 </div>
@@ -303,7 +295,7 @@
                     <table class="table table-borderless" style="width: 50%; margin-right: auto;">
                         <thead>
                             <tr>
-                                <th scope="col">Transaction Details</th>
+                                <th scope="col" class="fz-16">Transaction Details</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -334,7 +326,8 @@
                             <tr>
                                 <td style="width: 40%;">Phone:</td>
                                 <td>91-9818571035</td>
-                            </tr>
+                            </tr><br>
+                            <tr><td><br></td></tr>
                             <tr>
                                 <td colspan="2">
                                     Thank you for your business. It’s a pleasure to work with you on your project.
@@ -342,10 +335,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>Sincerely,</p>
-                                    <p>ColoredCow Consulting Pvt. Ltd.</p>
-                                    <p>F-61, Suncity, Sector - 54 </p>
-                                    <p>Gurgaon, Haryana, 122003, India</p>
+                                    <p class='mb-0 mt-0'>Sincerely,</p>
+                                    <p class='mb-0 mt-0'>ColoredCow Consulting Pvt. Ltd.</p>
+                                    <p class='mb-0 mt-0'>F-61, Suncity, Sector - 54 </p>
+                                    <p class='mb-0 mt-0'>Gurgaon, Haryana, 122003, India</p>
                                 </td>
                             </tr>
                         </tbody>

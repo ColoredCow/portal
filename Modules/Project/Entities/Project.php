@@ -127,4 +127,18 @@ class Project extends Model
 
         return round($expectedMonthlyHours, 2);
     }
+
+    public function getBillableHourForTerm(int $monthNumber, int $year)
+    {
+        return $this->getTeamMembers->sum(function ($teamMember) use($monthNumber, $year) {
+            if (!$teamMember->projectTeamMemberEffort) {
+                return 0;
+            }
+
+            return $teamMember->projectTeamMemberEffort()
+                ->where('added_on', '>=', $year . '-' . sprintf('%02s', $monthNumber) . '-01')
+                ->where('added_on', '<=', $year . '-' . sprintf('%02s', $monthNumber) . '-31')
+                ->sum('actual_effort');
+        });
+    }
 }

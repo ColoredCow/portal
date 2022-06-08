@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
+use Modules\Invoice\Contracts\CurrencyServiceContract;
 
 class Client extends Model
 {
@@ -59,6 +60,16 @@ class Client extends Model
         return $this->hasMany(ClientContactPerson::class);
     }
 
+    public function getBillingContactAttribute()
+    {
+        return $this->contactPersons()->where('type', 'billing-contact')->first();
+    }
+
+    public function getPrimaryProjectAttribute()
+    {
+        return $this->projects()->where('client_project_id', '001')->first();
+    }
+
     public function addresses()
     {
         return $this->hasMany(ClientAddress::class);
@@ -87,5 +98,29 @@ class Client extends Model
     public function getCurrencyAttribute()
     {
         return $this->type == 'indian' ? 'INR' : 'USD';
+    }
+
+    public function getBillableAmountForTerm(int $month, int $year)
+    {
+        $amount = $this->billableProjects->sum(function ($project) use ($month, $year) {
+            return round($project->getBillableHourForTerm($month, $year) * app(CurrencyServiceContract::class)->getCurrentRatesInINR(), 2);
+        });
+
+        return $amount;
+    }
+
+    public function getTaxAmountForTerm(int $month, int $year)
+    {
+        return round($this->getBillableAmountForTerm($month, $year) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
+    }
+
+    public function getTotalPayableAmountForTerm(int $month, int $year)
+    {
+        return $this->getBillableAmountForTerm($month, $year) + $this->getTaxAmountForTerm($month, $year);
+    }
+
+    public function getAmountPaidForTerm(int $month, int $year)
+    {
+        return 0.00;
     }
 }

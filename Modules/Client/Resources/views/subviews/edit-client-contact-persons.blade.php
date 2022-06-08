@@ -30,7 +30,7 @@
                 <div class="col-4 d-flex justify-content-between">
                     <div class="mr-3 w-full">
                         <select required="required" v-model="contactPerson.type" class="form-control" :name="`client_contact_persons[${index}][type]`">
-                            <option value="biiling-contact">Primary billing contact</option>
+                            <option value="billing-contact">Primary billing contact</option>
                             <option value="general-contact">General Point of contact</option>
                         </select>
                     </div>
@@ -74,7 +74,7 @@
                     name:'',
                     email:'',
                     phone:'',
-                    type:'biiling-contact'
+                    type:'billing-contact'
                 }
             },
 
