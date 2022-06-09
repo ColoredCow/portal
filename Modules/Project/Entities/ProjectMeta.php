@@ -9,7 +9,7 @@ class ProjectMeta extends Model
     protected $table = 'project_meta';
     protected $guarded = [];
 
-    public function meta()
+    public function project()
     {
         return $this->belongsTo(Project::class);
     }

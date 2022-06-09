@@ -50,12 +50,13 @@ class SyncEffortsheet extends Command
         $sheetColumnsName = config('efforttracking.columns_name');
 
         foreach ($projects as $project) {
-            ProjectMeta::updateOrCreate([
-                'key' => 'last_updated_at', 'project_id' => $project->id,
-                ], [
-                    'value' => now()
-                ]);
             try {
+                ProjectMeta::updateOrCreate([
+                    'key' => 'last_updated_at', 'project_id' => $project->id,
+                    ], [
+                        'value' => now()
+                    ]);
+                    
                 $effortSheetUrl = $project->effort_sheet_url;
 
                 if (! $effortSheetUrl) {
