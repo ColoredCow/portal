@@ -127,4 +127,9 @@ class Project extends Model
 
         return round($expectedMonthlyHours, 2);
     }
+
+    public function meta()
+    {
+        return $this->hasMany(ProjectMeta::class);
+    }
 }
