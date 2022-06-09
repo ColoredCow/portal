@@ -56,7 +56,7 @@ class SyncEffortsheet extends Command
                     ], [
                         'value' => now()
                     ]);
-                    
+
                 $effortSheetUrl = $project->effort_sheet_url;
 
                 if (! $effortSheetUrl) {
