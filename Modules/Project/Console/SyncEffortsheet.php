@@ -109,9 +109,11 @@ class SyncEffortsheet extends Command
                         break;
                     }
 
-                    ProjectMeta::updateOrCreate([
+                    ProjectMeta::updateOrCreate(
+                        [
                         'key' => 'last_updated_at', 'project_id' => $project->id,
-                        ], [
+                        ],
+                        [
                             'value' => now()
                         ]
                     );
