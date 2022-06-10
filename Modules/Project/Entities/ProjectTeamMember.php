@@ -23,6 +23,7 @@ class ProjectTeamMember extends Model
         return $this->belongsTo(User::class, 'team_member_id', 'id');
     }
 
+
     public function projectTeamMemberEffort()
     {
         return $this->hasMany(ProjectTeamMemberEffort::class);

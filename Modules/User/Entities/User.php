@@ -4,6 +4,7 @@ namespace Modules\User\Entities;
 
 use App\Models\KnowledgeCafe\Library\Book;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -144,6 +145,7 @@ class User extends Authenticatable
     }
     public function activeProjectTeamMembers()
     {
+        
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id')->where('ended_on', null);
     }
 
