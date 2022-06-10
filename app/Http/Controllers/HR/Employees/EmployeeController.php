@@ -19,7 +19,7 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
-        return view('hr.employees.show', compact('employee'));
+        return view('hr.employees.show', ['employee' => $employee]);
     }
 
     /**
@@ -32,10 +32,5 @@ class EmployeeController extends Controller
         $employee->load('projects');
 
         return view('hr.employees.projects', compact('employee'));
-    }
-
-    public function showEmployeeProjects(Employee $employee)
-    {
-        return view('hr.employees.employee-details')->with(['employee' => $employee]);
     }
 }

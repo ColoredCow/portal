@@ -67,7 +67,6 @@ Route::middleware('auth')->group(function () {
         Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
 
         Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
-        Route::get('employee/{employee}/showprojects/', 'Employees\EmployeeController@showEmployeeProjects')->name('employee.projects.show');
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {
