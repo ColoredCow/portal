@@ -15,5 +15,15 @@ return [
     'type' => [
         'monthly-billing' => 'Monthly Billing',
         'fixed-budget' => 'Fixed Budget'
+    ],
+    'meta_keys' => [
+        'billing_level' => [
+            'key' => 'billing_level',
+            'value' =>'Billing level',
+        ],
+        'last_updated_at' => [
+            'key' => 'last_updated_at',
+            'value' => 'Last refreshed at',
+        ]
     ]
 ];

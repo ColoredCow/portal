@@ -146,4 +146,14 @@ class Project extends Model
     {
         return $this->hasMany(ProjectMeta::class);
     }
+
+    public function getBillingLevelAttribute()
+    {
+        return optional($this->meta()->where('key', 'billing_level')->first())->value;
+    }
+
+    public function getLastUpdatedAtAttribute()
+    {
+        return optional($this->meta()->where('key', 'last_updated_at')->first())->value;
+    }
 }
