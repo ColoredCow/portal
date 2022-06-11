@@ -23,7 +23,7 @@
                 <tbody>
                     @if(optional($employee->user)->activeProjectTeamMembers == null)
                         </table>
-                        <div class="fz-lg-28 text-center mt-2"><div class="mb-2">Not in any project</div></div>
+                        <div class="fz-lg-28 text-center mt-2"><div class="mb-4">Not in any project</div></div>
                     @else
                         @foreach($employee->user->activeProjectTeamMembers as $activeProjectTeamMember)
                             <tr>

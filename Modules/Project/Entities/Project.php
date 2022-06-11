@@ -3,7 +3,6 @@
 namespace Modules\Project\Entities;
 
 use App\Traits\Filters;
-use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Entities\Client;
