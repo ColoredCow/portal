@@ -130,8 +130,8 @@ class Project extends Model
 
     public function getBillableHourForTerm(int $monthNumber, int $year)
     {
-        return $this->getTeamMembers->sum(function ($teamMember) use($monthNumber, $year) {
-            if (!$teamMember->projectTeamMemberEffort) {
+        return $this->getTeamMembers->sum(function ($teamMember) use ($monthNumber, $year) {
+            if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
             }
 
@@ -140,5 +140,10 @@ class Project extends Model
                 ->where('added_on', '<=', $year . '-' . sprintf('%02s', $monthNumber) . '-31')
                 ->sum('actual_effort');
         });
+    }
+
+    public function meta()
+    {
+        return $this->hasMany(ProjectMeta::class);
     }
 }

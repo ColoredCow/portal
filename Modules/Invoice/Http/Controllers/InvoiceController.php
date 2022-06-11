@@ -57,7 +57,7 @@ class InvoiceController extends Controller
     {
         $filters = $request->all();
 
-        return $this->service->monthlyGSTTaxReportExport($filters);
+        return $this->service->monthlyGSTTaxReportExport($filters, $request);
     }
 
     /**
