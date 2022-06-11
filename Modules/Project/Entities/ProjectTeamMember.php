@@ -2,10 +2,12 @@
 
 namespace Modules\Project\Entities;
 
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Project\Database\Factories\ProjectTeamMemberFactory;
 use Modules\User\Entities\User;
+use Illuminate\Support\Carbon;
 
 class ProjectTeamMember extends Model
 {
@@ -27,6 +29,11 @@ class ProjectTeamMember extends Model
     public function projectTeamMemberEffort()
     {
         return $this->hasMany(ProjectTeamMemberEffort::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
     }
 
     public function scopeActive($query)
