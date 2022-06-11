@@ -104,6 +104,10 @@ class Invoice extends Model
             return false;
         }
 
+        if ($this->status == 'disputed' && $this->receivable_date->isPast()) {
+            return false;
+        }
+
         if ($this->receivable_date->isPast()) {
             return true;
         }
