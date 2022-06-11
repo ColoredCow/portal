@@ -5,7 +5,9 @@
         <div class="card-header pb-lg-5 fz-28"><div class="mt-4 ml-5">Employee Details</div></div>
         <div class="d-flex flex-row bd-highlight mb-3">
         <div class="d-flex justify-content-start mt-5 ml-9"><h1>{{$employee->name}}</h1></div>
+        @if(optional($employee->user)->activeProjectTeamMembers)
         <img src="{{ $employee->user->avatar }}" class="d-flex justify-content-end w-100 h-100 rounded-circle ml-20 mr-1 mb-1 mt-4 float:right">
+        @endif
         </div>
         <hr class='bg-dark mx-7 my-7'>
         <div class="font-weight-bold fz-24 pl-9 mt-4 ml-2 !important;">Project Details</div>
@@ -33,11 +35,11 @@
                         @else
                             @foreach($employee->user->activeProjectTeamMembers as $activeProjectTeamMember)
                                 <tr>
-                                    <td class="c-pointer"><div class="ml-10"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
+                                    <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
                                     <td><div class="ml-9">{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
                                     <td><div class="ml-9">{{$activeProjectTeamMember->current_actual_effort}}</div></td>
                                     <td><div class="ml-7"><div class="{{$activeProjectTeamMember->getVelocityAttribute() >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->getVelocityAttribute()}}</div></td>
-                                    <td><div class="ml-15">{{$activeProjectTeamMember->fte}}</td>
+                                    <td><div class="ml-10">{{$activeProjectTeamMember->fte}}</td>
                                 </tr>
                             @endforeach
                         @endif
