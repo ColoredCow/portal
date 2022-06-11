@@ -75,7 +75,7 @@
                                 <td>{{ $invoice->status }}</td>
                             @endif
                             @if($invoice->status == 'sent' || $invoice->status == 'paid')
-                                <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
+                                <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : 'font-weight-bold text-success' }}">
                                 {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
                                 </td>
                             @endif
