@@ -145,7 +145,6 @@ class User extends Authenticatable
     }
     public function activeProjectTeamMembers()
     {
-        
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id')->where('ended_on', null);
     }
 
