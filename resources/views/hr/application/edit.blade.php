@@ -473,7 +473,6 @@
                                         {{ $applicationRound->round->name }}
                                         <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
                                             <i class="fa fa-info-circle fa-lg"></i>
-											<span class="ml-2">Assigned to<img class="ml-2 w-25 h-25 rounded-circle" src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" data-toggle="tooltip" data-placement="top" title="{{ Auth::user()->name }}"></span>
                                         </span>
                                     </div>
                                     @if ($applicationRound->round_status)
@@ -485,7 +484,6 @@
                                         @if ($applicationRound->noShow && $applicationRound->round->reminder_enabled)
                                             <span class="text-danger"><i class="fa fa-warning fa-lg"></i>&nbsp;{{ config('constants.hr.status.no-show-reminded.title') }}</span>
                                         @endif
-                    
                                         @if ($applicationRound->round_status === config('constants.hr.status.confirmed.label'))
                                             <div class="text-success"><i class="fa fa-check"></i>&nbsp;{{ config('constants.hr.status.confirmed.title') }}</div>
                                         @elseif ($applicationRound->round_status == config('constants.hr.status.rejected.label'))
@@ -552,6 +550,7 @@
 															<label class="text-secondary fz-14 leading-none mb-0.16">Email</label>
 															<div>{{ $applicant->email }}</div>
 														</div>
+														
 														<div class="form-group col-md-5">
 															<label class="text-secondary fz-14 leading-none mb-0.16">College</label>
 															<div class="mt-2 evaluation-score">
@@ -579,12 +578,6 @@
 																@else
 																	–
 																@endif
-																<div class="mt-2 evaluation-score">
-																	<input type="radio" class="toggle-button" name="resume" id="resume_evaluation_1">
-																	<label for="resume_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
-																	<input type="radio" class="toggle-button" name="resume" id="resume_evaluation_2">
-																	<label for="resume_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
-																</div>
 															</div>
 														</div>
 														<div class="form-group offset-md-1 col-md-5">
@@ -612,9 +605,9 @@
 																	<label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
 																	<div>{{ $value }}</div>
 																	<div class="mt-2 evaluation-score">
-																		<input type="radio" class="toggle-button" name="{{ $field }}" id="reason_for_eligibility_evaluation_1">
+																		<input type="radio" class="toggle-button" name="{{ Str::snake($field) }}" id="reason_for_eligibility_evaluation_1">
 																		<label for="reason_for_eligibility_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
-																		<input type="radio" class="toggle-button" name="{{ $field }}" id="reason_for_eligibility_evaluation_2">
+																		<input type="radio" class="toggle-button" name="{{ Str::snake($field) }}" id="reason_for_eligibility_evaluation_2">
 																		<label for="reason_for_eligibility_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
 																	</div>
 																</div>
@@ -685,6 +678,20 @@
                                                 <div class="form-group col-md-12">
                                                     <button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
                                                 </div>
+												@if(session('status'))
+												<div class="form-row">
+													<div class="form-group my-2 pl-2">
+														<h4>
+															<span>Result: </span>
+															@if($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
+																<span class="text-success">Passing</span>
+															@else
+																<span class="text-danger">Failing</span>
+															@endif
+														</h4>
+													</div>
+												</div>
+												@endif
                                             </div>
                                             <div class="form-row">
                                                 <div class="form-group col-md-12">

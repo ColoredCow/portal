@@ -83,7 +83,7 @@ class ApplicantController extends Controller
 
 	public function show($applicationID) {
 		$application = Application::find($applicationID);
-		$application->status = "in-progress";
+		$application->status = "in-progress"; // TODO: status will be "resume-screening-wip" instead of "in-progress"
 		$application->save();
 		$applicant = Applicant::find($application->hr_applicant_id);
         $universities = University::find($applicant->hr_university_id)->get();
