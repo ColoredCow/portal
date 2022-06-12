@@ -84,7 +84,7 @@ class ApplicantController extends Controller
     public function show($applicationID)
     {
         $application = Application::find($applicationID);
-        $universities = University::find($application->applicant->hr_university_id)->get();
+        $universities = University::orderBy('name')->get();
 
         return view('hr.application.details', ['application' => $application, 'applicant' => $application->applicant, 'universities' => $universities]);
     }
