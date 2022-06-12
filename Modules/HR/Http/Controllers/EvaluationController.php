@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Employee;
-use Modules\HR\Entities\Round;
 use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Evaluation\ParameterOption;
 use Modules\HR\Entities\Evaluation\Segment;
