@@ -42,7 +42,20 @@ class ProjectTeamMember extends Model
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
+
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = $currentDate->subDay();
+        }
+
         $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
+
+        return $this->daily_expected_effort * $daysTillToday;
+    }
+
+    public function getExpectedEffortTillTodayAttribute()
+    {
+        $project = new Project;
+        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
@@ -55,7 +68,13 @@ class ProjectTeamMember extends Model
     public function getFteAttribute()
     {
         $project = new Project;
-        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))));
+        $currentDate = today(config('constants.timezone.indian'));
+
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = $currentDate->subDay();
+        }
+
+        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
 
         return round($this->current_actual_effort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
