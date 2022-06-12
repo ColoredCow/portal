@@ -20,7 +20,7 @@ class EvaluationController extends Controller
         $segments = Segment::all();
 
         return view('hr::evaluation.index', [
-            'segments' => $segments
+            'segments' => $segments,
         ]);
     }
 
@@ -33,8 +33,15 @@ class EvaluationController extends Controller
 
         return view('hr::evaluation.segment-parameters', [
             'segment' => $segment,
-            'parameters' => $segment->parameters()->with('options')->get(),
-            'parentParameters' => $segment->parameters()->whereNull('parent_id')->with('options')->get(),
+            'parameters' => $segment
+                ->parameters()
+                ->with('options')
+                ->get(),
+            'parentParameters' => $segment
+                ->parameters()
+                ->whereNull('parent_id')
+                ->with('options')
+                ->get(),
         ]);
     }
 
@@ -63,16 +70,16 @@ class EvaluationController extends Controller
     {
         $segment = Segment::find($segmentID);
         $parameter = Parameter::create([
-                'name' => $request->name,
-                'marks' => $request->marks,
-                'segment_id' => $segment->id
+            'name' => $request->name,
+            'marks' => $request->marks,
+            'segment_id' => $segment->id,
         ]);
 
         foreach ($request->parameter_options as $parameterOption) {
             ParameterOption::create([
                 'value' => $parameterOption['label'],
                 'marks' => $parameterOption['marks'],
-                'evaluation_id' => $parameter->id
+                'evaluation_id' => $parameter->id,
             ]);
         }
 
@@ -92,7 +99,7 @@ class EvaluationController extends Controller
                 $parameterOption->update([
                     'value' => $parameterOptionData['label'],
                     'marks' => $parameterOptionData['marks'],
-                    'evaluation_id' => $parameter->id
+                    'evaluation_id' => $parameter->id,
                 ]);
                 $parameterNewOptions->push($parameterOption);
                 continue;
@@ -101,17 +108,15 @@ class EvaluationController extends Controller
             $parameterOption = ParameterOption::create([
                 'value' => $parameterOptionData['label'],
                 'marks' => $parameterOptionData['marks'],
-                'evaluation_id' => $parameter->id
+                'evaluation_id' => $parameter->id,
             ]);
 
             $parameterNewOptions->push($parameterOption);
         }
 
-        $parameter->options
-            ->diff($parameterNewOptions)
-            ->each(function ($parameterOption) {
-                $parameterOption->delete();
-            });
+        $parameter->options->diff($parameterNewOptions)->each(function ($parameterOption) {
+            $parameterOption->delete();
+        });
 
         return redirect(route('hr.evaluation.segment-parameters', $segmentID));
     }
@@ -137,11 +142,15 @@ class EvaluationController extends Controller
             $segmentList[] = self::getSegmentDetails($segment);
         }
 
-        return view('hr.application.evaluation-form')->with([
-            'segment' => $segmentList,
-            'applicationRound' => $applicationRound,
-            'employees' => Employee::active()->orderBy('name')->get(),
-        ])->render();
+        return view('hr.application.evaluation-form')
+            ->with([
+                'segment' => $segmentList,
+                'applicationRound' => $applicationRound,
+                'employees' => Employee::active()
+                    ->orderBy('name')
+                    ->get(),
+            ])
+            ->render();
     }
 
     public function update($applicationRoundId)
@@ -157,13 +166,16 @@ class EvaluationController extends Controller
             $applicationRound->updateOrCreateEvaluationSegment($request['evaluation_segment']);
         }
 
-        return redirect()->back()->with('status', 'Application evaluated successfully!');
+        return redirect()
+            ->back()
+            ->with('status', 'Application evaluated successfully!');
     }
 
     private function getSegments($applicationId)
     {
-        return Segment::whereHas('round')->orWhereNull('round_id')->with(
-            [
+        return Segment::whereHas('round')
+            ->orWhereNull('round_id')
+            ->with([
                 'round',
                 'applicationEvaluations' => function ($query) use ($applicationId) {
                     $query->where('application_id', $applicationId);
@@ -176,8 +188,8 @@ class EvaluationController extends Controller
                     $query->where('application_id', $applicationId);
                     $query->with('evaluationOption');
                 },
-            ]
-        )->get();
+            ])
+            ->get();
     }
 
     private function getSegmentGeneralInfo($segment)
@@ -229,7 +241,7 @@ class EvaluationController extends Controller
 
     private function getParameterInfo($parameter)
     {
-        if (! $parameter) {
+        if (!$parameter) {
             return;
         }
 
