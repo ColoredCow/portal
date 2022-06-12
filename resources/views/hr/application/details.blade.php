@@ -128,7 +128,7 @@
 			@endif
 		</div>
 	</div>
-	<form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+	<form action="{{ route('application-round.update') }}" method="post" enctype="multipart/form-data" class="applicant-round-form">
 		{{ csrf_field() }}
 		{{ method_field('PATCH') }}
 		<div class="collapse show">
@@ -183,9 +183,9 @@
 							@endif  
 						</div>
 						@if ($applicationRound->scheduled_date)
-						<div class="form-group col-md-3 d-flex align-items-end">
-							<button type="button" class="py-1 mb-0 btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
-						</div>
+							<div class="form-group col-md-3 d-flex align-items-end">
+								<button type="submit" class="py-1 mb-0 btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
+							</div>
 						@endif
 					</div>
 				@endif
