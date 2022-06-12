@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($client->billableProjects as $project)
+        @foreach($projects as $project)
             @if($project->getBillableHourForTerm($monthNumber, $year) == 0)
                 @continue
             @endif
@@ -17,7 +17,7 @@
                 <td>{{$project->name}}</td>
                 <td>{{$project->getBillableHourForTerm($monthNumber, $year)}}</td>
                 <td>{{$currencyService->getCurrentRatesInINR()}}</td>
-                <td>{{round($project->getBillableHourForTerm($monthNumber, $year) * $currencyService->getCurrentRatesInINR(), 2)}}</td>
+                <td>{{round($project->getBillableHourForTerm($monthNumber, $year) * $client->billingDetails->service_rates, 2)}}</td>
             </tr>
         @endforeach
     </tbody>

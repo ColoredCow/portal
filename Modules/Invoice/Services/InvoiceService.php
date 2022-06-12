@@ -89,6 +89,8 @@ class InvoiceService implements InvoiceServiceContract
     public function store($data)
     {
         $data['receivable_date'] = $data['due_on'];
+        $project = $data['billing_for'] == 'client' ? Client::find($data['client_id'])->primaryProject : Project::find($data['billing_for']);
+        $data['project_id'] = $project->id;
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         $this->setInvoiceNumber($invoice, $data['sent_on']);
@@ -369,7 +371,7 @@ class InvoiceService implements InvoiceServiceContract
     public function getInvoiceNumber($client_id, $project_id, $sent_date)
     {
         $client = Client::find($client_id);
-        $country_id = ClientAddress::where('client_id', $client_id)->first()->country_id;
+        $country_id = optional(ClientAddress::where('client_id', $client_id)->first())->country_id;
         $client_type = ($country_id == 1) ? 'IN' : 'EX';
         $client_project_id = Project::find($project_id)->client_project_id;
         $last_invoice = Invoice::where([['client_id', $client_id], ['project_id', $project_id]])->orderBy('id', 'DESC')->get()->offsetGet(1);
@@ -380,20 +382,36 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice_number;
     }
 
+    public function getInvoiceNumberPreview($client, $project, $sent_date)
+    {
+        $country_id = optional(ClientAddress::where('client_id', $client->id)->first())->country_id;
+        $client_type = ($country_id == 1) ? 'IN' : 'EX';
+        $last_invoice = Invoice::where([['client_id', $client->id], ['project_id', $project->id]])->orderBy('id', 'DESC')->first();
+        $invoice_sequence = (int) Str::substr($last_invoice->invoice_number, 8, 6) + 1;
+        $invoice_number = $client_type . sprintf('%03s', $client->client_id) . '-' . $project->client_project_id . '-' . sprintf('%06s', $invoice_sequence) . date('m', strtotime($sent_date)) . date('y', strtotime($sent_date));
+
+        return $invoice_number;
+    }
+
     public function generateInvoice(array $data)
     {
         $client = Client::find($data['client_id']);
         $year = (int) substr($data['term'], 0, 4);
         $monthNumber = (int) substr($data['term'], 5, 2);
         $monthName = date("F", mktime(0, 0, 0, $monthNumber, 10));
+        $billing_for =  $data['billing_for'] ?? null;
+        $invoiceLevel = $billing_for == 'client_level' ? 'client' : 'project';
+        $projects = $billing_for == 'client_level' ? $client->clientLevelBillingProjects : collect([Project::find($data['billing_for'])]);
+        $projectForInvoiceNumber = $invoiceLevel == 'project' ? Project::find($data['billing_for']) : Client::find($data['client_id'])->primaryProject;
+        $invoiceNumber = $this->getInvoiceNumberPreview($client, $projectForInvoiceNumber, $data['sent_on']);
 
         return [
             'client' => $client,
-            'projects' => $client->billableProjects,
+            'projects' => $projects,
             'keyAccountManager' => $client->keyAccountManager()->first(),
-            'invoiceNumber' => 'IN0010010000010422',
+            'invoiceNumber' => $invoiceNumber,
             'invoiceData' => $data,
-            'invoiceLevel' => $data['invoice_level'],
+            'invoiceLevel' => $invoiceLevel,
             'monthName' => $monthName,
             'year' => $year,
             'monthNumber' => $monthNumber,

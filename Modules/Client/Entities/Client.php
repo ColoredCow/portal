@@ -11,12 +11,13 @@ use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
+use Modules\Project\Entities\ProjectMeta;
 
 class Client extends Model
 {
     use HasHierarchy, HasFactory, Filters;
 
-    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id'];
+    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'primary_project_id'];
 
     protected $appends = ['type', 'currency'];
 
@@ -45,9 +46,20 @@ class Client extends Model
         return $this->hasMany(Project::class);
     }
 
-    public function billableProjects()
+    public function projectLevelBillingProjects()
     {
-        return $this->hasMany(Project::class)->where('status', '!=', 'inactive');
+        return $this->belongsToMany(Project::class, 'project_meta', 'projects.client_id', 'project_id')->where([
+            'project_meta.key' => config('project.meta_keys.billing_level.key'),
+            'project_meta.value' => config('project.meta_keys.billing_level.value.project.key')
+        ])->where('projects.status', '!=', 'inactive');
+    }
+    
+    public function clientLevelBillingProjects()
+    {
+        return $this->belongsToMany(Project::class, 'project_meta', 'projects.client_id', 'project_id')->where([
+            'project_meta.key' => config('project.meta_keys.billing_level.key'),
+            'project_meta.value' => config('project.meta_keys.billing_level.value.client.key')
+        ])->where('projects.status', '!=', 'inactive');
     }
 
     public function getReferenceIdAttribute()
@@ -65,9 +77,9 @@ class Client extends Model
         return $this->contactPersons()->where('type', 'billing-contact')->first();
     }
 
-    public function getPrimaryProjectAttribute()
+    public function primaryProject()
     {
-        return $this->projects()->where('client_project_id', '001')->first();
+        return $this->hasOne(Project::class, 'id', 'primary_project_id');
     }
 
     public function addresses()
@@ -100,26 +112,26 @@ class Client extends Model
         return $this->type == 'indian' ? 'INR' : 'USD';
     }
 
-    public function getBillableAmountForTerm(int $month, int $year)
-    {
-        $amount = $this->billableProjects->sum(function ($project) use ($month, $year) {
-            return round($project->getBillableHourForTerm($month, $year) * app(CurrencyServiceContract::class)->getCurrentRatesInINR(), 2);
+    public function getBillableAmountForTerm(int $month, int $year, $projects)
+    {   
+        $amount = $projects->sum(function ($project) use ($month, $year) {
+            return round($project->getBillableHourForTerm($month, $year) * $this->billingDetails->service_rates, 2);
         });
-
+        
         return $amount;
     }
 
-    public function getTaxAmountForTerm(int $month, int $year)
+    public function getTaxAmountForTerm(int $month, int $year, $projects)
     {
-        return round($this->getBillableAmountForTerm($month, $year) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
+        return round($this->getBillableAmountForTerm($month, $year, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $month, int $year)
+    public function getTotalPayableAmountForTerm(int $month, int $year, $projects)
     {
-        return $this->getBillableAmountForTerm($month, $year) + $this->getTaxAmountForTerm($month, $year);
+        return $this->getBillableAmountForTerm($month, $year, $projects) + $this->getTaxAmountForTerm($month, $year, $projects);
     }
 
-    public function getAmountPaidForTerm(int $month, int $year)
+    public function getAmountPaidForTerm(int $month, int $year, $projects)
     {
         return 0.00;
     }

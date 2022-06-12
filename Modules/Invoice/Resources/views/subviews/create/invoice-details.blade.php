@@ -16,24 +16,11 @@
                 </div>
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
-                        <div>
-                            <label for="invoice_level" class="field-required mr-2">Invoice Level</label>
-                            <span data-toggle="tooltip" data-placement="right" title="{{ __('In Client level the invoice will be generated for all the projects of client.') }}"  >
-                                <i class="fa fa-question-circle"></i>&nbsp;
-                            </span>
-                        </div>
+                        <label for="billing_for" class="field-required">Project</label>
                     </div>
-                    <select @change="setInvoiceLevel($event)" id="invoice_level" name="invoice_level" class="form-control" required="required">
-                        <option value="client">Client Level</option>
-                        <option value="project">Project Level</option>
-                    </select>
-                </div>
-                <div v-if="invoiceLevel=='project'" class="form-group">
-                    <div class="d-flex justify-content-between">
-                        <label for="client_id" class="field-required">Project</label>
-                    </div>
-                    <select name="project_id" @change="updateGenerateInvoiceLink($event)" id="project_id" class="form-control" required="required">
-                        <option value="">Select project</option>
+                    <select name="billing_for" id="billing_for" class="form-control" required="required">
+                        <option v-if="client" value="client_level" v-text="primaryprojectLabel"></option>
+                        <option v-else="client" value="">Select Project</option>
                         <option v-for="project in projects" :value="project.id" v-text="project.name"
                             :key="project.id">
                         </option>
@@ -110,7 +97,7 @@
     </div>
     <div class="card-footer">
         <button type="button" class="btn btn-primary" onclick="saveInvoice(this)">Create</button>
-        <a class="btn btn-secondary" v-if="showGenerateInvoiceLink" id="generate_invoice_link" @click.prevent="generateInvoice($event)" href="">Generate Invoice</a>
+        <a class="btn btn-secondary" id="generate_invoice_link" @click.prevent="generateInvoice($event)" href="">Generate Invoice</a>
     </div>
 </div>
 
@@ -127,7 +114,6 @@
         }
         
         const validateFormData = (form) => {
-            console.log(form)
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return false;
@@ -141,54 +127,29 @@
             data() {
                 return {
                     clients: @json($clients),
+                    primaryProject: {},
+                    primaryprojectLabel: '',
                     projects: {},
                     groups: {},
                     clientId: '',
                     client: null,
                     currency: '',
                     amount: '',
-                    invoiceLevel: 'client',
-                    showGenerateInvoiceLink: false,
                 }
             },
 
             methods: {
                 updateClientDetails: function() {
                     this.projects = {};
+                    this.client = null;
                     for (var i in this.clients) {
                         let client = this.clients[i];
                         if (client.id == this.clientId) {
                             this.client = client;
+                            this.primaryProject = client.primary_project;
+                            this.primaryprojectLabel = 'Client Level (' + client.primary_project.name + ')';
                             this.currency = client.currency;
-                            this.projects = _.orderBy(client.projects, 'name', 'asc');
-                        }
-                    }
-                    if ($('#client_id').val() > '' && this.invoiceLevel == 'client') {
-                        this.showGenerateInvoiceLink = true;
-                    } else {
-                        this.showGenerateInvoiceLink = false;
-                    }
-
-                },
-
-                updateGenerateInvoiceLink: function(event) {
-                    if (event.target.value >= 0) {
-                        this.showGenerateInvoiceLink = true;
-                    } else {
-                        this.showGenerateInvoiceLink = false;
-                    }
-                },
-
-                setInvoiceLevel: function(event) {
-                    if (event.target.value == 'project') {
-                        this.invoiceLevel = 'project';
-                        this.showGenerateInvoiceLink = false;
-                    } else {
-                        this.invoiceLevel = 'client';
-                        if ($('#client_id').val() > 0) {
-                            this.showGenerateInvoiceLink = true;
-                        } else {
-                            this.showGenerateInvoiceLink = false;
+                            this.projects = _.orderBy(client.project_level_billing_projects, 'name', 'asc');
                         }
                     }
                 },
@@ -210,9 +171,9 @@
                 },
 
                 checkValidity: function() {
-                    $("#invoice_file").attr("required", false);
+                    $('#invoice_file, [name="currency"], [name="amount"]').attr("required", false);
                     var isValidated = validateFormData(document.getElementById('invoice_form'));
-                    $("#invoice_file").attr("required", true);
+                    $('#invoice_file, [name="currency"], [name="amount"]').attr("required", true);
                     
                     return isValidated;
                 },

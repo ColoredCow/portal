@@ -13,6 +13,7 @@ class ClientFormsRequest extends FormRequest
             'is_channel_partner' => 'nullable|string',
             'channel_partner_id' => 'nullable|string',
             'parent_organisation_id' => 'nullable|string',
+            'primary_project_id' => 'nullable|string',
         ];
 
         if (request()->has('status')) {

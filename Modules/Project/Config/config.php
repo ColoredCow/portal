@@ -19,7 +19,16 @@ return [
     'meta_keys' => [
         'billing_level' => [
             'key' => 'billing_level',
-            'value' =>'Billing level',
+            'value' => [
+                'client' => [
+                    'key' => 'client',
+                    'label' => 'Client level',
+                ],
+                'project' => [
+                    'key' => 'project',
+                    'label' => 'Project level',
+                ]
+            ]
         ],
         'last_updated_at' => [
             'key' => 'last_updated_at',

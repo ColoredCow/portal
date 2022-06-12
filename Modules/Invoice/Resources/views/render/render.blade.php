@@ -228,7 +228,7 @@
                                         </td>
                                         <td align="right">
                                             <p>{{ $monthName }}</p>
-                                            <p>IN033-016-000002</p>
+                                            <p>{{ $invoiceNumber }}</p>
                                             <p>{{ date('F d, Y', strtotime($invoiceData['sent_on'])) }}</p>
                                             <p>{{ date('F d, Y', strtotime($invoiceData['due_on'])) }}</p>
                                         </td>
@@ -240,8 +240,8 @@
                             <td align="left" class="fw-bold">
                                 <p>Client Name: {{ $client->name }}</p>
                                 <p>Client ID: {{ sprintf('%03s', $client->client_id) }}</p>
-                                <p>Project Name: {{ $client->primary_project->name }}</p>
-                                <p>Project ID: {{ $client->primary_project->client_project_id }}</p>
+                                <p>Project Name: {{ $client->primaryProject->name }}</p>
+                                <p>Project ID: {{ $client->primaryProject->client_project_id }}</p>
                                 <p>Category : Web Application Development</p>
                             </td>
                             <td align="right">
@@ -265,29 +265,29 @@
                         <tr>
                             <td>Total</td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year) }}</td>
+                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
                         <tr>
                             <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
                             <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
-                            <td>{{ $client->country->currency_symbol . $client->getTaxAmountForTerm($monthNumber, $year) }}</td>
+                            <td>{{ $client->country->currency_symbol . $client->getTaxAmountForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
                         <tr>
                             <td>Current Payable</td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year) + $client->getTaxAmountForTerm($monthNumber, $year) }}</td>
+                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year, $projects) + $client->getTaxAmountForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
                         <tr>
                             <td>Amount Paid</td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthNumber, $year) }}</td>
+                            <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
                         <tr>
                             <td>
                                 <strong>Current Amount Due in {{ $client->country->initials . ' ' . $client->country->currency_symbol }}</strong>
                             </td>
                             <td></td>
-                            <td><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year) }}</strong></td>
+                            <td><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year, $projects) }}</strong></td>
                         </tr>
                     </table>
                 </div>

@@ -1,5 +1,4 @@
 <div class="card">
- 
     <div id="client_detail_form" class="collapse show" data-parent="#edit_client_form_container">
         <div class="card-body">
             <div class="form-row">
@@ -22,16 +21,16 @@
             </div>
             <br>
             <div class="form-row">
-                <div class=" col-md-5 form-check-inline mr-0 form-group">
-                        <input type="checkbox" 
-                            class="checkbox-custom mb-1.9 mb-1.67 mr-3" 
-                            name="is_channel_partner" 
-                            id="is_channel_partner"
-                            {{ ($client->is_channel_partner || old('is_channel_partner') == "1") ? 'checked' : '' }}
-                            value="1">
-                        <label for="is_channel_partner">Is this client a channel partner?
-                            <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple sub clients."><i class="fa fa-question-circle"></i>&nbsp;</span>
-                        </label>
+                <div class=" col-md-5 mr-0 form-group">
+                    <label for="primary_project_id" >Choose Primary Project
+                        <span data-toggle="tooltip" data-placement="right" title="This project id will be used in client level invoice."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                    </label>
+                    <select name="primary_project_id" id="primary_project_id" class="form-control">
+                        <option value="">Select primary project</option>
+                        @foreach ($client->projects as $project)
+                            <option value="{{ $project->id }}" {{ $client->primaryProject->id == $project->id || old('primary_project_id') == $project->id ? 'selected' : ''}}>{{ $project->name . '(' . $project->client_project_id . ')' }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group offset-md-1 col-md-5">
                     <label for="channel_partner_id" >Channel partner 
@@ -49,13 +48,16 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-row">
-                <div class=" col-md-5 form-check-inline mr-0 form-group">
-                    <input type="checkbox" {{ ($client->has_departments || old('has_departments') == "1") ? 'checked' : '' }} class="checkbox-custom mb-1.9 mb-1.67 mr-3" name="has_departments" id="has_departments"
-                        value="1">
-                    <label for="has_departments">Has multiple departments?
-                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple departments as a new client."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                <div class="col-md-5 form-check-inline mr-0 form-group">
+                    <input type="checkbox" 
+                            class="checkbox-custom mb-1.9 mb-1.67 mr-3" 
+                            name="is_channel_partner" 
+                            id="is_channel_partner"
+                            {{ ($client->is_channel_partner || old('is_channel_partner') == "1") ? 'checked' : '' }}
+                            value="1">
+                    <label for="is_channel_partner">Is this client a channel partner?
+                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple sub clients."><i class="fa fa-question-circle"></i>&nbsp;</span>
                     </label>
                 </div>
                 <div class="form-group offset-md-1 col-md-5">
@@ -74,8 +76,15 @@
                     </select>
                 </div>
             </div>
-
-
+            <div class="form-row">
+                <div class="col-md-5 form-check-inline mr-0 form-group">
+                    <input type="checkbox" {{ ($client->has_departments || old('has_departments') == "1") ? 'checked' : '' }} class="checkbox-custom mb-1.9 mb-1.67 mr-3" name="has_departments" id="has_departments"
+                            value="1">
+                    <label for="has_departments">Has multiple departments?
+                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple departments as a new client."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             @include('client::subviews.edit-client-form-submit-buttons')
