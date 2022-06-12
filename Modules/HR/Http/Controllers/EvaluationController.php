@@ -140,12 +140,12 @@ class EvaluationController extends Controller
             $segmentList[] = self::getSegmentDetails($segment);
         }
 
-        // $evaluationScores = self::calculateEvaluationScores($segmentList);
+        $evaluationScores = self::calculateEvaluationScores($segmentList);
 
         return view('hr.application.evaluation-form')->with([
             'segment' => $segmentList,
             'applicationRound' => $applicationRound,
-            // 'evaluationScores' => $evaluationScores,
+            'evaluationScores' => $evaluationScores,
             'employees' => Employee::active()->orderBy('name')->get(),
         ])->render();
     }
@@ -154,7 +154,6 @@ class EvaluationController extends Controller
     {
         $applicationRound = ApplicationRound::find($applicationRoundId);
 
-		dd(request()->all());
         if (array_key_exists('evaluation', request()->all())) {
             $applicationRound->updateOrCreateEvaluation(request()->all()['evaluation']);
         }
