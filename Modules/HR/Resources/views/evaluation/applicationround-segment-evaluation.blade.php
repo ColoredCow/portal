@@ -33,7 +33,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-check form-check-inline mt-2">
+                            <div class="form-check form-check-inline mt-2 evaluation-form-{{ preg_replace('/(\?+)/', '', Str::snake($evaluation_parameter['name'], '-')) }}">
                                 @foreach($evaluation_parameter['option_detail'] as $option)
                                     @php
                                         $optionLabel = $option['name'];
