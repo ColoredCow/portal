@@ -16,7 +16,19 @@
                 </div>
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
-                        <label for="billing_for" class="field-required">Project</label>
+                        <div>
+                            <label for="billing_for" class="field-required">
+                                Project
+                            </label>
+                            <span 
+                                data-toggle="tooltip" 
+                                data-placement="right" 
+                                title="Client Level Project will include all the projects having billing level set to client level. The primary project id is set as project id in this case."
+                                class="ml-2"
+                            >
+                                <i class="fa fa-question-circle"></i>&nbsp;
+                            </span>
+                        </div>
                     </div>
                     <select name="billing_for" id="billing_for" class="form-control" required="required">
                         <option v-if="client && primaryProject" value="client_level" v-text="primaryprojectLabel"></option>
