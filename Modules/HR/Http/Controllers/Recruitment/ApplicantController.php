@@ -12,6 +12,7 @@ use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Job;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\HR\Entities\Application;
+use Modules\User\Entities\User;
 use Modules\HR\Entities\University;
 
 class ApplicantController extends Controller
@@ -83,11 +84,15 @@ class ApplicantController extends Controller
 
 	public function show($applicationID) {
 		$application = Application::find($applicationID);
+        foreach ($application->applicationRounds as $applicationRound) {
+            $applicationRound = $applicationRound;
+        }
+        $interviewers = User::interviewers()->orderBy('name')->get();
 		$application->status = "in-progress";
 		$application->save();
 		$applicant = Applicant::find($application->hr_applicant_id);
         $universities = University::find($applicant->hr_university_id)->get();
 
-		return view('hr.application.details', ['application' => $application, 'applicant' => $applicant, 'universities' => $universities]);
+		return view('hr.application.details', ['application' => $application, 'applicant' => $applicant, 'universities' => $universities, 'applicationRound' => $applicationRound, 'interviewers' => $interviewers]);
 	}
 }
