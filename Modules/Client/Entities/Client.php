@@ -48,10 +48,11 @@ class Client extends Model
 
     public function projectLevelBillingProjects()
     {
-        return $this->belongsToMany(Project::class, 'project_meta', 'projects.client_id', 'project_id')->where([
-            'project_meta.key' => config('project.meta_keys.billing_level.key'),
-            'project_meta.value' => config('project.meta_keys.billing_level.value.project.key')
-        ])->where('projects.status', '!=', 'inactive');
+        return $this->hasMany(Project::class)->where('projects.status', '!=', 'inactive')
+            ->leftJoin('project_meta', function ($join) {
+                $join->on('project_meta.project_id', '=', 'projects.id');
+                $join->where('project_meta.key', '=', config('project.meta_keys.billing_level.value.project.key'));
+            });
     }
     
     public function clientLevelBillingProjects()

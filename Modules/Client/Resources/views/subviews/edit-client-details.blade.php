@@ -28,7 +28,7 @@
                     <select name="primary_project_id" id="primary_project_id" class="form-control">
                         <option value="">Select primary project</option>
                         @foreach ($client->projects as $project)
-                            <option value="{{ $project->id }}" {{ $client->primaryProject->id == $project->id || old('primary_project_id') == $project->id ? 'selected' : ''}}>{{ $project->name . '(' . $project->client_project_id . ')' }}</option>
+                            <option value="{{ $project->id }}" {{ optional($client->primaryProject)->id == $project->id || old('primary_project_id') == $project->id ? 'selected' : ''}}>{{ $project->name . '(' . $project->client_project_id . ')' }}</option>
                         @endforeach
                     </select>
                 </div>

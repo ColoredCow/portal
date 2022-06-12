@@ -19,7 +19,7 @@
                         <label for="billing_for" class="field-required">Project</label>
                     </div>
                     <select name="billing_for" id="billing_for" class="form-control" required="required">
-                        <option v-if="client" value="client_level" v-text="primaryprojectLabel"></option>
+                        <option v-if="client && primaryProject" value="client_level" v-text="primaryprojectLabel"></option>
                         <option v-else="client" value="">Select Project</option>
                         <option v-for="project in projects" :value="project.id" v-text="project.name"
                             :key="project.id">
@@ -147,7 +147,9 @@
                         if (client.id == this.clientId) {
                             this.client = client;
                             this.primaryProject = client.primary_project;
-                            this.primaryprojectLabel = 'Client Level (' + client.primary_project.name + ')';
+                            if (this.primaryProject) {
+                                this.primaryprojectLabel = 'Client Level (' + client.primary_project.name + ')';
+                            }
                             this.currency = client.currency;
                             this.projects = _.orderBy(client.project_level_billing_projects, 'name', 'asc');
                         }
