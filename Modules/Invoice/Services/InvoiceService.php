@@ -395,7 +395,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function generateInvoice(array $data)
     {
-        $client = Client::find(33);
+        $client = Client::find($data['client_id']);
         $year = (int) substr($data['term'], 0, 4);
         $monthNumber = (int) substr($data['term'], 5, 2);
         $monthName = date("F", mktime(0, 0, 0, $monthNumber, 10));
