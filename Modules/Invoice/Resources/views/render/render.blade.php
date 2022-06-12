@@ -196,14 +196,14 @@
                                 <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" height="50" width="200">
                             </td>
                             <td style="color: grey;" align="right">
-                                <p>F-61, Suncity, Sector - 54</p>
-                                <p>Gurgaon, Haryana, 122003, India</p>
+                                <p>{{ config('invoice.coloredcow-details.address-line-1') }}</p>
+                                <p>{{ config('invoice.coloredcow-details.address-line-2') }}</p>
                                 <p>finance@coloredcow.com</p>
-                                <p>91 9818571035</p>
-                                <p>PAN : AAICC2546G</p>
-                                <p>GSTIN : 06AAICC2546G1ZT</p>
-                                <p>SAC / HSN code : 998311</p>
-                                <p>CIN No. U72900HR2019PTC081234</p>
+                                <p>{{ str_replace('-', ' ', config('invoice.finance-details.phone')) }}</p>
+                                <p>PAN : {{ config('invoice.finance-details.pan') }}</p>
+                                <p>GSTIN : {{ config('invoice.finance-details.gstin') }}</p>
+                                <p>SAC / HSN code : {{ config('invoice.finance-details.hsn-code') }}</p>
+                                <p>CIN No. {{ config('invoice.finance-details.cin-no') }}</p>
                             </td>
                         </tr>
                         <tr style="width:100%;">
@@ -251,7 +251,7 @@
                                             <p>Total Amount Due :</p>
                                         </td>
                                         <td align="right">
-                                            <p><strong>{{ $client->country->currency_symbol }}53,100.00</strong></p>
+                                            <p><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year, $projects) }}</strong></p>
                                         </td>
                                     </tr>
                                 </table>
@@ -301,31 +301,31 @@
                         <tbody>
                             <tr>
                                 <td style="width: 40%;">Transaction Method:</td>
-                                <td>Bank Transfer</td>
+                                <td>{{ config('invoice.finance-details.transaction-method.value.bank-transfer.value') }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 40%;">Bank Name:</td>
-                                <td>Citibank N.A. Delhi, India</td>
+                                <td>{{ config('invoice.finance-details.bank-address') }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 40%;">Swift Code:</td>
-                                <td>CITIINBX</td>
+                                <td>{{ config('invoice.finance-details.swift-code') }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 40%;">Bank/IFCI Code:</td>
-                                <td>CITI0000002</td>
+                                <td>{{ config('invoice.finance-details.ifci-code') }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 40%;">Account Number:</td>
-                                <td>0077793224</td>
+                                <td>{{ config('invoice.finance-details.account-number') }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 40%;">A/C Holder Name:</td>
-                                <td>ColoredCow Consulting Pvt. Ltd.</td>
+                                <td>{{ config('invoice.finance-details.holder-name') }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 40%;">Phone:</td>
-                                <td>91-9818571035</td>
+                                <td>{{ config('invoice.finance-details.phone') }}</td>
                             </tr><br>
                             <tr><td><br></td></tr>
                             <tr>
@@ -336,9 +336,9 @@
                             <tr>
                                 <td>
                                     <p class='mb-0 mt-0'>Sincerely,</p>
-                                    <p class='mb-0 mt-0'>ColoredCow Consulting Pvt. Ltd.</p>
-                                    <p class='mb-0 mt-0'>F-61, Suncity, Sector - 54 </p>
-                                    <p class='mb-0 mt-0'>Gurgaon, Haryana, 122003, India</p>
+                                    <p class='mb-0 mt-0'>{{ config('invoice.coloredcow-details.name') }}</p>
+                                    <p class='mb-0 mt-0'>{{ config('invoice.coloredcow-details.address-line-1') }}</p>
+                                    <p class='mb-0 mt-0'>{{ config('invoice.coloredcow-details.address-line-2') }}</p>
                                 </td>
                             </tr>
                         </tbody>
