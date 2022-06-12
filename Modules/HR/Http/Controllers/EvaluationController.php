@@ -146,15 +146,15 @@ class EvaluationController extends Controller
 
     public function update($applicationRoundId)
     {
-		$request = request()->all();
+        $request = request()->all();
 
-		$applicationRound = ApplicationRound::find($applicationRoundId);
-		
+        $applicationRound = ApplicationRound::find($applicationRoundId);
+
         if (array_key_exists('evaluation', $request)) {
-			$applicationRound->updateOrCreateEvaluation($request['evaluation']);
+            $applicationRound->updateOrCreateEvaluation($request['evaluation']);
         }
         if (array_key_exists('evaluation_segment', $request)) {
-			$applicationRound->updateOrCreateEvaluationSegment($request['evaluation_segment']);
+            $applicationRound->updateOrCreateEvaluationSegment($request['evaluation_segment']);
         }
 
         return redirect()->back()->with('status', 'Application evaluated successfully!');
