@@ -104,7 +104,7 @@ class Invoice extends Model
             return false;
         }
 
-        if ($this->receivable_date->isPast()) {
+        if ($this->receivable_date < date('Y-m-d')) {
             return true;
         }
 
