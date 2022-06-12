@@ -398,8 +398,8 @@ class InvoiceService implements InvoiceServiceContract
         $client = Client::find($data['client_id']);
         $year = (int) substr($data['term'], 0, 4);
         $monthNumber = (int) substr($data['term'], 5, 2);
-        $monthName = date("F", mktime(0, 0, 0, $monthNumber, 10));
-        $billing_for =  $data['billing_for'] ?? null;
+        $monthName = date('F', mktime(0, 0, 0, $monthNumber, 10));
+        $billing_for = $data['billing_for'] ?? null;
         $invoiceLevel = $billing_for == 'client_level' ? 'client' : 'project';
         $projects = $billing_for == 'client_level' ? $client->clientLevelBillingProjects : collect([Project::find($data['billing_for'])]);
         $projectForInvoiceNumber = $invoiceLevel == 'project' ? Project::find($data['billing_for']) : Client::find($data['client_id'])->primaryProject;

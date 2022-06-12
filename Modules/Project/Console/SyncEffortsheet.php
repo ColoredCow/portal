@@ -111,7 +111,7 @@ class SyncEffortsheet extends Command
 
                     ProjectMeta::updateOrCreate(
                         [
-                            'key' => config('project.meta_keys.last_updated_at.key'), 
+                            'key' => config('project.meta_keys.last_updated_at.key'),
                             'project_id' => $project->id,
                         ],
                         [

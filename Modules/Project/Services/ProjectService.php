@@ -57,10 +57,10 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
 
-        if($data['billing_level'] ?? null) {
+        if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
                 [
-                    'key' => config('project.meta_keys.billing_level.key'), 
+                    'key' => config('project.meta_keys.billing_level.key'),
                     'project_id' => $project->id,
                 ],
                 [
@@ -131,10 +131,10 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
 
-        if($data['billing_level'] ?? null) {
+        if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
                 [
-                    'key' => config('project.meta_keys.billing_level.key'), 
+                    'key' => config('project.meta_keys.billing_level.key'),
                     'project_id' => $project->id,
                 ],
                 [

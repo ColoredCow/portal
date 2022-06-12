@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
-use Modules\Invoice\Contracts\CurrencyServiceContract;
-use Modules\Project\Entities\ProjectMeta;
 
 class Client extends Model
 {
@@ -54,7 +52,7 @@ class Client extends Model
                 $join->where('project_meta.key', '=', config('project.meta_keys.billing_level.value.project.key'));
             });
     }
-    
+
     public function clientLevelBillingProjects()
     {
         return $this->belongsToMany(Project::class, 'project_meta', 'projects.client_id', 'project_id')->where([
@@ -114,11 +112,11 @@ class Client extends Model
     }
 
     public function getBillableAmountForTerm(int $month, int $year, $projects)
-    {   
+    {
         $amount = $projects->sum(function ($project) use ($month, $year) {
             return round($project->getBillableHourForTerm($month, $year) * $this->billingDetails->service_rates, 2);
         });
-        
+
         return $amount;
     }
 
