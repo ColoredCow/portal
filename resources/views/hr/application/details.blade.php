@@ -127,69 +127,71 @@
 				@endforeach
 			@endif
 		</div>
-		<form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
-			{{ csrf_field() }}
-			{{ method_field('PATCH') }}
-			<div  class="collapse {{ $application->latestApplicationRound->round->isTrialRound()? ($loop->last ? 'show' : '') : '' }}">
-				<div class="card-body">
-						<div class="form-row">
-							<div class="form-group col-md-5">
-								<label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
-									<div>
-									<i class="fa fa-calendar" aria-hidden="true"></i>
-									<span>Scheduled date</span>
-										@if($applicationRound->scheduled_date)
-											@if($applicationRound->hangout_link)
-												<a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
-													<i class="fa fa-video-camera" aria-hidden="true"></i>
-													<span>Meeting Link</span>
-												</a>
-											@endif
+	</div>
+	<form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+		{{ csrf_field() }}
+		{{ method_field('PATCH') }}
+		<div class="collapse show">
+			<div class="card-body">
+				@if ( !$applicationRound->round_status)
+					<div class="form-row">
+						<div class="form-group col-md-5">
+							<label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
+								<div>
+								<i class="fa fa-calendar" aria-hidden="true"></i>
+								<span>Scheduled date</span>
+									@if($applicationRound->scheduled_date)
+										@if($applicationRound->hangout_link)
+											<a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
+												<i class="fa fa-video-camera" aria-hidden="true"></i>
+												<span>Meeting Link</span>
+											</a>
 										@endif
-									</div>
-								</label>
-								@if ($applicationRound->scheduled_date)
-									<input type="datetime-local" 
-										name="scheduled_date" id="scheduled_date" 
-										class="form-control form-control-sm" 
-										value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
-								@else
-									<div class="fz-16 leading-tight">Pending calendar confirmation</div>
-								@endif
-							</div>
-							<div class="form-group col-md-4">
-								<label for="scheduled_person_id" class="fz-14 leading-none text-secondary">
-									<i class="fa fa-user" aria-hidden="true"></i>
-									<span>Scheduled for</span>
-								</label>
-								@if ($applicationRound->scheduled_date)
-									<select name="scheduled_person_id" id="scheduled_person_id" class="form-control form-control-sm" >
-										@foreach ($interviewers as $interviewer)
-											@php
-												$selected = $applicationRound->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
-											@endphp
-											<option value="{{ $interviewer->id }}" {{ $selected }}>
-												{{ $interviewer->name }}
-											</option>
-										@endforeach
-									</select>
-								@else
-									<div class="fz-16 leading-tight">
-										<img src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
-										<span>{{ $applicationRound->scheduledPerson->name }}</span>
-									</div>
-								@endif  
-							</div>
-							@if ($applicationRound->scheduled_date)
-								<div class="form-group col-md-3 d-flex align-items-end">
-									<button type="button" class="py-1 mb-0 btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
+									@endif
 								</div>
+							</label>
+							@if ($applicationRound->scheduled_date)
+								<input type="datetime-local" 
+									name="scheduled_date" id="scheduled_date" 
+									class="form-control form-control-sm" 
+									value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+							@else
+								<div class="fz-16 leading-tight">Pending calendar confirmation</div>
 							@endif
 						</div>
-				</div>
-			</div>	
-		</form>
-	</div>
+						<div class="form-group col-md-4">
+							<label for="scheduled_person_id" class="fz-14 leading-none text-secondary">
+								<i class="fa fa-user" aria-hidden="true"></i>
+								<span>Scheduled for</span>
+							</label>
+							@if ($applicationRound->scheduled_date)
+								<select name="scheduled_person_id" id="scheduled_person_id" class="form-control form-control-sm" >
+									@foreach ($interviewers as $interviewer)
+										@php
+											$selected = $applicationRound->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
+										@endphp
+										<option value="{{ $interviewer->id }}" {{ $selected }}>
+											{{ $interviewer->name }}
+										</option>
+									@endforeach
+								</select>
+							@else
+								<div class="fz-16 leading-tight">
+									<img src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
+									<span>{{ $applicationRound->scheduledPerson->name }}</span>
+								</div>
+							@endif  
+						</div>
+						@if ($applicationRound->scheduled_date)
+						<div class="form-group col-md-3 d-flex align-items-end">
+							<button type="button" class="py-1 mb-0 btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
+						</div>
+						@endif
+					</div>
+				@endif
+			</div>
+		</div>	
+	</form>
 </div>
 </div>
 
