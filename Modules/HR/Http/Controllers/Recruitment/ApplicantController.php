@@ -84,12 +84,13 @@ class ApplicantController extends Controller
 
     public function show($applicationID)
     {
+        $applicationRound = [];
         $application = Application::find($applicationID);
         foreach ($application->applicationRounds as $applicationRound) {
             $applicationRound = $applicationRound;
         }
         $interviewers = User::interviewers()->orderBy('name')->get();
-        $application->status = "in-progress";
+        $application->status = 'in-progress';
         $application->save();
         $applicant = Applicant::find($application->hr_applicant_id);
         $universities = University::find($applicant->hr_university_id)->get();

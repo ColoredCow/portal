@@ -5,7 +5,6 @@ namespace Modules\HR\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class InterviewReminder extends Mailable
 {
