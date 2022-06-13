@@ -172,7 +172,7 @@
                     if(this.checkValidity()) {
                         var element = $("#generate_invoice_link");
                         element.attr("disabled", true);
-                        var form = $("#invoice_form");
+                        var form = $("#invoiceForm");
                         var oldUrl = form.attr("action");
                         var url = "{{ route('invoice.generate-invoice') }}";
                         form.attr("target", "_blank");
@@ -186,7 +186,7 @@
 
                 checkValidity: function() {
                     $('#invoice_file, [name="currency"], [name="amount"]').attr("required", false);
-                    var isValidated = validateFormData(document.getElementById('invoice_form'));
+                    var isValidated = validateFormData(document.getElementById('invoiceForm'));
                     $('#invoice_file, [name="currency"], [name="amount"]').attr("required", true);
                     
                     return isValidated;
