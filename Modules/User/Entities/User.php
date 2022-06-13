@@ -142,6 +142,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProjectTeamMember::class, 'team_member_id');
     }
+    public function activeProjectTeamMembers()
+    {
+        return $this->hasMany(ProjectTeamMember::class, 'team_member_id')->where('ended_on', null);
+    }
 
     public function getMonthTotalEffortAttribute()
     {

@@ -28,6 +28,11 @@ class ProjectTeamMember extends Model
         return $this->hasMany(ProjectTeamMemberEffort::class);
     }
 
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->whereNull('ended_on');
