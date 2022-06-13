@@ -128,7 +128,7 @@
 			@endif
 		</div>
 	</div>
-	<form action="{{ route('application-round.update') }}" method="post" enctype="multipart/form-data" class="applicant-round-form">
+	<form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
 		{{ csrf_field() }}
 		{{ method_field('PATCH') }}
 		<div class="collapse show">
@@ -190,7 +190,9 @@
 					</div>
 				@endif
 			</div>
-		</div>	
+		</div>
+		<input type="hidden" name="action" value="schedule-update">
+		<input type="hidden" name="next_round" value="">
 	</form>
 </div>
 </div>
