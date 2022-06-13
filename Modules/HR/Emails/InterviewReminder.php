@@ -11,7 +11,8 @@ class InterviewReminder extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $applicationRound, $application;
+    public $applicationRound;
+    public $application;
 
     /**
      * Create a new message instance.

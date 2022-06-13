@@ -47,7 +47,7 @@ class SendInterviewReminders extends Command
         $applications = Application::all();
         $applications->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps']);
         foreach ($applications as $application) {
-            foreach($application->applicationRounds as $applicationRound) {
+            foreach ($application->applicationRounds as $applicationRound) {
                 if ($date == $applicationRound->scheduled_date->toDateString()) {
                     if ($time > $applicationRound->scheduled_date->toTimeString()) {
                         Mail::to($applicationRound->scheduledPerson->email, $applicationRound->scheduledPerson->name)->send(new InterviewReminder($applicationRound, $application));

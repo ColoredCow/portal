@@ -12,8 +12,6 @@ class EvaluationService implements EvaluationServiceContract
 {
     public function evaluationResult($applicationRound, $evaluationScores)
 	{
-		
-
 		// return $status;
 	}
 }

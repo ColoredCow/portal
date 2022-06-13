@@ -160,7 +160,7 @@ class EvaluationController extends Controller
         if (array_key_exists('evaluation_segment', request()->all())) {
             $applicationRound->updateOrCreateEvaluationSegment(request()->all()['evaluation_segment']);
         }
-		$status = 'Evaluation updated successfully!';
+		    $status = 'Evaluation updated successfully!';
 
         if ($applicationRound->hr_round_id == Round::where('name', 'Resume Screening')->first()->id) {
             $segmentList = [];
@@ -168,32 +168,32 @@ class EvaluationController extends Controller
                 $segmentList[] = self::getSegmentDetails($segment);
             }
             $evaluationScores = self::calculateEvaluationScores($segmentList);
-			$application = Application::find($applicationRound->hr_application_id);
-			$applicant = Applicant::find($application->hr_applicant_id);
+                $application = Application::find($applicationRound->hr_application_id);
+                $applicant = Applicant::find($application->hr_applicant_id);
 
-			if ($evaluationScores['score'] >= 2) {
-				$application->untag('new-application');
-				$application->tag('in-progress');
-				$nextApplicationRound = $application->job->rounds->where('id', 2)->first();
-				$scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-				$applicationRound = ApplicationRound::updateOrCreate([
-					'hr_application_id' => $application->id,
-					'hr_round_id' => Round::where('name', 'Introductory Call')->first()->id,
-					'trial_round_id' => 1,
-					'round_status' => 'confirmed',
-					'scheduled_date' => now(),
-					'scheduled_end' => now(),
-					'scheduled_person_id' => $scheduledPersonId,
-				]);
-				$status = 'Application success!';
-			} else {
-				$application->untag('new-application');
-				$applicationRound->round_status = 'rejected';
-				foreach ($applicant->applications as $applicantApplication) {
-					$applicantApplication->reject();
-				}
-				$status = 'Application reject!';
-			}
+                if ($evaluationScores['score'] >= 2) {
+                    $application->untag('new-application');
+                    $application->tag('in-progress');
+                    $nextApplicationRound = $application->job->rounds->where('id', 2)->first();
+                    $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                    $applicationRound = ApplicationRound::updateOrCreate([
+                        'hr_application_id' => $application->id,
+                        'hr_round_id' => Round::where('name', 'Introductory Call')->first()->id,
+                        'trial_round_id' => 1,
+                        'round_status' => 'confirmed',
+                        'scheduled_date' => now(),
+                        'scheduled_end' => now(),
+                        'scheduled_person_id' => $scheduledPersonId,
+                    ]);
+                    $status = 'Application success!';
+                } else {
+                    $application->untag('new-application');
+                    $applicationRound->round_status = 'rejected';
+                    foreach ($applicant->applications as $applicantApplication) {
+                        $applicantApplication->reject();
+                    }
+                    $status = 'Application reject!';
+                }
         }
 
         return redirect()->back()->with('status', $status);
