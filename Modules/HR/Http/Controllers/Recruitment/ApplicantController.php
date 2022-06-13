@@ -82,7 +82,7 @@ class ApplicantController extends Controller
         ]);
     }
 
-    public function show($applicationID) 
+    public function show($applicationID)
     {
         $application = Application::find($applicationID);
         foreach ($application->applicationRounds as $applicationRound) {
@@ -95,5 +95,5 @@ class ApplicantController extends Controller
         $universities = University::find($applicant->hr_university_id)->get();
 
         return view('hr.application.details', ['application' => $application, 'applicant' => $applicant, 'universities' => $universities, 'applicationRound' => $applicationRound, 'interviewers' => $interviewers]);
-	}
+    }
 }
