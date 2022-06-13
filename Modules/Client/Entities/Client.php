@@ -114,7 +114,7 @@ class Client extends Model
     public function getBillableAmountForTerm(int $month, int $year, $projects)
     {
         $amount = $projects->sum(function ($project) use ($month, $year) {
-            return round($project->getBillableHourForTerm($month, $year) * $this->billingDetails->service_rates, 2);
+            return round($project->getBillableHoursForTerm($month, $year) * $this->billingDetails->service_rates, 2);
         });
 
         return $amount;
@@ -122,6 +122,7 @@ class Client extends Model
 
     public function getTaxAmountForTerm(int $month, int $year, $projects)
     {
+        // Todo: Implement tax calculation correctly as per the GST rules
         return round($this->getBillableAmountForTerm($month, $year, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
@@ -132,6 +133,7 @@ class Client extends Model
 
     public function getAmountPaidForTerm(int $month, int $year, $projects)
     {
+        // This needs to be updated based on the requirements.
         return 0.00;
     }
 }

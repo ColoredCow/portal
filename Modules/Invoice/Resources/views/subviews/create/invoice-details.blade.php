@@ -4,10 +4,10 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
-                        <label for="client_id" class="field-required">Client</label>
-                        <a href="{{ route('client.create') }}" for="client_id" class="text-underline">Add new client</a>
+                        <label for="clientId" class="field-required">Client</label>
+                        <a href="{{ route('client.create') }}" for="clientId" class="text-underline">Add new client</a>
                     </div>
-                    <select name="client_id" id="client_id" class="form-control" required="required"
+                    <select name="client_id" id="clientId" class="form-control" required="required"
                         @change="updateClientDetails()" v-model="clientId">
                         <option value="">Select Client</option>
                         <option v-for="client in clients" :value="client.id" v-text="client.name"

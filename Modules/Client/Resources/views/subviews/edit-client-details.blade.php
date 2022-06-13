@@ -21,7 +21,7 @@
             </div>
             <br>
             <div class="form-row">
-                <div class=" col-md-5 mr-0 form-group">
+                <div class="col-md-5 mr-0 form-group">
                     <label for="primary_project_id" >Choose Primary Project
                         <span data-toggle="tooltip" data-placement="right" title="This project id will be used in client level invoice."><i class="fa fa-question-circle"></i>&nbsp;</span>
                     </label>
@@ -40,9 +40,9 @@
                         <option value="">Select channel partner</option>
                         @foreach ($channelPartners as $status => $channelPartner)
                             @if(($client->channel_partner_id == $channelPartner->id || old('channel_partner_id') == $channelPartner->id))
-                                <option selected value="{{ $channelPartner->id}}">{{ $channelPartner->name }}</option>
+                                <option selected value="{{ $channelPartner->id }}">{{ $channelPartner->name }}</option>
                             @else
-                                <option value="{{ $channelPartner->id}}">{{ $channelPartner->name }}</option>
+                                <option value="{{ $channelPartner->id }}">{{ $channelPartner->name }}</option>
                             @endif
                         @endforeach
                     </select>
@@ -68,9 +68,9 @@
                         <option value="">Select parent organisation</option>
                         @foreach ($parentOrganisations as $key => $parentOrganisation)
                             @if($client->parent_organisation_id == $parentOrganisation->id || old('parent_organisation_id') == $parentOrganisation->id)
-                                <option selected value="{{ $parentOrganisation->id}}">{{ $parentOrganisation->name }}</option>
+                                <option selected value="{{ $parentOrganisation->id }}">{{ $parentOrganisation->name }}</option>
                             @else
-                                <option value="{{ $parentOrganisation->id}}">{{ $parentOrganisation->name }}</option>
+                                <option value="{{ $parentOrganisation->id }}">{{ $parentOrganisation->name }}</option>
                             @endif
                         @endforeach
                     </select>

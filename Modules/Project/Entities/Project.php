@@ -128,7 +128,7 @@ class Project extends Model
         return round($expectedMonthlyHours, 2);
     }
 
-    public function getBillableHourForTerm(int $monthNumber, int $year)
+    public function getBillableHoursForTerm(int $monthNumber, int $year)
     {
         return $this->getTeamMembers->sum(function ($teamMember) use ($monthNumber, $year) {
             if (! $teamMember->projectTeamMemberEffort) {
