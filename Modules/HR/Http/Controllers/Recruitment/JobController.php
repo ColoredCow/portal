@@ -127,8 +127,6 @@ class JobController extends Controller
     {
         $opportunity->load('postedBy');
 
-        return view('hr.job.show')->with([
-            'job' => $opportunity,
-        ]);
+        return view('hr.job.show', ['job' => $opportunity]);
     }
 }
