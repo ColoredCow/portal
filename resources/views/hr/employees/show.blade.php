@@ -3,16 +3,16 @@
 <div class="container">
     <div class="mt-4 card">
         <div class="card-header pb-lg-5 fz-28"><div class="mt-4 ml-5">Employee Details</div></div>
-        <div class="d-flex flex-row bd-highlight mb-3">
-        <div class="d-flex justify-content-start mt-5 ml-9"><h1>{{$employee->name}}</h1></div>
-        @if(optional($employee->user)->activeProjectTeamMembers)
-        <img src="{{ $employee->user->avatar }}" class="d-flex justify-content-end w-100 h-100 rounded-circle ml-20 mr-1 mb-1 mt-4 float:right">
-        @endif
-        </div>
-        <hr class='bg-dark mx-7 my-7'>
-        <div class="font-weight-bold fz-24 pl-9 mt-4 ml-2 !important;">Project Details</div>
         <div class="card-body">
-            <div class="mx-7 !important">
+            <div class="d-flex justify-content-between mx-5 align-items-end">
+                <h1>{{$employee->name}}</h1>
+                @if(optional($employee->user()->withTrashed()->first())->activeProjectTeamMembers)
+                    <img src="{{ $employee->user()->withTrashed()->first()->avatar }}" class="w-100 h-100 rounded-circle">
+                @endif
+            </div>
+            <hr class='bg-dark mx-4 pb-0.5'>
+            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3">Project Details</div>
+            <div class="mx-5">
                 <table class="table">
                     <thead>
                         <tr class="bg-theme-gray text-light">
