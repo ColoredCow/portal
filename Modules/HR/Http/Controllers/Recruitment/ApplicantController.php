@@ -93,7 +93,7 @@ class ApplicantController extends Controller
         $application->status = 'in-progress';
         $application->save();
         $applicant = Applicant::find($application->hr_applicant_id);
-        $universities = University::find($applicant->hr_university_id)->get();
+        $universities = University::find($applicant->hr_university_id)->all();
 
         return view('hr.application.details', ['application' => $application, 'applicant' => $applicant, 'universities' => $universities, 'applicationRound' => $applicationRound, 'interviewers' => $interviewers]);
     }
