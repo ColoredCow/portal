@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mx-5 align-items-end">
                 <h1>{{$employee->name}}</h1>
-                @if(optional($employee->user()->withTrashed()->first())->activeProjectTeamMembers)
+                @if(optional($employee->user()->withTrashed())->first())
                     <img src="{{ $employee->user()->withTrashed()->first()->avatar }}" class="w-100 h-100 rounded-circle">
                 @endif
             </div>
