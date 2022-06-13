@@ -70,7 +70,7 @@
                         <td>
                             @foreach($project->teamMembers ?:[] as $teamMember)
                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}">
-                                    <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
+                                    <a href={{ route('employees.show', $teamMember->employee) }}><img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1 c-pointer"></a>
                                 </span>
                             @endforeach 
                         </td>

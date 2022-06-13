@@ -71,7 +71,7 @@
                             <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
                                 {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
                             </td>
-                            <td class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}'>
+                            <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
                                 {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
                             </td>
                             @if (Str::studly($invoice->status) == 'Sent')
