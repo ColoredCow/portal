@@ -160,7 +160,7 @@ class EvaluationController extends Controller
         if (array_key_exists('evaluation_segment', request()->all())) {
             $applicationRound->updateOrCreateEvaluationSegment(request()->all()['evaluation_segment']);
         }
-		$status = 'Evaluation updated successfully!';
+        $status = 'Evaluation updated successfully!';
 
         if ($applicationRound->hr_round_id == Round::where('name', 'Resume Screening')->first()->id) {
             $segmentList = [];
