@@ -38,9 +38,9 @@
             </td>
             <td>
                 @if($employee->user == null)
-                0
+                    0
                 @else
-                {{count($employee->user->activeProjectTeamMembers)}}
+                    {{count($employee->user->activeProjectTeamMembers)}}
                 @endif
             </td>
             <td class="{{ $employee->user ? ($employee->user->fte > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</td>

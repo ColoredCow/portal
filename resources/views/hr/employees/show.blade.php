@@ -1,16 +1,18 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="container">
     <div class="mt-4 card">
         <div class="card-header pb-lg-5 fz-28"><div class="mt-4 ml-5">Employee Details</div></div>
         <div class="card-body">
             <div class="d-flex justify-content-between mx-5 align-items-end">
                 <h1>{{$employee->name}}</h1>
-                @if(optional($employee->user()->withTrashed())->first())
+                @if(optional($employee->user()->withTrashed())->first()->avatar)
                     <img src="{{ $employee->user()->withTrashed()->first()->avatar }}" class="w-100 h-100 rounded-circle">
                 @endif
             </div>
             <hr class='bg-dark mx-4 pb-0.5'>
+            <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">Current FTE:<div class="{{ $employee->user ? ($employee->user->fte > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</div></div>
             <div class="font-weight-bold fz-24 pl-5 mt-5 mb-3">Project Details</div>
             <div class="mx-5">
                 <table class="table">
@@ -38,7 +40,7 @@
                                     <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
                                     <td><div class="ml-9">{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
                                     <td><div class="ml-9">{{$activeProjectTeamMember->current_actual_effort}}</div></td>
-                                    <td><div class="ml-7"><div class="{{$activeProjectTeamMember->getVelocityAttribute() >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->getVelocityAttribute()}}</div></td>
+                                    <td><div class="ml-7"><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
                                     <td><div class="ml-10">{{$activeProjectTeamMember->fte}}</td>
                                 </tr>
                             @endforeach
