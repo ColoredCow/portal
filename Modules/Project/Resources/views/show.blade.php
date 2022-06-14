@@ -38,9 +38,9 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Current FTE:</label>
+                            <label for="name" class="font-weight-bold">Current Velocity:</label>
                         </h4>
-                        <span class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->fte }}</span>
+                        <span class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->velocity }}</span>
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
                 </div>
@@ -79,15 +79,46 @@
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
                         <div>
-                            <div class="flex-column flex-md-row d-flex flex-wrap col-md-12 px-0 ml-3">
-                                @foreach($project->teamMembers ?:[] as $teamMember)
-                                    <div class="fz-lg-22 my-2 px-0 col-md-6">
-                                        <span>
-                                            <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
-                                        </span>
-                                        {{$teamMember->name}} - {{ config('project.designation')[$teamMember->pivot->designation] }}
-                                    </div>
-                                @endforeach
+                            <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
+                                <div class="table">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="bg-theme-gray text-light">
+                                                <th scope="col" class="pb-md-3 pb-xl-4 px-9">Name</th>
+                                                <th scope="col" class="pb-md-3 pb-xl-4">Hours Booked</th>
+                                                <th scope="col" class="pb-lg-1">Expected Hours
+                                                    
+                                                    <div class="ml-md-3 ml-xl-6 font-weight-bold fz-12"> 
+                                                        ({{$daysTillToday}} Days)
+                                                    </div>
+
+                                                </th>
+                                                <th scope="col" class="pb-md-3 pb-xl-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                                            </tr>
+                                        </thead>
+                                        @if($project->TeamMembers->first() == null)
+                                            </table>
+                                            <div class="fz-lg-28 text-center mt-4">No member in the project</div>
+                                        @else
+                                            <tbody>
+                                                @foreach($project->getTeamMembers ?:[] as $teamMember)
+                                                    <tr>
+                                                        <th scope="row" class="fz-lg-20 my-2 px-5 col-md-6 font-weight-normal"> 
+                                                            <span>
+                                                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
+                                                                <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
+                                                            </span>
+                                                            {{$teamMember->user->name}}
+                                                        </th>
+                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
+                                                        <td>{{$teamMember->current_expected_effort}}</td>
+                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                            </table>
+                                        @endif
+                                </div>
                             </div>
                         </div>
                     </div>

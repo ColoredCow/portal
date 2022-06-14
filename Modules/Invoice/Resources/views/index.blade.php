@@ -46,7 +46,8 @@
                         <th>Invoice Number</th>
                         <th>Amount ( + taxes)</th>
                         <th>Sent on</th>
-                        <th>Receivable date</th>
+                        <th>Due on</th>
+                        <th>Paid on</th>
                         <th>Status</th>
                         @if (request()->input('status') == 'sent' || request()->input('status') == '')
                             <th class="d-none">Email</th>
@@ -68,7 +69,11 @@
                                 {{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}
                             </td>
                             <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
-                                {{ Str::studly($invoice->status) }}</td>
+                                {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
+                            </td>
+                            <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
+                                {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
+                            </td>
                             @if (Str::studly($invoice->status) == 'Sent')
                                 <td class="d-none" ><button type="button" class="btn btn-primary ml-auto" data-bs-toggle="modal"
                                         data-bs-target="#Modal">Send Mail</button>

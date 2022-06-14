@@ -3,6 +3,8 @@
 namespace Modules\Project\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\TeamMemberDesignationRule;
+use App\Rules\TeamMemberRule;
 
 class ProjectRequest extends FormRequest
 {
@@ -37,6 +39,7 @@ class ProjectRequest extends FormRequest
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
+                    'contract_file' => 'nullable|mimes:pdf',
                 ];
                 break;
 
@@ -56,7 +59,10 @@ class ProjectRequest extends FormRequest
             case 'project_team_members':
                 if ($this->project_team_member) {
                     $rules = [
-                        'project_team_member' => 'array',
+                        'project_team_member' => ['array',
+                        new TeamMemberDesignationRule(),
+                        new TeamMemberRule(),
+                        ]
                     ];
                 }
                 break;

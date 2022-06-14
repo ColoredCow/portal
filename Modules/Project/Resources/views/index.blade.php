@@ -54,7 +54,7 @@
                     <th class="w-33p">Name</th>
                     <th class="w-33p">Client</th>
                     <th>Team Members</th>
-                    <th>FTE</th>
+                    <th>Velocity</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,13 +70,13 @@
                         <td>
                             @foreach($project->teamMembers ?:[] as $teamMember)
                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}">
-                                    <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
+                                    <a href={{ route('employees.show', $teamMember->employee) }}><img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1 c-pointer"></a>
                                 </span>
                             @endforeach 
                         </td>
                         <td>
-                            <a class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 c-pointer fa fa-external-link-square"></i></a>
-                            <a class="{{ $project->fte >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->fte }}</a>
+                            <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 c-pointer fa fa-external-link-square"></i></a>
+                            <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->velocity }}</a>
                         </td>
                     </tr>
                 @empty

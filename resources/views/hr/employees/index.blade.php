@@ -11,13 +11,14 @@
             <th>Name</th>
             <th>Designation</th>
             <th>Joined on</th>
-            <th>Projects</th>
+            <th>Projects Count</th>
+            <th>Current FTE</th>
         </tr>
 
         @foreach ($employees as $employee)
         <tr>
             <td>
-                <a >{{ $employee->name }}</a>
+                <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
             </td>
             <td>
                 @if ($employee->designation)
@@ -36,8 +37,13 @@
             @endif
             </td>
             <td>
-                <a href="">{{ "View Projects" }}</a>
+                @if($employee->user == null)
+                    0
+                @else
+                    {{count($employee->user->activeProjectTeamMembers)}}
+                @endif
             </td>
+            <td class="{{ $employee->user ? ($employee->user->fte > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</td>
         </tr>
         @endforeach
     </table>
