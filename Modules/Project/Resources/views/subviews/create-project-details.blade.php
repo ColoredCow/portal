@@ -35,6 +35,16 @@
                 placeholder="Enter total estimated hours" value="{{ old('total_estimated_hours') }}">
         </div>
         <div class="form-group offset-md-1 col-md-5">
+            <label for="billing_level" class="field-required">Billing Level</label>
+            <select name="billing_level" id="billing_level" class="form-control" required="required">
+                <option value="">{{ __('Select Billing Level') }}</option>
+                @foreach (config('project.meta_keys.billing_level.value') as $key => $billingLevel)
+                    <option value="{{ $key }}">{{ $billingLevel['label'] }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-md-5">
             <label for="contract_file"> {{ __('Upload Contract File') }}</label>
             <div class="custom-file mb-3">
                 <input type="file" id="contract_file" name="contract_file" class="custom-file-input">

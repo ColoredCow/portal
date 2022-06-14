@@ -46,7 +46,7 @@
 <div class="project-resource-effort-tracking-container container mt-4 pb-10">
     <div class="card">
         <div class="card-header">
-            <h4>{{$project->name}} - Members @if(optional($project->meta()->where('key', 'last_updated_at')->first())->value) <div class="fz-14 float-right mr-3 mt-1">Last refreshed at: {{($project->meta()->where('key', 'last_updated_at')->first()->value)}}</div> @endif</h4>
+            <h4>{{$project->name}} - Members @if(optional($project->last_updated_at)) <div class="fz-14 float-right mr-3 mt-1">{{ config('project.meta_keys.last_updated_at.value') . __(': ') . ($project->last_updated_at)}}</div> @endif</h4>
         </div>
         <div class="table-responsive">
             <table class="table">

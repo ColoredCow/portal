@@ -15,7 +15,7 @@ class Client extends Model
 {
     use HasHierarchy, HasFactory, Filters;
 
-    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id'];
+    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'primary_project_id'];
 
     protected $appends = ['type', 'currency'];
 
@@ -44,6 +44,23 @@ class Client extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function projectLevelBillingProjects()
+    {
+        return $this->hasMany(Project::class)->where('projects.status', '!=', 'inactive')
+            ->leftJoin('project_meta', function ($join) {
+                $join->on('project_meta.project_id', '=', 'projects.id');
+                $join->where('project_meta.key', '=', config('project.meta_keys.billing_level.value.project.key'));
+            });
+    }
+
+    public function clientLevelBillingProjects()
+    {
+        return $this->belongsToMany(Project::class, 'project_meta', 'projects.client_id', 'project_id')->where([
+            'project_meta.key' => config('project.meta_keys.billing_level.key'),
+            'project_meta.value' => config('project.meta_keys.billing_level.value.client.key')
+        ])->where('projects.status', '!=', 'inactive');
+    }
+
     public function getReferenceIdAttribute()
     {
         return sprintf('%03s', $this->id);
@@ -52,6 +69,16 @@ class Client extends Model
     public function contactPersons()
     {
         return $this->hasMany(ClientContactPerson::class);
+    }
+
+    public function getBillingContactAttribute()
+    {
+        return $this->contactPersons()->where('type', 'billing-contact')->first();
+    }
+
+    public function primaryProject()
+    {
+        return $this->hasOne(Project::class, 'id', 'primary_project_id');
     }
 
     public function addresses()
@@ -82,5 +109,31 @@ class Client extends Model
     public function getCurrencyAttribute()
     {
         return $this->type == 'indian' ? 'INR' : 'USD';
+    }
+
+    public function getBillableAmountForTerm(int $month, int $year, $projects)
+    {
+        $amount = $projects->sum(function ($project) use ($month, $year) {
+            return round($project->getBillableHoursForTerm($month, $year) * $this->billingDetails->service_rates, 2);
+        });
+
+        return $amount;
+    }
+
+    public function getTaxAmountForTerm(int $month, int $year, $projects)
+    {
+        // Todo: Implement tax calculation correctly as per the GST rules
+        return round($this->getBillableAmountForTerm($month, $year, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
+    }
+
+    public function getTotalPayableAmountForTerm(int $month, int $year, $projects)
+    {
+        return $this->getBillableAmountForTerm($month, $year, $projects) + $this->getTaxAmountForTerm($month, $year, $projects);
+    }
+
+    public function getAmountPaidForTerm(int $month, int $year, $projects)
+    {
+        // This needs to be updated based on the requirements.
+        return 0.00;
     }
 }

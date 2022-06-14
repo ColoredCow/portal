@@ -128,8 +128,32 @@ class Project extends Model
         return round($expectedMonthlyHours, 2);
     }
 
+    public function getBillableHoursForTerm(int $monthNumber, int $year)
+    {
+        return $this->getTeamMembers->sum(function ($teamMember) use ($monthNumber, $year) {
+            if (! $teamMember->projectTeamMemberEffort) {
+                return 0;
+            }
+
+            return $teamMember->projectTeamMemberEffort()
+                ->where('added_on', '>=', $year . '-' . sprintf('%02s', $monthNumber) . '-01')
+                ->where('added_on', '<=', $year . '-' . sprintf('%02s', $monthNumber) . '-31')
+                ->sum('actual_effort');
+        });
+    }
+
     public function meta()
     {
         return $this->hasMany(ProjectMeta::class);
+    }
+
+    public function getBillingLevelAttribute()
+    {
+        return optional($this->meta()->where('key', 'billing_level')->first())->value;
+    }
+
+    public function getLastUpdatedAtAttribute()
+    {
+        return optional($this->meta()->where('key', 'last_updated_at')->first())->value;
     }
 }
