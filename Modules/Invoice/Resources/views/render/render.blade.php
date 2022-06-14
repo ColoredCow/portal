@@ -3,9 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Source Sans Pro:400,500,600,700,800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <!-- Styles -->
         <style>
             html,
@@ -214,7 +211,7 @@
                                 <p>{{ $client->billing_contact->email }}</p>
                                 <p>{{ $client->addresses->first()->address }}</p>
                                 <p>{{ $client->addresses->first()->state . ' ' .$client->addresses->first()->area_code }}</p>
-                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN : 07AAATC0188R1ZB') : '' }}</p>
+                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN :') . config('invoice.finance-details.gstin') : '' }}</p>
                             </td>
                             <td>
                                 <p class="fw-bold ml-1em">Details</p>
