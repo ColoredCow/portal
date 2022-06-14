@@ -393,7 +393,7 @@ class InvoiceService implements InvoiceServiceContract
         return $invoiceNumber;
     }
 
-    public function generateInvoice(array $data)
+    public function getInvoiceData(array $data)
     {
         $client = Client::find($data['client_id']);
         $year = (int) substr($data['term'], 0, 4);

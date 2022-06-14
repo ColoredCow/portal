@@ -73,7 +73,7 @@ class InvoiceController extends Controller
 
     public function generateInvoice(Request $request)
     {
-        $data = $this->service->generateInvoice($request->all());
+        $data = $this->service->getInvoiceData($request->all());
         $invoiceNumber = $data['invoiceNumber'];
 
         $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -4);
