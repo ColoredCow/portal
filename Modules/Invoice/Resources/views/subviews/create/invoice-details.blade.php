@@ -57,7 +57,6 @@
                 <div class="form-group">
                     <label for="project_invoice_id" class="field-required">Status</label>
                     <select class="form-control" name="status">
-                        {{-- <option value="pending">Pending</option> --}}
                         <option value="sent">Sent</option>
                         <option value="paid">Paid</option>
                     </select>
