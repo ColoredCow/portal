@@ -9,7 +9,7 @@
                 </div>
                 <div class="form-group col-md-5 offset-md-1">
                     <label for="status" class="field-required">Status</label>
-                    <span class="ml-2" data-toggle="tooltip" data-placement="right" title="If mark inactive then all the projects associated to the client will be marked as inactive."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                    <span class="ml-2" data-toggle="tooltip" data-placement="right" title="If mark inactive then all the projects associated to the client will be marked as inactive."><i class="fa fa-question-circle"></i></span>
                     <select name="status" id="status" class="form-control" required="required">
                         <option value="">Select status</option>
                         @foreach (config('client.status') as $status => $label)
@@ -22,10 +22,10 @@
             <br>
             <div class="form-row">
                 <div class="col-md-5 mr-0 form-group">
-                    <label for="primary_project_id" >Choose Primary Project
-                        <span data-toggle="tooltip" data-placement="right" title="This project id will be used in client level invoice."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                    <label for="primaryProjectId" >Choose Primary Project
+                        <span data-toggle="tooltip" data-placement="right" title="This project id will be used in client level invoice."><i class="fa fa-question-circle"></i></span>
                     </label>
-                    <select name="primary_project_id" id="primary_project_id" class="form-control">
+                    <select name="primary_project_id" id="primaryProjectId" class="form-control">
                         <option value="">Select primary project</option>
                         @foreach ($client->projects as $project)
                             <option value="{{ $project->id }}" {{ optional($client->primaryProject)->id == $project->id || old('primary_project_id') == $project->id ? 'selected' : ''}}>{{ $project->name . '(' . $project->client_project_id . ')' }}</option>
@@ -33,8 +33,8 @@
                     </select>
                 </div>
                 <div class="form-group offset-md-1 col-md-5">
-                    <label for="channel_partner_id" >Channel partner 
-                        <span data-toggle="tooltip" data-placement="right" title="If this client came via a channel partner then link that client from here."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                    <label for="channel_partner_id">Channel partner 
+                        <span data-toggle="tooltip" data-placement="right" title="If this client came via a channel partner then link that client from here."><i class="fa fa-question-circle"></i></span>
                     </label>
                     <select name="channel_partner_id" id="channel_partner_id" class="form-control">
                         <option value="">Select channel partner</option>
@@ -57,12 +57,12 @@
                             {{ ($client->is_channel_partner || old('is_channel_partner') == "1") ? 'checked' : '' }}
                             value="1">
                     <label for="is_channel_partner">Is this client a channel partner?
-                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple sub clients."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple sub clients."><i class="fa fa-question-circle"></i></span>
                     </label>
                 </div>
                 <div class="form-group offset-md-1 col-md-5">
                     <label for="key_account_manager_id">Parent organisation
-                        <span data-toggle="tooltip" data-placement="right" title="If this client is a department of another client then link that organisation from here."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                        <span data-toggle="tooltip" data-placement="right" title="If this client is a department of another client then link that organisation from here."><i class="fa fa-question-circle"></i></span>
                     </label>
                     <select name="parent_organisation_id" id="parent_organisation_id" class="form-control">
                         <option value="">Select parent organisation</option>
@@ -81,7 +81,7 @@
                     <input type="checkbox" {{ ($client->has_departments || old('has_departments') == "1") ? 'checked' : '' }} class="checkbox-custom mb-1.9 mb-1.67 mr-3" name="has_departments" id="has_departments"
                             value="1">
                     <label for="has_departments">Has multiple departments?
-                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple departments as a new client."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple departments as a new client."><i class="fa fa-question-circle"></i></span>
                     </label>
                 </div>
             </div>
