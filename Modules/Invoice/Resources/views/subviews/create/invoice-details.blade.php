@@ -168,12 +168,13 @@
                 },
 
                 generateInvoice: function(event) {
+                    $('#invoice_file, [name="currency"], [name="amount"]').attr("required", false);
                     if(this.checkValidity()) {
                         var element = $("#generate_invoice_link");
-                        element.attr("disabled", true);
                         var form = $("#invoiceForm");
                         var oldUrl = form.attr("action");
                         var url = "{{ route('invoice.generate-invoice') }}";
+                        element.attr("disabled", true);
                         form.attr("target", "_blank");
                         form.attr("action", url);
                         form.submit();
@@ -181,14 +182,11 @@
                         form.removeAttr("target");
                         element.attr("disabled", false);
                     }
+                    $('#invoice_file, [name="currency"], [name="amount"]').attr("required", true);
                 },
 
                 checkValidity: function() {
-                    $('#invoice_file, [name="currency"], [name="amount"]').attr("required", false);
-                    var isValidated = validateFormData(document.getElementById('invoiceForm'));
-                    $('#invoice_file, [name="currency"], [name="amount"]').attr("required", true);
-                    
-                    return isValidated;
+                    return validateFormData(document.getElementById('invoiceForm'));
                 },
             },
 
