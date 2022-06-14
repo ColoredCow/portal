@@ -116,6 +116,11 @@ return [
                 'title' => 'In progress',
                 'class' => 'badge badge-warning',
             ],
+            'resume-screening-wip' => [
+                'label' => 'resume-screening-wip',
+                'title' => 'Resume screening wip',
+                'class' => 'badge badge-secondary',
+            ],
             'sent-for-approval' => [
                 'label' => 'sent-for-approval',
                 'title' => 'Sent for Approval',

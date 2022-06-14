@@ -84,7 +84,8 @@
                                             <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
                                         </div>
                                     </div>
-                                    <form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+                                    <form action="/
+                                    hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                                         <div id="collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->isTrialRound()? ($loop->last ? 'show' : '') : '' }}">
@@ -473,6 +474,10 @@
                                         {{ $applicationRound->round->name }}
                                         <span title="{{ $applicationRound->round->name }} guide" class="modal-toggler-text text-muted" data-toggle="modal" data-target="#round_guide_{{ $applicationRound->round->id }}">
                                             <i class="fa fa-info-circle fa-lg"></i>
+<<<<<<< HEAD
+=======
+											<span class="ml-2">Assigned to<img class="ml-2 w-25 h-25 rounded-circle" src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" data-toggle="tooltip" data-placement="top" title="{{ $applicationRound->scheduledPerson->name }}"></span>
+>>>>>>> 9e98d65eb7590648dca797a160a435595ab7c010
                                         </span>
                                     </div>
                                     @if ($applicationRound->round_status)
