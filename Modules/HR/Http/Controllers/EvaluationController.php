@@ -339,4 +339,28 @@ class EvaluationController extends Controller
 
         return $segmentDetails;
     }
+    
+    private function calculateEvaluationScores($segmentList)
+    {
+        $scores = [
+            'score' => 0,
+            'max' => 0
+        ];
+        foreach ($segmentList as $segment) {
+            $scores[$segment['round_id']][$segment['id']] = [
+                'score' => 0,
+                'max' => 0,
+            ];
+            foreach ($segment['parameters'] as $parameter) {
+                $scores[$segment['round_id']][$segment['id']]['max'] += $parameter['marks'];
+                if (isset($parameter['evaluation_detail']['marks'])) {
+                    $scores[$segment['round_id']][$segment['id']]['score'] += $parameter['evaluation_detail']['marks'];
+                }
+            }
+            $scores['score'] += $scores[$segment['round_id']][$segment['id']]['score'];
+            $scores['max'] += $scores[$segment['round_id']][$segment['id']]['max'];
+        }
+
+        return $scores;
+    }
 }
