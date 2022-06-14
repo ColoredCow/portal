@@ -1,11 +1,18 @@
-<form id="applicationEvaluation" method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
-	@method('PATCH')
+<form method="POST" action="/hr/evaluation/{{ $applicationRound->id }}">
+    @method('PATCH')
     @csrf
-    {{-- <div class="row mb-3 d-none evaluation-result">
+	{{-- TODO: We can utilize this code in the future if needed --}}
+
+    {{-- <div class="spinner d-none text-center">
+        <div id="spinner-div" class="pt-3">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div>
+    </div>
+    <div class="row mb-3 d-none evaluation-result">
         <div class="col-12">
             <h4>
                 <span>Result: </span>
-                @if($evaluationScores['score'] >= config('hr.applicationEvaluation.cutoffScore'))
+                @if ($evaluationScores['score'] >= 2)
                     <span class="text-success">Passing</span>
                 @else
                     <span class="text-danger">Failing</span>
@@ -19,7 +26,8 @@
         <div class="row py-4">
             <div class="col-12">
                 {{-- TODO: save form on click using AJAX --}}
-                <button class="btn btn-success show-evaluation-stage" data-target="#evaluationStage2" type="button">Next</button>
+                <button class="btn btn-success show-evaluation-stage" data-target="#evaluationStage2"
+                    type="button">Next</button>
             </div>
         </div>
     </div>
@@ -29,7 +37,8 @@
         <div class="row my-3">
             <div class="col-12">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input section-toggle-checkbox" id="SendForReview" data-show-on-checked="#assignSendForReview">
+                    <input type="checkbox" class="custom-control-input section-toggle-checkbox" id="SendForReview"
+                        data-show-on-checked="#assignSendForReview">
                     <label class="custom-control-label" for="SendForReview">Send for review</label>
                 </div>
             </div>
@@ -44,8 +53,8 @@
         </div>
         <div class="row py-4">
             <div class="col-12">
-				{{-- TODO: save form on click using AJAX --}}
-                <button type="button" class="btn btn-light border mr-2 show-evaluation-stage" data-target="#evaluationStage1">Back</button>
+                <button type="button" class="btn btn-light border mr-2 show-evaluation-stage"
+                    data-target="#evaluationStage1">Back</button>
                 <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>
