@@ -268,7 +268,7 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function monthlyGSTTaxReportExport($filters)
+    public function monthlyGSTTaxReportExport($filters, $request)
     {
         $query = Invoice::query();
 
@@ -279,7 +279,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoices = $invoice;
         $invoices = $this->formatMonthlyInvoicesForExportAll($invoices);
 
-        return Excel::download(new MonthlyGSTTaxReportExport($invoices), 'MonthlyGSTTaxReportExport.xlsx');
+        return Excel::download(new MonthlyGSTTaxReportExport($invoices), "MonthlyGSTTaxReportExport-$request->month-$request->year.xlsx");
     }
 
     private function formatMonthlyInvoicesForExportAll($invoices)
@@ -291,10 +291,10 @@ class InvoiceService implements InvoiceServiceContract
                 'Type' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 1) ? 'India' : 'Export') : '',
                 'INVOICE NO.' => $invoice->invoice_number,
                 'GST NO.' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 1) ? (isset(ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->gst_number) ? ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->gst_number : 'B2C') : 'Export') : '',
-                'INVOICE VALUE' => $invoice->invoiceAmount(),
+                'INVOICE VALUE' => str_replace(['$', '₹', 'CAD', '€'], '', $invoice->invoiceAmount()),
                 'RATE' => '',
-                'RECEIVABLE AMOUNT' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? $invoice->amount_paid : '',
-                'TAXABLE AMOUNT' => $invoice->display_amount,
+                'RECEIVABLE AMOUNT' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? str_replace(['$', '₹', 'CAD', '€'], '', $invoice->invoiceAmount()) : '',
+                'TAXABLE AMOUNT' => str_replace(['$', '₹', 'CAD', '€'], '', $invoice->display_amount),
                 'IGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state != config('invoice.invoice-details.billing-state')) && (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 1) ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100 : '0') : '',
                 'CGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == config('invoice.invoice-details.billing-state')) && (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 1) ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100 : '0') : '',
                 'SGST' => ClientAddress::select('*')->where('client_id', $invoice->client_id)->first() ? ((ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->state == config('invoice.invoice-details.billing-state')) && (ClientAddress::select('*')->where('client_id', $invoice->client_id)->first()->country_id == 1) ? ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100 : '0') : '',

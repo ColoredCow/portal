@@ -103,8 +103,11 @@ class Invoice extends Model
         if ($this->status == 'paid') {
             return false;
         }
+        if ($this->status == 'disputed') {
+            return false;
+        }
 
-        if ($this->receivable_date->isPast()) {
+        if ($this->receivable_date < date('Y-m-d')) {
             return true;
         }
 
