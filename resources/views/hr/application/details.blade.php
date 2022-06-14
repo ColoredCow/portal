@@ -1,10 +1,13 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="container">
+<div class="container">
 
 <div class="card">
 	<div class="card-header">
+		<div class="col-md-3">
+			@include('hr.application.timeline', ['timeline' => $timeline, 'currentApplication' => $application])
+		</div>
 		<div class="row">
 			<div class="col-8">
 				<div>Applicant Details</div>
