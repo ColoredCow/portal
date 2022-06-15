@@ -28,6 +28,7 @@
                             >
                                 <i class="fa fa-question-circle"></i>&nbsp;
                             </span>
+                            <span class="badge badge-warning" v-if="client && !primaryProject">{{ _('No primary project for this client.') }}</span>
                         </div>
                     </div>
                     <select name="billing_for" id="billing_for" class="form-control" required="required">

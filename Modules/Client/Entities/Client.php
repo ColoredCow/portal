@@ -46,7 +46,7 @@ class Client extends Model
 
     public function projectLevelBillingProjects()
     {
-        return $this->hasMany(Project::class)->where('projects.status', '!=', 'inactive')
+        return $this->hasMany(Project::class)->select('projects.*')->where('projects.status', '!=', 'inactive')
             ->leftJoin('project_meta', function ($join) {
                 $join->on('project_meta.project_id', '=', 'projects.id');
                 $join->where('project_meta.key', '=', config('project.meta_keys.billing_level.value.project.key'));
@@ -55,10 +55,11 @@ class Client extends Model
 
     public function clientLevelBillingProjects()
     {
-        return $this->belongsToMany(Project::class, 'project_meta', 'projects.client_id', 'project_id')->where([
-            'project_meta.key' => config('project.meta_keys.billing_level.key'),
-            'project_meta.value' => config('project.meta_keys.billing_level.value.client.key')
-        ])->where('projects.status', '!=', 'inactive');
+        return $this->hasMany(Project::class)->select('projects.*')->where('projects.status', '!=', 'inactive')
+            ->leftJoin('project_meta', function ($join) {
+                $join->on('project_meta.project_id', '=', 'projects.id');
+                $join->where('project_meta.key', '=', config('project.meta_keys.billing_level.value.client.key'));
+            });
     }
 
     public function getReferenceIdAttribute()
