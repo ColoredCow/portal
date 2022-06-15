@@ -209,22 +209,22 @@
                         <tr style="width:100%;">
                             <td align="left">
                                 <p class="fw-bold">Bill To</p>
-                                <p>{{ $client->billing_contact->name }}</p>
+                                <p>{{ optional($client->billing_contact)->name }}</p>
                                 <p>{{ $client->name }}</p>
-                                <p>{{ $client->billing_contact->email }}</p>
+                                <p>{{ optional($client->billing_contact)->email }}</p>
                                 <p>{{ $client->addresses->first()->address }}</p>
                                 <p>{{ $client->addresses->first()->state . ' ' .$client->addresses->first()->area_code }}</p>
-                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN :') . config('invoice.finance-details.gstin') : '' }}</p>
+                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN: ') . config('invoice.finance-details.gstin') : '' }}</p>
                             </td>
                             <td>
                                 <p class="fw-bold ml-1em">Details</p>
                                 <table>
                                     <tr>
                                         <td>
-                                            <p>Term :</p>
-                                            <p>Invoice Number :</p>
-                                            <p>Issue Date :</p>
-                                            <p>Due Date :</p>
+                                            <p>Term: </p>
+                                            <p>Invoice Number: </p>
+                                            <p>Issue Date: </p>
+                                            <p>Due Date: </p>
                                         </td>
                                         <td align="right">
                                             <p>{{ $monthName }}</p>
@@ -240,9 +240,9 @@
                             <td align="left" class="fw-bold">
                                 <p>Client Name: {{ $client->name }}</p>
                                 <p>Client ID: {{ sprintf('%03s', $client->client_id) }}</p>
-                                <p>Project Name: {{ $client->primaryProject->name }}</p>
-                                <p>Project ID: {{ $client->primaryProject->client_project_id }}</p>
-                                <p>Category : Web Application Development</p>
+                                <p>Project Name: {{ $invoiceLevel == 'client' ? $client->primaryProject->name : $projects->first()->name }}</p>
+                                <p>Project ID: {{ $invoiceLevel == 'client' ? $client->primaryProject->client_project_id : $projects->first()->client_project_id }}</p>
+                                <p>Category: Web Application Development</p>
                             </td>
                             <td align="right">
                                 <table>
@@ -275,7 +275,7 @@
                         <tr>
                             <td>Current Payable</td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year, $projects) + $client->getTaxAmountForTerm($monthNumber, $year, $projects) }}</td>
+                            <td>{{ $client->country->currency_symbol . ($client->getBillableAmountForTerm($monthNumber, $year, $projects) + $client->getTaxAmountForTerm($monthNumber, $year, $projects)) }}</td>
                         </tr>
                         <tr>
                             <td>Amount Paid</td>
