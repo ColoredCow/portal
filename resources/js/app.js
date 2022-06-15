@@ -933,9 +933,6 @@ $(document).ready(function() {
 			$(".evaluation-score input").each(function() {
 				if ($(this).is(":checked")) {
 					let evaluationParameterName = (this.name).replace(/_/g, "-");
-					if (evaluationParameterName.indexOf("?") > -1) {
-						evaluationParameterName = evaluationParameterName.substring(0 , evaluationParameterName.indexOf("?"));
-					}
 					if ((this.id).slice(-1) == 1) { // Thumbs-up
 						$(`.evaluation-form-${evaluationParameterName}`).find("input:eq(0)").prop("checked", true);
 					} else { // Thumbs-down
