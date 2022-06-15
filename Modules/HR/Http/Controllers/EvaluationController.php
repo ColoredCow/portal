@@ -72,7 +72,7 @@ class EvaluationController extends Controller
         $parameter = Parameter::create([
             'name' => $request->name,
             'marks' => $request->marks,
-			'slug' => \Str::slug($request->slug),
+            'slug' => \Str::slug($request->slug),
             'segment_id' => $segment->id,
         ]);
 
@@ -143,11 +143,15 @@ class EvaluationController extends Controller
             $segmentList[] = self::getSegmentDetails($segment);
         }
 
-        return view('hr.application.evaluation-form')->with([
-            'segment' => $segmentList,
-            'applicationRound' => $applicationRound,
-            'employees' => Employee::active()->orderBy('name')->get(),
-        ])->render();
+        return view('hr.application.evaluation-form')
+            ->with([
+                'segment' => $segmentList,
+                'applicationRound' => $applicationRound,
+                'employees' => Employee::active()
+                    ->orderBy('name')
+                    ->get(),
+            ])
+            ->render();
     }
 
     public function update($applicationRoundId)
@@ -163,7 +167,9 @@ class EvaluationController extends Controller
             $applicationRound->updateOrCreateEvaluationSegment($request['evaluation_segment']);
         }
 
-        return redirect()->back()->with('status', 'Evaluation updated successfully!');
+        return redirect()
+            ->back()
+            ->with('status', 'Evaluation updated successfully!');
     }
 
     private function getSegments($applicationId)
@@ -236,7 +242,7 @@ class EvaluationController extends Controller
 
     private function getParameterInfo($parameter)
     {
-        if (! $parameter) {
+        if (!$parameter) {
             return;
         }
 
@@ -301,29 +307,5 @@ class EvaluationController extends Controller
         $segmentDetails['applicationEvaluations'] = self::getSegmentApplicationEvaluations($segment->applicationEvaluations);
 
         return $segmentDetails;
-    }
-    
-    private function calculateEvaluationScores($segmentList)
-    {
-        $scores = [
-            'score' => 0,
-            'max' => 0
-        ];
-        foreach ($segmentList as $segment) {
-            $scores[$segment['round_id']][$segment['id']] = [
-                'score' => 0,
-                'max' => 0,
-            ];
-            foreach ($segment['parameters'] as $parameter) {
-                $scores[$segment['round_id']][$segment['id']]['max'] += $parameter['marks'];
-                if (isset($parameter['evaluation_detail']['marks'])) {
-                    $scores[$segment['round_id']][$segment['id']]['score'] += $parameter['evaluation_detail']['marks'];
-                }
-            }
-            $scores['score'] += $scores[$segment['round_id']][$segment['id']]['score'];
-            $scores['max'] += $scores[$segment['round_id']][$segment['id']]['max'];
-        }
-
-        return $scores;
     }
 }

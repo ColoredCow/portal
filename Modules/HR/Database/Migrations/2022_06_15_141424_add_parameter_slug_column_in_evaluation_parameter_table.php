@@ -14,7 +14,7 @@ class AddParameterSlugColumnInEvaluationParameterTable extends Migration
     public function up()
     {
         Schema::table('hr_evaluation_parameters', function (Blueprint $table) {
-			$table->string('slug')->nullable()->after('name');
+            $table->string('slug')->nullable()->after('name');
         });
     }
 

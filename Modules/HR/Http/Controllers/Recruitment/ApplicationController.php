@@ -149,15 +149,15 @@ abstract class ApplicationController extends Controller
     {
         $application = Application::findOrFail($id);
 
-		// If round is resume screening then if the user click on resume screen button, user is assigned for resume screening of that application
-		$applicationRound = ApplicationRound::find(ApplicationRound::Select('id')->where('hr_application_id', $application->id)->get()->last()->id);
+        // If round is resume screening then if the user click on resume screen button, user is assigned for resume screening of that application
+        $applicationRound = ApplicationRound::find(ApplicationRound::Select('id')->where('hr_application_id', $application->id)->get()->last()->id);
 
-		if ($applicationRound->hr_round_id == 1) {
-			$applicationRound->scheduled_date = today()->toDateString();
-			$applicationRound->scheduled_end = today()->toDateString();
-			$applicationRound->scheduled_person_id = auth()->id();
-			$applicationRound->save();
-		}
+        if ($applicationRound->hr_round_id == 1) {
+            $applicationRound->scheduled_date = today()->toDateString();
+            $applicationRound->scheduled_end = today()->toDateString();
+            $applicationRound->scheduled_person_id = auth()->id();
+            $applicationRound->save();
+        }
 
         // phew!
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps', 'tags']);
