@@ -76,7 +76,7 @@
                             <h4 class="d-inline-block">
                                 <label for="name" class="font-weight-bold">Billing Level:</label>
                             </h4>
-                            <span class="text-capitalize ml-2 fz-lg-22">{{ config('project.meta_keys.value.' . $project->billing_level . '.label') }}</span>
+                            <span class="text-capitalize ml-2 fz-lg-22">{{ config('project.meta_keys.billing_level.value.' . $project->billing_level . '.label') }}</span>
                         </div>
                     @endif
                 </div>

@@ -159,7 +159,7 @@
                             this.client = client;
                             this.primaryProject = client.primary_project;
                             if (this.primaryProject) {
-                                this.primaryprojectLabel = 'Client Level (' + client.primary_project.name + ')';
+                                this.primaryprojectLabel = 'Client Level (' + this.primaryProject.name + ')';
                             }
                             this.currency = client.currency;
                             this.projects = _.orderBy(client.project_level_billing_projects, 'name', 'asc');

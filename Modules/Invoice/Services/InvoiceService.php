@@ -375,7 +375,7 @@ class InvoiceService implements InvoiceServiceContract
         $clientType = ($countryId == 1) ? 'IN' : 'EX';
         $clientProjectId = Project::find($projectId)->client_project_id;
         $lastInvoice = Invoice::where([['client_id', $clientId], ['project_id', $projectId]])->orderBy('id', 'DESC')->get()->offsetGet(1);
-        $invoiceSequence = (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1;
+        $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1 : '000001';
 
         $invoiceNumber = $clientType . sprintf('%03s', $client->client_id) . $clientProjectId . sprintf('%06s', $invoiceSequence) . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
 
@@ -387,7 +387,7 @@ class InvoiceService implements InvoiceServiceContract
         $countryId = optional(ClientAddress::where('client_id', $client->id)->first())->country_id;
         $clientType = ($countryId == 1) ? 'IN' : 'EX';
         $lastInvoice = Invoice::where([['client_id', $client->id], ['project_id', $project->id]])->orderBy('id', 'DESC')->first();
-        $invoiceSequence = (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1;
+        $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1 : '000001';
         $invoiceNumber = $clientType . sprintf('%03s', $client->client_id) . '-' . $project->client_project_id . '-' . sprintf('%06s', $invoiceSequence) . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
 
         return $invoiceNumber;
