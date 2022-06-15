@@ -165,7 +165,6 @@
                             this.projects = _.orderBy(client.project_level_billing_projects, 'name', 'asc');
                         }
                     }
-                    console.log(this.client, this.primaryProject)
                 },
 
                 generateInvoice: function(event) {
