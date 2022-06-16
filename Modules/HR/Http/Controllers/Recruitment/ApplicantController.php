@@ -84,18 +84,9 @@ class ApplicantController extends Controller
 
     public function show($applicationID)
     {
-        $applicationRound = [];
         $application = Application::find($applicationID);
-        foreach ($application->applicationRounds as $applicationRound) {
-            $applicationRound = $applicationRound;
-        }
         $interviewers = User::interviewers()->orderBy('name')->get();
-        $application->status = 'in-progress';
-        $timeline = $application->applicant->timeline();
-        $application->save();
-        $applicant = Applicant::find($application->hr_applicant_id);
-        $universities = University::find($applicant->hr_university_id)->all();
 
-        return view('hr.application.details', ['application' => $application, 'applicant' => $applicant, 'universities' => $universities, 'applicationRound' => $applicationRound, 'interviewers' => $interviewers, 'timeline' => $timeline]);
+        return view('hr.application.details', ['application' => $application, 'applicant' => $application->applicant, 'applicationRound' => $application->applicationRounds, 'interviewers' => $interviewers, 'timeline' => $application->applicant->timeline()]);
     }
 }

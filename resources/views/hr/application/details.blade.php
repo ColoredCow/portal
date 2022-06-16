@@ -70,27 +70,11 @@
 				<div class="form-group col-md-5">
 					<label class="text-secondary fz-14 leading-none mb-0.16">
 						College
-						<span class="badge badge-danger d-none university-update-failure">Failed to update</span>
-						<span class="badge badge-success d-none university-update-success">Updated successfully!</span>
 					</label>
 					@if(!$applicant->hr_university_id)
 						<div id="applicant_college">{{ $applicant->college ?? '-' }}</div>
-					@endif
-					@if ($universities->isNotEmpty())
-						<select name="university_id"
-							id="application_university_id"
-							class="form-control form-control-sm pr-md-7"
-							data-applicant-id="{{ $applicant->id }}">
-							<option value="">Select</option>
-							@foreach ($universities as $university)
-								@php
-									$selected = $applicant->hr_university_id == $university->id ? 'selected="selected"' : '';
-								@endphp
-								<option value="{{ $university->id }}" {{ $selected }}>
-									{{ $university->name }}
-								</option>
-							@endforeach
-						</select>
+					@else
+						<div id="applicant_college">{{ $applicant->university->name ?? '-' }}</div>
 					@endif
 				</div>
 				<div class="form-group offset-md-1 col-md-5">
@@ -130,21 +114,21 @@
 				@endif
 			</div>
 		</div>
-		<form action="/hr/recruitment/applications/rounds/{{ $applicationRound->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
+		<form action="/hr/recruitment/applications/rounds/{{ $applicationRound['0']->id }}" method="POST" enctype="multipart/form-data" class="applicant-round-form">
 			{{ csrf_field() }}
 			{{ method_field('PATCH') }}
 			<div class="collapse show">
 				<div class="card-body">
-					@if ( !$applicationRound->round_status)
+					@if ( !isset($applicationRound['0']->round_status))
 						<div class="form-row">
 							<div class="form-group col-md-5">
 								<label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
 									<div>
 									<i class="fa fa-calendar" aria-hidden="true"></i>
 									<span>Scheduled date</span>
-										@if($applicationRound->scheduled_date)
-											@if($applicationRound->hangout_link)
-												<a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
+										@if($applicationRound['0']->scheduled_date)
+											@if($applicationRound['0']->hangout_link)
+												<a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound['0']->hangout_link }}">
 													<i class="fa fa-video-camera" aria-hidden="true"></i>
 													<span>Meeting Link</span>
 												</a>
@@ -152,11 +136,11 @@
 										@endif
 									</div>
 								</label>
-								@if ($applicationRound->scheduled_date)
+								@if ($applicationRound['0']->scheduled_date)
 									<input type="datetime-local" 
 										name="scheduled_date" id="scheduled_date" 
 										class="form-control form-control-sm" 
-										value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+										value="{{ $applicationRound['0']->scheduled_date->format(config('constants.display_datetime_format')) }}">
 								@else
 									<div class="fz-16 leading-tight">Pending calendar confirmation</div>
 								@endif
@@ -166,11 +150,11 @@
 									<i class="fa fa-user" aria-hidden="true"></i>
 									<span>Scheduled for</span>
 								</label>
-								@if ($applicationRound->scheduled_date)
+								@if ($applicationRound['0']->scheduled_date)
 									<select name="scheduled_person_id" id="scheduled_person_id" class="form-control form-control-sm" >
 										@foreach ($interviewers as $interviewer)
 											@php
-												$selected = $applicationRound->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
+												$selected = $applicationRound['0']->scheduled_person_id == $interviewer->id ? 'selected="selected"' : '';
 											@endphp
 											<option value="{{ $interviewer->id }}" {{ $selected }}>
 												{{ $interviewer->name }}
@@ -179,12 +163,12 @@
 									</select>
 								@else
 									<div class="fz-16 leading-tight">
-										<img src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
-										<span>{{ $applicationRound->scheduledPerson->name }}</span>
+										<img src="{{ $applicationRound['0']->scheduledPerson->avatar }}" alt="{{ $applicationRound['0']->scheduledPerson->name }}" class="w-25 h-25 rounded-circle">
+										<span>{{ $applicationRound['0']->scheduledPerson->name }}</span>
 									</div>
 								@endif  
 							</div>
-							@if ($applicationRound->scheduled_date)
+							@if ($applicationRound['0']->scheduled_date)
 								<div class="form-group col-md-3 d-flex align-items-end">
 									<button type="submit" class="py-1 mb-0 btn btn-info btn-sm round-submit update-schedule" data-action="schedule-update">Update Schedule</button>
 								</div>

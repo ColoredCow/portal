@@ -25,8 +25,7 @@
 
                     <div class="form-group">
                         <label for="name" class="field-required">Slug</label>
-                        <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug"
-                            required="required" v-model="selectedParameter.slug">
+                        <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug" v-model="selectedParameter.slug">
                     </div>
 
                     <br>
