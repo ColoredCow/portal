@@ -34,7 +34,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
-        $schedule->command('application:send-interview-reminder')->dailyAt('08:00');
     }
 
     /**

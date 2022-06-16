@@ -555,22 +555,31 @@
 														
 														<div class="form-group col-md-5">
 															<label class="text-secondary fz-14 leading-none mb-0.16">College</label>
+                                                            @if(!$applicant->hr_university_id)
+                                                                <div id="applicant_college">{{ $applicant->college ?? '-' }}</div>
+                                                            @else
+                                                                <div id="applicant_college">{{ $applicant->university->name ?? '-' }}</div>
+                                                            @endif
+                                                            @if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
 															<div class="mt-2 evaluation-score">
 																<input type="radio" class="toggle-button" name="college" id="college_evaluation_1">
 																<label for="college_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
 																<input type="radio" class="toggle-button" name="college" id="college_evaluation_2">
 																<label for="college_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
 															</div>
+                                                            @endif
 														</div>
 														<div class="form-group offset-md-1 col-md-5">
 															<label class="text-secondary fz-14 leading-none mb-0.16">Course</label>
 															<div>{{ $applicant->course ?? '-' }}</div>
+                                                            @if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
 															<div class="mt-2 evaluation-score">
 																<input type="radio" class="toggle-button" name="course" id="course_evaluation_1">
 																<label for="course_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
 																<input type="radio" class="toggle-button" name="course" id="course_evaluation_2">
 																<label for="course_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
 															</div>
+                                                            @endif
 														</div>
 														<div class="form-group col-md-5">
 															<label class="text-secondary fz-14 leading-none mb-0.16">Resume</label>
@@ -587,12 +596,14 @@
 															<div>
 																{{ $applicant->graduation_year ?? '-' }}&nbsp;
 																@includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
+                                                                @if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
 																<div class="mt-2 evaluation-score">
 																	<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_1">
 																	<label for="graduation_year_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
 																	<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_2">
 																	<label for="graduation_year_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
 																</div>
+                                                                @endif
 															</div>
 														</div>
 														@if (isset($applicant->reference))
@@ -606,12 +617,14 @@
 																<div class="form-group col-md-12">
 																	<label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
 																	<div>{{ $value }}</div>
+                                                                    @if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
 																	<div class="mt-2 evaluation-score">
 																		<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_1">
 																		<label for="reason_for_eligibility_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
 																		<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_2">
 																		<label for="reason_for_eligibility_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
 																	</div>
+                                                                    @endif
 																</div>
 															@endforeach
 														@endif
@@ -680,7 +693,7 @@
                                                 <div class="form-group col-md-12">
                                                     <button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
                                                 </div>
-												@if(session('status'))
+												@if(session('status') || $application->marks)
 												<div class="form-row">
 													<div class="form-group my-2 pl-2">
 														<h4>

@@ -1,6 +1,6 @@
 <tr>
     <td class="w-25p">
-        <div>
+        <div class="d-flex align-items-center">
 			<div class="d-flex align-items-center">
 				<h2 class="fz-16 m-0 mr-1">{{ $application->applicant->name }}</h2>
 				<button class="assignlabels outline-none " title="Assign labels" data-toggle="modal" data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
@@ -32,7 +32,7 @@
         <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
 			<div class="d-flex text-white my-2">
 				<a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-				<a href="/{{ Request::path() }}/{{ $application->id }}/edit" class="btn-sm btn-primary text-decoration-none" target="_self">Screen resume</a>
+				<a href="/{{ Request::path() }}/{{ $application->id }}/edit" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
 			</div>
             <span class="mr-1 text-truncate">
                 <i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>

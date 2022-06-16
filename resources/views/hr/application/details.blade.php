@@ -26,7 +26,7 @@
 				</div>
 				<div class="col-6 text-right">
 					<div class="mb-1">
-						<a href="/hr/recruitment/job/{{ $application->id }}/edit" class="btn btn-primary" target="_self">Screen resume</a>
+						<a href="/hr/recruitment/job/{{ $application->id }}/edit" class="btn btn-primary btn-sm" target="_self">Evaluate</a>
 						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customApplicationMail">Send mail</button>
 						@include('hr.custom-application-mail-modal', ['application' => $application])
 					</div>
