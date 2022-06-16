@@ -242,14 +242,14 @@ class EvaluationController extends Controller
 
     private function getParameterInfo($parameter)
     {
-        if (!$parameter) {
+		if (!$parameter) {
             return;
         }
 
         $parameterDetails = self::getParameterGeneralInfo($parameter);
 
         $parameterDetails['marks'] = $parameter->marks;
-		if ($parameter->slug) {
+        if ($parameter->slug) {
             $parameterDetails['slug'] = $parameter->slug;
         }
         $parameterDetails['option_detail'] = self::getOptionsDetails($parameter->options);
