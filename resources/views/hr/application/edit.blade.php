@@ -477,7 +477,7 @@
 											<span class="ml-2">Assigned to<img class="ml-2 w-25 h-25 rounded-circle" src="{{ $applicationRound->scheduledPerson->avatar }}" alt="{{ $applicationRound->scheduledPerson->name }}" data-toggle="tooltip" data-placement="top" title="{{ $applicationRound->scheduledPerson->name }}"></span>
                                         </span>
                                     </div>
-                                    @if ($applicationRound->round_status)
+                                    @if ($applicationRound->round_status && $applicationRound->conductedPerson)
                                         <span>Conducted By: {{ $applicationRound->conductedPerson->name }}</span>
                                     @endif
                                 </div>
@@ -693,7 +693,7 @@
                                                 <div class="form-group col-md-12">
                                                     <button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
                                                 </div>
-												@if(session('status') || $application->marks)
+												@if(session('status') && $application->marks)
 												<div class="form-row">
 													<div class="form-group my-2 pl-2">
 														<h4>
