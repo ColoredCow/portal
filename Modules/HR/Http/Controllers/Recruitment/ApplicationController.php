@@ -146,6 +146,8 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
+
+        //TODO: We need to refactor the edit code and write it in the service
         $application = Application::findOrFail($id);
 
         if ($application->latestApplicationRound->hr_round_id == 1) {

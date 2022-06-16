@@ -84,7 +84,7 @@
     </td>
     <td>
         <span class="d-flex flex-column align-items-start">
-        @if (!in_array($application->status, ['resume-screening-wip', 'in-progress', 'new']))
+        @if (!in_array($application->status, ['in-progress', 'new']))
         <span
             class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
         @endif
