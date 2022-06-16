@@ -11,6 +11,9 @@ use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Job;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
+use Modules\HR\Entities\Application;
+use Modules\User\Entities\User;
+use Modules\HR\Entities\University;
 
 class ApplicantController extends Controller
 {
@@ -77,5 +80,13 @@ class ApplicantController extends Controller
         return response()->json([
             'status' => $status,
         ]);
+    }
+
+    public function show($applicationID)
+    {
+        $application = Application::find($applicationID);
+        $interviewers = User::interviewers()->orderBy('name')->get();
+
+        return view('hr.application.details', ['application' => $application, 'applicant' => $application->applicant, 'applicationRound' => $application->applicationRounds, 'interviewers' => $interviewers, 'timeline' => $application->applicant->timeline(), 'applicationFormDetails' => $application->applicationMeta()->formData()->first()]);
     }
 }

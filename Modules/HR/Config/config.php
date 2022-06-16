@@ -3,7 +3,7 @@
 return [
     'name' => 'HR',
     'applicationEvaluation' => [
-        'cutoffScore' => 10,
+        'cutoffScore' => 6,
     ],
     'opportunities' => [
         'job' => [
@@ -35,7 +35,7 @@ return [
         'awaiting-confirmation' => 'Awaiting confirmation',
         'new-application' => 'New application',
         'no-show' => 'No show',
-        'no-show-reminded' => 'No show reminded'
+        'no-show-reminded' => 'No show reminded',
     ],
 
     'opportunities-status' => [

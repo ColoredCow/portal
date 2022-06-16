@@ -22,6 +22,11 @@
                             value="{{ old('marks') }}">
                     </div>
 
+                    <div class="form-group">
+                        <label for="name" class="field-required">Slug</label>
+                        <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug" value="{{ old('slug') }}">
+                    </div>
+
                     <br>
                     <br>
                     <h5>Options</h5>
