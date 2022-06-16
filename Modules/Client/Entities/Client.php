@@ -15,7 +15,7 @@ class Client extends Model
 {
     use HasHierarchy, HasFactory, Filters;
 
-    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'primary_project_id', 'client_id'];
+    protected $fillable = ['name', 'key_account_manager_id', 'status', 'is_channel_partner', 'has_departments', 'channel_partner_id', 'parent_organisation_id', 'client_id'];
 
     protected $appends = ['type', 'currency'];
 
@@ -75,11 +75,6 @@ class Client extends Model
     public function getBillingContactAttribute()
     {
         return $this->contactPersons()->where('type', 'billing-contact')->first();
-    }
-
-    public function primaryProject()
-    {
-        return $this->hasOne(Project::class, 'id', 'primary_project_id');
     }
 
     public function addresses()

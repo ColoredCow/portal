@@ -240,8 +240,8 @@
                             <td align="left" class="fw-bold">
                                 <p>Client Name: {{ $client->name }}</p>
                                 <p>Client ID: {{ sprintf('%03s', $client->client_id) }}</p>
-                                <p>Project Name: {{ $invoiceLevel == 'client' ? $client->primaryProject->name : $projects->first()->name }}</p>
-                                <p>Project ID: {{ $invoiceLevel == 'client' ? $client->primaryProject->client_project_id : $projects->first()->client_project_id }}</p>
+                                <p>Project Name: {{ $invoiceLevel == 'client' ? '' : $projects->first()->name }}</p>
+                                <p>Project ID: {{ $invoiceLevel == 'client' ? '' : $projects->first()->client_project_id }}</p>
                                 <p>Category: Web Application Development</p>
                             </td>
                             <td align="right">
