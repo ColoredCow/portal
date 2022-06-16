@@ -23,17 +23,15 @@
                             <span 
                                 data-toggle="tooltip" 
                                 data-placement="right" 
-                                title="Client Level Project will include all the projects having billing level set to client level. The primary project id is set as project id in this case."
+                                title="Client Level Project will include all the projects having billing level set to client level."
                                 class="ml-2"
                             >
                                 <i class="fa fa-question-circle"></i>&nbsp;
                             </span>
-                            <span class="badge badge-warning" v-if="client && !primaryProject">{{ _('No primary project for this client.') }}</span>
                         </div>
                     </div>
-                    <select name="billing_for" id="billing_for" class="form-control" required="required">
-                        <option v-if="client && primaryProject" value="client_level" v-text="primaryprojectLabel"></option>
-                        <option v-else="client" value="">Select Project</option>
+                    <select name="project_id" id="billing_for" class="form-control" required="required">
+                        <option value="">Select Project</option>
                         <option v-for="project in projects" :value="project.id" v-text="project.name"
                             :key="project.id">
                         </option>
@@ -90,10 +88,10 @@
                 <div class="text-danger fz-14" v-if="currency == 'INR' ">Total Amount : @{{ tot }}</div>
                 <div class="text-danger fz-14" v-if="currency == 'USD' ">Total Amount : @{{ amt }}</div>
                 <div class="text-danger fz-14 my-0" id="container"></div>
-                <div class="form-group mt-2">
+                {{-- <div class="form-group mt-2">
                     <label for="term" class="field-required">Invoice for term</label>
                     <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', '') }}'>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="sent_on" class="field-required">Sent on</label>
                     <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"
@@ -109,7 +107,7 @@
     </div>
     <div class="card-footer">
         <button type="button" class="btn btn-primary" onclick="saveInvoice(this)">Create</button>
-        <a class="btn btn-secondary" id="generate_invoice_link" @click.prevent="generateInvoice($event)" href="">Generate Invoice</a>
+        {{-- <a class="btn btn-secondary" id="generate_invoice_link" @click.prevent="generateInvoice($event)" href="">Generate Invoice</a> --}}
     </div>
 </div>
 
@@ -139,8 +137,6 @@
             data() {
                 return {
                     clients: @json($clients),
-                    primaryProject: {},
-                    primaryprojectLabel: '',
                     projects: {},
                     groups: {},
                     clientId: '',
@@ -158,12 +154,8 @@
                         let client = this.clients[i];
                         if (client.id == this.clientId) {
                             this.client = client;
-                            this.primaryProject = client.primary_project;
-                            if (this.primaryProject) {
-                                this.primaryprojectLabel = 'Client Level (' + this.primaryProject.name + ')';
-                            }
                             this.currency = client.currency;
-                            this.projects = _.orderBy(client.project_level_billing_projects, 'name', 'asc');
+                            this.projects = _.orderBy(client.projects, 'name', 'asc');
                         }
                     }
                 },

@@ -89,8 +89,6 @@ class InvoiceService implements InvoiceServiceContract
     public function store($data)
     {
         $data['receivable_date'] = $data['due_on'];
-        $project = $data['billing_for'] == 'client' ? Client::find($data['client_id'])->primaryProject : Project::find($data['billing_for']);
-        $data['project_id'] = $project->id;
         $invoice = Invoice::create($data);
         $this->saveInvoiceFile($invoice, $data['invoice_file']);
         $this->setInvoiceNumber($invoice, $data['sent_on']);
@@ -395,6 +393,7 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getInvoiceData(array $data)
     {
+        // this is a incomplete code. Will complete it once the invoice generation functionality is ready.
         $client = Client::find($data['client_id']);
         $year = (int) substr($data['term'], 0, 4);
         $monthNumber = (int) substr($data['term'], 5, 2);

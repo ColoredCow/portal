@@ -139,7 +139,7 @@ class ClientService implements ClientServiceContract
 
     public function getAll($status = 'active')
     {
-        return Client::status($status)->with('projectLevelBillingProjects', 'primaryProject')->orderBy('name')->get();
+        return Client::status($status)->with('projects')->orderBy('name')->get();
     }
 
     public function store($data)
@@ -154,7 +154,6 @@ class ClientService implements ClientServiceContract
     {
         $data['is_channel_partner'] = $data['is_channel_partner'] ?? false;
         $data['has_departments'] = $data['has_departments'] ?? false;
-        $data['primary_project_id'] = $data['primary_project_id'] ?? null;
         $isDataUpdated = $client->update($data);
 
         if ($data['status'] ?? 'active' == 'inactive') {
