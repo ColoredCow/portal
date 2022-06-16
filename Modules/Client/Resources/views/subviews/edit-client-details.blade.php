@@ -22,17 +22,6 @@
             <br>
             <div class="form-row">
                 <div class="col-md-5 mr-0 form-group">
-                    <label for="primaryProjectId" >Choose Primary Project
-                        <span data-toggle="tooltip" data-placement="right" title="This project id will be used in client level invoice."><i class="fa fa-question-circle"></i></span>
-                    </label>
-                    <select name="primary_project_id" id="primaryProjectId" class="form-control">
-                        <option value="">Select primary project</option>
-                        @foreach ($client->projects as $project)
-                            <option value="{{ $project->id }}" {{ optional($client->primaryProject)->id == $project->id || old('primary_project_id') == $project->id ? 'selected' : ''}}>{{ $project->name . '(' . $project->client_project_id . ')' }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group offset-md-1 col-md-5">
                     <label for="channel_partner_id">Channel partner 
                         <span data-toggle="tooltip" data-placement="right" title="If this client came via a channel partner then link that client from here."><i class="fa fa-question-circle"></i></span>
                     </label>
@@ -46,19 +35,6 @@
                             @endif
                         @endforeach
                     </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-5 form-check-inline mr-0 form-group">
-                    <input type="checkbox" 
-                            class="checkbox-custom mb-1.9 mb-1.67 mr-3" 
-                            name="is_channel_partner" 
-                            id="is_channel_partner"
-                            {{ ($client->is_channel_partner || old('is_channel_partner') == "1") ? 'checked' : '' }}
-                            value="1">
-                    <label for="is_channel_partner">Is this client a channel partner?
-                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple sub clients."><i class="fa fa-question-circle"></i></span>
-                    </label>
                 </div>
                 <div class="form-group offset-md-1 col-md-5">
                     <label for="key_account_manager_id">Parent organisation
@@ -74,6 +50,21 @@
                             @endif
                         @endforeach
                     </select>
+                </div>
+            </div><br>
+            <div class="form-row">
+                <div class="col-md-5 form-check-inline mr-0 form-group">
+                    <input type="checkbox" 
+                            class="checkbox-custom mb-1.9 mb-1.67 mr-3" 
+                            name="is_channel_partner" 
+                            id="is_channel_partner"
+                            {{ ($client->is_channel_partner || old('is_channel_partner') == "1") ? 'checked' : '' }}
+                            value="1">
+                    <label for="is_channel_partner">Is this client a channel partner?
+                        <span data-toggle="tooltip" data-placement="right" title="Check if this client will have multiple sub clients."><i class="fa fa-question-circle"></i></span>
+                    </label>
+                </div>
+                <div class="form-group offset-md-1 col-md-5"> 
                 </div>
             </div>
             <div class="form-row">
