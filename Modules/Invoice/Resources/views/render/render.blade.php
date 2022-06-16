@@ -214,7 +214,7 @@
                                 <p>{{ optional($client->billing_contact)->email }}</p>
                                 <p>{{ $client->addresses->first()->address }}</p>
                                 <p>{{ $client->addresses->first()->state . ' ' .$client->addresses->first()->area_code }}</p>
-                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN: ') . config('invoice.finance-details.gstin') : '' }}</p>
+                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
                             </td>
                             <td>
                                 <p class="fw-bold ml-1em">Details</p>
