@@ -933,10 +933,11 @@ $(document).ready(function() {
 			$(".evaluation-score input").each(function() {
 				if ($(this).is(":checked")) {
 					let evaluationParameterName = (this.name).replace(/_/g, "-");
+					console.log(evaluationParameterName);
 					if ((this.id).slice(-1) == 1) { // Thumbs-up
-						$(`.evaluation-form-${evaluationParameterName}`).find("input:eq(0)").prop("checked", true);
+						$(`.${evaluationParameterName}`).find("input:eq(0)").prop("checked", true);
 					} else { // Thumbs-down
-						$(`.evaluation-form-${evaluationParameterName}`).find("input:eq(1)").prop("checked", true);
+						$(`.${evaluationParameterName}`).find("input:eq(1)").prop("checked", true);
 					}
 				}
 			});

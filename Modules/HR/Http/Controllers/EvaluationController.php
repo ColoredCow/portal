@@ -219,8 +219,8 @@ class EvaluationController extends Controller
         $evaluationDetails = [];
 
         $evaluationDetails['comment'] = $evaluation->comment;
-        $evaluationDetails['option'] = $evaluation->evaluationOption->value;
-        $evaluationDetails['marks'] = $evaluation->evaluationOption->marks;
+        $evaluationDetails['option'] = $evaluation->evaluationOption ? $evaluation->evaluationOption->value : null;
+        $evaluationDetails['marks'] = $evaluation->evaluationOption ? $evaluation->evaluationOption->marks : null;
 
         return $evaluationDetails;
     }
@@ -242,13 +242,16 @@ class EvaluationController extends Controller
 
     private function getParameterInfo($parameter)
     {
-        if (!$parameter) {
+		if (!$parameter) {
             return;
         }
 
         $parameterDetails = self::getParameterGeneralInfo($parameter);
 
         $parameterDetails['marks'] = $parameter->marks;
+		if ($parameter->slug) {
+			$parameterDetails['slug'] = $parameter->slug;
+		}
         $parameterDetails['option_detail'] = self::getOptionsDetails($parameter->options);
 
         $parameterDetails['evaluation'] = false;

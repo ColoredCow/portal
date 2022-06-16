@@ -607,9 +607,9 @@
 																	<label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
 																	<div>{{ $value }}</div>
 																	<div class="mt-2 evaluation-score">
-																		<input type="radio" class="toggle-button" name="{{ preg_replace('/(\?+)/', '', Str::snake($field)) }}" id="reason_for_eligibility_evaluation_1">
+																		<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_1">
 																		<label for="reason_for_eligibility_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
-																		<input type="radio" class="toggle-button" name="{{ preg_replace('/(\?+)/', '', Str::snake($field)) }}" id="reason_for_eligibility_evaluation_2">
+																		<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_2">
 																		<label for="reason_for_eligibility_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
 																	</div>
 																</div>

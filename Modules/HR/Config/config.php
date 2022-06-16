@@ -3,7 +3,7 @@
 return [
     'name' => 'HR',
     'applicationEvaluation' => [
-        'cutoffScore' => 10,
+        'cutoffScore' => 6,
     ],
     'opportunities' => [
         'job' => [
