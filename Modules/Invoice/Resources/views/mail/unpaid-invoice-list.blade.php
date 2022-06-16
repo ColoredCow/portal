@@ -18,7 +18,7 @@
                         <td style="padding-right: 10px;">{{ $invoice->project->name }}</td>
                         <td style="padding-right: 10px;">{{ $invoice->created_at->format(config('invoice.default-date-format')) }}</td>
                         <td style="padding-right: 10px; {{ $invoice->shouldHighlighted()? 'color: red; border-top: 1px solid #000' : 'border-top: 1px solid #000' }}">{{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}</td>
-                        <td style="{{ $invoice->shouldHighlighted() ? 'font-weight: bold; color: red; ' : '' }}{{ $invoice->status == 'paid' ? 'font-weight: bold; color: green;' : '' }}">
+                        <td style="padding-right: 10px; {{ $invoice->shouldHighlighted() ? 'font-weight: bold; color: red; ' : '' }}{{ $invoice->status == 'paid' ? 'font-weight: bold; color: green;' : '' }}">
                             {{ $invoice->shouldHighlighted() ? __('overdue') : $invoice->status }}
                         </td>
                     </tr>
