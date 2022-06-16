@@ -693,7 +693,7 @@
                                                 <div class="form-group col-md-12">
                                                     <button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
                                                 </div>
-												@if(session('status') && $application->marks)
+												@if(session('status') || $application->marks  && $application->latestApplicationRound->hr_round_id == 1)
 												<div class="form-row">
 													<div class="form-group my-2 pl-2">
 														<h4>
