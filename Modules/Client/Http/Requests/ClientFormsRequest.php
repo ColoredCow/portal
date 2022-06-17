@@ -11,8 +11,8 @@ class ClientFormsRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'is_channel_partner' => 'nullable|string',
-            'channel_partner_id' => 'nullable|string',
-            'parent_organisation_id' => 'nullable|string',
+            'channel_partner_id' => 'nullable|integer',
+            'parent_organisation_id' => 'nullable|integer',
         ];
 
         if (request()->has('status')) {
@@ -27,7 +27,7 @@ class ClientFormsRequest extends FormRequest
         return [
             'client_contact_persons.*.name' => 'nullable|max:120',
             'client_contact_persons.*.email' => 'required|email',
-            'client_contact_persons.*.phone' => 'required|digits_between:4,10|integer',
+            'client_contact_persons.*.phone' => 'nullable|digits_between:4,10|integer',
         ];
     }
 

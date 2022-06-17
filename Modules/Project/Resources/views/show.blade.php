@@ -71,6 +71,14 @@
                             <span class="ml-2 fz-lg-22">Not Available</span>
                         @endif
                     </div>
+                    @if($project->billing_level)
+                        <div class="form-group offset-md-1 pl-4 col-md-5">
+                            <h4 class="d-inline-block">
+                                <label for="name" class="font-weight-bold">Billing Level:</label>
+                            </h4>
+                            <span class="text-capitalize ml-2 fz-lg-22">{{ config('project.meta_keys.billing_level.value.' . $project->billing_level . '.label') }}</span>
+                        </div>
+                    @endif
                 </div>
                 <br>
                 <div class="form-row ">

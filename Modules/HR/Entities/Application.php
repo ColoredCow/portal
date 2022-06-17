@@ -579,4 +579,11 @@ class Application extends Model
 
         return route('select-appointments', $params);
     }
+
+    public function getMarksAttribute()
+    {
+        return $this->evaluations->sum(function ($evaluation) {
+            return $evaluation->evaluationOption->marks;
+        });
+    }
 }

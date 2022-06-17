@@ -4,6 +4,7 @@ namespace Modules\Invoice\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
@@ -65,9 +66,22 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $invoice = $this->service->store($request->all());
+        $this->service->store($request->all());
 
         return redirect(route('invoice.index'))->with('success', 'Invoice created successfully!');
+    }
+
+    public function generateInvoice(Request $request)
+    {
+        $data = $this->service->getInvoiceData($request->all());
+        $invoiceNumber = $data['invoiceNumber'];
+
+        $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -4);
+        $pdf = App::make('snappy.pdf.wrapper');
+        $html = view('invoice::render.render', $data);
+        $pdf->loadHTML($html);
+
+        return $pdf->inline(str_replace('-', '', $invoiceNumber) . '.pdf');
     }
 
     /**

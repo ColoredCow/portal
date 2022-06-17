@@ -11,6 +11,7 @@ use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectRepository;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Storage;
+use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
 
 class ProjectService implements ProjectServiceContract
@@ -55,6 +56,18 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
+
+        if ($data['billing_level'] ?? null) {
+            ProjectMeta::updateOrCreate(
+                [
+                    'key' => config('project.meta_keys.billing_level.key'),
+                    'project_id' => $project->id,
+                ],
+                [
+                    'value' => $data['billing_level']
+                ]
+            );
+        }
 
         $project->client->update(['status' => 'active']);
         $this->saveOrUpdateProjectContract($data, $project);
@@ -117,6 +130,19 @@ class ProjectService implements ProjectServiceContract
             'end_date' => date('Y-m-d'),
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
+
+        if ($data['billing_level'] ?? null) {
+            ProjectMeta::updateOrCreate(
+                [
+                    'key' => config('project.meta_keys.billing_level.key'),
+                    'project_id' => $project->id,
+                ],
+                [
+                    'value' => $data['billing_level']
+                ]
+            );
+        }
+
         $this->saveOrUpdateProjectContract($data, $project);
         if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
