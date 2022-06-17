@@ -58,45 +58,45 @@
             </thead>
             <tbody>
                 @can('projects.view')
-                @forelse($clients as $client)
-                    <tr class="bg-theme-warning-lighter">
-                        <td colspan=4 class="font-weight-bold">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    {{ $client->name }}
+                    @forelse($clients as $client)
+                        <tr class="bg-theme-warning-lighter">
+                            <td colspan=4 class="font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        {{ $client->name }}
+                                    </div>
+                                    <div class="">{{ __('Total Hours Booked: ') . $client->current_hours_in_projects }}</div>
                                 </div>
-                                <div class="">{{ __('Total Hours Booked: ') . $client->current_hours_in_projects }}</div>
-                            </div>
-                        </td>
-                    </tr>
-                    @foreach($client->projects as $project)
-                        <tr>
-                            @can('projects.update')
-                            <td class="w-33p"><div class="pl-2 pl-xl-3"><a href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div></td>
-                            @else
-                            <td class="w-33p"><div class="pl-2 pl-xl-3">{{ $project->name }}</div></td>
-                            @endcan
-                            <td class="w-33p"></td>
-                            <td>
-                                @foreach($project->getTeamMembers ?:[] as $teamMember)
-                                    <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}}">
-                                        <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1 c-pointer"></a>
-                                    </span>
-                                @endforeach 
-                            </td>
-                            <td>
-                                <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 c-pointer fa fa-external-link-square"></i></a>
-                                <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->velocity }}</a>
                             </td>
                         </tr>
-                    @endforeach
-                @empty
-                    <tr>
-                        <td colspan="3">
-                            <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>
-                        <td>
-                    </tr>
-                @endforelse
+                        @foreach($client->projects as $project)
+                            <tr>
+                                @can('projects.update')
+                                    <td class="w-33p"><div class="pl-2 pl-xl-3"><a href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div></td>
+                                @else
+                                    <td class="w-33p"><div class="pl-2 pl-xl-3">{{ $project->name }}</div></td>
+                                @endcan
+                                <td class="w-33p"></td>
+                                <td>
+                                    @foreach($project->getTeamMembers ?:[] as $teamMember)
+                                        <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}}">
+                                            <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1"></a>
+                                        </span>
+                                    @endforeach 
+                                </td>
+                                <td>
+                                    <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
+                                    <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->velocity }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="3">
+                                <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>
+                            <td>
+                        </tr>
+                    @endforelse
                 @else
                 <tr>
                     <td colspan="3"> 

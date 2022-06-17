@@ -24,11 +24,11 @@ class ProjectService implements ProjectServiceContract
         ];
         $data['projects'] = $data['projects'] ?? 'all-projects';
 
-        $clients = Client::query();
+        $clients = null;
         $projectsCount = 0;
 
         if ($data['projects'] == 'all-projects') {
-            $clients = $clients->with('projects', function ($query) use ($filters) {
+            $clients = Client::query()->with('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters)->orderBy('name', 'asc');
             })->whereHas('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters);
@@ -40,7 +40,7 @@ class ProjectService implements ProjectServiceContract
         } else {
             $userId = auth()->user()->id;
 
-            $clients = $clients->with('projects', function ($query) use ($userId, $filters) {
+            $clients = Client::query()->with('projects', function ($query) use ($userId, $filters) {
                 $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 });
