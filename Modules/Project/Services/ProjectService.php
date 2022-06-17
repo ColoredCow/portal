@@ -41,23 +41,21 @@ class ProjectService implements ProjectServiceContract
             $userId = auth()->user()->id;
 
             $clients = $clients->with('projects', function ($query) use ($userId, $filters) {
-                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use($userId) {
+                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 });
-            })->whereHas('projects', function ($query) use($userId, $filters) {
-                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use($userId) {
+            })->whereHas('projects', function ($query) use ($userId, $filters) {
+                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 });
             })->get();
 
             $projectsCount = $clients->sum(function ($client) use ($filters, $userId) {
-                return $client->projects()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use($userId) {
+                return $client->projects()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 })->count();
             });
         }
-
-
 
         return [
             'clients' => $clients,
