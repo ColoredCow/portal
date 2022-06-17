@@ -51,7 +51,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th class="w-33p">Client/Project Name</th>
-                    <th class="w-33p">Tags</th>
+                    {{-- <th class="w-33p">Tags</th> --}}
                     <th>Team Members</th>
                     <th>Velocity</th>
                 </tr>
@@ -76,7 +76,7 @@
                                 @else
                                     <td class="w-33p"><div class="pl-2 pl-xl-3">{{ $project->name }}</div></td>
                                 @endcan
-                                <td class="w-33p"></td>
+                                {{-- <td class="w-33p"></td> --}}
                                 <td>
                                     @foreach($project->getTeamMembers ?:[] as $teamMember)
                                         <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}}">
@@ -85,8 +85,11 @@
                                     @endforeach 
                                 </td>
                                 <td>
-                                    <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
-                                    <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->velocity }}</a>
+                                    @php
+                                        $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
+                                    @endphp
+                                    <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
+                                    <span class="{{ $textColor }} font-weight-bold">{{ $project->velocity }}</span>
                                 </td>
                             </tr>
                         @endforeach
