@@ -24,17 +24,45 @@ class ProjectService implements ProjectServiceContract
         ];
         $data['projects'] = $data['projects'] ?? 'all-projects';
 
+        $clients = Client::query();
+        $projectsCount = 0;
+
         if ($data['projects'] == 'all-projects') {
-            return Project::applyFilter($filters)
-                ->get()->sortBy(function ($query) {
-                    return $query->client->name;
-                });
+            $clients = $clients->with('projects', function ($query) use ($filters) {
+                $query->applyFilter($filters)->orderBy('name', 'asc');
+            })->whereHas('projects', function ($query) use ($filters) {
+                $query->applyFilter($filters);
+            })->orderBy('name')->get();
+
+            $projectsCount = $clients->sum(function ($client) use ($filters) {
+                return $client->projects()->applyFilter($filters)->count();
+            });
         } else {
-            return auth()->user()->projects()->applyFilter($filters)
-                ->get()->sortBy(function ($query) {
-                    return $query->client->name;
+            $userId = auth()->user()->id;
+
+            $clients = $clients->with('projects', function ($query) use ($userId, $filters) {
+                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use($userId) {
+                    $query->where('team_member_id', $userId);
                 });
+            })->whereHas('projects', function ($query) use($userId, $filters) {
+                $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use($userId) {
+                    $query->where('team_member_id', $userId);
+                });
+            })->get();
+
+            $projectsCount = $clients->sum(function ($client) use ($filters, $userId) {
+                return $client->projects()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use($userId) {
+                    $query->where('team_member_id', $userId);
+                })->count();
+            });
         }
+
+
+
+        return [
+            'clients' => $clients,
+            'projectsCount' => $projectsCount,
+        ];
     }
 
     public function create()
