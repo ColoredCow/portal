@@ -33,7 +33,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-check form-check-inline mt-2">
+                            <div class="form-check form-check-inline mt-2 evaluation-form {{ $evaluation_parameter['slug'] ?? '' }}">
                                 @foreach($evaluation_parameter['option_detail'] as $option)
                                     @php
                                         $optionLabel = $option['name'];

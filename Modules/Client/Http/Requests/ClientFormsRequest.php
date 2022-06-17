@@ -11,8 +11,8 @@ class ClientFormsRequest extends FormRequest
         $rules = [
             'name' => 'required|string',
             'is_channel_partner' => 'nullable|string',
-            'channel_partner_id' => 'nullable|string',
-            'parent_organisation_id' => 'nullable|string',
+            'channel_partner_id' => 'nullable|integer',
+            'parent_organisation_id' => 'nullable|integer',
         ];
 
         if (request()->has('status')) {

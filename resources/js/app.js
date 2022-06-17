@@ -928,6 +928,20 @@ $(document).ready(function() {
 		  $(".evaluation-stage").addClass("d-none");
 		  var target = $(this).data("target");
 		  $(target).removeClass("d-none");
+
+		  if ($("#segment-general-information > span")[0].innerText == "General Information") {
+			$(".evaluation-score input").each(function() {
+				if ($(this).is(":checked")) {
+					let evaluationParameterName = (this.name).replace(/_/g, "-");
+					console.log(evaluationParameterName);
+					if ((this.id).slice(-1) == 1) { // Thumbs-up
+						$(`.${evaluationParameterName}`).find("input:eq(0)").prop("checked", true);
+					} else { // Thumbs-down
+						$(`.${evaluationParameterName}`).find("input:eq(1)").prop("checked", true);
+					}
+				}
+			});
+		  }
 	  });
 	  $(document).on("change", ".set-segment-assignee", setSegmentAssignee);
 	  $(document).on("click", ".toggle-block-display", toggleBlockDisplay);
@@ -1079,7 +1093,6 @@ function barChart(){
 		options: options
 	  });
 }
- 
 
 $(function () {
 	$(".reject-reason").on("click", function () {
