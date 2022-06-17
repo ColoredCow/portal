@@ -59,6 +59,19 @@
                     @endforeach
                 </select>
             </div>
+            <div class="mr-2 mt-2 mt-md-0 form-group">
+                <label id="university">{!! __('University') !!}</label><br>
+                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0" name="hr_university_id" id="university"
+                    onchange="this.form.submit()">
+                    <option value="" {{ request()->has('hr_university_id') ? '' : 'selected' }}>
+                        {!! __('All University') !!}
+                    </option>
+                    @foreach ($universities as $university)
+                    <option value="{{ $university->id }}" {{ request()->get('hr_university_id') == $university->id ? 'selected' : '' }}>
+                        {{ $university->name }} </option>
+                    @endforeach
+                </select>
+            </div>
         </div>
     </form>
     @include('hr.application.filter-modal')
