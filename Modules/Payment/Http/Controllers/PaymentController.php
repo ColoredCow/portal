@@ -36,4 +36,19 @@ class PaymentController extends Controller
     public function edit($id)
     {
     }
+
+    public function transactionIndex()
+    {
+        return view('payment::transactionIndex');
+    }
+
+    public function expense()
+    {
+        return view('payment::expense');
+    }
+
+    public function revenue()
+    {
+        return view('payment::revenue');
+    }
 }

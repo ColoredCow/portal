@@ -32,5 +32,6 @@ mix.js('Modules/Project/Resources/assets/js/app.js', 'public/js/project.js')
 	.sass('Modules/Project/Resources/assets/sass/app.scss', 'public/css/project.css');
 mix.js('Modules/Client/Resources/assets/js/app.js', 'public/js/client.js')
 	.sass('Modules/Client/Resources/assets/sass/app.scss', 'public/css/client.css');
+mix.js('Modules/Payment/Resources/assets/js/app.js', 'public/js/payment.js');
 
 mix.version();
