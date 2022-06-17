@@ -132,4 +132,11 @@ class Client extends Model
         // This needs to be updated based on the requirements.
         return 0.00;
     }
+
+    public function getCurrentHoursInProjectsAttribute()
+    {
+        return $this->projects->sum(function ($project) {
+            return $project->current_hours_for_month;
+        });
+    }
 }

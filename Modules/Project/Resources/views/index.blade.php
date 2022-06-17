@@ -1,6 +1,5 @@
 @extends('project::layouts.master')
 @section('content')
-
 <div class="container" id="vueContainer">
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -22,7 +21,7 @@
         <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('project.index', ['status' => 'active'])  }}">
             <div class='d-flex justify-content-between align-items-md-center mb-2 mb-xl-0'>
                 <h4 class="">{{ config('project.status')[request()->input('status', 'active')] }} Projects
-                    ({{ $projects ? $projects->count() : ''}})</h4>
+                    ({{ $projectsCount }})</h4>
                 <input type="hidden" name="status" value="{{ request()->input('status', 'active') }}">
                 <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                     onchange="this.form.submit()">
@@ -51,41 +50,56 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th class="w-33p">Name</th>
-                    <th class="w-33p">Client</th>
+                    <th class="w-33p">Client/Project Name</th>
+                    {{-- <th class="w-33p">Tags</th> --}}
                     <th>Team Members</th>
                     <th>Velocity</th>
                 </tr>
             </thead>
             <tbody>
                 @can('projects.view')
-                @forelse($projects as $project)
-                    <tr>
-                        @can('projects.update')
-                        <td class="w-33p"> <a href="{{ route('project.show', $project) }}">{{ $project->name }}</a> </td>
-                        @else
-                        <td class="w-33p"> {{ $project->name }} </td>
-                        @endcan
-                        <td class="w-33p">{{ $project->client->name }}</td>
-                        <td>
-                            @foreach($project->teamMembers ?:[] as $teamMember)
-                                <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}">
-                                    <a href={{ route('employees.show', $teamMember->employee) }}><img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1 c-pointer"></a>
-                                </span>
-                            @endforeach 
-                        </td>
-                        <td>
-                            <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 c-pointer fa fa-external-link-square"></i></a>
-                            <a class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger' }} font-weight-bold">{{ $project->velocity }}</a>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="3">
-                            <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>
-                        <td>
-                    </tr>
-                @endforelse
+                    @forelse($clients as $client)
+                        <tr class="bg-theme-warning-lighter">
+                            <td colspan=4 class="font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        {{ $client->name }}
+                                    </div>
+                                    <div class="">{{ __('Total Hours Booked: ') . $client->current_hours_in_projects }}</div>
+                                </div>
+                            </td>
+                        </tr>
+                        @foreach($client->projects as $project)
+                            <tr>
+                                @can('projects.update')
+                                    <td class="w-33p"><div class="pl-2 pl-xl-3"><a href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div></td>
+                                @else
+                                    <td class="w-33p"><div class="pl-2 pl-xl-3">{{ $project->name }}</div></td>
+                                @endcan
+                                {{-- <td class="w-33p"></td> --}}
+                                <td>
+                                    @foreach($project->getTeamMembers ?:[] as $teamMember)
+                                        <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}}">
+                                            <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1"></a>
+                                        </span>
+                                    @endforeach 
+                                </td>
+                                <td>
+                                    @php
+                                        $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
+                                    @endphp
+                                    <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
+                                    <span class="{{ $textColor }} font-weight-bold">{{ $project->velocity }}</span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="3">
+                                <p class="my-4 text-left"> No {{ config('project.status')[request()->input('status', 'active')] }} projects found.</p>
+                            <td>
+                        </tr>
+                    @endforelse
                 @else
                 <tr>
                     <td colspan="3"> 
@@ -95,13 +109,6 @@
                 @endcan
             </tbody>
         </table>
-
     </div>
-
 </div>
-
-
-
-
-
 @endsection
