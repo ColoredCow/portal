@@ -88,7 +88,8 @@
     @php
         $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
         $search = request()->has('search') ? '&search=' . request('search') : '';
-        $query_filters = $hr_job_id . $search
+        $hr_university_id = request()->has('hr_university_id') ? '&hr_university_id=' . request('hr_university_id') : '';
+        $query_filters = $hr_job_id . $search . $hr_university_id
     @endphp
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
