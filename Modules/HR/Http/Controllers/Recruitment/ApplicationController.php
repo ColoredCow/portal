@@ -59,6 +59,7 @@ abstract class ApplicationController extends Controller
             'status' =>request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
+            'university' => request()->get('hr_university_id'),
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
@@ -131,6 +132,7 @@ abstract class ApplicationController extends Controller
             ->count();
         }
         $attr['jobs'] = Job::all();
+        $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
