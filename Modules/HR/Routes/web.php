@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
                 'destroy' => 'universities.contacts.destroy',
                 'store' => 'universities.contacts.store',
             ]);
-        Route::get('universities/reports', 'Universities\ReportController@index')->name('universities.reports');
+        //Route::get('universities/reports', 'Universities\ReportController@index')->name('universities.reports');
 
         Route::resource('universities/aliases', 'Universities\UniversityAliasController', [
             'names' => 'universities.aliases',
@@ -86,5 +86,6 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
+        Route::get('/resources/', 'ResourcesController@index')->name('resources.index');
     });
 });
