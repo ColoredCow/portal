@@ -146,11 +146,13 @@
 														@endif
 													</div>
 												@endif
-												<div class="form-row">
-													<div class="form-group col-md-12">
-														<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+												@if($applicationRound->round->name == "Resume Screening")
+													<div class="form-row">
+														<div class="form-group col-md-12">
+															<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+														</div>
 													</div>
-												</div>
+												@endif
 												<div class="form-row">
 													<div class="form-group col-md-12">
 														@php
@@ -273,6 +275,7 @@
 												<span>Conducted By: {{ $applicationRound->conductedPerson->name }}</span>
 											@endif
 										</div>
+										
 										<div class="d-flex align-items-center">
 											<div class="d-flex flex-column align-items-end">
 												@if ($applicationRound->noShow && $applicationRound->round->reminder_enabled)
@@ -288,6 +291,7 @@
 													<span>Conducted on: {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
 												@endif
 											</div>
+											
 											<div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#pre-trial-collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i></div>
 										</div>
 									</div>
@@ -295,6 +299,134 @@
 										{{ csrf_field() }}
 										{{ method_field('PATCH') }}
 										<div id="pre-trial-collapse_{{ $loop->iteration }}" class="collapse {{ $application->latestApplicationRound->round->isTrialRound()? '' : ($loop->last ? 'show' : '') }}">
+											@if($applicationRound->round->name == "Resume Screening")
+												<div class="card-body border-0">
+													<div class="card-header border-0">
+														<div class="d-flex justify-content-between">
+															<div>Applicant Details</div>
+															@foreach ($application->tags as $tag)
+																<div class="badge text-uppercase fz-xl-12 c-pointer" style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color  }};" data-toggle="tooltip" data-placement="top" title="{{ $tag->description }}">
+																	@if ($tag->icon)
+																		{!! config("tags.icons.{$tag->icon}") !!}
+																	@endif
+																	{{ $tag->name }}
+																</div>
+															@endforeach
+															@if (!in_array($application->status, ['in-progress', 'new']))
+																<div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12">
+																	{{ config("constants.hr.status.$application->status.title") }}
+																</div>
+															@endif
+														</div>
+													</div>
+													<div class="card-body">
+														<div class="form-row">
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Name</label>
+																<div>
+																	{{ $applicant->name }}
+																	@if ($applicant->linkedin)
+																		<a href="{{ $applicant->linkedin }}" target="_blank"><i class="fa fa-linkedin-square pl-1 fa-lg"></i></a>
+																	@endif
+																</div>
+															</div>
+															<div class="form-group offset-md-1 col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Applied for</label>
+																<div>
+																	<a href="{{ $application->job->link }}" target="_blank">
+																		<span>{{ $application->job->title }}</span>
+																		<i class="fa fa-external-link fz-14" aria-hidden="true"></i>
+																	</a>
+																</div>
+															</div>
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Phone</label>
+																<div>{{ $applicant->phone ?? '-' }}</div>
+															</div>
+															<div class="form-group offset-md-1 col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Email</label>
+																<div>{{ $applicant->email }}</div>
+															</div>
+															
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">College</label>
+																@if(!$applicant->hr_university_id)
+																	<div id="applicant_college">{{ $applicant->college ?? '-' }}</div>
+																@else
+																	<div id="applicant_college">{{ $applicant->university->name ?? '-' }}</div>
+																@endif
+																@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
+																<div class="mt-2 evaluation-score">
+																	<input type="radio" class="toggle-button" name="college" id="college_evaluation_1">
+																	<label for="college_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																	<input type="radio" class="toggle-button" name="college" id="college_evaluation_2">
+																	<label for="college_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																</div>
+																@endif
+															</div>
+															<div class="form-group offset-md-1 col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Course</label>
+																<div>{{ $applicant->course ?? '-' }}</div>
+																@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
+																<div class="mt-2 evaluation-score">
+																	<input type="radio" class="toggle-button" name="course" id="course_evaluation_1">
+																	<label for="course_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																	<input type="radio" class="toggle-button" name="course" id="course_evaluation_2">
+																	<label for="course_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																</div>
+																@endif
+															</div>
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Resume</label>
+																<div>
+																	@if ($application->resume)
+																		@include('hr.application.inline-resume', ['resume' => $application->resume])
+																	@else
+																		–
+																	@endif
+																</div>
+															</div>
+															<div class="form-group offset-md-1 col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Graduation Year</label>
+																<div>
+																	{{ $applicant->graduation_year ?? '-' }}&nbsp;
+																	@includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
+																	@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
+																	<div class="mt-2 evaluation-score">
+																		<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_1">
+																		<label for="graduation_year_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																		<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_2">
+																		<label for="graduation_year_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																	</div>
+																	@endif
+																</div>
+															</div>
+															@if (isset($applicant->reference))
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Reference</label>
+																<div>{{ $applicant->reference ?? '-' }}</div>
+															</div>
+															@endif
+															@if (isset($applicationFormDetails->value))
+																@foreach(json_decode($applicationFormDetails->value) as $field => $value)
+																	<div class="form-group col-md-12">
+																		<label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
+																		<div>{{ $value }}</div>
+																		@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
+																		<div class="mt-2 evaluation-score">
+																			<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_1">
+																			<label for="reason_for_eligibility_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																			<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_2">
+																			<label for="reason_for_eligibility_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																		</div>
+																		@endif
+																	</div>
+																@endforeach
+															@endif
+														</div>
+													</div>
+												</div>
+											@endif
 											<div class="card-body">
 												@if ( !$applicationRound->round_status)
 													<div class="form-row">
@@ -351,12 +483,14 @@
 															</div>
 														@endif
 													</div>
-												@endif                     
-												<div class="form-row">
-													<div class="form-group col-md-12">
-														<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+												@endif 
+												@if($applicationRound->round->name == "Resume Screening")                    
+													<div class="form-row">
+														<div class="form-group col-md-12">
+															<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+														</div>
 													</div>
-												</div>
+												@endif
 												<div class="form-row">
 													<div class="form-group col-md-12">
 														@php
@@ -505,132 +639,134 @@
 									{{ method_field('PATCH') }}
 									<div id="collapse_{{ $loop->iteration }}" class="collapse {{ $loop->last ? 'show' : '' }}">
 										<div class="card-body">
-											<div class="card mb-2 border-0">
-												<div class="card-header border-0">
-													<div class="d-flex justify-content-between">
-														<div>Applicant Details</div>
-														@foreach ($application->tags as $tag)
-															<div class="badge text-uppercase fz-xl-12 c-pointer" style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color  }};" data-toggle="tooltip" data-placement="top" title="{{ $tag->description }}">
-																@if ($tag->icon)
-																	{!! config("tags.icons.{$tag->icon}") !!}
-																@endif
-																{{ $tag->name }}
-															</div>
-														@endforeach
-														@if (!in_array($application->status, ['in-progress', 'new']))
-															<div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12">
-																{{ config("constants.hr.status.$application->status.title") }}
-															</div>
-														@endif
+											@if($applicationRound->round->name == "Resume Screening")
+												<div class="card mb-2 border-0">
+													<div class="card-header border-0">
+														<div class="d-flex justify-content-between">
+															<div>Applicant Details</div>
+															@foreach ($application->tags as $tag)
+																<div class="badge text-uppercase fz-xl-12 c-pointer" style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color  }};" data-toggle="tooltip" data-placement="top" title="{{ $tag->description }}">
+																	@if ($tag->icon)
+																		{!! config("tags.icons.{$tag->icon}") !!}
+																	@endif
+																	{{ $tag->name }}
+																</div>
+															@endforeach
+															@if (!in_array($application->status, ['in-progress', 'new']))
+																<div class="{{ config("constants.hr.status.$application->status.class") }} text-uppercase card-status-highlight fz-12">
+																	{{ config("constants.hr.status.$application->status.title") }}
+																</div>
+															@endif
+														</div>
 													</div>
-												</div>
-												<div class="card-body">
-													<div class="form-row">
-														<div class="form-group col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">Name</label>
-															<div>
-																{{ $applicant->name }}
-																@if ($applicant->linkedin)
-																	<a href="{{ $applicant->linkedin }}" target="_blank"><i class="fa fa-linkedin-square pl-1 fa-lg"></i></a>
-																@endif
+													<div class="card-body">
+														<div class="form-row">
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Name</label>
+																<div>
+																	{{ $applicant->name }}
+																	@if ($applicant->linkedin)
+																		<a href="{{ $applicant->linkedin }}" target="_blank"><i class="fa fa-linkedin-square pl-1 fa-lg"></i></a>
+																	@endif
+																</div>
 															</div>
-														</div>
-														<div class="form-group offset-md-1 col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">Applied for</label>
-															<div>
-																<a href="{{ $application->job->link }}" target="_blank">
-																	<span>{{ $application->job->title }}</span>
-																	<i class="fa fa-external-link fz-14" aria-hidden="true"></i>
-																</a>
+															<div class="form-group offset-md-1 col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Applied for</label>
+																<div>
+																	<a href="{{ $application->job->link }}" target="_blank">
+																		<span>{{ $application->job->title }}</span>
+																		<i class="fa fa-external-link fz-14" aria-hidden="true"></i>
+																	</a>
+																</div>
 															</div>
-														</div>
-														<div class="form-group col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">Phone</label>
-															<div>{{ $applicant->phone ?? '-' }}</div>
-														</div>
-														<div class="form-group offset-md-1 col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">Email</label>
-															<div>{{ $applicant->email }}</div>
-														</div>
-														
-														<div class="form-group col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">College</label>
-															@if(!$applicant->hr_university_id)
-																<div id="applicant_college">{{ $applicant->college ?? '-' }}</div>
-															@else
-																<div id="applicant_college">{{ $applicant->university->name ?? '-' }}</div>
-															@endif
-															@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
-															<div class="mt-2 evaluation-score">
-																<input type="radio" class="toggle-button" name="college" id="college_evaluation_1">
-																<label for="college_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
-																<input type="radio" class="toggle-button" name="college" id="college_evaluation_2">
-																<label for="college_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Phone</label>
+																<div>{{ $applicant->phone ?? '-' }}</div>
 															</div>
-															@endif
-														</div>
-														<div class="form-group offset-md-1 col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">Course</label>
-															<div>{{ $applicant->course ?? '-' }}</div>
-															@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
-															<div class="mt-2 evaluation-score">
-																<input type="radio" class="toggle-button" name="course" id="course_evaluation_1">
-																<label for="course_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
-																<input type="radio" class="toggle-button" name="course" id="course_evaluation_2">
-																<label for="course_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+															<div class="form-group offset-md-1 col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Email</label>
+																<div>{{ $applicant->email }}</div>
 															</div>
-															@endif
-														</div>
-														<div class="form-group col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">Resume</label>
-															<div>
-																@if ($application->resume)
-																	@include('hr.application.inline-resume', ['resume' => $application->resume])
+															
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">College</label>
+																@if(!$applicant->hr_university_id)
+																	<div id="applicant_college">{{ $applicant->college ?? '-' }}</div>
 																@else
-																	–
+																	<div id="applicant_college">{{ $applicant->university->name ?? '-' }}</div>
 																@endif
-															</div>
-														</div>
-														<div class="form-group offset-md-1 col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">Graduation Year</label>
-															<div>
-																{{ $applicant->graduation_year ?? '-' }}&nbsp;
-																@includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
 																@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
 																<div class="mt-2 evaluation-score">
-																	<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_1">
-																	<label for="graduation_year_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
-																	<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_2">
-																	<label for="graduation_year_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																	<input type="radio" class="toggle-button" name="college" id="college_evaluation_1">
+																	<label for="college_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																	<input type="radio" class="toggle-button" name="college" id="college_evaluation_2">
+																	<label for="college_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
 																</div>
 																@endif
 															</div>
-														</div>
-														@if (isset($applicant->reference))
-														<div class="form-group col-md-5">
-															<label class="text-secondary fz-14 leading-none mb-0.16">Reference</label>
-															<div>{{ $applicant->reference ?? '-' }}</div>
-														</div>
-														@endif
-														@if (isset($applicationFormDetails->value))
-															@foreach(json_decode($applicationFormDetails->value) as $field => $value)
-																<div class="form-group col-md-12">
-																	<label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
-																	<div>{{ $value }}</div>
+															<div class="form-group offset-md-1 col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Course</label>
+																<div>{{ $applicant->course ?? '-' }}</div>
+																@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
+																<div class="mt-2 evaluation-score">
+																	<input type="radio" class="toggle-button" name="course" id="course_evaluation_1">
+																	<label for="course_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																	<input type="radio" class="toggle-button" name="course" id="course_evaluation_2">
+																	<label for="course_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																</div>
+																@endif
+															</div>
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Resume</label>
+																<div>
+																	@if ($application->resume)
+																		@include('hr.application.inline-resume', ['resume' => $application->resume])
+																	@else
+																		–
+																	@endif
+																</div>
+															</div>
+															<div class="form-group offset-md-1 col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Graduation Year</label>
+																<div>
+																	{{ $applicant->graduation_year ?? '-' }}&nbsp;
+																	@includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
 																	@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
 																	<div class="mt-2 evaluation-score">
-																		<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_1">
-																		<label for="reason_for_eligibility_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
-																		<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_2">
-																		<label for="reason_for_eligibility_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																		<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_1">
+																		<label for="graduation_year_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																		<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_2">
+																		<label for="graduation_year_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
 																	</div>
 																	@endif
 																</div>
-															@endforeach
-														@endif
+															</div>
+															@if (isset($applicant->reference))
+															<div class="form-group col-md-5">
+																<label class="text-secondary fz-14 leading-none mb-0.16">Reference</label>
+																<div>{{ $applicant->reference ?? '-' }}</div>
+															</div>
+															@endif
+															@if (isset($applicationFormDetails->value))
+																@foreach(json_decode($applicationFormDetails->value) as $field => $value)
+																	<div class="form-group col-md-12">
+																		<label class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>
+																		<div>{{ $value }}</div>
+																		@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
+																		<div class="mt-2 evaluation-score">
+																			<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_1">
+																			<label for="reason_for_eligibility_evaluation_1" class="mr-2 c-pointer thumb"><i class="fa fa-thumbs-up text-theme-gray-light hover-text-success checked-text-success" aria-hidden="true"></i></label>
+																			<input type="radio" class="toggle-button" name="reason_for_eligibility" id="reason_for_eligibility_evaluation_2">
+																			<label for="reason_for_eligibility_evaluation_2" class="c-pointer thumb"><i class="fa fa-thumbs-down text-theme-gray-light hover-text-danger checked-text-danger" aria-hidden="true"></i></label>
+																		</div>
+																		@endif
+																	</div>
+																@endforeach
+															@endif
+														</div>
 													</div>
 												</div>
-											</div>
+											@endif
 											
 											@if ( !$applicationRound->round_status)
 												<div class="form-row">
@@ -688,26 +824,28 @@
 													</div>
 													@endif
 												</div>
-											@endif                     
-											<div class="form-row">
-												<div class="form-group col-md-12">
-													<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
-												</div>
-												@if(session('status') || $application->marks  && $application->latestApplicationRound->hr_round_id == 1)
+											@endif 
+											@if($applicationRound->round->name == "Resume Screening")                    
 												<div class="form-row">
-													<div class="form-group my-2 pl-2">
-														<h4>
-															<span>Result: </span>
-															@if($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
-																<span class="text-success">Passing</span>
-															@else
-																<span class="text-danger">Failing</span>
-															@endif
-														</h4>
+													<div class="form-group col-md-12">
+														<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
 													</div>
+													@if(session('status') || $application->marks  && $application->latestApplicationRound->hr_round_id == 1)
+													<div class="form-row">
+														<div class="form-group my-2 pl-2">
+															<h4>
+																<span>Result: </span>
+																@if($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
+																	<span class="text-success">Passing</span>
+																@else
+																	<span class="text-danger">Failing</span>
+																@endif
+															</h4>
+														</div>
+													</div>
+													@endif
 												</div>
-												@endif
-											</div>
+											@endif
 											<div class="form-row">
 												<div class="form-group col-md-12">
 													@php
