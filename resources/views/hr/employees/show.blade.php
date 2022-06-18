@@ -31,7 +31,7 @@
                         </tr>
                     </thead>
                     <thead>
-                        @if(optional($employee->user)->activeProjectTeamMembers == null)
+                        @if(optional($employee->user)->activeProjectTeamMembers == null || ($employee->user)->activeProjectTeamMembers->isEmpty())
                             </table>
                             <div class="fz-lg-28 text-center mt-2"><div class="mb-4">Not in any project</div></div>
                         @else
