@@ -24,9 +24,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = $this->service->index(request()->all());
+        $data = $this->service->index(request()->all());
 
-        return view('project::index')->with('projects', $projects);
+        return view('project::index', $data);
     }
 
     /**
