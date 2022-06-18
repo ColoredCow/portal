@@ -147,11 +147,11 @@
 													</div>
 												@endif
 												@if($applicationRound->round->name == "Resume Screening")
-												<div class="form-row">
-													<div class="form-group col-md-12">
-														<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+													<div class="form-row">
+														<div class="form-group col-md-12">
+															<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+														</div>
 													</div>
-												</div>
 												@endif
 												<div class="form-row">
 													<div class="form-group col-md-12">
@@ -485,11 +485,11 @@
 													</div>
 												@endif 
 												@if($applicationRound->round->name == "Resume Screening")                    
-												<div class="form-row">
-													<div class="form-group col-md-12">
-														<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+													<div class="form-row">
+														<div class="form-group col-md-12">
+															<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
+														</div>
 													</div>
-												</div>
 												@endif
 												<div class="form-row">
 													<div class="form-group col-md-12">
@@ -826,25 +826,25 @@
 												</div>
 											@endif 
 											@if($applicationRound->round->name == "Resume Screening")                    
-											<div class="form-row">
-												<div class="form-group col-md-12">
-													<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
-												</div>
-												@if(session('status') || $application->marks  && $application->latestApplicationRound->hr_round_id == 1)
 												<div class="form-row">
-													<div class="form-group my-2 pl-2">
-														<h4>
-															<span>Result: </span>
-															@if($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
-																<span class="text-success">Passing</span>
-															@else
-																<span class="text-danger">Failing</span>
-															@endif
-														</h4>
+													<div class="form-group col-md-12">
+														<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
 													</div>
+													@if(session('status') || $application->marks  && $application->latestApplicationRound->hr_round_id == 1)
+													<div class="form-row">
+														<div class="form-group my-2 pl-2">
+															<h4>
+																<span>Result: </span>
+																@if($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
+																	<span class="text-success">Passing</span>
+																@else
+																	<span class="text-danger">Failing</span>
+																@endif
+															</h4>
+														</div>
+													</div>
+													@endif
 												</div>
-												@endif
-											</div>
 											@endif
 											<div class="form-row">
 												<div class="form-group col-md-12">
