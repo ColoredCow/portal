@@ -54,7 +54,7 @@
                     <td>
                         {{ $loop->iteration }}
                         <td>
-                            <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->project->name }}</a>
+                            <a href="{{ route('invoice.edit', $invoice) }}">{{ optional($invoice->project)->name ?: ($invoice->client->name . ' Projects') }}</a>
                         </td>
                         <td>{{ $invoice->display_amount }}</td>
                         <td>{{ $invoice->amount_paid }}</td>

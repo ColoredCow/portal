@@ -17,20 +17,33 @@
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <label for="billing_for" class="field-required">
-                                Project
+                            <label for="billingLevel" class="field-required">
+                                Bill Level
                             </label>
                             <span 
                                 data-toggle="tooltip" 
                                 data-placement="right" 
-                                title="Client Level Project will include all the projects having billing level set to client level."
+                                title="Client Level Billing will include all the projects of client having billing level set to client."
                                 class="ml-2"
                             >
                                 <i class="fa fa-question-circle"></i>&nbsp;
                             </span>
                         </div>
                     </div>
-                    <select name="project_id" id="billing_for" class="form-control" required="required">
+                    <select @change="updateShowProjects($event)" name="billing_level" id="billingLevel" class="form-control" required="required">
+                        <option value="{{ config('project.meta_keys.billing_level.value.client.key') }}">{{ config('project.meta_keys.billing_level.value.client.label') }}</option>
+                        <option value="{{ config('project.meta_keys.billing_level.value.project.key') }}">{{ config('project.meta_keys.billing_level.value.project.label') }}</option>
+                    </select>
+                </div>
+                <div v-if="showProjects" class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <label for="projects" class="field-required">
+                                Project
+                            </label>
+                        </div>
+                    </div>
+                    <select name="project_id" id="projects" class="form-control" required="required">
                         <option value="">Select Project</option>
                         <option v-for="project in projects" :value="project.id" v-text="project.name"
                             :key="project.id">
@@ -88,10 +101,10 @@
                 <div class="text-danger fz-14" v-if="currency == 'INR' ">Total Amount : @{{ tot }}</div>
                 <div class="text-danger fz-14" v-if="currency == 'USD' ">Total Amount : @{{ amt }}</div>
                 <div class="text-danger fz-14 my-0" id="container"></div>
-                {{-- <div class="form-group mt-2">
+                <div class="form-group mt-2">
                     <label for="term" class="field-required">Invoice for term</label>
                     <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', '') }}'>
-                </div> --}}
+                </div>
                 <div class="form-group">
                     <label for="sent_on" class="field-required">Sent on</label>
                     <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"
@@ -106,8 +119,9 @@
         </div>
     </div>
     <div class="card-footer">
+        <p><small class="text-theme-warning">Note: To preview invoice you don't need to fill all the details.</small></p>
         <button type="button" class="btn btn-primary" onclick="saveInvoice(this)">Create</button>
-        {{-- <a class="btn btn-secondary" id="generate_invoice_link" @click.prevent="generateInvoice($event)" href="">Generate Invoice</a> --}}
+        <a class="btn btn-secondary" id="generate_invoice_link" @click.prevent="generateInvoice($event)" href="">Preview Invoice <small>(Beta)</small> </a>
     </div>
 </div>
 
@@ -143,6 +157,7 @@
                     client: null,
                     currency: '',
                     amount: '',
+                    showProjects: false,
                 }
             },
 
@@ -155,8 +170,16 @@
                         if (client.id == this.clientId) {
                             this.client = client;
                             this.currency = client.currency;
-                            this.projects = _.orderBy(client.projects, 'name', 'asc');
+                            this.projects = _.orderBy(client.project_level_billing_projects, 'name', 'asc');
                         }
+                    }
+                },
+
+                updateShowProjects: function(event) {
+                    if (event.target.value == 'project') {
+                        this.showProjects = true;
+                    } else {
+                        this.showProjects = false;
                     }
                 },
 
