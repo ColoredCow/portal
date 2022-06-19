@@ -3,6 +3,7 @@
 namespace Modules\Invoice\Services;
 
 use App\Models\Country;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
@@ -124,7 +125,8 @@ class InvoiceService implements InvoiceServiceContract
 
     public function getUnpaidInvoices()
     {
-        return Invoice::status('sent')->with(['client', 'project'])->get();
+        return Invoice::status('sent')->with(['client', 'project'])->where('due_on', '>', Carbon::today())->get();
+
     }
 
     public function saveInvoiceFile($invoice, $file)
