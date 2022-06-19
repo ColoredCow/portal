@@ -1,5 +1,7 @@
 <?php
-
+use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Emails\ZeroEffortInProjectMail;
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,4 +22,9 @@ Route::prefix('projects')->middleware('auth')->group(function () {
     Route::post('/{project}/update', 'ProjectController@update')->name('project.update');
     Route::get('/contract/pdf/{contract}', 'ProjectController@showPdf')->name('pdf.show');
     //Route::get('/', 'ProjectController@edit')->name('project.edit');
+    Route::get('/email', function(){
+        $service = app(ProjectServiceContract::class);
+        $zeroEffortInProject = $service->getZeroEffortTeamMemberInProject();
+        return new ZeroEffortInProjectMail($zeroEffortInProject);
+    });
 });

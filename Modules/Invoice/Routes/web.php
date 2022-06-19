@@ -1,5 +1,6 @@
 <?php
-
+use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Modules\Invoice\Emails\SendUnpaidInvoiceListMail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,4 +27,9 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::post('/{invoice}', 'InvoiceController@sendEmail')->name('invoice.sendEmail');
     Route::get('/monthly-gst-report', 'InvoiceController@invoiceDetails')->name('invoice.details');
     Route::get('/monthly-GST-Tax-report-export', 'InvoiceController@monthlyGSTTaxReportExport')->name('invoice.monthly-tax-report-export');
+    Route::get('/emails', function(){
+        $service = app(InvoiceServiceContract::class);
+        $unpaidInvoices = $service->getUnpaidInvoices();
+        Mail::to('mastergutam71@gmail.com')->send(new SendUnpaidInvoiceListMail($unpaidInvoices));
+    });
 });

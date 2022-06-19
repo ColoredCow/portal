@@ -56,8 +56,8 @@ return [
      */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'contact@coloredcow.com'),
-        'name' => env('MAIL_FROM_NAME', 'ColoredCow'),
+        'address' => 'gautam.rajesh@coloredcow.com',
+        'name' => 'Gautam Rajesh',
     ],
 
     /*
