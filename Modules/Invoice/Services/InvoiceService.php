@@ -126,7 +126,6 @@ class InvoiceService implements InvoiceServiceContract
     public function getUnpaidInvoices()
     {
         return Invoice::status('sent')->with(['client', 'project'])->where('due_on', '>', Carbon::today())->get();
-
     }
 
     public function saveInvoiceFile($invoice, $file)
