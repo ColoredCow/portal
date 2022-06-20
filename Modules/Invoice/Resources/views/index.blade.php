@@ -19,13 +19,13 @@
                 @php
                     $request['invoice_status'] = 'ready';
                 @endphp
-                <a class="nav-link {{ (request()->input('invoice_status', 'sent') == 'ready') ? 'active' : '' }}" href="{{ route('invoice.index', $request)  }}">Ready to Send</a>
+                <a class="nav-link {{ (request()->input('invoice_status', 'sent') == 'ready') ? 'active' : '' }}" href="{{ route('invoice.index', $request) }}">Ready to Send</a>
             </li>
             <li class="nav-item mr-2">
                 @php
                     $request['invoice_status'] = 'sent';
                 @endphp
-                <a class="nav-link {{ (request()->input('invoice_status', 'sent') == 'sent') ? 'active' : '' }}" href="{{ route('invoice.index', $request)  }}">Sent</a>
+                <a class="nav-link {{ (request()->input('invoice_status', 'sent') == 'sent') ? 'active' : '' }}" href="{{ route('invoice.index', $request) }}">Sent</a>
             </li>
         </ul>
         <div class="d-flex justify-content-between mb-2">
