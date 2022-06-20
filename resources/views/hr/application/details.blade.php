@@ -26,7 +26,9 @@
 				</div>
 				<div class="col-6 text-right">
 					<div class="mb-1">
-						<a href="/hr/recruitment/job/{{ $application->id }}/edit" class="btn btn-primary btn-sm" target="_self">Evaluate</a>
+						@if($application->latestApplicationRound->hr_round_id == 1)
+							<a href="{{ route('applications.job.edit', $application->id) }}" class="btn btn-primary btn-sm" target="_self">Evaluate</a>
+						@endif
 						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#customApplicationMail">Send mail</button>
 						@include('hr.custom-application-mail-modal', ['application' => $application])
 					</div>

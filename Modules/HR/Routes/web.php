@@ -86,5 +86,6 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
+        Route::get('/resources/', 'ResourcesController@index')->name('resources.index');
     });
 });
