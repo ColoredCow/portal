@@ -1,9 +1,5 @@
 <div>
-    @php
-        @dd($projectManager);
-    @endphp
-    @php  $projectManagerName = implode(', ', $projectManager['projectManagerName']); @endphp
-    <p>Hello {{ $projectManagerName }},</p>
+    <p>Hello {{ $projectManager['projectManagerName'] }},</p>
     <p>We found some projects where the expected hours are zero for you or team members where you are assigned as project manager. Please update these projects:</p>
     <table class="table">
         <thead>
@@ -14,9 +10,7 @@
         <tbody>
             @foreach ($projectManager['projects'] as $projects)
             <tr>
-                @foreach ($projects as $project )
-                    <td>{{ $project->name }}</td>
-                @endforeach
+                <td>{{ $projects->name }}</td>
             </tr>
              @endforeach
         </tbody>

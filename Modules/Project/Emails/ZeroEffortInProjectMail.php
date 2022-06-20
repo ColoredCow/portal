@@ -32,12 +32,10 @@ class ZeroEffortInProjectMail extends Mailable
     public function build()
     {
         if(! $this->zeroEffortInProject->isEmpty()){
-            dd($this->zeroEffortInProject);
             foreach ($this->zeroEffortInProject as $projectManager) {
-                $projectManagerEmail = implode(',', $projectManager['projectManagerEmail']);
 
                 return $this
-                ->to($projectManagerEmail)
+                ->to($projectManager['projectManagerEmail'])
                 ->subject('Zero Effort for team members')
                 ->view('project::mail.zero-effort-team-member-list')
                 ->with(['projectManager' => $projectManager]);

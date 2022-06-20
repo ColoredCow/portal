@@ -272,83 +272,35 @@ class ProjectService implements ProjectServiceContract
             );
         }
     }
-    public function getTeamMembersWithZeroEffort($projectId, $teamMemberId){
-        $teamMember = ProjectTeamMember::where('project_id', $projectId)->where('designation', '!=' ,'project_manager')->where('daily_expected_effort', '0')->get()->toArray();
-        dd($teamMember);
-    }
-    public function getProjectManagerEmail($projectManagerId){
-        $projectManagerEmail = User::where('id', $projectManagerId)->pluck('email')->toArray();
-        return $projectManagerEmail;
-    }
-    public function getProjectManagerName($projectManagerId){
-        $projectManagerEmail = User::where('id', $projectManagerId)->pluck('name')->toArray();
-        return $projectManagerEmail;
-    }
-    // public function getZeroEffortTeamMemberInProject()
-    // {
-    //     $projects = Project::where('status', 'active')->get();
-    //     $data = [];
-    //     foreach ($projects as $project) {
-    //         if(! is_null(self::getTeamMembersWithZeroEffort($project)) && ! is_null(self::getProjectManagerEmail($project))){
-    //             $data[] = [
-    //                 'project' => $project,
-    //                 'teamMembers' => self::getTeamMembersWithZeroEffort($project),
-    //                 'projectManagerName' => self::getProjectManagerEmail($project),
-    //                 'projectManagerEmail' =>self::getProjectManagerEmail($project),
-    //             ];
-    //         }
-    //         $projectDetails = Collection::make($data);
-    //     }
-    //     return $projectDetails;
-    // }
-    // public function getZeroEffortTeamMemberInProject()
-    // {
-    //     $projectManagers= ProjectTeamMember::where('designation', 'project_manager')->get();
-    //     $projectManagers = $projectManagers->groupBy('team_member_id');
-    //     foreach ($projectManagers as $key => $projectManager) {
-    //         $projectManagerName = self::getProjectManagerName($key);
-    //         $projectManagerEmail = self::getProjectManagerEmail($key);
-    //         foreach ($projectManager as $key => $value){
-    //             $projectTeamMembers = self::getTeamMembersWithZeroEffort($value->project_id);
-    //             foreach ($projectTeamMembers as $key => $teamMember) {
-    //                 if($teamMember->daily_expected_effort == 0){
-    //                     $projects[] = Project::where('id', $value->project_id)->get();
-    //                 }
-    //             }
-    //         }
-    //         $data = [];
-    //         if (! empty($projects) && ! empty($projectManagerName) && ! empty($projectManagerEmail)) {
-    //             $data[] = [
-    //                 'projects' => $projects,
-    //                 'projectManagerName' => $projectManagerName,
-    //                 'projectManagerEmail' =>$projectManagerEmail,
-    //             ];
-    //         }
-    //     }
-    //     $projectDetails = Collection::make($data);
-    //     dd($projectDetails);
-    //     return $projectDetails;
-    // }
 
     public function getZeroEffortTeamMemberInProject()
     {
-        $projectManagers= ProjectTeamMember::where('designation', 'project_manager')->get();
-        $projectManagers = $projectManagers->groupBy('team_member_id');
-        foreach ($projectManagers as $key => $projectManager) {
-            foreach ($projectManager as $value){ 
-                $projectTeamMembers[] = self::getTeamMembersWithZeroEffort($value->project_id, $value->team_member_id);
-                dd($projectTeamMembers);
+        $user = User::get();
+        foreach ($user as $user) {
+            $projects = $user->projects;
+            $managerProjects=[];
+            foreach ($projects as $project) {
+                foreach($project->teamMembers as $teamMember){
+                    if($teamMember->getOriginal('pivot_designation') == 'project_manager' && $teamMember->getOriginal('pivot_team_member_id') == $user->id){ 
+                        foreach($project->teamMembers as $projectTeamMember){
+                            if($projectTeamMember->getOriginal('pivot_designation') != 'project_manager' && $projectTeamMember->getOriginal('pivot_daily_expected_effort') == 0 ){
+                                $managerProjects[] = $project;
+                                $projectManagerName = $teamMember->name;
+                                $projectManagerEmail = $teamMember->email;
+                            }
+                        }
+                    }
+                }
             }
-            // dd($projects);
-            $projectManagerName = self::getProjectManagerName($key);
-            $projectManagerEmail = self::getProjectManagerEmail($key);
-            $data[] = [
-                // 'projects' => $projects,
-                'projectManagerName' => $projectManagerName,
-                'projectManagerEmail' =>$projectManagerEmail,
-            ];
+            if(!empty($managerProjects)){
+                $data[] = [
+                    'projects' => $managerProjects,
+                    'projectManagerName' => $projectManagerName,
+                    'projectManagerEmail' =>$projectManagerEmail,
+                ];
+            }
         }
-        dd($data);
+        $projectDetails = Collection::make($data);
         return $projectDetails;
     }
 }
