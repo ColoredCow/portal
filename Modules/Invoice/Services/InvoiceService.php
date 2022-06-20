@@ -19,10 +19,9 @@ use Modules\Project\Entities\Project;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index($filters = [])
+    public function index($filters = [], $invoiceStatus = 'sent')
     {
         $query = Invoice::query();
-
         $invoices = $this
             ->applyFilters($query, $filters)
             ->get();
@@ -33,6 +32,7 @@ class InvoiceService implements InvoiceServiceContract
             'currencyService' => $this->currencyService(),
             'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
             'filters' => $filters,
+            'invoiceStatus' => $invoiceStatus,
         ];
     }
 
