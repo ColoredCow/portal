@@ -13,6 +13,12 @@ class ProjectTeamMember extends Model
 
     protected $guarded = [];
 
+    protected $dates = [
+        'ended_on',
+        'created_at',
+        'updated_at',
+    ];
+
     protected static function newFactory()
     {
         return new ProjectTeamMemberFactory();
