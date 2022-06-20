@@ -72,6 +72,28 @@
                     <span v-on:click="addNewProjectTeamMember()" style="text-decoration: underline;" class="text-underline btn" >Add new team member</span>
                 </div>
 
+                <hr class='bg-dark mt-4 mb-5 pb-0.5'>
+
+                <div class="bg-theme-gray-lighter card mt-3">
+                    <h4 class="ml-3 mt-2 mb-2 font-weight-bold">Team Members History</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Team Members</th>
+                            <th>Designation</th>
+                            <th>Added on</th>
+                            <th>Ended on</th>
+                        </tr>
+                        @foreach ($project->getInactiveTeamMembers as $inactiveTeamMembers)
+                        <tr>
+                            <th class="font-weight-normal"><img src="{{ $inactiveTeamMembers->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">{{$inactiveTeamMembers->user->name}}</th>
+                            <th class="font-weight-light">{{str_replace('_', ' ',ucwords($inactiveTeamMembers->designation))}}</th>
+                            <th class="font-weight-light">{{($inactiveTeamMembers->created_at)->format('Y-m-d')}}</th>
+                            <th class="font-weight-light">{{($inactiveTeamMembers->ended_on)->format('Y-m-d')}}</th>
+                        <tr>
+                        @endforeach
+                    </table>
+                </div>
+                
             </div>
 
             <div class="card-footer">
