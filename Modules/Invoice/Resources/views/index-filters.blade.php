@@ -1,5 +1,5 @@
 <form action="{{ route('invoice.index')  }}" id="invoiceFilterForm">
-    <input type="hidden" name="invoice_status" value="{{ request()->input('invoice_status', 'ready') }}">
+    <input type="hidden" name="invoice_status" value="{{ request()->input('invoice_status', 'sent') }}">
     <div class="d-flex">
         <div class='form-group mr-4 w-168'>
             <select class="form-control bg-light" name="year"  onchange="document.getElementById('invoiceFilterForm').submit();">
