@@ -11,49 +11,46 @@
                 </button>
             </div>
         @endif
-        <ul class="nav nav-pills my-3">
+        <ul class="nav nav-pills mb-6">
             @php
                 $request = request()->all();
             @endphp
-            <li class="nav-item mr-3">
+            <li class="nav-item mr-2">
                 @php
                     $request['invoice_status'] = 'ready';
                 @endphp
-                <a class="nav-link {{ (request()->input('invoice_status', 'ready') == 'ready') ? 'active' : '' }}" href="{{ route('invoice.index', $request)  }}">Ready to Send</a>
+                <a class="nav-link {{ (request()->input('invoice_status', 'sent') == 'ready') ? 'active' : '' }}" href="{{ route('invoice.index', $request)  }}">Ready to Send</a>
             </li>
             <li class="nav-item mr-2">
                 @php
                     $request['invoice_status'] = 'sent';
                 @endphp
-                <a class="nav-link {{ (request()->input('invoice_status', 'ready') == 'sent') ? 'active' : '' }}" href="{{ route('invoice.index', $request)  }}">Sent</a>
+                <a class="nav-link {{ (request()->input('invoice_status', 'sent') == 'sent') ? 'active' : '' }}" href="{{ route('invoice.index', $request)  }}">Sent</a>
             </li>
         </ul>
         <div class="d-flex justify-content-between mb-2">
-            <h4 class="mb-1 pb-1">Invoices</h4>
-            @if (request()->invoice_status == 'sent') 
+            <h4 class="mb-1 pb-1 fz-28">Invoices</h4>
+            @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
                 <span>
                     <a href="{{ route('invoice.create') }}" class="btn btn-info text-white">Add Invoice</a>
                 </span>
             @endif
         </div>
         <br>
-        <br>
-        @if (request()->invoice_status == 'sent')
+        @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
             <div>
                 @include('invoice::index-filters')
             </div>
         @endif
-
-        <div class="text-danger mt-2">
-            @error('invoice_email')
+        @error('invoice_email')
+            <div class="text-danger mt-2">
                 {{ $message }}
-            @enderror
-        </div>
-        
-            <div class="font-muli-bold my-4">
-                Current Exchange rates ($1) : &nbsp; ₹{{ $currencyService->getCurrentRatesInINR() }}
             </div>
-        @if(request()->invoice_status == 'sent')
+        @enderror
+        <div class="font-muli-bold my-4">
+            Current Exchange rates ($1) : &nbsp; ₹{{ $currencyService->getCurrentRatesInINR() }}
+        </div>
+        @if(request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
             <div class="font-muli-bold my-4">
                 Receivable amount (for current filters): &nbsp; ₹{{ $totalReceivableAmount }}
             </div>
@@ -66,7 +63,7 @@
                         <th>Project</th>
                         <th>Invoice Number</th>
                         <th>Amount ( + taxes)</th>
-                        @if (request()->invoice_status == "sent")
+                        @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
                             <th>Sent on</th>
                             <th>Due on</th>
                             <th>Paid on</th>
@@ -82,12 +79,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if((request()->invoice_status == 'sent'))
+                    @if((request()->invoice_status == 'sent' || $invoiceStatus == 'sent'))
                         @foreach ($invoices as $invoice)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
-                                    <a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->project->name }}</a>
+                                    <a href="{{ route('invoice.edit', $invoice) }}">{{ optional($invoice->project)->name ?: ($invoice->client->name . ' Projects') }}</a>
                                 </td>
                                 <td>{{ $invoice->invoice_number }}</td>
                                 <td>{{ $invoice->invoiceAmount() }}</td>
@@ -138,10 +135,11 @@
                                 @endif
                             </tr>
                         @endforeach
+                    @else
+                        <tr><td colspan=7 class="text-center fz-24 text-theme-gray py-6">No invoices available</td></tr>
                     @endif
                 </tbody>
             </table>
         </div>
-
     </div>
 @endsection
