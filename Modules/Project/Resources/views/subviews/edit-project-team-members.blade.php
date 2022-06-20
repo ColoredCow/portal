@@ -86,9 +86,9 @@
                         @foreach ($project->getInactiveTeamMembers as $inactiveTeamMember)
                         <tr>
                             <th class="font-weight-normal"><img src="{{ $inactiveTeamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">{{$inactiveTeamMember->user->name}}</th>
-                            <th class="font-weight-light">{{ucwords(str_replace('_', ' ', $inactiveTeamMember->designation))}}</th>
-                            <th class="font-weight-light">{{($inactiveTeamMember->created_at)->format('Y-m-d')}}</th>
-                            <th class="font-weight-light">{{($inactiveTeamMember->ended_on)->format('Y-m-d')}}</th>
+                            <th class="font-weight-light">{{ ucwords(str_replace('_', ' ', $inactiveTeamMember->designation)) }}</th>
+                            <th class="font-weight-light">{{ ($inactiveTeamMember->created_at)->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ ($inactiveTeamMember->ended_on)->format('Y-m-d') }}</th>
                         <tr>
                         @endforeach
                     </table>
