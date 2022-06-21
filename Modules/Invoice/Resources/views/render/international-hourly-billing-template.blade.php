@@ -16,7 +16,7 @@
             <tr>
                 <td>{{$project->name}}</td>
                 <td>{{$project->getBillableHoursForTerm($monthNumber, $year)}}</td>
-                <td>{{$currencyService->getCurrentRatesInINR()}}</td>
+                <td>{{optional($client->billingDetails)->service_rates}}</td>
                 <td>{{round($project->getBillableHoursForTerm($monthNumber, $year) * $client->billingDetails->service_rates, 2)}}</td>
             </tr>
         @endforeach

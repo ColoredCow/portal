@@ -30,11 +30,9 @@
         </ul>
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Invoices</h4>
-            @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
-                <span>
-                    <a href="{{ route('invoice.create') }}" class="btn btn-info text-white">Add Invoice</a>
-                </span>
-            @endif
+            <span>
+                <a href="{{ route('invoice.create') }}" class="btn btn-info text-white">Add Invoice</a>
+            </span>
         </div>
         <br>
         @if (request()->invoice_status == 'sent' || $invoiceStatus == 'sent')
@@ -133,6 +131,26 @@
                                         </div>
                                     </td>
                                 @endif
+                            </tr>
+                        @endforeach
+                    @elseif(request()->invoice_status == 'ready')
+                        @foreach ($readyToSendInvoicesData as $invoiceData)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    {{ $invoiceData->name . ' Projects' }}
+                                </td>
+                                <td>{{ str_replace('-', '', $invoiceData->next_invoice_number) }}</td>
+                                <td>{{ config('constants.currency.' . $invoiceData->currency . '.symbol') . ' ' .  $invoiceData->getTotalPayableAmountForTerm(now(config('constants.timezone.indian'))->subMonth()->format('m'), today(config('constants.timezone.indian'))->subMonth()->format('Y'), $invoiceData->clientLevelBillingProjects) }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('invoice.generate-invoice-for-client', $invoiceData) }}" target="_blank" class="btn btn-info text-light">Preview</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('invoice.generate-invoice-for-client', $invoiceData) }}" target="_blank" class="btn btn-info text-light disabled">Preview</a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('invoice.generate-invoice-for-client', $invoiceData) }}" target="_blank" class="btn btn-success text-light disabled">Add</a>
+                                </td>
                             </tr>
                         @endforeach
                     @else

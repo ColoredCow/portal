@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
+use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Services\InvoiceService;
 
 class Client extends Model
 {
@@ -128,8 +130,10 @@ class Client extends Model
         return round($this->getBillableAmountForTerm($month, $year, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $month, int $year, $projects)
+    public function getTotalPayableAmountForTerm(int $month, int $year=null, $projects=null)
     {
+        $projects = $projects ?? collect([]);
+
         return $this->getBillableAmountForTerm($month, $year, $projects) + $this->getTaxAmountForTerm($month, $year, $projects);
     }
 
@@ -144,5 +148,11 @@ class Client extends Model
         return $this->projects->sum(function ($project) {
             return $project->current_hours_for_month;
         });
+    }
+
+    public function getNextInvoiceNumberAttribute()
+    {
+        $invoiceService = new InvoiceService();
+        return $invoiceService->getInvoiceNumberPreview($this, null, today(), config('project.meta_keys.billing_level.value.client.key'));
     }
 }

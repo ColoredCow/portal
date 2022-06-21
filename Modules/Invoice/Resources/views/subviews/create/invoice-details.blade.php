@@ -20,9 +20,9 @@
                             <label for="billingLevel" class="field-required">
                                 Bill Level
                             </label>
-                            <span 
-                                data-toggle="tooltip" 
-                                data-placement="right" 
+                            <span
+                                data-toggle="tooltip"
+                                data-placement="right"
                                 title="Client Level Billing will include all the projects of client having billing level set to client."
                                 class="ml-2"
                             >
@@ -136,7 +136,7 @@
             }
             button.form.submit();
         }
-        
+
         const validateFormData = (form) => {
             if (!form.checkValidity()) {
                 form.reportValidity();
@@ -170,7 +170,7 @@
                         if (client.id == this.clientId) {
                             this.client = client;
                             this.currency = client.currency;
-                            this.projects = _.orderBy(client.project_level_billing_projects, 'name', 'asc');
+                            this.projects = _.orderBy(client.projects, 'name', 'asc');
                         }
                     }
                 },

@@ -93,7 +93,6 @@ class Invoice extends Model
 
     public function invoiceAmounts()
     {
-        $country = optional($this->client)->country;
         $amount = (int) $this->amount;
 
         if ($this->client->type == 'indian') {
