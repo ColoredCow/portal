@@ -276,12 +276,12 @@ class ProjectService implements ProjectServiceContract
     public function getZeroEffortTeamMemberInProject()
     {
         $user = User::get();
+        $data = [];
         foreach ($user as $user) {
             $projects = $user->projects;
             $managerProjects = [];
-            $projectManagerName = "";
-            $projectManagerEmail = "";
-            $data = [];
+            $projectManagerName = '';
+            $projectManagerEmail = '';
             foreach ($projects as $project) {
                 foreach ($project->teamMembers as $teamMember) {
                     if ($teamMember->getOriginal('pivot_designation') == 'project_manager' && $teamMember->getOriginal('pivot_team_member_id') == $user->id) {
