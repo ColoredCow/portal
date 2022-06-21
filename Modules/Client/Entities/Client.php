@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
-use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Services\InvoiceService;
 
 class Client extends Model
