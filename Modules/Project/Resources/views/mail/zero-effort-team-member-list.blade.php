@@ -10,9 +10,15 @@
         <tbody>
             @foreach ($projectManager['projects'] as $projects)
             <tr>
-                <td>{{ $projects->name }}</td>
+                <td>
+                  <li>{{ $projects->name }}</li>
+                </td>
             </tr>
              @endforeach
         </tbody>
       </table>
+    <br>
+    <p style="line-height: 1px;">Thanks,</p>
+    <p style="line-height: 1px;">Portal Team</p>
+    <p style="line-height: 1px;">ColoredCow</p>
 </div>
