@@ -21,13 +21,12 @@ class InvoiceService implements InvoiceServiceContract
 {
     public function index($filters = [], $invoiceStatus = 'sent')
     {
-        $filters =[
+        $filters = [
             'client_id' => $filters['client_id'] ?? null,
             'month' => $filters['month'] ?? null,
             'year' => $filters['year'] ?? null,
             'status' => $filters['status'] ?? null,
         ];
-
 
         $query = Invoice::query();
         $invoices = $this
