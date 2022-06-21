@@ -283,7 +283,7 @@ class ProjectService implements ProjectServiceContract
                 foreach ($project->teamMembers as $teamMember) {
                     if ($teamMember->getOriginal('pivot_designation') == 'project_manager' && $teamMember->getOriginal('pivot_team_member_id') == $user->id) {
                         foreach ($project->teamMembers as $projectTeamMember) {
-                            if ($projectTeamMember->getOriginal('pivot_designation') != 'project_manager' && $projectTeamMember->getOriginal('pivot_daily_expected_effort') == 0 ) {
+                            if ($projectTeamMember->getOriginal('pivot_designation') != 'project_manager' && $projectTeamMember->getOriginal('pivot_daily_expected_effort') == 0) {
                                 $managerProjects[] = $project;
                                 $projectManagerName = $teamMember->name;
                                 $projectManagerEmail = $teamMember->email;
