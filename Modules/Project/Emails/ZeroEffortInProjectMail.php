@@ -31,7 +31,7 @@ class ZeroEffortInProjectMail extends Mailable
      */
     public function build()
     {
-        if(! $this->zeroEffortInProject->isEmpty()) {
+        if (! $this->zeroEffortInProject->isEmpty()) {
             foreach ($this->zeroEffortInProject as $projectManager) {
                 return $this
                 ->to($projectManager['projectManagerEmail'])
