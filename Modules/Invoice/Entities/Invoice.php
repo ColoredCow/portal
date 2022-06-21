@@ -52,9 +52,9 @@ class Invoice extends Model
             });
     }
 
-    public function scopeClient($query, $client_id)
+    public function scopeClient($query, $clientId)
     {
-        return $query->where('client_id', $client_id);
+        return $query->where('client_id', $clientId);
     }
 
     public function project()

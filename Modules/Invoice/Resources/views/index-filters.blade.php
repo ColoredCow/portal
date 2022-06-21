@@ -40,7 +40,7 @@
         </div>
 
         
-        <div class='form-group mr-4 w-168'>
+        <div class='form-group mr-4 w-300'>
             <select class="form-control bg-light" name="client_id"  onchange="document.getElementById('invoiceFilterForm').submit();">
                 <option {{ $filters['client_id'] == '' ? "selected=selected" : '' }} value="">All clients</option>
                 @foreach ($clients as $client)
