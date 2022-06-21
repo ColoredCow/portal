@@ -116,7 +116,6 @@ class InvoiceController extends Controller
         return $pdf;
     }
 
-
     /**
      * Show the specified resource.
      * @param int $id

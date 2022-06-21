@@ -40,7 +40,6 @@ class InvoiceService implements InvoiceServiceContract
             $readyToSendInvoicesData = Client::whereId(2)->get();
         }
 
-
         return [
             'invoices' => $invoices,
             'clients' => $this->getClientsForInvoice(),

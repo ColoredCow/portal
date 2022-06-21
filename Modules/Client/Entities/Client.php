@@ -130,7 +130,7 @@ class Client extends Model
         return round($this->getBillableAmountForTerm($month, $year, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $month, int $year=null, $projects=null)
+    public function getTotalPayableAmountForTerm(int $month, int $year = null, $projects = null)
     {
         $projects = $projects ?? collect([]);
 
@@ -153,6 +153,7 @@ class Client extends Model
     public function getNextInvoiceNumberAttribute()
     {
         $invoiceService = new InvoiceService();
+
         return $invoiceService->getInvoiceNumberPreview($this, null, today(), config('project.meta_keys.billing_level.value.client.key'));
     }
 }
