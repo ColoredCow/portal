@@ -32,13 +32,22 @@
 
         <div class='form-group mr-4 w-168'>
             <select class="form-control bg-light" name="status"  onchange="document.getElementById('invoiceFilterForm').submit();">
-                <option {{ $filters['status'] == '' ? "selected=selected" : '' }} value="">All Status
-                </option>
-                <option {{ $filters['status'] == 'sent' ? "selected=selected" : '' }} value="sent">Pending
-                </option>
+                <option {{ $filters['status'] == '' ? "selected=selected" : '' }} value="">All Status</option>
+                <option {{ $filters['status'] == 'sent' ? "selected=selected" : '' }} value="sent">Pending</option>
                 <option {{ $filters['status'] == 'paid' ? "selected=selected" : '' }} value="paid">Paid</option>
                 <option {{ $filters['status'] == 'disputed' ? "selected=selected" : '' }} value="disputed">Disputed</option>
             </select>
         </div>
+
+        
+        <div class='form-group mr-4 w-168'>
+            <select class="form-control bg-light" name="client_id"  onchange="document.getElementById('invoiceFilterForm').submit();">
+                <option {{ $filters['client_id'] == '' ? "selected=selected" : '' }} value="">All clients</option>
+                @foreach ($clients as $client)
+                    <option {{ $filters['client_id'] == $client->id ? "selected=selected" : '' }} value="{{$client->id}}">{{$client->name}}</option>
+                @endforeach
+            </select>
+        </div>
+
     </div>
 </form>
