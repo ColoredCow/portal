@@ -2,7 +2,6 @@
 
 namespace Modules\Project\Emails;
 
-use Google\Service\ShoppingContent\Resource\Collections;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

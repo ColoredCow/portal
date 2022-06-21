@@ -278,7 +278,7 @@ class ProjectService implements ProjectServiceContract
         $user = User::get();
         foreach ($user as $user) {
             $projects = $user->projects;
-            $managerProjects=[];
+            $managerProjects = [];
             foreach ($projects as $project) {
                 foreach ($project->teamMembers as $teamMember) {
                     if ($teamMember->getOriginal('pivot_designation') == 'project_manager' && $teamMember->getOriginal('pivot_team_member_id') == $user->id) {
@@ -292,7 +292,7 @@ class ProjectService implements ProjectServiceContract
                     }
                 }
             }
-            if (!empty($managerProjects)) {
+            if (! empty($managerProjects)) {
                 $data[] = [
                     'projects' => $managerProjects,
                     'projectManagerName' => $projectManagerName,
@@ -301,6 +301,7 @@ class ProjectService implements ProjectServiceContract
             }
         }
         $projectDetails = Collection::make($data);
+
         return $projectDetails;
     }
 }
