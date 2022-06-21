@@ -21,6 +21,13 @@ class InvoiceService implements InvoiceServiceContract
 {
     public function index($filters = [], $invoiceStatus = 'sent')
     {
+        $filters = [
+            'client_id' => $filters['client_id'] ?? null,
+            'month' => $filters['month'] ?? null,
+            'year' => $filters['year'] ?? null,
+            'status' => $filters['status'] ?? null,
+        ];
+
         $query = Invoice::query();
         $invoices = $this
             ->applyFilters($query, $filters)
@@ -75,6 +82,7 @@ class InvoiceService implements InvoiceServiceContract
             'year' => now()->format('Y'),
             'month' => now()->format('m'),
             'status' => 'sent',
+            'client_id' => '',
         ];
     }
 
@@ -191,6 +199,10 @@ class InvoiceService implements InvoiceServiceContract
 
         if ($country = Arr::get($filters, 'region', '')) {
             $query = $query->region($country);
+        }
+
+        if ($clientId = Arr::get($filters, 'clientId', '')) {
+            $query = $query->client($clientId);
         }
 
         return $query;
