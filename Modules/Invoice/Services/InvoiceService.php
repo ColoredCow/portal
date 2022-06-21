@@ -19,10 +19,16 @@ use Modules\Project\Entities\Project;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index($filters = [])
+    public function index($filters = [], $invoiceStatus = 'sent')
     {
-        $query = Invoice::query();
+        $filters = [
+            'client_id' => $filters['client_id'] ?? null,
+            'month' => $filters['month'] ?? null,
+            'year' => $filters['year'] ?? null,
+            'status' => $filters['status'] ?? null,
+        ];
 
+        $query = Invoice::query();
         $invoices = $this
             ->applyFilters($query, $filters)
             ->get();
@@ -33,6 +39,7 @@ class InvoiceService implements InvoiceServiceContract
             'currencyService' => $this->currencyService(),
             'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
             'filters' => $filters,
+            'invoiceStatus' => $invoiceStatus,
         ];
     }
 
@@ -75,6 +82,7 @@ class InvoiceService implements InvoiceServiceContract
             'year' => now()->format('Y'),
             'month' => now()->format('m'),
             'status' => 'sent',
+            'client_id' => '',
         ];
     }
 
@@ -194,6 +202,10 @@ class InvoiceService implements InvoiceServiceContract
 
         if ($country = Arr::get($filters, 'region', '')) {
             $query = $query->region($country);
+        }
+
+        if ($clientId = Arr::get($filters, 'client_id', '')) {
+            $query = $query->client($clientId);
         }
 
         return $query;

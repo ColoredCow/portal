@@ -52,6 +52,11 @@ class Invoice extends Model
             });
     }
 
+    public function scopeClient($query, $clientId)
+    {
+        return $query->where('client_id', $clientId);
+    }
+
     public function project()
     {
         return $this->belongsTo(Project::class);
