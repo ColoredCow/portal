@@ -201,7 +201,7 @@ class InvoiceService implements InvoiceServiceContract
             $query = $query->region($country);
         }
 
-        if ($clientId = Arr::get($filters, 'clientId', '')) {
+        if ($clientId = Arr::get($filters, 'client_id', '')) {
             $query = $query->client($clientId);
         }
 
