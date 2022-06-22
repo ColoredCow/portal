@@ -11,4 +11,5 @@
 <div class="container mx-4 mt-5">
     <p>No resource exist for this job. </p>
 </div>
+<!-- Functionality yet to be created -->
 @endsection

@@ -9,7 +9,7 @@ class ResourcesController extends Controller
 {
     public function index()
     {
-        $jobs = Job::select('title')->get();
+        $jobs = Job::all();
 
         return view('hr::guidelines-resources.index', compact('jobs'));
     }
