@@ -4,7 +4,6 @@ namespace Modules\HR\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\Job;
-use Illuminate\Http\Request;
 
 
 class ResourcesController extends Controller
