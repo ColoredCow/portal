@@ -1,17 +1,17 @@
 <div>
-    <p>Hello {{ $projectManager['projectManagerName'] }},</p>
+    <p>Hello {{ $projectManager['name'] }},</p>
     <p>We found some projects where the expected hours are zero for you or team members where you are assigned as project manager. Please update these projects:</p>
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">ProjectName</th>
+            <th scope="col">Project Name</th>
           </tr>
         </thead>
         <tbody>
-            @foreach ($projectManager['projects'] as $projects)
+            @foreach ($projectManager['projects'] as $project)
             <tr>
                 <td>
-                  <li>{{ $projects->name }}</li>
+                  <li>{{ $project->name }}</li>
                 </td>
             </tr>
              @endforeach

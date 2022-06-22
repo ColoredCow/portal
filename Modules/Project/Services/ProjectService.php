@@ -273,11 +273,11 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    public function getZeroEffortTeamMemberInProject()
+    public function getMailDetailsProjectManager()
     {
-        $user = User::get();
+        $users = User::get();
         $data = [];
-        foreach ($user as $user) {
+        foreach ($users as $user) {
             $projects = $user->projects;
             $managerProjects = [];
             $projectManagerName = '';
@@ -298,8 +298,8 @@ class ProjectService implements ProjectServiceContract
             if (! empty($managerProjects)) {
                 $data[] = [
                     'projects' => $managerProjects,
-                    'projectManagerName' => $projectManagerName,
-                    'projectManagerEmail' =>$projectManagerEmail,
+                    'name' => $projectManagerName,
+                    'email' =>$projectManagerEmail,
                 ];
             }
         }
