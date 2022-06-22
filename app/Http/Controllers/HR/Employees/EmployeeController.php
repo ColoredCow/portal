@@ -14,7 +14,7 @@ class EmployeeController extends Controller
     public function __construct(EmployeeServiceContract $service)
     {
         $this->service = $service;
-    }   
+    }
 
     /**
      * Display a listing of the resource.
@@ -33,7 +33,7 @@ class EmployeeController extends Controller
         }
 
         $employees = Employee::active()->orderBy('name')->get();
-        
+
         return view('hr.employees.index', $this->service->index($filters, $status), compact('employees'));
     }
 
@@ -53,4 +53,5 @@ class EmployeeController extends Controller
 
         return view('hr.employees.projects', compact('employee'));
     }
+
 }

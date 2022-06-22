@@ -17,6 +17,7 @@ class EmployeeService implements EmployeeServiceContract
         $employees = $this
             ->applyFilters($query, $filters)
             ->get();
+
         return [
             'employees' => $employees,
             'filters' => $filters,
@@ -39,5 +40,5 @@ class EmployeeService implements EmployeeServiceContract
 
         return $query;
     }
-    
+
 }
