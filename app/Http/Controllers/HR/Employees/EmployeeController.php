@@ -4,17 +4,37 @@ namespace App\Http\Controllers\HR\Employees;
 
 use App\Http\Controllers\Controller;
 use Modules\HR\Entities\Employee;
+use App\Contracts\EmployeeServiceContract;
+use Illuminate\Http\Request;
+
 
 class EmployeeController extends Controller
 {
+    protected $service;
+
+    public function __construct(EmployeeServiceContract $service)
+    {
+        $this->service = $service;
+    }
+    
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::active()->orderBy('name')->get();
+        $status = $request->status ?? 'active';
+        $filters = $request->all();
 
-        return view('hr.employees.index', compact('employees'));
+        if ($status == 'active') {
+            unset($filters['status']);
+            $filters = $filters ?: $this->service->defaultFilters();
+        } else {
+            $invoiceStatus = 'inactive';
+            $filters = $request->all();
+        }
+
+        $employees = Employee::active()->orderBy('name')->get();
+        return view('hr.employees.index', $this->service->index($filters, $status), compact('employees'));
     }
 
     public function show(Employee $employee)
