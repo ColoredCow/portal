@@ -23,14 +23,7 @@ class EmployeeController extends Controller
     {
         $status = $request->status ?? 'active';
         $filters = $request->all();
-
-        if ($status == 'active') {
-            unset($filters['status']);
-            $filters = $filters ?: $this->service->defaultFilters();
-        } else {
-            $invoiceStatus = 'inactive';
-            $filters = $request->all();
-        }
+        $filters = $filters ?: $this->service->defaultFilters();
 
         $employees = Employee::active()->orderBy('name')->get();
 
