@@ -53,5 +53,4 @@ class EmployeeController extends Controller
 
         return view('hr.employees.projects', compact('employee'));
     }
-
 }
