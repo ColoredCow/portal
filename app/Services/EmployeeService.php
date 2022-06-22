@@ -8,12 +8,13 @@ use Illuminate\Support\Arr;
 
 class EmployeeService implements EmployeeServiceContract
 {
-    public function index($filters = [], $status = 'active')
+    public function index($filters = [])
     {
         $filters = [
             'status' => $filters['status'] ?? null,
         ];
         $query = Employee::query();
+        $employees = Employee::active()->orderBy('name')->get();
         $employees = $this
             ->applyFilters($query, $filters)
             ->get();
@@ -21,7 +22,6 @@ class EmployeeService implements EmployeeServiceContract
         return [
             'employees' => $employees,
             'filters' => $filters,
-            'status' => $status,
         ];
     }
 
