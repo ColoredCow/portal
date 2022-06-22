@@ -5,7 +5,18 @@
     <br>
     @include('hr.employees.menu')
     <br><br>
-    <h1>Employees</h1>
+    <div class="d-flex">
+        <h1>Employees</h1>
+        <form id="employeeFilterForm">
+            <input type="hidden" name="status" value="{{ request()->input('status', 'active') }}">
+            <div class='form-group w-130' class="d-inline">
+                <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
+                    <option {{ $filters['status'] == 'active' ? "selected=selected" : '' }} value="active">Active</option>
+                    <option {{ $filters['status'] == 'inactive' ? "selected=selected" : '' }} value="inactive">Inactive</option>
+                </select>
+            </div>
+        </form>
+    </div>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Name</th>
