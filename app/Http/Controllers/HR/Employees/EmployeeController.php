@@ -21,13 +21,13 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $status = $request->status ?? 'active';
+        $request->status = $request->status ?? 'active';
         $filters = $request->all();
         $filters = $filters ?: $this->service->defaultFilters();
 
         $employees = Employee::active()->orderBy('name')->get();
 
-        return view('hr.employees.index', $this->service->index($filters, $status), compact('employees'));
+        return view('hr.employees.index', $this->service->index($filters), compact('employees'));
     }
 
     public function show(Employee $employee)
