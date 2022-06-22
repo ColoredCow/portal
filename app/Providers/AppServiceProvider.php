@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+
 use App\Contracts\EmployeeServiceContract;
 use App\Services\EmployeeService;
 use Nwidart\Modules\Facades\Module;

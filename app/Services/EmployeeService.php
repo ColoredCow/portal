@@ -39,4 +39,5 @@ class EmployeeService implements EmployeeServiceContract
 
         return $query;
     }
+    
 }
