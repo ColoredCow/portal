@@ -11,8 +11,10 @@ class ResourcesController extends Controller
 {
     public function index()
     {
-        $jobs = Job::select('title')->get();   
+        $jobs = Job::select('title')->get();
+
         return view('hr::guidelines-resources.index', compact('jobs'));
+
     }
 
     public function show()
