@@ -25,7 +25,7 @@ class ProjectController extends Controller
     public function index()
     {
         $data = $this->service->index(request()->all());
-
+        dd($this->service->getMailDetailsForProjectManagers());
         return view('project::index', $data);
     }
 
