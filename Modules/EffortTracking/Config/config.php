@@ -3,7 +3,7 @@
 return [
     'name' => 'EffortTracking',
     'minimum_expected_hours' => 8,
-    'update_date_count_after_time' => '18:00:00',
+    'update_date_count_after_time' => '20:00:00',
     'columns_name' => [
         'team_member_name' => 'team member name',
         'start_date' => 'start date',
