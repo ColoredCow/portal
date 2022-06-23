@@ -282,11 +282,10 @@ class ProjectService implements ProjectServiceContract
             if (empty($userProjects)) {
                 continue;
             }
-            $projects = Project::whereIn('id', $userProjects)->get();
+            $projects = Project::with(['teamMembers'])->whereIn('id', $userProjects)->get();
             $managerProjects = [];
             foreach ($projects as $project) {
-                $projectTeamMembers = Project::with(['teamMembers'])->get();
-                foreach ($projectTeamMembers as $teamMember) {
+                foreach ($project->teamMembers as $teamMember) {
                     if ($teamMember->getOriginal('pivot_designation') != 'project_manager' && $teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
                         $managerProjects[] = $project;
                         break;
