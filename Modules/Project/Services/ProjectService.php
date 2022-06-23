@@ -273,25 +273,22 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    public function getMailDetailsProjectManager()
+    public function getMailDetailsForProjectManager()
     {
         $users = User::get();
         $data = [];
         foreach ($users as $user) {
-            $projects = $user->projects;
+            $userProjectManager = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
+            $projects = Project::whereIn('id', $userProjectManager)->get();
             $managerProjects = [];
             $projectManagerName = '';
             $projectManagerEmail = '';
             foreach ($projects as $project) {
                 foreach ($project->teamMembers as $teamMember) {
-                    if ($teamMember->getOriginal('pivot_designation') == 'project_manager' && $teamMember->getOriginal('pivot_team_member_id') == $user->id) {
-                        foreach ($project->teamMembers as $projectTeamMember) {
-                            if ($projectTeamMember->getOriginal('pivot_designation') != 'project_manager' && $projectTeamMember->getOriginal('pivot_daily_expected_effort') == 0) {
-                                $managerProjects[] = $project;
-                                $projectManagerName = $teamMember->name;
-                                $projectManagerEmail = $teamMember->email;
-                            }
-                        }
+                    if ($teamMember->getOriginal('pivot_designation') != 'project_manager' && $teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
+                        $managerProjects[] = $project;
+                        $projectManagerName = $user->name;
+                        $projectManagerEmail = $user->email;
                     }
                 }
             }

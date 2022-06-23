@@ -2,13 +2,16 @@
 
 namespace Modules\Project\Console;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
-use Modules\Project\Contracts\ProjectServiceContract;
-use Modules\Project\Emails\ZeroEffortInProjectMail;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Mail;
 
-class ZeroEffortInProject extends Command
+class ZeroEffortInProject implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
      * The console command name.
      *
@@ -41,9 +44,7 @@ class ZeroEffortInProject extends Command
     public function handle()
     {
         $service = app(ProjectServiceContract::class);
-        $zeroEffortInProject = $service->getZeroEffortTeamMemberInProject();
-        foreach ($zeroEffortInProject as $projectManager) {
-            Mail::send(new ZeroEffortInProjectMail($projectManager));
-        }
+        $zeroEffortInProject = $service->getMailDetailsForProjectManager();
+        Mail::send(new ZeroEffortInProjectMail($zeroEffortInProject));
     }
 }
