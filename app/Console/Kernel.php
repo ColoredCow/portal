@@ -6,6 +6,7 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\SyncEffortsheet;
+use Modules\Project\Console\ZeroEffortInProject;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,8 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         SyncEffortsheet::class,
-        SendEffortSummaryCommand::class
-        ZeroEffortCommand::class,
+        SendEffortSummaryCommand::class,
+        ZeroEffortInProject::class,
     ];
 
     /**
