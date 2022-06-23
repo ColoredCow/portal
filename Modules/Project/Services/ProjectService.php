@@ -273,10 +273,10 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    public function getMailDetailsForProjectManager()
+    public function getMailDetailsForProjectManagers()
     {
         $users = User::get();
-        $data = [];
+        $dataForMail = [];
         foreach ($users as $user) {
             $userProjectManager = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
             $projects = Project::whereIn('id', $userProjectManager)->get();
@@ -293,14 +293,14 @@ class ProjectService implements ProjectServiceContract
                 }
             }
             if (! empty($managerProjects)) {
-                $data[] = [
+                $dataForMail[] = [
                     'projects' => $managerProjects,
                     'name' => $projectManagerName,
                     'email' =>$projectManagerEmail,
                 ];
             }
         }
-        $projectDetails = Collection::make($data);
+        $projectDetails = Collection::make($dataForMail);
 
         return $projectDetails;
     }
