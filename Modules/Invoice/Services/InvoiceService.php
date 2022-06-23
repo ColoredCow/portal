@@ -216,7 +216,7 @@ class InvoiceService implements InvoiceServiceContract
             $query = $query->client($clientId);
         }
 
-        return $query;
+        return $query->orderBy('sent_on', 'desc');
     }
 
     /**
@@ -395,7 +395,7 @@ class InvoiceService implements InvoiceServiceContract
         $countryId = optional(ClientAddress::where('client_id', $clientId)->first())->country_id;
         $clientType = ($countryId == 1) ? 'IN' : 'EX';
         $clientProjectId = optional(Project::find($projectId))->client_project_id;
-        $lastInvoice = optional(Invoice::where([['client_id', $clientId], ['project_id', $projectId]])->orderBy('id', 'DESC')->get())->offsetGet(1);
+        $lastInvoice = optional(Invoice::where([['client_id', $clientId], ['project_id', $projectId]])->orderBy('sent_on', 'DESC')->get())->offsetGet(1);
         $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1 : '000001';
 
         $invoiceNumber = $clientType . sprintf('%03s', $client->client_id) . ($invoiceLevel == 'client' ? '000' : $clientProjectId) . sprintf('%06s', $invoiceSequence) . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
@@ -407,7 +407,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $countryId = optional(ClientAddress::where('client_id', $client->id)->first())->country_id;
         $clientType = ($countryId == 1) ? 'IN' : 'EX';
-        $lastInvoice = Invoice::where([['client_id', $client->id], ['project_id', optional($project)->id]])->orderBy('id', 'DESC')->first();
+        $lastInvoice = Invoice::where([['client_id', $client->id], ['project_id', optional($project)->id]])->orderBy('sent_on', 'DESC')->first();
         $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1 : '000001';
         $invoiceNumber = $clientType . sprintf('%03s', $client->client_id) . '-' . ($invoiceLevel == 'client' ? '000' : $project->client_project_id) . '-' . sprintf('%06s', $invoiceSequence) . '-' . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
 

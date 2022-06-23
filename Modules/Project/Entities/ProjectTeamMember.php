@@ -26,7 +26,7 @@ class ProjectTeamMember extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'team_member_id', 'id');
+        return $this->belongsTo(User::class, 'team_member_id', 'id')->withTrashed();
     }
 
     public function projectTeamMemberEffort()

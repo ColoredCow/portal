@@ -17,6 +17,15 @@ class Employee extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function scopeStatus($query, $status)
+    {
+        if ($status == 'active') {
+            return $query->wherehas('user');
+        } else {
+            return $query->whereDoesntHave('user');
+        }
+    }
+
     public function scopeActive($query)
     {
         return $query->whereNotNull('user_id');
