@@ -4,6 +4,7 @@ namespace Modules\HR\Entities;
 
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
 
 class Employee extends Model
@@ -19,7 +20,7 @@ class Employee extends Model
 
     public function scopeStatus($query, $status)
     {
-        if ($status == 'active') {
+        if ($status == 'current') {
             return $query->wherehas('user');
         } else {
             return $query->whereDoesntHave('user');
@@ -48,5 +49,14 @@ class Employee extends Model
     public function projects()
     {
         return $this->belongsToMany(Project::class)->withPivot('contribution_type');
+    }
+
+    public function scopeApplyFilters($query, $filters)
+    {
+        if ($status = Arr::get($filters, 'status', '')) {
+            $query = $query->status($status);
+        }
+
+        return $query;
     }
 }
