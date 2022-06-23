@@ -31,7 +31,7 @@ class ZeroEffortInProjectMail extends Mailable
     {
         return $this
         ->to($this->projectManager['email'])
-        ->subject('Some of your team members have zero effort in project!')
+        ->subject('ColoredCow Portal - Some of your team members have zero effort in projects!')
         ->view('project::mail.zero-effort-team-member-list')
         ->with(['projectManager' => $this->projectManager]);
     }

@@ -43,7 +43,7 @@ class ZeroEffortInProject extends Command
         $service = app(ProjectServiceContract::class);
         $getMailDetailsForProjectManagers = $service->getMailDetailsForProjectManagers();
         foreach ($getMailDetailsForProjectManagers as $projectManager) {
-            Mail::send(new ZeroEffortInProjectMail($projectManager));
+            Mail::queue(new ZeroEffortInProjectMail($projectManager));
         }
     }
 }

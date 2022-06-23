@@ -278,20 +278,25 @@ class ProjectService implements ProjectServiceContract
         $users = User::get();
         $dataForMail = [];
         foreach ($users as $user) {
-            $userProjectManager = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
-            $projects = Project::whereIn('id', $userProjectManager)->get();
+            $userProjectManagerId = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
+            if (empty($userProjectManagerId)) {
+                continue;
+            }
+            $projects = Project::whereIn('id', $userProjectManagerId)->get();
             $managerProjects = [];
             $projectManagerName = '';
             $projectManagerEmail = '';
             foreach ($projects as $project) {
-                foreach ($project->teamMembers as $teamMember) {
+                $projectTeamMembers = $project->teamMembers;
+                foreach ($projectTeamMembers as $teamMember) {
                     if ($teamMember->getOriginal('pivot_designation') != 'project_manager' && $teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
                         $managerProjects[] = $project;
-                        $projectManagerName = $user->name;
-                        $projectManagerEmail = $user->email;
+                        continue;
                     }
                 }
             }
+            $projectManagerName = $user->name;
+            $projectManagerEmail = $user->email;
             if (! empty($managerProjects)) {
                 $dataForMail[] = [
                     'projects' => $managerProjects,
