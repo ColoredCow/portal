@@ -82,7 +82,7 @@ class Invoice extends Model
     public function invoiceAmount()
     {
         $country = optional($this->client)->country;
-        $amount =  (float) $this->amount;
+        $amount = (float) $this->amount;
 
         if ($this->client->type == 'indian') {
             $amount = (float) $this->amount + (float) $this->gst;
