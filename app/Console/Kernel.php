@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         SyncEffortsheet::class,
         SendEffortSummaryCommand::class
+        ZeroEffortCommand::class,
     ];
 
     /**
