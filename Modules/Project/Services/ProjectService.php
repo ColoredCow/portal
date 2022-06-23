@@ -13,6 +13,7 @@ use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -270,5 +271,37 @@ class ProjectService implements ProjectServiceContract
                 ['contract_file_path' => $filePath]
             );
         }
+    }
+
+    public function getMailDetailsForProjectManagers()
+    {
+        $users = User::get();
+        $dataForMail = [];
+        foreach ($users as $user) {
+            $userProjects = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
+            if (empty($userProjects)) {
+                continue;
+            }
+            $projects = Project::with(['teamMembers'])->whereIn('id', $userProjects)->get();
+            $managerProjects = [];
+            foreach ($projects as $project) {
+                foreach ($project->teamMembers as $teamMember) {
+                    if ($teamMember->getOriginal('pivot_designation') != 'project_manager' && $teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
+                        $managerProjects[] = $project;
+                        break;
+                    }
+                }
+            }
+            if (! empty($managerProjects)) {
+                $dataForMail[] = [
+                    'projects' => $managerProjects,
+                    'name' => $user->name,
+                    'email' =>$user->email,
+                ];
+            }
+        }
+        $projectDetails = Collection::make($dataForMail);
+
+        return $projectDetails;
     }
 }
