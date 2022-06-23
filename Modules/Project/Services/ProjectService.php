@@ -278,14 +278,12 @@ class ProjectService implements ProjectServiceContract
         $users = User::get();
         $dataForMail = [];
         foreach ($users as $user) {
-            $userProjectManagerId = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
-            if (empty($userProjectManagerId)) {
+            $userAsProjectManagerInProjectsId = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
+            if (empty($userAsProjectManagerInProjectsId)) {
                 continue;
             }
-            $projects = Project::whereIn('id', $userProjectManagerId)->get();
+            $projects = Project::whereIn('id', $userAsProjectManagerInProjectsId)->get();
             $managerProjects = [];
-            $projectManagerName = '';
-            $projectManagerEmail = '';
             foreach ($projects as $project) {
                 $projectTeamMembers = $project->teamMembers;
                 foreach ($projectTeamMembers as $teamMember) {
@@ -295,13 +293,11 @@ class ProjectService implements ProjectServiceContract
                     }
                 }
             }
-            $projectManagerName = $user->name;
-            $projectManagerEmail = $user->email;
             if (! empty($managerProjects)) {
                 $dataForMail[] = [
                     'projects' => $managerProjects,
-                    'name' => $projectManagerName,
-                    'email' =>$projectManagerEmail,
+                    'name' => $user->name,
+                    'email' =>$user->email,
                 ];
             }
         }
