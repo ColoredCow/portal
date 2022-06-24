@@ -5,19 +5,19 @@ $(document).ready(function () {
 
 	$("#billing_frequency").on("change", function() {
 
-  		if($("#billing_frequency option:selected").data('value') == 'Monthly') {
+  		if($("#billing_frequency option:selected").data("value") == "Monthly") {
 			$(".dates").show();
 		}
- 		else if($("#billing_frequency option:selected").data('value') == 'Quarterly') {
+ 		else if($("#billing_frequency option:selected").data("value") == "Quarterly") {
 			$(".dates").show();
 		}
-		else if($("#billing_frequency option:selected").data('value') == 'Yearly') {
+		else if($("#billing_frequency option:selected").data("value") == "Yearly") {
 			$(".dates").show();
 		}
- 		else if($("#billing_frequency option:selected").data('value') == 'Net 15 days') {
+ 		else if($("#billing_frequency option:selected").data("value") == "Net 15 days") {
 			$(".dates").hide();
 		}
-		else if($("#billing_frequency option:selected").data('value') == 'Based on project terms') {
+		else if($("#billing_frequency option:selected").data("value") == "Based on project terms") {
 			$(".dates").hide();
 		}
 	});
