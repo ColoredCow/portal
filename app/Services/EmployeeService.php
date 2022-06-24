@@ -2,21 +2,15 @@
 
 namespace App\Services;
 
-use App\Contracts\EmployeeServiceContract;
 use Modules\HR\Entities\Employee;
-use Illuminate\Support\Arr;
 
-class EmployeeService implements EmployeeServiceContract
+class EmployeeService
 {
     public function index($filters = [])
     {
-        $filters = [
-            'status' => $filters['status'] ?? null,
-        ];
-        $query = Employee::query();
-        $employees = Employee::active()->orderBy('name')->get();
-        $employees = $this
-            ->applyFilters($query, $filters)
+        $employees = Employee::active()
+            ->orderBy('name')
+            ->applyFilters($filters)
             ->get();
 
         return [
@@ -28,16 +22,7 @@ class EmployeeService implements EmployeeServiceContract
     public function defaultFilters()
     {
         return [
-            'status' => 'active',
+            'status' => 'current',
         ];
-    }
-
-    private function applyFilters($query, $filters)
-    {
-        if ($status = Arr::get($filters, 'status', '')) {
-            $query = $query->status($status);
-        }
-
-        return $query;
     }
 }
