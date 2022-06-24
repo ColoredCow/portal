@@ -8,7 +8,7 @@ $(document).ready(function () {
 			$(".dates").removeClass("d-none");
 			return;
 		} else {
-		$(".dates").addClass("d-none");
+			$(".dates").addClass("d-none");
 		}
 	});
 });
