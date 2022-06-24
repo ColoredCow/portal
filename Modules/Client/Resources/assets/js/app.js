@@ -7,8 +7,8 @@ $(document).ready(function () {
   		if($dateAvailableForValue.includes($("#billing_frequency option:selected").data("value"))) {
 			$(".dates").removeClass("d-none");
 			return;
-		}
-		else
+		} else {
 		$(".dates").addClass("d-none");
+		}
 	});
 });
