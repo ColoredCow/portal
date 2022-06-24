@@ -65,8 +65,8 @@
                         <div class="d-flex justify-content-between">
                             <div class="input-group mr-5 w-50p">
                                 <select name="billing_date" id="billing_date" class="form-control">
-                                    @for($monthDate=1 ; $monthDate<32 ; $monthDate++)
-                                    <option {{ $monthDate == 'billing_date' ? "selected=selected" : '' }} value="{{$monthDate}}">{{$monthDate}}</option>
+                                    @for($monthDate=1; $monthDate<32; $monthDate++)
+                                        <option {{ $monthDate == 'billing_date' ?"selected=selected" : '' }} value="{{$monthDate}}">{{$monthDate}}</option>
                                     @endfor
                                 </select>
                             </div>
