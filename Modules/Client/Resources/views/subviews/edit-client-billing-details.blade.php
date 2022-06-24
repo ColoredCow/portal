@@ -60,7 +60,11 @@
                             @endforeach
                         </select>
                     </div>
+                    @if($clientBillingDetail->billing_frequency == "1" || $clientBillingDetail->billing_frequency == "5")
+                    <div class="form-group dates d-none">
+                    @else
                     <div class="form-group dates">
+                    @endif
                         <label for="billing_date" >Billing Date <span data-toggle="tooltip" data-placement="right" title="If the selected date is greater then the number of days in the month then the available date before the selected date will be considered as billing date."><i class="fa fa-question-circle"></i>&nbsp;</span></label>
                         <div class="d-flex justify-content-between">
                             <div class="input-group mr-5 w-50p">
