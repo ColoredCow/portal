@@ -4,14 +4,14 @@ namespace App\Http\Controllers\HR\Employees;
 
 use App\Http\Controllers\Controller;
 use Modules\HR\Entities\Employee;
-use App\Contracts\EmployeeServiceContract;
+use App\Services\EmployeeService;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
     protected $service;
 
-    public function __construct(EmployeeServiceContract $service)
+    public function __construct(EmployeeService $service)
     {
         $this->service = $service;
     }
