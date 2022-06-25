@@ -60,17 +60,13 @@
                             @endforeach
                         </select>
                     </div>
-                    @if($clientBillingDetail->billing_frequency == "1" || $clientBillingDetail->billing_frequency == "5")
-                    <div class="form-group dates d-none">
-                    @else
-                    <div class="form-group dates">
-                    @endif
+                    <div class="form-group dates @if($clientBillingDetail->billing_frequency == config('client.billing-frequency')['net-15-days']['id'] || $clientBillingDetail->billing_frequency == config('client.billing-frequency')['based-on-project-terms']['id'])d-none @endif">
                         <label for="billing_date" >Billing Date <span data-toggle="tooltip" data-placement="right" title="If the selected date is greater then the number of days in the month then the available date before the selected date will be considered as billing date."><i class="fa fa-question-circle"></i>&nbsp;</span></label>
                         <div class="d-flex justify-content-between">
                             <div class="input-group mr-5 w-50p">
                                 <select name="billing_date" id="billing_date" class="form-control">
                                     @for($monthDate=1; $monthDate<32; $monthDate++)
-                                        <option {{ $monthDate == 'billing_date' ?"selected=selected" : '' }} value="{{$monthDate}}">{{$monthDate}}</option>
+                                        <option {{ $clientBillingDetail->billing_date == $monthDate ?"selected=selected" : '' }} value="{{$monthDate}}">{{$monthDate}}</option>
                                     @endfor
                                 </select>
                             </div>
