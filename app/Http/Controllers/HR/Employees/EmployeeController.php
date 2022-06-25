@@ -4,17 +4,27 @@ namespace App\Http\Controllers\HR\Employees;
 
 use App\Http\Controllers\Controller;
 use Modules\HR\Entities\Employee;
+use App\Services\EmployeeService;
+use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+    protected $service;
+
+    public function __construct(EmployeeService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::active()->orderBy('name')->get();
+        $filters = $request->all();
+        $filters = $filters ?: $this->service->defaultFilters();
 
-        return view('hr.employees.index', compact('employees'));
+        return view('hr.employees.index', $this->service->index($filters));
     }
 
     public function show(Employee $employee)

@@ -5,7 +5,18 @@
     <br>
     @include('hr.employees.menu')
     <br><br>
-    <h1>Employees</h1>
+    <div class="d-flex">
+        <h1>Employees</h1>
+        <form id="employeeFilterForm">
+            <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
+            <div class='form-group w-130' class="d-inline">
+                <select class="form-control bg-info text-white ml-3" name="status"  onchange="document.getElementById('employeeFilterForm').submit();">
+                    <option {{ $filters['status'] == 'current' ? "selected=selected" : '' }} value="current">Current</option>
+                    <option {{ $filters['status'] == 'previous' ? "selected=selected" : '' }} value="previous">Previous</option>
+                </select>
+            </div>
+        </form>
+    </div>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Name</th>
@@ -47,22 +58,5 @@
         </tr>
         @endforeach
     </table>
-    <ul class="pagination" role="navigation">
-        <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
-            <span class="page-link" aria-hidden="true">‹</span>
-        </li>
-        <li class="page-item active" aria-current="page">
-            <span class="page-link">1</span>
-        </li>
-        <li class="page-item">
-            <span class="page-link bg-light">2</span>
-        </li>
-        <li class="page-item">
-            <span class="page-link bg-light">3</span>
-        </li>
-        <li class="page-item bg-light">
-            <span class="page-link" rel="next" aria-label="Next »">›</span>
-        </li>
-    </ul>
 </div>
 @endsection

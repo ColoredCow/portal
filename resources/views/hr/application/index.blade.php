@@ -48,7 +48,7 @@
             </div>
             <div class="mr-2 mt-2 mt-md-0 form-group">
                 <label id="job">{!! __('Jobs') !!}</label><br>
-                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0" name="hr_job_id" id="job"
+                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="hr_job_id" id="job"
                     onchange="this.form.submit()">
                     <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
                         {!! __('All Jobs') !!}
@@ -61,7 +61,7 @@
             </div>
             <div class="mr-2 mt-2 mt-md-0 form-group">
                 <label id="university">{!! __('University') !!}</label><br>
-                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0" name="hr_university_id" id="university"
+                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="hr_university_id" id="university"
                     onchange="this.form.submit()">
                     <option value="" {{ request()->has('hr_university_id') ? '' : 'selected' }}>
                         {!! __('All University') !!}
