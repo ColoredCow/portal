@@ -18,7 +18,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="service_rates">Service Rates</label>
                         <div class="d-flex justify-content-between">
@@ -35,7 +34,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label for="discount_rate">Discount</label>
                         <div class="d-flex justify-content-between">
@@ -44,8 +42,7 @@
                                 <div class="input-group-append">
                                     <span class="input-group-text">{{ $clientCountry->currency }}</span>
                                 </div>
-                              </div>
-
+                            </div>
                             <select name="discount_rate_term" class="form-control">
                                 <option {{ $clientBillingDetail->discount_rate_term == 'per_hour' ? 'selected=selected' : '' }} value="per_hour">Per Hour</option>
                                 <option {{ $clientBillingDetail->discount_rate_term == 'overall' ? 'selected=selected' : '' }} value="overall">Overall</option>
@@ -53,18 +50,28 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-5 offset-md-1">  
-                    <div class="form-group ">
+                    <div class="form-group">
                         <label for="billing_frequency" >Billing Frequency</label>
                         <select name="billing_frequency" id="billing_frequency" class="form-control">
                             <option value="">Select billing frequency</option>
                             @foreach (config('client.billing-frequency') as $billingFrequency)
-                            <option {{ $clientBillingDetail->billing_frequency == $billingFrequency['id'] ? 'selected=selected' : '' }} value="{{ $billingFrequency['id'] }}">{{ $billingFrequency['name'] }}</option>
+                            <option {{ $clientBillingDetail->billing_frequency == $billingFrequency['id'] ? 'selected=selected' : '' }} value="{{ $billingFrequency['id'] }}" data-value="{{ $billingFrequency['name'] }}">{{ $billingFrequency['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
-
+                    <div class="form-group dates @if($clientBillingDetail->billing_frequency == config('client.billing-frequency.net-15-days.id') || $clientBillingDetail->billing_frequency == config('client.billing-frequency.based-on-project-terms.id'))d-none @endif">
+                        <label for="billing_date" >Billing Date <span data-toggle="tooltip" data-placement="right" title="If the selected date is greater then the number of days in the month then the available date before the selected date will be considered as billing date."><i class="fa fa-question-circle"></i>&nbsp;</span></label>
+                        <div class="d-flex justify-content-between">
+                            <div class="input-group mr-5 w-50p">
+                                <select name="billing_date" id="billing_date" class="form-control">
+                                    @for($monthDate=1; $monthDate<32; $monthDate++)
+                                        <option {{ $clientBillingDetail->billing_date == $monthDate ?"selected=selected" : '' }} value="{{$monthDate}}">{{$monthDate}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                        </div>
+		            </div>
                     <div class="form-group">
                         <label for="bank_charges">Bank Charges</label>
                         <div class="d-flex justify-content-between">
@@ -77,7 +84,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             @else
                 <p>Please fill the billing address details first</p>
@@ -87,7 +93,4 @@
             @include('client::subviews.edit-client-form-submit-buttons', ['isNext' => false])
         </div>
     </div>
-    
-
-
 </div>
