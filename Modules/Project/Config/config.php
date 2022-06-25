@@ -11,10 +11,6 @@ return [
         'project_manager' => 'Project Manager',
         'developer' => 'Developer',
         'designer' => 'Designer',
-        'tester' => 'Tester(QA)',
-        'solution_architect' => 'Solution Architect',
-        'customer_support' => 'Customer Support',
-        'consultant' => 'Consultant'
     ],
     'type' => [
         'monthly-billing' => 'Monthly Billing',
