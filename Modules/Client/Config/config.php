@@ -46,28 +46,23 @@ return [
     ],
 
     'billing-frequency' => [
-        'net-15-days' =>
-        [
+        'net-15-days' => [
             'id' => 1,
             'name' => 'Net 15 days',
         ],
-        'monthly' =>
-        [
+        'monthly' => [
             'id' => 2,
             'name' => 'Monthly',
         ],
-        'quaterly' =>
-        [
+        'quaterly' => [
             'id' => 3,
             'name' => 'Quarterly',
         ],
-        'yearly' =>
-        [
+        'yearly' => [
             'id' => 4,
             'name' => 'Yearly',
         ],
-        'based-on-project-terms' =>
-        [
+        'based-on-project-terms' => [
             'id' => 5,
             'name' => 'Based on project terms',
         ],
