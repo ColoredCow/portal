@@ -45,6 +45,7 @@ return [
         ],
     ],
 
+    // Todo: Need to store these values in database
     'billing-frequency' => [
         'net-15-days' => [
             'id' => 1,
