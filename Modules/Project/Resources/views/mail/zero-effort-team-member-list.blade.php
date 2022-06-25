@@ -1,4 +1,9 @@
 <div>
+  <style>
+    .line {
+      line-height: 1px;
+    }
+  </style>
     <p>Hello {{ $projectManager['name'] }},</p>
     <p>We found some projects where the expected hours are zero for you or team members where you are assigned as project manager. Please update these projects:</p>
     <table class="table">
@@ -18,7 +23,7 @@
         </tbody>
       </table>
     <br>
-    <p style="line-height: 1px;">Thanks,</p>
-    <p style="line-height: 1px;">Portal Team</p>
-    <p style="line-height: 1px;">ColoredCow</p>
+    <p class="line">Thanks,</p>
+    <p class="line">Portal Team</p>
+    <p class="line">ColoredCow</p>
 </div>
