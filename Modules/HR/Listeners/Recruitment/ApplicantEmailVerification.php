@@ -34,7 +34,7 @@ class ApplicantEmailVerification
         $body = Setting::where('module', 'hr')->where('setting_key', 'applicant_verification_body')->first();
 
         $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body->setting_value);
-		$verification_link = url('/') . '/applicantEmailVerification/' . encrypt($application->applicant->email) . '/' .$application->id;
+        $verification_link = url('/') . '/applicantEmailVerification/' . encrypt($application->applicant->email) . '/' . $application->id;
         $body->setting_value = str_replace(config('constants.hr.template-variables.verification-link'), $verification_link, $body->setting_value);
 
         Mail::to($applicant->email, $applicant->name)

@@ -11,7 +11,7 @@ class ApplicantEmailVerified
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-	public $application;
+    public $application;
 
     /**
      * Create a new event instance.
@@ -26,7 +26,7 @@ class ApplicantEmailVerified
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return void
      */
     public function broadcastOn()
     {

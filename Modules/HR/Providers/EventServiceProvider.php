@@ -3,8 +3,7 @@
 namespace Modules\HR\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
-use Modules\HR\Events\ApplicantEmailVerified;
+use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 use Modules\HR\Events\Recruitment\ApplicationCreated;
 use Modules\HR\Events\Recruitment\JobUpdated;
 use Modules\HR\Listeners\Recruitment\ApplicantEmailVerification;
@@ -39,9 +38,9 @@ class EventServiceProvider extends ServiceProvider
             MoveResumeToWebsite::class,
         ],
 
-		ApplicantEmailVerified::class => [
+        ApplicantEmailVerified::class => [
             AutoRespondApplicant::class,
-		],
+        ],
 
         JobUpdated::class => [
             UpdateJobRounds::class,
