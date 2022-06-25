@@ -5,9 +5,9 @@ namespace Modules\HR\Listeners\Recruitment;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\Recruitment\Applicant\ApplicantCreateAutoResponder;
-use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
+use Modules\HR\Events\Recruitment\ApplicationCreated;
 
-class AutoRespondApplicant
+class ApplicantEmailVerification
 {
     /**
      * Create the event listener.
@@ -22,25 +22,27 @@ class AutoRespondApplicant
     /**
      * Handle the event.
      *
-     * @param  ApplicantEmailVerified  $event
+     * @param  ApplicationCreated  $event
      * @return void
      */
-    public function handle(ApplicantEmailVerified $event)
+    public function handle(ApplicationCreated $event)
     {
         $application = $event->application;
         $applicant = $application->applicant;
 
-        $subject = Setting::where('module', 'hr')->where('setting_key', 'applicant_create_autoresponder_subject')->first();
-        $body = Setting::where('module', 'hr')->where('setting_key', 'applicant_create_autoresponder_body')->first();
+        $subject = Setting::where('module', 'hr')->where('setting_key', 'applicant_verification_subject')->first();
+        $body = Setting::where('module', 'hr')->where('setting_key', 'applicant_verification_body')->first();
 
         $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body->setting_value);
+		$verification_link = url('/') . '/applicantEmailVerification/' . encrypt($application->applicant->email) . '/' .$application->id;
+        $body->setting_value = str_replace(config('constants.hr.template-variables.verification-link'), $verification_link, $body->setting_value);
 
         Mail::to($applicant->email, $applicant->name)
             ->send(new ApplicantCreateAutoResponder($subject->setting_value, $body->setting_value));
 
         $application->update([
-            'autoresponder_subject' => $subject->setting_value,
-            'autoresponder_body' => $body->setting_value,
+            'applicant_verification_subject' => $subject->setting_value,
+            'applicant_verification_body' => $body->setting_value,
         ]);
     }
 }

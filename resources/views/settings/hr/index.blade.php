@@ -7,6 +7,7 @@
     <br>
     @include('status', ['errors' => $errors->all()])
     <br>
+	@include('settings.hr.application-verification')
     @include('settings.hr.applicant-auto-responder')
     @include('settings.hr.applicant-interview-reminder')
     @include('settings.hr.no-show')

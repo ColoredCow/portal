@@ -13,7 +13,7 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
-use Modules\HR\Entities\University;
+use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 
 class ApplicantController extends Controller
 {
@@ -89,4 +89,12 @@ class ApplicantController extends Controller
 
         return view('hr.application.details', ['application' => $application, 'applicant' => $application->applicant, 'applicationRound' => $application->applicationRounds, 'interviewers' => $interviewers, 'timeline' => $application->applicant->timeline(), 'applicationFormDetails' => $application->applicationMeta()->formData()->first()]);
     }
+
+	public function applicantEmailVerification($applicantEmail, $applicationID)
+	{
+		$application = Application::find($applicationID);
+		event(new ApplicantEmailVerified($application));
+
+		return view('hr.application.verification')->with(['application' => $application, 'email' => decrypt($applicantEmail)]);
+	}
 }
