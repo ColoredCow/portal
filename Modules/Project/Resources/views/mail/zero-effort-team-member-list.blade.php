@@ -8,9 +8,9 @@
 	<p>We found some projects where the expected hours are zero for you or team members where you are assigned as project manager. Please update these projects:</p>
 	<table class="table">
 		<thead>
-		  <tr>
+			<tr>
 			<th scope="col">Project Name</th>
-		  </tr>
+			</tr>
 		</thead>
 		<tbody>
 			@foreach ($projectManager['projects'] as $project)
@@ -21,7 +21,7 @@
 				</tr>
 			 @endforeach
 		</tbody>
-	  </table>
+		</table>
 	<br>
 	<p class="line">Thanks,</p>
 	<p class="line">Portal Team</p>
