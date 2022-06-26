@@ -16,7 +16,7 @@
                     <div class="form-row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="title">Tempalte Name</label>
+                                <label for="title">Template Name</label>
                                 <input type="text" name="title" class="form-control" value="{{ $template->title }}">
                             </div>
                         </div>
