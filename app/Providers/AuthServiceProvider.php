@@ -22,7 +22,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Setting' => 'App\Policies\SettingPolicy',
         'App\Http\Controllers\Finance\ReportsController' => 'App\Policies\Finance\ReportPolicy',
         'App\Http\Controllers\UserController' => 'App\Policies\UserPolicy',
-        'Modules\Infrastructure\Http\Controllers\InfrastructureController' =>'App\Policies\Infrastructure\BillingsPolicy'
+        'Modules\Infrastructure\Http\Controllers\InfrastructureController' =>'App\Policies\Infrastructure\BillingsPolicy',
+        'App\Models\Finance\Salary' =>'App\Policies\Finance\SalaryPolicy'
     ];
 
     /**

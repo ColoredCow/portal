@@ -5,14 +5,17 @@ namespace Modules\Salary\Http\Controllers;
 use Modules\User\Entities\User;
 use Illuminate\Routing\Controller;
 use Modules\Salary\Services\SalaryCalculationService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class SalaryController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->authorize('viewAny', Salary::class);
         return view('salary::index');
     }
 
