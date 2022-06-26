@@ -9,6 +9,8 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Rules\ProjectNameExist;
+use \Cron\CronExpression;
+use \Carbon\Carbon;
 
 class ProjectController extends Controller
 {
@@ -25,6 +27,22 @@ class ProjectController extends Controller
     public function index()
     {
         $data = $this->service->index(request()->all());
+        app()->make(\Illuminate\Contracts\Console\Kernel::class);
+        $schedule = app()->make(\Illuminate\Console\Scheduling\Schedule::class);
+
+        $events = collect($schedule->events())->map(function($event) {
+            $cron = CronExpression::factory($event->expression);
+            $date = Carbon::now();
+            if ($event->timezone) {
+                $date->setTimezone($event->timezone);
+            }
+            return (object)[
+                'expression' => $event->expression,
+                'command' => str_after($event->command, '\'artisan\' '),
+                'next_run_at' => $cron->getNextRunDate()->format('Y-m-d H:i:s'),
+            ];
+        });
+        dd($events);
 
         return view('project::index', $data);
     }

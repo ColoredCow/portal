@@ -32,7 +32,9 @@
             <user-dashboard-infrastructure />
         </div>
         @endif
-
+        <div class="min-w-389">
+            @php Artisan::call('cache:clear'); @endphp
+        </div>
     </div>
 </div>
 @includeWhen($book, 'knowledgecafe.library.books.show_nudge_modal')
