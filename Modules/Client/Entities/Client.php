@@ -167,10 +167,10 @@ class Client extends Model
 
     public function getWorkingDaysForTerm(int $monthNumber, int $year)
     {
-        $monthStartDate = Carbon::parse($year . '-' . sprintf('%02s',$monthNumber) . '-01');
-        $monthEnd = Carbon::parse($year . '-' . sprintf('%02s',$monthNumber) . '-01')->endOfMonth();
+        $monthStartDate = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01');
++       $monthEnd = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01')->endOfMonth();
         
-        return $monthEnd->diffInDaysFiltered(function(Carbon $date) {
+        return $monthEnd->diffInDaysFiltered(function (Carbon $date) {
             return !$date->isWeekend();
         }, $monthStartDate);
     }
@@ -191,7 +191,7 @@ class Client extends Model
 
     public function getEffortSheetUrlAttribute()
     {
-        foreach($this->clientLevelBillingProjects as $project) {
+        foreach ($this->clientLevelBillingProjects as $project) {
             if ($project->effort_sheet_url) {
                 return $project->effort_sheet_url;
             }

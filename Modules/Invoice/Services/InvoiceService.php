@@ -480,7 +480,7 @@ class InvoiceService implements InvoiceServiceContract
             'cc' => $cc,
             'body' => $data['email_body'] ?? null,
             'subject' => $data['email_subject'] ?? null
-        ];        
+        ];
         $year = (int) substr($term, 0, 4);
         $monthNumber = (int) substr($term, 5, 2);
         $invoiceNumber = str_replace('-', '', $client->next_invoice_number);
