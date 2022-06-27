@@ -16,6 +16,7 @@ class SalaryController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Salary::class);
+
         return view('salary::index');
     }
 
