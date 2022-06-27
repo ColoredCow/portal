@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateResourcesCategoriesTable extends Migration
+class CreateHrResourcesCategories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateResourcesCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('resources_categories', function (Blueprint $table) {
+        Schema::create('hr_resources_categories', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->string('slug');
             $table->string('name');
@@ -28,6 +28,6 @@ class CreateResourcesCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resources_categories');
+        Schema::dropIfExists('hr_resources_categories');
     }
 }

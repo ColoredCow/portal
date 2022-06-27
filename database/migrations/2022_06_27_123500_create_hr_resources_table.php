@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateResourcesTable extends Migration
+class CreateHrResourcesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateResourcesTable extends Migration
      */
     public function up()
     {
-        Schema::create('resources', function (Blueprint $table) {
+        Schema::create('hr_resources', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
-            $table->text('resource_link');
+            $table->string('resource_link');
             $table->unsignedBigInteger('job_id');
-            $table->unsignedBigInteger('resource_category');
-            $table->foreign('job_id')->references('id')->on('hr_jobs');
-            $table->foreign('resource_category')->references('id')->on('resources_categories');
+            $table->integer('hr_resource_category_id');
             $table->timestamps();
+
+            $table->foreign('job_id')->references('id')->on('hr_jobs');
+            $table->foreign('hr_resource_category_id')->references('id')->on('hr_resources_categories');
         });
     }
 
@@ -31,6 +32,6 @@ class CreateResourcesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resources');
+        Schema::dropIfExists('hr_resources');
     }
 }
