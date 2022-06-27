@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mt-4">
 	<form action="{{ url('/settings/hr/update') }}" method="POST">
 
 		{{ csrf_field() }}
