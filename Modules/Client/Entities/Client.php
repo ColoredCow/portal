@@ -169,9 +169,9 @@ class Client extends Model
     {
         $monthStartDate = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01');
         $monthEnd = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01')->endOfMonth();
-        
+
         return $monthEnd->diffInDaysFiltered(function (Carbon $date) {
-            return !$date->isWeekend();
+            return ! $date->isWeekend();
         }, $monthStartDate);
     }
 

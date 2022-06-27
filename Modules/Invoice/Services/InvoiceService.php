@@ -158,11 +158,11 @@ class InvoiceService implements InvoiceServiceContract
         return Invoice::status('sent')->with(['client', 'project'])->get();
     }
 
-    public function saveInvoiceFile($invoice, $file, $fileName=null)
+    public function saveInvoiceFile($invoice, $file, $fileName = null)
     {
         $folder = $this->getInvoiceFilePath($invoice);
 
-        if (!$fileName) {
+        if (! $fileName) {
             $fileName = $file->getClientOriginalName();
         }
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
@@ -461,8 +461,8 @@ class InvoiceService implements InvoiceServiceContract
     public function sendInvoice(Client $client, $term, $data)
     {
         $cc = $data['cc'] ?? [];
-        
-        if (!empty($cc)) {
+
+        if (! empty($cc)) {
             $cc = array_map('trim', explode(',', $data['cc']));
             foreach ($cc as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -501,7 +501,7 @@ class InvoiceService implements InvoiceServiceContract
             'sent_on' => $sentOn,
             'due_on' => $dueOn
         ]);
- 
+
         $invoiceNumber = str_replace('-', '', $data['invoiceNumber']);
         $pdf = App::make('snappy.pdf.wrapper');
         $html = view('invoice::render.render', $data)->render();

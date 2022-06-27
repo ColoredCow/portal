@@ -43,14 +43,14 @@ class SendInvoiceMail extends Mailable
     {
         $subject = $this->email['subject'];
         $body = $this->email['body'];
-        if (!$subject) {
+        if (! $subject) {
             $subject = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_subject')->first();
             $subject = $subject ? $subject->setting_value : '';
             $subject = str_replace(config('invoice.template-variables.subject.project-name'), $this->client->name . ' Projects', $subject);
             $subject = str_replace(config('invoice.template-variables.subject.term'), $this->monthName, $subject);
             $subject = str_replace(config('invoice.template-variables.subject.year'), $this->year, $subject);
         }
-        
+
         if (! $body) {
             $body = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_body')->first();
             $body = $body ? $body->setting_value : '';
@@ -76,16 +76,16 @@ class SendInvoiceMail extends Mailable
                 $body
             );
         }
-        
+
         $invoiceFile = Storage::path($this->invoice->file_path);
-        
+
         $mail = $this->to($this->email['to'], $this->email['to_name'])
             ->from($this->email['from'], $this->email['from_name']);
-        
+
         foreach ($this->email['cc'] as $email) {
             $mail->cc($email);
         }
-            
+
         return $mail->subject($subject)
             ->attach($invoiceFile, [
                 'mime' => 'application/pdf',
