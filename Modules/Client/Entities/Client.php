@@ -168,7 +168,7 @@ class Client extends Model
     public function getWorkingDaysForTerm(int $monthNumber, int $year)
     {
         $monthStartDate = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01');
-+       $monthEnd = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01')->endOfMonth();
+        $monthEnd = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01')->endOfMonth();
         
         return $monthEnd->diffInDaysFiltered(function (Carbon $date) {
             return !$date->isWeekend();
