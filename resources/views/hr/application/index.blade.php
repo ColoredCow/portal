@@ -48,7 +48,7 @@
             </div>
             <div class="mr-2 mt-2 mt-md-0 form-group">
                 <label id="job">{!! __('Jobs') !!}</label><br>
-                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0" name="hr_job_id" id="job"
+                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="hr_job_id" id="job"
                     onchange="this.form.submit()">
                     <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
                         {!! __('All Jobs') !!}
@@ -61,7 +61,7 @@
             </div>
             <div class="mr-2 mt-2 mt-md-0 form-group">
                 <label id="university">{!! __('University') !!}</label><br>
-                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0" name="hr_university_id" id="university"
+                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="hr_university_id" id="university"
                     onchange="this.form.submit()">
                     <option value="" {{ request()->has('hr_university_id') ? '' : 'selected' }}>
                         {!! __('All University') !!}
@@ -95,7 +95,7 @@
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : ( isset($status) ? '' : 'job-application-status' ) }} btn"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
+                    href="/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}" >
                     <sup class = "application-menu-options-title fz-18">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
@@ -107,7 +107,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.in-progress.label') ? 'job-application-status text-underline' : '' }} btn" 
-                href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=trial-program>
+                href="/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=trial-program">
                     <sup class = "application-menu-options-title fz-18">
                         {{$trialProgramCount}}
                     </sup>
@@ -119,7 +119,7 @@
             </li>
             <li id="list-styling">
                 <a class="{{ $status === config('constants.hr.status.on-hold.label') ? 'job-application-status text-underline' : '' }} btn" 
-                href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
+                href="/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18">
                         {{$onHoldApplicationsCount}}
                     </sup>
@@ -131,7 +131,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.no-show.label') ? 'job-application-status text-underline':'' }} btn"
-                href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
+                href= "/{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
@@ -143,7 +143,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.sent-for-approval.label') ? 'job-application-status text-underline' : '' }} btn"
-                href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
+                href= "/{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
@@ -155,7 +155,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.approved.label') ? 'job-application-status text-underline' : '' }} btn"
-                href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
+                href= "/{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18">
                         {{$approvedApplicationsCount}}
                     </sup>
@@ -167,7 +167,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.onboarded.label') ? 'job-application-status text-underline' : '' }} btn"
-                href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
+                href= "/{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18" >
                         {{$onboardedApplicationsCount}}
                     </sup>
@@ -179,7 +179,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.rejected.label') ? 'job-application-status text-underline':'' }} btn"
-                href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
+                href= "/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18" >
                         {{$rejectedApplicationsCount}}    
                     </sup>
