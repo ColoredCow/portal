@@ -12,11 +12,15 @@ use Modules\Invoice\Entities\Invoice;
 
 class SendInvoiceMail extends Mailable
 {
-    use SerializesModels;
+    use SerializesModels, Queueable;
 
-    protected $client;
-    protected $month;
-    protected $year;
+    public $client;
+    public $month;
+    public $year;
+    public $monthName;
+    public $invoiceNumber;
+    public $email;
+    public $invoice;
 
     /**
      * Create a new message instance.
@@ -43,6 +47,7 @@ class SendInvoiceMail extends Mailable
     {
         $subject = $this->email['subject'];
         $body = $this->email['body'];
+
         if (! $subject) {
             $subject = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_subject')->first();
             $subject = $subject ? $subject->setting_value : '';
@@ -82,8 +87,8 @@ class SendInvoiceMail extends Mailable
         $mail = $this->to($this->email['to'], $this->email['to_name'])
             ->from($this->email['from'], $this->email['from_name']);
 
-        foreach ($this->email['cc'] as $email) {
-            $mail->cc($email);
+        foreach ($this->email['cc'] as $emailAddress) {
+            $mail->cc($emailAddress);
         }
 
         return $mail->subject($subject)
