@@ -203,4 +203,12 @@ class InvoiceController extends Controller
 
         return redirect(route('invoice.index'));
     }
+
+    public function sendInvoice(Request $request)
+    {
+        $client = Client::find($request->client_id);
+        $this->service->sendInvoice($client, $request->term, $request->all());
+
+        return redirect()->back()->with('status', 'Invoice sent successfully.');
+    }
 }

@@ -3,6 +3,7 @@
 namespace Modules\Client\Entities;
 
 use App\Traits\Filters;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\Project;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
+use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Services\InvoiceService;
 
 class Client extends Model
@@ -149,10 +151,50 @@ class Client extends Model
         });
     }
 
+    public function getClientLevelProjectsBillableHoursForTerm(int $monthNumber, int $year)
+    {
+        return $this->clientLevelBillingProjects->sum(function ($project) use ($monthNumber, $year) {
+            return $project->getBillableHoursForTerm($monthNumber, $year);
+        });
+    }
+
     public function getNextInvoiceNumberAttribute()
     {
         $invoiceService = new InvoiceService();
 
         return $invoiceService->getInvoiceNumberPreview($this, null, today(), config('project.meta_keys.billing_level.value.client.key'));
+    }
+
+    public function getWorkingDaysForTerm(int $monthNumber, int $year)
+    {
+        $monthStartDate = Carbon::parse($year . '-' . sprintf('%02s',$monthNumber) . '-01');
+        $monthEnd = Carbon::parse($year . '-' . sprintf('%02s',$monthNumber) . '-01')->endOfMonth();
+        
+        return $monthEnd->diffInDaysFiltered(function(Carbon $date) {
+            return !$date->isWeekend();
+        }, $monthStartDate);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function scopeInvoiceReadyToSend($query)
+    {
+        return $query->whereDoesntHave('invoices', function ($query) {
+            return $query->whereMonth('sent_on', now(config('constants.timezone.indian')));
+        })->whereHas('billingDetails', function ($query) {
+            return $query->where('billing_date', '<=', today()->format('d'));
+        });
+    }
+
+    public function getEffortSheetUrlAttribute()
+    {
+        foreach($this->clientLevelBillingProjects as $project) {
+            if ($project->effort_sheet_url) {
+                return $project->effort_sheet_url;
+            }
+        }
     }
 }

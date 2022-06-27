@@ -26,6 +26,35 @@ $(document).ready(function(){
 		}
 		document.getElementById("container").innerHTML = output;
 	});
+
+	$('#showPreview').on('click', function() {
+		var invoiceData = $(this).data('invoice-data');
+		var emailSubject = $('#emailSubject').val();
+		var emailBody = $('#emailBody').text();
+		var emailSubject = emailSubject.replace('|*project_name*|', invoiceData['projectName']);
+		var emailSubject = emailSubject.replace('|*term*|', invoiceData['monthName']);
+		var emailSubject = emailSubject.replace('|*year*|', invoiceData['year']);
+		var emailBody = emailBody.replace('|*billing_person_name*|', invoiceData['billingPersonName']);
+		var emailBody = emailBody.replace('|*invoice_amount*|', invoiceData['totalAmount']);
+		var emailBody = emailBody.replace('|*invoice_number*|', invoiceData['invoiceNumber']);
+		var emailBody = emailBody.replace('|*term*|', invoiceData['monthName']);
+		var emailBody = emailBody.replace('|*year*|', invoiceData['year']);
+		$('#emailSubject').val(emailSubject); 
+		$('#sendTo').val(invoiceData['billingPersonEmail']); 
+		$('#sendToName').val(invoiceData['billingPersonName']); 
+		$('#clientId').val(invoiceData['clientId']); 
+		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$('#emailPreview').modal('show');
+	});
+
+	$('#verifyInvoice').on('click', function () {
+		console.log($(this));
+		if ($('#verifyInvoice').is(':checked')) {
+			$('#sendInvoiceBtn').attr('disabled', false);
+		} else {
+			$('#sendInvoiceBtn').attr('disabled', true);
+		}
+	});
 });
 
 function convert_number(number) {

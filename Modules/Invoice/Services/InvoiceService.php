@@ -15,6 +15,10 @@ use Modules\Client\Entities\ClientAddress;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 use Modules\Client\Entities\Client;
+use Modules\Invoice\Emails\SendInvoiceMail;
+use Illuminate\Support\Facades\App;
+use Mail;
+use App\Models\Setting;
 use Modules\Project\Entities\Project;
 
 class InvoiceService implements InvoiceServiceContract
@@ -37,7 +41,7 @@ class InvoiceService implements InvoiceServiceContract
             $readyToSendInvoicesData = [];
         } else {
             $invoices = [];
-            $readyToSendInvoicesData = Client::whereId(2)->get();
+            $readyToSendInvoicesData = Client::invoiceReadyToSend()->whereId(2)->get();
         }
 
         return [
@@ -48,6 +52,14 @@ class InvoiceService implements InvoiceServiceContract
             'filters' => $filters,
             'invoiceStatus' => $invoiceStatus,
             'readyToSendInvoicesData' => $readyToSendInvoicesData,
+            'emailSubject' => Setting::where([
+                'module' => 'invoice',
+                'setting_key' => config('invoice.templates.setting-key.send-invoice.subject')
+            ])->first()->setting_value,
+            'emailBody' => Setting::where([
+                'module' => 'invoice',
+                'setting_key' => config('invoice.templates.setting-key.send-invoice.body')
+            ])->first()->setting_value,
         ];
     }
 
@@ -146,16 +158,23 @@ class InvoiceService implements InvoiceServiceContract
         return Invoice::status('sent')->with(['client', 'project'])->get();
     }
 
-    public function saveInvoiceFile($invoice, $file)
+    public function saveInvoiceFile($invoice, $file, $fileName=null)
+    {
+        $folder = $this->getInvoiceFilePath($invoice);
+
+        if (!$fileName) {
+            $fileName = $file->getClientOriginalName();
+        }
+        $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
+        $invoice->update(['file_path' => $file]);
+    }
+
+    public function getInvoiceFilePath(Invoice $invoice)
     {
         $year = $invoice->sent_on->format('Y');
         $month = $invoice->sent_on->format('m');
 
-        $folder = '/invoice/' . $year . '/' . $month;
-
-        $fileName = $file->getClientOriginalName();
-        $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
-        $invoice->update(['file_path' => $file]);
+        return '/invoice/' . $year . '/' . $month;
     }
 
     public function getInvoiceFile($invoiceId)
@@ -437,5 +456,75 @@ class InvoiceService implements InvoiceServiceContract
             'monthNumber' => $monthNumber,
             'currencyService' => $this->currencyService(),
         ];
+    }
+
+    public function sendInvoice(Client $client, $term, $data)
+    {
+        $cc = $data['cc'] ?? [];
+        
+        if (!empty($cc)) {
+            $cc = array_map('trim', explode(',', $data['cc']));
+            foreach ($cc as $index => $email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    continue;
+                }
+                unset($cc[$index]);
+            }
+        }
+
+        $email = [
+            'to' => $data['to'] ?? optional($client->billing_contact)->email,
+            'to_name' => $data['to_name'] ?? optional($client->billing_contact)->name,
+            'from' => $data['from'] ?? config('invoice.mail.send-invoice.email'),
+            'from_name' => config('invoice.mail.send-invoice.email'),
+            'cc' => $cc,
+            'body' => $data['email_body'] ?? null,
+            'subject' => $data['email_subject'] ?? null
+        ];        
+        $year = (int) substr($term, 0, 4);
+        $monthNumber = (int) substr($term, 5, 2);
+        $invoiceNumber = str_replace('-', '', $client->next_invoice_number);
+        $invoice = $this->generateInvoiceForClient($client, $monthNumber, $year, $term);
+        Mail::send(new SendInvoiceMail($client, $invoice, $monthNumber, $year, $invoiceNumber, $email));
+    }
+
+    public function generateInvoiceForClient(Client $client, $monthNumber, $year, $term)
+    {
+        $term = $term ?? today(config('constants.timezone.indian'))->subMonth()->format('Y-m');
+        $sentOn = today(config('constants.timezone.indian'));
+        $dueOn = today(config('constants.timezone.indian'))->addWeek();
+
+        $data = $this->getInvoiceData([
+            'client_id' => $client->id,
+            'term' => $term,
+            'billing_level' => 'client',
+            'sent_on' => $sentOn,
+            'due_on' => $dueOn
+        ]);
+ 
+        $invoiceNumber = str_replace('-', '', $data['invoiceNumber']);
+        $pdf = App::make('snappy.pdf.wrapper');
+        $html = view('invoice::render.render', $data)->render();
+        $data['receivable_date'] = $dueOn;
+        $data['project_id'] = null;
+        $invoice = Invoice::create([
+            'client_id' => $client->id,
+            'billing_level' => 'client',
+            'status' => 'sent',
+            'sent_on' =>  $sentOn,
+            'due_on' => $dueOn,
+            'receivable_date' => $dueOn,
+            'currency' => $client->country->currency,
+            'amount' => $client->getBillableAmountForTerm($monthNumber, $year, $client->clientLevelBillingProjects)
+        ]);
+
+        $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
+        $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
+        $invoice->update([
+            'invoice_number' => $invoiceNumber,
+            'file_path' => $filePath
+        ]);
+
+        return $invoice;
     }
 }

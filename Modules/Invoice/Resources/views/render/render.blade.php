@@ -213,7 +213,7 @@
                                 <p>{{ $client->name }}</p>
                                 <p>{{ optional($client->billing_contact)->email }}</p>
                                 <p>{{ $client->addresses->first()->address }}</p>
-                                <p>{{ $client->addresses->first()->state . ' ' .$client->addresses->first()->area_code }}</p>
+                                <p>{{ $client->addresses->first()->state . ' ' . $client->addresses->first()->area_code }}</p>
                                 <p>{{ $client->country->initials == 'IN' ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
                                 <p>{{ optional($client->billing_contact)->phone }}</p>
                             </td>
@@ -331,6 +331,11 @@
                                 <td>{{ config('invoice.finance-details.phone') }}</td>
                             </tr><br>
                             <tr><td><br></td></tr>
+                            <tr>
+                                <td colspan="2">
+                                    <a href="{{ $client->effort_sheet_url }}">For more details of this invoice you can visit this sheet.</a>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="2">
                                     Thank you for your business. It’s a pleasure to work with you on your project.

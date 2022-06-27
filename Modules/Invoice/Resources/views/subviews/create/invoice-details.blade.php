@@ -103,7 +103,7 @@
                 <div class="text-danger fz-14 my-0" id="container"></div>
                 <div class="form-group mt-2">
                     <label for="term" class="field-required">Invoice for term</label>
-                    <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', '') }}'>
+                    <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', now(config('constants.timezone.indian'))->subMonth()->format('Y-m')) }}'>
                 </div>
                 <div class="form-group">
                     <label for="sent_on" class="field-required">Sent on</label>
@@ -119,9 +119,7 @@
         </div>
     </div>
     <div class="card-footer">
-        <p><small class="text-theme-warning">Note: To preview invoice you don't need to fill all the details.</small></p>
         <button type="button" class="btn btn-primary" onclick="saveInvoice(this)">Create</button>
-        <a class="btn btn-secondary" id="generate_invoice_link" @click.prevent="generateInvoice($event)" href="">Preview Invoice <small>(Beta)</small> </a>
     </div>
 </div>
 
@@ -181,28 +179,6 @@
                     } else {
                         this.showProjects = false;
                     }
-                },
-
-                generateInvoice: function(event) {
-                    $('#invoice_file, [name="currency"], [name="amount"]').attr("required", false);
-                    if(this.checkValidity()) {
-                        var element = $("#generate_invoice_link");
-                        var form = $("#invoiceForm");
-                        var oldUrl = form.attr("action");
-                        var url = "{{ route('invoice.generate-invoice') }}";
-                        element.attr("disabled", true);
-                        form.attr("target", "_blank");
-                        form.attr("action", url);
-                        form.submit();
-                        form.attr("action", oldUrl);
-                        form.removeAttr("target");
-                        element.attr("disabled", false);
-                    }
-                    $('#invoice_file, [name="currency"], [name="amount"]').attr("required", true);
-                },
-
-                checkValidity: function() {
-                    return validateFormData(document.getElementById('invoiceForm'));
                 },
             },
 

@@ -27,7 +27,15 @@
             </div>
         @endif
 
-    
+        @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
+            <div class="col-md-4">
+                <div class="card h-75 mx-4 mt-3 mb-5 ">
+                    <a class="card-body no-transition" href="{{ route('setting.invoice') }}">
+                        <br><h2 class="text-center">Invoice</h2><br>
+                    </a>
+                </div>
+            </div>
+        @endif
     </div>
 </div>
 
