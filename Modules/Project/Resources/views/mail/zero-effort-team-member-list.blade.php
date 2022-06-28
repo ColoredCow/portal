@@ -1,7 +1,7 @@
 <div>
 	<style>
 		.line {
-		line-height: 1px;
+			line-height: 1px;
 		}
 	</style>
 	<p>Hello {{ $projectManager['name'] }},</p>
@@ -16,7 +16,7 @@
 			@foreach ($projectManager['projects'] as $project)
 				<tr>
 					<td>
-					<li>{{ $project->name }}</li>
+						<a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
 					</td>
 				</tr>
 			 @endforeach
