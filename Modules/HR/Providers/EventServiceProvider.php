@@ -32,15 +32,17 @@ class EventServiceProvider extends ServiceProvider
             'Modules\HR\Listeners\AppointmentSlotMailSent'
         ],
 
+        //ToDo: We need to uncomment ApplicantEmailVerification class and enable auto respond after email is verified. This will be implemented once the email content is ready
         ApplicationCreated::class => [
             CreateFirstApplicationRound::class,
-            ApplicantEmailVerification::class,
+            AutoRespondApplicant::class,
+            // ApplicantEmailVerification::class,
             MoveResumeToWebsite::class,
         ],
 
-        ApplicantEmailVerified::class => [
-            AutoRespondApplicant::class,
-        ],
+        // ApplicantEmailVerified::class => [
+        //     AutoRespondApplicant::class,
+        // ],
 
         JobUpdated::class => [
             UpdateJobRounds::class,
