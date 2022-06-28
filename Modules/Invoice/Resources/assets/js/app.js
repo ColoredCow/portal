@@ -70,7 +70,7 @@ $(document).ready(function(){
 	});
 });
 
-const validateFormData = (form) => {
+function validateFormData(form) {
 	if (!form.checkValidity()) {
 		form.reportValidity();
 		return false;
