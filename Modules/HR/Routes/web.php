@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
             Route::resource('applicants', 'ApplicantController')->only(['index', 'edit']);
             Route::get('/applicant/create', 'ApplicantController@create')->name('hr.applicant.create');
             Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
+            Route::get('applicant/on-hold/{applicationID}', 'ApplicantController@ApplicationOnHold')->name('application.on.hold');
             Route::get('/applicant/details/show/{applicationID}', 'ApplicantController@show')->name('hr.applicant.details.show');
             Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
 

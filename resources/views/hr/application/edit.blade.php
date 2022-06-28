@@ -890,6 +890,31 @@
 												</select>
 												<button type="button" class="btn btn-success ml-2" @click="takeAction()">Take action</button>
 											@endif
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2" data-toggle="modal" data-target="#ModalCenter">
+											  Put on Hold
+											</button>
+											
+											<!-- Modal -->
+											<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+											  <div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="ModalLongTitle">NOTE</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<p>Do you want to put your application on Hold?</p>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+														<a href="{{ route("application.on.hold", $application->id) }}" class="btn btn-primary">Yes</a>
+													</div>
+												</div>
+											  </div>
+											</div>
 											@if ($loop->last && !$application->isRejected())
 												{{-- @if ($applicantOpenApplications->count() > 1) --}}
 													<button type="button" class="btn btn-outline-danger ml-2" id="rejectApplication" @click="rejectApplication()">Reject</button>

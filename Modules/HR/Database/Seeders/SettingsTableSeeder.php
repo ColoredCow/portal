@@ -54,5 +54,16 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'applicant_interview_reminder_body',
             'setting_value' => '<div>Hello |*applicant_name*|,</div><div> </div><div>We thought to nudge you about our talk today at |*interview_time*|.</div><div> </div><div>Also, if you haven\'t accepted the Google calendar invite, which we\'ve sent you earlier, please do so now. That will help. Ignore if you\'ve already done so.</div><div> </div><div>Talk to you soon!</div><div> </div><div>HR Team</div><div>ColoredCow</div>',
         ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'application_on_hold_subject',
+            'setting_value' => 'Your application is put on hold',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'application_on_hold_body',
+            'setting_value' => '<div>Hello |*applicant_name*|,</div><div> </div><div>Thanks for your interest in ColoredCow.Your application is successfully put on hold.<br>
+            In the meantime, please visit our Careers blog and follow us on LinkedIn to learn more about us and stay up to date. </div><div>Thank You.</div><div> </div><div>HR Team</div><div>ColoredCow</div>',
+        ]);
     }
 }
