@@ -3,21 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Source Sans Pro:400,500,600,700,800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ public_path('css/app.css') }}" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <!-- Styles -->
         <style>
             html,
             body {
                 color: #012840;
-                font-family: 'Source Sans Pro', 'sans-serif';
                 font-weight: normal;
                 margin: 0;
                 padding: 0;
                 height: 100%;
                 background-size: 100% 100%;
                 font-size: 12px;
+                background: white !important;
             }
             .full-height {
                 height: 100vh;
@@ -176,8 +174,8 @@
                 font-weight: bold !important;
             }
             td p {
-                margin-top: 0;
-                margin-bottom: 0;
+                margin-top: 1px;
+                margin-bottom: 1px;
             }
             tr, td{
                 padding: 0.2em 0 0.2em 1em !important;
