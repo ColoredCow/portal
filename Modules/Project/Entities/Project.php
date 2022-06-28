@@ -49,10 +49,17 @@ class Project extends Model
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
     }
+
     public function getInactiveTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNotNull('ended_on')->orderBy('ended_on', 'DESC');
     }
+
+    public function getAllTeamMembers()
+    {
+        return $this->hasMany(ProjectTeamMember::class);
+    }
+
     public function projectContracts()
     {
         return $this->hasMany(ProjectContract::class);
@@ -133,7 +140,7 @@ class Project extends Model
 
     public function getBillableHoursForTerm(int $monthNumber, int $year)
     {
-        return $this->getTeamMembers->sum(function ($teamMember) use ($monthNumber, $year) {
+        return $this->getAllTeamMembers->sum(function ($teamMember) use ($monthNumber, $year) {
             if (! $teamMember->projectTeamMemberEffort) {
                 return 0;
             }

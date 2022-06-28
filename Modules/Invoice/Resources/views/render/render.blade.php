@@ -213,8 +213,9 @@
                                 <p>{{ $client->name }}</p>
                                 <p>{{ optional($client->billing_contact)->email }}</p>
                                 <p>{{ $client->addresses->first()->address }}</p>
-                                <p>{{ $client->addresses->first()->state . ' ' .$client->addresses->first()->area_code }}</p>
+                                <p>{{ $client->addresses->first()->state . ' ' . $client->addresses->first()->area_code }}</p>
                                 <p>{{ $client->country->initials == 'IN' ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
+                                <p>{{ optional($client->billing_contact)->phone }}</p>
                             </td>
                             <td>
                                 <p class="fw-bold ml-1em">Details</p>
@@ -240,8 +241,10 @@
                             <td align="left" class="fw-bold">
                                 <p>Client Name: {{ $client->name }}</p>
                                 <p>Client ID: {{ sprintf('%03s', $client->client_id) }}</p>
-                                <p>Project Name: {{ $invoiceLevel == 'client' ? '' : $projects->first()->name }}</p>
-                                <p>Project ID: {{ $invoiceLevel == 'client' ? '' : $projects->first()->client_project_id }}</p>
+                                @if($billingLevel == config('project.meta_keys.billing_level.value.project.key'))
+                                    <p>Project Name: {{ $projects->first()->name }}</p>
+                                    <p>Project ID: {{ $projects->first()->client_project_id }}</p>
+                                @endif
                                 <p>Category: Web Application Development</p>
                             </td>
                             <td align="right">
@@ -328,6 +331,11 @@
                                 <td>{{ config('invoice.finance-details.phone') }}</td>
                             </tr><br>
                             <tr><td><br></td></tr>
+                            <tr>
+                                <td colspan="2">
+                                    <a href="{{ $client->effort_sheet_url }}">For more details of this invoice you can visit this sheet.</a>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="2">
                                     Thank you for your business. It’s a pleasure to work with you on your project.
