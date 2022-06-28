@@ -52,14 +52,14 @@ class InvoiceService implements InvoiceServiceContract
             'filters' => $filters,
             'invoiceStatus' => $invoiceStatus,
             'clientsReadyToSendInvoicesData' => $clientsReadyToSendInvoicesData,
-            'emailSubject' => Setting::where([
+            'emailSubject' => optional(Setting::where([
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.send-invoice.subject')
-            ])->first()->setting_value,
-            'emailBody' => Setting::where([
+            ])->first())->setting_value,
+            'emailBody' => optional(Setting::where([
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.send-invoice.body')
-            ])->first()->setting_value,
+            ])->first())->setting_value,
         ];
     }
 
