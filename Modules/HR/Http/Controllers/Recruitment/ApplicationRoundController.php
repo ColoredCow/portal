@@ -21,6 +21,7 @@ class ApplicationRoundController extends Controller
      */
     public function update(ApplicationRoundRequest $request, ApplicationRound $round)
     {
+        dd($request->all());
         $round->_update($request->validated());
         if (array_key_exists('round_evaluation', $request->validated())) {
             $round->updateOrCreateEvaluation($request->validated()['round_evaluation']);

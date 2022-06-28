@@ -1,12 +1,11 @@
-<span class="badge badge-danger c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</span>
 <div class="modal fade" id="job_to_internship" tabindex="-1" role="dialog" aria-labelledby="job_to_internship" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-			<h5 class="modal-title" id="job_to_internship">Move {{ $application->applicant->name }} to Internship</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+				<h5 class="modal-title" id="job_to_internship">Move {{ $application->applicant->name }} to Internship</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
             </div>
             <div class="modal-body">
 				<form action="{{ route('applications.job.update', $application->id) }}" method="POST">

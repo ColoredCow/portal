@@ -581,7 +581,7 @@
 						<br>
 						@if(sizeof($applicationRound->followUps))
 							<div class="mt-3">
-							@foreach($applicationRound->followUps as $followUp)
+								@foreach($applicationRound->followUps as $followUp)
 									<div class="d-flex align-items-center mb-1.5">
 										<i class="fa fa-clock-o fz-20 mr-1" aria-hidden="true"></i>
 										<span class="fz-14 leading-none">
@@ -730,7 +730,9 @@
 																<label class="text-secondary fz-14 leading-none mb-0.16">Graduation Year</label>
 																<div>
 																	{{ $applicant->graduation_year ?? '-' }}&nbsp;
-																	@includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
+																	@if(isset($hasGraduated) && !$hasGraduated)
+																		<span class="badge badge-danger c-pointer" data-toggle="modal" data-target="#job_to_internship">Move to internship</span>
+																	@endif
 																	@if(!$application->marks && $application->latestApplicationRound->hr_round_id == 1)
 																	<div class="mt-2 evaluation-score">
 																		<input type="radio" class="toggle-button" name="graduation_year" id="graduation_year_evaluation_1">
@@ -767,22 +769,21 @@
 													</div>
 												</div>
 											@endif
-											
 											@if ( !$applicationRound->round_status)
 												<div class="form-row">
 													<div class="form-group col-md-5">
 														<label for="scheduled_date" class="fz-14 leading-none text-secondary w-100p">
 															<div>
-															<i class="fa fa-calendar" aria-hidden="true"></i>
-															<span>Scheduled date</span>
-																@if($applicationRound->scheduled_date)
-																	@if($applicationRound->hangout_link)
-																		<a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
-																			<i class="fa fa-video-camera" aria-hidden="true"></i>
-																			<span>Meeting Link</span>
-																		</a>
+																<i class="fa fa-calendar" aria-hidden="true"></i>
+																<span>Scheduled date</span>
+																	@if($applicationRound->scheduled_date)
+																		@if($applicationRound->hangout_link)
+																			<a target="_blank" class="ml-5 font-muli-bold" href="{{ $applicationRound->hangout_link }}">
+																				<i class="fa fa-video-camera" aria-hidden="true"></i>
+																				<span>Meeting Link</span>
+																			</a>
+																		@endif
 																	@endif
-																@endif
 															</div>
 														</label>
 														@if ($applicationRound->scheduled_date)
@@ -825,7 +826,7 @@
 													@endif
 												</div>
 											@endif 
-											@if($applicationRound->round->name == "Resume Screening")                    
+											@if($applicationRound->round->name == "Resume Screening")   
 												<div class="form-row">
 													<div class="form-group col-md-12">
 														<button type="button" class="btn btn-theme-fog btn-sm" @click="getApplicationEvaluation({{ $applicationRound->id }})">Application Evaluation</button>
@@ -835,10 +836,12 @@
 														<div class="form-group my-2 pl-2">
 															<h4>
 																<span>Result: </span>
-																@if($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
-																	<span class="text-success">Passing</span>
-																@else
-																	<span class="text-danger">Failing</span>
+																@if($application->marks !== null)
+																	@if($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
+																		<span class="text-success">Passing</span>
+																	@else
+																		<span class="text-danger">Failing</span>
+																	@endif
 																@endif
 															</h4>
 														</div>
@@ -906,7 +909,7 @@
 										@endif
 									</div>
 									<input type="hidden" name="action" value="updated">
-									<input type="hidden" name="next_round" value="">
+									
 									@if ($loop->last)
 										<input type="hidden" name="current_applicationround_id" id="current_applicationround_id" value="{{ $applicationRound->id }}">
 									@endif
@@ -920,6 +923,7 @@
 						</div>
 						@include('hr.round-guide-modal', ['round' => $applicationRound->round])
 						@includeWhen($applicationRound->round_status && !$applicationRound->mail_sent, 'hr.round-review-mail-modal', ['applicantRound' => $applicationRound])
+						@includeWhen(isset($hasGraduated) && !$hasGraduated, 'hr.job-to-internship-modal', ['application' => $application])
 						@include('hr.application.application-evaluation', ['round' => $applicationRound->round])
 					@endforeach
 				@endif
