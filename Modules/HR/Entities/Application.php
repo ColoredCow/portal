@@ -593,7 +593,7 @@ class Application extends Model
     public function getMarksAttribute()
     {
         if ($this->evaluations->isEmpty()) {
-            return ;
+            return;
         }
 
         return $this->evaluations->sum(function ($evaluation) {
