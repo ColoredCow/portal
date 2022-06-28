@@ -22,7 +22,7 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/{invoice}/edit', 'InvoiceController@edit')->name('invoice.edit');
     Route::post('/{invoiceId}/update', 'InvoiceController@update')->name('invoice.update');
     Route::delete('/{invoiceId}/delete', 'InvoiceController@destroy')->name('invoice.delete');
-    Route::get('/generate-invoice-client/{client}', 'InvoiceController@generateInvoiceForClient')->name('invoice.generate-invoice-for-client');
+    Route::post('/generate-invoice-client', 'InvoiceController@generateInvoiceForClient')->name('invoice.generate-invoice-for-client');
     Route::post('/generate-invoice', 'InvoiceController@generateInvoice')->name('invoice.generate-invoice');
     Route::post('/{invoice}', 'InvoiceController@sendEmail')->name('invoice.sendEmail');
     Route::get('/monthly-gst-report', 'InvoiceController@invoiceDetails')->name('invoice.details');

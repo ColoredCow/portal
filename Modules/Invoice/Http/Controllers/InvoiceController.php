@@ -91,8 +91,9 @@ class InvoiceController extends Controller
         return $pdf->inline(str_replace('-', '', $invoiceNumber) . '.pdf');
     }
 
-    public function generateInvoiceForClient(Client $client)
+    public function generateInvoiceForClient(Request $request)
     {
+        $client = Client::find($request->client_id);
         $data = $this->service->getInvoiceData([
             'client_id' => $client->id,
             'term' => today(config('constants.timezone.indian'))->subMonth()->format('Y-m'),
@@ -209,6 +210,6 @@ class InvoiceController extends Controller
         $client = Client::find($request->client_id);
         $this->service->sendInvoice($client, $request->term, $request->all());
 
-        return redirect()->back()->with('status', 'Invoice sent successfully.');
+        return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
 }

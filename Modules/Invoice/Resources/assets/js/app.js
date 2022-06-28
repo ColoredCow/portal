@@ -29,16 +29,22 @@ $(document).ready(function(){
 
 	$("#showPreview").on("click", function() {
 		var invoiceData = $(this).data("invoice-data");
+		var mapping = {
+			"|*project_name*|": invoiceData["projectName"],
+			"|*term*|": invoiceData["monthName"],
+			"|*year*|": invoiceData["year"],
+			"|*billing_person_name*|": invoiceData["billingPersonName"],
+			"|*invoice_amount*|": invoiceData["totalAmount"],
+			"|*invoice_number*|": invoiceData["invoiceNumber"],
+		};
 		var emailSubject = $("#emailSubject").val();
 		var emailBody = $("#emailBody").text();
-		var emailSubject = emailSubject.replace("|*project_name*|", invoiceData["projectName"]);
-		var emailSubject = emailSubject.replace("|*term*|", invoiceData["monthName"]);
-		var emailSubject = emailSubject.replace("|*year*|", invoiceData["year"]);
-		var emailBody = emailBody.replace("|*billing_person_name*|", invoiceData["billingPersonName"]);
-		var emailBody = emailBody.replace("|*invoice_amount*|", invoiceData["totalAmount"]);
-		var emailBody = emailBody.replace("|*invoice_number*|", invoiceData["invoiceNumber"]);
-		var emailBody = emailBody.replace("|*term*|", invoiceData["monthName"]);
-		var emailBody = emailBody.replace("|*year*|", invoiceData["year"]);
+		
+		for (var key in mapping) {
+			var emailSubject = emailSubject.replace(key, mapping[key]);
+			var emailBody = emailBody.replace(key, mapping[key]);
+		}
+
 		$("#emailSubject").val(emailSubject); 
 		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
 		$("#sendToName").val(invoiceData["billingPersonName"]); 
@@ -48,14 +54,29 @@ $(document).ready(function(){
 	});
 
 	$("#verifyInvoice").on("click", function () {
-		console.log($(this));
 		if ($("#verifyInvoice").is(":checked")) {
 			$("#sendInvoiceBtn").attr("disabled", false);
 		} else {
 			$("#sendInvoiceBtn").attr("disabled", true);
 		}
 	});
+	
+	$("#sendInvoiceForm").on("submit", function (event) {
+		event.preventDefault();
+		$("#sendInvoiceBtn").attr("disabled", true);
+		if(validateFormData(event.target)) {
+			event.target.submit();
+		}
+	});
 });
+
+const validateFormData = (form) => {
+	if (!form.checkValidity()) {
+		form.reportValidity();
+		return false;
+	}
+	return true;
+}
 
 function convert_number(number) {
 	if (number < 0 || number > 999999999) {

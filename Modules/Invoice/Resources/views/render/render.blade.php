@@ -241,7 +241,7 @@
                             <td align="left" class="fw-bold">
                                 <p>Client Name: {{ $client->name }}</p>
                                 <p>Client ID: {{ sprintf('%03s', $client->client_id) }}</p>
-                                @if($invoiceLevel == config('project.meta_keys.billing_level.value.project.key'))
+                                @if($billingLevel == config('project.meta_keys.billing_level.value.project.key'))
                                     <p>Project Name: {{ $projects->first()->name }}</p>
                                     <p>Project ID: {{ $projects->first()->client_project_id }}</p>
                                 @endif

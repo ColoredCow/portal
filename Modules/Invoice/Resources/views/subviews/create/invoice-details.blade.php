@@ -18,7 +18,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <label for="billingLevel" class="field-required">
-                                Bill Level
+                                Billing Level
                             </label>
                             <span
                                 data-toggle="tooltip"

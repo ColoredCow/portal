@@ -86,7 +86,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if((request()->invoice_status == 'sent' || $invoiceStatus == 'sent') && !$invoices->isEmpty())
+                    @if((request()->invoice_status == 'sent' || $invoiceStatus == 'sent') && $invoices->isNotEmpty())
                         @foreach ($invoices as $invoice)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -142,8 +142,8 @@
                                 @endif
                             </tr>
                         @endforeach
-                    @elseif((request()->invoice_status == 'ready'  || $invoiceStatus == 'ready') && !$readyToSendInvoicesData->isEmpty())
-                        @foreach ($readyToSendInvoicesData as $client)
+                    @elseif((request()->invoice_status == 'ready'  || $invoiceStatus == 'ready') && $clientsReadyToSendInvoicesData->isNotEmpty())
+                        @foreach ($clientsReadyToSendInvoicesData as $client)
                             @php
                                 $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($month, $year, $client->clientLevelBillingProjects);
                                 $invoiceData = [
@@ -170,7 +170,11 @@
                                 <td>{{ $client->getWorkingDaysForTerm($month, $year) }}</td>
                                 <td>{{ $amount }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('invoice.generate-invoice-for-client', $client) }}" target="_blank" class="btn btn-info text-light">Preview</a>
+                                    <form action="{{ route('invoice.generate-invoice-for-client') }}" target="_blank" method="POST">
+                                        @csrf
+                                        <input type="hidden" name='client_id' value="{{ $client->id }}">
+                                        <input type='submit' class="btn btn-info text-light" value="Preview">
+                                    </form>
                                 </td>
                                 <td class="text-center">
                                     <div class="btn btn-success text-light" id="showPreview" data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('Preview') }}</div>
@@ -184,7 +188,7 @@
             </table>
         </div>
     </div>
-    @if(request()->invoice_status == 'ready')
+    @if(request()->invoice_status == 'ready' || $invoiceStatus == 'ready')
         <div class="modal fade" id="emailPreview" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -197,38 +201,37 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('invoice.send-invoice-mail') }}" method="POST">
+                        <form action="{{ route('invoice.send-invoice-mail') }}" method="POST" id="sendInvoiceForm">
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label class="leading-none" for="sendFrom">From</label>
                                     <input type="email" name="from" id="sendFrom"
-                                        class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
+                                        class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}" required>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="leading-none" for="sendTo">To</label>
                                     <input type="email" name="to" id="sendTo"
-                                        class="form-control">
+                                        class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="leading-none" for="sendToName">Receiver Name</label>
                                     <input type="text" name="to_name" id="sendToName"
-                                        class="form-control">
+                                        class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="leading-none" for="cc">
                                         CC 
                                         <span data-toggle="tooltip" data-placement="right" title="Comma separated emails">
                                             <i class="fa fa-question-circle"></i>
-                                        </span></label>
+                                        </span>
                                     </label>
-                                    <input type="text" name="cc" id="cc"
-                                        class="form-control">
+                                    <input type="text" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="leading-none" for="emailSubject">Subject</label>
                                     <input type="text" name="email_subject" id="emailSubject"
-                                        class="form-control" value="{{ $emailSubject }}">
+                                        class="form-control" value="{{ $emailSubject }}" required>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="leading-none" for="emailBody">Body</label>

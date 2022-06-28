@@ -47,39 +47,29 @@ class SendInvoiceMail extends Mailable
     {
         $subject = $this->email['subject'];
         $body = $this->email['body'];
+        $templateVariablesForSubject = config('invoice.template-variables.subject');
+        $templateVariablesForBody = config('invoice.template-variables.body');
 
         if (! $subject) {
             $subject = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_subject')->first();
             $subject = $subject ? $subject->setting_value : '';
-            $subject = str_replace(config('invoice.template-variables.subject.project-name'), $this->client->name . ' Projects', $subject);
-            $subject = str_replace(config('invoice.template-variables.subject.term'), $this->monthName, $subject);
-            $subject = str_replace(config('invoice.template-variables.subject.year'), $this->year, $subject);
+            $subject = str_replace($templateVariablesForSubject['project-name'], $this->client->name . ' Projects', $subject);
+            $subject = str_replace($templateVariablesForSubject['term'], $this->monthName, $subject);
+            $subject = str_replace($templateVariablesForSubject['year'], $this->year, $subject);
         }
 
         if (! $body) {
             $body = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_body')->first();
             $body = $body ? $body->setting_value : '';
-            $body = str_replace(config('invoice.template-variables.body.billing-person-name'), optional($this->client->billing_contact)->name, $body);
+            $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->name, $body);
             $body = str_replace(
-                config('invoice.template-variables.body.invoice-amount'),
+                $templateVariablesForBody['invoice-amount'],
                 $this->client->country->currency_symbol . $this->client->getTotalPayableAmountForTerm($this->month, $this->year, $this->client->clientLevelBillingProjects),
                 $body
             );
-            $body = str_replace(
-                config('invoice.template-variables.body.invoice-number'),
-                str_replace('-', '', $this->invoiceNumber),
-                $body
-            );
-            $body = str_replace(
-                config('invoice.template-variables.body.term'),
-                $this->monthName,
-                $body
-            );
-            $body = str_replace(
-                config('invoice.template-variables.body.year'),
-                $this->year,
-                $body
-            );
+            $body = str_replace($templateVariablesForBody['invoice-number'], str_replace('-', '', $this->invoiceNumber), $body);
+            $body = str_replace($templateVariablesForBody['term'], $this->monthName, $body);
+            $body = str_replace($templateVariablesForBody['year'], $this->year, $body);
         }
 
         $invoiceFile = Storage::path($this->invoice->file_path);
