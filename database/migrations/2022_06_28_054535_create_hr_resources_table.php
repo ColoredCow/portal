@@ -14,10 +14,10 @@ class CreateHrResourcesTable extends Migration
     public function up()
     {
         Schema::create('hr_resources', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->bigIncrements('id');
             $table->text('resource_link');
-            $table->unsignedBigInteger('job_id');
-            $table->integer('hr_resource_category_id');
+            $table->unsignedInteger('job_id');
+            $table->unsignedBigInteger('hr_resource_category_id');
             $table->timestamps();
             $table->foreign('job_id')->references('id')->on('hr_jobs');
             $table->foreign('hr_resource_category_id')->references('id')->on('hr_resources_categories');

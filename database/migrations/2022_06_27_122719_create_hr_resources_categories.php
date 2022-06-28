@@ -14,7 +14,7 @@ class CreateHrResourcesCategories extends Migration
     public function up()
     {
         Schema::create('hr_resources_categories', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->bigIncrements('id');
             $table->string('slug');
             $table->string('name');
             $table->timestamps();
