@@ -64,6 +64,13 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'application_on_hold_body',
             'setting_value' => '<div>Hello |*applicant_name*|,</div><div> </div><div>Thanks for your interest in ColoredCow.Your application is successfully put on hold.<br>
             In the meantime, please visit our Careers blog and follow us on LinkedIn to learn more about us and stay up to date. </div><div>Thank You.</div><div> </div><div>HR Team</div><div>ColoredCow</div>',
+            'setting_key' => 'applicant_verification_subject',
+            'setting_value' => 'Verify the application!',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'applicant_verification_body',
+            'setting_value' => '<div>Hello |*applicant_name*|,<br /><br /></div><p class="p1" style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #212529; font-family: Raleway, sans-serif; font-size: 14.4px; white-space: pre-wrap;">For verify the application, click on the below link <a style="box-sizing: border-box; color: #007bff; text-decoration-line: none; background-color: transparent;" href="|*verification_link*|">Verification link/</a></p>HR Team<br />ColoredCow</div>',
         ]);
     }
 }

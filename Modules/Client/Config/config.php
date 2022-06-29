@@ -45,28 +45,25 @@ return [
         ],
     ],
 
+    // Todo: Need to store these values in database
     'billing-frequency' => [
-        [
+        'net-15-days' => [
             'id' => 1,
             'name' => 'Net 15 days',
         ],
-
-        [
+        'monthly' => [
             'id' => 2,
             'name' => 'Monthly',
         ],
-
-        [
+        'quaterly' => [
             'id' => 3,
             'name' => 'Quarterly',
         ],
-
-        [
+        'yearly' => [
             'id' => 4,
             'name' => 'Yearly',
         ],
-
-        [
+        'based-on-project-terms' => [
             'id' => 5,
             'name' => 'Based on project terms',
         ],

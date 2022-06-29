@@ -27,7 +27,7 @@
                                 <select name="job_title" id="job_title" class="form-control" required="required" value={{ old('job_title') }}>
                                     <option value="">Select Job</option>
                                     @foreach($hrJobs as $hrJob)
-                                    <option value="{{ $hrJob->title }}">{{ $hrJob->title }}</option>
+                                    <option value="{{ $hrJob->title }}" {{ old('job_title') == $hrJob->title ? 'selected' : '' }}>{{ $hrJob->title }}</option>
                                     @endforeach
                                 </select>
                             </div>

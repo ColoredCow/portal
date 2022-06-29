@@ -15,7 +15,11 @@ return [
         'unpaid-invoice' => [
             'email' => env('INVOICE_UNPAID_LIST_EMAIL', 'finance@coloredcow.com'),
             'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance')
-        ]
+        ],
+        'send-invoice' => [
+            'email' => env('INVOICE_UNPAID_LIST_EMAIL', 'finance@coloredcow.com'),
+            'name' => env('INVOICE_UNPAID_LIST_NAME', 'ColoredCow Finance')
+        ],
     ],
 
     'pending-invoice-mail' => [
@@ -71,5 +75,30 @@ return [
             'address-line-1' => 'F-61, Suncity, Sector - 54',
             'address-line-2' => 'Gurgaon, Haryana, 122003, India'
         ]
-    ]
+    ],
+
+    'templates' => [
+        'setting-key' => [
+            'send-invoice' => [
+                'key' => 'send_invoice',
+                'subject' => 'send_invoice_subject',
+                'body' => 'send_invoice_body',
+            ]
+        ]
+    ],
+
+    'template-variables' => [
+        'subject' => [
+            'project-name' => '|*project_name*|',
+            'term' => '|*term*|',
+            'year' => '|*year*|',
+        ],
+        'body' => [
+            'billing-person-name' => '|*billing_person_name*|',
+            'invoice-amount' => '|*invoice_amount*|',
+            'invoice-number' => '|*invoice_number*|',
+            'term' => '|*term*|',
+            'year' => '|*year*|',
+        ],
+    ],
 ];

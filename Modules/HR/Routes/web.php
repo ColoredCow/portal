@@ -91,3 +91,4 @@ Route::middleware('auth')->group(function () {
         Route::get('/resources/show/', 'ResourcesController@show')->name('resources.show');
     });
 });
+Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

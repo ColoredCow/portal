@@ -17,6 +17,7 @@ use Modules\HR\Entities\University;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\Recruitment\Applicant\OnHold;
+use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 
 class ApplicantController extends Controller
 {
@@ -107,5 +108,13 @@ class ApplicantController extends Controller
             ->send(new OnHold($subject->setting_value, $body->setting_value));
 
         return redirect()->back()->with('status', 'Your application is put on hold successfully');
+    }
+    
+    public function applicantEmailVerification($applicantEmail, $applicationID)
+    {
+        $application = Application::find($applicationID);
+        event(new ApplicantEmailVerified($application));
+
+        return view('hr.application.verification')->with(['application' => $application, 'email' => decrypt($applicantEmail)]);
     }
 }
