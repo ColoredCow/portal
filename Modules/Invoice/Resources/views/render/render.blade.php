@@ -215,6 +215,14 @@
                 margin-top: 1.5px !important;
                 margin-bottom: 1.5px !important;
             }
+            .stamp {
+                float: right; 
+                margin-top: -95px; 
+                margin-left: 170px;
+            }
+            .transaction-details th {
+                padding-left: 10px; padding-bottom:10px;
+            }
         </style>
     </head>
     <body>
@@ -326,11 +334,10 @@
                         </tr>
                     </table>
                 </div>
-                <div>
-                    <table class="table table-borderless" style="width: 50%; margin-right: auto;">
+                    <table class="table-borderless transaction-details" style="width: 60%;">
                         <thead>
                             <tr>
-                                <th scope="col" class="fz-16">Transaction Details</th>
+                                <th class="fz-16" align="left">Transaction Details</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -365,7 +372,7 @@
                             <tr><td><br></td></tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="{{ $client->effort_sheet_url }}">For more details of this invoice you can visit this sheet.</a>
+                                    <a href="{{ $client->effort_sheet_url }}" target="_blank">For more details of this invoice you can visit this sheet.</a>
                                 </td>
                             </tr>
                             <tr>
@@ -392,6 +399,11 @@
                             <tr>
                                 <td colspan="2">
                                     <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
+                                </td>
+                            </tr>
+                            <tr colspan="2">
+                                <td>
+                                    <img class="stamp" src="{{ storage_path('app/stamp/coloredcow-stamp.png') }}" alt="" height="100" width="100">     
                                 </td>
                             </tr>
                         </tbody>
