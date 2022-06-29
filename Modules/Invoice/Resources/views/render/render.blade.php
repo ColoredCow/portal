@@ -372,7 +372,7 @@
                             <tr><td><br></td></tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="{{ $client->effort_sheet_url }}" target="_blank">For more details of this invoice you can visit this sheet.</a>
+                                    <a href="{{ $client->effort_sheet_url }}">For more details of this invoice you can visit this sheet.</a>
                                 </td>
                             </tr>
                             <tr>
