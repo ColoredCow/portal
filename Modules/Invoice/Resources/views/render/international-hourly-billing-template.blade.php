@@ -1,7 +1,7 @@
 <br>
 <table class="table">
     <thead class="thead-dark">
-        <tr>
+        <tr align="left">
             <th>Description</th>
             <th>Hours</th>
             <th>Rate({{$client->country->initials . ' ' . $client->country->currency_symbol}})</th>
@@ -13,10 +13,10 @@
             @if($project->getBillableHoursForTerm($monthNumber, $year) == 0)
                 @continue
             @endif
-            <tr>
+            <tr class="border-bottom">
                 <td>{{$project->name}}</td>
                 <td>{{$project->getBillableHoursForTerm($monthNumber, $year)}}</td>
-                <td>{{$currencyService->getCurrentRatesInINR()}}</td>
+                <td>{{optional($client->billingDetails)->service_rates}}</td>
                 <td>{{round($project->getBillableHoursForTerm($monthNumber, $year) * $client->billingDetails->service_rates, 2)}}</td>
             </tr>
         @endforeach
