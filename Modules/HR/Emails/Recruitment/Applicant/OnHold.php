@@ -5,7 +5,6 @@ namespace Modules\HR\Emails\Recruitment\Applicant;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class OnHold extends Mailable
 {
