@@ -11,7 +11,7 @@ class Invoice extends Model
 {
     use Encryptable;
 
-    protected $fillable = ['client_id', 'project_id', 'status', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number'];
+    protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number'];
 
     protected $dates = ['sent_on', 'due_on', 'receivable_date', 'payment_at'];
 
@@ -93,7 +93,6 @@ class Invoice extends Model
 
     public function invoiceAmounts()
     {
-        $country = optional($this->client)->country;
         $amount = (int) $this->amount;
 
         if ($this->client->type == 'indian') {

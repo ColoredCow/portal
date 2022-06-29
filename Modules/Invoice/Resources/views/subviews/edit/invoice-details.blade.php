@@ -36,7 +36,7 @@
                     <div class="d-flex">
                         <label for="client_id" class="mr-5">Project:</label>
                         <span>
-                            <p>{{ $invoice->project->name }}</p>
+                            <p>{{ optional($invoice->project)->name ?: ($invoice->client->name . ' Projects') }}</p>
                         </span>
                     </div>
                 </div>

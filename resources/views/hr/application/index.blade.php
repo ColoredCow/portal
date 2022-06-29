@@ -14,7 +14,7 @@
                 <div class="d-flex">
                     <div class="input-group mb-3 col-md-9">
                         <input type="text" class="form-control w-300" id="search" placeholder="Enter a keyword" aria-describedby="button-addon2"
-                        name="search" value= @if(request()->has('search')){{request()->get('search')}}@endif>
+                        name="search" value= "@if(request()->has('search')){{request()->get('search')}}@endif">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center" type="button" id="button-addon2" data-toggle="modal" data-target="#application-modal">
                                 <i class="fa fa-filter" aria-hidden="true"></i>
@@ -95,7 +95,7 @@
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : ( isset($status) ? '' : 'job-application-status' ) }} btn"
-                    href=/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}} >
+                    href="/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}" >
                     <sup class = "application-menu-options-title fz-18">
                         {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
                     </sup>
@@ -107,7 +107,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.in-progress.label') ? 'job-application-status text-underline' : '' }} btn" 
-                href=/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=trial-program>
+                href="/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}&round=trial-program">
                     <sup class = "application-menu-options-title fz-18">
                         {{$trialProgramCount}}
                     </sup>
@@ -119,7 +119,7 @@
             </li>
             <li id="list-styling">
                 <a class="{{ $status === config('constants.hr.status.on-hold.label') ? 'job-application-status text-underline' : '' }} btn" 
-                href=/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}>
+                href="/{{Request::path() .'?status='. config('constants.hr.status.on-hold.label')}}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18">
                         {{$onHoldApplicationsCount}}
                     </sup>
@@ -131,7 +131,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.no-show.label') ? 'job-application-status text-underline':'' }} btn"
-                href= /{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}>
+                href= "/{{ Request::path() }}?status={{ config('constants.hr.status.no-show.label') }}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18">
                         {{$noShowApplicationsCount+$noShowRemindedApplicationsCount}}
                     </sup>
@@ -143,7 +143,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.sent-for-approval.label') ? 'job-application-status text-underline' : '' }} btn"
-                href= /{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}>
+                href= "/{{ Request::path() .'?status='. config('constants.hr.status.sent-for-approval.label')}}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18">
                         {{$sentForApprovalApplicationsCount}}
                     </sup>
@@ -155,7 +155,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.approved.label') ? 'job-application-status text-underline' : '' }} btn"
-                href= /{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}>
+                href= "/{{ Request::path() }}?status={{ config('constants.hr.status.approved.label') }}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18">
                         {{$approvedApplicationsCount}}
                     </sup>
@@ -167,7 +167,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class="{{ $status === config('constants.hr.status.onboarded.label') ? 'job-application-status text-underline' : '' }} btn"
-                href= /{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}>
+                href= "/{{ Request::path() }}?status={{ config('constants.hr.status.onboarded.label') }}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18" >
                         {{$onboardedApplicationsCount}}
                     </sup>
@@ -179,7 +179,7 @@
             </li>
             <li id="list-styling">
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.rejected.label') ? 'job-application-status text-underline':'' }} btn"
-                href= /{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}>
+                href= "/{{ Request::path() }}?status={{ config('constants.hr.status.rejected.label') }}{{$query_filters}}">
                     <sup class = "application-menu-options-title fz-18" >
                         {{$rejectedApplicationsCount}}    
                     </sup>
