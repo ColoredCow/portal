@@ -109,7 +109,7 @@ class ApplicantController extends Controller
 
         return redirect()->back()->with('status', 'Your application is put on hold successfully');
     }
-    
+
     public function applicantEmailVerification($applicantEmail, $applicationID)
     {
         $application = Application::find($applicationID);
