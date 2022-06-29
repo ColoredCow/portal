@@ -18,7 +18,6 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\Recruitment\Applicant\OnHold;
 
-
 class ApplicantController extends Controller
 {
     use AuthorizesRequests;
