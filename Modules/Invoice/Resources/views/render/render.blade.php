@@ -325,7 +325,7 @@
                             <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
                             <td>{{ $client->country->currency_symbol . $client->getTaxAmountForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
-                        <tr class="">
+                        <tr>
                             <td>Current Payable</td>
                             <td></td>
                             <td></td>
