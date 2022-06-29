@@ -212,4 +212,23 @@ class InvoiceController extends Controller
 
         return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
+
+    public function invoiceReport(Request $request)
+    {
+        $filters = [
+            'client_id' => $filters['client_id'] ?? null,
+            'invoiceYear' => $filters['invoiceYear'] ?? null,
+        ];
+        $filters = $request->all();
+
+        $invoices=$this->service->invoiceReport($filters);
+        return view('invoice::invoice-report')->with('invoices',$invoices);
+    }
+
+    public function invoiceReportExport(Request $request)
+    {
+        $filters = $request->all();
+
+        return $this->service->invoiceReportExport($filters);
+    }
 }

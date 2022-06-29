@@ -56,6 +56,10 @@ class Invoice extends Model
     {
         return $query->where('client_id', $clientId);
     }
+    public function scopeYear($query, $invoiceYear)
+    {
+        return where('sent_on');
+    }
 
     public function project()
     {
@@ -116,5 +120,22 @@ class Invoice extends Model
         }
 
         return false;
+    }
+    public function getInvoiceAmountInInrAttribute()
+    {
+        if (optional($this->currency) == 'INR') {
+            return $this->amount;
+        }
+        else 
+            return $this->amount * $this->conversion_rate;
+    }
+
+    public function getInvoiceAmountInDollarAttribute()
+    {
+        if (optional($this->currency) == 'INR') {
+            return $this->amount / $this->conversion_rate;
+        }
+        else 
+            return $this->amount;
     }
 }

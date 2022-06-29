@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\App;
 use Mail;
 use App\Models\Setting;
 use Modules\Project\Entities\Project;
+use Modules\Invoice\Exports\InvoiceReportExport;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -233,6 +234,10 @@ class InvoiceService implements InvoiceServiceContract
 
         if ($clientId = Arr::get($filters, 'client_id', '')) {
             $query = $query->client($clientId);
+        }
+
+        if ($invoiceYear = Arr::get($filters, 'invoice_year', '')){
+            $query = $query->Year($invoiceyear);
         }
 
         return $query->orderBy('sent_on', 'desc');
@@ -526,5 +531,21 @@ class InvoiceService implements InvoiceServiceContract
         ]);
 
         return $invoice;
+    }
+
+    public function invoiceReport($filters)
+    {
+        $query = Invoice::query();
+        $invoices= $this
+            ->applyFilters($query, $filters)
+            ->get() ?: [];
+        return $invoices;
+    }
+
+    public function invoiceReportExport($filters)
+    {
+        $invoices = $this->invoiceReport($filters);
+
+        return Excel::download(new InvoiceReportExport($invoices), 'InvoiceReportExport.xlsx');
     }
 }
