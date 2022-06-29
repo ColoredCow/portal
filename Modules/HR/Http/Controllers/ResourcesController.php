@@ -3,7 +3,9 @@
 namespace Modules\HR\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 use Modules\HR\Entities\Job;
+use App\Models\Category;
 
 class ResourcesController extends Controller
 {
@@ -17,5 +19,15 @@ class ResourcesController extends Controller
     public function show()
     {
         return view('hr::guidelines-resources.show');
+    }
+
+    public function store(Request $request)
+    {
+        $category = Category::create([
+            'name' => $request['name'],
+            'slug' => str_slug($request['name'], '-')
+        ]);
+
+        return redirect(route('resources.show'));
     }
 }
