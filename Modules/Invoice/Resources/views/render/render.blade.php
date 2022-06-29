@@ -236,8 +236,8 @@
                                 <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" height="50" width="200">
                             </td>
                             <td style="color: grey;" align="right">
-                                <p>{{ config('invoice.coloredcow-details.address-line-1') }}</p>
-                                <p>{{ config('invoice.coloredcow-details.address-line-2') }}</p>
+                                <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-1') }}</p>
+                                <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
                                 <p>finance@coloredcow.com</p>
                                 <p>{{ str_replace('-', ' ', config('invoice.finance-details.phone')) }}</p>
                                 <p>PAN : {{ config('invoice.finance-details.pan') }}</p>
