@@ -19,6 +19,13 @@
                 font-size: 12px;
                 background: white !important;
             }
+            footer {
+                margin-top: 50px; 
+                color:gray;
+            }
+            footer p {
+                text-align: center;
+            }
             .full-height {
                 height: 100vh;
             }
@@ -248,6 +255,7 @@
                         </tr>
                         <tr style="width:100%;">
                             <td align="left">
+                                <br><br><br>
                                 <p class="fw-bold">Bill To</p>
                                 <p>{{ optional($client->billing_contact)->name }}</p>
                                 <p>{{ $client->name }}</p>
@@ -303,37 +311,44 @@
                     </tbody>
                 </table>
                 @include('invoice::render.international-hourly-billing-template')
-                <div>
-                    <table class="table" style="margin-left: auto;width:50%;">
-                        <tr class="border-bottom">
-                            <td>Total</td>
-                            <td></td>
+                <div><br>
+                    <table class="table" style="margin-left:33%; width:67%;">
+                        <tr class="border-bottom" >
+                            <td style="width: 135px;">Total</td>
+                            <td style="width: 94px;">{{ $client->getClientLevelProjectsBillableHoursForTerm($monthNumber, $year) }}</td>
+                            <td style="width: 135px;"></td>
                             <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
                         <tr class="border-bottom">
                             <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
+                            <td></td>
                             <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
                             <td>{{ $client->country->currency_symbol . $client->getTaxAmountForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
-                        <tr class="border-bottom">
+                        <tr>
                             <td>Current Payable</td>
+                            <td></td>
                             <td></td>
                             <td>{{ $client->country->currency_symbol . ($client->getBillableAmountForTerm($monthNumber, $year, $projects) + $client->getTaxAmountForTerm($monthNumber, $year, $projects)) }}</td>
                         </tr>
+                        <tr><td><br></td></tr>
                         <tr class="border-bottom">
                             <td>Amount Paid</td>
+                            <td></td>
                             <td></td>
                             <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
                         <tr class="border-bottom">
                             <td>
-                                <strong>Current Amount Due in {{ $client->country->initials . ' ' . $client->country->currency_symbol }}</strong>
+                                <strong>Amount Due in {{ $client->country->initials . ' ' . $client->country->currency_symbol }}</strong>
                             </td>
+                            <td></td>
                             <td></td>
                             <td><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year, $projects) }}</strong></td>
                         </tr>
                     </table>
                 </div>
+                    <br>
                     <table class="table-borderless transaction-details" style="width: 60%;">
                         <thead>
                             <tr>
@@ -411,5 +426,8 @@
                 </div>
             </div>
         </header>
+        <footer >
+            <p>{{ __('This is a system generated invoice and need not be signed.') }}</p>
+        </footer>
     </body>
 </html>
