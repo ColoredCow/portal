@@ -8,7 +8,7 @@
                 <form method="POST" action="{{ route('resources.store') }}" id="create-form">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">Add New Category<strong class="text-danger">*</strong></label>
+                        <label for="name" class="form-label">Category Name<strong class="text-danger">*</strong></label>
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                 </form>

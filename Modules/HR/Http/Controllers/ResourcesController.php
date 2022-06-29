@@ -28,6 +28,6 @@ class ResourcesController extends Controller
             'slug' => str_slug($request['name'], '-')
         ]);
 
-        return redirect(route('resources.show'));
+        return redirect()->back();
     }
 }
