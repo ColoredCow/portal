@@ -101,11 +101,14 @@ class ApplicantController extends Controller
 
         $subject = Setting::where('module', 'hr')->where('setting_key', 'application_on_hold_subject')->first();
         $body = Setting::where('module', 'hr')->where('setting_key', 'application_on_hold_body')->first();
-
+        $job_title = Job::find($application->hr_job_id)->title;
         $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
+        $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
 
         Mail::to($applicant->email, $applicant->name)
             ->send(new OnHold($subject->setting_value, $body->setting_value));
+
+        $application->onHold();
 
         return redirect()->back()->with('status', 'Your application is put on hold successfully');
     }
