@@ -41,4 +41,4 @@ If you are a new contributor, visit our [Contributing Guidelines](./docs/contrib
 2. [Employee Portal – Even small businesses should have it – Part 1](https://coloredcow.com/employee-portal-even-small-businesses-part-1)
 
 
-# portall
+# portal
