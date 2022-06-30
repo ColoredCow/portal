@@ -12,7 +12,6 @@ class ResourcesController extends Controller
     public function index()
     {
         $jobs = Job::all();
-
         
         return view('hr::guidelines-resources.index', compact('jobs'));
     }
@@ -20,9 +19,8 @@ class ResourcesController extends Controller
     public function show()
     {
         $categories = Category::all();
-        
-        
-        return view('hr::guidelines-resources.show', compact('categories')); 
+
+        return view('hr::guidelines-resources.show', compact('categories'));
     }
 
     public function store(Request $request)
@@ -34,5 +32,4 @@ class ResourcesController extends Controller
 
         return redirect()->back();
     }
-
 }
