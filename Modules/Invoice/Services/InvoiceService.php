@@ -235,9 +235,9 @@ class InvoiceService implements InvoiceServiceContract
         if ($clientId = Arr::get($filters, 'client_id', '')) {
             $query = $query->client($clientId);
         }
-
-        if ($invoiceYear = Arr::get($filters, 'invoice_year', '')){
-            $query = $query->Year($invoiceyear);
+        
+        if ($invoiceYear = Arr::get($filters, 'invoiceYear', '')){
+            $query = $query->InvoiceInaYear($invoiceYear);
         }
 
         return $query->orderBy('sent_on', 'desc');
@@ -533,18 +533,22 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice;
     }
 
-    public function invoiceReport($filters)
+    public function invoiceReport($filters,$request)
     {
+        $filters = $request->all();
+        $filters = [
+            'client_id' => $filters['client_id'] ?? null,
+            'invoiceYear' => $filters['invoiceYear'] ?? null,
+        ];
         $query = Invoice::query();
-        $invoices= $this
+        $invoices = $this
             ->applyFilters($query, $filters)
             ->get() ?: [];
         return $invoices;
     }
-
-    public function invoiceReportExport($filters)
+    public function invoiceReportExport($filters,$request)
     {
-        $invoices = $this->invoiceReport($filters);
+        $invoices = $this->invoiceReport($filters,$request);
 
         return Excel::download(new InvoiceReportExport($invoices), 'InvoiceReportExport.xlsx');
     }

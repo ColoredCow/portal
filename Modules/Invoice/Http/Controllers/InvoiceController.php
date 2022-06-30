@@ -215,13 +215,9 @@ class InvoiceController extends Controller
 
     public function invoiceReport(Request $request)
     {
-        $filters = [
-            'client_id' => $filters['client_id'] ?? null,
-            'invoiceYear' => $filters['invoiceYear'] ?? null,
-        ];
         $filters = $request->all();
 
-        $invoices=$this->service->invoiceReport($filters);
+        $invoices=$this->service->invoiceReport($filters,$request);
         return view('invoice::invoice-report')->with('invoices',$invoices);
     }
 

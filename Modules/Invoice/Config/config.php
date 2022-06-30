@@ -42,8 +42,8 @@ return [
     ],
 
     'financial-month-details' => [
-        'financial_year_start_month' => 'April',
-        'financial_year_end_month' => 'March'
+        'financial_year_start_month' => '04',
+        'financial_year_end_month' => '03'
     ],
 
     'tax-details' => [
