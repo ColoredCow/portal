@@ -26,9 +26,18 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = $request->all() ?: $this->service->defaultFilters();
+        $invoiceStatus = $request->invoice_status ?? 'sent';
+        $filters = $request->all();
 
-        return view('invoice::index', $this->service->index($filters));
+        if ($invoiceStatus == 'sent') {
+            unset($filters['invoice_status']);
+            $filters = $filters ?: $this->service->defaultFilters();
+        } else {
+            $invoiceStatus = 'ready';
+            $filters = $request->all();
+        }
+
+        return view('invoice::index', $this->service->index($filters, $invoiceStatus));
     }
 
     /**

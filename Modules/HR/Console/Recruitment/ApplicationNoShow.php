@@ -21,7 +21,7 @@ class ApplicationNoShow extends Command
      *
      * @var string
      */
-    protected $description = 'Set application status to no-show if an application round is not conducted 2 hours after scheduled time';
+     public $description = 'Set application status to no-show if an application round is not conducted 2 hours after scheduled time';
 
     /**
      * Create a new command instance.

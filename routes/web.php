@@ -126,6 +126,8 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
+
+        Route::get('/cron', 'CronController@index')->name('settings.cron');
     });
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {

@@ -6,6 +6,7 @@ use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\SyncEffortsheet;
+use Modules\Project\Console\ZeroEffortInProject;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         SyncEffortsheet::class,
-        SendEffortSummaryCommand::class
+        SendEffortSummaryCommand::class,
+        ZeroEffortInProject::class,
     ];
 
     /**
@@ -34,6 +36,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
+        $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
     }
 
     /**

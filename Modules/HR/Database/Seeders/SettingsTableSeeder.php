@@ -54,5 +54,15 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'applicant_interview_reminder_body',
             'setting_value' => '<div>Hello |*applicant_name*|,</div><div> </div><div>We thought to nudge you about our talk today at |*interview_time*|.</div><div> </div><div>Also, if you haven\'t accepted the Google calendar invite, which we\'ve sent you earlier, please do so now. That will help. Ignore if you\'ve already done so.</div><div> </div><div>Talk to you soon!</div><div> </div><div>HR Team</div><div>ColoredCow</div>',
         ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'applicant_verification_subject',
+            'setting_value' => 'Verify the application!',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'applicant_verification_body',
+            'setting_value' => '<div>Hello |*applicant_name*|,<br /><br /></div><p class="p1" style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #212529; font-family: Raleway, sans-serif; font-size: 14.4px; white-space: pre-wrap;">For verify the application, click on the below link <a style="box-sizing: border-box; color: #007bff; text-decoration-line: none; background-color: transparent;" href="|*verification_link*|">Verification link/</a></p>HR Team<br />ColoredCow</div>',
+        ]);
     }
 }

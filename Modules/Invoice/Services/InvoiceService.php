@@ -19,10 +19,16 @@ use Modules\Project\Entities\Project;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index($filters = [])
+    public function index($filters = [], $invoiceStatus = 'sent')
     {
-        $query = Invoice::query();
+        $filters = [
+            'client_id' => $filters['client_id'] ?? null,
+            'month' => $filters['month'] ?? null,
+            'year' => $filters['year'] ?? null,
+            'status' => $filters['status'] ?? null,
+        ];
 
+        $query = Invoice::query();
         $invoices = $this
             ->applyFilters($query, $filters)
             ->get();
@@ -33,6 +39,7 @@ class InvoiceService implements InvoiceServiceContract
             'currencyService' => $this->currencyService(),
             'totalReceivableAmount' => $this->getTotalReceivableAmountInINR($invoices),
             'filters' => $filters,
+            'invoiceStatus' => $invoiceStatus,
         ];
     }
 
@@ -75,6 +82,7 @@ class InvoiceService implements InvoiceServiceContract
             'year' => now()->format('Y'),
             'month' => now()->format('m'),
             'status' => 'sent',
+            'client_id' => '',
         ];
     }
 
@@ -193,7 +201,11 @@ class InvoiceService implements InvoiceServiceContract
             $query = $query->region($country);
         }
 
-        return $query;
+        if ($clientId = Arr::get($filters, 'client_id', '')) {
+            $query = $query->client($clientId);
+        }
+
+        return $query->orderBy('sent_on', 'desc');
     }
 
     /**
@@ -372,7 +384,7 @@ class InvoiceService implements InvoiceServiceContract
         $countryId = optional(ClientAddress::where('client_id', $clientId)->first())->country_id;
         $clientType = ($countryId == 1) ? 'IN' : 'EX';
         $clientProjectId = Project::find($projectId)->client_project_id;
-        $lastInvoice = optional(Invoice::where([['client_id', $clientId], ['project_id', $projectId]])->orderBy('id', 'DESC')->get())->offsetGet(1);
+        $lastInvoice = optional(Invoice::where([['client_id', $clientId], ['project_id', $projectId]])->orderBy('sent_on', 'DESC')->get())->offsetGet(1);
         $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1 : '000001';
 
         $invoiceNumber = $clientType . sprintf('%03s', $client->client_id) . $clientProjectId . sprintf('%06s', $invoiceSequence) . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
@@ -384,7 +396,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $countryId = optional(ClientAddress::where('client_id', $client->id)->first())->country_id;
         $clientType = ($countryId == 1) ? 'IN' : 'EX';
-        $lastInvoice = Invoice::where([['client_id', $client->id], ['project_id', $project->id]])->orderBy('id', 'DESC')->first();
+        $lastInvoice = Invoice::where([['client_id', $client->id], ['project_id', $project->id]])->orderBy('sent_on', 'DESC')->first();
         $invoiceSequence = $lastInvoice ? (int) Str::substr($lastInvoice->invoice_number, 8, 6) + 1 : '000001';
         $invoiceNumber = $clientType . sprintf('%03s', $client->client_id) . '-' . $project->client_project_id . '-' . sprintf('%06s', $invoiceSequence) . date('m', strtotime($sentDate)) . date('y', strtotime($sentDate));
 

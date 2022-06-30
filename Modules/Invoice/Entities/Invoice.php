@@ -52,6 +52,11 @@ class Invoice extends Model
             });
     }
 
+    public function scopeClient($query, $clientId)
+    {
+        return $query->where('client_id', $clientId);
+    }
+
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -77,10 +82,10 @@ class Invoice extends Model
     public function invoiceAmount()
     {
         $country = optional($this->client)->country;
-        $amount = (int) $this->amount;
+        $amount = (float) $this->amount;
 
         if ($this->client->type == 'indian') {
-            $amount = (int) $this->amount + (int) $this->gst;
+            $amount = (float) $this->amount + (float) $this->gst;
         }
 
         return trim(optional($country)->currency_symbol . ' ' . $amount);
