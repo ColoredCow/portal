@@ -51,7 +51,6 @@
             <thead class="thead-dark">
                 <tr>
                     <th class="w-33p sticky-top">Client/Project Name</th>
-                    {{-- <th class="w-33p">Tags</th> --}}
                     <th class="sticky-top">Team Members</th>
                     <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
