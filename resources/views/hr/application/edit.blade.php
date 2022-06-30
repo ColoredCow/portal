@@ -880,7 +880,7 @@
 											<div class="d-flex align-items-center">
 											@if ($applicationRound->showActions)
 												<select name="action_type" id="action_type" 
-												class="form-control w-50p" v-on:change="onSelectNextRound($event)" 
+												class="form-control w-42p" v-on:change="onSelectNextRound($event)" 
 												data-application-job-rounds="{{ json_encode($application->job->exceptTrialRounds) }}">
 													<option v-for="round in applicationJobRounds" value="round" 
 													:data-next-round-id="round.id">Move to @{{ round.name }}</option>
