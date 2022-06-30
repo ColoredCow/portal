@@ -19,7 +19,6 @@ class ResourcesController extends Controller
     public function show()
     {
         $categories = Category::all();
-
         
         return view('hr::guidelines-resources.show', compact('categories')); 
     }
@@ -32,6 +31,6 @@ class ResourcesController extends Controller
         ]);
 
         return redirect()->back();
-
     }
+
 }
