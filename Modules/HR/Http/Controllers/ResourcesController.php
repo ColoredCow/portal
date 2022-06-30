@@ -32,5 +32,4 @@ class ResourcesController extends Controller
 
         return redirect()->back();
     }
-
 }
