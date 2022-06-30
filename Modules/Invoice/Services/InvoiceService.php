@@ -266,7 +266,7 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function taxReportExport($filters)
+    public function taxReportExport($filters, $request)
     {
         $invoices = $this->taxReportInvoices($filters);
         if (isset($filters['region'])) {
@@ -275,7 +275,7 @@ class InvoiceService implements InvoiceServiceContract
             $invoices = $this->formatInvoicesForExportAll($invoices);
         }
 
-        return Excel::download(new TaxReportExport($invoices), 'TaxReportExport.xlsx');
+        return Excel::download(new TaxReportExport($invoices), "TaxReportExport-$request->month-$request->year.xlsx");
     }
 
     public function invoiceDetails($filters)
