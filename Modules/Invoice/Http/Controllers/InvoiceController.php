@@ -180,7 +180,7 @@ class InvoiceController extends Controller
     {
         $filters = $request->all();
 
-        return $this->service->taxReportExport($filters);
+        return $this->service->taxReportExport($filters, $request);
     }
 
     public function sendEmail(Request $request, Invoice $invoice, Client $client)

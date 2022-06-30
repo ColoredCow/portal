@@ -50,10 +50,9 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th class="w-33p">Client/Project Name</th>
-                    {{-- <th class="w-33p">Tags</th> --}}
-                    <th>Team Members</th>
-                    <th>Velocity</th>
+                    <th class="w-33p sticky-top">Client/Project Name</th>
+                    <th class="sticky-top">Team Members</th>
+                    <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
             </thead>
             <tbody>
@@ -89,9 +88,9 @@
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
                                     @endphp
                                     <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
-                                    <span class="{{ $textColor }} font-weight-bold">{{ $project->velocity }}</span>
-                                </td>
-                            </tr>
+                                    <span class="{{ $textColor }} font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span>
+                                    </td>
+                                    </tr>
                         @endforeach
                     @empty
                         <tr>
