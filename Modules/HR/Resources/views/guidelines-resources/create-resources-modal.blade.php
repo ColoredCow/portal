@@ -5,7 +5,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add Resouces</h5>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('resources.store') }}" id="create-form">
+                <form method="POST" action="{{ route('resources.store') }}" id="addResourceForm">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Resource URL<strong class="text-danger">*</strong></label>
@@ -23,7 +23,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" form="create-form" id="save-btn-action">Save</button>
+                <button type="button" class="btn btn-primary" form="addResourceForm" id="save-btn-action">Save</button>
             </div>
         </div>
     </div>
