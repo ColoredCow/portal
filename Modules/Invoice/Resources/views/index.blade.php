@@ -62,7 +62,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th></th>
-                        <th>Project</th>
+                        <th class="w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
                             <th>Invoice Number</th>
                         @else
