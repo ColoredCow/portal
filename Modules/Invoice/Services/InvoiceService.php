@@ -41,7 +41,7 @@ class InvoiceService implements InvoiceServiceContract
             $clientsReadyToSendInvoicesData = [];
         } else {
             $invoices = [];
-            $clientsReadyToSendInvoicesData = Client::invoiceReadyToSend()->whereId(2)->get();
+            $clientsReadyToSendInvoicesData = Client::invoiceReadyToSend()->get();
         }
 
         return [
