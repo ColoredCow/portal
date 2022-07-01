@@ -11,8 +11,7 @@ class ResourcesController extends Controller
 {
     public function index()
     {
-        $jobs = Job::all();
-                
+        $jobs = Job::all();        
         return view('hr::guidelines-resources.index', compact('jobs'));
     }
 
