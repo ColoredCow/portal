@@ -62,7 +62,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th></th>
-                        <th>Project</th>
+                        <th class="w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
                             <th>Invoice Number</th>
                         @else
@@ -177,7 +177,7 @@
                                     </form>
                                 </td>
                                 <td class="text-center">
-                                    <div class="btn btn-sm btn-success text-light" id="showPreview" data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('View Mail') }}</div>
+                                    <div class="btn btn-sm btn-success text-light show-preview" data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('View Mail') }}</div>
                                 </td>
                             </tr>
                         @endforeach
