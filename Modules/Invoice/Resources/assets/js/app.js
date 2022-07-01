@@ -27,7 +27,7 @@ $(document).ready(function(){
 		document.getElementById("container").innerHTML = output;
 	});
 
-	$("#showPreview").on("click", function() {
+	$(".show-preview").on("click", function() {
 		var invoiceData = $(this).data("invoice-data");
 		var mapping = {
 			"|*project_name*|": invoiceData["projectName"],
