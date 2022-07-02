@@ -17,9 +17,9 @@ class HRJobsSeeder extends Seeder
      */
     public function run()
     {
-        $Job=new Job;
+        $Job = new Job;
         Model::unguard();
-        $faker=Faker::create();
+        $faker = Faker::create();
         foreach (range(1, 25) as $index) {
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
             DB::table('hr_jobs')->insert([
@@ -41,7 +41,7 @@ class HRJobsSeeder extends Seeder
                 'posted_by'=> 8,
                 'status'=> $faker->text,
                 'deleted_at'=> $faker->date
-            ]); 
+            ]);
             DB::table('hr_applicants')->insert([
                 'id'=> $index,
                 'name'=> $faker->name,
@@ -73,5 +73,4 @@ class HRJobsSeeder extends Seeder
         }
         \Artisan::call('mapping-of-jobs-and-hr-rounds');
     }
-    
 }
