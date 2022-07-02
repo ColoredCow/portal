@@ -4,7 +4,8 @@
 
 <div class="chart-container" align="center">
     <div class="bar-chart-container">
-        <h2 align="left">Analytics</h2>
+        <div ="button" align="left">
+        <h2 href="button" class="btn btn-primary text- white">Analytics</h2>
         <form action="{{route('recruitment.report')}}" method="POST" align="right">
             {{csrf_field()}}
             <input type="date" name="report_start_date" id='StartDate'> to
