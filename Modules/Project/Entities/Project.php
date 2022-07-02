@@ -49,6 +49,7 @@ class Project extends Model
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
     }
+
     public function getInactiveTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNotNull('ended_on')->orderBy('ended_on', 'DESC');
