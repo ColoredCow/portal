@@ -217,14 +217,6 @@ class InvoiceController extends Controller
     {
         $filters = $request->all();
 
-        $invoices=$this->service->invoiceReport($filters,$request);
-        return view('invoice::invoice-report')->with('invoices',$invoices);
-    }
-
-    public function invoiceReportExport(Request $request)
-    {
-        $filters = $request->all();
-
-        return $this->service->invoiceReportExport($filters);
+        return view('invoice::invoice-report')->with($this->service->invoiceReport($filters,$request));
     }
 }

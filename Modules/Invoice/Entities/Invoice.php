@@ -6,6 +6,7 @@ use App\Traits\Encryptable;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Invoice extends Model
 {
@@ -59,6 +60,38 @@ class Invoice extends Model
     public function scopeInvoiceInaYear($query, $invoiceYear)
     {
         return $query->whereBetween('sent_on', [($invoiceYear. "-" .config('invoice.financial-month-details.financial_year_start_month'). "-". "01"),(($invoiceYear +1). "-" .config('invoice.financial-month-details.financial_year_end_month'). "-" ."01")]);
+    }
+    public function scopeApplyFilters($query, $filters)
+    {
+        if ($year = Arr::get($filters, 'year', '')) {
+            $query = $query->year($year);
+        }
+
+        if ($month = Arr::get($filters, 'month', '')) {
+            $query = $query->month($month);
+        }
+
+        if ($status = Arr::get($filters, 'status', '')) {
+            $query = $query->status($status);
+        }
+
+        if ($country = Arr::get($filters, 'country', '')) {
+            $query = $query->country($country);
+        }
+
+        if ($country = Arr::get($filters, 'region', '')) {
+            $query = $query->region($country);
+        }
+
+        if ($clientId = Arr::get($filters, 'client_id', '')) {
+            $query = $query->client($clientId);
+        }
+        
+        if ($invoiceYear = Arr::get($filters, 'invoiceYear', '')){
+            $query = $query->InvoiceInaYear($invoiceYear);
+        }
+
+        return $query;
     }
 
     public function project()
