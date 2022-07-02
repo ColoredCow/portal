@@ -7,24 +7,22 @@ use Carbon\Carbon;
 use Cron\CronExpression;
 use Illuminate\Support\Facades\Artisan;
 
-
 class CronController extends Controller
 {
     public function index()
     {
         app()->make(\Illuminate\Contracts\Console\Kernel::class);
         $schedule = app()->make(\Illuminate\Console\Scheduling\Schedule::class);
-        
-        foreach(Artisan::all() as $key=>$command)
-        {
-            var_dump($key);
-            var_dump(class_basename($command));
-
-            // dd(Modules\HR\Console\Recruitment\ApplicationNoShow::class);
-        }
 
         $events = collect($schedule->events())->map(function($event) 
         {
+            $command = str_after($event->command, '\'artisan\' ');
+            $commandDescription = '';
+            foreach (Artisan::all() as $artisanCommand => $commandDetails){
+                if ($artisanCommand == $command) {
+                    $commandDescription = $commandDetails->getDescription();
+                }
+            }
             $cron = CronExpression::factory($event->expression);
             $date = Carbon::now();
             if ($event->timezone) {
@@ -32,12 +30,17 @@ class CronController extends Controller
             }
             return (object)[
                 'expression' => $event->expression,
-                'command' => str_after($event->command, '\'artisan\' '),
-                'next_run_at' => $cron->getNextRunDate()->format('Y-m-d H:i:s'),
-                'description' => $event->description,
+                'command' => $command,
+                'next_run_at' => $cron->getNextRunDate()->format('d, M, Y g:i A'),
+                'description' => $commandDescription,
             ];
         });
-        dd($events);
         return view('settings.cron.index')->with('events',$events);
+    }
+
+    public function run($command)
+    {
+        Artisan::call($command);
+        return redirect()->route('settings.cron')->with('success', 'Command executed successfully');
     }
 }
