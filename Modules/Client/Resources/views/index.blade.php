@@ -12,7 +12,7 @@
     <div class="d-none d-md-flex justify-content-between my-2">
         @include('client::menu_header')
         @can('clients.create')
-            <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
+            <a href= "{{ route('client.create') }}" class="btn btn-info text-white active">Add client</a>
         @endcan
     </div>
     <div class="d-md-flex justify-content-between mt-5 mb-2">
@@ -22,7 +22,7 @@
                 <div class="d-flex align-items-center">
                     <input type="hidden" name="status" value="{{ request()->get('status', 'active') }}">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Client name" value={{request()->get('name')}}>
-                    <button class="btn btn-info ml-2 text-white">Search</button> 
+                    <button class="btn btn-info ml-2 text-white active">Search</button> 
                 </div>
             </form>
         </div>
@@ -58,10 +58,14 @@
 
                 @empty
                     <tr>
-                        <td colspan="2">
+                        <td>  </td>
+                        <td> - </td>
+                        <td>  </td>
                             <p class="my-4 text-left">No {{ config('client.status')[request()->input('status', 'active')] }} clients found.</p>
                         <td>
                     </tr>
+                   
+
                 @endforelse
             </tbody>
         </table>
