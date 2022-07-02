@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <h1>Add new application</h1>
+    <h1>Add new applicationss</h1>
 
     <div>
         @include('status', ['errors' => $errors->all()])

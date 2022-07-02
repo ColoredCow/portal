@@ -15,7 +15,7 @@
     },
     "devDependencies": {
         "bootstrap": "^4.4.1",
-        "cross-env": "^7.0.2",
+        "cross-env": "^7.0.3",
         "eslint": "^7.31.0",
         "eslint-config-airbnb-base": "^14.2.1",
         "eslint-loader": "^4.0.2",
