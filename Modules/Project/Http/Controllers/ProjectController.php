@@ -9,8 +9,6 @@ use Modules\Project\Entities\Project;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Rules\ProjectNameExist;
-use \Cron\CronExpression;
-use \Carbon\Carbon;
 
 class ProjectController extends Controller
 {
