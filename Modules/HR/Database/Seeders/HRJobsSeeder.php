@@ -42,7 +42,7 @@ class HRJobsSeeder extends Seeder
                 'status'=> $faker->text,
                 'deleted_at'=> $faker->date
             ]); 
-              DB::table('hr_applicants')->insert([
+            DB::table('hr_applicants')->insert([
                 'id'=> $index,
                 'name'=> $faker->name,
                 'email'=>  $faker->email,
@@ -71,8 +71,7 @@ class HRJobsSeeder extends Seeder
             ]);
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
-            \Artisan::call('mapping-of-jobs-and-hr-rounds');
-
+        \Artisan::call('mapping-of-jobs-and-hr-rounds');
     }
     
 }
