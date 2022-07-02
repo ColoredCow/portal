@@ -1,15 +1,15 @@
-<div class="modal fade" id="create_Modal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+<div class="modal fade" id="create-Modal" tabindex="-1" aria-labelledby="createModal-Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Resouces</h5>
+                <h5 class="modal-title" id="exampleModal-Label">Add Resouces</h5>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('resources.store') }}" id="addResourceForm">
+                <form method="POST" action="{{ route('resources.create') }}" id="addResourceForm">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Resource URL<strong class="text-danger">*</strong></label>
-                        <input type="url" class="form-control" id="name" name="name" required>
+                        <input type="url" class="form-control" id="resource_link" name="resource_link" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="category-type">Select Categories<strong class="text-danger">*</strong></label>
@@ -20,11 +20,12 @@
                             @endforeach
                         </select>
                     </div>
+                    <button type="button" class="btn btn-primary" form="addResourceForm" id="save-btn-action">Save</button>
                 </form>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-primary" form="addResourceForm" id="save-btn-action">Save</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

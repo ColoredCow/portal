@@ -11,11 +11,12 @@
                         <label for="name" class="form-label">Category Name<strong class="text-danger">*</strong></label>
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
+                    <button type="button" class="btn btn-primary" form="create-form" id="save-btn-action">Save</button>
                 </form>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-primary" form="create-form" id="save-btn-action">Save</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
