@@ -24,5 +24,6 @@ class HRDatabaseSeeder extends Seeder
         $this->call(HrApplicantsTableSeeder::class);
         $this->call(HrApplicationRoundTableSeeder::class);
         $this->call(HrApplicationsTableSeeder::class);
+        $this->call(HRJobsSeeder::class);
     }
 }
