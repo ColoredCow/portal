@@ -3,21 +3,28 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Source Sans Pro:400,500,600,700,800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <!-- Styles -->
         <style>
             html,
             body {
-                color: #012840;
-                font-family: 'Source Sans Pro', 'sans-serif';
                 font-weight: normal;
+                font-family: sans-serif;
+                line-height: 1.15;
+                -webkit-text-size-adjust: 100%;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 margin: 0;
                 padding: 0;
                 height: 100%;
                 background-size: 100% 100%;
                 font-size: 12px;
+                background: white !important;
+            }
+            footer {
+                margin-top: 50px; 
+                color:gray;
+            }
+            footer p {
+                text-align: center;
             }
             .full-height {
                 height: 100vh;
@@ -47,12 +54,10 @@
                 flex-direction: column;
             }
             .links>a {
-                color: #636b6f;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
                 letter-spacing: .1rem;
-                text-decoration: none;
                 text-transform: uppercase;
             }
             .fz-20 {
@@ -175,13 +180,55 @@
             .fw-bold {
                 font-weight: bold !important;
             }
-            td p {
-                margin-top: 0;
-                margin-bottom: 0;
-            }
             tr, td{
                 padding: 0.2em 0 0.2em 1em !important;
                 margin: 0.2em 0 0.2em 1em !important;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            thead {
+                display: table-header-group;
+            }
+            .table .thead-dark th {
+                color: #fff;
+                background-color: #343a40;
+                border-color: #454d55;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                padding-left: 10px
+            }
+            .table thead th {
+                vertical-align: bottom;
+                border-bottom: 2px solid #dee2e6;
+            }
+            .border-bottom td{
+                vertical-align: bottom;
+                border-bottom: 1px solid #dee2e6;
+                padding-bottom: 4px !important;
+                padding-top: 4px !important;
+            }
+            .table-borderless th,
+            .table-borderless td,
+            .table-borderless thead th,
+            .table-borderless tbody + tbody {
+                border: 0;
+            }
+            td p {
+                margin-top: 5px !important;
+                margin-bottom: 5px !important;
+            }
+            .table-borderless tbody td p {
+                margin-top: 1.5px !important;
+                margin-bottom: 1.5px !important;
+            }
+            .stamp {
+                float: right; 
+                margin-top: -95px; 
+                margin-left: 170px;
+            }
+            .transaction-details th {
+                padding-left: 10px; padding-bottom:10px;
             }
         </style>
     </head>
@@ -196,8 +243,8 @@
                                 <img src="{{ public_path() . '/images/coloredcow.png' }}" alt="" height="50" width="200">
                             </td>
                             <td style="color: grey;" align="right">
-                                <p>{{ config('invoice.coloredcow-details.address-line-1') }}</p>
-                                <p>{{ config('invoice.coloredcow-details.address-line-2') }}</p>
+                                <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-1') }}</p>
+                                <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
                                 <p>finance@coloredcow.com</p>
                                 <p>{{ str_replace('-', ' ', config('invoice.finance-details.phone')) }}</p>
                                 <p>PAN : {{ config('invoice.finance-details.pan') }}</p>
@@ -208,13 +255,15 @@
                         </tr>
                         <tr style="width:100%;">
                             <td align="left">
+                                <br><br><br>
                                 <p class="fw-bold">Bill To</p>
                                 <p>{{ optional($client->billing_contact)->name }}</p>
                                 <p>{{ $client->name }}</p>
                                 <p>{{ optional($client->billing_contact)->email }}</p>
-                                <p>{{ $client->addresses->first()->address }}</p>
-                                <p>{{ $client->addresses->first()->state . ' ' .$client->addresses->first()->area_code }}</p>
+                                <p>{{ optional($client->addresses->first())->address }}</p>
+                                <p>{{ optional($client->addresses->first())->city . ', ' . optional($client->addresses->first())->state . ', ' . optional($client->addresses->first())->area_code }}</p>
                                 <p>{{ $client->country->initials == 'IN' ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
+                                <p>{{ optional($client->billing_contact)->phone }}</p>
                             </td>
                             <td>
                                 <p class="fw-bold ml-1em">Details</p>
@@ -240,8 +289,10 @@
                             <td align="left" class="fw-bold">
                                 <p>Client Name: {{ $client->name }}</p>
                                 <p>Client ID: {{ sprintf('%03s', $client->client_id) }}</p>
-                                <p>Project Name: {{ $invoiceLevel == 'client' ? '' : $projects->first()->name }}</p>
-                                <p>Project ID: {{ $invoiceLevel == 'client' ? '' : $projects->first()->client_project_id }}</p>
+                                @if($billingLevel == config('project.meta_keys.billing_level.value.project.key'))
+                                    <p>Project Name: {{ $projects->first()->name }}</p>
+                                    <p>Project ID: {{ $projects->first()->client_project_id }}</p>
+                                @endif
                                 <p>Category: Web Application Development</p>
                             </td>
                             <td align="right">
@@ -260,42 +311,48 @@
                     </tbody>
                 </table>
                 @include('invoice::render.international-hourly-billing-template')
-                <div>
-                    <table class="table" style="margin-left: auto;width:50%;">
-                        <tr>
-                            <td>Total</td>
-                            <td></td>
+                <div><br>
+                    <table class="table" style="margin-left:33%; width:67%;">
+                        <tr class="border-bottom" >
+                            <td style="width: 135px;">Total</td>
+                            <td style="width: 94px;">{{ $client->getClientLevelProjectsBillableHoursForTerm($monthNumber, $year) }}</td>
+                            <td style="width: 135px;"></td>
                             <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
-                        <tr>
+                        <tr class="border-bottom">
                             <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
+                            <td></td>
                             <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
                             <td>{{ $client->country->currency_symbol . $client->getTaxAmountForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
                         <tr>
                             <td>Current Payable</td>
                             <td></td>
+                            <td></td>
                             <td>{{ $client->country->currency_symbol . ($client->getBillableAmountForTerm($monthNumber, $year, $projects) + $client->getTaxAmountForTerm($monthNumber, $year, $projects)) }}</td>
                         </tr>
-                        <tr>
+                        <tr><td><br></td></tr>
+                        <tr class="border-bottom">
                             <td>Amount Paid</td>
+                            <td></td>
                             <td></td>
                             <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthNumber, $year, $projects) }}</td>
                         </tr>
-                        <tr>
+                        <tr class="border-bottom">
                             <td>
-                                <strong>Current Amount Due in {{ $client->country->initials . ' ' . $client->country->currency_symbol }}</strong>
+                                <strong>Amount Due in {{ $client->country->initials . ' ' . $client->country->currency_symbol }}</strong>
                             </td>
+                            <td></td>
                             <td></td>
                             <td><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year, $projects) }}</strong></td>
                         </tr>
                     </table>
                 </div>
-                <div>
-                    <table class="table table-borderless" style="width: 50%; margin-right: auto;">
+                    <br>
+                    <table class="table-borderless transaction-details" style="width: 60%;">
                         <thead>
                             <tr>
-                                <th scope="col" class="fz-16">Transaction Details</th>
+                                <th class="fz-16" align="left">Transaction Details</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -330,15 +387,38 @@
                             <tr><td><br></td></tr>
                             <tr>
                                 <td colspan="2">
-                                    Thank you for your business. It’s a pleasure to work with you on your project.
+                                    <a href="{{ $client->effort_sheet_url }}">For more details of this invoice you can visit this sheet.</a>
                                 </td>
                             </tr>
                             <tr>
+                                <td colspan="2">
+                                    Thank you for your business. It’s a pleasure to work with you on your project.
+                                </td>
+                            </tr>
+                            <tr><td><br></td></tr>
+                            <tr>
                                 <td>
-                                    <p class='mb-0 mt-0'>Sincerely,</p>
-                                    <p class='mb-0 mt-0'>{{ config('invoice.coloredcow-details.name') }}</p>
-                                    <p class='mb-0 mt-0'>{{ config('invoice.coloredcow-details.address-line-1') }}</p>
-                                    <p class='mb-0 mt-0'>{{ config('invoice.coloredcow-details.address-line-2') }}</p>
+                                    <p>Sincerely,</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <p>{{ config('invoice.coloredcow-details.name') }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-1') }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <p>{{ config('invoice.coloredcow-details.gurgaon.address-line-2') }}</p>
+                                </td>
+                            </tr>
+                            <tr colspan="2">
+                                <td>
+                                    <img class="stamp" src="{{ storage_path('app/stamp/coloredcow-stamp.png') }}" alt="" height="100" width="100">     
                                 </td>
                             </tr>
                         </tbody>
@@ -346,5 +426,8 @@
                 </div>
             </div>
         </header>
+        <footer >
+            <p>{{ __('This is a system generated invoice and need not be signed.') }}</p>
+        </footer>
     </body>
 </html>

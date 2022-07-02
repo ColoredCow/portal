@@ -129,6 +129,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/cron', 'CronController@index')->name('settings.cron');
         Route::get('/cron/{command}', 'CronController@run')->name('settings.cron.run');
+        Route::get('/invoice-template', 'SettingController@invoiceTemplates')->name('setting.invoice');
+        Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
     });
 
     Route::prefix('knowledgecafe')->namespace('KnowledgeCafe')->group(function () {

@@ -2,6 +2,7 @@
 
 Before you start following the guidelines, make sure to go through the [prerequisites guide](./prerequisites.md) to install the required tools and packages on your machine.
 
+**Note:** If you are a Windows user, use GitBash or PowerShell instead of the command prompt.
 
 1. Navigate to the right directory where your project will be locally saved
     - For WAMP:

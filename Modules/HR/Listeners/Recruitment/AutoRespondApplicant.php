@@ -25,7 +25,9 @@ class AutoRespondApplicant
      * @param  ApplicantEmailVerified  $event
      * @return void
      */
-    public function handle(ApplicantEmailVerified $event)
+
+    //ToDo: We need to replace the instance of ApplicationCreated with ApplicantEmailVerified
+    public function handle(ApplicationCreated $event)
     {
         $application = $event->application;
         $applicant = $application->applicant;

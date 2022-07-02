@@ -35,7 +35,7 @@ class SendPendingInvoiceMail extends Mailable
 
         return $this
         ->from($request->sender_invoice_email)
-        ->subject($this->invoice->project->name . ' invoice ' . '-' . ' ' . $month . ' ' . $request->year)
+        ->subject((optional($this->invoice->project)->name ?: $this->invoice->client->name . ' Projects') . ' invoice ' . '-' . ' ' . $month . ' ' . $request->year)
         ->view('invoice::mail.pending-invoice')
         ->with(['invoice' => $this->invoice]);
     }

@@ -86,6 +86,7 @@
                         <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
+                        <div class="fz-14 float-right mr-3 mt-1">{{ config('project.meta_keys.last_updated_at.value') . __(': ') . ($project->last_updated_at)}}</div>
                         <div>
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
                                 <div class="table">

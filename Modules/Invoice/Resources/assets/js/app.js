@@ -26,7 +26,57 @@ $(document).ready(function(){
 		}
 		document.getElementById("container").innerHTML = output;
 	});
+
+	$(".show-preview").on("click", function() {
+		var invoiceData = $(this).data("invoice-data");
+		var mapping = {
+			"|*project_name*|": invoiceData["projectName"],
+			"|*term*|": invoiceData["monthName"],
+			"|*year*|": invoiceData["year"],
+			"|*billing_person_name*|": invoiceData["billingPersonName"],
+			"|*invoice_amount*|": invoiceData["totalAmount"],
+			"|*invoice_number*|": invoiceData["invoiceNumber"],
+		};
+		var emailSubject = $("#emailSubject").val();
+		var emailBody = $("#emailBody").text();
+		
+		for (var key in mapping) {
+			var emailSubject = emailSubject.replace(key, mapping[key]);
+			var emailBody = emailBody.replace(key, mapping[key]);
+		}
+
+		$("#emailSubject").val(emailSubject); 
+		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
+		$("#sendToName").val(invoiceData["billingPersonName"]); 
+		$("#clientId").val(invoiceData["clientId"]); 
+		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$("#emailPreview").modal("show");
+	});
+
+	$("#verifyInvoice").on("click", function () {
+		if ($("#verifyInvoice").is(":checked")) {
+			$("#sendInvoiceBtn").attr("disabled", false);
+		} else {
+			$("#sendInvoiceBtn").attr("disabled", true);
+		}
+	});
+	
+	$("#sendInvoiceForm").on("submit", function (event) {
+		event.preventDefault();
+		$("#sendInvoiceBtn").attr("disabled", true);
+		if(validateFormData(event.target)) {
+			event.target.submit();
+		}
+	});
 });
+
+function validateFormData(form) {
+	if (!form.checkValidity()) {
+		form.reportValidity();
+		return false;
+	}
+	return true;
+}
 
 function convert_number(number) {
 	if (number < 0 || number > 999999999) {
