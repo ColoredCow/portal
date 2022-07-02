@@ -234,7 +234,7 @@
                         <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
                             <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
                             <div class="rounded w-13 h-13 d-inline-block mr-1"
-                                style="background-color: blue ; color : white;"></div>
+                            style="background-color: {{$tag->background_color}};color: {{$tag->text_color}};"></div>
                             <span>{{ $tag->name }}</span>
                         </a>
                     @endforeach
@@ -253,3 +253,5 @@
     </table>
     {{ $applications->links() }}
 </div>
+
+@endsection

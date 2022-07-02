@@ -16,7 +16,7 @@
                 </form>     
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" disabled data-dismiss="modal">Appllllly(Coming Soon)</button>
+                <button type="button" class="btn btn-outline-primary" disabled data-dismiss="modal">Applly(Coming Soon)</button>
                 <button type="button" class="btn btn-outline-danger" disabled data-dismiss="modal">Close(Coming Soon)</button>
             </div>
         </div>
