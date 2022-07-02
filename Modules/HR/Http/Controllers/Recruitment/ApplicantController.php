@@ -111,8 +111,6 @@ class ApplicantController extends Controller
         $application->onHold();
 
         return redirect()->route('applications.job.index')->with('status', 'Your application is put on hold successfully!');
-
-
     }
     public function applicantEmailVerification($applicantEmail, $applicationID)
     {
