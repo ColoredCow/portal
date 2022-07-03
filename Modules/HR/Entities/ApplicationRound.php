@@ -150,31 +150,30 @@ class ApplicationRound extends Model
                 break;
 
             case 'on-hold':
-                    $application->untag('new-application');
-                    $application->untag('in-progress');
-                    $fillable['round_status'] = 'on-hold';
-                    $application->onHold();
+                $application->untag('new-application');
+                $application->untag('in-progress');
+                $fillable['round_status'] = 'on-hold';
+                $application->onHold();
 
-                    ApplicationMeta::create([
-                        'hr_application_id' => $application->id,
-                        'key' => 'on-hold',
-                        'value' => json_encode([
-                        'on-hold_by' => $fillable['conducted_person_id']])
-                        ]);
+                ApplicationMeta::create([
+                    'hr_application_id' => $application->id,
+                    'key' => 'on-hold',
+                    'value' => json_encode([
+                    'on-hold_by' => $fillable['conducted_person_id']])
+                    ]);
 
-                        $applicant = $application->applicant;
+                    $applicant = $application->applicant;
 
-                        $subject = Setting::where('module', 'hr')->where('setting_key', 'application_on_hold_subject')->first();
-                        $body = Setting::where('module', 'hr')->where('setting_key', 'application_on_hold_body')->first();
-                        $job_title = Job::find($application->hr_job_id)->title;
-                        $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
-                        $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
+                    $subject = Setting::where('module', 'hr')->where('setting_key', 'application_on_hold_subject')->first();
+                    $body = Setting::where('module', 'hr')->where('setting_key', 'application_on_hold_body')->first();
+                    $job_title = Job::find($application->hr_job_id)->title;
+                    $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
+                    $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
 
-                        Mail::to($applicant->email, $applicant->name)
-                            ->send(new OnHold($subject->setting_value, $body->setting_value));
+                    Mail::to($applicant->email, $applicant->name)
+                        ->send(new OnHold($subject->setting_value, $body->setting_value));
 
-                        return redirect()->route('applications.job.index');
-
+                    return redirect()->route('applications.job.index');
                     break;
 
             case 'send-for-approval':
