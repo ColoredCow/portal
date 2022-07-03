@@ -42,7 +42,7 @@ class OnHold extends Mailable
      */
     public function build()
     {
-        return $this->from("amanbahuguna009@gmail.com")
+        return $this->from(config('hr.default.email'), config('hr.default.name'))
             ->subject($this->subject)
             ->view('mail.plain')->with([
             'body' => $this->body,
