@@ -170,11 +170,9 @@ class ApplicationRound extends Model
                 $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
                 $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
 
-                Mail::to($applicant->email, $applicant->name)
-                    ->send(new OnHold($subject->setting_value, $body->setting_value));
+                Mail::to($applicant->email, $applicant->name)->send(new OnHold($subject->setting_value, $body->setting_value));
 
                 return redirect()->route('applications.job.index');
-                break;
 
             case 'send-for-approval':
                 $application->untag('new-application');
