@@ -51,4 +51,5 @@
         "resources/js/*.(js|vue)": "./node_modules/.bin/eslint --ext .js,.vue --fix",
         "Modules/*/resources/assets/js/*.(js|vue)": "./node_modules/.bin/eslint --ext .js,.vue --fix"
     }
+    
 }
