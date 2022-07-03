@@ -13,6 +13,10 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\HR\Entities\Application;
 use Modules\User\Entities\User;
+use Modules\HR\Entities\University;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\Recruitment\Applicant\OnHold;
 use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 
 class ApplicantController extends Controller
@@ -90,6 +94,24 @@ class ApplicantController extends Controller
         return view('hr.application.details', ['application' => $application, 'applicant' => $application->applicant, 'applicationRound' => $application->applicationRounds, 'interviewers' => $interviewers, 'timeline' => $application->applicant->timeline(), 'applicationFormDetails' => $application->applicationMeta()->formData()->first()]);
     }
 
+    public function ApplicationOnHold($applicationID)
+    {
+        $application = Application::find($applicationID);
+        $applicant = $application->applicant;
+
+        $subject = Setting::where('module', 'hr')->where('setting_key', 'application_on_hold_subject')->first();
+        $body = Setting::where('module', 'hr')->where('setting_key', 'application_on_hold_body')->first();
+        $job_title = Job::find($application->hr_job_id)->title;
+        $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
+        $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
+
+        Mail::to($applicant->email, $applicant->name)
+            ->send(new OnHold($subject->setting_value, $body->setting_value));
+
+        $application->onHold();
+
+        return redirect()->route('applications.job.index')->with('status', 'Your application is put on hold successfully!');
+    }
     public function applicantEmailVerification($applicantEmail, $applicationID)
     {
         $application = Application::find($applicationID);

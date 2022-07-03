@@ -2,25 +2,25 @@
 
 @section('content')
 <div class="container">
-	<br>
-	<h1>Mail Templates</h1>
-	<br>
-	@include('status', ['errors' => $errors->all()])
-	<br>
-	@include('settings.hr.application-verification')
-	@include('settings.hr.applicant-auto-responder')
-	@include('settings.hr.applicant-interview-reminder')
-	@include('settings.hr.no-show')
-	@include('settings.hr.approve')
-	@include('settings.hr.offer-letter')
-	<h4 class="mt-5">Mail templates for rounds</h4>
-	@foreach ($rounds as $index => $round)
-		@foreach ($roundMailTypes as $type)
-			@php
-				$mailTemplate = $type['label'] . '_mail_template';
-			@endphp
-			<div class="card mt-4">
-				<form action="{{ route('hr.round.update', $round->id) }}" method="POST">
+    <br>
+    <h1>Mail Templates</h1>
+    <br>
+    @include('status', ['errors' => $errors->all()])
+    <br>
+    @include('settings.hr.applicant-auto-responder')
+    @include('settings.hr.applicant-interview-reminder')
+    @include('settings.hr.no-show')
+    @include('settings.hr.approve')
+    @include('settings.hr.offer-letter')
+    @include('settings.hr.on-hold')
+    <h4 class="mt-5">Mail templates for rounds</h4>
+    @foreach ($rounds as $index => $round)
+        @foreach ($roundMailTypes as $type)
+            @php
+                $mailTemplate = $type['label'] . '_mail_template';
+            @endphp
+            <div class="card mt-4">
+                <form action="{{ route('hr.round.update', $round->id) }}" method="POST">
 
 					{{ csrf_field() }}
 					{{ method_field('PATCH') }}
