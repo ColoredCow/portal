@@ -22,7 +22,11 @@
                 <div class="d-flex align-items-center">
                     <input type="hidden" name="status" value="{{ request()->get('status', 'active') }}">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Client name" value={{request()->get('name')}}>
+<<<<<<< HEAD
                     <button class="btn btn-info ml-2 text:white active ">Search</button> 
+=======
+                    <button class="btn btn-info ml-2 text-white active">Search</button> 
+>>>>>>> d88740a54653becf5375caf31993ebe4770c83b7
                 </div>
             </form>
         </div>
