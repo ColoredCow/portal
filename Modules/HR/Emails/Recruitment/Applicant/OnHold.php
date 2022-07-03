@@ -25,7 +25,7 @@ class OnHold extends Mailable
     public $body;
 
     /**
-     * Create a new message instance.
+     * Create new message instance.
      *
      * @return void
      */
