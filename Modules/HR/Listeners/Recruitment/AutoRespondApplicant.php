@@ -5,7 +5,7 @@ namespace Modules\HR\Listeners\Recruitment;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\Recruitment\Applicant\ApplicantCreateAutoResponder;
-use Modules\HR\Events\Recruitment\ApplicationCreated;
+use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 
 class AutoRespondApplicant
 {
@@ -22,12 +22,11 @@ class AutoRespondApplicant
     /**
      * Handle the event.
      *
-     * @param  ApplicationCreated  $event
+     * @param  ApplicantEmailVerified  $event
      * @return void
      */
 
-    //ToDo: We need to replace the instance of ApplicationCreated with ApplicantEmailVerified
-    public function handle(ApplicationCreated $event)
+    public function handle(ApplicantEmailVerified $event)
     {
         $application = $event->application;
         $applicant = $application->applicant;
