@@ -26,7 +26,7 @@
             <input
                 type="text" name="search" class="form-control" id="search" placeholder="Name, email, phone, or university"
                 value=@if(request()->has('search')){{request()->get('search')}}@endif>
-            <button class="btn btn-info ml-2 text-white">Search</button>
+            <button class="btn btn-info ml-2 ">Search</button>
         </form>
     </div>
     @if(request()->has('search') || request()->has('tags'))
