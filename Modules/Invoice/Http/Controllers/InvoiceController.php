@@ -217,6 +217,6 @@ class InvoiceController extends Controller
     {
         $filters = $request->all();
 
-        return view('invoice::invoice-report', $this->service->invoiceReport($filters,$request));
+        return view('invoice::invoice-report', $this->service->invoiceReport($filters, $request));
     }
 }

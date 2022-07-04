@@ -493,7 +493,7 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice;
     }
 
-    public function invoiceReport($filters,$request)
+    public function invoiceReport($filters, $request)
     {
         $filters = $request->all();
         $filters = [

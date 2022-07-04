@@ -35,33 +35,33 @@
             </thead>
             <tbody>
                 @foreach($invoices as $invoice)
-                <tr>
-                    <td>{{$loop->index+1}}</td>
-                    <td>{{$invoice->project->name}}</td>
-                    <td>{{$invoice->invoice_number}}</td>
-                    <td>{{$invoice->sent_on->format(config('invoice.default-date-format'))}}</td>
-                    <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
-                    <td>{{$invoice->amount}}</td>
-                    @if($invoice->currency == config('constants.countries.india.currency'))
-                        <td>{{$invoice->gst}}</td>
-                        <td>{{$invoice->tds}}</td>
-                        <td>{{$invoice->InvoiceAmountInInr}}</td>
-                        <td>{{$invoice->amount_paid}}</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    @else
-                        <td>-</td>
-                        <td>-</td>
-                        <td>{{$invoice->InvoiceAmountInInr}}</td>
-                        <td>{{$invoice->amount_paid}}</td>
-                        <td>{{$invoice->bank_charges}}</td>
-                        <td>{{$invoice->conversion_rate}}</td>
-                        <td>{{$invoice->conversion_rate_diff}}</td>
-                        <td>{{$invoice->amount_paid}}</td>
-                    @endif
-                </tr>
+                    <tr>
+                        <td>{{$loop->index+1}}</td>
+                        <td>{{$invoice->project->name}}</td>
+                        <td>{{$invoice->invoice_number}}</td>
+                        <td>{{$invoice->sent_on->format(config('invoice.default-date-format'))}}</td>
+                        <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
+                        <td>{{$invoice->amount}}</td>
+                        @if($invoice->currency == config('constants.countries.india.currency'))
+                            <td>{{$invoice->gst}}</td>
+                            <td>{{$invoice->tds}}</td>
+                            <td>{{$invoice->InvoiceAmountInInr}}</td>
+                            <td>{{$invoice->amount_paid}}</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        @else
+                            <td>-</td>
+                            <td>-</td>
+                            <td>{{$invoice->InvoiceAmountInInr}}</td>
+                            <td>{{$invoice->amount_paid}}</td>
+                            <td>{{$invoice->bank_charges}}</td>
+                            <td>{{$invoice->conversion_rate}}</td>
+                            <td>{{$invoice->conversion_rate_diff}}</td>
+                            <td>{{$invoice->amount_paid}}</td>
+                        @endif
+                    </tr>
                 @endforeach
                 <tr>
                     <td>Total</td>

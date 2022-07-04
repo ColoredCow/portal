@@ -106,6 +106,4 @@ return [
             'year' => '|*year*|',
         ],
     ],
-
-    'default-currency' => 'INR',
 ];
