@@ -26,12 +26,12 @@
                     <th>Date</th>
                     <th>Particular</th>
                     <th>Type</th>
-                    <th>INVOICE NO.</th>
+                    <th>Invoice No.</th>
                     <th>GST NO.</th>
-                    <th>INVOICE VALUE</th>
-                    <th>RATE</th>
-                    <th>RECEIVABLE AMOUNT</th>
-                    <th>TAXABLE AMOUNT</th>
+                    <th>Invoice Value</th>
+                    <th>Rate</th>
+                    <th>Receivable Amount</th>
+                    <th>Taxable Amount</th>
                     <th>IGST</th>
                     <th>CGST</th>
                     <th>SGST</th>
