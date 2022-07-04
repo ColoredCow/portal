@@ -906,7 +906,7 @@
 														</button>
 													</div>
 													<div class="modal-body">
-														<p>Do you want to put your application on Hold?</p>
+														<p>Do you want to put this application on Hold?</p>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
