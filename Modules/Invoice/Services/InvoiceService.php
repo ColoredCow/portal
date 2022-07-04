@@ -3,7 +3,6 @@
 namespace Modules\Invoice\Services;
 
 use App\Models\Country;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Invoice\Entities\Invoice;
@@ -32,11 +31,9 @@ class InvoiceService implements InvoiceServiceContract
             'status' => $filters['status'] ?? null,
         ];
 
-        $query = Invoice::query();
-
         if ($invoiceStatus == 'sent') {
-            $invoices = $this
-                ->applyFilters($query, $filters)
+            $invoices = Invoice::query()->applyFilters($filters)
+                ->orderBy('sent_on', 'desc')
                 ->get();
             $clientsReadyToSendInvoicesData = [];
         } else {
@@ -209,35 +206,6 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice->save();
     }
 
-    private function applyFilters($query, $filters)
-    {
-        if ($year = Arr::get($filters, 'year', '')) {
-            $query = $query->year($year);
-        }
-
-        if ($month = Arr::get($filters, 'month', '')) {
-            $query = $query->month($month);
-        }
-
-        if ($status = Arr::get($filters, 'status', '')) {
-            $query = $query->status($status);
-        }
-
-        if ($country = Arr::get($filters, 'country', '')) {
-            $query = $query->country($country);
-        }
-
-        if ($country = Arr::get($filters, 'region', '')) {
-            $query = $query->region($country);
-        }
-
-        if ($clientId = Arr::get($filters, 'client_id', '')) {
-            $query = $query->client($clientId);
-        }
-
-        return $query->orderBy('sent_on', 'desc');
-    }
-
     /**
      *  TaxReports.
      */
@@ -280,11 +248,9 @@ class InvoiceService implements InvoiceServiceContract
 
     public function invoiceDetails($filters)
     {
-        $query = Invoice::query();
-
-        $invoices = $this
-            ->applyFilters($query, $filters)
-            ->paginate(config('constants.pagination_size')) ?: [];
+        $invoices = Invoice::query()->applyFilters($filters)
+            ->orderBy('sent_on', 'desc')
+            ->get();
 
         $igst = [];
         $cgst = [];
@@ -312,13 +278,10 @@ class InvoiceService implements InvoiceServiceContract
 
     public function monthlyGSTTaxReportExport($filters, $request)
     {
-        $query = Invoice::query();
+        $invoices = Invoice::query()->applyFilters($filters)
+            ->orderBy('sent_on', 'desc')
+            ->get();
 
-        $invoice = $this
-            ->applyFilters($query, $filters)
-            ->get() ?: [];
-
-        $invoices = $invoice;
         $invoices = $this->formatMonthlyInvoicesForExportAll($invoices);
 
         return Excel::download(new MonthlyGSTTaxReportExport($invoices), "MonthlyGSTTaxReportExport-$request->month-$request->year.xlsx");
@@ -347,11 +310,9 @@ class InvoiceService implements InvoiceServiceContract
 
     private function taxReportInvoices($filters)
     {
-        $query = Invoice::query();
-
-        return $this
-            ->applyFilters($query, $filters)
-            ->get() ?: [];
+        return Invoice::query()->applyFilters($filters)
+            ->orderBy('sent_on', 'desc')
+            ->get();
     }
 
     private function formatInvoicesForExportIndian($invoices)
@@ -526,5 +487,23 @@ class InvoiceService implements InvoiceServiceContract
         ]);
 
         return $invoice;
+    }
+
+    public function invoiceReport($filters, $request)
+    {
+        $filters = $request->all();
+        $filters = [
+            'client_id' => $filters['client_id'] ?? null,
+            'invoiceYear' => $filters['invoiceYear'] ?? null,
+        ];
+        $invoices = Invoice::query()->applyFilters($filters)
+            ->orderBy('sent_on', 'desc')
+            ->get();
+        $clients = Client::all();
+
+        return [
+            'invoices' => $invoices,
+            'clients' => $clients,
+        ];
     }
 }

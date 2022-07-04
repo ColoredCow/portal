@@ -60,8 +60,9 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
                 @can('finance_invoices.view')
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
-                @endcan    
-                    <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly Tax report</a>
+                @endcan
+                    <a class="dropdown-item" href="{{route('invoice.yearly-report') }}">Yearly Invoice report</a>    
+                    <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly tax report</a>
                     <a class="dropdown-item " href="{{ route('invoice.details') }}"> Monthly GST Report</a>
                     <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
                     <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>

@@ -41,6 +41,11 @@ return [
         'sgst' => '9%'
     ],
 
+    'financial-month-details' => [
+        'financial_year_start_month' => '04',
+        'financial_year_end_month' => '03'
+    ],
+
     'tax-details' => [
         'igst' => 0.18,
         'cgst' => 0.09,
