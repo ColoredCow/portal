@@ -37,13 +37,15 @@
             </div>
         @endif
 
-        <div class="col-md-4">
-            <div class="card h-75 mx-4 mt-3 mb-5 ">
-                <a class="card-body no-transition" href="{{ route('settings.cron') }}">
-                    <br><h2 class="text-center">Cron</h2><br>
-                </a>
+        @if (auth()->user()->hasAnyPermission(['super-admin']))
+            <div class="col-md-4">
+                <div class="card h-75 mx-4 mt-3 mb-5 ">
+                    <a class="card-body no-transition" href="{{ route('settings.cron') }}">
+                        <br><h2 class="text-center">Cron</h2><br>
+                    </a>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 
