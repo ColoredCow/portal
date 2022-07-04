@@ -118,7 +118,7 @@ class ApplicationRound extends Model
             case 'reject':
                 $application->untag('new-application');
                 $fillable['round_status'] = 'rejected';
-                if (!empty($attr['follow_up_comment_for_reject'])) {
+                if (! empty($attr['follow_up_comment_for_reject'])) {
                     $this->followUps()->create([
                         'comments' => $attr['follow_up_comment_for_reject'],
                         'conducted_by' => auth()->id(),
@@ -214,7 +214,7 @@ class ApplicationRound extends Model
                 $subject = $attr['subject'];
                 $body = $attr['body'];
 
-                if (!$application->offer_letter) {
+                if (! $application->offer_letter) {
                     $application->offer_letter = FileHelper::generateOfferLetter($application);
                 }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
@@ -443,7 +443,7 @@ class ApplicationRound extends Model
             return false;
         }
 
-        return is_null($this->round_status) || !$this->isOnboarded();
+        return is_null($this->round_status) || ! $this->isOnboarded();
     }
 
     public function getPreviousApplicationRound()
