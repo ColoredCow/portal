@@ -4,7 +4,7 @@
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>HR <span class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_sales">
                 @can('hr_recruitment_applications.view')
                     <a class="dropdown-item" href="{{ route('applications.job.index') }}">Recruitment</a>
                 @endcan

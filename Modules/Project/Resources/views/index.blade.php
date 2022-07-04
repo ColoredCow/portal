@@ -50,9 +50,9 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>Client/Project Name</th>
-                    <th>Team Members</th>
-                    <th>Velocity (Hours)</th>
+                    <th class="w-33p sticky-top">Client/Project Name</th>
+                    <th class="sticky-top">Team Members</th>
+                    <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
             </thead>
             <tbody>
