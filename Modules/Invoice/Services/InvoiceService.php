@@ -501,6 +501,7 @@ class InvoiceService implements InvoiceServiceContract
             ->orderBy('sent_on', 'desc')
             ->get();
         $clients = Client::all();
+
         return [
             'invoices' => $invoices,
             'clients' => $clients,

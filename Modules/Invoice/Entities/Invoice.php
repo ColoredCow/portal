@@ -59,7 +59,7 @@ class Invoice extends Model
     }
     public function scopeInvoiceInaYear($query, $invoiceYear)
     {
-        return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-'. '01'),(($invoiceYear +1) . '-' . config('invoice.financial-month-details.financial_year_end_month'). '-' .'01')]);
+        return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-'. '01'),(($invoiceYear +1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '01')]);
     }
     public function scopeApplyFilters($query, $filters)
     {
@@ -86,7 +86,7 @@ class Invoice extends Model
         if ($clientId = Arr::get($filters, 'client_id', '')) {
             $query = $query->client($clientId);
         }
-        
+
         if ($invoiceYear = Arr::get($filters, 'invoiceYear', '')) {
             $query = $query->InvoiceInaYear($invoiceYear);
         }
