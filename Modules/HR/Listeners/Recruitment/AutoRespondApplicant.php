@@ -25,7 +25,6 @@ class AutoRespondApplicant
      * @param  ApplicantEmailVerified  $event
      * @return void
      */
-
     public function handle(ApplicantEmailVerified $event)
     {
         $application = $event->application;
