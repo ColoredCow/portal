@@ -62,13 +62,12 @@
                 <thead class="thead-dark">
                     <tr>
                         <th></th>
-                        <th>Project</th>
+                        <th class="w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
                             <th>Invoice Number</th>
                         @else
-                            <th>Rates</th>
-                            <th>Billable Hours</th>
-                            <th>Working Days</th>
+                        <th>Rates</th>
+                        <th>Billable Hours</th>
                         @endif
                         <th>Amount ( + taxes)</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
@@ -77,6 +76,7 @@
                             <th>Paid on</th>
                             <th>Status</th>
                         @elseif (request()->invoice_status == "ready")
+                            <th>EffortSheet</th>
                             <th>Preview Invoice</th>
                             <th>Action</th>
                         @endif
@@ -167,17 +167,17 @@
                                 </td>
                                 <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $client->billingDetails->service_rates . __('/hour')}}</td>
                                 <td>{{ $client->getClientLevelProjectsBillableHoursForTerm($month, $year) }}</td>
-                                <td>{{ $client->getWorkingDaysForTerm($month, $year) }}</td>
                                 <td>{{ $amount }}</td>
+                                <td align="center"> <a class="btn btn-sm btn-info text-light" href="{{ $client->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a></td>
                                 <td class="text-center">
                                     <form action="{{ route('invoice.generate-invoice-for-client') }}" target="_blank" method="POST">
                                         @csrf
                                         <input type="hidden" name='client_id' value="{{ $client->id }}">
-                                        <input type='submit' class="btn btn-info text-light" value="Preview">
+                                        <input type='submit' class="btn btn-sm btn-info text-light" value="Preview">
                                     </form>
                                 </td>
                                 <td class="text-center">
-                                    <div class="btn btn-success text-light" id="showPreview" data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('Preview') }}</div>
+                                    <div class="btn btn-sm btn-success text-light show-preview" data-invoice-data="{{ json_encode($invoiceData) }}">{{ __('View Mail') }}</div>
                                 </td>
                             </tr>
                         @endforeach

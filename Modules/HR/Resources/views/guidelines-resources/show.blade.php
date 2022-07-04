@@ -5,7 +5,7 @@
         <h3>Resources for Laravel Developer</h3>
     </div>
     <div class="col-md-2">
-        <button type="button" class="btn btn-primary btn-block btn-lg"><i class="fa fa-plus"></i>
+        <button type="button" class="btn btn-primary btn-block btn-lg" data-bs-toggle="modal" data-bs-target="#create_Modal"><i class="fa fa-plus"></i>
         {{ __('Add Resources') }}
         </button>
     </div>
@@ -20,4 +20,5 @@
 </div>
 <!-- Functionality yet to be created -->
 @include('hr::guidelines-resources.create-category-modal')
+@include('hr::guidelines-resources.create-resources-modal')
 @endsection

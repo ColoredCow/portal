@@ -2,9 +2,9 @@
 <table class="table">
     <thead class="thead-dark">
         <tr align="left">
-            <th>Description</th>
-            <th>Hours</th>
-            <th>Rate({{$client->country->initials . ' ' . $client->country->currency_symbol}})</th>
+            <th style="width: 408px;">Description</th>
+            <th style="width: 95px;">Hours</th>
+            <th style="width: 135px;">Rate({{$client->country->initials . ' ' . $client->country->currency_symbol}})</th>
             <th>Cost({{$client->country->initials . ' ' . $client->country->currency_symbol}})</th>
         </tr>
     </thead>
