@@ -6,7 +6,7 @@
     <br>
 
     <div class="d-flex justify-content-between mb-2">
-        <h4 class="mb-1 pb-1">Monthly Gst Report</h4>
+        <h4 class="mb-1 pb-1">Monthly GST Report</h4>
         <span>
             <a href="{{ route('invoice.monthly-tax-report-export', request()->all()) }}" class="btn btn-info text-white">Export To Excel</a>
         </span>
