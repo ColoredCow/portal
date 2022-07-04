@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\App;
 use Mail;
 use App\Models\Setting;
 use Modules\Project\Entities\Project;
-use Modules\Invoice\Exports\InvoiceReportExport;
 
 class InvoiceService implements InvoiceServiceContract
 {
