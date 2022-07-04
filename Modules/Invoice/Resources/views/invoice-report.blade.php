@@ -71,8 +71,8 @@
                     <td>-</td>
                     @if(!$invoices->isEmpty())
                         <td>{{$invoices->sum('amount')}}</td>
-                        <td>{{$invoice->sum('gst')}}</td>
-                        <td>{{$invoice->sum('tds')}}</td>
+                        <td>{{$invoices->sum('gst')}}</td>
+                        <td>{{$invoices->sum('tds')}}</td>
                         <td>{{$invoices ->sum('InvoiceAmountInInr')}}</td>
                         <td>{{$invoices ->sum('amount_paid')}}</td>
                         <td>{{$invoices ->sum('bank_charges')}}</td>
