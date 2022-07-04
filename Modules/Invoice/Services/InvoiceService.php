@@ -502,7 +502,7 @@ class InvoiceService implements InvoiceServiceContract
         ];
         $invoices = Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
-            ->paginate(config('constants.pagination_size')) ?: [];
+            ->get();
         $clients=Client::all();
         return [
             'invoices' => $invoices,
