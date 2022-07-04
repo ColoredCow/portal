@@ -30,8 +30,8 @@ class ApplicantEmailVerification
         $application = $event->application;
         $applicant = $application->applicant;
 
-        $subject = Setting::where('module', 'hr')->where('setting_key', 'application_verification_subject')->first();
-        $body = Setting::where('module', 'hr')->where('setting_key', 'application_verification_body')->first();
+        $subject = Setting::where('module', 'hr')->where('setting_key', 'applicant_verification_subject')->first();
+        $body = Setting::where('module', 'hr')->where('setting_key', 'applicant_verification_body')->first();
 
         $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $application->applicant->name, $body->setting_value);
         $encryptedEmail = encrypt($application->applicant->email);
