@@ -251,7 +251,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $invoices = Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
-            ->paginate(config('constants.pagination_size')) ?: [];
+            ->get();
 
         $igst = [];
         $cgst = [];
@@ -281,7 +281,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $invoices = Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
-            ->get() ?: [];
+            ->get();
 
         $invoices = $this->formatMonthlyInvoicesForExportAll($invoices);
 
@@ -313,7 +313,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         return Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
-            ->get() ?: [];
+            ->get();
     }
 
     private function formatInvoicesForExportIndian($invoices)
