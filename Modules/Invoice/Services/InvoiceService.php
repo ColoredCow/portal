@@ -207,8 +207,6 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice->save();
     }
 
-    
-
     /**
      *  TaxReports.
      */
@@ -251,7 +249,6 @@ class InvoiceService implements InvoiceServiceContract
 
     public function invoiceDetails($filters)
     {
-
         $invoices = Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
             ->paginate(config('constants.pagination_size')) ?: [];
@@ -503,7 +500,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoices = Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
             ->get();
-        $clients=Client::all();
+        $clients = Client::all();
         return [
             'invoices' => $invoices,
             'clients' => $clients,
