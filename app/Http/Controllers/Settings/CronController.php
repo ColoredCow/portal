@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Cron\CronExpression;
 use Illuminate\Support\Facades\Artisan;
 
