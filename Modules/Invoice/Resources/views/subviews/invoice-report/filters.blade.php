@@ -13,9 +13,9 @@
         <div class='form-group mr-4 w-180'>
             <select class="form-control bg-light" name="invoiceYear"
                 onchange="document.getElementById('yearlyInvoiceFilterForm').submit();">
-                <option {{ request()->input('invoiceYear') == '' ? "selected=selected" : '' }} value="">Invoice year</option>
+                <option {{ request()->input('invoiceYear', null) == 'all-years' ? "selected=selected" : '' }} value="all-years">All years</option>
                 @for($Invoiceyear=2000; $Invoiceyear<today()->addYear(2)->year; $Invoiceyear++)
-                <option {{ request()->input('invoiceYear') == $Invoiceyear ? "selected=selected" : '' }} value={{$Invoiceyear}}>{{$Invoiceyear}}-{{$Invoiceyear + 1}}</option>
+                <option {{ request()->input('invoiceYear') == $Invoiceyear || (!request()->has('invoiceYear') && today()->year == $Invoiceyear) ? "selected=selected" : '' }} value={{$Invoiceyear}}>{{$Invoiceyear}}-{{$Invoiceyear + 1}}</option>
                 @endfor
             </select>
         </div>

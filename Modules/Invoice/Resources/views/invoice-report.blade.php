@@ -37,10 +37,10 @@
                 @foreach($invoices as $invoice)
                     <tr>
                         <td>{{$loop->index+1}}</td>
-                        <td>{{$invoice->project->name}}</td>
+                        <td>{{optional($invoice->project)->name ?: ($invoice->client->name . 'Projects')}}</td>
                         <td>{{$invoice->invoice_number}}</td>
                         <td>{{$invoice->sent_on->format(config('invoice.default-date-format'))}}</td>
-                        <td>{{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'  }}</td>
+                        <td>{{$invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'}}</td>
                         <td>{{$invoice->amount}}</td>
                         @if($invoice->currency == config('constants.countries.india.currency'))
                             <td>{{$invoice->gst}}</td>
@@ -73,12 +73,12 @@
                         <td>{{$invoices->sum('amount')}}</td>
                         <td>{{$invoices->sum('gst')}}</td>
                         <td>{{$invoices->sum('tds')}}</td>
-                        <td>{{$invoices ->sum('InvoiceAmountInInr')}}</td>
-                        <td>{{$invoices ->sum('amount_paid')}}</td>
-                        <td>{{$invoices ->sum('bank_charges')}}</td>
-                        <td>{{$invoices ->sum('conversion_rate')}}</td>
+                        <td>{{$invoices->sum('InvoiceAmountInInr')}}</td>
+                        <td>{{$invoices->sum('amount_paid')}}</td>
+                        <td>{{$invoices->sum('bank_charges')}}</td>
+                        <td>{{$invoices->sum('conversion_rate')}}</td>
                         <td>{{$invoices->sum('conversion_rate_diff')}}</td>
-                        <td>{{$invoices ->avg('amount_paid')}}</td>
+                        <td>{{$invoices->avg('amount_paid')}}</td>
                     @else
                         <td>-</td>
                         <td>-</td>
