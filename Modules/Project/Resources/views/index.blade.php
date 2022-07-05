@@ -52,6 +52,7 @@
                 <tr>
                     <th class="w-33p sticky-top">Client/Project Name</th>
                     <th class="sticky-top">Team Members</th>
+                    <th class="sticky-top">Status</th>
                     <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
             </thead>
@@ -83,6 +84,7 @@
                                         </span>
                                     @endforeach 
                                 </td>
+                                <td></td>
                                 <td>
                                     @php
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
