@@ -11,7 +11,10 @@ class CronController extends Controller
 {
     public function index()
     {
+        // Collects all the content  from the kernel class.
         app()->make(\Illuminate\Contracts\Console\Kernel::class);
+
+        // Collects all the commands from the schedule class.
         $schedule = app()->make(\Illuminate\Console\Scheduling\Schedule::class);
 
         $events = collect($schedule->events())->map(function ($event) {
@@ -23,16 +26,13 @@ class CronController extends Controller
                     break;
                 }
             }
+            // CRON expression parser that can determine whether or not a CRON expression.
             $cron = CronExpression::factory($event->expression);
-            $date = Carbon::now();
-            if ($event->timezone) {
-                $date->setTimezone($event->timezone);
-            }
 
             return (object) [
                 'expression' => $event->expression,
                 'command' => $command,
-                'next_run_at' => $cron->getNextRunDate()->format('d, M, Y, g:i A'),
+                'next_run_at' => $cron->getNextRunDate()->format('d, M, Y, g:i A'), // Converts the cron expression to a human readable date.
                 'description' => $commandDescription,
             ];
         });
