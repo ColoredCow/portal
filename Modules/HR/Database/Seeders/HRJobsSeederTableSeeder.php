@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Modules\HR\Entities\Job;
 use Illuminate\Database\Eloquent\Model;
 
-class HRJobSeederTableSeeder extends Seeder
+class HRJobsSeederTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
