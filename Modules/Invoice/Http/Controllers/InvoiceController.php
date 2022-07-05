@@ -213,10 +213,10 @@ class InvoiceController extends Controller
         return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
 
-    public function invoiceReport(Request $request)
+    public function yearlyInvoiceReport(Request $request)
     {
         $filters = $request->all();
 
-        return view('invoice::invoice-report', $this->service->invoiceReport($filters, $request));
+        return view('invoice::invoice-report', $this->service->yearlyInvoiceReport($filters, $request));
     }
 }

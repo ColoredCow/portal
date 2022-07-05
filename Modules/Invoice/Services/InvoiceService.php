@@ -489,13 +489,18 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice;
     }
 
-    public function invoiceReport($filters, $request)
+    public function yearlyInvoiceReport($filters, $request)
     {
         $filters = $request->all();
         $filters = [
             'client_id' => $filters['client_id'] ?? null,
-            'invoiceYear' => $filters['invoiceYear'] ?? null,
+            'invoiceYear' => $filters['invoiceYear'] ?? today()->year,
         ];
+
+        if ($filters['invoiceYear'] == 'all-years') {
+            $filters['invoiceYear'] = null;
+        }
+
         $invoices = Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
             ->get();
