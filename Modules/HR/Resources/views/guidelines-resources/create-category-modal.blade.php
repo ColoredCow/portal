@@ -9,13 +9,22 @@
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Category Name<strong class="text-danger">*</strong></label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" onkeyup="success()" name="name" required>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" form="create-form" id="save-btn-action">Save</button>
+                <button type="button" class="btn btn-primary" form="create-form" id="save-btn-action" disabled>Save</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function success() {
+	 if(document.getElementById("name").value=="") { 
+            document.getElementById('save-btn-action').disabled = true; 
+        } else { 
+            document.getElementById('save-btn-action').disabled = false;
+        }
+    }
+</script>
