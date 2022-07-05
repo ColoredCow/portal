@@ -16,9 +16,11 @@ class HRJobSeederTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
-        Job::factory()
-            ->count(2)
-            ->create();
+        if (! app()->environment('production')) {
+            Job::factory()
+                ->count(2)
+                ->create();
+        }
+        \Artisan::call('mapping-of-jobs-and-hr-rounds');
     }
 }

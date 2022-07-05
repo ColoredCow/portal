@@ -25,24 +25,24 @@ class HrJobFactory extends Factory
         $faker = Faker::create();
 
         return [
-            'id'=> $index,
-            'opportunity_id'=> $faker->randomDigit,
-            'title'=>  $faker->title,
-            'description'=> $faker->text,
-            'type'=> $faker->sentence(2),
-            'domain'=> $faker->text,
-            'start_date'=> $faker->date,
-            'link'=> 'https=>//coloredcow.com/career/laravel-developer/',
-            'end_date'=> $faker->date,
-            'facebook_post'=> $faker->text,
-            'twitter_post'=> $faker->text,
-            'linkedin_post'=> $faker->text,
-            'instagram_post'=> $faker->text,
-            'created_at'=> $faker->date,
-            'updated_at'=> $faker->date,
-            'posted_by'=> 8,
-            'status'=> $faker->text,
-            'deleted_at'=> $faker->date
+            'id' => $index,
+            'opportunity_id' => $faker->randomDigit,
+            'title' => $faker->title,
+            'description' => $faker->text,
+            'type' => $faker->sentence(2),
+            'domain' => $faker->text,
+            'start_date' => $faker->date,
+            'link' => 'https=>//coloredcow.com/career/laravel-developer/',
+            'end_date' => $faker->date,
+            'facebook_post' => $faker->text,
+            'twitter_post' => $faker->text,
+            'linkedin_post' => $faker->text,
+            'instagram_post' => $faker->text,
+            'created_at' => $faker->date,
+            'updated_at' => $faker->date,
+            'posted_by' => $faker->randomDigit,
+            'status' => $faker->text,
+            'deleted_at' => $faker->date,
         ];
     }
 }
