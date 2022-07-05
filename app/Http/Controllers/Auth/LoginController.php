@@ -120,6 +120,7 @@ class LoginController extends Controller
         ]);
         $role = DB::table('roles')->select('id')->where('name', 'book-manager')->first();
         $user->roles()->attach($role);
+
         return $user;
     }
 }
