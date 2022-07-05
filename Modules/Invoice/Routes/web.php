@@ -25,7 +25,7 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::post('/generate-invoice-client', 'InvoiceController@generateInvoiceForClient')->name('invoice.generate-invoice-for-client');
     Route::post('/generate-invoice', 'InvoiceController@generateInvoice')->name('invoice.generate-invoice');
     Route::post('/{invoice}', 'InvoiceController@sendEmail')->name('invoice.sendEmail');
-    Route::get('/yearly-Invoice-report', 'invoiceController@yearlyInvoiceReport')->name('invoice.yearly-report');
+    Route::get('/yearly-Invoice-report', 'InvoiceController@yearlyInvoiceReport')->name('invoice.yearly-report');
     Route::get('/monthly-gst-report', 'InvoiceController@invoiceDetails')->name('invoice.details');
     Route::get('/monthly-GST-Tax-report-export', 'InvoiceController@monthlyGSTTaxReportExport')->name('invoice.monthly-tax-report-export');
     Route::get('/{invoiceId}/{filename}', 'InvoiceController@getInvoiceFile')->name('invoice.get-file');
