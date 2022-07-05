@@ -1,0 +1,52 @@
+<?php
+
+namespace Modules\HR\Console\Recruitment;
+
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use Modules\HR\Entities\Application;
+use Modules\HR\Emails\Recruitment\Applicant\SendFollowUpReminder;
+
+class FollowUpReminders extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'hr:check-follow-up';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Send an email to the candidate if an application has a need to follow up tag associated with it';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $applications = Application::all();
+        $applications->load([ 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options',]);
+
+        foreach ($applications as $application) {
+            if ($application->status == "need-follow-up") {
+                Mail::send(new SendFollowUpReminder($application));
+            }
+        }
+    }
+}
