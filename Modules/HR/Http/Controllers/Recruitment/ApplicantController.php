@@ -82,17 +82,18 @@ class ApplicantController extends Controller
         ]);
     }
 
-    public function show($applicationID)
+    public function show($applicationId)
     {
-        $application = Application::find($applicationID);
+        $application = Application::find($applicationId);
         $interviewers = User::interviewers()->orderBy('name')->get();
 
         return view('hr.application.details', ['application' => $application, 'applicant' => $application->applicant, 'applicationRound' => $application->applicationRounds, 'interviewers' => $interviewers, 'timeline' => $application->applicant->timeline(), 'applicationFormDetails' => $application->applicationMeta()->formData()->first()]);
     }
 
-    public function applicantEmailVerification($applicantEmail, $applicationID)
+    public function applicantEmailVerification($applicantEmail, $applicationId)
     {
-        $application = Application::find($applicationID);
+        $application = Application::find($applicationId);
+        $application->update(['is_verified' => true]);
         event(new ApplicantEmailVerified($application));
 
         return view('hr.application.verification')->with(['application' => $application, 'email' => decrypt($applicantEmail)]);
