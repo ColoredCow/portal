@@ -28,7 +28,7 @@ class HrJobsFactory extends Factory
             'opportunity_id' => 0,
             'title' => $faker->jobTitle,
             'description' => $faker->text(),
-            'type' => config('hr.opportunities.job.type'),
+            'type' => "Job",
             'domain' => array_rand(config('hr.opportunities.domains')),
             'start_date' => null,
             'link' => null,
@@ -40,7 +40,7 @@ class HrJobsFactory extends Factory
             'created_at' => null,
             'updated_at' => null,
             'posted_by' => null,
-            'status' => array_rand(config('hr.opportunities-status')),
+            'status' => "published",
             'deleted_at' => null,
         ];
     }
