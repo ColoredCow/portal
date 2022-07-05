@@ -233,6 +233,21 @@ Before you start following the guidelines, make sure to go through the [prerequi
                  # some code above
                  Require all granted
             </Directory>
+
+            - After making the above changes, if you are still getting the "403 Forbidden" error. Consider the following changes:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Require all granted
+            </Directory>
+            ```
+            Change to:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Allow from all
+                 Require all granted
+            </Directory>
             ```
            - Restart MAMP. Next, open this url in your browser: http://portal.test
 11. Login to the portal using the newly created user in the database. Go to `http://localhost/phpmyadmin/index.php` and search for the `users` table and you can find the user email in it. The default password to log in is `12345678`.
