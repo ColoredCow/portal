@@ -176,4 +176,14 @@ class User extends Authenticatable
 
         return $fte;
     }
+
+    public function activeProjects()
+    {
+        $userId= $this->id; 
+        $projects = Project::whereHas('getTeamMembers',function($query) use($userId) {
+            return $query->where('team_member_id', $userId);
+    
+            })->get();
+        return $projects;
+    }
 }
