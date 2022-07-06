@@ -60,7 +60,7 @@
             @endphp
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
-                    <tr>
+                    <tr class="text-center">
                         <th></th>
                         <th class="w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
@@ -108,23 +108,23 @@
                                 </td>
                                 <td>{{ $invoice->invoice_number }}</td>
                                 <td>{{ $invoice->invoiceAmount() }}</td>
-                                <td>{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
-                                <td class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }}'>
+                                <td class="text-center">{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
+                                <td class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }} text-center'>
                                     {{ $invoice->receivable_date->format(config('invoice.default-date-format')) }}
                                 </td>
-                                <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
+                                <td class="{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
                                     {{ $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '' }}
                                 </td>
-                                <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }}">
+                                <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
                                     {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @if($invoice->reminder_mail_sent)
-                                        <div class="text-success text-center">{{ __('Reminder Sent') }}</div>
+                                        <div class="text-success">{{ __('Reminder Sent') }}</div>
                                     @elseif($invoice->shouldHighlighted())
                                         <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-bs-toggle="modal" data-bs-target="#invoiceReminder" >{{ __('Reminder') }}</div>
                                     @else
-                                        - 
+                                        <div> - </div> 
                                     @endif
                                 </td>
                             </tr>
