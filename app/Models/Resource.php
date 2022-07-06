@@ -11,5 +11,5 @@ class Resource extends Model
 
     protected $guarded = [];
 
-    protected $table = 'hr_resources'; 
+    protected $table = 'hr_resources';
 }
