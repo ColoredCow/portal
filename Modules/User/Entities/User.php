@@ -183,6 +183,7 @@ class User extends Authenticatable
         $projects = Project::whereHas('getTeamMembers', function ($query) use ($userId) {
             return $query->where('team_member_id', $userId);
         })->get();
+        
         return $projects;
     }
 }
