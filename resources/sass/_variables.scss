@@ -1,12 +1,11 @@
 // Body
-$body-bg: rgba(177,170,129,0.15);
-$body-color: #2C2A2C;
-
+$body-bg: rgba(177, 170, 129, 0.15);
+$body-color: #2c2a2c;
 // Typography
-$font-family-sans-serif: 'Muli', sans-serif;
+$font-family-sans-serif: "Muli",
+sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
-
 // Colors
 $blue: #3490dc;
 $indigo: #6574cd;
@@ -19,34 +18,32 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 $white: #fff;
-
 $theme-box-shadow: rgba(44, 42, 44, 0.12);
 $theme-box-shadow-dark: rgba(44, 42, 44, 0.26);
-$theme-white-mild: rgba(255,255,255,0.72);
-$theme-box-shadow-light-dark : rgba(44,42,44,0.24);
-
-$theme-gray-ultra-lightest: #F8F8F8;
-$theme-gray-lightest: #F1F1F1;
-$theme-gray-lighter: #E6E6E6;
-$theme-gray-light: #D6D6D6;
+$theme-white-mild: rgba(255, 255, 255, 0.72);
+$theme-box-shadow-light-dark: rgba(44, 42, 44, 0.24);
+$theme-gray-ultra-lightest: #f8f8f8;
+$theme-gray-lightest: #f1f1f1;
+$theme-gray-lighter: #e6e6e6;
+$theme-gray-light: #d6d6d6;
 $theme-gray: #909090;
-$theme-gray-dark: #413E41;
-$theme-gray-darker: #2C2A2C;
-$theme-red-lightest: rgba(211, 26, 26, .1);
-$theme-red-light: rgba(211, 26, 26, .36);
+$theme-gray-dark: #413e41;
+$theme-gray-darker: #2c2a2c;
+$theme-red-lightest: rgba(211, 26, 26, 0.1);
+$theme-red-light: rgba(211, 26, 26, 0.36);
 $red: #ff0000;
-$theme-red: #D31A1A;
-$theme-green: #559E00;
-$theme-green-light: rgba(85, 158, 0, .48);
-$theme-green-lighter: rgba(85, 158, 0, .36);
-$theme-green-lightest: rgba(85, 158, 0, .1);
-$theme-orange: #FF9821;
-$theme-orange-dark: #E87C00;
-$theme-mud-dark: #CDCDC3;
-$theme-mud-light: #E2E1D7;
-$theme-mud-lighter: #F3F2EC;
+$theme-red: #d31a1a;
+$theme-green: #559e00;
+$theme-green-light: rgba(85, 158, 0, 0.48);
+$theme-green-lighter: rgba(85, 158, 0, 0.36);
+$theme-green-lightest: rgba(85, 158, 0, 0.1);
+$theme-orange: #ff9821;
+$theme-orange-dark: #e87c00;
+$theme-mud-dark: #cdcdc3;
+$theme-mud-light: #e2e1d7;
+$theme-mud-lighter: #f3f2ec;
 $theme-mud-lightest: rgba(177, 170, 129, 0.3);
-$theme-info: #4A90E2;
+$theme-info: #4a90e2;
 $theme-info-light: rgba(74, 144, 226, 0.48);
 $theme-info-lighter: rgba(74, 144, 226, 0.36);
 $theme-warning: rgba(232, 124, 0, 1);
@@ -59,286 +56,62 @@ $theme-success-light: rgba(85, 158, 0, 0.36);
 $theme-white-light: rgba(255, 255, 255, 0.6);
 $theme-white-lightest: rgba(255, 255, 255, 0.2);
 $theme-white-97: rgba(255, 255, 255, 0.97);
-$theme-teal: #63B2B7;
-$theme-pumpkin: #BA6C11;
+$theme-teal: #63b2b7;
+$theme-pumpkin: #ba6c11;
 $theme-thunder: #433543;
-$theme-gray-border: #D8D8D8;
-$theme-blue-chalk: #F2EBFE;
-$theme-fog: #DAC4FF;
-
+$theme-gray-border: #d8d8d8;
+$theme-blue-chalk: #f2ebfe;
+$theme-fog: #dac4ff;
 // Pagination
 $pagination-color: $theme-gray-light;
 $pagination-bg: $white;
-
 $pagination-hover-color: $theme-gray-darker;
 $pagination-hover-bg: $white;
-
 $pagination-active-color: $theme-gray-darker;
 $pagination-active-bg: $white;
-
 $emphasized-link-hover-darken-percentage: 0%;
-
-$theme-colors: (
-    'theme-gray-ultra-lightest': $theme-gray-ultra-lightest,
-    'theme-gray-lightest': $theme-gray-lightest,
-    'theme-gray-lighter': $theme-gray-lighter,
-    'theme-gray-light': $theme-gray-light,
-    'theme-gray': $theme-gray,
-    'theme-gray-dark': $theme-gray-dark,
-    'theme-gray-darker': $theme-gray-darker,
-    'red': $red,
-    'theme-red': $theme-red,
-    'theme-red-lightest': $theme-red-lightest,
-    'theme-red-light': $theme-red-light,
-    'theme-green': $theme-green,
-    'theme-green-light': $theme-green-light,
-    'theme-green-lighter': $theme-green-lighter,
-    'theme-green-lightest': $theme-green-lightest,
-    'theme-orange': $theme-orange,
-    'theme-orange-dark': $theme-orange-dark,
-    'theme-mud-lightest': $theme-mud-lightest,
-    'theme-mud-lighter': $theme-mud-lighter,
-    'theme-mud-light': $theme-mud-light,
-    'theme-mud-dark': $theme-mud-dark,
-    'theme-body': $body-color,
-    'white': $white,
-    'theme-white-light': $theme-white-light,
-    'theme-white-lightest': $theme-white-lightest,
-    'theme-white-97': $theme-white-97,
-    'theme-info-light': $theme-info-light,
-    'theme-warning': $theme-warning,
-    'theme-warning-light': $theme-warning-light,
-    'theme-warning-lighter': $theme-warning-lighter,
-    'theme-warning-lightest': $theme-warning-lightest,
-    'theme-danger-light': $theme-danger-light,
-    'theme-success': $theme-success,
-    'theme-success-light': $theme-success-light,
-    'theme-pumpkin': $theme-pumpkin,
-    'theme-thunder': $theme-thunder,
-    'theme-info': $theme-info,
-    'theme-info-lighter': $theme-info-lighter,
-    'theme-teal': $theme-teal,
-    'theme-gray-border': $theme-gray-border,
-    'theme-white-mild': $theme-white-mild,
-    'theme-blue-chalk': $theme-blue-chalk,
-    'theme-fog': $theme-fog,
-);
-$sizes: (
-    'auto': auto,
-    '25p': 25%,
-    '30p': 30%,
-    '33p': 33%,
-    '38p': 38%,
-    '40p': 40%,
-    '42p': 42%,
-    '50p': 50%,
-    '60p': 60%,
-    '70p': 70%,
-    '50p-6': calc(50% - 6px),
-    '90p': 90%,
-    '100p': 100%,
-    'half': 50%,
-    'full': 100%,
-    '1': 1px,
-    6\.7: 6.7px,
-    '8': 8px,
-    '9': 9px,
-    '10': 10px,
-    '11': 11px,
-    11\.5: 11.5px,
-    '12': 12px,
-    '13': 13px,
-    '14': 14px,
-    '15': 15px,
-    '16': 16px,
-    '17': 17px,
-    '18': 18px,
-    '20': 20px,
-    '22': 22px,
-    '23': 23px,
-    '24': 24px,
-    '25': 25px,
-    '26': 26px,
-    '28': 28px,
-    '30': 30px,
-    '32': 32px,
-    '34': 34px,
-    '36': 36px,
-    '38': 38px,
-    '40': 40px,
-    '44': 44px,
-    '46': 46px,
-    '48': 48px,
-    '50': 50px,
-    '60': 60px,
-    '62': 62px,
-    '68': 68px,
-    '70': 70px,
-    '72': 72px,
-    '74': 74px,
-    '85': 85px,
-    '90': 90px,
-    '96': 96px,
-    '100': 100px,
-    '110': 110px,
-    '102': 102px,
-    '104': 104px,
-    '108': 108px,
-    '114': 114px,
-    '120': 120px,
-    '126': 126px,
-    '128': 128px,
-    '129': 129px,
-    '130': 130px,
-    '132': 132px,
-    133\.5: 133.5px,
-    '139': 139px,
-    '144': 144px,
-    '145': 145px,
-    '148': 148px,
-    '150': 150px,
-    '155': 155px,
-    '168': 168px,
-    '174': 174px,
-    '175': 175px,
-    '180': 180px,
-    '186': 186px,
-    '188': 188px,
-    '190': 190px,
-    '192': 192px,
-    '194': 194px,
-    '200': 200px,
-    '204': 204px,
-    '220': 220px,
-    '224': 224px,
-    '232': 232px,
-    '234': 234px,
-    '250': 250px,
-    '255': 255px,
-    '252': 252px,
-    '258': 258px,
-    '270': 270px,
-    '272': 272px,
-    '296': 296px,
-    '300': 300px,
-    '312': 312px,
-    '318': 318px,
-    '320': 320px,
-    '336': 336px,
-    '340': 340px,
-    '345': 345px,
-    '360': 360px,
-    '389': 389px,
-    '406': 406px,
-    '416': 416px,
-    '444': 444px,
-    '492': 492px,
-    '496': 496px,
-    '500': 500px,
-    '552': 552px,
-    '556': 556px,
-    '558': 558px,
-    '600': 600px,
-    '696': 696px,
-    '1044': 1044px,
-    '1056': 1056px,
-);
-
-$font-sizes: (
-    '8': 8px,
-    '10': 10px,
-    '12': 12px,
-    '14': 14px,
-    '16': 16px,
-    '18': 18px,
-    '20': 20px,
-    '22': 22px,
-    '24': 24px,
-    '28': 28px,
-    '30': 30px,
-    '36': 36px,
-    '40': 40px,
-    '46': 46px,
-    '48': 48px,
-    '60': 60px,
-    '72': 72px,
-    '150': 150px,
-);
-
-$line-heights: (
-    'half' : 0.5,
-    'none' : 1,
-    'tight': 1.25,
-    'normal': 1.5,
-    'loose': 2,
-    '10': 10px,
-    '14': 14px,
-    '16': 16px,
-    '20': 20px,
-    '22': 22px,
-    '25': 25px,
-    '30': 30px,
-    '44': 44px,
-    '45': 45px,
-    '60': 60px,
-);
-
+$theme-colors: ( "theme-gray-ultra-lightest": $theme-gray-ultra-lightest, "theme-gray-lightest": $theme-gray-lightest, "theme-gray-lighter": $theme-gray-lighter, "theme-gray-light": $theme-gray-light, "theme-gray": $theme-gray, "theme-gray-dark": $theme-gray-dark, "theme-gray-darker": $theme-gray-darker, "red": $red, "theme-red": $theme-red, "theme-red-lightest": $theme-red-lightest, "theme-red-light": $theme-red-light, "theme-green": $theme-green, "theme-green-light": $theme-green-light, "theme-green-lighter": $theme-green-lighter, "theme-green-lightest": $theme-green-lightest, "theme-orange": $theme-orange, "theme-orange-dark": $theme-orange-dark, "theme-mud-lightest": $theme-mud-lightest, "theme-mud-lighter": $theme-mud-lighter, "theme-mud-light": $theme-mud-light, "theme-mud-dark": $theme-mud-dark, "theme-body": $body-color, "white": $white, "theme-white-light": $theme-white-light, "theme-white-lightest": $theme-white-lightest, "theme-white-97": $theme-white-97, "theme-info-light": $theme-info-light, "theme-warning": $theme-warning, "theme-warning-light": $theme-warning-light, "theme-warning-lighter": $theme-warning-lighter, "theme-warning-lightest": $theme-warning-lightest, "theme-danger-light": $theme-danger-light, "theme-success": $theme-success, "theme-success-light": $theme-success-light, "theme-pumpkin": $theme-pumpkin, "theme-thunder": $theme-thunder, "theme-info": $theme-info, "theme-info-lighter": $theme-info-lighter, "theme-teal": $theme-teal, "theme-gray-border": $theme-gray-border, "theme-white-mild": $theme-white-mild, "theme-blue-chalk": $theme-blue-chalk, "theme-fog": $theme-fog, );
+$sizes: ( "auto": auto, "25p": 25%, "30p": 30%, "33p": 33%, "38p": 38%, "40p": 40%, "42p": 42%, "50p": 50%, "60p": 60%, "70p": 70%, "50p-6": calc(50% - 6px), "90p": 90%, "100p": 100%, "half": 50%, "full": 100%, "1": 1px, 6\.7: 6.7px, "8": 8px, "9": 9px, "10": 10px, "11": 11px, 11\.5: 11.5px, "12": 12px, "13": 13px, "14": 14px, "15": 15px, "16": 16px, "17": 17px, "18": 18px, "20": 20px, "22": 22px, "23": 23px, "24": 24px, "25": 25px, "26": 26px, "28": 28px, "30": 30px, "32": 32px, "34": 34px, "36": 36px, "38": 38px, "40": 40px, "44": 44px, "46": 46px, "48": 48px, "50": 50px, "60": 60px, "62": 62px, "68": 68px, "70": 70px, "72": 72px, "74": 74px, "85": 85px, "90": 90px, "96": 96px, "100": 100px, "110": 110px, "102": 102px, "104": 104px, "108": 108px, "114": 114px, "120": 120px, "126": 126px, "128": 128px, "129": 129px, "130": 130px, "132": 132px, 133\.5: 133.5px, "139": 139px, "144": 144px, "145": 145px, "148": 148px, "150": 150px, "155": 155px, "168": 168px, "174": 174px, "175": 175px, "180": 180px, "186": 186px, "188": 188px, "190": 190px, "192": 192px, "194": 194px, "200": 200px, "204": 204px, "220": 220px, "224": 224px, "232": 232px, "234": 234px, "250": 250px, "255": 255px, "252": 252px, "258": 258px, "270": 270px, "272": 272px, "296": 296px, "300": 300px, "312": 312px, "318": 318px, "320": 320px, "336": 336px, "340": 340px, "345": 345px, "360": 360px, "389": 389px, "406": 406px, "416": 416px, "444": 444px, "450": 450px, "492": 492px, "496": 496px, "500": 500px, "552": 552px, "556": 556px, "558": 558px, "600": 600px, "696": 696px, "750": 750px, "1044": 1044px, "1056": 1056px, );
+$font-sizes: ( "8": 8px, "10": 10px, "12": 12px, "14": 14px, "16": 16px, "18": 18px, "20": 20px, "22": 22px, "24": 24px, "28": 28px, "30": 30px, "36": 36px, "40": 40px, "46": 46px, "48": 48px, "60": 60px, "72": 72px, "150": 150px, );
+$line-heights: ( "half": 0.5, "none": 1, "tight": 1.25, "normal": 1.5, "loose": 2, "10": 10px, "14": 14px, "16": 16px, "20": 20px, "22": 22px, "25": 25px, "30": 30px, "44": 44px, "45": 45px, "60": 60px, );
 $spacer: 12px;
-$spacers: (
-    0: 0,
-    0\.08: ($spacer * 1/12), // 1px
-    0\.16: ($spacer * 1/6), // 2px
-    0\.5: ($spacer * 0.25), // 3px
-    0\.67: ($spacer * 1/3), // 4px
-    0\.83: ($spacer * 5/12), // 5px
-    1: ($spacer * 0.5), // 6px
-    1\.083: ($spacer * 6.5/12), // 6.5px
-    1\.33: ($spacer * 2/3), // 8px
-    1\.5: ($spacer * 3/4), // 9px
-    1\.67: ($spacer * 5/6), // 10px
-    1\.9: ($spacer * 11/12), // 11px
-    2: ($spacer * 1), // 12px
-    2\.5: ($spacer * 1.25), // 15px
-    2\.67: ($spacer * 4/3), // 16px
-    3: ($spacer * 1.5), // 18px
-    3\.33: ($spacer * 5/3), // 20px
-    4: ($spacer * 2), // 24px
-    5: ($spacer * 2.5), // 30px
-    6: ($spacer * 3), //36px
-    7: ($spacer * 3.5), //42px
-    7\.5: ($spacer * 3.75), //45px
-    8: ($spacer * 4), //48px
-    8\.33: ($spacer * 25/6), //50px
-    9: ($spacer * 4.5), //54px
-    10: ($spacer * 5), //60px
-    12\.5: ($spacer * 6.25), //75px
-    13: ($spacer * 6.5), //78px
-    13\.33: ($spacer * 20/3), //80px
-    14: ($spacer * 7), //84px
-    15: ($spacer * 7.5), //90px
-    15\.33: ($spacer * 23/3), //92px
-    17: ($spacer * 8.5), //102px
-    18: ($spacer * 9), //108px
-    20: ($spacer * 10), //120px
-    21\.67: ($spacer * 65/6), //130px
-    25: ($spacer * 12.5), //150px
-    35: ($spacer * 35/2), //210px
+$spacers: ( 0: 0, 0\.08: ( $spacer * 1/12, ), //1px 0\.16:
+( $spacer * 1/6, ), //2px 0\.5:
+( $spacer * 0.25, ), //3px 0\.67:
+( $spacer * 1/3, ), //4px 0\.83:
+( $spacer * 5/12, ), //5px 1:
+( $spacer * 0.5, ), //6px 1\.083:
+( $spacer * 6.5/12, ), //6.5px 1\.33:
+( $spacer * 2/3, ), //8px 1\.5:
+( $spacer * 3/4, ), //9px 1\.67:
+( $spacer * 5/6, ), //10px 1\.9:
+( $spacer * 11/12, ), //11px 2:
+( $spacer * 1, ), //12px 2\.5:
+( $spacer * 1.25, ), //15px 2\.67:
+( $spacer * 4/3, ), //16px 3:
+( $spacer * 1.5, ), //18px 3\.33:
+( $spacer * 5/3, ), //20px 4:
+( $spacer * 2, ), //24px 5:
+( $spacer * 2.5, ), //30px 6:
+( $spacer * 3, ), //36px 7:
+( $spacer * 3.5, ), //42px 7\.5:
+( $spacer * 3.75, ), //45px 8:
+( $spacer * 4, ), //48px 8\.33:
+( $spacer * 25/6, ), //50px 9:
+( $spacer * 4.5, ), //54px 10:
+( $spacer * 5, ), //60px 12\.5:
+( $spacer * 6.25, ), //75px 13:
+( $spacer * 6.5, ), //78px 13\.33:
+( $spacer * 20/3, ), //80px 14:
+( $spacer * 7, ), //84px 15:
+( $spacer * 7.5, ), //90px 15\.33:
+( $spacer * 23/3, ), //92px 17:
+( $spacer * 8.5, ), //102px 18:
+( $spacer * 9, ), //108px 20:
+( $spacer * 10, ), //120px 21\.67:
+( $spacer * 65/6, ), //130px 25:
+( $spacer * 12.5, ), //150px 35:
+( $spacer * 35/2, ), //210px,
 );
-
-$rounded: (
-    '0': 0,
-    '6': 6px,
-    6\.5: 6.5px,
-    '12': 12px,
-    '24': 24px,
-    'tablet': 500px,
-);
-
-$grid-breakpoints: (
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
-    hd: 1440px
-);
+$rounded: ( "0": 0, "6": 6px, 6\.5: 6.5px, "12": 12px, "24": 24px, "tablet": 500px, );
+$grid-breakpoints: ( xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, hd: 1440px, );
