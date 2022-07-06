@@ -92,8 +92,8 @@
                             </a>
                         @endif
                         <div class="custom-file mb-3">
-                            <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
-                            <label for="contract" class="custom-file-label">Upload New Contract</label>
+                            <input type="file" id="contract_file" name="contract_file"  class="custom-file-input">
+                            <label for="contract_file" class="custom-file-label  overflow-hidden" >Upload New Contract</label>
                         </div>
                     </div>
                 </div>
