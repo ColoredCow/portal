@@ -46,7 +46,7 @@ class SendFollowUpReminder extends Mailable
 
         $body = str_replace(config('hr.template-variables.applicant-name'), $application->applicant->name, $body);
         $body = str_replace(config('hr.template-variables.round-name'), $roundName, $body);
-        
+
         return $this->to($application->applicant->email, $application->applicant->name)
             ->from(config('hr.default.email'), config('hr.default.name'))
             ->subject($subject)
