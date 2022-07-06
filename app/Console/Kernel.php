@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('application:no-show')->everyThirtyMinutes();
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
-        $schedule->command('sync:effortsheet')->weekdays()->timezone(config('constants.timezone.indian'))->everyFourHours();
+        $schedule->command('sync:effortsheet')->weekdays()->timezone(config('constants.timezone.indian'))->dailyAt('00:30', '04:30', '08:30', '12:30', '16:30', '20:30');
         $schedule->command('effort-summary:send')->weekdays()->timezone(config('constants.timezone.indian'))->at('21:00');
         $schedule->command('hr:check-follow-ups')->daily();
         $schedule->command('mapping-of-jobs-and-hr-rounds');
