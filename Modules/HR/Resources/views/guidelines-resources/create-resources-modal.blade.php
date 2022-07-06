@@ -13,7 +13,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="category-type">Select Categories<strong class="text-danger">*</strong></label>
-                        <select class="form-control" id="hr_resource_category_id" name="hr_resource_category_id" required>
+                        <select class="form-control" id="hrResourceCategory" name="hr_resource_category_id" required>
                             <option value="">Select Category</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
