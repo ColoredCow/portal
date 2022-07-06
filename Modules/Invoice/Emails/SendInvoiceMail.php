@@ -80,7 +80,7 @@ class SendInvoiceMail extends Mailable
         foreach ($this->email['cc'] as $emailAddress) {
             $mail->cc($emailAddress);
         }
-        
+
         foreach ($this->email['bcc'] as $emailAddress) {
             $mail->bcc($emailAddress);
         }

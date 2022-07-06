@@ -441,7 +441,7 @@ class InvoiceService implements InvoiceServiceContract
                 unset($cc[$index]);
             }
         }
-        
+
         if (! empty($bcc)) {
             $bcc = array_map('trim', explode(',', $data['bcc']));
             foreach ($bcc as $index => $email) {
@@ -468,7 +468,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice = $this->generateInvoiceForClient($client, $monthNumber, $year, $term);
         Mail::queue(new SendInvoiceMail($client, $invoice, $monthNumber, $year, $invoiceNumber, $email));
     }
-    
+
     public function sendInvoiceReminder(Invoice $invoice, $data)
     {
         $cc = $data['cc'] ?? [];
@@ -483,7 +483,7 @@ class InvoiceService implements InvoiceServiceContract
                 unset($cc[$index]);
             }
         }
-        
+
         if (! empty($bcc)) {
             $bcc = array_map('trim', explode(',', $data['bcc']));
             foreach ($bcc as $index => $email) {
