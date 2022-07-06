@@ -39,7 +39,7 @@ class SendFollowUpReminder extends Mailable
 
         $subject = Setting::where('module', 'hr')->where('setting_key', 'Follow_up_email_for_scheduling_interview_subject')->first();
         $body = Setting::where('module', 'hr')->where('setting_key', 'Follow_up_email_for_scheduling_interview_body')->first();
-        $roundName = Round::where('id', $application->latestApplicationRound->hr_application_id)->first();
+        $roundName = Round::all()->where('id', $application->latestApplicationRound->hr_application_id)->first();
 
         $subject = $subject ? $subject->setting_value : '';
         $body = $body ? $body->setting_value : '';
