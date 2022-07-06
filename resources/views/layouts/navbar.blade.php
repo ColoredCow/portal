@@ -96,7 +96,7 @@
         </li>
     @endif
 
-    @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
+    @if(auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span class="caret"></span>
