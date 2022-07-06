@@ -52,6 +52,7 @@
                 <tr>
                     <th class="w-33p sticky-top">Client/Project Name</th>
                     <th class="sticky-top">Team Members</th>
+                    <th class="sticky-top">Status</th>
                     <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
             </thead>
@@ -83,6 +84,21 @@
                                         </span>
                                     @endforeach 
                                 </td>
+                                {{-- to create status contract --}}
+                                <td>
+                                    @php
+                                        $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
+                                    @endphp
+                                    <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
+                                    <span class="{{ $textColor }} font-weight-bold">
+                                        
+                                @if($project->contract_file_path==null) No Contract
+                                @endif
+                                    </div>
+                                    </span>
+                                    </td>
+
+                                    {{-- velocity hours --}}
                                 <td>
                                     @php
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
