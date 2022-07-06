@@ -174,18 +174,11 @@ Before you start following the guidelines, make sure to go through the [prerequi
                 </Directory>
             </VirtualHost>
             ```
-            - After making the above code, if you are getting the "403 Forbidden" error. Consider the following changes:
+            - After adding the above code, if you are getting the "403 Forbidden" error, try to resolve it through the following addition in your code:
             ```apacheconf
             <Directory>
                  # some code above
-                 Allow from all
-            </Directory>
-            ```
-            Change to:
-            ```apacheconf
-            <Directory>
-                 # some code above
-                 Allow from all
+                 Allow from all   #add this line
                  Require all granted
             </Directory>
             ```
