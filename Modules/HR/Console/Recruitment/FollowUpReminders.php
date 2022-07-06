@@ -2,6 +2,7 @@
 
 namespace Modules\HR\Console\Recruitment;
 
+
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Entities\Application;
@@ -14,7 +15,7 @@ class FollowUpReminders extends Command
      *
      * @var string
      */
-    protected $signature = 'hr:check-follow-up';
+    protected $signature = 'hr:need-follow-up';
 
     /**
      * The console command description.
@@ -41,10 +42,10 @@ class FollowUpReminders extends Command
     public function handle()
     {
         $applications = Application::all();
-        $applications->load([ 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options',]);
+        $applications->load(['applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options',]);
 
         foreach ($applications as $application) {
-            if ($application->status == "need-follow-up") {
+            if ($application->tags == "need-follow-up") {
                 Mail::send(new SendFollowUpReminder($application));
             }
         }
