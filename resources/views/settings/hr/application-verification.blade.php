@@ -9,16 +9,16 @@
 				<div class="form-row">
 					<div class="col-md-12">
 						<div class="form-group">
-							<label for="setting_key[application_verification_subject]">Subject</label>
-							<input type="text" name="setting_key[application_verification_subject]" class="form-control" value="{{ isset($settings['application_verification_subject']->setting_value) ? $settings['application_verification_subject']->setting_value : '' }}">
+							<label for="setting_key[applicant_verification_subject]">Subject</label>
+							<input type="text" name="setting_key[applicant_verification_subject]" class="form-control" value="{{ isset($settings['applicant_verification_subject']->setting_value) ? $settings['applicant_verification_subject']->setting_value : '' }}">
 						</div>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-md-12">
 						<div class="form-group">
-							<label for="setting_key[application_verification_body]">Mail body:</label>
-							<textarea name="setting_key[application_verification_body]" rows="10" class="richeditor form-control" placeholder="Body">{{ isset($settings['application_verification_body']->setting_value) ? $settings['application_verification_body']->setting_value : '' }}</textarea>
+							<label for="setting_key[applicant_verification_body]">Mail body:</label>
+							<textarea name="setting_key[applicant_verification_body]" rows="10" class="richeditor form-control" placeholder="Body">{{ isset($settings['applicant_verification_body']->setting_value) ? $settings['applicant_verification_body']->setting_value : '' }}</textarea>
 						</div>
 					</div>
 				</div>
