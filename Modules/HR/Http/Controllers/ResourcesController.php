@@ -20,7 +20,7 @@ class ResourcesController extends Controller
     public function show(Job $job)
     {
         $categories = Category::all();
-        
+
         return view('hr::guidelines-resources.show', compact('categories'))->with(['job' => $job]);
     }
 
