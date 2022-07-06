@@ -250,7 +250,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $invoices = Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
-            ->get();
+            ->paginate(config('constants.pagination_size')) ?: [];
 
         $igst = [];
         $cgst = [];
