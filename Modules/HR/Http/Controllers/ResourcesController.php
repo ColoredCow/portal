@@ -17,11 +17,11 @@ class ResourcesController extends Controller
         return view('hr::guidelines-resources.index', compact('jobs'));
     }
 
-    public function show()
+    public function show(Job $job)
     {
         $categories = Category::all();
-
-        return view('hr::guidelines-resources.show', compact('categories'));
+        
+        return view('hr::guidelines-resources.show', compact('categories'))->with(['job' => $job]);
     }
 
     public function store(Request $request)
@@ -38,6 +38,8 @@ class ResourcesController extends Controller
     {
         $resources = Resource::create([
             'resource_link' => $request['resource_link'],
+            'hr_resource_category_id' => $request['hr_resource_category_id'],
+            'job_id' => $request['job_id'],
         ]);
 
         return redirect()->back();

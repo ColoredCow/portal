@@ -12,4 +12,14 @@ class Resource extends Model
     protected $guarded = [];
 
     protected $table = 'hr_resources';
+
+    public function category()
+    {
+        return $this->belongsToMany(Category::class, 'hr_resources', 'hr_resource_category_id');
+    }
+
+    public function job()
+    {
+        return $this->belongsToMany(Job::class, 'hr_resources', 'job_id');
+    }
 }

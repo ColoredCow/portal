@@ -13,19 +13,19 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="category-type">Select Categories<strong class="text-danger">*</strong></label>
-                        <select class="form-control" id="id" name="id" required>
+                        <select class="form-control" id="hr_resource_category_id" name="hr_resource_category_id" required>
                             <option value="">Select Category</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <button type="button" class="btn btn-primary" form="addResourceForm" id="save-btn-action">Save</button>
+                    <input type="hidden" name="job_id" id="job_id" value="{{$job->id}}">
                 </form>
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-primary" form="addResourceForm" id="save-btn-action">Save</button>
-            </div> -->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" form="addResourceForm" id="save-btn-action">Save</button>
+            </div>
         </div>
     </div>
 </div>

@@ -87,7 +87,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
         Route::get('/resources/', 'ResourcesController@index')->name('resources.index');
-        Route::get('/resources/show/', 'ResourcesController@show')->name('resources.show');
+        Route::get('/resources/{job}/show/', 'ResourcesController@show')->name('resources.show');
         Route::post('/category/store/', 'ResourcesController@store')->name('resources.store');
         Route::post('/resources/create/', 'ResourcesController@create')->name('resources.create');
     });
