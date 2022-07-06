@@ -88,22 +88,51 @@ return [
                 'key' => 'send_invoice',
                 'subject' => 'send_invoice_subject',
                 'body' => 'send_invoice_body',
+                'template-variables' => [
+                    'subject' => [
+                        'project-name' => '|*project_name*|',
+                        'term' => '|*term*|',
+                        'year' => '|*year*|',
+                    ],
+                    'body' => [
+                        'billing-person-name' => '|*billing_person_name*|',
+                        'invoice-amount' => '|*invoice_amount*|',
+                        'invoice-number' => '|*invoice_number*|',
+                        'term' => '|*term*|',
+                        'year' => '|*year*|',
+                    ],
+                ],
+            ],
+            'invoice-reminder' => [
+                'key' => 'invoice_reminder',
+                'subject' => 'invoice_reminder_subject',
+                'body' => 'invoice_reminder_body',
+                'template-variables' => [
+                    'subject' => [
+                        'project-name' => '|*project_name*|',
+                        'term' => '|*term*|',
+                        'year' => '|*year*|',
+                    ],
+                    'body' => [
+                        'billing-person-name' => '|*billing_person_name*|',
+                    ],
+                ],
+            ],
+            'received-invoice-payment' => [
+                'key' => 'received_invoice_payment',
+                'subject' => 'received_invoice_payment_subject',
+                'body' => 'received_invoice_payment_body',
+                'template-variables' => [
+                    'subject' => [
+                        'project-name' => '|*project_name*|',
+                        'term' => '|*term*|',
+                        'year' => '|*year*|',
+                    ],
+                    'body' => [
+                        'billing-person-name' => '|*billing_person_name*|',
+                    ],
+                ],
             ]
         ]
-    ],
-
-    'template-variables' => [
-        'subject' => [
-            'project-name' => '|*project_name*|',
-            'term' => '|*term*|',
-            'year' => '|*year*|',
-        ],
-        'body' => [
-            'billing-person-name' => '|*billing_person_name*|',
-            'invoice-amount' => '|*invoice_amount*|',
-            'invoice-number' => '|*invoice_number*|',
-            'term' => '|*term*|',
-            'year' => '|*year*|',
-        ],
     ],
 ];
