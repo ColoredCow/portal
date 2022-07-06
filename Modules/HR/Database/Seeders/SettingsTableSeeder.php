@@ -56,6 +56,11 @@ class SettingsTableSeeder extends Seeder
         ]);
         Setting::updateOrCreate([
             'module' => 'hr',
+            'setting_key' => 'applicant_verification_subject',
+            'setting_value' => 'Confirm your email address',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
             'setting_key' => 'Follow_up_email_for_scheduling_interview_subject',
             'setting_value' => 'Follow up email for scheduling interview ',
         ]);
