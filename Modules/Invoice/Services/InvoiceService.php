@@ -249,8 +249,7 @@ class InvoiceService implements InvoiceServiceContract
     public function invoiceDetails($filters)
     {
         $invoices = Invoice::query()->applyFilters($filters)
-            ->orderBy('sent_on', 'desc');
-            
+            ->orderBy('sent_on', 'desc');            
 
         $igst = [];
         $cgst = [];
@@ -259,10 +258,10 @@ class InvoiceService implements InvoiceServiceContract
         $clientAddress = [];
         foreach ($invoices->get() as $invoice) :
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
-            $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-            $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
-            $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
-            $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
+        $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
+        $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;            
+        $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
         endforeach;
 
         return [
