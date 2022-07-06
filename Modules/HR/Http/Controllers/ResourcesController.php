@@ -38,7 +38,7 @@ class ResourcesController extends Controller
     {
         $resources = Resource::create([
             'resource_link' => $request['resource_link'],
-            'hr_resource_category_id' => $request['hr_resource_category_id'],
+            'hr_resource_category_id' => $request['category-type'],
             'job_id' => $request['job_id'],
         ]);
 

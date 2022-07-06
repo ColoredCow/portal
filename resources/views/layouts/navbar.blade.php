@@ -25,7 +25,7 @@
                 @endcan
                 <a class="dropdown-item" href="{{route('userappointmentslots.show',auth()->id())}}">Appointment Slots</a>
                 <a class="dropdown-item" href="{{ route('hr.tags.index') }}">{{ __('Manage Tags') }}</a>
-                <a class="dropdown-item " href="{{ route('resources.index') }}">Guidelines And Resources</a>
+                <a class="dropdown-item disabled" href="{{ route('resources.index') }}">Guidelines And Resources</a>
             </div>
         </li>
     @endif
