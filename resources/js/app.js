@@ -947,6 +947,15 @@ $(document).ready(function() {
 	  $(document).on("click", ".toggle-block-display", toggleBlockDisplay);
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
+
+function ButtonEnable() {
+	 if(document.getElementById("name").value=="") { 
+            document.getElementById('save-btn-action').disabled = true; 
+        } else { 
+            document.getElementById('save-btn-action').disabled = false;
+        }
+}
+
   
 function showCommentBlock() {
 	  var blockId = $(this).data("block-id");
