@@ -91,7 +91,7 @@
                                     @endphp
                                     <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
                                     <span class="{{ $textColor }} font-weight-bold">
-                                     @if($project->contract_file_path==null) No Contract @else @endif  </span>
+                                     @if($project->contract_file_path==null) No Contract @else  @endif  </span>
                                 </td>
                                     {{-- velocity hours --}}
                                 <td>
