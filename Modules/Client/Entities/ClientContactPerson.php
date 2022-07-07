@@ -14,4 +14,11 @@ class ClientContactPerson extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function getFirstNameAttribute()
+    {
+        $name = explode(' ', $this->name);
+        
+        return  $name[0] ?? '';
+    }
 }

@@ -126,9 +126,9 @@ class InvoiceController extends Controller
      * Show the form for editing the specified resource.
      * @param int $id
      */
-    public function edit($id)
+    public function edit(Invoice $invoice)
     {
-        return view('invoice::edit', $this->service->edit($id));
+        return view('invoice::edit', $this->service->edit($invoice));
     }
 
     /**
@@ -136,9 +136,9 @@ class InvoiceController extends Controller
      * @param Request $request
      * @param int $id
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Invoice $invoice)
     {
-        $this->service->update($request->all(), $id);
+        $this->service->update($request->all(), $invoice);
 
         return redirect(route('invoice.index'))->with('success', 'Invoice updated successfully!');
     }
