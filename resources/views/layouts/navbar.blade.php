@@ -57,7 +57,7 @@
             <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
                 @can('finance_invoices.view')
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
                 @endcan
