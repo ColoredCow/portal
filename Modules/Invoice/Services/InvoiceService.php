@@ -508,9 +508,6 @@ class InvoiceService implements InvoiceServiceContract
         if ($clientId == null) {
             $clientCurrency = null;
         } else {
-            $clientCurrency = optional($invoices->first())->currency;
-        }
-        if (($invoices->first()) == null) {
             $clientCurrency = Client::find($clientId, 'id')->currency;
         }
 
