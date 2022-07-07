@@ -27,7 +27,7 @@
                                 <span>
                                     <div class="d-flex justify-content-between">
                                         <input class="form-control mr-3" type="text" v-model="newCategory" placeholder="Enter New Category" autofocus>
-                                        <button type="button" class="btn btn-info btn-sm" @click="addNewCategory()">  Add&nbsp;New </button>
+                                        <button type="button" class="btn btn-info btn-sm" style="width: 200px" @click="addNewCategory()">  Add New </button>
                                         
                                     </div>
                                 </span>
