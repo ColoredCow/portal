@@ -566,11 +566,18 @@ class InvoiceService implements InvoiceServiceContract
         $invoices = Invoice::query()->applyFilters($filters)
             ->orderBy('sent_on', 'desc')
             ->get();
-        $clients = Client::all();
+        $clients = Client::orderBy('name', 'asc')->get();
+        $clientId = request()->client_id;
+        if ($clientId == null) {
+            $clientCurrency = null;
+        } else {
+            $clientCurrency = Client::find($clientId, 'id')->currency;
+        }
 
         return [
             'invoices' => $invoices,
             'clients' => $clients,
+            'clientCurrency' => $clientCurrency,
         ];
     }
 }
