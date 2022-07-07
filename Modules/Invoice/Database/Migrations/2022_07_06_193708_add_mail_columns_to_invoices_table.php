@@ -14,7 +14,7 @@ class AddMailColumnsToInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->boolean('reminder_mail_sent')->default(false);
+            $table->integer('reminder_mail_count')->default(0);
             $table->boolean('payment_confirmation_mail_sent')->default(false);
         });
     }
@@ -27,7 +27,7 @@ class AddMailColumnsToInvoicesTable extends Migration
     public function down()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn(['reminder_mail_sent', 'payment_confirmation_mail_sent']);
+            $table->dropColumn(['reminder_mail_count', 'payment_confirmation_mail_sent']);
         });
     }
 }
