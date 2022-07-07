@@ -124,7 +124,7 @@ class InvoiceController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param Invoice $invoice
      */
     public function edit(Invoice $invoice)
     {
@@ -134,7 +134,7 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
+     * @param Invoice $invoice
      */
     public function update(Request $request, Invoice $invoice)
     {
