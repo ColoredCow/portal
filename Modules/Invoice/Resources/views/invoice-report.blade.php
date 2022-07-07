@@ -23,14 +23,20 @@
                     <th>Sent on Date</th>
                     <th>Payment Date</th>
                     <th>Invoice Amount</th>
-                    <th>GST Amount</th>
-                    <th>TDS</th>
-                    <th>Amount in INR</th>
+                    @if($clientCurrency == config('constants.countries.india.currency') || $clientCurrency == null)
+                        <th>GST Amount</th>
+                        <th>TDS</th>
+                    @endif
+                    @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
+                        <th>Amount in INR</th>
+                    @endif   
                     <th>Amount Recieved</th>
-                    <th>Bank Charges</th>
-                    <th>Dollar Rate</th>
-                    <th>Exchange Rate differene</th>
-                    <th>Amount received in Dollars</th>
+                    @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
+                        <th>Bank Charges</th>
+                        <th>Dollar Rate</th>
+                        <th>Exchange Rate differene</th>
+                        <th>Amount received in Dollars</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -42,20 +48,15 @@
                         <td>{{$invoice->sent_on->format(config('invoice.default-date-format'))}}</td>
                         <td>{{$invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-'}}</td>
                         <td>{{$invoice->amount}}</td>
-                        @if($invoice->currency == config('constants.countries.india.currency'))
+                        @if($clientCurrency == config('constants.countries.india.currency') || $clientCurrency == null)
                             <td>{{$invoice->gst}}</td>
                             <td>{{$invoice->tds}}</td>
+                        @endif
+                        @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
                             <td>{{$invoice->InvoiceAmountInInr}}</td>
-                            <td>{{$invoice->amount_paid}}</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        @else
-                            <td>-</td>
-                            <td>-</td>
-                            <td>{{$invoice->InvoiceAmountInInr}}</td>
-                            <td>{{$invoice->amount_paid}}</td>
+                        @endif
+                        <td>{{$invoice->amount_paid}}</td>
+                        @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
                             <td>{{$invoice->bank_charges}}</td>
                             <td>{{$invoice->conversion_rate}}</td>
                             <td>{{$invoice->conversion_rate_diff}}</td>
@@ -71,24 +72,36 @@
                     <td>-</td>
                     @if(!$invoices->isEmpty())
                         <td>{{$invoices->sum('amount')}}</td>
-                        <td>{{$invoices->sum('gst')}}</td>
-                        <td>{{$invoices->sum('tds')}}</td>
-                        <td>{{$invoices->sum('InvoiceAmountInInr')}}</td>
+                        @if($clientCurrency == config('constants.countries.india.currency') || $clientCurrency == null)
+                            <td>{{$invoices->sum('gst')}}</td>
+                            <td>{{$invoices->sum('tds')}}</td>
+                        @endif
+                        @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
+                            <td>{{$invoices->sum('InvoiceAmountInInr')}}</td>
+                        @endif
                         <td>{{$invoices->sum('amount_paid')}}</td>
-                        <td>{{$invoices->sum('bank_charges')}}</td>
-                        <td>{{$invoices->sum('conversion_rate')}}</td>
-                        <td>{{$invoices->sum('conversion_rate_diff')}}</td>
-                        <td>{{$invoices->avg('amount_paid')}}</td>
+                        @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
+                            <td>{{$invoices->sum('bank_charges')}}</td>
+                            <td>{{$invoices->sum('conversion_rate')}}</td>
+                            <td>{{$invoices->sum('conversion_rate_diff')}}</td>
+                            <td>{{$invoices->avg('amount_paid')}}</td>
+                        @endif
                     @else
                         <td>-</td>
+                        @if($clientCurrency == config('constants.countries.india.currency') || $clientCurrency == null)
+                            <td>-</td>
+                            <td>-</td>
+                        @endif
+                        @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
+                            <td>-</td>
+                        @endif
                         <td>-</td>
-                        <td>-</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
+                        @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        @endif    
                     @endif
                 </tr>
             </tbody>
