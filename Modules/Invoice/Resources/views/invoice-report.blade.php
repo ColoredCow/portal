@@ -82,9 +82,9 @@
                         <td>{{$invoices->sum('amount_paid')}}</td>
                         @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
                             <td>{{$invoices->sum('bank_charges')}}</td>
-                            <td>{{$invoices->sum('conversion_rate')}}</td>
-                            <td>{{$invoices->sum('conversion_rate_diff')}}</td>
-                            <td>{{$invoices->avg('amount_paid')}}</td>
+                            <td>{{$invoices->avg('conversion_rate')}}</td>
+                            <td>{{$invoices->avg('conversion_rate_diff')}}</td>
+                            <td>{{$invoices->sum('amount_paid')}}</td>
                         @endif
                     @else
                         <td>-</td>

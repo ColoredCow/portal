@@ -505,13 +505,13 @@ class InvoiceService implements InvoiceServiceContract
             ->get();
         $clients = Client::orderBy('name', 'asc')->get();
         $clientId = request()->client_id;
-        if($clientId == null) {
+        if ($clientId == null) {
             $clientCurrency = null;
         } else {
             $clientCurrency = optional($invoices->first())->currency;
         }
-        if(($invoices->first()) == null) {
-            $clientCurrency = Client::find($clientId,'id')->currency;
+        if (($invoices->first()) == null) {
+            $clientCurrency = Client::find($clientId, 'id')->currency;
         }
 
         return [
