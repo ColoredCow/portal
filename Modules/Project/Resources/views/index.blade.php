@@ -85,7 +85,6 @@
                                     @endforeach 
                                 </td>
                                 <td>
-                                    <span class="text-dark font-weight-bold">
                                     @if($project->contract_file_path == null)
                                         <span class="text-dark font-weight-bold">No Contract</span>
                                     @endif
