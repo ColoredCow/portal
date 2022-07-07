@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="d-block">
-                    <h4 class="modal-title">Invoice mail preview </h4>
+                    <h4 class="modal-title">{{ __('Invoice mail preview') }}</h4>
                 </div>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -14,19 +14,19 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label class="leading-none" for="sendFrom">From</label>
+                            <label class="leading-none" for="sendFrom">{{ __('From') }}</label>
                             <input type="email" name="from" id="sendFrom"
                                 class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}" required>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="leading-none" for="sendTo">To</label>
+                            <label class="leading-none" for="sendTo">{{ __('To') }}</label>
                             <input type="email" name="to" id="sendTo"
                                 class="form-control" required>
                         </div>
                         <input type="hidden" name="to_name" id="sendToName" class="form-control" required>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="cc">
-                                CC 
+                                {{ __('CC') }} 
                                 <span data-toggle="tooltip" data-placement="right" title="Comma separated emails">
                                     <i class="fa fa-question-circle"></i>
                                 </span>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="bcc">
-                                BCC 
+                                {{ __('BCC') }} 
                                 <span data-toggle="tooltip" data-placement="right" title="Comma separated emails">
                                     <i class="fa fa-question-circle"></i>
                                 </span>
@@ -43,12 +43,12 @@
                             <input type="text" name="bcc" id="bcc" class="form-control" value="">
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="leading-none" for="emailSubject">Subject</label>
+                            <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>
                             <input type="text" name="email_subject" id="emailSubject"
                                 class="form-control" value="{{ $sendInvoiceEmailSubject }}" required>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="leading-none" for="emailBody">Body</label>
+                            <label class="leading-none" for="emailBody">{{ __('Body') }}</label>
                             <textarea name="email_body" id="emailBody" class="form-control richeditor">{{ $sendInvoiceEmailBody }}</textarea>
                         </div>
                     </div>
