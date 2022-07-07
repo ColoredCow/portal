@@ -1,6 +1,6 @@
 <div class="card">
     <form action="{{ route('setting.invoice.update') }}" method="POST">
-        {{ csrf_field() }}
+        @csrf
         <div class="card-header c-pointer" data-toggle="collapse" data-target="#receivedInvoicePayment" aria-expanded="true" aria-controls="sendInvoice">Received invoice payment</div>
         <div id="receivedInvoicePayment" class="collapse">
             <div class="card-body">

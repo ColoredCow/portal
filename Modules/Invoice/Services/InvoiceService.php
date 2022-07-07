@@ -429,26 +429,26 @@ class InvoiceService implements InvoiceServiceContract
 
     public function sendInvoice(Client $client, $term, $data)
     {
-        $cc = $data['cc'] ?? [];
-        $bcc = $data['bcc'] ?? [];
+        $ccEmails = $data['cc'] ?? [];
+        $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($cc)) {
-            $cc = array_map('trim', explode(',', $data['cc']));
-            foreach ($cc as $index => $email) {
+        if (! empty($ccEmails)) {
+            $ccEmails = array_map('trim', explode(',', $data['cc']));
+            foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     continue;
                 }
-                unset($cc[$index]);
+                unset($ccEmails[$index]);
             }
         }
 
-        if (! empty($bcc)) {
-            $bcc = array_map('trim', explode(',', $data['bcc']));
-            foreach ($bcc as $index => $email) {
+        if (! empty($bccEmails)) {
+            $bccEmails = array_map('trim', explode(',', $data['bcc']));
+            foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     continue;
                 }
-                unset($bcc[$index]);
+                unset($bccEmails[$index]);
             }
         }
 
@@ -457,8 +457,8 @@ class InvoiceService implements InvoiceServiceContract
             'to_name' => $data['to_name'] ?? optional($client->billing_contact)->name,
             'from' => $data['from'] ?? config('invoice.mail.send-invoice.email'),
             'from_name' => config('invoice.mail.send-invoice.email'),
-            'cc' => $cc,
-            'bcc' => $bcc,
+            'cc' => $ccEmails,
+            'bcc' => $bccEmails,
             'body' => $data['email_body'] ?? null,
             'subject' => $data['email_subject'] ?? null
         ];
@@ -471,26 +471,26 @@ class InvoiceService implements InvoiceServiceContract
 
     public function sendInvoiceReminder(Invoice $invoice, $data)
     {
-        $cc = $data['cc'] ?? [];
-        $bcc = $data['bcc'] ?? [];
+        $ccEmails = $data['cc'] ?? [];
+        $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($cc)) {
-            $cc = array_map('trim', explode(',', $data['cc']));
-            foreach ($cc as $index => $email) {
+        if (! empty($ccEmails)) {
+            $ccEmails = array_map('trim', explode(',', $data['cc']));
+            foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     continue;
                 }
-                unset($cc[$index]);
+                unset($ccEmails[$index]);
             }
         }
 
-        if (! empty($bcc)) {
-            $bcc = array_map('trim', explode(',', $data['bcc']));
-            foreach ($bcc as $index => $email) {
+        if (! empty($bccEmails)) {
+            $bccEmails = array_map('trim', explode(',', $data['bcc']));
+            foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     continue;
                 }
-                unset($bcc[$index]);
+                unset($bccEmails[$index]);
             }
         }
 
@@ -499,8 +499,8 @@ class InvoiceService implements InvoiceServiceContract
             'to_name' => $data['to_name'] ?? optional($invoice->client->billing_contact)->name,
             'from' => $data['from'] ?? config('invoice.mail.send-invoice.email'),
             'from_name' => config('invoice.mail.send-invoice.email'),
-            'cc' => $cc,
-            'bcc' => $bcc,
+            'cc' => $ccEmails,
+            'bcc' => $bccEmails,
             'body' => $data['email_body'] ?? null,
             'subject' => $data['email_subject'] ?? null
         ];
