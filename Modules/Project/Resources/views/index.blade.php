@@ -84,16 +84,12 @@
                                         </span>
                                     @endforeach 
                                 </td>
-                                {{-- to create status contract --}}
                                 <td>
-                                    @php
-                                        $textColor = '.text-dark'
-                                    @endphp
-                                   
-                                    <span class="{{ $textColor }} font-weight-bold">
-                                     @if($project->contract_file_path==null) No Contract @else  @endif  </span>
+                                    <span class="text-dark font-weight-bold">
+                                    @if($project->contract_file_path == null)
+                                        <span class="text-dark font-weight-bold">No Contract</span>
+                                    @endif
                                 </td>
-                                    {{-- velocity hours --}}
                                 <td>
                                     @php
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
