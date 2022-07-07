@@ -10,6 +10,7 @@ class CronController extends Controller
 {
     public function index()
     {
+        $this->authorize('index', Cron::class);
         // Collects all the content  from the kernel class.
         app()->make(\Illuminate\Contracts\Console\Kernel::class);
 
@@ -39,7 +40,7 @@ class CronController extends Controller
         return view('settings.cron.index')->with('events', $events);
     }
 
-    public function run($command)
+    public function run(string $command)
     {
         Artisan::call($command);
 
