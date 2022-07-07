@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
-use Mail;
-use Modules\Invoice\Emails\SendPendingInvoiceMail;
-use Modules\Invoice\Rules\EmailValidation;
 
 class InvoiceController extends Controller
 {
@@ -183,26 +180,12 @@ class InvoiceController extends Controller
         return $this->service->taxReportExport($filters, $request);
     }
 
-    public function sendEmail(Request $request, Invoice $invoice, Client $client)
+    public function sendReminderEmail(Request $request)
     {
-        $senderEmail = $invoice->client->contactPersons()->get('email');
-        $emails = $request->invoice_email;
+        $invoice = Invoice::find($request->invoice_id);
+        $this->service->sendInvoiceReminder($invoice, $request->all());
 
-        $validator = $request->validate([
-        'invoice_email' => new EmailValidation(),
-        ]);
-
-        if ($emails != '') {
-            $validate = preg_split('/[,]/', $emails);
-            Mail::to($senderEmail)
-            ->cc($validate)
-            ->send(new SendPendingInvoiceMail($invoice));
-        } else {
-            Mail::to($senderEmail)
-            ->send(new SendPendingInvoiceMail($invoice));
-        }
-
-        return redirect(route('invoice.index'));
+        return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
 
     public function sendInvoice(Request $request)

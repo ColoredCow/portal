@@ -53,6 +53,30 @@ $(document).ready(function(){
 		$("#emailPreview").modal("show");
 	});
 
+	$(".send-reminder").on("click", function() {
+		var invoiceData = $(this).data("invoice-data");
+		var mapping = {
+			"|*project_name*|": invoiceData["projectName"],
+			"|*term*|": invoiceData["monthName"],
+			"|*year*|": invoiceData["year"],
+			"|*billing_person_name*|": invoiceData["billingPersonName"],
+		};
+		var emailSubject = $("#emailSubject").val();
+		var emailBody = $("#emailBody").text();
+		
+		for (var key in mapping) {
+			var emailSubject = emailSubject.replace(key, mapping[key]);
+			var emailBody = emailBody.replace(key, mapping[key]);
+		}
+
+		$("#emailSubject").val(emailSubject); 
+		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
+		$("#sendToName").val(invoiceData["billingPersonName"]); 
+		$("#invoiceId").val(invoiceData["invoiceId"]); 
+		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$("#emailPreview").modal("show");
+	});
+
 	$("#verifyInvoice").on("click", function () {
 		if ($("#verifyInvoice").is(":checked")) {
 			$("#sendInvoiceBtn").attr("disabled", false);
@@ -64,6 +88,14 @@ $(document).ready(function(){
 	$("#sendInvoiceForm").on("submit", function (event) {
 		event.preventDefault();
 		$("#sendInvoiceBtn").attr("disabled", true);
+		if(validateFormData(event.target)) {
+			event.target.submit();
+		}
+	});
+
+	$("#sendInvoiceReminderForm").on("submit", function (event) {
+		event.preventDefault();
+		$("#sendBtn").attr("disabled", true);
 		if(validateFormData(event.target)) {
 			event.target.submit();
 		}
