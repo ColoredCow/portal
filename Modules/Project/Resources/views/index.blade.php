@@ -87,7 +87,7 @@
                                 {{-- to create status contract --}}
                                 <td>
                                     @php
-                                        $textColor = $project->contract >= 1 ? 'text-success' : 'text-danger'
+                                        $textColor = '.text-dark'
                                     @endphp
                                    
                                     <span class="{{ $textColor }} font-weight-bold">
