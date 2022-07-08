@@ -47,7 +47,7 @@
 
                             @if($book->readers->count())
                                 <div id="readers_section" class="mt-3">
-                                    <div class="d-flex justify-content-start">
+                                    <div class="d-flex justify-content-start flex-wrap">
                                         @foreach($book->readers as $reader)
                                             <div class="text-center mr-2">
                                                 <img
@@ -58,6 +58,72 @@
                                                     src="{{ $reader->avatar}}"
                                                     alt="{{ $reader->name }}"/>
                                             </div>
+                                            <div class="text-center mr-2">
+                                                <img
+                                                    data-toggle="tooltip"
+                                                    title="{{ $reader->name }}"
+                                                    data-placement="bottom"
+                                                    class="reader_image"
+                                                    src="{{ $reader->avatar}}"
+                                                    alt="{{ $reader->name }}"/>
+                                            </div>
+                                            <div class="text-center mr-2">
+                                                <img
+                                                    data-toggle="tooltip"
+                                                    title="{{ $reader->name }}"
+                                                    data-placement="bottom"
+                                                    class="reader_image"
+                                                    src="{{ $reader->avatar}}"
+                                                    alt="{{ $reader->name }}"/>
+                                            </div>
+                                            <div class="text-center mr-2">
+                                                <img
+                                                    data-toggle="tooltip"
+                                                    title="{{ $reader->name }}"
+                                                    data-placement="bottom"
+                                                    class="reader_image"
+                                                    src="{{ $reader->avatar}}"
+                                                    alt="{{ $reader->name }}"/>
+                                            </div> <div class="text-center mr-2">
+                                                <img
+                                                    data-toggle="tooltip"
+                                                    title="{{ $reader->name }}"
+                                                    data-placement="bottom"
+                                                    class="reader_image"
+                                                    src="{{ $reader->avatar}}"
+                                                    alt="{{ $reader->name }}"/>
+                                            </div>
+                                            <div class="text-center mr-2">
+                                                <img
+                                                    data-toggle="tooltip"
+                                                    title="{{ $reader->name }}"
+                                                    data-placement="bottom"
+                                                    class="reader_image"
+                                                    src="{{ $reader->avatar}}"
+                                                    alt="{{ $reader->name }}"/>
+                                            </div>
+                                             <div class="text-center mr-2">
+                                                <div class 
+                                                <img
+                                                    data-toggle="tooltip"
+                                                    title="{{ $reader->name }}"
+                                                    data-placement="bottom"
+                                                    class="reader_image"
+                                                    src="{{ $reader->avatar}}"
+                                                    alt="{{ $reader->name }}"/>
+                                            </div>
+                                            <div class="text-center mr-2">
+                                                <img
+                                                    data-toggle="tooltip"
+                                                    title="{{ $reader->name }}"
+                                                    data-placement="bottom"
+                                                    class="reader_image"
+                                                    src="{{ $reader->avatar}}"
+                                                    alt="{{ $reader->name }}"/>
+                                            </div>
+                                           
+                                            
+                                            
                                         @endforeach
                                     </div>
                                 </div>
