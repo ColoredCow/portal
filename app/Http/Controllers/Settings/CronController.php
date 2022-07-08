@@ -18,8 +18,12 @@ class CronController extends Controller
         $schedule = app()->make(\Illuminate\Console\Scheduling\Schedule::class);
 
         $events = collect($schedule->events())->map(function ($event) {
+
+            // Removes the excess characters in the command.
             $command = str_after($event->command, '\'artisan\' ');
             $commandDescription = '';
+
+            // Loops through the artisan commands and gets the description.
             foreach (Artisan::all() as $artisanCommand => $commandDetails) {
                 if ($artisanCommand == $command) {
                     $commandDescription = $commandDetails->getDescription();
@@ -42,6 +46,7 @@ class CronController extends Controller
 
     public function run(string $command)
     {
+        $this->authorize('run', Cron::class);
         Artisan::call($command);
 
         return redirect()->route('settings.cron')->with('success', 'Command executed successfully');
