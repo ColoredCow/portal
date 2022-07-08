@@ -123,7 +123,7 @@
                                     @if($invoice->reminder_mail_count)
                                         <div class="text-success">{{ __('Reminder Sent') }}</div>
                                     @elseif($invoice->shouldHighlighted())
-                                        <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-bs-toggle="modal" data-bs-target="#invoiceReminder" >{{ __('Reminder') }}</div>
+                                        <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal" data-target="#invoiceReminder" >{{ __('Reminder') }}</div>
                                     @else
                                         <div> - </div> 
                                     @endif
