@@ -61,14 +61,14 @@
                     </div>
                     @can('library_books.delete')
                         <div class="p-0 position-absolute action_buttons">
-                            <div class="dropdown ">
-                                <a href="#" class="m-1 mr-2 text-muted h4" data-toggle="dropdown">
+                            <div class="dropdown">
+                                <a href="#" class="m-1 mr-2 text-muted h4" data-toggle="dropdown" >
                                     <i class="fa fa-cog"></i>
                                 </a>
-                                <ul class="dropdown-menu ">
-                                    <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item" style="cursor: pointer">Update Category</li>
-                                    <li @click="updateCopiesCount(index)" class="dropdown-item" style="cursor: pointer">Copies Available</li>
-                                    <li @click="deleteBook(index)" class="dropdown-item text-danger" style="cursor: pointer">Delete</li>
+                                <ul class="dropdown-menu">
+                                    <a @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item" href="http://localhost/knowledgecafe/library/books/UpdateCategory">Update Category</a>
+                                    <a @click="updateCopiesCount(index)" class="dropdown-item" href="http://localhost/knowledgecafe/library/books/CopiesAvailable">Copies Available</a>
+                                    <a @click="deleteBook(index)" class="dropdown-item text-danger" href="http://localhost/knowledgecafe/library/books/Delete">Delete</a>
                                 </ul>
                             </div>
                         </div>
