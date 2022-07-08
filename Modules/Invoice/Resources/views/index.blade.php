@@ -137,7 +137,7 @@
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
                                     'billingPersonName' => optional($client->billing_contact)->name,
-                                    'billingPersonFirstName' => optional($invoice->client->billing_contact)->first_name,
+                                    'billingPersonFirstName' => optional($client->billing_contact)->first_name,
                                     'billingPersonEmail' => optional($client->billing_contact)->email,
                                     'senderEmail' => config('invoice.mail.send-invoice.email'),
                                     'invoiceNumber' => str_replace('-', '', $client->next_invoice_number),
