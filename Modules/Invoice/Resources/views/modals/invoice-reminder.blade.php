@@ -54,7 +54,6 @@
                     </div>
                     <div class="form-group ml-1 mt-2">
                         <input type="hidden" name="invoice_id" id="invoiceId" value="">
-                        <input type="hidden" name="term" value="{{ $year . '-' . $month }}">
                         <input type="submit" id="sendReminderBtn" class="btn btn-success text-light" value="Send Reminder">
                     </div>
                 </form>

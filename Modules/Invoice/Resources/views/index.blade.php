@@ -92,6 +92,7 @@
                             $invoiceData = [
                                 'projectName' => optional($invoice->project)->name ?: ($invoice->client->name . 'Projects'),
                                 'billingPersonName' => optional($invoice->client->billing_contact)->name,
+                                'billingPersonFirstName' => optional($invoice->client->billing_contact)->first_name,
                                 'billingPersonEmail' => optional($invoice->client->billing_contact)->email,
                                 'senderEmail' => config('invoice.mail.send-invoice.email'),
                                 'monthName' => date('F', mktime(0, 0, 0, $invoiceMonthNumber, 10)),
@@ -136,6 +137,7 @@
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
                                     'billingPersonName' => optional($client->billing_contact)->name,
+                                    'billingPersonFirstName' => optional($invoice->client->billing_contact)->first_name,
                                     'billingPersonEmail' => optional($client->billing_contact)->email,
                                     'senderEmail' => config('invoice.mail.send-invoice.email'),
                                     'invoiceNumber' => str_replace('-', '', $client->next_invoice_number),
