@@ -4,12 +4,14 @@
 
 <div class="chart-container" align="center">
     <div class="bar-chart-container">
-        <h2 align="left">Analytics</h2>
+        <div align="left">
+         <h2>Analytics </h2>  
+        </div>
         <form action="{{route('recruitment.report')}}" method="POST" align="right">
             {{csrf_field()}}
             <input type="date" name="report_start_date" id='StartDate'> to
             <input type="date" name="report_end_date" id="EndDate">
-            <input type="submit" value="View">
+            <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
         </form>
         <br>
 
