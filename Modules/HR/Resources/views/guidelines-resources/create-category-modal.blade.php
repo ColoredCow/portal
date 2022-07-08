@@ -14,7 +14,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" form="create-form" id="save-btn-action">Save</button>
+                <button type="submit" class="btn btn-primary" form="create-form" id="save-btn-action">Save</button>
             </div>
         </div>
     </div>

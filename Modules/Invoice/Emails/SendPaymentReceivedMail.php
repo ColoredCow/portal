@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Modules\Invoice\Entities\Invoice;
 
-class SendPendingInvoiceMail extends Mailable
+class SendPaymentReceivedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -41,11 +41,11 @@ class SendPendingInvoiceMail extends Mailable
     {
         $subject = $this->email['subject'];
         $body = $this->email['body'];
-        $templateVariablesForSubject = config('invoice.templates.setting-key.invoice-reminder.template-variables.subject');
-        $templateVariablesForBody = config('invoice.templates.setting-key.invoice-reminder.template-variables.body');
+        $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');
+        $templateVariablesForBody = config('invoice.templates.setting-key.received-invoice-payment.template-variables.body');
 
         if (! $subject) {
-            $subject = Setting::where('module', 'invoice')->where('setting_key', 'invoice_reminder_subject')->first();
+            $subject = Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_subject')->first();
             $subject = $subject ? $subject->setting_value : '';
             $subject = str_replace($templateVariablesForSubject['project-name'], optional($this->invoice->project)->name ?: ($this->invoice->client->name . ' Projects'), $subject);
             $subject = str_replace($templateVariablesForSubject['term'], $this->monthName, $subject);
@@ -53,7 +53,7 @@ class SendPendingInvoiceMail extends Mailable
         }
 
         if (! $body) {
-            $body = Setting::where('module', 'invoice')->where('setting_key', 'invoice_reminder_body')->first();
+            $body = Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first();
             $body = $body ? $body->setting_value : '';
             $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->first_name, $body);
         }

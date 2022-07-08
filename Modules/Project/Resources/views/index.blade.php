@@ -52,6 +52,7 @@
                 <tr>
                     <th class="w-33p sticky-top">Client/Project Name</th>
                     <th class="sticky-top">Team Members</th>
+                    <th class="sticky-top">Status</th>
                     <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
             </thead>
@@ -78,10 +79,18 @@
                                 {{-- <td class="w-33p"></td> --}}
                                 <td>
                                     @foreach($project->getTeamMembers ?:[] as $teamMember)
-                                        <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}}">
+                                    
+                                        <span class="content tooltip-wrapper"  data-html="true" data-toggle="tooltip"  title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}} <br>    Efforts: {{$teamMember->current_actual_effort}}Hours" >
                                             <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1"></a>
+                                        
                                         </span>
+
                                     @endforeach 
+                                </td>
+                                <td>
+                                    @if($project->contract_file_path == null)
+                                        <span class="text-dark font-weight-bold">No Contract</span>
+                                    @endif
                                 </td>
                                 <td>
                                     @php
