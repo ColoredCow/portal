@@ -10,7 +10,7 @@
         </button>
     </div>
     <div class="col-md-2">
-        <button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#createModal"><i class="fa fa-plus"></i>
+        <button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#create_Modal"><i class="fa fa-plus"></i>
         {{ __('Add category') }}
         </button>
     </div>

@@ -9,7 +9,7 @@
 
     <div class="dashboard_view d-flex flex-wrap justify-content-start ml-3">
 
-        @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
+        @if(auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
         <div class="mr-5 mb-4 min-w-389">
             <user-dashboard-library />
         </div>
