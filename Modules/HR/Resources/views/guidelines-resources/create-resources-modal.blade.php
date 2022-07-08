@@ -20,7 +20,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <input type="hidden" name="job_id" id="job_id" value="{{$job->id}}">
+                    <input type="hidden" name="job_id" id="job_id" value="{{$jobId->id}}">
                 </form>
             </div>
             <div class="modal-footer">
