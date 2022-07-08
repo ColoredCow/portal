@@ -66,9 +66,9 @@
                                     <i class="fa fa-cog"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <a @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item" href="http://localhost/knowledgecafe/library/books/UpdateCategory">Update Category</a>
-                                    <a @click="updateCopiesCount(index)" class="dropdown-item" href="http://localhost/knowledgecafe/library/books/CopiesAvailable">Copies Available</a>
-                                    <a @click="deleteBook(index)" class="dropdown-item text-danger" href="http://localhost/knowledgecafe/library/books/Delete">Delete</a>
+                                    <a @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item c-pointer" >Update Category</a>
+                                    <a @click="updateCopiesCount(index)" class="dropdown-item c-pointer">Copies Available</a>
+                                    <a @click="deleteBook(index)" class="dropdown-item text-danger c-pointer">Delete</a>
                                 </ul>
                             </div>
                         </div>
