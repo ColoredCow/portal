@@ -66,9 +66,9 @@
                                     <i class="fa fa-cog"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <a @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item c-pointer" >Update Category</a>
-                                    <a @click="updateCopiesCount(index)" class="dropdown-item c-pointer">Copies Available</a>
-                                    <a @click="deleteBook(index)" class="dropdown-item text-danger c-pointer">Delete</a>
+                                    <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item c-pointer" >Update Category</li>
+                                    <li @click="updateCopiesCount(index)" class="dropdown-item c-pointer">Copies Available</li>
+                                    <li @click="deleteBook(index)" class="dropdown-item text-danger c-pointer">Delete</li>
                                 </ul>
                             </div>
                         </div>
