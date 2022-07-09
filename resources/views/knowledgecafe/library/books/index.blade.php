@@ -100,5 +100,6 @@
         </div>
     </div>
     @include('knowledgecafe.library.books.update-category-modal')
+    @include('knowledgecafe.library.books.modal-insertion')
 </div>
 @endsection

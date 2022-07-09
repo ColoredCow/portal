@@ -12,6 +12,7 @@ var clipboard = new ClipboardJS(".btn-clipboard");
   
 window.Vue = require("vue");
 import { Laue } from "laue";
+import { Alert } from "bootstrap";
  
 Vue.use(Laue);
   
@@ -584,7 +585,7 @@ if (document.getElementById("books_listing")) {
 			  },
   
 			  updateCopiesCount: function(index) {
-				  var new_count = parseInt(prompt("Number of copies of this book", this.books[index].number_of_copies));
+				  var new_count = $("#this.books[index].number_of_copies").modal(show);
 				  if (new_count && isFinite(new_count)) {
 					  this.books[index].number_of_copies = new_count;
 					  axios.put(this.updateRoute + "/" + this.books[index].id, {

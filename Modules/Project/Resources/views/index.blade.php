@@ -85,7 +85,8 @@
                                     @endforeach 
                                 </td>
                                 <td>
-                                    @if($project->contract_file_path == null)
+                                    
+                                    @if(empty($project->projectContracts->first()->contract_file_path))
                                         <span class="text-dark font-weight-bold">No Contract</span>
                                     @endif
                                 </td>
