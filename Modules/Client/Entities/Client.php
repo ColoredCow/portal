@@ -197,4 +197,38 @@ class Client extends Model
             }
         }
     }
+
+    public function getStartBillingDateAttribute()
+    {
+        $billingDate = $this->billingDetails->billing_date;
+        if (today(config('constants.timezone.indian'))->day < $billingDate) {
+            if (today(config('constants.timezone.indian'))->subMonth()->addDays($billingDate - today(config('constants.timezone.indian'))->day) > today(config('constants.timezone.indian'))->subMonth()->endOfMonth()) {
+                return today(config('constants.timezone.indian'))->subMonth()->endOfMonth();
+            }
+
+            return today(config('constants.timezone.indian'))->subMonth()->addDays($billingDate - today(config('constants.timezone.indian'))->day);
+        }
+
+        if (today(config('constants.timezone.indian'))->day >= $billingDate) {
+            return today(config('constants.timezone.indian'))->startOfMonth()->addDays($billingDate - 1);
+        }
+    }
+    
+    public function getEndBillingDateAttribute()
+    {
+        $billingDate =  $this->billingDetails->billing_date;
+        if (today(config('constants.timezone.indian'))->day < $billingDate) {
+            if (today(config('constants.timezone.indian'))->addDays($billingDate - today(config('constants.timezone.indian'))->day) > today(config('constants.timezone.indian'))->endOfMonth()) {
+                return today(config('constants.timezone.indian'))->endOfMonth();
+            }
+
+            return today(config('constants.timezone.indian'))->addDays($billingDate - today(config('constants.timezone.indian'))->day)->subDay();;
+        }
+        
+        if ( today(config('constants.timezone.indian'))->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2) > today(config('constants.timezone.indian'))->addMonthsNoOverflow()->endOfMonth()) {
+            return today(config('constants.timezone.indian'))->addMonthsNoOverflow()->endOfMonth();
+        }
+
+        return today(config('constants.timezone.indian'))->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
+    }
 }
