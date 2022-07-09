@@ -12,7 +12,6 @@ var clipboard = new ClipboardJS(".btn-clipboard");
   
 window.Vue = require("vue");
 import { Laue } from "laue";
-import { Alert } from "bootstrap";
  
 Vue.use(Laue);
   
