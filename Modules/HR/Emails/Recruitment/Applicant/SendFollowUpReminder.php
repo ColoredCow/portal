@@ -27,7 +27,6 @@ class SendFollowUpReminder extends Mailable
     {
         $this->application = $application;
     }
-
     /**
      * Build the message.
      *
@@ -35,19 +34,19 @@ class SendFollowUpReminder extends Mailable
      */
     public function build()
     {
-        $application = $this->applicationRound->application;
-        $job = $application->job;
-
+        $application = $this->application;
+        // $job = $application->job;
+        
         $subject = Setting::where('module', 'hr')->where('setting_key', 'Follow_up_email_for_scheduling_interview_subject')->first();
         $body = Setting::where('module', 'hr')->where('setting_key', 'Follow_up_email_for_scheduling_interview_body')->first();
-        $roundName = Round::select('*')->where('id', $application->latestApplicationRound->hr_application_id)->first();
-
+        $roundName = Round::select('*')->where('id', $application->latestApplicationRound->hr_application_id)->first()->name;
+        
         $subject = $subject ? $subject->setting_value : '';
         $body = $body ? $body->setting_value : '';
-
+        
         $body = str_replace(config('hr.template-variables.applicant-name'), $application->applicant->name, $body);
         $body = str_replace(config('hr.template-variables.round-name'), $roundName, $body);
-
+        
         return $this->to($application->applicant->email, $application->applicant->name)
             ->from(config('hr.default.email'), config('hr.default.name'))
             ->subject($subject)
