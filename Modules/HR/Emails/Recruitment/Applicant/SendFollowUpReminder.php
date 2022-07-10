@@ -29,11 +29,7 @@ class SendFollowUpReminder extends Mailable
         $this->application = $application;
         $this->tag = $tag;
     }
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
+
     public function build()
     {
         $application = $this->application;
