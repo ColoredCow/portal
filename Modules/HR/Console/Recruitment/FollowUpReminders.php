@@ -47,9 +47,9 @@ class FollowUpReminders extends Command
         $applications->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps', 'tags']);
         foreach ($applications as $application) {
             foreach($application->tags as $tag) {
-                if($tag->slug === "need-follow-up") {
+                if ($tag->slug === "need-follow-up") :
                     Mail::send(new SendFollowUpReminder($application));
-                }	
+                endif;
             }
         }
     }
