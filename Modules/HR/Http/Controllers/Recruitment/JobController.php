@@ -128,7 +128,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Modules\HR\Http\Requests\Recruitment\JobDomainRequest  $request 
+     * @param \Modules\HR\Http\Requests\Recruitment\JobDomainRequest  $request
      */
     public function storeJobdomain(JobDomainRequest $request)
     {
