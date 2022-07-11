@@ -51,7 +51,7 @@
                     <a  :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
                     </a>
-                    <div class="pl-2 pr-3">
+                    <div class="pl-2 pr-3 mr-1">
                         <a  :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                         
