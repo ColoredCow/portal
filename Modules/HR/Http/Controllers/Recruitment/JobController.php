@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use Illuminate\Http\Request;
-use Modules\HR\Http\Controllers\Recruitment\JobdomainRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
@@ -140,5 +139,4 @@ class JobController extends Controller
         $hr_job_domains->slug = Str::slug($request['slug']);
         $hr_job_domains->save();
     }
-
 }    
