@@ -38,7 +38,7 @@ class JobController extends Controller
                 $query->isOpen()->get();
             }])
             ->latest()
-            ->appends(Request::except('page'));
+            ->appends();
 
         request()->is('*recruitment/opportunities*') ? $jobs->typeRecruitment() : $jobs->typeVolunteer();
         $jobs->paginate(config('constants.pagination_size'));
@@ -129,7 +129,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  Modules\HR\Entities\HrJobDomain   $request
      */
     public function storeJobdomain(JobDomainRequest $request)
     {
