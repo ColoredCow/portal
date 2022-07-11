@@ -13,7 +13,6 @@ use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
 use Modules\User\Entities\User;
 use Illuminate\Support\Str;
 
-
 class JobController extends Controller
 {
     use AuthorizesRequests;
