@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
@@ -129,7 +128,7 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Modules\HR\Entities\HrJobDomain   $request
+     * @param  \Modules\HR\Entities\HrJobDomain   $request
      */
     public function storeJobdomain(JobDomainRequest $request)
     {

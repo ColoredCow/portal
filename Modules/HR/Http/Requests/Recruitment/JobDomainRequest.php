@@ -24,7 +24,7 @@ class JobDomainRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string',
+            'name' => 'required|string',
             'slug' => 'string',
         ];
     }
