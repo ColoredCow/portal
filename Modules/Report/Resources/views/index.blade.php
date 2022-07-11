@@ -5,7 +5,7 @@
     <div class="d-flex">
         <h4 class="d-inline-block font-weight-bold">Sales & Marketing Reports</h4>
         @can('report.edit')
-        <button type="button" class="btn btn-primary ml-auto report" data-bs-toggle="modal" data-bs-target="#Modal">
+        <button type="button" class="btn btn-primary ml-auto report" data-toggle="modal" data-target="#Modal">
             Add Report
         </button>
         <div class="modal @if(count($errors->all()) > 0) show-modal @endif" id="Modal" role="dialog" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -13,7 +13,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Add Report</h4>
-                        <button type="button" class="btn-close ml-auto" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="btn-close ml-auto" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <form method="post" action="{{ route('report.store') }}">
@@ -88,7 +88,7 @@
             @can('report.edit')
             <div class="card-footer">
                 <a href="{{route('report.edit', ['id' => $report->id]) }}">
-                    <button type="button" class="btn btn-primary report" data-bs-toggle="modal" data-bs-target="#EditModal"> Edit </button>
+                    <button type="button" class="btn btn-primary report" data-toggle="modal" data-target="#EditModal"> Edit </button>
                 </a>
             </div>
             @endcan
