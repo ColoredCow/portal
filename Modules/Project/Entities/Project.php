@@ -71,7 +71,7 @@ class Project extends Model
         $totalEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', $this->client->start_billing_date, $this->client->end_billing_date)->sum('actual_effort');
+            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', $this->client->client_month_start_date, $this->client->client_month_end_date)->sum('actual_effort');
         }
 
         return $totalEffort;
@@ -115,7 +115,7 @@ class Project extends Model
     public function getExpectedHours($currentDate)
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $daysTillToday = count($this->getWorkingDaysList($this->client->start_billing_date, $currentDate));
+        $daysTillToday = count($this->getWorkingDaysList($this->client->client_month_start_date, $currentDate));
         $currentExpectedEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
@@ -126,9 +126,9 @@ class Project extends Model
     }
 
     public function getExpectedMonthlyHoursAttribute()
-    {
+    { 
         $teamMembers = $this->getTeamMembers()->get();
-        $workingDaysCount = count($this->getWorkingDaysList($this->client->start_billing_date, $this->client->end_billing_date));
+        $workingDaysCount = count($this->getWorkingDaysList($this->client->client_month_start_date, $this->client->client_month_end_date));
         $expectedMonthlyHours = 0;
 
         foreach ($teamMembers as $teamMember) {
