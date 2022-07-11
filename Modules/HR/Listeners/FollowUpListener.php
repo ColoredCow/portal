@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 use Modules\HR\Emails\Recruitment\Applicant\ApplicantCreateAutoResponder;
 use Modules\HR\Entities\FollowUp;
+use Modules\User\Entities\User;
 
 class FollowUpListener
 {
@@ -46,7 +47,8 @@ class FollowUpListener
 
         FollowUp::create([
             'hr_application_round_id' => $application->latestApplicationRound->id,
-            'comments' => 'sent follow up email'
-        ]);
+            'comments' => 'sent follow up email',
+            'conducted_by' => User::select('id')->first()->id
+                ]);
     }
 }
