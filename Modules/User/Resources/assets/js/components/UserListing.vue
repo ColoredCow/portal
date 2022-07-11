@@ -111,12 +111,6 @@ export default {
 		},
 
 		removeUser: async function() {
-
-			// if(!confirm("Are you sure?")) {
-			// 	return true;
-			// }
-
-
 			let user = this.users[this.currentUserIndex];
 			let route = `/user/${user.id}/delete`;
 			let response = await axios.delete(route);
