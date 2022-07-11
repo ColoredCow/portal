@@ -116,7 +116,7 @@ class EffortTrackingService
 
             $teamMembersEffortUserDetails = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id]) : [];
             $totalEffortInEffortsheet = array_key_exists('total_effort_in_effortsheet', $teamMembersEffortUserDetails) ? $teamMembersEffortUserDetails['total_effort_in_effortsheet'] : 0;
-            $expectedEffort = $this->getExpectedHours($teamMember->daily_expected_effort, count($this->getWorkingDays(now()->startOfMonth(), $currentDate)));
+            $expectedEffort = $this->getExpectedHours($teamMember->daily_expected_effort, count($this->getWorkingDays($teamMember->project->client->client_month_start_date, $currentDate)));
             $users[] = [
                 'id' => $userDetails->id,
                 'name' => $userDetails->name,
