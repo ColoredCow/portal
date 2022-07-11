@@ -138,5 +138,5 @@ class JobController extends Controller
         $hr_job_domains->domain_name = $request['domain_name'];
         $hr_job_domains->slug = Str::slug($request['slug']);
         $hr_job_domains->save();
-    }
+    }  
 }    
