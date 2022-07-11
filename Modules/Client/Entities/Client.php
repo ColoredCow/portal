@@ -201,7 +201,7 @@ class Client extends Model
     public function getClientMonthStartDateAttribute()
     {
         $billingDate = $this->billingDetails->billing_date;
-        if($billingDate == null) {
+        if ($billingDate == null) {
             return now(config('constants.timezone.indian'))->startOfMonth();
         } else {
             if (today(config('constants.timezone.indian'))->day < $billingDate) {
@@ -221,7 +221,7 @@ class Client extends Model
     public function getClientMonthEndDateAttribute()
     {
         $billingDate = $this->billingDetails->billing_date;
-        if($billingDate == null) {
+        if ($billingDate == null) {
             return now(config('constants.timezone.indian'))->endOfMonth();
         } else {
             if (today(config('constants.timezone.indian'))->day < $billingDate) {

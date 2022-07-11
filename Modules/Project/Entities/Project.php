@@ -126,7 +126,7 @@ class Project extends Model
     }
 
     public function getExpectedMonthlyHoursAttribute()
-    { 
+    {
         $teamMembers = $this->getTeamMembers()->get();
         $workingDaysCount = count($this->getWorkingDaysList($this->client->client_month_start_date, $this->client->client_month_end_date));
         $expectedMonthlyHours = 0;
