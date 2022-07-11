@@ -2,8 +2,8 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use CreateHrJobDomainsTable;
 use Illuminate\Http\Request;
+use Modules\HR\Http\Controllers\Recruitment\JobdomainRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
@@ -11,7 +11,7 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\User\Entities\User;
-use Illuminate\support\Str;
+use Illuminate\Support\Str;
 
 class JobController extends Controller
 {
@@ -135,12 +135,10 @@ class JobController extends Controller
     {
         // dd($request);
         $hr_job_domains = new EntitiesHrJobDomain();
-        $hr_job_domains->id =('id');
+        $hr_job_domains->id = ('id');
         $hr_job_domains->domain_name = $request['domain_name'];
-        $hr_job_domains->slug =Str::slug( $request['slug']);
+        $hr_job_domains->slug = Str::slug($request['slug']);
         $hr_job_domains->save();
-      
-    
-
     }
+
 }    
