@@ -88,11 +88,11 @@ class EffortTrackingService
         $users = [];
         $currentDate = now(config('constants.timezone.indian'));
         if (isset($teamMembers[0])) {
-            $startDate = $currentDate->startOfMonth()->toDateString();
-            $endDate = $currentDate->endOfMonth()->toDateString();
-        } else {
             $startDate = $teamMembers[0]->project->client->client_month_start_date;
             $endDate = $teamMembers[0]->project->client->client_month_end_date;
+        } else {
+            $startDate = $currentDate->startOfMonth()->toDateString();
+            $endDate = $currentDate->endOfMonth()->toDateString();
         }
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->user;
