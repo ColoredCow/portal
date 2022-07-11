@@ -3,7 +3,6 @@
 namespace Modules\EffortTracking\Services;
 
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 
 class EffortTrackingService
 {
@@ -87,9 +86,13 @@ class EffortTrackingService
         $teamMembersEffort = [];
         $users = [];
         $currentDate = now(config('constants.timezone.indian'));
-        $startDate = $currentDate->startOfMonth()->toDateString();
-        $endDate = $currentDate->endOfMonth()->toDateString();
-
+        if (isset($teamMembers[0])) {
+            $startDate = $currentDate->startOfMonth()->toDateString();
+            $endDate = $currentDate->endOfMonth()->toDateString();
+        } else {
+            $startDate = $teamMembers[0]->project->client->client_month_start_date;
+            $endDate = $teamMembers[0]->project->client->client_month_end_date;
+        }
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->user;
             $efforts = $teamMember->projectTeamMemberEffort()->get();

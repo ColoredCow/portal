@@ -71,7 +71,7 @@ class Project extends Model
         $totalEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', $this->client->client_month_start_date, $this->client->client_month_end_date)->sum('actual_effort');
+            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->client_month_start_date->subday(), $this->client->client_month_end_date])->sum('actual_effort');
         }
 
         return $totalEffort;
