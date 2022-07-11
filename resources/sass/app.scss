@@ -777,6 +777,14 @@ span.total-chart-count{
 	border: none;
 	background-color: transparent;
 }
+//task_module
+.task-content{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
 // End Custom
 
 [v-cloak] { display: none; }
