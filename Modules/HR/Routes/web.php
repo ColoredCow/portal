@@ -74,7 +74,6 @@ Route::middleware('auth')->group(function () {
             Route::get('job/{application}/offer-letter', 'JobApplicationController@viewOfferLetter')->name('applications.job.offer-letter');
             Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
             
-           
             Route::post('/create', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
 
             Route::resource('job', 'JobApplicationController')
