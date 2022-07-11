@@ -132,6 +132,7 @@ class JobController extends Controller
      */
     public function storeJobdomain(Request $request)
     {
+		$hr_job_domains = request()->all();
         $hr_job_domains = new EntitiesHrJobDomain();
         $hr_job_domains->id = ('id');
         $hr_job_domains->domain_name = $request['domain_name'];
