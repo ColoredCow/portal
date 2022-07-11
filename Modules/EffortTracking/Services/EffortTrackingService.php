@@ -13,7 +13,7 @@ class EffortTrackingService
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
         $currentDate = Carbon::now(config('constants.timezone.indian'));
         $totalEffort = $project->current_hours_for_month;
-        $workingDays = $this->getWorkingDays(now()->startOfMonth(), $currentDate);
+        $workingDays = $this->getWorkingDays($project->client->client_month_start_date, $currentDate);
         $startDate = $project->client->client_month_start_date;
         $endDate = $project->client->client_month_end_date;
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
