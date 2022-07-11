@@ -14,7 +14,43 @@
     @include($menu)
     <br><br>
     @include('status', ['errors' => $errors->all()])
-    <h2 class="mb-3">New Opportunity</h2>
+                              <!-- Button trigger modal -->         
+ <div class="d-flex justify-content-between">
+    <div>
+        <h2 class="mb-3">New Opportunity</h2>
+    </div>
+    <div>                                                   
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Add domain</button>
+    </div>
+ </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Domain Name </h5> 
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('hr-job-domains.storeJobdomain')}}" method="POST">
+                @csrf
+                <div class="form-group">
+                  <label for="exampleInputEmail1">name</label><strong class="text-danger">*</strong></label>
+                  <input type="text" name="domain_name"  class="form-control"  id="exampleInputdomainname" aria-describedby="domainHelp" placeholder="name">   
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputslug">slug</label>
+                  <input type="text" name="slug" class="form-control" id="slugify" placeholder="slug">
+                </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <button type="submit" class="btn btn-primary">Save changes</button>    
+            </form>
+      </div>
+     </div>
+    </div>
+  </div>      
     <form action="{{ $formAction }}" method="POST">
         @csrf
         <div class="card mb-3">
