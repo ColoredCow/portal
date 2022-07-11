@@ -39,7 +39,7 @@
 
                         <div >
                             <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
-                            <button v-show="userPermissions['can-delete']" class="btn btn-sm btn-outline-danger "  @click="removeUser(index)">Remove user</button>
+                            <button v-show="userPermissions['can-delete']" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#exampleModal" @click="setIndex(index)">Remove user</button>
                         </div>
 
                     </td>
@@ -47,6 +47,20 @@
             </tbody>
 		</table>
 
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						Are you sure?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="button"  @click="removeUser(index)" class="btn btn-danger">Yes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+         
         <user-role-update-modal 
             :user="this.selectedUser"
             :updateRoute="this.updateRoute"
@@ -96,17 +110,23 @@ export default {
 			Vue.set(this.selectedUser, "roles",  selectedRoles);
 		},
 
-		removeUser: async function(index) {
+		removeUser: async function() {
 
-			if(!confirm("Are you sure?")) {
-				return true;
-			}
+			// if(!confirm("Are you sure?")) {
+			// 	return true;
+			// }
 
-			this.currentUserIndex = index;
-			let user = this.users[index];
+
+			let user = this.users[this.currentUserIndex];
 			let route = `/user/${user.id}/delete`;
 			let response = await axios.delete(route);
+			window.location.reload();
 			this.$delete(this.allUsers, index);
+		},
+		
+		setIndex: function(index){
+			this.currentUserIndex = index;
+
 		}
 	},
 
