@@ -64,7 +64,7 @@ class ProjectController extends Controller
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
-        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($project->client->client_month_start_date, $currentDate));
 
         return view('project::show', [
             'project' => $project,
@@ -99,7 +99,7 @@ class ProjectController extends Controller
             'projectTeamMembers' => $this->service->getProjectTeamMembers($project),
             'projectRepositories' => $this->service->getProjectRepositories($project),
             'designations' => $this->service->getDesignations(),
-            'workingDaysInMonth' => $this->service->getWorkingDays(),
+            'workingDaysInMonth' => $this->service->getWorkingDays($project),
         ]);
     }
 

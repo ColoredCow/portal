@@ -47,8 +47,8 @@ class SendInvoiceMail extends Mailable
     {
         $subject = $this->email['subject'];
         $body = $this->email['body'];
-        $templateVariablesForSubject = config('invoice.template-variables.subject');
-        $templateVariablesForBody = config('invoice.template-variables.body');
+        $templateVariablesForSubject = config('invoice.templates.setting-key.send-invoice.template-variables.subject');
+        $templateVariablesForBody = config('invoice.templates.setting-key.send-invoice.template-variables.body');
 
         if (! $subject) {
             $subject = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_subject')->first();
@@ -61,13 +61,13 @@ class SendInvoiceMail extends Mailable
         if (! $body) {
             $body = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_body')->first();
             $body = $body ? $body->setting_value : '';
-            $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->name, $body);
+            $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->first_name, $body);
             $body = str_replace(
                 $templateVariablesForBody['invoice-amount'],
                 $this->client->country->currency_symbol . $this->client->getTotalPayableAmountForTerm($this->month, $this->year, $this->client->clientLevelBillingProjects),
                 $body
             );
-            $body = str_replace($templateVariablesForBody['invoice-number'], str_replace('-', '', $this->invoiceNumber), $body);
+            $body = str_replace($templateVariablesForBody['invoice-number'], $this->invoiceNumber, $body);
             $body = str_replace($templateVariablesForBody['term'], $this->monthName, $body);
             $body = str_replace($templateVariablesForBody['year'], $this->year, $body);
         }
@@ -79,6 +79,10 @@ class SendInvoiceMail extends Mailable
 
         foreach ($this->email['cc'] as $emailAddress) {
             $mail->cc($emailAddress);
+        }
+
+        foreach ($this->email['bcc'] as $emailAddress) {
+            $mail->bcc($emailAddress);
         }
 
         return $mail->subject($subject)
