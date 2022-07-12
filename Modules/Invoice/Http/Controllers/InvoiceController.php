@@ -207,6 +207,6 @@ class InvoiceController extends Controller
     {
         $filters = $request->all();
 
-        return $this->service->yearlyInvoiceReportExport($filters, $request); 
+        return $this->service->yearlyInvoiceReportExport($filters, $request);
     }
 }
