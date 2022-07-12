@@ -13,6 +13,7 @@
 	@include('settings.hr.no-show')
 	@include('settings.hr.approve')
 	@include('settings.hr.offer-letter')
+	@include('settings.hr.follow-up')
 	@include('settings.hr.on-hold')
 	<h4 class="mt-5">Mail templates for rounds</h4>
 	@foreach ($rounds as $index => $round)
