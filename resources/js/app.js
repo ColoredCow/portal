@@ -960,9 +960,9 @@ document.getElementById("name").onkeyup = function() {ButtonEnable()};
 
 function ButtonEnable() {
 	if(document.getElementById("name").value=="") { 
-		   document.getElementById('save-btn-action').disabled = true; 
+		   document.getElementById("save-btn-action").disabled = true; 
 	   } else { 
-		   document.getElementById('save-btn-action').disabled = false;
+		   document.getElementById("save-btn-action").disabled = false;
 	   }
 }
   
