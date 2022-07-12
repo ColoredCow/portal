@@ -687,12 +687,11 @@ class InvoiceService implements InvoiceServiceContract
 
         if ($request->client_id == 'all' || $request->client_id == null) {
             return Excel::download(new YearlyInvoiceReportExport($invoices), "YearlyInvoiceReportExport-$request->client_id-$request->invoiceYear.xlsx");
-        } else {
-            $clientId = request()->client_id;
-            $clientName = Client::where('id', $clientId)->first()->name;
-
-            return Excel::download(new YearlyInvoiceReportExport($invoices), "YearlyInvoiceReportExport-$clientName-$request->invoiceYear.xlsx");
         }
+        $clientId = request()->client_id;
+        $clientName = Client::where('id', $clientId)->first()->name;
+
+        return Excel::download(new YearlyInvoiceReportExport($invoices), "YearlyInvoiceReportExport-$clientName-$request->invoiceYear.xlsx");
     }
     private function formatYearlyInvoicesForExportAll($invoices)
     {
