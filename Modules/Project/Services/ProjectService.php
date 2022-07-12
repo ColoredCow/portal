@@ -68,7 +68,6 @@ class ProjectService implements ProjectServiceContract
             $filters['status'] = 'inactive';
             $inactiveProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                 $query->where('team_member_id', $userId);
-
             })->count();
         }
 
