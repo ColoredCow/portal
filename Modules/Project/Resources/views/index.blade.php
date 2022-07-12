@@ -33,7 +33,7 @@
             <div class="d-flex align-items-center">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Project name"
                 value={{request()->get('name')}}>
-                <button class="btn btn-info ml-2 text-white">Search</button> 
+                <button class="btn btn-info ml-2 text-white">Search</button>
             </div>
         </form>
     </div>
@@ -80,7 +80,7 @@
                                         <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}}">
                                             <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1"></a>
                                         </span>
-                                    @endforeach 
+                                    @endforeach
                                 </td>
                                 <td>
                                     @php
@@ -100,8 +100,8 @@
                     @endforelse
                 @else
                 <tr>
-                    <td colspan="3"> 
-                        <p class="my-4 text-left"> You don't have permission to see projects.</p>  
+                    <td colspan="3">
+                        <p class="my-4 text-left"> You don't have permission to see projects.</p>
                     <td>
                 </tr>
                 @endcan
