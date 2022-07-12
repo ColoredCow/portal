@@ -254,4 +254,5 @@
     </table>
     {{ $applications->links() }}
 </div>
+
 @endsection
