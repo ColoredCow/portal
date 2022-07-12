@@ -956,7 +956,7 @@ $(document).ready(function() {
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
 
-document.getElementById("name").onkeyup = function(){ButtonEnable()};;
+$(document).getElementById("name").onkeyup = function(){ButtonEnable()};
 
 function ButtonEnable() {
 	if(document.getElementById("name").value=="") { 
