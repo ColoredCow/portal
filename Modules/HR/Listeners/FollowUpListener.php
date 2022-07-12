@@ -48,6 +48,6 @@ class FollowUpListener
             'hr_application_round_id' => $application->latestApplicationRound->id,
             'comments' => 'sent follow up email',
             'conducted_by' => User::select('id')->first()->id
-                ]);
+        ]);
     }
 }
