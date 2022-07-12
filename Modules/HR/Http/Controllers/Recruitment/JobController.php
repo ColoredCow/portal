@@ -136,5 +136,7 @@ class JobController extends Controller
         $hr_job_domains->domain_name = $request['name'];
         $hr_job_domains->slug = Str::slug($request['name']);
         $hr_job_domains->save();
+
+        return redirect('/hr/recruitment/opportunities/create')->with('Edite',"$opportunity->titlename!");
     }
 }
