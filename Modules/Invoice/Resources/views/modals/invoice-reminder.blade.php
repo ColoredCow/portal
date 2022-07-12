@@ -5,7 +5,7 @@
                 <div class="d-block">
                     <h4 class="modal-title">{{ __('Pending Invoice Mail') }}</h4>
                 </div>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
