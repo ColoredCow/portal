@@ -30,9 +30,8 @@ class FollowUpListener
     {
         $application = $event->application;
         $applicant = $application->applicant;
-
-        $subject = Setting::where('module', 'hr')->where('setting_key', 'Follow_up_email_for_scheduling_interview_subject')->first();
-        $body = Setting::where('module', 'hr')->where('setting_key', 'Follow_up_email_for_scheduling_interview_body')->first();
+        $subject = Setting::where('module', 'hr')->where('setting_key', config('hr.templates.follow_up_email_for_scheduling_interview.subject'))->first();
+        $body = Setting::where('module', 'hr')->where('setting_key', config('hr.templates.follow_up_email_for_scheduling_interview.body'))->first();
 
         $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
         $body->setting_value = str_replace(config('hr.template-variables.round-name'), $application->latestApplicationRound->round->name, $body->setting_value);
