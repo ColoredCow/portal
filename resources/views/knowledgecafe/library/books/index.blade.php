@@ -51,7 +51,7 @@
                     <a  :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
                     </a>
-                    <div class="pl-2 pr-3">
+                    <div class="pl-2 pr-3 mr-1">
                         <a  :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                         
@@ -61,8 +61,8 @@
                     </div>
                     @can('library_books.delete')
                         <div class="p-0 position-absolute action_buttons">
-                            <div class="dropdown ">
-                                <a href="#" class="m-1 mr-2 text-muted h4" data-toggle="dropdown">
+                            <div class="dropdown">
+                                <a href="#" class="m-1 mr-2 text-muted h4" data-toggle="dropdown" >
                                     <i class="fa fa-cog"></i>
                                 </a>
                                 <ul class="dropdown-menu ">
