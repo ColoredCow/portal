@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Entities\Job;
 use App\Models\Category;
 
-
 class Resource extends Model
 {
     use HasFactory;
