@@ -76,7 +76,7 @@ Route::middleware('auth')->group(function () {
 
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
-                ->names(['index' => 'applications.job.index','edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
+                ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
 
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
