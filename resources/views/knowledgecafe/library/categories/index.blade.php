@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" id="books_category" v-cloak>
     <br>
-    @include('knowledgecafe.library.menu', ['active' => 'book_category'])
+    @include('knowldegecafe.library.menu', ['active' => 'book_category'])
     <br><br>
 
     <div class="row">

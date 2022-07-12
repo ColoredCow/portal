@@ -51,7 +51,7 @@
                     <a  :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
                     </a>
-                    <div class="pl-2 pr-3">
+                    <div class="pl-2 pr-3 mr-1">
                         <a  :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                         
@@ -65,11 +65,25 @@
                                 <a href="#" class="m-1 mr-2 text-muted h4" data-toggle="dropdown" >
                                     <i class="fa fa-cog"></i>
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item c-pointer" >Update Category</li>
-                                    <li @click="updateCopiesCount(index)" class="dropdown-item c-pointer">Copies Available</li>
-                                    <li @click="deleteBook(index)" class="dropdown-item text-danger c-pointer">Delete</li>
+                                <ul class="dropdown-menu ">
+                                    <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item">Update Category</li>
+                                    <li @click="updateCopiesCount(index)" class="dropdown-item">Copies Available</li>
+                                    <li  data-toggle="modal" data-target="#exampleModal" class="dropdown-item text-danger">Delete</li>
                                 </ul>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body p-4">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <p>Are you sure?</p> 
+                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button @click="deleteBook(index)" type="button" class="btn btn-sm btn-danger">Yes</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endcan
