@@ -35,9 +35,17 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters);
             })->orderBy('name')->get();
 
-            $projectsCount = $clients->sum(function ($client) use ($filters) {
-                return $client->projects()->applyFilter($filters)->count();
-            });
+            $filters['status']='active';
+            $activeProjectsCount = Project::query()->applyFilter($filters)->count();
+            
+
+            $filters['status']='halted';
+            $haltedProjectsCount  = Project::query()->applyFilter($filters)->count();
+
+
+            $filters['status']='inactive';
+            $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
+
         } else {
             $userId = auth()->user()->id;
 
@@ -51,16 +59,32 @@ class ProjectService implements ProjectServiceContract
                 });
             })->get();
 
-            $projectsCount = $clients->sum(function ($client) use ($filters, $userId) {
-                return $client->projects()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
+            $filters['status']='active';
+            $activeProjectsCount =Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 })->count();
-            });
+        
+
+            $filters['status']='halted';
+            $haltedProjectsCount  =Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
+                    $query->where('team_member_id', $userId);
+                })->count();
+
+
+            $filters['status']='inactive';
+            $inactiveProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
+                    $query->where('team_member_id', $userId);
+                })->count();
+            
+
         }
 
         return [
             'clients' => $clients,
-            'projectsCount' => $projectsCount,
+            'activeProjectsCount' => $activeProjectsCount ,
+            'inactiveProjectsCount' => $inactiveProjectsCount,
+            'haltedProjectsCount' => $haltedProjectsCount
+
         ];
     }
 

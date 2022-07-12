@@ -20,8 +20,7 @@
     <div class="mb-2">
         <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('project.index', ['status' => 'active'])  }}">
             <div class='d-flex justify-content-between align-items-md-center mb-2 mb-xl-0'>
-                <h4 class="">{{ config('project.status')[request()->input('status', 'active')] }} Projects
-                    ({{ $projectsCount }})</h4>
+                <h4 class="">{{ config('project.status')[request()->input('status', 'active')] }} Projects</h4>
                 <input type="hidden" name="status" value="{{ request()->input('status', 'active') }}">
                 <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                     onchange="this.form.submit()">
