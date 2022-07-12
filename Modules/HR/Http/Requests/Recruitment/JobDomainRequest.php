@@ -25,7 +25,6 @@ class JobDomainRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'slug' => 'string',
         ];
     }
 }

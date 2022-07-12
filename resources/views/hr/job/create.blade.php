@@ -38,11 +38,7 @@
                 @csrf
                 <div class="form-group">
                   <label for="exampleInputEmail1">name</label><strong class="text-danger">*</strong></label>
-                  <input type="text" name="name"  class="form-control"  id="name" aria-describedby="Help" placeholder="name">   
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputslug">slug</label>
-                  <input type="text" name="slug" class="form-control" id="slug" placeholder="slug">
+                  <input type="text" name="name"  class="form-control"  id="name" aria-describedby="Help" placeholder="name"> 
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                  <button type="submit" class="btn btn-primary">Save changes</button>    
