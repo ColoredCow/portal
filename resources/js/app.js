@@ -568,7 +568,6 @@ if (document.getElementById("books_listing")) {
 			  },
   
 			  deleteBook: async function(index) {
-				console.log("hello")
 				  let bookID = this.books[index]["id"];
 				  let route = `${this.updateRoute}/${bookID}`;
 				  let response = await axios.delete(route);
