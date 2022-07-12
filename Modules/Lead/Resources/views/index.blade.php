@@ -167,8 +167,18 @@
 @extends('lead::layouts.master')
 
 @section('content')
+<<<<<<< Updated upstream
     <h1><b>Coming Soon...</b></h1>
     <p>
         Our Web Site Is Under Construction, Great Things Are Coming. 
     </p>
+=======
+
+    <h1>Coming Soon!!</h1>
+
+>>>>>>> Stashed changes
 @endsection
+<style>
+    h1 {text-align: center;}
+    p {text-align: center;}
+</style>    

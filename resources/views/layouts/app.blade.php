@@ -30,8 +30,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'ColoredCow Portal') }}
+                <a class="navbar-brand" href="http://portal.test">
+                    Employee Portal
                 </a>
                 @auth
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
