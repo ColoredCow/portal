@@ -8,16 +8,16 @@
 				<div class="form-row">
 					<div class="col-md-12">
 						<div class="form-group">
-							<label for="setting_key[Follow_up_email_for_scheduling_interview_subject]">Subject</label>
-							<input type="text" name="setting_key[Follow_up_email_for_scheduling_interview_subject]" class="form-control" value="{{ isset($settings['Follow_up_email_for_scheduling_interview_subject']->setting_value) ? $settings['Follow_up_email_for_scheduling_interview_subject']->setting_value : '' }}">
+							<label for="setting_key[config('hr.templates.follow_up_email_for_scheduling_interview.subject')]">Subject</label>
+							<input type="text" name="setting_key[config('hr.templates.follow_up_email_for_scheduling_interview.subject')]" class="form-control" value="{{ isset($settings[config('hr.templates.follow_up_email_for_scheduling_interview.subject')]->setting_value) ? $settings[config('hr.templates.follow_up_email_for_scheduling_interview.subject')]->setting_value : '' }}">
 						</div>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-md-12">
 						<div class="form-group">
-							<label for="setting_key[Follow_up_email_for_scheduling_interview_body]">Mail body:</label>
-							<textarea name="setting_key[Follow_up_email_for_scheduling_interview_body]" rows="10" class="richeditor form-control" placeholder="Body">{{ isset($settings['Follow_up_email_for_scheduling_interview_body']->setting_value) ? $settings['Follow_up_email_for_scheduling_interview_body']->setting_value : '' }}</textarea>
+							<label for="setting_key[config('hr.templates.follow_up_email_for_scheduling_interview.body')]">Mail body:</label>
+							<textarea name="setting_key[config('hr.templates.follow_up_email_for_scheduling_interview.body')]" rows="10" class="richeditor form-control" placeholder="Body">{{ isset($settings[config('hr.templates.follow_up_email_for_scheduling_interview.body')]->setting_value) ? $settings[config('hr.templates.follow_up_email_for_scheduling_interview.body')]->setting_value : '' }}</textarea>
 						</div>
 					</div>
 				</div>
