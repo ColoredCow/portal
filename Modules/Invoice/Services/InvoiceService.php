@@ -161,7 +161,8 @@ class InvoiceService implements InvoiceServiceContract
             'clients' => $this->getClientsForInvoice(),
             'countries' => Country::all(),
             'paymentReceivedEmailSubject' => $emailData['subject'],
-            'paymentReceivedEmailBody' => $emailData['body']
+            'paymentReceivedEmailBody' => $emailData['body'],
+            'currencyService' => $this->currencyService(),
         ];
     }
 
