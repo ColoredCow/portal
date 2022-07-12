@@ -2,7 +2,7 @@
     id="update_category_modal"
     tabindex="-1" 
     role="dialog" 
-    aria-labelledby="update_category_modal" 
+    aria-labeledby="update_category_modal" 
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -15,7 +15,7 @@
             <div class="modal-body">
                 <div>
                     <ul class="list-group" >
-                            <li v-for="(category, index) in bookCategories" class="list-group-item">
+                            <li v-for="(category, index) in bookcategories" class="list-group-item">
                                 <div class="form-check books_category_item">
                                     <label class="form-check-label">
                                     <input type="checkbox" :data-category="category.name"  class=" book_category_input" :value="category.id"> @{{ category.name }}
@@ -40,7 +40,7 @@
 
             <div class="modal-footer">
                 <button id="close_update_category_modal" type="type" class="btn btn-light" data-dismiss="modal" aria-label="Close">Cancel</button>
-                <button @click="updateCategory" type="button" type="button" class="btn btn-primary">Save</button>
+                <button @click="updateCategory" type="button" type="button" class="btn btni-primary">Save</button>
             </div>
         </div>
     </div>
