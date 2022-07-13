@@ -593,10 +593,9 @@ if (document.getElementById("books_listing")) {
 						});
 					}
 			  },
-			
-        updateIndex: function(index){
-          this.currentIndex = index;
-        },
+			updateIndex: function(index){
+         		 this.currentIndex = index;
+        	},
 		  },
 		  mounted: function() {
 			  let categoryInputContainer = document.querySelector("#update_category_modal");
