@@ -635,8 +635,7 @@ if (document.getElementById("books_category")) {
 			  },
   
 			  deleteCategory: async function(index) {
-				  let confirmDelete = confirm("Are you sure ?");
-  
+				  let confirmDelete = confirm("Are you sure ?");  
 				  if (!confirmDelete) {
 					  return false;
 				  }
