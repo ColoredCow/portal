@@ -7,7 +7,7 @@
         <div align="left" class="report-heading">
          <h2>Analytics </h2>  
         </div>
-        <div class="report-date-filter-form">
+        <div class="report-date-filter">
             <form action="{{route('recruitment.report')}}" method="POST" align="right">
                 {{csrf_field()}}
                 <input type="date" name="report_start_date" id='StartDate'> to
