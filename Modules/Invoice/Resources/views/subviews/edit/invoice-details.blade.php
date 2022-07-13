@@ -130,21 +130,21 @@
                 <div class="form-group" v-if="this.client.type != 'indian'">
                     <div class="d-flex">
                         <label for="bank_charges" class="mr-4 pt-1 field-required">Bank Charges:</label>
-                        <input type="text" class = "form-control w-272 ml-auto" name="bank_charges" v-model='bank_charges' required="required">
+                        <input type="number" class = "form-control w-272 ml-auto" name="bank_charges" v-model='bank_charges' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
                         <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate Diff:</label>
-                        <input type="text" class = "form-control w-272 ml-auto" name="conversion_rate_diff" v-model = 'conversion_rate_diff' required="required">
+                        <input type="number" class = "form-control w-272 ml-auto" name="conversion_rate_diff" v-model = 'conversion_rate_diff' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
                         <label for="conversion_rate" class="mr-4 pt-1 field-required">Conversion Rate:</label>
-                        <input type="text" class = "form-control w-272 ml-auto" name="conversion_rate" v-model = 'conversion_rate' required="required">
+                        <input type="number" class = "form-control w-272 ml-auto" name="conversion_rate" v-model = 'conversion_rate' required="required">
                     </div>
                 </div>
 
