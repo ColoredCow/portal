@@ -30,4 +30,5 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/monthly-gst-report', 'InvoiceController@invoiceDetails')->name('invoice.details');
     Route::get('/monthly-GST-Tax-report-export', 'InvoiceController@monthlyGSTTaxReportExport')->name('invoice.monthly-tax-report-export');
     Route::get('/{invoiceId}/{filename}', 'InvoiceController@getInvoiceFile')->name('invoice.get-file');
+    Route::get('/yearly-Invoice-report-export', 'InvoiceController@yearlyInvoiceReportExport')->name('invoice.yearly-report-export');
 });
