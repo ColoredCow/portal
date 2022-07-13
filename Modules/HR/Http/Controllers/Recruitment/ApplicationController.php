@@ -136,6 +136,7 @@ abstract class ApplicationController extends Controller
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRounds;
+        $attr['rounds'] = $hrRounds;
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
