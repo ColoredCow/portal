@@ -30,10 +30,10 @@
                                         <li class="mb-2">
                                             <div class="d-flex align-items-center">
                                                 <p class="mb-0">
-                                                    @if ($userBookAMonth->user->id === auth()->user()->id)
+                                                    @if (optional($userBookAMonth->user)->id === auth()->user()->id)
                                                         <strong>You</strong> have picked
                                                     @else
-                                                        <strong>{{ $userBookAMonth->user->name }}</strong> has picked
+                                                        <strong>{{ optional($userBookAMonth->user)->name }}</strong> has picked
                                                     @endif
                                                     <a href="{{ route('books.show', $userBookAMonth->book) }}">{{ $userBookAMonth->book->title }}</a>.
                                                 </p>
