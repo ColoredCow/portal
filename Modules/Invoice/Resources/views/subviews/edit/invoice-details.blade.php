@@ -161,20 +161,21 @@
                 </div>
             </div>
             <div class="d-flex" v-if="status == 'paid'">
-                @if($invoice->payment_confirmation_mail_sent === 0)
+                    @if($invoice->payment_confirmation_mail_sent === 0)
                     <input type="checkbox" id="showEmail" class="ml-auto" @change="showEmail($event)" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
-                    <i v-if="show_on_select" class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
-                @else
+                    <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
+                    @else
                     <label class="mx-1 pt-1">
                         {{ __('Confirmation Mail Status: ') }}
                         <span class="text-success font-weight-bold">
                             {{ __('Sent') }}
                         </span>
                     </label>
-                @endif
-            </div>
+                    @endif
+            </div> 
         </div>
+        <div v-if="show_on_select">Mail not sent</div>
         <div>
             @include('invoice::modals.payment-received')
         </div>
@@ -227,9 +228,10 @@
 
         showEmail($event) {
             if (event.target.checked) {
-                this.show_on_select = true
-            } else {
                 this.show_on_select = false
+            } else {
+                this.show_on_select = true
+               
             }
         }
     },
