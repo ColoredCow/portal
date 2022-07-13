@@ -1,6 +1,7 @@
 @extends('lead::layouts.master')
 
 @section('content')
-<p class="text-center">Coming Soon!!</p>
-<h1></h1>
+<div class="text-center" style="margin-top:6cm">
+    <h1>Coming Soon!!</h1> 
+  </div>
 @endsection
