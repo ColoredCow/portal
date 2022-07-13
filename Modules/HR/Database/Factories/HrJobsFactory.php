@@ -29,7 +29,6 @@ class HrJobsFactory extends Factory
             'title' => $faker->jobTitle,
             'description' => $faker->text(),
             'type' => 'job',
-            'domain' => array_rand(config('hr.opportunities.domains')),
             'start_date' => null,
             'link' => null,
             'end_date' => null,
