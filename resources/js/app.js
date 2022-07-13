@@ -126,7 +126,7 @@ $(document).ready(() => {
 		this.form.submit();
 	});
 });
-  
+
 if (document.getElementById("page_hr_applicant_edit")) {
 	  new Vue({
 		  el: "#page_hr_applicant_edit",
@@ -210,7 +210,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 		  }
 	  });
 }
-  
+
 if (document.getElementById("project_container")) {
 	  const projectContainer = new Vue({
 		  el: "#project_container",
@@ -568,16 +568,11 @@ if (document.getElementById("books_listing")) {
 			  },
   
 			  deleteBook: async function(index) {
-				  let confirmDelete = confirm("Are you sure ?");
-  
-				  if (!confirmDelete) {
-					  return false;
-				  }
-  
 				  let bookID = this.books[index]["id"];
 				  let route = `${this.updateRoute}/${bookID}`;
 				  let response = await axios.delete(route);
 				  this.books.splice(index, 1);
+				  $("#exampleModal").modal("hide");
 			  },
   
 			  searchBooks: function() {
@@ -955,6 +950,16 @@ $(document).ready(function() {
 	  $(document).on("click", ".toggle-block-display", toggleBlockDisplay);
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
+
+$(document).getElementById("Categoryname").onkeyup = ButtonEnable();
+
+function ButtonEnable() {
+	if(document.getElementById("name").value=="") { 
+		   document.getElementById("save-btn-action").disabled = true; 
+	   } else { 
+		   document.getElementById("save-btn-action").disabled = false;
+	   }
+}
   
 function showCommentBlock() {
 	  var blockId = $(this).data("block-id");

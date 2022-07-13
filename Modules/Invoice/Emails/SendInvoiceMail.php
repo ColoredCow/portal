@@ -61,7 +61,7 @@ class SendInvoiceMail extends Mailable
         if (! $body) {
             $body = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_body')->first();
             $body = $body ? $body->setting_value : '';
-            $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->name, $body);
+            $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->first_name, $body);
             $body = str_replace(
                 $templateVariablesForBody['invoice-amount'],
                 $this->client->country->currency_symbol . $this->client->getTotalPayableAmountForTerm($this->month, $this->year, $this->client->clientLevelBillingProjects),

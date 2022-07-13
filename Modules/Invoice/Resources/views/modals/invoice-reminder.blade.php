@@ -5,7 +5,7 @@
                 <div class="d-block">
                     <h4 class="modal-title">{{ __('Pending Invoice Mail') }}</h4>
                 </div>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="close"   data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -54,7 +54,6 @@
                     </div>
                     <div class="form-group ml-1 mt-2">
                         <input type="hidden" name="invoice_id" id="invoiceId" value="">
-                        <input type="hidden" name="term" value="{{ $year . '-' . $month }}">
                         <input type="submit" id="sendReminderBtn" class="btn btn-success text-light" value="Send Reminder">
                     </div>
                 </form>

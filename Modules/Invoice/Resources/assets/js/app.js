@@ -33,7 +33,7 @@ $(document).ready(function(){
 			"|*project_name*|": invoiceData["projectName"],
 			"|*term*|": invoiceData["monthName"],
 			"|*year*|": invoiceData["year"],
-			"|*billing_person_name*|": invoiceData["billingPersonName"],
+			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
 			"|*invoice_amount*|": invoiceData["totalAmount"],
 			"|*invoice_number*|": invoiceData["invoiceNumber"],
 		};
@@ -59,7 +59,7 @@ $(document).ready(function(){
 			"|*project_name*|": invoiceData["projectName"],
 			"|*term*|": invoiceData["monthName"],
 			"|*year*|": invoiceData["year"],
-			"|*billing_person_name*|": invoiceData["billingPersonName"],
+			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
 		};
 		var emailSubject = $("#emailSubject").val();
 		var emailBody = $("#emailBody").text();
