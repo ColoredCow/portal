@@ -57,12 +57,12 @@
             <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
                 @can('finance_invoices.view')
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
-                @endcan
-                    <a class="dropdown-item" href="{{route('invoice.yearly-report') }}">Yearly Invoice report</a>    
-                    <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly tax report</a>
+                @endcan    
+                    <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly Tax Report</a>
+                    <a class="dropdown-item" href="{{route('invoice.yearly-report') }}"> Yearly Invoice Report</a>
                     <a class="dropdown-item " href="{{ route('invoice.details') }}"> Monthly GST Report</a>
                     <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
                     <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>
@@ -96,7 +96,7 @@
         </li>
     @endif
 
-    @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
+    @if(auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span class="caret"></span>

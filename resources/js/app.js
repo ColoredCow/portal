@@ -126,7 +126,7 @@ $(document).ready(() => {
 		this.form.submit();
 	});
 });
-  
+
 if (document.getElementById("page_hr_applicant_edit")) {
 	  new Vue({
 		  el: "#page_hr_applicant_edit",
@@ -210,7 +210,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 		  }
 	  });
 }
-  
+
 if (document.getElementById("project_container")) {
 	  const projectContainer = new Vue({
 		  el: "#project_container",
@@ -359,19 +359,27 @@ clipboard.on("success", function(e) {
 });
   
 tinymce.init({
-	  selector: ".richeditor",
-	  skin: "lightgray",
-	  plugins: [ "lists autolink link" ],
-	  menubar: false,
-	  statusbar: false,
-	  entity_encoding: "raw",
-	  forced_root_block: "",
-	  force_br_newlines: true,
-	  force_p_newlines: false,
-	  height: "280",
-	  convert_urls: 0
+	selector: ".richeditor",
+	skin: "lightgray",
+	toolbar:
+    	"undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+	plugins: ["advlist lists autolink link code image print"],
+	font_formats:
+    	"Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
+	images_upload_url: "postAcceptor.php",
+	content_style: "body{font-size:14pt;}",
+	automatic_uploads: false,
+	fontsize_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt",
+	menubar: false,
+	statusbar: false,
+	entity_encoding: "raw",
+	forced_root_block: "",
+	force_br_newlines: true,
+	force_p_newlines: false,
+	height: "280",
+	convert_urls: 0,
 });
-  
+
 $(".hr_round_guide").on("click", ".edit-guide", function() {
 	  let container = $(this).closest(".hr_round_guide");
 	  container.find(".btn-guide, .guide-container").toggleClass("d-none");
@@ -560,15 +568,11 @@ if (document.getElementById("books_listing")) {
 			  },
   
 			  deleteBook: async function(index) {
-				  let confirmDelete = confirm("Are you sure ?");
-				  if (!confirmDelete) {
-					  return false;
-				  }
-  
 				  let bookID = this.books[index]["id"];
 				  let route = `${this.updateRoute}/${bookID}`;
 				  let response = await axios.delete(route);
 				  this.books.splice(index, 1);
+				  $("#exampleModal").modal("hide");
 			  },
   
 			  searchBooks: function() {
@@ -945,6 +949,16 @@ $(document).ready(function() {
 	  $(document).on("click", ".toggle-block-display", toggleBlockDisplay);
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
+
+$(document).getElementById("Categoryname").onkeyup = ButtonEnable();
+
+function ButtonEnable() {
+	if(document.getElementById("name").value=="") { 
+		   document.getElementById("save-btn-action").disabled = true; 
+	   } else { 
+		   document.getElementById("save-btn-action").disabled = false;
+	   }
+}
   
 function showCommentBlock() {
 	  var blockId = $(this).data("block-id");

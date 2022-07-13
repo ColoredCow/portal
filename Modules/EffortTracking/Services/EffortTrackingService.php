@@ -13,9 +13,9 @@ class EffortTrackingService
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
         $currentDate = Carbon::now(config('constants.timezone.indian'));
         $totalEffort = $project->current_hours_for_month;
-        $workingDays = $this->getWorkingDays(now()->startOfMonth(), $currentDate);
-        $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
-        $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
+        $workingDays = $this->getWorkingDays($project->client->client_month_start_date, $currentDate);
+        $startDate = $project->client->client_month_start_date;
+        $endDate = $project->client->client_month_end_date;
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
 
         return [
@@ -87,9 +87,13 @@ class EffortTrackingService
         $teamMembersEffort = [];
         $users = [];
         $currentDate = now(config('constants.timezone.indian'));
-        $startDate = $currentDate->startOfMonth()->toDateString();
-        $endDate = $currentDate->endOfMonth()->toDateString();
-
+        if (isset($teamMembers[0])) {
+            $startDate = $teamMembers[0]->project->client->client_month_start_date;
+            $endDate = $teamMembers[0]->project->client->client_month_end_date;
+        } else {
+            $startDate = $currentDate->startOfMonth()->toDateString();
+            $endDate = $currentDate->endOfMonth()->toDateString();
+        }
         foreach ($teamMembers as $teamMember) {
             $userDetails = $teamMember->user;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
@@ -112,7 +116,7 @@ class EffortTrackingService
 
             $teamMembersEffortUserDetails = $efforts->isNotEmpty() ? end($teamMembersEffort[$userDetails->id]) : [];
             $totalEffortInEffortsheet = array_key_exists('total_effort_in_effortsheet', $teamMembersEffortUserDetails) ? $teamMembersEffortUserDetails['total_effort_in_effortsheet'] : 0;
-            $expectedEffort = $this->getExpectedHours($teamMember->daily_expected_effort, count($this->getWorkingDays(now()->startOfMonth(), $currentDate)));
+            $expectedEffort = $this->getExpectedHours($teamMember->daily_expected_effort, count($this->getWorkingDays($teamMember->project->client->client_month_start_date, $currentDate)));
             $users[] = [
                 'id' => $userDetails->id,
                 'name' => $userDetails->name,
