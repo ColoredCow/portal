@@ -411,6 +411,7 @@ if (document.getElementById("show_and_save_book")) {
 			  showInfo: false,
 			  book: {},
 			  number_of_copies: 1,
+			  currentIndex: 0,
 			  routes: {
 				  index: document.getElementById("show_book").dataset.indexRoute || "",
 				  fetch: document.getElementById("book_form").dataset.actionRoute || "",
@@ -583,17 +584,20 @@ if (document.getElementById("books_listing")) {
 				  return str.length > length ? str.substring(0, length) + "..." : str;
 			  },
   
-			  updateCopiesCount: function(index) {
-				  var new_count = parseInt(prompt("Number of copies of this book", this.books[index].number_of_copies));
-				  if (new_count && isFinite(new_count)) {
-					  this.books[index].number_of_copies = new_count;
-					  axios.put(this.updateRoute + "/" + this.books[index].id, {
-						  number_of_copies: new_count
-					  });
-				  }
-			  }
+			  updateCopiesCount: function(currentIndex) {
+					var new_count = document.getElementById('copiesOfBooks' ).value;
+					if (new_count && isFinite(new_count)) {
+						this.books[this.currentIndex].number_of_copies = new_count;
+						axios.put(this.updateRoute + "/" + this.books[this.currentIndex].id, {
+							number_of_copies: new_count
+						});
+					}
+			  },
+			
+        updateIndex: function(index){
+          this.currentIndex = index;
+        },
 		  },
-  
 		  mounted: function() {
 			  let categoryInputContainer = document.querySelector("#update_category_modal");
 			  let allCategoryInputs = categoryInputContainer.querySelectorAll("input[type=\"checkbox\"]");
