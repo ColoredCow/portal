@@ -357,6 +357,11 @@ class Application extends Model
         $this->update(['status' => config('hr.status.approved.label')]);
     }
 
+    public function onHold()
+    {
+        $this->update(['status' => config('hr.status.on-hold.label')]);
+    }
+
     public function onboarded()
     {
         $this->update(['status' => config('hr.status.onboarded.label')]);

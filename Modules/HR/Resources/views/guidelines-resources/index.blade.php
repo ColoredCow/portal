@@ -8,7 +8,7 @@
     <div class="col-sm-2 mt-2 mx-3">
         <div class="card h-130 w-200">
             <div class="card-body">
-                <a href="{{ route('resources.show') }}" class="card-text">{{$job->title}}</a>
+                <a href="{{ route('resources.show', $job->id) }}" class="card-text">{{$job->title}}</a>
             </div>
         </div>
     </div>

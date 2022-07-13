@@ -7,7 +7,7 @@
     <br>
 
     <div class="d-flex justify-content-start row flex-wrap">
-        @if( auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
+        @if( auth()->user()->canAny(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
         <div class="col-md-4">
             <div class="card h-75 mx-4 mt-3 mb-5 ">
                 <a class="card-body no-transition" href="{{ route('settings.hr') }}">
@@ -17,7 +17,7 @@
         </div>
         @endif
 
-        @if(auth()->user()->hasAnyPermission(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
+        @if(auth()->user()->canAny(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
                     <a class="card-body no-transition" href="{{ route('setting.agreement.nda') }}">
@@ -27,7 +27,7 @@
             </div>
         @endif
 
-        @if(auth()->user()->hasAnyPermission(['finance_invoices.view', 'finance_invoices.update', 'finance_invoices.delete', 'finance_invoices.create']))
+        @if(auth()->user()->canAny(['finance_invoices.view', 'finance_invoices.update', 'finance_invoices.delete', 'finance_invoices.create']))
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
                     <a class="card-body no-transition" href="{{ route('setting.invoice') }}">
