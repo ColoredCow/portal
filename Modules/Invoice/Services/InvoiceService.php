@@ -21,6 +21,7 @@ use Mail;
 use App\Models\Setting;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
+use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -654,16 +655,107 @@ class InvoiceService implements InvoiceServiceContract
             ->get();
         $clients = Client::orderBy('name', 'asc')->get();
         $clientId = request()->client_id;
-        if ($clientId == null) {
-            $clientCurrency = null;
-        } else {
-            $clientCurrency = Client::find($clientId, 'id')->currency;
-        }
+        $clientCurrency = $this->clientCurrency($clientId);
 
         return [
             'invoices' => $invoices,
             'clients' => $clients,
             'clientCurrency' => $clientCurrency,
         ];
+    }
+    public function yearlyInvoiceReportExport($filters, $request)
+    {
+        $filters = $request->all();
+        $filters = [
+            'client_id' => $filters['client_id'] ?? null,
+            'invoiceYear' => $filters['invoiceYear'] ?? today()->year,
+        ];
+        if ($filters['invoiceYear'] == 'all-years') {
+            $filters['invoiceYear'] = null;
+        }
+
+        $invoices = Invoice::query()->applyFilters($filters)
+        ->orderBy('sent_on', 'desc')
+        ->get();
+
+        if (isset($filters['client_id'])) {
+            $clientId = request()->client_id;
+            $clientCurrency = $this->clientCurrency($clientId);
+            $invoices = $clientCurrency == config('invoice.region.indian') ? $this->formatYearlyInvoicesReportForIndianClientExport($invoices) : $this->formatYearlyInvoicesReportForInternationalClientExport($invoices);
+        } else {
+            $invoices = $this->formatYearlyInvoicesForExportAll($invoices);
+        }
+
+        if ($request->client_id == 'all' || $request->client_id == null) {
+            return Excel::download(new YearlyInvoiceReportExport($invoices), "YearlyInvoiceReportExport-$request->client_id-$request->invoiceYear.xlsx");
+        }
+        $clientId = request()->client_id;
+        $clientName = Client::where('id', $clientId)->first()->name;
+
+        return Excel::download(new YearlyInvoiceReportExport($invoices), "YearlyInvoiceReportExport-$clientName-$request->invoiceYear.xlsx");
+    }
+    private function formatYearlyInvoicesForExportAll($invoices)
+    {
+        return $invoices->map(function ($invoice) {
+            return [
+                'Project Name' => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
+                'Invoice number' => $invoice->invoice_number,
+                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
+                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
+                'Invoice Amount' => $invoice->amount,
+                'GST Amount' => $invoice->gst,
+                'TDS' => number_format((float) $invoice->tds, 2),
+                'Amount in INR' => $invoice->InvoiceAmountInInr,
+                'Amount Recieved' => $invoice->amount_paid,
+                'Bank Charges' => $invoice->bank_charges,
+                'Dollar Rate' => $invoice->conversion_rate,
+                'Exchange Rate Diff' => $invoice->conversion_rate_diff,
+                'Amount Recieved in Dollars' => $invoice->amount_paid
+            ];
+        });
+    }
+
+    private function formatYearlyInvoicesReportForIndianClientExport($invoices)
+    {
+        return $invoices->map(function ($invoice) {
+            return [
+                'Project Name' => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
+                'Invoice number' => $invoice->invoice_number,
+                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
+                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
+                'Invoice Amount' => $invoice->amount,
+                'GST Amount' => $invoice->gst,
+                'TDS' => number_format((float) $invoice->tds, 2),
+                'Amount Recieved' => $invoice->amount_paid
+            ];
+        });
+    }
+
+    private function formatYearlyInvoicesReportForInternationalClientExport($invoices)
+    {
+        return $invoices->map(function ($invoice) {
+            return [
+                'Project Name' => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
+                'Invoice number' => $invoice->invoice_number,
+                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
+                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
+                'Invoice Amount' => $invoice->amount,
+                'Amount in INR' => $invoice->InvoiceAmountInInr,
+                'Amount Recieved' => $invoice->amount_paid,
+                'Bank Charges' => $invoice->bank_charges,
+                'Dollar Rate' => $invoice->conversion_rate,
+                'Exchange Rate Diff' => $invoice->conversion_rate_diff,
+                'Amount Recieved in Dollars' => $invoice->amount_paid
+            ];
+        });
+    }
+
+    public function clientCurrency($clientId)
+    {
+        if ($clientId == null) {
+            return;
+        }
+
+        return Client::find($clientId, 'id')->currency;
     }
 }
