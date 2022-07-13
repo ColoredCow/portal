@@ -4,7 +4,7 @@
 <div class="container" id="vueContainer">
     <br>
     @include('hr.menu')
-    @include('hr.application.total-count-popupIcon')
+    @include('hr.application.total-application-count-modal')
     <br>
     <form class="form" action="/{{ Request::path() }}">
         <div class="row">
