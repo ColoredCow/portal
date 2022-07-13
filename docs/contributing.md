@@ -54,6 +54,6 @@
 # Merge Conflict :
  **Why merge conflict occurs and how to resolve that conflict** can go through the given links:
 
--[fix merge conflicts vscode](https://linuxpip.org/fix-merge-conflicts-vscode/)
+- [fix merge conflicts vscode](https://linuxpip.org/fix-merge-conflicts-vscode/)
 
--[How do i resolve merge conflicts](https://dev.to/github/how-do-i-resolve-merge-conflicts-5438)
+- [How do i resolve merge conflicts](https://dev.to/github/how-do-i-resolve-merge-conflicts-5438)
