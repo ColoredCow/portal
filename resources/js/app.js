@@ -561,7 +561,8 @@ if (document.getElementById("books_listing")) {
   
 			  deleteBook: async function(index) {
 				  let confirmDelete = confirm("Are you sure ?");
-  
+				  console.log("confirmDelete")
+				  console.log(confirmDelete)
 				  if (!confirmDelete) {
 					  return false;
 				  }
@@ -632,8 +633,7 @@ if (document.getElementById("books_category")) {
 			  },
   
 			  deleteCategory: async function(index) {
-				  let confirmDelete = confirm("Are you sure ?");
-  
+				  let confirmDelete = confirm("Are you sure ?");  
 				  if (!confirmDelete) {
 					  return false;
 				  }

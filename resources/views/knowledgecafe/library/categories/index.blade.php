@@ -56,14 +56,16 @@
                 </span>
             </div>
 
-            <div @click="showEditMode(index)" class="col-lg-4 d-flex align-items-center justify-content-end">
+           <div class="d-flex align-item-center justify-content-end col-lg-4">
+            <div  @click="showEditMode(index)" >
                 <button class="btn btn-primary">
                     <i class="fa fa-pencil"></i>&nbsp;Edit
                 </button>
-                <div class="text-danger c-pointer ml-3" @click="deleteCategory(index)">
-                    <i class="fa fa-times"></i>&nbsp;Delete
-                </div>
             </div>
+            <div class="text-danger c-pointer ml-3" @click="deleteCategory(index)">
+                <i class="fa fa-times"></i>&nbsp;Delete
+            </div>
+           </div>
 
         </div>
     </div>
