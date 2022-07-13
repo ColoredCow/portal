@@ -3,7 +3,6 @@
 namespace Modules\Invoice\Services;
 
 use App\Models\Country;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Invoice\Entities\Invoice;
@@ -16,9 +15,11 @@ use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Contracts\CurrencyServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Emails\SendInvoiceMail;
+use Modules\Invoice\Emails\SendPendingInvoiceMail;
 use Illuminate\Support\Facades\App;
 use Mail;
 use App\Models\Setting;
+use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 
 class InvoiceService implements InvoiceServiceContract
@@ -32,16 +33,14 @@ class InvoiceService implements InvoiceServiceContract
             'status' => $filters['status'] ?? null,
         ];
 
-        $query = Invoice::query();
-
         if ($invoiceStatus == 'sent') {
-            $invoices = $this
-                ->applyFilters($query, $filters)
+            $invoices = Invoice::query()->applyFilters($filters)
+                ->orderBy('sent_on', 'desc')
                 ->get();
             $clientsReadyToSendInvoicesData = [];
         } else {
             $invoices = [];
-            $clientsReadyToSendInvoicesData = Client::invoiceReadyToSend()->get();
+            $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();
         }
 
         return [
@@ -52,13 +51,21 @@ class InvoiceService implements InvoiceServiceContract
             'filters' => $filters,
             'invoiceStatus' => $invoiceStatus,
             'clientsReadyToSendInvoicesData' => $clientsReadyToSendInvoicesData,
-            'emailSubject' => optional(Setting::where([
+            'sendInvoiceEmailSubject' => optional(Setting::where([
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.send-invoice.subject')
             ])->first())->setting_value,
-            'emailBody' => optional(Setting::where([
+            'sendInvoiceEmailBody' => optional(Setting::where([
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.send-invoice.body')
+            ])->first())->setting_value,
+            'invoiceReminderEmailSubject' => optional(Setting::where([
+                'module' => 'invoice',
+                'setting_key' => config('invoice.templates.setting-key.invoice-reminder.subject')
+            ])->first())->setting_value,
+            'invoiceReminderEmailBody' => optional(Setting::where([
+                'module' => 'invoice',
+                'setting_key' => config('invoice.templates.setting-key.invoice-reminder.body')
             ])->first())->setting_value,
         ];
     }
@@ -127,10 +134,16 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice;
     }
 
-    public function update($data, $id)
+    public function update($data, $invoice)
     {
-        $invoice = Invoice::find($id);
         $invoice->update($data);
+        if (isset($data['send_mail'])) {
+            $emailData = $this->getSendEmailData($data, $invoice);
+            Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+            $invoice->update([
+                'payment_confirmation_mail_sent' => true
+            ]);
+        }
         if (isset($data['invoice_file']) and $data['invoice_file']) {
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
@@ -139,12 +152,45 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice;
     }
 
-    public function edit($id)
+    public function edit($invoice)
     {
+        $emailData = $this->getPaymentReceivedEmailForInvoice($invoice);
+
         return [
-            'invoice' => Invoice::find($id),
+            'invoice' => $invoice,
             'clients' => $this->getClientsForInvoice(),
             'countries' => Country::all(),
+            'paymentReceivedEmailSubject' => $emailData['subject'],
+            'paymentReceivedEmailBody' => $emailData['body'],
+            'currencyService' => $this->currencyService(),
+        ];
+    }
+
+    public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
+    {
+        $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');
+        $month = $invoice->sent_on->subMonth()->month;
+        $year = $invoice->sent_on->subMonth()->year;
+        $monthName = date('F', mktime(0, 0, 0, $month, 10));
+
+        $subjectData = [
+            $templateVariablesForSubject['project-name'] => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
+            $templateVariablesForSubject['term'] => $monthName,
+            $templateVariablesForSubject['year'] => $year
+        ];
+
+        $subject = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_subject')->first())->setting_value ?: '';
+
+        foreach ($subjectData as $key => $value) {
+            $subject = str_replace($key, $value, $subject);
+        }
+
+        $body = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first())->setting_value ?: '';
+        $body = str_replace(config('invoice.templates.setting-key.received-invoice-payment.template-variables.body.billing-person-name'), optional($invoice->client->billing_contact)->first_name, $body);
+
+        return [
+            'subject' => $subject,
+            'body' => $body
         ];
     }
 
@@ -209,35 +255,6 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice->save();
     }
 
-    private function applyFilters($query, $filters)
-    {
-        if ($year = Arr::get($filters, 'year', '')) {
-            $query = $query->year($year);
-        }
-
-        if ($month = Arr::get($filters, 'month', '')) {
-            $query = $query->month($month);
-        }
-
-        if ($status = Arr::get($filters, 'status', '')) {
-            $query = $query->status($status);
-        }
-
-        if ($country = Arr::get($filters, 'country', '')) {
-            $query = $query->country($country);
-        }
-
-        if ($country = Arr::get($filters, 'region', '')) {
-            $query = $query->region($country);
-        }
-
-        if ($clientId = Arr::get($filters, 'client_id', '')) {
-            $query = $query->client($clientId);
-        }
-
-        return $query->orderBy('sent_on', 'desc');
-    }
-
     /**
      *  TaxReports.
      */
@@ -280,18 +297,15 @@ class InvoiceService implements InvoiceServiceContract
 
     public function invoiceDetails($filters)
     {
-        $query = Invoice::query();
-
-        $invoices = $this
-            ->applyFilters($query, $filters)
-            ->paginate(config('constants.pagination_size')) ?: [];
+        $invoices = Invoice::query()->applyFilters($filters)
+            ->orderBy('sent_on', 'desc');
 
         $igst = [];
         $cgst = [];
         $sgst = [];
         $clients = [];
         $clientAddress = [];
-        foreach ($invoices as $invoice) :
+        foreach ($invoices->get() as $invoice) :
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
         $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
         $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
@@ -300,7 +314,7 @@ class InvoiceService implements InvoiceServiceContract
         endforeach;
 
         return [
-            'invoices' => $invoices,
+            'invoices' => $invoices->paginate(config('constants.pagination_size')),
             'clients' => $clients,
             'clientAddress' => $clientAddress,
             // 'currentRates' => $this->currencyService()->getCurrentRatesInINR(),
@@ -312,13 +326,10 @@ class InvoiceService implements InvoiceServiceContract
 
     public function monthlyGSTTaxReportExport($filters, $request)
     {
-        $query = Invoice::query();
+        $invoices = Invoice::query()->applyFilters($filters)
+            ->orderBy('sent_on', 'desc')
+            ->get();
 
-        $invoice = $this
-            ->applyFilters($query, $filters)
-            ->get() ?: [];
-
-        $invoices = $invoice;
         $invoices = $this->formatMonthlyInvoicesForExportAll($invoices);
 
         return Excel::download(new MonthlyGSTTaxReportExport($invoices), "MonthlyGSTTaxReportExport-$request->month-$request->year.xlsx");
@@ -347,11 +358,9 @@ class InvoiceService implements InvoiceServiceContract
 
     private function taxReportInvoices($filters)
     {
-        $query = Invoice::query();
-
-        return $this
-            ->applyFilters($query, $filters)
-            ->get() ?: [];
+        return Invoice::query()->applyFilters($filters)
+            ->orderBy('sent_on', 'desc')
+            ->get();
     }
 
     private function formatInvoicesForExportIndian($invoices)
@@ -460,15 +469,26 @@ class InvoiceService implements InvoiceServiceContract
 
     public function sendInvoice(Client $client, $term, $data)
     {
-        $cc = $data['cc'] ?? [];
+        $ccEmails = $data['cc'] ?? [];
+        $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($cc)) {
-            $cc = array_map('trim', explode(',', $data['cc']));
-            foreach ($cc as $index => $email) {
+        if (! empty($ccEmails)) {
+            $ccEmails = array_map('trim', explode(',', $data['cc']));
+            foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     continue;
                 }
-                unset($cc[$index]);
+                unset($ccEmails[$index]);
+            }
+        }
+
+        if (! empty($bccEmails)) {
+            $bccEmails = array_map('trim', explode(',', $data['bcc']));
+            foreach ($bccEmails as $index => $email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    continue;
+                }
+                unset($bccEmails[$index]);
             }
         }
 
@@ -477,7 +497,8 @@ class InvoiceService implements InvoiceServiceContract
             'to_name' => $data['to_name'] ?? optional($client->billing_contact)->name,
             'from' => $data['from'] ?? config('invoice.mail.send-invoice.email'),
             'from_name' => config('invoice.mail.send-invoice.email'),
-            'cc' => $cc,
+            'cc' => $ccEmails,
+            'bcc' => $bccEmails,
             'body' => $data['email_body'] ?? null,
             'subject' => $data['email_subject'] ?? null
         ];
@@ -486,6 +507,93 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceNumber = str_replace('-', '', $client->next_invoice_number);
         $invoice = $this->generateInvoiceForClient($client, $monthNumber, $year, $term);
         Mail::queue(new SendInvoiceMail($client, $invoice, $monthNumber, $year, $invoiceNumber, $email));
+    }
+
+    public function sendInvoiceReminder(Invoice $invoice, $data)
+    {
+        $ccEmails = $data['cc'] ?? [];
+        $bccEmails = $data['bcc'] ?? [];
+
+        if (! empty($ccEmails)) {
+            $ccEmails = array_map('trim', explode(',', $data['cc']));
+            foreach ($ccEmails as $index => $email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    continue;
+                }
+                unset($ccEmails[$index]);
+            }
+        }
+
+        if (! empty($bccEmails)) {
+            $bccEmails = array_map('trim', explode(',', $data['bcc']));
+            foreach ($bccEmails as $index => $email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    continue;
+                }
+                unset($bccEmails[$index]);
+            }
+        }
+
+        $email = [
+            'to' => $data['to'] ?? optional($invoice->client->billing_contact)->email,
+            'to_name' => $data['to_name'] ?? optional($invoice->client->billing_contact)->first_name,
+            'from' => $data['from'] ?? config('invoice.mail.send-invoice.email'),
+            'from_name' => config('invoice.mail.send-invoice.email'),
+            'cc' => $ccEmails,
+            'bcc' => $bccEmails,
+            'body' => $data['email_body'] ?? null,
+            'subject' => $data['email_subject'] ?? null
+        ];
+        Mail::queue(new SendPendingInvoiceMail($invoice, $email));
+        $invoice->update([
+            'reminder_mail_count' => ($invoice->reminder_mail_count + 1)
+        ]);
+    }
+
+    public function sendPaymentReceivedMail(Invoice $invoice, $data)
+    {
+        $emailData = $this->getSendEmailData($data, $invoice);
+        Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
+        $invoice->update([
+            'payment_confirmation_mail_sent' => true
+        ]);
+    }
+
+    public function getSendEmailData(array $data, $invoice)
+    {
+        $ccEmails = $data['cc'] ?? [];
+        $bccEmails = $data['bcc'] ?? [];
+
+        if (! empty($ccEmails)) {
+            $ccEmails = array_map('trim', explode(',', $data['cc']));
+            foreach ($ccEmails as $index => $email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    continue;
+                }
+                unset($ccEmails[$index]);
+            }
+        }
+
+        if (! empty($bccEmails)) {
+            $bccEmails = array_map('trim', explode(',', $data['bcc']));
+            foreach ($bccEmails as $index => $email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    continue;
+                }
+                unset($bccEmails[$index]);
+            }
+        }
+
+        return [
+            'to' => $data['to'] ?? optional($invoice->client->billing_contact)->email,
+            'to_name' => $data['to_name'] ?? optional($invoice->client->billing_contact)->first_name,
+            'from' => $data['from'] ?? config('invoice.mail.send-invoice.email'),
+            'from_name' => config('invoice.mail.send-invoice.email'),
+            'cc' => $ccEmails,
+            'bcc' => $bccEmails,
+            'body' => $data['email_body'] ?? null,
+            'subject' => $data['email_subject'] ?? null
+        ];
     }
 
     public function generateInvoiceForClient(Client $client, $monthNumber, $year, $term)
@@ -503,6 +611,7 @@ class InvoiceService implements InvoiceServiceContract
         ]);
 
         $invoiceNumber = str_replace('-', '', $data['invoiceNumber']);
+        $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
         $pdf = App::make('snappy.pdf.wrapper');
         $html = view('invoice::render.render', $data)->render();
         $data['receivable_date'] = $dueOn;
@@ -526,5 +635,35 @@ class InvoiceService implements InvoiceServiceContract
         ]);
 
         return $invoice;
+    }
+
+    public function yearlyInvoiceReport($filters, $request)
+    {
+        $filters = $request->all();
+        $filters = [
+            'client_id' => $filters['client_id'] ?? null,
+            'invoiceYear' => $filters['invoiceYear'] ?? today()->year,
+        ];
+
+        if ($filters['invoiceYear'] == 'all-years') {
+            $filters['invoiceYear'] = null;
+        }
+
+        $invoices = Invoice::query()->applyFilters($filters)
+            ->orderBy('sent_on', 'desc')
+            ->get();
+        $clients = Client::orderBy('name', 'asc')->get();
+        $clientId = request()->client_id;
+        if ($clientId == null) {
+            $clientCurrency = null;
+        } else {
+            $clientCurrency = Client::find($clientId, 'id')->currency;
+        }
+
+        return [
+            'invoices' => $invoices,
+            'clients' => $clients,
+            'clientCurrency' => $clientCurrency,
+        ];
     }
 }

@@ -7,7 +7,7 @@
             <h1>Tags</h1>
         </div>
         <div class="col-md-2">
-            <button type="button" class="btn btn-success btn-block btn-lg" data-bs-toggle="modal" data-bs-target="#createModal">
+            <button type="button" class="btn btn-success btn-block btn-lg" data-toggle="modal" data-target="#createModal">
             {{ __('New Tag') }}
             </button>
         </div>

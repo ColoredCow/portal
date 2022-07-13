@@ -16,15 +16,15 @@
         <div class="mt-2">
             <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" data-bs-toggle="pill" data-bs-target="#project-details" type="button"
+                    <a class="nav-link active" data-toggle="pill" data-target="#project-details" type="button"
                         role="tab" aria-selected="true">Project details</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-team-members" type="button"
+                    <a class="nav-link" data-toggle="pill" data-target="#project-team-members" type="button"
                         role="tab" aria-selected="false">Project team members</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="pill" data-bs-target="#project-repository" type="button"
+                    <a class="nav-link" data-toggle="pill" data-target="#project-repository" type="button"
                         role="tab" aria-selected="false">Project repositories</a>
                 </li>
             </ul>

@@ -25,10 +25,23 @@ class HrJobsFactory extends Factory
         $faker = Faker::create();
 
         return [
-            'status' => array_rand(config('hr.opportunities-status')),
-            'type' => config('hr.opportunities.job.type'),
+            'opportunity_id' => 0,
             'title' => $faker->jobTitle,
             'description' => $faker->text(),
+            'type' => 'job',
+            'domain' => array_rand(config('hr.opportunities.domains')),
+            'start_date' => null,
+            'link' => null,
+            'end_date' => null,
+            'facebook_post' => null,
+            'twitter_post' => null,
+            'linkedin_post' => null,
+            'instagram_post' => null,
+            'created_at' => null,
+            'updated_at' => null,
+            'posted_by' => null,
+            'status' => 'published',
+            'deleted_at' => null,
         ];
     }
 }
