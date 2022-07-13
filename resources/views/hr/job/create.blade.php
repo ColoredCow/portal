@@ -9,12 +9,12 @@
         // if ($job->type == 'volunteer') {
             // $menu = 'hr.volunteers.menu';
             // $formAction = route('volunteer.opportunities.store', $job->id);
-        // }
+            // }
     @endphp
     @include($menu)
     <br><br>
     @include('status', ['errors' => $errors->all()])
-                              <!-- Button trigger modal -->         
+    <!-- Button trigger modal -->         
  <div class="d-flex justify-content-between">
     <div>
         <h2 class="mb-3">New Opportunity</h2>
@@ -76,10 +76,10 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain<strong class="text-danger">*</strong></label>
-                        <select class="form-control" name="domain" id="domain" value="{{ old('domain') }}" required>
-                            @foreach (config('hr.opportunities.domains') as $domain => $label)
-                                <option value="{{ $domain }}" {{ old('domain') == $domain ? 'selected' : '' }}>{{ $label }}</option>
-                            @endforeach
+                        <select class="form-control" name="domain" id="domain " value="{{ old('type') }}">
+                            @foreach($domains as $domain)
+                                <option value="{{ $domain->slug }}"  {{ old('domain') == $domain ? 'selected' : '' }}>{{ $domain->slug }}</option>
+                            @endforeach 
                         </select>
                     </div>
                     <div class="col-md-3 form-group">

@@ -55,6 +55,7 @@ class JobController extends Controller
         return view('hr.job.create')->with([
             'rounds' => Round::all(),
             'interviewers' => User::interviewers()->get(),
+            'domains' => EntitiesHrJobDomain::all(),
         ]);
     }
 
@@ -137,6 +138,6 @@ class JobController extends Controller
         $hr_job_domains->slug = Str::slug($request['name']);
         $hr_job_domains->save();
 
-        return redirect('/hr/recruitment/opportunities/create')->with('Edite',"$opportunity->titlename!");
+        return redirect('/hr/recruitment/opportunities/create');
     }
 }
