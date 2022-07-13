@@ -16,7 +16,6 @@
     </li>
     </li>
     <li class="nav-item" data-toggle="modal" data-target="#countIcon">
-    <a class="nav-item nav-link"><i class="fa fa-bitbucket" aria-hidden="true"></i>&nbsp;Total Count</a>
-        <!-- <a class="nav-item nav-link"><i class="fa fa-bitbucket" aria-hidden="true"></i>&nbsp;Total Count</a> -->
+        <a class="nav-item nav-link"><i class="fa fa-bitbucket" aria-hidden="true"></i>&nbsp;Total Count</a>
     </li>
 </ul>

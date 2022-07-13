@@ -15,7 +15,7 @@
 
           @endphp
           <div class="d-flex">
-            <p>{{$round}} </p>
+            <p>{{$round}}</p>&nbsp;{{ '-' }}&nbsp;
             <p>{{$$roundWiseCount}} </p> 
           </div>
           @endforeach
