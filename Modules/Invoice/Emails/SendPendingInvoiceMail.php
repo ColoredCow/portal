@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Modules\Invoice\Entities\Invoice;
 
 class SendPendingInvoiceMail extends Mailable
@@ -43,6 +44,7 @@ class SendPendingInvoiceMail extends Mailable
         $body = $this->email['body'];
         $templateVariablesForSubject = config('invoice.templates.setting-key.invoice-reminder.template-variables.subject');
         $templateVariablesForBody = config('invoice.templates.setting-key.invoice-reminder.template-variables.body');
+        $invoiceFile = Storage::path($this->invoice->file_path);
 
         if (! $subject) {
             $subject = Setting::where('module', 'invoice')->where('setting_key', 'invoice_reminder_subject')->first();
@@ -56,6 +58,12 @@ class SendPendingInvoiceMail extends Mailable
             $body = Setting::where('module', 'invoice')->where('setting_key', 'invoice_reminder_body')->first();
             $body = $body ? $body->setting_value : '';
             $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->first_name, $body);
+            $body = str_replace(
+                $templateVariablesForBody['invoice-amount'], 
+                (optional($this->invoice->client->country)->currency_symbol ?: '') . $this->invoice->amount,
+                $body
+            );
+            $body = str_replace($templateVariablesForBody['invoice-number'], $this->invoice->invoice_number, $body);
         }
 
         $mail = $this->to($this->email['to'], $this->email['to_name'])
@@ -70,7 +78,9 @@ class SendPendingInvoiceMail extends Mailable
         }
 
         return $mail->subject($subject)
-            ->view('mail.plain')->with([
+            ->attach($invoiceFile, [
+                'mime' => 'application/pdf',
+            ])->view('mail.plain')->with([
                 'body' => $body,
             ]);
     }
