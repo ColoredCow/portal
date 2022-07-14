@@ -15,10 +15,10 @@ class UpdateHrApplicationsWithHrChannel extends Migration
     public function up()
     {
         Schema::table('hr_applications', function (Blueprint $table) {
-           $table->unsignedBigInteger('hr_channel_id')->nullable();
+            $table->unsignedBigInteger('hr_channel_id')->nullable();
 
-           $table->foreign('hr_channel_id')->references('id')->on('hr_channel');
-       });
+            $table->foreign('hr_channel_id')->references('id')->on('hr_channel');
+        });
     }
 
     /**
@@ -28,6 +28,9 @@ class UpdateHrApplicationsWithHrChannel extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('hr_applications', function (Blueprint $table) {
+            $table->dropForeign(['hr_channel_id']);
+            $table->dropColumn(['hr_channel_id']);
+        });
     }
 }
