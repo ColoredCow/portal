@@ -15,7 +15,6 @@ class HrChannelsTableSeeder extends Seeder
      */
     public function run()
     {
-
         $count = DB::table('hr_channels')->count();
         if ($count == 0) {
             DB::table('hr_channels')->insert([
@@ -33,7 +32,7 @@ class HrChannelsTableSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ]
             ]);
-        }else{
+        } else {
             // data already exist...
         }
 

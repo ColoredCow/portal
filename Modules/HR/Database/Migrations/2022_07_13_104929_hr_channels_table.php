@@ -27,6 +27,6 @@ class HrChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hr_channel');
+        Schema::dropIfExists('hr_channels');
     }
 }
