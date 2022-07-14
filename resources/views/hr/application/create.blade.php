@@ -27,12 +27,12 @@
                                 <select name="job_title" id="job_title" class="form-control" required="required" value={{ old('job_title') }}>
                                     <option value="">Select Job</option>
                                     @foreach($hrJobs as $hrJob)
-                                    <option value="{{ $hrJob->title }}" {{ old('job_title') == $hrJob->title ? 'selected' : '' }}>{{ $hrJob->title }}</option>
+                                    <option id="{{$hrJob->opportunity_id}}" value="{{ $hrJob->title }}" {{ old('job_title') == $hrJob->title ? 'selected' : '' }}>{{ $hrJob->title }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-
-                            <div class="form-group">
+                                <input type="hidden" name="opportunity_id" id="opportunity_id" value="">
+                             </div>
+                             <div class="form-group">
                                 <label for="name" class="field-required">First Name</label>
                                 <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name"
                                     required="required" value="{{ old('first_name') }}">

@@ -74,6 +74,12 @@ $(document).ready(() => {
 		$("#statusAlert").alert("close");
 	}, 2000);
 
+
+	$("#job_title").on("change", function(event) {
+		let opportunity_id = $(this).find(":selected").attr("id");
+		$("#opportunity_id").attr("value", opportunity_id);
+	});
+
 	if ($(".form-create-invoice").length) {
 		let form = $(".form-create-invoice");
 		let client_id = form.find("#client_id").val();
@@ -1030,7 +1036,7 @@ function saveFollowUp() {
 		  form.submit();
 	  }
 }
-  
+
 function datePickerChart(){
 	  $("#EndDate").change(function () {
 		var startDate = document.getElementById("StartDate").value;
