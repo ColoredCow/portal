@@ -1,7 +1,7 @@
-@extends('lead::layouts.master')
+@extends('layouts.app')
 
 @section('content')
-<div class="text-center" style="margin-top:6cm">
-    <h1>Coming Soon!!</h1> 
-  </div>
+<div class="text-center d-flex justify-content-center align-items-center" style="height: 600px;">
+  <h1>Coming Soon!!</h1>
+</div>
 @endsection
