@@ -21,11 +21,8 @@ use Mail;
 use App\Models\Setting;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
-<<<<<<< HEAD
 use Modules\Client\Entities\ClientEmailId;
-=======
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
->>>>>>> a9e1de8dd77bab38e4f8fcb26429a3de3b48eb70
 
 class InvoiceService implements InvoiceServiceContract
 {
