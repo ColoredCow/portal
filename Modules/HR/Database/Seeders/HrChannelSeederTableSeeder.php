@@ -4,7 +4,6 @@ namespace Modules\HR\Database\Seeders;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class HrChannelSeederTableSeeder extends Seeder
