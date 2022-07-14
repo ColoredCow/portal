@@ -96,6 +96,11 @@ class Client extends Model
         return $this->hasOne(ClientBillingDetail::class)->withDefault();
     }
 
+    public function emailIds()
+    {
+        return $this->hasOne(ClientEmailId::class);
+    }
+
     public function getTypeAttribute()
     {
         $address = $this->addresses->first();

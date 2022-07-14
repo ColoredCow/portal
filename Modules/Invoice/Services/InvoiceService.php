@@ -21,6 +21,7 @@ use Mail;
 use App\Models\Setting;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
+use Modules\Client\Entities\ClientEmailId;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -139,6 +140,7 @@ class InvoiceService implements InvoiceServiceContract
         $invoice->update($data);
         if (isset($data['send_mail'])) {
             $emailData = $this->getSendEmailData($data, $invoice);
+            $this->saveCcEmailandBccEmailIdsForInvoice($data, $invoice->client_id, $invoice->project_id);
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
             $invoice->update([
                 'payment_confirmation_mail_sent' => true
@@ -163,6 +165,22 @@ class InvoiceService implements InvoiceServiceContract
             'paymentReceivedEmailSubject' => $emailData['subject'],
             'paymentReceivedEmailBody' => $emailData['body']
         ];
+    }
+
+    public function saveCcEmailandBccEmailIdsForInvoice($data, $client_id, $project_id)
+    {
+        $ccEmail = $data['cc'];
+        $bccEmail = $data['bcc'];
+        ClientEmailId::updateOrCreate(
+            [
+                'client_id' => $client_id,
+                'project_id' => $project_id
+            ],
+            [
+                'cc_emails' => $ccEmail,
+                'bcc_emails' => $bccEmail
+            ]
+        );
     }
 
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
@@ -470,6 +488,8 @@ class InvoiceService implements InvoiceServiceContract
     {
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
+        $project_id = null;
+        $this->saveCcEmailandBccEmailIdsForInvoice($data, $client->id, $project_id);
 
         if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
@@ -512,6 +532,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
+        $this->saveCcEmailandBccEmailIdsForInvoice($data, $invoice->client_id, $invoice->project_id);
 
         if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
@@ -562,6 +583,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
+        $this->saveCcEmailandBccEmailIdsForInvoice($data, $invoice->client_id, $invoice->project_id);
 
         if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
