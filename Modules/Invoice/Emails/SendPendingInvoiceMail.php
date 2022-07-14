@@ -59,7 +59,7 @@ class SendPendingInvoiceMail extends Mailable
             $body = $body ? $body->setting_value : '';
             $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->first_name, $body);
             $body = str_replace(
-                $templateVariablesForBody['invoice-amount'], 
+                $templateVariablesForBody['invoice-amount'],
                 (optional($this->invoice->client->country)->currency_symbol ?: '') . $this->invoice->amount,
                 $body
             );
