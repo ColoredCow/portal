@@ -11,7 +11,13 @@
 		</li>
 	</ul>
 	<br>
+	<div class="d-flex">
 		<h4>User Management</h4>
+		<select name="Current" onchange="this.form.submit()" class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0">
+			<option value="current">Current</option> 
+			<option value="past" selected="selected">Past</option>
+		</select>
+	</div>
 		<user-listing 
 			:users="{{ json_encode($users) }}"
 			:update-route="{{ json_encode( route('user.update-roles')) }}"
