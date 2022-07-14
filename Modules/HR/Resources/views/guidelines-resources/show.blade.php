@@ -1,6 +1,6 @@
 @extends('hr::layouts.master')
 @section('content')
-<div class="row col-gap justify-content-center">
+<div class="row col-gap justify-content-center mt-5">
     <div class="col-md-7">
         <h3>Resources for Laravel Developer</h3>
     </div>
