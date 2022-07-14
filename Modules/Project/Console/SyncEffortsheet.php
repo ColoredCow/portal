@@ -5,6 +5,7 @@ namespace Modules\Project\Console;
 use Illuminate\Console\Command;
 use Modules\EffortTracking\Services\EffortTrackingService;
 use Modules\Project\Entities\Project;
+
 class SyncEffortsheet extends Command
 {
     /**
