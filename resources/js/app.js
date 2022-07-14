@@ -1059,8 +1059,7 @@ function barChart(){
 		  borderColor:"#67A7E2",
 		  borderWidth: 1,
 		  pointHoverRadius: 7
-			},
-			
+			}	
 		]
 	  };
 	  var options = {
@@ -1072,12 +1071,12 @@ function barChart(){
 				return `Verified Applications: ${cData.afterBody[0]}`;
 			}
 		},
-		  displayColors:false,
-		  bodyFontSize: 20,
-		  bodyFontStyle: "bold",
-		  backgroundColor:"#282828",
-		  bodyFontColor:"#ffffff",
-		  cornerRadius:0,
+		  	displayColors:false,
+		  	bodyFontSize: 20,
+		  	bodyFontStyle: "bold",
+		  	backgroundColor:"#282828",
+		  	bodyFontColor:"#ffffff",
+		  	cornerRadius:0,
 		  borderWidth:2
 		},
 		title: {

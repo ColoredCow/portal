@@ -40,7 +40,7 @@ class ReportsController extends Controller
         }
         $x = 0;
         foreach ($record_1 as $row) {
-            if($row->is_verified == "1"){
+            if($row->is_verified == "1") {
                 $x++;  
             }
         }
@@ -78,7 +78,7 @@ class ReportsController extends Controller
         }
         $x = 0;
         foreach ($record_1 as $row) {
-            if($row->is_verified == "1"){
+            if($row->is_verified == "1") {
                 $x++;  
             }
         }
