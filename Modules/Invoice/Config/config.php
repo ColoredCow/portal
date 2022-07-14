@@ -115,6 +115,8 @@ return [
                     ],
                     'body' => [
                         'billing-person-name' => '|*billing_person_name*|',
+                        'invoice-amount' => '|*invoice_amount*|',
+                        'invoice-number' => '|*invoice_number*|',
                     ],
                 ],
             ],
