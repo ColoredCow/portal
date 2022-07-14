@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="container mx-15 mt-5">
-    <p>No resource exist for this job. </p>
+    <div class="text-center mt-25">No resource exist for this job. </div>
 </div>
 <!-- Functionality yet to be created -->
 @include('hr::guidelines-resources.create-category-modal')
