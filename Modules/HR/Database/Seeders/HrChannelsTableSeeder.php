@@ -33,8 +33,7 @@ class HrChannelsTableSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
                 ]
             ]);
-        }
-        else{
+        }else{
             // data already exist...
         }
 
