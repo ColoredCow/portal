@@ -35,6 +35,5 @@ class HrChannelsTableSeeder extends Seeder
         } else {
             // data already exist...
         }
-
     }
 }
