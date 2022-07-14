@@ -33,15 +33,14 @@ class ReportsController extends Controller
         )
         ->get();
         $data = [];
-
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
         }
         $x = 0;
         foreach ($record_1 as $row) {
-            if($row->is_verified == "1") {
-                $x++;  
+            if ($row->is_verified == '1') {
+                $x++;
             }
         }
         $data['afterBody'][] = $x;
@@ -78,8 +77,8 @@ class ReportsController extends Controller
         }
         $x = 0;
         foreach ($record_1 as $row) {
-            if($row->is_verified == "1") {
-                $x++;  
+            if ($row->is_verified == '1') {
+                $x++;
             }
         }
         $data['afterBody'][] = $x;
