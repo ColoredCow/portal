@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
+use Modules\HR\Entities\Application;
 
 class ReportsController extends Controller
 {
@@ -27,14 +28,23 @@ class ReportsController extends Controller
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
-
+        $record_1 = Application::select(
+            \DB::raw('is_verified')
+        )
+        ->get();
         $data = [];
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
         }
-
+        $x = 0;
+        foreach ($record_1 as $row) {
+            if($row->is_verified == "1"){
+                $x++;  
+            }
+        }
+        $data['afterBody'][] = $x;
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
@@ -55,6 +65,10 @@ class ReportsController extends Controller
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
+        $record_1 = Application::select(
+            \DB::raw('is_verified')
+        )
+            ->get();
 
         $data = [];
 
@@ -62,6 +76,13 @@ class ReportsController extends Controller
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
         }
+        $x = 0;
+        foreach ($record_1 as $row) {
+            if($row->is_verified == "1"){
+                $x++;  
+            }
+        }
+        $data['afterBody'][] = $x;
 
         $data['chartData'] = json_encode($data);
 

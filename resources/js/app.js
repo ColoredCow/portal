@@ -1046,6 +1046,7 @@ function datePickerChart(){
 function barChart(){
 	  var value = $(".chart-data").data("target");
 	  var cData = value;
+	  console.log(cData)
 	  var ctx = $("#barChart");
 
 	  var data = {
@@ -1058,12 +1059,19 @@ function barChart(){
 		  borderColor:"#67A7E2",
 		  borderWidth: 1,
 		  pointHoverRadius: 7
-			}
+			},
+			
 		]
 	  };
 	  var options = {
 		responsive: true,
 		tooltips:{
+		callbacks:{
+			afterBody: function(context) {
+				console.log(context);
+				return `Verified Applications: ${cData.afterBody[0]}`;
+			}
+		},
 		  displayColors:false,
 		  bodyFontSize: 20,
 		  bodyFontStyle: "bold",
