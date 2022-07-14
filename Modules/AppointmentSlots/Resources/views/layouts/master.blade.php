@@ -1,4 +1,4 @@
-@extends('')
+@extends('layouts.app')
 
 @section('css_scripts')
 <link href="/lib/fullcalendar/lib/main.min.css" rel="stylesheet">
