@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHrChannelTable extends Migration
+class HrChannelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateHrChannelTable extends Migration
      */
     public function up()
     {
-        Schema::create('hr_channel', function (Blueprint $table) {
+        Schema::create('hr_channels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('name');
             $table->timestamps();
