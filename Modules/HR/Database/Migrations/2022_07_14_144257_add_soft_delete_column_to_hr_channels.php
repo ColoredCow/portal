@@ -26,6 +26,7 @@ class AddSoftDeleteColumnToHrChannels extends Migration
     public function down()
     {
         Schema::table('hr_channels', function (Blueprint $table) {
+            
             $table->dropSoftDeletes();    
         });
     }
