@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="form-row mb-4">
+        <div class="form-row mb-1">
             <div class="col-md-5">
                 <div>
                     <h4><b>Invoice Information:</b></h4>
