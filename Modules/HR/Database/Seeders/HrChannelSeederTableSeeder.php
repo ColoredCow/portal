@@ -21,11 +21,13 @@ class HrChannelSeederTableSeeder extends Seeder
                 'name'=>'LinkedIn',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],[
+            
+            ], [
                 'name'=>'Indeed',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],[
+            
+            ], [
                 'name'=>'Website',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
