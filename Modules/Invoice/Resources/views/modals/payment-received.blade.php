@@ -1,7 +1,7 @@
 @php
     $project_id = $invoice->project_id;
-    $ccEmails = $invoice->client->emailIds($project_id)->cc_emails;
-    $bccEmails = $invoice->client->emailIds($project_id)->bcc_emails;
+    $ccEmails = optional($invoice->client->emailIds($project_id))->cc_emails;
+    $bccEmails = optional($invoice->client->emailIds($project_id))->bcc_emails;
 @endphp
 
 <div class="modal fade" id="paymentReceived" tabindex="-1" role="dialog" aria-hidden="true">
@@ -34,7 +34,7 @@
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        <input type="text" name="cc" id="cc" class="form-control" value="{{$ccEmails}}">
+                        <input type="text" name="cc" id="cc" class="form-control" value="{{$ccEmails == null ? config('invoice.mail.send-invoice.email') : $ccEmails}}">
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="bcc">

@@ -100,8 +100,8 @@
                                 'emailSubject' => $invoiceReminderEmailSubject,
                                 'emailBody' => $invoiceReminderEmailBody,
                                 'invoiceId' => $invoice->id,
-                                'ccEmails' => $invoice->client->emailIds($invoice->project_id)->cc_emails,
-                                'bccEmails' => $invoice->client->emailIds($invoice->projectId)->bcc_emails,
+                                'ccEmails' => optional($invoice->client->emailIds($invoice->project_id))->cc_emails,
+                                'bccEmails' => optional($invoice->client->emailIds($invoice->projectId))->bcc_emails,
                                 'invoiceNumber' => $invoice->invoice_number,
                                 'invoiceAmount' => $invoice->invoiceAmount()
                             ];
