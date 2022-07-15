@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('lead::layouts.master')
 
 @section('content')
 <div class="task-content">
