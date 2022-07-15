@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
+use Modules\HR\Entities\Application;
 
 class ReportsController extends Controller
 {
@@ -28,16 +29,25 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
+        $record1 = Application::select(
+                \DB::raw('is_verified')
+        )
+        ->get();
         $data = [];
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
         }
-
+        $i=0;
+        foreach($record1 as$row){
+            if($row->is_verified=='1'){
+                $i++;
+            }
+        }
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount'));
+        return view('hr.recruitment.reports', $data, compact('todayCount','i'));
     }
 
     public function searchBydate(Request $req)
