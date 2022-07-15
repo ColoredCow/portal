@@ -21,6 +21,7 @@ class CreateClientEmailIdsTable extends Migration
             $table->string('bcc_emails')->nullable();
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

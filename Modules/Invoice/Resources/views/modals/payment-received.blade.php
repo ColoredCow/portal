@@ -34,11 +34,7 @@
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        @if($ccEmails == null)
-                            <input type="text" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
-                        @else
-                            <input type="text" name="cc" id="cc" class="form-control" value="{{$ccEmails}}">
-                        @endif
+                        <input type="text" name="cc" id="cc" class="form-control" value="{{$ccEmails}}">
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="bcc">
@@ -47,11 +43,7 @@
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        @if($bccEmails == null)
-                            <input type="text" name="bcc" id="bcc" class="form-control" value="">
-                        @else
-                            <input type="text" name="bcc" id="bcc" class="form-control" value="{{$bccEmails}}">
-                        @endif
+                        <input type="text" name="bcc" id="bcc" class="form-control" value="{{$bccEmails}}">
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>

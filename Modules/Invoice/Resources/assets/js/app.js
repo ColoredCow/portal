@@ -50,11 +50,11 @@ $(document).ready(function(){
 		$("#sendToName").val(invoiceData["billingPersonName"]); 
 		$("#clientId").val(invoiceData["clientId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
-		$("#emailPreview").modal("show");
-		if(invoiceData["bccEmails"] != null) {
+		if (invoiceData["ccEmails"] != null) {
 			$("#cc").val(invoiceData["ccEmails"]);
 		}
 		$("#bcc").val(invoiceData["bccEmails"]);
+		$("#emailPreview").modal("show");
 	});
 
 	$(".send-reminder").on("click", function() {
@@ -80,12 +80,11 @@ $(document).ready(function(){
 		$("#sendToName").val(invoiceData["billingPersonName"]); 
 		$("#invoiceId").val(invoiceData["invoiceId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
-		$("#emailPreview").modal("show");
-		if(invoiceData["bccEmails"] != null) {
+		if (invoiceData["ccEmails"] != null) {
 			$("#cc").val(invoiceData["ccEmails"]);
 		}
 		$("#bcc").val(invoiceData["bccEmails"]);
-		console.log(invoiceData["bccEmails"]);
+		$("#emailPreview").modal("show");
 	});
 
 	$("#verifyInvoice").on("click", function () {
