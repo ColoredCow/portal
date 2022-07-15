@@ -14,9 +14,9 @@ class DomainTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {  
-           $date = Carbon::now()->modify('-2 year');
-           $createdDate = clone($date);
+    {
+        $date = Carbon::now()->modify('-2 year');
+        $createdDate = clone($date);
          DB::table('hr_job_domains')->insert([
             0 => [
                 'domain_name' => 'Engineering',
