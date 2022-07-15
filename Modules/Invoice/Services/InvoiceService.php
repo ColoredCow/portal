@@ -188,6 +188,7 @@ class InvoiceService implements InvoiceServiceContract
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
     {
         $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');
+        $templateVariablesForBody = config('invoice.templates.setting-key.received-invoice-payment.template-variables.body');
         $month = $invoice->sent_on->subMonth()->month;
         $year = $invoice->sent_on->subMonth()->year;
         $monthName = date('F', mktime(0, 0, 0, $month, 10));
@@ -205,7 +206,9 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         $body = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first())->setting_value ?: '';
-        $body = str_replace(config('invoice.templates.setting-key.received-invoice-payment.template-variables.body.billing-person-name'), optional($invoice->client->billing_contact)->first_name, $body);
+        $body = str_replace($templateVariablesForBody['billing-person-name'], optional($invoice->client->billing_contact)->first_name, $body);
+        $body = str_replace($templateVariablesForBody['invoice-number'], $invoice->invoice_number, $body);
+        $body = str_replace($templateVariablesForBody['invoice-amount'], $invoice->invoiceAmount(), $body);
 
         return [
             'subject' => $subject,

@@ -64,6 +64,8 @@ $(document).ready(function(){
 			"|*term*|": invoiceData["monthName"],
 			"|*year*|": invoiceData["year"],
 			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
+			"|*invoice_amount*|": invoiceData["invoiceAmount"],
+			"|*invoice_number*|": invoiceData["invoiceNumber"],
 		};
 		var emailSubject = $("#emailSubject").val();
 		var emailBody = $("#emailBody").text();
