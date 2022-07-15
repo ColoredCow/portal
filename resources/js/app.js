@@ -73,6 +73,11 @@ $(document).ready(() => {
 	setTimeout(function() {
 		$("#statusAlert").alert("close");
 	}, 2000);
+   $(function() {
+	    $("#Category_Name").keyup(check_save).each(function() {
+		  check_save();
+		});
+	});
 
 	if ($(".form-create-invoice").length) {
 		let form = $(".form-create-invoice");
@@ -955,17 +960,14 @@ $(document).ready(function() {
 	  $(document).on("click", ".toggle-block-display", toggleBlockDisplay);
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
-
-$(document).getElementById("Categoryname").onkeyup = ButtonEnable();
-
-function ButtonEnable() {
-	if(document.getElementById("name").value=="") { 
-		   document.getElementById("save-btn-action").disabled = true; 
-	   } else { 
-		   document.getElementById("save-btn-action").disabled = false;
-	   }
-}
   
+  function check_save() {
+	if ($(this).val().length == 0) {
+	  $("#save-btn-action").attr("disabled", true);
+	} else {
+	  $("#save-btn-action").removeAttr("disabled");
+	}
+  }
 function showCommentBlock() {
 	  var blockId = $(this).data("block-id");
 	  $(blockId).removeClass("d-none").find("input").focus();
