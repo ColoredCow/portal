@@ -5,6 +5,7 @@ namespace Modules\HR\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Modules\HR\Entities\HrJobDomain;
 
 class DomainTableSeeder extends Seeder
 {
@@ -15,46 +16,18 @@ class DomainTableSeeder extends Seeder
      */
     public function run()
     {
-        $date = Carbon::now()->modify('-2 year');
-        $createdDate = clone$date;
-        DB::table('hr_job_domains')->insert([
-            0 => [
-                'domain_name' => 'Engineering',
-                'slug' => 'engineering',
-                'created_at' => $createdDate,
-                'updated_at' => $createdDate
-            ],
-            1 => [
-                'domain_name' => 'Design',
-                'slug' => 'design',
-                'created_at' => $createdDate,
-                'updated_at' => $createdDate
-            ],
-            2 => [
-                'domain_name' => 'Marketing',
-                'slug' => 'marketing',
-                'created_at' => $createdDate,
-                'updated_at' => $createdDate
-            ],
-            3 => [
-                'domain_name' => 'Data Researcher',
-                'slug' => 'data-researcher',
-                'created_at' => $createdDate,
-                'updated_at' => $createdDate
-            ],
-            4 => [
-                'domain_name' => 'People Operations',
-                'slug' => 'people-operations',
-                'created_at' => $createdDate,
-                'updated_at' => $createdDate
-            ],
-            5 => [
-                'domain_name' => 'Project Management',
-                'slug' => 'project-management',
-                'created_at' => $createdDate,
-                'updated_at' => $createdDate
-            ],
-
-         ]);
+        foreach (config('hr.opportunities.domains') as $slug => $domain) {
+            HrJobDomain::updateOrCreate(
+                [
+                    'slug' => $slug,
+                ],
+                [
+                    'domain_name' => $domain,
+                    'slug' => $slug,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
+            );
+        }
     }
 }
