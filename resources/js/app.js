@@ -956,15 +956,15 @@ $(document).ready(function() {
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
 
-$(function() {
-	$("#Category_Name").keyup(check_save).each(function() {
+$(function(){
+	$("#Category_Name").keyup(check_save).each(function(){
 	  check_save();
 	});
 });
-  function check_save() {
-	if ($(this).val().length == 0) {
+  function check_save(){
+	if ($(this).val().length == 0){
 	  $("#save-btn-action").attr("disabled", true);
-	} else {
+	} else{
 	  $("#save-btn-action").removeAttr("disabled");
 	}
   }
