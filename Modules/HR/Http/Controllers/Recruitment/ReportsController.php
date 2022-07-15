@@ -29,18 +29,18 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $record1 = Application::select(
+        $record1 = Application::select (
             \DB::raw('is_verified')
         )
         ->get();
         $data = [];
 
-        foreach ($record as $row) {
+        foreach ($record1 as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
         }
         $i=0;
-        foreach ($record1 as$row) {
+        foreach ($record1 as $row) {
             if ($row->is_verified=='1') {
                 $i++;
             }
