@@ -962,12 +962,12 @@ $(function(){
 	});
 });
 function check_save(){
-	if ($(this).val().length == 0){
-	  $("#save-btn-action").attr("disabled", true);
-	} else{
-	  $("#save-btn-action").removeAttr("disabled");
+	 if ($(this).val().length == 0){
+	     $("#save-btn-action").attr("disabled", true);
+	}  else{
+	     $("#save-btn-action").removeAttr("disabled");
 	}
-  }
+}
 function showCommentBlock() {
 	  var blockId = $(this).data("block-id");
 	  $(blockId).removeClass("d-none").find("input").focus();
