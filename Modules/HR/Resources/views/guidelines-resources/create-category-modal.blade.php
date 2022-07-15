@@ -9,7 +9,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Category Name<strong class="text-danger">*</strong></label>
-                        <input type="text" class="form-control" id="Category_Name" name="name" required>
+                        <input type="text" class="form-control" id="categoryName" name="name" required>
                     </div>
                 </form>
             </div>
