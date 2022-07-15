@@ -165,7 +165,7 @@
                     <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
                     <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
-                    <div><small>{{ __('If disabled the mail will not be sent.') }}<small></div>
+                    <div class="fz-14 text-theme-orange">{{ __('If disabled the mail will not be sent.') }}</div>
                 @else
                     <label class="mx-1 pt-1">
                         {{ __('Confirmation Mail Status: ') }}
