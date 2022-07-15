@@ -18,4 +18,5 @@ class HrChannelsTableSeeder extends Seeder
         $hrChannel = HrChannel::updateOrCreate(['name'=>'Indeed']);
         $hrChannel = HrChannel::updateOrCreate(['name'=>'Website']);
     }
+
 }

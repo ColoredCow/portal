@@ -13,8 +13,7 @@ class HrChannelsTable extends Migration
      */
     public function up()
     {
-        
-        Schema::create('hr_channels_table', function (Blueprint $table) { 
+        Schema::create('hr_channels_table', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('name');
             $table->timestamps();
@@ -33,7 +32,7 @@ class HrChannelsTable extends Migration
             'hr_channels_table',
             function (Blueprint $table) {
                 $table->dropSoftDeletes();
-        }
+            }
         );
     }
 }
