@@ -140,7 +140,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $invoice->update($data);
         if (isset($data['send_mail'])) {
-            $emailData = $this->getSendEmailData($datstoreClientEmails($data, $invoice->client_id, $invoice->project_id);
+            $emailData = $this->getSendEmailData($datstoreClientEmails($data, $invoice->client_id, $invoice->project_id));
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
             $invoice->update([
                 'payment_confirmation_mail_sent' => true
