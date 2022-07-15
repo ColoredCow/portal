@@ -96,9 +96,9 @@ class Client extends Model
         return $this->hasOne(ClientBillingDetail::class)->withDefault();
     }
 
-    public function emailIds()
+    public function emailIds($project_id)
     {
-        return $this->hasOne(ClientEmailId::class);
+        return ClientEmailId::where('project_id', $project_id)->where('client_id', $this->id)->first();
     }
 
     public function getTypeAttribute()

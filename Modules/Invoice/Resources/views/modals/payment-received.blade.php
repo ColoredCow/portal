@@ -1,3 +1,9 @@
+@php
+    $project_id = $invoice->project_id;
+    $ccEmails = $invoice->client->emailIds($project_id)->cc_emails;
+    $bccEmails = $invoice->client->emailIds($project_id)->bcc_emails;
+@endphp
+
 <div class="modal fade" id="paymentReceived" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -28,7 +34,11 @@
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        <input type="text" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
+                        @if($ccEmails == null)
+                            <input type="text" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
+                        @else
+                            <input type="text" name="cc" id="cc" class="form-control" value="{{$ccEmails}}">
+                        @endif
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="bcc">
@@ -37,7 +47,11 @@
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        <input type="text" name="bcc" id="bcc" class="form-control" value="">
+                        @if($bccEmails == null)
+                            <input type="text" name="bcc" id="bcc" class="form-control" value="">
+                        @else
+                            <input type="text" name="bcc" id="bcc" class="form-control" value="{{$bccEmails}}">
+                        @endif
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>

@@ -99,7 +99,9 @@
                                 'year' => $invoiceYear,
                                 'emailSubject' => $invoiceReminderEmailSubject,
                                 'emailBody' => $invoiceReminderEmailBody,
-                                'invoiceId' => $invoice->id
+                                'invoiceId' => $invoice->id,
+                                'ccEmails' => $invoice->client->emailIds($invoice->project_id)->cc_emails,
+                                'bccEmails' => $invoice->client->emailIds($invoice->projectId)->bcc_emails
                             ];
                         @endphp
                             <tr>

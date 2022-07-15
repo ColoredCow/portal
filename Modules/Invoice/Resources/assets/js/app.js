@@ -51,6 +51,10 @@ $(document).ready(function(){
 		$("#clientId").val(invoiceData["clientId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
 		$("#emailPreview").modal("show");
+		if(invoiceData["bccEmails"] != null) {
+			$("#cc").val(invoiceData["ccEmails"]);
+		}
+		$("#bcc").val(invoiceData["bccEmails"]);
 	});
 
 	$(".send-reminder").on("click", function() {
@@ -75,6 +79,11 @@ $(document).ready(function(){
 		$("#invoiceId").val(invoiceData["invoiceId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
 		$("#emailPreview").modal("show");
+		if(invoiceData["bccEmails"] != null) {
+			$("#cc").val(invoiceData["ccEmails"]);
+		}
+		$("#bcc").val(invoiceData["bccEmails"]);
+		console.log(invoiceData["bccEmails"]);
 	});
 
 	$("#verifyInvoice").on("click", function () {
