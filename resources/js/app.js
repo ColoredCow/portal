@@ -951,16 +951,18 @@ $(document).ready(function() {
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
 
-$(document).getElementById("Categoryname").onkeyup = ButtonEnable();
-
-function ButtonEnable() {
-	if(document.getElementById("name").value=="") { 
-		   document.getElementById("save-btn-action").disabled = true; 
-	   } else { 
-		   document.getElementById("save-btn-action").disabled = false;
-	   }
+$(function(){
+	$("#categoryName").keyup(check_save).each(function(){
+	  check_save();
+	});
+});
+function check_save(){
+	 if ($(this).val().length == 0){
+	     $("#save-btn-action").attr("disabled", true);
+	}  else{
+	     $("#save-btn-action").removeAttr("disabled");
+	}
 }
-  
 function showCommentBlock() {
 	  var blockId = $(this).data("block-id");
 	  $(blockId).removeClass("d-none").find("input").focus();
