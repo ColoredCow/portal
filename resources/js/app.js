@@ -73,11 +73,6 @@ $(document).ready(() => {
 	setTimeout(function() {
 		$("#statusAlert").alert("close");
 	}, 2000);
-   $(function() {
-	    $("#Category_Name").keyup(check_save).each(function() {
-		  check_save();
-		});
-	});
 
 	if ($(".form-create-invoice").length) {
 		let form = $(".form-create-invoice");
@@ -960,7 +955,12 @@ $(document).ready(function() {
 	  $(document).on("click", ".toggle-block-display", toggleBlockDisplay);
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
-  
+
+$(function() {
+	$("#Category_Name").keyup(check_save).each(function() {
+	  check_save();
+	});
+});
   function check_save() {
 	if ($(this).val().length == 0) {
 	  $("#save-btn-action").attr("disabled", true);
