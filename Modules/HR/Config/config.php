@@ -59,10 +59,18 @@ return [
         'career' => 'career',
     ],
 
+    'templates' => [
+        'follow_up_email_for_scheduling_interview' => [
+            'subject' => 'follow_up_email_for_scheduling_interview_subject',
+            'body' => 'follow_up_email_for_scheduling_interview_body',
+        ],
+    ],
+
     'template-variables' => [
         'applicant-name' => '|*applicant_name*|',
         'interview-time' => '|*interview_time*|',
-        'job-title' => '|*job_title*|'
+        'job-title' => '|*job_title*|',
+        'round-name' => '|*round_name*|'
     ],
 
     'default' => [

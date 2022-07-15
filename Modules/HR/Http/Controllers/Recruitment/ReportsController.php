@@ -29,7 +29,7 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $record1 = Application::select (
+        $record1 = Application::select(
             \DB::raw('is_verified')
         )
         ->get();
