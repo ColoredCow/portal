@@ -140,7 +140,8 @@ class InvoiceService implements InvoiceServiceContract
     {
         $invoice->update($data);
         if (isset($data['send_mail'])) {
-            $emailData = $this->getSendEmailData($datstoreClientEmails($data, $invoice->client_id, $invoice->project_id));
+            $emailData = $this->getSendEmailData($data, $invoice);
+            $this->storeClientEmails($data, $invoice->client_id, $invoice->project_id);
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));
             $invoice->update([
                 'payment_confirmation_mail_sent' => true
@@ -165,7 +166,10 @@ class InvoiceService implements InvoiceServiceContract
             'paymentReceivedEmailSubject' => $emailData['subject'],
             'paymentReceivedEmailBody' => $emailData['body'],
             'currencyService' => $this->currencyService(),
-        storeClientEmails($data, $client_id, $project_id)
+        ];
+    }
+
+    public function storeClientEmails($data, $client_id, $project_id)
     {
         $ccEmail = $data['cc'];
         $bccEmail = $data['bcc'];
@@ -489,7 +493,8 @@ class InvoiceService implements InvoiceServiceContract
     {
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
-        $prostoreClientEmails($data, $client->id, $projectid);
+        $projectid = null;
+        $this->storeClientEmails($data, $client->id, $projectid);
 
         if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
@@ -531,7 +536,8 @@ class InvoiceService implements InvoiceServiceContract
     public function sendInvoiceReminder(Invoice $invoice, $data)
     {
         $ccEmails = $data['cc'] ?? [];
-        $bccEmails = $datastoreClientEmails($data, $invoice->client_id, $invoice->project_id);
+        $bccEmails = $data['bcc'] ?? [];
+        $this->storeClientEmails($data, $invoice->client_id, $invoice->project_id);
 
         if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
