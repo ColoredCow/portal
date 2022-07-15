@@ -41,7 +41,7 @@ class ReportsController extends Controller
         }
         $i = 0;
         foreach ($record1 as $row) {
-            if ($row->is_verified=='1') {
+            if ($row->is_verified == '1') {
                 $i++;
             }
         }
