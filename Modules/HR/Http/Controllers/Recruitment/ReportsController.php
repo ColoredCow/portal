@@ -30,7 +30,7 @@ class ReportsController extends Controller
             ->get();
 
         $record1 = Application::select(
-                \DB::raw('is_verified')
+            \DB::raw('is_verified')
         )
         ->get();
         $data = [];
@@ -40,14 +40,14 @@ class ReportsController extends Controller
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
         }
         $i=0;
-        foreach($record1 as$row){
-            if($row->is_verified=='1'){
+        foreach ($record1 as$row){
+            if ($row->is_verified=='1') {
                 $i++;
             }
         }
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount','i'));
+        return view('hr.recruitment.reports', $data, compact('todayCount', 'i'));
     }
 
     public function searchBydate(Request $req)
