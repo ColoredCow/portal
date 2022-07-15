@@ -5,10 +5,10 @@
 <div class="chart-container" align="center">
     <div class="bar-chart-container">
         <div class="d-flex justify-content-between">
-             <div>
-                <h2>Analytics </h2>  
+            <div class="my-2">
+                <h2>Analytics </h2>
             </div>
-            <div>
+            <div class="my-2">
                 <form action="{{route('recruitment.report')}}" method="POST" align="right">
                     {{csrf_field()}}
                     <input type="date" name="report_start_date" id='StartDate'> to
