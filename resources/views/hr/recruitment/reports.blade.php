@@ -4,10 +4,10 @@
 
 <div class="chart-container" align="center">
     <div class="bar-chart-container">
-        <div align="left" class="report-heading">
+        <div align="left" class="float-left">
          <h2>Analytics </h2>  
-        </div>
-        <div class="report-date-filter">
+        </div> 
+        <div class="float-right">
             <form action="{{route('recruitment.report')}}" method="POST" align="right">
                 {{csrf_field()}}
                 <input type="date" name="report_start_date" id='StartDate'> to
@@ -17,7 +17,7 @@
         </div>
         <br>
 
-        <div class="card report-detail-section">
+        <div class="float-left mt-4 col-12">
             <div class="card-header" align='left'>
                 <span class="chart-heading mr-5">Application Received</span><span class="total-chart-count">Today's Count:<?php echo $todayCount ?></span>
             </div>
