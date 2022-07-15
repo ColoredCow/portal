@@ -8,11 +8,15 @@
     <div>
         <div class="form-group">
             <label class="font-weight-bold" for>Name:</label>
-            <span>coloredcow user</span>
+            <span>
+                <input type="type your name" placeholder="name">
+            </span>
         </div>
             <div class="form-group">
                 <label class="font-weight-bold" for>Email:</label>
-                <span>user@coloredcow.com</span>
+                <span>
+                    <input type="type your username" placeholder="username">
+                </span>
             </div>
         </div>
         <div class="card-body" style="padding-top: 0;">
