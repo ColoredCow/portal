@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class HrChannelsTable extends Migration
 {
@@ -13,10 +13,11 @@ class HrChannelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hr_channels', function (Blueprint $table) {
+        Schema::create('hr_channels_table', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +28,11 @@ class HrChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hr_channels');
+        Schema::dropIfExists(
+            'hr_channels_table',
+            function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        }
+        );
     }
 }

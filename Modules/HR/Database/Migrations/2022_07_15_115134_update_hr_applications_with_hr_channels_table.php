@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class UpdateHrApplicationsWithHrChannel extends Migration
+class UpdateHrApplicationsWithHrChannelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,9 @@ class UpdateHrApplicationsWithHrChannel extends Migration
     public function up()
     {
         Schema::table('hr_applications', function (Blueprint $table) {
-            $table->unsignedBigInteger('hr_channel_id')->nullable();
+            $table->unsignedBigInteger('hr_channels_id')->nullable();
 
-            $table->foreign('hr_channel_id')->references('id')->on('hr_channels');
+            $table->foreign('hr_channels_id')->references('id')->on('hr_channels_table');
         });
     }
 
