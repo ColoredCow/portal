@@ -40,7 +40,7 @@ class ReportsController extends Controller
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
         }
         $i=0;
-        foreach ($record1 as$row){
+        foreach ($record1 as$row) {
             if ($row->is_verified=='1') {
                 $i++;
             }
