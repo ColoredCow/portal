@@ -6,7 +6,7 @@
     <div class="bar-chart-container">
         <div align="left">
          <span class="chart-heading mr-5">Analytics</span>
-            <span class="total-chart">Total Verified Applications:<?php echo $i ?></span>
+            <span class="total-chart">Total Verified Applications: <?php echo $i ?></span>
         </div>
         <form action="{{route('recruitment.report')}}" method="POST" align="right">
             {{csrf_field()}}
