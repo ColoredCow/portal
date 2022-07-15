@@ -202,4 +202,11 @@ class InvoiceController extends Controller
 
         return view('invoice::invoice-report', $this->service->yearlyInvoiceReport($filters, $request));
     }
+
+    public function yearlyInvoiceReportExport(Request $request)
+    {
+        $filters = $request->all();
+
+        return $this->service->yearlyInvoiceReportExport($filters, $request);
+    }
 }

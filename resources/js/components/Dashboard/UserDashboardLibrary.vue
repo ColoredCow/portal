@@ -4,7 +4,7 @@
       <h3><a href="/knowledgecafe/library/books">Library</a></h3>
     </div>
     <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
+      <ul class="nav nav-tabs card-header-tabs flex-nowrap">
         <li class="nav-item">
           <a
             id="wishlist"

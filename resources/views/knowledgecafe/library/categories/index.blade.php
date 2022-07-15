@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" id="books_category" v-cloak>
     <br>
-    @include('knowledgecafe.library.menu', ['active' => 'book_category'])
+    @include('knowldegecafe.library.menu', ['active' => 'book_category'])
     <br><br>
 
     <div class="row">
@@ -56,10 +56,13 @@
                 </span>
             </div>
 
-            <div @click="showEditMode(index)" class="col-lg-4 d-flex align-items-center justify-content-end">
-                <button class="btn btn-primary">
+            <div class="col-lg-4 d-flex align-items-center justify-content-end">
+                <div  @click="showEditMode(index)">
+                   <button class="btn btn-primary">
                     <i class="fa fa-pencil"></i>&nbsp;Edit
-                </button>
+                   </button>
+                </div>
+                
                 <div class="text-danger c-pointer ml-3" @click="deleteCategory(index)">
                     <i class="fa fa-times"></i>&nbsp;Delete
                 </div>
