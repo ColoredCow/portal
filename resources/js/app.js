@@ -957,7 +957,7 @@ $(document).ready(function() {
 });
 
 $(function(){
-	$("#Category_Name").keyup(check_save).each(function(){
+	$("#categoryName").keyup(check_save).each(function(){
 	  check_save();
 	});
 });
