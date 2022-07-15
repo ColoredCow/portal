@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Database\Seeders;
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Modules\HR\Entities\HrChannel;
 
@@ -19,4 +18,5 @@ class HrChannelsTableSeeder extends Seeder
         $hrChannel = HrChannel::updateOrCreate(['name'=>'Indeed']);
         $hrChannel = HrChannel::updateOrCreate(['name'=>'Website']);
     }
+
 }
