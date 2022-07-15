@@ -17,7 +17,7 @@ class DomainTableSeeder extends Seeder
     {
         $date = Carbon::now()->modify('-2 year');
         $createdDate = clone($date);
-         DB::table('hr_job_domains')->insert([
+        DB::table('hr_job_domains')->insert([
             0 => [
                 'domain_name' => 'Engineering',
                 'slug' => 'engineering',
@@ -54,7 +54,7 @@ class DomainTableSeeder extends Seeder
                 'created_at' => $createdDate,
                 'updated_at' => $createdDate
             ],
-           
+
          ]);
     }
 }
