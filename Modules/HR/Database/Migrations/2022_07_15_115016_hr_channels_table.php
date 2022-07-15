@@ -13,6 +13,7 @@ class HrChannelsTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('hr_channels_table', function (Blueprint $table) { 
             $table->bigIncrements('id');
             $table->text('name');
@@ -28,8 +29,10 @@ class HrChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hr_channels_table',function (Blueprint $table) {
-            $table->dropSoftDeletes();
+        Schema::dropIfExists(
+            'hr_channels_table',
+            function (Blueprint $table) {
+                $table->dropSoftDeletes();
         }
         );
     }
