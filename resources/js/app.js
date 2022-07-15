@@ -961,7 +961,7 @@ $(function(){
 	  check_save();
 	});
 });
-  function check_save(){
+function check_save(){
 	if ($(this).val().length == 0){
 	  $("#save-btn-action").attr("disabled", true);
 	} else{
