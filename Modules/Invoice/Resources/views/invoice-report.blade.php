@@ -53,7 +53,7 @@
                         <td>{{$invoice->amount}}</td>
                         @if($clientCurrency == config('constants.countries.india.currency') || $clientCurrency == null)
                             <td>{{$invoice->gst}}</td>
-                            <td>{{$invoice->invoiceAmountandGstSum}}</td>
+                            <td>{{$invoice->total_amount}}</td>
                             <td>{{$invoice->tds}}</td>
                         @endif
                         @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
@@ -79,7 +79,7 @@
                         <td>{{$invoices->sum('amount')}}</td>
                         @if($clientCurrency == config('constants.countries.india.currency') || $clientCurrency == null)
                             <td>{{$invoices->sum('gst')}}</td>
-                            <td>{{$invoices->sum('invoiceAmountandGstSum')}}
+                            <td>{{$invoices->sum('total_amount')}}
                             <td>{{$invoices->sum('tds')}}</td>
                         @endif
                         @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)

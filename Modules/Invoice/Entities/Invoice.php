@@ -168,7 +168,7 @@ class Invoice extends Model
         }
     }
 
-    public function getInvoiceAmountandGstSumAttribute()
+    public function getTotalAmountAttribute()
     {
         return $this->amount + $this->gst;
     }
