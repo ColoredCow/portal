@@ -20,4 +20,3 @@ class HrChannelsTableSeeder extends Seeder
         }
     }
 }
-
