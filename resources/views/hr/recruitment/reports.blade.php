@@ -6,7 +6,7 @@
     <div class="bar-chart-container">
         <div class="d-flex justify-content-between">
              <div>
-                <h2>Analytics </h2>  
+                <h2>Analytics t</h2>  
             </div>
             <div>
                 <form action="{{route('recruitment.report')}}" method="POST" align="right">
@@ -18,6 +18,8 @@
                 <br>
             </div>
         </div>
+        <pre></pre>
+        <pre></pre>
         <div class="card">
             <div class="card-header" align='left'>
                 <span class="chart-heading mr-5">Application Received</span><span class="total-chart-count">Today's Count:<?php echo $todayCount ?></span>
