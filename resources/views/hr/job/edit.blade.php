@@ -51,10 +51,10 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain<strong class="text-danger">*</strong></label>
-                        <select class="form-control" name="domain" id="domain" value="{{ old('domain') }}" required>
-                            @foreach (config('hr.opportunities.domains') as $domain => $label)
-                                <option value="{{ $domain }}" {{ old('domain', $job->domain) == $domain ? 'selected' : '' }}>{{ $label }}</option>
-                            @endforeach
+                        <select class="form-control" name="domain" id="domain " value="{{ old('type') }}"> 
+                            @foreach($domains as $domain)
+                                <option  value="{{ $domain->slug }}"  {{ old('domain') == $domain ? 'selected' : '' }}>{{ $domain->domain_name }}</option>
+                            @endforeach 
                         </select>   
                     </div>
                     <div class="col-md-3 form-group">
