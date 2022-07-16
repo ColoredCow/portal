@@ -2,7 +2,6 @@
 
 namespace Modules\Report\Http\Controllers;
 
-use Doctrine\DBAL\Schema\View;
 use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
 
@@ -18,7 +17,6 @@ class FinanceReportController extends Controller
     /**
      * Main function to fetch the P&L report.
      */
-
     public function profitAndLoss()
     {
         $currentYear = date('m') > 03 ? date('Y') + 1 : date('Y');
@@ -33,7 +31,6 @@ class FinanceReportController extends Controller
         $allAmounts = array_map(function ($item) {
             return $item['amounts'];
         }, $reportData);
-
 
         return view('report::finance.profit-and-loss', ['reportData' => $reportData, 'currentYear' => $currentYear, 'allAmounts' => $allAmounts]);
     }
