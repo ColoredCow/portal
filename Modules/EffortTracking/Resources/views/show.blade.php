@@ -109,7 +109,10 @@
             </div>
             <div class="modal-body py-5">
                 <div class="text-danger">
-                    <div>Something went wrong while refreshing the efforts.</div>
+                    <p>
+                        Something went wrong while refreshing the efforts. <br>
+                        Please check if the effortsheet formatting is correct.
+                    </p>
                 </div>
             </div>
             <div class="modal-footer">
