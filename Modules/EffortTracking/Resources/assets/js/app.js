@@ -16,7 +16,7 @@ $(function () {
 				}, 3000);
 			},
 			error: function(response) {
-				$('#modal-message').modal('show');
+				$("#modal-message").modal("show");
 				button.prop("disabled", true);
 				button.toggleClass("d-none");
 				button.siblings(".fa-spinner").toggleClass("d-none");
