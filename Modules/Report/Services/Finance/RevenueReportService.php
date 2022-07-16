@@ -4,7 +4,7 @@ namespace Modules\Report\Services\Finance;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
 
 
@@ -28,12 +28,10 @@ class RevenueReportService
     }
 
 
-
     public function getParticularReport($particularSlug, $particular, $startYear, $endYear)
     {
         $startDate =  Carbon::parse($startYear . '-04-01')->startOfDay();
         $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
-
         $particular['amounts'] = $this->{"getParticularAmountFor" . Str::studly($particularSlug)}($particular, $startDate, $endDate);
         return $particular;
     }
@@ -57,7 +55,22 @@ class RevenueReportService
 
     private function getParticularAmountForExport($particular, $startDate, $endDate)
     {
-        return 0;
+        $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
+        $totalAmount = 0;
+        $results = [];
+
+        // ToDo:: We need to change this logic and get the exchange rate for every month.
+        $exchangeRates = app(CurrencyService::class)->getCurrentRatesInINR();
+
+        foreach ($invoices as $invoice) {
+            $amount = $invoice->amount * $exchangeRates;
+            $dateKey =  $invoice->sent_on->format('m-y');
+            $totalAmount += $amount;
+            $results[$dateKey] =  ($results[$dateKey] ?? 0) + $amount;
+        }
+
+        $results['total'] = $totalAmount;
+        return $results;
     }
 
     private function getParticularAmountForCommissionReceived($particular, $startDate, $endDate)

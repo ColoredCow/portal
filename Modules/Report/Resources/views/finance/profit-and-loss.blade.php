@@ -7,8 +7,7 @@
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1"> Profit and Loss Report</h4>
             <span>
-                <a href="{{ route('invoice.tax-report-export', request()->all()) }}" class="btn btn-info text-white"> Export
-                    To Excel</a>
+                <a href="" class="btn disabled btn-info text-white"> Export To Excel </a>
             </span>
         </div>
         <br>
@@ -42,15 +41,16 @@
                             <option {{ request()->input('transaction') == 'revenue' ? 'selected=selected' : '' }}
                                 value="revenue">
                                 Revenue</option>
-                            <option {{ request()->input('transaction') == 'expenses' ? 'selected=selected' : '' }}
+                            <option disabled
+                                {{ request()->input('transaction') == 'expenses' ? 'selected=selected' : '' }}
                                 value="expenses">
                                 Expenses</option>
 
-                            <option {{ request()->input('transaction') == 'texes' ? 'selected=selected' : '' }}
+                            <option disabled {{ request()->input('transaction') == 'texes' ? 'selected=selected' : '' }}
                                 value="texes">
                                 Taxes</option>
 
-                            <option {{ request()->input('transaction') == 'texes' ? 'selected=selected' : '' }}
+                            <option disabled {{ request()->input('transaction') == 'texes' ? 'selected=selected' : '' }}
                                 value="overall">
                                 Overall</option>
                         </select>

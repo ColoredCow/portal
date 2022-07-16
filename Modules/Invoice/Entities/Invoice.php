@@ -22,7 +22,15 @@ class Invoice extends Model
 
     public function scopeStatus($query, $status)
     {
-        return $query->where('status', $status);
+        if (is_string($status)) {
+            return $query->where('status', $status);
+        }
+
+        if (is_array($status)) {
+            return $query->whereIn('status', $status);
+        }
+
+        return $query;
     }
 
     public function scopeYear($query, $year)
