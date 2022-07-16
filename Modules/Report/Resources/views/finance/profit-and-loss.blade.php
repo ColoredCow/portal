@@ -20,14 +20,18 @@
                     <div class='form-group mr-4 w-168'>
                         <select class="form-control bg-light" name="year"
                             onchange="document.getElementById('p&LFilterForm').submit();">
-                            <option {{ request()->input('year') == '' ? 'selected=selected' : '' }} value="">All
-                                Years</option>
-                            @php $year = now()->year; @endphp
-                            @while ($year != 2015)
-                                <option {{ request()->input('year') == $year ? 'selected=selected' : '' }}
-                                    value="{{ $year }}">
-                                    {{ $year }}</option>
-                                @php $year--; @endphp
+                            @php
+                                $startYear = $currentYear;
+                            @endphp
+
+                            @while ($startYear != 2015)
+                                <option value="{{ $startYear }}"
+                                    {{ request()->input('year') == $startYear ? 'selected' : '' }}>
+                                    {{ $startYear - 1 }} - {{ $startYear }}
+                                </option>
+                                @php
+                                    $startYear--;
+                                @endphp
                             @endwhile
                         </select>
                     </div>
@@ -41,6 +45,14 @@
                             <option {{ request()->input('transaction') == 'expenses' ? 'selected=selected' : '' }}
                                 value="expenses">
                                 Expenses</option>
+
+                            <option {{ request()->input('transaction') == 'texes' ? 'selected=selected' : '' }}
+                                value="texes">
+                                Taxes</option>
+
+                            <option {{ request()->input('transaction') == 'texes' ? 'selected=selected' : '' }}
+                                value="overall">
+                                Overall</option>
                         </select>
                     </div>
                 </div>
@@ -48,10 +60,9 @@
         </div>
 
         @php
-            $currentYear = request()->input('year', now()->year);
             $lastYear = $currentYear - 1;
-            $currentYear = substr($currentYear, -2);
-            $lastYear = substr($lastYear, -2);
+            $currentYearVal = substr($currentYear, -2);
+            $lastYearVal = substr($lastYear, -2);
             
         @endphp
 
@@ -62,39 +73,42 @@
                         <th>Head</th>
                         <th>Particulars</th>
                         <th>Total</th>
-                        <th>Apr-{{ $lastYear }} </th>
-                        <th>May-{{ $lastYear }}</th>
-                        <th>Jun-{{ $lastYear }}</th>
-                        <th>Jul-{{ $lastYear }}</th>
-                        <th>Aug-{{ $lastYear }}</th>
-                        <th>Sep-{{ $lastYear }}</th>
-                        <th>Nov-{{ $lastYear }} </th>
-                        <th>Dec-{{ $lastYear }}</th>
-                        <th>Jan-{{ $currentYear }} </th>
-                        <th>Feb-{{ $currentYear }}</th>
-                        <th>Mar-{{ $currentYear }}</th>
+                        <th>Apr-{{ $lastYearVal }} </th>
+                        <th>May-{{ $lastYearVal }}</th>
+                        <th>Jun-{{ $lastYearVal }}</th>
+                        <th>Jul-{{ $lastYearVal }}</th>
+                        <th>Aug-{{ $lastYearVal }}</th>
+                        <th>Sep-{{ $lastYearVal }}</th>
+                        <th>Oct-{{ $lastYearVal }}</th>
+                        <th>Nov-{{ $lastYearVal }} </th>
+                        <th>Dec-{{ $lastYearVal }}</th>
+                        <th>Jan-{{ $currentYearVal }} </th>
+                        <th>Feb-{{ $currentYearVal }}</th>
+                        <th>Mar-{{ $currentYearVal }}</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    <tr>
-                        <td>Head</td>
-                        <td>Particulars</td>
-                        <td>Total</td>
-                        <td>Apr-{{ $lastYear }} </td>
-                        <td>May-{{ $lastYear }}</td>
-                        <td>Jun-{{ $lastYear }}</td>
-                        <td>Jul-{{ $lastYear }}</td>
-                        <td>Aug-{{ $lastYear }}</td>
-                        <td>Sep-{{ $lastYear }}</td>
-                        <td>Nov-{{ $lastYear }} </td>
-                        <td>Dec-{{ $lastYear }}</td>
-                        <td>Jan-{{ $currentYear }}</td>
-                        <td>Feb-{{ $currentYear }}</td>
-                        <td>Mar-{{ $currentYear }}</td>
-                    </tr>
-
+                    @foreach ($reportData as $perticular)
+                        <tr>
+                            <td>{{ $perticular['head'] }}</td>
+                            <td>{{ $perticular['name'] }}</td>
+                            <td>{{ $perticular['amounts']['total'] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["04-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["05-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["06-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["07-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["08-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["09-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["10-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["11-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["12-$lastYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["01-$currentYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["02-$currentYearVal"] ?? 0 }}</td>
+                            <td>{{ $perticular['amounts']["03-$currentYearVal"] ?? 0 }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

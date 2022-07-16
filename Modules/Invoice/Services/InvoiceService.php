@@ -212,7 +212,7 @@ class InvoiceService implements InvoiceServiceContract
     {
         $folder = $this->getInvoiceFilePath($invoice);
 
-        if (! $fileName) {
+        if (!$fileName) {
             $fileName = $file->getClientOriginalName();
         }
         $file = Storage::putFileAs($folder, $file, $fileName, ['visibility' => 'public']);
@@ -251,6 +251,12 @@ class InvoiceService implements InvoiceServiceContract
     {
         return Invoice::status('sent')->get();
     }
+
+    public function getInvoicesBetweenDates($startDate, $endDate, $type = "indian")
+    {
+        return Invoice::sentBetween($startDate, $endDate)->region($type)->get();
+    }
+
 
     private function setInvoiceNumber($invoice, $sent_date)
     {
@@ -311,10 +317,10 @@ class InvoiceService implements InvoiceServiceContract
         $clientAddress = [];
         foreach ($invoices->get() as $invoice) :
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
-        $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-        $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
-        $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
-        $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
+            $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
+            $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
+            $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
+            $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
         endforeach;
 
         return [
@@ -476,7 +482,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -486,7 +492,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -518,7 +524,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -528,7 +534,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -568,7 +574,7 @@ class InvoiceService implements InvoiceServiceContract
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
 
-        if (! empty($ccEmails)) {
+        if (!empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
             foreach ($ccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -578,7 +584,7 @@ class InvoiceService implements InvoiceServiceContract
             }
         }
 
-        if (! empty($bccEmails)) {
+        if (!empty($bccEmails)) {
             $bccEmails = array_map('trim', explode(',', $data['bcc']));
             foreach ($bccEmails as $index => $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -678,8 +684,8 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         $invoices = Invoice::query()->applyFilters($filters)
-        ->orderBy('sent_on', 'desc')
-        ->get();
+            ->orderBy('sent_on', 'desc')
+            ->get();
 
         if (isset($filters['client_id'])) {
             $clientId = request()->client_id;

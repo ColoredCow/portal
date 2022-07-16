@@ -61,6 +61,14 @@ class Invoice extends Model
     {
         return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-' . '01'), (($invoiceYear + 1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '01')]);
     }
+
+    public function scopeSentBetween($query, $startDate, $endDate)
+    {
+        $query->whereDate('sent_on', '>=',  $startDate);
+        $query->whereDate('sent_on', '<=',  $endDate);
+        return $query;
+    }
+
     public function scopeApplyFilters($query, $filters)
     {
         if ($year = Arr::get($filters, 'year', '')) {
