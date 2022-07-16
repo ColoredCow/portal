@@ -43,7 +43,7 @@ class SyncEffortsheet extends Command
 
         foreach ($projects as $project) {
             $effortTracking = new EffortTrackingService;
-            $effortTracking->refreshEfforts($project);
+            $effortTracking->getEffortForProject($project);
         }
     }
 }

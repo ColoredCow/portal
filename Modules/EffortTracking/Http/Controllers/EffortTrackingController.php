@@ -30,9 +30,9 @@ class EffortTrackingController extends Controller
      * Refresh the efforts of the project team members.
      * @param Project $project
      */
-    public function refreshEfforts(Project $project)
+    public function getEffortForProject(Project $project)
     {
-        if ($this->service->refreshEfforts($project)) {
+        if ($this->service->getEffortForProject($project)) {
             return response()->json(['message' => 'Effort updated successfully'], 200);
         }
 

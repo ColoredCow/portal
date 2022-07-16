@@ -144,12 +144,12 @@ class EffortTrackingService
         ];
     }
 
-    public function refreshEfforts($project)
+    public function getEffortForProject($project)
     {
         $users = User::with('projectTeamMembers');
         $sheetColumnsName = config('efforttracking.columns_name');
         try {
-            $effortSheetUrl = $project->effort_sheet_url;
+            $effortSheetUrl = $project->effort_sheet_url ?: $project->client->effort_sheet_url;
 
             if (! $effortSheetUrl) {
                 return false;
@@ -204,7 +204,7 @@ class EffortTrackingService
             $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheet[0]);
             $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheet[0]);
 
-            if ($sheetIndexForTeamMemberName && $sheetIndexForTotalBillableEffort && $sheetIndexForStartDate && $sheetIndexForEndDate === false) {
+            if (($sheetIndexForTeamMemberName && $sheetIndexForTotalBillableEffort && $sheetIndexForStartDate && $sheetIndexForEndDate) == false) {
                 return false;
             }
 
@@ -225,6 +225,9 @@ class EffortTrackingService
             }
 
             foreach ($usersData as $sheetUser) {
+                if (!isset($sheetUser[$sheetIndexForTeamMemberName])) {
+                    dd($sheetIndexForTeamMemberName);
+                }
                 $userNickname = $sheetUser[$sheetIndexForTeamMemberName];
                 $portalUsers = clone $users;
                 $portalUser = $portalUsers->where('nickname', $userNickname)->first();
