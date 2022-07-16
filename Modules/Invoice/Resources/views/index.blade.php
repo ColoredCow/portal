@@ -137,6 +137,7 @@
                     @elseif((request()->invoice_status == 'ready'  || $invoiceStatus == 'ready') && $clientsReadyToSendInvoicesData->isNotEmpty())
                         @foreach ($clientsReadyToSendInvoicesData as $client)
                             @php
+                                $projectId = optional($client->project)->id;
                                 $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($month, $year, $client->clientLevelBillingProjects);
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
@@ -150,7 +151,9 @@
                                     'year' => $year,
                                     'emailSubject' => $sendInvoiceEmailSubject,
                                     'emailBody' => $sendInvoiceEmailBody,
-                                    'clientId' => $client->id
+                                    'clientId' => $client->id,
+                                    'ccEmails' => optional($client->emailIds($projectId))->cc_emails,
+                                    'bccEmails' => optional($client->emailIds($projectId))->bcc_emails
                                 ];
                             @endphp
                             <tr>

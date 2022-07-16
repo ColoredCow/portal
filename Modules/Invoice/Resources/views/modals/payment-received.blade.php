@@ -1,7 +1,6 @@
 @php
-    $project_id = $invoice->project_id;
-    $ccEmails = optional($invoice->client->emailIds($project_id))->cc_emails;
-    $bccEmails = optional($invoice->client->emailIds($project_id))->bcc_emails;
+    $ccEmails = optional($invoice->client->emailIds($invoice->project_id))->cc_emails;
+    $bccEmails = optional($invoice->client->emailIds($invoice->project_id))->bcc_emails;
 @endphp
 
 <div class="modal fade" id="paymentReceived" tabindex="-1" role="dialog" aria-hidden="true">
