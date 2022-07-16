@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Modules\Invoice\Services\CurrencyService;
 use Modules\Invoice\Services\InvoiceService;
 
-
 class RevenueReportService
 {
     protected $invoiceService;
@@ -19,20 +18,21 @@ class RevenueReportService
 
     public function getAllParticulars(int $startYear, int $endYear): array
     {
-        $particulars =  config('report.finance.profit_and_loss.particulars.revenue');
+        $particulars = config('report.finance.profit_and_loss.particulars.revenue');
         $results = [];
         foreach ($particulars as $key => $particular) {
             $results[] = $this->getParticularReport($key, $particular, $startYear, $endYear);
         }
+
         return $results;
     }
 
-
     public function getParticularReport(String $particularSlug, array $particular, int $startYear, int $endYear): array
     {
-        $startDate =  Carbon::parse($startYear . '-04-01')->startOfDay();
+        $startDate = Carbon::parse($startYear . '-04-01')->startOfDay();
         $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
-        $particular['amounts'] = $this->{"getParticularAmountFor" . Str::studly($particularSlug)}($particular, $startDate, $endDate);
+        $particular['amounts'] = $this->{'getParticularAmountFor' . Str::studly($particularSlug)}($particular, $startDate, $endDate);
+
         return $particular;
     }
 
@@ -43,15 +43,15 @@ class RevenueReportService
         $results = [];
 
         foreach ($invoices as $invoice) {
-            $dateKey =  $invoice->sent_on->format('m-y');
+            $dateKey = $invoice->sent_on->format('m-y');
             $totalAmount += $invoice->amount;
-            $results[$dateKey] =  ($results[$dateKey] ?? 0) + $invoice->amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $invoice->amount;
         }
 
         $results['total'] = $totalAmount;
+
         return $results;
     }
-
 
     private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
     {
@@ -64,12 +64,13 @@ class RevenueReportService
 
         foreach ($invoices as $invoice) {
             $amount = $invoice->amount * $exchangeRates;
-            $dateKey =  $invoice->sent_on->format('m-y');
+            $dateKey = $invoice->sent_on->format('m-y');
             $totalAmount += $amount;
-            $results[$dateKey] =  ($results[$dateKey] ?? 0) + $amount;
+            $results[$dateKey] = ($results[$dateKey] ?? 0) + $amount;
         }
 
         $results['total'] = $totalAmount;
+
         return $results;
     }
 

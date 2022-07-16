@@ -72,8 +72,9 @@ class Invoice extends Model
 
     public function scopeSentBetween($query, $startDate, $endDate)
     {
-        $query->whereDate('sent_on', '>=',  $startDate);
-        $query->whereDate('sent_on', '<=',  $endDate);
+        $query->whereDate('sent_on', '>=', $startDate);
+        $query->whereDate('sent_on', '<=', $endDate);
+
         return $query;
     }
 

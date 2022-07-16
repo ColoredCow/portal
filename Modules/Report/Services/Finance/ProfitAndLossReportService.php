@@ -2,12 +2,11 @@
 
 namespace Modules\Report\Services\Finance;
 
-
 class ProfitAndLossReportService
 {
     public function profitAndLoss(array $filters): array
     {
-        $transaction =  $filters['transaction'];
+        $transaction = $filters['transaction'];
         $year = $filters['year'];
 
         $startYear = $year - 1;
