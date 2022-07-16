@@ -190,7 +190,7 @@ class InvoiceService implements InvoiceServiceContract
         $body = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first())->setting_value ?: '';
         $body = str_replace($templateVariablesForBody['billing-person-name'], optional($invoice->client->billing_contact)->first_name, $body);
         $body = str_replace($templateVariablesForBody['invoice-number'], $invoice->invoice_number, $body);
-        $body = str_replace($templateVariablesForBody['invoice-amount'], $invoice->invoiceAmount(), $body);
+        $body = str_replace($templateVariablesForBody['currency'], optional($invoice->client->country)->currency_symbol, $body);
 
         return [
             'subject' => $subject,
