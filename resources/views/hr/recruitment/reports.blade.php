@@ -8,7 +8,7 @@
              <div>
                 <h2>Analytics t</h2>  
             </div>
-            <div>
+            <div class="my-2">
                 <form action="{{route('recruitment.report')}}" method="POST" align="right">
                     {{csrf_field()}}
                     <input type="date" name="report_start_date" id='StartDate'> to
