@@ -5,7 +5,7 @@ namespace Modules\Report\Services\Finance;
 
 class ExpenseReportService
 {
-    public function getAllParticulars($year)
+    public function getAllParticulars(String $year): array
     {
         $particulars =  config('report.finance.profit_and_loss.particulars.expenses');
         $results = [];
@@ -16,18 +16,13 @@ class ExpenseReportService
     }
 
 
-    public function getParticularReport($particular, $year)
+    public function getParticularReport(array $particular, String $year): array
     {
         $results = [];
         $results['name'] = $particular['name'];
         $results['head'] = $particular['head'];
-        $results['amount'] = $this->getParticularAmount($particular, $year);
-        return $results;
-    }
 
-    private function getParticularAmount($particular, $year)
-    {
-        $amount = 0;
-        return $amount;
+        // ToDO:: we need to add function to get the amount for each particular
+        return $results;
     }
 }

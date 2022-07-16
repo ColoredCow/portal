@@ -17,7 +17,7 @@ class RevenueReportService
         $this->invoiceService = app(InvoiceService::class);
     }
 
-    public function getAllParticulars($startYear, $endYear)
+    public function getAllParticulars(String $startYear, String $endYear): array
     {
         $particulars =  config('report.finance.profit_and_loss.particulars.revenue');
         $results = [];
@@ -28,7 +28,7 @@ class RevenueReportService
     }
 
 
-    public function getParticularReport($particularSlug, $particular, $startYear, $endYear)
+    public function getParticularReport(String $particularSlug, array $particular, String $startYear, String $endYear): array
     {
         $startDate =  Carbon::parse($startYear . '-04-01')->startOfDay();
         $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
@@ -36,7 +36,7 @@ class RevenueReportService
         return $particular;
     }
 
-    private function getParticularAmountForDomestic($particular, $startDate, $endDate)
+    private function getParticularAmountForDomestic(array $particular, Object $startDate, Object $endDate): array
     {
         $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'indian');
         $totalAmount = 0;
@@ -53,7 +53,7 @@ class RevenueReportService
     }
 
 
-    private function getParticularAmountForExport($particular, $startDate, $endDate)
+    private function getParticularAmountForExport(array $particular, Object $startDate, Object $endDate): array
     {
         $invoices = $this->invoiceService->getInvoicesBetweenDates($startDate, $endDate, 'non-indian');
         $totalAmount = 0;
@@ -73,28 +73,28 @@ class RevenueReportService
         return $results;
     }
 
-    private function getParticularAmountForCommissionReceived($particular, $startDate, $endDate)
+    private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        return 0;
+        return ['total' => 0];
     }
 
-    private function getParticularAmountForCashBack($particular, $startDate, $endDate)
+    private function getParticularAmountForCashBack(array $particular, Object $startDate, Object $endDate): array
     {
-        return 0;
+        return ['total' => 0];
     }
 
-    private function getParticularAmountForDiscountReceived($particular, $startDate, $endDate)
+    private function getParticularAmountForDiscountReceived(array $particular, Object $startDate, Object $endDate): array
     {
-        return 0;
+        return ['total' => 0];
     }
 
-    private function getParticularAmountForInterestOnFd($particular, $startDate, $endDate)
+    private function getParticularAmountForInterestOnFd(array $particular, Object $startDate, Object $endDate): array
     {
-        return 0;
+        return ['total' => 0];
     }
 
-    private function getParticularAmountForForeignExchangeLoss($particular, $startDate, $endDate)
+    private function getParticularAmountForForeignExchangeLoss(array $particular, Object $startDate, Object $endDate): array
     {
-        return 0;
+        return ['total' => 0];
     }
 }

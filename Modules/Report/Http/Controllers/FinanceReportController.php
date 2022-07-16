@@ -2,6 +2,7 @@
 
 namespace Modules\Report\Http\Controllers;
 
+use Doctrine\DBAL\Schema\View;
 use Illuminate\Routing\Controller;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
 
@@ -13,6 +14,10 @@ class FinanceReportController extends Controller
     {
         $this->service = $service;
     }
+
+    /**
+     * Main function to fetch the P&L report.
+     */
 
     public function profitAndLoss()
     {

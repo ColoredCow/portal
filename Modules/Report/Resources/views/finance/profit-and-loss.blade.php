@@ -66,7 +66,7 @@
             
         @endphp
 
-        <div style="width: 73em; overflow: scroll;">
+        <div>
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>

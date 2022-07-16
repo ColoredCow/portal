@@ -13,7 +13,7 @@ class ProfitAndLossReportService
         $startYear = $year - 1;
         $endYear = $year;
 
-        if ($transaction != 'expenses') {
+        if ($transaction == 'revenue') {
             return app(RevenueReportService::class)->getAllParticulars($startYear, $endYear);
         }
 
