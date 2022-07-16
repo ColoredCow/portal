@@ -225,9 +225,6 @@ class EffortTrackingService
             }
 
             foreach ($usersData as $sheetUser) {
-                if (!isset($sheetUser[$sheetIndexForTeamMemberName])) {
-                    dd($sheetIndexForTeamMemberName);
-                }
                 $userNickname = $sheetUser[$sheetIndexForTeamMemberName];
                 $portalUsers = clone $users;
                 $portalUser = $portalUsers->where('nickname', $userNickname)->first();
