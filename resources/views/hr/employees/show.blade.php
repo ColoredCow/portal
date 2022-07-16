@@ -2,6 +2,9 @@
 @section('content')
 
 <div class="container">
+    <br>
+        @include('hr.employees.sub-views.menu')
+    <br>
     <div class="mt-4 card">
         <div class="card-header pb-lg-5 fz-28"><div class="mt-4 ml-5">Employee Details</div></div>
         <div class="card-body">
