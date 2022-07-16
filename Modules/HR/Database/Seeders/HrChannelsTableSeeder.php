@@ -14,8 +14,10 @@ class HrChannelsTableSeeder extends Seeder
      */
     public function run()
     {
-        $hrChannel = HrChannel::updateOrCreate(['name'=>'LinkedIn']);
-        $hrChannel = HrChannel::updateOrCreate(['name'=>'Indeed']);
-        $hrChannel = HrChannel::updateOrCreate(['name'=>'Website']);
+        $hrChannels = ['LinkedIn', 'Indeed', 'Website'];
+        foreach ($hrChannels as $channelName) {
+            HrChannel::updateOrCreate(['name' => $channelName]);
+        }
     }
 }
+

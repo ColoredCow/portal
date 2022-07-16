@@ -16,7 +16,7 @@ class UpdateHrApplicationsWithHrChannelsTable extends Migration
         Schema::table('hr_applications', function (Blueprint $table) {
             $table->unsignedBigInteger('hr_channels_id')->nullable();
 
-            $table->foreign('hr_channels_id')->references('id')->on('hr_channels_table');
+            $table->foreign('hr_channel_id')->references('id')->on('hr_channels');
         });
     }
 

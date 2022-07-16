@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class HrChannel extends Model
 {
     public $timestamps = true;
-    protected $table = 'hr_channels_table';
-    protected $fillable = ['id', 'name'];
+    protected $table = 'hr_channels';
+    protected $guarded = [];
 }
