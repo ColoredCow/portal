@@ -90,7 +90,7 @@
                         <td>Sep-{{ $lastYear }}</td>
                         <td>Nov-{{ $lastYear }} </td>
                         <td>Dec-{{ $lastYear }}</td>
-                        <td>Jan-{{ $currentYear }} </td>
+                        <td>Jan-{{ $currentYear }}</td>
                         <td>Feb-{{ $currentYear }}</td>
                         <td>Mar-{{ $currentYear }}</td>
                     </tr>
