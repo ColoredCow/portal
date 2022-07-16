@@ -42,8 +42,12 @@ class ReportsController extends Controller
 
     public function searchBydate(Request $req)
     {
-        $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
-            ->count();
+    if ($req->report_start_date = null && $req->report_end_date = null);
+    {
+        return redirect()->back();
+    }
+        ($todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
+            ->count());
 
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
