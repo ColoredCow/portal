@@ -167,4 +167,9 @@ class Invoice extends Model
             return $this->amount * $this->conversion_rate;
         }
     }
+
+    public function getTotalAmountAttribute()
+    {
+        return $this->amount + $this->gst;
+    }
 }

@@ -205,6 +205,9 @@
         },
 
         changePaidAmountListener() {
+            var emailBody = $("#emailBody").text();
+            emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+            tinymce.get("emailBody").setContent(emailBody, { format: "html" });
             this.calculateTaxes()
         },
 
@@ -253,28 +256,32 @@
 
         updatePaymentAmountDetails(filtered_number_list) {
             let totalNumbersInList =  filtered_number_list.length
-
+            var emailBody = $("#emailBody").text();
+           
             for (var index = 0; index < totalNumbersInList; index++) {
                 if (this.client.type == 'indian') {
                     if (index == totalNumbersInList - 1) {
                         this.amountPaid = filtered_number_list[index]
                         $('#amountPaid').val(this.amountPaid)
+                        emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                         this.calculateTaxes()
                     }
+                    continue;
                 }
-
+                
                 if (index == 0) {
                     this.amountPaid = filtered_number_list[index]
                     $('#amountPaid').val(this.amountPaid)
+                    emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                     this.calculateTaxes()
                 } else if (index == 1) {
                     conversionRate = filtered_number_list[index]
                     this.conversionRate = conversionRate
-                    console.log(this.currentExchangeRate)
                     this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
                 }
-
             }
+
+            tinymce.get("emailBody").setContent(emailBody, { format: "html" });
         }
     },
 
@@ -286,6 +293,7 @@
             clientId:"{{ $invoice->client_id  }}",
             projectId:"{{ $invoice->project_id }}",
             client:@json( $invoice->client),
+            amountPaidText:"|*amount_paid*|",  
             currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
             currencyTransactionCharge:"{{ $invoice->currency_transaction_charge ? : $invoice->currency }}",
             comments:`{{ $invoice->comments }}`,
