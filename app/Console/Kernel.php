@@ -20,7 +20,6 @@ class Kernel extends ConsoleKernel
         SendEffortSummaryCommand::class,
         ZeroEffortInProject::class,
     ];
-
     /**
      * Define the application's command schedule.
      *
@@ -33,10 +32,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
         $schedule->command('sync:effortsheet')->weekdays()->timezone(config('constants.timezone.indian'))->everyFourHours();
         $schedule->command('effort-summary:send')->weekdays()->timezone(config('constants.timezone.indian'))->at('21:00');
-        $schedule->command('hr:check-follow-ups')->daily();
+         $schedule->command('hr:check-follow-ups')->daily();                                                                                                                                                                
+        $schedule->command('command:message-for-email-verified')->dailyAt('7:00');
+
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
+        
     }
 
     /**
@@ -49,5 +51,6 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
+  
     }
 }
