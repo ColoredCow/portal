@@ -204,7 +204,7 @@ class EffortTrackingService
             $sheetIndexForStartDate = $this->getColumnIndex($sheetColumnsName['start_date'], $sheet[0]);
             $sheetIndexForEndDate = $this->getColumnIndex($sheetColumnsName['end_date'], $sheet[0]);
 
-            if (($sheetIndexForTeamMemberName && $sheetIndexForTotalBillableEffort && $sheetIndexForStartDate && $sheetIndexForEndDate) == false) {
+            if ($sheetIndexForTeamMemberName === false || $sheetIndexForTotalBillableEffort === false || $sheetIndexForStartDate === false || $sheetIndexForEndDate === false) {
                 return false;
             }
 
@@ -225,38 +225,42 @@ class EffortTrackingService
             }
 
             foreach ($usersData as $sheetUser) {
-                $userNickname = $sheetUser[$sheetIndexForTeamMemberName];
-                $portalUsers = clone $users;
-                $portalUser = $portalUsers->where('nickname', $userNickname)->first();
+                try {
+                    $userNickname = $sheetUser[$sheetIndexForTeamMemberName];
+                    $portalUsers = clone $users;
+                    $portalUser = $portalUsers->where('nickname', $userNickname)->first();
 
-                if (! $portalUser) {
-                    continue;
-                }
-
-                $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
-                $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
-                $currentDate = now(config('constants.timezone.indian'))->today();
-
-                if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
-                    continue;
-                }
-
-                $effortData = [
-                    'portal_user' => $portalUser,
-                    'sheet_user' => $sheetUser,
-                    'project' => $project,
-                    'billing_start_date' => $billingStartDate,
-                    'billing_end_date' => $billingEndDate,
-                    'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
-                ];
-
-                foreach ($projectsInSheet as $sheetProject) {
-                    try {
-                        $effortData['sheet_project'] = $sheetProject;
-                        $this->updateEffort($effortData);
-                    } catch (Exception $e) {
+                    if (! $portalUser) {
                         continue;
                     }
+
+                    $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
+                    $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
+                    $currentDate = now(config('constants.timezone.indian'))->today();
+
+                    if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
+                        continue;
+                    }
+
+                    $effortData = [
+                        'portal_user' => $portalUser,
+                        'sheet_user' => $sheetUser,
+                        'project' => $project,
+                        'billing_start_date' => $billingStartDate,
+                        'billing_end_date' => $billingEndDate,
+                        'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
+                    ];
+
+                    foreach ($projectsInSheet as $sheetProject) {
+                        try {
+                            $effortData['sheet_project'] = $sheetProject;
+                            $this->updateEffort($effortData);
+                        } catch (Exception $e) {
+                            continue;
+                        }
+                    }
+                } catch (Exception $e) {
+                    continue;
                 }
             }
         } catch (Exception $e) {
