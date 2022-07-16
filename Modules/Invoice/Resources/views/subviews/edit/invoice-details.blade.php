@@ -10,7 +10,7 @@
                             @if($label != "pending")
                                 <option value="{{ $label }}">{{ $status }}</option>
                             @endif
-                        @endforeach 
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -92,15 +92,15 @@
                 </div>
 
                 <div class="form-group d-flex">
-                    <label for="amount" class="field-required mr-3 pt-1">Received Amount</label>
+                    <label for="amountPaid" class="field-required mr-3 pt-1">Received Amount</label>
                     <div class="input-group flex-1">
-                        <input v-model="amount_paid" type="number" class="form-control" name="amount_paid" id="amount_paid"
+                        <input v-model="amountPaid" type="number" class="form-control" name="amount_paid" id="amountPaid"
                             placeholder="Amount Received" required="required" step=".01" min="0" v-on:input="changePaidAmountListener">
                             <div class="input-group-prepend">
-                                <select name="currency_transaction_charge" v-model="currency_transaction_charge" id="currency_transaction_charge" class="input-group-text" required="required">
+                                <select name="currency_transaction_charge" v-model="currencyTransactionCharge" id="currencyTransactionCharge" class="input-group-text" required="required">
                                 @foreach($countries as $country)
                                     <option value="{{$country->currency}}">{{$country->currency}}</option>
-                                @endforeach    
+                                @endforeach
                                 </select>
                             </div>
                     </div>
@@ -108,7 +108,7 @@
 
                 <div class="form-group-inline d-flex mb-2">
                     <label for="payment_at" class="field-required mr-8 pt-1">Payment date</label>
-                    <input type="date" class="form-control flex-1" name="payment_at" id="payment_at" 
+                    <input type="date" class="form-control flex-1" name="payment_at" id="payment_at"
                     required="required"
                     value="{{ $invoice->payment_at ? $invoice->payment_at->format('Y-m-d') : date('Y-m-d') }}">
                 </div>
@@ -123,34 +123,34 @@
                 <div class="form-group" v-if="this.client.type == 'indian'">
                     <div class="d-flex">
                         <label for="tds_percentage" class="mr-4 pt-1 field-required">TDS %:</label>
-                        <input type="text" class = "form-control w-272 ml-auto" name="tds_percentage" v-model='tds_percentage' required="required">
+                        <input type="text" class = "form-control w-272 ml-auto" name="tds_percentage" v-model='tdsPercentage' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type != 'indian'">
                     <div class="d-flex">
                         <label for="bank_charges" class="mr-4 pt-1 field-required">Bank Charges:</label>
-                        <input type="text" class = "form-control w-272 ml-auto" name="bank_charges" v-model='bank_charges' required="required">
+                        <input type="number" class="form-control w-272 ml-auto" step="0.01" name="bank_charges" v-model='bankCharges' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
                         <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate Diff:</label>
-                        <input type="text" class = "form-control w-272 ml-auto" name="conversion_rate_diff" v-model = 'conversion_rate_diff' required="required">
+                        <input type="number" class="form-control w-272 ml-auto" step="0.01" name="conversion_rate_diff" v-model = 'conversionRateDiff' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
                         <label for="conversion_rate" class="mr-4 pt-1 field-required">Conversion Rate:</label>
-                        <input type="text" class = "form-control w-272 ml-auto" name="conversion_rate" v-model = 'conversion_rate' required="required">
+                        <input type="number" id="conversionRate" class="form-control w-272 ml-auto" step="0.01" name="conversion_rate" v-model = 'conversionRate' required="required">
                     </div>
                 </div>
 
                 <div class="form-group ">
                     <label for="comments">Comments</label>
-                    <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
+                    <textarea name="comments" id="paidInvoiceComment" rows="5" class="form-control" @keyup="parseComment($event)" v-model="comments"></textarea>
                 </div>
 
             </div>
@@ -182,10 +182,10 @@
     <div class="card-footer">
         <button type="submit" class="btn btn-primary mr-4">Save</button>
         @if(auth()->user()->can('finance_invoices.delete'))
-            <span class="btn btn-danger" @click="deleteInvoice()" >Delete</span>   
+            <span class="btn btn-danger" @click="deleteInvoice()" >Delete</span>
         @else
             @include('errors.403')
-        @endif    
+        @endif
     </div>
 </div>
 
@@ -217,12 +217,12 @@
         },
 
         updateTds() {
-            this.tds = this.amount - this.amount_paid + (this.amount * 0.18)
-            this.tds_percentage = (this.tds/this.amount) * 100
+            this.tds = this.amount - this.amountPaid + (this.amount * 0.18)
+            this.tdsPercentage = (this.tds/this.amount) * 100
         },
 
         updateBankCharges() {
-            this.bank_charges = this.amount - this.amount_paid
+            this.bankCharges = this.amount - this.amountPaid
         },
 
         showEmail($event) {
@@ -230,6 +230,50 @@
                 this.show_on_select = true
             } else {
                 this.show_on_select = false
+            }
+        },
+
+        parseComment($event) {
+            let comment = event.target.value
+
+            extractedNumberList = comment.split(" ").map(function(word) {
+                var number = Number(word.trim().replaceAll(",", ""))
+                if (isNaN(number)) {
+                    return null;
+                }
+                return number;
+            });
+
+            var filteredNumberList = extractedNumberList.filter(function (number) {
+                return number != null;
+            });
+
+            this.updatePaymentAmountDetails(filteredNumberList)
+        },
+
+        updatePaymentAmountDetails(filtered_number_list) {
+            let totalNumbersInList =  filtered_number_list.length
+
+            for (var index = 0; index < totalNumbersInList; index++) {
+                if (this.client.type == 'indian') {
+                    if (index == totalNumbersInList - 1) {
+                        this.amountPaid = filtered_number_list[index]
+                        $('#amountPaid').val(this.amountPaid)
+                        this.calculateTaxes()
+                    }
+                }
+
+                if (index == 0) {
+                    this.amountPaid = filtered_number_list[index]
+                    $('#amountPaid').val(this.amountPaid)
+                    this.calculateTaxes()
+                } else if (index == 1) {
+                    conversionRate = filtered_number_list[index]
+                    this.conversionRate = conversionRate
+                    console.log(this.currentExchangeRate)
+                    this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
+                }
+
             }
         }
     },
@@ -240,25 +284,26 @@
             invoice:@json($invoice),
             projects:@json( $invoice->client->projects),
             clientId:"{{ $invoice->client_id  }}",
-            projectId:"{{ $invoice->project_id  }}",
+            projectId:"{{ $invoice->project_id }}",
             client:@json( $invoice->client),
-            currency_transaction_charge:"{{ $invoice->currency_transaction_charge ? : $invoice->currency }}",
-            comments:`{{ $invoice->comments }}`, 
+            currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
+            currencyTransactionCharge:"{{ $invoice->currency_transaction_charge ? : $invoice->currency }}",
+            comments:`{{ $invoice->comments }}`,
             status:"{{ $invoice->status }}",
             amount:"{{ $invoice->amount }}",
             sent_on:"{{ $invoice->sent_on->format('Y-m-d') }}",
             due_on:"{{ $invoice->due_on->format('Y-m-d') }}",
-            amount_paid: "{{ $invoice->amount_paid }}",
-            bank_charges: "{{ $invoice->bank_charges }}",
-            conversion_rate_diff: "{{ $invoice->conversion_rate_diff }}",
-            conversion_rate: "{{ $invoice->conversion_rate }}",
+            amountPaid: "{{ $invoice->amount_paid }}",
+            bankCharges: "{{ $invoice->bank_charges }}",
+            conversionRateDiff: "{{ $invoice->conversion_rate_diff }}",
+            conversionRate: "{{ $invoice->conversion_rate }}",
             tds: "{{ $invoice->tds }}",
-            tds_percentage: "{{ $invoice->tds_percentage }}",
+            tdsPercentage: "{{ $invoice->tds_percentage }}",
             show_on_select: true,
         }
     },
 
-   
+
 
     mounted() {
     },

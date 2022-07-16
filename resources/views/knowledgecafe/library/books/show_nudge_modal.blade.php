@@ -47,7 +47,7 @@
 
                             @if($book->readers->count())
                                 <div id="readers_section" class="mt-3">
-                                    <div class="d-flex justify-content-start">
+                                    <div class="d-flex justify-content-start flex-wrap">
                                         @foreach($book->readers as $reader)
                                             <div class="text-center mr-2">
                                                 <img

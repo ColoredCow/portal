@@ -9,12 +9,12 @@
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Category Name<strong class="text-danger">*</strong></label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="categoryName" name="name" required>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" form="create-form" id="save-btn-action">Save</button>
+                <button type="submit" class="btn btn-primary" form="create-form" id="save-btn-action" disabled>Save</button>
             </div>
         </div>
     </div>

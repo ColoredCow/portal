@@ -96,7 +96,7 @@
                                                 <th scope="col" class="pb-md-3 pb-xl-4 px-9">Name</th>
                                                 <th scope="col" class="pb-md-3 pb-xl-4">Hours Booked</th>
                                                 <th scope="col" class="pb-lg-1">Expected Hours
-                                                    
+
                                                     <div class="ml-md-3 ml-xl-6 font-weight-bold fz-12"> 
                                                         ({{$daysTillToday}} Days)
                                                     </div>
