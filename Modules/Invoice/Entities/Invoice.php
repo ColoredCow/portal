@@ -111,6 +111,11 @@ class Invoice extends Model
         return $this->amount . ' ' . optional($country)->currency_symbol;
     }
 
+    public function getFormattedInvoiceNumberAttribute()
+    {
+        return substr($this->invoice_number, 0, -4);
+    }
+
     public function isAmountInINR()
     {
         return $this->currency == 'INR';
@@ -125,7 +130,7 @@ class Invoice extends Model
             $amount = (float) $this->amount + (float) $this->gst;
         }
 
-        return trim(optional($country)->currency_symbol . ' ' . $amount);
+        return trim(optional($country)->currency_symbol . $amount);
     }
 
     public function invoiceAmounts()

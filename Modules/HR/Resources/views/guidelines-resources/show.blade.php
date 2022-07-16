@@ -1,6 +1,6 @@
 @extends('hr::layouts.master')
 @section('content')
-<div class="row col-gap justify-content-center">
+<div class="row col-gap justify-content-center mt-5">
     <div class="col-md-7">
         <h3>Resources for Laravel Developer</h3>
     </div>
@@ -16,7 +16,9 @@
     </div>
 </div>
 <div class="container mx-15 mt-5">
-    <p>No resource exist for this job. </p>
+        <div class="text-center mt-25">
+        <p>No resource exist for this job. </p>
+    </div>
 </div>
 <!-- Functionality yet to be created -->
 @include('hr::guidelines-resources.create-category-modal')
