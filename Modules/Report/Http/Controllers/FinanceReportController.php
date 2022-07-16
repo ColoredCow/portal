@@ -25,6 +25,11 @@ class FinanceReportController extends Controller
         $filters = array_merge($defaultFilters, request()->all());
         $reportData = $this->service->profitAndLoss($filters);
 
-        return view('report::finance.profit-and-loss', ['reportData' => $reportData, 'currentYear' => $currentYear]);
+        $allAmounts = array_map(function ($item) {
+            return $item['amounts'];
+        }, $reportData);
+
+
+        return view('report::finance.profit-and-loss', ['reportData' => $reportData, 'currentYear' => $currentYear, 'allAmounts' => $allAmounts]);
     }
 }

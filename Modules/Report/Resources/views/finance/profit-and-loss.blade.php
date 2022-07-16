@@ -109,6 +109,25 @@
                             <td>{{ $perticular['amounts']["03-$currentYearVal"] ?? 0 }}</td>
                         </tr>
                     @endforeach
+
+                    <tr class="bg-info">
+
+                        <td colspan="2">Total Revenue </td>
+                        <td>{{ array_sum(array_column($allAmounts, 'total')) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "04-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "05-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "06-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "07-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "08-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "09-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "10-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "11-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "12-$lastYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "01-$currentYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "02-$currentYearVal")) }}</td>
+                        <td>{{ array_sum(array_column($allAmounts, "03-$currentYearVal")) }}</td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
