@@ -17,7 +17,7 @@ class RevenueReportService
         $this->invoiceService = app(InvoiceService::class);
     }
 
-    public function getAllParticulars(String $startYear, String $endYear): array
+    public function getAllParticulars(int $startYear, int $endYear): array
     {
         $particulars =  config('report.finance.profit_and_loss.particulars.revenue');
         $results = [];
@@ -28,7 +28,7 @@ class RevenueReportService
     }
 
 
-    public function getParticularReport(String $particularSlug, array $particular, String $startYear, String $endYear): array
+    public function getParticularReport(String $particularSlug, array $particular, int $startYear, int $endYear): array
     {
         $startDate =  Carbon::parse($startYear . '-04-01')->startOfDay();
         $endDate = Carbon::parse($endYear . '-03-31')->endOfDay();
