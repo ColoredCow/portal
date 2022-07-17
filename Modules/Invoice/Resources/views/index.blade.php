@@ -10,6 +10,19 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                 
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+                        $(this).remove(); 
+                    });
+                }, 6000);
+                 
+                });
+                </script>
+                
         @endif
         <ul class="nav nav-pills mb-6">
             @php
