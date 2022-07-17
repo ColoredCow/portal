@@ -10,14 +10,7 @@
       </div>
       <div class="modal-body">
       @foreach ($rounds as $round)
-          @php
-          $roundWiseCount = camel_case($round).'Count';
-
-          @endphp
-          <div class="d-flex">
-            <p>{{$round}}</p>&nbsp;{{ '-' }}&nbsp;
-            <p>{{$$roundWiseCount}} </p> 
-          </div>
+            <p>{{$round->name}} - {{$round->counttotal}} </p>
           @endforeach
       </div>
       <div class="modal-footer">

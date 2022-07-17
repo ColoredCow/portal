@@ -21,6 +21,7 @@ use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
+use Illuminate\Support\Facades\DB;
 
 abstract class ApplicationController extends Controller
 {
@@ -131,10 +132,15 @@ abstract class ApplicationController extends Controller
             })
             ->count();
         }
+
+        $hrRoundsCounts = DB::table('hr_rounds')
+        ->join('hr_application_round', 'hr_rounds.id', '=', 'hr_application_round.hr_round_id')
+        ->select('hr_rounds.id', 'hr_rounds.name', DB::raw('count(hr_application_round.hr_round_id) as counttotal'))
+        ->groupBy('hr_rounds.id')->get();
         $attr['jobs'] = Job::all();
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
-        $attr['rounds'] = $hrRounds;
+        $attr['rounds'] = $hrRoundsCounts;
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
