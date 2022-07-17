@@ -22,32 +22,35 @@ class ReportsController extends Controller
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
-            \DB::raw('DATE(created_at) as date_created_at')
+            \DB::raw('DATE(created_at) as date_created_at'),
         )
             ->where('created_at', '>', Carbon::now()->subDays(7))
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
+        $data = [];  
+
         $record1 = Application::select(
             \DB::raw('is_verified')
         )
         ->get();
-        $data = [];
 
-        foreach ($record1 as $row) {
+        foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
-        }
-        $i = 0;
-        foreach ($record1 as $row) {
-            if ($row->is_verified == '1') {
-                $i++;
+            }
+
+        $data['chartData'] = json_encode($data);
+        
+        $countIsVerified = 0;
+        foreach( $record1 as $row ){
+            if($row-> is_verified == '1' ){
+               $countIsVerified++; 
             }
         }
-        $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'i'));
+        return view('hr.recruitment.reports', $data, compact('todayCount','countIsVerified'));
     }
 
     public function searchBydate(Request $req)
@@ -58,7 +61,7 @@ class ReportsController extends Controller
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
-            \DB::raw('DATE(created_at) as date_created_at')
+            \DB::raw('DATE(created_at) as date_created_at'),
         )
             ->where('created_at', '>=', $req->report_start_date)
             ->where('created_at', '<=', $req->report_end_date)
@@ -66,15 +69,27 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $data = [];
-
+        $data = []; 
+        
+        $record1 = Application::select(
+            \DB::raw('is_verified')
+        )
+        ->get();
+        
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
+            }
+        
+        $data['chartData'] = json_encode($data); 
+
+        $countIsVerified = 0;
+        foreach( $record1 as $row ){
+            if($row-> is_verified == '1' ){
+               $countIsVerified++; 
+            }
         }
 
-        $data['chartData'] = json_encode($data);
-
-        return view('hr.recruitment.reports', $data, compact('todayCount'));
+        return view('hr.recruitment.reports', $data, compact('todayCount','countIsVerified'));
     }
 }
