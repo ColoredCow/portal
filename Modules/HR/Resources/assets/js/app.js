@@ -235,18 +235,18 @@ function updateUniversityFailureAction() {
 	showFlashMessage("university-update-failure", 2000);
 }
 $(document).on("submit", "#addResourceForm", (e) => {
-	var resource_link = document.getElementById('resource_link');
-	var hrResourceCategory = document.getElementById('hrResourceCategory');
+	var resource_link = document.getElementById("resource_link");
+	var hrResourceCategory = document.getElementById("hrResourceCategory");
 	if (resource_link.value == '' || resource_link.value == null) {
-		alert('Resource Url is required');
+		alert("Resource Url is required");
 		e.preventDefault();
 	}
 	else if(!resource_link.value.match(/^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/)){
-		alert('Enter a valid Url');
+		alert("Enter a valid Url");
 		e.preventDefault();
 	}
-	if (hrResourceCategory.value == '' || hrResourceCategory.value == null) {
-		alert('Category is required');
+	if (hrResourceCategory.value == "" || hrResourceCategory.value == null) {
+		alert("Category is required");
 		e.preventDefault();
 	}
 });
