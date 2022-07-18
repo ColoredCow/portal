@@ -67,8 +67,6 @@ class ApplicationRound extends Model
                     $application->untag("On-hold");
                     $application->untag('in-progress');
                     $application->tag('new-application');
-                   $fillable['round_status'] = 'new-application';
-                   $this->update($fillable);
                 }else{
                     $application->untag('new-application');
                     $application->tag('in-progress');
