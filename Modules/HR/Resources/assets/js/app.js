@@ -237,7 +237,7 @@ function updateUniversityFailureAction() {
 $(document).on("submit", "#addResourceForm", (e) => {
 	var resource_link = document.getElementById("resource_link");
 	var hrResourceCategory = document.getElementById("hrResourceCategory");
-	if (resource_link.value == '' || resource_link.value == null) {
+	if (resource_link.value == "" || resource_link.value == null) {
 		alert("Resource Url is required");
 		e.preventDefault();
 	}
