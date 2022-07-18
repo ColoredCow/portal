@@ -5,6 +5,8 @@ namespace Modules\HR\Http\Controllers\Recruitment;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\Job;
 use Carbon\Carbon;
 
 class ReportsController extends Controller
@@ -18,6 +20,11 @@ class ReportsController extends Controller
     {
         $todayCount = Applicant::whereDate('created_at', '=', now())
             ->count();
+        $applications = Application::select('hr_job_id', \DB::raw('COUNT(*) as count'))->groupBy('hr_job_id')->get();
+        $applicationDomain = [];
+        foreach ($applications as $application) {
+            $applicationDomain[] = [Job::where('id', $application->hr_job_id)->pluck('title')->first(), $application->count];
+        }
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
@@ -35,6 +42,7 @@ class ReportsController extends Controller
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
         }
 
+        $data['jobs_count'] = $applicationDomain;
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
@@ -44,6 +52,11 @@ class ReportsController extends Controller
     {
         $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
             ->count();
+        $applications = Application::select('hr_job_id', \DB::raw('COUNT(*) as count'))->groupBy('hr_job_id')->get();
+        $applicationDomain = [];
+        foreach ($applications as $application) {
+            $applicationDomain[] = [Job::where('id', $application->hr_job_id)->pluck('title')->first(), $application->count];
+        }
 
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
@@ -63,6 +76,7 @@ class ReportsController extends Controller
             $data['data'][] = (int) $row->count;
         }
 
+        $data['jobs_count'] = $applicationDomain;
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));

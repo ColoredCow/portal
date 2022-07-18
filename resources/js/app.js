@@ -1071,6 +1071,11 @@ function barChart(){
 	  var options = {
 		responsive: true,
 		tooltips:{
+			callbacks: {
+				afterBody: function(context) {
+				  return cData.jobs_count;
+				   }
+			   },
 		  displayColors:false,
 		  bodyFontSize: 20,
 		  bodyFontStyle: "bold",
