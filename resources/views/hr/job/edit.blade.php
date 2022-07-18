@@ -51,9 +51,9 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain<strong class="text-danger">*</strong></label>
-                        <select class="form-control" name="domain_name" id="domain_name" value="{{ old('domain_name') }}" required>
-                            @foreach ($domains as $domain)
-                            <option  value="{{ $domain->id }}" >{{ $domain->domain_name }}</option>
+                        <select class="form-control" id="domain" name="domain" >
+                            @foreach ($jobs as $jobtitle)
+                            <option  value="{{ $jobtitle->domain }}" {{ old('domain',$jobtitle->domain) == $job->domain ? 'selected' : '' }} >{{ $jobtitle->domain }}</option>
                             @endforeach
                         </select>
                     </div>

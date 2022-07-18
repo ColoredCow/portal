@@ -94,7 +94,7 @@ class JobController extends Controller
         return view('hr.job.edit')->with([
             'job' => $opportunity,
             'interviewers' => User::interviewers()->get(),
-            'domains' => EntitiesHrJobDomain::all()
+            'jobs' => Job::all(),
         ]);
     }
 
