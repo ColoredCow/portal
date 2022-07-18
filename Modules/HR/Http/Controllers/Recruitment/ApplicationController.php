@@ -22,6 +22,8 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\DB;
+use Modules\HR\Database\Seeders\HRRoundsTableSeeder;
+use Modules\HR\Entities\Round;
 
 abstract class ApplicationController extends Controller
 {
@@ -132,11 +134,14 @@ abstract class ApplicationController extends Controller
             })
             ->count();
         }
-
+        
         $hrRoundsCounts = DB::table('hr_rounds')
         ->join('hr_application_round', 'hr_rounds.id', '=', 'hr_application_round.hr_round_id')
+        ->join('hr_applications','hr_rounds.id','=','hr_applications.hr_applicant_id')
+        ->whereIn('status', ['in-progress', 'new', 'trial-program'])
         ->select('hr_rounds.id', 'hr_rounds.name', DB::raw('count(hr_application_round.hr_round_id) as counttotal'))
         ->groupBy('hr_rounds.id')->get();
+        // dd($hrRoundsCounts);
         $attr['jobs'] = Job::all();
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
