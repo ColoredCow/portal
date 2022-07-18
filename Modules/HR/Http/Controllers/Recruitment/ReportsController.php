@@ -29,7 +29,7 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $data = [];  
+        $data = [];
 
         $record1 = Application::select(
             \DB::raw('is_verified')
@@ -39,7 +39,7 @@ class ReportsController extends Controller
         $countIsVerified = 0;
         foreach ($record1 as $row) {
             if ($row-> is_verified == '1') {
-                $countIsVerified++; 
+                $countIsVerified++;
             }
         }
 
@@ -70,7 +70,7 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $data = []; 
+        $data = [];
         
 
         $record1 = Application::select(
@@ -81,7 +81,7 @@ class ReportsController extends Controller
         $countIsVerified = 0;
         foreach ($record1 as $row) {
             if ($row-> is_verified == '1') {
-                $countIsVerified++; 
+                $countIsVerified++;
             }
         }
 
@@ -91,7 +91,7 @@ class ReportsController extends Controller
             $data['data'][] = (int) $row->count;
         }
         
-        $data['chartData'] = json_encode($data); 
+        $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount', 'countIsVerified'));
     }
