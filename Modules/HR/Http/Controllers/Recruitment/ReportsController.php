@@ -37,6 +37,14 @@ class ReportsController extends Controller
         )
         ->get();
 
+        $countIsVerified = 0;
+        foreach ($record1 as $row) {
+            if ($row-> is_verified == '1') {
+                $countIsVerified++; 
+            }
+        }
+
+        
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
@@ -44,13 +52,6 @@ class ReportsController extends Controller
         }
 
         $data['chartData'] = json_encode($data);
-        
-        $countIsVerified = 0;
-        foreach ($record1 as $row) {
-            if ($row-> is_verified == '1') {              
-                $countIsVerified++; 
-            }
-        }
 
         return view('hr.recruitment.reports', $data, compact('todayCount', 'countIsVerified'));
     }
@@ -80,20 +81,20 @@ class ReportsController extends Controller
         )
         ->get();
         
-        foreach ($record as $row) {
-            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
-            $data['data'][] = (int) $row->count;
-        }
-        
-        
-        $data['chartData'] = json_encode($data); 
-
         $countIsVerified = 0;
         foreach ($record1 as $row) {
             if ($row-> is_verified == '1') {
                 $countIsVerified++; 
             }
         }
+
+
+        foreach ($record as $row) {
+            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
+            $data['data'][] = (int) $row->count;
+        }
+        
+        $data['chartData'] = json_encode($data); 
 
         return view('hr.recruitment.reports', $data, compact('todayCount', 'countIsVerified'));
     }
