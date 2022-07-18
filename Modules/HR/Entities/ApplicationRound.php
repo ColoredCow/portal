@@ -63,7 +63,7 @@ class ApplicationRound extends Model
                 break;
 
             case 'confirm':
-                if ($application->status = 'On-hold') {
+                if ($application->status =='On-hold') {
                     $application->untag('On-hold');
                     $application->tag('new-application');
                 } else {
