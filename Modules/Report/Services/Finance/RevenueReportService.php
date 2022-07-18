@@ -74,6 +74,9 @@ class RevenueReportService
         return $results;
     }
 
+    // ToDo:: Defining all the required particular functions below.
+    // We need to add the definition in each function to get the amount for each particular.
+
     private function getParticularAmountForCommissionReceived(array $particular, Object $startDate, Object $endDate): array
     {
         return ['total' => 0];
