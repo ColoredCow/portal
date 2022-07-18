@@ -38,11 +38,10 @@ class ReportsController extends Controller
 
         $countIsVerified = 0;
         foreach ($record1 as $row) {
-            if ($row-> is_verified == '1') {
+            if ($row->is_verified == '1') {
                 $countIsVerified++;
             }
         }
-
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
@@ -71,26 +70,24 @@ class ReportsController extends Controller
             ->get();
 
         $data = [];
-        
 
         $record1 = Application::select(
             \DB::raw('is_verified')
         )
         ->get();
-        
+
         $countIsVerified = 0;
         foreach ($record1 as $row) {
-            if ($row-> is_verified == '1') {
+            if ($row->is_verified == '1') {
                 $countIsVerified++;
             }
         }
-
 
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
         }
-        
+
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount', 'countIsVerified'));
