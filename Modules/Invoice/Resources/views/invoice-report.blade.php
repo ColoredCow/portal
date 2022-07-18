@@ -16,10 +16,10 @@
         @include('invoice::subviews.invoice-report.filters')
     </div>
     <br>
-    <div class="table-responsive">
+    <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-light">
-                <tr>
+                <tr class="sticky-top">
                     <th>S.N</th>
                     <th>Project Name</th>
                     <th>Invoice Number</th>

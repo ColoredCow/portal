@@ -60,7 +60,7 @@
             @endphp
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
-                    <tr class="text-center">
+                    <tr class="text-center sticky-top">
                         <th></th>
                         <th class="w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
