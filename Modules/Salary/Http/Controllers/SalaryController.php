@@ -2,9 +2,8 @@
 
 namespace Modules\Salary\Http\Controllers;
 
-use Modules\User\Entities\User;
+use Modules\HR\Entities\Employee;
 use Illuminate\Routing\Controller;
-use Modules\Salary\Services\SalaryCalculationService;
 
 class SalaryController extends Controller
 {
@@ -25,10 +24,9 @@ class SalaryController extends Controller
 
     public function employee()
     {
-        $user = User::find(4);
-        $salaryCalculation = new SalaryCalculationService(28169);
+        $employees = Employee::get();
 
-        return view('salary::employee.index', ['user' => $user, 'salaryCalculation' => $salaryCalculation]);
+        return view('salary::employee.index');
     }
 
     /**
