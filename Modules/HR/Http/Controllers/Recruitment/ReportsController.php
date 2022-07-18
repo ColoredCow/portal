@@ -36,6 +36,11 @@ class ReportsController extends Controller
         )
         ->get();
 
+        $record1 = Application::select(
+            \DB::raw('is_verified')
+        )
+        ->get();
+
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
@@ -50,7 +55,18 @@ class ReportsController extends Controller
             }
         }
 
+<<<<<<< Updated upstream
         return view('hr.recruitment.reports', $data, compact('todayCount','countIsVerified'));
+=======
+        $countIsVerified = 0;
+        foreach( $record1 as $row ) {
+            if($row-> is_verified == '1' ) {
+                $countIsVerified++;
+            }
+        }
+
+        return view('hr.recruitment.reports', $data, compact('todayCount' , 'countIsVerified' ));
+>>>>>>> Stashed changes
     }
 
     public function searchBydate(Request $req)
@@ -69,6 +85,7 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
+<<<<<<< Updated upstream
         $data = []; 
         
         $record1 = Application::select(
@@ -76,6 +93,15 @@ class ReportsController extends Controller
         )
         ->get();
         
+=======
+        $data = [];
+
+        $record1 = Application::select(
+            \DB::raw( 'is_verified' )
+        )
+        ->get();
+
+>>>>>>> Stashed changes
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
@@ -90,6 +116,19 @@ class ReportsController extends Controller
             }
         }
 
+<<<<<<< Updated upstream
         return view('hr.recruitment.reports', $data, compact('todayCount','countIsVerified'));
+=======
+        $data['chartData'] = json_encode($data);
+
+        $countIsVerified = 0;
+        foreach( $record1 as $row) {
+            if($row-> is_verified == '1') {
+                $countIsVerified++;
+            }
+        }
+
+        return view('hr.recruitment.reports', $data, compact('todayCount' , 'countIsVerified'));
+>>>>>>> Stashed changes
     }
 }
