@@ -29,7 +29,6 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-
         $data = [];  
 
         $record1 = Application::select(
@@ -44,11 +43,10 @@ class ReportsController extends Controller
             }
         }
 
-        
+
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
-        
         }
 
         $data['chartData'] = json_encode($data);
@@ -71,7 +69,6 @@ class ReportsController extends Controller
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
-
 
         $data = []; 
         
