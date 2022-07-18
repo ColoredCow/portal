@@ -42,16 +42,16 @@ class ReportsController extends Controller
 
     public function searchBydate(Request $req)
     {
-        ($todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
-            ->count());
+        $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
+            ->count();
 
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
             \DB::raw('DATE(created_at) as date_created_at')
         )
-            ->where('created_at',$req->Carbon::getWeekStartsAt())
-            ->where('created_at',$req->Carbon::getWeekEndsAt())
+            ->where('created_at','>=',$req->report_start_date)
+            ->where('created_at','<=',$req->report_end_date)
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
