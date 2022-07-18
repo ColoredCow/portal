@@ -47,7 +47,7 @@ class FixInvoiceAmountsCommand extends Command
         $invoices = Invoice::whereNotNull('amount')->get();
 
         foreach ($invoices ?? [] as $invoice) {
-            if (! is_string($invoice->amount) && $invoice->amount > 0) {
+            if ($invoice->amount > 0) {
                 continue;
             }
 
