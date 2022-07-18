@@ -31,73 +31,73 @@ require("./../../Modules/User/Resources/assets/js/vueComponents.js");
 // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
 
 Vue.component(
- "project-stage-component",
- require("./components/ProjectStageComponent.vue").default
+  "project-stage-component",
+  require("./components/ProjectStageComponent.vue").default
 );
 Vue.component(
- "project-stage-billing-component",
- require("./components/ProjectStageBillingComponent.vue").default
+  "project-stage-billing-component",
+  require("./components/ProjectStageBillingComponent.vue").default
 );
 Vue.component(
- "applicant-round-action-component",
- require("./components/HR/ApplicantRoundActionComponent.vue").default
+  "applicant-round-action-component",
+  require("./components/HR/ApplicantRoundActionComponent.vue").default
 );
 Vue.component(
- "project-details-component",
- require("./components/ProjectDetailsComponent.vue").default
+  "project-details-component",
+  require("./components/ProjectDetailsComponent.vue").default
 );
 Vue.component(
- "books-comments-component",
- require("./components/Book/BooksCommentsComponent.vue").default
+  "books-comments-component",
+  require("./components/Book/BooksCommentsComponent.vue").default
 );
 Vue.component(
- "effort-component",
- require("./components/Project/Report.vue").default
+  "effort-component",
+  require("./components/Project/Report.vue").default
 );
 Vue.component("comment", require("./components/CommentItem.vue").default);
 Vue.component(
- "user-dashboard-read-books",
- require("./components/Dashboard/UserDashboardReadBooks.vue").default
+  "user-dashboard-read-books",
+  require("./components/Dashboard/UserDashboardReadBooks.vue").default
 );
 Vue.component(
- "user-dashboard-wishlist-books",
- require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
+  "user-dashboard-wishlist-books",
+  require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
 );
 Vue.component(
- "user-dashboard-projects",
- require("./components/Dashboard/UserDashboardProjects.vue").default
+  "user-dashboard-projects",
+  require("./components/Dashboard/UserDashboardProjects.vue").default
 );
 Vue.component(
- "user-dashboard-library",
- require("./components/Dashboard/UserDashboardLibrary.vue").default
+  "user-dashboard-library",
+  require("./components/Dashboard/UserDashboardLibrary.vue").default
 );
 Vue.component(
- "user-dashboard-infrastructure",
- require("./components/Dashboard/UserDashboardInfrastructure.vue").default
+  "user-dashboard-infrastructure",
+  require("./components/Dashboard/UserDashboardInfrastructure.vue").default
 );
 Vue.component(
- "user-dashboard-invoice",
- require("./components/Dashboard/UserDashboardInvoice.vue").default
+  "user-dashboard-invoice",
+  require("./components/Dashboard/UserDashboardInvoice.vue").default
 );
 Vue.component(
- "job-application-component",
- require("./components/HR/JobApplicationComponent.vue").default
+  "job-application-component",
+  require("./components/HR/JobApplicationComponent.vue").default
 );
 
 if (Vue) {
- Vue.filter("str_limit", function(value, size) {
-  if (!value) return "";
-  value = value.toString();
+  Vue.filter("str_limit", function(value, size) {
+    if (!value) return "";
+    value = value.toString();
 
-  if (value.length <= size) {
-   return value;
+    if (value.length <= size) {
+      return value;
   }
-  return value.substr(0, size) + "...";
+    return value.substr(0, size) + "...";
  });
 }
 
 if (document.getElementById("vueContainer")) {
- new Vue({
+  new Vue({
   el: "#vueContainer",
  });
 }
