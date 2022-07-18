@@ -31,23 +31,23 @@ require("./../../Modules/User/Resources/assets/js/vueComponents.js");
 // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
 
 Vue.component(
-    "project-stage-component",
-    require("./components/ProjectStageComponent.vue").default
+  "project-stage-component",
+  require("./components/ProjectStageComponent.vue").default
 );
 Vue.component(
-    "project-stage-billing-component",
-    require("./components/ProjectStageBillingComponent.vue").default
+  "project-stage-billing-component",
+  require("./components/ProjectStageBillingComponent.vue").default
 );
 Vue.component(
-    "applicant-round-action-component",
-    require("./components/HR/ApplicantRoundActionComponent.vue").default
+  "applicant-round-action-component",
+  require("./components/HR/ApplicantRoundActionComponent.vue").default
 );
 Vue.component(
-    "project-details-component",
-    require("./components/ProjectDetailsComponent.vue").default
+  "project-details-component",
+  require("./components/ProjectDetailsComponent.vue").default
 );
 Vue.component(
-    "books-comments-component",
+  "books-comments-component",
     require("./components/Book/BooksCommentsComponent.vue").default
 );
 Vue.component(
