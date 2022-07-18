@@ -16,9 +16,11 @@
                         <h2 class="fz-18 leading-22">Hours Booked: <span>{{ $project->current_hours_for_month }}</span>
                         </h2>
                         <h2 class="fz-18 leading-22" id="projectHours">Expected Hours:
-                            <span>{{ $project->current_expected_hours }}</span></h2>
+                            <span>{{ $project->current_expected_hours }}</span>
+                        </h2>
                         <h2 class="fz-18 leading-22">Expected Hours Till Today:
-                            <span>{{ $project->expected_hours_till_today }}</span></h2>
+                            <span>{{ $project->expected_hours_till_today }}</span>
+                        </h2>
                         <h2 class="fz-18 leading-22" id="projectVelocity">Velocity: <span>{{ $project->velocity }}</span>
                         </h2>
                     </div>
@@ -52,9 +54,16 @@
         <div class="card">
             <div class="card-header">
                 <div>
-                    <h4>{{ $project->name }} - Members <i class="fa fa-spinner fa-spin ml-2 d-none"></i> <i
-                            class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
-                            data-url="{{ route('effort-tracking.refresh', $project) }}"></i></h4>
+                    <h4>{{ $project->name }} - Members
+                        <i class="fa fa-spinner fa-spin ml-2 d-none"></i>
+                        <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
+                            data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
+                        @if ($project->last_updated_at)
+                            <div class="fz-14 float-right mr-3 mt-1">
+                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . $project->last_updated_at }}
+                            </div>
+                        @endif
+                    </h4>
                 </div>
             </div>
             <div class="table-responsive">
@@ -87,7 +96,8 @@
                                     {{ $teamMember->current_actual_effort }}</td>
                                 <td>{{ $teamMember->current_expected_effort }}</td>
                                 <td>{{ $teamMember->expected_effort_till_today }}</td>
-                                <td>{{ $teamMember->expected_effort_till_today - $teamMember->current_actual_effort }}</td>
+                                <td>{{ $teamMember->expected_effort_till_today - $teamMember->current_actual_effort }}
+                                </td>
                                 <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
                                     {{ $teamMember->velocity }}</td>
                                 <td>{{ $teamMember->fte }}</td>
@@ -101,23 +111,23 @@
     <div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Refresh Effort</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body py-5">
-                <div class="text-danger">
-                    <p>
-                        Something went wrong while refreshing the efforts. <br>
-                        Please check if the effortsheet formatting is correct.
-                    </p>
+                <div class="modal-header">
+                    <h5 class="modal-title">Refresh Effort</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                <div class="modal-body py-5">
+                    <div class="text-danger">
+                        <p>
+                            Something went wrong while refreshing the efforts. <br>
+                            Please check if the effortsheet formatting is correct.
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
