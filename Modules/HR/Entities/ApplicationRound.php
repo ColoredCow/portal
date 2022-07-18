@@ -63,8 +63,16 @@ class ApplicationRound extends Model
                 break;
 
             case 'confirm':
-                $application->untag('new-application');
-                $application->tag('in-progress');
+                if($application->status="On-hold"){
+                    $application->untag("On-hold");
+                    $application->untag('in-progress');
+                    $application->tag('new-application');
+                   $fillable['round_status'] = 'new-application';
+                   $this->update($fillable);
+                }else{
+                    $application->untag('new-application');
+                    $application->tag('in-progress');
+                }
                 //move application to Trial Round
                 if ($nextRound->isTrialRound()) {
                     $fillable['round_status'] = 'confirmed';
