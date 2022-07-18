@@ -1258,12 +1258,6 @@ function barChart() {
   var options = {
     responsive: true,
     tooltips: {
-      callbacks: {
-        afterBody: function(context) {
-          console.log(context);
-          return `Verified Applications: ${cData.afterBody[0]}`;
-        },
-      },
       displayColors: false,
       bodyFontSize: 20,
       bodyFontStyle: "bold",
