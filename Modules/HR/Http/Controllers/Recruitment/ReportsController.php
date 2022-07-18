@@ -92,4 +92,5 @@ class ReportsController extends Controller
 
         return view('hr.recruitment.reports', $data, compact('todayCount', 'countIsVerified'));
     }
+
 }
