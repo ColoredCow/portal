@@ -4,24 +4,8 @@
 
 <div class="chart-container" align="center">
     <div class="bar-chart-container">
-<<<<<<< Updated upstream
         <div align="left">
         <span class="chart-heading mr-5">Analytics</span><span class="total-chart">Total Verified Applications:<?php echo $countIsVerified ?></span>
-=======
-        <div class="d-flex justify-content-between">
-            <div class="my-2">
-                <span class="chart-heading mr-5">Analytics</span><span class="total-chart-count">Total Verified Applications:<?php echo $countIsVerified ?></span>
-            </div>
-            <div class="my-2">
-                <form action="{{route('recruitment.report')}}" method="POST" align="right">
-                    {{csrf_field()}}
-                    <input type="date" name="report_start_date" id='StartDate'> to
-                    <input type="date" name="report_end_date" id="EndDate">
-                    <input type="submit" class="btn btn-sm btn-primary text-white" value="View">
-                </form>
-                <br>
-            </div>
->>>>>>> Stashed changes
         </div>
         <form action="{{route('recruitment.report')}}" method="POST" align="right">
             {{csrf_field()}}
