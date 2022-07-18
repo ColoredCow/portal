@@ -66,7 +66,7 @@ class ApplicationRound extends Model
                 if ($application->status=='on-hold') {
                     $application->untag('on-hold');
                     $application->tag('new-application');
-                } else {
+                }else{
                     $application->untag('new-application');
                     $application->tag('in-progress');
                 }
