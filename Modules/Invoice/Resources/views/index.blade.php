@@ -60,22 +60,22 @@
             @endphp
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
-                    <tr class="text-center">
-                        <th class="sticky-top"></th>
-                        <th class="sticky-top w-150">Project</th>
+                    <tr class="text-center sticky-top">
+                        <th></th>
+                        <th class="w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
-                            <th class="sticky-top">Invoice Number</th>
+                            <th>Invoice Number</th>
                         @else
                         <th>Rates</th>
                         <th>Billable Hours</th>
                         @endif
-                        <th class="sticky-top">Amount ( + taxes)</th>
+                        <th>Amount ( + taxes)</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
-                            <th class="sticky-top">Sent on</th>
-                            <th class="sticky-top">Due on</th>
-                            <th class="sticky-top">Paid on</th>
-                            <th class="sticky-top">Status</th>
-                            <th class="sticky-top">Email</th>
+                            <th>Sent on</th>
+                            <th>Due on</th>
+                            <th>Paid on</th>
+                            <th>Status</th>
+                            <th>Email</th>
                         @elseif (request()->invoice_status == "ready")
                             <th>EffortSheet</th>
                             <th>Preview Invoice</th>

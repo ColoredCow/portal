@@ -22,10 +22,10 @@
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <tr>
-                    <th class="sticky-top">Name</th>
-                    <th class="sticky-top">Resources</th>
-                    <th class="sticky-top">Requirements</th
+                <tr class="sticky-top">
+                    <th>Name</th>
+                    <th>Resources</th>
+                    <th>Requirements</th
                 </tr>
             </thead>
             <tbody>

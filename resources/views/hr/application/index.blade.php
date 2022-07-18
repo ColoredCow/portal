@@ -199,10 +199,10 @@
     @endif
 
     <table class="table table-striped table-bordered" id="applicants_table">
-        <thead class="thead-dark">
-            <th class="sticky-top">Name</th>
-            <th class="sticky-top">Details</th>
-            <th class="sticky-top">
+        <thead class="thead-dark sticky-top">
+            <th>Name</th>
+            <th>Details</th>
+            <th>
                 <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="assigneeDropdown">Assignee</span>
                 <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
                     <span class="dropdown-item-text fz-12">Filter by assignee</span>
@@ -220,7 +220,7 @@
                     @endforeach
                 </div>
             </th>
-            <th class="sticky-top">
+            <th>
                 <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="statusDropdown">Status</span>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                     <span class="dropdown-item-text fz-12">Filter by status</span>

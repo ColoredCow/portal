@@ -61,12 +61,12 @@
     </div>
 
     <table class="table table-striped table-bordered" id="applicants_table">
-        <tr>
-            <th class="sticky-top">Name</th>
-            <th class="sticky-top">Email</th>
-            <th class="sticky-top">Applied for</th>
-            <th class="sticky-top">Applied on</th>
-            <th class="sticky-top">Status</th>
+        <tr class="sticky-top">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Applied for</th>
+            <th>Applied on</th>
+            <th>Status</th>
         </tr>
         @foreach ($applications as $application)
         <tr>

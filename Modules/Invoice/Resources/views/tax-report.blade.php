@@ -21,30 +21,30 @@
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <tr>
-                    <th class="sticky-top"></th>
-                    <th class="sticky-top">Project</th>
-                    <th class="sticky-top">Amount</th>
-                    <th class="sticky-top">Received amount</th>
+                <tr class="sticky-top">
+                    <th></th>
+                    <th>Project</th>
+                    <th>Amount</th>
+                    <th>Received amount</th>
                     @if (request()->input('region') == config('invoice.region.indian'))
-                        <th class="sticky-top">Amount (+GST)</th>
-                        <th class="sticky-top">GST</th>
-                        <th class="sticky-top">TDS</th>
+                        <th>Amount (+GST)</th>
+                        <th>GST</th>
+                        <th>TDS</th>
                     @endif
                     @if (request()->input('region') == config('invoice.region.international'))
-                        <th class="sticky-top">Bank Charges</th>
-                        <th class="sticky-top">Conversion Rate Difference</th>
+                        <th>Bank Charges</th>
+                        <th>Conversion Rate Difference</th>
                     @endif
                     @if(request()->input('region') == '')
-                        <th class="sticky-top">Amount (+GST)</th>
-                        <th class="sticky-top">GST</th>
-                        <th class="sticky-top">TDS</th>
-                        <th class="sticky-top">Bank Charges</th>
-                        <th class="sticky-top">Conversion Rate Difference</th>
+                        <th>Amount (+GST)</th>
+                        <th>GST</th>
+                        <th>TDS</th>
+                        <th>Bank Charges</th>
+                        <th>Conversion Rate Difference</th>
                     @endif
-                    <th class="sticky-top">Sent at</th>
-                    <th class="sticky-top">Payment at</th>
-                    <th class="sticky-top">Status</th>
+                    <th>Sent at</th>
+                    <th>Payment at</th>
+                    <th>Status</th>
                 </tr>
             </thead>
 

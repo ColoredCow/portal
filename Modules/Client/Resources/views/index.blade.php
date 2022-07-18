@@ -38,10 +38,10 @@
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <tr>
-                    <th class="sticky-top">Name</th>
-                    <th class="sticky-top">Client Type</th>
-                    <th class="sticky-top">Key Account Manager</th>
+                <tr class="sticky-top">
+                    <th>Name</th>
+                    <th>Client Type</th>
+                    <th>Key Account Manager</th>
                 </tr>
             </thead>
             <tbody>

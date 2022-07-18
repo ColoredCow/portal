@@ -18,12 +18,12 @@
         </form>
     </div>
     <table class="table table-striped table-bordered">
-        <tr>
-            <th class="sticky-top">Name</th>
-            <th class="sticky-top">Designation</th>
-            <th class="sticky-top">Joined on</th>
-            <th class="sticky-top">Projects Count</th>
-            <th class="sticky-top">Current FTE</th>
+        <tr class="sticky-top">
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Joined on</th>
+            <th>Projects Count</th>
+            <th>Current FTE</th>
         </tr>
 
         @foreach ($employees as $employee)
