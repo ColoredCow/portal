@@ -64,7 +64,7 @@ class ApplicationRound extends Model
 
             case 'confirm':
                 if($application->status="On-hold"){
-                    $application->untag("On-hold");
+                    $application->untag('On-hold');
                     $application->tag('new-application');
                 }else{
                     $application->untag('new-application');
