@@ -13,12 +13,12 @@
         </div>
     </div>
     <br>
-    <div class="table-responsive">
+    <div>
         <table class="table table-striped table-bordered" id="tags_table">
             <tr>
-                <th>{{ __('Tag Name') }}</th>
-                <th>{{ __('Description') }}</th>
-                <th>{{ __('Actions') }}</th>
+                <th class="sticky-top">{{ __('Tag Name') }}</th>
+                <th class="sticky-top">{{ __('Description') }}</th>
+                <th class="sticky-top">{{ __('Actions') }}</th>
             </tr>
             @foreach ($tags as $tag)
             <tr>

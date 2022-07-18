@@ -22,20 +22,20 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th></th>
-                    <th>Date</th>
-                    <th>Particular</th>
-                    <th>Type</th>
-                    <th>Invoice No.</th>
-                    <th>GST NO.</th>
-                    <th>Invoice Value</th>
-                    <th>Rate</th>
-                    <th>Receivable Amount</th>
-                    <th>Taxable Amount</th>
-                    <th>IGST</th>
-                    <th>CGST</th>
-                    <th>SGST</th>
-                    <th>HSN Code</th>
+                    <th class="sticky-top"></th>
+                    <th class="sticky-top">Date</th>
+                    <th class="sticky-top">Particular</th>
+                    <th class="sticky-top">Type</th>
+                    <th class="sticky-top">Invoice No.</th>
+                    <th class="sticky-top">GST NO.</th>
+                    <th class="sticky-top">Invoice Value</th>
+                    <th class="sticky-top">Rate</th>
+                    <th class="sticky-top">Receivable Amount</th>
+                    <th class="sticky-top">Taxable Amount</th>
+                    <th class="sticky-top">IGST</th>
+                    <th class="sticky-top">CGST</th>
+                    <th class="sticky-top">SGST</th>
+                    <th class="sticky-top">HSN Code</th>
                 </tr>
             </thead>
 

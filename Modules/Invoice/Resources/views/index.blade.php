@@ -61,21 +61,21 @@
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr class="text-center">
-                        <th></th>
-                        <th class="w-150">Project</th>
+                        <th class="sticky-top"></th>
+                        <th class="sticky-top w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
-                            <th>Invoice Number</th>
+                            <th class="sticky-top">Invoice Number</th>
                         @else
                         <th>Rates</th>
                         <th>Billable Hours</th>
                         @endif
-                        <th>Amount ( + taxes)</th>
+                        <th class="sticky-top">Amount ( + taxes)</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
-                            <th>Sent on</th>
-                            <th>Due on</th>
-                            <th>Paid on</th>
-                            <th>Status</th>
-                            <th>Email</th>
+                            <th class="sticky-top">Sent on</th>
+                            <th class="sticky-top">Due on</th>
+                            <th class="sticky-top">Paid on</th>
+                            <th class="sticky-top">Status</th>
+                            <th class="sticky-top">Email</th>
                         @elseif (request()->invoice_status == "ready")
                             <th>EffortSheet</th>
                             <th>Preview Invoice</th>

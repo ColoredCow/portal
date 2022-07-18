@@ -13,29 +13,29 @@
         @include('invoice::subviews.invoice-report.filters')
     </div>
     <br>
-    <div class="table-responsive">
+    <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-light">
                 <tr>
-                    <th>S.N</th>
-                    <th>Project Name</th>
-                    <th>Invoice Number</th>
-                    <th>Sent on Date</th>
-                    <th>Payment Date</th>
-                    <th>Invoice Amount</th>
+                    <th class="sticky-top">S.N</th>
+                    <th class="sticky-top">Project Name</th>
+                    <th class="sticky-top">Invoice Number</th>
+                    <th class="sticky-top">Sent on Date</th>
+                    <th class="sticky-top">Payment Date</th>
+                    <th class="sticky-top">Invoice Amount</th>
                     @if($clientCurrency == config('constants.countries.india.currency') || $clientCurrency == null)
-                        <th>GST Amount</th>
-                        <th>TDS</th>
+                        <th class="sticky-top">GST Amount</th> 
+                        <th class="sticky-top">TDS</th>
                     @endif
                     @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
-                        <th>Amount in INR</th>
+                        <th class="sticky-top">Amount in INR</th>
                     @endif   
-                    <th>Amount Recieved</th>
+                    <th class="sticky-top">Amount Recieved</th>
                     @if($clientCurrency != config('constants.countries.india.currency') || $clientCurrency == null)
-                        <th>Bank Charges</th>
-                        <th>Dollar Rate</th>
-                        <th>Exchange Rate differene</th>
-                        <th>Amount received in Dollars</th>
+                        <th class="sticky-top">Bank Charges</th>
+                        <th class="sticky-top">Dollar Rate</th>
+                        <th class="sticky-top">Exchange Rate differene</th>
+                        <th class="sticky-top">Amount received in Dollars</th>
                     @endif
                 </tr>
             </thead>
