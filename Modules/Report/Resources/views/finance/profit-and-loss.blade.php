@@ -47,11 +47,11 @@
                                 value="expenses">
                                 Expenses</option>
 
-                            <option disabled {{ request()->input('transaction') == 'texes' ? 'selected=selected' : '' }}
+                            <option disabled {{ request()->input('transaction') == 'taxes' ? 'selected=selected' : '' }}
                                 value="texes">
                                 Taxes</option>
 
-                            <option disabled {{ request()->input('transaction') == 'texes' ? 'selected=selected' : '' }}
+                            <option disabled {{ request()->input('transaction') == 'taxes' ? 'selected=selected' : '' }}
                                 value="overall">
                                 Overall</option>
                         </select>
