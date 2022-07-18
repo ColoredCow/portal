@@ -30,7 +30,8 @@ class ReportsController extends Controller
             ->get();
 
         
-        $data = [];  
+        
+         $data = [];  
 
         $record1 = Application::select(
             \DB::raw('is_verified')
@@ -46,9 +47,9 @@ class ReportsController extends Controller
         $data['chartData'] = json_encode($data);
         
         $countIsVerified = 0;
-        foreach( $record1 as $row) {
-            if($row-> is_verified == '1' ) {
-               $countIsVerified++; 
+        foreach ($record1 as $row) {
+            if ($row-> is_verified == '1') {
+                $countIsVerified++; 
             }
         }
 
@@ -72,9 +73,11 @@ class ReportsController extends Controller
             ->get();
 
 
+        
         $data = []; 
         
-        $record1 = Application::select (
+
+        $record1 = Application::select(
             \DB::raw('is_verified')
         )
         ->get();
@@ -86,12 +89,13 @@ class ReportsController extends Controller
         }
         
 
+        
         $data['chartData'] = json_encode($data); 
 
         $countIsVerified = 0;
-        foreach( $record1 as $row) {
-            if($row-> is_verified == '1' ) {
-               $countIsVerified++; 
+        foreach ($record1 as $row) {
+            if ($row-> is_verified == '1' ) {
+                $countIsVerified++; 
             }
         }
 
