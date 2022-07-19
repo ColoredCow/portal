@@ -82,6 +82,13 @@ return [
         ]
     ],
 
+    'mail-type' => [
+        'invoice-reminder' => [
+            'slug' => 'invoice-reminder',
+            'label' => 'Invoice Reminder'
+        ]
+    ],
+
     'templates' => [
         'setting-key' => [
             'send-invoice' => [

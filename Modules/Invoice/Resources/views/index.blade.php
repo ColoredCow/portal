@@ -122,10 +122,11 @@
                                     {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
                                 </td>
                                 <td class="text-center">
-                                    @if($invoice->reminder_mail_count)
-                                        <div class="text-success">{{ __('Reminder Sent') }}</div>
-                                    @elseif($invoice->shouldHighlighted())
-                                        <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal" data-target="#invoiceReminder" >{{ __('Reminder') }}</div>
+                                    {{-- @if($invoice->reminder_mail_count)
+                                        <div class="text-success">{{ __('Reminder Sent') }}</div> --}}
+                                        {{-- @dd($latestInvoice); --}}
+                                    @if($invoice->shouldHighlighted())
+                                        <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal" data_toogle="tooltip" data-placement="top" title="{{($latestInvoice->sent_on) }}"data-target="#invoiceReminder" >{{ __('Reminder') }} ({{$invoice->invoiceMail->count()}})</div>
                                     @else
                                         <div> - </div> 
                                     @endif

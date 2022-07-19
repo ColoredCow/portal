@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\InvoiceMail;
 
 class InvoiceController extends Controller
 {
@@ -26,7 +27,6 @@ class InvoiceController extends Controller
     {
         $invoiceStatus = $request->invoice_status ?? 'sent';
         $filters = $request->all();
-
         if ($invoiceStatus == 'sent') {
             unset($filters['invoice_status']);
             $filters = $filters ?: $this->service->defaultFilters();
@@ -34,8 +34,9 @@ class InvoiceController extends Controller
             $invoiceStatus = 'ready';
             $filters = $request->all();
         }
-
-        return view('invoice::index', $this->service->index($filters, $invoiceStatus));
+        $latestInvoice=InvoiceMail::
+        all()->sortByDesc('sent_on')->first();
+        return view('invoice::index', $this->service->index($filters, $invoiceStatus,$latestInvoice));
     }
 
     /**
@@ -185,7 +186,7 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($request->invoice_id);
         $this->service->sendInvoiceReminder($invoice, $request->all());
 
-        return redirect()->back()->with('status', 'Invoice saved successfully.');
+       return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
 
     public function sendInvoice(Request $request)

@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Invoice\Entities\Invoice;
 use Illuminate\Support\Facades\Storage;
+use Modules\Invoice\Entities\InvoiceMail;
 use Modules\Invoice\Exports\TaxReportExport;
 use Modules\Invoice\Exports\MonthlyGSTTaxReportExport;
 use Modules\Client\Contracts\ClientServiceContract;
@@ -25,7 +26,7 @@ use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index($filters = [], $invoiceStatus = 'sent')
+    public function index($filters = [], $invoiceStatus = 'sent', $latestInvoice)
     {
         $filters = [
             'client_id' => $filters['client_id'] ?? null,
@@ -68,6 +69,7 @@ class InvoiceService implements InvoiceServiceContract
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.invoice-reminder.body')
             ])->first())->setting_value,
+            'latestInvoice'=>$latestInvoice,
         ];
     }
 
@@ -559,6 +561,12 @@ class InvoiceService implements InvoiceServiceContract
         Mail::queue(new SendPendingInvoiceMail($invoice, $email));
         $invoice->update([
             'reminder_mail_count' => ($invoice->reminder_mail_count + 1)
+        ]);
+        // dd($invoice);
+        InvoiceMail::create([
+            'invoice_id'=> $invoice->id,
+            'subject' => $email['subject'],
+            'body' => $email['body'],
         ]);
     }
 
