@@ -10,7 +10,6 @@ class InvoiceMail extends Model
 {
     use HasFactory;
     protected $table = 'invoice_mails';
-    // protected $fillable='invoice_id';
     protected $guarded = []; 
 
     public function Invoice(){
