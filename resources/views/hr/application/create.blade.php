@@ -9,8 +9,7 @@
             <br><br>
         </div>
     </div>
-
-
+    
     <div class="d-flex justify-content-between">
         <h1>Add new application</h1>
         @if(session('status'))
@@ -28,7 +27,6 @@
                             <button type="button" class="close" data-dismiss="modal" arial-labvel="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <form action="{{route('channel.create')}}" method="POST">
-
                             {{ csrf_field() }}
                             <div class="modal-body">
                                 <div class="mb-3">
@@ -36,7 +34,6 @@
                                     <input type="text" name="name" class="form-control">
                                 </div>
                             </div>
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
@@ -48,7 +45,6 @@
             </div>
         </div>
     </div>
-
     <div>
         @include('status', ['errors' => $errors->all()])
         <div class="card">

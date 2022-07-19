@@ -20,14 +20,11 @@ class HrChannelController extends Controller
         ]);
 
         $name = $request->input('name');
-        HrChannel::updateOrCreate(
-            [
+        HrChannel::updateOrCreate([
             'name'=>$name
-        ],
-            [
+        ], [
             'name'=>$name
-        ]
-        );
+        ]);
 
         return redirect()->back()->with('status', 'Saved Successfully!');
     }
