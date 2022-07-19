@@ -185,13 +185,14 @@ class Invoice extends Model
             return $this->amount * $this->conversion_rate;
         }
     }
-    public function invoiceMail(){
+    public function invoiceMail()
+    {
 
         return $this->hasMany(InvoiceMail::class, 'invoice_id', 'id');
     }
 
     public function latestReminder()
     {
-       return $this->invoiceMail()->orderByDesc('sent_on')->first();
+        return $this->invoiceMail()->orderByDesc('sent_on')->first();
     }
 }
