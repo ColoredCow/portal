@@ -53,7 +53,7 @@
                         <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain<strong class="text-danger">*</strong></label>
                         <select class="form-control" id="domain" name="domain" >
                             @foreach ($jobs as $jobtitle)
-                            <option  value="{{ $jobtitle->domain }}" {{ old('domain',$jobtitle->slug) == $job->domain ? 'selected' : '' }} >{{ Str::title(str_replace('-', ' ', $jobtitle->domain)) }}</option>
+                            <option  value="{{ $jobtitle->slug }}" {{ old('domain',$jobtitle->slug) == $job->domain ? 'selected' : '' }} >{{ Str::title(str_replace('-', ' ', $jobtitle->domain)) }}</option>
                             @endforeach
                         </select>
                     </div>
