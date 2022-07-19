@@ -29,14 +29,13 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $from = date('2022-07-06');
+        $from = date('2022-07-01');
         $currentDate = Carbon::today(config('constants.timezone.indian'));
         $record1 = Application::select(
             \DB::raw('is_verified')
         )
             ->whereBetween('created_at', [$from, $currentDate])
             ->where('is_verified', 1)
-            ->get()
             ->count();
 
         $data = [];
@@ -67,14 +66,13 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $from = date('2022-07-06');
+        $from = date('2022-07-01');
         $currentDate = Carbon::today(config('constants.timezone.indian'));
         $record1 = Application::select(
             \DB::raw('is_verified')
         )
             ->whereBetween('created_at', [$from, $currentDate])
             ->where('is_verified', 1)
-            ->get()
             ->count();
 
         $data = [];
