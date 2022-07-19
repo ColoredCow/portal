@@ -62,6 +62,9 @@
                 <thead class="thead-dark">
                     <tr class="text-center sticky-top">
                         <th></th>
+                        @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
+                            <th>Client</th>
+                        @endif
                         <th class="w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
                             <th>Invoice Number</th>
@@ -106,6 +109,7 @@
                         @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $invoice->client->name }}</td>
                                 <td>
                                     <a href="{{ route('invoice.edit', $invoice) }}">{{ optional($invoice->project)->name ?: ($invoice->client->name . ' Projects') }}</a>
                                 </td>
