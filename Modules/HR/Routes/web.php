@@ -90,6 +90,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/resources/{jobId}/show/', 'ResourcesController@show')->name('resources.show');
         Route::post('/category/store/', 'ResourcesController@store')->name('resources.store');
         Route::post('/resources/create/', 'ResourcesController@create')->name('resources.create');
+        Route::post('/channel/create','HrChannelController@store')->name('channel.create');
     });
+
+
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
