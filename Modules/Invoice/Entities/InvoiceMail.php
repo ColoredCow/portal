@@ -14,7 +14,6 @@ class InvoiceMail extends Model
   
     public function Invoice()
     {
-
         return $this->belongsTo(Invoice::class);
     }
 }

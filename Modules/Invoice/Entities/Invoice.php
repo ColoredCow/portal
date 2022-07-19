@@ -187,7 +187,6 @@ class Invoice extends Model
     }
     public function invoiceMail()
     {
-
         return $this->hasMany(InvoiceMail::class, 'invoice_id', 'id');
     }
 
