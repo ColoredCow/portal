@@ -17,4 +17,8 @@ Route::prefix('report')->group(function () {
     Route::get('/edit/{id}', 'ReportController@edit')->name('report.edit');
     Route::get('/show/{id}', 'ReportController@show')->name('report.show');
     Route::post('/update/{id}', 'ReportController@update')->name('report.update');
+
+    Route::prefix('finance')->group(function () {
+        Route::get('profit-and-loss', 'FinanceReportController@profitAndLoss')->name('reports.finance.profit-and-loss');
+    });
 });
