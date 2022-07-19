@@ -15,7 +15,7 @@
         <a class="nav-item nav-link {{ Request::is('hr/recruitment/campaigns*') ? 'active' : '' }}" href="{{ route('recruitment.campaigns') }}"><i class="fa fa-envelope"></i>&nbsp;Campaigns</a>
     </li>
     </li>
-    <li class="nav-item" data-toggle="modal" data-target="#countIcon">
+    <li class="nav-item c-pointer" data-toggle="modal" data-target="#countIcon">
         <a class="nav-item nav-link"><i class="fa fa-bitbucket" aria-hidden="true"></i>&nbsp;Total Count</a>
     </li>
 </ul>
