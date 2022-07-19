@@ -10,6 +10,7 @@ use Modules\User\Entities\User;
 use Revolution\Google\Sheets\Sheets;
 use Illuminate\Support\Str;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
+use Modules\Project\Entities\ProjectMeta;
 
 class EffortTrackingService
 {
@@ -255,6 +256,15 @@ class EffortTrackingService
                         try {
                             $effortData['sheet_project'] = $sheetProject;
                             $this->updateEffort($effortData);
+                            ProjectMeta::updateOrCreate(
+                                [
+                                    'key' => config('project.meta_keys.last_updated_at.key'),
+                                    'project_id' => $project->id,
+                                ],
+                                [
+                                    'value' => now(config('constants.timezone.indian'))
+                                ]
+                            );
                         } catch (Exception $e) {
                             continue;
                         }

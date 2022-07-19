@@ -160,11 +160,12 @@
                     <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
                 </div>
             </div>
-            <div class="d-flex" v-if="status == 'paid'">
+            <div v-if="status == 'paid'">
                 @if($invoice->payment_confirmation_mail_sent === 0)
-                    <input type="checkbox" id="showEmail" class="ml-auto" @change="showEmail($event)" name="send_mail">
+                    <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
-                    <i v-if="show_on_select" class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
+                    <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
+                    <div class="fz-14 text-theme-orange">{{ __('If disabled the mail will not be sent.') }}</div>
                 @else
                     <label class="mx-1 pt-1">
                         {{ __('Confirmation Mail Status: ') }}
@@ -173,7 +174,7 @@
                         </span>
                     </label>
                 @endif
-            </div>
+            </div> 
         </div>
         <div>
             @include('invoice::modals.payment-received')

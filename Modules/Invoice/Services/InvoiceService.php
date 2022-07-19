@@ -259,6 +259,14 @@ class InvoiceService implements InvoiceServiceContract
         return $invoice->save();
     }
 
+    public function getInvoicesBetweenDates($startDate, $endDate, $type = 'indian')
+    {
+        return Invoice::sentBetween($startDate, $endDate)
+            ->region($type)
+            ->status(['sent', 'paid'])
+            ->get();
+    }
+
     /**
      *  TaxReports.
      */
