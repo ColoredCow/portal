@@ -32,6 +32,8 @@
                         <select required="required" v-model="contactPerson.type" class="form-control" :name="`client_contact_persons[${index}][type]`">
                             <option value="billing-contact">Primary billing contact</option>
                             <option value="general-contact">General Point of contact</option>
+                            <option value="secondary-contact">Secondary billing contact</option>
+                            <option value="tertiary-contact">Tertiary billing contact</option>
                         </select>
                     </div>
 

@@ -87,6 +87,21 @@
                     @if((request()->invoice_status == 'sent' || $invoiceStatus == 'sent') && $invoices->isNotEmpty())
                         @foreach ($invoices as $invoice)
                         @php
+                            if(optional($invoice->client->tertiary_contact)->first() != null) {
+                                $bccEmails='';
+                                foreach($invoice->client->tertiary_contact as $bccEmail)
+                                {$bccEmails .= ",$bccEmail->email";} 
+                                $bccEmails = substr($bccEmails, 1);
+                            } else {
+                                $bccEmails = null;
+                            }
+                            if(optional($invoice->client->secondary_contact)->first() != null) {
+                                $ccEmails=config('invoice.mail.send-invoice.email');
+                                foreach($invoice->client->secondary_contact as $ccEmail)
+                                {$ccEmails .= ",$ccEmail->email";}
+                            } else {
+                                $ccEmails = null;
+                            }
                             $invoiceMonthNumber = $invoice->sent_on->subMonth()->month;
                             $invoiceYear = $invoice->sent_on->subMonth()->year;
                             $invoiceData = [
@@ -101,7 +116,9 @@
                                 'emailBody' => $invoiceReminderEmailBody,
                                 'invoiceId' => $invoice->id,
                                 'invoiceNumber' => $invoice->invoice_number,
-                                'invoiceAmount' => $invoice->invoiceAmount()
+                                'invoiceAmount' => $invoice->invoiceAmount(),
+                                'bccEmails' => $bccEmails,
+                                'ccEmails' => $ccEmails
                             ];
                         @endphp
                             <tr>
@@ -135,6 +152,21 @@
                     @elseif((request()->invoice_status == 'ready'  || $invoiceStatus == 'ready') && $clientsReadyToSendInvoicesData->isNotEmpty())
                         @foreach ($clientsReadyToSendInvoicesData as $client)
                             @php
+                                if(optional($client->tertiary_contact)->first() != null) {
+                                    $bccEmails='';
+                                    foreach($client->tertiary_contact as $bccEmail)
+                                        {$bccEmails .= ",$bccEmail->email";} 
+                                    $bccEmails = substr($bccEmails, 1);
+                                } else {
+                                    $bccEmails = null;
+                                }
+                                if(optional($client->secondary_contact)->first() != null) {
+                                    $ccEmails=config('invoice.mail.send-invoice.email');
+                                    foreach($client->secondary_contact as $ccEmail)
+                                        {$ccEmails .= ",$ccEmail->email";}
+                                } else {
+                                    $ccEmails = null;
+                                }
                                 $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($month, $year, $client->clientLevelBillingProjects);
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
@@ -148,7 +180,9 @@
                                     'year' => $year,
                                     'emailSubject' => $sendInvoiceEmailSubject,
                                     'emailBody' => $sendInvoiceEmailBody,
-                                    'clientId' => $client->id
+                                    'clientId' => $client->id,
+                                    'bccEmails' => $bccEmails,
+                                    'ccEmails' => $ccEmails
                                 ];
                             @endphp
                             <tr>

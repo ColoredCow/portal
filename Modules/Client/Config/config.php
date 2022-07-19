@@ -25,6 +25,13 @@ return [
         ],
     ],
 
+    'client-roles'=>[
+        'Primary-billing-contact' => 'billing-contact',
+        'General-Point-of-contact' => 'general-contact',
+        'Secondary-billing-contact' => 'secondary-contact',
+        'Tertiary-billing-contact' => 'tertiary-contact',
+    ],
+
     'default-client-form-stage' => 'client-details',
 
     'countries' => [
