@@ -29,19 +29,17 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $data = [];
-
+        $from = date('2022-07-06');
+        $currentDate = Carbon::today(config('constants.timezone.indian'));
         $record1 = Application::select(
             \DB::raw('is_verified')
         )
-        ->get();
+            ->whereBetween('created_at', [$from, $currentDate])
+            ->where('is_verified', 1)
+            ->get()
+            ->count();
 
-        $countIsVerified = 0;
-        foreach ($record1 as $row) {
-            if ($row->is_verified == '1') {
-                $countIsVerified++;
-            }
-        }
+        $data = [];
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
@@ -50,7 +48,7 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'countIsVerified'));
+        return view('hr.recruitment.reports', $data, compact('todayCount', 'record1'));
     }
 
     public function searchBydate(Request $req)
@@ -69,19 +67,17 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $data = [];
-
+        $from = date('2022-07-06');
+        $currentDate = Carbon::today(config('constants.timezone.indian'));
         $record1 = Application::select(
             \DB::raw('is_verified')
         )
-        ->get();
+            ->whereBetween('created_at', [$from, $currentDate])
+            ->where('is_verified', 1)
+            ->get()
+            ->count();
 
-        $countIsVerified = 0;
-        foreach ($record1 as $row) {
-            if ($row->is_verified == '1') {
-                $countIsVerified++;
-            }
-        }
+        $data = [];
 
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
@@ -90,6 +86,6 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'countIsVerified'));
+        return view('hr.recruitment.reports', $data, compact('todayCount', 'record1'));
     }
 }
