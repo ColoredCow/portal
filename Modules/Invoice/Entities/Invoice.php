@@ -6,7 +6,6 @@ use App\Traits\Encryptable;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Invoice\Entities\InvoiceMail;
 use Illuminate\Support\Arr;
 
 class Invoice extends Model
