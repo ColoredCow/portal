@@ -68,9 +68,13 @@
                     </div>
                 </div>
 
+                
+                @if((request()->get('projects') == 'inactive-projects') || (request()->get('projects') == 'halted-projects'))
+
                 <div>
                     <span v-on:click="addNewProjectTeamMember()" style="text-decoration: underline;" class="text-underline btn" >Add new team member</span>
                 </div>
+                @endif
 
                 <hr class='bg-dark mt-4 mb-5 pb-0.5'>
 
