@@ -43,7 +43,10 @@ if(optional($invoice->client->secondary_contact)->first() != null) {
                         <label class="leading-none" for="sendTo">{{ __('To') }}</label>
                         <input type="email" name="to" id="sendTo" class="form-control" value="{{ optional($invoice->client->billing_contact)->email }}" required>
                     </div>
-                    <input type="hidden" name="to_name" id="sendToName" class="form-control" value="{{ optional($invoice->client->billing_contact)->name }}" required>
+                    <div class="form-group col-md-12">
+                        <label class="leading-none" for="sendToName">{{ __('Receiver Name') }}</label>
+                        <input type="text" name="to_name" id="sendToName" class="form-control" value="{{ optional($invoice->client->billing_contact)->name }}" required>
+                    </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="cc">
                             {{ __('CC') }} 

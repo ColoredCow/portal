@@ -12,7 +12,11 @@
                     Phone
                 </div>
                 <div class="col-4">
-                    Role
+                    Role <span data-toggle="tooltip" data-placement="right"
+                    title="Primary billing contact - Email id will be used as Reciever email and Name will be used as reciever name.
+                    Secondary billing contact - Email id will be used as CC email.
+                    Tertiary billing contact - Email id will be used as BCC email.">
+                    <i class="fa fa-question-circle"></i>&nbsp;</span>
                 </div>
             </div>
 
