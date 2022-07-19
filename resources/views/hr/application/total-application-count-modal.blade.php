@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
       @foreach ($rounds as $round)
-            <p>{{$round->name}} - {{$round->counttotal}} </p>
+            <p>{{$round}}</p>
           @endforeach
       </div>
       <div class="modal-footer">
