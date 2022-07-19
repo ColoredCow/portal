@@ -37,7 +37,7 @@ $(document).ready(function(){
 			"|*invoice_amount*|": invoiceData["totalAmount"],
 			"|*invoice_number*|": invoiceData["invoiceNumber"],
 		};
-		var emailSubject = $("#emailSubject").val();
+		var emailSubject = invoiceData["emailSubject"];
 		var emailBody = $("#emailBody").text();
 		
 		for (var key in mapping) {
@@ -50,6 +50,7 @@ $(document).ready(function(){
 		$("#sendToName").val(invoiceData["billingPersonName"]); 
 		$("#clientId").val(invoiceData["clientId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$("#cc").val(invoiceData["senderEmail"]);
 		if (invoiceData["ccEmails"] != null) {
 			$("#cc").val(invoiceData["ccEmails"]);
 		}
@@ -67,7 +68,7 @@ $(document).ready(function(){
 			"|*invoice_amount*|": invoiceData["invoiceAmount"],
 			"|*invoice_number*|": invoiceData["invoiceNumber"],
 		};
-		var emailSubject = $("#emailSubject").val();
+		var emailSubject = invoiceData["emailSubject"];
 		var emailBody = $("#emailBody").text();
 		
 		for (var key in mapping) {
@@ -80,6 +81,7 @@ $(document).ready(function(){
 		$("#sendToName").val(invoiceData["billingPersonName"]); 
 		$("#invoiceId").val(invoiceData["invoiceId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$("#cc").val(invoiceData['senderEmail']);
 		if (invoiceData["ccEmails"] != null) {
 			$("#cc").val(invoiceData["ccEmails"]);
 		}

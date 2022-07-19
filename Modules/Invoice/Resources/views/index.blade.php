@@ -101,7 +101,7 @@
                                 'emailBody' => $invoiceReminderEmailBody,
                                 'invoiceId' => $invoice->id,
                                 'ccEmails' => optional($invoice->client->emailIds($invoice->project_id))->cc_emails,
-                                'bccEmails' => optional($invoice->client->emailIds($invoice->projectId))->bcc_emails,
+                                'bccEmails' => optional($invoice->client->emailIds($invoice->project_id))->bcc_emails,
                                 'invoiceNumber' => $invoice->invoice_number,
                                 'invoiceAmount' => $invoice->invoiceAmount()
                             ];
