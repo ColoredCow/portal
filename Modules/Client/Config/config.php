@@ -25,7 +25,7 @@ return [
         ],
     ],
 
-    'client-roles'=>[
+    'client-contact-person-type'=>[
         'primary-billing-contact' => 'billing-contact',
         'general-Point-of-contact' => 'general-contact',
         'secondary-billing-contact' => 'secondary-contact',
