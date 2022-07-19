@@ -4,6 +4,7 @@ namespace Modules\Salary\Http\Controllers;
 
 use Modules\HR\Entities\Employee;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 
 class SalaryController extends Controller
 {
@@ -26,7 +27,12 @@ class SalaryController extends Controller
     {
         $employees = Employee::get();
 
-        return view('salary::employee.index');
+        return view('salary::employee.index')->with('employees', $employees);
+    }
+
+    public function saveSalary(Request $req)
+    {
+        dd($req->grossSalary);
     }
 
     /**
