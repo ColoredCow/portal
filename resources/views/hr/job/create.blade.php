@@ -37,7 +37,7 @@
             <form action="{{ route('hr-job-domains.storeJobdomain')}}" method="POST">
                 @csrf
                 <div class="form-group">
-                  <label for="exampleInputEmail1">name</label><strong class="text-danger">*</strong></label>
+                  <label for="exampleInput1">name</label><strong class="text-danger">*</strong></label>
                   <input type="text" name="name"  class="form-control"  id="name" aria-describedby="Help" placeholder="name"> 
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -78,7 +78,7 @@
                         <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain<strong class="text-danger">*</strong></label>
                         <select class="form-control" name="domain" id="domain "> 
                             @foreach($domains as $domain)
-                                <option  value="{{ $domain->domain_name }}"  {{ old('domain') == $domain ? 'selected' : '' }}>{{ $domain->domain_name }}</option>
+                                <option  value="{{ $domain->slug }}"  {{ old('domain') == $domain ? 'selected' : '' }}>{{ $domain->domain }}</option>
                             @endforeach 
                         </select>
                     </div>

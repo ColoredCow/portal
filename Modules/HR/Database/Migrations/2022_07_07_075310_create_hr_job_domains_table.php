@@ -15,7 +15,7 @@ class CreateHrJobDomainsTable extends Migration
     {
         Schema::create('hr_job_domains', function (Blueprint $table) {
             $table->id();
-            $table->text('domain_name');
+            $table->text('domain');
             $table->string('slug');
             $table->timestamps();
         });

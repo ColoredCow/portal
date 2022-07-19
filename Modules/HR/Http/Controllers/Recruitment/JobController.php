@@ -94,7 +94,7 @@ class JobController extends Controller
         return view('hr.job.edit')->with([
             'job' => $opportunity,
             'interviewers' => User::interviewers()->get(),
-            'jobs' => Job::all(),
+            'jobs' => EntitiesHrJobDomain::all(),
         ]);
     }
 
@@ -135,7 +135,7 @@ class JobController extends Controller
     public function storeJobdomain(JobDomainRequest $request)
     {
         $hr_job_domains = new EntitiesHrJobDomain();
-        $hr_job_domains->domain_name = $request['name'];
+        $hr_job_domains->domain = $request['name'];
         $hr_job_domains->slug = Str::slug($request['name']);
         $hr_job_domains->save();
 
