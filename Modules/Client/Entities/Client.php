@@ -83,17 +83,17 @@ class Client extends Model
 
     public function getBillingContactAttribute()
     {
-        return $this->contactPersons()->where('type', config('client.client-roles.Primary-billing-contact'))->first();
+        return $this->contactPersons()->where('type', config('client.client-roles.primary-billing-contact'))->first();
     }
 
     public function getSecondaryContactAttribute()
     {
-        return $this->contactPersons()->where('type', config('client.client-roles.Secondary-billing-contact'))->get();
+        return $this->contactPersons()->where('type', config('client.client-roles.secondary-billing-contact'))->get();
     }
 
     public function getTertiaryContactAttribute()
     {
-        return $this->contactPersons()->where('type', config('client.client-roles.Tertiary-billing-contact'))->get();
+        return $this->contactPersons()->where('type', config('client.client-roles.tertiary-billing-contact'))->get();
     }
 
     public function addresses()
