@@ -92,7 +92,5 @@ Route::middleware('auth')->group(function () {
         Route::post('/resources/create/', 'ResourcesController@create')->name('resources.create');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
     });
-
-
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
