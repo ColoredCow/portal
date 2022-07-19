@@ -77,12 +77,10 @@
                                     <td class="w-33p"><div class="pl-2 pl-xl-3">{{ $project->name }}</div></td>
                                 @endcan
                                 {{-- <td class="w-33p"></td> --}}
-                                <td>
+                                <td style="width:21%;">
                                     @foreach($project->getTeamMembers ?:[] as $teamMember)
-                                        <span class="content tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}}">
-                                            <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1"></a>
-                                        </span>
-                                    @endforeach 
+                                        <span class="content tooltip-wrapper"  data-html="true" data-toggle="tooltip"  title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}} <br>    Efforts: {{$teamMember->current_actual_effort}} Hours" >
+                                             <a href={{ route('employees.show', $teamMember->user) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1"></a>
                                 </td>
                                 <td>
                                     @if($project->contract_file_path == null)
