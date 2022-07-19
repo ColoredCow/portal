@@ -140,7 +140,6 @@ abstract class ApplicationController extends Controller
                          });
             })
             ->count();
-            
         }
 
         $attr['jobs'] = Job::all();
