@@ -3,8 +3,6 @@
 namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Modules\HR\Entities\Application;
 use Modules\HR\Jobs\Recruitment\SendEmailToNonVerifiedApplicants;
 
@@ -15,7 +13,14 @@ class DailyMessage extends Command
      *
      * @var string
      */
-    protected $name = 'command:message-for-email-verified';
+    protected $name = 'hr:message-for-email-verified';
+
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
+    protected $siganture = 'hr:message-for-email-verified';
 
     /**
      * The console command description.
@@ -41,36 +46,9 @@ class DailyMessage extends Command
      */
     public function handle()
     {
-        dd("hello");
-        $applications = Application::select('*')->where('is_verified', false)->where('created_at', '>=', '2022-07-06')->get();
-        foreach($applications as $application)
-        {
-            SendEmailToNonVerifiedApplicants::dispatch($application);
-        }
-
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [
-            ['example', InputArgument::REQUIRED, 'An example argument.'],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
-        ];
+        $applications= Application::where('is_verified', false)->where('created_at', '>=', '2022-07-06')->get();
+        SendEmailToNonVerifiedApplicants::dispatch($applications);
+       
     }
 }
+

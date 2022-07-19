@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
             return Module::has($moduleName) && Module::isEnabled($moduleName);
         });
     }
+ 
 
     /**
      * Register any application services.
