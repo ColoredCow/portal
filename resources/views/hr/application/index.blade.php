@@ -199,7 +199,7 @@
     @endif
 
     <table class="table table-striped table-bordered" id="applicants_table">
-        <thead>
+        <thead class="thead-dark sticky-top">
             <th>Name</th>
             <th>Details</th>
             <th>

@@ -26,7 +26,6 @@ class ProjectService implements ProjectServiceContract
         $data['projects'] = $data['projects'] ?? 'all-projects';
 
         $clients = null;
-        $projectsCount = 0;
 
         if ($data['projects'] == 'all-projects') {
             $clients = Client::query()->with('projects', function ($query) use ($filters) {
@@ -35,9 +34,14 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters);
             })->orderBy('name')->get();
 
-            $projectsCount = $clients->sum(function ($client) use ($filters) {
-                return $client->projects()->applyFilter($filters)->count();
-            });
+            $filters['status'] = 'active';
+            $activeProjectsCount = Project::query()->applyFilter($filters)->count();
+
+            $filters['status'] = 'halted';
+            $haltedProjectsCount = Project::query()->applyFilter($filters)->count();
+
+            $filters['status'] = 'inactive';
+            $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
         } else {
             $userId = auth()->user()->id;
 
@@ -51,16 +55,27 @@ class ProjectService implements ProjectServiceContract
                 });
             })->get();
 
-            $projectsCount = $clients->sum(function ($client) use ($filters, $userId) {
-                return $client->projects()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
-                    $query->where('team_member_id', $userId);
-                })->count();
-            });
+            $filters['status'] = 'active';
+            $activeProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
+                $query->where('team_member_id', $userId);
+            })->count();
+
+            $filters['status'] = 'halted';
+            $haltedProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
+                $query->where('team_member_id', $userId);
+            })->count();
+
+            $filters['status'] = 'inactive';
+            $inactiveProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
+                $query->where('team_member_id', $userId);
+            })->count();
         }
 
         return [
             'clients' => $clients,
-            'projectsCount' => $projectsCount,
+            'activeProjectsCount' => $activeProjectsCount,
+            'inactiveProjectsCount' => $inactiveProjectsCount,
+            'haltedProjectsCount' => $haltedProjectsCount
         ];
     }
 
@@ -244,10 +259,10 @@ class ProjectService implements ProjectServiceContract
 
         return sprintf('%03s', $clientProjectsCount);
     }
-    public function getWorkingDays()
+    public function getWorkingDays($project)
     {
-        $startDate = Carbon::now(config('constants.timezone.indian'))->startOfMonth();
-        $endDate = Carbon::now(config('constants.timezone.indian'))->endOfMonth();
+        $startDate = $project->client->client_month_start_date;
+        $endDate = $project->client->client_month_end_date;
         $period = CarbonPeriod::create($startDate, $endDate);
         $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];

@@ -60,7 +60,7 @@
             @endphp
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
-                    <tr class="text-center">
+                    <tr class="text-center sticky-top">
                         <th></th>
                         <th class="w-150">Project</th>
                         @if (request()->invoice_status == "sent" || $invoiceStatus == 'sent')
@@ -99,7 +99,9 @@
                                 'year' => $invoiceYear,
                                 'emailSubject' => $invoiceReminderEmailSubject,
                                 'emailBody' => $invoiceReminderEmailBody,
-                                'invoiceId' => $invoice->id
+                                'invoiceId' => $invoice->id,
+                                'invoiceNumber' => $invoice->invoice_number,
+                                'invoiceAmount' => $invoice->invoiceAmount()
                             ];
                         @endphp
                             <tr>
@@ -123,7 +125,7 @@
                                     @if($invoice->reminder_mail_count)
                                         <div class="text-success">{{ __('Reminder Sent') }}</div>
                                     @elseif($invoice->shouldHighlighted())
-                                        <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-bs-toggle="modal" data-bs-target="#invoiceReminder" >{{ __('Reminder') }}</div>
+                                        <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data-toggle="modal" data-target="#invoiceReminder" >{{ __('Reminder') }}</div>
                                     @else
                                         <div> - </div> 
                                     @endif
@@ -137,7 +139,7 @@
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
                                     'billingPersonName' => optional($client->billing_contact)->name,
-                                    'billingPersonFirstName' => optional($invoice->client->billing_contact)->first_name,
+                                    'billingPersonFirstName' => optional($client->billing_contact)->first_name,
                                     'billingPersonEmail' => optional($client->billing_contact)->email,
                                     'senderEmail' => config('invoice.mail.send-invoice.email'),
                                     'invoiceNumber' => str_replace('-', '', $client->next_invoice_number),

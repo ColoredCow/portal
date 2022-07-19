@@ -94,15 +94,15 @@
                                         <thead>
                                             <tr class="bg-theme-gray text-light">
                                                 <th scope="col" class="pb-md-3 pb-xl-4 px-9">Name</th>
-                                                <th scope="col" class="pb-md-3 pb-xl-4">Hours Booked</th>
-                                                <th scope="col" class="pb-lg-1">Expected Hours
-                                                    
-                                                    <div class="ml-md-3 ml-xl-6 font-weight-bold fz-12"> 
+                                                <th scope="col" class="text-center">Hours Booked</th>
+                                                <th scope="col" class="text-center">Expected Hours
+
+                                                    <div class="text-center"> 
                                                         ({{$daysTillToday}} Days)
                                                     </div>
 
                                                 </th>
-                                                <th scope="col" class="pb-md-3 pb-xl-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                                                <th scope="col" class="text-center">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
                                         </thead>
                                         @if($project->TeamMembers->first() == null)
@@ -119,9 +119,9 @@
                                                             </span>
                                                             {{$teamMember->user->name}}
                                                         </th>
-                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
-                                                        <td>{{$teamMember->current_expected_effort}}</td>
-                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
+                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-center' }}">{{$teamMember->current_actual_effort}}</td>
+                                                        <td class="text-center">{{$teamMember->current_expected_effort }}</td>
+                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-center' }}">{{$teamMember->velocity}}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

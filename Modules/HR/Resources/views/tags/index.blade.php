@@ -7,15 +7,15 @@
             <h1>Tags</h1>
         </div>
         <div class="col-md-2">
-            <button type="button" class="btn btn-success btn-block btn-lg" data-bs-toggle="modal" data-bs-target="#createModal">
+            <button type="button" class="btn btn-success btn-block btn-lg" data-toggle="modal" data-target="#createModal">
             {{ __('New Tag') }}
             </button>
         </div>
     </div>
     <br>
-    <div class="table-responsive">
+    <div>
         <table class="table table-striped table-bordered" id="tags_table">
-            <tr>
+            <tr class="sticky-top">
                 <th>{{ __('Tag Name') }}</th>
                 <th>{{ __('Description') }}</th>
                 <th>{{ __('Actions') }}</th>

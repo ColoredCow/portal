@@ -3,7 +3,7 @@
         <div class="card-header p-1">
             <h3 class="text-center"><a href="/infrastructure">Infrastructure</a></h3>
         </div>
-         <div class="card-body pt-3" style="height: 18em;overflow: auto;">
+         <div class="card-body pt-3 h-325 w-md-389 w-389  overflow-y-scroll">
             <ul v-if="this.billingDetails.current_amount" class="list list-group unstyled-list">
                 <li style="font-size:16px;">
                     <div class="d-inline-block text-secondary"> Unbilled amount till today </div>
