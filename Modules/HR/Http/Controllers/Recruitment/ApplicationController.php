@@ -72,19 +72,11 @@ abstract class ApplicationController extends Controller
         })->with(['applicant', 'job', 'tags', 'latestApplicationRound']);
         foreach (array_keys(request()->all()) as $filterKeys) {
             switch ($filterKeys) {
-                case 'start-year':
-                    $startYear = request()->all()['start-year'] ? (int) request()->all()['start-year'] : null;
-                    if ($startYear != null) {
-                        $applications = $applications->whereHas('applicant', function ($query) use ($startYear) {
-                            $query->where('graduation_year', '>=', $startYear);
-                        });
-                    }
-                    break;
                 case 'end-year':
-                    $endYear = request()->get('end-year') ? (int) request()->get('end-year') : null;
-                    if ($endYear != null) {
-                        $applications = $applications->whereHas('applicant', function ($query) use ($endYear) {
-                            $query->where('graduation_year', '<=', $endYear)
+                    $GraduatingYear = request()->get('end-year') ? (int) request()->get('end-year') : null;
+                    if ($GraduatingYear != null) {
+                        $applications = $applications->whereHas('applicant', function ($query) use ($GraduatingYear) {
+                            $query->where('graduation_year', '<=', $GraduatingYear)
                             ->orWhereNull('graduation_year');
                         });
                     }

@@ -34,11 +34,7 @@
             <div class="d-flex flex-row">
                 <div class="d-flex mt-2 mt-md-0">
                     <div class="mr-2 form-group">
-                        <label id="start-year">{!! __('Start Year') !!}</label><br>
-                        <input id="start-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="start-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('start-year', request()->get('start-year')) }}">
-                    </div>
-                    <div class="mr-2 form-group">
-                        <label id="end-year">{!! __('End Year') !!}</label><br>
+                        <label id="end-year">{!! __('Year of Graduation') !!}</label><br>
                         <input id="end-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="end-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('end-year', request()->get('end-year')) }}">
                     </div>
                 </div>
