@@ -26,7 +26,7 @@ use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 
 class InvoiceService implements InvoiceServiceContract
 {
-    public function index($filters = [], $invoiceStatus = 'sent', $latestInvoice)
+    public function index($filters = [], $invoiceStatus = 'sent')
     {
         $filters = [
             'client_id' => $filters['client_id'] ?? null,
@@ -69,7 +69,6 @@ class InvoiceService implements InvoiceServiceContract
                 'module' => 'invoice',
                 'setting_key' => config('invoice.templates.setting-key.invoice-reminder.body')
             ])->first())->setting_value,
-            'latestInvoice'=>$latestInvoice,
         ];
     }
 
@@ -567,6 +566,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
             'body' => $email['body'],
+            'type' => config('invoice.mail-type.invoice-reminder.slug')
         ]);
     }
 

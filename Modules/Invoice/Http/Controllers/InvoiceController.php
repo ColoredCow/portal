@@ -34,9 +34,8 @@ class InvoiceController extends Controller
             $invoiceStatus = 'ready';
             $filters = $request->all();
         }
-        $latestInvoice=InvoiceMail::
-        all()->sortByDesc('sent_on')->first();
-        return view('invoice::index', $this->service->index($filters, $invoiceStatus,$latestInvoice));
+
+        return view('invoice::index', $this->service->index($filters, $invoiceStatus));
     }
 
     /**

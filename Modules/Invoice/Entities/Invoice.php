@@ -6,6 +6,7 @@ use App\Traits\Encryptable;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Invoice\Entities\InvoiceMail;
 use Illuminate\Support\Arr;
 
 class Invoice extends Model
@@ -184,9 +185,13 @@ class Invoice extends Model
             return $this->amount * $this->conversion_rate;
         }
     }
+    public function invoiceMail(){
 
-    public function getTotalAmountAttribute()
+        return $this->hasMany(InvoiceMail::class, 'invoice_id', 'id');
+    }
+
+    public function latestReminder()
     {
-        return $this->amount + $this->gst;
+       return $this->invoiceMail()->orderByDesc('sent_on')->first();
     }
 }
