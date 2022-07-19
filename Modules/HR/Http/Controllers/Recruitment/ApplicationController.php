@@ -21,9 +21,7 @@ use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
-use Illuminate\Support\Facades\DB;
-use Modules\HR\Database\Seeders\HRRoundsTableSeeder;
-use Modules\HR\Entities\Round;
+
 
 abstract class ApplicationController extends Controller
 {
