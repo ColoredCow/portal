@@ -561,7 +561,6 @@ class InvoiceService implements InvoiceServiceContract
         $invoice->update([
             'reminder_mail_count' => ($invoice->reminder_mail_count + 1)
         ]);
-        // dd($invoice);
         InvoiceMail::create([
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
