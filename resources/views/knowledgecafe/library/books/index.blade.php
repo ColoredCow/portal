@@ -66,14 +66,14 @@
                                 </a>
                                 <ul class="dropdown-menu ">
                                     <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item">Update Category</li>
-                                    <li @click="updateIndex(index)" data-toggle="modal" data-target="#exampleModal" class="dropdown-item">Copies Available</li>
+                                    <li @click="updateIndex(index)"  data-toggle="modal" :data-target="'#updateModalValue' + index" class="dropdown-item">Copies Available</li>
                                     <li @click="deleteBook(index)" class="dropdown-item text-danger">Delete</li>
                                 </ul>
                             </div>
                         </div>
                     @endcan
                 </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" :id="'updateModalValue' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -82,7 +82,7 @@
                           </button>
                         </div>
                         <div class="modal-body">Number of copies of this book: <input type="text" name="copiesofbooks"
-                            id="copiesOfBooks">  </div>
+                            id="copiesOfBooks":value="book.number_of_copies">  </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                           <button type="button" class="btn btn-primary" @click="updateCopiesCount(index)" data-dismiss="modal">OK</button>

@@ -12,6 +12,7 @@ var clipboard = new ClipboardJS(".btn-clipboard");
   
 window.Vue = require("vue");
 import { Laue } from "laue";
+import { defaultsDeep } from "lodash";
  
 Vue.use(Laue);
   
@@ -412,6 +413,7 @@ if (document.getElementById("show_and_save_book")) {
 			  book: {},
 			  number_of_copies: 1,
 			  currentIndex: 0,
+			  copyValue: 1,
 			  routes: {
 				  index: document.getElementById("show_book").dataset.indexRoute || "",
 				  fetch: document.getElementById("book_form").dataset.actionRoute || "",
