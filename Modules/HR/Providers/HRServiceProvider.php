@@ -154,7 +154,7 @@ class HRServiceProvider extends ServiceProvider
         }
         if (! Arr::has($this->app->getBindings(), UniversityServiceContract::class)) {
             $this->app->bind(UniversityServiceContract::class, function () {
-                return new UniversityService();
+                return new UniversityService(); 
             });
         }
     }
