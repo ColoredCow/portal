@@ -249,29 +249,31 @@ class Client extends Model
             return today(config('constants.timezone.indian'))->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
         }
     }
-   
+
     public function getCcEmailsAttribute()
     {
         $ccEmails = null;
-        if(optional($this->secondary_contact)->first() != null) {
-            $ccEmails=config('invoice.mail.send-invoice.email');
-            foreach($this->secondary_contact as $ccEmail) {
+        if (optional($this->secondary_contact)->first() != null) {
+            $ccEmails = config('invoice.mail.send-invoice.email');
+            foreach ($this->secondary_contact as $ccEmail) {
                 $ccEmails .= ",$ccEmail->email";
             }
         }
+
         return $ccEmails;
     }
 
     public function getBccEmailsAttribute()
     {
         $bccEmails = null;
-        if(optional($this->tertiary_contact)->first() != null) {
-            $bccEmails='';
-            foreach($this->tertiary_contact as $bccEmail) {
+        if (optional($this->tertiary_contact)->first() != null) {
+            $bccEmails = '';
+            foreach ($this->tertiary_contact as $bccEmail) {
                 $bccEmails .= ",$bccEmail->email";
-            } 
+            }
             $bccEmails = substr($bccEmails, 1);
         }
+
         return $bccEmails;
     }
 }
