@@ -110,10 +110,8 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $invoice->client->name }}</td>
-                                <td>
-                                    <a href="{{ route('invoice.edit', $invoice) }}">{{ optional($invoice->project)->name ?: ($invoice->client->name . ' Projects') }}</a>
-                                </td>
-                                <td>{{ $invoice->invoice_number }}</td>
+                                <td>{{ optional($invoice->project)->name ?: ($invoice->client->name . ' Projects') }}</td>
+                                <td><a href="{{ route('invoice.edit', $invoice) }}">{{ $invoice->invoice_number }}</a></td>
                                 <td>{{ $invoice->invoiceAmount() }}</td>
                                 <td class="text-center">{{ $invoice->sent_on->format(config('invoice.default-date-format')) }}</td>
                                 <td class='{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger ' : '' }} text-center'>
