@@ -53,10 +53,10 @@ class EvaluationController extends Controller
      */
     public function createSegment(Request $request)
     {
-        $segment_id = Round::select('*')->where('name', $request->rounds)->first()->id;
+        $segmentId = Round::select('*')->where('name', $request->rounds)->first()->id;
         $segment = Segment::create([
             'name' => $request->name,
-            'round_id' => $segment_id
+            'round_id' => $segmentId
         ]);
 
         return redirect(route('hr.evaluation'));
