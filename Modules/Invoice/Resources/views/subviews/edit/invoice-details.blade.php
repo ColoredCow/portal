@@ -130,21 +130,21 @@
                 <div class="form-group" v-if="this.client.type != 'indian'">
                     <div class="d-flex">
                         <label for="bank_charges" class="mr-4 pt-1 field-required">Bank Charges:</label>
-                        <input type="number" class = "form-control w-272 ml-auto" name="bank_charges" v-model='bankCharges' required="required">
+                        <input type="number" class="form-control w-272 ml-auto" step="0.01" name="bank_charges" v-model='bankCharges' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
                         <label for="client_id" class="mr-4 pt-1 field-required">Conversion Rate Diff:</label>
-                        <input type="number" class = "form-control w-272 ml-auto" name="conversion_rate_diff" v-model = 'conversionRateDiff' required="required">
+                        <input type="number" class="form-control w-272 ml-auto" step="0.01" name="conversion_rate_diff" v-model = 'conversionRateDiff' required="required">
                     </div>
                 </div>
 
                 <div class="form-group" v-if="this.client.type !== 'indian'">
                     <div class="d-flex">
                         <label for="conversion_rate" class="mr-4 pt-1 field-required">Conversion Rate:</label>
-                        <input type="number" id="conversionRate" class = "form-control w-272 ml-auto" name="conversion_rate" v-model = 'conversionRate' required="required">
+                        <input type="number" id="conversionRate" class="form-control w-272 ml-auto" step="0.01" name="conversion_rate" v-model = 'conversionRate' required="required">
                     </div>
                 </div>
 
@@ -160,11 +160,12 @@
                     <textarea name="comments" id="comments" rows="5" class="form-control" v-model="comments"></textarea>
                 </div>
             </div>
-            <div class="d-flex" v-if="status == 'paid'">
+            <div v-if="status == 'paid'">
                 @if($invoice->payment_confirmation_mail_sent === 0)
-                    <input type="checkbox" id="showEmail" class="ml-auto" @change="showEmail($event)" name="send_mail">
+                    <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
-                    <i v-if="show_on_select" class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
+                    <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
+                    <div class="fz-14 text-theme-orange">{{ __('If disabled the mail will not be sent.') }}</div>
                 @else
                     <label class="mx-1 pt-1">
                         {{ __('Confirmation Mail Status: ') }}
@@ -173,7 +174,7 @@
                         </span>
                     </label>
                 @endif
-            </div>
+            </div> 
         </div>
         <div>
             @include('invoice::modals.payment-received')
@@ -205,6 +206,9 @@
         },
 
         changePaidAmountListener() {
+            var emailBody = $("#emailBody").text();
+            emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
+            tinymce.get("emailBody").setContent(emailBody, { format: "html" });
             this.calculateTaxes()
         },
 
@@ -253,28 +257,32 @@
 
         updatePaymentAmountDetails(filtered_number_list) {
             let totalNumbersInList =  filtered_number_list.length
-
+            var emailBody = $("#emailBody").text();
+           
             for (var index = 0; index < totalNumbersInList; index++) {
                 if (this.client.type == 'indian') {
                     if (index == totalNumbersInList - 1) {
                         this.amountPaid = filtered_number_list[index]
                         $('#amountPaid').val(this.amountPaid)
+                        emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                         this.calculateTaxes()
                     }
+                    continue;
                 }
-
+                
                 if (index == 0) {
                     this.amountPaid = filtered_number_list[index]
                     $('#amountPaid').val(this.amountPaid)
+                    emailBody = emailBody.replace(this.amountPaidText, this.amountPaid);
                     this.calculateTaxes()
                 } else if (index == 1) {
                     conversionRate = filtered_number_list[index]
                     this.conversionRate = conversionRate
-                    console.log(this.currentExchangeRate)
                     this.conversionRateDiff = Math.abs(this.currentExchangeRate - conversionRate).toFixed(2)
                 }
-
             }
+
+            tinymce.get("emailBody").setContent(emailBody, { format: "html" });
         }
     },
 
@@ -286,6 +294,7 @@
             clientId:"{{ $invoice->client_id  }}",
             projectId:"{{ $invoice->project_id }}",
             client:@json( $invoice->client),
+            amountPaidText:"|*amount_paid*|",  
             currentExchangeRate: "{{ $currencyService->getCurrentRatesInINR() }}",
             currencyTransactionCharge:"{{ $invoice->currency_transaction_charge ? : $invoice->currency }}",
             comments:`{{ $invoice->comments }}`,

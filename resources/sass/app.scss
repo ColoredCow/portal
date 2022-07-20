@@ -785,6 +785,10 @@ span.total-chart-count{
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
+.flex-nowrap {
+	flex-wrap: nowrap !important;
+}
+
 // End Custom
 
 [v-cloak] { display: none; }
