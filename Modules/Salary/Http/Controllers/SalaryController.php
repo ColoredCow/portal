@@ -29,14 +29,14 @@ class SalaryController extends Controller
         return view('salary::employee.index')->with('employee', $employee);
     }
 
-    public function storeSalary( Request $request, Employee $employee)
+    public function storeSalary(Request $request, Employee $employee)
     {
         EmployeeSalary::updateOrCreate(
-             ['employee_id' => $employee->user_id],
-             ['gross_salary' => $request->grossSalary]
-         );
+            ['employee_id' => $employee->user_id],
+            ['gross_salary' => $request->grossSalary]
+        );
 
-        return back()->with('success', 'Gross Salary saved successfully!');
+        return redirect()->back()->with('success', 'Gross Salary saved successfully!');
     }
 
     /**
