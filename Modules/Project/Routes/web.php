@@ -11,7 +11,6 @@ use App\Http\Controllers\MailController;
 | contains the "web" middleware group. Now create something great!
 |
  */
-use Google\Service\CloudRun\Route;
 
 Route::get('/', [MailController::class, 'sendMail']);
 
