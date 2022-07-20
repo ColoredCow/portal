@@ -23,7 +23,7 @@ use App\Http\Controllers\MailController;
  */
 use Google\Service\CloudRun\Route;
 
-Route::get('/',[MailController::class,'sendMail']);
+Route::get('/', [MailController::class,'sendMail']);
 
 /*
 |--------------------------------------------------------------------------

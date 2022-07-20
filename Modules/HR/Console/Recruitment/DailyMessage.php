@@ -50,4 +50,3 @@ class DailyMessage extends Command
         SendEmailToNonVerifiedApplicants::dispatch($applications);
     }
 }
-

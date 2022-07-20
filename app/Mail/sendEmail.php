@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Mail;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -30,6 +31,6 @@ class sendEmail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->view('emails.end-Email');
-        with('applications',$this->applications);
+        with('applications', $this->applications);
     }
 }
