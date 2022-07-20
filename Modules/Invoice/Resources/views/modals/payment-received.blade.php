@@ -1,24 +1,3 @@
-@php
-if(optional($invoice->client->tertiary_contact)->first() != null) {
-    $bccEmails='';
-    foreach($invoice->client->tertiary_contact as $bccEmail) {
-        $bccEmails .= ",$bccEmail->email";
-    } 
-    $bccEmails = substr($bccEmails, 1);
-} else {
-    $bccEmails = null;
-}
-if(optional($invoice->client->secondary_contact)->first() != null) {
-    $ccEmails='';
-    foreach($invoice->client->secondary_contact as $ccEmail) {
-        $ccEmails .= ",$ccEmail->email";
-    } 
-    $ccEmails = substr($ccEmails, 1);
-} else {
-    $ccEmails = null;
-}
-@endphp
-
 <div class="modal fade" id="paymentReceived" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -52,7 +31,7 @@ if(optional($invoice->client->secondary_contact)->first() != null) {
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        <input type="text" name="cc" id="cc" class="form-control" value="{{$ccEmails == null ? config('invoice.mail.send-invoice.email') : config('invoice.mail.send-invoice.email') .','. $ccEmails}}">
+                        <input type="text" name="cc" id="cc" class="form-control" value="{{$invoice->cc_emails == null ? config('invoice.mail.send-invoice.email') : config('invoice.mail.send-invoice.email') .','. $invoice->cc_emails}}">
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="bcc">
@@ -61,7 +40,7 @@ if(optional($invoice->client->secondary_contact)->first() != null) {
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        <input type="text" name="bcc" id="bcc" class="form-control" value="{{$bccEmails}}">
+                        <input type="text" name="bcc" id="bcc" class="form-control" value="{{$invoice->bcc_emails}}">
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>
