@@ -135,10 +135,10 @@ class JobController extends Controller
      */
     public function storeJobdomain(JobDomainRequest $request)
     {
-        $hr_job_domains = new EntitiesHrJobDomain();
-        $hr_job_domains->domain = $request['name'];
-        $hr_job_domains->slug = Str::slug($request['name']);
-        $hr_job_domains->save();
+        $hrJobDomains = new EntitiesHrJobDomain();
+        $hrJobDomains->domain = $request['name'];
+        $hrJobDomains->slug = Str::slug($request['name']);
+        $hrJobDomains->save();
 
         return redirect()->back();
     }
