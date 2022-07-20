@@ -47,7 +47,8 @@
             </tbody>
             </table>
     </div>
-    @include('hr::guidelines-resources.create-category-modal')
-    @include('hr::guidelines-resources.create-resources-modal')
-    @include('hr::guidelines-resources.edit-modal')
-    @endsection
+</div>
+@include('hr::guidelines-resources.create-category-modal')
+@include('hr::guidelines-resources.create-resources-modal')
+@include('hr::guidelines-resources.edit-modal')
+@endsection
