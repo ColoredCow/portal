@@ -48,6 +48,5 @@ class DailyMessage extends Command
     {
         $applications = Application::where('is_verified', false)->where('created_at', '>=', '2022-07-06')->get();
         SendEmailToNonVerifiedApplicants::dispatch($applications);
-  
     }
 }
