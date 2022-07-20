@@ -31,7 +31,8 @@
                 </td>
 
                 <td>
-                    <button v-on:click="editSegment({{ $segment }})" class="btn btn-default">Edit</button>
+                    <i class="fa fa-edit" style="font-size: 20px; color: green;"></i>
+                    <i class="fa fa-trash  fa-7x" style="font-size: 20px; color: red; margin-left: 15px;"></i>
                 </td>
             </tr>
             @endforeach
