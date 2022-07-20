@@ -9,8 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        {{-- @dd($rounds) --}}
-      @foreach ($rounds as $key=>$round)
+          @foreach ($rounds as $key=>$round)
             <p>{{$key}}: {{$round}}</p>
           @endforeach
       </div>
