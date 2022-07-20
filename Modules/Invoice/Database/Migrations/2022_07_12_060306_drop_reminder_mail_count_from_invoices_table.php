@@ -14,7 +14,7 @@ class DropReminderMailCountFromInvoicesTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn("reminder_mail_count");
+            $table->dropColumn('reminder_mail_count');
         });
     }
 

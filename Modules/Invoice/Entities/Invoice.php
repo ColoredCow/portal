@@ -191,6 +191,7 @@ class Invoice extends Model
 
     public function latestReminder()
     {
-        return $this->invoiceMail()->orderByDesc('sent_on')->first();
+        return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice-reminder.slug'))
+        ->orderByDesc('sent_on')->first();
     }
 }
