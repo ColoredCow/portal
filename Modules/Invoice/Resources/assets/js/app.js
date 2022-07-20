@@ -112,6 +112,11 @@ $(document).ready(function(){
 			event.target.submit();
 		}
 	});
+	window.setTimeout(function() {
+		$(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+			$(this).remove(); 
+		});
+	}, 6000);
 });
 
 function validateFormData(form) {
@@ -203,8 +208,3 @@ function convert_number(number) {
 	return result;
 }
 
-window.setTimeout(function() {
-	$(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-		$(this).remove(); 
-	});
-}, 6000);
