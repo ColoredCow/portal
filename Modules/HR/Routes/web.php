@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/resources/edit/', 'ResourcesController@edit')->name('resources.edit-modal');
         Route::put('/resources/update/{resource}', 'ResourcesController@update')->name('resources.update');
         Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
+        Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

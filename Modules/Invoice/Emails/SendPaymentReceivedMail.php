@@ -56,6 +56,12 @@ class SendPaymentReceivedMail extends Mailable
             $body = Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first();
             $body = $body ? $body->setting_value : '';
             $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->first_name, $body);
+            $body = str_replace(
+                $templateVariablesForBody['invoice-amount'],
+                (optional($this->invoice->client->country)->currency_symbol ?: '') . $this->invoice->amount,
+                $body
+            );
+            $body = str_replace($templateVariablesForBody['invoice-number'], $this->invoice->invoice_number, $body);
         }
 
         $mail = $this->to($this->email['to'], $this->email['to_name'])
