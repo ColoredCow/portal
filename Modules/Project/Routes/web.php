@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MailController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
