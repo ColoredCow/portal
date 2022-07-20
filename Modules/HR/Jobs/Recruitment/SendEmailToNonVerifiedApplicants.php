@@ -9,7 +9,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Mail\sendEmail;
 use Illuminate\Support\Facades\Mail;
-use Modules\HR\Entities\Applications;
 
 class SendEmailToNonVerifiedApplicants implements ShouldQueue
 {
