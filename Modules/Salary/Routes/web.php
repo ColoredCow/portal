@@ -13,8 +13,8 @@
 
 Route::prefix('salary')->middleware('auth')->group(function () {
     Route::get('/', 'SalaryController@index')->name('salary.index');
-    Route::get('/employee', 'SalaryController@employee')->name('salary.employee');
-    Route::post('/employee/save', 'SalaryController@saveSalary')->name('salary.employee.save');
+    Route::get('/employee/{employee}', 'SalaryController@employee')->name('salary.employee');
+    Route::get('/employee/store', 'SalaryController@storeSalary')->name('salary.employee.store');
 });
 
 //Route::prefix('salary-settings')->middleware('auth')->group(function () {

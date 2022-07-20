@@ -5,6 +5,7 @@ namespace Modules\Salary\Http\Controllers;
 use Modules\HR\Entities\Employee;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Modules\Salary\Entities\EmployeeSalary;
 
 class SalaryController extends Controller
 {
@@ -23,16 +24,19 @@ class SalaryController extends Controller
     {
     }
 
-    public function employee()
+    public function employee(Request $request, Employee $employee)
     {
-        $employees = Employee::get();
-
-        return view('salary::employee.index')->with('employees', $employees);
+        return view('salary::employee.index')->with('employee', $employee);
     }
 
-    public function saveSalary(Request $req)
+    public function storeSalary( Request $request, Employee $employee)
     {
-        dd($req->grossSalary);
+        EmployeeSalary::updateOrCreate(
+             ['employee_id' => $employee->user_id],
+             ['gross_salary' => $request->grossSalary]
+         );
+
+        return back()->with('success', 'Gross Salary saved successfully!');
     }
 
     /**
