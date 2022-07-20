@@ -154,7 +154,7 @@ class HRServiceProvider extends ServiceProvider
         }
         if (! Arr::has($this->app->getBindings(), UniversityServiceContract::class)) {
             $this->app->bind(UniversityServiceContract::class, function () {
-                return new UniversityService(); 
+                return new UniversityService();
             });
         }
     }
@@ -166,7 +166,7 @@ class HRServiceProvider extends ServiceProvider
      */
     protected function registerCommands()
     {
-        $this->commands([ 
+        $this->commands([
             \Modules\HR\Console\Recruitment\DailyMessage::class,
              \Modules\HR\Console\Recruitment\ApplicationNoShow::class,
             \Modules\HR\Console\Recruitment\MappingOfJobsAndHrRounds::class,

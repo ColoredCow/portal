@@ -31,6 +31,5 @@ class sendEmail extends Mailable implements ShouldQueue
     {
         return $this->view('emails.end-Email');
         with('applications',$this->applications);
-        
     }
 }
