@@ -89,8 +89,7 @@
                         @php
                             if(optional($invoice->client->tertiary_contact)->first() != null) {
                                 $bccEmails='';
-                                foreach($invoice->client->tertiary_contact as $bccEmail)
-                                {
+                                foreach($invoice->client->tertiary_contact as $bccEmail) {
                                     $bccEmails .= ",$bccEmail->email";
                                 } 
                                 $bccEmails = substr($bccEmails, 1);
@@ -99,8 +98,7 @@
                             }
                             if(optional($invoice->client->secondary_contact)->first() != null) {
                                 $ccEmails=config('invoice.mail.send-invoice.email');
-                                foreach($invoice->client->secondary_contact as $ccEmail)
-                                {
+                                foreach($invoice->client->secondary_contact as $ccEmail) {
                                     $ccEmails .= ",$ccEmail->email";
                                 }
                             } else {
@@ -158,20 +156,18 @@
                             @php
                                 if(optional($client->tertiary_contact)->first() != null) {
                                     $bccEmails='';
-                                    foreach($client->tertiary_contact as $bccEmail)
-                                        {
-                                            $bccEmails .= ",$bccEmail->email";
-                                        } 
+                                    foreach($client->tertiary_contact as $bccEmail) {
+                                        $bccEmails .= ",$bccEmail->email";
+                                    } 
                                     $bccEmails = substr($bccEmails, 1);
                                 } else {
                                     $bccEmails = null;
                                 }
                                 if(optional($client->secondary_contact)->first() != null) {
                                     $ccEmails=config('invoice.mail.send-invoice.email');
-                                    foreach($client->secondary_contact as $ccEmail)
-                                        {
-                                            $ccEmails .= ",$ccEmail->email";
-                                        }
+                                    foreach($client->secondary_contact as $ccEmail) {
+                                        $ccEmails .= ",$ccEmail->email";
+                                    }
                                 } else {
                                     $ccEmails = null;
                                 }

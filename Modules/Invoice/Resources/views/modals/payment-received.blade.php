@@ -1,8 +1,7 @@
 @php
 if(optional($invoice->client->tertiary_contact)->first() != null) {
     $bccEmails='';
-    foreach($invoice->client->tertiary_contact as $bccEmail)
-    {
+    foreach($invoice->client->tertiary_contact as $bccEmail) {
         $bccEmails .= ",$bccEmail->email";
     } 
     $bccEmails = substr($bccEmails, 1);
@@ -11,8 +10,7 @@ if(optional($invoice->client->tertiary_contact)->first() != null) {
 }
 if(optional($invoice->client->secondary_contact)->first() != null) {
     $ccEmails='';
-    foreach($invoice->client->secondary_contact as $ccEmail)
-    {
+    foreach($invoice->client->secondary_contact as $ccEmail) {
         $ccEmails .= ",$ccEmail->email";
     } 
     $ccEmails = substr($ccEmails, 1);
