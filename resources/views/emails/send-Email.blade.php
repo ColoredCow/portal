@@ -9,12 +9,11 @@
     </p>
 </div>
 
-@foreach($applications as $application)
+@foreach((array)$applications as $application)
     <p>|{{$application['applicant_name']}} | {{$application['applicant_phone_number']}}</p>                                                                                                                ber']}}</p>
 @endforeach
 
 Thanks,<br>
 <p>Hr team</p>
-{{ config('app.name') }} 
-@endcomponent
+<p>Coloredcow.</p>
 
