@@ -1,7 +1,6 @@
 <?php
 
 namespace Modules\HR\Entities;
-
 use App\Helpers\FileHelper;
 use App\Traits\HasTags;
 use Carbon\Carbon;
@@ -66,10 +65,11 @@ class ApplicationRound extends Model
                 if ($application->status == 'on-hold') {
                     $application->untag('on-hold');
                     $application->tag('new-application');
+                    $application->status = 'new';
+                    $application->save();
                 } else {
                     $application->untag('new-application');
                     $application->tag('in-progress');
-                }
                 //move application to Trial Round
                 if ($nextRound->isTrialRound()) {
                     $fillable['round_status'] = 'confirmed';
@@ -118,6 +118,7 @@ class ApplicationRound extends Model
                         'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                     ]);
                 }
+            }
                 break;
 
             case 'reject':
