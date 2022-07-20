@@ -199,19 +199,21 @@ class Invoice extends Model
                 $ccEmails .= ",$ccEmail->email";
             }
         }
+
         return $ccEmails;
     }
-    
+
     public function getBccEmailsAttribute()
     {
         $bccEmails = null;
-        if(optional($this->client->tertiary_contact)->first() != null) {
-            $bccEmails='';
-            foreach($this->client->tertiary_contact as $bccEmail) {
+        if (optional($this->client->tertiary_contact)->first() != null) {
+            $bccEmails = '';
+            foreach ($this->client->tertiary_contact as $bccEmail) {
                 $bccEmails .= ",$bccEmail->email";
-            } 
+            }
             $bccEmails = substr($bccEmails, 1);
         }
+
         return $bccEmails;
     }
 }
