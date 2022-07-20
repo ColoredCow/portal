@@ -86,6 +86,10 @@ return [
         'invoice-reminder' => [
             'slug' => 'invoice-reminder',
             'label' => 'Invoice Reminder'
+        ],
+        'payment-confirmation' => [
+            'slug' => 'payment-confirmation',
+            'label' => 'Payment Confirmation'
         ]
     ],
 

@@ -194,4 +194,10 @@ class Invoice extends Model
         return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice-reminder.slug'))
         ->orderByDesc('sent_on')->first();
     }
+
+    public function confirmationMail()
+    {
+        return $this->invoiceMail()->where('type', config('invoice.mail-type.payment-confirmation.slug'))
+        ->first();
+    }
 }
