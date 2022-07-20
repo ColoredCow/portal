@@ -22,8 +22,6 @@ class DomainTableSeeder extends Seeder
                 [
                     'domain' => $domain,
                     'slug' => $slug,
-                    'created_at' => now(),
-                    'updated_at' => now()
                 ]
             );
         }

@@ -11,6 +11,7 @@ use Modules\HR\Http\Requests\Recruitment\JobRequest;
 use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
 use Modules\User\Entities\User;
 use Illuminate\Support\Str;
+use Request;
 
 class JobController extends Controller
 {
@@ -37,7 +38,7 @@ class JobController extends Controller
                 $query->isOpen()->get();
             }])
             ->latest()
-            ->appends();
+            ->appends(Request::except('page'));
 
         request()->is('*recruitment/opportunities*') ? $jobs->typeRecruitment() : $jobs->typeVolunteer();
         $jobs->paginate(config('constants.pagination_size'));
