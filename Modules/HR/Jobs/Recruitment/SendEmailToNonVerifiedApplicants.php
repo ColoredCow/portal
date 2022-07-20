@@ -33,7 +33,6 @@ class SendEmailToNonVerifiedApplicants implements ShouldQueue
      */
     public function handle()
     {
-        dd($this->applications);
         $email = new sendEmail($this->applications);
         Mail::to('pankaj.kandpal@coloredcow.in')->send($email);
     }
