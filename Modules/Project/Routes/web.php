@@ -14,7 +14,7 @@ use App\Http\Controllers\MailController;
  */
 use Google\Service\CloudRun\Route;
 
-Route::get('/',[MailController::class,'sendMail']);
+Route::get('/', [MailController::class,'sendMail']);
 
 Route::prefix('projects')->middleware('auth')->group(function () {
     Route::get('/', 'ProjectController@index')->name('project.index');
