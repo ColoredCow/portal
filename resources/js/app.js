@@ -70,6 +70,7 @@ if (document.getElementById("vueContainer")) {
 }
   
 $(document).ready(() => {
+
 	setTimeout(function() {
 		$("#statusAlert").alert("close");
 	}, 2000);
@@ -949,9 +950,21 @@ $(document).ready(function() {
 	  $(document).on("change", ".set-segment-assignee", setSegmentAssignee);
 	  $(document).on("click", ".toggle-block-display", toggleBlockDisplay);
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
+	  $(document).on("click", ".rg_edit_btn", resourceGuidelineEditClicked);
 });
 
 $(document).getElementById("Categoryname").onkeyup = ButtonEnable();
+
+function resourceGuidelineEditClicked(event) 
+{
+	let actionUrl = $(this).attr('action_url');
+	$("#edit-Modal #update-form").attr("action", actionUrl);
+	let resourceLink = $(this).attr('resource_link');
+	$("#edit-Modal #update-form #resource_link").attr("value", resourceLink);
+	let categoryName = $(this).attr('category_id');
+	$("#edit-Modal #update-form #hrResourceCategory").val(categoryName);
+	$("#edit-Modal").modal("show");
+}
 
 function ButtonEnable() {
 	if(document.getElementById("name").value=="") { 

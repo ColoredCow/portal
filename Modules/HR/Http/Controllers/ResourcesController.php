@@ -48,4 +48,21 @@ class ResourcesController extends Controller
 
         return redirect()->back();
     }
+
+    public function update(Request $request, Resource $resource)
+    {
+        $resource->update([
+            'resource_link' => $request['name'],
+            'hr_resource_category_id' => $request['category-type']
+        ]);
+
+        return redirect()->back()->with('status', 'Category updated successfully!');
+    }
+
+    public function destroy(Resource $resource)
+    {
+        $resource->delete();
+
+        return redirect()->back()->with('status', 'Category deleted successfully!');
+    }
 }
