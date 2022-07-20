@@ -27,7 +27,6 @@ abstract class ApplicationController extends Controller
     abstract public function getApplicationType();
 
     protected $service;
-    
     public function __construct(ApplicationService $service)
     {
         $this->service = $service;
