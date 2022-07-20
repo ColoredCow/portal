@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
-                            <label for="name" class="mt- -2 font-weight-bold">Status:</label>
+                            <label for="name" class="font-weight-bold">Status:</label>
                         </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->status }}</span>
                     </div>
