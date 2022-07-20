@@ -29,7 +29,7 @@
         </li>
       </ul>
     </div>
-    <div class="card-body pt-3 h-318 w-md-389 w-389">
+    <div class="card-body pt-3 h-318 w-md-389 w-389 overflow-y-scroll">
       <div v-show="this.activeTile == 'wishlist'">
         <user-dashboard-wishlist-books />
       </div>
