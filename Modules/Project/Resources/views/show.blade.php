@@ -54,19 +54,20 @@
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Status:</label>
+                            <label for="name" class="mt- -2 font-weight-bold">Status:</label>
                         </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->status }}</span>
                     </div>
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="form-group  pl-4">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Effortsheet:</label>
                         </h4>
                         @if($project->effort_sheet_url)
-                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded" target="_blank">{{ _('Open Sheet') }}</a>
+                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn btn-primary btn-smtext-white ml-2
+                                 text-light rounded" target="_blank">{{ _('Open Sheet') }}</a>
                         @else
                             <span class="ml-2 fz-lg-22">Not Available</span>
                         @endif
