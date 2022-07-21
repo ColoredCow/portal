@@ -48,7 +48,7 @@ class DailyMessage extends Command
     public function handle()
     {
         $applications = Application::where('is_verified', false)->where('created_at', '>=', '2022-07-06')->get();
-        Mail::to('pankaj.kandpal@coloredcow.in')->queue(new sendEmail($applications));
+        Mail::to(config('hr.default.non-verified-email'))->queue(new sendEmail($applications));
 
         $this->info('email sent successfully.');
     }

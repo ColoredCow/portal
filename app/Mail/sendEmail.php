@@ -31,6 +31,7 @@ class sendEmail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('emails.send-Email');
+        return $this->from(config('hr.default.email'), config('hr.default.name'))
+        ->view('emails.send-Email');
     }
 }

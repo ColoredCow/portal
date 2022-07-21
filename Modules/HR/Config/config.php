@@ -76,6 +76,7 @@ return [
     'default' => [
         'email' => env('HR_DEFAULT_FROM_EMAIL', 'portal@coloredcow.com'),
         'name' => env('HR_DEFAULT_FROM_NAME', 'ColoredCow Portal Careers'),
+        'non-verified-email' => env('HR_MAILTO_NON_VERIFIED_APPLICANTS', 'pankaj.kandpal@coloredcow.in'),
     ],
     'interview-time-format' => 'h:i a',
     'no-show-hours-limit' => 2,
