@@ -61,7 +61,7 @@
     </div>
 
     <table class="table table-striped table-bordered" id="applicants_table">
-        <tr>
+        <tr class="sticky-top">
             <th>Name</th>
             <th>Email</th>
             <th>Applied for</th>

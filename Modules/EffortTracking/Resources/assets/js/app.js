@@ -1,3 +1,30 @@
+$(function () {
+	$(".fa-refresh").on("click", function () {
+		let button = $(this).prop("disabled", true);
+		button.toggleClass("d-none");
+		button.siblings(".fa-spinner").toggleClass("d-none");
+
+		$.ajax({
+			url: button.data("url"),
+			type: "POST",
+			success: function(response) {
+				setTimeout(() => {
+					button.prop("disabled", false);
+					button.toggleClass("d-none");
+					button.siblings(".fa-spinner").toggleClass("d-none");
+					location.reload();
+				}, 3000);
+			},
+			error: function(response) {
+				$("#modal-message").modal("show");
+				button.prop("disabled", true);
+				button.toggleClass("d-none");
+				button.siblings(".fa-spinner").toggleClass("d-none");
+			},
+		});
+	});;
+});
+
 $(document).on("click", "#add_task", (e) => {
 	let form = $("#add_form")
 		.children()

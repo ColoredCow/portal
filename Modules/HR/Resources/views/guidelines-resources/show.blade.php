@@ -1,6 +1,6 @@
 @extends('hr::layouts.master')
 @section('content')
-<div class="row col-gap justify-content-center" id="resource_category">
+<div class="row col-gap justify-content-center mt-5">
     <div class="col-md-6">
         <h3>Resources for {{$job->title}}</h3>
     </div>
@@ -41,6 +41,7 @@
                     <a href="#" id="resource_id" resource_id={{ $resource->id }} action_url={{route('resources.update', $resource->id)}} resource_link="{{$resource->resource_link}}" category_id="{{$resource->category->id}}" class="pr-1 btn btn-link rg_edit_btn"><i class="text-success fa fa-edit fa-lg"></i></a>
                     <button type="submit" id="resource_id" class="pl-1 btn btn-link"><i class="text-danger fa fa-trash fa-lg"></i></button>
                 </form>
+                @includewhen($resource, 'hr::guidelines-resources.edit-modal')
             </td>
             @endforeach
             @endif
@@ -48,7 +49,6 @@
             </table>
     </div>
 </div>
-@include('hr::guidelines-resources.create-category-modal')
-@include('hr::guidelines-resources.create-resources-modal')
-@include('hr::guidelines-resources.edit-modal')
+@include('hr::guidelines-resources.hr-category-modal')
+@include('hr::guidelines-resources.hr-resources-modal')
 @endsection
