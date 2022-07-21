@@ -52,7 +52,7 @@ Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDash
 Vue.component("job-application-component", require("./components/HR/JobApplicationComponent.vue").default);
 
 if (Vue) {
-    Vue.filter("str_limit", function(value, size) {
+    Vue.filter("str_limit", function (value, size) {
         if (!value) return "";
         value = value.toString();
 
@@ -70,7 +70,7 @@ if (document.getElementById("vueContainer")) {
 }
 
 $(document).ready(() => {
-    setTimeout(function() {
+    setTimeout(function () {
         $("#statusAlert").alert("close");
     }, 2000);
 
@@ -83,12 +83,12 @@ $(document).ready(() => {
     }
     $("[data-toggle=\"tooltip\"]").tooltip();
 
-    $(".status-close").on("click", function() {
+    $(".status-close").on("click", function () {
         let wrapper = $(this).closest(".alert");
         wrapper.fadeOut(500);
     });
 
-    $(".client_edit_form_submission_btn").on("click", function() {
+    $(".client_edit_form_submission_btn").on("click", function () {
         if (!$("#edit_client_info_form")[0].checkValidity()) {
             $("#edit_client_info_form")[0].reportValidity();
             return false;
@@ -97,7 +97,7 @@ $(document).ready(() => {
         $("#edit_client_info_form").submit();
     });
 
-    $(".prospect_edit_form_submission_btn").on("click", function() {
+    $(".prospect_edit_form_submission_btn").on("click", function () {
         if (!$("#edit_prospect_info_form")[0].checkValidity()) {
             $("#edit_prospect_info_form")[0].reportValidity();
             return false;
@@ -106,7 +106,7 @@ $(document).ready(() => {
         $("#edit_prospect_info_form").submit();
     });
 
-    $("body").on("change", ".custom-file-input", function() {
+    $("body").on("change", ".custom-file-input", function () {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
@@ -116,7 +116,7 @@ $(document).ready(() => {
         barChart();
     }
 
-    $("#save-btn-action").on("click", function() {
+    $("#save-btn-action").on("click", function () {
         this.disabled = true;
         if (!this.form.checkValidity()) {
             this.disabled = false;
@@ -144,34 +144,34 @@ if (document.getElementById("page_hr_applicant_edit")) {
             createCalendarEvent: true
         },
         methods: {
-            toggleResumeFrame: function() {
+            toggleResumeFrame: function () {
                 this.showResumeFrame = !this.showResumeFrame;
             },
-            toggleEvaluationFrame: function() {
+            toggleEvaluationFrame: function () {
                 this.showEvaluationFrame = !this.showEvaluationFrame;
             },
-            getApplicationEvaluation: function(applicationRoundID) {
+            getApplicationEvaluation: function (applicationRoundID) {
                 $("#page_hr_applicant_edit #application_evaluation_body").html(
                     "<div class=\"my-4 fz-18 text-center\">Loading...</div>"
                 );
                 if (!this.showEvaluationFrame) {
                     axios
                         .get("/hr/evaluation/" + applicationRoundID)
-                        .then(function(response) {
+                        .then(function (response) {
                             $("#page_hr_applicant_edit #application_evaluation_body").html(response.data);
                         })
-                        .catch(function(error) {
+                        .catch(function (error) {
                             alert("Error fetching application evaluation!");
                         });
                 }
                 this.toggleEvaluationFrame();
             },
 
-            onSelectNextRound: function(event) {
+            onSelectNextRound: function (event) {
                 this.selectedAction = event.target.value;
                 this.selectedActionOption = event.target.options[event.target.options.selectedIndex];
             },
-            takeAction: function() {
+            takeAction: function () {
                 switch (this.selectedAction) {
                     case "round":
                         if (!this.selectedActionOption) {
@@ -195,7 +195,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
                         $("#onboard_applicant").modal("show");
                 }
             },
-            rejectApplication: function() {
+            rejectApplication: function () {
                 $("#application_reject_modal").modal("show");
                 loadTemplateMail("reject", (res) => {
                     $("#rejectMailToApplicantSubject").val(res.subject);
@@ -218,7 +218,7 @@ if (document.getElementById("project_container")) {
             newStage: false
         },
         methods: {
-            createProjectStage: function() {
+            createProjectStage: function () {
                 this.$refs.projectStage.create();
             }
         }
@@ -246,15 +246,15 @@ if (document.getElementById("client_form")) {
             clientEmails: document.getElementById("emails").value == "" ? [] : document.getElementById("emails").value.split(",")
         },
         methods: {
-            toggleActive: function() {
+            toggleActive: function () {
                 this.isActive = !this.isActive;
             },
-            addNewEmail: function() {
+            addNewEmail: function () {
                 this.clientEmails.push(this.newEmailName + " <" + this.newEmailId + ">");
                 this.newEmailName = "";
                 this.newEmailId = "";
             },
-            removeEmail: function(item) {
+            removeEmail: function (item) {
                 let index = this.clientEmails.indexOf(item);
                 if (index !== -1) {
                     this.clientEmails.splice(index, 1);
@@ -274,18 +274,18 @@ if (document.getElementById("finance_report")) {
             conversionRateUSD: document.getElementById("conversion_rate_usd").dataset.conversionRateUsd || 0
         },
         computed: {
-            convertedUSDSentAmount: function() {
+            convertedUSDSentAmount: function () {
                 let convertedAmount = parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
                 return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
             },
-            totalINREstimated: function() {
+            totalINREstimated: function () {
                 return parseFloat(this.sentAmountINR) + parseFloat(this.convertedUSDSentAmount);
             }
         }
     });
 }
 
-$("#page_hr_applicant_edit .applicant-round-form").on("click", ".round-submit", function() {
+$("#page_hr_applicant_edit .applicant-round-form").on("click", ".round-submit", function () {
     let button = $(this); // reject button
     let form = $(this).closest(".applicant-round-form"); // <form element with class "applicant-round-form" >
     let selectedAction = $(this).data("action"); // reject
@@ -306,7 +306,7 @@ $(".date-field").datepicker({
     dateFormat: "dd/mm/yy"
 });
 
-$("#form_invoice").on("change", "#client_id", function() {
+$("#form_invoice").on("change", "#client_id", function () {
     let form = $(this).closest("form");
     let client_id = $(this).val();
     if (!client_id) {
@@ -325,7 +325,7 @@ function updateClientProjects(form, client_id) {
     $.ajax({
         url: "/clients/" + client_id + "/get-projects",
         method: "GET",
-        success: function(res) {
+        success: function (res) {
             form.find("#project_ids").html(getProjectList(res));
         }
     });
@@ -347,12 +347,12 @@ function setTooltip(btn, message) {
 }
 
 function hideTooltip(btn) {
-    setTimeout(function() {
+    setTimeout(function () {
         $(btn).tooltip("hide");
     }, 1000);
 }
 
-clipboard.on("success", function(e) {
+clipboard.on("success", function (e) {
     setTooltip(e.trigger, "Copied!");
     hideTooltip(e.trigger);
 });
@@ -377,12 +377,12 @@ tinymce.init({
     convert_urls: 0,
 });
 
-$(".hr_round_guide").on("click", ".edit-guide", function() {
+$(".hr_round_guide").on("click", ".edit-guide", function () {
     let container = $(this).closest(".hr_round_guide");
     container.find(".btn-guide, .guide-container").toggleClass("d-none");
 });
 
-$(".hr_round_guide").on("click", ".save-guide", function() {
+$(".hr_round_guide").on("click", ".save-guide", function () {
     let container = $(this).closest(".hr_round_guide");
     let form = container.find("form");
     let button = $(this);
@@ -390,10 +390,10 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
         method: form.attr("method"),
         url: form.attr("action"),
         data: form.serialize() + "&guidelines=" + tinyMCE.activeEditor.getContent(),
-        beforeSend: function() {
+        beforeSend: function () {
             button.prop("disabled", true).find(".item").toggleClass("d-none");
         },
-        success: function(res) {
+        success: function (res) {
             button.prop("disabled", false).find(".item").toggleClass("d-none");
             if (res.length) {
                 container.find(".guide-display").html(res);
@@ -428,7 +428,7 @@ if (document.getElementById("show_and_save_book")) {
         },
 
         methods: {
-            onFileSelected: function(e) {
+            onFileSelected: function (e) {
                 let file = e.target.files[0];
                 if (!file) {
                     return;
@@ -436,13 +436,13 @@ if (document.getElementById("show_and_save_book")) {
                 this.compressedFile = null;
                 let image = new ImageCompressor(file, {
                     quality: 0.1,
-                    success: function(result) {
+                    success: function (result) {
                         this.compressedFile = result;
                     }
                 });
             },
 
-            submitBookForm: function() {
+            submitBookForm: function () {
                 let formData = new FormData(document.getElementById("book_form"));
                 if (this.compressedFile) {
                     formData.append("book_image", compressedFile, compressedFile.name);
@@ -473,7 +473,7 @@ if (document.getElementById("show_and_save_book")) {
                 });
             },
 
-            saveBookToRecords: function() {
+            saveBookToRecords: function () {
                 if (!this.book) {
                     alert("Error in saving records");
                 }
@@ -515,7 +515,7 @@ if (document.getElementById("books_listing")) {
         },
 
         methods: {
-            updateCategoryMode: function(index) {
+            updateCategoryMode: function (index) {
                 let categories = this.books[index]["categories"];
                 if (!categories) {
                     return false;
@@ -525,11 +525,11 @@ if (document.getElementById("books_listing")) {
                 categories.forEach((category) => (this.categoryInputs[category.id].checked = true));
             },
 
-            updateCategory: function() {
+            updateCategory: function () {
                 let selectedCategory = [];
                 let bookID = this.books[this.currentBookIndex]["id"];
 
-                this.categoryInputs.forEach(function(checkbox) {
+                this.categoryInputs.forEach(function (checkbox) {
                     if (checkbox.checked) {
                         selectedCategory.push({
                             name: checkbox.dataset.category,
@@ -546,7 +546,7 @@ if (document.getElementById("books_listing")) {
                 document.getElementById("close_update_category_modal").click();
             },
 
-            addNewCategory: async function() {
+            addNewCategory: async function () {
                 if (!this.newCategory) {
                     alert("Please enter category name");
                     return false;
@@ -564,7 +564,7 @@ if (document.getElementById("books_listing")) {
                 }
             },
 
-            deleteBook: async function(index) {
+            deleteBook: async function (index) {
                 let confirmDelete = confirm("Are you sure ?");
 
                 if (!confirmDelete) {
@@ -577,18 +577,18 @@ if (document.getElementById("books_listing")) {
                 this.books.splice(index, 1);
             },
 
-            searchBooks: function() {
+            searchBooks: function () {
                 window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
             },
 
-            strLimit: function(str, length) {
+            strLimit: function (str, length) {
                 if (!str) {
                     return "";
                 }
                 return str.length > length ? str.substring(0, length) + "..." : str;
             },
 
-            updateCopiesCount: function(index) {
+            updateCopiesCount: function (index) {
                 var new_count = parseInt(prompt("Number of copies of this book", this.books[index].number_of_copies));
                 if (new_count && isFinite(new_count)) {
                     this.books[index].number_of_copies = new_count;
@@ -599,7 +599,7 @@ if (document.getElementById("books_listing")) {
             }
         },
 
-        mounted: function() {
+        mounted: function () {
             let categoryInputContainer = document.querySelector("#update_category_modal");
             let allCategoryInputs = categoryInputContainer.querySelectorAll("input[type=\"checkbox\"]");
             allCategoryInputs.forEach((checkbox) => (this.categoryInputs[checkbox.value] = checkbox));
@@ -621,12 +621,12 @@ if (document.getElementById("books_category")) {
         },
 
         methods: {
-            showEditMode: function(index) {
+            showEditMode: function (index) {
                 this.categoryNameToChange[index] = this.categories[index]["name"];
                 this.$set(this.categories[index], "editMode", true);
             },
 
-            updateCategoryName: function(index) {
+            updateCategoryName: function (index) {
                 this.$set(this.categories[index], "name", this.categoryNameToChange[index]);
                 let categoryID = this.categories[index]["id"];
                 let route = `${this.indexRoute}/${categoryID}`;
@@ -636,7 +636,7 @@ if (document.getElementById("books_category")) {
                 this.$set(this.categories[index], "editMode", false);
             },
 
-            deleteCategory: async function(index) {
+            deleteCategory: async function (index) {
                 let confirmDelete = confirm("Are you sure ?");
 
                 if (!confirmDelete) {
@@ -649,14 +649,14 @@ if (document.getElementById("books_category")) {
                 this.categories.splice(index, 1);
             },
 
-            updateNewCategoryMode: function(mode) {
+            updateNewCategoryMode: function (mode) {
                 if (mode != "add") {
                     this.newCategoryName = "";
                 }
                 this.newCategoryMode = mode;
             },
 
-            addNewCategory: async function() {
+            addNewCategory: async function () {
                 if (!this.newCategoryName) {
                     alert("Please enter category name");
                     return false;
@@ -709,7 +709,7 @@ if (document.getElementById("show_book_info")) {
                 []
         },
         methods: {
-            markBook: async function(read) {
+            markBook: async function (read) {
                 let response = await axios.post(this.route, {
                     book_id: this.book.id,
                     is_read: read
@@ -721,7 +721,7 @@ if (document.getElementById("show_book_info")) {
                 this.readers = response.data.readers;
             },
 
-            addToBookAMonth: async function(action) {
+            addToBookAMonth: async function (action) {
                 let response = await axios.post(this.bookAMonthStoreRoute);
                 this.isBookAMonth = true;
                 if (!response.data) {
@@ -729,7 +729,7 @@ if (document.getElementById("show_book_info")) {
                 }
             },
 
-            removeFromBookAMonth: async function(action) {
+            removeFromBookAMonth: async function (action) {
                 let response = await axios.post(this.bookAMonthDestroyRoute);
                 this.isBookAMonth = false;
                 if (!response.data) {
@@ -737,13 +737,13 @@ if (document.getElementById("show_book_info")) {
                 }
             },
 
-            borrowTheBook: async function() {
+            borrowTheBook: async function () {
                 let response = await axios.get(this.borrowBookRoute);
                 this.isBorrowed = true;
                 this.borrowers = response.data.borrowers;
             },
 
-            putTheBookBackToLibrary: async function() {
+            putTheBookBackToLibrary: async function () {
                 let response = await axios.get(this.putBackBookRoute);
                 this.isBorrowed = false;
                 this.borrowers = response.data.borrowers;
@@ -811,17 +811,17 @@ if (document.getElementById("roles_permission_table")) {
             permissionInputs: []
         },
         methods: {
-            updatePermissionModal: function(index) {
+            updatePermissionModal: function (index) {
                 let permissions = this.roles[index].permissions;
                 this.currentRoleIndex = index;
                 this.permissionInputs.map((checkbox) => (checkbox.checked = false));
                 permissions.forEach((permission) => (this.permissionInputs[permission.id].checked = true));
             },
-            updatePermissions: function() {
+            updatePermissions: function () {
                 let selectedPermissions = [];
                 let roleID = this.roles[this.currentRoleIndex]["id"];
 
-                this.permissionInputs.forEach(function(checkbox) {
+                this.permissionInputs.forEach(function (checkbox) {
                     if (checkbox.checked) {
                         selectedPermissions.push({
                             name: checkbox.dataset.permission,
@@ -839,7 +839,7 @@ if (document.getElementById("roles_permission_table")) {
                 document.getElementById("update_role_permissions_modal").click();
             }
         },
-        mounted: function() {
+        mounted: function () {
             let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
             let allPermissionInputs = permissionInputContainer.querySelectorAll("input[type=\"checkbox\"]");
             allPermissionInputs.forEach((checkbox) => (this.permissionInputs[checkbox.value] = checkbox));
@@ -862,7 +862,7 @@ if (document.getElementById("user_roles_table")) {
             roleInputs: []
         },
         methods: {
-            updateUserRolesModal: function(index) {
+            updateUserRolesModal: function (index) {
                 let roles = this.users[index]["roles"];
                 if (!roles) {
                     return false;
@@ -872,13 +872,13 @@ if (document.getElementById("user_roles_table")) {
                 roles.forEach((role) => (this.roleInputs[role.id].checked = true));
             },
 
-            updateRoles: function() {
+            updateRoles: function () {
                 let selectedRoles = [];
                 if (this.users) {
                     let userID = this.users[this.currentUserIndex].id;
                 }
 
-                this.roleInputs.forEach(function(checkbox) {
+                this.roleInputs.forEach(function (checkbox) {
                     if (checkbox.checked) {
                         selectedRoles.push({
                             name: checkbox.dataset.role,
@@ -896,7 +896,7 @@ if (document.getElementById("user_roles_table")) {
                 document.getElementById("close_update_user_roles_modal").click();
             },
 
-            formatRoles: function(user) {
+            formatRoles: function (user) {
                 let roleNames = [];
                 for (var i in user.roles) {
                     let roleName = user.roles[i].label;
@@ -910,7 +910,7 @@ if (document.getElementById("user_roles_table")) {
                 return roleNames.join(", ");
             }
         },
-        mounted: function() {
+        mounted: function () {
             let roleInputContainer = document.querySelector("#update_user_roles_modal");
             let allRoleInputs = roleInputContainer.querySelectorAll("input[type=\"checkbox\"]");
             allRoleInputs.forEach((checkbox) => (this.roleInputs[checkbox.value] = checkbox));
@@ -924,18 +924,18 @@ require("./finance/payment");
 /*
  * HR Module JS code start
  */
-$(document).ready(function() {
+$(document).ready(function () {
     $(document).on("click", ".show-comment", showCommentBlock);
     $(document).on("click", ".section-toggle", sectionToggle);
     $(document).on("click", "#saveFollowUp", saveFollowUp);
     $(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-    $(document).on("click", ".show-evaluation-stage", function() {
+    $(document).on("click", ".show-evaluation-stage", function () {
         $(".evaluation-stage").addClass("d-none");
         var target = $(this).data("target");
         $(target).removeClass("d-none");
 
         if ($("#segment-general-information > span")[0].innerText == "General Information") {
-            $(".evaluation-score input").each(function() {
+            $(".evaluation-score input").each(function () {
                 if ($(this).is(":checked")) {
                     let evaluationParameterName = (this.name).replace(/_/g, "-");
                     console.log(evaluationParameterName);
@@ -1040,7 +1040,7 @@ function saveFollowUp() {
 }
 
 function datePickerChart() {
-    $("#EndDate").change(function() {
+    $("#EndDate").change(function () {
         var startDate = document.getElementById("StartDate").value;
         var endDate = document.getElementById("EndDate").value;
         if ((Date.parse(endDate) <= Date.parse(startDate))) {
@@ -1108,8 +1108,8 @@ function barChart() {
     });
 }
 
-$(function() {
-    $(".reject-reason").on("click", function() {
+$(function () {
+    $(".reject-reason").on("click", function () {
         let reasonCheckboxInput = $(this);
         let reasonCommentInput = reasonCheckboxInput.closest(".rejection-reason-block").find("input[type=\"text\"]");
         if (reasonCheckboxInput.is(":checked")) {
@@ -1120,17 +1120,17 @@ $(function() {
     });
 });
 
-$("#job_start_date").on("change", function() {
+$("#job_start_date").on("change", function () {
     let startDate = $("#job_start_date").val();
     $("#job_end_date").attr("min", startDate);
 });
 
-$("#job_end_date").on("change", function() {
+$("#job_end_date").on("change", function () {
     let endDate = $("#job_end_date").val();
     $("#job_start_date").attr("max", endDate);
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
         removeItemButton: true,
         maxItemCount: 9,
@@ -1144,7 +1144,7 @@ $(document).ready(function() {
  */
 
 // fix for tinymce and bootstrap modal
-$(document).on("focusin", function(e) {
+$(document).on("focusin", function (e) {
     if ($(event.target).closest(".mce-window").length) {
         e.stopImmediatePropagation();
     }
