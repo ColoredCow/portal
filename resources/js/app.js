@@ -74,6 +74,12 @@ $(document).ready(() => {
 		$("#statusAlert").alert("close");
 	}, 2000);
 
+
+	$("#job_title").on("change", function(event) {
+		let opportunityId = $(this).find(":selected").attr("id");
+		$("#opportunityId").attr("value", opportunityId);
+	});
+
 	if ($(".form-create-invoice").length) {
 		let form = $(".form-create-invoice");
 		let client_id = form.find("#client_id").val();
@@ -951,16 +957,18 @@ $(document).ready(function() {
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
 
-$(document).getElementById("Categoryname").onkeyup = ButtonEnable();
-
-function ButtonEnable() {
-	if(document.getElementById("name").value=="") { 
-		   document.getElementById("save-btn-action").disabled = true; 
-	   } else { 
-		   document.getElementById("save-btn-action").disabled = false;
-	   }
+$(function(){
+	$("#categoryName").keyup(check_save).each(function(){
+	  check_save();
+	});
+});
+function check_save(){
+	 if ($(this).val().length == 0){
+	     $("#save-btn-action").attr("disabled", true);
+	}  else{
+	     $("#save-btn-action").removeAttr("disabled");
+	}
 }
-  
 function showCommentBlock() {
 	  var blockId = $(this).data("block-id");
 	  $(blockId).removeClass("d-none").find("input").focus();
@@ -1035,7 +1043,7 @@ function saveFollowUp() {
 		  form.submit();
 	  }
 }
-  
+
 function datePickerChart(){
 	  $("#EndDate").change(function () {
 		var startDate = document.getElementById("StartDate").value;
