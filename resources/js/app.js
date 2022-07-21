@@ -11,8 +11,15 @@ import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
 
 window.Vue = require("vue");
+<<<<<<< HEAD
 import { Laue } from "laue";
 
+||||||| 32f17b31
+import { Laue } from "laue";
+ 
+=======
+import { Laue } from "laue"; 
+>>>>>>> d9b7f02181f613845c9894900a4ab91aad704f39
 Vue.use(Laue);
 
 /**
@@ -106,6 +113,12 @@ $(document).ready(() => {
 	setTimeout(function() {
 		$("#statusAlert").alert("close");
 	}, 2000);
+
+
+	$("#job_title").on("change", function(event) {
+		let opportunityId = $(this).find(":selected").attr("id");
+		$("#opportunityId").attr("value", opportunityId);
+	});
 
 	if ($(".form-create-invoice").length) {
 		let form = $(".form-create-invoice");
@@ -488,6 +501,7 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
  */
 
 if (document.getElementById("show_and_save_book")) {
+<<<<<<< HEAD
 	const bookForm = new Vue({
 		el: "#show_and_save_book",
 		data: {
@@ -573,9 +587,180 @@ if (document.getElementById("show_and_save_book")) {
 			}
 		}
 	});
+||||||| 32f17b31
+	  const bookForm = new Vue({
+		  el: "#show_and_save_book",
+		  data: {
+			  addMethod: "from_isbn",
+			  showInfo: false,
+			  book: {},
+			  number_of_copies: 1,
+			  routes: {
+				  index: document.getElementById("show_book").dataset.indexRoute || "",
+				  fetch: document.getElementById("book_form").dataset.actionRoute || "",
+				  store: document.getElementById("show_book").dataset.storeRoute || ""
+			  },
+			  buttons: {
+				  disableSubmitButton: false,
+				  disableSaveButton: false
+			  }
+		  },
+  
+		  methods: {
+			  onFileSelected: function(e) {
+				  let file = e.target.files[0];
+				  if (!file) {
+					  return;
+				  }
+				  this.compressedFile = null;
+				  let image = new ImageCompressor(file, {
+					  quality: 0.1,
+					  success: function(result) {
+						  this.compressedFile = result;
+					  }
+				  });
+			  },
+  
+			  submitBookForm: function() {
+				  let formData = new FormData(document.getElementById("book_form"));
+				  if (this.compressedFile) {
+					  formData.append("book_image", compressedFile, compressedFile.name);
+				  }
+  
+				  this.book = {};
+				  this.buttons.disableSubmitButton = true;
+  
+				  axios.post(this.routes.fetch, formData).then((response) => {
+					  this.buttons.disableSubmitButton = false;
+					  let data = response.data;
+  
+					  if (!data) {
+						  alert("Error:Please try again");
+						  return;
+					  }
+  
+					  if (data.error) {
+						  alert(data.message);
+						  return;
+					  }
+  
+					  this.book = data.book;
+  
+					  if (Object.keys(this.book).length) {
+						  this.showInfo = true;
+					  }
+				  });
+			  },
+  
+			  saveBookToRecords: function() {
+				  if (!this.book) {
+					  alert("Error in saving records");
+				  }
+				  this.buttons.disableSaveButton = true;
+				  this.book.number_of_copies = this.number_of_copies;
+				  this.book["on_kindle"] = document.getElementById("on_kindle").checked ? 1 : 0;
+				  axios.post(this.routes.store, this.book).then((response) => {
+					  this.buttons.disableSaveButton = false;
+  
+					  if (response.data.error) {
+						  alert("Error in saving records");
+						  return false;
+					  }
+					  window.location.href = this.routes.index;
+				  });
+			  }
+		  }
+	  });
+=======
+	  const bookForm = new Vue({
+		  el: "#show_and_save_book",
+		  data: {
+			  addMethod: "from_isbn",
+			  showInfo: false,
+			  book: {},
+			  number_of_copies: 1,
+			  currentIndex: 0,
+			  routes: {
+				  index: document.getElementById("show_book").dataset.indexRoute || "",
+				  fetch: document.getElementById("book_form").dataset.actionRoute || "",
+				  store: document.getElementById("show_book").dataset.storeRoute || ""
+			  },
+			  buttons: {
+				  disableSubmitButton: false,
+				  disableSaveButton: false
+			  }
+		  },
+  
+		  methods: {
+			  onFileSelected: function(e) {
+				  let file = e.target.files[0];
+				  if (!file) {
+					  return;
+				  }
+				  this.compressedFile = null;
+				  let image = new ImageCompressor(file, {
+					  quality: 0.1,
+					  success: function(result) {
+						  this.compressedFile = result;
+					  }
+				  });
+			  },
+  
+			  submitBookForm: function() {
+				  let formData = new FormData(document.getElementById("book_form"));
+				  if (this.compressedFile) {
+					  formData.append("book_image", compressedFile, compressedFile.name);
+				  }
+  
+				  this.book = {};
+				  this.buttons.disableSubmitButton = true;
+  
+				  axios.post(this.routes.fetch, formData).then((response) => {
+					  this.buttons.disableSubmitButton = false;
+					  let data = response.data;
+  
+					  if (!data) {
+						  alert("Error:Please try again");
+						  return;
+					  }
+  
+					  if (data.error) {
+						  alert(data.message);
+						  return;
+					  }
+  
+					  this.book = data.book;
+  
+					  if (Object.keys(this.book).length) {
+						  this.showInfo = true;
+					  }
+				  });
+			  },
+  
+			  saveBookToRecords: function() {
+				  if (!this.book) {
+					  alert("Error in saving records");
+				  }
+				  this.buttons.disableSaveButton = true;
+				  this.book.number_of_copies = this.number_of_copies;
+				  this.book["on_kindle"] = document.getElementById("on_kindle").checked ? 1 : 0;
+				  axios.post(this.routes.store, this.book).then((response) => {
+					  this.buttons.disableSaveButton = false;
+  
+					  if (response.data.error) {
+						  alert("Error in saving records");
+						  return false;
+					  }
+					  window.location.href = this.routes.index;
+				  });
+			  }
+		  }
+	  });
+>>>>>>> d9b7f02181f613845c9894900a4ab91aad704f39
 }
 
 if (document.getElementById("books_listing")) {
+<<<<<<< HEAD
 	const bookForm = new Vue({
 		el: "#books_listing",
 		data: {
@@ -702,6 +887,221 @@ if (document.getElementById("books_listing")) {
 			);
 		}
 	});
+||||||| 32f17b31
+	  const bookForm = new Vue({
+		  el: "#books_listing",
+		  data: {
+			  books: document.getElementById("books_table").dataset.books
+				  ? JSON.parse(document.getElementById("books_table").dataset.books)
+				  : {},
+			  bookCategories: document.getElementById("books_table").dataset.categories
+				  ? JSON.parse(document.getElementById("books_table").dataset.categories)
+				  : [],
+			  updateRoute: document.getElementById("books_table").dataset.indexRoute || "",
+			  categoryIndexRoute: document.getElementById("books_table").dataset.categoryIndexRoute || "",
+			  categoryInputs: [],
+			  currentBookIndex: 0,
+			  newCategory: "",
+			  searchKey: document.getElementById("search_input")
+				  ? document.getElementById("search_input").dataset.value
+				  : ""
+		  },
+  
+		  methods: {
+			  updateCategoryMode: function(index) {
+				  let categories = this.books[index]["categories"];
+				  if (!categories) {
+					  return false;
+				  }
+				  this.currentBookIndex = index;
+				  this.categoryInputs.map((checkbox) => (checkbox.checked = false));
+				  categories.forEach((category) => (this.categoryInputs[category.id].checked = true));
+			  },
+  
+			  updateCategory: function() {
+				  let selectedCategory = [];
+				  let bookID = this.books[this.currentBookIndex]["id"];
+  
+				  this.categoryInputs.forEach(function(checkbox) {
+					  if (checkbox.checked) {
+						  selectedCategory.push({
+							  name: checkbox.dataset.category,
+							  id: checkbox.value
+						  });
+					  }
+				  });
+  
+				  this.$set(this.books[this.currentBookIndex], "categories", selectedCategory);
+				  let route = `${this.updateRoute}/${bookID}`;
+				  axios.put(route, {
+					  categories: JSON.parse(JSON.stringify(selectedCategory))
+				  });
+				  document.getElementById("close_update_category_modal").click();
+			  },
+  
+			  addNewCategory: async function() {
+				  if (!this.newCategory) {
+					  alert("Please enter category name");
+					  return false;
+				  }
+  
+				  let response = await axios.post(this.categoryIndexRoute, {
+					  name: this.newCategory
+				  });
+				  if (response.data && response.data.category) {
+					  await this.bookCategories.push(response.data.category);
+					  this.newCategory = "";
+					  let allCheckboxes = document.querySelectorAll("#update_category_modal input[type=\"checkbox\"]");
+					  let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
+					  this.categoryInputs[lastCheckbox.value] = lastCheckbox;
+				  }
+			  },
+  
+			  deleteBook: async function(index) {
+				  let bookID = this.books[index]["id"];
+				  let route = `${this.updateRoute}/${bookID}`;
+				  let response = await axios.delete(route);
+				  this.books.splice(index, 1);
+				  $("#exampleModal").modal("hide");
+			  },
+  
+			  searchBooks: function() {
+				  window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
+			  },
+  
+			  strLimit: function(str, length) {
+				  if (!str) {
+					  return "";
+				  }
+				  return str.length > length ? str.substring(0, length) + "..." : str;
+			  },
+  
+			  updateCopiesCount: function(index) {
+				  var new_count = parseInt(prompt("Number of copies of this book", this.books[index].number_of_copies));
+				  if (new_count && isFinite(new_count)) {
+					  this.books[index].number_of_copies = new_count;
+					  axios.put(this.updateRoute + "/" + this.books[index].id, {
+						  number_of_copies: new_count
+					  });
+				  }
+			  }
+		  },
+  
+		  mounted: function() {
+			  let categoryInputContainer = document.querySelector("#update_category_modal");
+			  let allCategoryInputs = categoryInputContainer.querySelectorAll("input[type=\"checkbox\"]");
+			  allCategoryInputs.forEach((checkbox) => (this.categoryInputs[checkbox.value] = checkbox));
+		  }
+	  });
+=======
+	  const bookForm = new Vue({
+		  el: "#books_listing",
+		  data: {
+			  books: document.getElementById("books_table").dataset.books
+				  ? JSON.parse(document.getElementById("books_table").dataset.books)
+				  : {},
+			  bookCategories: document.getElementById("books_table").dataset.categories
+				  ? JSON.parse(document.getElementById("books_table").dataset.categories)
+				  : [],
+			  updateRoute: document.getElementById("books_table").dataset.indexRoute || "",
+			  categoryIndexRoute: document.getElementById("books_table").dataset.categoryIndexRoute || "",
+			  categoryInputs: [],
+			  currentBookIndex: 0,
+			  newCategory: "",
+			  searchKey: document.getElementById("search_input")
+				  ? document.getElementById("search_input").dataset.value
+				  : ""
+		  },
+  
+		  methods: {
+			  updateCategoryMode: function(index) {
+				  let categories = this.books[index]["categories"];
+				  if (!categories) {
+					  return false;
+				  }
+				  this.currentBookIndex = index;
+				  this.categoryInputs.map((checkbox) => (checkbox.checked = false));
+				  categories.forEach((category) => (this.categoryInputs[category.id].checked = true));
+			  },
+  
+			  updateCategory: function() {
+				  let selectedCategory = [];
+				  let bookID = this.books[this.currentBookIndex]["id"];
+  
+				  this.categoryInputs.forEach(function(checkbox) {
+					  if (checkbox.checked) {
+						  selectedCategory.push({
+							  name: checkbox.dataset.category,
+							  id: checkbox.value
+						  });
+					  }
+				  });
+  
+				  this.$set(this.books[this.currentBookIndex], "categories", selectedCategory);
+				  let route = `${this.updateRoute}/${bookID}`;
+				  axios.put(route, {
+					  categories: JSON.parse(JSON.stringify(selectedCategory))
+				  });
+				  document.getElementById("close_update_category_modal").click();
+			  },
+  
+			  addNewCategory: async function() {
+				  if (!this.newCategory) {
+					  alert("Please enter category name");
+					  return false;
+				  }
+  
+				  let response = await axios.post(this.categoryIndexRoute, {
+					  name: this.newCategory
+				  });
+				  if (response.data && response.data.category) {
+					  await this.bookCategories.push(response.data.category);
+					  this.newCategory = "";
+					  let allCheckboxes = document.querySelectorAll("#update_category_modal input[type=\"checkbox\"]");
+					  let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
+					  this.categoryInputs[lastCheckbox.value] = lastCheckbox;
+				  }
+			  },
+  
+			  deleteBook: async function(index) {
+				  let bookID = this.books[index]["id"];
+				  let route = `${this.updateRoute}/${bookID}`;
+				  let response = await axios.delete(route);
+				  this.books.splice(index, 1);
+				  $("#exampleModal").modal("hide");
+			  },
+  
+			  searchBooks: function() {
+				  window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
+			  },
+  
+			  strLimit: function(str, length) {
+				  if (!str) {
+					  return "";
+				  }
+				  return str.length > length ? str.substring(0, length) + "..." : str;
+			  },
+  
+			  updateCopiesCount: function() {
+				var new_count = document.getElementById("copiesOfBooks"+ this.currentIndex).value;
+				if (new_count && isFinite(new_count)) {
+					this.books[this.currentIndex].number_of_copies = new_count;
+					axios.put(this.updateRoute + "/" + this.books[this.currentIndex].id, {
+						number_of_copies: new_count
+					});
+				}
+			  },
+			updateIndex: function(index){
+         		 this.currentIndex = index;
+        	},
+		  },
+		  mounted: function() {
+			  let categoryInputContainer = document.querySelector("#update_category_modal");
+			  let allCategoryInputs = categoryInputContainer.querySelectorAll("input[type=\"checkbox\"]");
+			  allCategoryInputs.forEach((checkbox) => (this.categoryInputs[checkbox.value] = checkbox));
+		  }
+	  });
+>>>>>>> d9b7f02181f613845c9894900a4ab91aad704f39
 }
 
 if (document.getElementById("books_category")) {
@@ -1225,9 +1625,19 @@ function saveFollowUp() {
 		form.submit();
 	}
 }
+<<<<<<< HEAD
 
 function datePickerChart() {
 	$("#EndDate").change(function() {
+||||||| 32f17b31
+  
+function datePickerChart(){
+	  $("#EndDate").change(function () {
+=======
+
+function datePickerChart(){
+	  $("#EndDate").change(function () {
+>>>>>>> d9b7f02181f613845c9894900a4ab91aad704f39
 		var startDate = document.getElementById("StartDate").value;
 		var endDate = document.getElementById("EndDate").value;
 		if (Date.parse(endDate) <= Date.parse(startDate)) {
@@ -1343,7 +1753,19 @@ $(document).ready(function() {
 
 // fix for tinymce and bootstrap modal
 $(document).on("focusin", function(e) {
+<<<<<<< HEAD
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
 	}
 });
+||||||| 32f17b31
+	  if ($(event.target).closest(".mce-window").length) {
+		  e.stopImmediatePropagation();
+	  }
+});
+=======
+	  if ($(event.target).closest(".mce-window").length) {
+		  e.stopImmediatePropagation();
+	  }
+});
+>>>>>>> d9b7f02181f613845c9894900a4ab91aad704f39
