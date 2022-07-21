@@ -32,6 +32,8 @@ class sendEmail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->from(config('hr.default.email'), config('hr.default.name'))
-        ->view('emails.send-Email');
+        ->to(config('mail.error_address'))
+        ->subject('Follow up with non verified applicants')
+        ->view('emails.send-non-verified-applicants-information-email');
     }
 }
