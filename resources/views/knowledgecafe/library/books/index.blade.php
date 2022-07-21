@@ -66,30 +66,14 @@
                                 </a>
                                 <ul class="dropdown-menu ">
                                     <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item">Update Category</li>
-                                    <li @click="updateIndex(index)"  data-toggle="modal" :data-target="'#updateModalValue' + index" class="dropdown-item">Copies Available</li>
+                                    <li @click="updateIndex(index)"  data-toggle="modal" :data-target="'#copiesOfBooksCountModal' + index" class="dropdown-item">Copies Available</li>
                                     <li @click="deleteBook(index)" class="dropdown-item text-danger">Delete</li>
-                                    <li @click="updateCopiesCount(index)" class="dropdown-item">Copies Available</li>
-                                    <li  data-toggle="modal" data-target="#exampleModal" class="dropdown-item text-danger">Delete</li>
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-body p-4">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <p>Are you sure?</p> 
-                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button @click="deleteBook(index)" type="button" class="btn btn-sm btn-danger">Yes</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     @endcan
                 </div>
-                <div class="modal fade" :id="'updateModalValue' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" :id="'copiesOfBooksCountModal' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
