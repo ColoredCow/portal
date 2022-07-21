@@ -76,7 +76,6 @@ class ReportsController extends Controller
         $from = date('2022-07-06');
         $currentDate = Carbon::today(config('constants.timezone.indian'));
         return Application::whereBetween('created_at', [$from, $currentDate])
-            ->where('is_verified', 1)
-            ->count();
+            ->where('is_verified', 1)->count();
     }
 }
