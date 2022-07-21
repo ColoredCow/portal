@@ -30,7 +30,7 @@
                                     <option id="{{$hrJob->opportunity_id}}" value="{{ $hrJob->title }}" {{ old('job_title') == $hrJob->title ? 'selected' : '' }}>{{ $hrJob->title }}</option>
                                     @endforeach
                                 </select>
-                                <input type="hidden" name="opportunityId" id="opportunityId" value="">
+                                <input type="hidden" name="opportunity_id" id="opportunityId" value="">
                              </div>
                              <div class="form-group">
                                 <label for="name" class="field-required">First Name</label>
