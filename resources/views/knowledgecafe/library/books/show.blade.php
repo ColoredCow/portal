@@ -59,7 +59,7 @@
                             <div class="ml-1 mb-1 mt-2 w-full d-flex align-items-center">
                                 <p class="font-weight-bold mb-0 text-nowrap mr-2" v-if="readers.length">Read by:</p>
                                 <div class="d-flex justify-content-start flex-wrap">
-                                    <div v-for="(reader, index)  in readers " class="mr-2 text-center">
+                                    <div v-for="(reader, index)  in readers " class="mr-2 text-bottom">
                                         <img :src="reader.avatar" alt="" class="reader_image" data-toggle="tooltip" data-placement="bottom" :title="reader.name">
                                     </div>
                                 </div>

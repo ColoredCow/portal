@@ -174,6 +174,15 @@ Before you start following the guidelines, make sure to go through the [prerequi
                 </Directory>
             </VirtualHost>
             ```
+            - After adding the above code, if you are getting the "403 Forbidden" error, try to resolve it through the following addition in your code:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Allow from all   #add this line
+                 Require all granted
+            </Directory>
+            ```
+
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
 
     3. For MAMP(macOS):

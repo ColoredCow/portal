@@ -74,6 +74,8 @@ Route::middleware('auth')->group(function () {
             Route::get('job/{application}/offer-letter', 'JobApplicationController@viewOfferLetter')->name('applications.job.offer-letter');
             Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
 
+            Route::post('/store', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
+
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
@@ -87,8 +89,10 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
         Route::get('/resources/', 'ResourcesController@index')->name('resources.index');
-        Route::get('/resources/show/', 'ResourcesController@show')->name('resources.show');
+        Route::get('/resources/{jobId}/show/', 'ResourcesController@show')->name('resources.show');
         Route::post('/category/store/', 'ResourcesController@store')->name('resources.store');
+        Route::post('/resources/create/', 'ResourcesController@create')->name('resources.create');
+        Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

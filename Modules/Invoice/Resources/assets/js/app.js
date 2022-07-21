@@ -33,7 +33,7 @@ $(document).ready(function(){
 			"|*project_name*|": invoiceData["projectName"],
 			"|*term*|": invoiceData["monthName"],
 			"|*year*|": invoiceData["year"],
-			"|*billing_person_name*|": invoiceData["billingPersonName"],
+			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
 			"|*invoice_amount*|": invoiceData["totalAmount"],
 			"|*invoice_number*|": invoiceData["invoiceNumber"],
 		};
@@ -53,6 +53,32 @@ $(document).ready(function(){
 		$("#emailPreview").modal("show");
 	});
 
+	$(".send-reminder").on("click", function() {
+		var invoiceData = $(this).data("invoice-data");
+		var mapping = {
+			"|*project_name*|": invoiceData["projectName"],
+			"|*term*|": invoiceData["monthName"],
+			"|*year*|": invoiceData["year"],
+			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
+			"|*invoice_amount*|": invoiceData["invoiceAmount"],
+			"|*invoice_number*|": invoiceData["invoiceNumber"],
+		};
+		var emailSubject = $("#emailSubject").val();
+		var emailBody = $("#emailBody").text();
+		
+		for (var key in mapping) {
+			var emailSubject = emailSubject.replace(key, mapping[key]);
+			var emailBody = emailBody.replace(key, mapping[key]);
+		}
+
+		$("#emailSubject").val(emailSubject); 
+		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
+		$("#sendToName").val(invoiceData["billingPersonName"]); 
+		$("#invoiceId").val(invoiceData["invoiceId"]); 
+		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
+		$("#emailPreview").modal("show");
+	});
+
 	$("#verifyInvoice").on("click", function () {
 		if ($("#verifyInvoice").is(":checked")) {
 			$("#sendInvoiceBtn").attr("disabled", false);
@@ -68,6 +94,19 @@ $(document).ready(function(){
 			event.target.submit();
 		}
 	});
+
+	$("#sendInvoiceReminderForm").on("submit", function (event) {
+		event.preventDefault();
+		$("#sendBtn").attr("disabled", true);
+		if(validateFormData(event.target)) {
+			event.target.submit();
+		}
+	});
+	window.setTimeout(function() {
+		$(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+			$(this).remove(); 
+		});
+	}, 6000);
 });
 
 function validateFormData(form) {
@@ -158,3 +197,4 @@ function convert_number(number) {
 	}
 	return result;
 }
+

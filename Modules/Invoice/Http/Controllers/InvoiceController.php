@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
-use Mail;
-use Modules\Invoice\Emails\SendPendingInvoiceMail;
-use Modules\Invoice\Rules\EmailValidation;
 
 class InvoiceController extends Controller
 {
@@ -127,21 +124,21 @@ class InvoiceController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param Invoice $invoice
      */
-    public function edit($id)
+    public function edit(Invoice $invoice)
     {
-        return view('invoice::edit', $this->service->edit($id));
+        return view('invoice::edit', $this->service->edit($invoice));
     }
 
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
+     * @param Invoice $invoice
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Invoice $invoice)
     {
-        $this->service->update($request->all(), $id);
+        $this->service->update($request->all(), $invoice);
 
         return redirect(route('invoice.index'))->with('success', 'Invoice updated successfully!');
     }
@@ -183,26 +180,12 @@ class InvoiceController extends Controller
         return $this->service->taxReportExport($filters, $request);
     }
 
-    public function sendEmail(Request $request, Invoice $invoice, Client $client)
+    public function sendReminderEmail(Request $request)
     {
-        $senderEmail = $invoice->client->contactPersons()->get('email');
-        $emails = $request->invoice_email;
+        $invoice = Invoice::find($request->invoice_id);
+        $this->service->sendInvoiceReminder($invoice, $request->all());
 
-        $validator = $request->validate([
-        'invoice_email' => new EmailValidation(),
-        ]);
-
-        if ($emails != '') {
-            $validate = preg_split('/[,]/', $emails);
-            Mail::to($senderEmail)
-            ->cc($validate)
-            ->send(new SendPendingInvoiceMail($invoice));
-        } else {
-            Mail::to($senderEmail)
-            ->send(new SendPendingInvoiceMail($invoice));
-        }
-
-        return redirect(route('invoice.index'));
+        return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
 
     public function sendInvoice(Request $request)
@@ -218,5 +201,12 @@ class InvoiceController extends Controller
         $filters = $request->all();
 
         return view('invoice::invoice-report', $this->service->yearlyInvoiceReport($filters, $request));
+    }
+
+    public function yearlyInvoiceReportExport(Request $request)
+    {
+        $filters = $request->all();
+
+        return $this->service->yearlyInvoiceReportExport($filters, $request);
     }
 }
