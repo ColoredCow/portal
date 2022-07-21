@@ -118,7 +118,7 @@ class HRServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production') && $this->app->runningInConsole()) {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
@@ -147,12 +147,12 @@ class HRServiceProvider extends ServiceProvider
 
     private function loadService()
     {
-        if (!Arr::has($this->app->getBindings(), ApplicationServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), ApplicationServiceContract::class)) {
             $this->app->bind(ApplicationServiceContract::class, function () {
                 return new ApplicationService();
             });
         }
-        if (!Arr::has($this->app->getBindings(), UniversityServiceContract::class)) {
+        if (! Arr::has($this->app->getBindings(), UniversityServiceContract::class)) {
             $this->app->bind(UniversityServiceContract::class, function () {
                 return new UniversityService();
             });
