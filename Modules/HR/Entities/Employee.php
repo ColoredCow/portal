@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Modules\User\Entities\User;
+use Modules\Salary\Entities\EmployeeSalary;
 
 class Employee extends Model
 {
@@ -58,5 +59,10 @@ class Employee extends Model
         }
 
         return $query;
+    }
+
+    public function employeeSalary()
+    {
+        return $this->hasMany(EmployeeSalary::class);
     }
 }
