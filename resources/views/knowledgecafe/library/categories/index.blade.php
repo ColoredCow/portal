@@ -3,13 +3,14 @@
 @section('content')
 <div class="container" id="books_category" v-cloak>
     <br>
-    @include('knowldegecafe.library.menu', ['active' => 'book_category'])
-    <br><br>
+    @include('knowledgecafe.library.menu', ['active' => 'book_category'])
+
+    <br>
+    <br>
 
     <div class="row">
         <div class="col-md-6"><h1>Book Category</h1></div>
         <div class="col-md-6">
-            <button @click="updateNewCategoryMode('add')" class="btn btn-success float-right">Add Category</button>
         </div>
     </div>
 
