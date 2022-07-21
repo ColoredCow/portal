@@ -31,7 +31,7 @@ class ReportsController extends Controller
 
         $data = [];
 
-        $verifiedApplicationCount = $this->verifiedApplications();
+        $verifiedApplicationsCount= $this->getVerifiedApplicationsCount();
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
@@ -40,7 +40,7 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'verifiedApplicationCount'));
+        return view('hr.recruitment.reports', $data, compact('todayCount' , 'verifiedApplicationsCount'));
     }
 
     public function searchBydate(Request $req)
@@ -61,6 +61,8 @@ class ReportsController extends Controller
 
         $data = [];
 
+        $verifiedApplicationsCount= $this->getVerifiedApplicationsCount();
+
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
@@ -68,14 +70,13 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount'));
+        return view('hr.recruitment.reports', $data, compact('todayCount', 'verifiedApplicationsCount'));
     }
 
-    private function verifiedApplications()
+    private function getVerifiedApplicationsCount()
     {
-        $from = date('2022-07-06');
+        $from = config('hr.verified_application_dates.start_date');
         $currentDate = Carbon::today(config('constants.timezone.indian'));
-
         return Application::whereBetween('created_at', [$from, $currentDate])
             ->where('is_verified', 1)->count();
     }
