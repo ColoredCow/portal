@@ -29,16 +29,9 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
 
-        $from = date('2022-07-01');
-        $currentDate = Carbon::today(config('constants.timezone.indian'));
-        $record1 = Application::select(
-            \DB::raw('is_verified')
-        )
-            ->whereBetween('created_at', [$from, $currentDate])
-            ->where('is_verified', 1)
-            ->count();
-
         $data = [];
+
+        $verifiedApplicationsCount= $this->verifiedApplications();
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
@@ -47,7 +40,7 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'record1'));
+        return view('hr.recruitment.reports', $data, compact('todayCount','verifiedApplicationsCount'));
     }
 
     public function searchBydate(Request $req)
@@ -65,25 +58,26 @@ class ReportsController extends Controller
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
-
-        $from = date('2022-07-01');
-        $currentDate = Carbon::today(config('constants.timezone.indian'));
-        $record1 = Application::select(
-            \DB::raw('is_verified')
-        )
-            ->whereBetween('created_at', [$from, $currentDate])
-            ->where('is_verified', 1)
-            ->count();
-
+      
         $data = [];
-
+            
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
         }
-
+            
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'record1'));
+        return view('hr.recruitment.reports', $data, compact('todayCount'));
+    }
+    
+    private function verifiedApplications()
+    {
+        $from = date('2022-07-06');
+        $currentDate = Carbon::today(config('constants.timezone.indian'));
+        return Application::whereBetween('created_at', [$from, $currentDate])
+            ->where('is_verified', 1)
+            ->get()
+            ->count();  
     }
 }
