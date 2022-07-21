@@ -60,21 +60,22 @@ class ReportsController extends Controller
             ->get();
 
         $data = [];
-      
+
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
         }
-           
+
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
     }
-    
+
     private function verifiedApplications()
     {
         $from = date('2022-07-06');
         $currentDate = Carbon::today(config('constants.timezone.indian'));
+
         return Application::whereBetween('created_at', [$from, $currentDate])
             ->where('is_verified', 1)->count();
     }

@@ -28,7 +28,7 @@ return [
         ],
 
     ],
-    
+
     'tags' => [
         'in-progress' => 'In progress',
         'need-follow-up' => 'Need follow up',
