@@ -31,7 +31,7 @@ class ReportsController extends Controller
 
         $data = [];
 
-        $verifiedApplicationsCount= $this->verifiedApplications();
+        $verifiedApplicationCount= $this->verifiedApplications();
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
@@ -40,7 +40,7 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'verifiedApplicationsCount'));
+        return view('hr.recruitment.reports', $data, compact('todayCount', 'verifiedApplicationCount'));
     }
 
     public function searchBydate(Request $req)
