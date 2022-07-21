@@ -583,8 +583,8 @@ if (document.getElementById("books_listing")) {
 				  return str.length > length ? str.substring(0, length) + "..." : str;
 			  },
   
-			  updateCopiesCount: function(currentIndex) {
-					var new_count = document.getElementById('copiesOfBooks' ).value;
+			  updateCopiesCount: function() {
+					var new_count = document.getElementById('copiesOfBooks'+ this.currentIndex).value;
 					if (new_count && isFinite(new_count)) {
 						this.books[this.currentIndex].number_of_copies = new_count;
 						axios.put(this.updateRoute + "/" + this.books[this.currentIndex].id, {
