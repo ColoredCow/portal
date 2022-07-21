@@ -9,18 +9,21 @@ use Modules\HR\Entities\Employee;
 use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Evaluation\ParameterOption;
 use Modules\HR\Entities\Evaluation\Segment;
+use Modules\HR\Entities\Round;
 
 class EvaluationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $segments = Segment::all();
+        $rounds = Round::select('name')->get();
 
         return view('hr::evaluation.index', [
             'segments' => $segments,
+            'rounds' => $rounds,
         ]);
     }
 
@@ -50,7 +53,11 @@ class EvaluationController extends Controller
      */
     public function createSegment(Request $request)
     {
-        $segment = Segment::create(['name' => $request->name]);
+        $segmentId = Round::select('*')->where('name', $request->rounds)->first()->id;
+        $segment = Segment::create([
+            'name' => $request->name,
+            'round_id' => $segmentId
+        ]);
 
         return redirect(route('hr.evaluation'));
     }
