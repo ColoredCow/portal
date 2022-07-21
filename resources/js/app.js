@@ -593,13 +593,13 @@ if (document.getElementById("books_listing")) {
 			  },
   
 			  updateCopiesCount: function() {
-					var new_count = document.getElementById('copiesOfBooks'+ this.currentIndex).value;
-					if (new_count && isFinite(new_count)) {
-						this.books[this.currentIndex].number_of_copies = new_count;
-						axios.put(this.updateRoute + "/" + this.books[this.currentIndex].id, {
-							number_of_copies: new_count
-						});
-					}
+				var new_count = document.getElementById("copiesOfBooks"+ this.currentIndex).value;
+				if (new_count && isFinite(new_count)) {
+					this.books[this.currentIndex].number_of_copies = new_count;
+					axios.put(this.updateRoute + "/" + this.books[this.currentIndex].id, {
+						number_of_copies: new_count
+					});
+				}
 			  },
 			updateIndex: function(index){
          		 this.currentIndex = index;
