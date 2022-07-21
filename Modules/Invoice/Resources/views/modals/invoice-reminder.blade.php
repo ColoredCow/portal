@@ -31,7 +31,7 @@
                                     <i class="fa fa-question-circle"></i>
                                 </span>
                             </label>
-                            <input type="text" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
+                            <input type="email" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="bcc">
@@ -40,7 +40,7 @@
                                     <i class="fa fa-question-circle"></i>
                                 </span>
                             </label>
-                            <input type="text" name="bcc" id="bcc" class="form-control" value="">
+                            <input type="email" name="bcc" id="bcc" class="form-control" value="">
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>
