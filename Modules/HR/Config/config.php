@@ -166,4 +166,5 @@ return [
         'salary-expectation-mismatch' => 'Salary expectation mismatch',
         'not-enough-knowledge-inclination-for-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
     ],
+    'non-verified-application-start-date' => '2022-07-06',
 ];
