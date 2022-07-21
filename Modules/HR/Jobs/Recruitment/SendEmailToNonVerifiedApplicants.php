@@ -23,7 +23,7 @@ class SendEmailToNonVerifiedApplicants implements ShouldQueue
      */
     public function __construct($applications)
     {
-        $this->$applications = $applications;
+        $this->applications = $applications;
     }
 
     /**
@@ -33,7 +33,8 @@ class SendEmailToNonVerifiedApplicants implements ShouldQueue
      */
     public function handle()
     {
-        $email = new sendEmail($this->applications);
+        $email = new sendEmail();
+        ew sendEmail($this->applications);
         Mail::to('pankaj.kandpal@coloredcow.in')->send($email);
     }
 }

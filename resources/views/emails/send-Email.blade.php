@@ -1,7 +1,6 @@
 <div>
-	<p>Hello
-	 Pankaj kandpal,
-	The following applications are present in the portal, those whose status is not verified. Please follow up with them via phone call
+	<p>Hello Pankaj kandpal,</p>
+	<p>The following applications are present in the portal, those whose status is not verified. Please follow up with them via phone call
     </p>
 </div>
 @foreach($applications as $application)

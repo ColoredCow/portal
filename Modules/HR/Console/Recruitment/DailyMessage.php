@@ -48,8 +48,8 @@ class DailyMessage extends Command
     public function handle()
     {
         $applications = Application::where('is_verified', false)->where('created_at', '>=', '2022-07-06')->get();
-        Mail::to('test@gmail.com')->queue(new sendEmail($applications));
+        Mail::to('pankaj.kandpal@coloredcow.in')->queue(new sendEmail($applications));
 
-        $this->info('Effort summary sent successfully.');
+        $this->info('email sent successfully.');
     }
 }
