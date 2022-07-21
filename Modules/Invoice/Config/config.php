@@ -90,6 +90,10 @@ return [
         'payment-confirmation' => [
             'slug' => 'payment-confirmation',
             'label' => 'Payment Confirmation'
+        ],
+        'invoice' => [
+            'slug' => 'invoice',
+            'label' => 'Invoice'
         ]
     ],
 

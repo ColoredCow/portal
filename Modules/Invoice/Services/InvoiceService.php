@@ -523,6 +523,12 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceNumber = str_replace('-', '', $client->next_invoice_number);
         $invoice = $this->generateInvoiceForClient($client, $monthNumber, $year, $term);
         Mail::queue(new SendInvoiceMail($client, $invoice, $monthNumber, $year, $invoiceNumber, $email));
+        InvoiceMail::create([
+            'invoice_id'=> $invoice->id,
+            'subject' => $email['subject'],
+            'body' => $email['body'],
+            'type' => config('invoice.mail-type.invoice.slug')
+        ]);
     }
 
     public function sendInvoiceReminder(Invoice $invoice, $data)

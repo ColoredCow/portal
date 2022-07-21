@@ -121,7 +121,6 @@
                                 <td class="{{ $invoice->shouldHighlighted() ? 'font-weight-bold text-danger' : '' }}{{ $invoice->status == 'paid' ? 'font-weight-bold text-success' : '' }} text-center">
                                     {{ $invoice->shouldHighlighted() ? __('Overdue') : $invoice->status }}
                                 </td>
-                                {{-- @dd($invoice->confirmationMailCheck()); --}}
                                 <td class="text-center">
                                     @if($invoice->shouldHighlighted())
                                         <div data-toggle="modal" data-target="#invoiceReminder" >
