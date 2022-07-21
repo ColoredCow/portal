@@ -32,7 +32,7 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters)->orderBy('name', 'asc');
             })->whereHas('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters);
-            })->orderBy('name')->get();
+            })->orderBy('name')->paginate(config('constants.pagination_size'));
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->count();
@@ -53,7 +53,7 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 });
-            })->get();
+            })->orderBy('name')->paginate(config('constants.pagination_size'));
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
@@ -117,7 +117,7 @@ class ProjectService implements ProjectServiceContract
 
     public function getClients()
     {
-        return Client::where('status', 'active')->get();
+        return Client::where('status', 'active')->orderBy('name')->get();
     }
 
     public function getTeamMembers()
