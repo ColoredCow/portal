@@ -16,9 +16,9 @@ class CreateEmployeeSalariesTable extends Migration
         Schema::create('employee_salaries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('employee_id')->unsigned();
-            $table->unsignedBigInteger('gross_salary');
+            $table->text('monthly_gross_salary');
             $table->timestamps();
-            $table->foreign('employee_id')->references('id')->on('users');
+            $table->foreign('employee_id')->references('id')->on('employees');
         });
     }
 

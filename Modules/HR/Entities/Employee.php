@@ -63,6 +63,6 @@ class Employee extends Model
 
     public function employeeSalary()
     {
-        return $this->belongsTo(EmployeeSalary::class)->with('employee_id', $this->user_id);
+        return $this->hasMany(EmployeeSalary::class);
     }
 }

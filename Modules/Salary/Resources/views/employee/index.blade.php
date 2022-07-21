@@ -6,6 +6,10 @@
     <br>
     <form action="{{ route('salary.employee.store', $employee) }}" method="POST">
         @csrf
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+        @endif
         <div class="mt-4 card">
             <div class="card-header pb-lg-5 fz-28">
                 <div class="mt-4 ml-5">Employee Salary</div>
@@ -19,11 +23,10 @@
                 </div>
 
                 <hr class='bg-dark mx-4 pb-0.5'>
-                <div class="fz-24 pl-5 mt-5 mb-3 d-flex justify-content-inline">{{__('Current Gross Salary: ')}}<div class="ml-1">******</div></div>
                 <br>
-                <div class="form-group mx-5 mr-7">
-                    <label class="leading-none" for="grossSalary">{{ __('Gross Salary') }}</label>
-                    <input type="number" step ="0.01" name="grossSalary" id="grossSalary" class="form-control" placeholder="Enter Gross Salary" value="{{ request()->get('salary') }}" required>
+                <div class="form-group">
+                    <label class="leading-none ml-5" for="grossSalary">{{ __('Monthly Gross Salary') }}</label>
+                    <input type="number" step ="0.01" name="grossSalary" id="grossSalary" placeholder="Enter Monthly Gross Salary" value="{{ optional($employee->employeeSalary->first())->monthly_gross_salary }}" required>
                 </div>
             </div>
             <div class="card-footer">

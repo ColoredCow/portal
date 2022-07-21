@@ -6,9 +6,15 @@ use Modules\HR\Entities\Employee;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\Salary\Entities\EmployeeSalary;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class SalaryController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(EmployeeSalary::class);
+    }
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -26,14 +32,16 @@ class SalaryController extends Controller
 
     public function employee(Request $request, Employee $employee)
     {
+        $this->authorize('view', EmployeeSalary::class);
+
         return view('salary::employee.index')->with('employee', $employee);
     }
 
     public function storeSalary(Request $request, Employee $employee)
     {
         EmployeeSalary::updateOrCreate(
-            ['employee_id' => $employee->user_id],
-            ['gross_salary' => $request->grossSalary]
+            ['employee_id' => $employee->id],
+            ['monthly_gross_salary' => ($request->grossSalary)]
         );
 
         return redirect()->back()->with('success', 'Gross Salary saved successfully!');
