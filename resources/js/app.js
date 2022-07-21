@@ -11,7 +11,8 @@ import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
   
 window.Vue = require("vue");
-import { Laue } from "laue"; 
+import { Laue } from "laue";
+ 
 Vue.use(Laue);
   
 /**
@@ -583,13 +584,13 @@ if (document.getElementById("books_listing")) {
 				  return str.length > length ? str.substring(0, length) + "..." : str;
 			  },
   
-			  updateCopiesCount: function(currentIndex) {
-					var new_count = document.getElementById('copiesOfBooks' ).value;
+			  updateCopiesCount: function() {
+					var new_count = document.getElementById("copiesOfBooks"+this.currentIndex).value;
 					if (new_count && isFinite(new_count)) {
 						this.books[this.currentIndex].number_of_copies = new_count;
 						axios.put(this.updateRoute + "/" + this.books[this.currentIndex].id, {
 							number_of_copies: new_count
-						});
+ 						});
 					}
 			  },
 			updateIndex: function(index){
