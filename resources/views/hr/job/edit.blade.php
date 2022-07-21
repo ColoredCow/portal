@@ -51,11 +51,11 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain<strong class="text-danger">*</strong></label>
-                        <select class="form-control" name="domain" id="domain" value="{{ old('domain') }}" required>
-                            @foreach (config('hr.opportunities.domains') as $domain => $label)
-                                <option value="{{ $domain }}" {{ old('domain', $job->domain) == $domain ? 'selected' : '' }}>{{ $label }}</option>
+                        <select class="form-control" id="domain" name="domain" >
+                            @foreach ($jobs as $jobtitle)
+                             <option  value="{{ $jobtitle->slug }}" {{ old('domain',$jobtitle->slug) == $job->domain ? 'selected' : '' }} >{{ Str::title(str_replace('-', ' ', $jobtitle->domain)) }}</option>
                             @endforeach
-                        </select>   
+                        </select>
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="start_date" class="fz-14 leading-none text-secondary mb-1">Start Date</label>
