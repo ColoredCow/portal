@@ -76,8 +76,8 @@ $(document).ready(() => {
 
 
 	$("#job_title").on("change", function(event) {
-		let opportunity_id = $(this).find(":selected").attr("id");
-		$("#opportunity_id").attr("value", opportunity_id);
+		let opportunityId = $(this).find(":selected").attr("id");
+		$("#opportunityId").attr("value", opportunityId);
 	});
 
 	if ($(".form-create-invoice").length) {
