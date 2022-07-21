@@ -43,6 +43,7 @@ class Applicant extends Model
             'resume' => $attr['resume'] ?? '',
             'resume_file' => $attr['resume_file'] ?? '',
             'status' => $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label'),
+            'hr_channel_id' => $attr['hr_channel_id'],
         ]);
 
         if (isset($attr['form_data'])) {

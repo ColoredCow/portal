@@ -16,8 +16,8 @@
                     <label for="excel_file" class="field-required">Job</label>
                     <select class="form-control" name="job_id" id="job_id" required="required">
                         <option value="">Select Job</option>
-                        @foreach($jobs as $job)
-                            <option value="{{ $job->id }}">{{ $job->title }}</option>
+                        @foreach($hrJobs as $hrJob)
+                            <option value="{{ $hrJob->id }}">{{ $hrJob->title }}</option>
                         @endforeach
                     </select>
                 </div>

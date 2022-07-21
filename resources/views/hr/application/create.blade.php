@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@include('hr.application.excel-import')
 
 @section('content')
 <div class="container" id="page_hr_applicant_create">
@@ -9,9 +10,10 @@
             <br><br>
         </div>
     </div>
-
+    <div class="d-flex justify-content-between">
     <h1>Add new application</h1>
-
+    <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
+</div>
     <div>
         @include('status', ['errors' => $errors->all()])
         <div class="card">
