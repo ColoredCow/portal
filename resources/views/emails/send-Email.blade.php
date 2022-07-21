@@ -4,7 +4,7 @@
     </p>
 </div>
 @foreach($applications as $application)
-    <p>|{{$application->applicant->name ?? "-"}} | {{$application->applicant->phone ?? "-"}}| {{$application->job->title ?? "-"}}</p>                                                                                                                ber']}}</p>
+    <p>|{{$application->applicant->name ?? "-"}} | {{$application->applicant->phone ?? "-"}}| {{$application->job->title ?? "-"}}</p>
 @endforeach
 
 Thanks,<br>

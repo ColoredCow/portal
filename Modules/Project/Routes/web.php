@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\MailController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,8 +10,6 @@ use App\Http\Controllers\MailController;
 | contains the "web" middleware group. Now create something great!
 |
  */
-
-Route::get('/', [MailController::class, 'sendMail']);
 
 Route::prefix('projects')->middleware('auth')->group(function () {
     Route::get('/', 'ProjectController@index')->name('project.index');
