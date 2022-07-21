@@ -26,10 +26,11 @@ class sendEmail extends Mailable implements ShouldQueue
     /**
      * Build the message.
      *
+     *
      * @return $this
      */
     public function build()
     {
-        return $this->view('emails.send-Email')->with('applications', $this->applications);
+        return $this->view('emails.send-Email');
     }
 }

@@ -2,9 +2,10 @@
 
 namespace Modules\HR\Console\Recruitment;
 
+use App\Mail\sendEmail;
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Application;
-use Modules\HR\Jobs\Recruitment\SendEmailToNonVerifiedApplicants;
+use Illuminate\Support\Facades\Mail;
 
 class DailyMessage extends Command
 {
@@ -47,6 +48,8 @@ class DailyMessage extends Command
     public function handle()
     {
         $applications = Application::where('is_verified', false)->where('created_at', '>=', '2022-07-06')->get();
-        SendEmailToNonVerifiedApplicants::dispatch($applications);
+        Mail::to('test@gmail.com')->queue(new sendEmail($applications));
+
+        $this->info('Effort summary sent successfully.');
     }
 }
