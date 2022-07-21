@@ -46,11 +46,11 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-      - name: Configure application encryption key
-        run: php artisan key:generate
       - name: Install composer dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Install NPM Dependencies
         run: npm install
+      - name: Configure application encryption key
+        run: php artisan key:generate
       - name: Larastan
         run: ./vendor/bin/phpstan analyse
