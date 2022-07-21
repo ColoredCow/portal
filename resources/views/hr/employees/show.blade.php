@@ -23,7 +23,7 @@
                         <tr class="bg-theme-gray text-light">
                             <th scope="col" class="pb-lg-4"><div class="ml-7">Project Name</div></th>
                             <th scope="col" class="pb-lg-4">Expected Monthly Hrs.</th>
-                            <th scope="col" class= "pb-lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current month."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                            <th scope="col" class="pb-lg-4">Hours Booked <span data-toggle="tooltip" data-placement="right" title="Hours in effortsheet for the current month."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                             <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                             <th scope="col" class="pb-lg-4">
                                 FTE Covered
@@ -41,10 +41,10 @@
                             @foreach($employee->user->activeProjectTeamMembers as $activeProjectTeamMember)
                                 <tr>
                                     <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
-                                    <td><div class="ml-9">{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
-                                    <td><div class="ml-9">{{$activeProjectTeamMember->current_actual_effort}}</div></td>
-                                    <td><div class="ml-7"><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
-                                    <td><div class="ml-10">{{$activeProjectTeamMember->fte}}</td>
+                                    <td><div>{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
+                                    <td><div>{{$activeProjectTeamMember->current_actual_effort}}</div></td>
+                                    <td><div><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
+                                    <td><div>{{$activeProjectTeamMember->fte}}</td>
                                 </tr>
                             @endforeach
                         @endif
