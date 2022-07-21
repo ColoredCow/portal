@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         SendEffortSummaryCommand::class,
         ZeroEffortInProject::class,
     ];
+    
     /**
      * Define the application's command schedule.
      *
