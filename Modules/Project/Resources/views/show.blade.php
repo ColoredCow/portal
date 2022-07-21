@@ -61,7 +61,7 @@
                 </div>
                 <br>
                 <div class="form-row">
-                    <div class="form-group  pl-4">
+                    <div class="form-group col-md-6 pl-4">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Effortsheet:</label>
                         </h4>
