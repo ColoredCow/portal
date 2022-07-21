@@ -17,8 +17,7 @@ class EmployeeSalaryPolicy
      */
     public function view(User $user)
     {
-        return $user->hasRole('super-admin');
-//        return $user->hasPermissionTo('employee_salary.view');
+        return $user->hasPermissionTo('employee_salary.view');
     }
 
     /**
@@ -29,7 +28,7 @@ class EmployeeSalaryPolicy
      */
     public function create(User $user)
     {
-//        return $user->hasPermissionTo('employee_salary.create');
+        return $user->hasPermissionTo('employee_salary.create');
     }
 
     /**
@@ -40,7 +39,7 @@ class EmployeeSalaryPolicy
      */
     public function update(User $user)
     {
-//        return $user->hasPermissionTo('employee_salary.update');
+        return $user->hasPermissionTo('employee_salary.update');
     }
 
     /**
@@ -51,7 +50,7 @@ class EmployeeSalaryPolicy
      */
     public function delete(User $user)
     {
-//        return $user->hasPermissionTo('employee_salary.delete');
+        return $user->hasPermissionTo('employee_salary.delete');
     }
 
     /**
@@ -62,11 +61,11 @@ class EmployeeSalaryPolicy
      */
     public function list(User $user)
     {
-//        return $user->hasPermissionTo('employee_salary.view');
+        return $user->hasPermissionTo('employee_salary.view');
     }
 
     public function viewAny(User $user)
     {
-//        return $user->hasPermissionTo('employee_salary.view');
+        return $user->hasPermissionTo('employee_salary.view');
     }
 }
