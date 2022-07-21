@@ -31,7 +31,7 @@ class ReportsController extends Controller
 
         $data = [];
 
-        $verifiedApplicationCount= $this->verifiedApplications();
+        $verifiedApplicationCount = $this->verifiedApplications();
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
@@ -58,14 +58,14 @@ class ReportsController extends Controller
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
-      
+
         $data = [];
-            
+      
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
         }
-            
+           
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
