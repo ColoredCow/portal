@@ -37,16 +37,16 @@ class ApplicationRound extends Model
 
     public function _update($attr)
     {
-        // TODO: the fillable definition below need to be put somewhere else.
-        // When just updating an application round (maybe updating comment), the below details are getting overriden.
-        $fillable = [
-            'conducted_person_id' => auth()->id(),
-            'conducted_date' => now(),
-        ];
-
         $application = $this->application;
         $applicant = $this->application->applicant;
         $nextRound = Round::find($attr['next_round']);
+
+        // TODO: the fillable definition below need to be put somewhere else.
+        // When just updating an application round (maybe updating comment), the below details are getting overriden.
+        $fillable = [
+            'conducted_person_id' => ($application->status == 'on-hold') ? null : auth()->id(),
+            'conducted_date' => ($application->status == 'on-hold') ? null : now(),
+        ];
 
         switch ($attr['action']) {
             case 'schedule-update':
