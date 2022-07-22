@@ -1,3 +1,4 @@
+<div class ="hr-menu">
 <ul class="nav nav-pills">
     <li class="nav-item">
         <a class="nav-item nav-link {{ Request::is('hr/recruitment/opportunities*') ? 'active' : '' }}" href="{{ route('recruitment.opportunities') }}"><i class="fa fa-list-ul"></i>&nbsp;Opportunities</a>
@@ -19,3 +20,4 @@
         <a class="nav-item nav-link"><i class="fa fa-bitbucket" aria-hidden="true"></i>&nbsp;Total Count</a>
     </li>
 </ul>
+</div>
