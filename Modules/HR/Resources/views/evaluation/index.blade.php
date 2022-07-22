@@ -31,8 +31,9 @@
                 </td>
 
                 <td>
-                    <i class="fa fa-edit" style="font-size: 20px; color: green;"></i>
-                    <i class="fa fa-trash  fa-7x" style="font-size: 20px; color: red; margin-left: 15px;"></i>
+                    <i class="fa fa-edit fz-20 text-theme-green"></i>
+
+                    <i class="fa fa-trash fz-20 ml-4 text-theme-red"></i>
                 </td>
             </tr>
             @endforeach
