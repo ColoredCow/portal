@@ -1,4 +1,4 @@
-<div class ="hr-menu">
+<div class ="text-primary">
 <ul class="nav nav-pills">
     <li class="nav-item">
         <a class="nav-item nav-link {{ Request::is('hr/recruitment/opportunities*') ? 'active' : '' }}" href="{{ route('recruitment.opportunities') }}"><i class="fa fa-list-ul"></i>&nbsp;Opportunities</a>
