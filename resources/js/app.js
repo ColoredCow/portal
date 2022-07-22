@@ -172,7 +172,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				this.selectedActionOption = event.target.options[event.target.options.selectedIndex];
 			},
 			takeAction: function () {
-			switch (this.selectedAction) {
+				switch (this.selectedAction) {
 				case "round":
 					if (!this.selectedActionOption) {
 						this.selectedActionOption = document.querySelector("#action_type option:checked");
