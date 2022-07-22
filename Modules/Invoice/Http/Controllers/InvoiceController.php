@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Entities\InvoiceMail;
 
 class InvoiceController extends Controller
 {
