@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
+use Mpdf\Tag\Em;
 
 class ReportsController extends Controller
 {
@@ -42,29 +43,37 @@ class ReportsController extends Controller
 
     public function searchBydate(Request $req)
     {
-        $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
-            ->count();
+      if(empty( $req->report_start_date && $req->report_end_date)){
 
-        $record = Applicant::select(
-            \DB::raw('COUNT(*) as count'),
-            \DB::raw('MONTHNAME(created_at) as month_created_at'),
-            \DB::raw('DATE(created_at) as date_created_at')
-        )
-            ->where('created_at', Carbon::getWeekStartsAt(), $req->report_start_date)
-            ->where('created_at', Carbon::getWeekEndsAt(), $req->report_end_date)
-            ->groupBy('date_created_at', 'month_created_at')
-            ->orderBy('date_created_at', 'ASC')
-            ->get();
+        $req->report_start_date = Carbon::now()->startOfMonth();
+        $req->report_end_date = Carbon::today();
+      }
 
-        $data = [];
 
-        foreach ($record as $row) {
-            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
-            $data['data'][] = (int) $row->count;
-        }
 
-        $data['chartData'] = json_encode($data);
+          $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
+              ->count();
 
-        return view('hr.recruitment.reports', $data, compact('todayCount'));
+          $record = Applicant::select(
+              \DB::raw('COUNT(*) as count'),
+              \DB::raw('MONTHNAME(created_at) as month_created_at'),
+              \DB::raw('DATE(created_at) as date_created_at')
+          )
+              ->where('created_at', '>=' , $req->report_start_date)
+              ->where('created_at', '<=' , $req->report_end_date)
+              ->groupBy('date_created_at', 'month_created_at')
+              ->orderBy('date_created_at', 'ASC')
+              ->get();
+
+          $data = [];
+
+          foreach ($record as $row) {
+              $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
+              $data['data'][] = (int) $row->count;
+          }
+
+          $data['chartData'] = json_encode($data);
+
+          return view('hr.recruitment.reports', $data, compact('todayCount'));
     }
 }
