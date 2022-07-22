@@ -48,7 +48,7 @@ class ReportsController extends Controller
         }
         
         
-        $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
+        $todayCount = Applicant::whereDate('created_at', '=',Carbon::today())
             ->count();
 
         $record = Applicant::select(
