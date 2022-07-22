@@ -208,11 +208,4 @@ class InvoiceController extends Controller
 
         return $this->service->yearlyInvoiceReportExport($filters, $request);
     }
-
-    public function getEmailDetails()
-    {
-        dd('hre');
-        $data['emails']= InvoiceMail::all();
-        return view('modal.email-details', $data);
-    }
 }
