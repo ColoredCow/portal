@@ -160,7 +160,6 @@ class InvoiceService implements InvoiceServiceContract
     public function edit($invoice)
     {
         $emailData = $this->getPaymentReceivedEmailForInvoice($invoice);
-
         return [
             'invoice' => $invoice,
             'clients' => $this->getClientsForInvoice(),
@@ -168,6 +167,7 @@ class InvoiceService implements InvoiceServiceContract
             'paymentReceivedEmailSubject' => $emailData['subject'],
             'paymentReceivedEmailBody' => $emailData['body'],
             'currencyService' => $this->currencyService(),
+            'emails'=>InvoiceMail::all(),
         ];
     }
 

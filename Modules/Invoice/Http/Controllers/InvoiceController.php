@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\InvoiceMail;
 
 class InvoiceController extends Controller
 {
@@ -207,5 +208,12 @@ class InvoiceController extends Controller
         $filters = $request->all();
 
         return $this->service->yearlyInvoiceReportExport($filters, $request);
+    }
+
+    public function getEmailDetails()
+    {
+        dd('hre');
+        $data['emails']= InvoiceMail::all();
+        return view('modal.email-details', $data);
     }
 }
