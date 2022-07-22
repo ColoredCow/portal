@@ -18,7 +18,8 @@
         </form>
     </div>
     <table class="table table-striped table-bordered">
-        <tr>
+        <thead class="thead-dark">
+        <tr class="sticky-top">
             <th>Name</th>
             <th>Designation</th>
             <th>Joined on</th>

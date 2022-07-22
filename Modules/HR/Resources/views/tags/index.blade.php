@@ -15,6 +15,7 @@
     <br>
     <div class="table-responsive">
         <table class="table table-striped table-bordered" id="tags_table">
+            <thead class="thead-dark">
             <tr>
                 <th>{{ __('Tag Name') }}</th>
                 <th>{{ __('Description') }}</th>
