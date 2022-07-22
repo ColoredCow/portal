@@ -61,7 +61,7 @@ class Employee extends Model
         return $query;
     }
 
-    public function employeeSalary()
+    public function employeeSalaries()
     {
         return $this->hasMany(EmployeeSalary::class);
     }
