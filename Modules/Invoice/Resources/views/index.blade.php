@@ -104,7 +104,9 @@
                                 'emailBody' => $invoiceReminderEmailBody,
                                 'invoiceId' => $invoice->id,
                                 'invoiceNumber' => $invoice->invoice_number,
-                                'invoiceAmount' => $invoice->invoiceAmount()
+                                'invoiceAmount' => $invoice->invoiceAmount(),
+                                'bccEmails' => $invoice->client->bccEmails(),
+                                'ccEmails' => $invoice->client->ccEmails()
                             ];
                         @endphp
                             <tr>
@@ -150,7 +152,9 @@
                                     'year' => $year,
                                     'emailSubject' => $sendInvoiceEmailSubject,
                                     'emailBody' => $sendInvoiceEmailBody,
-                                    'clientId' => $client->id
+                                    'clientId' => $client->id,
+                                    'bccEmails' => $client->bccEmails(),
+                                    'ccEmails' => $client->ccEmails()
                                 ];
                             @endphp
                             <tr>
