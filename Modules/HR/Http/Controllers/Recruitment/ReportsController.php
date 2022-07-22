@@ -45,11 +45,9 @@ class ReportsController extends Controller
 
     public function searchBydate(Request $req)
     {
-        if (empty($req->report_start_date && $req->report_end_date)) {
-            $req->report_start_date = Carbon::now()->startOfMonth();
-            $req->report_end_date = Carbon::today();
-        }
-        
+        $req->report_start_date=$req->report_start_date??carbon::now()->startOfMonth();
+        $req->report_end_date=$req->report_end_date??Carbon::today();
+
         
         $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
             ->count();
