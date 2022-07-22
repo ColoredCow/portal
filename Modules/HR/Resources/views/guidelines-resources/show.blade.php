@@ -17,7 +17,7 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-primary">
                 <tr>
-                    <th>Sno</th>
+                    <th>S. no.</th>
                     <th>Categories</th>
                     <th>Actions</th>
                 </tr>
@@ -26,7 +26,7 @@
                 @if($resources->first() == null)
         </table>
         <div class="fz-lg-28 text-center mt-2">
-            <div class="mb-4">Not in any resources</div>
+            <div class="mb-4">No resources found</div>
         </div>
         @else
         @foreach($resources as $key => $resource)

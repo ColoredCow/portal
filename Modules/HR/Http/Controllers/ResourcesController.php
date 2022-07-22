@@ -17,9 +17,9 @@ class ResourcesController extends Controller
         return view('hr::guidelines-resources.index', compact('jobs'));
     }
 
-    public function show($jobId)
+    public function show($job)
     {
-        $job = Job::find($jobId);
+        $job = Job::find($job);
 
         $resources = $job->resources;
 
