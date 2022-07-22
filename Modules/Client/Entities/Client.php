@@ -86,14 +86,14 @@ class Client extends Model
         return $this->contactPersons()->where('type', config('client.client-contact-person-type.primary-billing-contact'))->first();
     }
 
-    public function getSecondaryContactAttribute()
+    public function secondaryContacts()
     {
-        return $this->contactPersons()->where('type', config('client.client-contact-person-type.secondary-billing-contact'))->get();
+        return $this->contactPersons()->where('type', config('client.client-contact-person-type.secondary-billing-contact'));
     }
 
-    public function getTertiaryContactAttribute()
+    public function tertiaryContacts()
     {
-        return $this->contactPersons()->where('type', config('client.client-contact-person-type.tertiary-billing-contact'))->get();
+        return $this->contactPersons()->where('type', config('client.client-contact-person-type.tertiary-billing-contact'));
     }
 
     public function addresses()
@@ -250,30 +250,29 @@ class Client extends Model
         }
     }
 
-    public function getCcEmailsAttribute()
+    public function ccEmails()
     {
         $ccEmails = null;
-        if (optional($this->secondary_contact)->first() != null) {
-            $ccEmails = config('invoice.mail.send-invoice.email');
-            foreach ($this->secondary_contact as $ccEmail) {
-                $ccEmails .= ",$ccEmail->email";
+        if (optional($this->secondarycontacts)->first() != null) {
+            $ccEmails = config('invoice.mail.send-invoice.email') . ",";
+            foreach ($this->secondarycontacts as $secondarycontact) {
+                $ccEmails .= $secondarycontact->email . ",";
             }
         }
 
-        return $ccEmails;
+        return (substr_replace($ccEmails, "", -1));
     }
 
-    public function getBccEmailsAttribute()
+    public function bccEmails()
     {
         $bccEmails = null;
-        if (optional($this->tertiary_contact)->first() != null) {
+        if (optional($this->tertiarycontacts)->first() != null) {
             $bccEmails = '';
-            foreach ($this->tertiary_contact as $bccEmail) {
-                $bccEmails .= ",$bccEmail->email";
+            foreach ($this->tertiarycontacts as $tertiarycontact) {
+                $bccEmails .= $tertiarycontact->email . ",";
             }
-            $bccEmails = substr($bccEmails, 1);
         }
 
-        return $bccEmails;
+        return (substr_replace($bccEmails, "", -1));
     }
 }

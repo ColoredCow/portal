@@ -190,30 +190,4 @@ class Invoice extends Model
         return $this->amount + $this->gst;
     }
 
-    public function getCcEmailsAttribute()
-    {
-        $ccEmails = null;
-        if (optional($this->client->secondary_contact)->first() != null) {
-            $ccEmails = config('invoice.mail.send-invoice.email');
-            foreach ($this->client->secondary_contact as $ccEmail) {
-                $ccEmails .= ",$ccEmail->email";
-            }
-        }
-
-        return $ccEmails;
-    }
-
-    public function getBccEmailsAttribute()
-    {
-        $bccEmails = null;
-        if (optional($this->client->tertiary_contact)->first() != null) {
-            $bccEmails = '';
-            foreach ($this->client->tertiary_contact as $bccEmail) {
-                $bccEmails .= ",$bccEmail->email";
-            }
-            $bccEmails = substr($bccEmails, 1);
-        }
-
-        return $bccEmails;
-    }
 }

@@ -105,8 +105,8 @@
                                 'invoiceId' => $invoice->id,
                                 'invoiceNumber' => $invoice->invoice_number,
                                 'invoiceAmount' => $invoice->invoiceAmount(),
-                                'bccEmails' => $invoice->bcc_emails,
-                                'ccEmails' => $invoice->cc_emails
+                                'bccEmails' => $invoice->client->bccEmails(),
+                                'ccEmails' => $invoice->client->ccEmails()
                             ];
                         @endphp
                             <tr>
@@ -153,8 +153,8 @@
                                     'emailSubject' => $sendInvoiceEmailSubject,
                                     'emailBody' => $sendInvoiceEmailBody,
                                     'clientId' => $client->id,
-                                    'bccEmails' => $client->bcc_emails,
-                                    'ccEmails' => $client->cc_emails
+                                    'bccEmails' => $client->bccEmails(),
+                                    'ccEmails' => $client->ccEmails()
                                 ];
                             @endphp
                             <tr>

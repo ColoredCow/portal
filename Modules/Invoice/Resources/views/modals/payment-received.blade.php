@@ -31,7 +31,7 @@
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        <input type="text" name="cc" id="cc" class="form-control" value="{{$invoice->cc_emails == null ? config('invoice.mail.send-invoice.email') : config('invoice.mail.send-invoice.email') .','. $invoice->cc_emails}}">
+                        <input type="text" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') . ($invoice->client->ccEmails() == null ?: ',' . $invoice->client->ccEmails()) }}">
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="bcc">
@@ -40,7 +40,7 @@
                                 <i class="fa fa-question-circle"></i>
                             </span>
                         </label>
-                        <input type="text" name="bcc" id="bcc" class="form-control" value="{{$invoice->bcc_emails}}">
+                        <input type="text" name="bcc" id="bcc" class="form-control" value="{{$invoice->client->bccEmails()}}">
                     </div>
                     <div class="form-group col-md-12">
                         <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>
