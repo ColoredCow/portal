@@ -47,6 +47,7 @@ class ReportsController extends Controller
             $req->report_end_date = Carbon::today();
         }
         
+        
         $todayCount = Applicant::whereDate('created_at', '=', Carbon::today())
             ->count();
 
