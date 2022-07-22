@@ -189,5 +189,4 @@ class Invoice extends Model
     {
         return $this->amount + $this->gst;
     }
-
 }

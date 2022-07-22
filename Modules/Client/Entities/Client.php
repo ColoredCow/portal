@@ -254,13 +254,13 @@ class Client extends Model
     {
         $ccEmails = null;
         if (optional($this->secondarycontacts)->first() != null) {
-            $ccEmails = config('invoice.mail.send-invoice.email') . ",";
+            $ccEmails = config('invoice.mail.send-invoice.email') . ',';
             foreach ($this->secondarycontacts as $secondarycontact) {
-                $ccEmails .= $secondarycontact->email . ",";
+                $ccEmails .= $secondarycontact->email . ',';
             }
         }
 
-        return (substr_replace($ccEmails, "", -1));
+        return substr_replace($ccEmails, '', -1);
     }
 
     public function bccEmails()
@@ -269,10 +269,10 @@ class Client extends Model
         if (optional($this->tertiarycontacts)->first() != null) {
             $bccEmails = '';
             foreach ($this->tertiarycontacts as $tertiarycontact) {
-                $bccEmails .= $tertiarycontact->email . ",";
+                $bccEmails .= $tertiarycontact->email . ',';
             }
         }
 
-        return (substr_replace($bccEmails, "", -1));
+        return substr_replace($bccEmails, '', -1);
     }
 }
