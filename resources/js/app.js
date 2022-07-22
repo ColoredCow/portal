@@ -955,11 +955,11 @@ $(document).ready(function () {
 });
 
 function resourceGuidelineEditClicked(event) {
-	let actionUrl = $(this).attr('action_url');
+	let actionUrl = $(this).attr("action_url");
 	$("#edit-Modal #update-form").attr("action", actionUrl);
-	let resourceLink = $(this).attr('resource_link');
+	let resourceLink = $(this).attr("resource_link");
 	$("#edit-Modal #update-form #resource_link").val(resourceLink);
-	let categoryName = $(this).attr('category_id');
+	let categoryName = $(this).attr("category_id");
 	$("#edit-Modal #update-form #hrResourceCategory").val(categoryName);
 	$("#edit-Modal").modal("show");
 }
