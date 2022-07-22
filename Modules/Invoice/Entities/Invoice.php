@@ -200,7 +200,7 @@ class Invoice extends Model
         return $this->invoiceMail()->where('type', config('invoice.mail-type.payment-confirmation.slug'))
         ->first();
     }
-    
+
     public function invoiceOfInvoiceTypeMail()
     {
         return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice.slug'))
