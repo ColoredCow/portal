@@ -42,4 +42,9 @@ $(document).ready(function () {
 			$(this).parent(".monthly-effort-div").siblings(".weekly-effort-div").children(".weekly-effort").val(monthlyEffort/daysInMonth * 5);	
 		}
 	});
+	window.setTimeout(function() {
+		$(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+			$(this).remove(); 
+		});
+	}, 6000);
 });

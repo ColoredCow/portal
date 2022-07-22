@@ -4,6 +4,7 @@
 <div class="container" id="vueContainer">
     <br>
     @include('hr.menu')
+    @include('hr.application.total-application-count-modal')
     <br>
     <form class="form" action="/{{ Request::path() }}">
         <div class="row">
@@ -89,7 +90,7 @@
         $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $hr_university_id = request()->has('hr_university_id') ? '&hr_university_id=' . request('hr_university_id') : '';
-        $query_filters = $hr_job_id . $search . $hr_university_id
+        $query_filters = $hr_job_id . $search . $hr_university_id;
     @endphp
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
@@ -199,7 +200,7 @@
     @endif
 
     <table class="table table-striped table-bordered" id="applicants_table">
-        <thead>
+        <thead class="thead-dark sticky-top">
             <th>Name</th>
             <th>Details</th>
             <th>

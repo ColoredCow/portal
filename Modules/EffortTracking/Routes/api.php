@@ -16,3 +16,5 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/efforttracking', function (Request $request) {
     return $request->user();
 });
+
+Route::post('project/{project}/refresh', 'EffortTrackingController@getEffortForProject')->name('effort-tracking.refresh');
