@@ -49,7 +49,7 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'verifiedApplicationCount'));
+        return view('hr.recruitment.reports', $data, with($todayCount, $verifiedApplicationCount));
     }
 
     private function getVerifiedApplicationsCount()
