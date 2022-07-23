@@ -23,7 +23,10 @@
                             <input type="email" name="to" id="sendTo"
                                 class="form-control" required>
                         </div>
-                        <input type="hidden" name="to_name" id="sendToName" class="form-control" required>
+                        <div class="form-group col-md-12">
+                            <label class="leading-none" for="sendToName">{{ __('Receiver Name') }}</label>
+                            <input type="text" name="to_name" id="sendToName" class="form-control" required>
+                        </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="cc">
                                 {{ __('CC') }} 
@@ -31,7 +34,7 @@
                                     <i class="fa fa-question-circle"></i>
                                 </span>
                             </label>
-                            <input type="email" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
+                            <input type="text" name="cc" id="cc" class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="bcc">
@@ -40,7 +43,7 @@
                                     <i class="fa fa-question-circle"></i>
                                 </span>
                             </label>
-                            <input type="email" name="bcc" id="bcc" class="form-control" value="">
+                            <input type="text" name="bcc" id="bcc" class="form-control" value="">
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>
