@@ -147,16 +147,16 @@
         </li>
     @endif
 
-    @canany(['hr_settings.view', 'user_management.view'])
+    @canany(['hr_settings.view', 'user_management.view', 'finance_invoices_settings.view', 'nda_settings.view'])
         <li class="nav-item dropdown">
             <a id="navbarDropdown_settings" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Settings<span
                     class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
-                @can('hr_settings.view')
+                @canany(['hr_settings.view', 'finance_invoices_settings.view', 'nda_settings.view'])
                     <a class="dropdown-item" href="{{ route('settings.index') }}">Settings</a>
-                @endcan
+                @endcanany
                 @can('user_management.view')
                     <a class="dropdown-item" href="{{ route('user.index') }}">User Management</a>
                 @endcan
