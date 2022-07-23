@@ -63,7 +63,7 @@ class ReportsController extends Controller
 
     public function showReportCard()
     {
-        $todayCount = Applicant::whereDate('created_at', '=', now(45))
+        $todayCount = Applicant::whereDate('created_at', now())
         ->count();
         $record = Applicant::select(
             \DB::raw('COUNT(*) as count'),
