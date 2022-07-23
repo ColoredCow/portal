@@ -14,9 +14,7 @@ class SalarySettingController extends Controller
      */
     public function index()
     {
-        $salaryConfig = SalaryConfiguration::formatAll();
-
-        return view('salary::settings.index', ['salaryConfig' => $salaryConfig]);
+        dd("hello");
     }
 
     /**
