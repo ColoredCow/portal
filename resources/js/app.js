@@ -11,8 +11,7 @@ import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
   
 window.Vue = require("vue");
-import { Laue } from "laue";
- 
+import { Laue } from "laue"; 
 Vue.use(Laue);
   
 /**
@@ -73,6 +72,12 @@ $(document).ready(() => {
 	setTimeout(function() {
 		$("#statusAlert").alert("close");
 	}, 2000);
+
+
+	$("#job_title").on("change", function(event) {
+		let opportunityId = $(this).find(":selected").attr("id");
+		$("#opportunityId").attr("value", opportunityId);
+	});
 
 	if ($(".form-create-invoice").length) {
 		let form = $(".form-create-invoice");
@@ -419,6 +424,7 @@ if (document.getElementById("show_and_save_book")) {
 			  showInfo: false,
 			  book: {},
 			  number_of_copies: 1,
+			  currentIndex: 0,
 			  routes: {
 				  index: document.getElementById("show_book").dataset.indexRoute || "",
 				  fetch: document.getElementById("book_form").dataset.actionRoute || "",
@@ -586,17 +592,19 @@ if (document.getElementById("books_listing")) {
 				  return str.length > length ? str.substring(0, length) + "..." : str;
 			  },
   
-			  updateCopiesCount: function(index) {
-				  var new_count = parseInt(prompt("Number of copies of this book", this.books[index].number_of_copies));
-				  if (new_count && isFinite(new_count)) {
-					  this.books[index].number_of_copies = new_count;
-					  axios.put(this.updateRoute + "/" + this.books[index].id, {
-						  number_of_copies: new_count
-					  });
-				  }
-			  }
+			  updateCopiesCount: function() {
+				var new_count = document.getElementById("copiesOfBooks"+ this.currentIndex).value;
+				if (new_count && isFinite(new_count)) {
+					this.books[this.currentIndex].number_of_copies = new_count;
+					axios.put(this.updateRoute + "/" + this.books[this.currentIndex].id, {
+						number_of_copies: new_count
+					});
+				}
+			  },
+			updateIndex: function(index){
+         		 this.currentIndex = index;
+        	},
 		  },
-  
 		  mounted: function() {
 			  let categoryInputContainer = document.querySelector("#update_category_modal");
 			  let allCategoryInputs = categoryInputContainer.querySelectorAll("input[type=\"checkbox\"]");
@@ -951,16 +959,18 @@ $(document).ready(function() {
 	  $(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 });
 
-$(document).getElementById("Categoryname").onkeyup = ButtonEnable();
-
-function ButtonEnable() {
-	if(document.getElementById("name").value=="") { 
-		   document.getElementById("save-btn-action").disabled = true; 
-	   } else { 
-		   document.getElementById("save-btn-action").disabled = false;
-	   }
+$(function(){
+	$("#categoryName").keyup(check_save).each(function(){
+	  check_save();
+	});
+});
+function check_save(){
+	 if ($(this).val().length == 0){
+	     $("#save-btn-action").attr("disabled", true);
+	}  else{
+	     $("#save-btn-action").removeAttr("disabled");
+	}
 }
-  
 function showCommentBlock() {
 	  var blockId = $(this).data("block-id");
 	  $(blockId).removeClass("d-none").find("input").focus();
@@ -1035,7 +1045,7 @@ function saveFollowUp() {
 		  form.submit();
 	  }
 }
-  
+
 function datePickerChart(){
 	  $("#EndDate").change(function () {
 		var startDate = document.getElementById("StartDate").value;

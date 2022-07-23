@@ -170,6 +170,7 @@ class InvoiceService implements InvoiceServiceContract
     public function getPaymentReceivedEmailForInvoice(Invoice $invoice)
     {
         $templateVariablesForSubject = config('invoice.templates.setting-key.received-invoice-payment.template-variables.subject');
+        $templateVariablesForBody = config('invoice.templates.setting-key.received-invoice-payment.template-variables.body');
         $month = $invoice->sent_on->subMonth()->month;
         $year = $invoice->sent_on->subMonth()->year;
         $monthName = date('F', mktime(0, 0, 0, $month, 10));
@@ -187,7 +188,9 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         $body = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first())->setting_value ?: '';
-        $body = str_replace(config('invoice.templates.setting-key.received-invoice-payment.template-variables.body.billing-person-name'), optional($invoice->client->billing_contact)->first_name, $body);
+        $body = str_replace($templateVariablesForBody['billing-person-name'], optional($invoice->client->billing_contact)->first_name, $body);
+        $body = str_replace($templateVariablesForBody['invoice-number'], $invoice->invoice_number, $body);
+        $body = str_replace($templateVariablesForBody['currency'], optional($invoice->client->country)->currency_symbol, $body);
 
         return [
             'subject' => $subject,
@@ -254,6 +257,14 @@ class InvoiceService implements InvoiceServiceContract
         $invoice->invoice_number = $this->getInvoiceNumber($invoice->client_id, $invoice->project_id, $sent_date, $invoice->billing_level);
 
         return $invoice->save();
+    }
+
+    public function getInvoicesBetweenDates($startDate, $endDate, $type = 'indian')
+    {
+        return Invoice::sentBetween($startDate, $endDate)
+            ->region($type)
+            ->status(['sent', 'paid'])
+            ->get();
     }
 
     /**
@@ -700,17 +711,19 @@ class InvoiceService implements InvoiceServiceContract
             return [
                 'Project Name' => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
                 'Invoice number' => $invoice->invoice_number,
-                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
-                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Invoice Amount' => $invoice->amount,
                 'GST Amount' => $invoice->gst,
+                'Amount(+GST)' => $invoice->total_amount,
                 'TDS' => number_format((float) $invoice->tds, 2),
                 'Amount in INR' => $invoice->InvoiceAmountInInr,
                 'Amount Recieved' => $invoice->amount_paid,
                 'Bank Charges' => $invoice->bank_charges,
                 'Dollar Rate' => $invoice->conversion_rate,
                 'Exchange Rate Diff' => $invoice->conversion_rate_diff,
-                'Amount Recieved in Dollars' => $invoice->amount_paid
+                'Amount Recieved in Dollars' => $invoice->amount_paid,
+                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
+                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
+                'Status' => $invoice->status
             ];
         });
     }
@@ -721,12 +734,14 @@ class InvoiceService implements InvoiceServiceContract
             return [
                 'Project Name' => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
                 'Invoice number' => $invoice->invoice_number,
-                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
-                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Invoice Amount' => $invoice->amount,
                 'GST Amount' => $invoice->gst,
+                'Amount(+GST)' => $invoice->total_amount,
                 'TDS' => number_format((float) $invoice->tds, 2),
-                'Amount Recieved' => $invoice->amount_paid
+                'Amount Recieved' => $invoice->amount_paid,
+                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
+                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
+                'Status' => $invoice->status
             ];
         });
     }
@@ -737,15 +752,16 @@ class InvoiceService implements InvoiceServiceContract
             return [
                 'Project Name' => optional($invoice->project)->name ?: ($invoice->client->name . ' Projects'),
                 'Invoice number' => $invoice->invoice_number,
-                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
-                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
                 'Invoice Amount' => $invoice->amount,
                 'Amount in INR' => $invoice->InvoiceAmountInInr,
                 'Amount Recieved' => $invoice->amount_paid,
                 'Bank Charges' => $invoice->bank_charges,
                 'Dollar Rate' => $invoice->conversion_rate,
                 'Exchange Rate Diff' => $invoice->conversion_rate_diff,
-                'Amount Recieved in Dollars' => $invoice->amount_paid
+                'Amount Recieved in Dollars' => $invoice->amount_paid,
+                'Sent at' => $invoice->sent_on->format(config('invoice.default-date-format')),
+                'Payment at' => $invoice->payment_at ? $invoice->payment_at->format(config('invoice.default-date-format')) : '-',
+                'Status' => $invoice->status
             ];
         });
     }
