@@ -9,11 +9,11 @@
 
     <div class=" card-deck dashboard_view d-flex flex-wrap justify-content-start ml-3">
 
-        @if(auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
-        <div class="mr-5 mr-md-3 pr-md-0 pr-4 mb-4 min-w-389">
-            <user-dashboard-library />
-        </div>
-        @endif
+        @can('library_books.view')
+            <div class="mr-5 mr-md-3 pr-md-0 pr-4 mb-4 min-w-389">
+                <user-dashboard-library />
+            </div>
+        @endcan
 
         @can('projects.view')
         <div class="pr-5 mb-4 min-w-389">

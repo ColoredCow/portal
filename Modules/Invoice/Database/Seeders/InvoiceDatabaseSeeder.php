@@ -21,5 +21,10 @@ class InvoiceDatabaseSeeder extends Seeder
         Permission::updateOrCreate(['name' => 'finance_invoices.view']);
         Permission::updateOrCreate(['name' => 'finance_invoices.update']);
         Permission::updateOrCreate(['name' => 'finance_invoices.delete']);
+
+        Permission::updateOrCreate(['name' => 'finance_invoices_settings.create']);
+        Permission::updateOrCreate(['name' => 'finance_invoices_settings.view']);
+        Permission::updateOrCreate(['name' => 'finance_invoices_settings.update']);
+        Permission::updateOrCreate(['name' => 'finance_invoices_settings.delete']);
     }
 }

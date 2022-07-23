@@ -147,22 +147,20 @@
         </li>
     @endif
 
-    @if (Module::checkStatus('HR') || Module::checkStatus('User'))
+    @canany(['hr_settings.view', 'user_management.view'])
         <li class="nav-item dropdown">
             <a id="navbarDropdown_settings" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Settings<span
                     class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
-                @if (Module::checkStatus('HR') &&
-                    auth()->user()->can('hr_recruitment_applications.view'))
+                @can('hr_settings.view')
                     <a class="dropdown-item" href="{{ route('settings.index') }}">Settings</a>
-                @endif
-                @if (Module::checkStatus('User') &&
-                    auth()->user()->can('user_management.view'))
+                @endcan
+                @can('user_management.view')
                     <a class="dropdown-item" href="{{ route('user.index') }}">User Management</a>
-                @endif
+                @endcan
             </div>
         </li>
-    @endif
+    @endcanany
 </ul>

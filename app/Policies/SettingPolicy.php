@@ -11,6 +11,7 @@ class SettingPolicy
 
     public function view(User $user)
     {
+        return true;
         return $user->hasPermissionTo('settings.view');
     }
 
