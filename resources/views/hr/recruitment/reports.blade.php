@@ -6,7 +6,7 @@
     <div class="bar-chart-container">
         <div class="d-flex justify-content-between">
              <div>
-                <h2>Analytics </h2>  
+                <h2>Analytics </h2>
             </div>
             <div>
                 <form action="{{route('recruitment.report')}}" method="POST" align="right">

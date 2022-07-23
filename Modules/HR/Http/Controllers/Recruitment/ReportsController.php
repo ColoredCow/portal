@@ -27,7 +27,7 @@ class ReportsController extends Controller
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
-
+    
         $data = [];
 
         foreach ($record as $row) {
@@ -50,8 +50,8 @@ class ReportsController extends Controller
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
             \DB::raw('DATE(created_at) as date_created_at')
         )
-            ->where('created_at', '>=', $req->report_start_date)
-            ->where('created_at', '<=', $req->report_end_date)
+            ->wheredate('created_at', '>=', $req->report_start_date)
+            ->wheredate('created_at', '<=', $req->report_end_date)
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();

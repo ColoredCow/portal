@@ -51,7 +51,7 @@
                 <tr>
                     <th class="w-33p sticky-top">Client/Project Name</th>
                     <th class="sticky-top">Team Members</th>
-                    <th class="sticky-top">Status</th>
+                    <th class="sticky-top">Tags</th>
                     <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
             </thead>
