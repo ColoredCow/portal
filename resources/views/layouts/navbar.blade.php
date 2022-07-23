@@ -87,30 +87,28 @@
         </li>
     @endif
 
-    @if (Module::checkStatus('Prospect') || Module::checkStatus('Lead') || Module::checkStatus('SalesAutomation'))
+    @canany(['prospect.view', 'lead.view', 'sales_automation.view', 'sales_reports.view'])
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Sales <span
                     class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
-                @if (Module::checkStatus('Prospect') &&
-                    auth()->user()->can('prospect.view'))
+                @can('prospect.view')
                     <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
-                @endif
-                @if (Module::checkStatus('Lead') &&
-                    auth()->user()->can('lead.view'))
+                @endcan
+                @can('lead.view')
                     <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
-                @endif
-                @if (Module::checkStatus('SalesAutomation'))
+                @endcan
+                @can('sales_automation.view')
                     <a class="dropdown-item" href="{{ route('salesautomation.index') }}">Sales Automation</a>
-                @endif
-                @if (Module::checkStatus('Report'))
+                @endcan
+                @can('sales_reports.view')
                     <a class="dropdown-item" href="{{ '/report' }}">Report</a>
-                @endif
+                @endcan
             </div>
         </li>
-    @endif
+    @endcan
 
     @if (auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
         <li class="nav-item dropdown">
@@ -129,8 +127,7 @@
         </li>
     @endif
 
-    @if (Module::checkStatus('Infrastructure') &&
-        auth()->user()->can('infrastructure.billings.view'))
+    @can('infrastructure.billings.view')
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Infrastructure<span
@@ -145,7 +142,7 @@
                 @endcan
             </div>
         </li>
-    @endif
+    @endcan
 
     @canany(['hr_settings.view', 'user_management.view', 'finance_invoices_settings.view', 'nda_settings.view'])
         <li class="nav-item dropdown">

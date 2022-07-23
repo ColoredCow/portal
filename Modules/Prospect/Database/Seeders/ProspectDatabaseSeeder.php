@@ -4,6 +4,7 @@ namespace Modules\Prospect\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Permission;
 
 class ProspectDatabaseSeeder extends Seeder
 {
@@ -16,6 +17,9 @@ class ProspectDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        Permission::updateOrCreate(['name' => 'prospect.create']);
+        Permission::updateOrCreate(['name' => 'prospect.view']);
+        Permission::updateOrCreate(['name' => 'prospect.update']);
+        Permission::updateOrCreate(['name' => 'prospect.delete']);
     }
 }
