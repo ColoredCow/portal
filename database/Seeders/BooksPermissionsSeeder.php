@@ -48,13 +48,13 @@ class BooksPermissionsSeeder extends Seeder
             $adminRole->givePermissionTo($permission);
         }
 
-        // set permissions for book-manager role
-        $bookManagerRole = Role::where(['name' => 'book-manager'])->first();
+        // set permissions for employee role
+        $employeeRole = Role::where(['name' => 'employee'])->first();
         foreach (
             array_merge($libraryBooksPermissions, $libraryBookCategoriesPermissions)
             as $permission
         ) {
-            $bookManagerRole->givePermissionTo($permission);
+            $employeeRole->givePermissionTo($permission);
         }
     }
 }

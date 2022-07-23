@@ -32,61 +32,19 @@ class RolesTableSeeder extends Seeder
                 'name' => 'employee',
                 'label' => 'Employee',
                 'guard_name' => 'web',
-                'description' => 'Limited actions',
+                'description' => 'All available actions for a basic employer of the company.',
             ],
             [
                 'name' => 'hr-manager',
                 'label' => 'HR',
                 'guard_name' => 'web',
-                'description' => 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old',
+                'description' => 'Someone who is responsible for HR',
             ],
             [
-                'name' => 'Finance',
-                'label' => 'Finance',
+                'name' => 'finance-manager',
+                'label' => 'Finance Manager',
                 'guard_name' => 'web',
-                'description' => 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old',
-            ],
-            [
-                'name' => 'volunteer-manager',
-                'label' => 'Volunteer Manager',
-                'guard_name' => 'web',
-                'description' => 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old',
-            ],
-            [
-                'name' => 'book-manager',
-                'label' => 'Library',
-                'guard_name' => 'web',
-                'description' => 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old',
-            ],
-            [
-                'name' => 'user-management',
-                'label' => 'User Management',
-                'guard_name' => 'web',
-                'description' => 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old',
-            ],
-            [
-                'name' => 'client-manager',
-                'label' => 'Client Manager',
-                'guard_name' => 'web',
-                'description' => 'User having this role will be able to Create, Update and Delete the clients',
-            ],
-            [
-                'name' => 'key-account-manager',
-                'label' => 'Key Account Manager',
-                'guard_name' => 'web',
-                'description' => 'User having this role will be able to Create, Update and Delete the clients having him as a key account manager.',
-            ],
-            [
-                'name' => 'project-manager',
-                'label' => 'Project Manager',
-                'guard_name' => 'web',
-                'description' => 'User having this role will be able to perform all operations in the projects module.',
-            ],
-            [
-                'name' => 'accountant',
-                'label' => 'Accountant',
-                'guard_name' => 'web',
-                'description' => 'User having this role will be able to view the finance report',
+                'description' => 'Someone who is in charge of the finance of the company',
             ]
         ];
 
