@@ -1,5 +1,5 @@
 <ul class="navbar-nav mr-auto" style="font-size:16px;">
-    @if (Module::checkStatus('HR'))
+    @canany(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view', 'hr_settings.view', 'hr_universities.view'])
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>HR <span class="caret"></span>
@@ -17,16 +17,21 @@
                 @can('hr_recruitment_applications.view')
                     <a class="dropdown-item" href="{{ route('hr.evaluation') }}">Manage Evaluation</a>
                 @endcan
-                @can('hr_recruitment_applications.view')
+                @can('hr_settings.view')
                     <a class="dropdown-item" href="{{ route('settings.hr') }}">Settings</a>
                 @endcan
                 @can('hr_universities.view')
                     <a class="dropdown-item" href="{{ route('universities.index') }}">Universities</a>
                 @endcan
-                <a class="dropdown-item" href="{{ route('userappointmentslots.show', auth()->id()) }}">Appointment
-                    Slots</a>
-                <a class="dropdown-item" href="{{ route('hr.tags.index') }}">{{ __('Manage Tags') }}</a>
-                <a class="dropdown-item disabled" href="{{ route('resources.index') }}">Guidelines And Resources</a>
+                @can('hr_recruitment_applications.view')
+                    <a class="dropdown-item" href="{{ route('userappointmentslots.show', auth()->id()) }}">Appointment Slots</a>
+                @endcan
+                @can('hr_settings.view')
+                    <a class="dropdown-item" href="{{ route('hr.tags.index') }}">{{ __('Manage Tags') }}</a>
+                @endcan
+                @can('hr_recruitment_applications.view')
+                    <a class="dropdown-item disabled" href="{{ route('resources.index') }}">Guidelines And Resources</a>
+                @endcan
             </div>
         </li>
     @endif
@@ -73,9 +78,7 @@
                 <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly Tax Report</a>
                 <a class="dropdown-item" href="{{ route('invoice.yearly-report') }}"> Yearly Invoice Report</a>
                 <a class="dropdown-item " href="{{ route('invoice.details') }}"> Monthly GST Report</a>
-
                 <a class="dropdown-item " href="{{ route('reports.finance.profit-and-loss') }}">P&L Report</a>
-
                 <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
                 <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>
 
