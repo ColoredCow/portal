@@ -19,5 +19,5 @@ Route::prefix('salary')->middleware('auth')->group(function () {
 
 //Route::prefix('salary-settings')->middleware('auth')->group(function () {
 //    Route::get('/', 'SalarySettingController@index')->name('salary-settings.index');
-//    Route::post('/update/', 'SalarySettingController@update')->name('salary-settings.update');
+//   Route::post('/update/', 'SalarySettingController@update')->name('salary-settings.update');
 //});

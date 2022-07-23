@@ -125,10 +125,6 @@ Route::middleware('auth')->group(function () {
             Route::post('update', 'HRController@update')->name('setting.hr.update');
         });
 
-        Route::prefix('salary')->group(function() {
-            Route::post('/', 'SalarySettingController@index')->name('setting.salary');    
-        });
-
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
         Route::get('/invoice-template', 'SettingController@invoiceTemplates')->name('setting.invoice');
         Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
