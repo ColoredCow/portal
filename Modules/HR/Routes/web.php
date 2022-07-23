@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::post('reports', 'ReportsController@searchBydate')->name('recruitment.report');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
+            Route::get('Dailyapplicationcount', 'ReportsController@index')->name('recruitment.index');
+            Route::get('reports', 'ReportsController@showReportCard')->name('recruitment.reports');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
                 ->only(['index', 'create', 'store', 'update', 'edit', 'destroy'])
                 ->names([
