@@ -83,7 +83,17 @@ class Client extends Model
 
     public function getBillingContactAttribute()
     {
-        return $this->contactPersons()->where('type', 'billing-contact')->first();
+        return $this->contactPersons()->where('type', config('client.client-contact-person-type.primary-billing-contact'))->first();
+    }
+
+    public function secondaryContacts()
+    {
+        return $this->contactPersons()->where('type', config('client.client-contact-person-type.secondary-billing-contact'));
+    }
+
+    public function tertiaryContacts()
+    {
+        return $this->contactPersons()->where('type', config('client.client-contact-person-type.tertiary-billing-contact'));
     }
 
     public function addresses()
@@ -238,5 +248,31 @@ class Client extends Model
 
             return today(config('constants.timezone.indian'))->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
         }
+    }
+
+    public function ccEmails()
+    {
+        $ccEmails = null;
+        if (optional($this->secondarycontacts)->first() != null) {
+            $ccEmails = config('invoice.mail.send-invoice.email') . ',';
+            foreach ($this->secondarycontacts as $secondarycontact) {
+                $ccEmails .= $secondarycontact->email . ',';
+            }
+        }
+
+        return substr_replace($ccEmails, '', -1);
+    }
+
+    public function bccEmails()
+    {
+        $bccEmails = null;
+        if (optional($this->tertiarycontacts)->first() != null) {
+            $bccEmails = '';
+            foreach ($this->tertiarycontacts as $tertiarycontact) {
+                $bccEmails .= $tertiarycontact->email . ',';
+            }
+        }
+
+        return substr_replace($bccEmails, '', -1);
     }
 }
