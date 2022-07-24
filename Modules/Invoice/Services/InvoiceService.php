@@ -660,7 +660,7 @@ class InvoiceService implements InvoiceServiceContract
         // $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
         $invoice->update([
             'invoice_number' => $invoiceNumber,
-            'file_path' => ""
+            'file_path' => ''
         ]);
 
         return $invoice;
