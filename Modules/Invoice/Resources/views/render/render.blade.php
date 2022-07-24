@@ -251,18 +251,18 @@
                                 <p>GSTIN : {{ config('invoice.finance-details.gstin') }}</p>
                                 <p>SAC / HSN code : {{ config('invoice.finance-details.hsn-code') }}</p>
                                 <p>CIN No. {{ config('invoice.finance-details.cin-no') }}</p>
+                                <p><br><br><br></p>
                             </td>
                         </tr>
                         <tr style="width:100%;">
-                            <td align="left">
-                                <br><br><br>
+                            <td align="left" style="width:70%;">
                                 <p class="fw-bold">Bill To</p>
                                 <p>{{ optional($client->billing_contact)->name }}</p>
                                 <p>{{ $client->name }}</p>
                                 <p>{{ optional($client->billing_contact)->email }}</p>
                                 <p>{{ optional($client->addresses->first())->address }}</p>
                                 <p>{{ optional($client->addresses->first())->city . ', ' . optional($client->addresses->first())->state . ', ' . optional($client->addresses->first())->area_code }}</p>
-                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
+                                <p>{{ $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
                                 <p>{{ optional($client->billing_contact)->phone }}</p>
                             </td>
                             <td>
@@ -276,7 +276,7 @@
                                             <p>Due Date: </p>
                                         </td>
                                         <td align="right">
-                                            <p>{{ $monthName }}</p>
+                                            <p>{{ $termText }}</p>
                                             <p>{{ $invoiceNumber }}</p>
                                             <p>{{ date('F d, Y', strtotime($invoiceData['sent_on'])) }}</p>
                                             <p>{{ date('F d, Y', strtotime($invoiceData['due_on'])) }}</p>
@@ -302,7 +302,7 @@
                                             <p>Total Amount Due :</p>
                                         </td>
                                         <td align="right">
-                                            <p><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year, $projects) }}</strong></p>
+                                            <p><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) }}</strong></p>
                                         </td>
                                     </tr>
                                 </table>
@@ -315,28 +315,28 @@
                     <table class="table" style="margin-left:33%; width:67%;">
                         <tr class="border-bottom" >
                             <td style="width: 135px;">Total</td>
-                            <td style="width: 94px;">{{ $client->getClientLevelProjectsBillableHoursForTerm($monthNumber, $year) }}</td>
+                            <td style="width: 94px;">{{ $billingLevel == 'client' ? $client->getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract) : $project->getBillableHoursForMonth($monthsToSubtract) }}</td>
                             <td style="width: 135px;"></td>
-                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year, $projects) }}</td>
+                            <td>{{ $client->country->currency_symbol . ($billingLevel == 'client' ? $client->getBillableAmountForTerm($monthsToSubtract, $projects) : $project->getBillableAmountForTerm($monthsToSubtract)) }}</td>
                         </tr>
                         <tr class="border-bottom">
                             <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
                             <td></td>
                             <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
-                            <td>{{ $client->country->currency_symbol . $client->getTaxAmountForTerm($monthNumber, $year, $projects) }}</td>
+                            <td>{{ $client->country->currency_symbol . ($billingLevel == 'client' ? $client->getTaxAmountForTerm($monthsToSubtract, $projects) : $project->getTaxAmountForTerm($monthsToSubtract)) }}</td>
                         </tr>
                         <tr>
                             <td>Current Payable</td>
                             <td></td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . ($client->getBillableAmountForTerm($monthNumber, $year, $projects) + $client->getTaxAmountForTerm($monthNumber, $year, $projects)) }}</td>
+                            <td>{{ $client->country->currency_symbol . ($billingLevel == 'client' ? $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) : $project->getTotalPayableAmountForTerm($monthsToSubtract)) }}</td>
                         </tr>
                         <tr><td><br></td></tr>
                         <tr class="border-bottom">
                             <td>Amount Paid</td>
                             <td></td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthNumber, $year, $projects) }}</td>
+                            <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthsToSubtract, $projects) }}</td>
                         </tr>
                         <tr class="border-bottom">
                             <td>
@@ -344,7 +344,7 @@
                             </td>
                             <td></td>
                             <td></td>
-                            <td><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year, $projects) }}</strong></td>
+                            <td><strong>{{ $client->country->currency_symbol . ($billingLevel == 'client' ? $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) : $project->getTotalPayableAmountForTerm($monthsToSubtract)) }}</strong></td>
                         </tr>
                     </table>
                 </div>
@@ -387,7 +387,7 @@
                             <tr><td><br></td></tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="{{ $client->effort_sheet_url }}">For more details of this invoice you can visit this sheet.</a>
+                                    <a href="{{ $billingLevel == 'client' ? $client->effort_sheet_url : $project->effort_sheet_url }}" target="_blank">For more details of this invoice you can visit this sheet.</a>
                                 </td>
                             </tr>
                             <tr>

@@ -62,6 +62,7 @@
                         </div>
                         <div class="form-group ml-1">
                             <input type="hidden" name="client_id" id="clientId" value="">
+                            <input type="hidden" name="project_id" id="projectId" value="">
                             <input type="hidden" name="term" value="{{ $year . '-' . $month }}">
                             <input type="submit" id="sendInvoiceBtn" class="btn btn-success text-light" value="Send Invoice" disabled>
                         </div>
