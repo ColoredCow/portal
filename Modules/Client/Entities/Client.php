@@ -182,18 +182,16 @@ class Client extends Model
 
     public function getWorkingDaysForTerm()
     {
-        $monthStartDate = $this->client_month_start_date;
+        $monthStartDate = $this->month_start_date;
         $monthEndDate = $this->client_month_end_date;
 
-        return $monthEndDate->diffInDaysFiltered(function (Carbon $date) {
-            return ! $date->isWeekend();
-        }, $monthStartDate);
+        return $this->getWorkingDays($monthStartDate, $monthEndDate);
     }
 
     public function getWorkingDays($startDate, $endDate)
     {
         return $endDate->addDay()->diffInDaysFiltered(function (Carbon $date) {
-            return ! $date->isWeekend();
+            return $date->isWeekday();
         }, $startDate);
     }
 
@@ -220,7 +218,7 @@ class Client extends Model
         }
     }
 
-    public function getClientMonthStartDateAttribute($monthsToSubtract)
+    public function getMonthStartDateAttribute($monthsToSubtract)
     {
         $monthsToSubtract = $monthsToSubtract ?? 0;
         $billingDate = $this->billingDetails->billing_date;
@@ -268,7 +266,7 @@ class Client extends Model
 
     public function TeamMembersEffortData()
     {
-        $startDate = $this->getClientMonthStartDateAttribute(1);
+        $startDate = $this->getMonthStartDateAttribute(1);
         $endDate = $this->getClientMonthEndDateAttribute(1);
 
         $data = [];

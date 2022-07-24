@@ -474,7 +474,7 @@ class InvoiceService implements InvoiceServiceContract
         $projects = $billingLevel == 'client' ? $client->clientLevelBillingProjects : collect([$project]);
         $projectForInvoiceNumber = $billingLevel == 'project' ? $project : null;
         $invoiceNumber = $this->getInvoiceNumberPreview($client, $projectForInvoiceNumber, $data['sent_on'], $billingLevel);
-        $billingStartMonth = $client ? $client->getClientMonthStartDateAttribute(1)->format('M') : $project->client->getClientMonthStartDateAttribute(1)->format('M');
+        $billingStartMonth = $client ? $client->getMonthStartDateAttribute(1)->format('M') : $project->client->getMonthStartDateAttribute(1)->format('M');
         $billingEndMonth = $client ? $client->getClientMonthEndDateAttribute(1)->format('M') : $project->client->getClientMonthEndDateAttribute(1)->format('M');
         $termText = $billingStartMonth . ' - ' . $billingEndMonth;
 

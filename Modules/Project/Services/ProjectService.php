@@ -261,7 +261,7 @@ class ProjectService implements ProjectServiceContract
     }
     public function getWorkingDays($project)
     {
-        $startDate = $project->client->client_month_start_date;
+        $startDate = $project->client->month_start_date;
         $endDate = $project->client->client_month_end_date;
         $period = CarbonPeriod::create($startDate, $endDate);
         $numberOfWorkingDays = 0;

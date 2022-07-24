@@ -78,7 +78,7 @@ class Project extends Model
         $totalEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->client_month_start_date->subday(), $this->client->client_month_end_date])->sum('actual_effort');
+            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->client_month_end_date])->sum('actual_effort');
         }
 
         return $totalEffort;
@@ -122,7 +122,7 @@ class Project extends Model
     public function getExpectedHours($currentDate)
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $daysTillToday = count($this->getWorkingDaysList($this->client->client_month_start_date, $currentDate));
+        $daysTillToday = count($this->getWorkingDaysList($this->client->month_start_date, $currentDate));
         $currentExpectedEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
@@ -135,7 +135,7 @@ class Project extends Model
     public function getExpectedMonthlyHoursAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $workingDaysCount = count($this->getWorkingDaysList($this->client->client_month_start_date, $this->client->client_month_end_date));
+        $workingDaysCount = count($this->getWorkingDaysList($this->client->month_start_date, $this->client->client_month_end_date));
         $expectedMonthlyHours = 0;
 
         foreach ($teamMembers as $teamMember) {
@@ -163,7 +163,7 @@ class Project extends Model
 
     public function getBillableHoursForMonth($monthToSubtract = 1)
     {
-        $startDate = $this->client->getClientMonthStartDateAttribute($monthToSubtract);
+        $startDate = $this->client->getMonthStartDateAttribute($monthToSubtract);
         $endDate = $this->client->getClientMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
