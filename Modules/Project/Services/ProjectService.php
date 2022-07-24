@@ -26,7 +26,6 @@ class ProjectService implements ProjectServiceContract
         $data['projects'] = $data['projects'] ?? 'my-projects';
 
         $clients = null;
-        
         if ($data['projects'] == 'my-projects') {
             $userId = auth()->user()->id;
 
