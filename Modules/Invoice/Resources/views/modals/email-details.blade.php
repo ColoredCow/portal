@@ -15,7 +15,20 @@
                         <form action="" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('PATCH') }}
-                                <div class="card-header c-pointer" data-toggle="collapse" data-target="#type" aria-expanded="true" aria-controls="type">Type:{{ $email ['type'] }} <hr> Sent_on:{{ $email ['sent_on'] }}</div>
+                                <div class="card-header c-pointer" data-toggle="collapse" data-target="#type" aria-expanded="true" aria-controls="type">
+                                    <div class="container">
+                                        <div class="row">
+                                          <div class="col-md-auto">
+                                              <span style="font-weight: bold">Type:</span>
+                                              <span>{{ $email ['type']}} </span>
+                                          </div>
+                                          <div class="col">
+                                            <span style="font-weight: bold">Sent on:</span>
+                                            <span>{{ date('l h:s A jS F Y', strtotime($email['sent_on']))}} </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                </div>
                                 <div id="type" class="collapse">
                                     <div class="card-body">
                                         <div class="form-row">

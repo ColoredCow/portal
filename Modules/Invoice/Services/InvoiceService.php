@@ -151,7 +151,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id' => $invoice->id,
             'body' => $data['email_body'],
             'subject' => $data['email_subject'],
-            'type' => config('invoice.mail-type.payment-confirmation.slug')
+            'type' => config('invoice.mail-type.payment-confirmation.label')
         ]);
 
         return $invoice;
@@ -523,12 +523,12 @@ class InvoiceService implements InvoiceServiceContract
         $monthNumber = (int) substr($term, 5, 2);
         $invoiceNumber = str_replace('-', '', $client->next_invoice_number);
         $invoice = $this->generateInvoiceForClient($client, $monthNumber, $year, $term);
-        Mail::queue(new SendInvoiceMail($client, $invoice, $monthNumber, $year, $invoiceNumber, $email));
+        // Mail::queue(new SendInvoiceMail($client, $invoice, $monthNumber, $year, $invoiceNumber, $email));
         InvoiceMail::create([
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
             'body' => $email['body'],
-            'type' => config('invoice.mail-type.invoice.slug')
+            'type' => config('invoice.mail-type.invoice.label')
         ]);
     }
 
@@ -575,7 +575,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
             'body' => $email['body'],
-            'type' => config('invoice.mail-type.invoice-reminder.slug')
+            'type' => config('invoice.mail-type.invoice-reminder.label')
         ]);
     }
 
@@ -656,11 +656,11 @@ class InvoiceService implements InvoiceServiceContract
             'amount' => $client->getBillableAmountForTerm($monthNumber, $year, $client->clientLevelBillingProjects)
         ]);
 
-        $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
-        $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
+        // $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
+        // $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
         $invoice->update([
             'invoice_number' => $invoiceNumber,
-            'file_path' => $filePath
+            'file_path' => ""
         ]);
 
         return $invoice;
