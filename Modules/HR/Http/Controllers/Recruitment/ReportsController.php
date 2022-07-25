@@ -44,16 +44,8 @@ class ReportsController extends Controller
                             ->orderBy('date_created_at', 'ASC')
                             ->get();
         $data = [];
-<<<<<<< HEAD
         $str = [];
         $s = [];
-||||||| d9b7f021
-
-=======
-
-        $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
-
->>>>>>> d6de3a1305716a2469e27e2fd481be7feefbe34a
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
@@ -118,16 +110,8 @@ class ReportsController extends Controller
                             ->orderBy('date_created_at', 'ASC')
                             ->get();
         $data = [];
-<<<<<<< HEAD
         $str = [];
         $s = [];
-||||||| d9b7f021
-
-=======
-
-        $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
-
->>>>>>> d6de3a1305716a2469e27e2fd481be7feefbe34a
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
