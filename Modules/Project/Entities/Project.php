@@ -158,7 +158,7 @@ class Project extends Model
 
     public function getTotalPayableAmountForTerm(int $monthToSubtract = 1)
     {
-        return $this->getBillableAmountForTerm($monthToSubtract) + $this->getTaxAmountForTerm($monthToSubtract);
+        return $this->getBillableAmountForTerm($monthToSubtract) + $this->getTaxAmountForTerm($monthToSubtract) + optional($this->client->billingDetails)->bank_charges;
     }
 
     public function getBillableHoursForMonth($monthToSubtract = 1)
