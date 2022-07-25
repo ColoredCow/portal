@@ -9,9 +9,9 @@
 			</thead>
 			<tbody>
 				<tr v-for="(role, index) in allRoles" :key="index">
-					<td width="50%">
-						<p>{{ role.label }}</p>
-						<p class="text-muted" style="font-size:12px;">{{ role.description }}</p>
+					<td class="w-50p">
+						<div class="mb-1">{{ role.label }}</div>
+						<div class="text-muted fz-14">{{ role.description }}</div>
 					</td>
 					<td>
 						<button class="btn btn-sm btn-outline-info" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">Manage permissions</button>

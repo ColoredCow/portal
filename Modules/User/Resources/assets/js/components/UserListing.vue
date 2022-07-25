@@ -14,14 +14,17 @@
             <tbody>
                 <tr v-for="(user,index) in filteredUsers" :key="index">
                     <td>
-                        <span class="align-items-center d-flex justify-content-start">
-                            <div style="width:30px;" class="mr-2">
+                        <span class="align-items-start d-flex justify-content-start">
+                            <div class="mr-2 w-30">
                                 <img style="border-radius:50%"  class="w-full" :src="user.avatar" alt="">
                             </div>
-                            {{ user.name }}
+							<div>
+								<div>{{ user.name }}</div>
+								<div class="text-secondary fz-14">{{ user.email }}</div>
+							</div>
                         </span>
                         </td>
-                    <td> 
+                    <td>
                         <span>{{ formatRoles(user) }}<span v-if="user.websiteUserRole">, {{user.websiteUserRole}}</span></span>
                     </td>
 
@@ -31,7 +34,7 @@
                                 Select action
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                
+
                                 <a v-show="userPermissions['can-assign-roles']" class="dropdown-item" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)" href="#">Assign roles</a>
                                 <a v-show="userPermissions['can-delete']" class="dropdown-item text-danger"  @click="removeUser(index)"  ref="#">Remove this user</a>
                             </div>
@@ -60,8 +63,8 @@
 				</div>
 			</div>
 		</div>
-         
-        <user-role-update-modal 
+
+        <user-role-update-modal
             :user="this.selectedUser"
             :updateRoute="this.updateRoute"
             :config="config"
@@ -76,13 +79,13 @@ export default {
 	props:[ "users", "updateRoute", "userPermissions", "config"],
 
 	data(){
-		return { 
+		return {
 			currentUserIndex: 0,
 			roleInputs: [],
 			allUsers: this.users,
 			selectedUser:{},
 			search: ""
-		};  
+		};
 	},
 
 	methods: {
@@ -97,7 +100,7 @@ export default {
 				let roleName = userRoles[i].label;
 				roleNames.push(roleName);
 			}
-        
+
 			return (roleNames.length) ? roleNames.join(", ") : "-";
 		},
 
@@ -117,7 +120,7 @@ export default {
 			window.location.reload();
 			this.$delete(this.allUsers, index);
 		},
-		
+
 		setIndex: function(index){
 			this.currentUserIndex = index;
 
