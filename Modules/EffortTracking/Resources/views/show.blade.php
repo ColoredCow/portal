@@ -2,14 +2,14 @@
 @section('content')
     <div class="project-effort-tracking-container container py-10">
         <a href="{{ route('project.index') }}"
-            class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-flex align-items-center">
+            class="text-theme-body text-decoration-none mb-3 mb-xl-4 align-items-center">
             <span class="mr-1 d-inline-flex w-8 h-8 w-xl-12 h-xl-12">
                 {!! file_get_contents(public_path('icons/prev-icon.svg')) !!}
             </span>
             <span>All Projects</span>
         </a>
 
-        <div class="card">
+        <div class="card mt-4">
             <div class="card-header d-flex flex-row justify-content-between">
                 <h2>{{ $project->name }} - Effort Details for {{ $currentMonth }}</h4>
                     <div>
