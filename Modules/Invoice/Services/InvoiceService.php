@@ -678,8 +678,8 @@ class InvoiceService implements InvoiceServiceContract
             'amount' => $client ? $client->getTotalPayableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects) : $project->getTotalPayableAmountForTerm($monthsToSubtract)
         ]);
 
-        // $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
-        // $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
+        $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
+        $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
         $invoice->update([
             'invoice_number' => $invoiceNumber,
             'file_path' => ''

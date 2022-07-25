@@ -19,11 +19,11 @@
                                     <div class="container">
                                         <div class="row">
                                           <div class="col-md-auto">
-                                              <span style="font-weight: bold">Type:</span>
+                                              <span ><b>Type:</b></span>
                                               <span>{{ $email ['type']}} </span>
                                           </div>
                                           <div class="col">
-                                            <span style="font-weight: bold">Sent on:</span>
+                                            <span ><b>Sent on:</b></span>
                                             <span>{{ date('l h:s A jS F Y', strtotime($email['sent_on']))}} </span>
                                           </div>
                                         </div>
@@ -43,7 +43,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label >Mail body:</label>
-                                                    <textarea type="text" placeholder="{{ $email ['body'] }}" rows="10" class=" form-control" disabled></textarea>
+                                                    <textarea type="text" placeholder="{{ $email['body'] }}" rows="10" class=" form-control" disabled></textarea>
                                                 </div>
                                             </div>
                                         </div>

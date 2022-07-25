@@ -184,18 +184,24 @@ class Invoice extends Model
             return $this->amount * $this->conversion_rate;
         }
     }
+
+    public function getTotalAmountAttribute()
+    {
+        return $this->amount + $this->gst;
+    }
+
     public function invoiceMail()
     {
         return $this->hasMany(InvoiceMail::class, 'invoice_id', 'id');
     }
 
-    public function latestReminder()
+    public function getInvoiceLatestReminderMail()
     {
         return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice-reminder.slug'))
         ->orderByDesc('sent_on')->first();
     }
 
-    public function confirmationMail()
+    public function getInvoiceConfirmationMail()
     {
         return $this->invoiceMail()->where('type', config('invoice.mail-type.payment-confirmation.slug'))
         ->first();
