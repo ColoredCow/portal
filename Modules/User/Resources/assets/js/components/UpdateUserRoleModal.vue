@@ -1,6 +1,6 @@
 <template>
     <div class="modal" tabindex="-1" role="dialog" id="update_user_roles_modal">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Roles assigned to: <strong> {{ this.user.name }}  </strong></h5>
@@ -22,7 +22,7 @@
 
                     <div v-show="this.activeTile == 'portal'" class="modal-body">
                         <li v-for="(role, index) in this.roles" class="list-group-item" :key="index">
-                            <div :class=" (role.name != 'super-admin') ? 'form-check ml-3' : 'form-check'">
+                            <div class="form-check">
                                 <label class="form-check-label" style="cursor: pointer;">
                                     <input
                                         type="checkbox"
@@ -31,9 +31,10 @@
                                         :data-label="role.label"
                                         :value="role.id"
                                         @click="checkForSuperAdmin(role)"
-                                        class=""> {{ role.label }}
+                                    />
+									{{ role.label }}
                                 </label>
-                                <p class="text-muted" style="font-size:12px;">{{ role.description }}</p>
+                                <div class="text-muted fz-12 ml-3">{{ role.description }}</div>
                             </div>
                         </li>
                     </div>
