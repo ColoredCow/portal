@@ -75,7 +75,7 @@ class ReportsController extends Controller
         }
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'verifiedApplicationCount'));
+        return view('hr.recruitment.reports', $data, compact('todayCount'));
     }
 
     public function searchBydate(Request $req)
@@ -142,15 +142,6 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount', 'verifiedApplicationCount'));
-    }
-
-    private function getVerifiedApplicationsCount()
-    {
-        $from = config('hr.verified_application_date.start_date');
-        $currentDate = Carbon::today(config('constants.timezone.indian'));
-
-        return Application::whereBetween('created_at', [$from, $currentDate])
-            ->where('is_verified', 1)->count();
+        return view('hr.recruitment.reports', $data, compact('todayCount'));
     }
 }
