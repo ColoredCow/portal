@@ -12,4 +12,9 @@ class Resource extends Model
     protected $guarded = [];
 
     protected $table = 'hr_resources';
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'hr_resource_category_id');
+    }
 }

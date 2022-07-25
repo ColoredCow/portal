@@ -49,7 +49,7 @@ class Client extends Model
 
     public function projectLevelBillingProjects()
     {
-        return $this->hasMany(Project::class)->select('projects.*')->where('projects.status', '!=', 'inactive')
+        return $this->hasMany(Project::class)->select('projects.*')
             ->join('project_meta', function ($join) {
                 $join->on('project_meta.project_id', '=', 'projects.id');
                 $join->where([
@@ -61,7 +61,7 @@ class Client extends Model
 
     public function clientLevelBillingProjects()
     {
-        return $this->hasMany(Project::class)->select('projects.*')->where('projects.status', '!=', 'inactive')
+        return $this->hasMany(Project::class)->select('projects.*')
             ->join('project_meta', function ($join) {
                 $join->on('project_meta.project_id', '=', 'projects.id');
                 $join->where([
@@ -83,7 +83,17 @@ class Client extends Model
 
     public function getBillingContactAttribute()
     {
-        return $this->contactPersons()->where('type', 'billing-contact')->first();
+        return $this->contactPersons()->where('type', config('client.client-contact-person-type.primary-billing-contact'))->first();
+    }
+
+    public function secondaryContacts()
+    {
+        return $this->contactPersons()->where('type', config('client.client-contact-person-type.secondary-billing-contact'));
+    }
+
+    public function tertiaryContacts()
+    {
+        return $this->contactPersons()->where('type', config('client.client-contact-person-type.tertiary-billing-contact'));
     }
 
     public function addresses()
@@ -116,29 +126,32 @@ class Client extends Model
         return $this->type == 'indian' ? 'INR' : 'USD';
     }
 
-    public function getBillableAmountForTerm(int $month, int $year, $projects)
+    public function getBillableAmountForTerm(int $monthsToSubtract, $projects)
     {
-        $amount = $projects->sum(function ($project) use ($month, $year) {
-            return round($project->getBillableHoursForTerm($month, $year) * $this->billingDetails->service_rates, 2);
+        $monthsToSubtract = $monthsToSubtract ?? 1;
+        $amount = $projects->sum(function ($project) use ($monthsToSubtract) {
+            return round($project->getBillableHoursForMonth($monthsToSubtract) * $this->billingDetails->service_rates, 2);
         });
 
         return $amount;
     }
 
-    public function getTaxAmountForTerm(int $month, int $year, $projects)
+    public function getTaxAmountForTerm(int $monthsToSubtract, $projects)
     {
+        $monthsToSubtract = $monthsToSubtract ?? 1;
         // Todo: Implement tax calculation correctly as per the GST rules
-        return round($this->getBillableAmountForTerm($month, $year, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
+        return round($this->getBillableAmountForTerm($monthsToSubtract, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $month, int $year = null, $projects = null)
+    public function getTotalPayableAmountForTerm(int $monthsToSubtract, $projects = null)
     {
+        $monthsToSubtract = $monthsToSubtract ?? 1;
         $projects = $projects ?? collect([]);
 
-        return $this->getBillableAmountForTerm($month, $year, $projects) + $this->getTaxAmountForTerm($month, $year, $projects);
+        return $this->getBillableAmountForTerm($monthsToSubtract, $projects) + $this->getTaxAmountForTerm($monthsToSubtract, $projects) + optional($this->billingDetails)->bank_charges;
     }
 
-    public function getAmountPaidForTerm(int $month, int $year, $projects)
+    public function getAmountPaidForTerm(int $monthsToSubtract, $projects)
     {
         // This needs to be updated based on the requirements.
         return 0.00;
@@ -151,10 +164,10 @@ class Client extends Model
         });
     }
 
-    public function getClientLevelProjectsBillableHoursForTerm(int $monthNumber, int $year)
+    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract = 1)
     {
-        return $this->clientLevelBillingProjects->sum(function ($project) use ($monthNumber, $year) {
-            return $project->getBillableHoursForTerm($monthNumber, $year);
+        return $this->clientLevelBillingProjects->sum(function ($project) use ($monthsToSubtract) {
+            return $project->getBillableHoursForMonth($monthsToSubtract);
         });
     }
 
@@ -165,14 +178,19 @@ class Client extends Model
         return $invoiceService->getInvoiceNumberPreview($this, null, today(), config('project.meta_keys.billing_level.value.client.key'));
     }
 
-    public function getWorkingDaysForTerm(int $monthNumber, int $year)
+    public function getWorkingDaysForTerm()
     {
-        $monthStartDate = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01');
-        $monthEnd = Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-01')->endOfMonth();
+        $monthStartDate = $this->month_start_date;
+        $monthEndDate = $this->month_end_date;
 
-        return $monthEnd->diffInDaysFiltered(function (Carbon $date) {
-            return ! $date->isWeekend();
-        }, $monthStartDate);
+        return $this->getWorkingDays($monthStartDate, $monthEndDate);
+    }
+
+    public function getWorkingDays($startDate, $endDate)
+    {
+        return $endDate->addDay()->diffInDaysFiltered(function (Carbon $date) {
+            return $date->isWeekday();
+        }, $startDate);
     }
 
     public function invoices()
@@ -196,5 +214,117 @@ class Client extends Model
                 return $project->effort_sheet_url;
             }
         }
+    }
+
+    public function getMonthStartDateAttribute($monthsToSubtract)
+    {
+        $monthsToSubtract = $monthsToSubtract ?? 0;
+        $billingDate = $this->billingDetails->billing_date;
+
+        if ($billingDate == null) {
+            return now(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->startOfMonth();
+        }
+
+        if (today(config('constants.timezone.indian'))->day < $billingDate) {
+            if (today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract + 1)->addDays($billingDate - today(config('constants.timezone.indian'))->day) > today(config('constants.timezone.indian'))->subMonth()->endOfMonth()) {
+                return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract + 1)->endOfMonth();
+            }
+
+            return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract + 1)->addDays($billingDate - today(config('constants.timezone.indian'))->day);
+        }
+
+        if (today(config('constants.timezone.indian'))->day >= $billingDate) {
+            return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->startOfMonth()->addDays($billingDate - 1);
+        }
+    }
+
+    public function getMonthEndDateAttribute($monthsToSubtract)
+    {
+        $monthsToSubtract = $monthsToSubtract ?? 0;
+        $billingDate = $this->billingDetails->billing_date;
+
+        if ($billingDate == null) {
+            return now(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->endOfMonth();
+        }
+
+        if (today(config('constants.timezone.indian'))->day < $billingDate) {
+            if (today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addDays($billingDate - today(config('constants.timezone.indian'))->day) > today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->endOfMonth()) {
+                return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->endOfMonth();
+            }
+
+            return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addDays($billingDate - today(config('constants.timezone.indian'))->day - 1);
+        }
+
+        if (today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2) > today(config('constants.timezone.indian'))->addMonthsNoOverflow()->endOfMonth()) {
+            return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->endOfMonth();
+        }
+
+        return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
+    }
+
+    public function TeamMembersEffortData()
+    {
+        $startDate = $this->getMonthStartDateAttribute(1);
+        $endDate = $this->getMonthEndDateAttribute(1);
+
+        $data = [];
+        $clientId = $this->id;
+        $users = User::whereHas('projectTeamMembers.project.client', function ($query) use ($clientId) {
+            return $query->where('id', $clientId);
+        })->get();
+
+        foreach ($users as $user) {
+            $projectTeamMemberForUser = $user->projectTeamMembers()->whereHas('project.client', function ($query) use ($clientId) {
+                return $query->where('id', $clientId);
+            })->whereHas('project.meta', function ($query) {
+                return $query->where([
+                    'key' => config('project.meta_keys.billing_level.key'),
+                    'value' => config('project.meta_keys.billing_level.value.client.key')
+                ]);
+            })->get();
+
+            if ($projectTeamMemberForUser->isEmpty()) {
+                continue;
+            }
+
+            $billableHours = $projectTeamMemberForUser->sum(function ($teamMember) use ($startDate, $endDate) {
+                return $teamMember->projectTeamMemberEffort->where('added_on', '>=', $startDate)->where('added_on', '<=', $endDate)->sum('actual_effort');
+            });
+
+            if ($billableHours == 0) {
+                continue;
+            }
+            $data[$user->name] = [
+                'nickname' => $user->nickname,
+                'billableHours' => $billableHours
+            ];
+        }
+
+        return collect($data);
+    }
+
+    public function getCcEmailsAttribute()
+    {
+        $ccEmails = config('invoice.mail.send-invoice.email') . ',';
+        if ($this->secondaryContacts->isNotEmpty()) {
+            foreach ($this->secondaryContacts as $secondaryContact) {
+                $ccEmails .= $secondaryContact->email . ',';
+            }
+        }
+
+        return substr_replace($ccEmails, '', -1);
+    }
+
+    public function getBccEmailsAttribute()
+    {
+        $bccEmails = '';
+
+        if ($this->tertiaryContacts->isNotEmpty()) {
+            foreach ($this->tertiaryContacts as $tertiaryContact) {
+                $bccEmails .= $tertiaryContact->email . ',';
+            }
+        }
+
+        return substr_replace($bccEmails, '', -1);
     }
 }

@@ -20,21 +20,20 @@
     <div class="mb-2">
         <form class="d-md-flex justify-content-between ml-md-3" action="{{ route('project.index', ['status' => 'active'])  }}">
             <div class='d-flex justify-content-between align-items-md-center mb-2 mb-xl-0'>
-                <h4 class="">{{ config('project.status')[request()->input('status', 'active')] }} Projects
-                    ({{ $projectsCount }})</h4>
+                <h4 class="">{{ config('project.status')[request()->input('status', 'active')] }} Projects</h4>
                 <input type="hidden" name="status" value="{{ request()->input('status', 'active') }}">
                 <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                     onchange="this.form.submit()">
-                    <option value="my-projects" {{ request()->get('projects') == 'my-projects' ? 'selected' : '' }}>
+                    <option value="my-projects" {{ (request()->get('projects') == 'my-projects' || !request()->has('projects')) ? 'selected' : '' }}>
                         {{ __('My Projects') }} </option>
-                    <option value="all-projects" {{ (request()->get('projects') == 'all-projects' || !request()->has('projects')) ? 'selected' : '' }}>
+                    <option value="all-projects" {{ request()->get('projects') == 'all-projects' ? 'selected' : '' }}>
                         {{ __('All Projects') }} </option>
                 </select>
             </div>
             <div class="d-flex align-items-center">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Project name"
                 value={{request()->get('name')}}>
-                <button class="btn btn-info ml-2 text-white">Search</button> 
+                <button class="btn btn-info ml-2 text-white">Search</button>
             </div>
         </form>
     </div>
@@ -52,7 +51,7 @@
                 <tr>
                     <th class="w-33p sticky-top">Client/Project Name</th>
                     <th class="sticky-top">Team Members</th>
-                    <th class="sticky-top">Status</th>
+                    <th class="sticky-top">Tags</th>
                     <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
             </thead>
@@ -76,27 +75,26 @@
                                 @else
                                     <td class="w-33p"><div class="pl-2 pl-xl-3">{{ $project->name }}</div></td>
                                 @endcan
-                                {{-- <td class="w-33p"></td> --}}
-                                <td>
+                                <td class="w-20p">
                                     @foreach($project->getTeamMembers ?:[] as $teamMember)
                                         <span class="content tooltip-wrapper"  data-html="true" data-toggle="tooltip"  title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}} <br>    Efforts: {{$teamMember->current_actual_effort}} Hours" >
                                             <a href={{ route('employees.show', $teamMember->user) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mb-1 mr-2 {{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'border border-success' : 'border border-danger' }} border-2"></a>
                                         </span>
-                                    @endforeach 
+                                    @endforeach
                                 </td>
                                 <td>
-                                    @if($project->contract_file_path == null)
-                                        <span class="text-dark font-weight-bold">No Contract</span>
+                                    @if(empty($project->projectContracts->first()->contract_file_path))
+                                        <span class="badge badge-light border border-dark rounded-0">No Contract</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="w-20p">
                                     @php
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
                                     @endphp
                                     <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
                                     <span class="{{ $textColor }} font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span>
-                                    </td>
-                                    </tr>
+                                </td>
+                            </tr>
                         @endforeach
                     @empty
                         <tr>
@@ -107,13 +105,14 @@
                     @endforelse
                 @else
                 <tr>
-                    <td colspan="3"> 
-                        <p class="my-4 text-left"> You don't have permission to see projects.</p>  
+                    <td colspan="3">
+                        <p class="my-4 text-left"> You don't have permission to see projects.</p>
                     <td>
                 </tr>
                 @endcan
             </tbody>
         </table>
     </div>
+    {{ $clients->links()}}
 </div>
 @endsection
