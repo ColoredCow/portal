@@ -317,7 +317,13 @@
                             <td style="width: 135px;">Total</td>
                             <td style="width: 94px;">{{ $billingLevel == 'client' ? $client->getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract) : $project->getBillableHoursForMonth($monthsToSubtract) }}</td>
                             <td style="width: 135px;"></td>
-                            <td>{{ $client->country->currency_symbol . ($billingLevel == 'client' ? $client->getBillableAmountForTerm($monthsToSubtract, $projects) : $project->getBillableAmountForTerm($monthsToSubtract)) }}</td>
+                            <td>
+                                {{ 
+                                    $client->country->currency_symbol . ($billingLevel == 'client' ? 
+                                    $client->getBillableAmountForTerm($monthsToSubtract, $projects) + optional($client->billingDetails)->bank_charges: 
+                                    $project->getBillableAmountForTerm($monthsToSubtract) + optional($project->client->billingDetails)->bank_charges) 
+                                }}
+                            </td>
                         </tr>
                         <tr class="border-bottom">
                             <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>

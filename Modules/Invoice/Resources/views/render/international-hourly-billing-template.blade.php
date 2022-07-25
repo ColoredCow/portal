@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($projects as $project)
+        @foreach ($projects as $project)
             @if($project->getBillableHoursForMonth($monthsToSubtract) == 0)
                 @continue
             @endif
@@ -20,5 +20,11 @@
                 <td>{{round($project->getBillableHoursForMonth($monthsToSubtract) * $client->billingDetails->service_rates, 2)}}</td>
             </tr>
         @endforeach
+        @if (optional($client->billingDetails)->bank_charges) 
+            <tr class="border-bottom">
+                <td colspan=3>{{__('Bank Charges')}}</td>
+                <td>{{$client->billingDetails->bank_charges}}</td>
+            </tr>
+        @endif
     </tbody>
 </table>
