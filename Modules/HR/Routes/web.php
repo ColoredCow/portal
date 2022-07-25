@@ -92,6 +92,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/resources/{jobId}/show/', 'ResourcesController@show')->name('resources.show');
         Route::post('/category/store/', 'ResourcesController@store')->name('resources.store');
         Route::post('/resources/create/', 'ResourcesController@create')->name('resources.create');
+        Route::get('/resources/edit/', 'ResourcesController@edit')->name('resources.edit-modal');
+        Route::put('/resources/update/{resource}', 'ResourcesController@update')->name('resources.update');
+        Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
     });
 });
