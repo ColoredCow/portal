@@ -17,12 +17,6 @@ class ProspectDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
-        Permission::updateOrCreate(['name' => 'prospect.create']);
-        Permission::updateOrCreate(['name' => 'prospect.view']);
-        Permission::updateOrCreate(['name' => 'prospect.update']);
-        Permission::updateOrCreate(['name' => 'prospect.delete']);
-
         $prospectPermissions = [
             ['name' => 'prospect.create'],
             ['name' => 'prospect.view'],
