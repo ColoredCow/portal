@@ -32,5 +32,11 @@ class ProjectPermissionsTableSeeder extends Seeder
         foreach ($projectsPermissions as $permission) {
             $adminRole->givePermissionTo($permission);
         }
+
+        // set permissions for employee role
+        $employeeRole = Role::where(['name' => 'employee'])->first();
+        foreach ($projectsPermissions as $permission) {
+            $employeeRole->givePermissionTo($permission);
+        }
     }
 }

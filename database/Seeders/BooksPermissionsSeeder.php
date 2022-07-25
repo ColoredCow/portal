@@ -35,28 +35,22 @@ class BooksPermissionsSeeder extends Seeder
             ['name' => 'library_book_category.update'],
             ['name' => 'library_book_category.delete'],
         ];
-        foreach (
-            array_merge($weeklyDosesPermissions, $libraryBooksPermissions, $libraryBookCategoriesPermissions)
-            as $permission
-        ) {
+
+        $allKnowledgeCafePermissions = array_merge($weeklyDosesPermissions, $libraryBooksPermissions, $libraryBookCategoriesPermissions);
+
+        foreach ($allKnowledgeCafePermissions as $permission) {
             Permission::updateOrCreate($permission);
         }
 
         // set permissions for admin role
         $adminRole = Role::where(['name' => 'admin'])->first();
-        foreach (
-            array_merge($weeklyDosesPermissions, $libraryBooksPermissions, $libraryBookCategoriesPermissions)
-            as $permission
-        ) {
+        foreach ($allKnowledgeCafePermissions as $permission) {
             $adminRole->givePermissionTo($permission);
         }
 
         // set permissions for employee role
         $employeeRole = Role::where(['name' => 'employee'])->first();
-        foreach (
-            array_merge($libraryBooksPermissions, $libraryBookCategoriesPermissions)
-            as $permission
-        ) {
+        foreach ($allKnowledgeCafePermissions as $permission) {
             $employeeRole->givePermissionTo($permission);
         }
     }

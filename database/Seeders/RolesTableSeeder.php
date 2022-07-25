@@ -36,7 +36,7 @@ class RolesTableSeeder extends Seeder
             ],
             [
                 'name' => 'hr-manager',
-                'label' => 'HR',
+                'label' => 'HR Manager',
                 'guard_name' => 'web',
                 'description' => 'Someone who is responsible for HR',
             ],
