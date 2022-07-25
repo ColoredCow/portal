@@ -42,9 +42,8 @@
 
                         <div >
                             <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
-                            <button v-show="userPermissions['can-delete']" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#exampleModal" @click="setIndex(index)">Remove user</button>
+                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#exampleModal" @click="setIndex(index)">Remove user</button>
                         </div>
-
                     </td>
                 </tr>
             </tbody>
@@ -75,7 +74,7 @@
 
 <script>
 export default {
-	props:[ "users", "updateRoute", "userPermissions", "config"],
+	props:["users", "updateRoute", "userPermissions", "config", "authUser"],
 
 	data(){
 		return {
