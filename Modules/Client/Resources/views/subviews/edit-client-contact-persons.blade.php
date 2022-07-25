@@ -29,7 +29,7 @@
                     <input v-model="contactPerson.email" autocomplete="nope"  class="form-control" type="email" :name="`client_contact_persons[${index}][email]`">
                 </div>
                 <div class="col-2">
-                    <input v-model="contactPerson.phone"  class="form-control" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' :name="`client_contact_persons[${index}][phone]`" pattern="[1-9]{1}[0-9]{9}" title="The entered number is not a valid phone number">
+                    <input v-model="contactPerson.phone"  class="form-control" type="text" :name="`client_contact_persons[${index}][phone]`" title="The entered number is not a valid phone number" maxlength="20">
                 </div>
                 <div class="col-4 d-flex justify-content-between">
                     <div class="mr-3 w-full">

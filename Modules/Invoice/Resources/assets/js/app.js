@@ -31,7 +31,7 @@ $(document).ready(function(){
 		var invoiceData = $(this).data("invoice-data");
 		var mapping = {
 			"|*project_name*|": invoiceData["projectName"],
-			"|*term*|": invoiceData["monthName"],
+			"|*term*|": invoiceData["term"],
 			"|*year*|": invoiceData["year"],
 			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
 			"|*invoice_amount*|": invoiceData["totalAmount"],
@@ -54,6 +54,7 @@ $(document).ready(function(){
 			$("#cc").val(invoiceData["ccEmails"]);
 		}
 		$("#bcc").val(invoiceData["bccEmails"]);
+		$("#projectId").val(invoiceData["projectId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
 		$("#emailPreview").modal("show");
 	});
@@ -62,7 +63,7 @@ $(document).ready(function(){
 		var invoiceData = $(this).data("invoice-data");
 		var mapping = {
 			"|*project_name*|": invoiceData["projectName"],
-			"|*term*|": invoiceData["monthName"],
+			"|*term*|": invoiceData["term"],
 			"|*year*|": invoiceData["year"],
 			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
 			"|*invoice_amount*|": invoiceData["invoiceAmount"],
@@ -207,4 +208,3 @@ function convert_number(number) {
 	}
 	return result;
 }
-

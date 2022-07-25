@@ -30,7 +30,7 @@
                     <a class="dropdown-item" href="{{ route('hr.tags.index') }}">{{ __('Manage Tags') }}</a>
                 @endcan
                 @can('hr_recruitment_applications.view')
-                    <a class="dropdown-item disabled" href="{{ route('resources.index') }}">Guidelines And Resources</a>
+                    <a class="dropdown-item" href="{{ route('resources.index') }}">Guidelines And Resources</a>
                 @endcan
             </div>
         </li>
