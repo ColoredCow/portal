@@ -9,7 +9,7 @@
         <a class="nav-item nav-link {{ Request::is('hr/recruitment/internship*') ? 'active' : '' }}" href="{{ route('applications.internship.index') }}"><i class="fa fa-university"></i>&nbsp;Internship Applications</a>
     </li>
     <li class="nav-item">
-        <a class="nav-item nav-link {{ Request::is('hr/recruitment/reports*') ? 'active' : '' }}" href="{{ route('recruitment.index') }}"><i class="fa fa-pie-chart"></i>&nbsp;Reports</a>
+        <a class="nav-item nav-link {{ Request::is('hr/recruitment/reports*') ? 'active' : '' }}" href="{{ route('recruitment.reports.index') }}"><i class="fa fa-pie-chart"></i>&nbsp;Reports</a>
     </li>
     <li class="nav-item">
         <a class="nav-item nav-link {{ Request::is('hr/recruitment/campaigns*') ? 'active' : '' }}" href="{{ route('recruitment.campaigns') }}"><i class="fa fa-envelope"></i>&nbsp;Campaigns</a>
