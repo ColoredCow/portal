@@ -54,9 +54,10 @@
                     {{count($employee->user->activeProjectTeamMembers)}}
                 @endif
             </td>
-            <td class="{{ $employee->user ? ($employee->user->fte > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</td>
+            <td class="{{ $employee->user ? ($employee->user->fte >= 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</td>
         </tr>
         @endforeach
     </table>
 </div>
 @endsection
+

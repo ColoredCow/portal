@@ -12,7 +12,11 @@
                     Phone
                 </div>
                 <div class="col-4">
-                    Role
+                    Role <span data-toggle="tooltip" data-placement="right"
+                    title="Primary billing contact - Email id will be used as Reciever email and Name will be used as reciever name.
+                    Secondary billing contact - Email id will be used as CC email.
+                    Tertiary billing contact - Email id will be used as BCC email.">
+                    <i class="fa fa-question-circle"></i>&nbsp;</span>
                 </div>
             </div>
 
@@ -32,6 +36,8 @@
                         <select required="required" v-model="contactPerson.type" class="form-control" :name="`client_contact_persons[${index}][type]`">
                             <option value="billing-contact">Primary billing contact</option>
                             <option value="general-contact">General Point of contact</option>
+                            <option value="secondary-contact">Secondary billing contact</option>
+                            <option value="tertiary-contact">Tertiary billing contact</option>
                         </select>
                     </div>
 
