@@ -7,6 +7,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
+use app\console\Commands\DailyEffortsAlertNotification;
 
 class Kernel extends ConsoleKernel
 {
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         SyncEffortsheet::class,
         SendEffortSummaryCommand::class,
         ZeroEffortInProject::class,
+        DailyEffortsAlertNotification::class,
     ];
 
     /**
