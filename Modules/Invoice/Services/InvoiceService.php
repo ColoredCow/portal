@@ -523,7 +523,7 @@ class InvoiceService implements InvoiceServiceContract
         $monthNumber = (int) substr($term, 5, 2);
         $invoiceNumber = str_replace('-', '', $client->next_invoice_number);
         $invoice = $this->generateInvoiceForClient($client, $monthNumber, $year, $term);
-        // Mail::queue(new SendInvoiceMail($client, $invoice, $monthNumber, $year, $invoiceNumber, $email));
+        Mail::queue(new SendInvoiceMail($client, $invoice, $monthNumber, $year, $invoiceNumber, $email));
         InvoiceMail::create([
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
