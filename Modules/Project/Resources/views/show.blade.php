@@ -115,8 +115,8 @@
                                                         <th scope="row" class="fz-lg-20 my-2 px-5 col-md-6 font-weight-normal"> 
                                                             <span>
                                                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
-                                                                <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
-                                                            </span>
+                                                                <img src="{{ $teamMember->user->avatar }}" class="w-40 h-30 rounded-circle mr-1 mb-1 {{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'border border-success' : 'border border-danger'}}">
+                                                            </span>                                                                                                                                                                                                                 
                                                             {{$teamMember->user->name}}
                                                         </th>
                                                         <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
