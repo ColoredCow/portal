@@ -16,9 +16,9 @@ class SalaryPermissionTableSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        $roles = ['employee_salary.create', 'employee_salary.view', 'employee_salary.update', 'employee_salary.delete'];
-        foreach ($roles as $role) {
-            Permission::updateOrCreate(['name' => $role]);
+        $permissions = ['employee_salary.create', 'employee_salary.view', 'employee_salary.update', 'employee_salary.delete'];
+        foreach ($permissions as $permission) {
+            Permission::updateOrCreate(['name' => $permission]);
         }
     }
 }
