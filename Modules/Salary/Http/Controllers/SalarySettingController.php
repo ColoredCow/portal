@@ -61,6 +61,6 @@ class SalarySettingController extends Controller
             $salaryConfiguration = SalaryConfiguration::updateOrCreate($dataToFind, $dataToUpdate);
         }
 
-        return redirect(route('salary-settings.index'));
+        return redirect(route('salary.settings'))->with('success', 'Salary settings saved successfully!');
     }
 }

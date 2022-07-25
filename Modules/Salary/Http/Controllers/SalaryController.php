@@ -7,6 +7,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\Salary\Entities\EmployeeSalary;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\Salary\Services\SalaryCalculationService;
+use Modules\Salary\Entities\SalaryConfiguration;
 
 class SalaryController extends Controller
 {
@@ -33,8 +35,24 @@ class SalaryController extends Controller
     public function employee(Request $request, Employee $employee)
     {
         $this->authorize('view', EmployeeSalary::class);
+        $salaryCalculation = new SalaryCalculationService(optional($employee->employeeSalaries->last())->monthly_gross_sallary);
+        $data = [
+            'basicSalaryPercentage' => SalaryConfiguration::getBasicSalaryAttribute(),
+            'medicalAllowance' => SalaryConfiguration::getMedicalAllowanceAttribute(),
+            'employeeEsi' => SalaryConfiguration::getEmployeeEsiAttribute(),
+            'employerEsi' => SalaryConfiguration::getEmployerEsiAttribute(),
+            'employeeEsiLimit' => SalaryConfiguration::getEmployeeEsiLimitAttribute(),
+            'transportAllowance' => SalaryConfiguration::getTransportAllowanceAttribute(),
+            'edliChargesLimit' => SalaryConfiguration::getEdliChargeslimitAttribute(),
+            'hra' => SalaryConfiguration::getHraAttribute(),
+            'employeeEpf' => SalaryConfiguration::getEmployeeEpfAttribute(),
+            'employerEpf' => SalaryConfiguration::getEmployerEpfAttribute(),
+            'administrationCharges' => SalaryConfiguration::getAdministrationChargesAttribute(),
+            'edliCharges' => SalaryConfiguration::getEdliChargesAttribute(),
+            'foodAllowance' => SalaryConfiguration::getFoodAllowanceAttribute()
+        ];
 
-        return view('salary::employee.index')->with('employee', $employee);
+        return view('salary::employee.index')->with(['employee'=> $employee], ['data' => $data]);
     }
 
     public function storeSalary(Request $request, Employee $employee)
