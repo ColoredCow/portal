@@ -207,7 +207,7 @@ class Invoice extends Model
         ->first();
     }
 
-    public function invoiceOfInvoiceTypeMail()
+    public function getInvoiceTypeMail()
     {
         return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice.slug'))
         ->first();
