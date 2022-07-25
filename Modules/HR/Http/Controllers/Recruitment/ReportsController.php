@@ -84,6 +84,9 @@ class ReportsController extends Controller
 
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, with($todayCount));
+        return view('hr.recruitment.reports')->with([
+            'chartData' => $data['chartData'],
+            'todayCount' => $todayCount,
+        ]);
     }
 }
