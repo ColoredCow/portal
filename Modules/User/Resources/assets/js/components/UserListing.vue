@@ -69,7 +69,6 @@
             :updateRoute="this.updateRoute"
             :config="config"
             @userRolesUpdated="this.onUserRoleUpdated"
-
         />
     </div>
 </template>
@@ -110,7 +109,7 @@ export default {
 		},
 
 		onUserRoleUpdated: function(selectedRoles) {
-			Vue.set(this.selectedUser, "roles",  selectedRoles);
+			Vue.set(this.selectedUser, "roles", selectedRoles);
 		},
 
 		removeUser: async function() {

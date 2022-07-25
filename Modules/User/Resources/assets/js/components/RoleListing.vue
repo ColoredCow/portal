@@ -23,9 +23,7 @@
 				</tr>
 			</tbody>
 		</table>
-
-		<role-permission-update-modal :updateRoute="this.updateRoute"  :role = "this.selectedRole" :permissions = "this.permissions" :rolePermissionsUpdated="onRolePressionsUpdated"/>
-
+		<role-permission-update-modal :updateRoute="this.updateRoute" :role="this.selectedRole" :permissions = "this.permissions" @rolePermissionsUpdated="onRolePressionsUpdated"/>
 	</div>
 </template>
 
@@ -60,10 +58,8 @@ export default {
 		},
 
 		onRolePressionsUpdated: function(selectedPermissions) {
-			Vue.set(this.selectedRole, "permissions",  selectedPermissions);
+			Vue.set(this.selectedRole, "permissions", selectedPermissions);
 		}
-
-
 	}
 };
 </script>

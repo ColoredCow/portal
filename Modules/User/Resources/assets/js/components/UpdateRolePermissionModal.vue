@@ -81,10 +81,7 @@ export default {
 			});
 
 			document.getElementById("update_role_permissions_modal").click();
-
 			this.$emit("rolePermissionsUpdated", selectedPermissions);
-
-
 		}
 	},
 
