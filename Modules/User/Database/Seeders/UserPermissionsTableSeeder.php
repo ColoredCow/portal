@@ -25,5 +25,25 @@ class UserPermissionsTableSeeder extends Seeder
         Permission::updateOrCreate(['name' => 'user_role_management.view']);
         Permission::updateOrCreate(['name' => 'user_role_management.update']);
         Permission::updateOrCreate(['name' => 'user_role_management.delete']);
+
+        $userManagementPermissions = [
+            ['name' => 'user_management.create'],
+            ['name' => 'user_management.view'],
+            ['name' => 'user_management.update'],
+            ['name' => 'user_management.delete'],
+        ];
+
+        $userRoleManagementPermissions = [
+            ['name' => 'user_role_management.create'],
+            ['name' => 'user_role_management.view'],
+            ['name' => 'user_role_management.update'],
+            ['name' => 'user_role_management.delete'],
+        ];
+
+        $allUsersPermissions = array_merge($userManagementPermissions, $userRoleManagementPermissions);
+
+        foreach ($allUsersPermissions as $permission) {
+            Permission::updateOrCreate($permission);
+        }
     }
 }
