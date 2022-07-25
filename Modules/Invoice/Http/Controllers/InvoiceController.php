@@ -2,11 +2,14 @@
 
 namespace Modules\Invoice\Http\Controllers;
 
+use App\Mail\sendEmail;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Entities\Invoice;
+use app\Mail\DailyEffortNotification; 
 
 class InvoiceController extends Controller
 {
