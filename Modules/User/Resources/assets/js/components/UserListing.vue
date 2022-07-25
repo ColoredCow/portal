@@ -42,22 +42,25 @@
 
                         <div >
                             <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
-                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#exampleModal" @click="setIndex(index)">Remove user</button>
+                            <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">Remove user</button>
                         </div>
                     </td>
                 </tr>
             </tbody>
 		</table>
 
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
+					<div class="modal-header">
+                        <h5 class="modal-title">Delete user: <strong> {{ users[currentUserIndex].name }}</strong></h5>
+					</div>
 					<div class="modal-body">
-						Are you sure?
+						Are you sure you want to take this action? It cannot be undone. The user will be removed from the system and will not be able to log in.
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button type="button"  @click="removeUser(index)" class="btn btn-danger">Yes</button>
+						<button type="button" @click="removeUser(index)" class="btn btn-danger">Yes</button>
 					</div>
 				</div>
 			</div>
@@ -121,7 +124,6 @@ export default {
 
 		setIndex: function(index){
 			this.currentUserIndex = index;
-
 		}
 	},
 
