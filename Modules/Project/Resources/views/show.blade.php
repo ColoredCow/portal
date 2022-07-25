@@ -30,7 +30,7 @@
                     <br>
                 @endif
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="form-group col-md-6 pl-4 mb-0">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mt-3">Name:</label>
                         </h4>
@@ -44,7 +44,14 @@
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
                 </div>
-                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-6 pl-4">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Client:</label>
+                        </h4>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->client->name }}</span>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
                         <h4 class="d-inline-block">
