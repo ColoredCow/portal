@@ -7,7 +7,7 @@
 
         <div class="col-md-4">
             <div class="card h-75 mx-6 mt-5 mb-5 ">
-                <a class="card-body no-transition" href="{{ route('recruitment.reports') }}" >
+                <a class="card-body no-transition" href="{{ route('recruitment.daily-applications-count') }}" >
                     <br><h2 class="text-center">Daily application count</h2><br>
                 </a>
             </div>
