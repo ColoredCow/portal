@@ -43,6 +43,5 @@ class ReportDatabaseSeeder extends Seeder
         foreach ($financeReportsPermissions as $permission) {
             $financeManagerRole->givePermissionTo($permission);
         }
-
     }
 }
