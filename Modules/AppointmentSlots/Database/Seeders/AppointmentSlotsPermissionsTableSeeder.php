@@ -4,7 +4,6 @@ namespace Modules\AppointmentSlots\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
 

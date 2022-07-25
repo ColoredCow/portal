@@ -3,10 +3,8 @@
 namespace Modules\Project\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
-use Spatie\Permission\Models\Permission;
 
 class ProjectDatabaseSeeder extends Seeder
 {
