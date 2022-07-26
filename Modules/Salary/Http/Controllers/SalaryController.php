@@ -51,7 +51,7 @@ class SalaryController extends Controller
             'foodAllowance' => $salaryConfig->foodAllowance(),
         ];
 
-        return view('salary::employee.index')->with(['employee'=> $employee, 'data' => $data]);
+        return view('salary::employee.index')->with(['employee'=> $employee, 'data' => $data, 'salaryConfigs' => SalaryConfiguration::formatAll()]);
     }
 
     public function storeSalary(Request $request, Employee $employee)
