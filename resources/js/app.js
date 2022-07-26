@@ -28,6 +28,7 @@ Vue.use(Laue);
  *  Module Vue Components
  */
 require("./../../Modules/User/Resources/assets/js/vueComponents.js");
+require("./../../Modules/Salary/Resources/assets/js/vueComponents.js");
 // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
 
 Vue.component("project-stage-component", require("./components/ProjectStageComponent.vue").default);
