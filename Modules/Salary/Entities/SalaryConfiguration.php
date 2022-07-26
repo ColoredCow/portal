@@ -13,93 +13,93 @@ class SalaryConfiguration extends Model
         return self::all()->keyBy('slug');
     }
 
-    public function getBasicSalaryAttribute()
+    public function basicSalary()
     {
-        $basicSalaryConfig = self::formatAll()->get('basic_salary');
+        $basicSalaryConfig = $this->formatAll()->get('basic_salary');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getMedicalAllowanceAttribute()
+    public function medicalAllowance()
     {
-        $basicSalaryConfig = self::formatAll()->get('medical_allowance');
+        $basicSalaryConfig = $this->formatAll()->get('medical_allowance');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getEmployeeEsiAttribute()
+    public function employeeEsi()
     {
-        $basicSalaryConfig = self::formatAll()->get('employee_esi');
+        $basicSalaryConfig = $this->formatAll()->get('employee_esi');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getEmployerEsiAttribute()
+    public function employerEsi()
     {
-        $basicSalaryConfig = self::formatAll()->get('employer_esi');
+        $basicSalaryConfig = $this->formatAll()->get('employer_esi');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getTransportAllowanceAttribute()
+    public function transportAllowance()
     {
-        $basicSalaryConfig = self::formatAll()->get('transport_allowance');
+        $basicSalaryConfig = $this->formatAll()->get('transport_allowance');
 
         return $basicSalaryConfig->fixed_amount;
     }
 
-    public function getEmployeeEsiLimitAttribute()
+    public function employeeEsiLimit()
     {
-        $basicSalaryConfig = self::formatAll()->get('employee_esi_limit');
+        $basicSalaryConfig = $this->formatAll()->get('employee_esi_limit');
 
         return $basicSalaryConfig->fixed_amount;
     }
 
-    public function getEdliChargeslimitAttribute()
+    public function edliChargeslimit()
     {
-        $basicSalaryConfig = self::formatAll()->get('edli_charges_limit');
+        $basicSalaryConfig = $this->formatAll()->get('edli_charges_limit');
 
         return $basicSalaryConfig->fixed_amount;
     }
 
-    public function getHraAttribute()
+    public function hra()
     {
-        $basicSalaryConfig = self::formatAll()->get('hra');
+        $basicSalaryConfig = $this->formatAll()->get('hra');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getEmployeeEpfAttribute()
+    public function employeeEpf()
     {
-        $basicSalaryConfig = self::formatAll()->get('employee_epf');
+        $basicSalaryConfig = $this->formatAll()->get('employee_epf');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getEmployerEpfAttribute()
+    public function employerEpf()
     {
-        $basicSalaryConfig = self::formatAll()->get('employer_epf');
+        $basicSalaryConfig = $this->formatAll()->get('employer_epf');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getAdministrationChargesAttribute()
+    public function administrationCharges()
     {
-        $basicSalaryConfig = self::formatAll()->get('administration_charges');
+        $basicSalaryConfig = $this->formatAll()->get('administration_charges');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getEdliChargesAttribute()
+    public function edliCharges()
     {
-        $basicSalaryConfig = self::formatAll()->get('edli_charges');
+        $basicSalaryConfig = $this->formatAll()->get('edli_charges');
 
-        return $basicSalaryConfig->percentage_rate;
+        return $basicSalaryConfig->percentage_rate / 100;
     }
 
-    public function getFoodAllowanceAttribute()
+    public function foodAllowance()
     {
-        $basicSalaryConfig = self::formatAll()->get('food_allowance');
+        $basicSalaryConfig = $this->formatAll()->get('food_allowance');
 
         return $basicSalaryConfig->fixed_amount;
     }

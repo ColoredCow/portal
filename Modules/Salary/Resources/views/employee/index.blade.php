@@ -9,6 +9,7 @@
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
+                </div>
             @endif
             <div class="mt-4 card">
                 <div class="card-header pb-lg-5 fz-28">
@@ -27,20 +28,19 @@
                     </div>
                     <hr class='bg-dark mx-4 pb-0.5'>
                     <br>
-                    <div class="input-group col-md-9 fz-24 ml-3">Monthly Gross
-                        Salary:&nbsp; @{{ grossSalary }}</div>
+                    <div class="input-group col-md-9 fz-24 ml-3">Monthly Gross Salary:&nbsp; <i class="fa fa-rupee"></i>&nbsp; @{{ Math.ceil(grossSalary) }}</div>
                     <br>
-                    <div class="input-group col-md-9 fz-24 ml-3">Basic Salary:&nbsp; @{{ grossSalary * 0.5 }}</div>
+                    <div class="input-group col-md-9 fz-24 ml-3">Basic Salary:&nbsp; <i class="fa fa-rupee"></i>&nbsp; @{{ Math.ceil(grossSalary * basicSalaryPercentage) }}</div>
                     <br>
-                    <div class="input-group col-md-9 fz-24 ml-3">HRA:&nbsp; @{{ grossSalary * 0.25 }}</div>
+                    <div class="input-group col-md-9 fz-24 ml-3">HRA:&nbsp; <i class="fa fa-rupee"></i>&nbsp; @{{ Math.ceil(grossSalary * hraPercentage) }}</div>
                     <br>
-                    <div class="input-group col-md-9 fz-24 ml-3">Transport Allowance:&nbsp; @{{ transportAllowance }}</div>
+                    <div class="input-group col-md-9 fz-24 ml-3">Transport Allowance:&nbsp; <i class="fa fa-rupee"></i>&nbsp; @{{ transportAllowance }}</div>
                     <br>
-                    <div class="input-group col-md-9 fz-24 ml-3">Other Allowance:&nbsp; @{{ otherAllowance }}</div>
+                    <div class="input-group col-md-9 fz-24 ml-3">Other Allowance:&nbsp; <i class="fa fa-rupee"></i>&nbsp; @{{ Math.ceil(otherAllowance) }} </div>
                     <br>
-                    <div class="input-group col-md-9 fz-24 ml-3">Food Allowance:&nbsp; @{{ foodAllowance }}</div>
+                    <div class="input-group col-md-9 fz-24 ml-3">Food Allowance:&nbsp; <i class="fa fa-rupee"></i>&nbsp; @{{ foodAllowance }}</div>
                     <br>
-                    <div class="input-group col-md-9 fz-24 ml-3">Total Salary:&nbsp; @{{ grossSalary }}</div>
+                    <div class="input-group col-md-9 fz-24 ml-3">Total Salary:&nbsp; <i class="fa fa-rupee"></i>&nbsp; @{{ Math.ceil(totalSalary) }}</div>
                     <br>
                     <br>
                     <br>
@@ -67,15 +67,39 @@
             el: '#employee_salary_form',
 
             data() {
-                return {
-
-                    grossSalary: "{{ optional($employee->employeeSalaries->last())->monthly_gross_salary }}",
+                otherAllowances = parseInt("{{ ceil(optional($employee->employeeSalaries->last())->monthly_gross_salary - optional($employee->employeeSalaries->last())->monthly_gross_salary * ($data['hraPercentage'] + $data['basicSalaryPercentage']) - $data['foodAllowance'] - $data['transportAllowance'])}}")
+                if("{{optional($employee->employeeSalaries->last())->monthly_gross_salary == null}}") {
+                    return {
+                        grossSalary: null,
+                        hraPercentage: null,
+                        basicSalaryPercentage: null,
+                        otherAllowance: null,
+                        totalSalary: null,
+                        foodAllowance: null,
+                        transportAllowance: null,
+                    }
+                } else {
+                    return {
+                        grossSalary: "{{ optional($employee->employeeSalaries->last())->monthly_gross_salary }}",
+                        hraPercentage: "{{$data['hraPercentage']}}",
+                        basicSalaryPercentage: "{{$data['basicSalaryPercentage']}}",
+                        otherAllowance: otherAllowances,
+                        totalSalary: parseInt("{{optional($employee->employeeSalaries->last())->monthly_gross_salary * ($data['hraPercentage'] + $data['basicSalaryPercentage']) + $data['foodAllowance'] + $data['transportAllowance']}}") + otherAllowances,
+                        foodAllowance: parseInt("{{$data['foodAllowance']}}"),
+                        transportAllowance: parseInt("{{$data['transportAllowance']}}"),
+                    }
                 }
             },
 
             methods: {
                 updateGrossSalary: function($event) {
                     this.grossSalary = $event.target.value;
+                    this.basicSalaryPercentage = "{{$data['basicSalaryPercentage']}}",
+                    this.hraPercentage = "{{$data['hraPercentage']}}",
+                    this.foodAllowance = parseInt("{{$data['foodAllowance']}}"),
+                    this.transportAllowance = parseInt("{{$data['transportAllowance']}}")
+                    this.otherAllowance = this.grossSalary - (this.grossSalary * this.basicSalaryPercentage) - (this.grossSalary * this.hraPercentage) - this.transportAllowance - this.foodAllowance;
+                    this.totalSalary = (this.grossSalary * this.basicSalaryPercentage) + (this.grossSalary * this.hraPercentage) + this.transportAllowance + this.foodAllowance + this.otherAllowance;
                 }
             }
         });

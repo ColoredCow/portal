@@ -35,24 +35,24 @@ class SalaryController extends Controller
     public function employee(Request $request, Employee $employee)
     {
         $this->authorize('view', EmployeeSalary::class);
-        $salaryCalculation = new SalaryCalculationService(optional($employee->employeeSalaries->last())->monthly_gross_sallary);
+        $salaryConfig = new SalaryConfiguration();
         $data = [
-            'basicSalaryPercentage' => SalaryConfiguration::getBasicSalaryAttribute(),
-            'medicalAllowance' => SalaryConfiguration::getMedicalAllowanceAttribute(),
-            'employeeEsi' => SalaryConfiguration::getEmployeeEsiAttribute(),
-            'employerEsi' => SalaryConfiguration::getEmployerEsiAttribute(),
-            'employeeEsiLimit' => SalaryConfiguration::getEmployeeEsiLimitAttribute(),
-            'transportAllowance' => SalaryConfiguration::getTransportAllowanceAttribute(),
-            'edliChargesLimit' => SalaryConfiguration::getEdliChargeslimitAttribute(),
-            'hra' => SalaryConfiguration::getHraAttribute(),
-            'employeeEpf' => SalaryConfiguration::getEmployeeEpfAttribute(),
-            'employerEpf' => SalaryConfiguration::getEmployerEpfAttribute(),
-            'administrationCharges' => SalaryConfiguration::getAdministrationChargesAttribute(),
-            'edliCharges' => SalaryConfiguration::getEdliChargesAttribute(),
-            'foodAllowance' => SalaryConfiguration::getFoodAllowanceAttribute()
+            'basicSalaryPercentage' => $salaryConfig->basicSalary(),
+            'medicalAllowance' => $salaryConfig->medicalAllowance(),
+            'employeeEsiPercentage' => $salaryConfig->employeeEsi(),
+            'employerEsiPercentage' => $salaryConfig->employerEsi(),
+            'employeeEsiLimit' => $salaryConfig->employeeEsiLimit(),
+            'transportAllowance' => $salaryConfig->transportAllowance(),
+            'edliChargesLimit' => $salaryConfig->edliChargeslimit(),
+            'hraPercentage' => $salaryConfig->hra(),
+            'employeeEpfPercentage' => $salaryConfig->employeeEpf(),
+            'employerEpfPercentage' => $salaryConfig->employerEpf(),
+            'administrationCharges' => $salaryConfig->administrationCharges(),
+            'edliChargesPercentage' => $salaryConfig->edliCharges(),
+            'foodAllowance' => $salaryConfig->foodAllowance(),
         ];
 
-        return view('salary::employee.index')->with(['employee'=> $employee], ['data' => $data]);
+        return view('salary::employee.index')->with(['employee'=> $employee, 'data' => $data]);
     }
 
     public function storeSalary(Request $request, Employee $employee)
