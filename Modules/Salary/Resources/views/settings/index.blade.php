@@ -1,17 +1,13 @@
 @extends('salary::layouts.master')
 
 @section('content')
-    <div class="container">
+    <div class="container" id="salary_settings_container">
         <h4>Salary Settings</h4>
         <br>
         <form action="{{ route('salary-settings.update') }}" method="POST">
             @csrf
             @include('status', ['errors' => $errors->all()])
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                </div>
-            @endif
+            @includeWhen(session('success'), 'toast', ['message' => session('success')])
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-6">
