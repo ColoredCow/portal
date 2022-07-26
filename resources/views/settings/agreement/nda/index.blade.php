@@ -17,7 +17,20 @@
         @foreach ($roundMailTypes as $type)
             @php
                 $mailTemplate = $type['label'] . '_mail_template';
+                $confirmMailTemplate = $round->confirmed_mail_template;
+                $cfmArray = json_decode($confirmMailTemplate, true);
             @endphp
+            @if ($cfmArray)
+                @php
+                    $mailSubject = $cfmArray['subject'];
+                    $mailBody = $cfmArray['body'];
+                @endphp
+            @else
+                @php
+                    $mailSubject = '';
+                    $mailBody = '';
+                @endphp
+            @endif
             <div class="card mt-4">
                 <form action="{{ route('hr.round.update', $round->id) }}" method="POST">
 
@@ -34,7 +47,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="round_mail_subject">Subject</label>
-                                    <input type="text" name="round_mail_subject" class="form-control" value="{{ $round->{$mailTemplate}['subject'] }}">
+                                    <input type="text" name="round_mail_subject" class="form-control" value="{{ $mailSubject }}">
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +55,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="round_mail_body">Mail body:</label>
-                                        <textarea name="round_mail_body" rows="10" class="richeditor form-control" placeholder="Body">{{ $round->{$mailTemplate}['body'] }}</textarea>
+                                        <textarea name="round_mail_body" rows="10" class="richeditor form-control" placeholder="Body">{{ $mailBody }}</textarea>
                                     </div>
                                 </div>
                             </div>
