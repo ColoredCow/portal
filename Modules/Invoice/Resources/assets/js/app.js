@@ -31,13 +31,13 @@ $(document).ready(function(){
 		var invoiceData = $(this).data("invoice-data");
 		var mapping = {
 			"|*project_name*|": invoiceData["projectName"],
-			"|*term*|": invoiceData["monthName"],
+			"|*term*|": invoiceData["term"],
 			"|*year*|": invoiceData["year"],
 			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
 			"|*invoice_amount*|": invoiceData["totalAmount"],
 			"|*invoice_number*|": invoiceData["invoiceNumber"],
 		};
-		var emailSubject = $("#emailSubject").val();
+		var emailSubject = invoiceData["emailSubject"];
 		var emailBody = $("#emailBody").text();
 		
 		for (var key in mapping) {
@@ -49,6 +49,12 @@ $(document).ready(function(){
 		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
 		$("#sendToName").val(invoiceData["billingPersonName"]); 
 		$("#clientId").val(invoiceData["clientId"]); 
+		$("#cc").val(invoiceData["senderEmail"]);
+		if (invoiceData["ccEmails"] != null) {
+			$("#cc").val(invoiceData["ccEmails"]);
+		}
+		$("#bcc").val(invoiceData["bccEmails"]);
+		$("#projectId").val(invoiceData["projectId"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
 		$("#emailPreview").modal("show");
 	});
@@ -57,13 +63,13 @@ $(document).ready(function(){
 		var invoiceData = $(this).data("invoice-data");
 		var mapping = {
 			"|*project_name*|": invoiceData["projectName"],
-			"|*term*|": invoiceData["monthName"],
+			"|*term*|": invoiceData["term"],
 			"|*year*|": invoiceData["year"],
 			"|*billing_person_name*|": invoiceData["billingPersonFirstName"],
 			"|*invoice_amount*|": invoiceData["invoiceAmount"],
 			"|*invoice_number*|": invoiceData["invoiceNumber"],
 		};
-		var emailSubject = $("#emailSubject").val();
+		var emailSubject = invoiceData["emailSubject"];
 		var emailBody = $("#emailBody").text();
 		
 		for (var key in mapping) {
@@ -75,6 +81,11 @@ $(document).ready(function(){
 		$("#sendTo").val(invoiceData["billingPersonEmail"]); 
 		$("#sendToName").val(invoiceData["billingPersonName"]); 
 		$("#invoiceId").val(invoiceData["invoiceId"]); 
+		$("#cc").val(invoiceData["senderEmail"]);
+		if (invoiceData["ccEmails"] != null) {
+			$("#cc").val(invoiceData["ccEmails"]);
+		}
+		$("#bcc").val(invoiceData["bccEmails"]); 
 		tinymce.get("emailBody").setContent(emailBody, { format: "html" });
 		$("#emailPreview").modal("show");
 	});
@@ -197,4 +208,3 @@ function convert_number(number) {
 	}
 	return result;
 }
-

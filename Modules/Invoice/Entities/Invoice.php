@@ -176,6 +176,20 @@ class Invoice extends Model
 
         return false;
     }
+    public function getTermAttribute()
+    {
+        $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
+        $currentMonthNumber = today(config('constants.timezone.indian'))->month;
+        $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $termEndDate = $this->client->getMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
+
+        if ($termStartDate->format('M') == $termEndDate->format('M')) {
+            $term = $termEndDate->format('F');
+        }
+
+        return $term;
+    }
     public function getInvoiceAmountInInrAttribute()
     {
         if (optional($this->currency) == config('constants.countries.india.currency')) {
@@ -203,7 +217,7 @@ class Invoice extends Model
 
     public function invoiceOfInvoiceTypeMail()
     {
-        return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice.slug'))
-        ->first();
-    }
+    return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice.slug'))
+    ->first();
+}
 }

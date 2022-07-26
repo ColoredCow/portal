@@ -167,6 +167,7 @@ class HRServiceProvider extends ServiceProvider
     protected function registerCommands()
     {
         $this->commands([
+            \Modules\HR\Console\Recruitment\DailyMessage::class,
             \Modules\HR\Console\Recruitment\ApplicationNoShow::class,
             \Modules\HR\Console\Recruitment\MappingOfJobsAndHrRounds::class,
             \Modules\HR\Console\Recruitment\MarkApplicationForFollowUp::class,

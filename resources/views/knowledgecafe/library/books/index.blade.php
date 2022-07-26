@@ -46,7 +46,6 @@
         data-category-index-route="{{ route('books.category.index') }}">
         <div class="d-flex flex-wrap w-full">
             <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
-
                 <div class="d-flex" >
                     <a  :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
@@ -67,28 +66,30 @@
                                 </a>
                                 <ul class="dropdown-menu ">
                                     <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item">Update Category</li>
-                                    <li @click="updateCopiesCount(index)" class="dropdown-item">Copies Available</li>
-                                    <li  data-toggle="modal" data-target="#exampleModal" class="dropdown-item text-danger">Delete</li>
+                                    <li @click="updateIndex(index)"  data-toggle="modal" :data-target="'#copiesOfBooksCountModal' + index" class="dropdown-item">Copies Available</li>
+                                    <li @click="deleteBook(index)" class="dropdown-item text-danger">Delete</li>
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-body p-4">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <p>Are you sure?</p> 
-                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button @click="deleteBook(index)" type="button" class="btn btn-sm btn-danger">Yes</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     @endcan
                 </div>
-
+                <div class="modal fade" :id="'copiesOfBooksCountModal' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">Number of copies of this book: <br> <input type="text" name="copiesofbooks"
+                            :id="'copiesOfBooks'+index":value="book.number_of_copies">  </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <button type="button" class="btn btn-primary" @click="updateCopiesCount(index)" data-dismiss="modal">OK</button>
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
                 <div v-if="book.readers && book.readers.length">
                     <p  class="mb-0 mt-1">Read by</p>
                     <div  class="pl-0 pt-2 pb-3">
