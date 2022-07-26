@@ -19,15 +19,27 @@ class ClientDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        Permission::updateOrCreate(['name' => 'clients.create']);
-        Permission::updateOrCreate(['name' => 'clients.view']);
-        Permission::updateOrCreate(['name' => 'clients.update']);
-        Permission::updateOrCreate(['name' => 'clients.delete']);
+        $clientsPermissions = [
+            ['name' => 'clients.create'],
+            ['name' => 'clients.view'],
+            ['name' => 'clients.update'],
+            ['name' => 'clients.delete'],
+        ];
+        foreach ($clientsPermissions as $permission) {
+            Permission::updateOrCreate($permission);
+        }
 
-        $projectManager = Role::where(['name' => 'project-manager'])->first();
-        $projectManager->givePermissionTo([
-            'clients.view'
-        ]);
+        // set permissions for admin role
+        $adminRole = Role::where(['name' => 'admin'])->first();
+        foreach ($clientsPermissions as $permission) {
+            $adminRole->givePermissionTo($permission);
+        }
+
+        // set permissions for employee role
+        $employeeRole = Role::where(['name' => 'employee'])->first();
+        foreach ($clientsPermissions as $permission) {
+            $employeeRole->givePermissionTo($permission);
+        }
 
         // seed fake data
         if (! app()->environment('production')) {

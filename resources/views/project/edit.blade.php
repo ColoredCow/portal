@@ -9,6 +9,8 @@
         <div class="col-md-6"><h1>Edit Project</h1></div>
         <div class="col-md-6"><a href="{{ route('projects.create') }}" class="btn btn-success float-right">Create Project</a></div>
     </div>
+
+
     @include('status', ['errors' => $errors->all()])
     <div class="card">
         <form action="{{ route('projects.update', $project->id) }}" method="POST">
