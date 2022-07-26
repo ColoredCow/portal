@@ -53,7 +53,7 @@
                         </select>
                     </div>
                     <div class="col-1 daily-effort-div" >
-                        <input type="number" v-model="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
+                        <input type="number" :name="`project_team_member[${index}][daily_expected_effort]`" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
                     </div>
 
                     <div class="col-1 weekly-effort-div">
@@ -64,7 +64,17 @@
                         <input type="number" :value="projectTeamMember.pivot.daily_expected_effort*workingDaysInMonth" class="form-control monthly-effort">
                     </div>
                     <div class="col-1">
-                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
+                        @foreach (config('project.status') as $status => $status)
+                        @if($project->status == $status && $status == ('active'))    
+                            <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" >Remove</button>
+                        @endif
+                        @if($project->status == $status && $status == ('halted'))
+                            <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" disabled>Remove</button>
+                        @endif
+                        @if($project->status == $status && $status == ('inactive'))
+                            <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" disabled>Remove</button>
+                        @endif
+                        @endforeach    
                     </div>
                 </div>
 
@@ -89,7 +99,7 @@
                             <th class="font-weight-light">{{ ucwords(str_replace('_', ' ', $inactiveTeamMember->designation)) }}</th>
                             <th class="font-weight-light">{{ ($inactiveTeamMember->created_at)->format('Y-m-d') }}</th>
                             <th class="font-weight-light">{{ ($inactiveTeamMember->ended_on)->format('Y-m-d') }}</th>
-                        <tr>
+                        </tr>
                         @endforeach
                     </table>
                 </div>
@@ -97,7 +107,17 @@
             </div>
 
             <div class="card-footer">
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')">Save</button>
+            @foreach (config('project.status') as $status => $status)
+            @if($project->status == $status && $status == ('active'))
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" >Save</button>
+            @endif
+            @if($project->status == $status && $status == ('halted'))
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" disabled>Save</button>
+            @endif
+            @if($project->status == $status && $status == ('inactive'))
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" disabled>Save</button>
+            @endif
+            @endforeach
             </div>
         </form>
     </div>
