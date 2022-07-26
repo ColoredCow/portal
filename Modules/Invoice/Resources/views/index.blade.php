@@ -128,7 +128,7 @@
                                 <td class="text-center">
                                     @if($invoice->shouldHighlighted())
                                         <div data-toggle="modal" data-target="#invoiceReminder" >
-                                            <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data_toogle="tooltip" data-placement="top" title="{{optional($invoice->getInvoiceLatestReminderMail())->sent_on }}">{{ __('Reminder') }} ({{$invoice->invoiceMail->count()}})</div>
+                                            <div class="btn btn-sm btn-primary send-reminder" data-invoice-data="{{ json_encode($invoiceData) }}" data_toogle="tooltip" data-placement="top" title="{{optional($invoice->getInvoiceLatestReminderMail())->sent_on }}">{{ __('Reminder') }} ({{$invoice->invoiceMail()->count()}})</div>
                                         </div>
                                     @else
                                         <div> - </div> 

@@ -597,8 +597,8 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
             'body' => $email['body'],
-            'sent_on'=> now(),
-            'type' => config('invoice.mail-type.invoice-reminder.label')
+            'type' => config('invoice.mail-type.invoice-reminder.label'),
+            'sent_on'=> now()
         ]);
     }
 
