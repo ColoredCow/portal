@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-1">
                         @foreach (config('project.status') as $status => $status)
-                        @if($project->status == $status && $status == ('active'))    
+                        @if($project->status == $status && $status == ('active'))
                             <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" >Remove</button>
                         @endif
                         @if($project->status == $status && $status == ('halted'))
