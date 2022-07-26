@@ -34,24 +34,12 @@ class SalaryController extends Controller
     public function employee(Request $request, Employee $employee)
     {
         $this->authorize('view', EmployeeSalary::class);
-        $salaryConfig = new SalaryConfiguration();
-        $data = [
-            'basicSalaryPercentage' => $salaryConfig->basicSalary(),
-            'medicalAllowance' => $salaryConfig->medicalAllowance(),
-            'employeeEsiPercentage' => $salaryConfig->employeeEsi(),
-            'employerEsiPercentage' => $salaryConfig->employerEsi(),
-            'employeeEsiLimit' => $salaryConfig->employeeEsiLimit(),
-            'transportAllowance' => $salaryConfig->transportAllowance(),
-            'edliChargesLimit' => $salaryConfig->edliChargeslimit(),
-            'hraPercentage' => $salaryConfig->hra(),
-            'employeeEpfPercentage' => $salaryConfig->employeeEpf(),
-            'employerEpfPercentage' => $salaryConfig->employerEpf(),
-            'administrationCharges' => $salaryConfig->administrationCharges(),
-            'edliChargesPercentage' => $salaryConfig->edliCharges(),
-            'foodAllowance' => $salaryConfig->foodAllowance(),
-        ];
+        $salaryConfigs = SalaryConfiguration::formatAll();
 
-        return view('salary::employee.index')->with(['employee'=> $employee, 'data' => $data, 'salaryConfigs' => SalaryConfiguration::formatAll()]);
+        return view('salary::employee.index')->with([
+            'employee'=> $employee,
+            'salaryConfigs' => $salaryConfigs
+        ]);
     }
 
     public function storeSalary(Request $request, Employee $employee)
