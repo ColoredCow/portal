@@ -51,10 +51,10 @@ class SalarySettingController extends Controller
         foreach ($request->all() as $setting => $value) {
             $dataToUpdate = [];
             $dataToFind = ['slug' => $setting];
-            $dataToUpdate['label'] = Str::title($setting);
+            $dataToUpdate['label'] = config('salary.settings.labels.' . $setting);
             if (is_array($value)) {
                 $dataToUpdate['percentage_rate'] = $value['rate'];
-                $dataToUpdate['percentage_applied_on'] = 'gross_salary';
+                $dataToUpdate['percentage_applied_on'] = config('salary.settings.percentage_applies_on.' . $setting);
             } else {
                 $dataToUpdate['fixed_amount'] = $value;
             }

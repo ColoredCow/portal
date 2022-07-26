@@ -37,7 +37,7 @@
                     </div>
                     <br>
                     <div class="form-group col-md-12">
-                        <div class="ml-3">
+                        <div class="ml-4">
                             <salary-breakdown
                                 :salary-configs="{{ json_encode($salaryConfigs) }}"
                                 :gross-salary="grossSalary"
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="card-footer bg-light">
-                <button type="submit" class="btn btn-primary ml-7">Save</button>
+                <button type="submit" class="btn btn-primary ml-7 px-4">Save</button>
             </div>
         </form>
     </div>
