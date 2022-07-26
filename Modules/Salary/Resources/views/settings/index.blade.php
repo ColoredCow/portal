@@ -130,7 +130,7 @@
                                         class="form-control w-10" placeholder="%"
                                         value="{{ optional($salaryConfig->get('hra', null))->percentage_rate }}">
                                     <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">% of basic salery</span>
+                                        <span class="input-group-text" id="basic-addon2">% of basic salary</span>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +142,7 @@
                                         value="{{ optional($salaryConfig->get('employee_epf', null))->percentage_rate }}"
                                         class="form-control w-10" placeholder="%">
                                     <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">% of basic salery</span>
+                                        <span class="input-group-text" id="basic-addon2">% of basic salary</span>
                                     </div>
                                 </div>
                             </div>

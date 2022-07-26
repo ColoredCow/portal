@@ -36,7 +36,7 @@
                 </div>
             </div>
         @endcan
-        @if(auth()->user()->canAny(['employee_salary.view', 'employee_salary.update', 'employee_salary.delete', 'employee_salary.create']))
+        @can('employee_salary_settings.view')
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
                     <a class="card-body no-transition" href="{{ route('salary.settings') }}">
@@ -44,7 +44,7 @@
                     </a>
                 </div>
             </div>
-        @endif
+        @endcan
     </div>
 </div>
 

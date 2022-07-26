@@ -24,19 +24,28 @@ class SalaryPermissionTableSeeder extends Seeder
             ['name' => 'employee_salary.update'],
             ['name' => 'employee_salary.delete'],
         ];
-        foreach ($employeeSalaryPermissions as $permission) {
+
+        $employeeSalarySettingsPermissions = [
+            ['name' => 'employee_salary_settings.create'],
+            ['name' => 'employee_salary_settings.view'],
+            ['name' => 'employee_salary_settings.update'],
+            ['name' => 'employee_salary_settings.delete'],
+        ];
+
+        $allEmployeeSalarySettings = array_merge($employeeSalaryPermissions, $employeeSalarySettingsPermissions);
+        foreach ($allEmployeeSalarySettings as $permission) {
             Permission::updateOrCreate($permission);
         }
 
         // set permissions for admin role
         $adminRole = Role::where(['name' => 'admin'])->first();
-        foreach ($employeeSalaryPermissions as $permission) {
+        foreach ($allEmployeeSalarySettings as $permission) {
             $adminRole->givePermissionTo($permission);
         }
 
         // set permissions for finance-manager role
         $financeManagerRole = Role::where(['name' => 'finance-manager'])->first();
-        foreach ($employeeSalaryPermissions as $permission) {
+        foreach ($allEmployeeSalarySettings as $permission) {
             $financeManagerRole->givePermissionTo($permission);
         }
     }
