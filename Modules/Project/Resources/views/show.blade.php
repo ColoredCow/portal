@@ -15,12 +15,12 @@
             <div class="card-body">
                 @if($contractFilePath)
                     <div class="form-row ">
-                        <div class="form-group col-md-6 pl-4 mt-2">
+                        <div class="form-group col-md-5 pl-4 mt-2">
                             <h4 class="d-inline-block ">
                                 <label for="name" class="font-weight-bold">Project Contract:</label>
                             </h4>
                             <div class="row">
-                                <div class="col-xs-6 py-2">
+                                <div class="col-xs-6 py-1">
                                     <div class="text-capitalize d-inline ml-2 fz-lg-20"> {{pathinfo($contractFilePath)['filename']}} </div>
                                     <a href="{{route('pdf.show', ['contract' => $contract])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
                                 </div>
@@ -80,7 +80,7 @@
                 <br>
                 <div class="form-row"> 
                     @if($project->billing_level)
-                        <div class="form-group offset-md-1 pl-4 col-md-5">
+                        <div class="form-group col-md-6 pl-4">
                             <h4 class="d-inline-block">
                                 <label for="name" class="font-weight-bold">Billing Level:</label>
                             </h4>
