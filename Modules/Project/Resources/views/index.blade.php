@@ -78,7 +78,7 @@
                                 <td class="w-20p">
                                     @foreach($project->getTeamMembers ?:[] as $teamMember)
                                         <span class="content tooltip-wrapper"  data-html="true" data-toggle="tooltip"  title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}} <br>    Efforts: {{$teamMember->current_actual_effort}} Hours" >
-                                            <a href={{ route('employees.show', $teamMember->user) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mb-1 mr-2 {{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'border border-success' : 'border border-danger' }} border-2"></a>
+                                            <a href={{ route('employees.show', $teamMember->user) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mb-1 mr-0.5 {{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'border border-success' : 'border border-danger' }} border-2"></a>
                                         </span>
                                     @endforeach
                                 </td>
