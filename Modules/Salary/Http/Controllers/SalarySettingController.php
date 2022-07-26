@@ -2,7 +2,6 @@
 
 namespace Modules\Salary\Http\Controllers;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Salary\Entities\SalaryConfiguration;
