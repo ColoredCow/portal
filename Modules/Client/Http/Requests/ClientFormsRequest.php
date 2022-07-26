@@ -27,7 +27,7 @@ class ClientFormsRequest extends FormRequest
         return [
             'client_contact_persons.*.name' => 'nullable|max:120',
             'client_contact_persons.*.email' => 'required|email',
-            'client_contact_persons.*.phone' => 'nullable|max:20',
+            'client_contact_persons.*.phone' => 'nullable|digits_between:4,10|integer',
         ];
     }
 
