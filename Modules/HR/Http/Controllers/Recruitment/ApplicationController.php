@@ -65,8 +65,6 @@ abstract class ApplicationController extends Controller
             'assignee' => request()->get('assignee'), // TODO
             'round' =>str_replace('-', ' ', request()->get('round'))
         ];
-
-        // dd($filters);
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
