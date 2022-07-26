@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\Salary\Entities\EmployeeSalary;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Modules\Salary\Services\SalaryCalculationService;
 use Modules\Salary\Entities\SalaryConfiguration;
 
 class SalaryController extends Controller
