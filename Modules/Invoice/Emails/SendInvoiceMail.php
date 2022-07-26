@@ -7,7 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
 
 class SendInvoiceMail extends Mailable
@@ -15,9 +14,7 @@ class SendInvoiceMail extends Mailable
     use SerializesModels, Queueable;
 
     public $client;
-    public $month;
-    public $year;
-    public $monthName;
+    public $monthToSubtract;
     public $invoiceNumber;
     public $email;
     public $invoice;
@@ -27,12 +24,10 @@ class SendInvoiceMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Client $client, Invoice $invoice, int $month, int $year, string $invoiceNumber, array $email)
+    public function __construct(Invoice $invoice, string $invoiceNumber, array $email)
     {
-        $this->client = $client;
-        $this->month = $month;
-        $this->year = $year;
-        $this->monthName = date('F', mktime(0, 0, 0, $month, 10));
+        $this->client = $invoice->client;
+        $this->monthToSubtract = 1;
         $this->invoiceNumber = $invoiceNumber;
         $this->email = $email;
         $this->invoice = $invoice;
@@ -47,29 +42,34 @@ class SendInvoiceMail extends Mailable
     {
         $subject = $this->email['subject'];
         $body = $this->email['body'];
-        $templateVariablesForSubject = config('invoice.template-variables.subject');
-        $templateVariablesForBody = config('invoice.template-variables.body');
+        $templateVariablesForSubject = config('invoice.templates.setting-key.send-invoice.template-variables.subject');
+        $templateVariablesForBody = config('invoice.templates.setting-key.send-invoice.template-variables.body');
+        $billingStartMonth = $this->client->getMonthStartDateAttribute(1)->format('M');
+        $billingEndMonth = $this->client->getMonthEndDateAttribute(1)->format('M');
+        $year = $this->client->getMonthEndDateAttribute(1)->year;
+        $monthName = $this->client->getMonthEndDateAttribute(1)->format('F');
+        $termText = $billingStartMonth != $billingEndMonth ? $billingStartMonth . ' - ' . $billingEndMonth : $monthName;
 
         if (! $subject) {
             $subject = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_subject')->first();
             $subject = $subject ? $subject->setting_value : '';
             $subject = str_replace($templateVariablesForSubject['project-name'], $this->client->name . ' Projects', $subject);
-            $subject = str_replace($templateVariablesForSubject['term'], $this->monthName, $subject);
-            $subject = str_replace($templateVariablesForSubject['year'], $this->year, $subject);
+            $subject = str_replace($templateVariablesForSubject['term'], $termText, $subject);
+            $subject = str_replace($templateVariablesForSubject['year'], $year, $subject);
         }
 
         if (! $body) {
             $body = Setting::where('module', 'invoice')->where('setting_key', 'send_invoice_body')->first();
             $body = $body ? $body->setting_value : '';
-            $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->name, $body);
+            $body = str_replace($templateVariablesForBody['billing-person-name'], optional($this->client->billing_contact)->first_name, $body);
             $body = str_replace(
                 $templateVariablesForBody['invoice-amount'],
-                $this->client->country->currency_symbol . $this->client->getTotalPayableAmountForTerm($this->month, $this->year, $this->client->clientLevelBillingProjects),
+                $this->client->country->currency_symbol . $this->client->getTotalPayableAmountForTerm($this->monthToSubtract, $this->client->clientLevelBillingProjects),
                 $body
             );
-            $body = str_replace($templateVariablesForBody['invoice-number'], str_replace('-', '', $this->invoiceNumber), $body);
-            $body = str_replace($templateVariablesForBody['term'], $this->monthName, $body);
-            $body = str_replace($templateVariablesForBody['year'], $this->year, $body);
+            $body = str_replace($templateVariablesForBody['invoice-number'], $this->invoiceNumber, $body);
+            $body = str_replace($templateVariablesForBody['term'], $monthName, $body);
+            $body = str_replace($templateVariablesForBody['year'], $year, $body);
         }
 
         $invoiceFile = Storage::path($this->invoice->file_path);
@@ -79,6 +79,10 @@ class SendInvoiceMail extends Mailable
 
         foreach ($this->email['cc'] as $emailAddress) {
             $mail->cc($emailAddress);
+        }
+
+        foreach ($this->email['bcc'] as $emailAddress) {
+            $mail->bcc($emailAddress);
         }
 
         return $mail->subject($subject)

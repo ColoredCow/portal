@@ -37,16 +37,16 @@ class ApplicationRound extends Model
 
     public function _update($attr)
     {
-        // TODO: the fillable definition below need to be put somewhere else.
-        // When just updating an application round (maybe updating comment), the below details are getting overriden.
-        $fillable = [
-            'conducted_person_id' => auth()->id(),
-            'conducted_date' => now(),
-        ];
-
         $application = $this->application;
         $applicant = $this->application->applicant;
         $nextRound = Round::find($attr['next_round']);
+
+        // TODO: the fillable definition below need to be put somewhere else.
+        // When just updating an application round (maybe updating comment), the below details are getting overriden.
+        $fillable = [
+            'conducted_person_id' => ($application->status == 'on-hold') ? null : auth()->id(),
+            'conducted_date' => ($application->status == 'on-hold') ? null : now(),
+        ];
 
         switch ($attr['action']) {
             case 'schedule-update':
@@ -63,16 +63,22 @@ class ApplicationRound extends Model
                 break;
 
             case 'confirm':
-                $application->untag('new-application');
-                $application->tag('in-progress');
-                //move application to Trial Round
-                if ($nextRound->isTrialRound()) {
-                    $fillable['round_status'] = 'confirmed';
-                    $this->update($fillable);
-                    $application->markInProgress();
-                    $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                    $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                    $applicationRound = self::create([
+                if ($application->status == 'on-hold') {
+                    $application->untag('on-hold');
+                    $application->tag('new-application');
+                    $application->status = 'new';
+                    $application->save();
+                } else {
+                    $application->untag('new-application');
+                    $application->tag('in-progress');
+                    //move application to Trial Round
+                    if ($nextRound->isTrialRound()) {
+                        $fillable['round_status'] = 'confirmed';
+                        $this->update($fillable);
+                        $application->markInProgress();
+                        $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
+                        $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                        $applicationRound = self::create([
                         'hr_application_id' => $application->id,
                         'hr_round_id' => $nextRound->id,
                         'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
@@ -80,16 +86,16 @@ class ApplicationRound extends Model
                         'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                         'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                     ]);
-                }
-                //if application are requested to move to preparatory or warmup round then they are automatically moved to Trial Round
-                //and trial_round_id column is set to the id of preparatory rounds that is requested
-                elseif ($nextRound->inPreparatoryRounds()) {
-                    $fillable['round_status'] = 'confirmed';
-                    $this->update($fillable);
-                    $application->markInProgress();
-                    $nextApplicationRound = $application->job->rounds->where('id', Round::where('name', 'Trial Program')->first()->id)->first();
-                    $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                    $applicationRound = self::create([
+                    }
+                    //if application are requested to move to preparatory or warmup round then they are automatically moved to Trial Round
+                    //and trial_round_id column is set to the id of preparatory rounds that is requested
+                    elseif ($nextRound->inPreparatoryRounds()) {
+                        $fillable['round_status'] = 'confirmed';
+                        $this->update($fillable);
+                        $application->markInProgress();
+                        $nextApplicationRound = $application->job->rounds->where('id', Round::where('name', 'Trial Program')->first()->id)->first();
+                        $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                        $applicationRound = self::create([
                         'hr_application_id' => $application->id,
                         'hr_round_id' => Round::where('name', 'Trial Program')->first()->id,
                         'trial_round_id' => $nextRound->id,
@@ -97,21 +103,22 @@ class ApplicationRound extends Model
                         'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                         'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                     ]);
-                }
-                //For Pre-trial Rounds
-                else {
-                    $fillable['round_status'] = 'confirmed';
-                    $this->update($fillable);
-                    $application->markInProgress();
-                    $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
-                    $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
-                    $applicationRound = self::create([
+                    }
+                    //For Pre-trial Rounds
+                    else {
+                        $fillable['round_status'] = 'confirmed';
+                        $this->update($fillable);
+                        $application->markInProgress();
+                        $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
+                        $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
+                        $applicationRound = self::create([
                         'hr_application_id' => $application->id,
                         'hr_round_id' => $nextRound->id,
                         'scheduled_date' => $attr['next_scheduled_start'] ?? null,
                         'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
                         'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
                     ]);
+                    }
                 }
                 break;
 
@@ -174,7 +181,8 @@ class ApplicationRound extends Model
                 $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
                 $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
 
-                Mail::to($applicant->email, $applicant->name)->send(new OnHold($subject->setting_value, $body->setting_value));
+                //ToDo: We need to think of what would be the worfklow once an application is put on hold by HR team.
+                // Mail::to($applicant->email, $applicant->name)->send(new OnHold($subject->setting_value, $body->setting_value));
 
                 return redirect()->route('applications.job.index');
 

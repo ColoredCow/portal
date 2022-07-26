@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,8 +12,6 @@
 
     </head>
     <body>
-        @yield('content')
-
         {{-- Laravel Mix - JS File --}}
         {{-- <script src="{{ mix('js/task.js') }}"></script> --}}
     </body>

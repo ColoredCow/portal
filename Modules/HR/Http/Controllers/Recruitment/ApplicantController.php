@@ -25,7 +25,7 @@ class ApplicantController extends Controller
     {
         $this->service = $service;
         $this->authorizeResource(Applicant::class, null, [
-            'except' => ['store'],
+            'except' => ['store', 'show', 'create'],
         ]);
     }
 

@@ -14,13 +14,17 @@ class CreateHrResourcesTable extends Migration
     public function up()
     {
         Schema::create('hr_resources', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->text('resource_link');
-            $table->unsignedInteger('job_id');
-            $table->unsignedBigInteger('hr_resource_category_id');
+            $table->integer('hr_resource_category_id')->unsigned();
+            $table->integer('job_id')->unsigned();
             $table->timestamps();
-            $table->foreign('job_id')->references('id')->on('hr_jobs');
-            $table->foreign('hr_resource_category_id')->references('id')->on('hr_resources_categories');
+            $table->foreign('hr_resource_category_id')->references('id')->on('hr_resources_categories')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            $table->foreign('job_id')->references('id')->on('hr_jobs')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 

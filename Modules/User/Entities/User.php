@@ -118,7 +118,7 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project_team_members', 'team_member_id', 'project_id');
+        return $this->belongsToMany(Project::class, 'project_team_members', 'team_member_id', 'project_id')->wherePivot('ended_on', null);
     }
 
     public function meta()
@@ -175,5 +175,15 @@ class User extends Authenticatable
         }
 
         return $fte;
+    }
+
+    public function activeProjects()
+    {
+        $userId = $this->id;
+        $projects = Project::whereHas('getTeamMembers', function ($query) use ($userId) {
+            return $query->where('team_member_id', $userId);
+        })->get();
+
+        return $projects;
     }
 }

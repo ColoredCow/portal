@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function projects()
     {
-        $userProjects = Auth::user()->projects;
+        $userProjects = Auth::user()->activeProjects();
 
         return $userProjects;
     }

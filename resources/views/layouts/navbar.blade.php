@@ -1,5 +1,5 @@
 <ul class="navbar-nav mr-auto" style="font-size:16px;">
-    @if(Module::checkStatus('HR'))
+    @canany(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view', 'hr_settings.view', 'hr_universities.view'])
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>HR <span class="caret"></span>
@@ -17,20 +17,29 @@
                 @can('hr_recruitment_applications.view')
                     <a class="dropdown-item" href="{{ route('hr.evaluation') }}">Manage Evaluation</a>
                 @endcan
-                @can('hr_recruitment_applications.view')
+                @can('hr_settings.view')
                     <a class="dropdown-item" href="{{ route('settings.hr') }}">Settings</a>
                 @endcan
                 @can('hr_universities.view')
                     <a class="dropdown-item" href="{{ route('universities.index') }}">Universities</a>
                 @endcan
-                <a class="dropdown-item" href="{{route('userappointmentslots.show',auth()->id())}}">Appointment Slots</a>
-                <a class="dropdown-item" href="{{ route('hr.tags.index') }}">{{ __('Manage Tags') }}</a>
-                <a class="dropdown-item disabled" href="{{ route('resources.index') }}">Guidelines And Resources</a>
+                @can('hr_recruitment_applications.view')
+                    <a class="dropdown-item" href="{{ route('userappointmentslots.show', auth()->id()) }}">Appointment Slots</a>
+                @endcan
+                @can('hr_settings.view')
+                    <a class="dropdown-item" href="{{ route('hr.tags.index') }}">{{ __('Manage Tags') }}</a>
+                @endcan
+                @can('hr_recruitment_applications.view')
+                    <a class="dropdown-item" href="{{ route('resources.index') }}">Guidelines And Resources</a>
+                @endcan
             </div>
         </li>
     @endif
 
-    @if((Module::checkStatus('Client') && auth()->user()->can('clients.view')) || (Module::checkStatus('Project') && auth()->user()->can('projects.view')) )
+    @if ((Module::checkStatus('Client') &&
+        auth()->user()->can('clients.view')) ||
+        (Module::checkStatus('Project') &&
+            auth()->user()->can('projects.view')))
         <li class="nav-item dropdown">
             <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
@@ -46,60 +55,59 @@
         </li>
     @endif
 
-    @if(Module::checkStatus('Task') && auth()->user()->can('task.view'))
+    @can('task.view')
         <li class="nav-item">
             <a class="nav-item nav-link" href="/task">Task</a>
         </li>
-    @endif
+    @endcan
 
-    @if((Module::checkStatus('Invoice') && auth()->user()->can('finance_invoices.view')) || (Module::checkStatus('LegalDocument') && auth()->user()->can('legal-document.view') ))
+    @can('finance_invoices.view')
         <li class="nav-item dropdown">
             <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span
+                    class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_finance">
-                @can('finance_invoices.view')
-                    <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
-                @endcan
-                    <a class="dropdown-item" href="{{route('invoice.yearly-report') }}">Yearly Invoice report</a>    
-                    <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly tax report</a>
-                    <a class="dropdown-item " href="{{ route('invoice.details') }}"> Monthly GST Report</a>
-                    <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
-                    <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>
-                
-                @if(Module::checkStatus('LegalDocument') && auth()->user()->can('legal-document.view'))
+            <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
+                <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
+                <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly Tax Report</a>
+                <a class="dropdown-item" href="{{ route('invoice.yearly-report') }}">Yearly Invoice Report</a>
+                <a class="dropdown-item " href="{{ route('invoice.details') }}">Monthly GST Report</a>
+                <a class="dropdown-item " href="{{ route('reports.finance.profit-and-loss') }}">P&L Report</a>
+                <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
+                <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>
                 <a class="dropdown-item disabled" href="{{ route('legal-document.index') }}">Legal Documents</a>
-                @endif
             </div>
         </li>
-    @endif
+    @endcan
 
-    @if(Module::checkStatus('Prospect') || Module::checkStatus('Lead') || Module::checkStatus('SalesAutomation'))
+    @canany(['prospect.view', 'lead.view', 'sales_automation.view', 'sales_reports.view'])
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Sales <span class="caret"></span>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Sales <span
+                    class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
-                @if(Module::checkStatus('Prospect') && auth()->user()->can('prospect.view'))
+                @can('prospect.view')
                     <a class="dropdown-item" href="{{ '/prospect' }}">Prospects</a>
-                @endif
-                @if(Module::checkStatus('Lead') && auth()->user()->can('lead.view'))
+                @endcan
+                @can('lead.view')
                     <a class="dropdown-item" href="{{ '/lead' }}">Leads</a>
-                @endif
-                @if(Module::checkStatus('SalesAutomation'))
+                @endcan
+                @can('sales_automation.view')
                     <a class="dropdown-item" href="{{ route('salesautomation.index') }}">Sales Automation</a>
-                @endif
-                @if(Module::checkStatus('Report'))
+                @endcan
+                @can('sales_reports.view')
                     <a class="dropdown-item" href="{{ '/report' }}">Report</a>
-                @endif
+                @endcan
             </div>
         </li>
-    @endif
+    @endcan
 
-    @if(auth()->user()->hasAnyPermission(['weeklydoses.view', 'library_books.view']))
+    @if (auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span class="caret"></span>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span
+                    class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
                 @can('library_books.view')
@@ -112,35 +120,37 @@
         </li>
     @endif
 
-    @if(Module::checkStatus('Infrastructure') && auth()->user()->can('infrastructure.billings.view'))
+    @can('infrastructure.billings.view')
         <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Infrastructure<span class="caret"></span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
-            @can('infrastructure.backups.view')
-                <a class="dropdown-item" href="{{ route('infrastructure.index') }}">Backups</a>
-            @endcan
-            @can('infrastructure.ec2-instances.view')
-                <a class="dropdown-item" href="{{ route('infrastructure.get-instances') }}">EC2 Instances</a>
-            @endcan
-        </div>
-        </li>
-    @endif
-
-    @if(Module::checkStatus('HR') || Module::checkStatus('User'))
-        <li class="nav-item dropdown">
-            <a id="navbarDropdown_settings" class="nav-link dropdown-toggle" href="#" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Settings<span class="caret"></span>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Infrastructure<span
+                    class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
-                @if(Module::checkStatus('HR') && auth()->user()->can('hr_recruitment_applications.view'))
-                    <a class="dropdown-item" href="{{ route('settings.index') }}">Settings</a>
-                @endif
-                @if(Module::checkStatus('User') && auth()->user()->can('user_management.view'))
-                    <a class="dropdown-item" href="{{ route('user.index') }}">User Management</a>
-                @endif
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
+                @can('infrastructure.backups.view')
+                    <a class="dropdown-item" href="{{ route('infrastructure.index') }}">Backups</a>
+                @endcan
+                @can('infrastructure.ec2-instances.view')
+                    <a class="dropdown-item" href="{{ route('infrastructure.get-instances') }}">EC2 Instances</a>
+                @endcan
             </div>
         </li>
-    @endif
+    @endcan
+
+    @canany(['hr_settings.view', 'user_management.view', 'finance_invoices_settings.view', 'nda_settings.view'])
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown_settings" class="nav-link dropdown-toggle" href="#" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Settings<span
+                    class="caret"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
+                @canany(['hr_settings.view', 'finance_invoices_settings.view', 'nda_settings.view'])
+                    <a class="dropdown-item" href="{{ route('settings.index') }}">Settings</a>
+                @endcanany
+                @can('user_management.view')
+                    <a class="dropdown-item" href="{{ route('user.index') }}">User Management</a>
+                @endcan
+            </div>
+        </li>
+    @endcanany
 </ul>

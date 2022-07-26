@@ -46,7 +46,7 @@ class ProjectTeamMember extends Model
 
     public function getCurrentActualEffortAttribute()
     {
-        return $this->projectTeamMemberEffort()->where('added_on', '>=', now(config('constants.timezone.indian'))->startOfMonth())->sum('actual_effort');
+        return $this->projectTeamMemberEffort()->where('added_on', '>=', $this->project->client->month_start_date)->sum('actual_effort');
     }
 
     public function getCurrentExpectedEffortAttribute()
@@ -58,7 +58,7 @@ class ProjectTeamMember extends Model
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
@@ -66,7 +66,7 @@ class ProjectTeamMember extends Model
     public function getExpectedEffortTillTodayAttribute()
     {
         $project = new Project;
-        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))));
+        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, today(config('constants.timezone.indian'))));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
@@ -85,7 +85,10 @@ class ProjectTeamMember extends Model
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, $currentDate));
+        if ($daysTillToday == 0) {
+            return 0;
+        }
 
         return round($this->current_actual_effort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }

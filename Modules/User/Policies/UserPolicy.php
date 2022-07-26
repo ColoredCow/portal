@@ -11,8 +11,8 @@ class UserPolicy
         return $user->can('user_management.view');
     }
 
-    public function delete(User $user)
+    public function delete(User $user, User $userToDelete)
     {
-        return $user->can('user_management.delete');
+        return $user->can('user_management.delete') && $user->id !== $userToDelete->id;
     }
 }

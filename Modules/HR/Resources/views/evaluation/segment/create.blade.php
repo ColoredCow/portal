@@ -13,9 +13,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="field-required">Segment Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ old('name') }}">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required="required" value="{{ old('name') }}">  
                     </div>
-              
+                    <div class="form-group">
+                        <select class="form-control" name="rounds" id="rounds">
+                            <option value="">Select Round</option>
+                            @foreach ($rounds as $round)
+                                <option value="{{$round->name}}">{{$round->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

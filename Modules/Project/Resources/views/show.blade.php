@@ -30,7 +30,7 @@
                     <br>
                 @endif
                 <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
+                    <div class="form-group col-md-6 pl-4 mb-0">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold mt-3">Name:</label>
                         </h4>
@@ -44,13 +44,12 @@
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
                 </div>
-                <br>
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
                         <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Project Type:</label>
+                            <label for="name" class="font-weight-bold">Client:</label>
                         </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->client->name }}</span>
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
@@ -59,18 +58,27 @@
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->status }}</span>
                     </div>
                 </div>
-                <br>
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Effortsheet:</label>
                         </h4>
                         @if($project->effort_sheet_url)
-                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn btn-primary btn-sm text-white ml-2 text-light rounded" target="_blank">{{ _('Open Sheet') }}</a>
+                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn-sm btn-primary btn-smtext-white ml-2 text-light rounded" 
+                                target="_blank">{{ _('Open Sheet') }}</a>
                         @else
                             <span class="ml-2 fz-lg-22">Not Available</span>
                         @endif
                     </div>
+                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Project Type:</label>
+                        </h4>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
+                    </div>  
+                </div>
+                <br>
+                <div class="form-row"> 
                     @if($project->billing_level)
                         <div class="form-group offset-md-1 pl-4 col-md-5">
                             <h4 class="d-inline-block">
@@ -86,23 +94,21 @@
                         <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
-                        <div class="fz-14 float-right mr-3 mt-1">{{ config('project.meta_keys.last_updated_at.value') . __(': ') . ($project->last_updated_at)}}</div>
+                        <div class="fz-14 float-right mr-3 mt-1">{{ config('project.meta_keys.last_updated_at.value') . __(': ') . (Carbon\Carbon::parse($project->last_updated_at)->format('D, d-m-Y, g:i a'))}}</div>
                         <div>
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
                                 <div class="table">
                                     <table class="table">
                                         <thead>
                                             <tr class="bg-theme-gray text-light">
-                                                <th scope="col" class="pb-md-3 pb-xl-4 px-9">Name</th>
-                                                <th scope="col" class="pb-md-3 pb-xl-4">Hours Booked</th>
-                                                <th scope="col" class="pb-lg-1">Expected Hours
-                                                    
-                                                    <div class="ml-md-3 ml-xl-6 font-weight-bold fz-12"> 
+                                                <th class="pb-md-3 pb-xl-4 px-9">Name</th>
+                                                <th>Hours Booked</th>
+                                                <th>Expected Hours
+                                                    <div class="ml-lg-3 ml-xl-5 fz-md-10 fz-xl-14"> 
                                                         ({{$daysTillToday}} Days)
                                                     </div>
-
                                                 </th>
-                                                <th scope="col" class="pb-md-3 pb-xl-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
+                                                <th>Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                                             </tr>
                                         </thead>
                                         @if($project->TeamMembers->first() == null)
@@ -112,15 +118,15 @@
                                             <tbody>
                                                 @foreach($project->getTeamMembers ?:[] as $teamMember)
                                                     <tr>
-                                                        <th scope="row" class="fz-lg-20 my-2 px-5 col-md-6 font-weight-normal"> 
+                                                        <th class="fz-lg-20 my-2 px-5 font-weight-normal"> 
                                                             <span>
                                                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
                                                                 <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
-                                                            </span>
+                                                            </span>                                                                                                                                                                                                                 
                                                             {{$teamMember->user->name}}
                                                         </th>
                                                         <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
-                                                        <td>{{$teamMember->current_expected_effort}}</td>
+                                                        <td>{{$teamMember->current_expected_effort }}</td>
                                                         <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
                                                     </tr>
                                                 @endforeach
