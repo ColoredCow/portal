@@ -23,7 +23,7 @@
 								<div class="text-secondary fz-14">{{ user.email }}</div>
 							</div>
                         </span>
-                        </td>
+					</td>
                     <td>
                         <span>{{ formatRoles(user) }}<span v-if="user.websiteUserRole">, {{user.websiteUserRole}}</span></span>
                     </td>
