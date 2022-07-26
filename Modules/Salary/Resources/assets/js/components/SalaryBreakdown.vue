@@ -63,13 +63,13 @@ export default {
 			return Math.ceil(this.grossSalary * percentage / 100);
 		},
 		transportAllowance() {
-			if (this.grossSalary === '') {
+			if (this.grossSalary === "") {
 				return 0;
 			}
 			return parseInt(this.salaryConfigs.transport_allowance.fixed_amount);
 		},
 		foodAllowance() {
-			if (this.grossSalary === '') {
+			if (this.grossSalary === "") {
 				return 0;
 			}
 			return parseInt(this.salaryConfigs.food_allowance.fixed_amount);
@@ -80,11 +80,6 @@ export default {
 		totalSalary() {
 			return this.basicSalary + this.hra + this.transportAllowance + this.foodAllowance + this.otherAllowance;
 		},
-	},
-
-    mounted() {
-        console.log('this.salaryConfigs', this.salaryConfigs);
-        console.log('this.grossSalary', this.grossSalary);
-    }
+	}
 };
 </script>
