@@ -36,6 +36,15 @@
                 </div>
             </div>
         @endcan
+        @can('employee_salary_settings.view')
+            <div class="col-md-4">
+                <div class="card h-75 mx-4 mt-3 mb-5 ">
+                    <a class="card-body no-transition" href="{{ route('salary.settings') }}">
+                        <br><h2 class="text-center">Salary</h2><br>
+                    </a>
+                </div>
+            </div>
+        @endcan
     </div>
 </div>
 
