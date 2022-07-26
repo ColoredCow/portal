@@ -159,6 +159,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id' => $invoice->id,
             'body' => $data['email_body'],
             'subject' => $data['email_subject'],
+            'sent_on'=>now(),
             'type' => config('invoice.mail-type.payment-confirmation.label')
         ]);
 
@@ -548,6 +549,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
             'body' => $email['body'],
+            'sent_on'=> now(),
             'type' => config('invoice.mail-type.invoice.label')
         ]);
     }
@@ -595,6 +597,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
             'body' => $email['body'],
+            'sent_on'=> now(),
             'type' => config('invoice.mail-type.invoice-reminder.label')
         ]);
     }
@@ -682,7 +685,7 @@ class InvoiceService implements InvoiceServiceContract
         $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
         $invoice->update([
             'invoice_number' => $invoiceNumber,
-            'file_path' => ''
+            'file_path' => $filePath
         ]);
 
         return $invoice;

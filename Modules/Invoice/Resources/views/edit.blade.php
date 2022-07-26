@@ -1,7 +1,7 @@
 @extends('invoice::layouts.master')
 @section('content')
 @php
- $filename=basename($invoice->file_path);
+   $filename=basename($invoice->file_path);
 @endphp
 <div class="container">
     <br>
@@ -9,8 +9,8 @@
     @if(auth()->user()->can('finance_invoices.update'))
             <h4>Invoice Information</h4>
             <span>
-                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#previewMails" href="#">Preview mails</a>
-                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" onclick="alert('Will add this soon')" href="#">Duplicate this invoice</a>
+                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" data-toggle="modal" data-target="#previewMails" href="javascript:void(0)">Preview mails</a>
+                <a class="btn btn-sm btn-info text-white mr-4 font-weight-bold" onclick="alert('Will add this soon')" href="javascript:void(0)">Duplicate this invoice</a>
                 <a class="btn btn-sm btn-info text-white font-weight-bold" target="_blank" href="{{ route('invoice.get-file', [$invoice->id, $filename]) }}">View invoice PDF</a>
             </span>
         </div>

@@ -12,47 +12,44 @@
             <div class="modal-body">
                 @foreach ($emails as $email)
                     <div class="card mt-4">
-                        <form action="" method="POST">
-                            {{ csrf_field() }}
-                            {{ method_field('PATCH') }}
-                                <div class="card-header c-pointer" data-toggle="collapse" data-target="#type" aria-expanded="true" aria-controls="type">
-                                    <div class="container">
-                                        <div class="row">
-                                          <div class="col-md-auto">
-                                              <span ><b>Type:</b></span>
-                                              <span>{{ $email ['type']}} </span>
-                                          </div>
-                                          <div class="col">
-                                            <span ><b>Sent on:</b></span>
-                                            <span>{{ date('l h:s A jS F Y', strtotime($email['sent_on']))}} </span>
-                                          </div>
-                                        </div>
-                                      </div>
+                        @csrf
+                        <div class="card-header c-pointer" data-toggle="collapse" data-target="#type" aria-expanded="true" aria-controls="type">
+                            <div class="container">
+                                <div class="row">
+                                <div class="col-md-auto">
+                                    <span ><b>Type:</b></span>
+                                    <span>{{ $email ['type']}} </span>
                                 </div>
-                                <div id="type" class="collapse">
-                                    <div class="card-body">
-                                        <div class="form-row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Subject</label>
-                                                    <input type="text" name="" class="form-control" value="{{ $email ['subject'] }}" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label >Mail body:</label>
-                                                    <textarea type="text" placeholder="{{ $email['body'] }}" rows="10" class=" form-control" disabled></textarea>
-                                                </div>
-                                            </div>
+                                <div class="col">
+                                    <span ><b>Sent on:</b></span>
+                                    <span>{{ date('l h:s A jS F Y', strtotime($email['sent_on']))}} </span>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="type" class="collapse">
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Subject</label>
+                                            <input type="text" name="" class="form-control" value="{{ $email ['subject'] }}" disabled>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label >Mail body:</label>
+                                            <textarea type="text" placeholder="{{ $email['body'] }}" rows="10" class=" form-control" disabled></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                        </form>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
                     </div>
                 @endforeach
             </div>
