@@ -51,14 +51,6 @@
                         </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->client->name }}</span>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6 pl-4">
-                        <h4 class="d-inline-block">
-                            <label for="name" class="font-weight-bold">Project Type:</label>
-                        </h4>
-                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
-                    </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">
                         <h4 class="d-inline-block">
                             <label for="name" class="font-weight-bold">Status:</label>
@@ -66,7 +58,6 @@
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->status }}</span>
                     </div>
                 </div>
-                <br>
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
                         <h4 class="d-inline-block">
@@ -79,6 +70,15 @@
                             <span class="ml-2 fz-lg-22">Not Available</span>
                         @endif
                     </div>
+                    <div class="form-group offset-md-1 pl-4 col-md-5">
+                        <h4 class="d-inline-block">
+                            <label for="name" class="font-weight-bold">Project Type:</label>
+                        </h4>
+                        <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
+                    </div>  
+                </div>
+                <br>
+                <div class="form-row"> 
                     @if($project->billing_level)
                         <div class="form-group offset-md-1 pl-4 col-md-5">
                             <h4 class="d-inline-block">
