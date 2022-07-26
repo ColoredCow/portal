@@ -14,18 +14,18 @@ class SalarySettingRequest extends FormRequest
     public function rules()
     {
         return [
-            "basic_salary" => 'array',
-            "hra" => 'array',
-            "employee_esi" => 'array',
-            "employer_esi" => 'array',
-            "employee_epf" => 'array',
-            "employer_epf" => 'array',
-            "administration_charges" => 'array',
-            "edli_charges" => 'array',
-            "transport_allowance" => 'nullable|string',
-            "food_allowance" => 'nullable|string',
-            "employee_esi_limit" => 'nullable|string',
-            "edli_charges_limit" => 'nullable|string',
+            'basic_salary' => 'array',
+            'hra' => 'array',
+            'employee_esi' => 'array',
+            'employer_esi' => 'array',
+            'employee_epf' => 'array',
+            'employer_epf' => 'array',
+            'administration_charges' => 'array',
+            'edli_charges' => 'array',
+            'transport_allowance' => 'nullable|string',
+            'food_allowance' => 'nullable|string',
+            'employee_esi_limit' => 'nullable|string',
+            'edli_charges_limit' => 'nullable|string',
         ];
     }
 
