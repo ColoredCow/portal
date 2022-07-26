@@ -7,17 +7,17 @@
     <br>
 
     <div class="d-flex justify-content-start row flex-wrap">
-        @if( auth()->user()->canAny(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
-        <div class="col-md-4">
-            <div class="card h-75 mx-4 mt-3 mb-5 ">
-                <a class="card-body no-transition" href="{{ route('settings.hr') }}">
-                    <br><h2 class="text-center">HR</h2><br>
-                </a>
+        @can('hr_settings.view')
+            <div class="col-md-4">
+                <div class="card h-75 mx-4 mt-3 mb-5 ">
+                    <a class="card-body no-transition" href="{{ route('settings.hr') }}">
+                        <br><h2 class="text-center">HR</h2><br>
+                    </a>
+                </div>
             </div>
-        </div>
-        @endif
+        @endcanany
 
-        @if(auth()->user()->canAny(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view']))
+        @can('nda_settings.view')
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
                     <a class="card-body no-transition" href="{{ route('setting.agreement.nda') }}">
@@ -25,9 +25,9 @@
                     </a>
                 </div>
             </div>
-        @endif
+        @endcanany
 
-        @if(auth()->user()->canAny(['finance_invoices.view', 'finance_invoices.update', 'finance_invoices.delete', 'finance_invoices.create']))
+        @can('finance_invoices_settings.view')
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
                     <a class="card-body no-transition" href="{{ route('setting.invoice') }}">
@@ -35,7 +35,7 @@
                     </a>
                 </div>
             </div>
-        @endif
+        @endcan
     </div>
 </div>
 

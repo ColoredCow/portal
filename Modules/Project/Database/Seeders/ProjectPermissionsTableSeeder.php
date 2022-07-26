@@ -1,14 +1,13 @@
 <?php
 
-namespace Modules\Client\Database\Seeders;
+namespace Modules\Project\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Modules\Client\Entities\Client;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Permission;
 
-class ClientDatabaseSeeder extends Seeder
+class ProjectPermissionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,32 +17,26 @@ class ClientDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
-        $clientsPermissions = [
-            ['name' => 'clients.create'],
-            ['name' => 'clients.view'],
-            ['name' => 'clients.update'],
-            ['name' => 'clients.delete'],
+        $projectsPermissions = [
+            ['name' => 'projects.create'],
+            ['name' => 'projects.view'],
+            ['name' => 'projects.update'],
+            ['name' => 'projects.delete'],
         ];
-        foreach ($clientsPermissions as $permission) {
+        foreach ($projectsPermissions as $permission) {
             Permission::updateOrCreate($permission);
         }
 
         // set permissions for admin role
         $adminRole = Role::where(['name' => 'admin'])->first();
-        foreach ($clientsPermissions as $permission) {
+        foreach ($projectsPermissions as $permission) {
             $adminRole->givePermissionTo($permission);
         }
 
         // set permissions for employee role
         $employeeRole = Role::where(['name' => 'employee'])->first();
-        foreach ($clientsPermissions as $permission) {
+        foreach ($projectsPermissions as $permission) {
             $employeeRole->givePermissionTo($permission);
-        }
-
-        // seed fake data
-        if (! app()->environment('production')) {
-            Client::factory()->count(3)->create();
         }
     }
 }
