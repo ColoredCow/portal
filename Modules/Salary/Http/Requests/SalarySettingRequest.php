@@ -22,10 +22,10 @@ class SalarySettingRequest extends FormRequest
             "employer_epf" => 'array',
             "administration_charges" => 'array',
             "edli_charges" => 'array',
-            "transport_allowance" => 'string',
-            "food_allowance" => 'string',
-            "employee_esi_limit" => 'string',
-            "edli_charges_limit" => 'string',
+            "transport_allowance" => 'nullable|string',
+            "food_allowance" => 'nullable|string',
+            "employee_esi_limit" => 'nullable|string',
+            "edli_charges_limit" => 'nullable|string',
         ];
     }
 
