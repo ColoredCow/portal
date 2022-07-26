@@ -1,35 +1,50 @@
 <template>
 	<div>
-        <h1>Breakdown</h1>
-		<div class="input-group col-md-9 fz-24 ml-3">
-			<span class="mr-2">Basic Salary:</span>
-			<i class="fa fa-rupee"></i>
-			<span>{{ basicSalary }}</span>
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Basic Salary</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ basicSalary }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">HRA</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ hra }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Transport Allowance</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ transportAllowance }}</span>
+				</div>
+			</div>
 		</div>
-		<div class="input-group col-md-9 fz-24 ml-3">
-			<span class="mr-2">HRA:</span>
-			<i class="fa fa-rupee"></i>
-			<span>{{ hra }}</span>
-		</div>
-		<div class="input-group col-md-9 fz-24 ml-3">
-			<span class="mr-2">Transport Allowance:</span>
-			<i class="fa fa-rupee"></i>
-			<span>{{ transportAllowance }}</span>
-		</div>
-		<div class="input-group col-md-9 fz-24 ml-3">
-			<span class="mr-2">Food Allowance:</span>
-			<i class="fa fa-rupee"></i>
-			<span>{{ foodAllowance }}</span>
-		</div>
-		<div class="input-group col-md-9 fz-24 ml-3">
-			<span class="mr-2">Other Allowance:</span>
-			<i class="fa fa-rupee"></i>
-			<span>{{ otherAllowance }}</span>
-		</div>
-		<div class="input-group col-md-9 fz-24 ml-3">
-			<span class="mr-2">Total Salary:</span>
-			<i class="fa fa-rupee"></i>
-			<span>{{ totalSalary }}</span>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Food Allowance</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ foodAllowance }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Other Allowance</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ otherAllowance }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Total Salary</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ totalSalary }}</span>
+				</div>
+			</div>
 		</div>
     </div>
 </template>
