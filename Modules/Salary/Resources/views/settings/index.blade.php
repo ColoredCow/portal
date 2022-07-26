@@ -1,7 +1,7 @@
 @extends('salary::layouts.master')
 
 @section('content')
-    <div class="container" id="salary_settings_container">
+    <div class="container">
         <h4>Salary Settings</h4>
         <br>
         <form action="{{ route('salary-settings.update') }}" method="POST">
