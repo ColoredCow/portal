@@ -60,7 +60,7 @@ export default {
 		},
 		hra() {
 			let multiplier = this.grossSalary;
-			if (this.salaryConfigs.hra.percentage_applied_on == 'basic_salary') {
+			if (this.salaryConfigs.hra.percentage_applied_on == "basic_salary") {
 				multiplier = this.basicSalary;
 			}
 			let percentage = parseInt(this.salaryConfigs.hra.percentage_rate);
@@ -88,7 +88,7 @@ export default {
 
 	methods: {
 		formatCurrency(amount) {
-			return amount.toLocaleString('en-IN');
+			return amount.toLocaleString("en-IN");
 		},
 	}
 };
