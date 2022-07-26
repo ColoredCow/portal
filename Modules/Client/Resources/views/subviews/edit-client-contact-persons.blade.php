@@ -12,7 +12,11 @@
                     Phone
                 </div>
                 <div class="col-4">
-                    Role
+                    Role <span data-toggle="tooltip" data-placement="right"
+                    title="Primary billing contact - Email id will be used as Reciever email and Name will be used as reciever name.
+                    Secondary billing contact - Email id will be used as CC email.
+                    Tertiary billing contact - Email id will be used as BCC email.">
+                    <i class="fa fa-question-circle"></i>&nbsp;</span>
                 </div>
             </div>
 
@@ -25,13 +29,15 @@
                     <input v-model="contactPerson.email" autocomplete="nope"  class="form-control" type="email" :name="`client_contact_persons[${index}][email]`">
                 </div>
                 <div class="col-2">
-                    <input v-model="contactPerson.phone"  class="form-control" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' :name="`client_contact_persons[${index}][phone]`" pattern="[1-9]{1}[0-9]{9}" title="The entered number is not a valid phone number">
+                    <input v-model="contactPerson.phone"  class="form-control" type="text" :name="`client_contact_persons[${index}][phone]`" title="The entered number is not a valid phone number" maxlength="20">
                 </div>
                 <div class="col-4 d-flex justify-content-between">
                     <div class="mr-3 w-full">
                         <select required="required" v-model="contactPerson.type" class="form-control" :name="`client_contact_persons[${index}][type]`">
                             <option value="billing-contact">Primary billing contact</option>
                             <option value="general-contact">General Point of contact</option>
+                            <option value="secondary-contact">Secondary billing contact</option>
+                            <option value="tertiary-contact">Tertiary billing contact</option>
                         </select>
                     </div>
 

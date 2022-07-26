@@ -200,4 +200,19 @@ class Invoice extends Model
         return $this->invoiceMail()->where('type', config('invoice.mail-type.payment-confirmation.slug'))
         ->first();
     }
+
+    public function getTermAttribute()
+    {
+        $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
+        $currentMonthNumber = today(config('constants.timezone.indian'))->month;
+        $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $termEndDate = $this->client->getMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
+
+        if ($termStartDate->format('M') == $termEndDate->format('M')) {
+            $term = $termEndDate->format('F');
+        }
+
+        return $term;
+    }
 }

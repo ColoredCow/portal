@@ -110,6 +110,7 @@ abstract class ApplicationController extends Controller
         ];
         $hrRounds = ['Resume Screening', 'Introductory Call', 'Basic Technical Round', 'Detailed Technical Round', 'Team Interaction Round', 'HR Round', 'Trial Program', 'Volunteer Screening'];
         $strings = array_pluck(config('constants.hr.status'), 'label');
+        $hrRoundsCounts = [];
 
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
@@ -120,7 +121,14 @@ abstract class ApplicationController extends Controller
                 ->count();
         }
 
+        $jobType = $this->getApplicationType();
+
         foreach ($hrRounds as $round) {
+            $applicationCount = Application::query()->filterByJobType($jobType)
+            ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
+            ->FilterByRoundName($round)
+            ->count();
+            $hrRoundsCounts[$round] = $applicationCount;
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
             ->where('status', config('constants.hr.status.in-progress.label'))
             ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
@@ -131,9 +139,11 @@ abstract class ApplicationController extends Controller
             })
             ->count();
         }
+
         $attr['jobs'] = Job::all();
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
+        $attr['rounds'] = $hrRoundsCounts;
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
