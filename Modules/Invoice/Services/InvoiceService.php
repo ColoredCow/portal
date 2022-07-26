@@ -159,7 +159,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id' => $invoice->id,
             'body' => $data['email_body'],
             'subject' => $data['email_subject'],
-            'type' => config('invoice.mail-type.payment-confirmation.slug')
+            'type' => config('invoice.mail-type.payment-confirmation.label')
         ]);
 
         return $invoice;
@@ -176,6 +176,7 @@ class InvoiceService implements InvoiceServiceContract
             'paymentReceivedEmailSubject' => $emailData['subject'],
             'paymentReceivedEmailBody' => $emailData['body'],
             'currencyService' => $this->currencyService(),
+            'emails'=>InvoiceMail::all(),
         ];
     }
 
@@ -543,6 +544,12 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceNumber = str_replace('-', '', optional($client)->next_invoice_number ?: $project->next_invoice_number);
         $invoice = $this->createInvoice($client, $project, $term);
         Mail::queue(new SendInvoiceMail($invoice, $invoiceNumber, $email));
+        InvoiceMail::create([
+            'invoice_id'=> $invoice->id,
+            'subject' => $email['subject'],
+            'body' => $email['body'],
+            'type' => config('invoice.mail-type.invoice.label')
+        ]);
     }
 
     public function sendInvoiceReminder(Invoice $invoice, $data)
@@ -588,7 +595,7 @@ class InvoiceService implements InvoiceServiceContract
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
             'body' => $email['body'],
-            'type' => config('invoice.mail-type.invoice-reminder.slug')
+            'type' => config('invoice.mail-type.invoice-reminder.label')
         ]);
     }
 
@@ -675,7 +682,7 @@ class InvoiceService implements InvoiceServiceContract
         $pdf->generateFromHtml($html, storage_path('app' . $filePath), [], true);
         $invoice->update([
             'invoice_number' => $invoiceNumber,
-            'file_path' => $filePath
+            'file_path' => ''
         ]);
 
         return $invoice;
