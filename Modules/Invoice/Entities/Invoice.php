@@ -176,6 +176,43 @@ class Invoice extends Model
 
         return false;
     }
+    public function getInvoiceAmountInInrAttribute()
+    {
+        if (optional($this->currency) == config('constants.countries.india.currency')) {
+            return $this->amount;
+        } else {
+            return $this->amount * $this->conversion_rate;
+        }
+    }
+
+    public function getTotalAmountAttribute()
+    {
+        return $this->amount + $this->gst;
+    }
+
+    public function invoiceMail()
+    {
+        return $this->hasMany(InvoiceMail::class, 'invoice_id', 'id');
+    }
+
+    public function getInvoiceLatestReminderMail()
+    {
+        return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice-reminder.slug'))
+        ->orderByDesc('sent_on')->first();
+    }
+
+    public function getInvoiceConfirmationMail()
+    {
+        return $this->invoiceMail()->where('type', config('invoice.mail-type.payment-confirmation.slug'))
+        ->first();
+    }
+
+    public function getInvoiceTypeMail()
+    {
+        return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice.slug'))
+        ->first();
+    }
+
     public function getTermAttribute()
     {
         $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
@@ -190,34 +227,4 @@ class Invoice extends Model
 
         return $term;
     }
-    public function getInvoiceAmountInInrAttribute()
-    {
-        if (optional($this->currency) == config('constants.countries.india.currency')) {
-            return $this->amount;
-        } else {
-            return $this->amount * $this->conversion_rate;
-        }
-    }
-    public function invoiceMail()
-    {
-        return $this->hasMany(InvoiceMail::class, 'invoice_id', 'id');
-    }
-
-    public function latestReminder()
-    {
-        return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice-reminder.slug'))
-        ->orderByDesc('sent_on')->first();
-    }
-
-    public function confirmationMail()
-    {
-        return $this->invoiceMail()->where('type', config('invoice.mail-type.payment-confirmation.slug'))
-        ->first();
-    }
-
-    public function invoiceOfInvoiceTypeMail()
-    {
-    return $this->invoiceMail()->where('type', config('invoice.mail-type.invoice.slug'))
-    ->first();
-}
 }

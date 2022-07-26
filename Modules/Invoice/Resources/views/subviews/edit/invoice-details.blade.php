@@ -161,7 +161,7 @@
                 </div>
             </div>
             <div v-if="status == 'paid'">
-                @if($invoice->confirmationMail() === null)
+                @if($invoice->getInvoiceConfirmationMail() === null)
                     <input type="checkbox" id="showEmail" class="ml-auto" name="send_mail">
                     <label for="showEmail" class="mx-1 pt-1">{{ __('Send Confirmation Mail') }}</label>
                     <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#paymentReceived"></i>
