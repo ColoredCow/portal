@@ -44,7 +44,7 @@ class SalarySettingController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param SalarySettingRequest $request
      */
     public function update(SalarySettingRequest $request)
     {
