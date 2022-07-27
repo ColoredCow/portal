@@ -1,7 +1,6 @@
 <ul class="nav nav-pills my-3">
     @php
-        $request = request()->all();
-        unset($request['page']);
+        $request = request()->except('page');
     @endphp
     <li class="nav-item mr-3">
         @php
