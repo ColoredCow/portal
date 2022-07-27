@@ -12,7 +12,7 @@ class StorePostRequest extends FormRequest
      * @return array
      */
     public function rules()
-    { 
+    {
         $rules =  [
             'client_id' =>'required',
             'billing_level' => 'required',

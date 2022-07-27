@@ -73,7 +73,7 @@ class InvoiceController extends Controller
      * @param Request $request
      */
     public function store(StorePostRequest  $request)
-    { 
+    {
         $this->service->store($request->all());
 
         return redirect(route('invoice.index'))->with('success', 'Invoice created successfully!');
