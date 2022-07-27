@@ -792,6 +792,12 @@ span.total-chart-count{
 	border-width: 2px !important;
 }
 
+.Vue-Toastification__close-button {
+	&:hover, &:focus {
+		outline: none;
+	}
+}
+
 // End Custom
 
 [v-cloak] { display: none; }

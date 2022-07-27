@@ -43,7 +43,6 @@
                 </div>
             </div>
         </div>
-        @include('project::subviews.modal-success')
     </div>
 @endsection
 
@@ -99,7 +98,7 @@
                             $('.save-btn').attr('disabled', false);
                             $('#project-details-update-message').addClass('d-block');
                             $('#project-details-update-message').removeClass('d-none');
-                            $('#modal-success').modal('show');
+                            this.$toast.success('Project details updated!');
                         })
                         .catch((error) => {
                             $('#project-details-update-message').removeClass('d-block');
@@ -112,7 +111,7 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            $('#modal-success').modal('show');
+                            this.$toast.success('Project details updated!');
                         })
                 },
 
