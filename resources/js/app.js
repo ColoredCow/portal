@@ -395,8 +395,8 @@ $(document).ready(function () {
 	$("#addNewSegmentForm").submit(function (e) {
 		e.preventDefault();
 		let form = $("#addNewSegmentForm");
-		$("#createNewSegment").on('hidden.bs.modal', function () {
-            $(this).find('form').trigger('reset');
+		$("#createNewSegment").on("hidden.bs.modal", function () {
+           $(this).find("form").trigger("reset");
         });
 	
 		$.ajax({
@@ -405,7 +405,7 @@ $(document).ready(function () {
 			data: form.serialize(),
 			success:function (response) {
 				$("#createNewSegment").modal("hide");
-				$("#createNewSegment").on('hidden.bs.modal', function (e)
+				$("#createNewSegment").on("hidden.bs.modal", function (e)
 				 {
 				$("#segmentsuccess").toggleClass("d-none");
 				$("#segmentsuccess").fadeToggle(6000);
