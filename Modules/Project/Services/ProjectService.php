@@ -23,7 +23,7 @@ class ProjectService implements ProjectServiceContract
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
         ];
-        $data['projects'] = $data['projects'] ?? 'all-projects';
+        $data['projects'] = $data['projects'] ?? 'my-projects';
 
         $clients = null;
 
@@ -72,10 +72,11 @@ class ProjectService implements ProjectServiceContract
         }
 
         return [
-            'clients' => $clients,
+            'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
-            'haltedProjectsCount' => $haltedProjectsCount
+            'haltedProjectsCount' => $haltedProjectsCount,
+            'filters' => $filters
         ];
     }
 
