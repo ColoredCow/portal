@@ -75,8 +75,7 @@ class ProjectService implements ProjectServiceContract
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
-            'haltedProjectsCount' => $haltedProjectsCount,
-            'filters' => $filters
+            'haltedProjectsCount' => $haltedProjectsCount
         ];
     }
 
