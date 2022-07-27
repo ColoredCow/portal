@@ -55,7 +55,7 @@
 				<div class="text-secondary mb-1">Employee ESI</div>
 				<div class="fz-30">
 					<i class="fa fa-rupee"></i>
-					<span>NA</span>
+					<span>{{ this.formatCurrency(employeeEsi) }}</span>
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -68,8 +68,7 @@
 			<div class="col-md-4">
 				<div class="text-secondary mb-1">TDS</div>
 				<div class="fz-30">
-					<i class="fa fa-rupee"></i>
-					<span>NA</span>
+					<span>N/A</span>
 				</div>
 			</div>
 		</div>
@@ -112,7 +111,7 @@
 				<div class="text-secondary mb-1">EPF Employer Share</div>
 				<div class="fz-30">
 					<i class="fa fa-rupee"></i>
-					<span>{{ this.formatCurrency(employeeEpf) }}</span>
+					<span>{{ this.formatCurrency(employerEpf) }}</span>
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -157,10 +156,10 @@
 		</div>
 		<div class="row mb-5">
 			<div class="col-md-4">
-				<div class="text-secondary mb-1">CTC Aggreed</div>
+				<div class="text-secondary mb-1">CTC Aggregated</div>
 				<div class="fz-30">
 					<i class="fa fa-rupee"></i>
-					<span>{{ this.formatCurrency(ctcAggreed) }}</span>
+					<span>{{ this.formatCurrency(ctcAggregated) }}</span>
 				</div>
 			</div>
 		</div>
@@ -202,6 +201,13 @@ export default {
 		totalSalary() {
 			return this.basicSalary + this.hra + this.transportAllowance + this.foodAllowance + this.otherAllowance;
 		},
+		employeeEsi() {
+			if(this.grossSalary < this.salaryConfigs.employee_esi_limit.fixed_amount) {
+				let percentage = this.salaryConfigs.employee_esi.percentage_rate;
+				return Math.ceil(this.grossSalary * percentage / 100);
+			}
+			return 0;
+		},
 		employeeEpf() {
 			let multiplier = this.grossSalary;
 			if (this.salaryConfigs.employee_epf.percentage_applied_on == "basic_salary") {
@@ -211,17 +217,25 @@ export default {
 			return Math.ceil(multiplier * percentage / 100);
 		},
 		totalDeduction() {
-			return this.employeeEpf + this.foodAllowance;
+			return this.employeeEsi + this.employeeEpf + this.foodAllowance;
 		},
 		netPay() {
 			return this.totalSalary - this.totalDeduction;		
 		},
 		employerEsi() {
-			if(this.grossSalary< 21000) {
-				let percentage = parseInt(this.salaryConfigs.employee_esi_limit.percentage_rate);
+			if(this.grossSalary < this.salaryConfigs.employer_esi_limit.fixed_amount) {
+				let percentage = this.salaryConfigs.employer_esi.percentage_rate;
 				return Math.ceil(this.grossSalary * percentage / 100);
 			}
 			return 0;
+		},
+		employerEpf() {
+			let multiplier = this.grossSalary;
+			if (this.salaryConfigs.employer_epf.percentage_applied_on == "basic_salary") {
+				multiplier = this.basicSalary;
+			}
+			let percentage = parseInt(this.salaryConfigs.employer_epf.percentage_rate);
+			return Math.ceil(multiplier * percentage / 100);
 		},
 		administrationCharges() {
 			let multiplier = this.grossSalary;
@@ -240,7 +254,7 @@ export default {
 			return Math.min(Math.ceil(multiplier * percentage / 100) , Math.ceil(this.salaryConfigs.edli_charges_limit.fixed_amount * percentage / 100));
 		},
 		ctc() {
-			return Math.ceil(parseInt(this.grossSalary) + parseInt(this.employerEsi) + parseInt(this.employeeEpf) + parseInt(this.edliCharges) + parseInt(this.administrationCharges));
+			return Math.ceil(parseInt(this.grossSalary) + parseInt(this.employerEsi) + parseInt(this.employerEpf) + parseInt(this.administrationCharges) + parseInt(this.edliCharges));
 		},
 		ctcAnnual() {
 			return this.ctc * 12;		
@@ -249,12 +263,15 @@ export default {
 			if (this.grossSalary === "") {
 				return 0;
 			}
-			return parseInt(this.salaryConfigs.health_insurance.fixed_amount);		
+			if(this.employerEsi === null || this.emplpyeeEsi === null)
+			{
+				return parseInt(this.salaryConfigs.health_insurance.fixed_amount);
+			}
+			return 0;
 		},
-		ctcAggreed() {
+		ctcAggregated() {
 			return this.ctcAnnual + this.healthInsurance;		
 		},
-
 	},
 	methods: {
 		formatCurrency(amount) {

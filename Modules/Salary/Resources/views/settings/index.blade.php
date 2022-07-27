@@ -141,23 +141,32 @@
                                         type="number" class="form-control"
                                         placeholder="Enter Food Allowance Amount" step="0.01">
                                 </div>
-                                <div class="col-md-5">
+                                <div class="form-group col-md-5">
                                     <label>Employee ESI Limit</label>
                                     <input name="employee_esi_limit" type="number"
                                         class="form-control"
                                         value="{{ optional($salaryConfig->get('employee_esi_limit', null))->fixed_amount }}"
                                         placeholder="amount" step="0.01">
-                                    <small class="help-text text-muted fz-14">If the gross salary will be high with this limit then ESI will not be applicable. Leave null if you want to apply on all the employees.
+                                    <small class="help-text text-muted fz-14">If the gross salary will be higher then this limit, then ESI will not be applicable. Leave null if you want to apply on all the employees.
                                     </small>
                                 </div>
-                                <div class="offset-md-1 col-md-5">
+                                <div class="form-group offset-md-1 col-md-5">
+                                    <label>Employer ESI Limit</label>
+                                    <input name="employer_esi_limit" type="number"
+                                        class="form-control"
+                                        value="{{ optional($salaryConfig->get('employer_esi_limit', null))->fixed_amount }}"
+                                        placeholder="amount" step="0.01">
+                                    <small class="help-text text-muted fz-14">If the gross salary will be higher then this limit, then ESI will not be applicable. Leave null if you want to apply on all the employees.
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-5">
                                     <label>EDLI maximum salary limit</label><br>
                                     <input
                                         value="{{ optional($salaryConfig->get('edli_charges_limit', null))->fixed_amount }}" name="edli_charges_limit" type="number"
                                         class="form-control" placeholder="amount" step="0.01">
                                     <small class="help-text text-muted fz-14">If the basic salary will be high with this limit then this amount will be considered for calculations.Leave empty if you want to apply on all the amount.</small>
                                 </div>
-                                <div class="form-group col-md-5">
+                                <div class="form-group offset-md-1 col-md-5">
                                     <label>Health Insurance</label>
                                     <input name="health_insurance"
                                         value="{{ optional($salaryConfig->get('health_insurance', null))->fixed_amount }}"
