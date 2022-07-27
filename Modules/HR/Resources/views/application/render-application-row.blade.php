@@ -61,6 +61,10 @@
 	</td>
 	<td>
 		<div class="d-flex flex-column">
+			{{-- @if(!$application->job)
+			@dd($application)
+			@endif --}}
+			{{-- @dd($application->job); --}}
 			<span>{{ $application->job->title }}</span>
 			<span class="fz-xl-14 text-secondary">Applied on
 				{{ $application->created_at->format(config('constants.display_date_format')) }}</span>

@@ -84,6 +84,8 @@ Route::middleware('auth')->group(function () {
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
         });
+        // Route::get('filters', 'ApplicationController@filters')->name('filter.show');
+        
 
         Route::resource('/evaluation', 'EvaluationController')->only(['show', 'update']);
         Route::get('/resources/', 'ResourcesController@index')->name('resources.index');
