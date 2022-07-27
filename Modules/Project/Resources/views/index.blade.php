@@ -88,7 +88,7 @@
                                         <span class="badge badge-light border border-dark rounded-0">No Contract</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="w-20p">
                                     @php
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
                                     @endphp
