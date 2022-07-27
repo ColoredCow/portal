@@ -396,8 +396,8 @@ $(document).ready(function () {
 		e.preventDefault();
 		let form = $("#addNewSegmentForm");
 		$("#createNewSegment").on("hidden.bs.modal", function () {
-           $(this).find("form").trigger("reset");
-        });
+			$(this).find("form").trigger("reset");
+		});
 	
 		$.ajax({
 			type: form.attr("method"),
@@ -407,9 +407,9 @@ $(document).ready(function () {
 				$("#createNewSegment").modal("hide");
 				$("#createNewSegment").on("hidden.bs.modal", function (e)
 				 {
-				$("#segmentsuccess").toggleClass("d-none");
-				$("#segmentsuccess").fadeToggle(6000);
-			});
+					$("#segmentsuccess").toggleClass("d-none");
+					$("#segmentsuccess").fadeToggle(6000);
+				});
 			},
 			error: function(response){
 				if(response.responseJSON.errors.name) {
