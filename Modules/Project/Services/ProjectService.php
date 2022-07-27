@@ -70,7 +70,20 @@ class ProjectService implements ProjectServiceContract
                 $query->where('team_member_id', $userId);
             })->count();
         }
-
+        foreach ($clients as $client) {
+            foreach ($client->projects as $project) {
+                if (empty($project->projectContracts->first()->contract_file_path)) {
+                    $project->tag('no-contract');
+                } else if(!empty($project->projectContracts->first()->contract_file_path)) {
+					$project->untag('no-contract');
+				}
+                if (empty($project->effort_sheet_url)) {
+                    $project->tag('project-unavailable');
+                } else if(!empty($project->effort_sheet_url)) {
+					$project->untag('project-unavailable');
+				}
+            }
+        }
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,

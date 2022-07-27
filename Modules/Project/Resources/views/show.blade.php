@@ -67,7 +67,18 @@
                             <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn-sm btn-primary btn-smtext-white ml-2 text-light rounded" 
                                 target="_blank">{{ _('Open Sheet') }}</a>
                         @else
-                            <span class="ml-2 fz-lg-22">Not Available</span>
+                        @foreach ($project->tags as $tag)
+								@if($tag->name === "Project unavailable")
+								<span class="badge badge-pill mr-1 mb-1 fz-12 c-pointer"
+									style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};" data-toggle="tooltip"
+									data-placement="top" title="{{ $tag->description }}">
+									@if ($tag->icon)
+									{!! config("tags.icons.{$tag->icon}") !!}
+									@endif
+									<span>{{ $tag->name }}</span>
+								</span>
+								@endif
+							@endforeach
                         @endif
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5">

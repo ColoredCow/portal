@@ -2,6 +2,7 @@
 
 namespace Modules\Project\Entities;
 
+use App\Traits\HasTags;
 use App\Traits\Filters;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ use Modules\User\Entities\User;
 
 class Project extends Model
 {
+    use HasTags, HasFactory, Filters;
     use HasFactory, Filters;
 
     protected $guarded = [];
