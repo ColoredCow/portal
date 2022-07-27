@@ -61,6 +61,7 @@
     </div>
 
     <table class="table table-striped table-bordered" id="applicants_table">
+        <thead class="thead-dark">
         <tr class="sticky-top">
             <th>Name</th>
             <th>Email</th>

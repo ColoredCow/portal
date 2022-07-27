@@ -46,7 +46,9 @@
                 </td>
 
                 <td>
-                    <button v-on:click="editSegment({{ $segment }})" class="btn btn-default">Edit</button>
+                    <i v-on:click="editSegment({{ $segment }})" class="fa fa-edit fz-20 text-theme-green"></i>
+
+                    <i class="fa fa-trash fz-20 ml-4 text-theme-red"></i>
                 </td>
             </tr>
             @endforeach
