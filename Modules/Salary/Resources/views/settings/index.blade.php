@@ -7,11 +7,7 @@
         <form action="{{ route('salary-settings.update') }}" method="POST">
             @csrf
             @include('status', ['errors' => $errors->all()])
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                </div>
-            @endif
+            @includeWhen(session('success'), 'toast', ['message' => session('success')])
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-6">
