@@ -391,7 +391,6 @@ $(".hr_round_guide").on("click", ".edit-guide", function () {
 	container.find(".btn-guide, .guide-container").toggleClass("d-none");
 });
 
-<<<<<<< HEAD
 $(document).ready(function () {
 	$("#addNewSegmentForm").submit(function (e) {
 		e.preventDefault();
@@ -424,26 +423,6 @@ $(document).ready(function () {
 	});
 });
 
-$(".hr_round_guide").on("click", ".save-guide", function() {
-	  let container = $(this).closest(".hr_round_guide");
-	  let form = container.find("form");
-	  let button = $(this);
-	  $.ajax({
-		  method: form.attr("method"),
-		  url: form.attr("action"),
-		  data: form.serialize() + "&guidelines=" + tinyMCE.activeEditor.getContent(),
-		  beforeSend: function() {
-			  button.prop("disabled", true).find(".item").toggleClass("d-none");
-		  },
-		  success: function(res) {
-			  button.prop("disabled", false).find(".item").toggleClass("d-none");
-			  if (res.length) {
-				  container.find(".guide-display").html(res);
-				  container.find(".btn-guide, .guide-container").toggleClass("d-none");
-			  }
-		  }
-	  });
-=======
 $(".hr_round_guide").on("click", ".save-guide", function () {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
@@ -463,7 +442,6 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
 			}
 		}
 	});
->>>>>>> 273b74a49eb4e20d6970a503653cf8fd97ae4b03
 });
 
 /**
