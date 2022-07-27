@@ -47,11 +47,11 @@
         <div class="d-flex flex-wrap w-full">
             <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
                 <div class="d-flex" >
-                    <a  :href="updateRoute+ '/'+ book.id">
+                    <a  href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
                     </a>
                     <div class="pl-2 pr-3 mr-1">
-                        <a  :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
+                        <a  href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                         
                         <p class="text-info" v-if="book.on_kindle == 1" :title="book.author">On Kindle</p>
