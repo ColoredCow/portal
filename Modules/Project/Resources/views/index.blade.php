@@ -90,7 +90,7 @@
                                         <span class="text-dark font-weight-bold">No Contract</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="float-right">
                                     @php
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
                                     @endphp
