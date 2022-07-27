@@ -28,6 +28,7 @@ return [
             'food_allowance' => 'Food Allowance',
             'employee_esi_limit' => 'Employee ESI Limit',
             'edli_charges_limit' => 'EDLI Charges Limit',
+            'health_insurance' => 'Health Insurance',
         ]
     ]
 ];

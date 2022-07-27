@@ -23,14 +23,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="text-secondary mb-1">Food Allowance</div>
-				<div class="fz-30">
-					<i class="fa fa-rupee"></i>
-					<span>{{ this.formatCurrency(foodAllowance) }}</span>
-				</div>
-			</div>
+		<div class="row mb-5">
 			<div class="col-md-4">
 				<div class="text-secondary mb-1">Other Allowance</div>
 				<div class="fz-30">
@@ -39,10 +32,135 @@
 				</div>
 			</div>
 			<div class="col-md-4">
+				<div class="text-secondary mb-1">Food Allowance</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(foodAllowance) }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-md-4">
 				<div class="text-secondary mb-1">Total Salary</div>
 				<div class="fz-30">
 					<i class="fa fa-rupee"></i>
 					<span>{{ this.formatCurrency(totalSalary) }}</span>
+				</div>
+			</div>
+		</div>
+		<h2 class="text-underline">Salary Deduction</h2>
+		<br>
+		<div class="row mb-5">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Employee ESI</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>NA</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Employee EPF</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(employeeEpf) }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">TDS</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>NA</span>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Food Deduction</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(foodAllowance) }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Total Deduction</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(totalDeduction) }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Net Pay</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(netPay) }}</span>
+				</div>
+			</div>
+		</div>
+		<h2 class="text-underline">Employer Contribution</h2>
+		<br>
+		<div class="row mb-5">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Employer ESI</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(employerEsi) }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">EPF Employer Share</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(employeeEpf) }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Administration Charges</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(administrationCharges) }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">EDLI Charges</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(Math.ceil(edliCharges)) }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">CTC</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(ctc) }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">CTC Annual</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(ctcAnnual) }}</span>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">Health Insurance</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(healthInsurance) }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-md-4">
+				<div class="text-secondary mb-1">CTC Aggreed</div>
+				<div class="fz-30">
+					<i class="fa fa-rupee"></i>
+					<span>{{ this.formatCurrency(ctcAggreed) }}</span>
 				</div>
 			</div>
 		</div>
@@ -84,8 +202,60 @@ export default {
 		totalSalary() {
 			return this.basicSalary + this.hra + this.transportAllowance + this.foodAllowance + this.otherAllowance;
 		},
-	},
+		employeeEpf() {
+			let multiplier = this.grossSalary;
+			if (this.salaryConfigs.employee_epf.percentage_applied_on == "basic_salary") {
+				multiplier = this.basicSalary;
+			}
+			let percentage = parseInt(this.salaryConfigs.employee_epf.percentage_rate);
+			return Math.ceil(multiplier * percentage / 100);
+		},
+		totalDeduction() {
+			return this.employeeEpf + this.foodAllowance;
+		},
+		netPay() {
+			return this.totalSalary - this.totalDeduction;		
+		},
+		employerEsi() {
+			if(this.grossSalary< 21000) {
+				let percentage = parseInt(this.salaryConfigs.employee_esi_limit.percentage_rate);
+				return Math.ceil(this.grossSalary * percentage / 100);
+			}
+			return 0;
+		},
+		administrationCharges() {
+			let multiplier = this.grossSalary;
+			if (this.salaryConfigs.administration_charges.percentage_applied_on == "basic_salary") {
+				multiplier = this.basicSalary;
+			}
+			let percentage = this.salaryConfigs.administration_charges.percentage_rate;
+			return Math.ceil(multiplier * percentage / 100);
+		},
+		edliCharges() {
+			let multiplier = this.grossSalary;
+			if (this.salaryConfigs.edli_charges.percentage_applied_on == "basic_salary") {
+				multiplier = this.basicSalary;
+			}
+			let percentage = this.salaryConfigs.edli_charges.percentage_rate;
+			return Math.min(Math.ceil(multiplier * percentage / 100) , Math.ceil(this.salaryConfigs.edli_charges_limit.fixed_amount * percentage / 100));
+		},
+		ctc() {
+			return Math.ceil(parseInt(this.grossSalary) + parseInt(this.employerEsi) + parseInt(this.employeeEpf) + parseInt(this.edliCharges) + parseInt(this.administrationCharges));
+		},
+		ctcAnnual() {
+			return this.ctc * 12;		
+		},
+		healthInsurance() {
+			if (this.grossSalary === "") {
+				return 0;
+			}
+			return parseInt(this.salaryConfigs.health_insurance.fixed_amount);		
+		},
+		ctcAggreed() {
+			return this.ctcAnnual + this.healthInsurance;		
+		},
 
+	},
 	methods: {
 		formatCurrency(amount) {
 			return amount.toLocaleString("en-IN");
