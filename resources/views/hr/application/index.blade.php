@@ -56,7 +56,8 @@
                     </option>
                     @foreach ($jobs as $job)
                     <option value="{{ $job->id }}" {{ request()->get('hr_job_id') == $job->id ? 'selected' : '' }}>
-                        {{ $job->title }} </option>
+                        {{ $job->title }}
+                    </option>
                     @endforeach
                 </select>
             </div>
@@ -79,8 +80,8 @@
                     onchange="this.form.submit()">
                     <option value="" {{ request()->has('sort_by') ? '' : 'selected' }}>
                         {!! __('SortBy') !!}
-                        <option>Name</option>
-                        <option>Date</option>
+                        <option value="name">Name</option>
+                        <option value="date">Date</option>
                     </option>
                 </select>
             </div>
