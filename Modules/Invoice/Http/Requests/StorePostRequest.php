@@ -13,7 +13,7 @@ class StorePostRequest extends FormRequest
      */
     public function rules()
     {
-        $rules =  [
+        $rules = [
             'client_id' =>'required',
             'billing_level' => 'required',
             'status' => 'required',
@@ -25,8 +25,9 @@ class StorePostRequest extends FormRequest
             'sent_on' => 'required',
             'due_on' => 'required',
             'invoice_file' =>'required',
-            
+
         ];
+
         return $rules;
     }
 

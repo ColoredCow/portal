@@ -72,7 +72,7 @@ class InvoiceController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function store(StorePostRequest  $request)
+    public function store(StorePostRequest $request)
     {
         $this->service->store($request->all());
 
