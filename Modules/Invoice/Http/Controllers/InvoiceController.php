@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Http\Requests\StorePostRequest;
 
 class InvoiceController extends Controller
 {
@@ -71,8 +72,8 @@ class InvoiceController extends Controller
      * Store a newly created resource in storage.
      * @param Request $request
      */
-    public function store(Request $request)
-    {
+    public function store(StorePostRequest  $request)
+    { 
         $this->service->store($request->all());
 
         return redirect(route('invoice.index'))->with('success', 'Invoice created successfully!');

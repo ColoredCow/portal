@@ -62,15 +62,15 @@
                 </div>
                 <div class="form-group ">
                     <label for="comments">Comments</label>
-                    <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
+                    <textarea name="comments" id="comments" rows="5" class="form-control">{{old('comments') }}</textarea>
                 </div>
             </div>
             <div class="col-md-5 offset-md-1">
                 <div class="form-group">
                     <label for="project_invoice_id" class="field-required">Status</label>
                     <select class="form-control" name="status">
-                        <option value="sent">Sent</option>
-                        <option value="paid">Paid</option>
+                        <option value="sent" {{ old('status')=="sent" ? "selected" : ''}}>Sent</option>
+                        <option value="paid" {{ old('status')=="paid" ? "selected" : ''}}>Paid</option>
                     </select>
                 </div>
                 <div class="form-group mb-0">
@@ -108,12 +108,12 @@
                 <div class="form-group">
                     <label for="sent_on" class="field-required">Sent on</label>
                     <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"
-                        value="{{ now()->format('Y-m-d') }}">
+                        value="{{ old('sent_on', now()->format('Y-m-d'))}}">
                 </div>
                 <div class="form-group">
                     <label for="due_on" class="field-required">Due date</label>
                     <input type="date" class="form-control" name="due_on" id="due_on" required="required"
-                        value="{{ now()->addDays(6)->format('Y-m-d') }}">
+                        value="{{ old('due_on', now()->addDays(6)->format('Y-m-d')) }}">
                 </div>
             </div>
         </div>
@@ -151,10 +151,10 @@
                     clients: @json($clients),
                     projects: {},
                     groups: {},
-                    clientId: '',
+                    clientId: "{{old('client_id')}}",
                     client: null,
-                    currency: '',
-                    amount: '',
+                    currency: "{{old('currency')}}",
+                    amount: '{{old('amount')}}',
                     showProjects: false,
                 }
             },
