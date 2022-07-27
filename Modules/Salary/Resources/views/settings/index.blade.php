@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row mb-6">
                         <div class="col-12">
-                            <h4 class="text-underline">Based on Gross Salary</h4>
+                            <h4 class="text-underline">Based on gross salary</h4>
                             <br>
                             <div class="form-group">
                                 <label>Basic Salary</label>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="row mb-6">
                         <div class="col-12">
-                            <h4 class="text-underline">Based on Basic Salary</h4>
+                            <h4 class="text-underline">Based on basic salary</h4>
                             <br>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label>EDLI Charges FIXED</label>
+                                    <label>EDLI charges FIXED</label>
                                     <div class="input-group">
                                         <input style="flex-grow: 0.2;" name="edli_charges[rate]" type="number"
                                             class="form-control w-10" placeholder="%"
@@ -94,7 +94,7 @@
                     </div>
                     <div class="row mb-6">
                         <div class="col-12">
-                            <h4 class="text-underline">Deduction Based on Basic salary</h4>
+                            <h4 class="text-underline">Deduction based on basic salary</h4>
                             <br>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -142,7 +142,7 @@
                                         placeholder="Enter Food Allowance Amount" step="0.01">
                                 </div>
                                 <div class="form-group col-md-5">
-                                    <label>Employee ESI Limit</label>
+                                    <label>Employee ESI limit</label>
                                     <input name="employee_esi_limit" type="number"
                                         class="form-control"
                                         value="{{ optional($salaryConfig->get('employee_esi_limit', null))->fixed_amount }}"
@@ -151,7 +151,7 @@
                                     </small>
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
-                                    <label>Employer ESI Limit</label>
+                                    <label>Employer ESI limit</label>
                                     <input name="employer_esi_limit" type="number"
                                         class="form-control"
                                         value="{{ optional($salaryConfig->get('employer_esi_limit', null))->fixed_amount }}"
