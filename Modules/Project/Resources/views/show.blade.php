@@ -77,7 +77,6 @@
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
                     </div>  
                 </div>
-                <br>
                 <div class="form-row"> 
                     @if($project->billing_level)
                         <div class="form-group col-md-6 pl-4">
