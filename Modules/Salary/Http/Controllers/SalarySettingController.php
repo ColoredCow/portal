@@ -2,9 +2,9 @@
 
 namespace Modules\Salary\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Salary\Entities\SalaryConfiguration;
+use Modules\Salary\Http\Requests\SalarySettingRequest;
 
 class SalarySettingController extends Controller
 {
@@ -43,11 +43,12 @@ class SalarySettingController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param SalarySettingRequest $request
      */
-    public function update(Request $request)
+    public function update(SalarySettingRequest $request)
     {
-        foreach ($request->all() as $setting => $value) {
+        $validated = $request->validated();
+        foreach ($validated as $setting => $value) {
             $dataToUpdate = [];
             $dataToFind = ['slug' => $setting];
             $dataToUpdate['label'] = config('salary.settings.labels.' . $setting);
