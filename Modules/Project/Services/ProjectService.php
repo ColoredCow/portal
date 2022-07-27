@@ -26,7 +26,7 @@ class ProjectService implements ProjectServiceContract
         $data['projects'] = $data['projects'] ?? 'all-projects';
 
         $clients = null;
-
+    
         if ($data['projects'] == 'all-projects') {
             $clients = Client::query()->with('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters)->orderBy('name', 'asc');
@@ -70,6 +70,21 @@ class ProjectService implements ProjectServiceContract
                 $query->where('team_member_id', $userId);
             })->count();
         }
+        foreach ($clients as $client) {
+            foreach ($client->projects as $project) {
+                if (empty($project->projectContracts->first()->contract_file_path)) {
+                    $project->tag('no-contract');
+                } else if(!empty($project->projectContracts->first()->contract_file_path)) {
+					$project->untag('no-contract');
+				}
+                if (empty($project->effort_sheet_url)) {
+                    $project->tag('project-unavailable');
+                } else if(!empty($project->effort_sheet_url)) {
+					$project->untag('project-unavailable');
+				}
+            }
+        }
+
 
         return [
             'clients' => $clients,

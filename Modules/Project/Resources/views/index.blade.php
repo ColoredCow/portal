@@ -85,10 +85,16 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    
-                                    @if(empty($project->projectContracts->first()->contract_file_path))
-                                        <span class="text-dark font-weight-bold">No Contract</span>
-                                    @endif
+									@foreach ($project->tags as $tag)  
+										<span class="badge badge-pill mr-1 mb-1 fz-12 c-pointer"
+											style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};" data-toggle="tooltip"
+											data-placement="top" title="{{ $tag->description }}">
+											@if ($tag->icon)
+											{!! config("tags.icons.{$tag->icon}") !!}
+											@endif
+											<span>{{ $tag->name }}</span>
+										</span>
+									@endforeach
                                 </td>
                                 <td>
                                     @php
