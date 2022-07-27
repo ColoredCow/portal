@@ -15,6 +15,7 @@
     <br>
     <div>
         <table class="table table-striped table-bordered" id="tags_table">
+            <thead class="thead-dark">
             <tr class="sticky-top">
                 <th>{{ __('Tag Name') }}</th>
                 <th>{{ __('Description') }}</th>

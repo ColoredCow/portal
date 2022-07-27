@@ -24,9 +24,9 @@
                 <input type="hidden" name="status" value="{{ request()->input('status', 'active') }}">
                 <select class="fz-14 fz-lg-16 p-1 bg-info ml-3 my-auto text-white rounded border-0" name="projects"
                     onchange="this.form.submit()">
-                    <option value="my-projects" {{ request()->get('projects') == 'my-projects' ? 'selected' : '' }}>
+                    <option value="my-projects" {{ (request()->get('projects') == 'my-projects' || !request()->has('projects')) ? 'selected' : '' }}>
                         {{ __('My Projects') }} </option>
-                    <option value="all-projects" {{ (request()->get('projects') == 'all-projects' || !request()->has('projects')) ? 'selected' : '' }}>
+                    <option value="all-projects" {{ request()->get('projects') == 'all-projects' ? 'selected' : '' }}>
                         {{ __('All Projects') }} </option>
                 </select>
             </div>
@@ -51,7 +51,7 @@
                 <tr>
                     <th class="w-33p sticky-top">Client/Project Name</th>
                     <th class="sticky-top">Team Members</th>
-                    <th class="sticky-top">Status</th>
+                    <th class="sticky-top">Tags</th>
                     <th class="sticky-top">Velocity (Hours)</th>
                 </tr>
             </thead>
@@ -75,29 +75,26 @@
                                 @else
                                     <td class="w-33p"><div class="pl-2 pl-xl-3">{{ $project->name }}</div></td>
                                 @endcan
-                                {{-- <td class="w-33p"></td> --}}
-                                <td>
+                                <td class="w-20p">
                                     @foreach($project->getTeamMembers ?:[] as $teamMember)
                                         <span class="content tooltip-wrapper"  data-html="true" data-toggle="tooltip"  title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}} <br>    Efforts: {{$teamMember->current_actual_effort}} Hours" >
-                                            <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1"></a>
-                                        
+                                            <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mb-1 mr-0.5 {{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'border border-success' : 'border border-danger' }} border-2"></a>
                                         </span>
                                     @endforeach
                                 </td>
                                 <td>
-                                    
                                     @if(empty($project->projectContracts->first()->contract_file_path))
-                                        <span class="text-dark font-weight-bold">No Contract</span>
+                                        <span class="badge badge-light border border-dark rounded-0">No Contract</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="w-20p">
                                     @php
                                         $textColor = $project->velocity >= 1 ? 'text-success' : 'text-danger'
                                     @endphp
                                     <a class="{{ $textColor }}" href="{{route('project.effort-tracking', $project)}}"><i class="mr-0.5 fa fa-external-link-square"></i></a>
                                     <span class="{{ $textColor }} font-weight-bold">{{ $project->velocity . ' (' . $project->current_hours_for_month . ' Hrs.)' }}</span>
-                                    </td>
-                                    </tr>
+                                </td>
+                            </tr>
                         @endforeach
                     @empty
                         <tr>
@@ -116,5 +113,6 @@
             </tbody>
         </table>
     </div>
+    {{ $clients->links()}}
 </div>
 @endsection
