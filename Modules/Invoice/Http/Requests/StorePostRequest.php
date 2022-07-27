@@ -25,7 +25,6 @@ class StorePostRequest extends FormRequest
             'sent_on' => 'required',
             'due_on' => 'required',
             'invoice_file' =>'required',
-
         ];
 
         return $rules;
