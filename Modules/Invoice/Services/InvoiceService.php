@@ -160,7 +160,7 @@ class InvoiceService implements InvoiceServiceContract
             'body' => $data['email_body'],
             'subject' => $data['email_subject'],
             'sent_on'=>now(),
-            'type' => config('invoice.mail-type.payment-confirmation.label')
+            'type' => config('invoice.mail-type.payment-confirmation.slug')
         ]);
 
         return $invoice;
@@ -550,7 +550,7 @@ class InvoiceService implements InvoiceServiceContract
             'subject' => $email['subject'],
             'body' => $email['body'],
             'sent_on'=> now(),
-            'type' => config('invoice.mail-type.invoice.label')
+            'type' => config('invoice.mail-type.invoice.slug')
         ]);
     }
 
@@ -590,14 +590,11 @@ class InvoiceService implements InvoiceServiceContract
             'subject' => $data['email_subject'] ?? null
         ];
         Mail::queue(new SendPendingInvoiceMail($invoice, $email));
-        $invoice->update([
-            'reminder_mail_count' => ($invoice->reminder_mail_count + 1)
-        ]);
         InvoiceMail::create([
             'invoice_id'=> $invoice->id,
             'subject' => $email['subject'],
             'body' => $email['body'],
-            'type' => config('invoice.mail-type.invoice-reminder.label'),
+            'type' => config('invoice.mail-type.invoice-reminder.slug'),
             'sent_on'=> now()
         ]);
     }

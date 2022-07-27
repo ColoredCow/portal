@@ -16,9 +16,17 @@
                         <div class="card-header c-pointer" data-toggle="collapse" data-target="#type" aria-expanded="true" aria-controls="type">
                             <div class="container">
                                 <div class="row">
-                                <div class="col-md-auto">
+                                <div class="col-sm-5">
                                     <span ><b>Type:</b></span>
-                                    <span>{{ $email ['type']}} </span>
+                                    <span>
+                                        @if ($email['type']=='invoice-reminder')
+                                            Invoice-Reminder
+                                        @elseif ($email['type']=='invoice')
+                                            Invoice
+                                        @else
+                                            Payment-Reminder
+                                        @endif
+                                    </span>
                                 </div>
                                 <div class="col">
                                     <span ><b>Sent on:</b></span>
