@@ -70,6 +70,7 @@ class ProjectService implements ProjectServiceContract
                 $query->where('team_member_id', $userId);
             })->count();
         }
+    
         
         foreach ($clients as $client):
             foreach ($client->projects as $project):
