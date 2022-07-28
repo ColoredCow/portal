@@ -14,14 +14,28 @@
                         <div class="col-12">
                             <h4 class="text-underline">Based on gross salary</h4>
                             <br>
-                            <div class="form-group">
-                                <label>Basic Salary</label>
-                                <div class="input-group">
-                                    <input style="flex-grow: 0.2;" name="basic_salary[rate]" type="number"
-                                        class="form-control w-10" placeholder="%"
-                                        value="{{ optional($salaryConfig->get('basic_salary', null))->percentage_rate }}" step="0.01">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">% of gross salary</span>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Basic Salary</label>
+                                    <div class="input-group">
+                                        <input style="flex-grow: 0.2;" name="basic_salary[rate]" type="number"
+                                            class="form-control w-10" placeholder="%"
+                                            value="{{ optional($salaryConfig->get('basic_salary', null))->percentage_rate }}" step="0.01">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">% of gross salary</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Employer ESI</label>
+                                    <div class="input-group">
+                                        <input style="flex-grow: 0.2;" name="employer_esi[rate]" type="number"
+                                            class="form-control w-10"
+                                            value="{{ optional($salaryConfig->get('employer_esi', null))->percentage_rate }}"
+                                            placeholder="%" step="0.01">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">% of gross salary</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -38,18 +52,6 @@
                                         <input style="flex-grow: 0.2;" name="hra[rate]" type="number"
                                             class="form-control w-10" placeholder="%"
                                             value="{{ optional($salaryConfig->get('hra', null))->percentage_rate }}" step="0.01">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">% of basic salary</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Employer ESI</label>
-                                    <div class="input-group">
-                                        <input style="flex-grow: 0.2;" name="employer_esi[rate]" type="number"
-                                            class="form-control w-10"
-                                            value="{{ optional($salaryConfig->get('employer_esi', null))->percentage_rate }}"
-                                            placeholder="%" step="0.01">
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon2">% of basic salary</span>
                                         </div>
@@ -94,28 +96,34 @@
                     </div>
                     <div class="row mb-6">
                         <div class="col-12">
-                            <h4 class="text-underline">Deduction based on basic salary</h4>
-                            <br>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label>Employee ESI</label>
-                                    <div class="input-group">
-                                        <input style="flex-grow: 0.2;" name="employee_esi[rate]" type="number"
-                                            class="form-control w-10" placeholder="%"
-                                            value="{{ optional($salaryConfig->get('employee_esi', null))->percentage_rate }}" step="0.01">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">% of basic salary</span>
+                                    <h4 class="text-underline">Deduction based on gross salary</h4>
+                                    <br>
+                                    <div class="form-group col-md-14">
+                                        <label>Employee ESI</label>
+                                        <div class="input-group">
+                                            <input style="flex-grow: 0.2;" name="employee_esi[rate]" type="number"
+                                                class="form-control w-10" placeholder="%"
+                                                value="{{ optional($salaryConfig->get('employee_esi', null))->percentage_rate }}" step="0.01">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">% of gross salary</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label>Employee EPF</label>
-                                    <div class="input-group">
-                                        <input style="flex-grow: 0.2;" name="employee_epf[rate]" type="number"
-                                            value="{{ optional($salaryConfig->get('employee_epf', null))->percentage_rate }}"
-                                            class="form-control w-10" placeholder="%" step="0.01">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">% of basic salary</span>
+                                    <h4 class="text-underline">Deduction based on basic salary</h4>
+                                    <br>
+                                    <div class="form-group col-md-14">
+                                        <label>Employee EPF</label>
+                                        <div class="input-group">
+                                            <input style="flex-grow: 0.2;" name="employee_epf[rate]" type="number"
+                                                value="{{ optional($salaryConfig->get('employee_epf', null))->percentage_rate }}"
+                                                class="form-control w-10" placeholder="%" step="0.01">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">% of basic salary</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -132,14 +140,14 @@
                                     <input name="transport_allowance"
                                         value="{{ optional($salaryConfig->get('transport_allowance', null))->fixed_amount }}"
                                         type="number" class="form-control"
-                                        placeholder="Enter Transport Allowance " step="0.01">
+                                        placeholder="amount" step="0.01">
                                 </div>
                                 <div class="form-group offset-md-1 col-md-5">
                                     <label>Food allowance </label>
                                     <input name="food_allowance"
                                         value="{{ optional($salaryConfig->get('food_allowance', null))->fixed_amount }}"
                                         type="number" class="form-control"
-                                        placeholder="Enter Food Allowance Amount" step="0.01">
+                                        placeholder="amount" step="0.01">
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label>Employee ESI limit</label>
@@ -171,7 +179,7 @@
                                     <input name="health_insurance"
                                         value="{{ optional($salaryConfig->get('health_insurance', null))->fixed_amount }}"
                                         type="number" class="form-control"
-                                        placeholder="Enter Health Insurance Amount" step="0.01">
+                                        placeholder="amount" step="0.01">
                                 </div>
                             </div>
                         </div>

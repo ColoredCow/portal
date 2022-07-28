@@ -5,8 +5,8 @@ return [
     'settings' => [
         'percentage_applies_on' => [
             'basic_salary' => 'gross_salary',
-            'employee_esi' => 'basic_salary',
-            'employer_esi' => 'basic_salary',
+            'employee_esi' => 'gross_salary',
+            'employer_esi' => 'gross_salary',
             'hra' => 'basic_salary',
             'employee_epf' => 'basic_salary',
             'employer_epf' => 'basic_salary',

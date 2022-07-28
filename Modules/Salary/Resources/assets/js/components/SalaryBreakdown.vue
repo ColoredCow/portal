@@ -260,14 +260,10 @@ export default {
 			return this.ctc * 12;		
 		},
 		healthInsurance() {
-			if (this.grossSalary === "") {
+			if (this.grossSalary === "" || this.employerEsi !== 0 || this.employeeEsi !== 0) {
 				return 0;
 			}
-			if(this.employerEsi === null || this.emplpyeeEsi === null)
-			{
-				return parseInt(this.salaryConfigs.health_insurance.fixed_amount);
-			}
-			return 0;
+			return parseInt(this.salaryConfigs.health_insurance.fixed_amount);
 		},
 		ctcAggregated() {
 			return this.ctcAnnual + this.healthInsurance;		
