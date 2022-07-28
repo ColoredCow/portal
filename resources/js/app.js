@@ -11,9 +11,17 @@ import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
 
 window.Vue = require("vue");
-import { Laue } from "laue";
 
+import { Laue } from "laue";
 Vue.use(Laue);
+
+// vue toast registration
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+const options = {
+	timeout: 2000
+};
+Vue.use(Toast, options);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -28,6 +36,7 @@ Vue.use(Laue);
  *  Module Vue Components
  */
 require("./../../Modules/User/Resources/assets/js/vueComponents.js");
+require("./../../Modules/Salary/Resources/assets/js/vueComponents.js");
 // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
 
 Vue.component("project-stage-component", require("./components/ProjectStageComponent.vue").default);

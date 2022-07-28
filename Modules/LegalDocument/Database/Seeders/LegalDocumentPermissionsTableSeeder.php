@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Report\Database\Seeders;
+namespace Modules\LegalDocument\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Permission;
 
-class ReportDatabaseSeeder extends Seeder
+class LegalDocumentPermissionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,30 +17,25 @@ class ReportDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
-        $financeReportsPermissions = [
-            ['name' => 'finance_reports.view'],
+        $ndaSettingsPermissions = [
+            ['name' => 'nda_settings.create'],
+            ['name' => 'nda_settings.view'],
+            ['name' => 'nda_settings.update'],
+            ['name' => 'nda_settings.delete'],
         ];
-
-        $reportsPermissions = [
-            ['name' => 'report.view'],
-            ['name' => 'report.edit'],
-        ];
-        $allReportsPermissions = array_merge($financeReportsPermissions, $reportsPermissions);
-
-        foreach ($allReportsPermissions as $permission) {
+        foreach ($ndaSettingsPermissions as $permission) {
             Permission::updateOrCreate($permission);
         }
 
         // set permissions for admin role
         $adminRole = Role::where(['name' => 'admin'])->first();
-        foreach ($allReportsPermissions as $permission) {
+        foreach ($ndaSettingsPermissions as $permission) {
             $adminRole->givePermissionTo($permission);
         }
 
         // set permissions for finance-manager role
         $financeManagerRole = Role::where(['name' => 'finance-manager'])->first();
-        foreach ($financeReportsPermissions as $permission) {
+        foreach ($ndaSettingsPermissions as $permission) {
             $financeManagerRole->givePermissionTo($permission);
         }
     }

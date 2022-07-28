@@ -2,9 +2,10 @@
 
 namespace Modules\HR\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Modules\HR\Entities\Job;
+use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Artisan;
 
 class HRJobsSeederTableSeeder extends Seeder
 {
@@ -21,6 +22,6 @@ class HRJobsSeederTableSeeder extends Seeder
                 ->count(2)
                 ->create();
         }
-        \Artisan::call('mapping-of-jobs-and-hr-rounds');
+        Artisan::call('mapping-of-jobs-and-hr-rounds');
     }
 }
