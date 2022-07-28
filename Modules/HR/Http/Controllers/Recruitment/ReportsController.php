@@ -74,6 +74,7 @@ class ReportsController extends Controller
         ->get();
 
         $data = [];
+        $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
@@ -86,7 +87,7 @@ class ReportsController extends Controller
 
         return view('hr.recruitment.reports')->with([
             'chartData' => $data['chartData'],
-            'todayCount' => $todayCount,
+            'todayCount' => $todayCount, 'verifiedApplicationsCount' => $verifiedApplicationCount,
         ]);
     }
 }
