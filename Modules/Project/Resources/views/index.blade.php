@@ -94,7 +94,6 @@
 											<span>{{ $tag->name }}</span>
 										</span>
 									@endforeach
-jus-chdb-yem
                                 </td>
                                 <td class="w-20p">
                                     @php
