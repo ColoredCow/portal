@@ -128,10 +128,10 @@ $(document).ready(() => {
 });
 
 $(document).ready(function(){	
-	$('#domainformModal').on('hidden.bs.modal', function () {
-		$(this).find('form').trigger('reset');
+	$("#domainformModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
 		$("#domainerror").addClass("d-none");
-	})
+	});
 
 	$("#domainForm").on("submit",function(e){
 		e.preventDefault();
@@ -149,9 +149,8 @@ $(document).ready(function(){
 			error: function(response){
 				if(response.responseJSON.errors.name){
 					let text = response.responseJSON.errors.name[0];
-					 $("#domainerror").html(text).removeClass("d-none");
-					 
-					 return false;
+					$("#domainerror").html(text).removeClass("d-none");
+					return false;
 				}
 			},
 		});
