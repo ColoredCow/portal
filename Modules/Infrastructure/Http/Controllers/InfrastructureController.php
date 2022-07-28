@@ -19,11 +19,11 @@ class InfrastructureController extends Controller
         $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1']);
     }
 
-    public function index()
+    public function getS3Buckets()
     {
         $this->authorize('Backupview', $this);
         $storageBuckets = $this->service->getStorageBuckets();
-        return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
+        return view('infrastructure::s3')->with('storageBuckets', $storageBuckets);
     }
 
     public function getInstances()

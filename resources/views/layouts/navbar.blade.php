@@ -127,11 +127,11 @@
                     class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
-                @can('infrastructure.backups.view')
-                    <a class="dropdown-item" href="{{ route('infrastructure.index') }}">Backups</a>
-                @endcan
                 @can('infrastructure.ec2-instances.view')
-                    <a class="dropdown-item" href="{{ route('infrastructure.get-instances') }}">EC2 Instances</a>
+                    <a class="dropdown-item" href="{{ route('infrastructure.ec2-instances.index') }}">EC2 Instances</a>
+                @endcan
+                @can('infrastructure.backups.view')
+                    <a class="dropdown-item" href="{{ route('infrastructure.s3-buckets.index') }}">Backups</a>
                 @endcan
             </div>
         </li>
