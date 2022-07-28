@@ -30,6 +30,7 @@ class InfrastructureService implements InfrastructureServiceContract
                 'console_url' => config('infrastructure.console-urls.s3') . $bucket['Name'],
             ];
         }, $s3buckets);
+
         return $s3buckets;
     }
 
@@ -39,6 +40,7 @@ class InfrastructureService implements InfrastructureServiceContract
         $instances = $ec2Client->DescribeInstances()->toArray()['Reservations'];
         $instances = array_map(function ($instance) {
             $instanceDetails = $instance['Instances'][0];
+
             return [
                 'name' => $instanceDetails['Tags'][0]['Value'],
                 'state' => $instanceDetails['State']['Name'],
