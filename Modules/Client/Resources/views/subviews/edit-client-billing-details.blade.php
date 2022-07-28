@@ -30,6 +30,7 @@
 
                             <select name="service_rate_term" class="form-control">
                                 <option {{ $clientBillingDetail->service_rate_term == 'per_hour' ? 'selected=selected' : '' }} value="per_hour">Per Hour</option>
+                                <option {{ $clientBillingDetail->service_rate_term == 'per_resource' ? 'selected=selected' : '' }} value="per_resource">Per Resource</option>
                                 <option {{ $clientBillingDetail->service_rate_term == 'overall' ? 'selected=selected' : '' }} value="overall">Overall</option>
                             </select>
                         </div>

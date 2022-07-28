@@ -29,7 +29,7 @@ class Project extends Model
     public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
-            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort')->withTimestamps()->whereNull('project_team_members.ended_on');
+            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort', 'billing_engagement')->withTimestamps()->whereNull('project_team_members.ended_on');
     }
 
     public function repositories()

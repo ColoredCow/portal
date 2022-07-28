@@ -224,6 +224,7 @@ class ProjectService implements ProjectServiceContract
                     'team_member_id' => $teamMemberData['team_member_id'],
                     'designation' => $teamMemberData['designation'],
                     'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
+                    'billing_engagement' => $teamMemberData['billing_engagement']
                 ]);
             }
         }
@@ -261,8 +262,8 @@ class ProjectService implements ProjectServiceContract
     }
     public function getWorkingDays($project)
     {
-        $startDate = $project->client->client_month_start_date;
-        $endDate = $project->client->client_month_end_date;
+        $startDate = $project->client->month_start_date;
+        $endDate = $project->client->month_end_date;
         $period = CarbonPeriod::create($startDate, $endDate);
         $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];

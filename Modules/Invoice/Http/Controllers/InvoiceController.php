@@ -95,7 +95,7 @@ class InvoiceController extends Controller
     {
         $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
         $pdf = App::make('snappy.pdf.wrapper');
-        $html = view('invoice::render.render', $data);
+        $html = view('invoice::render.invoice-template-1', $data);
         $pdf->loadHTML($html);
 
         return $pdf;
