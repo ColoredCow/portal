@@ -11,10 +11,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger d-none pr-0.83" id="segmentError">
+                        <button type="button" id="segmentModalCloseBtn" class="float-right bg-transparent text-danger border-0 fz-16 mt-n1.33">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong id="errors"></strong>
+                    </div>
                     <div class="form-group">
                         <label for="name" class="field-required">Segment Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="">  
-                        <div id="segmentNameError" class="d-none text-danger">*Please give segment name</div>
                     </div>
                     <div class="form-group">
                         <select class="form-control" name="rounds" id="rounds">
@@ -23,7 +28,6 @@
                                 <option value="{{$round->name}}">{{$round->name}}</option>
                             @endforeach
                         </select>
-                        <div id="roundNameError" class="d-none text-danger">*Please select round</div>
                     </div>
                    
                 </div>

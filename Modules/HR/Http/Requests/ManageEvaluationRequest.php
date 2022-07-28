@@ -15,7 +15,7 @@ class ManageEvaluationRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'rounds' => 'required',
+            'rounds' => 'required|string    ',
         ];
     }
 

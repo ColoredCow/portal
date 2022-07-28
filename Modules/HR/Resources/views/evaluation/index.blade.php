@@ -8,17 +8,9 @@
         <div class="d-none alert alert-success fade show" role="alert" id="segmentsuccess">
             <strong>Success!!!</strong>Congratulations!!! New segment successfully created.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
             </button>
-          </div> 
-        {{-- <div id="segmentsuccess" class="d-none" >
-            <div class=" text text-success fade show" role="contentinfo" >
-                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-                <button type="button" class="close"  data-dismiss="text" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div><br><br> --}}
+          </div>
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">Segments</h1>
             <div>

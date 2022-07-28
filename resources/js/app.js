@@ -405,21 +405,25 @@ $(document).ready(function () {
 			data: form.serialize(),
 			success:function (response) {
 				$("#createNewSegment").modal("hide");
-				$("#createNewSegment").on("hidden.bs.modal", function (e)
-				 {
+				$("#createNewSegment").on("hidden.bs.modal", function (e) {
 					$("#segmentsuccess").toggleClass("d-none");
 					$("#segmentsuccess").fadeToggle(6000);
 				});
-			},
-			error: function(response){
-				if(response.responseJSON.errors.name) {
-					$("#segmentNameError").removeClass("d-none");
-				} 
-				if(response.responseJSON.errors.rounds) {
-					$("#roundNameError").removeClass("d-none");
-				}
-		 	}
+			},	
+			error: function(response) {
+			$("#segmentError").removeClass('d-none');
+				let errors = response.responseJSON.errors;
+				$('#errors').empty();
+				for (let error in errors) {
+					console.log(error);
+					$('#errors').append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			  }
+			}
 		});
+	});
+	$("#segmentModalCloseBtn").click(function() {
+		console.log($("#segmentError"))
+		$("#segmentError").toggleClass("d-none");
 	});
 });
 
