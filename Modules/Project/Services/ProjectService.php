@@ -77,15 +77,15 @@ class ProjectService implements ProjectServiceContract
                     if (empty($project->projectContracts->first()->contract_file_path)) {
                         $project->tag('no-contract');
                     } elseif (!empty($project->projectContracts->first()->contract_file_path)) {
-                    $project->untag('no-contract');
-                }
-                if (empty($project->effort_sheet_url)) {
-                    $project->tag('project-unavailable');
-                } elseif (!empty($project->effort_sheet_url)) {
-                $project->untag('project-unavailable');
-            }
-            endforeach;
-            endforeach;
+                        $project->untag('no-contract');
+                    }
+        if (empty($project->effort_sheet_url)) {
+            $project->tag('project-unavailable');
+        } elseif (!empty($project->effort_sheet_url)) {
+            $project->untag('project-unavailable');
+        }
+        endforeach;
+        endforeach;
         }
 
         return [
