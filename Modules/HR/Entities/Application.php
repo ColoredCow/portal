@@ -198,7 +198,7 @@ class Application extends Model
     }
 
     public function scopeFilterByUniversity($query, $id)
-    {   
+    {
         return $query->whereHas('applicant', function ($query) use ($id) {
             $query->where('hr_university_id', $id);
         });
