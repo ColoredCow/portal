@@ -411,18 +411,18 @@ $(document).ready(function () {
 				});
 			},	
 			error: function(response) {
-			$("#segmentError").removeClass('d-none');
+				$("#segmentError").removeClass("d-none");
 				let errors = response.responseJSON.errors;
-				$('#errors').empty();
+				$("#errors").empty();
 				for (let error in errors) {
 					console.log(error);
-					$('#errors').append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
 			  }
 			}
 		});
 	});
 	$("#segmentModalCloseBtn").click(function() {
-		console.log($("#segmentError"))
+		console.log($("#segmentError"));
 		$("#segmentError").toggleClass("d-none");
 	});
 });
