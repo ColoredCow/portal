@@ -46,7 +46,6 @@ class InfrastructureService implements InfrastructureServiceContract
                 'state' => $instanceDetails['State']['Name'],
                 'type' => $instanceDetails['InstanceType'],
                 'launch_time' => Carbon::parse($instanceDetails['LaunchTime'])->setTimezone(config('app.timezone'))->format('d M Y, h:i a'),
-                'public_ip' => $instanceDetails['PublicIpAddress'],
                 'console_url' => config('infrastructure.console-urls.ec2') . '?region=' . $this->region . '#Instances:instanceId=' . $instanceDetails['InstanceId'],
             ];
         }, $instances);
