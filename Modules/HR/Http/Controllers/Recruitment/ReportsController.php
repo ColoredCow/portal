@@ -17,27 +17,6 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $todayCount = Applicant::whereDate('created_at', '=', now())
-            ->count();
-        $record = Applicant::select(
-            \DB::raw('COUNT(*) as count'),
-            \DB::raw('MONTHNAME(created_at) as month_created_at'),
-            \DB::raw('DATE(created_at) as date_created_at'),
-        )
-            ->where('created_at', '>', Carbon::now()->subDays(7))
-            ->groupBy('date_created_at', 'month_created_at')
-            ->orderBy('date_created_at', 'ASC')
-            ->get();
-        $data = [];
-        foreach ($record as $row) {
-            $data['data'][] = (int) $row->count;
-            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
-            $record1 = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
-            $data['afterBody'][] = $record1;
-        }
-        $data['chartData'] = json_encode($data);
-
-        return view('hr.recruitment.reports', $data, compact('todayCount'));
         return view('hr.recruitment.reportcard');
     }
 
@@ -59,6 +38,7 @@ class ReportsController extends Controller
             ->orderBy('date_created_at', 'ASC')
             ->get();
         $data = [];
+        $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
@@ -67,7 +47,7 @@ class ReportsController extends Controller
         }
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, compact('todayCount'));
+        return view('hr.recruitment.reports', $data, with($todayCount, $verifiedApplicationCount));
     }
 
     private function getVerifiedApplicationsCount()
@@ -98,6 +78,8 @@ class ReportsController extends Controller
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
+            $record1 = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
+            $data['afterBody'][] = $record1;
         }
 
         $data['chartData'] = json_encode($data);

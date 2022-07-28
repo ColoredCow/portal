@@ -4,8 +4,6 @@
 
 <div class="chart-container" align="center">
     <div class="bar-chart-container">
-        <div align="left">
-            <span class="chart-heading mr-5">Analytics </span>
         <div class="d-flex justify-content-between">
             <div class="my-2">
                 <h2>Analytics </h2>
