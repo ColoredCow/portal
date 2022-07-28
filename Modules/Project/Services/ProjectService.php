@@ -4,16 +4,16 @@ namespace Modules\Project\Services;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Storage;
 use Modules\Client\Entities\Client;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
-use Modules\Project\Entities\ProjectRepository;
-use Modules\User\Entities\User;
-use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
+use Modules\Project\Entities\ProjectRepository;
 use Modules\Project\Entities\ProjectTeamMember;
-use Illuminate\Database\Eloquent\Collection;
+use Modules\User\Entities\User;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -70,25 +70,25 @@ class ProjectService implements ProjectServiceContract
                 $query->where('team_member_id', $userId);
             })->count();
         }
-        foreach ($clients as $client): 
-            foreach ($client->projects as $project) :
+        foreach ($clients as $client):
+            foreach ($client->projects as $project):
                 if (empty($project->projectContracts->first()->contract_file_path)) {
                     $project->tag('no-contract');
-                } else if(!empty($project->projectContracts->first()->contract_file_path)) {
-					$project->untag('no-contract');
-				}
+                } elseif (!empty($project->projectContracts->first()->contract_file_path)) {
+                    $project->untag('no-contract');
+                }
                 if (empty($project->effort_sheet_url)) {
                     $project->tag('project-unavailable');
-                } else if(!empty($project->effort_sheet_url)) {
-					$project->untag('project-unavailable');
-				}
+                } elseif (!empty($project->effort_sheet_url)) {
+                $project->untag('project-unavailable');
+            }
             endforeach;
         endforeach;
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
-            'haltedProjectsCount' => $haltedProjectsCount
+            'haltedProjectsCount' => $haltedProjectsCount,
         ];
     }
 
@@ -119,7 +119,7 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                 ],
                 [
-                    'value' => $data['billing_level']
+                    'value' => $data['billing_level'],
                 ]
             );
         }
@@ -156,7 +156,7 @@ class ProjectService implements ProjectServiceContract
     public function updateProjectData($data, $project)
     {
         $updateSection = $data['update_section'] ?? '';
-        if (! $updateSection) {
+        if (!$updateSection) {
             return false;
         }
 
@@ -193,7 +193,7 @@ class ProjectService implements ProjectServiceContract
                     'project_id' => $project->id,
                 ],
                 [
-                    'value' => $data['billing_level']
+                    'value' => $data['billing_level'],
                 ]
             );
         }
@@ -202,7 +202,7 @@ class ProjectService implements ProjectServiceContract
         if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
         } else {
-            if (! $project->client->projects()->where('status', 'active')->exists()) {
+            if (!$project->client->projects()->where('status', 'active')->exists()) {
                 $project->client->update(['status' => 'inactive']);
             }
             $project->getTeamMembers()->update(['ended_on' => now()]);
@@ -225,7 +225,7 @@ class ProjectService implements ProjectServiceContract
                     $member->update($tempArray);
                 }
             }
-            if (! $flag) {
+            if (!$flag) {
                 $member->update(['ended_on' => Carbon::now()]);
             }
         }
@@ -244,7 +244,7 @@ class ProjectService implements ProjectServiceContract
 
     private function updateProjectRepositories($data, $project)
     {
-        if (! isset($data['url'])) {
+        if (!isset($data['url'])) {
             $project->repositories()->delete();
 
             return;
@@ -280,7 +280,7 @@ class ProjectService implements ProjectServiceContract
         $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (! in_array($date->format('l'), $weekend)) {
+            if (!in_array($date->format('l'), $weekend)) {
                 $numberOfWorkingDays++;
             }
         }
@@ -320,11 +320,11 @@ class ProjectService implements ProjectServiceContract
                     }
                 }
             }
-            if (! empty($managerProjects)) {
+            if (!empty($managerProjects)) {
                 $dataForMail[] = [
                     'projects' => $managerProjects,
                     'name' => $user->name,
-                    'email' =>$user->email,
+                    'email' => $user->email,
                 ];
             }
         }
