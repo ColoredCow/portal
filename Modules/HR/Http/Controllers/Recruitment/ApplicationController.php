@@ -98,10 +98,9 @@ abstract class ApplicationController extends Controller
         $applications = $applications->whereHas('latestApplicationRound')
             ->applyFilter($filters);
 
-        if($filters['sortby'] == 'date'){
+        if ($filters['sortby'] == 'date'){
             $applications = $applications->orderBy('created_at', 'DESC');
-        }
-        else{
+        } else {
             $applications = $applications->join('hr_applicants', 'hr_applications.hr_applicant_id', '=', 'hr_applicants.id')
             ->orderBy('hr_applicants.name', 'ASC');
         }
