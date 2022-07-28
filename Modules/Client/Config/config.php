@@ -76,7 +76,7 @@ return [
         ],
     ],
 
-    'currency-symbols' =>[
+    'currency-symbols' => [
         [
             'rupee' => '₹'
         ],
@@ -88,5 +88,23 @@ return [
         [
             'pound' => '€'
         ],
+    ],
+
+    'service-rate-terms' => [
+        'per_hour' => [
+            'slug' => 'per_hour',
+            'label' => 'Per Hour',
+            'short-label' => '/hour'
+        ],
+        'per_resource' => [
+            'slug' => 'per_resource',
+            'label' => 'Per Resource',
+            'short-label' => '/resource'
+        ],
+        'overall' => [
+            'slug' => 'overall',
+            'label' => 'Overall',
+            'short-label' => 'overall'
+        ]
     ]
 ];

@@ -6,6 +6,7 @@ use App\Traits\Filters;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Invoice\Entities\Invoice;
@@ -55,6 +56,11 @@ class Project extends Model
     public function getTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
+    }
+
+    public function getTeamMembersGroupedByEngagement()
+    {
+        return $this->getTeamMembers()->select('billing_engagement', DB::raw('count(*) as resource_count'))->groupBy('billing_engagement')->get();
     }
 
     public function getInactiveTeamMembers()
@@ -178,6 +184,18 @@ class Project extends Model
         });
     }
 
+    public function getResourceBillableAmount()
+    {
+        $service_rate = $this->client->billingDetails->service_rates;
+        $totalAmount = 0;
+
+        foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
+            $totalAmount += ($groupedResources->billing_engagement/100) * $groupedResources->resource_count * $service_rate;
+        }
+
+        return round($totalAmount, 2);
+    }
+
     public function meta()
     {
         return $this->hasMany(ProjectMeta::class);
@@ -207,7 +225,8 @@ class Project extends Model
 
     public function scopeInvoiceReadyToSend($query)
     {
-        return $query->whereDoesntHave('invoices', function ($query) {
+        return
+        $query->whereDoesntHave('invoices', function ($query) {
             return $query->whereMonth('sent_on', now(config('constants.timezone.indian')))->whereYear('sent_on', now(config('constants.timezone.indian')));
         })->whereHas('client.billingDetails', function ($query) {
             return $query->where('billing_date', '<=', today()->format('d'));

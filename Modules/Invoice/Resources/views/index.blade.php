@@ -177,10 +177,14 @@
                                 <td>
                                     {{ $client->name . ' Projects' }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $client->billingDetails->service_rates . __('/hour')}}</td>
+                                <td>{{ config('constants.currency.' . $client->currency . '.symbol') . '' . $client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($client->billingDetails)->service_rate_term . '.short-label') }}</td>
                                 <td>
-                                    {{ $client->getClientLevelProjectsBillableHoursForInvoice() }}
-                                    {{-- <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#InvoiceDetailsForClient{{ $client->id }}"></i> --}}
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ __('-') }}
+                                    @else
+                                        {{ $client->getClientLevelProjectsBillableHoursForInvoice() }}
+                                        {{-- <i class="pt-1 ml-1 fa fa-external-link-square" data-toggle="modal" data-target="#InvoiceDetailsForClient{{ $client->id }}"></i> --}}
+                                    @endif
                                 </td>
                                 <td>{{ $amount }}</td>
                                 <td align="center"> <a class="btn btn-sm btn-info text-light" href="{{ $client->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a></td>
@@ -211,7 +215,11 @@
                             @endif
                             @php
                                 $index++;
-                                $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalPayableAmountForTerm($monthToSubtract);
+                                if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+                                    $amount = $project->client->country->currency_symbol . $project->getResourceBillableAmount();
+                                } else {
+                                    $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalPayableAmountForTerm($monthToSubtract);
+                                }
                                 $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
@@ -239,8 +247,14 @@
                                 <td>
                                     {{ $project->name }}
                                 </td>
-                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->client->billingDetails->service_rates . __('/hour')}}</td>
-                                <td>{{ $project->getBillableHoursForMonth($monthToSubtract) }}</td>
+                                <td>{{ config('constants.currency.' . $project->client->currency . '.symbol') . '' . $project->client->billingDetails->service_rates . config('client.service-rate-terms.' . optional($project->client->billingDetails)->service_rate_term . '.short-label') }}</td>
+                                <td>
+                                    @if(optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                    {{ __('-') }}
+                                    @else
+                                        {{ $project->getBillableHoursForMonth($monthToSubtract) }}
+                                    @endif
+                                </td>
                                 <td>{{ $amount }}</td>
                                 <td align="center"> <a class="btn btn-sm btn-info text-light" href="{{ $project->effort_sheet_url }}" target="_blank">{{ __('Link') }}</a></td>
                                 <td class="text-center">
