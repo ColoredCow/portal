@@ -82,7 +82,7 @@ class ProjectService implements ProjectServiceContract
             } elseif (! empty($project->effort_sheet_url)) {
                 $project->untag('project-unavailable');
             }
-         endforeach;
+        endforeach;
         endforeach;
 
         return [
