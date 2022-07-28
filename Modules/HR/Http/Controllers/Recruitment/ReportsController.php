@@ -24,54 +24,16 @@ class ReportsController extends Controller
             \DB::raw('MONTHNAME(created_at) as month_created_at'),
             \DB::raw('DATE(created_at) as date_created_at'),
         )
-            ->where('created_at', '>', Carbon::now()->subDays(30))
+            ->where('created_at', '>', Carbon::now()->subDays(7))
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
-        $record_1 = Application::select(
-            \DB::raw('DATE(created_at) as date_created_at'),
-            \DB::raw('ifnull(COUNT(is_verified), 0) as c')
-        )
-            ->where('is_verified', 1)
-            ->groupBy('date_created_at')
-            ->orderBy('date_created_at', 'ASC')
-            ->get();
-
-        $Date = Application::select(
-            \DB::raw('DATE(created_at) as date_created_at')
-        )
-                            ->groupBy('date_created_at')
-                            ->orderBy('date_created_at', 'ASC')
-                            ->get();
         $data = [];
-        $str = [];
-        $s = [];
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
-        }
-        $cnt = [];
-        foreach ($record_1 as $row) {
-            $str[][] = $row->date_created_at;
-            $cnt[][] = $row->c;
-        }
-        foreach ($Date as $row) {
-            $s[][] = $row->date_created_at;
-        }
-        $i = 0;
-        $j = 0;
-        foreach ($Date as $index) {
-            if (! empty($str[$i])) {
-                if ($s[$j] != $str[$i]) {
-                    $data['afterBody'][] = 0;
-                } else {
-                    $data['afterBody'][] = $cnt[$i];
-                    $i++;
-                }
-                $j++;
-            } else {
-                $data['afterBody'][] = 0;
-            }
+            $record1 = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
+            $data['afterBody'][] = $record1;
         }
         $data['chartData'] = json_encode($data);
 
@@ -95,51 +57,13 @@ class ReportsController extends Controller
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
-
-        $record_1 = Application::select(
-            \DB::raw('ifnull(COUNT(is_verified), 0) as c'),
-            \DB::raw('DATE(created_at) as date_created_at')
-        )
-            ->where('is_verified', 1)
-            ->groupBy('date_created_at')
-            ->get();
-        $Date = Application::select(
-            \DB::raw('DATE(created_at) as date_created_at')
-        )
-                            ->groupBy('date_created_at')
-                            ->orderBy('date_created_at', 'ASC')
-                            ->get();
         $data = [];
-        $str = [];
-        $s = [];
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
+            $record1 = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
+            $data['afterBody'][] = $record1;
         }
-        $cnt = [];
-        foreach ($record_1 as $row) {
-            $str[][] = $row->date_created_at;
-            $cnt[][] = $row->c;
-        }
-        foreach ($Date as $row) {
-            $s[][] = $row->date_created_at;
-        }
-        $i = 0;
-        $j = 0;
-        foreach ($Date as $index) {
-            if (! empty($str[$i])) {
-                if ($s[$j] != $str[$i]) {
-                    $data['afterBody'][] = 0;
-                } else {
-                    $data['afterBody'][] = $cnt[$i];
-                    $i++;
-                }
-                $j++;
-            } else {
-                $data['afterBody'][] = 0;
-            }
-        }
-
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
