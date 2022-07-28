@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    @include('infrastructure::menu_header', ['tab' => 'Database Backups'])
+    @include('infrastructure::menu_header', ['tab' => 'Backups'])
 
     <table class="table table-bordered table-striped my-6">
         <thead class="thead-dark">
