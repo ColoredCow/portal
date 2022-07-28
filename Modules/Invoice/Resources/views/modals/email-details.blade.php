@@ -18,15 +18,7 @@
                                 <div class="row">
                                 <div class="col-sm-5">
                                     <span ><b>Type:</b></span>
-                                    <span>
-                                        @if ($email['type']=='invoice-reminder')
-                                            Invoice-Reminder
-                                        @elseif ($email['type']=='invoice')
-                                            Invoice
-                                        @else
-                                            Payment-Reminder
-                                        @endif
-                                    </span>
+                                    <span>{{( config('invoice.mail-type.' . $email->type . '.label')) }}</span>
                                 </div>
                                 <div class="col">
                                     <span ><b>Sent on:</b></span>
