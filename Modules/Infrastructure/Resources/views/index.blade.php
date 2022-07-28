@@ -8,7 +8,7 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">S3 Bucket</th>
-            <th scope="col">Created time</th>
+            <th scope="col">Created at</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>

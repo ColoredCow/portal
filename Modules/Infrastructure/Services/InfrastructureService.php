@@ -13,7 +13,8 @@ class InfrastructureService implements InfrastructureServiceContract
     public function __construct()
     {
         $credentials = new Credentials(config('infrastructure.services.aws.key'), config('infrastructure.services.aws.secret'));
-        $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1', 'credentials' => $credentials]);
+        $this->region = 'ap-south-1';
+        $this->sdk = new Sdk(['version' => 'latest', 'region' => $this->region, 'credentials' => $credentials]);
     }
 
     public function getStorageBuckets()
@@ -26,7 +27,7 @@ class InfrastructureService implements InfrastructureServiceContract
             return [
                 'name' => $bucket['Name'],
                 'created_at' => Carbon::parse($bucket['CreationDate'])->setTimezone(config('app.timezone'))->format('d M Y, h:i a'),
-                'console_url' => 'https://s3.console.aws.amazon.com/s3/buckets/' . $bucket['Name']
+                'console_url' => config('infrastructure.console-urls.s3') . $bucket['Name'],
             ];
         }, $s3buckets);
         return $s3buckets;
@@ -44,7 +45,7 @@ class InfrastructureService implements InfrastructureServiceContract
                 'type' => $instanceDetails['InstanceType'],
                 'launch_time' => Carbon::parse($instanceDetails['LaunchTime'])->setTimezone(config('app.timezone'))->format('d M Y, h:i a'),
                 'public_ip' => $instanceDetails['PublicIpAddress'],
-                'console_url' => 'https://console.aws.amazon.com/ec2/v2/home?region=ap-south-1#Instances:instanceId=' . $instanceDetails['InstanceId'],
+                'console_url' => config('infrastructure.console-urls.ec2') . '?region=' . $this->region . '#Instances:instanceId=' . $instanceDetails['InstanceId'],
             ];
         }, $instances);
 

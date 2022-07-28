@@ -25,7 +25,10 @@
                                     <span>{{ $instance['state'] }}</span>
                                 </div>
                             @else
-                                <div class="badge badge-danger badge-pill">{{ $instance['state'] }}</div>
+                                <div class="badge badge-danger badge-pill">
+                                    <i class="fa fa-exclamation-circle fz-12"></i>
+                                    <span>{{ $instance['state'] }}</span>
+                                </div>
                             @endif
                         </div>
                     </td>
