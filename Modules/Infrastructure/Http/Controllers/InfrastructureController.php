@@ -24,7 +24,7 @@ class InfrastructureController extends Controller
         $this->authorize('Backupview', $this);
         $storageBuckets = $this->service->getStorageBuckets();
 
-        return view('infrastructure::s3')->with('storageBuckets', $storageBuckets);
+        return view('infrastructure::s3-buckets')->with('storageBuckets', $storageBuckets);
     }
 
     public function getInstances()
@@ -32,7 +32,7 @@ class InfrastructureController extends Controller
         $this->authorize('Ec2Instancesview', $this);
         $instances = $this->service->getServersInstances();
 
-        return view('infrastructure::instances')->with('instances', $instances);
+        return view('infrastructure::ec2-instances')->with('instances', $instances);
     }
 
     public function getBillingDetails()

@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header p-1">
-            <h3 class="text-center"><a href="/infrastructure/instances">Infrastructure</a></h3>
+            <h3 class="text-center"><a href="/infrastructure/ec2-instances">Infrastructure</a></h3>
         </div>
          <div class="card-body pt-3 h-325 w-md-389 w-389  overflow-y-scroll">
             <ul v-if="this.billingDetails.current_amount" class="list list-group unstyled-list">

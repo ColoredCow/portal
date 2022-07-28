@@ -13,6 +13,6 @@
 
 Route::prefix('infrastructure')->middleware('auth')->group(function () {
     Route::get('/s3-buckets', 'InfrastructureController@getS3Buckets')->name('infrastructure.s3-buckets.index');
-    Route::get('/instances', 'InfrastructureController@getInstances')->name('infrastructure.ec2-instances.index');
+    Route::get('/ec2-instances', 'InfrastructureController@getInstances')->name('infrastructure.ec2-instances.index');
     Route::get('/billing-details', 'InfrastructureController@getBillingDetails')->name('infrastructure.billing-details');
 });
