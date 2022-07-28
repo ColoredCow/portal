@@ -99,11 +99,11 @@ abstract class ApplicationController extends Controller
             ->applyFilter($filters);
 
         if($filters['sortby'] == 'date'){
-        $applications = $applications->orderBy('created_at', 'DESC');
+            $applications = $applications->orderBy('created_at', 'DESC');
         }
         else{
-        $applications = $applications->join('hr_applicants', 'hr_applications.hr_applicant_id', '=', 'hr_applicants.id')
-        ->orderBy('hr_applicants.name', 'ASC');
+            $applications = $applications->join('hr_applicants', 'hr_applications.hr_applicant_id', '=', 'hr_applicants.id')
+            ->orderBy('hr_applicants.name', 'ASC');
         }
 
         $applications = $applications->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
