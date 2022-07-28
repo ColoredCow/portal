@@ -38,6 +38,7 @@ class ReportsController extends Controller
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
+        return view('hr.recruitment.reportcard');
     }
 
     public function searchBydate(Request $req)
@@ -67,5 +68,43 @@ class ReportsController extends Controller
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, compact('todayCount'));
+    }
+
+    private function getVerifiedApplicationsCount()
+    {
+        $from = config('hr.verified_application_date.start_date');
+        $currentDate = Carbon::today(config('constants.timezone.indian'));
+
+        return Application::whereBetween('created_at', [$from, $currentDate])
+            ->where('is_verified', 1)->count();
+    }
+
+    public function showReportCard()
+    {
+        $todayCount = Applicant::whereDate('created_at', now())
+        ->count();
+        $record = Applicant::select(
+            \DB::raw('COUNT(*) as count'),
+            \DB::raw('MONTHNAME(created_at) as month_created_at'),
+            \DB::raw('DATE(created_at) as date_created_at')
+        )
+        ->where('created_at', '>', Carbon::now()->subDays(23))
+        ->groupBy('date_created_at', 'month_created_at')
+        ->orderBy('date_created_at', 'ASC')
+        ->get();
+
+        $data = [];
+
+        foreach ($record as $row) {
+            $data['data'][] = (int) $row->count;
+            $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
+        }
+
+        $data['chartData'] = json_encode($data);
+
+        return view('hr.recruitment.reports')->with([
+            'chartData' => $data['chartData'],
+            'todayCount' => $todayCount,
+        ]);
     }
 }
