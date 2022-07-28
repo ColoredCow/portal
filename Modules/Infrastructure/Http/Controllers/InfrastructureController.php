@@ -23,7 +23,6 @@ class InfrastructureController extends Controller
     {
         $this->authorize('Backupview', $this);
         $storageBuckets = $this->service->getStorageBuckets();
-
         return view('infrastructure::index')->with('storageBuckets', $storageBuckets);
     }
 

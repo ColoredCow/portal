@@ -22,7 +22,13 @@ class InfrastructureService implements InfrastructureServiceContract
         $completeSynchronously = $s3Client->listBucketsAsync()->wait();
         $s3Data = $completeSynchronously->toArray();
         $s3buckets = $s3Data['Buckets'];
-
+        $s3buckets = array_map(function ($bucket) {
+            return [
+                'name' => $bucket['Name'],
+                'created_at' => Carbon::parse($bucket['CreationDate'])->setTimezone(config('app.timezone'))->format('d M Y, h:i a'),
+                'console_url' => 'https://s3.console.aws.amazon.com/s3/buckets/' . $bucket['Name']
+            ];
+        }, $s3buckets);
         return $s3buckets;
     }
 

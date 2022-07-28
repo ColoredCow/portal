@@ -6,7 +6,10 @@
 
     <ul class="mt-5 w-50p list list-group">
         @foreach($instances as $instance)
-        <li class="list-item list-group-item">{{ \Str::title($instance['Instances'][0]['Tags'][0]['Value']) }}</li>
+            <li class="list-item list-group-item">
+                <span>{{ \Str::title($instance['Instances'][0]['Tags'][0]['Value']) }}</span>
+                <span></span>
+            </li>
         @endforeach
     </ul>
 </div>
