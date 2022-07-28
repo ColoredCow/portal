@@ -26,6 +26,8 @@ class SalarySettingRequest extends FormRequest
             'food_allowance' => 'nullable|string',
             'employee_esi_limit' => 'nullable|string',
             'edli_charges_limit' => 'nullable|string',
+            'health_insurance' => 'nullable|string',
+            'employer_esi_limit' => 'nullable|string',
         ];
     }
 
