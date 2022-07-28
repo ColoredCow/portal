@@ -111,6 +111,25 @@ $(document).ready(() => {
 		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 	});
 
+$("#addChannel").on("submit",function(e){
+	e.preventDefault();
+	let form = $("#addChannel");
+	let button = $("#channel_button")
+    
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function(response) {
+			$("#channelName").modal("hide");
+			$("#success").toggleClass("d-none");
+			$("#success").fadeToggle(5000);
+		},
+		error: function(response) {
+			$("#errorMessage").toggleClass("d-none");
+		},
+	});		
+});
 	if ($(".chart-data").length) {
 		datePickerChart();
 		barChart();
