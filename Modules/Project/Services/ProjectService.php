@@ -80,6 +80,7 @@ class ProjectService implements ProjectServiceContract
                     $project->untag('no-contract');
                 }
             if (empty($project->effort_sheet_url)) {
+                
                 $project->tag('project-unavailable');
             } elseif (! empty($project->effort_sheet_url)) {
                 $project->untag('project-unavailable');
