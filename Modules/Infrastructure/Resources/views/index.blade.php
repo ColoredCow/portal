@@ -20,7 +20,7 @@
                     <td>
                         <a href="{{ $storageBucket['console_url'] }}" target="_blank">
                             <span>View bucket</span>
-                            <span><i class="fa fa-external-link"></i></span>
+                            <span><i class="fa fa-external-link fz-14"></i></span>
                         </a>
                     </td>
                 </tr>

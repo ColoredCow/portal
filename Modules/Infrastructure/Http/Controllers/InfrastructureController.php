@@ -30,7 +30,6 @@ class InfrastructureController extends Controller
     {
         $this->authorize('Ec2Instancesview', $this);
         $instances = $this->service->getServersInstances();
-
         return view('infrastructure::instances')->with('instances', $instances);
     }
 

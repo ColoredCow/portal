@@ -8,6 +8,9 @@
         </li>
     </ul>
     <div>
-        <a target="_blank" href="https://ap-south-1.console.aws.amazon.com/console" class="btn btn-info text-white">AWS console</a>
+        <a target="_blank" href="https://ap-south-1.console.aws.amazon.com/console" class="btn btn-info text-white">
+            <span>AWS console</span>
+            <i class="fa fa-external-link fz-14"></i>
+        </a>
     </div>
 </div>

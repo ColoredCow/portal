@@ -36,6 +36,17 @@ class InfrastructureService implements InfrastructureServiceContract
     {
         $ec2Client = $this->sdk->createEc2();
         $instances = $ec2Client->DescribeInstances()->toArray()['Reservations'];
+        $instances = array_map(function ($instance) {
+            $instanceDetails = $instance['Instances'][0];
+            return [
+                'name' => $instanceDetails['Tags'][0]['Value'],
+                'state' => $instanceDetails['State']['Name'],
+                'type' => $instanceDetails['InstanceType'],
+                'launch_time' => Carbon::parse($instanceDetails['LaunchTime'])->setTimezone(config('app.timezone'))->format('d M Y, h:i a'),
+                'public_ip' => $instanceDetails['PublicIpAddress'],
+                'console_url' => 'https://console.aws.amazon.com/ec2/v2/home?region=ap-south-1#Instances:instanceId=' . $instanceDetails['InstanceId'],
+            ];
+        }, $instances);
 
         return $instances;
     }
