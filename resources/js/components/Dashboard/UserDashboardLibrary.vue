@@ -4,7 +4,7 @@
       <h3><a href="/knowledgecafe/library/books">Library</a></h3>
     </div>
     <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs flex-nowrap">
+      <ul class="nav nav-tabs card-header-tabs flex-nowrap menu scroll-x">
         <li class="nav-item">
           <a
             id="wishlist"
@@ -29,7 +29,7 @@
         </li>
       </ul>
     </div>
-    <div class="card-body pt-3 h-318 w-md-389 w-389 overflow-y-scroll">
+    <div class="card-body pt-3 h-318 w-md-389 w-389 overflow-y-scroll x>
       <div v-show="this.activeTile == 'wishlist'">
         <user-dashboard-wishlist-books />
       </div>
