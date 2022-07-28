@@ -24,7 +24,13 @@ class JobDomainRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|unique:hr_job_domains,domain',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'domain name is required',
         ];
     }
 }
