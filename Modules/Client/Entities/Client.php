@@ -198,7 +198,7 @@ class Client extends Model
     }
 
     public function scopeInvoiceReadyToSend($query)
-    {        
+    {
         return $query->whereDoesntHave('invoices', function ($query) {
             return $query->whereMonth('sent_on', now(config('constants.timezone.indian')))->whereYear('sent_on', now(config('constants.timezone.indian')));
         })->whereHas('billingDetails', function ($query) {
