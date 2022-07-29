@@ -126,8 +126,9 @@ class Client extends Model
         return $this->type == 'indian' ? 'INR' : 'USD';
     }
 
-    public function getBillableAmountForTerm(int $monthsToSubtract= 1, $projects)
+    public function getBillableAmountForTerm(int $monthsToSubtract, $projects)
     {
+        $monthsToSubtract = $monthsToSubtract ?? 1;
         $amount = $projects->sum(function ($project) use ($monthsToSubtract) {
             return round($project->getBillableHoursForMonth($monthsToSubtract) * $this->billingDetails->service_rates, 2);
         });
@@ -290,7 +291,7 @@ class Client extends Model
                 continue;
             }
 
-            $billableHours = $projectTeamMemberForUser->sum(function($teamMember) use ($startDate, $endDate) {
+            $billableHours = $projectTeamMemberForUser->sum(function ($teamMember) use ($startDate, $endDate) {
                 return $teamMember->projectTeamMemberEffort->where('added_on', '>=', $startDate)->where('added_on', '<=', $endDate)->sum('actual_effort');
             });
 
