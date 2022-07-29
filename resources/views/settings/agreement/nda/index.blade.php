@@ -34,7 +34,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="round_mail_subject">Subject</label>
-                                    <input type="text" name="round_mail_subject" class="form-control" value="{{ $round->{$mailTemplate}['subject'] }}">
+                                        <input type="text" name="round_mail_subject" class="form-control" value="{{ $round->{$mailTemplate}['subject'] ?? '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="round_mail_body">Mail body:</label>
-                                        <textarea name="round_mail_body" rows="10" class="richeditor form-control" placeholder="Body">{{ $round->{$mailTemplate}['body'] }}</textarea>
+                                        <textarea name="round_mail_body" rows="10" class="richeditor form-control" placeholder="Body">{{ $round->{$mailTemplate}['body'] ?? '' }}</textarea>
                                     </div>
                                 </div>
                             </div>
