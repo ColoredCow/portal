@@ -18,6 +18,7 @@ class CreateLedgerAccountsTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('project_id')->nullable();
             $table->date('date');
+            $table->text('particulars')->nullable();
             $table->float('credit')->nullable();
             $table->float('debit')->nullable();
             $table->float('balance')->nullable();
