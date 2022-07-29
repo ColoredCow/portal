@@ -30,7 +30,7 @@
       </ul>
     </div>
     <div class="card-body pt-3 h-318 w-md-389 w-389 overflow-y-scroll x>
-      <div v-show="this.activeTile == 'wishlist'">
+      <div v-show=" this .activeTile = wishlist>
         <user-dashboard-wishlist-books />
       </div>
       <span v-show="this.activeTile == 'read'">
@@ -40,9 +40,7 @@
         Books recommend for you. COMING SOON
       </span>
     </div>
-  </div>
 </template>
-
 <script>
 export default {
 	props: [],
