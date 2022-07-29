@@ -763,6 +763,15 @@ span.total-chart-count {
 .flex-nowrap {
     flex-wrap: nowrap !important;
 }
+.border-2 {
+	border-width: 2px !important;
+}
+
+.Vue-Toastification__close-button {
+	&:hover, &:focus {
+		outline: none;
+	}
+}
 
 // End Custom
 .scroll-x {
