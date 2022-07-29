@@ -64,17 +64,7 @@
                         <input type="number" :value="projectTeamMember.pivot.daily_expected_effort*workingDaysInMonth" class="form-control monthly-effort">
                     </div>
                     <div class="col-1">
-                        @foreach (config('project.status') as $status => $status)
-                        @if($project->status == $status && $status == ('active'))
-                            <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" >Remove</button>
-                        @endif
-                        @if($project->status == $status && $status == ('halted'))
-                            <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" disabled>Remove</button>
-                        @endif
-                        @if($project->status == $status && $status == ('inactive'))
-                            <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" disabled>Remove</button>
-                        @endif
-                        @endforeach    
+                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{$project->status=='active'? '' : 'disabled'}} >Remove</button>
                     </div>
                 </div>
 
@@ -107,17 +97,7 @@
             </div>
 
             <div class="card-footer">
-            @foreach (config('project.status') as $status => $status)
-            @if($project->status == $status && $status == ('active'))
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" >Save</button>
-            @endif
-            @if($project->status == $status && $status == ('halted'))
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" disabled>Save</button>
-            @endif
-            @if($project->status == $status && $status == ('inactive'))
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" disabled>Save</button>
-            @endif
-            @endforeach
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" {{$project->status=='active'? '' : 'disabled'}} >Save</button>
             </div>
         </form>
     </div>
