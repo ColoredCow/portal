@@ -474,7 +474,7 @@ class InvoiceService implements InvoiceServiceContract
         $projects = $billingLevel == 'client' ? $client->clientLevelBillingProjects : collect([$project]);
         $projectForInvoiceNumber = $billingLevel == 'project' ? $project : null;
         $invoiceNumber = $this->getInvoiceNumberPreview($client, $projectForInvoiceNumber, $data['sent_on'], $billingLevel);
-        $billingStartMonth = $client ? $client->getClientMonthStartDateAttribute(1)->format('M') : $project->client->getClientMonthStartDateAttribute(1)->format('M');
+        $billingStartMonth = $client ? $client->getMonthStartDateAttribute(1)->format('M') : $project->client->getMonthStartDateAttribute(1)->format('M');
         $billingEndMonth = $client ? $client->getClientMonthEndDateAttribute(1)->format('M') : $project->client->getClientMonthEndDateAttribute(1)->format('M');
         $termText = $billingStartMonth . ' - ' . $billingEndMonth;
 
@@ -631,11 +631,11 @@ class InvoiceService implements InvoiceServiceContract
 
     public function createInvoice($client, $project, $term)
     {
-        $term = $term ?? today(config('constants.timezone.indian'))->subMonth()->format('Y-m');
+        $term = $term ?? today('')->subMonth()->format('Y-m');
         $year = (int) substr($term, 0, 4);
         $monthNumber = (int) substr($term, 5, 2);
-        $sentOn = today(config('constants.timezone.indian'));
-        $dueOn = today(config('constants.timezone.indian'))->addDays(6);
+        $sentOn = today('');
+        $dueOn = today('')->addDays(6);
         $monthsToSubtract = today()->startOfMonth()->diffInMonths(Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-' . '01'));
         $data = $this->getInvoiceData([
             'client_id' => optional($client)->id,

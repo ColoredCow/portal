@@ -55,8 +55,8 @@
         @endif
         <div>
             @php
-                $month = now(config('constants.timezone.indian'))->subMonth()->format('m');
-                $year = now(config('constants.timezone.indian'))->subMonth()->format('Y');
+                $month = now('')->subMonth()->format('m');
+                $year = now('')->subMonth()->format('Y');
                 $monthToSubtract = 1;
             @endphp
             <table class="table table-bordered table-striped">
@@ -150,7 +150,7 @@
                             @php
                                 $index++;
                                 $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
-                                $billingStartMonth = $client->getClientMonthStartDateAttribute($monthToSubtract)->format('M');
+                                $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $client->getClientMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $monthName = $client->getClientMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
@@ -212,7 +212,7 @@
                             @php
                                 $index++;
                                 $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalPayableAmountForTerm($monthToSubtract);
-                                $billingStartMonth = $project->client->getClientMonthStartDateAttribute($monthToSubtract)->format('M');
+                                $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $project->client->getClientMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $monthName = $project->client->getClientMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
@@ -266,7 +266,7 @@
         </div>
         @foreach ($clientsReadyToSendInvoicesData as $client)
             @include(
-                'invoice::subviews.invoice-report.invoice-datails-modal', 
+                'invoice::subviews.invoice-report.invoice-details-modal', 
                 [
                     'modalId' => "InvoiceDetailsForClient" . $client->id,
                     'teamMembers' => $client->TeamMembersEffortData($monthToSubtract)

@@ -182,18 +182,16 @@ class Client extends Model
 
     public function getWorkingDaysForTerm()
     {
-        $monthStartDate = $this->client_month_start_date;
+        $monthStartDate = $this->month_start_date;
         $monthEndDate = $this->client_month_end_date;
 
-        return $monthEndDate->diffInDaysFiltered(function (Carbon $date) {
-            return ! $date->isWeekend();
-        }, $monthStartDate);
+        return $this->getWorkingDays($monthStartDate, $monthEndDate);
     }
 
     public function getWorkingDays($startDate, $endDate)
     {
         return $endDate->addDay()->diffInDaysFiltered(function (Carbon $date) {
-            return ! $date->isWeekend();
+            return $date->isWeekday();
         }, $startDate);
     }
 
@@ -205,7 +203,7 @@ class Client extends Model
     public function scopeInvoiceReadyToSend($query)
     {
         return $query->whereDoesntHave('invoices', function ($query) {
-            return $query->whereMonth('sent_on', now(config('constants.timezone.indian')))->whereYear('sent_on', now(config('constants.timezone.indian')));
+            return $query->whereMonth('sent_on', now(''))->whereYear('sent_on', now(''));
         })->whereHas('billingDetails', function ($query) {
             return $query->where('billing_date', '<=', today()->format('d'));
         });
@@ -220,25 +218,25 @@ class Client extends Model
         }
     }
 
-    public function getClientMonthStartDateAttribute($monthsToSubtract)
+    public function getMonthStartDateAttribute($monthsToSubtract)
     {
         $monthsToSubtract = $monthsToSubtract ?? 0;
         $billingDate = $this->billingDetails->billing_date;
 
         if ($billingDate == null) {
-            return now(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->startOfMonth();
+            return now('')->subMonthsNoOverflow($monthsToSubtract)->startOfMonth();
         }
 
-        if (today(config('constants.timezone.indian'))->day < $billingDate) {
-            if (today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract + 1)->addDays($billingDate - today(config('constants.timezone.indian'))->day) > today(config('constants.timezone.indian'))->subMonth()->endOfMonth()) {
-                return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract + 1)->endOfMonth();
+        if (today('')->day < $billingDate) {
+            if (today('')->subMonthsNoOverflow($monthsToSubtract + 1)->addDays($billingDate - today('')->day) > today('')->subMonth()->endOfMonth()) {
+                return today('')->subMonthsNoOverflow($monthsToSubtract + 1)->endOfMonth();
             }
 
-            return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract + 1)->addDays($billingDate - today(config('constants.timezone.indian'))->day);
+            return today('')->subMonthsNoOverflow($monthsToSubtract + 1)->addDays($billingDate - today('')->day);
         }
 
-        if (today(config('constants.timezone.indian'))->day >= $billingDate) {
-            return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->startOfMonth()->addDays($billingDate - 1);
+        if (today('')->day >= $billingDate) {
+            return today('')->subMonthsNoOverflow($monthsToSubtract)->startOfMonth()->addDays($billingDate - 1);
         }
     }
 
@@ -248,27 +246,27 @@ class Client extends Model
         $billingDate = $this->billingDetails->billing_date;
 
         if ($billingDate == null) {
-            return now(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->endOfMonth();
+            return now('')->subMonthsNoOverflow($monthsToSubtract)->endOfMonth();
         }
 
-        if (today(config('constants.timezone.indian'))->day < $billingDate) {
-            if (today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addDays($billingDate - today(config('constants.timezone.indian'))->day) > today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->endOfMonth()) {
-                return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->endOfMonth();
+        if (today('')->day < $billingDate) {
+            if (today('')->subMonthsNoOverflow($monthsToSubtract)->addDays($billingDate - today('')->day) > today('')->subMonthsNoOverflow($monthsToSubtract)->endOfMonth()) {
+                return today('')->subMonthsNoOverflow($monthsToSubtract)->endOfMonth();
             }
 
-            return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addDays($billingDate - today(config('constants.timezone.indian'))->day - 1);
+            return today('')->subMonthsNoOverflow($monthsToSubtract)->addDays($billingDate - today('')->day - 1);
         }
 
-        if (today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2) > today(config('constants.timezone.indian'))->addMonthsNoOverflow()->endOfMonth()) {
-            return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->endOfMonth();
+        if (today('')->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2) > today('')->addMonthsNoOverflow()->endOfMonth()) {
+            return today('')->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->endOfMonth();
         }
 
-        return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
+        return today('')->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
     }
 
     public function TeamMembersEffortData()
     {
-        $startDate = $this->getClientMonthStartDateAttribute(1);
+        $startDate = $this->getMonthStartDateAttribute(1);
         $endDate = $this->getClientMonthEndDateAttribute(1);
 
         $data = [];

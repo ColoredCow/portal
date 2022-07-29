@@ -103,7 +103,7 @@
                 <div class="text-danger fz-14 my-0" id="container"></div>
                 <div class="form-group mt-2">
                     <label for="term" class="field-required">Invoice for term</label>
-                    <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', now(config('constants.timezone.indian'))->subMonth()->format('Y-m')) }}'>
+                    <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', now('')->subMonth()->format('Y-m')) }}'>
                 </div>
                 <div class="form-group">
                     <label for="sent_on" class="field-required">Sent on</label>

@@ -27,7 +27,7 @@
                             <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right" title="Velocity is the ratio of current hours in project and expected hours."><i class="fa fa-question-circle"></i>&nbsp;</span></th>
                             <th scope="col" class="pb-lg-4">
                                 FTE Covered
-                                <span data-toggle="tooltip" data-placement="right" title="{{ __('This is portion of the overall FTE that contributed to this projects by employee till ') . (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time') ?  today(config('constants.timezone.indian'))->subDay()->format('d M') : today(config('constants.timezone.indian'))->format('d M')). "." }}"  >
+                                <span data-toggle="tooltip" data-placement="right" title="{{ __('This is portion of the overall FTE that contributed to this projects by employee till ') . (now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time') ?  today('')->subDay()->format('d M') : today('')->format('d M')). "." }}"  >
                                     <i class="fa fa-question-circle"></i>&nbsp;
                                 </span>
                             </th>
@@ -41,7 +41,7 @@
                             @foreach($employee->user->activeProjectTeamMembers as $activeProjectTeamMember)
                                 <tr>
                                     <td class="c-pointer"><div class="ml-7"><a href={{ route('project.show', $activeProjectTeamMember->project) }}>{{$activeProjectTeamMember->project->name}}</a></div></td>
-                                    <td><div>{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today(config('constants.timezone.indian'))->startOfMonth(), today(config('constants.timezone.indian'))->endOfMonth()))}}</div></td>
+                                    <td><div>{{$activeProjectTeamMember->daily_expected_effort * count($activeProjectTeamMember->project->getWorkingDaysList(today('')->startOfMonth(), today('')->endOfMonth()))}}</div></td>
                                     <td><div>{{$activeProjectTeamMember->current_actual_effort}}</div></td>
                                     <td><div><div class="{{$activeProjectTeamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$activeProjectTeamMember->velocity}}</div></td>
                                     <td><div>{{$activeProjectTeamMember->fte}}</td>

@@ -81,9 +81,9 @@ class InvoiceController extends Controller
         $data = $this->service->getInvoiceData([
             'client_id' => $request->client_id,
             'project_id' => $request->project_id,
-            'term' => today(config('constants.timezone.indian'))->subMonth()->format('Y-m'),
-            'sent_on' => today(config('constants.timezone.indian')),
-            'due_on' => today(config('constants.timezone.indian'))->addDays(6)
+            'term' => today('')->subMonth()->format('Y-m'),
+            'sent_on' => today(''),
+            'due_on' => today('')->addDays(6)
         ]);
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);

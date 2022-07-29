@@ -193,8 +193,8 @@ class Invoice extends Model
     public function getTermAttribute()
     {
         $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
-        $currentMonthNumber = today(config('constants.timezone.indian'))->month;
-        $termStartDate = $this->client->getClientMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $currentMonthNumber = today('')->month;
+        $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
         $termEndDate = $this->client->getClientMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
         $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
 

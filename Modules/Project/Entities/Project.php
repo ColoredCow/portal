@@ -78,7 +78,7 @@ class Project extends Model
         $totalEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
-            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->client_month_start_date->subday(), $this->client->client_month_end_date])->sum('actual_effort');
+            $totalEffort += $teamMember->projectTeamMemberEffort->whereBetween('added_on', [$this->client->month_start_date->subday(), $this->client->client_month_end_date])->sum('actual_effort');
         }
 
         return $totalEffort;
@@ -105,9 +105,9 @@ class Project extends Model
 
     public function getCurrentExpectedHoursAttribute()
     {
-        $currentDate = today(config('constants.timezone.indian'));
+        $currentDate = today('');
 
-        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+        if (now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
@@ -116,13 +116,13 @@ class Project extends Model
 
     public function getExpectedHoursTillTodayAttribute()
     {
-        return $this->getExpectedHours(today(config('constants.timezone.indian')));
+        return $this->getExpectedHours(today(''));
     }
 
     public function getExpectedHours($currentDate)
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $daysTillToday = count($this->getWorkingDaysList($this->client->client_month_start_date, $currentDate));
+        $daysTillToday = count($this->getWorkingDaysList($this->client->month_start_date, $currentDate));
         $currentExpectedEffort = 0;
 
         foreach ($teamMembers as $teamMember) {
@@ -135,7 +135,7 @@ class Project extends Model
     public function getExpectedMonthlyHoursAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
-        $workingDaysCount = count($this->getWorkingDaysList($this->client->client_month_start_date, $this->client->client_month_end_date));
+        $workingDaysCount = count($this->getWorkingDaysList($this->client->month_start_date, $this->client->client_month_end_date));
         $expectedMonthlyHours = 0;
 
         foreach ($teamMembers as $teamMember) {
@@ -163,7 +163,7 @@ class Project extends Model
 
     public function getBillableHoursForMonth($monthToSubtract = 1)
     {
-        $startDate = $this->client->getClientMonthStartDateAttribute($monthToSubtract);
+        $startDate = $this->client->getMonthStartDateAttribute($monthToSubtract);
         $endDate = $this->client->getClientMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
@@ -208,7 +208,7 @@ class Project extends Model
     public function scopeInvoiceReadyToSend($query)
     {
         return $query->whereDoesntHave('invoices', function ($query) {
-            return $query->whereMonth('sent_on', now(config('constants.timezone.indian')))->whereYear('sent_on', now(config('constants.timezone.indian')));
+            return $query->whereMonth('sent_on', now(''))->whereYear('sent_on', now(''));
         })->whereHas('client.billingDetails', function ($query) {
             return $query->where('billing_date', '<=', today()->format('d'));
         });

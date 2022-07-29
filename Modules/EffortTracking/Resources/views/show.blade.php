@@ -81,7 +81,7 @@
                             <th scope="col" class="pb-lg-4">
                                 FTE
                                 <span data-toggle="tooltip" data-placement="right"
-                                    title="{{ __('This is portion of the overall FTE that contributed to this projects by employee till ') .(now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')? today(config('constants.timezone.indian'))->subDay()->format('d M'): today(config('constants.timezone.indian'))->format('d M')) .'.' }}">
+                                    title="{{ __('This is portion of the overall FTE that contributed to this projects by employee till ') .(now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time')? today('')->subDay()->format('d M'): today('')->format('d M')) .'.' }}">
                                     <i class="fa fa-question-circle"></i>&nbsp;
                                 </span>
                             </th>
