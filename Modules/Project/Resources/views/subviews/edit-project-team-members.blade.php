@@ -66,6 +66,20 @@
                     <div class="col-1">
                         <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
                     </div>
+                    <div class="container d-flex bg-dark mt-2 text-light">
+                        <div class="col-3 mt-2">
+                            <div class="d-flex flex-column mr-3 form-group">
+                                <label>Added on</label>
+                                <input type="date" :name="`project_team_member[${index}][started_on]`" value="#">
+                            </div>
+                        </div>
+                        <div class="col-3 mt-2">
+                            <div class="d-flex flex-column ml-3 form-group">
+                                <label>Ended on</label>
+                                <input type="date" :name="`project_team_member[${index}][ended_on]`" value="#">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div>
@@ -87,8 +101,8 @@
                         <tr>
                             <th class="font-weight-normal"><img src="{{ $inactiveTeamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">{{$inactiveTeamMember->user->name}}</th>
                             <th class="font-weight-light">{{ ucwords(str_replace('_', ' ', $inactiveTeamMember->designation)) }}</th>
-                            <th class="font-weight-light">{{ ($inactiveTeamMember->created_at)->format('Y-m-d') }}</th>
-                            <th class="font-weight-light">{{ ($inactiveTeamMember->ended_on)->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ Carbon\Carbon::parse($inactiveTeamMember->started_on)->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ Carbon\Carbon::parse($inactiveTeamMember->ended_on)->format('Y-m-d') }}</th>
                         <tr>
                         @endforeach
                     </table>
