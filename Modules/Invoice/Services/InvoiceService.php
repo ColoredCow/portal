@@ -45,11 +45,11 @@ class InvoiceService implements InvoiceServiceContract
             $invoices = [];
             $clientsReadyToSendInvoicesData = Client::status('active')->invoiceReadyToSend()->orderBy('name')->get();
             $projectsReadyToSendInvoicesData = Project::whereHas('meta', function ($query) {
-                    return $query->where([
-                        'key' => 'billing_level',
-                        'value' => config('project.meta_keys.billing_level.value.project.key')
-                    ]);
-                })->status('active')->invoiceReadyToSend()->orderBy('name')->get();
+                return $query->where([
+                    'key' => 'billing_level',
+                    'value' => config('project.meta_keys.billing_level.value.project.key')
+                ]);
+            })->status('active')->invoiceReadyToSend()->orderBy('name')->get();
         }
 
         return [

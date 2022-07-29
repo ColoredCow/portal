@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
-use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
 
 class InvoiceController extends Controller

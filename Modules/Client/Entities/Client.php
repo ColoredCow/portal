@@ -135,14 +135,16 @@ class Client extends Model
         return $amount;
     }
 
-    public function getTaxAmountForTerm(int $monthsToSubtract = 1, $projects)
+    public function getTaxAmountForTerm(int $monthsToSubtract, $projects)
     {
+        $monthsToSubtract = $monthsToSubtract ?? 1;
         // Todo: Implement tax calculation correctly as per the GST rules
         return round($this->getBillableAmountForTerm($monthsToSubtract, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $monthsToSubtract = 1, $projects = null)
+    public function getTotalPayableAmountForTerm(int $monthsToSubtract, $projects = null)
     {
+        $monthsToSubtract = $monthsToSubtract ?? 1;
         $projects = $projects ?? collect([]);
 
         return $this->getBillableAmountForTerm($monthsToSubtract, $projects) + $this->getTaxAmountForTerm($monthsToSubtract, $projects);
@@ -161,8 +163,10 @@ class Client extends Model
         });
     }
 
-    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract=1)
+    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract)
     {
+        $monthsToSubtract = $monthsToSubtract ?? 1;
+
         return $this->clientLevelBillingProjects->sum(function ($project) use ($monthsToSubtract) {
             return $project->getBillableHoursForMonth($monthsToSubtract);
         });
@@ -175,7 +179,7 @@ class Client extends Model
         return $invoiceService->getInvoiceNumberPreview($this, null, today(), config('project.meta_keys.billing_level.value.client.key'));
     }
 
-    public function getWorkingDaysForTerm(int $monthNumber, int $year)
+    public function getWorkingDaysForTerm()
     {
         $monthStartDate = $this->client_month_start_date;
         $monthEndDate = $this->client_month_end_date;
@@ -215,7 +219,7 @@ class Client extends Model
         }
     }
 
-    public function getClientMonthStartDateAttribute($monthsToSubtract = 0)
+    public function getClientMonthStartDateAttribute($monthsToSubtract)
     {
         $monthsToSubtract = $monthsToSubtract ?? 0;
         $billingDate = $this->billingDetails->billing_date;
@@ -237,7 +241,7 @@ class Client extends Model
         }
     }
 
-    public function getClientMonthEndDateAttribute($monthsToSubtract = 0)
+    public function getClientMonthEndDateAttribute($monthsToSubtract)
     {
         $monthsToSubtract = $monthsToSubtract ?? 0;
         $billingDate = $this->billingDetails->billing_date;
@@ -261,7 +265,7 @@ class Client extends Model
         return today(config('constants.timezone.indian'))->subMonthsNoOverflow($monthsToSubtract)->addMonthsNoOverflow()->startOfMonth()->addDays($billingDate - 2);
     }
 
-    public function TeamMembersEffortData($monthToSub = 0)
+    public function TeamMembersEffortData()
     {
         $startDate = $this->getClientMonthStartDateAttribute(1);
         $endDate = $this->getClientMonthEndDateAttribute(1);
@@ -272,7 +276,7 @@ class Client extends Model
             return $query->where('id', $clientId);
         })->get();
 
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $projectTeamMemberForUser = $user->projectTeamMembers()->whereHas('project.client', function ($query) use ($clientId) {
                 return $query->where('id', $clientId);
             })->whereHas('project.meta', function ($query) {
@@ -286,7 +290,7 @@ class Client extends Model
                 continue;
             }
 
-            $billableHours = $projectTeamMemberForUser->sum(function($teamMember) use($startDate, $endDate) {
+            $billableHours = $projectTeamMemberForUser->sum(function($teamMember) use ($startDate, $endDate) {
                 return $teamMember->projectTeamMemberEffort->where('added_on', '>=', $startDate)->where('added_on', '<=', $endDate)->sum('actual_effort');
             });
 
@@ -297,7 +301,6 @@ class Client extends Model
                 'nickname' => $user->nickname,
                 'billableHours' => $billableHours
             ];
-
         }
 
         return collect($data);

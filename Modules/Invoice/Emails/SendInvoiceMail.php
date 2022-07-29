@@ -7,7 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Modules\Client\Entities\Client;
 use Modules\Invoice\Entities\Invoice;
 
 class SendInvoiceMail extends Mailable

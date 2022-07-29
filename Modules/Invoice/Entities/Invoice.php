@@ -197,7 +197,7 @@ class Invoice extends Model
         $termStartDate = $this->client->getClientMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
         $termEndDate = $this->client->getClientMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
         $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
-        
+
         if ($termStartDate->format('M') == $termEndDate->format('M')) {
             $term = $termEndDate->format('F');
         }
