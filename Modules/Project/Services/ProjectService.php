@@ -71,8 +71,8 @@ class ProjectService implements ProjectServiceContract
             })->count();
         }
 
-        foreach ($clients as $client):
-            foreach ($client->projects as $project):
+        foreach ($clients as $client){ 
+            foreach ($client->projects as $project){ 
                 if (empty($project->projectContracts->first()->contract_file_path)) {
                     $project->tag('no-contract');
                 } elseif (! empty($project->projectContracts->first()->contract_file_path)) {
@@ -83,8 +83,8 @@ class ProjectService implements ProjectServiceContract
         } elseif (! empty($project->effort_sheet_url)) {
             $project->untag('project-unavailable');
         }
-        endforeach;
-        endforeach;
+        }
+        }
 
         return [
             'clients' => $clients->appends($data),
