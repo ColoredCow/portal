@@ -60,7 +60,7 @@
                             data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
                         @if ($project->last_updated_at)
                             <div class="fz-14 float-right mr-3 mt-1">
-                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . $project->last_updated_at }}
+                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') .(Carbon\Carbon::parse($project->last_updated_at)->format('D g:i a, dS M Y'))}}
                             </div>
                         @endif
                     </h4>
