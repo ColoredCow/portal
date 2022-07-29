@@ -2,7 +2,6 @@
 
 namespace Modules\Invoice\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
@@ -80,23 +79,12 @@ class InvoiceController extends Controller
 
     public function generateInvoice(Request $request)
     {
-        $request->term = Carbon::parse($request->term . '-01')->subMonth()->format('Y-m');
-        $data = $this->service->getInvoiceData($request->all());
-        $invoiceNumber = $data['invoiceNumber'];
-        $pdf = $this->showInvoicePdf($data);
-
-        return $pdf->inline(str_replace('-', '', $invoiceNumber) . '.pdf');
-    }
-
-    public function generateInvoiceForClient(Request $request)
-    {
-        $client = Client::find($request->client_id);
         $data = $this->service->getInvoiceData([
-            'client_id' => $client->id,
+            'client_id' => $request->client_id,
+            'project_id' => $request->project_id,
             'term' => today(config('constants.timezone.indian'))->subMonth()->format('Y-m'),
-            'billing_level' => 'client',
             'sent_on' => today(config('constants.timezone.indian')),
-            'due_on' => today(config('constants.timezone.indian'))->addWeek()
+            'due_on' => today(config('constants.timezone.indian'))->addDays(6)
         ]);
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
@@ -190,8 +178,7 @@ class InvoiceController extends Controller
 
     public function sendInvoice(Request $request)
     {
-        $client = Client::find($request->client_id);
-        $this->service->sendInvoice($client, $request->term, $request->all());
+        $this->service->sendInvoice($request->all());
 
         return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
