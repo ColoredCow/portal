@@ -230,11 +230,35 @@
             .transaction-details th {
                 padding-left: 10px; padding-bottom:10px;
             }
+            .w-100p {
+                width: 100%;
+            }
+            .w-70p {
+                width: 70%;
+            }
+            .w-40p {
+                width: 40%;
+            }
+            .w-60p {
+                width: 60%;
+            }
+            .w-67p {
+                width: 67%;
+            }
+            .w-135 {
+                width: 135px;
+            }
+            .w-94 {
+                width: 94px;
+            }
         </style>
     </head>
     <body>
         <header>
-            <div style="width:100%;">
+            @php
+                $currencySymbol = $client ? $client->country->currency_symbol : $project->client->country->currency_symbol;
+            @endphp
+            <div class="w-100p">
                 <h2 style="text-align: center; font-weight: bold;">INVOICE</h2>
                 <table>
                     <tbody>
@@ -254,8 +278,8 @@
                                 <p><br><br><br></p>
                             </td>
                         </tr>
-                        <tr style="width:100%;">
-                            <td align="left" style="width:70%;">
+                        <tr class="w-100p">
+                            <td align="left" class="w-70p">
                                 <p class="fw-bold">Bill To</p>
                                 <p>{{ optional($client->billing_contact)->name }}</p>
                                 <p>{{ $client->name }}</p>
@@ -307,13 +331,13 @@
                                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                                         {{ '' }}
                                                     @else
-                                                        {{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) }}
+                                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) }}
                                                     @endif
                                                 @else 
                                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
-                                                        {{ $client->country->currency_symbol . $project->getResourceBillableAmount() }}
+                                                        {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                                     @else
-                                                        {{ $client->country->currency_symbol . $project->getBillableHoursForMonth($monthsToSubtract) }}
+                                                        {{ $currencySymbol . $project->getBillableHoursForMonth($monthsToSubtract) }}
                                                     @endif     
                                                 @endif
                                             </strong></p>
@@ -330,10 +354,10 @@
                     @include('invoice::render.international-hourly-billing-template')
                 @endif
                 <div><br>
-                    <table class="table" style="margin-left:33%; width:67%;">
+                    <table class="table w-67p" style="margin-left:33%;">
                         <tr class="border-bottom" >
-                            <td style="width: 135px;">Total</td>
-                            <td style="width: 94px;">
+                            <td class="w-135">Total</td>
+                            <td class="w-94">
                                 @if($billingLevel == 'client') 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ '' }}
@@ -348,7 +372,7 @@
                                     @endif     
                                 @endif
                             </td>
-                            <td style="width: 135px;"></td>
+                            <td class="w-135"></td>
                             <td>
                                 @if($billingLevel == 'client') 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
@@ -369,7 +393,7 @@
                             <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
                             <td></td>
                             <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
-                            <td>{{ $client->country->currency_symbol . ($billingLevel == 'client' ? $client->getTaxAmountForTerm($monthsToSubtract, $projects) : $project->getTaxAmountForTerm($monthsToSubtract)) }}</td>
+                            <td>{{ $currencySymbol . ($billingLevel == 'client' ? $client->getTaxAmountForTerm($monthsToSubtract, $projects) : $project->getTaxAmountForTerm($monthsToSubtract)) }}</td>
                         </tr>
                         <tr>
                             <td>Current Payable</td>
@@ -380,13 +404,13 @@
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ '' }}
                                     @else
-                                        {{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) }}
+                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) }}
                                     @endif
                                 @else 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
-                                        {{ $project->client->country->currency_symbol . $project->getResourceBillableAmount() }}
+                                        {{ currencySymbol . $project->getResourceBillableAmount() }}
                                     @else
-                                        {{ $project->client->country->currency_symbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
+                                        {{ currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
                                     @endif     
                                 @endif
                             </td>
@@ -396,11 +420,11 @@
                             <td>Amount Paid</td>
                             <td></td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthsToSubtract, $projects) }}</td>
+                            <td>{{ $currencySymbol . $client->getAmountPaidForTerm($monthsToSubtract, $projects) }}</td>
                         </tr>
                         <tr class="border-bottom">
                             <td>
-                                <strong>Amount Due in {{ $client->country->initials . ' ' . $client->country->currency_symbol }}</strong>
+                                <strong>Amount Due in {{ $client->country->initials . ' ' . $currencySymbol }}</strong>
                             </td>
                             <td></td>
                             <td></td>
@@ -409,13 +433,13 @@
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                         {{ '' }}
                                     @else
-                                        {{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) }}
+                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects) }}
                                     @endif
                                 @else 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
-                                        {{ $project->client->country->currency_symbol . $project->getResourceBillableAmount() }}
+                                        {{ currencySymbol . $project->getResourceBillableAmount() }}
                                     @else
-                                        {{ $project->client->country->currency_symbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
+                                        {{ currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
                                     @endif     
                                 @endif
                             </strong></td>
@@ -423,7 +447,7 @@
                     </table>
                 </div>
                     <br>
-                    <table class="table-borderless transaction-details" style="width: 60%;">
+                    <table class="table-borderless transaction-details w-60p">
                         <thead>
                             <tr>
                                 <th class="fz-16" align="left">Transaction Details</th>
@@ -431,31 +455,31 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="width: 40%;">Transaction Method:</td>
+                                <td class="w-40p" >Transaction Method:</td>
                                 <td>{{ config('invoice.finance-details.transaction-method.value.bank-transfer.value') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Bank Name:</td>
+                                <td class="w-40p">Bank Name:</td>
                                 <td>{{ config('invoice.finance-details.bank-address') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Swift Code:</td>
+                                <td class="w-40p">Swift Code:</td>
                                 <td>{{ config('invoice.finance-details.swift-code') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Bank/IFCI Code:</td>
+                                <td class="w-40p">Bank/IFCI Code:</td>
                                 <td>{{ config('invoice.finance-details.ifci-code') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Account Number:</td>
+                                <td class="w-40p">Account Number:</td>
                                 <td>{{ config('invoice.finance-details.account-number') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">A/C Holder Name:</td>
+                                <td class="w-40p">A/C Holder Name:</td>
                                 <td>{{ config('invoice.finance-details.holder-name') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Phone:</td>
+                                <td class="w-40p">Phone:</td>
                                 <td>{{ config('invoice.finance-details.phone') }}</td>
                             </tr><br>
                             <tr><td><br></td></tr>

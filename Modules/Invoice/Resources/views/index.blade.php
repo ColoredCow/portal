@@ -150,10 +150,11 @@
                             @endif
                             @php
                                 $index++;
+                                $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
                                 if ($client->hasCustomInvoiceTemplate()) {
-                                    $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getClientProjectsTotalLedgerAmount($quarter);
+                                    $amount = $currencySymbol . $client->getClientProjectsTotalLedgerAmount($quarter);
                                 } else {
-                                    $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
+                                    $amount = $currencySymbol . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
                                 }
                                 $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
@@ -225,12 +226,13 @@
                             @endif
                             @php
                                 $index++;
+                                $currencySymbol = config('constants.currency.' . $project->client->currency . '.symbol');
                                 if ($project->hasCustomInvoiceTemplate()) {
-                                    $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalLedgerAmount($quarter);
+                                    $amount = $currencySymbol . $project->getTotalLedgerAmount($quarter);
                                 } else if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
-                                    $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getResourceBillableAmount();
+                                    $amount = $currencySymbol . $project->getResourceBillableAmount();
                                 } else {
-                                    $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalPayableAmountForTerm($monthToSubtract);
+                                    $amount = $currencySymbol . $project->getTotalPayableAmountForTerm($monthToSubtract);
                                 }
                                 $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');

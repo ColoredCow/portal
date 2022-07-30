@@ -142,7 +142,7 @@ return [
         ],
         'invoice' => [
             'clients' => [
-                'Tech4Dev' => 'custom-invoice-template-1'
+                env('CUSTOM_INVOICE_CLIENT_1', '') => 'custom-invoice-template-1'
             ],
             'projects' => []
         ]

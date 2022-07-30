@@ -12,7 +12,7 @@ class DecimalToWordsHelper
         $digitLength = strlen($intValue);
         $string = [];
         $words = config('constants.amount-to-words');
-        $digits = array('', 'hundred', 'thousand', 'lakh', 'crore');
+        $digits = ['', 'hundred', 'thousand', 'lakh', 'crore'];
         $i = 0;
         while ($i < $digitLength) {
             $divider = ($i == 2) ? 10 : 100;
@@ -23,17 +23,18 @@ class DecimalToWordsHelper
                 $plural = (($counter = count($string)) && $number > 9) ? 's' : null;
                 $hundred = ($counter == 1 && $string[0]) ? ' and ' : null;
                 $string [] = ($number < 21) ? $words[$number] .
-                    " " . $digits[$counter] . $plural . " " . $hundred
+                    ' ' . $digits[$counter] . $plural . ' ' . $hundred
                     :
                     $words[floor($number / 10) * 10]
-                    . " " . $words[$number % 10] . " "
-                    . $digits[$counter] . $plural . " " . $hundred;
+                    . ' ' . $words[$number % 10] . ' '
+                    . $digits[$counter] . $plural . ' ' . $hundred;
             } else {
                 $string[] = null;
             }
         }
         $string = array_reverse($string);
         $integerVal = implode('', $string);
+
         return ($integerVal . $currency);
     }
 }
