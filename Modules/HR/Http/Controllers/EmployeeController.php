@@ -5,11 +5,13 @@ namespace Modules\HR\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\EmployeeService;
 use Modules\HR\Entities\Employee;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class EmployeeController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $service;
 
     public function __construct(EmployeeService $service)

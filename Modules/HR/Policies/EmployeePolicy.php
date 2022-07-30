@@ -12,7 +12,7 @@ class EmployeePolicy
 
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('hr_universities.view');
+        return $user->hasPermissionTo('hr_employees.view');
     }
 
     public function view(User $user, Employee $employee)
