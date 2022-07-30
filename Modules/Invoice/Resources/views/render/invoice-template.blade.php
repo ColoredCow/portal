@@ -424,7 +424,7 @@
                         </tr>
                         <tr class="border-bottom">
                             <td>
-                                <strong>Amount Due in {{ $client->country->initials . ' ' . $currencySymbol }}</strong>
+                                <strong>Amount Due in {{ $client->country->initials == 'IN' ? $currencySymbol : $client->country->initials . ' ' . $currencySymbol }}</strong>
                             </td>
                             <td></td>
                             <td></td>
