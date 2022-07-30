@@ -99,13 +99,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
 
-        Route::resource('employees', 'Employees\EmployeeController')
+        Route::resource('employees', 'EmployeeController')
             ->only(['index', 'show'])
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
         ]);
-        Route::get('employee-reports', 'Employees\EmployeeController@reports')->name('employees.reports');
+        Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
