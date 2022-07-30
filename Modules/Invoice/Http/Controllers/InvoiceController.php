@@ -58,6 +58,7 @@ class InvoiceController extends Controller
         if (! $filters) {
             return redirect(route('invoice.details', $this->service->defaultGstReportFilters()));
         }
+
         return view('invoice::monthly-gst-report', $this->service->invoiceDetails($filters));
     }
 
@@ -65,6 +66,7 @@ class InvoiceController extends Controller
     {
         $this->authorize('monthlyGstTaxReportExport', Invoice::class);
         $filters = $request->all();
+
         return $this->service->monthlyGSTTaxReportExport($filters, $request);
     }
 
@@ -159,6 +161,7 @@ class InvoiceController extends Controller
         if (! $filters) {
             return redirect(route('invoice.tax-report', $this->service->defaultTaxReportFilters()));
         }
+
         return view('invoice::tax-report', $this->service->taxReport($filters));
     }
 
@@ -166,6 +169,7 @@ class InvoiceController extends Controller
     {
         $this->authorize('tax_report_export', Invoice::class);
         $filters = $request->all();
+
         return $this->service->taxReportExport($filters, $request);
     }
 
@@ -188,6 +192,7 @@ class InvoiceController extends Controller
     {
         $this->authorize('yearlyInvoiceReport', Invoice::class);
         $filters = $request->all();
+
         return view('invoice::invoice-report', $this->service->yearlyInvoiceReport($filters, $request));
     }
 
@@ -195,6 +200,7 @@ class InvoiceController extends Controller
     {
         $this->authorize('yearlyInvoiceReportExport', Invoice::class);
         $filters = $request->all();
+
         return $this->service->yearlyInvoiceReportExport($filters, $request);
     }
 }

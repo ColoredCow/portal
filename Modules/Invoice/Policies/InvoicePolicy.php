@@ -19,7 +19,7 @@ class InvoicePolicy
      * Determine whether the user can view the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
+     * @param  \Modules\Invoice\Entities\Invoice  $invoice
      * @return mixed
      */
     public function view(User $user, Invoice $invoice)
@@ -42,7 +42,7 @@ class InvoicePolicy
      * Determine whether the user can update the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
+     * @param  \Modules\Invoice\Entities\Invoice  $invoice
      * @return mixed
      */
     public function update(User $user, Invoice $invoice)
@@ -54,7 +54,7 @@ class InvoicePolicy
      * Determine whether the user can delete the invoice.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Finance\Invoice  $invoice
+     * @param  \Modules\Invoice\Entities\Invoice  $invoice
      * @return mixed
      */
     public function delete(User $user, Invoice $invoice)

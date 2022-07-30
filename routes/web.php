@@ -56,8 +56,6 @@ Route::middleware('auth')->group(function () {
                     'edit' => 'applications.volunteer.edit',
                 ]);
         });
-
-
     });
 
     Route::prefix('finance')->namespace('Finance')->group(function () {

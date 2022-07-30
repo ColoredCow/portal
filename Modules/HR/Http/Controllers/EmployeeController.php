@@ -39,6 +39,7 @@ class EmployeeController extends Controller
     public function reports()
     {
         $this->authorize('reports');
+
         return view('hr.employees.reports');
     }
 }
