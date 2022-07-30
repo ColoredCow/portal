@@ -647,7 +647,8 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceNumber = str_replace('-', '', $data['invoiceNumber']);
         $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
         $pdf = App::make('snappy.pdf.wrapper');
-        $html = view('invoice::render.invoice-template', $data)->render();
+        $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
+        $html = view(('invoice::render.' . $template), $data)->render();
         $data['receivable_date'] = $dueOn;
         $data['project_id'] = null;
         $invoice = Invoice::create([

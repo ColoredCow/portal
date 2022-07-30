@@ -55,9 +55,10 @@
         @endif
         <div>
             @php
-                $month = now(config('constants.timezone.indian'))->subMonth()->format('m');
-                $year = now(config('constants.timezone.indian'))->subMonth()->format('Y');
+                $month = now()->subMonth()->format('m');
+                $year = now()->subMonth()->format('Y');
                 $monthToSubtract = 1;
+                $quarter = now()->quarter;
             @endphp
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
@@ -144,16 +145,25 @@
                             $index = 0;
                         @endphp
                         @foreach ($clientsReadyToSendInvoicesData as $client)
-                            @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
+                        @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
                                 @continue
                             @endif
                             @php
                                 $index++;
-                                $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
+                                if ($client->hasCustomInvoiceTemplate()) {
+                                    $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getClientProjectsTotalLedgerAmount($quarter);
+                                } else {
+                                    $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
+                                }
                                 $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
                                 $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $monthName = $client->getMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
+                                if (optional($client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
+                                    $termText = today()->startOfQuarter()->format('M');
+                                    $billingStartMonth = today()->startOfQuarter()->addQuarter()->format('M');
+                                    $billingEndMonth = today()->endOfQuarter()->format('M');
+                                }
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
                                     'billingPersonName' => optional($client->billing_contact)->name,
@@ -215,8 +225,10 @@
                             @endif
                             @php
                                 $index++;
-                                if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
-                                    $amount = $project->client->country->currency_symbol . $project->getResourceBillableAmount();
+                                if ($project->hasCustomInvoiceTemplate()) {
+                                    $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalLedgerAmount($quarter);
+                                } else if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+                                    $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getResourceBillableAmount();
                                 } else {
                                     $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalPayableAmountForTerm($monthToSubtract);
                                 }
@@ -224,6 +236,11 @@
                                 $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
                                 $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
+                                if (optional($project->client->billingDetails)->billing_frequency == config('client.billing-frequency.quarterly.id')) {
+                                    $termText = today()->startOfQuarter()->format('M');
+                                    $billingStartMonth = $termText = today()->startOfQuarter()->format('M');
+                                    $billingEndMonth  = $termText = today()->endOfQuarter()->format('M');
+                                }
                                 $invoiceData = [
                                     'projectName' => $project->name,
                                     'billingPersonName' => optional($project->client->billing_contact)->name,

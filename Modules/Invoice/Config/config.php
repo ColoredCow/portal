@@ -141,7 +141,10 @@ return [
             ]
         ],
         'invoice' => [
-            'Tech4Dev' => 'custom-invoice-template-1'
+            'clients' => [
+                'Tech4Dev' => 'custom-invoice-template-1'
+            ],
+            'projects' => []
         ]
     ],
 ];

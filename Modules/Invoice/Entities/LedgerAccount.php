@@ -29,10 +29,10 @@ class LedgerAccount extends Model implements Arrayable
             return $query;
         }
 
-        $quarter = $quarter ?? ceil(now()->month / 3);
+        $quarter = $quarter ?? now()->quarter;
 
-        $startDate = today()->startOfQuarter();
-        $endDate = today()->endOfQuarter();
+        $startDate = today()->startOfYear()->addQuarters($quarter - 1)->startOfQuarter();
+        $endDate =today()->startOfYear()->addQuarters($quarter - 1)->endOfQuarter();
 
         return $query->where('date', '>=', $startDate)->where('date', '<=', $endDate);
     }

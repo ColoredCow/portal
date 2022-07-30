@@ -255,4 +255,15 @@ class Project extends Model
 
         return $amount;
     }
+
+    public function hasCustomInvoiceTemplate()
+    {
+        $template = config('invoice.templates.invoice.projects.' . $this->name);
+
+        if ($template) {
+            return true;
+        }
+
+        return false;
+    }
 }

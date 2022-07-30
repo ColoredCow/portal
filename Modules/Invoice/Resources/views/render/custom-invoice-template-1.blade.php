@@ -63,7 +63,7 @@
     </head>
     <body>
         @php
-            $quarter = ceil(now()->month / 3);
+            $quarter = now()->quarter;
         @endphp
         <div class="w-100p page">
             <table class="w-100p">

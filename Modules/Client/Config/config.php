@@ -62,7 +62,7 @@ return [
             'id' => 2,
             'name' => 'Monthly',
         ],
-        'quaterly' => [
+        'quarterly' => [
             'id' => 3,
             'name' => 'Quarterly',
         ],
