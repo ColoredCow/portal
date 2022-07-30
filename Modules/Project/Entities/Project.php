@@ -6,9 +6,11 @@ use App\Traits\Filters;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
@@ -29,7 +31,7 @@ class Project extends Model
     public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
-            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort')->withTimestamps()->whereNull('project_team_members.ended_on');
+            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort', 'billing_engagement')->withTimestamps()->whereNull('project_team_members.ended_on');
     }
 
     public function repositories()
@@ -55,6 +57,11 @@ class Project extends Model
     public function getTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNULL('ended_on');
+    }
+
+    public function getTeamMembersGroupedByEngagement()
+    {
+        return $this->getTeamMembers()->select('billing_engagement', DB::raw('count(*) as resource_count'))->groupBy('billing_engagement')->get();
     }
 
     public function getInactiveTeamMembers()
@@ -178,6 +185,18 @@ class Project extends Model
         });
     }
 
+    public function getResourceBillableAmount()
+    {
+        $service_rate = $this->client->billingDetails->service_rates;
+        $totalAmount = 0;
+
+        foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
+            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate;
+        }
+
+        return round($totalAmount, 2);
+    }
+
     public function meta()
     {
         return $this->hasMany(ProjectMeta::class);
@@ -207,10 +226,44 @@ class Project extends Model
 
     public function scopeInvoiceReadyToSend($query)
     {
-        return $query->whereDoesntHave('invoices', function ($query) {
+        $query->whereDoesntHave('invoices', function ($query) {
             return $query->whereMonth('sent_on', now(config('constants.timezone.indian')))->whereYear('sent_on', now(config('constants.timezone.indian')));
         })->whereHas('client.billingDetails', function ($query) {
             return $query->where('billing_date', '<=', today()->format('d'));
         });
+    }
+
+    public function ledgerAccounts()
+    {
+        return $this->hasMany(LedgerAccount::class);
+    }
+
+    public function ledgerAccountsOnlyCredit()
+    {
+        return $this->ledgerAccounts()->whereNotNull('credit');
+    }
+
+    public function ledgerAccountsOnlyDebit()
+    {
+        return $this->ledgerAccounts()->whereNotNull('debit');
+    }
+
+    public function getTotalLedgerAmount($quarter = null)
+    {
+        $amount = 0;
+        $amount += (optional($this->ledgerAccountsOnlyCredit()->quarter($quarter))->get()->sum('credit') - optional($this->ledgerAccountsOnlyDebit()->quarter($quarter))->get()->sum('debit'));
+
+        return $amount;
+    }
+
+    public function hasCustomInvoiceTemplate()
+    {
+        $template = config('invoice.templates.invoice.projects.' . $this->name);
+
+        if ($template) {
+            return true;
+        }
+
+        return false;
     }
 }

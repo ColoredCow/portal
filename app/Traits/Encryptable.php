@@ -24,7 +24,7 @@ trait Encryptable
 
     public function setAttribute($key, $value)
     {
-        if (in_array($key, $this->encryptable)) {
+        if (in_array($key, $this->encryptable) && $value !== null) {
             $value = $this->encryptValue($value);
         }
 
