@@ -333,17 +333,17 @@ class Client extends Model
     {
         return $this->hasMany(LedgerAccount::class);
     }
-    
+
     public function ledgerAccountsOnlyCredit()
     {
         return $this->hasMany(LedgerAccount::class)->whereNotNull('credit');
     }
-    
+
     public function ledgerAccountsOnlyDebit()
     {
         return $this->hasMany(LedgerAccount::class)->whereNotNull('debit');
     }
-    
+
     public function getClientProjectsTotalLedgerAmount($quarter = null)
     {
         $amount = 0;
@@ -354,6 +354,4 @@ class Client extends Model
 
         return $amount;
     }
-
-
 }

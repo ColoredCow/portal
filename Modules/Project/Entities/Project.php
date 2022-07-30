@@ -242,12 +242,12 @@ class Project extends Model
     {
         return $this->ledgerAccounts()->whereNotNull('credit');
     }
-    
+
     public function ledgerAccountsOnlyDebit()
     {
         return $this->ledgerAccounts()->whereNotNull('debit');
     }
-    
+
     public function getTotalLedgerAmount($quarter = null)
     {
         $amount = 0;
