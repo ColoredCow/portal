@@ -98,6 +98,17 @@ Route::middleware('auth')->group(function () {
         Route::put('/resources/update/{resource}', 'ResourcesController@update')->name('resources.update');
         Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
+
+        Route::resource('employees', 'Employees\EmployeeController')
+            ->only(['index', 'show'])
+            ->names([
+                'index' => 'employees',
+                'show' => 'employees.show',
+        ]);
+
+        Route::get('employee/{employee}/projects/', 'Employees\EmployeeController@showProjects')->name('employees.projects');
+
+        Route::get('employee-reports', 'Employees\ReportsController@index')->name('employees.reports');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\HR\Employees;
+namespace Modules\HR\Http\Controllers\Employees;
 
 use App\Http\Controllers\Controller;
 
