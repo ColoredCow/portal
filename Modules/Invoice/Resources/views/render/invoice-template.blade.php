@@ -408,9 +408,9 @@
                                     @endif
                                 @else 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
-                                        {{ currencySymbol . $project->getResourceBillableAmount() }}
+                                        {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                     @else
-                                        {{ currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
+                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
                                     @endif     
                                 @endif
                             </td>
@@ -437,9 +437,9 @@
                                     @endif
                                 @else 
                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
-                                        {{ currencySymbol . $project->getResourceBillableAmount() }}
+                                        {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                     @else
-                                        {{ currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
+                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
                                     @endif     
                                 @endif
                             </strong></td>
