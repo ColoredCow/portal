@@ -7,18 +7,17 @@ class DecimalToWordsHelper
     public static function convertDecimalToWords($number, $currency)
     {
         $intValue = intval($number);
-        $point = round($number - $intValue, 2) * 100;
         $hundred = null;
-        $digitLength = strlen($intValue);
+        $digitLength = strlen(strval($intValue));
         $string = [];
         $words = config('constants.amount-to-words');
         $digits = ['', 'hundred', 'thousand', 'lakh', 'crore'];
-        $i = 0;
-        while ($i < $digitLength) {
-            $divider = ($i == 2) ? 10 : 100;
+        $index = 0;
+        while ($index < $digitLength) {
+            $divider = ($index == 2) ? 10 : 100;
             $number = floor($intValue % $divider);
             $intValue = floor($intValue / $divider);
-            $i += ($divider == 10) ? 1 : 2;
+            $index += ($divider == 10) ? 1 : 2;
             if ($number) {
                 $plural = (($counter = count($string)) && $number > 9) ? 's' : null;
                 $hundred = ($counter == 1 && $string[0]) ? ' and ' : null;
