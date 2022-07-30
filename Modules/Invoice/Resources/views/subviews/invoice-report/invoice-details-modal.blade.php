@@ -25,8 +25,8 @@
                             <tr>
                                 <td>{{ $teamMemberName }}</td>
                                 <td>{{ $client->getMonthStartDateAttribute(1)->format(config('invoice.default-date-format')) }}</td>
-                                <td>{{ $client->getClientMonthEndDateAttribute(1)->format(config('invoice.default-date-format')) }}</td>
-                                <td>{{ $client->getWorkingDays($client->getMonthStartDateAttribute(1), $client->getClientMonthEndDateAttribute(1)) }}</td>
+                                <td>{{ $client->getMonthEndDateAttribute(1)->format(config('invoice.default-date-format')) }}</td>
+                                <td>{{ $client->getWorkingDays($client->getMonthStartDateAttribute(1), $client->getMonthEndDateAttribute(1)) }}</td>
                                 <td>{{ $teamMemberData['billableHours'] }}</td>
                             </tr>
                             @if($loop->last)

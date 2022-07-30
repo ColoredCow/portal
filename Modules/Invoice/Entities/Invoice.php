@@ -195,7 +195,7 @@ class Invoice extends Model
         $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
         $currentMonthNumber = today(config('constants.timezone.indian'))->month;
         $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
-        $termEndDate = $this->client->getClientMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $termEndDate = $this->client->getMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
         $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
 
         if ($termStartDate->format('M') == $termEndDate->format('M')) {

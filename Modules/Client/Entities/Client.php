@@ -183,7 +183,7 @@ class Client extends Model
     public function getWorkingDaysForTerm()
     {
         $monthStartDate = $this->month_start_date;
-        $monthEndDate = $this->client_month_end_date;
+        $monthEndDate = $this->month_end_date;
 
         return $this->getWorkingDays($monthStartDate, $monthEndDate);
     }
@@ -240,7 +240,7 @@ class Client extends Model
         }
     }
 
-    public function getClientMonthEndDateAttribute($monthsToSubtract)
+    public function getMonthEndDateAttribute($monthsToSubtract)
     {
         $monthsToSubtract = $monthsToSubtract ?? 0;
         $billingDate = $this->billingDetails->billing_date;
@@ -267,7 +267,7 @@ class Client extends Model
     public function TeamMembersEffortData()
     {
         $startDate = $this->getMonthStartDateAttribute(1);
-        $endDate = $this->getClientMonthEndDateAttribute(1);
+        $endDate = $this->getMonthEndDateAttribute(1);
 
         $data = [];
         $clientId = $this->id;

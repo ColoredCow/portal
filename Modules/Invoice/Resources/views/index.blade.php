@@ -151,8 +151,8 @@
                                 $index++;
                                 $amount = config('constants.currency.' . $client->currency . '.symbol') . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
                                 $billingStartMonth = $client->getMonthStartDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonth = $client->getClientMonthEndDateAttribute($monthToSubtract)->format('M');
-                                $monthName = $client->getClientMonthEndDateAttribute($monthToSubtract)->format('F');
+                                $billingEndMonth = $client->getMonthEndDateAttribute($monthToSubtract)->format('M');
+                                $monthName = $client->getMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
                                 $invoiceData = [
                                     'projectName' => $client->name . ' Projects',
@@ -213,8 +213,8 @@
                                 $index++;
                                 $amount = config('constants.currency.' . $project->client->currency . '.symbol') . $project->getTotalPayableAmountForTerm($monthToSubtract);
                                 $billingStartMonth = $project->client->getMonthStartDateAttribute($monthToSubtract)->format('M');
-                                $billingEndMonth = $project->client->getClientMonthEndDateAttribute($monthToSubtract)->format('M');
-                                $monthName = $project->client->getClientMonthEndDateAttribute($monthToSubtract)->format('F');
+                                $billingEndMonth = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('M');
+                                $monthName = $project->client->getMonthEndDateAttribute($monthToSubtract)->format('F');
                                 $termText = $billingStartMonth;
                                 $invoiceData = [
                                     'projectName' => $project->name,

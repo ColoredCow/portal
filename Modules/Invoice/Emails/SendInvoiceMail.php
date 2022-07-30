@@ -45,9 +45,9 @@ class SendInvoiceMail extends Mailable
         $templateVariablesForSubject = config('invoice.templates.setting-key.send-invoice.template-variables.subject');
         $templateVariablesForBody = config('invoice.templates.setting-key.send-invoice.template-variables.body');
         $billingStartMonth = $this->client->getMonthStartDateAttribute(1)->format('M');
-        $billingEndMonth = $this->client->getClientMonthEndDateAttribute(1)->format('M');
-        $year = $this->client->getClientMonthEndDateAttribute(1)->year;
-        $monthName = $this->client->getClientMonthEndDateAttribute(1)->format('F');
+        $billingEndMonth = $this->client->getMonthEndDateAttribute(1)->format('M');
+        $year = $this->client->getMonthEndDateAttribute(1)->year;
+        $monthName = $this->client->getMonthEndDateAttribute(1)->format('F');
         $termText = $billingStartMonth != $billingEndMonth ? $billingStartMonth . ' - ' . $billingEndMonth : $monthName;
 
         if (! $subject) {

@@ -25,7 +25,7 @@ class EffortTrackingService
         $totalEffort = $project->current_hours_for_month;
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
         $startDate = $project->client->month_start_date;
-        $endDate = $project->client->client_month_end_date;
+        $endDate = $project->client->month_end_date;
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
 
         return [
@@ -102,7 +102,7 @@ class EffortTrackingService
         }
         if (isset($teamMembers[0])) {
             $startDate = $teamMembers[0]->project->client->month_start_date;
-            $endDate = $teamMembers[0]->project->client->client_month_end_date;
+            $endDate = $teamMembers[0]->project->client->month_end_date;
         } else {
             $startDate = $currentDate->startOfMonth()->toDateString();
             $endDate = $currentDate->endOfMonth()->toDateString();
