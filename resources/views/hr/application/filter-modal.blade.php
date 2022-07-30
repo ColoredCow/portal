@@ -16,11 +16,11 @@
                                     <option value="on-hold">Awaiting Confirmation</option>
                                     <option value="rejected">Closed</option>
                                     <option value="in-progress">In Progress</option>
-                                    <option value="">Need follow Up</option>
+                                    <option value="need-follow-up">Need follow Up</option>
                                     <option value="new">New Application</option>
-                                    <option value="">No Show</option>
-                                    <option value="no-show-reminded">No Show Reminded</option>
-                                    <option value="approved">On Board</option>
+                                    <option value="no-show">No Show</option>
+                                    <option value="no-show">No Show Reminded</option>
+                                    <option value="onboarded">On Boarded</option>
                                     <option value="sent-for-approval">Send For Approval</option>
                                 </select>
                                 <button type="submit" class="btn btn-outline-primary">Apply</button>

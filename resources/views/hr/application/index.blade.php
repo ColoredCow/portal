@@ -50,7 +50,7 @@
                 <label id="job">{!! __('Jobs') !!}</label><br>
                 <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="hr_job_id" id="job"
                     onchange="this.form.submit()">
-                    <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
+                    <option value=""{{ request()->has('hr_job_id') ? '' : 'selected' }}>
                         {!! __('All Jobs') !!}
                     </option>
                     @foreach ($jobs as $job)
@@ -94,14 +94,26 @@
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
             <li id="list-styling">
-                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : ( isset($status) ? '' : 'job-application-status' ) }} btn"
-                    href="/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}" >
+                <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.in-progress.label') ? 'job-application-status text-underline' : '' }} btn"
+                    href="/{{ Request::path() }}?status={{ config('constants.hr.status.in-progress.label') }}{{$query_filters}}" >
                     <sup class = "application-menu-options-title fz-18">
-                        {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
+                        {{$inProgressApplicationsCount}}
                     </sup>
                     <div>
                         <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>
-                        <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.new.label') ? 'text-underline' : '' }}">Open&nbsp</h5>
+                        <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.in-progress.label') ? 'text-underline' : '' }}">Open&nbsp</h5>
+                    </div>
+                </a>
+            </li>
+            <li id="list-styling">
+                <a class="{{ $status === config('constants.hr.status.new.label') ? 'job-application-status text-underline' : '' }} btn" 
+                href="/{{ Request::path() .'?status='. config('constants.hr.status.new.label') }}{{$query_filters}}">
+                    <sup class = "application-menu-options-title fz-18">
+                        {{$newApplicationsCount}}
+                    </sup>
+                    <div>
+                        <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/code.svg')) !!}</span>
+                        <h5 class="application-menu-headings fz-20 font-mulish {{ $status === config('constants.hr.status.new.label') ? 'text-underline' : '' }}">New Application</h5>    
                     </div>
                 </a>
             </li>
