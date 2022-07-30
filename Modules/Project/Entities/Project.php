@@ -191,7 +191,7 @@ class Project extends Model
         $totalAmount = 0;
 
         foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
-            $totalAmount += ($groupedResources->billing_engagement/100) * $groupedResources->resource_count * $service_rate;
+            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate;
         }
 
         return round($totalAmount, 2);

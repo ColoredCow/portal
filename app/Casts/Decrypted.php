@@ -1,10 +1,10 @@
 <?php
- 
+
 namespace App\Casts;
+
 use Crypt;
- 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
- 
+
 class Decrypted implements CastsAttributes
 {
     /**
@@ -14,7 +14,7 @@ class Decrypted implements CastsAttributes
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
-     * @return array
+     * @return mixed
      */
     public function get($model, $key, $value, $attributes)
     {
@@ -29,7 +29,7 @@ class Decrypted implements CastsAttributes
 
         return $value;
     }
- 
+
     /**
      * Prepare the given value for storage.
      *
@@ -37,7 +37,7 @@ class Decrypted implements CastsAttributes
      * @param  string  $key
      * @param  array  $value
      * @param  array  $attributes
-     * @return string
+     * @return mixed
      */
     public function set($model, $key, $value, $attributes)
     {

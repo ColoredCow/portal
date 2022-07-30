@@ -803,6 +803,7 @@ class InvoiceService implements InvoiceServiceContract
         $clients = Client::with('projects')->orderBy('name')->get();
         $client = Client::find($data['client_id'] ?? null);
         $project = Project::find($data['project_id'] ?? null);
+
         return [
             'clients' => $clients,
             'client' => $client,
