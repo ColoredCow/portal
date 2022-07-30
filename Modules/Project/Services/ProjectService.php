@@ -23,7 +23,7 @@ class ProjectService implements ProjectServiceContract
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
         ];
-        $data['projects'] = $data['projects'] ?? 'all-projects';
+        $data['projects'] = $data['projects'] ?? 'my-projects';
 
         $clients = null;
 
@@ -32,7 +32,7 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters)->orderBy('name', 'asc');
             })->whereHas('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters);
-            })->orderBy('name')->get();
+            })->orderBy('name')->paginate(config('constants.pagination_size'));
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->count();
@@ -53,7 +53,7 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 });
-            })->get();
+            })->orderBy('name')->paginate(config('constants.pagination_size'));
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
@@ -72,7 +72,7 @@ class ProjectService implements ProjectServiceContract
         }
 
         return [
-            'clients' => $clients,
+            'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
             'haltedProjectsCount' => $haltedProjectsCount
@@ -261,8 +261,8 @@ class ProjectService implements ProjectServiceContract
     }
     public function getWorkingDays($project)
     {
-        $startDate = $project->client->client_month_start_date;
-        $endDate = $project->client->client_month_end_date;
+        $startDate = $project->client->month_start_date;
+        $endDate = $project->client->month_end_date;
         $period = CarbonPeriod::create($startDate, $endDate);
         $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];
