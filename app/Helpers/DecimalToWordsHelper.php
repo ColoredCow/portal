@@ -22,7 +22,7 @@ class DecimalToWordsHelper
             if ($number) {
                 $plural = (($counter = count($string)) && $number > 9) ? 's' : null;
                 $hundred = ($counter == 1 && $string[0]) ? ' and ' : null;
-                $string [] = ($number < 21) ? $words[$number] .
+                $string[] = ($number < 21) ? $words[$number] .
                     ' ' . $digits[$counter] . $plural . ' ' . $hundred
                     :
                     $words[floor($number / 10) * 10]
@@ -35,6 +35,6 @@ class DecimalToWordsHelper
         $string = array_reverse($string);
         $integerVal = implode('', $string);
 
-        return ($integerVal . $currency);
+        return $integerVal . $currency;
     }
 }
