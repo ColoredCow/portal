@@ -33,6 +33,7 @@ class LedgerAccount extends Model implements Arrayable
 
         $startDate = today()->startOfQuarter();
         $endDate = today()->endOfQuarter();
+        dd($quarter, $startDate, $endDate);
 
         return $query->where('date', '>=', $startDate)->where('date', '<=', $endDate);
     }

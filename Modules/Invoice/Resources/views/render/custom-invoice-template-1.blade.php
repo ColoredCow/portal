@@ -62,6 +62,9 @@
         </style>
     </head>
     <body>
+        @php
+            $quarter = ceil(now()->month / 3);
+        @endphp
         <div class="w-100p page">
             <table class="w-100p">
                 <tbody>
@@ -136,11 +139,11 @@
                             <tr>
                                 <td class="w-76p">
                                     <div>
-                                        {{ $loop->iteration . __('. ') . $project->name . __(' (Q') . ceil(now()->month / 3) . __(')') }}
+                                        {{ $loop->iteration . __('. ') . $project->name . __(' (Q') . $quarter . __(')') }}
                                     </div>
                                 </td>
                                 <td>
-                                    {{ $client->country->currency_symbol . $project->getTotalLedgerAmount(ceil(now()->month / 3)) }}
+                                    {{ $client->country->currency_symbol . $project->getTotalLedgerAmount($quarter) }}
                                 </td>
                             </tr>
                             <tr></tr>
@@ -159,7 +162,7 @@
                                 </div>
                             </td>
                             <td>
-                                {{ $client->country->currency_symbol . $client->getClientProjectsTotalLedgerAmount(ceil(now()->month / 3)) }}
+                                {{ $client->country->currency_symbol . $client->getClientProjectsTotalLedgerAmount($quarter) }}
                             </td>
                         </tr>
                     </tbody>
@@ -212,7 +215,7 @@
                 <table class="table-border w-100p">
                     <tbody>
                         @foreach ($projects as $project)
-                            @foreach ($project->ledgerAccountsOnlyCredit()->quarter(ceil(now()->month / 3))->get() as $ledgerAccountRow )
+                            @foreach ($project->ledgerAccountsOnlyCredit()->quarter($quarter)->get() as $ledgerAccountRow )
                                 <tr>
                                     <td class="p-5 w-70p">
                                         {{ $ledgerAccountRow->particulars }}
@@ -232,7 +235,7 @@
                             </td>
                         </tr>
                         @foreach ($projects as $project)
-                            @foreach ($project->ledgerAccountsOnlyDebit()->quarter(ceil(now()->month / 3))->get() as $ledgerAccountRow)
+                            @foreach ($project->ledgerAccountsOnlyDebit()->quarter($quarter)->get() as $ledgerAccountRow)
                                 <tr>
                                     <td class="p-5 w-70p">
                                         {{ $ledgerAccountRow->particulars }}
@@ -248,7 +251,7 @@
                                 {{ __('Balance: ') }}
                             </td>
                             <td class="p-5 text-right">
-                                {{ $client->country->currency_symbol . ($client->getClientProjectsTotalLedgerAmount(ceil(now()->month / 3))) }}
+                                {{ $client->country->currency_symbol . ($client->getClientProjectsTotalLedgerAmount($quarter)) }}
                             </td>
                         </tr>
                     </tbody>
