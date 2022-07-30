@@ -95,7 +95,9 @@ class InvoiceController extends Controller
     {
         $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
         $pdf = App::make('snappy.pdf.wrapper');
-        $html = view('invoice::render.render', $data);
+
+        $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
+        $html = view(('invoice::render.' . $template), $data);
         $pdf->loadHTML($html);
 
         return $pdf;
@@ -194,5 +196,19 @@ class InvoiceController extends Controller
         $filters = $request->all();
 
         return $this->service->yearlyInvoiceReportExport($filters, $request);
+    }
+
+    public function ledgerAccountsIndex(Request $request)
+    {
+        $data = $this->service->getLedgerAccountData($request->all());
+
+        return view('invoice::ledger-accounts.index')->with($data);
+    }
+
+    public function storeLedgerAccountData(Request $request)
+    {
+        $this->service->storeLedgerAccountData($request->all());
+
+        return redirect()->back()->with('status', 'Data saved successfully.');
     }
 }

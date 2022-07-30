@@ -71,8 +71,9 @@
                 <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
                 <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly Tax Report</a>
                 <a class="dropdown-item" href="{{ route('invoice.yearly-report') }}">Yearly Invoice Report</a>
-                <a class="dropdown-item " href="{{ route('invoice.details') }}">Monthly GST Report</a>
-                <a class="dropdown-item " href="{{ route('reports.finance.profit-and-loss') }}">P&L Report</a>
+                <a class="dropdown-item" href="{{ route('invoice.details') }}">Monthly GST Report</a>
+                <a class="dropdown-item" href="{{ route('reports.finance.profit-and-loss') }}">P&L Report</a>
+                <a class="dropdown-item" href="{{ route('ledger-accounts.index') }}">Ledger Accounts</a>
                 <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
                 <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>
                 <a class="dropdown-item disabled" href="{{ route('legal-document.index') }}">Legal Documents</a>
@@ -127,11 +128,11 @@
                     class="caret"></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown_sales">
-                @can('infrastructure.backups.view')
-                    <a class="dropdown-item" href="{{ route('infrastructure.index') }}">Backups</a>
-                @endcan
                 @can('infrastructure.ec2-instances.view')
-                    <a class="dropdown-item" href="{{ route('infrastructure.get-instances') }}">EC2 Instances</a>
+                    <a class="dropdown-item" href="{{ route('infrastructure.ec2-instances.index') }}">EC2 Instances</a>
+                @endcan
+                @can('infrastructure.backups.view')
+                    <a class="dropdown-item" href="{{ route('infrastructure.s3-buckets.index') }}">Backups</a>
                 @endcan
             </div>
         </li>

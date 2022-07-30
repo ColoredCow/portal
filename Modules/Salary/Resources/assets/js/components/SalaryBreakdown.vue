@@ -254,6 +254,9 @@ export default {
 			return Math.min(Math.ceil(multiplier * percentage / 100) , Math.ceil(this.salaryConfigs.edli_charges_limit.fixed_amount * percentage / 100));
 		},
 		ctc() {
+			if (this.grossSalary === "") {
+				return 0;
+			}
 			return Math.ceil(parseInt(this.grossSalary) + parseInt(this.employerEsi) + parseInt(this.employerEpf) + parseInt(this.administrationCharges) + parseInt(this.edliCharges));
 		},
 		ctcAnnual() {
