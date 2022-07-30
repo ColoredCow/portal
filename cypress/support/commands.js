@@ -23,7 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('Login', (user) => {
+Cypress.Commands.add('login', (user) => {
     cy.visit("/login");
     cy.get('input[name=email]').type(user.username)
     cy.get('input[name=password]').type(user.password)
@@ -31,7 +31,7 @@ Cypress.Commands.add('Login', (user) => {
     cy.get("h3").first().should("have.text", "Dashboard");
   })
 
-Cypress.Commands.add('Logout', () => {
+Cypress.Commands.add('logout', () => {
     cy.get('#navbarDropdown').click();
     cy.get('#logout').click();
   })
