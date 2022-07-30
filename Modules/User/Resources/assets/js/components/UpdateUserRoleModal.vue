@@ -112,6 +112,7 @@ export default {
 			document.getElementById("close_update_user_roles_modal").click();
 
 			this.$emit("userRolesUpdated", selectedRoles);
+			this.$toast.success(' User role updated successfully!');
 		},
 
 		checkForSuperAdmin(role) {
