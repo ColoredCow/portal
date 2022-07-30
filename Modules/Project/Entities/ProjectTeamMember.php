@@ -66,7 +66,7 @@ class ProjectTeamMember extends Model
     public function getExpectedEffortTillTodayAttribute()
     {
         $project = new Project;
-        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, today('')));
+        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, today(config('constants.timezone.indian'))));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
