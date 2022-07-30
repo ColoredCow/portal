@@ -7,8 +7,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Client\Entities\Client;
-use Modules\Project\Entities\Project;
 
 class InvoiceController extends Controller
 {
@@ -200,11 +198,17 @@ class InvoiceController extends Controller
         return $this->service->yearlyInvoiceReportExport($filters, $request);
     }
 
-    public function ledgerAccountsIndex()
+    public function ledgerAccountsIndex(Request $request)
     {
-        $clients = Client::with('projects')->orderBy('name')->get();
-        return view('invoice::ledger-accounts.index')->with([
-            'clients' => $clients,
-        ]);
+        $data = $this->service->getLedgerAccountData($request->all());
+
+        return view('invoice::ledger-accounts.index')->with($data);
+    }
+
+    public function storeLedgerAccountData(Request $request)
+    {
+        $this->service->storeLedgerAccountData($request->all());
+
+        return redirect()->back()->with('status', 'Data saved successfully.');
     }
 }

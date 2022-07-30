@@ -31,6 +31,7 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/{invoiceId}/{filename}', 'InvoiceController@getInvoiceFile')->name('invoice.get-file');
     Route::get('/yearly-Invoice-report-export', 'InvoiceController@yearlyInvoiceReportExport')->name('invoice.yearly-report-export');
 });
-Route::prefix('/ledger-accounts')->middleware('auth')->group(function () {
-    Route::get('/', 'InvoiceController@ledgerAccountsIndex')->name('ledger-accounts.index');
+Route::middleware('auth')->group(function () {
+    Route::get('ledger-accounts', 'InvoiceController@ledgerAccountsIndex')->name('ledger-accounts.index');
+    Route::post('ledger-accounts', 'InvoiceController@storeLedgerAccountData')->name('ledger-accounts.store');
 });

@@ -12,6 +12,7 @@ use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 
 class Client extends Model
@@ -326,5 +327,10 @@ class Client extends Model
         }
 
         return substr_replace($bccEmails, '', -1);
+    }
+
+    public function ledgerAccounts()
+    {
+        return $this->hasMany(LedgerAccount::class);
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Modules\Client\Entities\Client;
 use Modules\EffortTracking\Entities\Task;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
@@ -231,5 +232,10 @@ class Project extends Model
         })->whereHas('client.billingDetails', function ($query) {
             return $query->where('billing_date', '<=', today()->format('d'));
         });
+    }
+
+    public function ledgerAccounts()
+    {
+        return $this->hasMany(LedgerAccount::class);
     }
 }

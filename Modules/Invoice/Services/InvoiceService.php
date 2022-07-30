@@ -22,6 +22,7 @@ use App\Models\Setting;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
+use Modules\Invoice\Entities\LedgerAccount;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -795,5 +796,31 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         return Client::find($clientId, 'id')->currency;
+    }
+
+    public function getLedgerAccountData(array $data)
+    {
+        $clients = Client::with('projects')->orderBy('name')->get();
+        $client = Client::find($data['client_id'] ?? null);
+        $project = Project::find($data['project_id'] ?? null);
+        return [
+            'clients' => $clients,
+            'client' => $client,
+            'project' => $project,
+            'ledgerAccountData' => $project ? $project->ledgerAccounts->toArray() : $client->ledgerAccounts->toArray()
+        ];
+    }
+
+    public function storeLedgerAccountData(array $data)
+    {
+        foreach ($data['ledger_account_data'] as $ledgerAccountData) {
+            if ($ledgerAccountData['id'] == null) {
+                LedgerAccount::create($ledgerAccountData);
+                continue;
+            }
+
+            $ledgerAccount = LedgerAccount::find($ledgerAccountData['id']);
+            $ledgerAccount->update($ledgerAccountData);
+        }
     }
 }
