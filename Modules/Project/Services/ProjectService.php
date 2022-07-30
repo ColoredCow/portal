@@ -72,7 +72,7 @@ class ProjectService implements ProjectServiceContract
         }
     
         
-         $clients->each(function($client) { 
+        $clients->each(function($client){ 
             foreach ($client->projects as $project):
                 if (empty($project->projectContracts->first()->contract_file_path)) {
                     $project->tag('no-contract');
