@@ -284,7 +284,7 @@ class ProjectService implements ProjectServiceContract
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
             if (! in_array($date->format('l'), $weekend)) {
-                ++$numberOfWorkingDays;
+                $numberOfWorkingDays;
             }
         }
 
@@ -295,7 +295,7 @@ class ProjectService implements ProjectServiceContract
     {
         if ($data['contract_file'] ?? null) {
             $file = $data['contract_file'];
-            $folder = '/contract/'.date('Y').'/'.date('m');
+            $folder = '/contract/' . date('Y') . '/' . date('m');
             $fileName = $file->getClientOriginalName();
             $filePath = Storage::putFileAs($folder, $file, $fileName);
             ProjectContract::updateOrCreate(
@@ -324,7 +324,7 @@ class ProjectService implements ProjectServiceContract
                     }
                 }
             }
-            if (!empty($managerProjects)) {
+            if (! empty($managerProjects)) {
                 $dataForMail[] = [
                     'projects' => $managerProjects,
                     'name' => $user->name,
