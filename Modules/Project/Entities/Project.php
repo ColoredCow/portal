@@ -105,9 +105,9 @@ class Project extends Model
 
     public function getCurrentExpectedHoursAttribute()
     {
-        $currentDate = today('');
+        $currentDate = today(config('constants.timezone.indian'));
 
-        if (now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
@@ -116,7 +116,7 @@ class Project extends Model
 
     public function getExpectedHoursTillTodayAttribute()
     {
-        return $this->getExpectedHours(today(''));
+        return $this->getExpectedHours(today(config('constants.timezone.indian')));
     }
 
     public function getExpectedHours($currentDate)
@@ -208,7 +208,7 @@ class Project extends Model
     public function scopeInvoiceReadyToSend($query)
     {
         return $query->whereDoesntHave('invoices', function ($query) {
-            return $query->whereMonth('sent_on', now(''))->whereYear('sent_on', now(''));
+            return $query->whereMonth('sent_on', now(config('constants.timezone.indian')))->whereYear('sent_on', now(config('constants.timezone.indian')));
         })->whereHas('client.billingDetails', function ($query) {
             return $query->where('billing_date', '<=', today()->format('d'));
         });

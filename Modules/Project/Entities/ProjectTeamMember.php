@@ -52,9 +52,9 @@ class ProjectTeamMember extends Model
     public function getCurrentExpectedEffortAttribute()
     {
         $project = new Project;
-        $currentDate = today('');
+        $currentDate = today(config('constants.timezone.indian'));
 
-        if (now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
@@ -79,9 +79,9 @@ class ProjectTeamMember extends Model
     public function getFteAttribute()
     {
         $project = new Project;
-        $currentDate = today('');
+        $currentDate = today(config('constants.timezone.indian'));
 
-        if (now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 

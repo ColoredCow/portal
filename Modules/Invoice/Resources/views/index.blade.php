@@ -55,8 +55,8 @@
         @endif
         <div>
             @php
-                $month = now('')->subMonth()->format('m');
-                $year = now('')->subMonth()->format('Y');
+                $month = now(config('constants.timezone.indian'))->subMonth()->format('m');
+                $year = now(config('constants.timezone.indian'))->subMonth()->format('Y');
                 $monthToSubtract = 1;
             @endphp
             <table class="table table-bordered table-striped">

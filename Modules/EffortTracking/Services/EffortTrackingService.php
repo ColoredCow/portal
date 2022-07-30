@@ -18,9 +18,9 @@ class EffortTrackingService
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
-        $currentDate = now('');
-        if (now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-            $currentDate = now('')->subDay();
+        $currentDate = now(config('constants.timezone.indian'));
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
         $totalEffort = $project->current_hours_for_month;
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
@@ -96,9 +96,9 @@ class EffortTrackingService
     {
         $teamMembersEffort = [];
         $users = [];
-        $currentDate = now('');
-        if (now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-            $currentDate = now('')->subDay();
+        $currentDate = now(config('constants.timezone.indian'));
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+            $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
         if (isset($teamMembers[0])) {
             $startDate = $teamMembers[0]->project->client->month_start_date;
@@ -237,7 +237,7 @@ class EffortTrackingService
 
                     $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
                     $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
-                    $currentDate = now('')->today();
+                    $currentDate = now(config('constants.timezone.indian'))->today();
 
                     if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
                         continue;
@@ -262,7 +262,7 @@ class EffortTrackingService
                                     'project_id' => $project->id,
                                 ],
                                 [
-                                    'value' => now('')
+                                    'value' => now(config('constants.timezone.indian'))
                                 ]
                             );
                         } catch (Exception $e) {
@@ -293,7 +293,7 @@ class EffortTrackingService
 
     public function updateEffort(array $effortData)
     {
-        $currentDate = now('')->today();
+        $currentDate = now(config('constants.timezone.indian'))->today();
         $projectTeamMember = $effortData['portal_user']->projectTeamMembers()->active()->where('project_id', $effortData['sheet_project']['id'])->first();
 
         if (! $projectTeamMember) {

@@ -78,7 +78,7 @@ class ReportsController extends Controller
     private function getVerifiedApplicationsCount()
     {
         $from = config('hr.verified_application_date.start_date');
-        $currentDate = Carbon::today('');
+        $currentDate = Carbon::today(config('constants.timezone.indian'));
 
         return Application::whereBetween('created_at', [$from, $currentDate])
             ->where('is_verified', 1)->count();

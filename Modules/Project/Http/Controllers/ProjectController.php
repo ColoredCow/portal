@@ -59,9 +59,9 @@ class ProjectController extends Controller
     {
         $contract = ProjectContract::where('project_id', $project->id)->first();
         $contractFilePath = $contract ? storage_path('app/' . $contract->contract_file_path) : null;
-        $currentDate = today('');
+        $currentDate = today(config('constants.timezone.indian'));
 
-        if (now('')->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
+        if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));

@@ -631,11 +631,11 @@ class InvoiceService implements InvoiceServiceContract
 
     public function createInvoice($client, $project, $term)
     {
-        $term = $term ?? today('')->subMonth()->format('Y-m');
+        $term = $term ?? today(config('constants.timezone.indian'))->subMonth()->format('Y-m');
         $year = (int) substr($term, 0, 4);
         $monthNumber = (int) substr($term, 5, 2);
-        $sentOn = today('');
-        $dueOn = today('')->addDays(6);
+        $sentOn = today(config('constants.timezone.indian'));
+        $dueOn = today(config('constants.timezone.indian'))->addDays(6);
         $monthsToSubtract = today()->startOfMonth()->diffInMonths(Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-' . '01'));
         $data = $this->getInvoiceData([
             'client_id' => optional($client)->id,
