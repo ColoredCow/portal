@@ -344,12 +344,12 @@ class Client extends Model
         return $this->hasMany(LedgerAccount::class)->whereNotNull('debit');
     }
     
-    public function getClientProjectsTotalLedgerAmount()
+    public function getClientProjectsTotalLedgerAmount($quarter = null)
     {
         $amount = 0;
 
         foreach ($this->clientLevelBillingProjects as $project) {
-            $amount += $project->getTotalLedgerAmount();
+            $amount += $project->getTotalLedgerAmount($quarter);
         }
 
         return $amount;

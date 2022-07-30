@@ -226,7 +226,6 @@ class Project extends Model
 
     public function scopeInvoiceReadyToSend($query)
     {
-        return
         $query->whereDoesntHave('invoices', function ($query) {
             return $query->whereMonth('sent_on', now(config('constants.timezone.indian')))->whereYear('sent_on', now(config('constants.timezone.indian')));
         })->whereHas('client.billingDetails', function ($query) {
@@ -241,18 +240,18 @@ class Project extends Model
 
     public function ledgerAccountsOnlyCredit()
     {
-        return $this->hasMany(LedgerAccount::class)->whereNotNull('credit');
+        return $this->ledgerAccounts()->whereNotNull('credit');
     }
     
     public function ledgerAccountsOnlyDebit()
     {
-        return $this->hasMany(LedgerAccount::class)->whereNotNull('debit');
+        return $this->ledgerAccounts()->whereNotNull('debit');
     }
     
-    public function getTotalLedgerAmount()
+    public function getTotalLedgerAmount($quarter = null)
     {
         $amount = 0;
-        $amount += (optional($this->ledgerAccountsOnlyCredit)->sum('credit') - optional($this->ledgerAccountsOnlyDebit)->sum('debit'));
+        $amount += (optional($this->ledgerAccountsOnlyCredit()->quarter($quarter))->get()->sum('credit') - optional($this->ledgerAccountsOnlyDebit()->quarter($quarter))->get()->sum('debit'));
 
         return $amount;
     }

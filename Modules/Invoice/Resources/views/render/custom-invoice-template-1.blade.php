@@ -140,7 +140,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ $client->country->currency_symbol . $project->getTotalLedgerAmount() }}
+                                    {{ $client->country->currency_symbol . $project->getTotalLedgerAmount(ceil(now()->month / 3)) }}
                                 </td>
                             </tr>
                             <tr></tr>
@@ -159,7 +159,7 @@
                                 </div>
                             </td>
                             <td>
-                                {{ $client->country->currency_symbol . $client->getClientProjectsTotalLedgerAmount() }}
+                                {{ $client->country->currency_symbol . $client->getClientProjectsTotalLedgerAmount(ceil(now()->month / 3)) }}
                             </td>
                         </tr>
                     </tbody>
@@ -212,7 +212,7 @@
                 <table class="table-border w-100p">
                     <tbody>
                         @foreach ($projects as $project)
-                            @foreach ($project->ledgerAccountsOnlyCredit as $ledgerAccountRow )
+                            @foreach ($project->ledgerAccountsOnlyCredit()->quarter(ceil(now()->month / 3))->get() as $ledgerAccountRow )
                                 <tr>
                                     <td class="p-5 w-70p">
                                         {{ $ledgerAccountRow->particulars }}
@@ -232,7 +232,7 @@
                             </td>
                         </tr>
                         @foreach ($projects as $project)
-                            @foreach ($project->ledgerAccountsOnlyDebit as $ledgerAccountRow)
+                            @foreach ($project->ledgerAccountsOnlyDebit()->quarter(ceil(now()->month / 3))->get() as $ledgerAccountRow)
                                 <tr>
                                     <td class="p-5 w-70p">
                                         {{ $ledgerAccountRow->particulars }}
@@ -248,7 +248,7 @@
                                 {{ __('Balance: ') }}
                             </td>
                             <td class="p-5 text-right">
-                                {{ $client->country->currency_symbol . ($client->getClientProjectsTotalLedgerAmount()) }}
+                                {{ $client->country->currency_symbol . ($client->getClientProjectsTotalLedgerAmount(ceil(now()->month / 3))) }}
                             </td>
                         </tr>
                     </tbody>
