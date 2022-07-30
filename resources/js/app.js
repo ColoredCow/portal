@@ -147,44 +147,44 @@ $("#addChannel").on("submit",function(e){
 });
 
 if (document.getElementById("page_hr_applicant_edit")) {
-	  new Vue({
-		  el: "#page_hr_applicant_edit",
-		  data: {
-			  showResumeFrame: false,
-			  showEvaluationFrame: false,
-			  applicationJobRounds: document.getElementById("action_type")
-				  ? JSON.parse(document.getElementById("action_type").dataset.applicationJobRounds)
-				  : {},
-			  selectedNextRound: "",
-			  nextRoundName: "",
-			  selectedAction: "round",
-			  selectedActionOption: "",
-			  nextRound: "",
-			  createCalendarEvent: true
-		  },
-		  methods: {
-			  toggleResumeFrame: function() {
-				  this.showResumeFrame = !this.showResumeFrame;
-			  },
-			  toggleEvaluationFrame: function() {
-				  this.showEvaluationFrame = !this.showEvaluationFrame;
-			  },
-			  getApplicationEvaluation: function(applicationRoundID) {
-				  $("#page_hr_applicant_edit #application_evaluation_body").html(
-					  "<div class=\"my-4 fz-18 text-center\">Loading...</div>"
-				  );
-				  if (!this.showEvaluationFrame) {
-					  axios
-						  .get("/hr/evaluation/" + applicationRoundID)
-						  .then(function(response) {
-							  $("#page_hr_applicant_edit #application_evaluation_body").html(response.data);
-						  })
-						  .catch(function(error) {
-							  alert("Error fetching application evaluation!");
-						  });
-				  }
-				  this.toggleEvaluationFrame();
-			  },
+	new Vue({
+		el: "#page_hr_applicant_edit",
+		data: {
+			showResumeFrame: false,
+			showEvaluationFrame: false,
+			applicationJobRounds: document.getElementById("action_type")
+				? JSON.parse(document.getElementById("action_type").dataset.applicationJobRounds)
+				: {},
+			selectedNextRound: "",
+			nextRoundName: "",
+			selectedAction: "round",
+			selectedActionOption: "",
+			nextRound: "",
+			createCalendarEvent: true
+		},
+		methods: {
+			toggleResumeFrame: function() {
+				this.showResumeFrame = !this.showResumeFrame;
+			},
+			toggleEvaluationFrame: function() {
+				this.showEvaluationFrame = !this.showEvaluationFrame;
+			},
+			getApplicationEvaluation: function(applicationRoundID) {
+				$("#page_hr_applicant_edit #application_evaluation_body").html(
+					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
+				);
+				if (!this.showEvaluationFrame) {
+					axios
+						.get("/hr/evaluation/" + applicationRoundID)
+						.then(function(response) {
+							$("#page_hr_applicant_edit #application_evaluation_body").html(response.data);
+						})
+						.catch(function(error) {
+							alert("Error fetching application evaluation!");
+						});
+					}
+				this.toggleEvaluationFrame();
+			},
   
 			  onSelectNextRound: function(event) {
 				  this.selectedAction = event.target.value;
