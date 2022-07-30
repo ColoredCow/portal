@@ -5,15 +5,19 @@ namespace Modules\Invoice\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class InvoiceController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $service;
 
     public function __construct(InvoiceServiceContract $service)
     {
+        $this->authorizeResource(Invoice::class);
         $this->service = $service;
     }
 
