@@ -39,29 +39,62 @@ require("./../../Modules/User/Resources/assets/js/vueComponents.js");
 require("./../../Modules/Salary/Resources/assets/js/vueComponents.js");
 // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
 
-Vue.component("project-stage-component", require("./components/ProjectStageComponent.vue").default);
-Vue.component("project-stage-billing-component", require("./components/ProjectStageBillingComponent.vue").default);
-Vue.component("applicant-round-action-component", require("./components/HR/ApplicantRoundActionComponent.vue").default);
-Vue.component("project-details-component", require("./components/ProjectDetailsComponent.vue").default);
-Vue.component("books-comments-component", require("./components/Book/BooksCommentsComponent.vue").default);
-Vue.component("effort-component", require("./components/Project/Report.vue").default);
+Vue.component(
+	"project-stage-component",
+	require("./components/ProjectStageComponent.vue").default
+);
+Vue.component(
+	"project-stage-billing-component",
+	require("./components/ProjectStageBillingComponent.vue").default
+);
+Vue.component(
+	"applicant-round-action-component",
+	require("./components/HR/ApplicantRoundActionComponent.vue").default
+);
+Vue.component(
+	"project-details-component",
+	require("./components/ProjectDetailsComponent.vue").default
+);
+Vue.component(
+	"books-comments-component",
+	require("./components/Book/BooksCommentsComponent.vue").default
+);
+Vue.component(
+	"effort-component",
+	require("./components/Project/Report.vue").default
+);
 Vue.component("comment", require("./components/CommentItem.vue").default);
-Vue.component("user-dashboard-read-books", require("./components/Dashboard/UserDashboardReadBooks.vue").default);
+Vue.component(
+	"user-dashboard-read-books",
+	require("./components/Dashboard/UserDashboardReadBooks.vue").default
+);
 Vue.component(
 	"user-dashboard-wishlist-books",
 	require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
 );
-Vue.component("user-dashboard-projects", require("./components/Dashboard/UserDashboardProjects.vue").default);
-Vue.component("user-dashboard-library", require("./components/Dashboard/UserDashboardLibrary.vue").default);
+Vue.component(
+	"user-dashboard-projects",
+	require("./components/Dashboard/UserDashboardProjects.vue").default
+);
+Vue.component(
+	"user-dashboard-library",
+	require("./components/Dashboard/UserDashboardLibrary.vue").default
+);
 Vue.component(
 	"user-dashboard-infrastructure",
 	require("./components/Dashboard/UserDashboardInfrastructure.vue").default
 );
-Vue.component("user-dashboard-invoice", require("./components/Dashboard/UserDashboardInvoice.vue").default);
-Vue.component("job-application-component", require("./components/HR/JobApplicationComponent.vue").default);
+Vue.component(
+	"user-dashboard-invoice",
+	require("./components/Dashboard/UserDashboardInvoice.vue").default
+);
+Vue.component(
+	"job-application-component",
+	require("./components/HR/JobApplicationComponent.vue").default
+);
 
 if (Vue) {
-	Vue.filter("str_limit", function (value, size) {
+	Vue.filter("str_limit", function(value, size) {
 		if (!value) return "";
 		value = value.toString();
 
@@ -79,9 +112,16 @@ if (document.getElementById("vueContainer")) {
 }
 
 $(document).ready(() => {
-	setTimeout(function () {
+	setTimeout(function() {
 		$("#statusAlert").alert("close");
 	}, 2000);
+
+	$("#job_title").on("change", function(event) {
+		let opportunityId = $(this)
+			.find(":selected")
+			.attr("id");
+		$("#opportunityId").attr("value", opportunityId);
+	});
 
 	if ($(".form-create-invoice").length) {
 		let form = $(".form-create-invoice");
@@ -92,12 +132,12 @@ $(document).ready(() => {
 	}
 	$("[data-toggle=\"tooltip\"]").tooltip();
 
-	$(".status-close").on("click", function () {
+	$(".status-close").on("click", function() {
 		let wrapper = $(this).closest(".alert");
 		wrapper.fadeOut(500);
 	});
 
-	$(".client_edit_form_submission_btn").on("click", function () {
+	$(".client_edit_form_submission_btn").on("click", function() {
 		if (!$("#edit_client_info_form")[0].checkValidity()) {
 			$("#edit_client_info_form")[0].reportValidity();
 			return false;
@@ -106,7 +146,7 @@ $(document).ready(() => {
 		$("#edit_client_info_form").submit();
 	});
 
-	$(".prospect_edit_form_submission_btn").on("click", function () {
+	$(".prospect_edit_form_submission_btn").on("click", function() {
 		if (!$("#edit_prospect_info_form")[0].checkValidity()) {
 			$("#edit_prospect_info_form")[0].reportValidity();
 			return false;
@@ -115,9 +155,15 @@ $(document).ready(() => {
 		$("#edit_prospect_info_form").submit();
 	});
 
-	$("body").on("change", ".custom-file-input", function () {
-		var fileName = $(this).val().split("\\").pop();
-		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	$("body").on("change", ".custom-file-input", function() {
+		var fileName = $(this)
+			.val()
+			.split("\\")
+			.pop();
+		$(this)
+			.siblings(".custom-file-label")
+			.addClass("selected")
+			.html(fileName);
 	});
 
 	if ($(".chart-data").length) {
@@ -125,7 +171,7 @@ $(document).ready(() => {
 		barChart();
 	}
 
-	$("#save-btn-action").on("click", function () {
+	$("#save-btn-action").on("click", function() {
 		this.disabled = true;
 		if (!this.form.checkValidity()) {
 			this.disabled = false;
@@ -142,9 +188,11 @@ if (document.getElementById("page_hr_applicant_edit")) {
 		data: {
 			showResumeFrame: false,
 			showEvaluationFrame: false,
-			applicationJobRounds: document.getElementById("action_type") ?
-				JSON.parse(document.getElementById("action_type").dataset.applicationJobRounds) :
-				{},
+			applicationJobRounds: document.getElementById("action_type")
+				? JSON.parse(
+					document.getElementById("action_type").dataset.applicationJobRounds
+				  )
+				: {},
 			selectedNextRound: "",
 			nextRoundName: "",
 			selectedAction: "round",
@@ -153,44 +201,51 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			createCalendarEvent: true
 		},
 		methods: {
-			toggleResumeFrame: function () {
+			toggleResumeFrame: function() {
 				this.showResumeFrame = !this.showResumeFrame;
 			},
-			toggleEvaluationFrame: function () {
+			toggleEvaluationFrame: function() {
 				this.showEvaluationFrame = !this.showEvaluationFrame;
 			},
-			getApplicationEvaluation: function (applicationRoundID) {
+			getApplicationEvaluation: function(applicationRoundID) {
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
 					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
 				);
 				if (!this.showEvaluationFrame) {
 					axios
 						.get("/hr/evaluation/" + applicationRoundID)
-						.then(function (response) {
-							$("#page_hr_applicant_edit #application_evaluation_body").html(response.data);
+						.then(function(response) {
+							$("#page_hr_applicant_edit #application_evaluation_body").html(
+								response.data
+							);
 						})
-						.catch(function (error) {
+						.catch(function(error) {
 							alert("Error fetching application evaluation!");
 						});
 				}
 				this.toggleEvaluationFrame();
 			},
 
-			onSelectNextRound: function (event) {
+			onSelectNextRound: function(event) {
 				this.selectedAction = event.target.value;
-				this.selectedActionOption = event.target.options[event.target.options.selectedIndex];
+				this.selectedActionOption =
+					event.target.options[event.target.options.selectedIndex];
 			},
-			takeAction: function () {
+			takeAction: function() {
 				switch (this.selectedAction) {
 				case "round":
 					if (!this.selectedActionOption) {
-						this.selectedActionOption = document.querySelector("#action_type option:checked");
+						this.selectedActionOption = document.querySelector(
+							"#action_type option:checked"
+						);
 					}
 					this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
 					this.nextRoundName = this.selectedActionOption.innerText;
-					loadTemplateMail("confirm", (res) => {
+					loadTemplateMail("confirm", res => {
 						$("#confirmMailToApplicantSubject").val(res.subject);
-						tinymce.get("confirmMailToApplicantBody").setContent(res.body, { format: "html" });
+						tinymce
+							.get("confirmMailToApplicantBody")
+							.setContent(res.body, { format: "html" });
 					});
 					$("#round_confirm").modal("show");
 					break;
@@ -204,11 +259,13 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					$("#onboard_applicant").modal("show");
 				}
 			},
-			rejectApplication: function () {
+			rejectApplication: function() {
 				$("#application_reject_modal").modal("show");
-				loadTemplateMail("reject", (res) => {
+				loadTemplateMail("reject", res => {
 					$("#rejectMailToApplicantSubject").val(res.subject);
-					tinymce.get("rejectMailToApplicantBody").setContent(res.body, { format: "html" });
+					tinymce
+						.get("rejectMailToApplicantBody")
+						.setContent(res.body, { format: "html" });
 				});
 			}
 		},
@@ -227,7 +284,7 @@ if (document.getElementById("project_container")) {
 			newStage: false
 		},
 		methods: {
-			createProjectStage: function () {
+			createProjectStage: function() {
 				this.$refs.projectStage.create();
 			}
 		}
@@ -246,24 +303,30 @@ if (document.getElementById("client_form")) {
 	const clientForm = new Vue({
 		el: "#client_form",
 		data: {
-			country: document.getElementById("country").dataset.preSelectCountry || "",
-			isActive: document.getElementById("is_active").dataset.preSelectStatus ?
-				parseInt(document.getElementById("is_active").dataset.preSelectStatus) :
-				1,
+			country:
+				document.getElementById("country").dataset.preSelectCountry || "",
+			isActive: document.getElementById("is_active").dataset.preSelectStatus
+				? parseInt(document.getElementById("is_active").dataset.preSelectStatus)
+				: 1,
 			newEmailName: "",
 			newEmailId: "",
-			clientEmails: document.getElementById("emails").value == "" ? [] : document.getElementById("emails").value.split(",")
+			clientEmails:
+				document.getElementById("emails").value == ""
+					? []
+					: document.getElementById("emails").value.split(",")
 		},
 		methods: {
-			toggleActive: function () {
+			toggleActive: function() {
 				this.isActive = !this.isActive;
 			},
-			addNewEmail: function () {
-				this.clientEmails.push(this.newEmailName + " <" + this.newEmailId + ">");
+			addNewEmail: function() {
+				this.clientEmails.push(
+					this.newEmailName + " <" + this.newEmailId + ">"
+				);
 				this.newEmailName = "";
 				this.newEmailId = "";
 			},
-			removeEmail: function (item) {
+			removeEmail: function(item) {
 				let index = this.clientEmails.indexOf(item);
 				if (index !== -1) {
 					this.clientEmails.splice(index, 1);
@@ -278,44 +341,56 @@ if (document.getElementById("finance_report")) {
 		el: "#finance_report",
 		data: {
 			showReportTable: "received",
-			sentAmountINR: document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
-			sentAmountUSD: document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
-			conversionRateUSD: document.getElementById("conversion_rate_usd").dataset.conversionRateUsd || 0
+			sentAmountINR:
+				document.getElementById("sent_amount_INR").dataset.sentAmount || 0,
+			sentAmountUSD:
+				document.getElementById("sent_amount_USD").dataset.sentAmount || 0,
+			conversionRateUSD:
+				document.getElementById("conversion_rate_usd").dataset
+					.conversionRateUsd || 0
 		},
 		computed: {
-			convertedUSDSentAmount: function () {
-				let convertedAmount = parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
+			convertedUSDSentAmount: function() {
+				let convertedAmount =
+					parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
 				return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
 			},
-			totalINREstimated: function () {
-				return parseFloat(this.sentAmountINR) + parseFloat(this.convertedUSDSentAmount);
+			totalINREstimated: function() {
+				return (
+					parseFloat(this.sentAmountINR) +
+					parseFloat(this.convertedUSDSentAmount)
+				);
 			}
 		}
 	});
 }
 
-$("#page_hr_applicant_edit .applicant-round-form").on("click", ".round-submit", function () {
-	let button = $(this); // reject button
-	let form = $(this).closest(".applicant-round-form"); // <form element with class "applicant-round-form" >
-	let selectedAction = $(this).data("action"); // reject
-	const actions = ["confirm", "send-for-approval", "onboard", "approve"];
-	if (actions.includes(selectedAction)) {
-		if (!form[0].checkValidity()) {
-			form[0].reportValidity();
-			return false;
+$("#page_hr_applicant_edit .applicant-round-form").on(
+	"click",
+	".round-submit",
+	function() {
+		let button = $(this); // reject button
+		let form = $(this).closest(".applicant-round-form"); // <form element with class "applicant-round-form" >
+		let selectedAction = $(this).data("action"); // reject
+		const actions = ["confirm", "send-for-approval", "onboard", "approve"];
+		if (actions.includes(selectedAction)) {
+			if (!form[0].checkValidity()) {
+				form[0].reportValidity();
+				return false;
+			}
 		}
-	}
 
-	form.find("[name=\"action\"]").val(selectedAction); // setting name="action" input inside form to "reject"
-	button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
-	form.submit(); // submitting the form
-});
+		form.find("[name=\"action\"]").val(selectedAction); // setting name="action" input inside form to "reject"
+		button.prop("disabled", "disabled").addClass("disabled"); // making button disabled
+		form.submit(); // submitting the form
+	}
+);
 
 $(".date-field").datepicker({
 	dateFormat: "dd/mm/yy"
 });
 
-$("#form_invoice").on("change", "#client_id", function () {
+$("#form_invoice").on("change", "#client_id", function() {
 	let form = $(this).closest("form");
 	let client_id = $(this).val();
 	if (!client_id) {
@@ -334,7 +409,7 @@ function updateClientProjects(form, client_id) {
 	$.ajax({
 		url: "/clients/" + client_id + "/get-projects",
 		method: "GET",
-		success: function (res) {
+		success: function(res) {
 			form.find("#project_ids").html(getProjectList(res));
 		}
 	});
@@ -352,16 +427,19 @@ function getProjectList(projects) {
 }
 
 function setTooltip(btn, message) {
-	$(btn).tooltip("hide").attr("data-original-title", message).tooltip("show");
+	$(btn)
+		.tooltip("hide")
+		.attr("data-original-title", message)
+		.tooltip("show");
 }
 
 function hideTooltip(btn) {
-	setTimeout(function () {
+	setTimeout(function() {
 		$(btn).tooltip("hide");
 	}, 1000);
 }
 
-clipboard.on("success", function (e) {
+clipboard.on("success", function(e) {
 	setTooltip(e.trigger, "Copied!");
 	hideTooltip(e.trigger);
 });
@@ -369,9 +447,11 @@ clipboard.on("success", function (e) {
 tinymce.init({
 	selector: ".richeditor",
 	skin: "lightgray",
-	toolbar: "undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+	toolbar:
+		"undo redo formatselect | fontselect fontsizeselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 	plugins: ["advlist lists autolink link code image print"],
-	font_formats: "Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
+	font_formats:
+		"Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;AkrutiKndPadmini=Akpdmi-n",
 	images_upload_url: "postAcceptor.php",
 	content_style: "body{font-size:14pt;}",
 	automatic_uploads: false,
@@ -383,10 +463,10 @@ tinymce.init({
 	force_br_newlines: true,
 	force_p_newlines: false,
 	height: "280",
-	convert_urls: 0,
+	convert_urls: 0
 });
 
-$(".hr_round_guide").on("click", ".edit-guide", function () {
+$(".hr_round_guide").on("click", ".edit-guide", function() {
 	let container = $(this).closest(".hr_round_guide");
 	container.find(".btn-guide, .guide-container").toggleClass("d-none");
 });
@@ -427,7 +507,7 @@ $(document).ready(function () {
 	});
 });
 
-$(".hr_round_guide").on("click", ".save-guide", function () {
+$(".hr_round_guide").on("click", ".save-guide", function() {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
 	let button = $(this);
@@ -435,11 +515,17 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
 		method: form.attr("method"),
 		url: form.attr("action"),
 		data: form.serialize() + "&guidelines=" + tinyMCE.activeEditor.getContent(),
-		beforeSend: function () {
-			button.prop("disabled", true).find(".item").toggleClass("d-none");
+		beforeSend: function() {
+			button
+				.prop("disabled", true)
+				.find(".item")
+				.toggleClass("d-none");
 		},
-		success: function (res) {
-			button.prop("disabled", false).find(".item").toggleClass("d-none");
+		success: function(res) {
+			button
+				.prop("disabled", false)
+				.find(".item")
+				.toggleClass("d-none");
 			if (res.length) {
 				container.find(".guide-display").html(res);
 				container.find(".btn-guide, .guide-container").toggleClass("d-none");
@@ -473,7 +559,7 @@ if (document.getElementById("show_and_save_book")) {
 		},
 
 		methods: {
-			onFileSelected: function (e) {
+			onFileSelected: function(e) {
 				let file = e.target.files[0];
 				if (!file) {
 					return;
@@ -481,13 +567,13 @@ if (document.getElementById("show_and_save_book")) {
 				this.compressedFile = null;
 				let image = new ImageCompressor(file, {
 					quality: 0.1,
-					success: function (result) {
+					success: function(result) {
 						this.compressedFile = result;
 					}
 				});
 			},
 
-			submitBookForm: function () {
+			submitBookForm: function() {
 				let formData = new FormData(document.getElementById("book_form"));
 				if (this.compressedFile) {
 					formData.append("book_image", compressedFile, compressedFile.name);
@@ -496,7 +582,7 @@ if (document.getElementById("show_and_save_book")) {
 				this.book = {};
 				this.buttons.disableSubmitButton = true;
 
-				axios.post(this.routes.fetch, formData).then((response) => {
+				axios.post(this.routes.fetch, formData).then(response => {
 					this.buttons.disableSubmitButton = false;
 					let data = response.data;
 
@@ -518,14 +604,16 @@ if (document.getElementById("show_and_save_book")) {
 				});
 			},
 
-			saveBookToRecords: function () {
+			saveBookToRecords: function() {
 				if (!this.book) {
 					alert("Error in saving records");
 				}
 				this.buttons.disableSaveButton = true;
 				this.book.number_of_copies = this.number_of_copies;
-				this.book["on_kindle"] = document.getElementById("on_kindle").checked ? 1 : 0;
-				axios.post(this.routes.store, this.book).then((response) => {
+				this.book["on_kindle"] = document.getElementById("on_kindle").checked
+					? 1
+					: 0;
+				axios.post(this.routes.store, this.book).then(response => {
 					this.buttons.disableSaveButton = false;
 
 					if (response.data.error) {
@@ -543,38 +631,42 @@ if (document.getElementById("books_listing")) {
 	const bookForm = new Vue({
 		el: "#books_listing",
 		data: {
-			books: document.getElementById("books_table").dataset.books ?
-				JSON.parse(document.getElementById("books_table").dataset.books) :
-				{},
-			bookCategories: document.getElementById("books_table").dataset.categories ?
-				JSON.parse(document.getElementById("books_table").dataset.categories) :
-				[],
-			updateRoute: document.getElementById("books_table").dataset.indexRoute || "",
-			categoryIndexRoute: document.getElementById("books_table").dataset.categoryIndexRoute || "",
+			books: document.getElementById("books_table").dataset.books
+				? JSON.parse(document.getElementById("books_table").dataset.books)
+				: {},
+			bookCategories: document.getElementById("books_table").dataset.categories
+				? JSON.parse(document.getElementById("books_table").dataset.categories)
+				: [],
+			updateRoute:
+				document.getElementById("books_table").dataset.indexRoute || "",
+			categoryIndexRoute:
+				document.getElementById("books_table").dataset.categoryIndexRoute || "",
 			categoryInputs: [],
 			currentBookIndex: 0,
 			newCategory: "",
-			searchKey: document.getElementById("search_input") ?
-				document.getElementById("search_input").dataset.value :
-				""
+			searchKey: document.getElementById("search_input")
+				? document.getElementById("search_input").dataset.value
+				: ""
 		},
 
 		methods: {
-			updateCategoryMode: function (index) {
+			updateCategoryMode: function(index) {
 				let categories = this.books[index]["categories"];
 				if (!categories) {
 					return false;
 				}
 				this.currentBookIndex = index;
-				this.categoryInputs.map((checkbox) => (checkbox.checked = false));
-				categories.forEach((category) => (this.categoryInputs[category.id].checked = true));
+				this.categoryInputs.map(checkbox => (checkbox.checked = false));
+				categories.forEach(
+					category => (this.categoryInputs[category.id].checked = true)
+				);
 			},
 
-			updateCategory: function () {
+			updateCategory: function() {
 				let selectedCategory = [];
 				let bookID = this.books[this.currentBookIndex]["id"];
 
-				this.categoryInputs.forEach(function (checkbox) {
+				this.categoryInputs.forEach(function(checkbox) {
 					if (checkbox.checked) {
 						selectedCategory.push({
 							name: checkbox.dataset.category,
@@ -583,7 +675,11 @@ if (document.getElementById("books_listing")) {
 					}
 				});
 
-				this.$set(this.books[this.currentBookIndex], "categories", selectedCategory);
+				this.$set(
+					this.books[this.currentBookIndex],
+					"categories",
+					selectedCategory
+				);
 				let route = `${this.updateRoute}/${bookID}`;
 				axios.put(route, {
 					categories: JSON.parse(JSON.stringify(selectedCategory))
@@ -591,7 +687,7 @@ if (document.getElementById("books_listing")) {
 				document.getElementById("close_update_category_modal").click();
 			},
 
-			addNewCategory: async function () {
+			addNewCategory: async function() {
 				if (!this.newCategory) {
 					alert("Please enter category name");
 					return false;
@@ -603,38 +699,40 @@ if (document.getElementById("books_listing")) {
 				if (response.data && response.data.category) {
 					await this.bookCategories.push(response.data.category);
 					this.newCategory = "";
-					let allCheckboxes = document.querySelectorAll("#update_category_modal input[type=\"checkbox\"]");
+					let allCheckboxes = document.querySelectorAll(
+						"#update_category_modal input[type=\"checkbox\"]"
+					);
 					let lastCheckbox = allCheckboxes[allCheckboxes.length - 1];
 					this.categoryInputs[lastCheckbox.value] = lastCheckbox;
 				}
 			},
 
-			deleteBook: async function (index) {
-				let confirmDelete = confirm("Are you sure ?");
-
-				if (!confirmDelete) {
-					return false;
-				}
-
+			deleteBook: async function(index) {
 				let bookID = this.books[index]["id"];
 				let route = `${this.updateRoute}/${bookID}`;
 				let response = await axios.delete(route);
 				this.books.splice(index, 1);
+				$("#exampleModal").modal("hide");
 			},
 
-			searchBooks: function () {
+			searchBooks: function() {
 				window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
 			},
 
-			strLimit: function (str, length) {
+			strLimit: function(str, length) {
 				if (!str) {
 					return "";
 				}
 				return str.length > length ? str.substring(0, length) + "..." : str;
 			},
 
-			updateCopiesCount: function (index) {
-				var new_count = parseInt(prompt("Number of copies of this book", this.books[index].number_of_copies));
+			updateCopiesCount: function(index) {
+				var new_count = parseInt(
+					prompt(
+						"Number of copies of this book",
+						this.books[index].number_of_copies
+					)
+				);
 				if (new_count && isFinite(new_count)) {
 					this.books[index].number_of_copies = new_count;
 					axios.put(this.updateRoute + "/" + this.books[index].id, {
@@ -644,10 +742,16 @@ if (document.getElementById("books_listing")) {
 			}
 		},
 
-		mounted: function () {
-			let categoryInputContainer = document.querySelector("#update_category_modal");
-			let allCategoryInputs = categoryInputContainer.querySelectorAll("input[type=\"checkbox\"]");
-			allCategoryInputs.forEach((checkbox) => (this.categoryInputs[checkbox.value] = checkbox));
+		mounted: function() {
+			let categoryInputContainer = document.querySelector(
+				"#update_category_modal"
+			);
+			let allCategoryInputs = categoryInputContainer.querySelectorAll(
+				"input[type=\"checkbox\"]"
+			);
+			allCategoryInputs.forEach(
+				checkbox => (this.categoryInputs[checkbox.value] = checkbox)
+			);
 		}
 	});
 }
@@ -656,23 +760,31 @@ if (document.getElementById("books_category")) {
 	const bookForm = new Vue({
 		el: "#books_category",
 		data: {
-			categories: document.getElementById("category_container").dataset.categories ?
-				JSON.parse(document.getElementById("category_container").dataset.categories) :
-				[],
+			categories: document.getElementById("category_container").dataset
+				.categories
+				? JSON.parse(
+					document.getElementById("category_container").dataset.categories
+				  )
+				: [],
 			categoryNameToChange: [],
-			indexRoute: document.getElementById("category_container").dataset.indexRoute || "",
+			indexRoute:
+				document.getElementById("category_container").dataset.indexRoute || "",
 			newCategoryName: "",
 			newCategoryMode: ""
 		},
 
 		methods: {
-			showEditMode: function (index) {
+			showEditMode: function(index) {
 				this.categoryNameToChange[index] = this.categories[index]["name"];
 				this.$set(this.categories[index], "editMode", true);
 			},
 
-			updateCategoryName: function (index) {
-				this.$set(this.categories[index], "name", this.categoryNameToChange[index]);
+			updateCategoryName: function(index) {
+				this.$set(
+					this.categories[index],
+					"name",
+					this.categoryNameToChange[index]
+				);
 				let categoryID = this.categories[index]["id"];
 				let route = `${this.indexRoute}/${categoryID}`;
 				axios.put(route, {
@@ -681,7 +793,7 @@ if (document.getElementById("books_category")) {
 				this.$set(this.categories[index], "editMode", false);
 			},
 
-			deleteCategory: async function (index) {
+			deleteCategory: async function(index) {
 				let confirmDelete = confirm("Are you sure ?");
 
 				if (!confirmDelete) {
@@ -694,14 +806,14 @@ if (document.getElementById("books_category")) {
 				this.categories.splice(index, 1);
 			},
 
-			updateNewCategoryMode: function (mode) {
+			updateNewCategoryMode: function(mode) {
 				if (mode != "add") {
 					this.newCategoryName = "";
 				}
 				this.newCategoryMode = mode;
 			},
 
-			addNewCategory: async function () {
+			addNewCategory: async function() {
 				if (!this.newCategoryName) {
 					alert("Please enter category name");
 					return false;
@@ -725,36 +837,48 @@ if (document.getElementById("show_book_info")) {
 	const bookForm = new Vue({
 		el: "#show_book_info",
 		data: {
-			book: document.getElementById("show_book_info").dataset.book ?
-				document.getElementById("show_book_info").dataset.book :
-				[],
-			route: document.getElementById("show_book_info").dataset.markBookRoute ?
-				document.getElementById("show_book_info").dataset.markBookRoute :
-				"",
-			borrowBookRoute: document.getElementById("show_book_info").dataset.borrowBookRoute ?
-				document.getElementById("show_book_info").dataset.borrowBookRoute :
-				"",
-			bookAMonthStoreRoute: document.getElementById("show_book_info").dataset.bookAMonthStoreRoute ?
-				document.getElementById("show_book_info").dataset.bookAMonthStoreRoute :
-				"",
-			bookAMonthDestroyRoute: document.getElementById("show_book_info").dataset.bookAMonthDestroyRoute ?
-				document.getElementById("show_book_info").dataset.bookAMonthDestroyRoute :
-				"",
-			putBackBookRoute: document.getElementById("show_book_info").dataset.putBackBookRoute ?
-				document.getElementById("show_book_info").dataset.putBackBookRoute :
-				"",
-			isRead: document.getElementById("show_book_info").dataset.isRead ? true : false,
-			isBorrowed: document.getElementById("show_book_info").dataset.isBorrowed ? true : false,
-			isBookAMonth: document.getElementById("show_book_info").dataset.isBookAMonth ? true : false,
-			readers: document.getElementById("show_book_info").dataset.readers ?
-				document.getElementById("show_book_info").dataset.readers :
-				[],
-			borrowers: document.getElementById("show_book_info").dataset.borrowers ?
-				document.getElementById("show_book_info").dataset.borrowers :
-				[]
+			book: document.getElementById("show_book_info").dataset.book
+				? document.getElementById("show_book_info").dataset.book
+				: [],
+			route: document.getElementById("show_book_info").dataset.markBookRoute
+				? document.getElementById("show_book_info").dataset.markBookRoute
+				: "",
+			borrowBookRoute: document.getElementById("show_book_info").dataset
+				.borrowBookRoute
+				? document.getElementById("show_book_info").dataset.borrowBookRoute
+				: "",
+			bookAMonthStoreRoute: document.getElementById("show_book_info").dataset
+				.bookAMonthStoreRoute
+				? document.getElementById("show_book_info").dataset.bookAMonthStoreRoute
+				: "",
+			bookAMonthDestroyRoute: document.getElementById("show_book_info").dataset
+				.bookAMonthDestroyRoute
+				? document.getElementById("show_book_info").dataset
+					.bookAMonthDestroyRoute
+				: "",
+			putBackBookRoute: document.getElementById("show_book_info").dataset
+				.putBackBookRoute
+				? document.getElementById("show_book_info").dataset.putBackBookRoute
+				: "",
+			isRead: document.getElementById("show_book_info").dataset.isRead
+				? true
+				: false,
+			isBorrowed: document.getElementById("show_book_info").dataset.isBorrowed
+				? true
+				: false,
+			isBookAMonth: document.getElementById("show_book_info").dataset
+				.isBookAMonth
+				? true
+				: false,
+			readers: document.getElementById("show_book_info").dataset.readers
+				? document.getElementById("show_book_info").dataset.readers
+				: [],
+			borrowers: document.getElementById("show_book_info").dataset.borrowers
+				? document.getElementById("show_book_info").dataset.borrowers
+				: []
 		},
 		methods: {
-			markBook: async function (read) {
+			markBook: async function(read) {
 				let response = await axios.post(this.route, {
 					book_id: this.book.id,
 					is_read: read
@@ -766,7 +890,7 @@ if (document.getElementById("show_book_info")) {
 				this.readers = response.data.readers;
 			},
 
-			addToBookAMonth: async function (action) {
+			addToBookAMonth: async function(action) {
 				let response = await axios.post(this.bookAMonthStoreRoute);
 				this.isBookAMonth = true;
 				if (!response.data) {
@@ -774,7 +898,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			removeFromBookAMonth: async function (action) {
+			removeFromBookAMonth: async function(action) {
 				let response = await axios.post(this.bookAMonthDestroyRoute);
 				this.isBookAMonth = false;
 				if (!response.data) {
@@ -782,13 +906,13 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			borrowTheBook: async function () {
+			borrowTheBook: async function() {
 				let response = await axios.get(this.borrowBookRoute);
 				this.isBorrowed = true;
 				this.borrowers = response.data.borrowers;
 			},
 
-			putTheBookBackToLibrary: async function () {
+			putTheBookBackToLibrary: async function() {
 				let response = await axios.get(this.putBackBookRoute);
 				this.isBorrowed = false;
 				this.borrowers = response.data.borrowers;
@@ -808,8 +932,14 @@ if (document.getElementById("home_page")) {
 	el.addEventListener("click", markBookAsRead, false);
 	var wishlistBtn = document.getElementById("addBookToWishlist");
 	wishlistBtn.addEventListener("click", addBookToWishlist, false);
-	var disableBookSuggestionBtn = document.getElementById("disableBookSuggestion");
-	disableBookSuggestionBtn.addEventListener("click", disableBookSuggestions, false);
+	var disableBookSuggestionBtn = document.getElementById(
+		"disableBookSuggestion"
+	);
+	disableBookSuggestionBtn.addEventListener(
+		"click",
+		disableBookSuggestions,
+		false
+	);
 	let isModalShown = sessionStorage.getItem("book_modal_has_shown");
 	if (!isModalShown) {
 		sessionStorage.setItem("book_modal_has_shown", "true");
@@ -838,35 +968,47 @@ function addBookToWishlist() {
 
 function disableBookSuggestions() {
 	$("#show_nudge_modal").modal("hide");
-	window.location.href = document.getElementById("disableBookSuggestion").dataset.href;
+	window.location.href = document.getElementById(
+		"disableBookSuggestion"
+	).dataset.href;
 }
 
 if (document.getElementById("roles_permission_table")) {
 	new Vue({
 		el: "#roles_permission_table",
 		data: {
-			roles: document.getElementById("roles_permission_table").dataset.roles ?
-				JSON.parse(document.getElementById("roles_permission_table").dataset.roles) :
-				[],
-			permissions: document.getElementById("roles_permission_table").dataset.permissions ?
-				JSON.parse(document.getElementById("roles_permission_table").dataset.permissions) :
-				[],
-			updateRoute: document.getElementById("roles_permission_table").dataset.updateRoute || "",
+			roles: document.getElementById("roles_permission_table").dataset.roles
+				? JSON.parse(
+					document.getElementById("roles_permission_table").dataset.roles
+				  )
+				: [],
+			permissions: document.getElementById("roles_permission_table").dataset
+				.permissions
+				? JSON.parse(
+					document.getElementById("roles_permission_table").dataset
+						.permissions
+				  )
+				: [],
+			updateRoute:
+				document.getElementById("roles_permission_table").dataset.updateRoute ||
+				"",
 			currentRoleIndex: 0,
 			permissionInputs: []
 		},
 		methods: {
-			updatePermissionModal: function (index) {
+			updatePermissionModal: function(index) {
 				let permissions = this.roles[index].permissions;
 				this.currentRoleIndex = index;
-				this.permissionInputs.map((checkbox) => (checkbox.checked = false));
-				permissions.forEach((permission) => (this.permissionInputs[permission.id].checked = true));
+				this.permissionInputs.map(checkbox => (checkbox.checked = false));
+				permissions.forEach(
+					permission => (this.permissionInputs[permission.id].checked = true)
+				);
 			},
-			updatePermissions: function () {
+			updatePermissions: function() {
 				let selectedPermissions = [];
 				let roleID = this.roles[this.currentRoleIndex]["id"];
 
-				this.permissionInputs.forEach(function (checkbox) {
+				this.permissionInputs.forEach(function(checkbox) {
 					if (checkbox.checked) {
 						selectedPermissions.push({
 							name: checkbox.dataset.permission,
@@ -875,7 +1017,11 @@ if (document.getElementById("roles_permission_table")) {
 					}
 				});
 
-				this.$set(this.roles[this.currentRoleIndex], "permissions", selectedPermissions);
+				this.$set(
+					this.roles[this.currentRoleIndex],
+					"permissions",
+					selectedPermissions
+				);
 				let route = `${this.updateRoute}/${roleID}`;
 				axios.put(route, {
 					permissions: JSON.parse(JSON.stringify(selectedPermissions)),
@@ -884,10 +1030,16 @@ if (document.getElementById("roles_permission_table")) {
 				document.getElementById("update_role_permissions_modal").click();
 			}
 		},
-		mounted: function () {
-			let permissionInputContainer = document.querySelector("#update_role_permissions_modal");
-			let allPermissionInputs = permissionInputContainer.querySelectorAll("input[type=\"checkbox\"]");
-			allPermissionInputs.forEach((checkbox) => (this.permissionInputs[checkbox.value] = checkbox));
+		mounted: function() {
+			let permissionInputContainer = document.querySelector(
+				"#update_role_permissions_modal"
+			);
+			let allPermissionInputs = permissionInputContainer.querySelectorAll(
+				"input[type=\"checkbox\"]"
+			);
+			allPermissionInputs.forEach(
+				checkbox => (this.permissionInputs[checkbox.value] = checkbox)
+			);
 		}
 	});
 }
@@ -896,34 +1048,35 @@ if (document.getElementById("user_roles_table")) {
 	var userRoles = new Vue({
 		el: "#user_roles_table",
 		data: {
-			users: document.getElementById("user_roles_table").dataset.users ?
-				JSON.parse(document.getElementById("user_roles_table").dataset.users) :
-				"",
-			roles: document.getElementById("user_roles_table").dataset.roles ?
-				JSON.parse(document.getElementById("user_roles_table").dataset.roles) :
-				"",
-			updateRoute: document.getElementById("user_roles_table").dataset.updateRoute || "",
+			users: document.getElementById("user_roles_table").dataset.users
+				? JSON.parse(document.getElementById("user_roles_table").dataset.users)
+				: "",
+			roles: document.getElementById("user_roles_table").dataset.roles
+				? JSON.parse(document.getElementById("user_roles_table").dataset.roles)
+				: "",
+			updateRoute:
+				document.getElementById("user_roles_table").dataset.updateRoute || "",
 			currentUserIndex: 0,
 			roleInputs: []
 		},
 		methods: {
-			updateUserRolesModal: function (index) {
+			updateUserRolesModal: function(index) {
 				let roles = this.users[index]["roles"];
 				if (!roles) {
 					return false;
 				}
 				this.currentUserIndex = index;
-				this.roleInputs.map((checkbox) => (checkbox.checked = false));
-				roles.forEach((role) => (this.roleInputs[role.id].checked = true));
+				this.roleInputs.map(checkbox => (checkbox.checked = false));
+				roles.forEach(role => (this.roleInputs[role.id].checked = true));
 			},
 
-			updateRoles: function () {
+			updateRoles: function() {
 				let selectedRoles = [];
 				if (this.users) {
 					let userID = this.users[this.currentUserIndex].id;
 				}
 
-				this.roleInputs.forEach(function (checkbox) {
+				this.roleInputs.forEach(function(checkbox) {
 					if (checkbox.checked) {
 						selectedRoles.push({
 							name: checkbox.dataset.role,
@@ -941,7 +1094,7 @@ if (document.getElementById("user_roles_table")) {
 				document.getElementById("close_update_user_roles_modal").click();
 			},
 
-			formatRoles: function (user) {
+			formatRoles: function(user) {
 				let roleNames = [];
 				for (var i in user.roles) {
 					let roleName = user.roles[i].label;
@@ -955,10 +1108,16 @@ if (document.getElementById("user_roles_table")) {
 				return roleNames.join(", ");
 			}
 		},
-		mounted: function () {
-			let roleInputContainer = document.querySelector("#update_user_roles_modal");
-			let allRoleInputs = roleInputContainer.querySelectorAll("input[type=\"checkbox\"]");
-			allRoleInputs.forEach((checkbox) => (this.roleInputs[checkbox.value] = checkbox));
+		mounted: function() {
+			let roleInputContainer = document.querySelector(
+				"#update_user_roles_modal"
+			);
+			let allRoleInputs = roleInputContainer.querySelectorAll(
+				"input[type=\"checkbox\"]"
+			);
+			allRoleInputs.forEach(
+				checkbox => (this.roleInputs[checkbox.value] = checkbox)
+			);
 		}
 	});
 }
@@ -969,25 +1128,34 @@ require("./finance/payment");
 /*
  * HR Module JS code start
  */
-$(document).ready(function () {
+$(document).ready(function() {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
 	$(document).on("click", "#saveFollowUp", saveFollowUp);
 	$(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-	$(document).on("click", ".show-evaluation-stage", function () {
+	$(document).on("click", ".show-evaluation-stage", function() {
 		$(".evaluation-stage").addClass("d-none");
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
 
-		if ($("#segment-general-information > span")[0].innerText == "General Information") {
-			$(".evaluation-score input").each(function () {
+		if (
+			$("#segment-general-information > span")[0].innerText ==
+			"General Information"
+		) {
+			$(".evaluation-score input").each(function() {
 				if ($(this).is(":checked")) {
-					let evaluationParameterName = (this.name).replace(/_/g, "-");
+					let evaluationParameterName = this.name.replace(/_/g, "-");
 					console.log(evaluationParameterName);
-					if ((this.id).slice(-1) == 1) { // Thumbs-up
-						$(`.${evaluationParameterName}`).find("input:eq(0)").prop("checked", true);
-					} else { // Thumbs-down
-						$(`.${evaluationParameterName}`).find("input:eq(1)").prop("checked", true);
+					if (this.id.slice(-1) == 1) {
+						// Thumbs-up
+						$(`.${evaluationParameterName}`)
+							.find("input:eq(0)")
+							.prop("checked", true);
+					} else {
+						// Thumbs-down
+						$(`.${evaluationParameterName}`)
+							.find("input:eq(1)")
+							.prop("checked", true);
 					}
 				}
 			});
@@ -995,36 +1163,34 @@ $(document).ready(function () {
 	});
 	$(document).on("change", ".set-segment-assignee", setSegmentAssignee);
 	$(document).on("click", ".toggle-block-display", toggleBlockDisplay);
-	$(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
-	$(document).on("click", ".rg_edit_btn", resourceGuidelineEditClicked);
+	$(document).on(
+		"change",
+		".send-mail-to-applicant",
+		toggleApplicantMailEditor
+	);
 });
 
-function resourceGuidelineEditClicked(event) {
-	let actionUrl = $(this).attr("action_url");
-	$("#edit-Modal #update-form").attr("action", actionUrl);
-	let resourceLink = $(this).attr("resource_link");
-	$("#edit-Modal #update-form #resource_link").val(resourceLink);
-	let categoryName = $(this).attr("category_id");
-	$("#edit-Modal #update-form #hrResourceCategory").val(categoryName);
-	$("#edit-Modal").modal("show");
-}
-
-$(function(){
-	$("#categoryName").keyup(check_save).each(function(){
-	  check_save();
-	});
+$(function() {
+	$("#categoryName")
+		.keyup(check_save)
+		.each(function() {
+			check_save();
+		});
 });
-function check_save(){
-	if ($(this).val().length == 0){
-	    $("#save-btn-action").attr("disabled", true);
-	}  else{
-	    $("#save-btn-action").removeAttr("disabled");
+function check_save() {
+	if ($(this).val().length == 0) {
+		$("#save-btn-action").attr("disabled", true);
+	} else {
+		$("#save-btn-action").removeAttr("disabled");
 	}
 }
 
 function showCommentBlock() {
 	var blockId = $(this).data("block-id");
-	$(blockId).removeClass("d-none").find("input").focus();
+	$(blockId)
+		.removeClass("d-none")
+		.find("input")
+		.focus();
 	$(this).addClass("d-none");
 }
 
@@ -1046,11 +1212,21 @@ function sectionToggleCheckbox() {
 
 function setSegmentAssignee() {
 	var segment = $(this).data("target-segment");
-	var assignee = $(this).find(":selected").text();
+	var assignee = $(this)
+		.find(":selected")
+		.text();
 	if (assignee) {
-		$(segment).find(".assignee").removeClass("d-none").find(".name").text(assignee);
+		$(segment)
+			.find(".assignee")
+			.removeClass("d-none")
+			.find(".name")
+			.text(assignee);
 	} else {
-		$(segment).find(".assignee").addClass("d-none").find(".name").text("");
+		$(segment)
+			.find(".assignee")
+			.addClass("d-none")
+			.find(".name")
+			.text("");
 	}
 }
 
@@ -1064,12 +1240,10 @@ function toggleBlockDisplay() {
 	}
 }
 
-
 function toggleApplicantMailEditor() {
 	let target = $(this).data("target");
 	$(target).toggleClass("d-none");
 }
-
 
 function loadTemplateMail(status, successCallback) {
 	// make query to load current template
@@ -1078,7 +1252,7 @@ function loadTemplateMail(status, successCallback) {
 		url: `/hr/recruitment/applicationround/${applicationRoundId}/mail-content/${status}`,
 		method: "post",
 		success: successCallback,
-		error: (err) => {
+		error: err => {
 			console.log(err);
 		}
 	});
@@ -1088,26 +1262,33 @@ function saveFollowUp() {
 	var form = $(this).closest("form");
 	if ($("#followUpAndReject").is(":checked")) {
 		var followUpComments = form.find("[name=\"comments\"]").val();
-		$(document).find("#followUpCommentForReject").val(followUpComments);
-		$(this).closest(".modal").modal("hide");
-		$(document).find("#rejectApplication").trigger("click");
+		$(document)
+			.find("#followUpCommentForReject")
+			.val(followUpComments);
+		$(this)
+			.closest(".modal")
+			.modal("hide");
+		$(document)
+			.find("#rejectApplication")
+			.trigger("click");
 	} else {
-		$(this).attr("disabled", "disabled").addClass("disabled c-disabled");
+		$(this)
+			.attr("disabled", "disabled")
+			.addClass("disabled c-disabled");
 		form.submit();
 	}
 }
 
 function datePickerChart() {
-	$("#EndDate").change(function () {
+	$("#EndDate").change(function() {
 		var startDate = document.getElementById("StartDate").value;
 		var endDate = document.getElementById("EndDate").value;
-		if ((Date.parse(endDate) <= Date.parse(startDate))) {
+		if (Date.parse(endDate) <= Date.parse(startDate)) {
 			alert("End date should be greater than Start date");
 			document.getElementById("EndDate").value = "";
 		}
 	});
 }
-
 
 function barChart() {
 	var value = $(".chart-data").data("target");
@@ -1116,18 +1297,26 @@ function barChart() {
 
 	var data = {
 		labels: cData.label,
-		datasets: [{
-			label: "Count",
-			data: cData.data,
-			backgroundColor: "#67A7E2",
-			borderColor: "#67A7E2",
-			borderWidth: 1,
-			pointHoverRadius: 7
-		}]
+		datasets: [
+			{
+				label: "Count",
+				data: cData.data,
+				backgroundColor: "#67A7E2",
+				borderColor: "#67A7E2",
+				borderWidth: 1,
+				pointHoverRadius: 7
+			}
+		]
 	};
 	var options = {
 		responsive: true,
 		tooltips: {
+			callbacks: {
+				afterBody: function(context) {
+					console.log(context);
+					return `Verified Applications: ${cData.afterBody[context[0].index]}`;
+				}
+			},
 			displayColors: false,
 			bodyFontSize: 20,
 			bodyFontStyle: "bold",
@@ -1137,15 +1326,17 @@ function barChart() {
 			borderWidth: 2
 		},
 		title: {
-			display: false,
+			display: false
 		},
 		legend: {
-			display: false,
+			display: false
 		},
 		scales: {
-			yAxes: [{
-				ticks: { stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5 },
-			}]
+			yAxes: [
+				{
+					ticks: { stepSize: 1, suggestedMin: 0.5, suggestedMax: 5.5 }
+				}
+			]
 		},
 
 		elements: {
@@ -1166,10 +1357,12 @@ function barChart() {
 	});
 }
 
-$(function () {
-	$(".reject-reason").on("click", function () {
+$(function() {
+	$(".reject-reason").on("click", function() {
 		let reasonCheckboxInput = $(this);
-		let reasonCommentInput = reasonCheckboxInput.closest(".rejection-reason-block").find("input[type=\"text\"]");
+		let reasonCommentInput = reasonCheckboxInput
+			.closest(".rejection-reason-block")
+			.find("input[type=\"text\"]");
 		if (reasonCheckboxInput.is(":checked")) {
 			reasonCommentInput.show().focus();
 		} else {
@@ -1178,17 +1371,17 @@ $(function () {
 	});
 });
 
-$("#job_start_date").on("change", function () {
+$("#job_start_date").on("change", function() {
 	let startDate = $("#job_start_date").val();
 	$("#job_end_date").attr("min", startDate);
 });
 
-$("#job_end_date").on("change", function () {
+$("#job_end_date").on("change", function() {
 	let endDate = $("#job_end_date").val();
 	$("#job_start_date").attr("max", endDate);
 });
 
-$(document).ready(function () {
+$(document).ready(function() {
 	var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
 		removeItemButton: true,
 		maxItemCount: 9,
@@ -1202,7 +1395,7 @@ $(document).ready(function () {
  */
 
 // fix for tinymce and bootstrap modal
-$(document).on("focusin", function (e) {
+$(document).on("focusin", function(e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
 	}

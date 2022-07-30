@@ -37,16 +37,14 @@ class ReportsController extends Controller
             ->groupBy('date_created_at', 'month_created_at')
             ->orderBy('date_created_at', 'ASC')
             ->get();
-
         $data = [];
-
         $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
-
         foreach ($record as $row) {
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
             $data['data'][] = (int) $row->count;
+            $verifiedApplications = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
+            $data['afterBody'][] = $verifiedApplications;
         }
-
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports', $data, with($todayCount, $verifiedApplicationCount));
@@ -76,17 +74,20 @@ class ReportsController extends Controller
         ->get();
 
         $data = [];
+        $verifiedApplicationCount = $this->getVerifiedApplicationsCount();
 
         foreach ($record as $row) {
             $data['data'][] = (int) $row->count;
             $data['label'][] = (new Carbon($row->date_created_at))->format('M d');
+            $verifiedApplications = Application::where('is_verified', 1)->whereDate('created_at', '=', date(new Carbon($row->date_created_at)))->count();
+            $data['afterBody'][] = $verifiedApplications;
         }
 
         $data['chartData'] = json_encode($data);
 
         return view('hr.recruitment.reports')->with([
             'chartData' => $data['chartData'],
-            'todayCount' => $todayCount,
+            'todayCount' => $todayCount, 'verifiedApplicationsCount' => $verifiedApplicationCount,
         ]);
     }
 }
