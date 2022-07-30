@@ -165,6 +165,22 @@
                                 {{ $client->country->currency_symbol . $client->getClientProjectsTotalLedgerAmount($quarter) }}
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-bold">
+                                <div class="font-weight-bold">
+                                    {{ '(' . strtoupper(App\Helpers\DecimalToWordsHelper::convertDecimalToWords($client->getClientProjectsTotalLedgerAmount($quarter), config('constants.currency.' . $client->country->currency . '.name'))) . ')' }}
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 <p></p>
