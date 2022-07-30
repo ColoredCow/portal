@@ -140,7 +140,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ $client->country->currency_symbol . __('2000')}}
+                                    {{ $client->country->currency_symbol . $project->getTotalLedgerAmount() }}
                                 </td>
                             </tr>
                             <tr></tr>
@@ -159,7 +159,7 @@
                                 </div>
                             </td>
                             <td>
-                                {{ $client->country->currency_symbol . __('2000')}}
+                                {{ $client->country->currency_symbol . $client->getClientProjectsTotalLedgerAmount() }}
                             </td>
                         </tr>
                     </tbody>
@@ -211,16 +211,46 @@
                 <p></p>
                 <table class="table-border w-100p">
                     <tbody>
-                        @foreach ( [1, 2, 3, 4] as $number )
-                            <tr>
-                                <td class="p-5 w-70p">
-                                    Glific product development {{ __(' (Q') . ceil(now()->month / 3) . __(')') }}
-                                </td>
-                                <td class="p-5 text-right">
-                                    {{ $client->country->currency_symbol }}2000
-                                </td>
-                            </tr>
+                        @foreach ($projects as $project)
+                            @foreach ($project->ledgerAccountsOnlyCredit as $ledgerAccountRow )
+                                <tr>
+                                    <td class="p-5 w-70p">
+                                        {{ $ledgerAccountRow->particulars }}
+                                    </td>
+                                    <td class="p-5 text-right">
+                                        {{ $client->country->currency_symbol . $ledgerAccountRow->credit }}
+                                    </td>
+                                </tr>
+                            @endforeach
                         @endforeach
+                        <tr class="font-weight-bold">
+                            <td class="p-5 w-70p">
+                                {{ __('Total: ') }}
+                            </td>
+                            <td class="p-5 text-right">
+                                {{ $client->country->currency_symbol . $client->ledgerAccountsOnlyCredit->sum('credit') }}
+                            </td>
+                        </tr>
+                        @foreach ($projects as $project)
+                            @foreach ($project->ledgerAccountsOnlyDebit as $ledgerAccountRow)
+                                <tr>
+                                    <td class="p-5 w-70p">
+                                        {{ $ledgerAccountRow->particulars }}
+                                    </td>
+                                    <td class="p-5 text-right">
+                                        {{ __('-') . $client->country->currency_symbol . $ledgerAccountRow->debit }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                        <tr class="font-weight-bold">
+                            <td class="p-5 w-70p">
+                                {{ __('Balance: ') }}
+                            </td>
+                            <td class="p-5 text-right">
+                                {{ $client->country->currency_symbol . ($client->getClientProjectsTotalLedgerAmount()) }}
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

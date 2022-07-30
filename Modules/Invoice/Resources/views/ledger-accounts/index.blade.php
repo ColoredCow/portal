@@ -53,7 +53,7 @@
                             <tbody v-for="(ledgerAccountRow, index) in ledgerAccountData">
                                 <tr>
                                     <td>
-                                        <input type="hidden" :name="`ledger_account_data[${index}][client_id]`" value="{{ $client->id }}">
+                                        <input type="hidden" :name="`ledger_account_data[${index}][client_id]`" value="{{ optional($client)->id }}">
                                         <input type="hidden" :name="`ledger_account_data[${index}][project_id]`" value="{{ optional($project)->id }}">
                                         <input class="py-2 w-full" type="hidden" :name="`ledger_account_data[${index}][id]`" v-model="ledgerAccountRow.id">
                                         <input class="py-2 w-full" :name="`ledger_account_data[${index}][date]`" v-model="ledgerAccountRow.date" type="date" required>
@@ -71,7 +71,7 @@
                         </table>
                     </form>
                     <div class="mt-2 ml-2 ">
-                        <a v-on:click="addNewRow()" href="javascript: void(0);" class="c-pointer text-decoration-none text-dark border-bottom border-dark">{{ __('Add new row') }}</a>
+                        <a v-if="clientId" v-on:click="addNewRow()" href="javascript: void(0);" class="c-pointer text-decoration-none text-dark border-bottom border-dark">{{ __('Add new row') }}</a>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                     clients: @json($clients),
                     clientId: "{{ old('client_id', optional($client)->id) }}",
                     projectId: "{{ old('project_id', optional($project)->id) }}",
-                    projects: @json($client->projects),
+                    projects: @json(optional($client)->projects),
                     client: null,
                     ledgerAccountData: @json($ledgerAccountData),
                     disabled: false

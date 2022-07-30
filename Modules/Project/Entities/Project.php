@@ -238,4 +238,22 @@ class Project extends Model
     {
         return $this->hasMany(LedgerAccount::class);
     }
+
+    public function ledgerAccountsOnlyCredit()
+    {
+        return $this->hasMany(LedgerAccount::class)->whereNotNull('credit');
+    }
+    
+    public function ledgerAccountsOnlyDebit()
+    {
+        return $this->hasMany(LedgerAccount::class)->whereNotNull('debit');
+    }
+    
+    public function getTotalLedgerAmount()
+    {
+        $amount = 0;
+        $amount += (optional($this->ledgerAccountsOnlyCredit)->sum('credit') - optional($this->ledgerAccountsOnlyDebit)->sum('debit'));
+
+        return $amount;
+    }
 }

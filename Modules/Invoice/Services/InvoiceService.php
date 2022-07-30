@@ -807,7 +807,7 @@ class InvoiceService implements InvoiceServiceContract
             'clients' => $clients,
             'client' => $client,
             'project' => $project,
-            'ledgerAccountData' => $project ? $project->ledgerAccounts->toArray() : $client->ledgerAccounts->toArray()
+            'ledgerAccountData' => $project ? $project->ledgerAccounts->toArray() : ($client ? $client->ledgerAccounts->toArray() : [])
         ];
     }
 

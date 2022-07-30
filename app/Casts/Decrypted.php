@@ -18,7 +18,16 @@ class Decrypted implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        return Crypt::decrypt($value);
+        if ($value === null) {
+            return $value;
+        }
+
+        try {
+            $value = Crypt::decrypt($value);
+        } catch (\Throwable $th) {
+        }
+
+        return $value;
     }
  
     /**
@@ -32,6 +41,6 @@ class Decrypted implements CastsAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        return ($value);
+        return $value;
     }
 }
