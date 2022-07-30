@@ -155,6 +155,8 @@ class InvoiceController extends Controller
 
     public function taxReport(Request $request)
     {
+        $this->authorize('taxReport', Invoice::class);
+
         $filters = $request->all();
 
         if (! $filters) {
@@ -166,6 +168,8 @@ class InvoiceController extends Controller
 
     public function taxReportExport(Request $request)
     {
+        $this->authorize('tax_report_export', Invoice::class);
+
         $filters = $request->all();
 
         return $this->service->taxReportExport($filters, $request);

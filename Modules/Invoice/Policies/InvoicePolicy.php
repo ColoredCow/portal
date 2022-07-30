@@ -61,4 +61,14 @@ class InvoicePolicy
     {
         return $user->hasPermissionTo('finance_invoices.delete');
     }
+
+    public function taxReport(User $user)
+    {
+        return $user->hasPermissionTo('finance_invoices.view');
+    }
+
+    public function taxReportExport(User $user)
+    {
+        return $user->hasPermissionTo('finance_invoices.view');
+    }
 }
