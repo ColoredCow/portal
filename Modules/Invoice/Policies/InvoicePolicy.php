@@ -71,4 +71,24 @@ class InvoicePolicy
     {
         return $user->hasPermissionTo('finance_invoices.view');
     }
+
+    public function yearlyInvoiceReport(User $user)
+    {
+        return $user->hasPermissionTo('finance_invoices.view');
+    }
+
+    public function yearlyInvoiceReportExport(User $user)
+    {
+        return $user->hasPermissionTo('finance_invoices.view');
+    }
+
+    public function invoiceDetails(User $user)
+    {
+        return $user->hasPermissionTo('finance_invoices.view');
+    }
+
+    public function monthlyGstTaxReportExport(User $user)
+    {
+        return $user->hasPermissionTo('finance_invoices.view');
+    }
 }
