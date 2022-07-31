@@ -140,7 +140,7 @@ return [
             'database' => 0,
         ],
     ],
-     
+
     'dbal' => [
         'types' => [
             'timestamp' => TimestampType::class,
