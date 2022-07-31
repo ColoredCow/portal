@@ -82,13 +82,13 @@
                         <div class="mr-2">
                             <div class="d-flex flex-column form-group">
                                 <label class="text-dark font-weight-bold fz-16">Added on</label>
-                                <input class="form-control" type="date" :name="`project_team_member[${index}][started_on]`" v-model="projectTeamMember.pivot.started_on">
+                                <input class="form-control" type="date" :name="`project_team_member[${index}][started_on]`" @input="updateStartDateForTeamMember($event, index)" :value="projectTeamMember.pivot.started_on | toDate">
                             </div>
                         </div>
                         <div>
                             <div class="d-flex flex-column form-group">
                                 <label class="text-dark font-weight-bold fz-16">Ended on</label>
-                                <input class="form-control" type="date" :name="`project_team_member[${index}][ended_on]`" v-model="projectTeamMember.pivot.ended_on">
+                                <input class="form-control" type="date" :name="`project_team_member[${index}][ended_on]`" @input="updateEndDateForTeamMember($event, index)" :value="projectTeamMember.pivot.ended_on | toDate">
                             </div>
                         </div>
                     </div>
@@ -113,8 +113,8 @@
                         <tr>
                             <th class="font-weight-normal"><img src="{{ $inactiveTeamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">{{$inactiveTeamMember->user->name}}</th>
                             <th class="font-weight-light">{{ ucwords(str_replace('_', ' ', $inactiveTeamMember->designation)) }}</th>
-                            <th class="font-weight-light">{{ Carbon\Carbon::parse($inactiveTeamMember->started_on)->format('Y-m-d') }}</th>
-                            <th class="font-weight-light">{{ Carbon\Carbon::parse($inactiveTeamMember->ended_on)->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ $inactiveTeamMember->started_on->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ $inactiveTeamMember->ended_on->format('Y-m-d') }}</th>
                         <tr>
                         @endforeach
                     </table>

@@ -136,6 +136,25 @@
                 removeProjectRepository(index) {
                     this.projectRepositories.splice(index, 1);
                 },
+
+                updateStartDateForTeamMember($event, index) {
+                    newDate = $event.target.value;
+                    this.projectTeamMembers[index]['pivot']['started_on'] = newDate;
+                },
+                
+                updateEndDateForTeamMember($event, index) {
+                    newDate = $event.target.value;
+                    this.projectTeamMembers[index]['pivot']['ended_on'] = newDate;
+                }
+            },
+
+            filters: {
+                toDate: function(timestamp) {
+                    if (timestamp == null) {
+                        return timestamp;
+                    }
+                    return timestamp.substring(0,10);
+                }
             },
 
             mounted() {},

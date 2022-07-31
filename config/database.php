@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Database\DBAL\TimestampType;
 
 return [
     /*
@@ -136,6 +137,13 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => 0,
+        ],
+    ],
+
+     
+    'dbal' => [
+        'types' => [
+            'timestamp' => TimestampType::class,
         ],
     ],
 ];
