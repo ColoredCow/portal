@@ -66,11 +66,11 @@
                     </div>
 
                     <div class="col-1 weekly-effort-div">
-                        <input type="number" :value="projectTeamMember.pivot.daily_expected_effort*5" class="form-control weekly-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, 5)" :value="projectTeamMember.pivot.daily_expected_effort*5" class="form-control weekly-effort">
                     </div>
 
                     <div class="col-1 monthly-effort-div">
-                        <input type="number" :value="projectTeamMember.pivot.daily_expected_effort*workingDaysInMonth" class="form-control monthly-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, workingDaysInMonth)" :value="projectTeamMember.pivot.daily_expected_effort*workingDaysInMonth" class="form-control monthly-effort">
                     </div>
                     <div class="col-2">
                         <input type="number" step="0.01" :name="`project_team_member[${index}][billing_engagement]`" v-model="projectTeamMember.pivot.billing_engagement" class="form-control">

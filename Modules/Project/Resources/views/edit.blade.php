@@ -29,7 +29,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" data-toggle="pill" data-target="#projectFinancialDetails" type="button"
-                        role="tab" aria-selected="false">Project Financial Detils</a>
+                        role="tab" aria-selected="false">Project Financial Details</a>
                 </li>
             </ul>
             @include('status', ['errors' => $errors->all()])
@@ -145,6 +145,11 @@
                 updateEndDateForTeamMember($event, index) {
                     newDate = $event.target.value;
                     this.projectTeamMembers[index]['pivot']['ended_on'] = newDate;
+                },
+
+                updatedDailyExpectedEffort($event, index, numberOfDays) {
+                    value = $event.target.value;
+                    this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                 }
             },
 
