@@ -93,8 +93,8 @@
                         <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
-                        <div class="fz-14 float-right mr-3 mt-1">{{ config('project.meta_keys.last_updated_at.value') . __(': ') . (Carbon\Carbon::parse($project->last_updated_at)->format('D, d-m-Y, g:i a'))}}</div>
-                        <div>
+                        <div class="fz-14 float-right mr-3 mt-1">{{ config('project.meta_keys.last_updated_at.value') . __(': ') . (Carbon\Carbon::parse($project->last_updated_at)->format('D g:i a, dS M Y'))}}
+                        </div> 
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
                                 <div class="table">
                                     <table class="table">
