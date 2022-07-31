@@ -818,6 +818,10 @@ class InvoiceService implements InvoiceServiceContract
         $project = Project::find($data['project_id'] ?? null);
         $client = Client::find($data['client_id'] ?? null);
 
+        if (! $client) {
+            return;
+        }
+
         if ($project) {
             $ledgerAccountsIdToDelete = LedgerAccount::where('project_id', $project->id)->pluck('id')->toArray();
         } else {

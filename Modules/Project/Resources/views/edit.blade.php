@@ -20,7 +20,7 @@
                         role="tab" aria-selected="true">Project details</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="pill" data-target="#ProjectTeamMembers" type="button"
+                    <a class="nav-link" data-toggle="pill" data-target="#projectTeamMembers" type="button"
                         role="tab" aria-selected="false">Project team members</a>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -38,7 +38,7 @@
                     @include('project::subviews.edit-project-details')
                 </div>
 
-                <div class="tab-pane fade mb-5" id="ProjectTeamMembers" role="tabpanel">
+                <div class="tab-pane fade mb-5" id="projectTeamMembers" role="tabpanel">
                     @include('project::subviews.edit-project-team-members')
                 </div>
 
