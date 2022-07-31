@@ -39,8 +39,8 @@
                     <form action="{{ route('hr-job-domains.storeJobdomain')}}" method="POST" id="domainForm" >
                         @csrf
                         <div class="form-group">
-                            <label for="exampleInput1">name</label><strong class="text-danger">*</strong></label>
-                            <input type="text" name="name" outo class="form-control"  id="name" aria-describedby="Help" placeholder="name"> 
+                            <label for="domainfield">name</label><strong class="text-danger">*</strong></label>
+                            <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="name"> 
                             <div class="d-none text-danger" name="error" id="domainerror"></div>
                         </div>        
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

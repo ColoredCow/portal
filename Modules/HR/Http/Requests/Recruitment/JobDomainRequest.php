@@ -30,7 +30,8 @@ class JobDomainRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'domain name is required',
+            'name.required' => 'Domain name is required',
+            'name.unique'  => 'Domain field is already taken',
         ];
     }
 }
