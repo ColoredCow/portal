@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Project\Entities\ProjectBillingDetail;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -156,6 +157,9 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
+
+            case 'project_financial_details':
+                return $this->updateProjectFinancialDetails($data, $project);
         }
     }
 
@@ -196,6 +200,14 @@ class ProjectService implements ProjectServiceContract
         }
 
         return $isProjectUpdated;
+    }
+
+    private function updateProjectFinancialDetails($data, $project)
+    {
+        ProjectBillingDetail::updateOrCreate(
+            ['project_id' => $project->id],
+            $data
+        );
     }
 
     private function updateProjectTeamMembers($data, $project)
@@ -262,6 +274,7 @@ class ProjectService implements ProjectServiceContract
 
         return sprintf('%03s', $clientProjectsCount);
     }
+
     public function getWorkingDays($project)
     {
         $startDate = $project->client->month_start_date;
@@ -277,6 +290,7 @@ class ProjectService implements ProjectServiceContract
 
         return $numberOfWorkingDays;
     }
+
     public function saveOrUpdateProjectContract($data, $project)
     {
         if ($data['contract_file'] ?? null) {
