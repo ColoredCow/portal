@@ -26,7 +26,23 @@ class ProjectService implements ProjectServiceContract
         $data['projects'] = $data['projects'] ?? 'my-projects';
 
         $clients = null;
-        if ($data['projects'] == 'my-projects') {
+
+        if ($data['projects'] == 'all-projects') {
+            $clients = Client::query()->with('projects', function ($query) use ($filters) {
+                $query->applyFilter($filters)->orderBy('name', 'asc');
+            })->whereHas('projects', function ($query) use ($filters) {
+                $query->applyFilter($filters);
+            })->orderBy('name')->paginate(config('constants.pagination_size'));
+
+            $filters['status'] = 'active';
+            $activeProjectsCount = Project::query()->applyFilter($filters)->count();
+
+            $filters['status'] = 'halted';
+            $haltedProjectsCount = Project::query()->applyFilter($filters)->count();
+
+            $filters['status'] = 'inactive';
+            $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
+        } else {
             $userId = auth()->user()->id;
 
             $clients = Client::query()->with('projects', function ($query) use ($userId, $filters) {
@@ -53,25 +69,10 @@ class ProjectService implements ProjectServiceContract
             $inactiveProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                 $query->where('team_member_id', $userId);
             })->count();
-        } else {
-            $clients = Client::query()->with('projects', function ($query) use ($filters) {
-                $query->applyFilter($filters)->orderBy('name', 'asc');
-            })->whereHas('projects', function ($query) use ($filters) {
-                $query->applyFilter($filters);
-            })->orderBy('name')->paginate(config('constants.pagination_size'));
-
-            $filters['status'] = 'active';
-            $activeProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['status'] = 'halted';
-            $haltedProjectsCount = Project::query()->applyFilter($filters)->count();
-
-            $filters['status'] = 'inactive';
-            $inactiveProjectsCount = Project::query()->applyFilter($filters)->count();
         }
 
         return [
-            'clients' => $clients,
+            'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
             'haltedProjectsCount' => $haltedProjectsCount
@@ -185,7 +186,7 @@ class ProjectService implements ProjectServiceContract
         }
 
         $this->saveOrUpdateProjectContract($data, $project);
-        if (in_array($data['status'], ['active', 'halted'])) {
+        if ($data['status'] == 'active') {
             $project->client->update(['status' => 'active']);
         } else {
             if (! $project->client->projects()->where('status', 'active')->exists()) {
@@ -223,8 +224,9 @@ class ProjectService implements ProjectServiceContract
                     'team_member_id' => $teamMemberData['team_member_id'],
                     'designation' => $teamMemberData['designation'],
                     'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
-                    'started_on' => $teamMemberData['started_on'],
+                    'started_on' => $teamMemberData['started_on'] ?? now(),
                     'ended_on' => $teamMemberData['ended_on'],
+                    'billing_engagement' => $teamMemberData['billing_engagement'],
                 ]);
             }
         }

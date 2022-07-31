@@ -14,8 +14,10 @@ class HrApplicantsTableSeeder extends Seeder
      */
     public function run()
     {
-        Applicant::factory()
-            ->count(2)
-            ->create();
+        if (! app()->environment('production')) {
+            Applicant::factory()
+                ->count(2)
+                ->create();
+        }
     }
 }
