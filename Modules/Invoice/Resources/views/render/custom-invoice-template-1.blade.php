@@ -5,6 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Styles -->
         <style>
+            html,
+            body {
+                font-weight: normal;
+                font-family: sans-serif;
+            }
             .d-block {
                 display: block;
             }
@@ -35,6 +40,9 @@
             .w-76p {
                 width: 76%;
             }
+            .w-80p {
+                width: 80%;
+            }
             .p-5 {
                 padding: 5px;
             }
@@ -59,6 +67,9 @@
                 padding-left: 7%; 
                 padding-right: 7%;
             }
+            .fz-14 {
+                font-size: 14px !important;
+            }
         </style>
     </head>
     <body>
@@ -81,14 +92,14 @@
                         </tr>
                     </tbody>
                 </table>
-                <table >
+                <table>
                     <tbody class="w-100p">
-                        <tr class="w-100p">
-                            <td class="w-68p">Date</td>
-                            <td class="text-right">Invoice No: {{ $invoiceNumber }}</td>
+                        <tr>
+                            <td>Date</td>
+                            <td class="text-right" style="width: 100%;">Invoice No: {{ $invoiceNumber }}</td>
                         </tr>
                         <tr class="w-100p">
-                            <td style=""> {{ today()->format('m/d/Y') }} </td>
+                            <td> {{ today()->format('m/d/Y') }} </td>
                         </tr>
                     </tbody>
                 </table>
@@ -137,7 +148,7 @@
                     <tbody>
                         @foreach ($projects as $project)
                             <tr>
-                                <td class="w-76p">
+                                <td class="w-80p">
                                     <div>
                                         {{ $loop->iteration . __('. ') . $project->name . __(' (Q') . $quarter . __(')') }}
                                     </div>
@@ -152,7 +163,7 @@
                             <td>
                             </td>
                             <td>
-                                {{ __('---------') }}
+                                {{ __('-------------') }}
                             </td>
                         </tr>
                         <tr>
@@ -176,8 +187,8 @@
                     <tbody>
                         <tr>
                             <td class="font-weight-bold">
-                                <div class="font-weight-bold">
-                                    {{ '(' . strtoupper(App\Helpers\DecimalToWordsHelper::convertDecimalToWords($client->getClientProjectsTotalLedgerAmount($quarter), config('constants.currency.' . $client->country->currency . '.name'))) . ')' }}
+                                <div class="font-weight-bold fz-14">
+                                    {{ '(' . strtoupper(App\Helpers\DecimalToWordsHelper::convertDecimalToWords(($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter)), config('constants.currency.' . $client->country->currency . '.name'))) . ')' }}
                                 </div>
                             </td>
                         </tr>
@@ -213,7 +224,7 @@
                 </tbody>
             </table>
             <div class="table-padding">
-                <table>
+                <table class="w-100p">
                     <tbody>
                         <tr>
                             <p>
