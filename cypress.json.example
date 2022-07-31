@@ -3,7 +3,7 @@
   "$schema": "https://on.cypress.io/cypress.schema.json",
   "env": {
     "users": {
-      "super-admin": {
+      "superadmin": {
         "email": "superadmin@coloredcow.com",
         "password": "12345678"
       },
