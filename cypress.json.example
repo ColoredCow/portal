@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://portal.test",
+  "baseUrl": "http://127.0.0.1:8000",
   "$schema": "https://on.cypress.io/cypress.schema.json",
   "env": {
     "users": {

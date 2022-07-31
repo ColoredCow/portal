@@ -143,7 +143,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Settings<span
                     class="caret"></span>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
+            <div id="dropdownMenu_settings" class="dropdown-menu" aria-labelledby="navbarDropdown_settings">
                 @canany(['hr_settings.view', 'finance_invoices_settings.view', 'nda_settings.view'])
                     <a class="dropdown-item" href="{{ route('settings.index') }}">Settings</a>
                 @endcanany
