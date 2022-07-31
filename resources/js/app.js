@@ -182,6 +182,36 @@ $(document).ready(() => {
 	});
 });
 
+$(document).ready(function(){	
+	$("#domainformModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+		$("#domainerror").addClass("d-none");
+	});
+
+	$("#domainForm").on("submit",function(e){
+		e.preventDefault();
+		let form =$("#domainForm");
+		
+	 	$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#domainformModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(3000);
+			},
+			error: function(response){
+				if(response.responseJSON.errors.name){
+					let text = response.responseJSON.errors.name[0];
+					$("#domainerror").html(text).removeClass("d-none");
+					return false;
+				}
+			},
+		});
+	});
+});
+
 if (document.getElementById("page_hr_applicant_edit")) {
 	new Vue({
 		el: "#page_hr_applicant_edit",
