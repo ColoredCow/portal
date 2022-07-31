@@ -3,7 +3,7 @@
     </div>
     <a id='working_days_in_month' :data-days-count='workingDaysInMonth'></a>
     <div id="project_team_member_form">
-        <form  action="{{ route('project.update', $project) }}" method="POST" id="update_project_team_member_form">
+        <form  action="{{ route('project.update', $project) }}" method="POST" id="updateProjectTeamMemberForm">
             @csrf
             <input type="hidden" value="project_team_members" name="update_section">
 
@@ -13,13 +13,16 @@
                     </div>
                     <div class="col-2">
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="text-center fz-16 font-weight-bold">
                             Expected Efforts In Hours
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3 fz-16 font-weight-bold align-items-center">
+                    <div class="">
+                        S. No.
+                    </div>
                     <div class="col-2">
                         Team Members
                     </div>
@@ -40,16 +43,19 @@
                     </div>
                 </div>
 
-                <div class="row mb-3" v-for="(projectTeamMember, index) in projectTeamMembers" :key="projectTeamMember.id">
+                <div class="row mb-3 bg-theme-gray-light pt-2" v-for="(projectTeamMember, index) in projectTeamMembers" :key="projectTeamMember.id">
                     <input hidden type="text" :name="`project_team_member[${index}][project_team_member_id]`" :value="projectTeamMember.pivot.id" class="form-control">
+                    <div class="mx-2 pt-2 font-weight-bold">
+                        @{{ index + 1 }}.
+                    </div>
                     <div class="col-2">
-                        <select v-model="projectTeamMember.id" :name="`project_team_member[${index}][team_member_id]`" class="form-control">
+                        <select v-model="projectTeamMember.id" :name="`project_team_member[${index}][team_member_id]`" class="custom-select">
                             <option value="">Select team member</option>
                             <option v-for="(teamMember) in users" :value="teamMember.id" :key="teamMember.id">@{{ teamMember.name }}</option>
                         </select>
                     </div>
                     <div class="col-2">
-                        <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="form-control">
+                        <select v-model="projectTeamMember.pivot.designation" :name="`project_team_member[${index}][designation]`" class="custom-select">
                             <option value="">Select Designations</option>
 
                             <option v-for="(designation, key) in designations" :value="key">@{{ designation }}</option>
@@ -66,23 +72,23 @@
                     <div class="col-1 monthly-effort-div">
                         <input type="number" :value="projectTeamMember.pivot.daily_expected_effort*workingDaysInMonth" class="form-control monthly-effort">
                     </div>
-                    <div class="col-2 monthly-effort-div">
+                    <div class="col-2">
                         <input type="number" step="0.01" :name="`project_team_member[${index}][billing_engagement]`" v-model="projectTeamMember.pivot.billing_engagement" class="form-control">
                     </div>
                     <div class="col-1">
                         <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
                     </div>
-                    <div class="container d-flex bg-dark mt-2 text-light">
-                        <div class="col-3 mt-2">
-                            <div class="d-flex flex-column mr-3 form-group">
-                                <label>Added on</label>
-                                <input type="date" :name="`project_team_member[${index}][started_on]`" value="#">
+                    <div class="d-flex mt-2 ml-9 text-light">
+                        <div class="mr-2">
+                            <div class="d-flex flex-column form-group">
+                                <label class="text-dark font-weight-bold fz-16">Added on</label>
+                                <input class="form-control" type="date" :name="`project_team_member[${index}][started_on]`" v-model="projectTeamMember.pivot.started_on">
                             </div>
                         </div>
-                        <div class="col-3 mt-2">
-                            <div class="d-flex flex-column ml-3 form-group">
-                                <label>Ended on</label>
-                                <input type="date" :name="`project_team_member[${index}][ended_on]`" value="#">
+                        <div>
+                            <div class="d-flex flex-column form-group">
+                                <label class="text-dark font-weight-bold fz-16">Ended on</label>
+                                <input class="form-control" type="date" :name="`project_team_member[${index}][ended_on]`" v-model="projectTeamMember.pivot.ended_on">
                             </div>
                         </div>
                     </div>
@@ -117,7 +123,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')">Save</button>
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('updateProjectTeamMemberForm')">Save</button>
             </div>
         </form>
     </div>

@@ -187,11 +187,24 @@ class Project extends Model
 
     public function getResourceBillableAmount()
     {
-        $service_rate = $this->client->billingDetails->service_rates;
+        $service_rate = optional($this->billingDetail)->service_rates;
+        if (! $service_rate) {
+            $service_rate = $this->client->billingDetails->service_rates;
+        }
         $totalAmount = 0;
+        $numberOfMonths = 1;
+
+        switch ($this->client->billingDetails->billing_frequency) {
+            case 3:
+                $numberOfMonths = 3;
+                break;
+                continue;
+            default:
+                $numberOfMonths = 1;
+        }
 
         foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
-            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate;
+            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate * $numberOfMonths;
         }
 
         return round($totalAmount, 2);
@@ -265,5 +278,10 @@ class Project extends Model
         }
 
         return false;
+    }
+
+    public function billingDetail()
+    {
+        return $this->hasOne(ProjectBillingDetail::class);
     }
 }

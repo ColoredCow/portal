@@ -3,7 +3,7 @@
     </div>
 
     <div id="project_detail_form">
-        <form action="{{ route('project.update', $project) }}" method="POST" id="form_update_project_details" enctype="multipart/form-data">
+        <form action="{{ route('project.update', $project) }}" method="POST" id="updateProjectDetails" enctype="multipart/form-data">
             @csrf
             <input type="hidden" value="project_details" name="update_section">
 
@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <div data-id="he" type="button" v-on:click="updateProjectForm('form_update_project_details')"
+                <div data-id="he" type="button" v-on:click="updateProjectForm('updateProjectDetails')"
                     class="btn btn-primary save-btn">Save</div>
             </div>
         </form>
