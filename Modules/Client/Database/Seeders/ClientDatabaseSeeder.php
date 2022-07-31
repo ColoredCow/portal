@@ -43,7 +43,7 @@ class ClientDatabaseSeeder extends Seeder
 
         // seed fake data
         if (! app()->environment('production')) {
-            Client::factory()->count(3)->create();
+            Client::factory()->count(10)->create();
         }
     }
 }
