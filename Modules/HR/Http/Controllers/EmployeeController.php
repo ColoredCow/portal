@@ -1,18 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\HR\Employees;
+namespace Modules\HR\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Modules\HR\Entities\Employee;
-use App\Services\EmployeeService;
 use Illuminate\Http\Request;
+use App\Services\EmployeeService;
+use Modules\HR\Entities\Employee;
+use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class EmployeeController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $service;
 
     public function __construct(EmployeeService $service)
     {
+        $this->authorizeResource(Employee::class);
         $this->service = $service;
     }
 
@@ -32,15 +36,10 @@ class EmployeeController extends Controller
         return view('hr.employees.show', ['employee' => $employee]);
     }
 
-    /**
-     * Display the project details of an Employee.
-     *
-     * @param  Employee $employee
-     */
-    public function showProjects(Employee $employee)
+    public function reports()
     {
-        $employee->load('projects');
+        $this->authorize('reports');
 
-        return view('hr.employees.projects', compact('employee'));
+        return view('hr.employees.reports');
     }
 }

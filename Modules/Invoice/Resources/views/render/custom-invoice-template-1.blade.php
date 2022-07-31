@@ -143,7 +143,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {{ $client->country->currency_symbol . $project->getTotalLedgerAmount($quarter) }}
+                                    {{ $client->country->currency_symbol . ($project->getResourceBillableAmount() + $project->getTotalLedgerAmount($quarter)) }}
                                 </td>
                             </tr>
                             <tr></tr>
@@ -162,7 +162,7 @@
                                 </div>
                             </td>
                             <td>
-                                {{ $client->country->currency_symbol . $client->getClientProjectsTotalLedgerAmount($quarter) }}
+                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter)) }}
                             </td>
                         </tr>
                         <tr>
@@ -231,6 +231,16 @@
                 <table class="table-border w-100p">
                     <tbody>
                         @foreach ($projects as $project)
+                            <tr>
+                                <td class="p-5 w-70p">
+                                    {{ $project->name }}
+                                </td>
+                                <td class="p-5 text-right">
+                                    {{ $project->client->country->currency_symbol .  $project->getResourceBillableAmount()}}
+                                </td>
+                            </tr>
+                        @endforeach
+                        @foreach ($projects as $project)
                             @foreach ($project->ledgerAccountsOnlyCredit()->quarter($quarter)->get() as $ledgerAccountRow )
                                 <tr>
                                     <td class="p-5 w-70p">
@@ -247,7 +257,7 @@
                                 {{ __('Total: ') }}
                             </td>
                             <td class="p-5 text-right">
-                                {{ $client->country->currency_symbol . $client->ledgerAccountsOnlyCredit->sum('credit') }}
+                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount() + $client->ledgerAccountsOnlyCredit->sum('credit')) }}
                             </td>
                         </tr>
                         @foreach ($projects as $project)
@@ -267,7 +277,7 @@
                                 {{ __('Balance: ') }}
                             </td>
                             <td class="p-5 text-right">
-                                {{ $client->country->currency_symbol . ($client->getClientProjectsTotalLedgerAmount($quarter)) }}
+                                {{ $client->country->currency_symbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter)) }}
                             </td>
                         </tr>
                     </tbody>

@@ -5,15 +5,19 @@ namespace Modules\Invoice\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
-use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Contracts\InvoiceServiceContract;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class InvoiceController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $service;
 
     public function __construct(InvoiceServiceContract $service)
     {
+        $this->authorizeResource(Invoice::class);
         $this->service = $service;
     }
 
@@ -49,8 +53,8 @@ class InvoiceController extends Controller
      */
     public function invoiceDetails(Request $request)
     {
+        $this->authorize('invoiceDetails', Invoice::class);
         $filters = $request->all();
-
         if (! $filters) {
             return redirect(route('invoice.details', $this->service->defaultGstReportFilters()));
         }
@@ -58,8 +62,9 @@ class InvoiceController extends Controller
         return view('invoice::monthly-gst-report', $this->service->invoiceDetails($filters));
     }
 
-    public function monthlyGSTTaxReportExport(Request $request)
+    public function monthlyGstTaxReportExport(Request $request)
     {
+        $this->authorize('monthlyGstTaxReportExport', Invoice::class);
         $filters = $request->all();
 
         return $this->service->monthlyGSTTaxReportExport($filters, $request);
@@ -153,8 +158,8 @@ class InvoiceController extends Controller
 
     public function taxReport(Request $request)
     {
+        $this->authorize('taxReport', Invoice::class);
         $filters = $request->all();
-
         if (! $filters) {
             return redirect(route('invoice.tax-report', $this->service->defaultTaxReportFilters()));
         }
@@ -164,6 +169,7 @@ class InvoiceController extends Controller
 
     public function taxReportExport(Request $request)
     {
+        $this->authorize('tax_report_export', Invoice::class);
         $filters = $request->all();
 
         return $this->service->taxReportExport($filters, $request);
@@ -186,6 +192,7 @@ class InvoiceController extends Controller
 
     public function yearlyInvoiceReport(Request $request)
     {
+        $this->authorize('yearlyInvoiceReport', Invoice::class);
         $filters = $request->all();
 
         return view('invoice::invoice-report', $this->service->yearlyInvoiceReport($filters, $request));
@@ -193,6 +200,7 @@ class InvoiceController extends Controller
 
     public function yearlyInvoiceReportExport(Request $request)
     {
+        $this->authorize('yearlyInvoiceReportExport', Invoice::class);
         $filters = $request->all();
 
         return $this->service->yearlyInvoiceReportExport($filters, $request);

@@ -41,6 +41,8 @@
                     <h3 class="font-weight-bold">{{ __('Details') }}</h3>
                     <form id="ledgerForm" action="{{ route('ledger-accounts.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="client_id" value="{{ optional($client)->id }}">
+                        <input type="hidden" name="project_id" value="{{ optional($project)->id }}">
                         <table class="table-bordered w-100p">
                             <thead class="table-dark">
                                 <th class="py-2 px-1">{{ __('Date') }}</th>
@@ -141,9 +143,6 @@
                 },
 
                 removeRow(index) {
-                    alert('Functionality yet to be developed.')
-                    return;
-                    
                     this.ledgerAccountData.splice(index, 1);
                 },
             },

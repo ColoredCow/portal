@@ -152,7 +152,7 @@
                                 $index++;
                                 $currencySymbol = config('constants.currency.' . $client->currency . '.symbol');
                                 if ($client->hasCustomInvoiceTemplate()) {
-                                    $amount = $currencySymbol . $client->getClientProjectsTotalLedgerAmount($quarter);
+                                    $amount = $currencySymbol . ($client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount($quarter));
                                 } else {
                                     $amount = $currencySymbol . $client->getTotalPayableAmountForTerm($monthToSubtract, $client->clientLevelBillingProjects);
                                 }

@@ -815,6 +815,19 @@ class InvoiceService implements InvoiceServiceContract
 
     public function storeLedgerAccountData(array $data)
     {
+        $project = Project::find($data['project_id'] ?? null);
+        $client = Client::find($data['client_id'] ?? null);
+
+        if (! $client) {
+            return;
+        }
+
+        if ($project) {
+            $ledgerAccountsIdToDelete = LedgerAccount::where('project_id', $project->id)->pluck('id')->toArray();
+        } else {
+            $ledgerAccountsIdToDelete = LedgerAccount::where('client_id', $client->id)->pluck('id')->toArray();
+        }
+
         foreach ($data['ledger_account_data'] as $ledgerAccountData) {
             if ($ledgerAccountData['id'] == null) {
                 LedgerAccount::create($ledgerAccountData);
@@ -823,6 +836,10 @@ class InvoiceService implements InvoiceServiceContract
 
             $ledgerAccount = LedgerAccount::find($ledgerAccountData['id']);
             $ledgerAccount->update($ledgerAccountData);
+            $index = array_search($ledgerAccount->id, $ledgerAccountsIdToDelete);
+            unset($ledgerAccountsIdToDelete[$index]);
         }
+
+        LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
 }

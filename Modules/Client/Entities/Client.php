@@ -355,6 +355,17 @@ class Client extends Model
         return $amount;
     }
 
+    public function getResourceBasedTotalAmount()
+    {
+        $amount = 0;
+
+        foreach ($this->clientLevelBillingProjects as $project) {
+            $amount += $project->getResourceBillableAmount();
+        }
+
+        return $amount;
+    }
+
     public function hasCustomInvoiceTemplate()
     {
         $template = config('invoice.templates.invoice.clients.' . $this->name);

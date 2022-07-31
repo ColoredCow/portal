@@ -31,7 +31,7 @@ class Project extends Model
     public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
-            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort', 'billing_engagement')->withTimestamps()->whereNull('project_team_members.ended_on');
+            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort', 'billing_engagement', 'started_on', 'ended_on')->withTimestamps()->whereNull('project_team_members.ended_on');
     }
 
     public function repositories()
@@ -187,11 +187,23 @@ class Project extends Model
 
     public function getResourceBillableAmount()
     {
-        $service_rate = $this->client->billingDetails->service_rates;
+        $service_rate = optional($this->billingDetail)->service_rates;
+        if (! $service_rate) {
+            $service_rate = $this->client->billingDetails->service_rates;
+        }
         $totalAmount = 0;
+        $numberOfMonths = 1;
+
+        switch ($this->client->billingDetails->billing_frequency) {
+            case 3:
+                $numberOfMonths = 3;
+                break;
+            default:
+                $numberOfMonths = 1;
+        }
 
         foreach ($this->getTeamMembersGroupedByEngagement() as $groupedResources) {
-            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate;
+            $totalAmount += ($groupedResources->billing_engagement / 100) * $groupedResources->resource_count * $service_rate * $numberOfMonths;
         }
 
         return round($totalAmount, 2);
@@ -265,5 +277,10 @@ class Project extends Model
         }
 
         return false;
+    }
+
+    public function billingDetail()
+    {
+        return $this->hasOne(ProjectBillingDetail::class);
     }
 }
