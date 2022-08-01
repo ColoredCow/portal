@@ -2,14 +2,14 @@
 @section('content')
     <div class="project-effort-tracking-container container py-10">
         <a href="{{ route('project.index') }}"
-            class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-flex align-items-center">
+            class="text-theme-body text-decoration-none mb-2 mb-xl-4 align-items-center">
             <span class="mr-1 d-inline-flex w-8 h-8 w-xl-12 h-xl-12">
                 {!! file_get_contents(public_path('icons/prev-icon.svg')) !!}
             </span>
             <span>All Projects</span>
         </a>
 
-        <div class="card">
+        <div class="card mt-4">
             <div class="card-header d-flex flex-row justify-content-between">
                 <h2>{{ $project->name }} - Effort Details for {{ $currentMonth }}</h4>
                     <div>
@@ -60,7 +60,7 @@
                             data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
                         @if ($project->last_updated_at)
                             <div class="fz-14 float-right mr-3 mt-1">
-                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . $project->last_updated_at }}
+                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . (Carbon\Carbon::parse($project->last_updated_at)->format('D g:i a, dS M Y'))}}
                             </div>
                         @endif
                     </h4>
@@ -105,29 +105,6 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Refresh Effort</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body py-5">
-                    <div class="text-danger">
-                        <p>
-                            Something went wrong while refreshing the efforts. <br>
-                            Please check if the effortsheet formatting is correct.
-                        </p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>

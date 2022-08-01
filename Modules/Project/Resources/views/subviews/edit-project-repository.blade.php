@@ -3,7 +3,7 @@
     </div>
 
     <div id="project_repository_form">
-        <form  action="{{ route('project.update', $project) }}" method="POST" id="update_project_repository_form">
+        <form  action="{{ route('project.update', $project) }}" method="POST" id="updateProjectRepositoryForm">
             @csrf
             <input type="hidden" value="project_repository" name="update_section"> 
             <div class="card-body">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_repository_form')">Save</button>
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('updateProjectRepositoryForm')">Save</button>
             </div>
         </form>
     </div>

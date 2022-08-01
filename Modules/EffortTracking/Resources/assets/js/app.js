@@ -16,7 +16,7 @@ $(function () {
 				}, 3000);
 			},
 			error: function(response) {
-				$("#modal-message").modal("show");
+				Vue.$toast.error("Something went wrong!\nPlease check if the effortsheet formatting is correct.");
 				button.prop("disabled", true);
 				button.toggleClass("d-none");
 				button.siblings(".fa-spinner").toggleClass("d-none");
