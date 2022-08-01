@@ -337,7 +337,7 @@
                                                     @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
                                                         {{ $currencySymbol . $project->getResourceBillableAmount() }}
                                                     @else
-                                                        {{ $currencySymbol . $project->getBillableHoursForMonth($monthsToSubtract) }}
+                                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract) }}
                                                     @endif     
                                                 @endif
                                             </strong></p>
