@@ -11,7 +11,7 @@
         </span>
     </td>
     <td >
-        @include('client::subviews.listing-client-type', ['client' => $client])
+        @include('client::subviews.listing-client-type', ['client'=> $client])
     </td>
     <td>
         @if ($client->keyAccountManager)
