@@ -131,7 +131,15 @@
                 },
             },
 
-            mounted() {},
+            created() {
+                console.log('this.projectTeamMembers', this.projectTeamMembers);
+                for(let index in this.projectTeamMembers) {
+                    let projectTeamMember = this.projectTeamMembers[index];
+                    projectTeamMember.pivot.weekly_expected_effort = projectTeamMember.pivot.daily_expected_effort * 5;
+                    projectTeamMember.pivot.monthly_expected_effort = projectTeamMember.pivot.daily_expected_effort * this.workingDaysInMonth;
+                }
+                console.log('this.projectTeamMembers updated', this.projectTeamMembers);
+            },
         });
     </script>
 @endsection
