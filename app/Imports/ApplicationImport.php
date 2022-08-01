@@ -29,7 +29,7 @@ class ApplicationImport implements ToCollection, WithHeadingRow
 
         foreach ($rows as $row) {
             $data = [];
-            $data['opportunity_id'] = $row['opportunity_id'];
+            $data['hr_job_id'] = $this->job->id;
             $data['job_title'] = $this->job->title;
             $data['first_name'] = $row['first_name'];
             $data['last_name'] = $row['last_name'];

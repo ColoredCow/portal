@@ -162,9 +162,9 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			getApplicationEvaluation: function (applicationRoundID) {
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
 					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
-				);
-				if (!this.showEvaluationFrame) {
-					axios
+					);
+					if (!this.showEvaluationFrame) {
+						axios
 						.get("/hr/evaluation/" + applicationRoundID)
 						.then(function (response) {
 							$("#page_hr_applicant_edit #application_evaluation_body").html(response.data);
@@ -172,8 +172,8 @@ if (document.getElementById("page_hr_applicant_edit")) {
 						.catch(function (error) {
 							alert("Error fetching application evaluation!");
 						});
-				}
-				this.toggleEvaluationFrame();
+					}
+					this.toggleEvaluationFrame();
 			},
 
 			onSelectNextRound: function (event) {
@@ -940,6 +940,7 @@ $(document).ready(function () {
 	$(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
 	$(document).on("click", ".show-evaluation-stage", function () {
 		$(".evaluation-stage").addClass("d-none");
+		console.log($(".evaluation-stage"))
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
 
@@ -947,7 +948,6 @@ $(document).ready(function () {
 			$(".evaluation-score input").each(function () {
 				if ($(this).is(":checked")) {
 					let evaluationParameterName = (this.name).replace(/_/g, "-");
-					console.log(evaluationParameterName);
 					if ((this.id).slice(-1) == 1) { // Thumbs-up
 						$(`.${evaluationParameterName}`).find("input:eq(0)").prop("checked", true);
 					} else { // Thumbs-down

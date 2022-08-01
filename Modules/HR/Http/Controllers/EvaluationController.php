@@ -146,9 +146,10 @@ class EvaluationController extends Controller
 
         $segmentList = [];
 
-        foreach (self::getSegments($applicationRound->hr_application_id) as $segment) {
+        foreach (self::getSegments($applicationRound->hr_application_id, $applicationRound->hr_round_id) as $segment) {
             $segmentList[] = self::getSegmentDetails($segment);
         }
+        
 
         return view('hr.application.evaluation-form')
             ->with([
@@ -179,10 +180,17 @@ class EvaluationController extends Controller
             ->with('status', 'Evaluation updated successfully!');
     }
 
-    private function getSegments($applicationId)
+    private function getSegments($applicationId, $roundId)
     {
-        return Segment::whereHas('round')
-            ->orWhereNull('round_id')
+        $query = null;
+        if ($roundId === 14) {
+            $query = Segment::whereHas('round')
+            ->where('round_id', $roundId);
+        } else {
+            $query = Segment::whereHas('round')
+            ->orWhereNull('round_id');
+        }
+        return $query
             ->with([
                 'round',
                 'applicationEvaluations' => function ($query) use ($applicationId) {

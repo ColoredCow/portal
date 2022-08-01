@@ -45,7 +45,7 @@ class ApplicationService implements ApplicationServiceContract
             'applications' => $applications,
             'status' => request()->get('status'),
         ];
-        $hrRounds = ['Resume Screening', 'Introductory Call', 'Basic Technical Round', 'Detailed Technical Round', 'Team Interaction Round', 'HR Round', 'Trial Program', 'Volunteer Screening'];
+        $hrRounds = ['Resume Screening', 'Telephonic Interview', 'Introductory Call', 'Basic Technical Round', 'Detailed Technical Round', 'Team Interaction Round', 'HR Round', 'Trial Program', 'Volunteer Screening'];
         $strings = array_pluck(config('hr.status'), 'label');
 
         foreach ($strings as $string) {
