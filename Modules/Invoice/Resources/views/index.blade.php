@@ -31,6 +31,7 @@
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Invoices</h4>
             <span>
+                <a href="{{ route('invoice.create-custom-invoice') }}" class="btn btn-info text-white">Custom Invoice</a>
                 <a href="{{ route('invoice.create') }}" class="btn btn-info text-white">Add Invoice</a>
             </span>
         </div>

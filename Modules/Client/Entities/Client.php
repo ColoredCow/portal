@@ -127,29 +127,29 @@ class Client extends Model
         return $this->type == 'indian' ? 'INR' : 'USD';
     }
 
-    public function getBillableAmountForTerm(int $monthsToSubtract, $projects)
+    public function getBillableAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
-        $amount = $projects->sum(function ($project) use ($monthsToSubtract) {
-            return round($project->getBillableHoursForMonth($monthsToSubtract) * $this->billingDetails->service_rates, 2);
+        $amount = $projects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
+            return round($project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
         });
 
         return $amount;
     }
 
-    public function getTaxAmountForTerm(int $monthsToSubtract, $projects)
+    public function getTaxAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
-        // Todo: Implement tax calculation correctly as per the GST rules
-        return round($this->getBillableAmountForTerm($monthsToSubtract, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
+        // Todo: Implement tax calculation correctly as per the IGST rules
+        return round($this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $monthsToSubtract, $projects = null)
+    public function getTotalPayableAmountForTerm(int $monthsToSubtract, $projects = null, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
         $projects = $projects ?? collect([]);
 
-        return $this->getBillableAmountForTerm($monthsToSubtract, $projects) + $this->getTaxAmountForTerm($monthsToSubtract, $projects) + optional($this->billingDetails)->bank_charges;
+        return $this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + optional($this->billingDetails)->bank_charges;
     }
 
     public function getAmountPaidForTerm(int $monthsToSubtract, $projects)
@@ -165,10 +165,10 @@ class Client extends Model
         });
     }
 
-    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract = 1)
+    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        return $this->clientLevelBillingProjects->sum(function ($project) use ($monthsToSubtract) {
-            return $project->getBillableHoursForMonth($monthsToSubtract);
+        return $this->clientLevelBillingProjects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
+            return $project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate);
         });
     }
 
