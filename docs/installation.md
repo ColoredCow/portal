@@ -144,8 +144,8 @@ Before you start following the guidelines, make sure to go through the [prerequi
             ```apacheconf
             <VirtualHost *:80>
                 ServerName portal.test
-                DocumentRoot "/path/to/your/project"
-                <Directory "/path/to/your/project">
+                DocumentRoot "your_project_path"
+                <Directory "your_project_path">
                     DirectoryIndex index.php
                     AllowOverride All
                     Order allow,deny
