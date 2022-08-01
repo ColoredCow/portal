@@ -88,7 +88,7 @@
 		<span
 			class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
 		@endif
-		{{-- @if (!$application->latestApplicationRound->scheduled_date)
+		@if (!$application->latestApplicationRound->scheduled_date)
 		<span class="badge badge-theme-teal text-white badge-pill mr-1 mb-1 fz-12">
 			<i class="fa fa-calendar" aria-hidden="true"></i>
 			<span>Awaiting confirmation</span>
@@ -100,7 +100,7 @@
 			<span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>
 			@endif
 		</span>
-		@endif --}}
+		@endif
 		@foreach ($application->tags as $tag)
 		<span class="badge badge-pill mr-1 mb-1 fz-12 c-pointer"
 			style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color  }};" data-toggle="tooltip"

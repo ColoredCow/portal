@@ -940,7 +940,6 @@ $(document).ready(function () {
 	$(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
 	$(document).on("click", ".show-evaluation-stage", function () {
 		$(".evaluation-stage").addClass("d-none");
-		console.log($(".evaluation-stage"))
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
 
@@ -948,6 +947,7 @@ $(document).ready(function () {
 			$(".evaluation-score input").each(function () {
 				if ($(this).is(":checked")) {
 					let evaluationParameterName = (this.name).replace(/_/g, "-");
+					console.log(evaluationParameterName);
 					if ((this.id).slice(-1) == 1) { // Thumbs-up
 						$(`.${evaluationParameterName}`).find("input:eq(0)").prop("checked", true);
 					} else { // Thumbs-down
