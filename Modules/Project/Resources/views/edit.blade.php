@@ -45,7 +45,7 @@
                 <div class="tab-pane fade mb-5" id="projectRepository" role="tabpanel">
                     @include('project::subviews.edit-project-repository')
                 </div>
-                
+
                 <div class="tab-pane fade mb-5" id="projectFinancialDetails" role="tabpanel">
                     @include('project::subviews.edit-project-financial-details')
                 </div>
@@ -78,7 +78,9 @@
                     return {
                         id: new Date().getTime(),
                         pivot: {
-
+                            daily_expected_effort: 0,
+                            weekly_expected_effort: 0,
+                            monthly_expected_effort: 0,
                         }
                     }
                 },
