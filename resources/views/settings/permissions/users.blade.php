@@ -23,7 +23,6 @@
 					<th width="20%">User Name</th>
 					<th width="35%">User Roles</th>
 					<th>Actions</th>
-
 				</tr>
 			</thead>
 			<tr v-for="(user,index) in users">

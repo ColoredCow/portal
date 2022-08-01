@@ -22,6 +22,7 @@ use App\Models\Setting;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
+use Modules\Invoice\Entities\LedgerAccount;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -646,7 +647,8 @@ class InvoiceService implements InvoiceServiceContract
         $invoiceNumber = str_replace('-', '', $data['invoiceNumber']);
         $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
         $pdf = App::make('snappy.pdf.wrapper');
-        $html = view('invoice::render.render', $data)->render();
+        $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
+        $html = view(('invoice::render.' . $template), $data)->render();
         $data['receivable_date'] = $dueOn;
         $data['project_id'] = null;
         $invoice = Invoice::create([
@@ -795,5 +797,49 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         return Client::find($clientId, 'id')->currency;
+    }
+
+    public function getLedgerAccountData(array $data)
+    {
+        $clients = Client::with('projects')->orderBy('name')->get();
+        $client = Client::find($data['client_id'] ?? null);
+        $project = Project::find($data['project_id'] ?? null);
+
+        return [
+            'clients' => $clients,
+            'client' => $client,
+            'project' => $project,
+            'ledgerAccountData' => $project ? $project->ledgerAccounts->toArray() : ($client ? $client->ledgerAccounts->toArray() : [])
+        ];
+    }
+
+    public function storeLedgerAccountData(array $data)
+    {
+        $project = Project::find($data['project_id'] ?? null);
+        $client = Client::find($data['client_id'] ?? null);
+
+        if (! $client) {
+            return;
+        }
+
+        if ($project) {
+            $ledgerAccountsIdToDelete = LedgerAccount::where('project_id', $project->id)->pluck('id')->toArray();
+        } else {
+            $ledgerAccountsIdToDelete = LedgerAccount::where('client_id', $client->id)->pluck('id')->toArray();
+        }
+
+        foreach ($data['ledger_account_data'] as $ledgerAccountData) {
+            if ($ledgerAccountData['id'] == null) {
+                LedgerAccount::create($ledgerAccountData);
+                continue;
+            }
+
+            $ledgerAccount = LedgerAccount::find($ledgerAccountData['id']);
+            $ledgerAccount->update($ledgerAccountData);
+            $index = array_search($ledgerAccount->id, $ledgerAccountsIdToDelete);
+            unset($ledgerAccountsIdToDelete[$index]);
+        }
+
+        LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
 }
