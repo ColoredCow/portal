@@ -73,7 +73,7 @@ abstract class ApplicationController extends Controller
         foreach (array_keys(request()->all()) as $filterKeys) {
             switch ($filterKeys) {
                 case 'end-year':
-                    $endYear = request()->get('end-year') ;
+                    $endYear = request()->get('end-year');
                     if ($endYear != null) {
                         $applications = $applications->whereHas('applicant', function ($query) use ($endYear) {
                             $query->where('graduation_year', '=', $endYear);
