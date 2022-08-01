@@ -45,52 +45,64 @@ class ProjectTeamMember extends Model
         return $query->whereNull('ended_on');
     }
 
-    public function getCurrentActualEffortAttribute()
+    public function getCurrentActualEffortAttribute($startDate, $endDate)
     {
-        return $this->projectTeamMemberEffort()->where('added_on', '>=', $this->project->client->month_start_date)->sum('actual_effort');
+        $startDate=$startDate??$this->project->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
+        return $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('actual_effort');
     }
 
-    public function getCurrentExpectedEffortAttribute()
+    public function getCurrentExpectedEffortAttribute($startDate, $endDate)
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
+        $startDate=$startDate??$this->project->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate, $currentDate));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
 
-    public function getExpectedEffortTillTodayAttribute()
+    public function getExpectedEffortTillTodayAttribute($startDate, $endDate)
     {
         $project = new Project;
-        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, today(config('constants.timezone.indian'))));
+        $startDate=$startDate??$this->project->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
+
+        $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate, today(config('constants.timezone.indian'))));
 
         return $this->daily_expected_effort * $daysTillToday;
     }
 
-    public function getVelocityAttribute()
+    public function getVelocityAttribute($startDate, $endDate)
     {
-        return $this->current_expected_effort ? round($this->current_actual_effort / $this->current_expected_effort, 2) : 0;
+        $startDate= $startDate??$this->project->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
+
+        return $this->getCurrentExpectedEffortAttribute($startDate, $endDate) ? round($this->getCurrentActualEffortAttribute($startDate, $endDate) / $this->getCurrentExpectedEffortAttribute($startDate, $endDate), 2) : 0;
     }
 
-    public function getFteAttribute()
+    public function getFteAttribute($startDate, $endDate)
     {
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
+        $startDate=$startDate??$this->project->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($this->project->client->month_start_date, $currentDate));
+        $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate, $currentDate));
         if ($daysTillToday == 0) {
             return 0;
         }
 
-        return round($this->current_actual_effort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
+        return round($this->getCurrentActualEffortAttribute($startDate, $endDate) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 }
