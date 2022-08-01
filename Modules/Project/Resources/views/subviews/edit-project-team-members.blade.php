@@ -62,11 +62,7 @@
                         </select>
                     </div>
                     <div class="col-1 daily-effort-div" >
-<<<<<<< HEAD
-                        <input type="number" :name="`project_team_member[${index}][daily_expected_effort]`" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
-=======
-                        <input type="number" v-model="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">
->>>>>>> d8cea5c394889d87c246d249b49f9fc3b4f90b62
+                        <input type="number" v-model="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
                     </div>
 
                     <div class="col-1 weekly-effort-div">
@@ -80,7 +76,7 @@
                         <input type="number" step="0.01" :name="`project_team_member[${index}][billing_engagement]`" v-model="projectTeamMember.pivot.billing_engagement" class="form-control">
                     </div>
                     <div class="col-1">
-                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{ $project->status=='active'? '' : 'disabled'}} >Remove</button>
+                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{$project->status=='active'? '' : 'disabled'}} >Remove</button>
                     </div>
                     <div class="d-flex mt-2 ml-9 text-light">
                         <div class="mr-2">
@@ -117,15 +113,9 @@
                         <tr>
                             <th class="font-weight-normal"><img src="{{ $inactiveTeamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">{{$inactiveTeamMember->user->name}}</th>
                             <th class="font-weight-light">{{ ucwords(str_replace('_', ' ', $inactiveTeamMember->designation)) }}</th>
-<<<<<<< HEAD
-                            <th class="font-weight-light">{{ ($inactiveTeamMember->created_at)->format('Y-m-d') }}</th>
-                            <th class="font-weight-light">{{ ($inactiveTeamMember->ended_on)->format('Y-m-d') }}</th>
-                        </tr>
-=======
                             <th class="font-weight-light">{{ $inactiveTeamMember->started_on->format('Y-m-d') }}</th>
                             <th class="font-weight-light">{{ $inactiveTeamMember->ended_on->format('Y-m-d') }}</th>
                         <tr>
->>>>>>> d8cea5c394889d87c246d249b49f9fc3b4f90b62
                         @endforeach
                     </table>
                 </div>
@@ -133,11 +123,7 @@
             </div>
 
             <div class="card-footer">
-<<<<<<< HEAD
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" {{ $project->status =='active'? '' : 'disabled' }} >Save</button>
-=======
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('updateProjectTeamMemberForm')">Save</button>
->>>>>>> d8cea5c394889d87c246d249b49f9fc3b4f90b62
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" {{$project->status=='active'? '' : 'disabled'}} >Save</button>
             </div>
         </form>
     </div>
