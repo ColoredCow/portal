@@ -23,7 +23,7 @@
             </div>
             <div class="form-group offset-md-1 col-md-5">
                 <label for="project_type" class="field-required">{{ __('Project Type') }}</label>
-                <select @change="updateShowfixedBudget($event)"  name="project_type" id="project_type" class="form-control" required>
+                <select v-model="projectType" name="project_type" id="project_type" class="form-control" required>
                     <option value="">Select project type</option>
                     @foreach (config('project.type') as $key => $project_type)
                         <option value="{{ $key }}" {{ old('project_type') == $key ? 'selected' : '' }}>{{ $project_type }}</option>
@@ -52,16 +52,16 @@
                     <label for="contract" class="custom-file-label">Choose file</label>
                 </div>
             </div>
-            <div class="form-group offset-md-1 col-md-2" v-if="" >
+            <div class="form-group offset-md-1 col-md-2" v-if="projectType === 'fixed-budget'">
                 <label for="start_date">Start Date</label>
-                <input type="date" class="form-control" name="start_date" id="startDate" 
+                <input type="date" class="form-control" name="start_date" id="startDate"
                     value="{{ old('start_date') }}">
             </div>
-            <div class="form-group offset-md-1 col-md-2" v-if="">
+            <div class="form-group offset-md-1 col-md-2" v-if="projectType === 'fixed-budget'">
                 <label for="end_date">End Date</label>
                 <input type="date" class="form-control" name="end_date" id="endDate"
-                     value="{{ old('start_date') }}">                    
-            </div>            
+                     value="{{ old('start_date') }}">
+            </div>
         </div>
         <br>
     </div>
@@ -70,37 +70,17 @@
     </div>
 </div>
 
-@section('scripts')
+@section('js_scripts')
     <script>
         new Vue({
-        el:'#create_project_details_form',
-
+        el: '#create_project_details_form',
             data() {
                 return {
-                    clients: @json($clients),
-                    project_type: '', 
-                    fixedBudget: '',
-                    startDate: '',
-                    endDate: '',    
-                    showfixedBudget: false,
+                    projectType: '',
                 }
             },
-
             methods: {
-                updateShowfixedBudget: function(event) {
-                    console.log('buhbuh');
-                    if (event.target.value == 'fixedBudget') {
-                        this.showfixedBudget = true;
-                    } else {
-                        this.fixedBudget = false;
-                    }
-                },
-
-
             },
-
-
         });
     </script>
 @endsection
-   
