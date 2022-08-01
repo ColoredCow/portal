@@ -161,7 +161,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
             127.0.0.1      portal.test
             ```
 
-        - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `/path/to/your/project` is written. For example, your project path may look like `C:\xampp\htdocs\portal\public`.
+        - Go to `C:\xampp\apache\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:\xampp\htdocs\portal\public`.
             ```apacheconf
             <VirtualHost *:80>
                 ServerName portal.test
