@@ -41,6 +41,8 @@ class ProjectRequest extends FormRequest
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'contract_file' => 'nullable|mimes:pdf',
                     'billing_level' => 'required|string|in:client,project',
+                    'start_date' => 'date',
+                    'end_date' => 'date',
                 ];
                 break;
 
@@ -55,6 +57,8 @@ class ProjectRequest extends FormRequest
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'contract_file' => 'nullable|mimes:pdf',
                     'billing_level' => 'required|string|in:client,project',
+                    'start_date' => 'date',
+                    'end_date' => 'date',
                 ];
                 break;
 

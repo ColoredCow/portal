@@ -1,3 +1,4 @@
+<div id="edit_project_details_form">
 <div class="card">
     <div class="card-header">
     </div>
@@ -42,6 +43,12 @@
                             @endforeach
                         </select>
                     </div>
+
+
+
+
+
+                    
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="effort_sheet_url">{{ __('Effort Sheet URL') }}</label>
                         <a id="view_effort_sheet_badge"
@@ -96,8 +103,17 @@
                             <label for="contract_file" class="custom-file-label overflow-hidden" >Upload New Contract</label>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="form-group offset-md-1 col-md-2">
+                        <label for="start_date">Start date</label>
+                        <input type="date" class="form-control" name="start_date" id="start_date"
+                            value="{{ $project->start_date->format('Y-m-d') }}">       
+                    </div>
+                    <div class="form-group offset-md-1 col-md-2">
+                        <label for="end_date">End date</label>
+                        <input type="date" class="form-control" name="end_date" id="end_date"
+                            value="{{ $project->end_date->format('Y-m-d') }}">       
+                    </div>
+                </div>                
             <div class="card-footer">
                 <div data-id="he" type="button" v-on:click="updateProjectForm('form_update_project_details')"
                     class="btn btn-primary save-btn">Save</div>
@@ -106,3 +122,23 @@
     </div>
 
 </div>
+@section('js_scripts')
+<script>
+    new Vue({
+    el:'#edit_project_details_form',
+
+        data() {
+        return {
+            start_date:"{{ $project->start_date->format('Y-m-d') }}",
+            end_date:"{{ $project->end_date->format('Y-m-d') }}",
+
+
+
+
+            }
+        },
+});
+
+</script>
+
+@endsection
