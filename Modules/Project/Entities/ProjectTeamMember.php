@@ -49,6 +49,7 @@ class ProjectTeamMember extends Model
     {
         $startDate = $startDate ?? $this->project->client->month_start_date;
         $endDate = $endDate ?? $this->client->month_end_date;
+
         return $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('actual_effort');
     }
 
