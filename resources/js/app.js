@@ -168,7 +168,7 @@ $(document).ready(() => {
 	$("#addChannel").on("submit",function(e){
 		e.preventDefault();
 		let form = $("#addChannel");
-		let button = $("#channel_button");
+		let button = $("#channelButton");
 		
 		$.ajax({
 			url: form.attr("action"),

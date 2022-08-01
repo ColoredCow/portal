@@ -27,7 +27,7 @@
                         </div>
                         <form action="{{route('channel.create')}}" method="POST" id="addChannel">
                             {{ csrf_field() }}
-                            <div class="channel-form-class modal-body">
+                            <div class="channel-form modal-body">
                                 <div class="mb-3">
                                     <label class="form-label">Channel Name</label>
                                     <input type="text" name="name" class="form-control" id="input_id" placeholder="Enter Channel Name">
@@ -36,8 +36,7 @@
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="saveButton btn btn-primary" id="channel_button" >Save changes</button>
-                        </div>
+                            <button type="submit" class="channel-form-save-btn btn btn-primary" id="channelButton" >Save changes</button>                        </div>
                         </form>
 
                     </div>
