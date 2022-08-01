@@ -2,11 +2,12 @@
 
 namespace App\Console;
 
-use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
+use Modules\Project\Console\SendEffortSummaryCommand;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Project\Console\SendDailyEffortSummaryForProjectsOnGoogleChat;
 
 class Kernel extends ConsoleKernel
 {
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         SyncEffortsheet::class,
         SendEffortSummaryCommand::class,
         ZeroEffortInProject::class,
+        SendDailyEffortSummaryForProjectsOnGoogleChat::class,
     ];
 
     /**
