@@ -495,14 +495,12 @@ $(document).ready(function () {
 				let errors = response.responseJSON.errors;
 				$("#errors").empty();
 				for (let error in errors) {
-					console.log(error);
 					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
 			  }
 			}
 		});
 	});
 	$("#segmentModalCloseBtn").click(function() {
-		console.log($("#segmentError"));
 		$("#segmentError").toggleClass("d-none");
 	});
 });
