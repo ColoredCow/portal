@@ -67,4 +67,10 @@ class SalaryController extends Controller
     public function edit($id)
     {
     }
+
+    public function salaryReport()
+    {
+        $employees = Employee::get();
+        return view('salary::salary.index')->with('employees', $employees);
+    }
 }
