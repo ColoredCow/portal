@@ -76,8 +76,7 @@ abstract class ApplicationController extends Controller
                     $endYear = request()->get('end-year') ;
                     if ($endYear != null) {
                         $applications = $applications->whereHas('applicant', function ($query) use ($endYear) {
-                            $query->where('graduation_year',$endYear);
-                            // ->orWhereNull('graduation_year');
+                            $query->where('graduation_year', '=', $endYear);
                         });
                     }
                     break;
