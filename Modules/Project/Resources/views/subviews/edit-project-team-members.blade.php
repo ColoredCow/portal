@@ -64,7 +64,7 @@
                         <input type="number" :value="projectTeamMember.pivot.daily_expected_effort*workingDaysInMonth" class="form-control monthly-effort">
                     </div>
                     <div class="col-1">
-                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{$project->status=='active'? '' : 'disabled'}} >Remove</button>
+                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{ $project->status=='active'? '' : 'disabled'}} >Remove</button>
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" {{$project->status=='active'? '' : 'disabled'}} >Save</button>
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" {{ $project->status =='active'? '' : 'disabled' }} >Save</button>
             </div>
         </form>
     </div>
