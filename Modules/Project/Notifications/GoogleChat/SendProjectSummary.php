@@ -27,9 +27,9 @@ class SendProjectSummary extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $data)
     {
-        //
+        $this->data = $data;
     }
 
     public function via($notifiable)
@@ -41,24 +41,26 @@ class SendProjectSummary extends Notification
 
     public function toGoogleChat($notifiable)
     {
+        $teamMemberTextParagraph = TextParagraph::create()
+            ->bold('Individual velocities');
+        foreach ($this->data['teamMembers'] as $teamMemberData) {
+            $teamMemberTextParagraph->break()
+                ->text( $teamMemberData['name'] . ' - ')
+                ->color($teamMemberData['velocity'], $teamMemberData['velocityColor']);
+        }
+
         return GoogleChatMessage::create()
             ->mentionAll('', " here's a summary of the daily effort")
             ->card(
                 Card::create()
                     ->header(
-                        'Daily Effort Summary - ProjectX',
+                        'Daily Effort Summary - ' . $this->data['projectName'],
                         today()->format('d M, Y')
                     )
                     ->section([
+                        Section::create($teamMemberTextParagraph),
                         Section::create(
-                            TextParagraph::create('Gaurav Gusain - ')
-                                ->color('20 hours', '#38c172')
-                                ->break()
-                                ->text('Vaibhav Rathore - ')
-                                ->color('18 hours', '#ff0000')
-                        ),
-                        Section::create(
-                            TextParagraph::create()->link('https://portal.coloredcow.com', 'View Project')
+                            TextParagraph::create()->link($this->data['projectUrl'], 'View Project')
                         )
                     ])
             );

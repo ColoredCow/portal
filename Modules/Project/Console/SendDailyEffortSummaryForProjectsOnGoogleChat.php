@@ -3,6 +3,7 @@
 namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;
+use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -42,7 +43,24 @@ class SendDailyEffortSummaryForProjectsOnGoogleChat extends Command
      */
     public function handle()
     {
-        Notification::route('googleChat', 'chat-webhook-url')->notify(new SendProjectSummary);
+        $projects = Project::with('getTeamMembers')->whereHas('teamMembers')->where('status', 'active')->get();
+        foreach ($projects as $project) {
+            $projectNotificationData = [
+                'projectName' => $project->name,
+                'projectUrl' => route('project.effort-tracking', $project),
+            ];
+            foreach ($project->getTeamMembers as $teamMember) {
+                $projectNotificationData['teamMembers'][] = [
+                    'name' => $teamMember->user->name,
+                    'velocity' => $teamMember->velocity,
+                    'velocityColor' => $teamMember->velocity >= 1 ? '#38c172' : '#ff0000',
+                ];
+            }
+            $projectGoogleChatWebhookUrl = '';
+            if (sizeof($projectNotificationData) && $projectGoogleChatWebhookUrl) {
+                Notification::route('googleChat', $projectGoogleChatWebhookUrl)->notify(new SendProjectSummary($projectNotificationData));
+            }
+        }
     }
 
     /**
