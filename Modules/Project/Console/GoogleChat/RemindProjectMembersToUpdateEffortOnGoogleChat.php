@@ -47,7 +47,6 @@ class RemindProjectMembersToUpdateEffortOnGoogleChat extends Command
             $projectGoogleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAA6LnA05c/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=HqINz-xmn-TBuGSB1M-vxllCYsU3MHeqg4exc-1d7og%3D';
             if ($projectGoogleChatWebhookUrl) {
                 Notification::route('googleChat', $projectGoogleChatWebhookUrl)->notify(new RemindToUpdateEffort($project));
-                dd('done');
             }
         }
     }
