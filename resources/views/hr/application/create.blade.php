@@ -9,16 +9,15 @@
             <br><br>
         </div>
     </div>
+
+    <div class="d-none alert alert-success " id="success" role="alert">
+        <strong>Saved Successfully!</strong>
+    </div>
     
     <div class="d-flex justify-content-between">
         <h1>Add new application</h1>
-        @if(session('status'))
-        <div class="alert alert-success">
-        {{ session('status') }}
-        </div>
-        @endif
         <div>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#channelName"><i class="fa fa-plus mr-1"></i>Create Channel</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#channelName" id="channelNameButton"><i class="fa fa-plus mr-1"></i>Create Channel</button>
             <div class="modal fade" id="channelName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -26,17 +25,18 @@
                             <h3 class="modal-title">Add Channel</h3>
                             <button type="button" class="close" data-dismiss="modal" arial-labvel="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
-                        <form action="{{route('channel.create')}}" method="POST">
+                        <form action="{{route('channel.create')}}" method="POST" id="addChannel">
                             {{ csrf_field() }}
-                            <div class="modal-body">
+                            <div class="channel-form modal-body">
                                 <div class="mb-3">
                                     <label class="form-label">Channel Name</label>
-                                    <input type="text" name="name" class="form-control">
+                                    <input type="text" name="name" class="form-control" id="input_id" placeholder="Enter Channel Name">
+                                    <div id="errorMessage" class="d-none my-2"><span class="text-danger">Channel name is required</span></div>
                                 </div>
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="channel-form-save-btn btn btn-primary" id="channelButton" >Save changes</button>
                         </div>
                         </form>
 
