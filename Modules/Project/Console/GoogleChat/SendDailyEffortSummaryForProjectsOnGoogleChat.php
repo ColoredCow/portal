@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Project\Console;
+namespace Modules\Project\Console\GoogleChat;
 
 use Illuminate\Console\Command;
 use Modules\Project\Entities\Project;
