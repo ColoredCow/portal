@@ -2,12 +2,10 @@
     <div class="card">
         <div class="card-header">
         </div>
-
         <div id="project_detail_form">
-            <form action="{{ route('project.update', $project) }}" method="POST" id="form_update_project_details" enctype="multipart/form-data">
+            <form action="{{ route('project.update', $project) }}" method="POST" id="updateProjectDetails" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" value="project_details" name="update_section">
-
                 <div class="card-body">
                     <div class="form-row">
                         <div class="form-group col-md-5">
@@ -114,7 +112,6 @@
                 </div>
             </form>
         </div>
-
     </div>
 </div>
 
