@@ -46,6 +46,7 @@ class InvoiceServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(InvoiceAuthServiceProvider::class);
     }
 
     /**

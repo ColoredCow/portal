@@ -230,11 +230,35 @@
             .transaction-details th {
                 padding-left: 10px; padding-bottom:10px;
             }
+            .w-100p {
+                width: 100%;
+            }
+            .w-70p {
+                width: 70%;
+            }
+            .w-40p {
+                width: 40%;
+            }
+            .w-60p {
+                width: 60%;
+            }
+            .w-67p {
+                width: 67%;
+            }
+            .w-135 {
+                width: 135px;
+            }
+            .w-94 {
+                width: 94px;
+            }
         </style>
     </head>
     <body>
         <header>
-            <div style="width:100%;">
+            @php
+                $currencySymbol = $client ? $client->country->currency_symbol : $project->client->country->currency_symbol;
+            @endphp
+            <div class="w-100p">
                 <h2 style="text-align: center; font-weight: bold;">INVOICE</h2>
                 <table>
                     <tbody>
@@ -251,18 +275,18 @@
                                 <p>GSTIN : {{ config('invoice.finance-details.gstin') }}</p>
                                 <p>SAC / HSN code : {{ config('invoice.finance-details.hsn-code') }}</p>
                                 <p>CIN No. {{ config('invoice.finance-details.cin-no') }}</p>
+                                <p><br><br><br></p>
                             </td>
                         </tr>
-                        <tr style="width:100%;">
-                            <td align="left">
-                                <br><br><br>
+                        <tr class="w-100p">
+                            <td align="left" class="w-70p">
                                 <p class="fw-bold">Bill To</p>
                                 <p>{{ optional($client->billing_contact)->name }}</p>
                                 <p>{{ $client->name }}</p>
                                 <p>{{ optional($client->billing_contact)->email }}</p>
                                 <p>{{ optional($client->addresses->first())->address }}</p>
                                 <p>{{ optional($client->addresses->first())->city . ', ' . optional($client->addresses->first())->state . ', ' . optional($client->addresses->first())->area_code }}</p>
-                                <p>{{ $client->country->initials == 'IN' ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
+                                <p>{{ $client->country->initials == 'IN' && optional($client->addresses->first())->gst_number ? __('GSTIN: ') . optional($client->addresses->first())->gst_number : '' }}</p>
                                 <p>{{ optional($client->billing_contact)->phone }}</p>
                             </td>
                             <td>
@@ -276,7 +300,7 @@
                                             <p>Due Date: </p>
                                         </td>
                                         <td align="right">
-                                            <p>{{ $monthName }}</p>
+                                            <p>{{ $termText }}</p>
                                             <p>{{ $invoiceNumber }}</p>
                                             <p>{{ date('F d, Y', strtotime($invoiceData['sent_on'])) }}</p>
                                             <p>{{ date('F d, Y', strtotime($invoiceData['due_on'])) }}</p>
@@ -302,7 +326,21 @@
                                             <p>Total Amount Due :</p>
                                         </td>
                                         <td align="right">
-                                            <p><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year, $projects) }}</strong></p>
+                                            <p><strong>
+                                                @if($billingLevel == 'client') 
+                                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                                        {{ '' }}
+                                                    @else
+                                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                                    @endif
+                                                @else 
+                                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                                        {{ $currencySymbol . $project->getResourceBillableAmount() }}
+                                                    @else
+                                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                                    @endif     
+                                                @endif
+                                            </strong></p>
                                         </td>
                                     </tr>
                                 </table>
@@ -310,46 +348,106 @@
                         </tr>
                     </tbody>
                 </table>
-                @include('invoice::render.international-hourly-billing-template')
+                @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                    @include('invoice::render.resource-based-billing-template')
+                @else 
+                    @include('invoice::render.international-hourly-billing-template')
+                @endif
                 <div><br>
-                    <table class="table" style="margin-left:33%; width:67%;">
+                    <table class="table w-67p" style="margin-left:33%;">
                         <tr class="border-bottom" >
-                            <td style="width: 135px;">Total</td>
-                            <td style="width: 94px;">{{ $client->getClientLevelProjectsBillableHoursForTerm($monthNumber, $year) }}</td>
-                            <td style="width: 135px;"></td>
-                            <td>{{ $client->country->currency_symbol . $client->getBillableAmountForTerm($monthNumber, $year, $projects) }}</td>
+                            <td class="w-135">Total</td>
+                            <td class="w-94">
+                                @if($billingLevel == 'client') 
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ '' }}
+                                    @else
+                                        {{ $client->getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                    @endif
+                                @else 
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ '' }}
+                                    @else
+                                        {{ $project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate)  }}
+                                    @endif     
+                                @endif
+                            </td>
+                            <td class="w-135"></td>
+                            <td>
+                                @if($billingLevel == 'client') 
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ '' }}
+                                    @else
+                                        {{ $client->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + optional($client->billingDetails)->bank_charges }}
+                                    @endif
+                                @else 
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ $project->getResourceBillableAmount() }}
+                                    @else
+                                        {{ $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) + optional($project->client->billingDetails)->bank_charges }}
+                                    @endif     
+                                @endif
+                            </td>
                         </tr>
                         <tr class="border-bottom">
                             <td>{{ $client->country->initials == 'IN' ? __('GST in INR') : __('IGST') }}</td>
                             <td></td>
                             <td>{{ $client->country->initials == 'IN' ? config('invoice.invoice-details.igst') : __('NILL') }}</td>
-                            <td>{{ $client->country->currency_symbol . $client->getTaxAmountForTerm($monthNumber, $year, $projects) }}</td>
+                            <td>{{ $currencySymbol . ($billingLevel == 'client' ? $client->getTaxAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) : $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate)) }}</td>
                         </tr>
                         <tr>
                             <td>Current Payable</td>
                             <td></td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . ($client->getBillableAmountForTerm($monthNumber, $year, $projects) + $client->getTaxAmountForTerm($monthNumber, $year, $projects)) }}</td>
+                            <td>
+                                @if($billingLevel == 'client') 
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ '' }}
+                                    @else
+                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                    @endif
+                                @else 
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ $currencySymbol . $project->getResourceBillableAmount() }}
+                                    @else
+                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                    @endif     
+                                @endif
+                            </td>
                         </tr>
                         <tr><td><br></td></tr>
                         <tr class="border-bottom">
                             <td>Amount Paid</td>
                             <td></td>
                             <td></td>
-                            <td>{{ $client->country->currency_symbol . $client->getAmountPaidForTerm($monthNumber, $year, $projects) }}</td>
+                            <td>{{ $currencySymbol . $client->getAmountPaidForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}</td>
                         </tr>
                         <tr class="border-bottom">
                             <td>
-                                <strong>Amount Due in {{ $client->country->initials . ' ' . $client->country->currency_symbol }}</strong>
+                                <strong>Amount Due in {{ $client->country->initials == 'IN' ? $currencySymbol : $client->country->initials . ' ' . $currencySymbol }}</strong>
                             </td>
                             <td></td>
                             <td></td>
-                            <td><strong>{{ $client->country->currency_symbol . $client->getTotalPayableAmountForTerm($monthNumber, $year, $projects) }}</strong></td>
+                            <td><strong>
+                                @if($billingLevel == 'client') 
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ '' }}
+                                    @else
+                                        {{ $currencySymbol . $client->getTotalPayableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) }}
+                                    @endif
+                                @else 
+                                    @if(optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug'))
+                                        {{ $currencySymbol . $project->getResourceBillableAmount() }}
+                                    @else
+                                        {{ $currencySymbol . $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate) }}
+                                    @endif     
+                                @endif
+                            </strong></td>
                         </tr>
                     </table>
                 </div>
                     <br>
-                    <table class="table-borderless transaction-details" style="width: 60%;">
+                    <table class="table-borderless transaction-details w-60p">
                         <thead>
                             <tr>
                                 <th class="fz-16" align="left">Transaction Details</th>
@@ -357,37 +455,37 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="width: 40%;">Transaction Method:</td>
+                                <td class="w-40p" >Transaction Method:</td>
                                 <td>{{ config('invoice.finance-details.transaction-method.value.bank-transfer.value') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Bank Name:</td>
+                                <td class="w-40p">Bank Name:</td>
                                 <td>{{ config('invoice.finance-details.bank-address') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Swift Code:</td>
+                                <td class="w-40p">Swift Code:</td>
                                 <td>{{ config('invoice.finance-details.swift-code') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Bank/IFCI Code:</td>
+                                <td class="w-40p">Bank/IFCI Code:</td>
                                 <td>{{ config('invoice.finance-details.ifci-code') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Account Number:</td>
+                                <td class="w-40p">Account Number:</td>
                                 <td>{{ config('invoice.finance-details.account-number') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">A/C Holder Name:</td>
+                                <td class="w-40p">A/C Holder Name:</td>
                                 <td>{{ config('invoice.finance-details.holder-name') }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 40%;">Phone:</td>
+                                <td class="w-40p">Phone:</td>
                                 <td>{{ config('invoice.finance-details.phone') }}</td>
                             </tr><br>
                             <tr><td><br></td></tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="{{ $client->effort_sheet_url }}">For more details of this invoice you can visit this sheet.</a>
+                                    <a href="{{ $billingLevel == 'client' ? $client->effort_sheet_url : $project->effort_sheet_url }}" target="_blank">For more details of this invoice you can visit this sheet.</a>
                                 </td>
                             </tr>
                             <tr>

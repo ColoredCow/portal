@@ -1,14 +1,7 @@
 @extends('project::layouts.master')
 @section('content')
 <div class="container" id="vueContainer">
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+    @includeWhen(session('success'), 'toast', ['message' => session('success')])
     <div class="d-none d-md-flex justify-content-between my-2">
         @include('client::menu_header')
         @can('clients.create')
@@ -22,7 +15,7 @@
                 <div class="d-flex align-items-center">
                     <input type="hidden" name="status" value="{{ request()->get('status', 'active') }}">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Client name" value={{request()->get('name')}}>
-                    <button class="btn btn-primary ml-2 text-white">Search</button> 
+                    <button class="btn btn-primary ml-2 text-white">Search</button>
                 </div>
             </form>
         </div>
@@ -47,7 +40,7 @@
             <tbody>
                 @forelse($clients?:[] as $client)
                     @include('client::subviews.listing-client-row', ['client' => $client, 'level' => 0])
-                
+
                     @foreach($client->linkedAsPartner as $partnerClient)
                         @include('client::subviews.listing-client-row', ['client' => $partnerClient, 'level' => 1])
                     @endforeach
@@ -67,6 +60,5 @@
         </table>
 
     </div>
-    
 </div>
 @endsection

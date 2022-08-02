@@ -4,6 +4,13 @@
     <br>
     <br>
     <div>
+        
+        <div class="d-none alert alert-success fade show" role="alert" id="segmentsuccess">
+            <strong>Success!!!</strong>Congratulations!!! New segment successfully created.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">Segments</h1>
             <div>
@@ -31,7 +38,9 @@
                 </td>
 
                 <td>
-                    <button v-on:click="editSegment({{ $segment }})" class="btn btn-default">Edit</button>
+                    <i v-on:click="editSegment({{ $segment }})" class="fa fa-edit fz-20 text-theme-green"></i>
+
+                    <i class="fa fa-trash fz-20 ml-4 text-theme-red"></i>
                 </td>
             </tr>
             @endforeach
