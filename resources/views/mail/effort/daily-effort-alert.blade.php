@@ -14,7 +14,7 @@
             <tbody>
                 <tr>
                     <td>{{now()}}</td>
-                    @foreach ($users['project'] as $project)
+                    @foreach ($users['projects'] as $project)
                       <td>{{ $project}}</td>
                     @endforeach
                 </tr>
