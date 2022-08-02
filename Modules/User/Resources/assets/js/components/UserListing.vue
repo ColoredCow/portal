@@ -119,6 +119,7 @@ export default {
 			let route = `/user/${user.id}/delete`;
 			let response = await axios.delete(route);
 			window.location.reload();
+			this.$toast.success("User removed successfully!");
 			this.$delete(this.allUsers, index);
 		},
 

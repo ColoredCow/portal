@@ -20,13 +20,15 @@ class UserDatabaseSeeder extends Seeder
         $this->call(UserPermissionsTableSeeder::class);
 
         if (! app()->environment('production')) {
-            $role = Role::where('name', 'super-admin')->first();
-            $users = User::factory()
-                ->count(3)
-                ->create();
+            $roles = Role::all();
+            foreach ($roles as $role) {
+                $users = User::factory()
+                    ->count(2)
+                    ->create();
 
-            foreach ($users as $user) {
-                $user->assignRole($role);
+                foreach ($users as $user) {
+                    $user->assignRole($role);
+                }
             }
         }
     }
