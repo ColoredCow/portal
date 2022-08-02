@@ -13,7 +13,7 @@ class ResourcesRequiredColumnForHrJobs extends Migration
      */
     public function up()
     {
-        Schema::create('hr_jobs', function (Blueprint $table) {
+        Schema::table('hr_jobs', function (Blueprint $table) {
             $table->integer('resources_required');
         });
     }
