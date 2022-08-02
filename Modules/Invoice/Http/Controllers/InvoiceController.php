@@ -2,7 +2,6 @@
 
 namespace Modules\Invoice\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
