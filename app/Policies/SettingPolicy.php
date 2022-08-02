@@ -11,16 +11,28 @@ class SettingPolicy
 
     public function view(User $user)
     {
-        return $user->hasPermissionTo('settings.view');
+        return $user->hasAnyPermission([
+            'hr_settings.view',
+            'nda_settings.view',
+            'finance_invoices_settings.view',
+        ]);
     }
 
     public function update(User $user)
     {
-        return $user->hasPermissionTo('settings.update');
+        return $user->hasAnyPermission([
+            'hr_settings.update',
+            'nda_settings.update',
+            'finance_invoices_settings.update',
+        ]);
     }
 
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('settings.view');
+        return $user->hasAnyPermission([
+            'hr_settings.view',
+            'nda_settings.view',
+            'finance_invoices_settings.view',
+        ]);
     }
 }

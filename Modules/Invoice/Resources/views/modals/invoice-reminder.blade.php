@@ -5,7 +5,7 @@
                 <div class="d-block">
                     <h4 class="modal-title">{{ __('Pending Invoice Mail') }}</h4>
                 </div>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="close"   data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -23,7 +23,10 @@
                             <input type="email" name="to" id="sendTo"
                                 class="form-control" required>
                         </div>
-                        <input type="hidden" name="to_name" id="sendToName" class="form-control" required>
+                        <div class="form-group col-md-12">
+                            <label class="leading-none" for="sendToName">{{ __('Receiver Name') }}</label>
+                            <input type="text" name="to_name" id="sendToName" class="form-control" required>
+                        </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="cc">
                                 {{ __('CC') }} 
