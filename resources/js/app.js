@@ -573,7 +573,6 @@ if (document.getElementById("show_and_save_book")) {
 				disableSaveButton: false
 			}
 		},
-		
 		methods: {
 			onFileSelected: function(e) {
 				let file = e.target.files[0];
@@ -636,7 +635,7 @@ if (document.getElementById("show_and_save_book")) {
 						alert("Error in saving records");
 						return false;
 					}
-					this.$toast.success("  Book added successfully ");
+					this.$toast.success("Book added successfully");
 					window.location.href = this.routes.index;
 				});
 			}
@@ -665,9 +664,8 @@ if (document.getElementById("books_listing")) {
 				? document.getElementById("search_input").dataset.value
 				: ""
 		},
-		
 		methods: {
-			updateCategoryMode: function(index) {		
+			updateCategoryMode: function(index) {
 				let categories = this.books[index]["categories"];
 				if (!categories) {
 					return false;
@@ -836,7 +834,7 @@ if (document.getElementById("books_category")) {
 					alert("Please enter category name");
 					return false;
 				}
-				this.$toast.success(" Category for books added successfully ");
+				this.$toast.success("Category for books added successfully");
 				let route = `${this.indexRoute}`;
 				let response = await axios.post(route, {
 					name: this.newCategoryName
