@@ -340,27 +340,30 @@ class ProjectService implements ProjectServiceContract
     public function getProjectDetailForDailyAlert()
     {
         $users = User::get();
-        $projectTeamMembers = ProjectTeamMember::all();
-        $project = Project::get();
         $dataForMail = [];
         foreach ($users as $user) {
-            $userProjects = ProjectTeamMember::where('team_member_id', $user->id)->get('project_id');
-            if (empty($userProjects)) {
+            if (empty($user->activeProjectTeamMembers)) {
                 continue;
             }
-            foreach ($projectTeamMembers as $projectTeamMember) {
-                if ($projectTeamMember->current_actual_effort < $projectTeamMember->daily_expected_effort) {
-                    $dataForMail[] = [
-                        'name' => $user->name,
-                        'email' =>$user->email,
-                        'project' => [
-                            'Project' => $projectTeamMember->project->name,
-                            'bookedHours'=> $projectTeamMember->current_actual_effort,
-                            'expectedHours' => $projectTeamMember->daily_expected_effort
-                        ],
+            $dataForMail[$user->name] = [
+                'email' =>$user->email,
+                'projects' => [],
+            ];
+
+            foreach ($user->activeProjectTeamMembers as $projectTeamMember) {
+                if ($projectTeamMember->current_actual_effort < $projectTeamMember->expectedEffort) {
+                    $projectData= [
+                        'Project' => $projectTeamMember->project->name,
+                        'bookedHours'=> $projectTeamMember->current_actual_effort,
+                        'expectedHours' => $projectTeamMember->expectedEffort
                     ];
+                    $dataForMail[$user->name]['projects'][] = $projectData;
                 }
             }
+            if (empty($dataForMail[$user->name]['projects'])) {
+                continue;
+            }
+            dd($dataForMail);
             $mailAlert = Collection::make($dataForMail);
 
             return $mailAlert;
