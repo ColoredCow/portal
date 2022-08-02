@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
+use Modules\Project\Entities\ProjectTeamMembersEffort;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -318,5 +320,35 @@ class ProjectService implements ProjectServiceContract
         $projectDetails = Collection::make($dataForMail);
 
         return $projectDetails;
+    }
+
+    public function getProjectDetailForDailyAlert()
+    {
+        $users = User::get();
+        $projectTeamMembers = ProjectTeamMember::all();
+        $project = Project::get();
+        $dataForMail = [];
+        foreach ($users as $user) {
+            $userProjects = ProjectTeamMember::where('team_member_id', $user->id)->get('project_id');
+            if (empty($userProjects)) {
+                continue;
+            }
+            foreach ($projectTeamMembers as $projectTeamMember) {
+                if($projectTeamMember->current_actual_effort < $projectTeamMember->daily_expected_effort){
+                    $dataForMail[] = [
+                        'name' => $user->name,
+                        'email' =>$user->email,
+                        'project' => [
+                                'Project' => $projectTeamMember->project->name,
+                                'bookedHours'=> $projectTeamMember->current_actual_effort,
+                                'expectedHours' => $projectTeamMember->daily_expected_effort
+                        ],
+                        
+                    ];
+                }
+            }
+            $mailAlert = Collection::make($dataForMail);
+            return $mailAlert;
+        }
     }
 }

@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use Modules\Project\Emails\DailyEffortsNotification;
+use Modules\Project\Services\ProjectService;
 
-class DailyEffortsAlertNotification extends Command
+class DailyEffortAlertNotificationMail extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'DailyEffortsAlertNotification';
+    protected $signature = 'users:Daily-effort-mail-alert';
 
     /**
      * The console command description.
@@ -37,6 +40,10 @@ class DailyEffortsAlertNotification extends Command
      */
     public function handle()
     {
-        return Command::SUCCESS;
+        $AlertService = new ProjectService();
+        $getProjectDetailForDailyAlert = $AlertService->getProjectDetailForDailyAlert();
+        foreach ($getProjectDetailForDailyAlert as $users) {
+            Mail::send(new DailyEffortsNotification($users));
+        }
     }
 }

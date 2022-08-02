@@ -577,9 +577,6 @@ class InvoiceService implements InvoiceServiceContract
             'subject' => $data['email_subject'] ?? null
         ];
         Mail::queue(new SendPendingInvoiceMail($invoice, $email));
-        $invoice->update([
-            'reminder_mail_count' => ($invoice->reminder_mail_count + 1)
-        ]);
     }
 
     public function sendPaymentReceivedMail(Invoice $invoice, $data)

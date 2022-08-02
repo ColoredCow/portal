@@ -7,7 +7,8 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
-use app\console\Commands\DailyEffortsAlertNotification;
+use Modules\Project\Console\DailyEffortAlertNotificationMail;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -20,7 +21,7 @@ class Kernel extends ConsoleKernel
         SyncEffortsheet::class,
         SendEffortSummaryCommand::class,
         ZeroEffortInProject::class,
-        DailyEffortsAlertNotification::class,
+        DailyEffortAlertNotificationMail::class,
     ];
 
     /**
@@ -40,6 +41,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
+        $schedule->command('users:Daily-effort-mail-alert')->daily()->at('09:00');
+
     }
 
     /**
