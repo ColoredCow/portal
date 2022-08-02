@@ -12,6 +12,8 @@ var clipboard = new ClipboardJS(".btn-clipboard");
 
 window.Vue = require("vue");
 import { Laue } from "laue";
+import { defaultsDeep } from "lodash";
+import Chart from 'chart.js/auto';
 
 Vue.use(Laue);
 
@@ -114,6 +116,9 @@ $(document).ready(() => {
 	if ($(".chart-data").length) {
 		datePickerChart();
 		barChart();
+	}
+	if ($("#myChart").length) {
+		bargraph();
 	}
 
 	$("#save-btn-action").on("click", function () {
@@ -952,7 +957,57 @@ $(document).ready(function () {
 	$(document).on("click", ".toggle-block-display", toggleBlockDisplay);
 	$(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 	$(document).on("click", ".rg_edit_btn", resourceGuidelineEditClicked);
-});
+
+
+});	
+function bargraph()
+{
+    var value = $("#myChart").data("target");
+	var cData = value;
+	console.log(cData.jobsTitle,cData.application)
+	 var ctx = $("#myChart");
+    var data = {
+        labels: cData.jobsTitle,
+        datasets: [
+            {
+                label: [],
+                data: cData.application,
+			     backgroundColor: [
+					'rgba(102, 51, 153)'
+				  ],
+				  borderColor: [
+					'rgba(102, 51, 153)'
+				  ],
+				  borderWidth: 2,
+				}]
+			  };
+
+var MeSeChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+	 indexAxis:'y',
+	 scales: {
+		x: {
+			min:0,
+			max:120,
+			ticks:{
+				stepSize:10
+			}
+		}
+		  },
+		  plugins: {
+			legend : {
+				labels:{
+					boxWidth: 0
+				}
+			}
+		  }
+		  
+		  
+		}
+	})
+}
 
 function resourceGuidelineEditClicked(event) {
 	let actionUrl = $(this).attr("action_url");

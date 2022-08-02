@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\Job;
 
 class ReportsController extends Controller
 {
@@ -87,6 +88,31 @@ class ReportsController extends Controller
         return view('hr.recruitment.reports')->with([
             'chartData' => $data['chartData'],
             'todayCount' => $todayCount,
+        ]);
+    }
+
+    public function bargraph()
+    {
+        $jobs = Job::all();
+        $jobsTitle = $jobs->pluck('title')->toArray();
+        $applicationCount = [];
+        $totalApplicationCount = 0;
+         foreach($jobs as $job)
+        {
+            $count = Application::where('hr_job_id', $job->id)->count();
+            $applicationCount[] = $count;
+            $totalApplicationCount += $count;
+        }
+        $chartData = [
+            'jobsTitle' => $jobsTitle,
+            'application' => $applicationCount,
+        ];
+        return view('hr.recruitment.BarGraph')->with([
+            'TotalCount' => $totalApplicationCount,
+            'jobs' => $jobs,
+            'application'=>$applicationCount,
+            'chartData' => json_encode($chartData,true)
+            
         ]);
     }
 }
