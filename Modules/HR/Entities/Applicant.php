@@ -38,7 +38,7 @@ class Applicant extends Model
         ]);
 
         $job = Job::where('opportunity_id', $attr['opportunity_id'])->first();
-        $hr_channel_id = ($attr['hr_channel_id']) ?? HrChannel::select("id")->where('name', "Website")->first()->id;
+        $hr_channel_id = ($attr['hr_channel_id']) ?? HrChannel::select('id')->where('name', 'Website')->first()->id;
         $application = Application::_create([
             'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,
