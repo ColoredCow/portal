@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Database\Factories\HrApplicantsFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Modules\HR\Entities\HrChannel;
 
 class Applicant extends Model
 {
@@ -37,12 +38,14 @@ class Applicant extends Model
         ]);
 
         $job = Job::where('opportunity_id', $attr['opportunity_id'])->first();
+        $hr_channel_id = ($attr['hr_channel_id']) ?? HrChannel::select("id")->where('name', "Website")->first()->id;
         $application = Application::_create([
             'hr_job_id' => $job->id,
             'hr_applicant_id' => $applicant->id,
             'resume' => $attr['resume'] ?? '',
             'resume_file' => $attr['resume_file'] ?? '',
             'status' => $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label'),
+            'hr_channel_id' => $hr_channel_id,
         ]);
 
         if (isset($attr['form_data'])) {
