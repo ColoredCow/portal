@@ -70,6 +70,7 @@ return [
         'phone' => env('COLOREDCOW_PHONE', ''),
         'pan' => env('PAN_NUMBER', ''),
         'gstin' => env('GSTIN', ''),
+        'cin-no' => env('CIN_NO', ''),
         'hsn-code' => env('HSN_CODE', ''),
         'correspondent-bank' => env('CORRESPONDENT_BANK', ''),
         'correspondent-bank-swift-code' => env('CORRESPONDENT_BANK_SWIFT_CODE', ''),
