@@ -123,7 +123,7 @@
         el: '#edit_project_details_form',
             data() {
                 return {
-                    projectType: '',
+                    projectType: "{{ $project->type }}",
                 }
             },
         });
