@@ -42,13 +42,7 @@
                                 @endif
                             @endforeach
                         </select>
-                    </div>
-
-
-
-
-
-                    
+                    </div>                  
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="effort_sheet_url">{{ __('Effort Sheet URL') }}</label>
                         <a id="view_effort_sheet_badge"
@@ -63,7 +57,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="name" class="field-required">Project Type</label>
-                        <select name="project_type" id="project_type" class="form-control" required="required">
+                        <select v-model=""  name="project_type" id="project_type" class="form-control" required="required">`
                             @foreach (config('project.type') as $key => $project_type)
                                 @php
                                     $selected = ($project->type == $key || old('project_type') == $key) ? 'selected' : '';
@@ -103,12 +97,12 @@
                             <label for="contract_file" class="custom-file-label overflow-hidden" >Upload New Contract</label>
                         </div>
                     </div>
-                    <div class="form-group offset-md-1 col-md-2">
+                    <div class="form-group offset-md-1 col-md-2" v-if="fixed-budget">
                         <label for="start_date">Start date</label>
                         <input type="date" class="form-control" name="start_date" id="start_date"
                             value="{{ $project->start_date->format('Y-m-d') }}">       
                     </div>
-                    <div class="form-group offset-md-1 col-md-2">
+                    <div class="form-group offset-md-1 col-md-2" v-if="fixed-budget">
                         <label for="end_date">End date</label>
                         <input type="date" class="form-control" name="end_date" id="end_date"
                             value="{{ $project->end_date->format('Y-m-d') }}">       
@@ -122,23 +116,16 @@
     </div>
 
 </div>
-@section('js_scripts')
-<script>
-    new Vue({
-    el:'#edit_project_details_form',
 
-        data() {
-        return {
-            start_date:"{{ $project->start_date->format('Y-m-d') }}",
-            end_date:"{{ $project->end_date->format('Y-m-d') }}",
-
-
-
-
-            }
-        },
-});
-
-</script>
-
+@section('vue_scripts')
+    <script>
+        new Vue({
+        el: '#edit_project_details_form',
+            data() {
+                return {
+                    projectType: '',
+                }
+            },
+        });
+    </script>
 @endsection
