@@ -45,7 +45,7 @@
                 <div class="tab-pane fade mb-5" id="projectRepository" role="tabpanel">
                     @include('project::subviews.edit-project-repository')
                 </div>
-                
+
                 <div class="tab-pane fade mb-5" id="projectFinancialDetails" role="tabpanel">
                     @include('project::subviews.edit-project-financial-details')
                 </div>
@@ -59,10 +59,10 @@
     <script>
         new Vue({
             el: '#view_edit_project',
-
             data() {
                 return {
                     project: @json($project),
+                    projectType: "{{ $project->type }}",
                     projectTeamMembers: @json($projectTeamMembers),
                     projectRepositories: @json($projectRepositories),
                     workingDaysInMonth: @json($workingDaysInMonth),
@@ -72,8 +72,6 @@
             },
 
             methods: {
-                showAlert() {},
-
                 defaultProjectTeamMember() {
                     return {
                         id: new Date().getTime(),
@@ -141,7 +139,7 @@
                     newDate = $event.target.value;
                     this.projectTeamMembers[index]['pivot']['started_on'] = newDate;
                 },
-                
+
                 updateEndDateForTeamMember($event, index) {
                     newDate = $event.target.value;
                     this.projectTeamMembers[index]['pivot']['ended_on'] = newDate;
