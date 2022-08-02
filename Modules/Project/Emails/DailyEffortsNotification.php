@@ -30,7 +30,7 @@ class DailyEffortsNotification extends Mailable
     public function build()
     {
         return $this
-        ->to($this->users["email"])
+        ->to($this->users['email'])
         ->subject('ColoredCow Portal - you are putting less efforts than actual in project!')
         ->view('mail.effort.daily-effort-alert')
         ->with(['users' => $this->users]);

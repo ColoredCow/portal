@@ -354,15 +354,15 @@ class ProjectService implements ProjectServiceContract
                         'name' => $user->name,
                         'email' =>$user->email,
                         'project' => [
-                                'Project' => $projectTeamMember->project->name,
-                                'bookedHours'=> $projectTeamMember->current_actual_effort,
-                                'expectedHours' => $projectTeamMember->daily_expected_effort
+                            'Project' => $projectTeamMember->project->name,
+                            'bookedHours'=> $projectTeamMember->current_actual_effort,
+                            'expectedHours' => $projectTeamMember->daily_expected_effort
                         ],
-                        
                     ];
                 }
             }
             $mailAlert = Collection::make($dataForMail);
+
             return $mailAlert;
         }
     }

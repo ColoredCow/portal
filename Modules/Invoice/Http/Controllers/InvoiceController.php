@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Modules\Invoice\Entities\Invoice;
-use Modules\Invoice\Http\Controllers\AuthorizesRequests;
 
 class InvoiceController extends Controller
 {
