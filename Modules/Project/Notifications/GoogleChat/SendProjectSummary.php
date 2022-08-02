@@ -45,7 +45,7 @@ class SendProjectSummary extends Notification
             ->bold('Individual velocities');
         foreach ($this->data['teamMembers'] as $teamMemberData) {
             $teamMemberTextParagraph->break()
-                ->text( $teamMemberData['name'] . ' - ')
+                ->text($teamMemberData['name'] . ' - ')
                 ->color($teamMemberData['velocity'], $teamMemberData['velocityColor']);
         }
 
