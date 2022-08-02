@@ -13,10 +13,13 @@ use app\Mail\DailyEffortNotification;
 
 class InvoiceController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $service;
 
     public function __construct(InvoiceServiceContract $service)
     {
+        $this->authorizeResource(Invoice::class);
         $this->service = $service;
     }
 
@@ -52,8 +55,8 @@ class InvoiceController extends Controller
      */
     public function invoiceDetails(Request $request)
     {
+        $this->authorize('invoiceDetails', Invoice::class);
         $filters = $request->all();
-
         if (! $filters) {
             return redirect(route('invoice.details', $this->service->defaultGstReportFilters()));
         }
@@ -61,8 +64,9 @@ class InvoiceController extends Controller
         return view('invoice::monthly-gst-report', $this->service->invoiceDetails($filters));
     }
 
-    public function monthlyGSTTaxReportExport(Request $request)
+    public function monthlyGstTaxReportExport(Request $request)
     {
+        $this->authorize('monthlyGstTaxReportExport', Invoice::class);
         $filters = $request->all();
 
         return $this->service->monthlyGSTTaxReportExport($filters, $request);
@@ -86,7 +90,9 @@ class InvoiceController extends Controller
             'project_id' => $request->project_id,
             'term' => today(config('constants.timezone.indian'))->subMonth()->format('Y-m'),
             'sent_on' => today(config('constants.timezone.indian')),
-            'due_on' => today(config('constants.timezone.indian'))->addDays(6)
+            'due_on' => today(config('constants.timezone.indian'))->addDays(6),
+            'period_start_date' => $request->period_start_date,
+            'period_end_date' => $request->period_end_date
         ]);
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
@@ -98,7 +104,9 @@ class InvoiceController extends Controller
     {
         $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
         $pdf = App::make('snappy.pdf.wrapper');
-        $html = view('invoice::render.render', $data);
+
+        $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
+        $html = view(('invoice::render.' . $template), $data);
         $pdf->loadHTML($html);
 
         return $pdf;
@@ -154,8 +162,8 @@ class InvoiceController extends Controller
 
     public function taxReport(Request $request)
     {
+        $this->authorize('taxReport', Invoice::class);
         $filters = $request->all();
-
         if (! $filters) {
             return redirect(route('invoice.tax-report', $this->service->defaultTaxReportFilters()));
         }
@@ -165,6 +173,7 @@ class InvoiceController extends Controller
 
     public function taxReportExport(Request $request)
     {
+        $this->authorize('tax_report_export', Invoice::class);
         $filters = $request->all();
 
         return $this->service->taxReportExport($filters, $request);
@@ -187,6 +196,7 @@ class InvoiceController extends Controller
 
     public function yearlyInvoiceReport(Request $request)
     {
+        $this->authorize('yearlyInvoiceReport', Invoice::class);
         $filters = $request->all();
 
         return view('invoice::invoice-report', $this->service->yearlyInvoiceReport($filters, $request));
@@ -194,8 +204,28 @@ class InvoiceController extends Controller
 
     public function yearlyInvoiceReportExport(Request $request)
     {
+        $this->authorize('yearlyInvoiceReportExport', Invoice::class);
         $filters = $request->all();
 
         return $this->service->yearlyInvoiceReportExport($filters, $request);
+    }
+
+    public function ledgerAccountsIndex(Request $request)
+    {
+        $data = $this->service->getLedgerAccountData($request->all());
+
+        return view('invoice::ledger-accounts.index')->with($data);
+    }
+
+    public function storeLedgerAccountData(Request $request)
+    {
+        $this->service->storeLedgerAccountData($request->all());
+
+        return redirect()->back()->with('status', 'Data saved successfully.');
+    }
+
+    public function createCustomInvoice()
+    {
+        return view('invoice::create-custom-invoice', $this->service->create());
     }
 }

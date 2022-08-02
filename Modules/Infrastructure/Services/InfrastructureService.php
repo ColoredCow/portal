@@ -13,7 +13,8 @@ class InfrastructureService implements InfrastructureServiceContract
     public function __construct()
     {
         $credentials = new Credentials(config('infrastructure.services.aws.key'), config('infrastructure.services.aws.secret'));
-        $this->sdk = new Sdk(['version' => 'latest', 'region' => 'ap-south-1', 'credentials' => $credentials]);
+        $this->region = 'ap-south-1';
+        $this->sdk = new Sdk(['version' => 'latest', 'region' => $this->region, 'credentials' => $credentials]);
     }
 
     public function getStorageBuckets()
@@ -22,6 +23,13 @@ class InfrastructureService implements InfrastructureServiceContract
         $completeSynchronously = $s3Client->listBucketsAsync()->wait();
         $s3Data = $completeSynchronously->toArray();
         $s3buckets = $s3Data['Buckets'];
+        $s3buckets = array_map(function ($bucket) {
+            return [
+                'name' => $bucket['Name'],
+                'created_at' => Carbon::parse($bucket['CreationDate'])->setTimezone(config('app.timezone'))->format('d M Y, h:i a'),
+                'console_url' => config('infrastructure.console-urls.s3') . $bucket['Name'],
+            ];
+        }, $s3buckets);
 
         return $s3buckets;
     }
@@ -30,6 +38,17 @@ class InfrastructureService implements InfrastructureServiceContract
     {
         $ec2Client = $this->sdk->createEc2();
         $instances = $ec2Client->DescribeInstances()->toArray()['Reservations'];
+        $instances = array_map(function ($instance) {
+            $instanceDetails = $instance['Instances'][0];
+
+            return [
+                'name' => $instanceDetails['Tags'][0]['Value'],
+                'state' => $instanceDetails['State']['Name'],
+                'type' => $instanceDetails['InstanceType'],
+                'launch_time' => Carbon::parse($instanceDetails['LaunchTime'])->setTimezone(config('app.timezone'))->format('d M Y, h:i a'),
+                'console_url' => config('infrastructure.console-urls.ec2') . '?region=' . $this->region . '#Instances:instanceId=' . $instanceDetails['InstanceId'],
+            ];
+        }, $instances);
 
         return $instances;
     }

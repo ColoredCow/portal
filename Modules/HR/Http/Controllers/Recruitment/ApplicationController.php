@@ -60,7 +60,7 @@ abstract class ApplicationController extends Controller
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
             'university' => request()->get('hr_university_id'),
-            'sortby' => request()->get('sort_by'),
+            // 'sortby' => request()->get('sort_by'), Commenting, as we need to brainstorm on this feature a bit
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
@@ -96,16 +96,8 @@ abstract class ApplicationController extends Controller
         }
 
         $applications = $applications->whereHas('latestApplicationRound')
-            ->applyFilter($filters);
-
-        if ($filters['sortby'] == 'date') {
-            $applications = $applications->orderBy('created_at', 'DESC');
-        } else {
-            $applications = $applications->join('hr_applicants', 'hr_applications.hr_applicant_id', '=', 'hr_applicants.id')
-            ->orderBy('hr_applicants.name', 'ASC');
-        }
-
-        $applications = $applications->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
+            ->applyFilter($filters)
+            ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
             ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
             ->orderByRaw('hr_application_round.scheduled_date ASC')
             ->select('hr_applications.*')

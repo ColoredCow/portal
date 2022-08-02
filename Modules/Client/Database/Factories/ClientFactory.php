@@ -2,8 +2,9 @@
 
 namespace Modules\Client\Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 use Modules\Client\Entities\Client;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClientFactory extends Factory
 {
@@ -22,8 +23,8 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'status' => 'inactive',
+            'name' => $this->faker->company,
+            'status' => Arr::random(['active', 'inactive']),
             'key_account_manager_id' => $this->faker->unique($reset = true)->randomDigitNotNull,
             'created_at' => now(),
             'updated_at' => now(),

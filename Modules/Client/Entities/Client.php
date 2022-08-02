@@ -12,6 +12,7 @@ use Modules\Client\Database\Factories\ClientFactory;
 use Modules\Client\Entities\Traits\HasHierarchy;
 use Modules\Client\Entities\Scopes\ClientGlobalScope;
 use Modules\Invoice\Entities\Invoice;
+use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 
 class Client extends Model
@@ -126,29 +127,29 @@ class Client extends Model
         return $this->type == 'indian' ? 'INR' : 'USD';
     }
 
-    public function getBillableAmountForTerm(int $monthsToSubtract, $projects)
+    public function getBillableAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
-        $amount = $projects->sum(function ($project) use ($monthsToSubtract) {
-            return round($project->getBillableHoursForMonth($monthsToSubtract) * $this->billingDetails->service_rates, 2);
+        $amount = $projects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
+            return round($project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) * $this->billingDetails->service_rates, 2);
         });
 
         return $amount;
     }
 
-    public function getTaxAmountForTerm(int $monthsToSubtract, $projects)
+    public function getTaxAmountForTerm(int $monthsToSubtract, $projects, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
-        // Todo: Implement tax calculation correctly as per the GST rules
-        return round($this->getBillableAmountForTerm($monthsToSubtract, $projects) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
+        // Todo: Implement tax calculation correctly as per the IGST rules
+        return round($this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) * ($this->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $monthsToSubtract, $projects = null)
+    public function getTotalPayableAmountForTerm(int $monthsToSubtract, $projects = null, $periodStartDate = null, $periodEndDate = null)
     {
         $monthsToSubtract = $monthsToSubtract ?? 1;
         $projects = $projects ?? collect([]);
 
-        return $this->getBillableAmountForTerm($monthsToSubtract, $projects) + $this->getTaxAmountForTerm($monthsToSubtract, $projects) + optional($this->billingDetails)->bank_charges;
+        return $this->getBillableAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($monthsToSubtract, $projects, $periodStartDate, $periodEndDate) + optional($this->billingDetails)->bank_charges;
     }
 
     public function getAmountPaidForTerm(int $monthsToSubtract, $projects)
@@ -164,10 +165,10 @@ class Client extends Model
         });
     }
 
-    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract = 1)
+    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        return $this->clientLevelBillingProjects->sum(function ($project) use ($monthsToSubtract) {
-            return $project->getBillableHoursForMonth($monthsToSubtract);
+        return $this->clientLevelBillingProjects->sum(function ($project) use ($monthsToSubtract, $periodStartDate, $periodEndDate) {
+            return $project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate);
         });
     }
 
@@ -326,5 +327,53 @@ class Client extends Model
         }
 
         return substr_replace($bccEmails, '', -1);
+    }
+
+    public function ledgerAccounts()
+    {
+        return $this->hasMany(LedgerAccount::class);
+    }
+
+    public function ledgerAccountsOnlyCredit()
+    {
+        return $this->hasMany(LedgerAccount::class)->whereNotNull('credit');
+    }
+
+    public function ledgerAccountsOnlyDebit()
+    {
+        return $this->hasMany(LedgerAccount::class)->whereNotNull('debit');
+    }
+
+    public function getClientProjectsTotalLedgerAmount($quarter = null)
+    {
+        $amount = 0;
+
+        foreach ($this->clientLevelBillingProjects as $project) {
+            $amount += $project->getTotalLedgerAmount($quarter);
+        }
+
+        return $amount;
+    }
+
+    public function getResourceBasedTotalAmount()
+    {
+        $amount = 0;
+
+        foreach ($this->clientLevelBillingProjects as $project) {
+            $amount += $project->getResourceBillableAmount();
+        }
+
+        return $amount;
+    }
+
+    public function hasCustomInvoiceTemplate()
+    {
+        $template = config('invoice.templates.invoice.clients.' . $this->name);
+
+        if ($template) {
+            return true;
+        }
+
+        return false;
     }
 }
