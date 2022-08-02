@@ -43,20 +43,20 @@ class SendDailyEffortSummaryForProjectsOnGoogleChat extends Command
      */
     public function handle()
     {
-        $projects = Project::with('getTeamMembers')->whereHas('teamMembers')->where('status', 'active')->get();
+        $projects = Project::with(['getTeamMembers', 'getTeamMembers.user'])->whereHas('getTeamMembers')->where('status', 'active')->get();
         foreach ($projects as $project) {
             $projectNotificationData = [
                 'projectName' => $project->name,
                 'projectUrl' => route('project.effort-tracking', $project),
             ];
-            foreach ($project->getTeamMembers as $teamMember) {
+            foreach ($project->getTeamMembers->sortBy('user.name') as $teamMember) {
                 $projectNotificationData['teamMembers'][] = [
                     'name' => $teamMember->user->name,
                     'velocity' => $teamMember->velocity,
                     'velocityColor' => $teamMember->velocity >= 1 ? '#38c172' : '#ff0000',
                 ];
             }
-            $projectGoogleChatWebhookUrl = '';
+            $projectGoogleChatWebhookUrl = $project->google_chat_webhook_url;
             if (sizeof($projectNotificationData) && $projectGoogleChatWebhookUrl) {
                 Notification::route('googleChat', $projectGoogleChatWebhookUrl)->notify(new SendProjectSummary($projectNotificationData));
             }

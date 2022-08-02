@@ -44,9 +44,8 @@ class RemindProjectMembersToUpdateEffortOnGoogleChat extends Command
     {
         $projects = Project::with('getTeamMembers')->whereHas('teamMembers')->where('status', 'active')->get();
         foreach ($projects as $project) {
-            $projectGoogleChatWebhookUrl = '';
-            if ($projectGoogleChatWebhookUrl) {
-                Notification::route('googleChat', $projectGoogleChatWebhookUrl)->notify(new RemindToUpdateEffort($project));
+            if ($project->google_chat_webhook_url) {
+                Notification::route('googleChat', $project->google_chat_webhook_url)->notify(new RemindToUpdateEffort($project));
             }
         }
     }
