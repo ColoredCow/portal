@@ -261,9 +261,9 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			getApplicationEvaluation: function(applicationRoundID) {
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
 					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
-					);
-					if (!this.showEvaluationFrame) {
-						axios
+				);
+				if (!this.showEvaluationFrame) {
+					axios
 						.get("/hr/evaluation/" + applicationRoundID)
 						.then(function(response) {
 
@@ -274,8 +274,8 @@ if (document.getElementById("page_hr_applicant_edit")) {
 						.catch(function(error) {
 							alert("Error fetching application evaluation!");
 						});
-					}
-					this.toggleEvaluationFrame();
+				}
+				this.toggleEvaluationFrame();
 			},
 
 			onSelectNextRound: function(event) {
