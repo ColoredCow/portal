@@ -682,6 +682,7 @@ class InvoiceService implements InvoiceServiceContract
         $data['receivable_date'] = $dueOn;
         $data['project_id'] = null;
         $tax = 0;
+
         if ($project) {
             if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
