@@ -165,6 +165,25 @@ $(document).ready(() => {
 			.addClass("selected")
 			.html(fileName);
 	});
+	$("#addChannel").on("submit",function(e){
+		e.preventDefault();
+		let form = $("#addChannel");
+		let button = $("#channelButton");
+		
+		$.ajax({
+			url: form.attr("action"),
+			type: form.attr("method"),
+			data: form.serialize(),
+			success: function(response) {
+				$("#channelName").modal("hide");
+				$("#success").toggleClass("d-none");
+				$("#success").fadeToggle(5000);
+			},
+			error: function(response) {
+				$("#errorMessage").toggleClass("d-none");
+			},
+		});		
+	});
 
 	if ($(".chart-data").length) {
 		datePickerChart();
@@ -219,9 +238,11 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			showResumeFrame: false,
 			showEvaluationFrame: false,
 			applicationJobRounds: document.getElementById("action_type")
+
 				? JSON.parse(
 					document.getElementById("action_type").dataset.applicationJobRounds
 				  )
+
 				: {},
 			selectedNextRound: "",
 			nextRoundName: "",
@@ -245,6 +266,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					axios
 						.get("/hr/evaluation/" + applicationRoundID)
 						.then(function(response) {
+
 							$("#page_hr_applicant_edit #application_evaluation_body").html(
 								response.data
 							);
