@@ -108,7 +108,7 @@
                         <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
                         <input type="url" class="form-control" name="google_chat_webhook_url" id="google_chat_webhook_url"
                             placeholder="Enter Google Chat Webhook URL"
-                            value="{{ old('google_chat_webhook_url') ?: $project->google_chat_webhook_url }}">
+                            value="{{ old('google_chat_webhook_url', $project->google_chat_webhook_url) }}">
                     </div>
                 </div>
             </div>
