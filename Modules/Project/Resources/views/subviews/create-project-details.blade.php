@@ -48,7 +48,7 @@
             <label for="contract_file"> {{ __('Upload Contract File') }}</label>
             <div class="custom-file mb-3">
                 <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
-                <label for="contract" class="custom-file-label">Choose file</label>
+                <label for="contract" class="custom-file-label overflow-hidden">Choose file</label>
             </div>
         </div>
     </div>

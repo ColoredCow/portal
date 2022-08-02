@@ -29,8 +29,9 @@
                               </div>
 
                             <select name="service_rate_term" class="form-control">
-                                <option {{ $clientBillingDetail->service_rate_term == 'per_hour' ? 'selected=selected' : '' }} value="per_hour">Per Hour</option>
-                                <option {{ $clientBillingDetail->service_rate_term == 'overall' ? 'selected=selected' : '' }} value="overall">Overall</option>
+                                @foreach (config('client.service-rate-terms') as $serviceRateTerm)
+                                    <option {{ $clientBillingDetail->service_rate_term == $serviceRateTerm['slug'] ? 'selected=selected' : '' }} value="{{ $serviceRateTerm['slug'] }}">{{ $serviceRateTerm['label'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

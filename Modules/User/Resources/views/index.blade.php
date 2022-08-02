@@ -2,6 +2,7 @@
 @section('content')
 
 <div class="container" id="vueContainer">
+    @includeWhen(session('success'), 'toast', ['message' => session('success')])
 	@include('user::layouts.navbar')
 	<h4>User Management</h4>
 	<user-listing
