@@ -45,11 +45,11 @@
                 {{$job->resources_required}}
             </td>
             <td>
-                <a type="button" class="fa fa-edit text-theme-green" data-toggle="modal" data-target="#exampleModal"></a>
+                <a type="button" class="fa fa-edit text-theme-green" data-toggle="modal" data-target="#exampleModal{{ $job->id }}"></a>
                 <form action="{{route('recruitment.opportunities.update', $job->id)}}" method="POST" >
                     @csrf
                     @method('PUT')
-                    <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModal{{ $job->id }}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -61,7 +61,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="name"><span>Resources Required</span></label>
-                                    <input type="number" class="form-control" name="resources_required" id="resources_required" placeholder="0">
+                                    <input type="number" class="form-control" name="resources_required" id="resources_required" placeholder="0" >
                                 </div>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save changes</button> 
