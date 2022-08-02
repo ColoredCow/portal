@@ -29,10 +29,36 @@
 			@endif
 		</div>
 		@include('hr.application.assignlabels-modal')
+		@php
+		$assignee = $application->latestApplicationRound->scheduledPerson;
+		@endphp
 		<div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
 			<div class="d-flex text-white my-2">
+			
 				<a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-				<a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+				<a data-target="#evaluation{{$application->id}}" role="button" class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
+				<div class="modal fade" id="evaluation{{$application->id}}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+				        <div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title text-secondary" id="confirmation">Request to handover</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p class="text-secondary">This application is already assigned to {{$assignee->name}}, to evaluate this, a confirmation would be needed from their end. Please click the request button to request the handover.</p>
+							</div>
+							<div class="modal-footer justify-content-between">
+								<button type="button" class="btn btn-primary">Request</button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+								
+				
+				{{-- <a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a> --}}
 			</div>
 			<span class="mr-1 text-truncate">
 				<i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
@@ -76,9 +102,7 @@
 		</div>
 	</td>
 	<td class="">
-		@php
-		$assignee = $application->latestApplicationRound->scheduledPerson;
-		@endphp
+
 		<img src="{{$assignee->avatar}}" alt="{{$assignee->name}}" class="w-25 h-25 rounded-circle"
 			data-toggle="tooltip" data-placement="top" title="{{$assignee->name}}">
 	</td>
