@@ -523,6 +523,40 @@ $(".hr_round_guide").on("click", ".edit-guide", function() {
 	container.find(".btn-guide, .guide-container").toggleClass("d-none");
 });
 
+$(document).ready(function () {
+	$("#addNewSegmentForm").submit(function (e) {
+		e.preventDefault();
+		let form = $("#addNewSegmentForm");
+		$("#createNewSegment").on("hidden.bs.modal", function () {
+			$(this).find("form").trigger("reset");
+		});
+	
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#createNewSegment").modal("hide");
+				$("#createNewSegment").on("hidden.bs.modal", function (e) {
+					$("#segmentsuccess").toggleClass("d-none");
+					$("#segmentsuccess").fadeToggle(6000);
+				});
+			},	
+			error: function(response) {
+				$("#segmentError").removeClass("d-none");
+				let errors = response.responseJSON.errors;
+				$("#errors").empty();
+				for (let error in errors) {
+					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			  }
+			}
+		});
+	});
+	$("#segmentModalCloseBtn").click(function() {
+		$("#segmentError").toggleClass("d-none");
+	});
+});
+
 $(".hr_round_guide").on("click", ".save-guide", function() {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
