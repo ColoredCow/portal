@@ -14,17 +14,17 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'client_id' =>'required',
-            'billing_level' => 'required',
-            'status' => 'required',
-            'currency' => 'required',
-            'comments' => 'required',
-            'amount' => 'required',
-            'gst' =>'required',
+            'client_id' =>'required|integer',
+            'billing_level' => 'required|string',
+            'status' => 'required|string',
+            'currency' => 'required|string',
+            'comments' => 'nullable|string',
+            'amount' => 'required|numeric',
+            'gst' =>'required|numeric',
             'term' => 'required',
-            'sent_on' => 'required',
-            'due_on' => 'required',
-            'invoice_file' =>'required',
+            'sent_on' => 'required|date',
+            'due_on' => 'required|date',
+            'invoice_file' =>'required|mimes:pdf',
         ];
 
         return $rules;
