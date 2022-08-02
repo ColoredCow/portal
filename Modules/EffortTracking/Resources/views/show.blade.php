@@ -75,7 +75,7 @@
                             <th scope="col" class="pb-lg-4">Expected Hours
                                 <div class="ml-lg-3 ml-xl-5 fz-md-10 fz-xl-14"> 
                                     (1 Days)
-                                </div></th></th>
+                                </div></th>
                             <th scope="col" class="w-lg-200">Expected Hours Till Today</th>
                             <th scope="col" class="pb-lg-4">Hours To Add</th>
                             <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right"
