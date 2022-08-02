@@ -149,7 +149,6 @@ class EvaluationController extends Controller
         foreach (self::getSegments($applicationRound->hr_application_id, $applicationRound->hr_round_id) as $segment) {
             $segmentList[] = self::getSegmentDetails($segment);
         }
-        
 
         return view('hr.application.evaluation-form')
             ->with([
@@ -190,6 +189,7 @@ class EvaluationController extends Controller
             $query = Segment::whereHas('round')
             ->orWhereNull('round_id');
         }
+
         return $query
             ->with([
                 'round',
