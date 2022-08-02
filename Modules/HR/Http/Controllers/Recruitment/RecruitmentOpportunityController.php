@@ -4,6 +4,7 @@ namespace Modules\HR\Http\Controllers\Recruitment;
 
 use Illuminate\Support\Facades\Request;
 use Modules\HR\Entities\Job;
+use Modules\HR\Http\Requests\Recruitment\JobRequest;
 
 class RecruitmentOpportunityController extends JobController
 {
@@ -31,5 +32,15 @@ class RecruitmentOpportunityController extends JobController
             'jobs' => $jobs,
             'type' => 'recruitment',
         ]);
+    }
+
+    public function update(JobRequest $request, Job $opportunity)
+    {
+        $validated = $request->validated();
+        $opportunity->update([
+            'resources_required' => $request['resources_required'],
+        ]);
+
+        return redirect(route('recruitment.opportunities'))->with('status', 'Resources updated successfully!');
     }
 }
