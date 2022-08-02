@@ -37,7 +37,7 @@ class SendProjectSummary extends Notification
             ->bold('Individual velocities');
         foreach ($this->data['teamMembers'] as $teamMemberData) {
             $teamMemberTextParagraph->break()
-                ->text($teamMemberData['name'] . ' - ')
+                ->text($teamMemberData['name'] . ': ')
                 ->color($teamMemberData['velocity'], $teamMemberData['velocityColor']);
         }
 
@@ -46,7 +46,7 @@ class SendProjectSummary extends Notification
             ->card(
                 Card::create()
                     ->header(
-                        'Daily Effort Summary - ' . $this->data['projectName'],
+                        'Daily Effort Summary • ' . $this->data['projectName'],
                         today()->format('d M, Y')
                     )
                     ->section([

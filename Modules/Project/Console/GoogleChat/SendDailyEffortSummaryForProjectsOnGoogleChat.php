@@ -54,7 +54,7 @@ class SendDailyEffortSummaryForProjectsOnGoogleChat extends Command
                 ];
             }
             $projectGoogleChatWebhookUrl = $project->google_chat_webhook_url;
-            if (count($projectNotificationData) && $projectGoogleChatWebhookUrl) {
+            if (isset($projectNotificationData['teamMembers']) && $projectGoogleChatWebhookUrl) {
                 Notification::route('googleChat', $projectGoogleChatWebhookUrl)->notify(new SendProjectSummary($projectNotificationData));
             }
         }
