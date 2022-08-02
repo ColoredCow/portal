@@ -1,7 +1,5 @@
 <div id="edit_project_details_form">
     <div class="card">
-        <div class="card-header">
-        </div>
         <div id="project_detail_form">
             <form action="{{ route('project.update', $project) }}" method="POST" id="updateProjectDetails" enctype="multipart/form-data">
                 @csrf
@@ -98,19 +96,27 @@
                         <div class="form-group offset-md-1 col-md-2" v-if="projectType == 'fixed-budget'">
                             <label for="start_date">Start date</label>
                             <input type="date" class="form-control" name="start_date" id="start_date"
-                                value="{{ optional($project->start_date)->format('Y-m-d') }}">       
+                                value="{{ optional($project->start_date)->format('Y-m-d') }}">
                         </div>
                         <div class="form-group offset-md-1 col-md-2" v-if="projectType == 'fixed-budget'">
                             <label for="end_date">End date</label>
                             <input type="date" class="form-control" name="end_date" id="end_date"
-                                value="{{ optional($project->end_date)->format('Y-m-d') }}">       
+                                value="{{ optional($project->end_date)->format('Y-m-d') }}">
                         </div>
-                    </div>                
-                <div class="card-footer">
-                    <div data-id="he" type="button" v-on:click="updateProjectForm('form_update_project_details')"
-                        class="btn btn-primary save-btn">Save</div>
-                </div>
-            </form>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
+                            <input type="url" class="form-control" name="google_chat_webhook_url" id="google_chat_webhook_url"
+                                placeholder="Enter Google Chat Webhook URL"
+                                value="{{ old('google_chat_webhook_url') ?: $project->google_chat_webhook_url }}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        <div class="card-footer">
+            <div data-id="he" type="button" v-on:click="updateProjectForm('form_update_project_details')"
+                class="btn btn-primary save-btn">Save</div>
         </div>
     </div>
 </div>

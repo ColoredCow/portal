@@ -16,6 +16,8 @@
                     @endforeach
                 </select>
             </div>
+        </div>
+        <div class="form-row">
             <div class="form-group col-md-5">
                 <label for="effort_sheet_url">{{ __('Effort Sheet URL') }}</label>
                 <input type="url" class="form-control" name="effort_sheet_url" id="effort_sheet_url"
@@ -30,6 +32,8 @@
                     @endforeach
                 </select>
             </div>
+        </div>
+        <div class="form-row">
             <div class="form-group col-md-5">
                 <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
                 <input type="number" class="form-control" name="total_estimated_hours" id="total_estimated_hours"
@@ -45,9 +49,11 @@
                     @endforeach
                 </select>
             </div>
+        </div>
+        <div class="form-row">
             <div class="form-group col-md-5">
                 <label for="contract_file"> {{ __('Upload Contract File') }}</label>
-                <div class="custom-file mb-3">
+                <div class="custom-file">
                     <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
                     <label for="contract" class="custom-file-label">Choose file</label>
                 </div>
@@ -63,7 +69,14 @@
                      value="{{ old('start_date') }}">
             </div>
         </div>
-        <br>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
+                <input type="url" class="form-control" name="google_chat_webhook_url" id="google_chat_webhook_url"
+                    placeholder="Enter Google Chat Webhook URL"
+                    value="{{ old('google_chat_webhook_url') }}">
+            </div>
+        </div>
     </div>
     <div class="card-footer">
         <button type="button" class="btn btn-primary" id="save-btn-action">Create</button>
