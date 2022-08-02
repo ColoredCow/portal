@@ -349,7 +349,7 @@ class ProjectService implements ProjectServiceContract
                 continue;
             }
             foreach ($projectTeamMembers as $projectTeamMember) {
-                if($projectTeamMember->current_actual_effort < $projectTeamMember->daily_expected_effort){
+                if ($projectTeamMember->current_actual_effort < $projectTeamMember->daily_expected_effort) {
                     $dataForMail[] = [
                         'name' => $user->name,
                         'email' =>$user->email,

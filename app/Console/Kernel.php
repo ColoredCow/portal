@@ -9,7 +9,6 @@ use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
 use Modules\Project\Console\DailyEffortAlertNotificationMail;
 
-
 class Kernel extends ConsoleKernel
 {
     /**
@@ -42,7 +41,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
         $schedule->command('users:Daily-effort-mail-alert')->daily()->at('09:00');
-
     }
 
     /**
