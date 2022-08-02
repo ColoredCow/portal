@@ -72,6 +72,7 @@ return [
         'gstin' => env('GSTIN', ''),
         'cin-no' => env('CIN_NO', ''),
         'hsn-code' => env('HSN_CODE', ''),
+        'cin-no' => env('CIN_NO', ''),
         'correspondent-bank' => env('CORRESPONDENT_BANK', ''),
         'correspondent-bank-swift-code' => env('CORRESPONDENT_BANK_SWIFT_CODE', ''),
         'beneficiary-bank-of-usd' => env('BENEFICIARY_BANK_OF_USD', ''),
