@@ -87,17 +87,17 @@
                         </div>
                     @endif
                 </div>
-                <div class="form-group col-md-6 pl-4 ">
+                <div class="form-group col-md-6 pl-4">
                     <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold">Start Date:</label>
                     </h4>
-                    <span class="text-capitalize ml-2 fz-lg-22">{{ $project->start_date->format('d M Y') }}</span>
+                    <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y'),''  }}</span>
                 </div>
                 <div class="form-group col-md-6 pl-4">
                     <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold">End Date:</label>
                     </h4>
-                    <span class="text-capitalize ml-2 fz-lg-22">{{ $project->end_date->format('d M Y') }}</span>
+                    <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y') }}</span>
                 </div>
                 <br>
                 <div class="form-row ">

@@ -91,8 +91,8 @@ class ProjectService implements ProjectServiceContract
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
             'status' => 'active',
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date'],
+            'start_date' => $data['start_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
@@ -168,8 +168,8 @@ class ProjectService implements ProjectServiceContract
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date'],
+            'start_date' => $data['start_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
 
