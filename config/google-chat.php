@@ -1,7 +1,7 @@
 <?php
 
 return [
-    /**
+    /*
      * Default Space Webhook Url.
      *
      * This key defines the default space where Google Chat messages will be posted to. Of
@@ -12,7 +12,7 @@ return [
      */
     'space' => env('GOOGLE_CHAT_DEFAULT_SPACE', null),
 
-    /**
+    /*
      * Additional Spaces.
      *
      * This key defines additional spaces which can be used as the argument in the

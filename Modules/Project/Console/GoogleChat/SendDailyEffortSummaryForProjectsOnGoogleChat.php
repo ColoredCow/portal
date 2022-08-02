@@ -5,9 +5,6 @@ namespace Modules\Project\Console\GoogleChat;
 use Illuminate\Console\Command;
 use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Notification;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-use NotificationChannels\GoogleChat\GoogleChatMessage;
 use Modules\Project\Notifications\GoogleChat\SendProjectSummary;
 
 class SendDailyEffortSummaryForProjectsOnGoogleChat extends Command
@@ -57,7 +54,7 @@ class SendDailyEffortSummaryForProjectsOnGoogleChat extends Command
                 ];
             }
             $projectGoogleChatWebhookUrl = $project->google_chat_webhook_url;
-            if (sizeof($projectNotificationData) && $projectGoogleChatWebhookUrl) {
+            if (count($projectNotificationData) && $projectGoogleChatWebhookUrl) {
                 Notification::route('googleChat', $projectGoogleChatWebhookUrl)->notify(new SendProjectSummary($projectNotificationData));
             }
         }

@@ -5,8 +5,6 @@ namespace Modules\Project\Console\GoogleChat;
 use Illuminate\Console\Command;
 use Modules\Project\Entities\Project;
 use Illuminate\Support\Facades\Notification;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Modules\Project\Notifications\GoogleChat\RemindToUpdateEffort;
 
 class RemindProjectMembersToUpdateEffortOnGoogleChat extends Command

@@ -5,18 +5,10 @@ namespace Modules\Project\Notifications\GoogleChat;
 use Illuminate\Bus\Queueable;
 use NotificationChannels\GoogleChat\Card;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use NotificationChannels\GoogleChat\Section;
-use NotificationChannels\GoogleChat\Enums\Icon;
-use Illuminate\Notifications\Messages\MailMessage;
-use NotificationChannels\GoogleChat\Widgets\Image;
-use NotificationChannels\GoogleChat\Widgets\Buttons;
-use NotificationChannels\GoogleChat\Enums\ImageStyle;
-use NotificationChannels\GoogleChat\Widgets\KeyValue;
 use NotificationChannels\GoogleChat\GoogleChatChannel;
 use NotificationChannels\GoogleChat\GoogleChatMessage;
 use NotificationChannels\GoogleChat\Widgets\TextParagraph;
-use NotificationChannels\GoogleChat\Components\Button\TextButton;
 
 class SendProjectSummary extends Notification
 {
