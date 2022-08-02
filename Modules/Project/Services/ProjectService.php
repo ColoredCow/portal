@@ -352,7 +352,7 @@ class ProjectService implements ProjectServiceContract
 
             foreach ($user->activeProjectTeamMembers as $projectTeamMember) {
                 if ($projectTeamMember->current_actual_effort < $projectTeamMember->expectedEffort) {
-                    $projectData= [
+                    $projectData = [
                         'Project' => $projectTeamMember->project->name,
                         'bookedHours'=> $projectTeamMember->current_actual_effort,
                         'expectedHours' => $projectTeamMember->expectedEffort
@@ -363,7 +363,6 @@ class ProjectService implements ProjectServiceContract
             if (empty($dataForMail[$user->name]['projects'])) {
                 continue;
             }
-            dd($dataForMail);
             $mailAlert = Collection::make($dataForMail);
 
             return $mailAlert;

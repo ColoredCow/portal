@@ -42,8 +42,8 @@ class DailyEffortAlertNotificationMail extends Command
     {
         $AlertService = new ProjectService();
         $getProjectDetailForDailyAlert = $AlertService->getProjectDetailForDailyAlert();
-        if (!empty($getProjectDetailForDailyAlert)) {
-            foreach($getProjectDetailForDailyAlert as $users) {
+        if (! empty($getProjectDetailForDailyAlert)) {
+            foreach ($getProjectDetailForDailyAlert as $users) {
                 Mail::send(new DailyEffortsNotification($users));
             }
         }
