@@ -75,7 +75,7 @@
         new Vue({
         el: '#create_project_details_form',
             data() {
-                return {
+                return{
                     projectType: '',
                 }
             },
