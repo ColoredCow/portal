@@ -351,7 +351,7 @@ class ProjectService implements ProjectServiceContract
             foreach ($user->activeProjectTeamMembers as $projectTeamMember) {
                 if ($projectTeamMember->current_actual_effort < $projectTeamMember->current_expected_effort) {
                     $projectData = [
-                        'Project' => $projectTeamMember->project->name,
+                        'project' => $projectTeamMember->project->name,
                         'bookedHours'=> $projectTeamMember->current_actual_effort,
                         'expectedHours' => $projectTeamMember->current_expected_effort
                     ];
