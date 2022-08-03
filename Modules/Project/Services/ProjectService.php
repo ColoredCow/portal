@@ -338,7 +338,7 @@ class ProjectService implements ProjectServiceContract
 
         return $projectDetails;
     }
-
+    
     public function getProjectDetailForDailyAlert()
     {
         $users = User::get();
@@ -363,9 +363,9 @@ class ProjectService implements ProjectServiceContract
             if (empty($dataForMail[$user->name]['projects'])) {
                 continue;
             }
-            $mailAlert = Collection::make($dataForMail);
         }
-        
+        $mailAlert = Collection::make($dataForMail);
+
         return $mailAlert;
     }
 }
