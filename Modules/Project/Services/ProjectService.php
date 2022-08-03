@@ -343,7 +343,7 @@ class ProjectService implements ProjectServiceContract
     {
         $users = User::get();
         $dataForMail = [];
-        $projectData = []; 
+        $projectData = [];
         foreach ($users as $user) {
             if (empty($user->activeProjectTeamMembers)) {
                 continue;
