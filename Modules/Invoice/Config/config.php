@@ -138,6 +138,7 @@ return [
                         'invoice-number' => '|*invoice_number*|',
                         'currency' => '|*currency*|',
                         'amount' => '|*amount*|',
+                        'amount_paid' => '|*amount_paid*|'
                     ],
                 ],
             ]
