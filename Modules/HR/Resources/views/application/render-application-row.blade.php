@@ -42,6 +42,9 @@
 			@if ($application->applicant->college)
 			<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}</span>
 			@endif
+			@if ($application->applicant->university)
+			<a href ="{{ route('universities.edit',$application->applicant->university) }}" ><span class="mr-1"><i class="fa fa-phone mr-1 {{ ($application->applicant->university->universityContacts->first() && $application->applicant->university->universityContacts->first()->phone) ? "text-success" : "text-danger" }}"></i></span>
+			@endif
 		</div>
 
 		<div>
