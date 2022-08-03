@@ -1,11 +1,8 @@
 <div class="card">
-    <div class="card-header">
-    </div>
-
     <div id="project_repository_form">
         <form  action="{{ route('project.update', $project) }}" method="POST" id="updateProjectRepositoryForm">
             @csrf
-            <input type="hidden" value="project_repository" name="update_section"> 
+            <input type="hidden" value="project_repository" name="update_section">
             <div class="card-body">
                 <div class="form-row" v-for="(projectRepository, index) in projectRepositories" >
                     <div class="form-group col-md-6">
@@ -14,7 +11,7 @@
                             v-model="projectRepository.url"
                             id="projectRepository.id"
                             :name="`url[${index}]`"
-                            placeholder="Enter project repository url" 
+                            placeholder="Enter project repository url"
                             required="required"
                             :key="projectRepository.id">
                     </div>

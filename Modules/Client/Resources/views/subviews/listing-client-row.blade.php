@@ -15,7 +15,7 @@
     </td>   
     <td>
         @if ($client->keyAccountManager)
-            <span data-html="true" data-toggle="tooltip" title="{{ $client->keyAccountManager->name}}" class="content tooltip-wrapper"><a href="{{ route('employees.show', $client->keyAccountManager->id) }}">
+            <span data-html="true" data-toggle="tooltip" title="{{ $client->keyAccountManager->name}}" class="content tooltip-wrapper">
             <img src="{{ $client->keyAccountManager->avatar }}" class="w-35 h-30 rounded-circle mb-1"> </a>
         @else
             -

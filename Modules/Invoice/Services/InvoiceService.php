@@ -681,18 +681,21 @@ class InvoiceService implements InvoiceServiceContract
         $html = view(('invoice::render.' . $template), $data)->render();
         $data['receivable_date'] = $dueOn;
         $data['project_id'] = null;
+        $tax = 0;
 
         if ($project) {
             if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
             } else {
-                $amount = $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+                $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+                $tax = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
             }
         } else {
             if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount();
             } else {
-                $amount = $client->getTotalPayableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+                $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+                $tax = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
             }
         }
 
@@ -705,7 +708,8 @@ class InvoiceService implements InvoiceServiceContract
             'due_on' => $dueOn,
             'receivable_date' => $dueOn,
             'currency' => $client ? $client->country->currency : $project->client->country->currency,
-            'amount' => $amount
+            'amount' => $amount,
+            'gst' => $tax
         ]);
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
