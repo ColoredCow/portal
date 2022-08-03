@@ -349,7 +349,7 @@ class ProjectService implements ProjectServiceContract
                 continue;
             }
             foreach ($user->activeProjectTeamMembers as $projectTeamMember) {
-                if($projectTeamMember->current_actual_effort < $projectTeamMember->current_expected_effort) {
+                if ($projectTeamMember->current_actual_effort < $projectTeamMember->current_expected_effort) {
                     $projectData = [
                         'Project' => $projectTeamMember->project->name,
                         'bookedHours'=> $projectTeamMember->current_actual_effort,
