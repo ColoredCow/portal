@@ -165,6 +165,25 @@ $(document).ready(() => {
 			.addClass("selected")
 			.html(fileName);
 	});
+	$("#addChannel").on("submit",function(e){
+		e.preventDefault();
+		let form = $("#addChannel");
+		let button = $("#channelButton");
+		
+		$.ajax({
+			url: form.attr("action"),
+			type: form.attr("method"),
+			data: form.serialize(),
+			success: function(response) {
+				$("#channelName").modal("hide");
+				$("#success").toggleClass("d-none");
+				$("#success").fadeToggle(5000);
+			},
+			error: function(response) {
+				$("#errorMessage").toggleClass("d-none");
+			},
+		});		
+	});
 
 	if ($(".chart-data").length) {
 		datePickerChart();
@@ -239,9 +258,11 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			showResumeFrame: false,
 			showEvaluationFrame: false,
 			applicationJobRounds: document.getElementById("action_type")
+
 				? JSON.parse(
 					document.getElementById("action_type").dataset.applicationJobRounds
 				  )
+
 				: {},
 			selectedNextRound: "",
 			nextRoundName: "",
@@ -265,6 +286,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					axios
 						.get("/hr/evaluation/" + applicationRoundID)
 						.then(function(response) {
+
 							$("#page_hr_applicant_edit #application_evaluation_body").html(
 								response.data
 							);
@@ -521,6 +543,40 @@ $(".hr_round_guide").on("click", ".edit-guide", function() {
 	container.find(".btn-guide, .guide-container").toggleClass("d-none");
 });
 
+$(document).ready(function () {
+	$("#addNewSegmentForm").submit(function (e) {
+		e.preventDefault();
+		let form = $("#addNewSegmentForm");
+		$("#createNewSegment").on("hidden.bs.modal", function () {
+			$(this).find("form").trigger("reset");
+		});
+	
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#createNewSegment").modal("hide");
+				$("#createNewSegment").on("hidden.bs.modal", function (e) {
+					$("#segmentsuccess").toggleClass("d-none");
+					$("#segmentsuccess").fadeToggle(6000);
+				});
+			},	
+			error: function(response) {
+				$("#segmentError").removeClass("d-none");
+				let errors = response.responseJSON.errors;
+				$("#errors").empty();
+				for (let error in errors) {
+					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			  }
+			}
+		});
+	});
+	$("#segmentModalCloseBtn").click(function() {
+		$("#segmentError").toggleClass("d-none");
+	});
+});
+
 $(".hr_round_guide").on("click", ".save-guide", function() {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
@@ -571,7 +627,6 @@ if (document.getElementById("show_and_save_book")) {
 				disableSaveButton: false
 			}
 		},
-
 		methods: {
 			onFileSelected: function(e) {
 				let file = e.target.files[0];
@@ -634,6 +689,7 @@ if (document.getElementById("show_and_save_book")) {
 						alert("Error in saving records");
 						return false;
 					}
+					this.$toast.success("Book added successfully");
 					window.location.href = this.routes.index;
 				});
 			}
@@ -662,7 +718,6 @@ if (document.getElementById("books_listing")) {
 				? document.getElementById("search_input").dataset.value
 				: ""
 		},
-
 		methods: {
 			updateCategoryMode: function(index) {
 				let categories = this.books[index]["categories"];
@@ -805,6 +860,7 @@ if (document.getElementById("books_category")) {
 					name: this.categories[index]["name"]
 				});
 				this.$set(this.categories[index], "editMode", false);
+				this.$toast.success( "Updated category for books" );
 			},
 
 			deleteCategory: async function(index) {
@@ -832,6 +888,7 @@ if (document.getElementById("books_category")) {
 					alert("Please enter category name");
 					return false;
 				}
+				this.$toast.success("Category for books added successfully");
 				let route = `${this.indexRoute}`;
 				let response = await axios.post(route, {
 					name: this.newCategoryName

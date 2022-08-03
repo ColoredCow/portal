@@ -36,8 +36,12 @@
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<<<<<<< HEAD
                             <button type="submit" class="channel-form-save-btn btn btn-primary" id="channelButton" >Save changes</button>
                         </div>
+=======
+                            <button type="submit" class="channel-form-save-btn btn btn-primary" id="channelButton" >Save changes</button>                        </div>
+>>>>>>> 39c8638b32c7589ad94da8b903d750750dd64441
                         </form>
 
                     </div>
