@@ -25,8 +25,7 @@
         @include('hr::evaluation.evaluation-form.knowledge')
         <div class="row py-4">
             <div class="col-12">
-                <button type="button" class="btn btn-light border mr-2 show-evaluation-stage"
-                    data-target="#evaluationStage1">Back</button>
+
                 <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>

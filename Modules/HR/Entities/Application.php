@@ -595,13 +595,15 @@ class Application extends Model
         return route('select-appointments', $params);
     }
 
-    public function getMarksAttribute()
+    public function getMarksAttribute($roundId)
     {
+        $roundId = $roundId ?? null;
+
         if ($this->evaluations->isEmpty()) {
             return;
         }
 
-        return $this->evaluations->sum(function ($evaluation) {
+        return $this->evaluations()->filterEvaluationsByRound($roundId)->get()->sum(function ($evaluation) {
             return $evaluation->evaluationOption->marks;
         });
     }
