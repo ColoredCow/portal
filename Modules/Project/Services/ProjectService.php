@@ -365,6 +365,7 @@ class ProjectService implements ProjectServiceContract
             }
             $mailAlert = Collection::make($dataForMail);
         }
+        
         return $mailAlert;
     }
 }
