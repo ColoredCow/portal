@@ -306,7 +306,7 @@ class ProjectService implements ProjectServiceContract
             );
         }
     }
-    
+
     public function getMailDetailsForProjectManagers()
     {
         $users = User::get();
@@ -338,7 +338,7 @@ class ProjectService implements ProjectServiceContract
 
         return $projectDetails;
     }
-    
+
     public function getProjectDetailForDailyAlert()
     {
         $users = User::get();
