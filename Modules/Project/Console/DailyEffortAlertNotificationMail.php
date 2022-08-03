@@ -14,7 +14,7 @@ class DailyEffortAlertNotificationMail extends Command
      *
      * @var string
      */
-    protected $signature = 'users:Daily-effort-mail-alert';
+    protected $signature = 'users:daily-effort-mail-alert';
 
     /**
      * The console command description.
@@ -40,9 +40,9 @@ class DailyEffortAlertNotificationMail extends Command
      */
     public function handle()
     {
-        $AlertService = new ProjectService();
-        $getProjectDetailForDailyAlert = $AlertService->getProjectDetailForDailyAlert();
-        if (! empty($getProjectDetailForDailyAlert)) {
+        $alertService = new ProjectService();
+        $getProjectDetailForDailyAlert = $alertService->getProjectDetailForDailyAlert();
+        if ($getProjectDetailForDailyAlert->isNotEmpty()) {
             foreach ($getProjectDetailForDailyAlert as $users) {
                 Mail::send(new DailyEffortsNotification($users));
             }
