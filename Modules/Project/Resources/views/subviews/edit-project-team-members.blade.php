@@ -1,6 +1,4 @@
 <div class="card">
-    <div class="card-header">
-    </div>
     <a id='working_days_in_month' :data-days-count='workingDaysInMonth'></a>
     <div id="project_team_member_form">
         <form  action="{{ route('project.update', $project) }}" method="POST" id="updateProjectTeamMemberForm">
@@ -113,13 +111,13 @@
                         <tr>
                             <th class="font-weight-normal"><img src="{{ $inactiveTeamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">{{$inactiveTeamMember->user->name}}</th>
                             <th class="font-weight-light">{{ ucwords(str_replace('_', ' ', $inactiveTeamMember->designation)) }}</th>
-                            <th class="font-weight-light">{{ $inactiveTeamMember->started_on->format('Y-m-d') }}</th>
-                            <th class="font-weight-light">{{ $inactiveTeamMember->ended_on->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ optional($inactiveTeamMember->started_on)->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ optional($inactiveTeamMember->ended_on)->format('Y-m-d') }}</th>
                         <tr>
                         @endforeach
                     </table>
                 </div>
-                
+
             </div>
 
             <div class="card-footer">
