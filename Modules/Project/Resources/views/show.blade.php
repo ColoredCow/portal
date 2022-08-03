@@ -91,6 +91,12 @@
                 </div>
                 <div class="form-group col-md-6 pl-4">
                     <h4 class="d-inline-block">
+                        <label for="name" class="font-weight-bold">Total Estimated Hour:</label>
+                    </h4>
+                    <span class="text-capitalize ml-2 fz-lg-22">{{ $project->total_estimated_hours }}
+                </div>
+                <div class="form-group col-md-6 pl-4">
+                    <h4 class="d-inline-block">
                         <label for="name" class="font-weight-bold">Start Date:</label>
                     </h4>
                     <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y') }}</span>
