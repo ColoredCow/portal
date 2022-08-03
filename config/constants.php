@@ -71,7 +71,7 @@ return [
             'name' => env('HR_DEFAULT_FROM_NAME', 'ColoredCow Portal Careers'),
         ],
         'interview-time-format' => 'h:i a',
-        'no-show-hours-limit' => 2,
+        'no-show-hours-limit' => 12,
         'application-meta' => [
             'keys' => [
                 'form-data' => 'form-data',
