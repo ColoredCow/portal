@@ -2,11 +2,13 @@
 
 namespace App\Console;
 
-use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
+use Modules\Project\Console\SendEffortSummaryCommand;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Project\Console\GoogleChat\SendDailyEffortSummaryForProjectsOnGoogleChat;
+use Modules\Project\Console\GoogleChat\RemindProjectMembersToUpdateEffortOnGoogleChat;
 use Modules\Project\Console\DailyEffortAlertNotificationMail;
 
 class Kernel extends ConsoleKernel
@@ -20,6 +22,8 @@ class Kernel extends ConsoleKernel
         SyncEffortsheet::class,
         SendEffortSummaryCommand::class,
         ZeroEffortInProject::class,
+        SendDailyEffortSummaryForProjectsOnGoogleChat::class,
+        RemindProjectMembersToUpdateEffortOnGoogleChat::class,
         DailyEffortAlertNotificationMail::class,
     ];
 
@@ -40,6 +44,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
+        $schedule->command('project:remind-to-update-effort')->dailyAt('19:00');
+        $schedule->command('project:send-daily-effort-summary-google-chat')->dailyAt('21:00');
         $schedule->command('users:daily-effort-mail-alert')->daily()->at('09:00');
     }
 
