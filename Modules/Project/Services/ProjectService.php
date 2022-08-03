@@ -304,7 +304,7 @@ class ProjectService implements ProjectServiceContract
             );
         }
     }
-
+    
     public function getMailDetailsForProjectManagers()
     {
         $users = User::get();
@@ -341,22 +341,20 @@ class ProjectService implements ProjectServiceContract
     {
         $users = User::get();
         $dataForMail = [];
+        $projectData = []; 
         foreach ($users as $user) {
             if (empty($user->activeProjectTeamMembers)) {
                 continue;
             }
-            $dataForMail[$user->name] = [
-                'email' =>$user->email,
-                'projects' => [],
-            ];
-
             foreach ($user->activeProjectTeamMembers as $projectTeamMember) {
-                if ($projectTeamMember->current_actual_effort < $projectTeamMember->expectedEffort) {
+                if($projectTeamMember->current_actual_effort < $projectTeamMember->current_expected_effort) {
                     $projectData = [
                         'Project' => $projectTeamMember->project->name,
                         'bookedHours'=> $projectTeamMember->current_actual_effort,
-                        'expectedHours' => $projectTeamMember->expectedEffort
+                        'expectedHours' => $projectTeamMember->current_expected_effort
                     ];
+                    $dataForMail[$user->name]['name'] = $user->name;
+                    $dataForMail[$user->name]['email'] = $user->email;
                     $dataForMail[$user->name]['projects'][] = $projectData;
                 }
             }
@@ -364,8 +362,7 @@ class ProjectService implements ProjectServiceContract
                 continue;
             }
             $mailAlert = Collection::make($dataForMail);
-
-            return $mailAlert;
         }
+        return $mailAlert;
     }
 }

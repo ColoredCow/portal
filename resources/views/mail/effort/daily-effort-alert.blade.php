@@ -2,7 +2,7 @@
 <p>Hello {{ $users['name'] }},</p>
 	<p>We found that your logged efforts are less than your expected efforts. Please update your effort in the following project(s):</p>
 	<div class ="table-responsive">
-        <table class="table">
+        <table>
             <thead>
                 <tr>
                     <th scope="col" class="pb-lg-6">Date</th>
@@ -13,9 +13,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{now()}}</td>
-                    @foreach ($users['projects'] as $project)
-                      <td>{{ $project}}</td>
+                    @foreach ($users['projects'] as $user)
+                    <tr>
+                      <td>{{now()}}</td>
+                      <td>{{$user['Project']}}</td>
+                      <td>{{$user['bookedHours']}}</td>
+                      <td>{{$user['expectedHours']}}</td>
+                    </tr>
                     @endforeach
                 </tr>
             </tbody>
