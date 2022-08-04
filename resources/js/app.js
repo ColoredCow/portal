@@ -11,12 +11,9 @@ import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
 
 window.Vue = require("vue");
-<<<<<<< HEAD
 import { Laue } from "laue";
 import { defaultsDeep } from "lodash";
 import Chart from 'chart.js/auto';
-=======
->>>>>>> cc027fc362b10b1964adc3703bf5457bc169fb0e
 
 import { Laue } from "laue";
 Vue.use(Laue);
