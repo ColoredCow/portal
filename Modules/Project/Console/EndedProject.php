@@ -4,7 +4,7 @@ namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Contracts\ProjectService;
 use Modules\Project\Emails\EndedProjectMail;
 
 class EndedProject extends Command
@@ -40,7 +40,7 @@ class EndedProject extends Command
      */
     public function handle()
     {
-        $service = app(ProjectServiceContract::class);
+        $service = app(ProjectService::class);
         $getMailDetailsForProjectKeyAccountManagers = $service->getMailDetailsForProjectKeyAccountManagers();
         foreach ($getMailDetailsForProjectKeyAccountManagers as $projectKeyAccountManager) {
             Mail::queue(new EndedProjectMail($projectKeyAccountManager));

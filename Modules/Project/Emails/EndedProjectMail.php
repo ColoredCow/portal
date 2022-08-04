@@ -32,7 +32,7 @@ class EndedProjectMail extends Mailable
         return $this
         ->to($this->$projectKeyAccountManager['email'])
         ->subject('ColoredCow Portal - Some of your projects are ended but still marked as active')
-        ->view('project::mail.ended-projects')
+        ->view('project::mail.ended-project')
         ->with(['$projectKeyAccountManager' => $this->$projectKeyAccountManager]);
-    }    
+    }
 }

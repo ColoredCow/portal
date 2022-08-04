@@ -20,6 +20,7 @@ class ProjectService implements ProjectServiceContract
 {
     public function index(array $data = [])
     {
+        dd($this->getMailDetailsForProjectKeyAccountManagers());
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
@@ -339,43 +340,34 @@ class ProjectService implements ProjectServiceContract
 
     public function getMailDetailsForProjectKeyAccountManagers()
     {
-        $currenttime = Carbon:: today(config('constants.timezone.indian'));
+        $currenttime = Carbon::today(config('constants.timezone.indian'));
 
-        $projects = Project::type('fixed-budget')->where('end_date','<',$currenttime)->wherestatus('active')->get();
+        $projects = Project::wheretype('fixed-budget')->wherestatus('active')->where('end_date','<',$currenttime)->get();
         $projectKeyAccountManager =[];
 
-        $users = User::get();
+        $users = User::select('name')->get();
+        
         $infoForMail = [];
         foreach ($users as $user) {
-            $userid = User::Select('user') ->where('id')->get();
-            if (empty($userid)) {
+            if (empty($user)) {
                 continue;
             }
         }
-        $clients = Client::get();
-        foreach ($clients as $client) {
-            $clientid = Client::Select('client') ->where('key_account_manager_id')->get();
-            if (empty($clientid)) {
-                continue;
-            }
-        }
-        if ($userid == $clientid){
-            return $projectKeyAccountManager;
-        }
+
 
         foreach ($projects as $project) {
             $projectKeyAccountManager[] = $project;
-
+            
             if (! empty($projectKeyAccountManager)) {
                 $infoForMail[] = [
-                    'projects' => $projectKeyAccountManager,
+                    'projects' => $project,
                     'name' => $user->name,
-                    'email' =>$user->email,
+                    'email' => $user->email,
                 ];
-            }
+            }dd($projectKeyAccountManager);
         }
         $projectDetail = Collection::make($infoForMail);
-
+        
         return $projectDetail;
     }
 }
