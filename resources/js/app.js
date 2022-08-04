@@ -1219,7 +1219,6 @@ $(document).ready(function() {
 	});
 	$(document).on("change", ".set-segment-assignee", setSegmentAssignee);
 	$(document).on("click", ".toggle-block-display", toggleBlockDisplay);
-<<<<<<< HEAD
 	$(document).on("change", ".send-mail-to-applicant", toggleApplicantMailEditor);
 	$(document).on("click", ".rg_edit_btn", resourceGuidelineEditClicked);
 
@@ -1299,14 +1298,6 @@ function bargraph()
 		}
 	})
 	}
-=======
-	$(document).on(
-		"change",
-		".send-mail-to-applicant",
-		toggleApplicantMailEditor
-	);
-});
->>>>>>> cc027fc362b10b1964adc3703bf5457bc169fb0e
 
 $(function() {
 	$("#categoryName")
