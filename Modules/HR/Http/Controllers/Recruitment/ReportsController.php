@@ -49,8 +49,7 @@ class ReportsController extends Controller
 
         return view('hr.recruitment.reports')-> with([
         'chartData' => $data['chartData'],
-        
-        'todayCount' => $todayCount, 
+        'todayCount' => $todayCount,
         'verifiedApplicationsCount' => $verifiedApplicationCount]);
     }
 
