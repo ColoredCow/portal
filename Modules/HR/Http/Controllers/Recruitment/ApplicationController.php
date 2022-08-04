@@ -73,20 +73,11 @@ abstract class ApplicationController extends Controller
         })->with(['applicant', 'job', 'tags', 'latestApplicationRound']);
         foreach (array_keys(request()->all()) as $filterKeys) {
             switch ($filterKeys) {
-                case 'start-year':
-                    $startYear = request()->all()['start-year'] ? (int) request()->all()['start-year'] : null;
-                    if ($startYear != null) {
-                        $applications = $applications->whereHas('applicant', function ($query) use ($startYear) {
-                            $query->where('graduation_year', '>=', $startYear);
-                        });
-                    }
-                    break;
                 case 'end-year':
-                    $endYear = request()->get('end-year') ? (int) request()->get('end-year') : null;
+                    $endYear = request()->get('end-year');
                     if ($endYear != null) {
                         $applications = $applications->whereHas('applicant', function ($query) use ($endYear) {
-                            $query->where('graduation_year', '<=', $endYear)
-                            ->orWhereNull('graduation_year');
+                            $query->where('graduation_year', '=', $endYear);
                         });
                     }
                     break;
@@ -116,6 +107,9 @@ abstract class ApplicationController extends Controller
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
+                ->whereHas('applicant', function ($query) use ($endYear) {
+                    return $query->where('graduation_year', '=', $endYear);
+                })
                 ->whereHas('latestApplicationRound', function ($subQuery) {
                     return $subQuery->where('is_latest', true);
                 })
@@ -132,6 +126,9 @@ abstract class ApplicationController extends Controller
             $hrRoundsCounts[$round] = $applicationCount;
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
             ->where('status', config('constants.hr.status.in-progress.label'))
+            ->whereHas('applicant', function ($Query) use ($endYear) {
+                return $Query->where('graduation_year', '=', $endYear);
+            })
             ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
                 return $subQuery->where('is_latest', true)
                          ->whereHas('round', function ($subQuery) use ($round) {
