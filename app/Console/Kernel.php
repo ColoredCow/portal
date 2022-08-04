@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('application:no-show')->everyThirtyMinutes();
+        $schedule->command('application:no-show')->dailyAt('21:00');
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
         $schedule->command('sync:effortsheet')->weekdays()->timezone(config('constants.timezone.indian'))->everyFourHours();
         $schedule->command('effort-summary:send')->weekdays()->timezone(config('constants.timezone.indian'))->at('21:00');
