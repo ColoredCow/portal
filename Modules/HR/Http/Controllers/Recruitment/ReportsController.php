@@ -98,7 +98,7 @@ class ReportsController extends Controller
         $jobsTitle = $jobs->pluck('title')->toArray();
         $applicationCount = [];
         $totalApplicationCount = 0;
-         foreach($jobs as $job) {
+        foreach ($jobs as $job) {
             $count = Application::where('hr_job_id', $job->id)->count();
             $applicationCount[] = $count;
             $totalApplicationCount += $count;
@@ -107,12 +107,13 @@ class ReportsController extends Controller
             'jobsTitle' => $jobsTitle,
             'application' => $applicationCount,
         ];
+
         return view('hr.recruitment.BarGraph')->with([
             'TotalCount' => $totalApplicationCount,
             'jobs' => $jobs,
             'application'=>$applicationCount,
             'chartData' => json_encode($chartData, true)
-            
+
         ]);
     }
 }
