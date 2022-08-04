@@ -15,7 +15,6 @@ import { Laue } from "laue";
 import { defaultsDeep } from "lodash";
 import Chart from 'chart.js/auto';
 
-import { Laue } from "laue";
 Vue.use(Laue);
 
 // vue toast registration
