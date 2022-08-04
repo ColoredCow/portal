@@ -105,8 +105,8 @@ abstract class ApplicationController extends Controller
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
-                ->whereHas('applicant', function ($query) use ($endYear) {
-                 $query->where('graduation_year', '=', $endYear);
+                ->whereHas('applicant', function ($Query) use ($endYear) {
+                 $Query->where('graduation_year', '=', $endYear);
                 })
                 ->whereHas('latestApplicationRound', function ($subQuery) {
                     return $subQuery->where('is_latest', true);
