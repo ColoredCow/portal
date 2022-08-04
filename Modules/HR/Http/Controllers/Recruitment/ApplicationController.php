@@ -108,7 +108,7 @@ abstract class ApplicationController extends Controller
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
                 ->whereHas('applicant', function ($Query) use ($endYear) {
-                 $Query->where('graduation_year', '=', $endYear);
+                 return $Query->where('graduation_year', '=', $endYear);
                 })
                 ->whereHas('latestApplicationRound', function ($subQuery) {
                     return $subQuery->where('is_latest', true);
@@ -127,7 +127,7 @@ abstract class ApplicationController extends Controller
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
             ->where('status', config('constants.hr.status.in-progress.label'))
             ->whereHas('applicant', function ($query) use ($endYear) {
-            $query->where('graduation_year', '=', $endYear);
+             return $query->where('graduation_year', '=', $endYear);
             })
             ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
                 return $subQuery->where('is_latest', true)
