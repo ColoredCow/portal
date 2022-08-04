@@ -35,17 +35,16 @@
                 <div class="d-flex mt-2 mt-md-0">
                     <div class="mr-2 form-group">
                         <label id="end-year">{!! __('Graduation Year') !!}</label><br>
-                        <input id="end-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="end-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('end-year', request()->get('end-year')) }}">
+                        <input id="end-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="end-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{old('end-year', request()->get('end-year')) }}">     
                     </div>
                 </div>
                 <button class="btn h-40 mt-6 mt-md-4 mt-xl-5 w-md-50 mr-md-2 theme-shadow-dark border pt-1">
                     <i class="fa fa-search c-pointer fz-20" aria-hidden="true"></i>
                 </button>
-            </div>
+            </div>         
             <div class="mr-2 mt-2 mt-md-0 form-group">
                 <label id="job">{!! __('Jobs') !!}</label><br>
-                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="hr_job_id" id="job"
-                    onchange="this.form.submit()">
+                <select class="fz-14 fz-lg-16 w-120 w-220 form-control rounded border-0 bg-white" name="hr_job_id" id="job" onchange="this.form.submit()">
                     <option value="" {{ request()->has('hr_job_id') ? '' : 'selected' }}>
                         {!! __('All Jobs') !!}
                     </option>
@@ -83,9 +82,10 @@
     <br>
     @php
         $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
+        
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $hr_university_id = request()->has('hr_university_id') ? '&hr_university_id=' . request('hr_university_id') : '';
-        $query_filters = $hr_job_id . $search . $hr_university_id
+        $query_filters = $hr_job_id .  $search . $hr_university_id 
     @endphp
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
@@ -93,7 +93,8 @@
                 <a id="job-application-listings" class= "{{ $status === config('constants.hr.status.new.label') ? 'job-application-status' : ( isset($status) ? '' : 'job-application-status' ) }} btn"
                     href="/{{ Request::path() }}?status={{ config('constants.hr.status.new.label') }}{{$query_filters}}" >
                     <sup class = "application-menu-options-title fz-18">
-                        {{$newApplicationsCount + $inProgressApplicationsCount - $trialProgramCount}}
+                        {{$newApplicationsCount+ $inProgressApplicationsCount-
+                        $trialProgramCount}}
                     </sup>
                     <div>
                         <span class="d-inline-block h-26 w-26">{!! file_get_contents(public_path('icons/people.svg')) !!}</span>

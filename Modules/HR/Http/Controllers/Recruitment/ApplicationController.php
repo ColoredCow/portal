@@ -105,8 +105,12 @@ abstract class ApplicationController extends Controller
         foreach ($strings as $string) {
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
+                ->whereHas('applicant', function ($query) use ($endYear) {
+                 $query->where('graduation_year', '=', $endYear);
+                })
                 ->whereHas('latestApplicationRound', function ($subQuery) {
                     return $subQuery->where('is_latest', true);
+                
                 })
                 ->count();
         }
@@ -114,13 +118,16 @@ abstract class ApplicationController extends Controller
         foreach ($hrRounds as $round) {
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
             ->where('status', config('constants.hr.status.in-progress.label'))
+            ->whereHas('applicant', function ($query) use ($endYear) {
+            $query->where('graduation_year', '=', $endYear);
+            })
             ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
                 return $subQuery->where('is_latest', true)
                          ->whereHas('round', function ($subQuery) use ($round) {
                              return $subQuery->where('name', $round);
                          });
             })
-            ->count();
+                ->count();
         }
         $attr['jobs'] = Job::all();
         $attr['universities'] = University::all();
