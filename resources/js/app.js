@@ -964,8 +964,7 @@ function bargraph()
 {
     var value = $("#myChart").data("target");
 	var cData = value;
-	console.log(cData.jobsTitle,cData.application)
-	 var ctx = $("#myChart");
+ var ctx = $("#myChart");
     var data = {
         labels: cData.jobsTitle,
         datasets: [
@@ -973,20 +972,20 @@ function bargraph()
                 label: [],
                 data: cData.application,
 			     backgroundColor: [
-					'rgba(102, 51, 153)'
+					'rgba(52, 144, 220)'
 				  ],
 				  borderColor: [
-					'rgba(102, 51, 153)'
+					'rgba(52, 144, 220)'
 				  ],
 				  borderWidth: 2,
 				}]
 			  };
 
-var MeSeChart = new Chart(ctx, {
+	var myBar = new Chart(ctx, {
     type: 'bar',
     data: data,
     options: {
-	 indexAxis:'y',
+	indexAxis:'y',
 	 scales: {
 		x: {
 			min:0,
@@ -1001,13 +1000,40 @@ var MeSeChart = new Chart(ctx, {
 				labels:{
 					boxWidth: 0
 				}
-			}
+			},
+			datalabels: {
+				color: 'black',
+				anchor: 'center',
+				align: 'right',
+				formatter: Math.round,
+				font: {
+				  weight: 'bold',
+				  size: 16
+				}
+			  }
+		  },
+		  animation: {
+			duration: 0,
+		  onComplete: function() {
+			var chart = this;
+			var ctx = chart.ctx;
+
+	
+			ctx.textAlign = "top";
+			ctx.textBaseline = "top";
+
+			this.data.datasets.forEach(function(dataset, i) {
+			  var meta = chart.getDatasetMeta(i);
+			  meta.data.forEach(function(bar, index) {
+				var data = dataset.data[index];
+				ctx.fillText(data, bar.x, bar.y - 5);
+			  });
+			});
 		  }
-		  
-		  
+		},
 		}
 	})
-}
+	}
 
 function resourceGuidelineEditClicked(event) {
 	let actionUrl = $(this).attr("action_url");
