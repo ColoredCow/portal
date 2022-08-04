@@ -70,8 +70,11 @@ return [
         'phone' => env('COLOREDCOW_PHONE', ''),
         'pan' => env('PAN_NUMBER', ''),
         'gstin' => env('GSTIN', ''),
-        'hsn-code' => env('HSN_CODE', ''),
         'cin-no' => env('CIN_NO', ''),
+        'hsn-code' => env('HSN_CODE', ''),
+        'correspondent-bank' => env('CORRESPONDENT_BANK', ''),
+        'correspondent-bank-swift-code' => env('CORRESPONDENT_BANK_SWIFT_CODE', ''),
+        'beneficiary-bank-of-usd' => env('BENEFICIARY_BANK_OF_USD', ''),
     ],
 
     'coloredcow-details' => [
@@ -132,11 +135,17 @@ return [
                     ],
                     'body' => [
                         'billing-person-name' => '|*billing_person_name*|',
-                        'invoice-amount' => '|*invoice_amount*|',
                         'invoice-number' => '|*invoice_number*|',
+                        'currency' => '|*currency*|',
                     ],
                 ],
             ]
+        ],
+        'invoice' => [
+            'clients' => [
+                env('CUSTOM_INVOICE_CLIENT_1', '') => 'custom-invoice-template-1'
+            ],
+            'projects' => []
         ]
     ],
 ];

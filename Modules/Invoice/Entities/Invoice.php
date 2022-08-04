@@ -22,7 +22,15 @@ class Invoice extends Model
 
     public function scopeStatus($query, $status)
     {
-        return $query->where('status', $status);
+        if (is_string($status)) {
+            return $query->where('status', $status);
+        }
+
+        if (is_array($status)) {
+            return $query->whereIn('status', $status);
+        }
+
+        return $query;
     }
 
     public function scopeYear($query, $year)
@@ -61,6 +69,15 @@ class Invoice extends Model
     {
         return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-' . '01'), (($invoiceYear + 1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '01')]);
     }
+
+    public function scopeSentBetween($query, $startDate, $endDate)
+    {
+        $query->whereDate('sent_on', '>=', $startDate);
+        $query->whereDate('sent_on', '<=', $endDate);
+
+        return $query;
+    }
+
     public function scopeApplyFilters($query, $filters)
     {
         if ($year = Arr::get($filters, 'year', '')) {
@@ -166,5 +183,25 @@ class Invoice extends Model
         } else {
             return $this->amount * $this->conversion_rate;
         }
+    }
+
+    public function getTotalAmountAttribute()
+    {
+        return $this->amount + $this->gst;
+    }
+
+    public function getTermAttribute()
+    {
+        $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
+        $currentMonthNumber = today(config('constants.timezone.indian'))->month;
+        $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $termEndDate = $this->client->getMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
+
+        if ($termStartDate->format('M') == $termEndDate->format('M')) {
+            $term = $termEndDate->format('F');
+        }
+
+        return $term;
     }
 }

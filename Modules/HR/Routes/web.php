@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::post('reports', 'ReportsController@searchBydate')->name('recruitment.report');
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
+            Route::get('Dailyapplicationcount', 'ReportsController@index')->name('recruitment.reports.index');
+            Route::get('reportsCard', 'ReportsController@showReportCard')->name('recruitment.daily-applications-count');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
                 ->only(['index', 'create', 'store', 'update', 'edit', 'destroy'])
                 ->names([
@@ -74,6 +76,8 @@ Route::middleware('auth')->group(function () {
             Route::get('job/{application}/offer-letter', 'JobApplicationController@viewOfferLetter')->name('applications.job.offer-letter');
             Route::get('internship/{application}/offer-letter', 'InternshipApplicationController@viewOfferLetter')->name('applications.internship.offer-letter');
 
+            Route::post('/store', 'JobController@storeJobdomain')->name('hr-job-domains.storeJobdomain');
+
             Route::resource('job', 'JobApplicationController')
                 ->only(['index', 'edit', 'update', 'store'])
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
@@ -90,6 +94,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/resources/{jobId}/show/', 'ResourcesController@show')->name('resources.show');
         Route::post('/category/store/', 'ResourcesController@store')->name('resources.store');
         Route::post('/resources/create/', 'ResourcesController@create')->name('resources.create');
+        Route::get('/resources/edit/', 'ResourcesController@edit')->name('resources.edit-modal');
+        Route::put('/resources/update/{resource}', 'ResourcesController@update')->name('resources.update');
+        Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
+        Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
+
+        Route::resource('employees', 'EmployeeController')
+            ->only(['index', 'show'])
+            ->names([
+                'index' => 'employees',
+                'show' => 'employees.show',
+        ]);
+        Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
