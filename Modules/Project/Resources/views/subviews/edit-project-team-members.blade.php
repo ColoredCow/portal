@@ -76,7 +76,7 @@
                         <input type="number" step="0.01" :name="`project_team_member[${index}][billing_engagement]`" v-model="projectTeamMember.pivot.billing_engagement" class="form-control">
                     </div>
                     <div class="col-1">
-                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{$project->status == 'active' ? '' : 'disabled'}} >Remove</button>
+                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{ $project->status == 'active' ? '' : 'disabled' }} >Remove</button>
                     </div>
                     <div class="d-flex mt-2 ml-9 text-light">
                         <div class="mr-2">
@@ -123,7 +123,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('updateProjectTeamMemberForm')" {{$project->status == 'active' ? '' : 'disabled'}} >Save</button>
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('updateProjectTeamMemberForm')" {{ $project->status == 'active' ? '' : 'disabled' }} >Save</button>
             </div>
         </form>
     </div>
