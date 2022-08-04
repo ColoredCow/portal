@@ -25,13 +25,12 @@
         @include('hr::evaluation.evaluation-form.knowledge')
         <div class="row py-4">
             <div class="col-12">
-
                 <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>
     @else
-        @include('hr::evaluation.evaluation-form.resume-screening.feeling')
         <div class="evaluation-stage" id="evaluationStage1">
+            @include('hr::evaluation.evaluation-form.resume-screening.feeling')
             <div class="row py-4">
                 <div class="col-12">
                     {{-- TODO: save form on click using AJAX --}}

@@ -188,7 +188,7 @@ class EvaluationController extends Controller
             ->where('round_id', $roundId);
         } else {
             $query = Segment::whereHas('round')
-            ->orWhereNull('round_id');
+            ->where('round_id', '!=', 14);
         }
 
         return $query

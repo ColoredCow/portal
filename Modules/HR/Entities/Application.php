@@ -595,9 +595,10 @@ class Application extends Model
         return route('select-appointments', $params);
     }
 
-    public function getMarksAttribute($roundId)
+    public function getMarksAttribute()
     {
-        $roundId = $roundId ?? null;
+        $applicationRound = $this->latestApplicationRound;
+        $roundId = $applicationRound ? $applicationRound->hr_round_id : null;
 
         if ($this->evaluations->isEmpty()) {
             return;

@@ -38,6 +38,8 @@ class ApplicationEvaluation extends Model
             return $query;
         }
 
-        return $query->where('application_round_id', $roundId);
+        return $query->whereHas('applicationRound', function ($query) use ($roundId) {
+            $query->where('hr_round_id', $roundId);
+        });
     }
 }
