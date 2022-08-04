@@ -1,6 +1,4 @@
 <div class="card">
-    <div class="card-header">
-    </div>
     <a id='working_days_in_month' :data-days-count='workingDaysInMonth'></a>
     <div id="project_team_member_form">
         <form  action="{{ route('project.update', $project) }}" method="POST" id="updateProjectTeamMemberForm">

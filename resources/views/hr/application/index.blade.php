@@ -22,7 +22,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-lg-2 align-self-center application-search">
+                    <div class="text-right ml-5 ml-md-0-search">
                         <button class="btn btn-info ml-2 text-white active">Search</button>
                     </div>
                 </div>
