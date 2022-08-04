@@ -110,7 +110,6 @@ abstract class ApplicationController extends Controller
                 })
                 ->whereHas('latestApplicationRound', function ($subQuery) {
                     return $subQuery->where('is_latest', true);
-                
                 })
                 ->count();
         }
