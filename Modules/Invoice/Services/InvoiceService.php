@@ -19,9 +19,11 @@ use Modules\Invoice\Emails\SendPendingInvoiceMail;
 use Illuminate\Support\Facades\App;
 use Mail;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
+use Modules\Invoice\Entities\LedgerAccount;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -127,6 +129,22 @@ class InvoiceService implements InvoiceServiceContract
         return [
             'clients' => $this->getClientsForInvoice(),
             'countries' => Country::all(),
+            'sendInvoiceEmailSubject' => optional(Setting::where([
+                'module' => 'invoice',
+                'setting_key' => config('invoice.templates.setting-key.send-invoice.subject')
+            ])->first())->setting_value,
+            'sendInvoiceEmailBody' => optional(Setting::where([
+                'module' => 'invoice',
+                'setting_key' => config('invoice.templates.setting-key.send-invoice.body')
+            ])->first())->setting_value,
+            'invoiceReminderEmailSubject' => optional(Setting::where([
+                'module' => 'invoice',
+                'setting_key' => config('invoice.templates.setting-key.invoice-reminder.subject')
+            ])->first())->setting_value,
+            'invoiceReminderEmailBody' => optional(Setting::where([
+                'module' => 'invoice',
+                'setting_key' => config('invoice.templates.setting-key.invoice-reminder.body')
+            ])->first())->setting_value,
         ];
     }
 
@@ -196,6 +214,13 @@ class InvoiceService implements InvoiceServiceContract
         $body = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first())->setting_value ?: '';
         $body = str_replace($templateVariablesForBody['billing-person-name'], optional($invoice->client->billing_contact)->first_name, $body);
         $body = str_replace($templateVariablesForBody['invoice-number'], $invoice->invoice_number, $body);
+
+        if ($invoice->client->country->initials == 'IN') {
+            $body = str_replace($templateVariablesForBody['amount'], $templateVariablesForBody['amount_paid'], $body);
+        } else {
+            $body = str_replace($templateVariablesForBody['amount'], (string) $invoice->amount, $body);
+        }
+
         $body = str_replace($templateVariablesForBody['currency'], optional($invoice->client->country)->currency_symbol, $body);
 
         return [
@@ -323,13 +348,13 @@ class InvoiceService implements InvoiceServiceContract
         $sgst = [];
         $clients = [];
         $clientAddress = [];
-        foreach ($invoices->get() as $invoice) :
+        foreach ($invoices->get() as $invoice) {
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
-        $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-        $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
-        $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
-        $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
-        endforeach;
+            $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
+            $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
+            $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
+            $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        }
 
         return [
             'invoices' => $invoices->paginate(config('constants.pagination_size')),
@@ -474,7 +499,15 @@ class InvoiceService implements InvoiceServiceContract
         $projectForInvoiceNumber = $billingLevel == 'project' ? $project : null;
         $invoiceNumber = $this->getInvoiceNumberPreview($client, $projectForInvoiceNumber, $data['sent_on'], $billingLevel);
         $billingStartMonth = $client ? $client->getMonthStartDateAttribute(1)->format('M') : $project->client->getMonthStartDateAttribute(1)->format('M');
+        if ($data['period_start_date'] ?? false) {
+            $billingStartMonth = Carbon::parse($data['period_start_date'])->format('M');
+        }
+
         $billingEndMonth = $client ? $client->getMonthEndDateAttribute(1)->format('M') : $project->client->getMonthEndDateAttribute(1)->format('M');
+        if ($data['period_end_date'] ?? false) {
+            $billingStartMonth = Carbon::parse($data['period_end_date'])->format('M');
+        }
+
         $termText = $billingStartMonth . ' - ' . $billingEndMonth;
 
         if ($billingStartMonth == $billingEndMonth) {
@@ -494,7 +527,9 @@ class InvoiceService implements InvoiceServiceContract
             'monthNumber' => $monthNumber,
             'currencyService' => $this->currencyService(),
             'monthsToSubtract' => 1,
-            'termText' => $termText
+            'termText' => $termText,
+            'periodStartDate' => $data['period_start_date'] ?? null,
+            'periodEndDate' => $data['period_end_date'] ?? null
         ];
     }
 
@@ -505,6 +540,8 @@ class InvoiceService implements InvoiceServiceContract
         $project = Project::find($data['project_id'] ?? null);
         $ccEmails = $data['cc'] ?? [];
         $bccEmails = $data['bcc'] ?? [];
+        $periodStartDate = $data['period_start_date'] ?? null;
+        $periodEndDate = $data['period_end_date'] ?? null;
 
         if (! empty($ccEmails)) {
             $ccEmails = array_map('trim', explode(',', $data['cc']));
@@ -537,7 +574,7 @@ class InvoiceService implements InvoiceServiceContract
             'subject' => $data['email_subject'] ?? null
         ];
         $invoiceNumber = str_replace('-', '', optional($client)->next_invoice_number ?: $project->next_invoice_number);
-        $invoice = $this->createInvoice($client, $project, $term);
+        $invoice = $this->createInvoice($client, $project, $term, $periodStartDate, $periodEndDate);
         Mail::queue(new SendInvoiceMail($invoice, $invoiceNumber, $email));
     }
 
@@ -628,7 +665,7 @@ class InvoiceService implements InvoiceServiceContract
         ];
     }
 
-    public function createInvoice($client, $project, $term)
+    public function createInvoice($client, $project, $term, $periodStartDate, $periodEndDate)
     {
         $term = $term ?? today(config('constants.timezone.indian'))->subMonth()->format('Y-m');
         $sentOn = today(config('constants.timezone.indian'));
@@ -641,14 +678,34 @@ class InvoiceService implements InvoiceServiceContract
             'billing_level' => $client ? 'client' : 'project',
             'sent_on' => $sentOn,
             'due_on' => $dueOn,
+            'period_start_date' => $periodStartDate,
+            'period_end_date' => $periodEndDate
         ]);
-
         $invoiceNumber = str_replace('-', '', $data['invoiceNumber']);
         $data['invoiceNumber'] = substr($data['invoiceNumber'], 0, -5);
         $pdf = App::make('snappy.pdf.wrapper');
-        $html = view('invoice::render.render', $data)->render();
+        $template = config('invoice.templates.invoice.clients.' . optional($data['client'])->name) ?: 'invoice-template';
+        $html = view(('invoice::render.' . $template), $data)->render();
         $data['receivable_date'] = $dueOn;
         $data['project_id'] = null;
+        $tax = 0;
+
+        if ($project) {
+            if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+                $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
+            } else {
+                $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+                $tax = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+            }
+        } else {
+            if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
+                $amount = $client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount();
+            } else {
+                $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+                $tax = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+            }
+        }
+
         $invoice = Invoice::create([
             'project_id' => optional($project)->id,
             'client_id' => optional($client)->id ?: $project->client->id,
@@ -658,7 +715,8 @@ class InvoiceService implements InvoiceServiceContract
             'due_on' => $dueOn,
             'receivable_date' => $dueOn,
             'currency' => $client ? $client->country->currency : $project->client->country->currency,
-            'amount' => $client ? $client->getTotalPayableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects) : $project->getTotalPayableAmountForTerm($monthsToSubtract)
+            'amount' => $amount,
+            'gst' => $tax
         ]);
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
@@ -795,5 +853,49 @@ class InvoiceService implements InvoiceServiceContract
         }
 
         return Client::find($clientId, 'id')->currency;
+    }
+
+    public function getLedgerAccountData(array $data)
+    {
+        $clients = Client::with('projects')->orderBy('name')->get();
+        $client = Client::find($data['client_id'] ?? null);
+        $project = Project::find($data['project_id'] ?? null);
+
+        return [
+            'clients' => $clients,
+            'client' => $client,
+            'project' => $project,
+            'ledgerAccountData' => $project ? $project->ledgerAccounts->toArray() : ($client ? $client->ledgerAccounts->toArray() : [])
+        ];
+    }
+
+    public function storeLedgerAccountData(array $data)
+    {
+        $project = Project::find($data['project_id'] ?? null);
+        $client = Client::find($data['client_id'] ?? null);
+
+        if (! $client) {
+            return;
+        }
+
+        if ($project) {
+            $ledgerAccountsIdToDelete = LedgerAccount::where('project_id', $project->id)->pluck('id')->toArray();
+        } else {
+            $ledgerAccountsIdToDelete = LedgerAccount::where('client_id', $client->id)->pluck('id')->toArray();
+        }
+
+        foreach ($data['ledger_account_data'] as $ledgerAccountData) {
+            if ($ledgerAccountData['id'] == null) {
+                LedgerAccount::create($ledgerAccountData);
+                continue;
+            }
+
+            $ledgerAccount = LedgerAccount::find($ledgerAccountData['id']);
+            $ledgerAccount->update($ledgerAccountData);
+            $index = array_search($ledgerAccount->id, $ledgerAccountsIdToDelete);
+            unset($ledgerAccountsIdToDelete[$index]);
+        }
+
+        LedgerAccount::destroy($ledgerAccountsIdToDelete);
     }
 }

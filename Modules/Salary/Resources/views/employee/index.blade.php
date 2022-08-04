@@ -1,6 +1,6 @@
 @extends('salary::layouts.master')
 @section('content')
-    <div class="container">
+    <div class="container" id="employee_salary_form">
         <br>
         @include('hr.employees.sub-views.menu')
         <br>
@@ -9,6 +9,7 @@
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
+                </div>
             @endif
             <div class="mt-4 card">
                 <div class="card-header pb-lg-5 fz-28">
@@ -27,22 +28,40 @@
                     </div>
                     <hr class='bg-dark mx-4 pb-0.5'>
                     <br>
-                    <div class="input-group col-md-9 fz-24 ml-3"><b>Monthly Gross
-                            Salary:&nbsp;</b>{{ optional($employee->employeeSalaries->last())->monthly_gross_salary }}</div>
-                    <br>
-                    <br>
                     <div class="form-group col-md-12">
-                        <label class="leading-none fz-24 ml-4" for="grossSalary">{{ __('Monthly Gross Salary') }}</label>
-                        <input type="number" step="0.01" name="grossSalary" id="grossSalary"
-                            class="form-control w-500 ml-4" placeholder="Enter Monthly Gross Salary" value=""
-                            required>
+                        <label class="leading-none fz-24 ml-4 d-flex align-items-center" for="grossSalary">
+                            <span class="mr-1 mb-1">{{ __('Monthly Gross Salary') }}</span>
+                            <span><i class="fa fa-rupee"></i></span>
+                        </label>
+                        <input v-model="grossSalary" type="number" step="0.01" name="grossSalary" id="grossSalary" class="form-control w-500 ml-4 bg-light" placeholder="Enter Monthly Gross Salary" min="0" required>
                     </div>
                     <br>
+                    <div class="form-group col-md-12">
+                        <div class="ml-4">
+                            <salary-breakdown
+                                :salary-configs="{{ json_encode($salaryConfigs) }}"
+                                :gross-salary="grossSalary"
+                            ></salary-breakdown>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-footer bg-light">
-                <button type="submit" class="btn btn-primary ml-7">Save</button>
+                <button type="submit" class="btn btn-primary ml-7 px-4">Save</button>
             </div>
         </form>
     </div>
+@endsection
+
+@section('js_scripts')
+    <script>
+        new Vue({
+            el: '#employee_salary_form',
+            data() {
+                return {
+                    grossSalary: "{{ optional($employee->employeeSalaries->last())->monthly_gross_salary }}"
+                }
+            }
+        });
+    </script>
 @endsection

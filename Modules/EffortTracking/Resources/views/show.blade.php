@@ -25,17 +25,18 @@
                         </h2>
                     </div>
             </div>
-            <div class="effort-tracking-data">
-                <div class="d-flex flex-row p-5 d-flex justify-content-center">
-                    <div class="d-flex flex-column mr-3 form-group">
-                        <label>Start date</label>
-                        <input type="date" name="start_date" disabled="disabled"
-                            value="{{ $startDate->toDateString() }}">
-                    </div>
-                    <div class="d-flex flex-column ml-3">
-                        <label>End date</label>
-                        <input type="date" name="end_date" disabled="disabled" value="{{ $endDate->toDateString() }}">
-                    </div>
+
+        </div>
+        <div class="effort-tracking-data">
+            <div class="d-flex flex-row p-5 d-flex justify-content-center">
+                <div class="d-flex flex-column mr-3 form-group">
+                    <label>Start date</label>
+                    <input type="text" name="start_date" disabled="disabled" value="{{ $startDate->format('d-F-Y') }}">
+                </div>
+                <div class="d-flex flex-column ml-3">
+                    <label>End date</label>
+                    <input type="text" name="end_date" disabled="disabled" value="{{ $endDate->format('d-F-Y') }}">
+
                 </div>
                 @if ($project->current_hours_for_month === 0)
                     <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>
@@ -60,7 +61,7 @@
                             data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
                         @if ($project->last_updated_at)
                             <div class="fz-14 float-right mr-3 mt-1">
-                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . $project->last_updated_at }}
+                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . (Carbon\Carbon::parse($project->last_updated_at)->format('D g:i a, dS M Y'))}}
                             </div>
                         @endif
                     </h4>
@@ -105,29 +106,6 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Refresh Effort</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body py-5">
-                    <div class="text-danger">
-                        <p>
-                            Something went wrong while refreshing the efforts. <br>
-                            Please check if the effortsheet formatting is correct.
-                        </p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>

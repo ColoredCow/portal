@@ -16,34 +16,41 @@
         <div class="mt-2">
             <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" data-toggle="pill" data-target="#project-details" type="button"
+                    <a class="nav-link active" data-toggle="pill" data-target="#projectDetails" type="button"
                         role="tab" aria-selected="true">Project details</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="pill" data-target="#project-team-members" type="button"
+                    <a class="nav-link" data-toggle="pill" data-target="#projectTeamMembers" type="button"
                         role="tab" aria-selected="false">Project team members</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="pill" data-target="#project-repository" type="button"
+                    <a class="nav-link" data-toggle="pill" data-target="#projectRepository" type="button"
                         role="tab" aria-selected="false">Project repositories</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" data-toggle="pill" data-target="#projectFinancialDetails" type="button"
+                        role="tab" aria-selected="false">Project Financial Details</a>
                 </li>
             </ul>
             @include('status', ['errors' => $errors->all()])
             <div class="tab-content">
-                <div class="tab-pane fade show active mb-5" id="project-details" role="tabpanel">
+                <div class="tab-pane fade show active mb-5" id="projectDetails" role="tabpanel">
                     @include('project::subviews.edit-project-details')
                 </div>
 
-                <div class="tab-pane fade mb-5" id="project-team-members" role="tabpanel">
+                <div class="tab-pane fade mb-5" id="projectTeamMembers" role="tabpanel">
                     @include('project::subviews.edit-project-team-members')
                 </div>
 
-                <div class="tab-pane fade mb-5" id="project-repository" role="tabpanel">
+                <div class="tab-pane fade mb-5" id="projectRepository" role="tabpanel">
                     @include('project::subviews.edit-project-repository')
+                </div>
+
+                <div class="tab-pane fade mb-5" id="projectFinancialDetails" role="tabpanel">
+                    @include('project::subviews.edit-project-financial-details')
                 </div>
             </div>
         </div>
-        @include('project::subviews.modal-success')
     </div>
 @endsection
 
@@ -52,10 +59,10 @@
     <script>
         new Vue({
             el: '#view_edit_project',
-
             data() {
                 return {
                     project: @json($project),
+                    projectType: "{{ $project->type }}",
                     projectTeamMembers: @json($projectTeamMembers),
                     projectRepositories: @json($projectRepositories),
                     workingDaysInMonth: @json($workingDaysInMonth),
@@ -65,8 +72,6 @@
             },
 
             methods: {
-                showAlert() {},
-
                 defaultProjectTeamMember() {
                     return {
                         id: new Date().getTime(),
@@ -99,7 +104,7 @@
                             $('.save-btn').attr('disabled', false);
                             $('#project-details-update-message').addClass('d-block');
                             $('#project-details-update-message').removeClass('d-none');
-                            $('#modal-success').modal('show');
+                            this.$toast.success('Project details updated!');
                         })
                         .catch((error) => {
                             $('#project-details-update-message').removeClass('d-block');
@@ -112,7 +117,7 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            $('#modal-success').modal('show');
+                            this.$toast.success('Project details updated!');
                         })
                 },
 
@@ -129,6 +134,30 @@
                 removeProjectRepository(index) {
                     this.projectRepositories.splice(index, 1);
                 },
+
+                updateStartDateForTeamMember($event, index) {
+                    newDate = $event.target.value;
+                    this.projectTeamMembers[index]['pivot']['started_on'] = newDate;
+                },
+
+                updateEndDateForTeamMember($event, index) {
+                    newDate = $event.target.value;
+                    this.projectTeamMembers[index]['pivot']['ended_on'] = newDate;
+                },
+
+                updatedDailyExpectedEffort($event, index, numberOfDays) {
+                    value = $event.target.value;
+                    this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
+                }
+            },
+
+            filters: {
+                toDate: function(timestamp) {
+                    if (timestamp == null) {
+                        return timestamp;
+                    }
+                    return timestamp.substring(0,10);
+                }
             },
 
             mounted() {},

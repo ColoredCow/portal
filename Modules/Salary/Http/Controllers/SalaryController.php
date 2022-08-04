@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\Salary\Entities\EmployeeSalary;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\Salary\Entities\SalaryConfiguration;
 
 class SalaryController extends Controller
 {
@@ -33,8 +34,12 @@ class SalaryController extends Controller
     public function employee(Request $request, Employee $employee)
     {
         $this->authorize('view', EmployeeSalary::class);
+        $salaryConfigs = SalaryConfiguration::formatAll();
 
-        return view('salary::employee.index')->with('employee', $employee);
+        return view('salary::employee.index')->with([
+            'employee'=> $employee,
+            'salaryConfigs' => $salaryConfigs
+        ]);
     }
 
     public function storeSalary(Request $request, Employee $employee)

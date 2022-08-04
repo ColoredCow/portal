@@ -1,6 +1,6 @@
 <template>
     <div class="modal" tabindex="-1" role="dialog" id="update_role_permissions_modal">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Permissions granted to: <b>{{ this.role.label }}</b></h5>
@@ -9,16 +9,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group" >
+                    <ul class="list-group">
                         <li v-for="(permission, index) in permissions" class="list-group-item" :key="index">
                             <div class="form-check">
-                                <label class="form-check-label" style="cursor: pointer;">
-                                    <input 
+                                <label class="form-check-label c-pointer">
+                                    <input
                                         type="checkbox"
-                                        style="cursor: pointer;"
-                                        class="book_category_input" 
+                                        class="book_category_input c-pointer"
                                         :data-permission="permission.name"
-                                        :value="permission.id"> {{ permission.name }}
+                                        :value="permission.id"
+									/>
+									{{ permission.name }}
                                 </label>
                             </div>
                         </li>
@@ -37,17 +38,17 @@
 
 <script>
 export default {
-       
+
 	props:["role", "permissions", "updateRoute"],
 
 	data(){
-		return { 
+		return {
 			permissionInputs:[]
-		};  
+		};
 	},
 
 	methods: {
-          
+
 		setupUserPermissions: function() {
 			let permissions = this.role.permissions;
 			if(!permissions) {
@@ -80,15 +81,13 @@ export default {
 			});
 
 			document.getElementById("update_role_permissions_modal").click();
-
 			this.$emit("rolePermissionsUpdated", selectedPermissions);
-
-
+			this.$toast.success(" User permission updated successfully!");
 		}
 	},
 
-	watch: { 
-		role: function(selectedRole) { 
+	watch: {
+		role: function(selectedRole) {
 			this.setupUserPermissions();
 		}
 	},
