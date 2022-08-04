@@ -23,7 +23,10 @@
                             <input type="email" name="to" id="sendTo"
                                 class="form-control" required>
                         </div>
-                        <input type="hidden" name="to_name" id="sendToName" class="form-control" required>
+                        <div class="form-group col-md-12">
+                            <label class="leading-none" for="sendToName">{{ __('Receiver Name') }}</label>
+                            <input type="text" name="to_name" id="sendToName" class="form-control" required>
+                        </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="cc">
                                 {{ __('CC') }} 
@@ -59,6 +62,7 @@
                         </div>
                         <div class="form-group ml-1">
                             <input type="hidden" name="client_id" id="clientId" value="">
+                            <input type="hidden" name="project_id" id="projectId" value="">
                             <input type="hidden" name="term" value="{{ $year . '-' . $month }}">
                             <input type="submit" id="sendInvoiceBtn" class="btn btn-success text-light" value="Send Invoice" disabled>
                         </div>

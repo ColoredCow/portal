@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Project\Entities\ProjectBillingDetail;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -23,7 +24,7 @@ class ProjectService implements ProjectServiceContract
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
         ];
-        $data['projects'] = $data['projects'] ?? 'all-projects';
+        $data['projects'] = $data['projects'] ?? 'my-projects';
 
         $clients = null;
 
@@ -32,7 +33,7 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters)->orderBy('name', 'asc');
             })->whereHas('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters);
-            })->orderBy('name')->get();
+            })->orderBy('name')->paginate(config('constants.pagination_size'));
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->count();
@@ -53,7 +54,7 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 });
-            })->get();
+            })->orderBy('name')->paginate(config('constants.pagination_size'));
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
@@ -72,7 +73,7 @@ class ProjectService implements ProjectServiceContract
         }
 
         return [
-            'clients' => $clients,
+            'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
             'haltedProjectsCount' => $haltedProjectsCount
@@ -91,9 +92,10 @@ class ProjectService implements ProjectServiceContract
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
             'status' => 'active',
-            'start_date' => date('Y-m-d'),
-            'end_date' => date('Y-m-d'),
+            'start_date' => $data['start_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
@@ -117,7 +119,7 @@ class ProjectService implements ProjectServiceContract
 
     public function getClients()
     {
-        return Client::where('status', 'active')->get();
+        return Client::where('status', 'active')->orderBy('name')->get();
     }
 
     public function getTeamMembers()
@@ -156,6 +158,9 @@ class ProjectService implements ProjectServiceContract
 
             case 'project_repository':
                 return $this->updateProjectRepositories($data, $project);
+
+            case 'project_financial_details':
+                return $this->updateProjectFinancialDetails($data, $project);
         }
     }
 
@@ -168,9 +173,10 @@ class ProjectService implements ProjectServiceContract
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
-            'start_date' => date('Y-m-d'),
-            'end_date' => date('Y-m-d'),
+            'start_date' => $data['start_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -196,6 +202,14 @@ class ProjectService implements ProjectServiceContract
         }
 
         return $isProjectUpdated;
+    }
+
+    private function updateProjectFinancialDetails($data, $project)
+    {
+        ProjectBillingDetail::updateOrCreate(
+            ['project_id' => $project->id],
+            $data
+        );
     }
 
     private function updateProjectTeamMembers($data, $project)
@@ -224,6 +238,9 @@ class ProjectService implements ProjectServiceContract
                     'team_member_id' => $teamMemberData['team_member_id'],
                     'designation' => $teamMemberData['designation'],
                     'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
+                    'started_on' => $teamMemberData['started_on'] ?? now(),
+                    'ended_on' => $teamMemberData['ended_on'],
+                    'billing_engagement' => $teamMemberData['billing_engagement'],
                 ]);
             }
         }
@@ -259,10 +276,11 @@ class ProjectService implements ProjectServiceContract
 
         return sprintf('%03s', $clientProjectsCount);
     }
+
     public function getWorkingDays($project)
     {
-        $startDate = $project->client->client_month_start_date;
-        $endDate = $project->client->client_month_end_date;
+        $startDate = $project->client->month_start_date;
+        $endDate = $project->client->month_end_date;
         $period = CarbonPeriod::create($startDate, $endDate);
         $numberOfWorkingDays = 0;
         $weekend = ['Saturday', 'Sunday'];
@@ -274,6 +292,7 @@ class ProjectService implements ProjectServiceContract
 
         return $numberOfWorkingDays;
     }
+
     public function saveOrUpdateProjectContract($data, $project)
     {
         if ($data['contract_file'] ?? null) {

@@ -4,6 +4,7 @@
 <div class="container" id="vueContainer">
     <br>
     @include('hr.menu')
+    @include('hr.application.total-application-count-modal')
     <br>
     <form class="form" action="/{{ Request::path() }}">
         <div class="row">
@@ -21,7 +22,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-lg-2 align-self-center application-search">
+                    <div class="text-right ml-5 ml-md-0-search">
                         <button class="btn btn-info ml-2 text-white active">Search</button>
                     </div>
                 </div>
@@ -50,7 +51,8 @@
                     </option>
                     @foreach ($jobs as $job)
                     <option value="{{ $job->id }}" {{ request()->get('hr_job_id') == $job->id ? 'selected' : '' }}>
-                        {{ $job->title }} </option>
+                        {{ $job->title }}
+                    </option>
                     @endforeach
                 </select>
             </div>
@@ -67,6 +69,18 @@
                     @endforeach
                 </select>
             </div>
+            {{-- Commenting, because we need to brainstorm on this feature a bit --}}
+            {{--<div class="mr-2 mt-2 mt-md-0 form-group">
+                <label id="sortby">{!! __('SortBy') !!}</label><br>
+                <select class="fz-14 fz-lg-16 w-120 w-140 form-control rounded border-0 bg-white" name="sort_by" id="sortby"
+                    onchange="this.form.submit()">
+                    <option value="" {{ request()->has('sort_by') ? '' : 'selected' }}>
+                        {!! __('SortBy') !!}
+                        <option value="name">Name</option>
+                        <option value="date">Date</option>
+                    </option>
+                </select>
+            </div>--}}
         </div>
     </form>
     @include('hr.application.filter-modal')
@@ -85,7 +99,9 @@
         
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $hr_university_id = request()->has('hr_university_id') ? '&hr_university_id=' . request('hr_university_id') : '';
-        $query_filters = $hr_job_id .  $search . $hr_university_id 
+
+        $sort_by = request()->has('sort_by') ? '&sort_by=' . request('sort_by') : '';
+        $query_filters = $hr_job_id . $search . $hr_university_id . $sort_by
     @endphp
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
@@ -196,7 +212,7 @@
     @endif
 
     <table class="table table-striped table-bordered" id="applicants_table">
-        <thead>
+        <thead class="thead-dark sticky-top">
             <th>Name</th>
             <th>Details</th>
             <th>

@@ -76,6 +76,7 @@ return [
     'default' => [
         'email' => env('HR_DEFAULT_FROM_EMAIL', 'portal@coloredcow.com'),
         'name' => env('HR_DEFAULT_FROM_NAME', 'ColoredCow Portal Careers'),
+        'non-verified-email' => env('HR_MAIL_TO_NON_VERIFIED_APPLICANTS', 'pankaj.kandpal@coloredcow.in'),
     ],
     'interview-time-format' => 'h:i a',
     'no-show-hours-limit' => 2,
@@ -165,4 +166,8 @@ return [
         'salary-expectation-mismatch' => 'Salary expectation mismatch',
         'not-enough-knowledge-inclination-for-coloredcow' => 'Not enough knowledge/inclination for ColoredCow',
     ],
+    'verified_application_date' =>[
+        'start_date' => '2022-07-06'
+    ],
+    'non-verified-application-start-date' => '2022-07-06',
 ];

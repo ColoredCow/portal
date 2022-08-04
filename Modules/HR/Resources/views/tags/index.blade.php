@@ -13,9 +13,10 @@
         </div>
     </div>
     <br>
-    <div class="table-responsive">
+    <div>
         <table class="table table-striped table-bordered" id="tags_table">
-            <tr>
+            <thead class="thead-dark">
+            <tr class="sticky-top">
                 <th>{{ __('Tag Name') }}</th>
                 <th>{{ __('Description') }}</th>
                 <th>{{ __('Actions') }}</th>
