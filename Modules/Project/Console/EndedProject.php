@@ -41,9 +41,10 @@ class EndedProject extends Command
     public function handle()
     {
         $service = app(ProjectService::class);
-        $getMailDetailsForProjectKeyAccountManagers = $service->getMailDetailsForProjectKeyAccountManagers();
-        foreach ($getMailDetailsForProjectKeyAccountManagers as $projectKeyAccountManager) {
-            Mail::queue(new EndedProjectMail($projectKeyAccountManager));
+        $projectsData = $service->getMailDetailsForProjectKeyAccountManagers();
+        foreach ($projectsData as $projectData) {
+            Mail::queue(new EndedProjectMail($projectData));
         }
     }
 }
+ 

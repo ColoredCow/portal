@@ -20,7 +20,7 @@ class ProjectService implements ProjectServiceContract
 {
     public function index(array $data = [])
     {
-        dd($this->getMailDetailsForProjectKeyAccountManagers());
+        
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
@@ -340,34 +340,34 @@ class ProjectService implements ProjectServiceContract
 
     public function getMailDetailsForProjectKeyAccountManagers()
     {
+
+        /*
+            [
+                1 => [
+                    [], [], [], [], []
+                ],
+                3 => [
+                    [], []
+                ]
+            ]
+        */
         $currenttime = Carbon::today(config('constants.timezone.indian'));
 
         $projects = Project::wheretype('fixed-budget')->wherestatus('active')->where('end_date','<',$currenttime)->get();
-        $projectKeyAccountManager =[];
-
-        $users = User::select('name')->get();
-        
-        $infoForMail = [];
-        foreach ($users as $user) {
-            if (empty($user)) {
-                continue;
-            }
-        }
-
+        $projectsData = [];
 
         foreach ($projects as $project) {
-            $projectKeyAccountManager[] = $project;
-            
-            if (! empty($projectKeyAccountManager)) {
-                $infoForMail[] = [
-                    'projects' => $project,
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectsData[$user->id][] = [
+                    'project' => $project,
                     'name' => $user->name,
                     'email' => $user->email,
                 ];
-            }dd($projectKeyAccountManager);
+                
+            }
         }
-        $projectDetail = Collection::make($infoForMail);
-        
-        return $projectDetail;
+        return Collection::make($projectsData);
     }
 }
+

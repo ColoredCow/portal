@@ -10,16 +10,16 @@ class EndedProjectMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $projectKeyAccountManager;
+    protected $projectsData;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(array $projectKeyAccountManager)
+    public function __construct(array $projectsData)
     {
-        $this->$projectKeyAccountManager = $projectKeyAccountManager;
+        $this->$projectsData = $projectsData;
     }
 
     /**
@@ -27,12 +27,13 @@ class EndedProjectMail extends Mailable
      *
      * @return $this
      */
-    public function build($projectKeyAccountManager)
+    public function build($projectsData)
     {
         return $this
-        ->to($this->$projectKeyAccountManager['email'])
+        ->to($this->$projectsData['email'])
         ->subject('ColoredCow Portal - Some of your projects are ended but still marked as active')
         ->view('project::mail.ended-project')
-        ->with(['$projectKeyAccountManager' => $this->$projectKeyAccountManager]);
+        ->with(['$projectsData' => $this->$projectsData]);
     }
 }
+
