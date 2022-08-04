@@ -112,7 +112,7 @@ class ReportsController extends Controller
             'TotalCount' => $totalApplicationCount,
             'jobs' => $jobs,
             'application'=>$applicationCount,
-            'chartData' => json_encode($chartData, true)
+            'chartData' => json_encode($chartData)
 
         ]);
     }
