@@ -123,7 +123,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('update_project_team_member_form')" {{ $project->status == 'active' ? '' : 'disabled' }} >Save</button>
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('updateProjectTeamMemberForm')" {{ $project->status == 'active' ? '' : 'disabled' }} >Save</button>
             </div>
         </form>
     </div>
