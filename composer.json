@@ -7,6 +7,12 @@
         "laravel"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "url": "https://github.com/logicforte/consoletvs-charts.git",
+            "type": "git"
+        }
+    ],
     "require": {
         "php": "^7.3",
         "ext-gd": "*",
@@ -14,7 +20,6 @@
         "barryvdh/laravel-snappy": "^0.4.7",
         "bordoni/phpass": "dev-main",
         "codegreencreative/laravel-samlidp": "^5.0",
-        "logicforte/consoletvs-charts": "6.*",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.4",
