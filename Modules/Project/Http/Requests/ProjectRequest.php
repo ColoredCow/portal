@@ -36,11 +36,14 @@ class ProjectRequest extends FormRequest
                     'status' => 'required|string',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
+                    'google_chat_webhook_url' => 'nullable|url',
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'contract_file' => 'nullable|mimes:pdf',
                     'billing_level' => 'required|string|in:client,project',
+                    'start_date' => 'nullable|date',
+                    'end_date' => 'nullable|date',
                 ];
                 break;
 
@@ -50,11 +53,14 @@ class ProjectRequest extends FormRequest
                     'client_id' => 'required|integer',
                     'project_manager' => 'nullable|string',
                     'effort_sheet_url' => 'nullable|active_url|max:191',
+                    'google_chat_webhook_url' => 'nullable|url',
                     'project_type' => 'required|string|in:monthly-billing,fixed-budget',
                     'total_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'monthly_estimated_hours' => 'nullable|numeric|between:0,9999.99',
                     'contract_file' => 'nullable|mimes:pdf',
                     'billing_level' => 'required|string|in:client,project',
+                    'start_date' => 'nullable|date',
+                    'end_date' => 'nullable|date',
                 ];
                 break;
 
@@ -94,6 +100,7 @@ class ProjectRequest extends FormRequest
             'invoice_email.email' => 'Email for invoice should a valid email address',
             'effort_sheet_url.max' => 'Url must be less than 191 characters',
             'effort_sheet_url.active_url' => 'Effortsheet url is not valid',
+            'google_chat_webhook_url.url' => 'Google Chat Webhook URL is not valid',
             'type.required' => 'Project type is required',
         ];
     }

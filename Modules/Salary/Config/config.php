@@ -5,8 +5,8 @@ return [
     'settings' => [
         'percentage_applies_on' => [
             'basic_salary' => 'gross_salary',
-            'employee_esi' => 'basic_salary',
-            'employer_esi' => 'basic_salary',
+            'employee_esi' => 'gross_salary',
+            'employer_esi' => 'gross_salary',
             'hra' => 'basic_salary',
             'employee_epf' => 'basic_salary',
             'employer_epf' => 'basic_salary',
@@ -28,6 +28,8 @@ return [
             'food_allowance' => 'Food Allowance',
             'employee_esi_limit' => 'Employee ESI Limit',
             'edli_charges_limit' => 'EDLI Charges Limit',
+            'health_insurance' => 'Health Insurance',
+            'employer_esi_limit' => 'Employer ESI Limit',
         ]
     ]
 ];

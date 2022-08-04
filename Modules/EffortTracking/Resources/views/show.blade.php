@@ -25,17 +25,18 @@
                         </h2>
                     </div>
             </div>
-            <div class="effort-tracking-data">
-                <div class="d-flex flex-row p-5 d-flex justify-content-center">
-                    <div class="d-flex flex-column mr-3 form-group">
-                        <label>Start date</label>
-                        <input type="date" name="start_date" disabled="disabled"
-                            value="{{ $startDate->toDateString() }}">
-                    </div>
-                    <div class="d-flex flex-column ml-3">
-                        <label>End date</label>
-                        <input type="date" name="end_date" disabled="disabled" value="{{ $endDate->toDateString() }}">
-                    </div>
+
+        </div>
+        <div class="effort-tracking-data">
+            <div class="d-flex flex-row p-5 d-flex justify-content-center">
+                <div class="d-flex flex-column mr-3 form-group">
+                    <label>Start date</label>
+                    <input type="text" name="start_date" disabled="disabled" value="{{ $startDate->format('d-F-Y') }}">
+                </div>
+                <div class="d-flex flex-column ml-3">
+                    <label>End date</label>
+                    <input type="text" name="end_date" disabled="disabled" value="{{ $endDate->format('d-F-Y') }}">
+
                 </div>
                 @if ($project->current_hours_for_month === 0)
                     <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>
@@ -60,7 +61,7 @@
                             data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
                         @if ($project->last_updated_at)
                             <div class="fz-14 float-right mr-3 mt-1">
-                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . $project->last_updated_at }}
+                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . (Carbon\Carbon::parse($project->last_updated_at)->format('D g:i a, dS M Y'))}}
                             </div>
                         @endif
                     </h4>

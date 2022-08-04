@@ -21,6 +21,7 @@
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "jgrossi/corcel": "^5.0",
         "jordikroon/google-vision": "^1.8",
+        "laravel-notification-channels/google-chat": "^1.0",
         "laravel/framework": "^8.0",
         "laravel/helpers": "^1.1",
         "laravel/legacy-factories": "^1.1",
