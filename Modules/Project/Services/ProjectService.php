@@ -71,21 +71,6 @@ class ProjectService implements ProjectServiceContract
             })->count();
         }
 
-        $clients->each(function ($client) {
-            foreach ($client->projects as $project) {
-                if (empty($project->projectContracts->first()->contract_file_path)) {
-                    $project->tag('no-contract');
-                } elseif (! empty($project->projectContracts->first()->contract_file_path)) {
-                    $project->untag('no-contract');
-                }
-                if (empty($project->effort_sheet_url)) {
-                    $project->tag('project-unavailable');
-                } elseif (! empty($project->effort_sheet_url)) {
-                    $project->untag('project-unavailable');
-                }
-            }
-        });
-
         return [
             'clients' => $clients->appends($data),
             'activeProjectsCount' => $activeProjectsCount,
@@ -113,6 +98,10 @@ class ProjectService implements ProjectServiceContract
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
+
+        if (! $project->effort_sheet_url) {
+            $project->tag('project-unavailable');
+        }
 
         if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
@@ -187,6 +176,11 @@ class ProjectService implements ProjectServiceContract
             'end_date' => date('Y-m-d'),
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
         ]);
+        if ($data['effort_sheet_url']) {
+            $project->untag('project-unavailable');
+        } else {
+            $project->tag('project-unavailable');
+        }
 
         if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
@@ -293,8 +287,9 @@ class ProjectService implements ProjectServiceContract
 
     public function saveOrUpdateProjectContract($data, $project)
     {
-        if ($data['contract_file'] ?? null) {
-            $file = $data['contract_file'];
+        $contractFile = $data['contract_file'] ?? null;
+        if ($contractFile) {
+            $file = $contractFile;
             $folder = '/contract/' . date('Y') . '/' . date('m');
             $fileName = $file->getClientOriginalName();
             $filePath = Storage::putFileAs($folder, $file, $fileName);
@@ -302,6 +297,9 @@ class ProjectService implements ProjectServiceContract
                 ['project_id' => $project->id],
                 ['contract_file_path' => $filePath]
             );
+            $project->untag('no-contract');
+        } else {
+            $project->tag('no-contract');
         }
     }
 
