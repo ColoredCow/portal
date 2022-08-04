@@ -119,23 +119,23 @@ abstract class ApplicationController extends Controller
         $jobType = $this->getApplicationType();
 
         foreach ($hrRounds as $round) {
-            $applicationCount = Application::query()->filterByJobType($jobType)
-            ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
-            ->FilterByRoundName($round)
-            ->count();
-            $hrRoundsCounts[$round] = $applicationCount;
-            $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
-            ->where('status', config('constants.hr.status.in-progress.label'))
-            ->whereHas('applicant', function ($query) use ($endYear) {
-             return $query->where('graduation_year', '=', $endYear);
-            })
-            ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
-                return $subQuery->where('is_latest', true)
-                         ->whereHas('round', function ($subQuery) use ($round) {
-                             return $subQuery->where('name', $round);
-                         });
-            })
+                $applicationCount = Application::query()->filterByJobType($jobType)
+                ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
+                ->FilterByRoundName($round)
                 ->count();
+                $hrRoundsCounts[$round] = $applicationCount;
+                $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
+                ->where('status', config('constants.hr.status.in-progress.label'))
+                ->whereHas('applicant', function ($query) use ($endYear) {
+                return $query->where('graduation_year', '=', $endYear);
+                })
+                ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
+                    return $subQuery->where('is_latest', true)
+                            ->whereHas('round', function ($subQuery) use ($round) {
+                                return $subQuery->where('name', $round);
+                            });
+                })
+                    ->count();
         }
 
         $attr['jobs'] = Job::all();
