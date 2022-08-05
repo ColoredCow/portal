@@ -274,7 +274,8 @@ class Application extends Model
      */
     public function scopeRejected($query)
     {
-        return $query->where('status', config('hr.status.rejected.label'));
+        return $query->where('status', config('hr.status.rejected.label'))
+        ->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -282,17 +283,20 @@ class Application extends Model
      */
     public function scopeClosed($query)
     {
-        return $query->where('status', config('hr.status.rejected.label'));
+        return $query->where('status', config('hr.status.rejected.label'))
+        ->orderBy('created_at', 'DESC');
     }
 
     public function scopeApproved($query)
     {
-        return $query->where('status', config('hr.status.approved.label'));
+        return $query->where('status', config('hr.status.approved.label'))
+        ->orderBy('created_at', 'DESC');
     }
 
     public function scopeOnboarded($query)
     {
-        return $query->where('status', config('hr.status.onboarded.label'));
+        return $query->where('status', config('hr.status.onboarded.label'))
+        ->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -319,7 +323,8 @@ class Application extends Model
      */
     public function scopeOnHold($query)
     {
-        return $query->where('status', config('hr.status.on-hold.label'));
+        return $query->where('status', config('hr.status.on-hold.label'))
+        ->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -330,7 +335,8 @@ class Application extends Model
         return $query->whereIn('status', [
             config('hr.status.no-show.label'),
             config('hr.status.no-show-reminded.label'),
-        ]);
+        ])
+        ->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -338,7 +344,8 @@ class Application extends Model
      */
     public function scopeSentForApproval($query)
     {
-        return $query->where('status', config('hr.status.sent-for-approval.label'));
+        return $query->where('status', config('hr.status.sent-for-approval.label'))
+        ->orderBy('created_at', 'DESC');
     }
 
     /**
