@@ -14,7 +14,7 @@ use Modules\Project\Entities\ProjectMeta;
 
 class EffortTrackingService
 {
-    public function show($project)
+    public function show(array $data, $project)
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
@@ -22,11 +22,18 @@ class EffortTrackingService
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
-        $totalEffort = $project->current_hours_for_month;
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
-        $startDate = $project->client->month_start_date;
-        $endDate = $project->client->month_end_date;
+        $currentMonth = $data['month'] ?? Carbon::now()->format('F');
+        $currentYear = $data['year'] ?? Carbon::now()->format('Y');
+        $thisMonth = date('m',strtotime($currentMonth));
+        $monthsDifference = Carbon::now()->format('m') - $thisMonth;
+        $totalYears = (Carbon::now()->format('Y') - $currentYear);
+        $totalMonths = $monthsDifference+($totalYears*12);
+        $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
+        $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
+        $totalEffort = $project->getCurrentHoursForMonthAttribute($startDate, $endDate);
+        $currentDate = now(config('constants.timezone.indian'));
 
         return [
             'project' => $project,
@@ -37,7 +44,10 @@ class EffortTrackingService
             'totalEffort' => $totalEffort,
             'startDate' => $startDate,
             'endDate' => $endDate,
-            'currentMonth' => now()->format('F'),
+            'currentMonth' => $currentMonth,
+            'currentYear' => $currentYear,
+            'totalMonths' => $totalMonths,
+            'currentDate' => $currentDate,
         ];
     }
 

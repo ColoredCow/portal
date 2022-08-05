@@ -79,6 +79,47 @@ class Project extends Model
         return $this->hasMany(ProjectContract::class);
     }
 
+    public function getExpectedHoursInMonthAttribute($startDate = null, $endDate = null)
+    {
+        $startDate = $startDate ?? $this->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
+        $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate));
+        $teamMembers = $this->getTeamMembers()->get();
+        $currentExpectedEffort = 0;
+
+        foreach ($teamMembers as $teamMember) {
+            $currentExpectedEffort += $teamMember->daily_expected_effort * $daysInMonth;
+        }
+
+        return round($currentExpectedEffort, 2);
+    }
+
+    public function getHoursBookedForMonth($monthToSubtract = 1, $startDate = null, $endDate = null)
+    {
+        $startDate = $startDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
+        $endDate = $endDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
+
+        return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
+            if (! $teamMember->projectTeamMemberEffort) {
+                return 0;
+            }
+
+            return $teamMember->projectTeamMemberEffort()
+                ->where('added_on', '>=', $startDate)
+                ->where('added_on', '<=', $endDate)
+                ->sum('actual_effort');
+        });
+    }
+
+    public function getVelocityForMonthAttribute($monthToSubtract, $startDate = null, $endDate = null)
+    {
+        $startDate = $startDate ?? $this->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
+
+        return round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2);
+
+    }
+
     public function getCurrentHoursForMonthAttribute()
     {
         $teamMembers = $this->getTeamMembers()->get();
