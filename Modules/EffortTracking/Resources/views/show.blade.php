@@ -59,11 +59,11 @@
                         <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
                             data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
                             <div class="fz-14 float-right">&nbsp;&nbsp;&nbsp;
-                                <strong>Last refreshed at: </strong>{{(Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format(' Y-M-d , D h:i:s A'))}}
+                            <strong>Last refreshed at:</strong>{{(Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format(' Y-M-d , D h:i:s A'))}}
                             </div > 
                             <div class="fz-14 float-right">
                             <strong>Timeline:</strong>{{(Carbon\Carbon::parse($project->client->month_start_date )->format('dS M'))}}                       
-                            {{(Carbon\Carbon::parse($project->client->month_end_date)->format('dS M'))}}              
+                            -{{(Carbon\Carbon::parse($project->client->month_end_date)->format('dS M'))}}              
                             </div>
                     </h4>
                 </div>
