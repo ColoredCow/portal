@@ -1465,8 +1465,8 @@ function bargraph() {
 				onComplete: function() {
 					var chart = this;
 					var ctx = chart.ctx;
-					ctx.textAlign = 'top';
-					ctx.textBaseline ='middle';
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
 					ctx.font = "13px Arial";
 					this.data.datasets.forEach(function(dataset, i) {
 						var meta = chart.getDatasetMeta(i);
