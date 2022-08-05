@@ -105,6 +105,7 @@ abstract class ApplicationController extends Controller
         $hrRoundsCounts = [];
 
         foreach ($strings as $string) {
+            $endYear = request()->get('end-year');
             $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
                 ->whereHas('applicant', function ($query) use ($endYear) {
@@ -119,6 +120,7 @@ abstract class ApplicationController extends Controller
         $jobType = $this->getApplicationType();
 
         foreach ($hrRounds as $round) {
+            $endYear = request()->get('end-year');
             $applicationCount = Application::query()->filterByJobType($jobType)
             ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
             ->FilterByRoundName($round)
