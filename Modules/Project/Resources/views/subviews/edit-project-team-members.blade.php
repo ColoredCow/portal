@@ -60,7 +60,7 @@
                         </select>
                     </div>
                     <div class="col-1 daily-effort-div" >
-                        <input type="number" v-model="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">
+                        <input type="number" v-model="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort" on:keyup ="all()">
                     </div>
 
                     <div class="col-1 weekly-effort-div">
