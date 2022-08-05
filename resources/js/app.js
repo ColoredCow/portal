@@ -1411,13 +1411,14 @@ function barChart() {
 		options: options
 	});
 }
+
 function bargraph() {
 	var value = $("#myChart").data("target");
 	var cData = value;
 	var ctx = $("#myChart");
 	var data = {
-	  labels: cData.jobsTitle,
-	  datasets: [{
+		labels: cData.jobsTitle,
+	  	datasets: [{
 			label: [],
 			data: cData.application,
 			backgroundColor: ["rgba(52, 144, 220)"],
@@ -1426,10 +1427,11 @@ function bargraph() {
 		},
 	],
 };
+
 var myBar = new Chart(ctx, {
 	type: "bar",
-	 data: data,
-	 options: {
+	data: data,
+	options: {
 		indexAxis: "y",
 		scales: {
 			x: {
