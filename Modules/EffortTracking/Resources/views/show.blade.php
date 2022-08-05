@@ -64,7 +64,7 @@
                             </div > 
                             <div class="fz-14 float-right">
                             <strong>Timeline:</strong>{{(Carbon\Carbon::parse($project->client->month_start_date )->format('dS M'))}}                       
-                            -{{(Carbon\Carbon::parse($project->client->month_end_date)->format('dS M'))}}              
+                            -{{(Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}              
                             </div>
                     </h4>
                 </div>
