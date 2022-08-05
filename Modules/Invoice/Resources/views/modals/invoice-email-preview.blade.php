@@ -16,16 +16,16 @@
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="sendFrom">{{ __('From') }}</label>
                             <input type="email" name="from" id="sendFrom"
-                                class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}" required>
+                                class="form-control" value="{{ config('invoice.mail.send-invoice.email') }}">
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="sendTo">{{ __('To') }}</label>
                             <input type="email" name="to" id="sendTo"
-                                class="form-control" required>
+                                class="form-control" >
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="sendToName">{{ __('Receiver Name') }}</label>
-                            <input type="text" name="to_name" id="sendToName" class="form-control" required>
+                            <input type="text" name="to_name" id="sendToName" class="form-control" >
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="cc">
@@ -48,7 +48,7 @@
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>
                             <input type="text" name="email_subject" id="emailSubject"
-                                class="form-control" value="{{ $sendInvoiceEmailSubject }}" required>
+                                class="form-control" value="{{ $sendInvoiceEmailSubject }} ">
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="emailBody">{{ __('Body') }}</label>
@@ -60,9 +60,11 @@
                             <input type="checkbox" id="verifyInvoice" class="c-pointer"> 
                             <label for="verifyInvoice" class="c-pointer">{{ __("I've verified the Invoice data.") }}</label>
                         </div>
+                        <div class="alert alert-danger d-none pr-0.83" id="errorMessage">
+                            <strong id="errors"></strong>
+                        </div>
                         <div class="form-group ml-1">
                             <input type="hidden" name="client_id" id="clientId" value="">
-                            <input type="hidden" name="project_id" id="projectId" value="">
                             <input type="hidden" name="term" value="{{ $year . '-' . $month }}">
                             <input type="submit" id="sendInvoiceBtn" class="btn btn-success text-light" value="Send Invoice" disabled>
                         </div>

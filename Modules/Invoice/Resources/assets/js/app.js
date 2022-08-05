@@ -99,11 +99,38 @@ $(document).ready(function(){
 	});
 	
 	$("#sendInvoiceForm").on("submit", function (event) {
-		event.preventDefault();
+		$('sendInvoiceBtn').prop('disabled', true)
 		$("#sendInvoiceBtn").attr("disabled", true);
-		if(validateFormData(event.target)) {
-			event.target.submit();
-		}
+        event.preventDefault();
+		let form =$("#sendInvoiceForm");
+        $('#emailPreview').on('hidden.bs.modal', function () {
+            $(this).find('form').trigger('reset');
+            $("#errors").addClass('d-none');
+			$("#errorMessage,#Invoicesuccess").addClass('d-none');
+        })
+        $.ajax({
+            type: form.attr("method"),
+            url: form.attr("action"),
+            data: form.serialize(),
+			success:function(response) {
+				location.reload();
+				$("#emailPreview").modal("hide");
+				$("#Invoicesuccess").toggleClass("d-none");
+				$("#Invoicesuccess").fadeToggle(9000);
+				window.scrollTo(0, 0);
+            },
+            error: function(response) {
+                $("#errors").empty();
+                $("#errorMessage, #errors").removeClass('d-none');
+                let errors = response.responseJSON.errors;
+                for (let error in errors) {
+                    console.log(errors[error]);
+                    $('#errors').append("<li class='text-danger'>" + errors[error] + "</li>");
+                }
+                $("#sendInvoiceBtn").attr("disabled", false);
+            },  
+        });
+
 	});
 
 	$("#sendInvoiceReminderForm").on("submit", function (event) {
@@ -113,11 +140,6 @@ $(document).ready(function(){
 			event.target.submit();
 		}
 	});
-	window.setTimeout(function() {
-		$(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-			$(this).remove(); 
-		});
-	}, 6000);
 });
 
 function validateFormData(form) {

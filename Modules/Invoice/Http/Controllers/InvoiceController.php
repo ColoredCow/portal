@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\App;
 use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
+use Modules\Invoice\Http\Requests\InvoiceValidatorRequest;
 class InvoiceController extends Controller
 {
     use AuthorizesRequests;
@@ -185,7 +185,7 @@ class InvoiceController extends Controller
         return redirect()->back()->with('status', 'Invoice saved successfully.');
     }
 
-    public function sendInvoice(Request $request)
+    public function sendInvoice(InvoiceValidatorRequest $request)
     {
         $this->service->sendInvoice($request->all());
 

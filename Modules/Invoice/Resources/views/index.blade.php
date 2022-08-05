@@ -28,6 +28,11 @@
                 <a class="nav-link {{ (request()->input('invoice_status', 'sent') == 'sent') ? 'active' : '' }}" href="{{ route('invoice.index', $request) }}">Sent</a>
             </li>
         </ul>
+        <div class="d-none alert alert-success " id="Invoicesuccess" role="alert">
+            <strong>Updated!</strong> Invoice sent successfully.
+            <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
+            </button>
+        </div>
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Invoices</h4>
             <span>
@@ -146,7 +151,7 @@
                             $index = 0;
                         @endphp
                         @foreach ($clientsReadyToSendInvoicesData as $client)
-                        @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
+                            @if ($client->getClientLevelProjectsBillableHoursForInvoice() == 0)
                                 @continue
                             @endif
                             @php
