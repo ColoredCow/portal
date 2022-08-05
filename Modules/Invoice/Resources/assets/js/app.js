@@ -120,16 +120,15 @@ $(document).ready(function(){
 				window.scrollTo(0, 0);
 			},
 			error: function(response) {
-                $("#errors").empty();
-                $("#errorMessage, #errors").removeClass("d-none");
-                let errors = response.responseJSON.errors;
-                for (let error in errors) {
-                    console.log(errors[error]);
-                    $("#errors").append("<li class='text-danger'>" + errors[error] + "</li>");
-                }
-                $("#sendInvoiceBtn").attr("disabled", false);
-            },  
-        });
+				$("#errors").empty();
+				$("#errorMessage, #errors").removeClass("d-none");
+				let errors = response.responseJSON.errors;
+				for (let error in errors) {
+					$("#errors").append("<li class='text-danger'>" + errors[error] + "</li>");
+				}
+				$("#sendInvoiceBtn").attr("disabled", false);
+			},  
+		});
 
 	});
 
