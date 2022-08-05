@@ -38,6 +38,8 @@
                     <input type="text" name="end_date" disabled="disabled" value="{{ $endDate->format('d-F-Y') }}">
 
                 </div>
+            </div>
+            <div>
                 @if ($project->current_hours_for_month === 0)
                     <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>
                 @else
