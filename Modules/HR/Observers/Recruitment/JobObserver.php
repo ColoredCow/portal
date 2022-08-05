@@ -22,7 +22,7 @@ class JobObserver
             return;
         }
         $job->rounds()->attach(Round::pluck('id')->toArray());
-        $job_status = $job->status;
+        $job_status = request()->status;
         $corcel = new Corcel();
         $corcel->post_title = $job->title;
         $corcel->post_content = $job->description;
@@ -55,7 +55,7 @@ class JobObserver
             return;
         }
         $corcel = new Corcel();
-        $job_status = $job->status;
+        $job_status = request()->status;
         $post = $corcel->hasMeta('hr_id', $job->id)->first();
         $corcel = $corcel->find($post->ID);
         $corcel->post_title = $job->title;

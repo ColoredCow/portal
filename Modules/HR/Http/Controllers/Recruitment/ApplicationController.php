@@ -95,7 +95,8 @@ abstract class ApplicationController extends Controller
             }
         }
 
-        $applications = $applications->whereHas('latestApplicationRound')
+        $applications = $applications
+            ->whereHas('latestApplicationRound')
             ->applyFilter($filters)
             ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
             ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
@@ -114,12 +115,13 @@ abstract class ApplicationController extends Controller
         $hrRoundsCounts = [];
 
         foreach ($strings as $string) {
-            $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
+            $query = Application::applyFilter($countFilters)
                 ->where('status', $string)
                 ->whereHas('latestApplicationRound', function ($subQuery) {
                     return $subQuery->where('is_latest', true);
-                })
-                ->count();
+                });
+
+            $attr[camel_case($string) . 'ApplicationsCount'] = $query->count();
         }
 
         $jobType = $this->getApplicationType();
@@ -148,6 +150,12 @@ abstract class ApplicationController extends Controller
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
+
+        $attr['openApplicationsCountForJobs'] = [];
+        foreach($applications as $application) {
+            $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
+            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
+        }
 
         return view('hr.application.index')->with($attr);
     }

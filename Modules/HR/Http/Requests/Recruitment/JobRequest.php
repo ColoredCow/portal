@@ -24,7 +24,6 @@ class JobRequest extends FormRequest
                 'status' => 'required|string',
                 'start_date' => 'nullable|date',
                 'end_date' => 'nullable|date',
-                'resources_required' => 'required|integer',
             ];
         }
 
@@ -42,7 +41,6 @@ class JobRequest extends FormRequest
                 'twitter_post' => 'nullable|url',
                 'linkedin_post' => 'nullable|url',
                 'rounds' => 'nullable',
-                'resources_required' => 'required|integer',
             ];
         }
 

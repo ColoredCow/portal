@@ -46,9 +46,8 @@
             </td>
             <td>
                 <a type="button" class="fa fa-edit text-theme-green" data-toggle="modal" data-target="#exampleModal{{ $job->id }}"></a>
-                <form action="{{route('recruitment.opportunities.update', $job->id)}}" method="POST" >
+                <form action="{{route('recruitment.opportunities.updateResources', $job->id)}}" method="POST" >
                     @csrf
-                    @method('PUT')
                     <div class="modal fade" id="exampleModal{{ $job->id }}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
