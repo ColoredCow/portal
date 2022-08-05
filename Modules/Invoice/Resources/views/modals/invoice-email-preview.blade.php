@@ -27,7 +27,6 @@
                             <label class="leading-none" for="sendToName">{{ __('Receiver Name') }}</label>
                             <input type="text" name="to_name" id="sendToName" class="form-control" >
                         </div>
-                        <input type="hidden" name="to_name" id="sendToName" class="form-control">
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="cc">
                                 {{ __('CC') }} 
@@ -62,10 +61,7 @@
                             <label for="verifyInvoice" class="c-pointer">{{ __("I've verified the Invoice data.") }}</label>
                         </div>
                         <div class="alert alert-danger d-none pr-0.83" id="errorMessage">
-                            {{-- <button type="button" id="InvoicePreviewModalCloseBtn" class="hahahahaha">
-                                <span aria-hidden="true">&times;</span>
-                            </button> --}}
-                            <strong id="errors"></strong>
+                             <strong id="errors"></strong>
                         </div>
                         <div class="form-group ml-1">
                             <input type="hidden" name="client_id" id="clientId" value="">
