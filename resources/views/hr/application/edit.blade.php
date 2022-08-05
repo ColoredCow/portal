@@ -1162,7 +1162,7 @@
                                                                 <div class="form-group my-2 pl-2">
                                                                     <h4>
                                                                         <span>Result: </span>
-                                                                        @if ($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
+                                                                        @if ($application->marks >= config('hr.applicationEvaluation.cutoffScore-resume-screening'))
                                                                             <span class="text-success">Passing</span>
                                                                         @else
                                                                             <span class="text-danger">Failing</span>
@@ -1185,7 +1185,7 @@
                                                                 <div class="form-group my-2 pl-2">
                                                                     <h4>
                                                                         <span>Result: </span>
-                                                                        @if ($application->marks >= config('hr.applicationEvaluation.cutoffScore'))
+                                                                        @if ($application->marks >= config('hr.applicationEvaluation.cutoffScore-telephonic-interview'))
                                                                             <span class="text-success">Passing</span>
                                                                         @else
                                                                             <span class="text-danger">Failing</span>
