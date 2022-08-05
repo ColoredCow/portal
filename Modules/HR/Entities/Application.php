@@ -282,7 +282,7 @@ class Application extends Model
      */
     public function scopeClosed($query)
     {
-        return $query->where('status', config('hr.status.rejected.label'))
+        return $query->where('status', config('hr.status.rejected.label'));
     }
 
     public function scopeApproved($query)
