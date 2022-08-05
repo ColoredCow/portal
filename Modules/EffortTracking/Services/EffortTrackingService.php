@@ -27,7 +27,7 @@ class EffortTrackingService
         $startDate = $project->client->month_start_date;
         $endDate = $project->client->month_end_date;
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
-        $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
+        $daysTillToday = count( $project->getWorkingDaysList($project->client->month_start_date, $currentDate));
 
         return [
             'project' => $project,
