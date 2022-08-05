@@ -99,37 +99,37 @@ $(document).ready(function(){
 	});
 	
 	$("#sendInvoiceForm").on("submit", function (event) {
-		$("sendInvoiceBtn").prop("disabled", true)
+		$("sendInvoiceBtn").prop("disabled", true);
 		$("#sendInvoiceBtn").attr("disabled", true);
-        event.preventDefault();
+		event.preventDefault();
 		let form =$("#sendInvoiceForm");
-        $("#emailPreview").on("hidden.bs.modal", function () {
-            $(this).find("form").trigger("reset");
-            $("#errors").addClass("d-none");
+		$("#emailPreview").on("hidden.bs.modal", function () {
+			$(this).find("form").trigger("reset");
+			$("#errors").addClass("d-none");
 			$("#errorMessage,#Invoicesuccess").addClass("d-none");
-        })
-        $.ajax({
-            type: form.attr("method"),
-            url: form.attr("action"),
-            data: form.serialize(),
+		});
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
 			success:function(response) {
 				location.reload();
 				$("#emailPreview").modal("hide");
 				$("#Invoicesuccess").toggleClass("d-none");
 				$("#Invoicesuccess").fadeToggle(9000);
 				window.scrollTo(0, 0);
-            },
-            error: function(response) {
-                $("#errors").empty();
-                $("#errorMessage, #errors").removeClass("d-none");
-                let errors = response.responseJSON.errors;
-                for (let error in errors) {
-                    console.log(errors[error]);
-                    $('#errors').append("<li class='text-danger'>" + errors[error] + "</li>");
-                }
-                $("#sendInvoiceBtn").attr("disabled", false);
-            },  
-        });
+				},
+				error: function(response) {
+					$("#errors").empty();
+					$("#errorMessage, #errors").removeClass("d-none");
+					let errors = response.responseJSON.errors;
+					for (let error in errors) {
+						console.log(errors[error]);
+						$("#errors").append("<li class='text-danger'>" + errors[error] + "</li>");
+					}
+					$("#sendInvoiceBtn").attr("disabled", false);
+				},  
+			});
 
 	});
 

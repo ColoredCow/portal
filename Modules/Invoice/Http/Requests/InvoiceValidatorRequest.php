@@ -13,7 +13,7 @@ class InvoiceValidatorRequest extends FormRequest
      */
     public function rules()
     {
-        $rules=[
+        $rules = [
             'from'=>'required|email',
             'to_name'=>'required',
             'to' => 'required|email',
@@ -22,6 +22,7 @@ class InvoiceValidatorRequest extends FormRequest
             'email_subject' => 'required|string',
             'email_body' => 'required|string'
         ];
+
         return $rules;
     }
 
