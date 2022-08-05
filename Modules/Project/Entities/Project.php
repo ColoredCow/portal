@@ -117,7 +117,6 @@ class Project extends Model
         $endDate = $endDate ?? $this->client->month_end_date;
 
         return round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2);
-
     }
 
     public function getCurrentHoursForMonthAttribute()
