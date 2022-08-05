@@ -296,7 +296,7 @@ class Application extends Model
     public function scopeOnboarded($query)
     {
         return $query->where('status', config('hr.status.onboarded.label'))
-        ->orderBy('created_at', 'DESC');
+        ->orderBy('created_at', 'DESC')
     }
 
     /**
