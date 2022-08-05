@@ -9,6 +9,7 @@ use Modules\Invoice\Entities\Invoice;
 use Modules\Invoice\Contracts\InvoiceServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Invoice\Http\Requests\InvoiceValidatorRequest;
+
 class InvoiceController extends Controller
 {
     use AuthorizesRequests;

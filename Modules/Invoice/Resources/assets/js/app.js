@@ -99,14 +99,14 @@ $(document).ready(function(){
 	});
 	
 	$("#sendInvoiceForm").on("submit", function (event) {
-		$('sendInvoiceBtn').prop('disabled', true)
+		$("sendInvoiceBtn").prop("disabled", true)
 		$("#sendInvoiceBtn").attr("disabled", true);
         event.preventDefault();
 		let form =$("#sendInvoiceForm");
-        $('#emailPreview').on('hidden.bs.modal', function () {
-            $(this).find('form').trigger('reset');
-            $("#errors").addClass('d-none');
-			$("#errorMessage,#Invoicesuccess").addClass('d-none');
+        $("#emailPreview").on("hidden.bs.modal", function () {
+            $(this).find("form").trigger("reset");
+            $("#errors").addClass("d-none");
+			$("#errorMessage,#Invoicesuccess").addClass("d-none");
         })
         $.ajax({
             type: form.attr("method"),
@@ -121,7 +121,7 @@ $(document).ready(function(){
             },
             error: function(response) {
                 $("#errors").empty();
-                $("#errorMessage, #errors").removeClass('d-none');
+                $("#errorMessage, #errors").removeClass("d-none");
                 let errors = response.responseJSON.errors;
                 for (let error in errors) {
                     console.log(errors[error]);
