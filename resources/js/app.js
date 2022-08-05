@@ -1418,66 +1418,66 @@ function bargraph() {
 	var ctx = $("#myChart");
 	var data = {
 		labels: cData.jobsTitle,
-	  	datasets: [{
-			label: [],
-			data: cData.application,
-			backgroundColor: ["rgba(52, 144, 220)"],
-			borderColor: ["rgba(52, 144, 220)"],
-			borderWidth: 2,
-		},
-	],
-};
-
-var myBar = new Chart(ctx, {
-	type: "bar",
-	data: data,
-	options: {
-		indexAxis: "y",
-		scales: {
-			x: {
-				min: 0,
-				max: 120,
-				ticks: {
-					stepSize: 10,
-				},
-			},
-		},
-		plugins: {
-			legend: {
-				labels: {
-					boxWidth: 0,
-				},
-			},
-			datalabels: 
+	  	datasets: [
 			{
-				color: "black",
-				anchor: "center",
-				align: "right",
-				formatter: Math.round,
-				font: {
-					weight: "bold",
-					size: 16,
+				label: [],
+				data: cData.application,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 2,
+			},
+		],
+	};
+
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 120,
+					ticks: {
+						stepSize: 10,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+				datalabels: {
+					color: "black",
+					anchor: "center",
+					align: "right",
+					formatter: Math.round,
+					font: {
+						weight: "bold",
+						size: 16,
+					},
+				},
+			},
+			animation: {
+				duration: 0,
+				onComplete: function() {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "top";
+					this.data.datasets.forEach(function(dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x, bar.y - 5);
+						});
+					});
 				},
 			},
 		},
-		animation: {
-			duration: 0,
-			onComplete: function() {
-				var chart = this;
-				var ctx = chart.ctx;
-				ctx.textAlign = "top";
-				ctx.textBaseline = "top";
-				this.data.datasets.forEach(function(dataset, i) {
-					var meta = chart.getDatasetMeta(i);
-					meta.data.forEach(function(bar, index) {
-						var data = dataset.data[index];
-						ctx.fillText(data, bar.x, bar.y - 5);
-					});
-				});
-			},
-		},
-	},
-});
+	});
 }
 
 $(function() {
