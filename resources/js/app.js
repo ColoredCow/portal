@@ -1424,7 +1424,7 @@ function bargraph() {
 				data: cData.application,
 				backgroundColor: ["rgba(52, 144, 220)"],
 				borderColor: ["rgba(52, 144, 220)"],
-				borderWidth: 2,
+				borderWidth: 10,
 			},
 		],
 	};
@@ -1437,9 +1437,9 @@ function bargraph() {
 			scales: {
 				x: {
 					min: 0,
-					max: 120,
+					max: 20,
 					ticks: {
-						stepSize: 10,
+						stepSize: 2,
 					},
 				},
 			},
@@ -1465,13 +1465,17 @@ function bargraph() {
 				onComplete: function() {
 					var chart = this;
 					var ctx = chart.ctx;
-					ctx.textAlign = "top";
-					ctx.textBaseline = "top";
+					ctx.textAlign = 'top';
+					ctx.textBaseline ='middle';
+					ctx.font = "13px Arial";
 					this.data.datasets.forEach(function(dataset, i) {
 						var meta = chart.getDatasetMeta(i);
 						meta.data.forEach(function(bar, index) {
 							var data = dataset.data[index];
-							ctx.fillText(data, bar.x, bar.y - 5);
+							if (data == "0") {
+								data = "";
+							}
+							ctx.fillText(data, bar.x + 5, bar.y );
 						});
 					});
 				},

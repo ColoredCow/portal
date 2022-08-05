@@ -7,5 +7,5 @@
 <div>
   <p>Total Count:<span>{{$TotalCount}}</span></p>
 </div>
-<canvas id="myChart" data-target="{{ $chartData }}" width="400" height="200"></canvas>
+<canvas id="myChart" data-target="{{ $chartData }}" width="120%" height="150px"></canvas>
 @endsection
