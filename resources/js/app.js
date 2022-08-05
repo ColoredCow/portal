@@ -1417,8 +1417,7 @@ function bargraph() {
 	var ctx = $("#myChart");
 	var data = {
 	  labels: cData.jobsTitle,
-	  datasets: [
-		{
+	  datasets: [{
 			label: [],
 			data: cData.application,
 			backgroundColor: ["rgba(52, 144, 220)"],
@@ -1427,59 +1426,57 @@ function bargraph() {
 		},
 	],
 };
-  
-	var myBar = new Chart(ctx, {
-	  type: "bar",
-	  data: data,
-	  options: {
+var myBar = new Chart(ctx, {
+	type: "bar",
+	 data: data,
+	 options: {
 		indexAxis: "y",
 		scales: {
-		  x: {
-			min: 0,
-			max: 120,
-			ticks: {
-			  stepSize: 10,
+			x: {
+				min: 0,
+				max: 120,
+				ticks: {
+					stepSize: 10,
+				},
 			},
-		  },
 		},
 		plugins: {
-		  legend: {
-			labels: {
-			  boxWidth: 0,
+			legend: {
+				labels: {
+					boxWidth: 0,
+				},
 			},
-		  },
-		  datalabels: {
-			color: "black",
-			anchor: "center",
-			align: "right",
-			formatter: Math.round,
-			font: {
-			  weight: "bold",
-			  size: 16,
+			datalabels: 
+			{
+				color: "black",
+				anchor: "center",
+				align: "right",
+				formatter: Math.round,
+				font: {
+					weight: "bold",
+					size: 16,
+				},
 			},
-		  },
 		},
 		animation: {
-		  duration: 0,
-		  onComplete: function() {
-			var chart = this;
-			var ctx = chart.ctx;
-  
-			ctx.textAlign = "top";
-			ctx.textBaseline = "top";
-  
-			this.data.datasets.forEach(function(dataset, i) {
-			  var meta = chart.getDatasetMeta(i);
-			  meta.data.forEach(function(bar, index) {
-				var data = dataset.data[index];
-				ctx.fillText(data, bar.x, bar.y - 5);
-			  });
-			});
-		  },
+			duration: 0,
+			onComplete: function() {
+				var chart = this;
+				var ctx = chart.ctx;
+				ctx.textAlign = "top";
+				ctx.textBaseline = "top";
+				this.data.datasets.forEach(function(dataset, i) {
+					var meta = chart.getDatasetMeta(i);
+					meta.data.forEach(function(bar, index) {
+						var data = dataset.data[index];
+						ctx.fillText(data, bar.x, bar.y - 5);
+					});
+				});
+			},
 		},
-	  },
-	});
-  }
+	},
+});
+}
 
 $(function() {
 	$(".reject-reason").on("click", function() {
