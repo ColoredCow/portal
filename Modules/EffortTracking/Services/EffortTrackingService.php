@@ -27,8 +27,7 @@ class EffortTrackingService
         $startDate = $project->client->month_start_date;
         $endDate = $project->client->month_end_date;
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
-        $daysTillToday = count( $project->getWorkingDaysList($project->client->month_start_date, $currentDate));
-
+        $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
         return [
             'project' => $project,
             'teamMembersEffort' => empty($teamMembersDetails['teamMembersEffort']) ? 0 : json_encode($teamMembersDetails['teamMembersEffort']),
@@ -42,7 +41,6 @@ class EffortTrackingService
             'daysTillToday' => $daysTillToday,
         ];
     }
-
     /**
      * Calculate FTE.
      * @param  int $currentHours  Current Hours.
