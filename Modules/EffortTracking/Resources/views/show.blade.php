@@ -25,17 +25,18 @@
                         </h2>
                     </div>
             </div>
-            <div class="effort-tracking-data">
-                <div class="d-flex flex-row p-5 d-flex justify-content-center">
-                    <div class="d-flex flex-column mr-3 form-group">
-                        <label>Start date</label>
-                        <input type="date" name="start_date" disabled="disabled"
-                            value="{{ $startDate->toDateString() }}">
-                    </div>
-                    <div class="d-flex flex-column ml-3">
-                        <label>End date</label>
-                        <input type="date" name="end_date" disabled="disabled" value="{{ $endDate->toDateString() }}">
-                    </div>
+
+        </div>
+        <div class="effort-tracking-data">
+            <div class="d-flex flex-row p-5 d-flex justify-content-center">
+                <div class="d-flex flex-column mr-3 form-group">
+                    <label>Start date</label>
+                    <input type="text" name="start_date" disabled="disabled" value="{{ $startDate->format('d-F-Y') }}">
+                </div>
+                <div class="d-flex flex-column ml-3">
+                    <label>End date</label>
+                    <input type="text" name="end_date" disabled="disabled" value="{{ $endDate->format('d-F-Y') }}">
+
                 </div>
                 @if ($project->current_hours_for_month === 0)
                     <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>

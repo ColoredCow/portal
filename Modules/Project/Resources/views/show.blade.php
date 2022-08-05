@@ -5,7 +5,9 @@
     <br>
     <div class="d-flex">
         <h4 class="c-pointer d-inline-block" v-on:click="counter += 1">{{ $project->name }}</h4>
-        <a id="view_effort_sheet_badge" target="_self" href="{{route('project.edit', $project )}}" class="btn btn-primary text-white ml-auto">{{ _('Edit') }}</a>
+        @can('update', $project)
+            <a id="view_effort_sheet_badge" target="_self" href="{{route('project.edit', $project )}}" class="btn btn-primary text-white ml-auto">{{ _('Edit') }}</a>
+        @endcan
     </div>
     <div class="card mt-3">
         <div class="card-header" data-toggle="collapse" data-target="#project_detail_form">
@@ -64,7 +66,7 @@
                             <label for="name" class="font-weight-bold">Effortsheet:</label>
                         </h4>
                         @if($project->effort_sheet_url)
-                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn-sm btn-primary btn-smtext-white ml-2 text-light rounded" 
+                            <a id="view_effort_sheet_badge" href="{{ $project->effort_sheet_url }}" class="btn-sm btn-primary btn-smtext-white ml-2 text-light rounded"
                                 target="_blank">{{ _('Open Sheet') }}</a>
                         @else
                             <span class="ml-2 fz-lg-22">Not Available</span>
@@ -75,9 +77,9 @@
                             <label for="name" class="font-weight-bold">Project Type:</label>
                         </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->type }}</span>
-                    </div>  
+                    </div>
                 </div>
-                <div class="form-row"> 
+                <div class="form-row">
                     @if($project->billing_level)
                         <div class="form-group col-md-6 pl-4">
                             <h4 class="d-inline-block">
@@ -86,6 +88,18 @@
                             <span class="text-capitalize ml-2 fz-lg-22">{{ config('project.meta_keys.billing_level.value.' . $project->billing_level . '.label') }}</span>
                         </div>
                     @endif
+                </div>
+                <div class="form-group col-md-6 pl-4">
+                    <h4 class="d-inline-block">
+                        <label for="name" class="font-weight-bold">Start Date:</label>
+                    </h4>
+                    <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->start_date)->format('d M Y') }}</span>
+                </div>
+                <div class="form-group col-md-6 pl-4">
+                    <h4 class="d-inline-block">
+                        <label for="name" class="font-weight-bold">End Date:</label>
+                    </h4>
+                    <span class="text-capitalize ml-2 fz-lg-22">{{ optional($project->end_date)->format('d M Y') }}</span>
                 </div>
                 <br>
                 <div class="form-row ">
@@ -106,7 +120,7 @@
                                                 <th class="pb-md-3 pb-xl-4 px-9">Name</th>
                                                 <th>Hours Booked</th>
                                                 <th>Expected Hours
-                                                    <div class="ml-lg-3 ml-xl-5 fz-md-10 fz-xl-14"> 
+                                                    <div class="ml-lg-3 ml-xl-5 fz-md-10 fz-xl-14">
                                                         ({{$daysTillToday}} Days)
                                                     </div>
                                                 </th>
@@ -120,11 +134,11 @@
                                             <tbody>
                                                 @foreach($project->getTeamMembers ?:[] as $teamMember)
                                                     <tr>
-                                                        <th class="fz-lg-20 my-2 px-5 font-weight-normal"> 
+                                                        <th class="fz-lg-20 my-2 px-5 font-weight-normal">
                                                             <span>
                                                                 <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation] }}">
                                                                 <img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
-                                                            </span>                                                                                                                                                                                                                 
+                                                            </span>
                                                             {{$teamMember->user->name}}
                                                         </th>
                                                         <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
