@@ -1319,10 +1319,10 @@
                             @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent,
                                 'hr.round-review-mail-modal',
                                 ['applicantRound' => $applicationRound])
-                            @include('hr.application.application-evaluation', [
-                                'round' => $applicationRound->round,
-                            ])
                         @endforeach
+                        @include('hr.application.application-evaluation', [
+                            'round' => $applicationRound->round,
+                        ])
                     @endif
                 </div>
             </div>

@@ -4,7 +4,15 @@ $technicalKnowledge = collect($segment)
     ->first();
 @endphp
 @foreach ($technicalKnowledge['parameters'] as $parameter)
-    @includeWhen(sizeof($parameter['children']), 'hr::evaluation.evaluation-form.resume-screening.parameter', [
+    @if (empty($parameter['children']))
+        @includeWhen(sizeof($parameter['children']),
+            'hr::evaluation.evaluation-form.resume-screening.parameter',
+            [
+                'parameter' => $parameter,
+                'parent' => [],
+            ])
+    @endif
+    @includeWhen(sizeof($parameter), 'hr::evaluation.evaluation-form.resume-screening.parameter', [
         'parameter' => $parameter,
         'parent' => [],
     ])
