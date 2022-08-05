@@ -190,9 +190,9 @@ $(document).ready(() => {
 		datePickerChart();
 		barChart();
 	}
-	 if ($("#myChart").length) {
-    bargraph();
-  }
+	if ($("#myChart").length) {
+		bargraph();
+	}
 
 	$("#save-btn-action").on("click", function() {
 		this.disabled = true;
@@ -1419,14 +1419,14 @@ function bargraph() {
 	  labels: cData.jobsTitle,
 	  datasets: [
 		{
-		  label: [],
-		  data: cData.application,
-		  backgroundColor: ["rgba(52, 144, 220)"],
-		  borderColor: ["rgba(52, 144, 220)"],
-		  borderWidth: 2,
+			label: [],
+			data: cData.application,
+			backgroundColor: ["rgba(52, 144, 220)"],
+			borderColor: ["rgba(52, 144, 220)"],
+			borderWidth: 2,
 		},
-	  ],
-	};
+	],
+};
   
 	var myBar = new Chart(ctx, {
 	  type: "bar",
@@ -1480,7 +1480,7 @@ function bargraph() {
 	  },
 	});
   }
-  
+
 $(function() {
 	$(".reject-reason").on("click", function() {
 		let reasonCheckboxInput = $(this);
