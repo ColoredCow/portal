@@ -151,11 +151,9 @@ abstract class ApplicationController extends Controller
         })->orderby('name', 'asc')->get();
 
         $attr['openApplicationsCountForJobs'] = [];
-        if (is_array($applications) || is_object($applications)) {
-            foreach ($applications as $application) {
-                $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
-                $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
-            }
+        foreach ($applications->items() as $application) {
+            $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
+            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
         }
 
         return view('hr.application.index')->with($attr);
