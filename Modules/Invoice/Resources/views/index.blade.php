@@ -1,16 +1,8 @@
 @extends('invoice::layouts.master')
 @section('content')
-    <div class="container" id="vueContainer">
-        <br>
-        <br>
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+<div class="container" id="vueContainer">
+    <br>
+    @includeWhen(session('success'), 'toast', ['message' => session('success')])
         <ul class="nav nav-pills mb-6">
             @php
                 $request = request()->all();
@@ -55,7 +47,7 @@
             </div>
         @endif
         <div>
-            @php
+            @php    
                 $month = now()->subMonth()->format('m');
                 $year = now()->subMonth()->format('Y');
                 $monthToSubtract = 1;
