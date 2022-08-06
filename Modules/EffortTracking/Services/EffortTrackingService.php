@@ -28,14 +28,9 @@ class EffortTrackingService
         $endDate = $project->client->month_end_date;
         $totalWorkingDays = count($this->getworkingDays($startDate, $endDate));
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
-      
-        
-        
+     
         return [
             'project' => $project,
-          
-            
-            
             'teamMembersEffort' => empty($teamMembersDetails['teamMembersEffort']) ? 0 : json_encode($teamMembersDetails['teamMembersEffort']),
             'users' => json_encode($teamMembersDetails['users']),
             'workingDays' => json_encode($workingDays),
