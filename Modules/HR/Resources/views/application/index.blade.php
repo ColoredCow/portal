@@ -11,7 +11,7 @@
         </div>
 
         <div class="col-md-6 text-right">
-            <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">lication</a>
+            <a href="{{ route('hr.applicant.create') }}" class="btn btn-primary text-white">Add new application</a>
             <button data-toggle="modal" data-target="#excelImport" class="btn btn-primary text-white">Import excel file</button>
         </div>
     </div>
