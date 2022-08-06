@@ -19,7 +19,6 @@ class EffortTrackingService
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
         $currentDate = now(config('constants.timezone.indian'));
-        
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
