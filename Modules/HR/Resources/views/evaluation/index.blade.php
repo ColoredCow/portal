@@ -12,11 +12,8 @@
         </div>      
     </div>
      <br>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <td>
-                </td>  
-            </tr>
+        <table class="table ">
+            
             @foreach ($rounds as $round)
                     <a >
                     @foreach ($segments as $segment)
@@ -32,9 +29,17 @@
 				<div class="form-row">
 					<div class="col-md-12">
 						<div class="form-group">
+              <div class="row">
+            <div class="col-md-10">
 							<label for="setting_key[applicant_verification_subject]">    <a href="{{ route('hr.evaluation.segment-parameters', $segment->id) }}">
                         {{ $segment->name }}
-                    </a></label>
+                        </a></label>
+</div>
+                        <div class="col-md-2">
+                    <i v-on:click="editSegment({{ $segment }})" class="fa fa-edit fz-20 text-theme-green"></i>
+                    <i class="fa fa-trash fz-20 ml-4 text-theme-red"></i>
+</div>
+</div>
             </div>
 					</div>
 				</div>  
