@@ -115,6 +115,9 @@ class Application extends Model
                 case 'job':
                     $query->filterByJob($value);
                     break;
+                case 'graduation_year':
+                    $query->filterByYear($value);
+                    break;
                 case 'university':
                     $query->filterByUniversity($value);
                     break;
@@ -194,6 +197,12 @@ class Application extends Model
         return $query->whereHas('job', function ($subQuery) use ($type) {
             $functionName = 'is' . $type;
             $subQuery->{$functionName}();
+        });
+    }
+    public function scopeFilterByYear($query, $id)
+    {
+        return $query->whereHas('applicant', function ($query) use ($id) {
+            $query->where('graduation_year','=', $id);
         });
     }
 
