@@ -25,7 +25,7 @@ class EffortTrackingService
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
-        $Month = intVal(date('m', strtotime($currentMonth)));
+        $Month = intval(date('m', strtotime($currentMonth)));
         $thisMonth = intval(Carbon::now()->format('m'));
         $monthsDifference = ($thisMonth - $Month);
         $totalYears = (Carbon::now()->format('Y') - $currentYear);
