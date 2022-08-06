@@ -199,6 +199,7 @@ class Application extends Model
             $subQuery->{$functionName}();
         });
     }
+    
     public function scopeFilterByYear($query, $id)
     {
         return $query->whereHas('applicant', function ($query) use ($id) {
