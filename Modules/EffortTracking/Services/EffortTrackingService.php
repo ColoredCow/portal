@@ -20,15 +20,15 @@ class EffortTrackingService
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
         $currentDate = now(config('constants.timezone.indian'));
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
-        $currentDate = now(config('constants.timezone.indian'))->subDay();
+            $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
         $totalEffort = $project->current_hours_for_month;
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
         $startDate = $project->client->month_start_date;
         $endDate = $project->client->month_end_date;
-        $totalWorkingDays =count($this->getworkingDays($startDate,$endDate));
+        $totalWorkingDays =count($this->getworkingDays($startDate, $endDate));
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
-         return [
+        return [
             'project' => $project,
             
             'teamMembersEffort' => empty($teamMembersDetails['teamMembersEffort']) ? 0 : json_encode($teamMembersDetails['teamMembersEffort']),
