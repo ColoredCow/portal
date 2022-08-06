@@ -210,7 +210,7 @@ class Application extends Model
     public function scopeFilterByYear($query, $id)
     {
         return $query->whereHas('applicant', function ($query) use ($id) {
-            $query->where('graduation_year','=', $id);
+            $query->where('graduation_year', $id);
         });
     }
 
