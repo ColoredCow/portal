@@ -26,7 +26,7 @@ class EffortTrackingService
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
         $thisMonth = date('m', strtotime($currentMonth));
-        $monthsDifference = Carbon::now()->format('m') - $thisMonth;
+        $monthsDifference = (Carbon::now()->format('m')) - $thisMonth;
         $totalYears = (Carbon::now()->format('Y') - $currentYear);
         $totalMonths = $monthsDifference + ($totalYears * 12);
         $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
