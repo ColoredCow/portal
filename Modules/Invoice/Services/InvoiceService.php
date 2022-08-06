@@ -19,7 +19,6 @@ use Modules\Invoice\Emails\SendPendingInvoiceMail;
 use Illuminate\Support\Facades\App;
 use Mail;
 use App\Models\Setting;
-use Carbon\Carbon;
 use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
