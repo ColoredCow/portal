@@ -1,51 +1,62 @@
 @extends('hr::layouts.master')
-@section('content')
-<div class="container" id="segments_container">
+@section('content') 
+ <div class="container" id="segments_container">
     <br>
     <br>
     <div>
         <div class="d-flex justify-content-between">
-            <h1 class="mb-0">Segments</h1>
+            <h1 class="mb-0">Rounds and Segments</h1>
             <div>
                 <button class="btn btn-primary" data-toggle="modal" data-target="#createNewSegment">Add New</button>
             </div>
         </div>      
-        <br>
-
+    </div>
+     <br>
         <table class="table table-striped table-bordered">
             <tr>
-                <th>Name</th>
-                <th>Marks</th>
-                <th>Actions</th>
-            </tr>
-            @foreach ($segments as $segment)
-            <tr>
                 <td>
-                    <a href="{{ route('hr.evaluation.segment-parameters', $segment->id) }}">
+                </td>  
+            </tr>
+            @foreach ($rounds as $round)
+                    <a >
+                    @foreach ($segments as $segment)
+                    <tr>
+                        @if($round->id == $segment->round_id )
+                        <td>
+                            <div class="card-header c-pointer" data-toggle="collapse" data-target="#applicant_verification{{$round->id}}" aria-expanded="true" aria-controls="applicant_verification"> {{$round->name}}
+                            </div>
+		                        <div id="applicant_verification{{$round->id}}" class="collapse">
+			                      <div class="card-body">
+      @foreach($segments as $segment )
+      @if($round->id == $segment->round_id )
+				<div class="form-row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="setting_key[applicant_verification_subject]">    <a href="{{ route('hr.evaluation.segment-parameters', $segment->id) }}">
                         {{ $segment->name }}
-                    </a>
-                </td>
-
-                <td>
-                    <h5>{{ $segment->parameters->sum('marks') }}</h5>
-                </td>
-
-                <td>
-                    <i v-on:click="editSegment({{ $segment }})" class="fa fa-edit fz-20 text-theme-green"></i>
-
-                    <i class="fa fa-trash fz-20 ml-4 text-theme-red"></i>
-                </td>
+                    </a></label>
+            </div>
+					</div>
+				</div>  
+      @endif             
+      @endforeach      
+      </div>
+    </div>               
+            @break
+                      @endif  
             </tr>
-            @endforeach
+                  @endforeach
+                    </a>
+                    <h5></h5>
+                </td> 
+            </tr>
+         @endforeach
         </table>
-
     </div>
-
 @include('hr::evaluation.segment.create')
 @include('hr::evaluation.segment.edit')
 </div>
 @endsection
-
 @section('js_scripts')
 <script>
     new Vue({
@@ -69,4 +80,4 @@
 
 </script>
 
-@endsection
+@endsection 

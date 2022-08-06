@@ -19,7 +19,7 @@ class EvaluationController extends Controller
     public function index(Request $request)
     {
         $segments = Segment::all();
-        $rounds = Round::select('name','id')->get();
+        $rounds = Round::select('name', 'id')->get();
 
         return view('hr::evaluation.index', [
             'segments' => $segments,
