@@ -41,7 +41,7 @@
 			@endif
 			<div>
 			@if ($application->applicant->college && $application->applicant->university)
-			<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}<a href ="{{ route('universities.edit',$application->applicant->university) }}"></span>
+			<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}<a href ="{{ route('universities.edit',$application->applicant->university) }}"target="_blank" ></span>
 			    @if($application->applicant->university->universityContacts->first() && $application->applicant->university->universityContacts->first()->phone)
 			        <span class="badge badge-pill badge-success mr-1 mb-2 float-right">See contact</span>
 		        @else
