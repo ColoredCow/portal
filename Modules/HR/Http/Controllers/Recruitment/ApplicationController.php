@@ -95,8 +95,7 @@ abstract class ApplicationController extends Controller
             }
         }
 
-        $applications = $applications
-            ->whereHas('latestApplicationRound')
+        $applications = $applications->whereHas('latestApplicationRound')
             ->applyFilter($filters)
             ->orderByRaw("FIELD(hr_application_round.scheduled_person_id, {$loggedInUserId} ) DESC")
             ->orderByRaw('ISNULL(hr_application_round.scheduled_date) ASC')
