@@ -632,11 +632,9 @@ class InvoiceService implements InvoiceServiceContract
     public function createInvoice($client, $project, $term)
     {
         $term = $term ?? today(config('constants.timezone.indian'))->subMonth()->format('Y-m');
-        $year = (int) substr($term, 0, 4);
-        $monthNumber = (int) substr($term, 5, 2);
         $sentOn = today(config('constants.timezone.indian'));
         $dueOn = today(config('constants.timezone.indian'))->addDays(6);
-        $monthsToSubtract = today()->startOfMonth()->diffInMonths(Carbon::parse($year . '-' . sprintf('%02s', $monthNumber) . '-' . '01'));
+        $monthsToSubtract = 1;
         $data = $this->getInvoiceData([
             'client_id' => optional($client)->id,
             'project_id' => optional($project)->id,
@@ -661,7 +659,7 @@ class InvoiceService implements InvoiceServiceContract
             'due_on' => $dueOn,
             'receivable_date' => $dueOn,
             'currency' => $client ? $client->country->currency : $project->client->country->currency,
-            'amount' => $client ? $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects) : $project->getBillableAmountForTerm($monthsToSubtract)
+            'amount' => $client ? $client->getTotalPayableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects) : $project->getTotalPayableAmountForTerm($monthsToSubtract)
         ]);
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';

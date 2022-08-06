@@ -164,10 +164,8 @@ class Client extends Model
         });
     }
 
-    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract)
+    public function getClientLevelProjectsBillableHoursForInvoice($monthsToSubtract = 1)
     {
-        $monthsToSubtract = $monthsToSubtract ?? 1;
-
         return $this->clientLevelBillingProjects->sum(function ($project) use ($monthsToSubtract) {
             return $project->getBillableHoursForMonth($monthsToSubtract);
         });

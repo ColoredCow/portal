@@ -156,7 +156,7 @@ class Project extends Model
         return round($this->getBillableAmountForTerm($monthToSubtract) * ($this->client->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $monthToSubtract)
+    public function getTotalPayableAmountForTerm(int $monthToSubtract = 1)
     {
         return $this->getBillableAmountForTerm($monthToSubtract) + $this->getTaxAmountForTerm($monthToSubtract);
     }
