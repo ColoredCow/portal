@@ -51,88 +51,66 @@
                     </select>
                 </div>
                 <div class="form-group ">
-                    <label for="project_invoice_id" class="field-required">Upload file</label>
-                    <div class="d-flex">
-                        <div class="custom-file mb-3">
-                            <input type="file" id="invoice_file" name="invoice_file" class="custom-file-input"
-                                required="required">
-                            <label for="customFile0" class="custom-file-label overflow-hidden">Choose file</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group ">
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="comments" rows="5" class="form-control"></textarea>
                 </div>
+                <small>Note: Please fill the email details to generate the invoice.</small>
             </div>
             <div class="col-md-5 offset-md-1">
                 <div class="form-group">
-                    <label for="project_invoice_id" class="field-required">Status</label>
-                    <select class="form-control" name="status">
-                        <option value="sent">Sent</option>
-                        <option value="paid">Paid</option>
-                    </select>
+                    <label for="term" class="field-required">Invoice Period Start Date</label>
+                    <input type="date" class="form-control" name="period_start_date" id="term" required="required" value='{{ old('period_start_date', '') }}'>
                 </div>
-                <div class="form-group mb-0">
-                    <label for="amount" class="field-required">Amount</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <select name="currency" v-model="currency" id="currency" class="input-group-text"
-                                required="required">
-                                @foreach ($countries as $country)
-                                    <option value="{{ $country->currency }}">{{ $country->currency }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <input v-model="amount" type="number" class="form-control" name="amount" id="amount"
-                            placeholder="Invoice Amount" required="required" step=".01" min="0">
-                    </div>
-                </div>
-                <div class="form-group" v-if="currency == 'INR'">
-                    <label for="gst">GST</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">INR</span>
-                        </div>
-                        <input v-model="gst" type="number" class="form-control" name="gst" id="gst" placeholder="GST"
-                            step=".01" min="0">
-                    </div>
-                </div>
-                <div class="text-danger fz-14" v-if="currency == 'INR' ">Total Amount : @{{ tot }}</div>
-                <div class="text-danger fz-14" v-if="currency == 'USD' ">Total Amount : @{{ amt }}</div>
-                <div class="text-danger fz-14 my-0" id="container"></div>
                 <div class="form-group mt-2">
-                    <label for="term" class="field-required">Invoice for term</label>
-                    <input type="month" class="form-control" name="term" id="term" required="required" value='{{ old('term', now(config('constants.timezone.indian'))->subMonth()->format('Y-m')) }}'>
-                </div>
-                <div class="form-group">
-                    <label for="sent_on" class="field-required">Sent on</label>
-                    <input type="date" class="form-control" name="sent_on" id="sent_on" required="required"
-                        value="{{ now()->format('Y-m-d') }}">
-                </div>
-                <div class="form-group">
-                    <label for="due_on" class="field-required">Due date</label>
-                    <input type="date" class="form-control" name="due_on" id="due_on" required="required"
-                        value="{{ now()->addDays(6)->format('Y-m-d') }}">
+                    <label for="term" class="field-required">Invoice Period End Date</label>
+                    <input type="date" class="form-control" name="period_end_date" id="term" required="required" value='{{ old('period_end_date', '') }}'>
                 </div>
             </div>
         </div>
     </div>
     <div class="card-footer">
-        <button type="button" class="btn btn-primary" onclick="saveInvoice(this)">Create</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#invoiceMailPreview">Create</button>
+        <button type="button" class="btn btn-primary" data-url="{{ route('invoice.generate-invoice') }}" onclick="previewInvoice(this)">Preview Invoice</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invoiceMailPreview">Email Details</button>
     </div>
 </div>
+@include('invoice::modals.custom-invoice-email-preview')
 
 
 @section('scripts')
     <script>
         const saveInvoice = (button) => {
             button.disabled = true;
-            if (!validateFormData(button.form)) {
+            form = document.getElementById('invoiceForm');
+            if (!validateFormData(form)) {
                 button.disabled = false;
                 return;
             }
+            form.submit();
+        }
+        
+        const previewInvoice = (button) => {
+            button.disabled = true;
+            $('.not-required-in-preview').map(function() {
+                return $(this).attr('required', false);
+            });
+            if (!validateFormData(button.form)) {
+                button.disabled = false;
+                $('.not-required-in-preview').map(function() {
+                    return $(this).attr('required', true);
+                });
+                return;
+            }
+            var oldUrl = button.form.action
+            button.form.setAttribute('target', '_blank');
+            button.form.action = button.dataset.url
             button.form.submit();
+            $('.not-required-in-preview').map(function() {
+                return $(this).attr('required', true);
+            });
+            button.form.removeAttribute('target');
+            button.disabled = false;
+            button.form.action = oldUrl;
         }
 
         const validateFormData = (form) => {
@@ -156,6 +134,7 @@
                     currency: '',
                     amount: '',
                     showProjects: false,
+                    previewInvoiceUrl: "{{ route('invoice.preview-custom-invoice') }}"
                 }
             },
 

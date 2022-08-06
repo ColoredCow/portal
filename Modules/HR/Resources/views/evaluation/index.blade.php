@@ -4,6 +4,13 @@
     <br>
     <br>
     <div>
+        
+        <div class="d-none alert alert-success fade show" role="alert" id="segmentsuccess">
+            <strong>Success!!!</strong>Congratulations!!! New segment successfully created.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">Segments</h1>
             <div>

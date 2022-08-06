@@ -152,26 +152,26 @@ class Project extends Model
         return round($expectedMonthlyHours, 2);
     }
 
-    public function getBillableAmountForTerm(int $monthToSubtract = 1)
+    public function getBillableAmountForTerm(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        return round($this->getBillableHoursForMonth($monthToSubtract) * $this->client->billingDetails->service_rates, 2);
+        return round($this->getBillableHoursForMonth($monthToSubtract, $periodStartDate, $periodEndDate) * $this->client->billingDetails->service_rates, 2);
     }
 
-    public function getTaxAmountForTerm($monthToSubtract = 1)
+    public function getTaxAmountForTerm($monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
         // Todo: Implement tax calculation correctly as per the GST rules
-        return round($this->getBillableAmountForTerm($monthToSubtract) * ($this->client->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
+        return round($this->getBillableAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) * ($this->client->country->initials == 'IN' ? config('invoice.tax-details.igst') : 0), 2);
     }
 
-    public function getTotalPayableAmountForTerm(int $monthToSubtract = 1)
+    public function getTotalPayableAmountForTerm(int $monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        return $this->getBillableAmountForTerm($monthToSubtract) + $this->getTaxAmountForTerm($monthToSubtract) + optional($this->client->billingDetails)->bank_charges;
+        return $this->getBillableAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + $this->getTaxAmountForTerm($monthToSubtract, $periodStartDate, $periodEndDate) + optional($this->client->billingDetails)->bank_charges;
     }
 
-    public function getBillableHoursForMonth($monthToSubtract = 1)
+    public function getBillableHoursForMonth($monthToSubtract = 1, $periodStartDate = null, $periodEndDate = null)
     {
-        $startDate = $this->client->getMonthStartDateAttribute($monthToSubtract);
-        $endDate = $this->client->getMonthEndDateAttribute($monthToSubtract);
+        $startDate = $periodStartDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
+        $endDate = $periodEndDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
 
         return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
             if (! $teamMember->projectTeamMemberEffort) {
