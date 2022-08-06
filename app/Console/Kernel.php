@@ -42,8 +42,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
-        $schedule->command('project:remind-to-update-effort')->dailyAt('19:00');
-        $schedule->command('project:send-daily-effort-summary-google-chat')->dailyAt('21:00');
+        $schedule->command('project:remind-to-update-effort')->weekdays()->at('19:00');
+        $schedule->command('project:send-daily-effort-summary-google-chat')->weekdays()->at('22:30');
     }
 
     /**
