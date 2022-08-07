@@ -170,4 +170,5 @@ return [
         'start_date' => '2022-07-06'
     ],
     'non-verified-application-start-date' => '2022-07-06',
+    'follow-up-attempts-threshold' => '2',
 ];
