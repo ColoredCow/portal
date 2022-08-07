@@ -2,6 +2,7 @@
 
 namespace Modules\Expense\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -59,13 +60,10 @@ class ExpenseServiceProvider extends ServiceProvider
     public function registerViews()
     {
         $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
-
         $sourcePath = module_path($this->moduleName, 'Resources/views');
-
         $this->publishes([
             $sourcePath => $viewPath
         ], ['views', $this->moduleNameLower . '-module-views']);
-
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
 
@@ -77,7 +75,6 @@ class ExpenseServiceProvider extends ServiceProvider
     public function registerTranslations()
     {
         $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
-
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
         } else {
@@ -110,7 +107,7 @@ class ExpenseServiceProvider extends ServiceProvider
     private function getPublishableViewPaths(): array
     {
         $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
+        foreach (Config::get('view.paths') as $path) {
             if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
