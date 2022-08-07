@@ -5,7 +5,6 @@ namespace Modules\HR\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class sendThreshholdFollowUp extends Mailable
 {
@@ -19,7 +18,7 @@ class sendThreshholdFollowUp extends Mailable
      */
     public function __construct($applications)
     {
-        $this->applications=$applications;
+        $this->applications = $applications;
     }
 
     /**
@@ -30,7 +29,7 @@ class sendThreshholdFollowUp extends Mailable
     public function build()
     {
         return $this->from(config('hr.default.email'), config('hr.default.name'))
-            ->subject("HR followUp Email")
+            ->subject('HR followUp Email')
             ->view('hr::application.followups');
     }
 }

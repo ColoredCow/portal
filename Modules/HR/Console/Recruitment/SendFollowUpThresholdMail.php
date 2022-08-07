@@ -4,8 +4,6 @@ namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Application;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Modules\HR\Emails\sendThreshholdFollowUp;
 use Illuminate\Support\Facades\Mail;
 
@@ -42,10 +40,10 @@ class sendFollowUpThresholdMail extends Command
      */
     public function handle()
     {
-        $applications=Application::whereIn('status',['new','in-progress'])->get();
-        $applications = $applications->reject(function ($application){
-           // dd($application->latestApplicationRound);
-            $applicationround=$application->latestApplicationRound;
+        $applications = Application::whereIn('status', ['new', 'in-progress'])->get();
+        $applications = $applications->reject(function ($application) {
+            // dd($application->latestApplicationRound);
+            $applicationround = $application->latestApplicationRound;
             if ($applicationround) {
                 $followUpCount = $application->latestApplicationRound->followUps->count();
                 if ($followUpCount == config('hr.follow-up-attempts-threshold')) {
@@ -53,7 +51,7 @@ class sendFollowUpThresholdMail extends Command
                 }
             }
         });
-        $emails=['deepak.sharma@colorecow.com','pk@coloredcow.com'];
+        $emails = ['deepak.sharma@colorecow.com', 'pk@coloredcow.com'];
         Mail::to($emails)->queue(new sendThreshholdFollowUp($applications));
     }
 }
