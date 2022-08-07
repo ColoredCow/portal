@@ -7,14 +7,8 @@ use Illuminate\Database\Eloquent\Factory;
 
 class ExpenseServiceProvider extends ServiceProvider
 {
-    /**
-     * @var string
-     */
     protected $moduleName = 'Expense';
 
-    /**
-     * @var string
-     */
     protected $moduleNameLower = 'expense';
 
     /**
