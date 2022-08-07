@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('expense')->group(function() {
+Route::prefix('expense')->group(function () {
     Route::get('/', 'ExpenseController@index');
 });
