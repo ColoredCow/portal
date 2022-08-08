@@ -26,6 +26,6 @@ class HrChannelController extends Controller
             'name'=>$name
         ]);
 
-        return redirect()->back()->with('status', 'Saved Successfully!');
+        return redirect()->back();
     }
 }

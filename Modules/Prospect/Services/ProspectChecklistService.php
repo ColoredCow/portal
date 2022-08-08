@@ -36,7 +36,7 @@ class ProspectChecklistService implements ProspectChecklistServiceContract
         switch ($moduleChecklist->slug) {
             case 'nda':
                 $this->handleNDAAgreement($data, $prospect, $moduleChecklist);
-            break;
+                break;
         }
 
         return [

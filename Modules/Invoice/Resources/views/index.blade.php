@@ -1,16 +1,8 @@
 @extends('invoice::layouts.master')
 @section('content')
-    <div class="container" id="vueContainer">
-        <br>
-        <br>
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+<div class="container" id="vueContainer">
+    <br>
+    @includeWhen(session('success'), 'toast', ['message' => session('success')])
         <ul class="nav nav-pills mb-6">
             @php
                 $request = request()->all();
@@ -31,6 +23,7 @@
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Invoices</h4>
             <span>
+                <a href="{{ route('invoice.create-custom-invoice') }}" class="btn btn-info text-white">Custom Invoice</a>
                 <a href="{{ route('invoice.create') }}" class="btn btn-info text-white">Add Invoice</a>
             </span>
         </div>
@@ -54,7 +47,7 @@
             </div>
         @endif
         <div>
-            @php
+            @php    
                 $month = now()->subMonth()->format('m');
                 $year = now()->subMonth()->format('Y');
                 $monthToSubtract = 1;
