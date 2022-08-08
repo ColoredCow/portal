@@ -235,11 +235,11 @@ class EffortTrackingService
                     if (! $portalUser) {
                         continue;
                     }
-    
+
                     $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
                     $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
                     $currentDate = now(config('constants.timezone.indian'))->today();
-    
+
                     if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
                         continue;
                     }
@@ -252,7 +252,7 @@ class EffortTrackingService
                         'billing_end_date' => $billingEndDate,
                      'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
                     ];
-     
+
                     foreach ($projectsInSheet as $sheetProject) {
                         try {
                             $effortData['sheet_project'] = $sheetProject;
@@ -288,7 +288,7 @@ class EffortTrackingService
                 return $columnIndex;
             }
         }
-           
+
         return false;
     }
 
