@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
                 'show' => 'employees.show',
         ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
+        Route::get('employee-basic-details', 'EmployeeController@basicDetails')->name('employees.basic.details');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
