@@ -61,7 +61,7 @@
             </tbody>
         </table>
     </div>
-    {!! $invoices->links() !!}
+    {{ $invoices->appends(request()->query())->links() }}
 </div>
 
 @endsection
