@@ -28,8 +28,8 @@ class EffortTrackingService
         $endDate = $project->client->month_end_date;
         $totalWorkingDays = count($this->getworkingDays($startDate, $endDate));
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
-        return [
 
+        return [
             'project' => $project,
             'teamMembersEffort' => empty($teamMembersDetails['teamMembersEffort']) ? 0 : json_encode($teamMembersDetails['teamMembersEffort']),
             'users' => json_encode($teamMembersDetails['users']),
@@ -80,7 +80,7 @@ class EffortTrackingService
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (!in_array($date->format('l'), $weekend)) {
+            if (! in_array($date->format('l'), $weekend)) {
                 $dates[] = $date->format('Y-m-d');
             }
         }
@@ -112,7 +112,7 @@ class EffortTrackingService
             $userDetails = $teamMember->user;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
 
-            if (!$userDetails) {
+            if (! $userDetails) {
                 continue;
             }
 
@@ -153,7 +153,7 @@ class EffortTrackingService
         try {
             $effortSheetUrl = $project->effort_sheet_url ?: $project->client->effort_sheet_url;
 
-            if (!$effortSheetUrl) {
+            if (! $effortSheetUrl) {
                 return false;
             }
 
@@ -161,7 +161,7 @@ class EffortTrackingService
 
             $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
 
-            if (!$isSyntaxMatching) {
+            if (! $isSyntaxMatching) {
                 return false;
             }
 
@@ -232,14 +232,14 @@ class EffortTrackingService
                     $portalUsers = clone $users;
                     $portalUser = $portalUsers->where('nickname', $userNickname)->first();
 
-                    if (!$portalUser) {
+                    if (! $portalUser) {
                         continue;
                     }
-
+    
                     $billingStartDate = Carbon::create($sheetUser[$sheetIndexForStartDate]);
                     $billingEndDate = Carbon::create($sheetUser[$sheetIndexForEndDate]);
                     $currentDate = now(config('constants.timezone.indian'))->today();
-
+    
                     if ($currentDate < $billingStartDate || $currentDate > $billingEndDate) {
                         continue;
                     }
@@ -250,9 +250,9 @@ class EffortTrackingService
                         'project' => $project,
                         'billing_start_date' => $billingStartDate,
                         'billing_end_date' => $billingEndDate,
-                        'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
+                     'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
                     ];
-
+     
                     foreach ($projectsInSheet as $sheetProject) {
                         try {
                             $effortData['sheet_project'] = $sheetProject;
@@ -288,7 +288,7 @@ class EffortTrackingService
                 return $columnIndex;
             }
         }
-
+           
         return false;
     }
 
@@ -297,7 +297,7 @@ class EffortTrackingService
         $currentDate = now(config('constants.timezone.indian'))->today();
         $projectTeamMember = $effortData['portal_user']->projectTeamMembers()->active()->where('project_id', $effortData['sheet_project']['id'])->first();
 
-        if (!$projectTeamMember) {
+        if (! $projectTeamMember) {
             return;
         }
         $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()
@@ -312,7 +312,6 @@ class EffortTrackingService
                 $billableEffort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
             }
         }
-
         ProjectTeamMemberEffort::updateOrCreate(
             [
                 'project_team_member_id' => $projectTeamMember->id,
