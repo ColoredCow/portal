@@ -16,6 +16,8 @@ Route::prefix('invoice')->middleware('auth')->group(function () {
     Route::get('/tax-report', 'InvoiceController@taxReport')->name('invoice.tax-report');
     Route::get('/tax-report-export', 'InvoiceController@taxReportExport')->name('invoice.tax-report-export');
     Route::get('/create', 'InvoiceController@create')->name('invoice.create');
+    Route::get('/create-custom-invoice', 'InvoiceController@createCustomInvoice')->name('invoice.create-custom-invoice');
+    Route::get('/preview-custom-invoice', 'InvoiceController@previewCustomInvoice')->name('invoice.preview-custom-invoice');
     Route::get('/dashboard', 'InvoiceController@dashboard')->name('invoice.dashboard');
     Route::post('/send-invoice-mail', 'InvoiceController@sendInvoice')->name('invoice.send-invoice-mail');
     Route::post('/', 'InvoiceController@store')->name('invoice.store');

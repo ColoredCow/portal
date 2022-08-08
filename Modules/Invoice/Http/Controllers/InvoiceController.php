@@ -88,7 +88,9 @@ class InvoiceController extends Controller
             'project_id' => $request->project_id,
             'term' => today(config('constants.timezone.indian'))->subMonth()->format('Y-m'),
             'sent_on' => today(config('constants.timezone.indian')),
-            'due_on' => today(config('constants.timezone.indian'))->addDays(6)
+            'due_on' => today(config('constants.timezone.indian'))->addDays(6),
+            'period_start_date' => $request->period_start_date,
+            'period_end_date' => $request->period_end_date
         ]);
         $invoiceNumber = $data['invoiceNumber'];
         $pdf = $this->showInvoicePdf($data);
@@ -218,5 +220,10 @@ class InvoiceController extends Controller
         $this->service->storeLedgerAccountData($request->all());
 
         return redirect()->back()->with('status', 'Data saved successfully.');
+    }
+
+    public function createCustomInvoice()
+    {
+        return view('invoice::create-custom-invoice', $this->service->create());
     }
 }

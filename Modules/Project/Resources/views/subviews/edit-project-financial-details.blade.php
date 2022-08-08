@@ -1,6 +1,4 @@
 <div class="card">
-    <div class="card-header">
-    </div>
     <div id="projectFinancialDetailsForm">
         <form action="{{ route('project.update', $project) }}" method="POST" id="updateProjectFinancialDetails" enctype="multipart/form-data">
             @csrf
