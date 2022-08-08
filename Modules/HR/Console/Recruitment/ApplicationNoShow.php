@@ -52,7 +52,7 @@ class ApplicationNoShow extends Command
             })
             ->whereNull('round_status')
             ->whereDate('scheduled_date', '=', today()->toDateString())
-            ->where('scheduled_date', '<=', now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString())
+            // ->where('scheduled_date', '<=', now()->subHours(config('constants.hr.no-show-hours-limit'))->toDateTimeString()) // we can use this check later in future
             ->get();
 
         $subject = Setting::module('hr')->key('no_show_mail_subject')->first();
