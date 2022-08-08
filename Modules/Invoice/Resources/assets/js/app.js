@@ -105,7 +105,6 @@ $(document).ready(function(){
 		let form =$("#sendInvoiceForm");
 		$("#emailPreview").on("hidden.bs.modal", function () {
 			$(this).find("form").trigger("reset");
-			$("#errors").addClass("d-none");
 			$("#errorMessage,#Invoicesuccess").addClass("d-none");
 		});
 		$.ajax({

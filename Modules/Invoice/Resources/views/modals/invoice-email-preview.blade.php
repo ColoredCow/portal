@@ -48,7 +48,7 @@
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="emailSubject">{{ __('Subject') }}</label>
                             <input type="text" name="email_subject" id="emailSubject"
-                                class="form-control" value="{{ $sendInvoiceEmailSubject }} ">
+                                class="form-control" value="{{ $sendInvoiceEmailSubject }}">
                         </div>
                         <div class="form-group col-md-12">
                             <label class="leading-none" for="emailBody">{{ __('Body') }}</label>

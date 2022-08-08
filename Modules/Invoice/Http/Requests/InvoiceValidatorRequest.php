@@ -14,8 +14,8 @@ class InvoiceValidatorRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'from'=>'required|email',
-            'to_name'=>'required',
+            'from' => 'required|email',
+            'to_name' => 'required',
             'to' => 'required|email',
             'bcc' => 'required|email',
             'cc' => 'required|email',
@@ -40,7 +40,7 @@ class InvoiceValidatorRequest extends FormRequest
         return [
             'from.required' => 'A sender is required',
             'to.required' => 'The receiver is required',
-           'to_name.required'=>'Receivers name must be required',
+           'to_name.required' => 'Receivers name must be required',
             'bcc.required' => 'The bcc field is required',
             'bcc.email' => 'An email format in bcc field is required',
             'cc.required' => 'The cc field is required',

@@ -29,7 +29,7 @@
             </li>
         </ul>
         <div class="d-none alert alert-success " id="Invoicesuccess" role="alert">
-            <strong>Updated!</strong> Invoice sent successfully.
+            <strong> Updated! </strong> Invoice sent successfully.
             <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
             </button>
         </div>
