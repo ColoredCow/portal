@@ -19,7 +19,6 @@
                     <label class="font-weight-bold" for="">Email:</label>
                     <span>{{ $user->email }}</span>
                 </div>
-                @includeWhen($user->profile, 'user::profile.subviews.show-user-profile-info')
             </div>
         </div>
         <div>
