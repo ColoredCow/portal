@@ -7,7 +7,7 @@ use Modules\HR\Entities\Application;
 use Modules\HR\Emails\sendThreshholdFollowUp;
 use Illuminate\Support\Facades\Mail;
 
-class sendFollowUpThresholdMail extends Command
+class SendFollowUpThresholdMail extends Command
 {
     /**
      * The console command name.
