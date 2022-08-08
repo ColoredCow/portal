@@ -47,6 +47,6 @@ class EmployeeController extends Controller
         $user = auth()->user();
         $section = request()->input('section', 'basic-details');
 
-        return view('hr.employees.basic-details')->with(['user' => $user,'section' => $section]);
+        return view('hr.employees.basic-details')->with(['user' => $user, 'section' => $section]);
     }
 }
