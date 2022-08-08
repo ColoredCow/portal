@@ -3,14 +3,14 @@
 namespace Modules\EffortTracking\Services;
 
 use Carbon\Carbon;
-use Exception;
 use Carbon\CarbonPeriod;
+use Exception;
+use Illuminate\Support\Str;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectMeta;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\User\Entities\User;
 use Revolution\Google\Sheets\Sheets;
-use Illuminate\Support\Str;
-use Modules\Project\Entities\ProjectTeamMemberEffort;
-use Modules\Project\Entities\ProjectMeta;
 
 class EffortTrackingService
 {
@@ -28,7 +28,6 @@ class EffortTrackingService
         $endDate = $project->client->month_end_date;
         $totalWorkingDays = count($this->getworkingDays($startDate, $endDate));
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
-
         return [
             'project' => $project,
             'teamMembersEffort' => empty($teamMembersDetails['teamMembersEffort']) ? 0 : json_encode($teamMembersDetails['teamMembersEffort']),
@@ -80,7 +79,7 @@ class EffortTrackingService
         $dates = [];
         $weekend = ['Saturday', 'Sunday'];
         foreach ($period as $date) {
-            if (! in_array($date->format('l'), $weekend)) {
+            if (!in_array($date->format('l'), $weekend)) {
                 $dates[] = $date->format('Y-m-d');
             }
         }
@@ -112,7 +111,7 @@ class EffortTrackingService
             $userDetails = $teamMember->user;
             $efforts = $teamMember->projectTeamMemberEffort()->get();
 
-            if (! $userDetails) {
+            if (!$userDetails) {
                 continue;
             }
 
@@ -153,7 +152,7 @@ class EffortTrackingService
         try {
             $effortSheetUrl = $project->effort_sheet_url ?: $project->client->effort_sheet_url;
 
-            if (! $effortSheetUrl) {
+            if (!$effortSheetUrl) {
                 return false;
             }
 
@@ -161,7 +160,7 @@ class EffortTrackingService
 
             $isSyntaxMatching = preg_match('/.*[^-\w]([-\w]{25,})[^-\w]?.*/', $effortSheetUrl, $correctedEffortsheetUrl);
 
-            if (! $isSyntaxMatching) {
+            if (!$isSyntaxMatching) {
                 return false;
             }
 
@@ -186,7 +185,7 @@ class EffortTrackingService
                             $projectsInSheet[] = [
                                 'id' => $subProject->id,
                                 'name' => $subProjectName,
-                                'sheetIndex' => $columnIndex - 1
+                                'sheetIndex' => $columnIndex - 1,
                             ];
                         }
                         continue;
@@ -214,7 +213,7 @@ class EffortTrackingService
                 $projectsInSheet[] = [
                     'id' => $project->id,
                     'name' => $project->name,
-                    'sheetIndex' => $sheetIndexForTotalBillableEffort
+                    'sheetIndex' => $sheetIndexForTotalBillableEffort,
                 ];
             }
 
@@ -232,7 +231,7 @@ class EffortTrackingService
                     $portalUsers = clone $users;
                     $portalUser = $portalUsers->where('nickname', $userNickname)->first();
 
-                    if (! $portalUser) {
+                    if (!$portalUser) {
                         continue;
                     }
 
@@ -263,7 +262,7 @@ class EffortTrackingService
                                     'project_id' => $project->id,
                                 ],
                                 [
-                                    'value' => now(config('constants.timezone.indian'))
+                                    'value' => now(config('constants.timezone.indian')),
                                 ]
                             );
                         } catch (Exception $e) {
@@ -297,7 +296,7 @@ class EffortTrackingService
         $currentDate = now(config('constants.timezone.indian'))->today();
         $projectTeamMember = $effortData['portal_user']->projectTeamMembers()->active()->where('project_id', $effortData['sheet_project']['id'])->first();
 
-        if (! $projectTeamMember) {
+        if (!$projectTeamMember) {
             return;
         }
         $latestProjectTeamMemberEffort = $projectTeamMember->projectTeamMemberEffort()

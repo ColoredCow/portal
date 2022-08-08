@@ -70,7 +70,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            {{-- @dd($project) --}}
                             <th scope="col" class="pb-lg-4">Name</th>
                             <th scope="col" class="pb-lg-4">Hours Booked</th>
                             <th scope="col" class="w-lg-200">Expected Hours 
