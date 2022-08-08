@@ -39,9 +39,16 @@
 			@if ($application->applicant->phone)
 			<span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $application->applicant->phone }}</span>
 			@endif
-			@if ($application->applicant->college)
-			<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}</span>
+			<div>
+			@if ($application->applicant->college && $application->applicant->university)
+			<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}<a href ="{{ route('universities.edit',$application->applicant->university) }}"target="_blank" ></span>
+			 	@if($application->applicant->university->universityContacts->first() && $application->applicant->university->universityContacts->first()->phone)
+					<span class="badge badge-pill badge-success mr-1  mt-1 ">See contact</span>
+		         	@else
+		           		<span class="badge badge-pill badge-danger mr-1  mt-1 ">Add contact</span>
+			  	@endif
 			@endif
+		    </div>
 		</div>
 
 		<div>
