@@ -79,10 +79,10 @@ class ApplicationService implements ApplicationServiceContract
         return $attr;
     }
 
-    public function saveApplication($data, $bulkRequest = false)
+    public function saveApplication($data)
     {
         $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
-        Applicant::_create($data, $bulkRequest);
+        Applicant::_create($data);
 
         return true;
     }

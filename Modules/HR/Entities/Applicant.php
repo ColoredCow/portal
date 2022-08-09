@@ -22,7 +22,7 @@ class Applicant extends Model
      *
      * @param  array $attr  fillables to be stored
      */
-    public static function _create($attr, $bulkRequest = false)
+    public static function _create($attr)
     {
         $applicant = self::firstOrCreate([
             'email' => $attr['email'],
@@ -45,7 +45,7 @@ class Applicant extends Model
             'resume_file' => $attr['resume_file'] ?? '',
             'status' => $applicant->wasRecentlyCreated ? config('constants.hr.status.new.label') : config('constants.hr.status.on-hold.label'),
             'hr_channel_id' => $hr_channel_id,
-        ], $bulkRequest);
+        ]);
 
         if (isset($attr['form_data'])) {
             $application_meta = ApplicationMeta::create([

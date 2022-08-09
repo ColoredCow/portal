@@ -12,11 +12,10 @@ class ApplicationImport implements ToCollection, WithHeadingRow
     protected $job;
     protected $service;
 
-    public function __construct($job, $bulkRequest = false)
+    public function __construct($job)
     {
         $this->job = $job;
         $this->service = resolve(ApplicationServiceContract::class);
-        $this->bulkRequest = $bulkRequest;
     }
 
     /**
@@ -45,7 +44,7 @@ class ApplicationImport implements ToCollection, WithHeadingRow
                 'Why Should We Pick You?' => $row['reason_for_eligibility']
             ];
 
-            $this->service->saveApplication($data, $this->bulkRequest);
+            $this->service->saveApplication($data);
         }
     }
 }
