@@ -148,7 +148,7 @@
                 updatedDailyExpectedEffort($event, index, numberOfDays) {
                     value = $event.target.value;
                     
-                    this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
+                     this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                 }
              
             },
