@@ -54,7 +54,7 @@ class JobObserver
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-        if (!isset( config('hr.opportunities-status-wp-mapping')[$job->status])) {
+        if (!isset(config('hr.opportunities-status-wp-mapping')[$job->status])) {
             return;
         }
         $corcel = new Corcel();
