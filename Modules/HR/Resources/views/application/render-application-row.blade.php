@@ -7,50 +7,52 @@
                     data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
             </div>
 
-            @php
-                $formData = $application
-                    ->applicationMeta()
-                    ->formData()
-                    ->first();
-            @endphp
-            @if (isset($formData->value))
-                @php
-                    $tooltipHtml = '';
-                    $index = 0;
-                    foreach (json_decode($formData->value) as $field => $value) {
-                        if (!$value) {
-                            continue;
-                        }
-                        $tooltipHtml .= "$field<br />";
-                        $tooltipHtml .= "$value\n\n";
-                        break;
-                    }
-                @endphp
-                @if ($tooltipHtml)
-                    <span class="mr-1">
-                        <i class="fa fa-eye" aria-hidden="true" class="text-secondary c-pointer" data-toggle="tooltip"
-                            data-placement="top" data-html="true" title="{!! $tooltipHtml !!}"></i>
-                    </span>
-                @endif
-            @endif
-        </div>
-        @include('hr.application.assignlabels-modal')
-        <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
-            <div class="d-flex text-white my-2">
-                <a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}"
-                    class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-                <a href="{{ route('applications.job.edit', $application->id) }}"
-                    class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
-            </div>
-            <span class="mr-1 text-truncate">
-                <i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
-            @if ($application->applicant->phone)
-                <span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $application->applicant->phone }}</span>
-            @endif
-            @if ($application->applicant->college)
-                <span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}</span>
-            @endif
-        </div>
+			@php
+			$formData = $application->applicationMeta()->formData()->first();
+			@endphp
+			@if (isset($formData->value))
+			@php
+			$tooltipHtml = '';
+			$index = 0;
+			foreach (json_decode($formData->value) as $field => $value) {
+			if (!$value) continue;
+			$tooltipHtml .= "$field<br />";
+			$tooltipHtml .= "$value\n\n";
+			break;
+			}
+			@endphp
+			@if ($tooltipHtml)
+			<span class="mr-1">
+				<i class="fa fa-eye" aria-hidden="true" class="text-secondary c-pointer" data-toggle="tooltip"
+					data-placement="top" data-html="true" title="{!! $tooltipHtml !!}"></i>
+			</span>
+			@endif
+			@endif
+		</div>
+		@include('hr.application.assignlabels-modal')
+		<div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
+			<div class="d-flex text-white my-2">
+				<a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
+				<a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+			</div>
+			<span class="mr-1 text-truncate">
+				<i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
+			@if ($application->applicant->phone)
+			<span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $application->applicant->phone }}</span>
+			@endif
+			<div>
+				@if ($application->applicant->college && $application->applicant->university)
+				<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}</span>
+				<a href ="{{ route('universities.edit',$application->applicant->university) }}"target="_blank" >
+					 @if($application->applicant->university->universityContacts->first() && $application->applicant->university->universityContacts->first()->phone)
+						<span class="badge badge-pill badge-success mr-1  mt-1 ">See contact</span>
+					@else
+						<span class="badge badge-pill badge-danger mr-1  mt-1 ">Add contact</span>
+					@endif
+				</a>
+				@endif
+			</div>
+		</div>
 
         <div>
             @if ($application->applicant->linkedin)
@@ -127,8 +129,8 @@
 
                     </span>
 
-                </span>
-            @endforeach
-        </span>
-    </td>
+		</span>
+		@endforeach
+		</span>
+	</td>
 </tr>

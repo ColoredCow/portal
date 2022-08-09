@@ -95,6 +95,7 @@ class ProjectService implements ProjectServiceContract
             'start_date' => $data['start_date'] ?? null,
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
@@ -175,6 +176,7 @@ class ProjectService implements ProjectServiceContract
             'start_date' => $data['start_date'] ?? null,
             'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
         ]);
 
         if ($data['billing_level'] ?? null) {
