@@ -75,7 +75,10 @@
                         <tr>
                             <th scope="col" class="pb-lg-4">Name</th>
                             <th scope="col" class="pb-lg-4">Hours Booked</th>
-                            <th scope="col" class="pb-lg-4">Expected Hours</th>
+                            <th scope="col" class="w-lg-200">Expected Hours 
+                            <div class="ml-lg-3">
+                                ({{$daysTillToday}} Days)
+                            </div></th>
                             <th scope="col" class="w-lg-200">Expected Hours Till Today</th>
                             <th scope="col" class="pb-lg-4">Hours To Add</th>
                             <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right"
