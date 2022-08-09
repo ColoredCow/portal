@@ -71,7 +71,8 @@
                                         <div class="card-header d-flex align-items-center justify-content-between">
                                             <div class="d-flex flex-column">
                                                 <div>
-                                                    {{ $applicationRound->trialRound->name }}
+                                                    <p id="applicationRoundName{{ $applicationRound->round->id }}">
+                                                        {{ $applicationRound->trialRound->name }}</p>
                                                     <span title="{{ $applicationRound->round->name }} guide"
                                                         class="modal-toggler-text text-muted" data-toggle="modal"
                                                         data-target="#round_guide_{{ $applicationRound->round->id }}">
@@ -193,7 +194,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
                                                                 <button type="button" class="btn btn-theme-fog btn-sm"
-                                                                    @click="getApplicationEvaluation({{ $applicationRound->id }})">Application
+                                                                    @click="getApplicationEvaluation({{ $applicationRound->id, $applicationRound->hr_round_id }})">Application
                                                                     Evaluation</button>
                                                             </div>
                                                         </div>
@@ -202,7 +203,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
                                                                 <button type="button" class="btn btn-theme-fog btn-sm"
-                                                                    @click="getApplicationEvaluation({{ $applicationRound->id }})">Application
+                                                                    @click="getApplicationEvaluation({{ $applicationRound->id, $applicationRound->hr_round_id }})">Application
                                                                     Evaluation</button>
                                                             </div>
                                                         </div>
@@ -351,7 +352,8 @@
                                         <div class="card-header d-flex align-items-center justify-content-between">
                                             <div class="d-flex flex-column">
                                                 <div>
-                                                    {{ $applicationRound->round->name }}
+                                                    <p class="applicationRoundName{{ $applicationRound->round->id }}">
+                                                        {{ $applicationRound->round->name }}</p>
                                                     <span title="{{ $applicationRound->round->name }} guide"
                                                         class="modal-toggler-text text-muted" data-toggle="modal"
                                                         data-target="#round_guide_{{ $applicationRound->round->id }}">
@@ -670,7 +672,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
                                                                 <button type="button" class="btn btn-theme-fog btn-sm"
-                                                                    @click="getApplicationEvaluation({{ $applicationRound->id }})">Application
+                                                                    @click="getApplicationEvaluation({{ $applicationRound->id, $applicationRound->hr_round_id }})">Application
                                                                     Evaluation</button>
                                                             </div>
                                                         </div>
@@ -679,7 +681,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
                                                                 <button type="button" class="btn btn-theme-fog btn-sm"
-                                                                    @click="getApplicationEvaluation({{ $applicationRound->id }})">Application
+                                                                    @click="getApplicationEvaluation({{ $applicationRound->id }}, {{ $applicationRound->hr_round_id }})">Application
                                                                     Evaluation</button>
                                                             </div>
                                                         </div>
@@ -828,7 +830,8 @@
                                 <div class="card-header d-flex align-items-center justify-content-between">
                                     <div class="d-flex flex-column">
                                         <div>
-                                            {{ $applicationRound->round->name }}
+                                            <p id="applicationRoundName{{ $applicationRound->hr_round_id }}">
+                                                {{ $applicationRound->round->name }}</p>
                                             <span title="{{ $applicationRound->round->name }} guide"
                                                 class="modal-toggler-text text-muted" data-toggle="modal"
                                                 data-target="#round_guide_{{ $applicationRound->round->id }}">
@@ -1154,7 +1157,7 @@
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <button type="button" class="btn btn-theme-fog btn-sm"
-                                                                @click="getApplicationEvaluation({{ $applicationRound->id }})">Application
+                                                                @click="getApplicationEvaluation({{ $applicationRound->id }}, {{ $applicationRound->hr_round_id }})">Application
                                                                 Evaluation</button>
                                                         </div>
                                                         @if (session('status') || ($application->marks && $application->latestApplicationRound->hr_round_id == 1))
@@ -1177,7 +1180,7 @@
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <button type="button" class="btn btn-theme-fog btn-sm"
-                                                                @click="getApplicationEvaluation({{ $applicationRound->id }})">Application
+                                                                @click="getApplicationEvaluation({{ $applicationRound->id }}, {{ $applicationRound->hr_round_id }})">Application
                                                                 Evaluation</button>
                                                         </div>
                                                         @if (session('status') || ($application->marks && $application->latestApplicationRound->hr_round_id == 14))
