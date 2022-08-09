@@ -15,7 +15,7 @@ class SendFollowUpThresholdMail extends Command
      *
      * @var string
      */
-    protected $name = 'hr:send-follow-ups-mail';
+    protected $name = 'hr:send-follow-up-mail';
 
     /**
      * The console command description.
@@ -43,12 +43,9 @@ class SendFollowUpThresholdMail extends Command
     {
         $applications = Application::whereIn('status', ['new', 'in-progress'])->get();
         $applications = $applications->reject(function ($application) {
-            $applicationround = $application->latestApplicationRound;
-            if ($applicationround) {
-                $followUpCount = $application->latestApplicationRound->followUps->count();
-                if ($followUpCount == config('hr.follow-up-attempts-threshold')) {
-                    return $application;
-                }
+            $followUpCount = $application->latestApplicationRound ? $application->latestApplicationRound->followUps->count() : 0;
+            if ($followUpCount == config('hr.follow-up-attempts-threshold')) {
+                return $application;
             }
         });
 
