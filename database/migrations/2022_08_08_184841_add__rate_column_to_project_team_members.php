@@ -30,4 +30,3 @@ class AddRateColumnToProjectTeamMembers extends Migration
         });
     }
 }
-
