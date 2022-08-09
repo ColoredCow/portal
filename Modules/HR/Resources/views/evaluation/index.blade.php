@@ -1,24 +1,17 @@
 @extends('hr::layouts.master')
-@section('content') 
- <div class="container" id="segments_container">
+@section('content')
+<div class="container" id="segments_container">
     <br>
     <br>
     <div>
-        
-        <div class="d-none alert alert-success fade show" role="alert" id="segmentsuccess">
-            <strong>Success!!!</strong>Congratulations!!! New segment successfully created.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">Rounds and Segments</h1>
             <div>
                 <button class="btn btn-primary" data-toggle="modal" data-target="#createNewSegment">Add New</button>
             </div>
         </div>      
-    </div>
-     <br>
+        <br>
+
         <table class="table ">
             
             @foreach ($rounds as $round)
@@ -26,7 +19,7 @@
                     @foreach ($segments as $segment)
                     <tr>
                         @if($round->id == $segment->round_id )
-                        <td>
+                        </br>
                             <div class="card-header c-pointer" data-toggle="collapse" data-target="#applicant_verification{{$round->id}}" aria-expanded="true" aria-controls="applicant_verification"> {{$round->name}}
                             </div>
 		                        <div id="applicant_verification{{$round->id}}" class="collapse">
@@ -69,6 +62,7 @@
 @include('hr::evaluation.segment.edit')
 </div>
 @endsection
+
 @section('js_scripts')
 <script>
     new Vue({
@@ -92,4 +86,4 @@
 
 </script>
 
-@endsection 
+@endsection
