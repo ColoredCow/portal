@@ -43,7 +43,7 @@ class EffortTrackingService
             'totalEffort' => $totalEffort,
             'startDate' => $startDate,
             'endDate' => $endDate,
-            'currentMonth' => now()->format('F'),
+            'currentMonth' => $currentMonth,
             'daysTillToday' => $daysTillToday,
             'currentMonth' => $currentMonth,
             'totalMonths' => $totalMonths,
