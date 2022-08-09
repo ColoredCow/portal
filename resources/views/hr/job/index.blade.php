@@ -60,7 +60,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="name"><span>Resources Required</span></label>
-                                    <input type="number" class="form-control" name="resources_required" id="resources_required" placeholder="0" >
+                                    <input type="number" class="form-control" name="resources_required" id="resources_required" value={{$job->resources_required}}>
                                 </div>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save changes</button> 
