@@ -3,14 +3,14 @@
 namespace Modules\EffortTracking\Services;
 
 use Carbon\Carbon;
-use Exception;
 use Carbon\CarbonPeriod;
+use Exception;
+use Illuminate\Support\Str;
 use Modules\Project\Entities\Project;
+use Modules\Project\Entities\ProjectMeta;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\User\Entities\User;
 use Revolution\Google\Sheets\Sheets;
-use Illuminate\Support\Str;
-use Modules\Project\Entities\ProjectTeamMemberEffort;
-use Modules\Project\Entities\ProjectMeta;
 
 class EffortTrackingService
 {
@@ -26,7 +26,8 @@ class EffortTrackingService
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
         $startDate = $project->client->month_start_date;
         $endDate = $project->client->month_end_date;
-        $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
+        $totalWorkingDays = count($this->getworkingDays($startDate, $endDate));
+        $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
 
         return [
             'project' => $project,
@@ -38,9 +39,9 @@ class EffortTrackingService
             'startDate' => $startDate,
             'endDate' => $endDate,
             'currentMonth' => now()->format('F'),
+            'daysTillToday' => $daysTillToday,
         ];
     }
-
     /**
      * Calculate FTE.
      * @param  int $currentHours  Current Hours.
@@ -185,7 +186,7 @@ class EffortTrackingService
                             $projectsInSheet[] = [
                                 'id' => $subProject->id,
                                 'name' => $subProjectName,
-                                'sheetIndex' => $columnIndex - 1
+                                'sheetIndex' => $columnIndex - 1,
                             ];
                         }
                         continue;
@@ -213,7 +214,7 @@ class EffortTrackingService
                 $projectsInSheet[] = [
                     'id' => $project->id,
                     'name' => $project->name,
-                    'sheetIndex' => $sheetIndexForTotalBillableEffort
+                    'sheetIndex' => $sheetIndexForTotalBillableEffort,
                 ];
             }
 
@@ -262,7 +263,7 @@ class EffortTrackingService
                                     'project_id' => $project->id,
                                 ],
                                 [
-                                    'value' => now(config('constants.timezone.indian'))
+                                    'value' => now(config('constants.timezone.indian')),
                                 ]
                             );
                         } catch (Exception $e) {
@@ -311,7 +312,6 @@ class EffortTrackingService
                 $billableEffort -= $latestProjectTeamMemberEffort->total_effort_in_effortsheet;
             }
         }
-
         ProjectTeamMemberEffort::updateOrCreate(
             [
                 'project_team_member_id' => $projectTeamMember->id,

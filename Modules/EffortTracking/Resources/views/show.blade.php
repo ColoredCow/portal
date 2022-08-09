@@ -29,24 +29,25 @@
                 <div class="d-flex flex-row p-5 d-flex justify-content-center">
                     <div class="d-flex flex-column mr-3 form-group">
                         <label>Start date</label>
-                        <input type="date" name="start_date" disabled="disabled"
-                            value="{{ $startDate->toDateString() }}">
+                        <input type="text" name="start_date" disabled="disabled" value="{{ $startDate->format('d-F-Y') }}">
                     </div>
                     <div class="d-flex flex-column ml-3">
                         <label>End date</label>
-                        <input type="date" name="end_date" disabled="disabled" value="{{ $endDate->toDateString() }}">
+                        <input type="text" name="end_date" disabled="disabled" value="{{ $endDate->format('d-F-Y') }}">
                     </div>
                 </div>
-                @if ($project->current_hours_for_month === 0)
-                    <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>
-                @else
-                    <div class="mt-4">
-                        <input type="hidden" name="team_members_effort" value="{{ $teamMembersEffort }}">
-                        <input type="hidden" name="workingDays" value="{{ $workingDays }}">
-                        <input type="hidden" name="users" value="{{ $users }}">
-                        <canvas class="w-full" id="effortTrackingGraph"></canvas>
-                    </div>
-                @endif
+                <div>
+                    @if ($project->current_hours_for_month === 0)
+                        <h2 class="text-center pb-6 font-weight-bold text-uppercase text-danger">No data available</h2>
+                    @else
+                        <div class="mt-4">
+                            <input type="hidden" name="team_members_effort" value="{{ $teamMembersEffort }}">
+                            <input type="hidden" name="workingDays" value="{{ $workingDays }}">
+                            <input type="hidden" name="users" value="{{ $users }}">
+                            <canvas class="w-full" id="effortTrackingGraph"></canvas>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
@@ -58,11 +59,13 @@
                         <i class="fa fa-spinner fa-spin ml-2 d-none"></i>
                         <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
                             data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
-                        @if ($project->last_updated_at)
-                            <div class="fz-14 float-right mr-3 mt-1">
-                                {{ config('project.meta_keys.last_updated_at.value') . __(': ') . (Carbon\Carbon::parse($project->last_updated_at)->format('D g:i a, dS M Y'))}}
+                            <div class="fz-14 float-right">&nbsp;&nbsp;&nbsp;
+                            <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format(' Y-M-d , D h:i:s A')) }}
+                            </div > 
+                            <div class="fz-14 float-right">
+                            <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
+                            -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}              
                             </div>
-                        @endif
                     </h4>
                 </div>
             </div>
@@ -72,7 +75,10 @@
                         <tr>
                             <th scope="col" class="pb-lg-4">Name</th>
                             <th scope="col" class="pb-lg-4">Hours Booked</th>
-                            <th scope="col" class="pb-lg-4">Expected Hours</th>
+                            <th scope="col" class="w-lg-200">Expected Hours 
+                            <div class="ml-lg-3">
+                                ({{$daysTillToday}} Days)
+                            </div></th>
                             <th scope="col" class="w-lg-200">Expected Hours Till Today</th>
                             <th scope="col" class="pb-lg-4">Hours To Add</th>
                             <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right"
