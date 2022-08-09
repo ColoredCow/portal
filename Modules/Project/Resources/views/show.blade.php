@@ -107,8 +107,11 @@
                         <h4 class="d-inline-block ">
                             <label for="name" class="font-weight-bold">Team Members:</label>
                         </h4>
-                        <div class="fz-14 float-right mr-3 mt-1">{{ config('project.meta_keys.last_updated_at.value') . __(': ') . (Carbon\Carbon::parse($project->last_updated_at)->format('D g:i a, dS M Y'))}}
-                        </div>
+                        <div class="fz-14 float-right mr-3 mt-1">
+                            <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
+                            -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}                      
+                             &nbsp;&nbsp;&nbsp; <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format('Y-M-d , D h:i:s A')) }}
+                        </div> 
                             <div class="flex-column flex-md-row d-flex flex-wrap col-md-18 px-0 ml-1 mr-4">
                                 <div class="table">
                                     <table class="table">
