@@ -112,23 +112,4 @@ class Job extends Model
             'internship',
         ]);
     }
-
-	public function scopeApplyFilter($query, array $filters)
-	{
-		foreach(array_filter($filters) as $type => $value) {
-			if(!$value) {
-				continue;
-			}
-			switch($type) {
-				case 'created_at' :
-					$query->scopeFilterByDate($value);
-					break;
-			}
-		}
-	}
-
-	public function scopeFilterByDate($query, $date)
-	{
-		return $query->where('created_at',$date);
-	}
 }
