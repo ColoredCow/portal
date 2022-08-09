@@ -45,7 +45,6 @@ class EffortTrackingService
             'endDate' => $endDate,
             'currentMonth' => $currentMonth,
             'daysTillToday' => $daysTillToday,
-            'currentMonth' => $currentMonth,
             'totalMonths' => $totalMonths,
             'currentYear' => $currentYear,
         ];
