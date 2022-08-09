@@ -11,7 +11,7 @@ class ProjectTeamMember extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['Rate'];
+    protected $guarded = [];
 
     protected $dates = [
         'started_on',

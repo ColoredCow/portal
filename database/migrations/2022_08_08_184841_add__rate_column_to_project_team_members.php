@@ -14,7 +14,7 @@ class AddRateColumnToProjectTeamMembers extends Migration
     public function up()
     {
         Schema::table('project_team_members', function (Blueprint $table) {
-            $table->float('Rate')->nullable()->after('billing_engagement');
+            $table->float('rate')->nullable()->after('billing_engagement');
         });
     }
 
@@ -25,6 +25,9 @@ class AddRateColumnToProjectTeamMembers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_team_members');
+        Schema::table('project_team_members', function (Blueprint $table) {
+            $table->dropColumn('rate');
+        });
     }
 }
+
