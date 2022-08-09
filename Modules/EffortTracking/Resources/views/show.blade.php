@@ -1,7 +1,7 @@
 @extends('efforttracking::layouts.master')
 @section('content')
 <div class="project-effort-tracking-container container py-10">
-    <a href="{{ route('project.index') }}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 d-flex align-items-center">
+    <a href="{{ route('project.index') }}" class="text-theme-body text-decoration-none mb-2 mb-xl-4 align-items-center">
         <span class="mr-1 d-inline-flex w-8 h-8 w-xl-12 h-xl-12">
             {!! file_get_contents(public_path('icons/prev-icon.svg')) !!}
         </span>
@@ -36,19 +36,9 @@
             <div class="d-flex">
                 <div class='form-group mr-4 ml-1 mt-1 w-168'>
                     <select class="form-control bg-light" name="month" onchange="document.getElementById('FilterForm').submit();">
-                        <option {{ request()->input('month') == '' ? "selected=selected" : '' }} value="{{$currentMonth}}">{{$currentMonth}}</option>
-                        <option {{ request()->input('month') == '01' ? "selected=selected" : '' }} value="January">January</option>
-                        <option {{ request()->input('month') == '02' ? "selected=selected" : '' }} value="February">February</option>
-                        <option {{ request()->input('month') == '03' ? "selected=selected" : '' }} value="March">March</option>
-                        <option {{ request()->input('month') == '04' ? "selected=selected" : '' }} value="April">April</option>
-                        <option {{ request()->input('month') == '05' ? "selected=selected" : '' }} value="May">May</option>
-                        <option {{ request()->input('month') == '06' ? "selected=selected" : '' }} value="June">June</option>
-                        <option {{ request()->input('month') == '07' ? "selected=selected" : '' }} value="July">July</option>
-                        <option {{ request()->input('month') == '08' ? "selected=selected" : '' }} value="August">August</option>
-                        <option {{ request()->input('month') == '09' ? "selected=selected" : '' }} value="September">September</option>
-                        <option {{ request()->input('month') == '10' ? "selected=selected" : '' }} value="October">October</option>
-                        <option {{ request()->input('month') == '11' ? "selected=selected" : '' }} value="November">November</option>
-                        <option {{ request()->input('month') == '12' ? "selected=selected" : '' }} value="December">December</option>
+                        @foreach (config('constants.months') as $months => $month)
+                        <option value="{{ $month }}" {{ $currentMonth == $month ? 'selected' : '' }}>{{ $month }}</option>
+                        @endforeach
                     </select>
                 </div>
         

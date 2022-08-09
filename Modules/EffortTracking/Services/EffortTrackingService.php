@@ -23,18 +23,14 @@ class EffortTrackingService
             $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
+        $currentDate = now(config('constants.timezone.indian'));
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
-        $Month = intval(date('m', strtotime($currentMonth)));
-        $thisMonth = intval(Carbon::now()->format('m'));
-        $monthsDifference = ($thisMonth - $Month);
-        $totalYears = (Carbon::now()->format('Y') - $currentYear);
-        $totalMonths = $monthsDifference + ($totalYears * 12);
+        $totalMonths = $this->getFilterParameter($currentMonth, $currentYear);
         $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
         $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
         $totalEffort = $project->getCurrentHoursForMonthAttribute($startDate, $endDate);
-        $currentDate = now(config('constants.timezone.indian'));
 
         return [
             'project' => $project,
@@ -46,10 +42,20 @@ class EffortTrackingService
             'startDate' => $startDate,
             'endDate' => $endDate,
             'currentMonth' => $currentMonth,
-            'currentYear' => $currentYear,
             'totalMonths' => $totalMonths,
-            'currentDate' => $currentDate,
+            'currentYear' => $currentYear,
         ];
+    }
+
+    public function getFilterParameter($currentMonth, $currentYear)
+    {
+        $Month = intval(date('m', strtotime($currentMonth)));
+        $thisMonth = intval(Carbon::now()->format('m'));
+        $monthsDifference = ($thisMonth - $Month);
+        $totalYears = (Carbon::now()->format('Y') - $currentYear);
+        $totalMonths = $monthsDifference + ($totalYears * 12);
+
+        return $totalMonths;
     }
 
     /**
