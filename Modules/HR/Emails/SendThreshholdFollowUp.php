@@ -17,9 +17,9 @@ class sendThreshholdFollowUp extends Mailable
      *
      * @return void
      */
-    public function __construct($applications,$user)
+    public function __construct($applications, $user)
     {
-       // dd($user);
+        // dd($user);
         $this->applications = $applications;
         $this->user = $user;
     }
