@@ -75,7 +75,7 @@ class Application extends Model
      *
      * @param  array $attr  fillables to be stored
      */
-    public static function _create($attr)
+    public static function _create($attr, $bulkRequest = false)
     {
         $resume_file = $attr['resume_file'] ?? null;
 
@@ -84,7 +84,7 @@ class Application extends Model
         }
         unset($attr['resume_file']);
         $application = self::create($attr);
-        event(new ApplicationCreated($application));
+        event(new ApplicationCreated($application, $bulkRequest));
 
         return $application;
     }

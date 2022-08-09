@@ -59,8 +59,9 @@ class ApplicantController extends Controller
      */
     public function importExcel(Request $request)
     {
+        $bulkRequest = true;
         $job = Job::find($request->job_id);
-        Excel::import(new ApplicationImport($job), request()->file('excel_file'));
+        Excel::import(new ApplicationImport($job, $bulkRequest), request()->file('excel_file'));
 
         return redirect(route('applications.job.index'));
     }

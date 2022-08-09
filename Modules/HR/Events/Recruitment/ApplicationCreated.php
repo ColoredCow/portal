@@ -12,15 +12,17 @@ class ApplicationCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $application;
+    public $bulkRequest;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Application $application)
+    public function __construct(Application $application, $bulkRequest = false)
     {
         $this->application = $application;
+        $this->bulkRequest = $bulkRequest;
     }
 
     /**
