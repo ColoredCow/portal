@@ -71,8 +71,8 @@
                                         <div class="card-header d-flex align-items-center justify-content-between">
                                             <div class="d-flex flex-column">
                                                 <div>
-                                                    <p id="applicationRoundName{{ $applicationRound->round->id }}">
-                                                        {{ $applicationRound->trialRound->name }}</p>
+                                                    <span id="applicationRoundName{{ $applicationRound->round->id }}">
+                                                        {{ $applicationRound->trialRound->name }}</span>
                                                     <span title="{{ $applicationRound->round->name }} guide"
                                                         class="modal-toggler-text text-muted" data-toggle="modal"
                                                         data-target="#round_guide_{{ $applicationRound->round->id }}">
@@ -352,8 +352,8 @@
                                         <div class="card-header d-flex align-items-center justify-content-between">
                                             <div class="d-flex flex-column">
                                                 <div>
-                                                    <p class="applicationRoundName{{ $applicationRound->round->id }}">
-                                                        {{ $applicationRound->round->name }}</p>
+                                                    <span class="applicationRoundName{{ $applicationRound->round->id }}">
+                                                        {{ $applicationRound->round->name }}</span>
                                                     <span title="{{ $applicationRound->round->name }} guide"
                                                         class="modal-toggler-text text-muted" data-toggle="modal"
                                                         data-target="#round_guide_{{ $applicationRound->round->id }}">
@@ -830,8 +830,8 @@
                                 <div class="card-header d-flex align-items-center justify-content-between">
                                     <div class="d-flex flex-column">
                                         <div>
-                                            <p id="applicationRoundName{{ $applicationRound->hr_round_id }}">
-                                                {{ $applicationRound->round->name }}</p>
+                                            <span id="applicationRoundName{{ $applicationRound->hr_round_id }}">
+                                                {{ $applicationRound->round->name }}</span>
                                             <span title="{{ $applicationRound->round->name }} guide"
                                                 class="modal-toggler-text text-muted" data-toggle="modal"
                                                 data-target="#round_guide_{{ $applicationRound->round->id }}">
