@@ -39,6 +39,9 @@
                     <div class="col-2 text-center">
                         Billing Engagement %
                     </div>
+                    <div class="col-2 text-center">
+                         Rate
+                    </div>
                 </div>
 
                 <div class="row mb-3 bg-theme-gray-light pt-2" v-for="(projectTeamMember, index) in projectTeamMembers" :key="projectTeamMember.id">
@@ -73,7 +76,10 @@
                     <div class="col-2">
                         <input type="number" step="0.01" :name="`project_team_member[${index}][billing_engagement]`" v-model="projectTeamMember.pivot.billing_engagement" class="form-control">
                     </div>
-                    <div class="col-1">
+                    <div class="col-2">
+                        <input type="number" step="0.01" :name="`project_team_member[${index}][Rate]`" v-model="projectTeamMember.pivot.Rate" class="form-control">
+                    </div>
+                    <div class="col-2">
                         <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{ $project->status == 'active' ? '' : 'disabled' }} >Remove</button>
                     </div>
                     <div class="d-flex mt-2 ml-9 text-light">
