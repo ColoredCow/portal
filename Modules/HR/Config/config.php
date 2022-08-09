@@ -171,4 +171,8 @@ return [
     ],
     'non-verified-application-start-date' => '2022-07-06',
     'follow-up-attempts-threshold' => '2',
+    'hr-followup-email' => [
+        'primary' => env('HR_FOLLOWUP_EMAIL_PRIMARY'),
+        'secondary' => env('HR_FOLLOWUP_EMAIL_SECONDARY'),
+    ]
 ];

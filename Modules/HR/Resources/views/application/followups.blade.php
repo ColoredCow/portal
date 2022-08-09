@@ -1,6 +1,6 @@
 <div>
-	<p>Hello</p>
-	<p>The following applications are present in the portal, those whose followUp attempts are greater than 2. Please follow up with them via phone call
+	<p>Hey {{$user->name}},
+	<p>Please check with the following applicants, we need to follow up with them via phone call. They have already been sent follow-ups via email. If possible please check with them over a phone call regarding their interview schedules.
     </p>
 </div>
 @foreach($applications as $application)

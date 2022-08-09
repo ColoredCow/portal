@@ -11,14 +11,17 @@ class sendThreshholdFollowUp extends Mailable
     use Queueable, SerializesModels;
 
     public $applications;
+    public $user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($applications)
+    public function __construct($applications,$user)
     {
+       // dd($user);
         $this->applications = $applications;
+        $this->user = $user;
     }
 
     /**
@@ -29,7 +32,7 @@ class sendThreshholdFollowUp extends Mailable
     public function build()
     {
         return $this->from(config('hr.default.email'), config('hr.default.name'))
-            ->subject('HR followUp Email')
+            ->subject('Follow up with applicants through a phone call')
             ->view('hr::application.followups');
     }
 }
