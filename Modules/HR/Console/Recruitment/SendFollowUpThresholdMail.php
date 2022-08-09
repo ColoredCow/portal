@@ -51,13 +51,13 @@ class SendFollowUpThresholdMail extends Command
                 }
             }
         });
-        
-        foreach( config ('hr.hr-followup-email') as $email){
+
+        foreach (config('hr.hr-followup-email') as $email) {
             $user = User::where('email', $email)->first();
-            if(!$user){
+            if (! $user) {
                 continue;
             }
-            Mail::to(config ('hr.hr-followup-email'))->queue(new sendThreshholdFollowUp($applications, $user));
+            Mail::to(config('hr.hr-followup-email'))->queue(new sendThreshholdFollowUp($applications, $user));
         }
     }
 }
