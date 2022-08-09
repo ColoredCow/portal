@@ -16,7 +16,7 @@ class CreateInvoiceAuditTable extends Migration
     {
         Schema::connection(config('audit.drivers.database.connection', config('database.default')))->create('invoice_audit', function (Blueprint $table) {
             $morphPrefix = Config::get('audit.user.morph_prefix', 'user');
-            
+
             $table->bigIncrements('id');
             $table->string($morphPrefix . '_type')->nullable();
             $table->unsignedBigInteger($morphPrefix . '_id')->nullable();
@@ -29,8 +29,8 @@ class CreateInvoiceAuditTable extends Migration
             $table->string('user_agent', 1023)->nullable();
             $table->string('tags')->nullable();
             $table->timestamps();
-    
-               $table->index([$morphPrefix . '_id', $morphPrefix . '_type']);
+
+            $table->index([$morphPrefix . '_id', $morphPrefix . '_type']);
         });
     }
 
