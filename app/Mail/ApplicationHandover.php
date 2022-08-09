@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Mail;
+
+use Modules\HR\Entities\Application;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class ApplicationHandover extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $application;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct(Application $application)
+    {
+
+        $this->application = $application->applicant;
+        
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+    
+        return $this->view('hr::application.application-handover-request');
+        
+    }
+}

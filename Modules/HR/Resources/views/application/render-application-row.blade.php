@@ -50,16 +50,17 @@
 								<p class="text-secondary">This application is already assigned to {{$assignee->name}}, to evaluate this, a confirmation would be needed from their end. Please click the request button to request the handover.</p>
 							</div>
 							<div class="modal-footer justify-content-between">
-								<button type="button" class="btn btn-primary">Request</button>
+								<a href="{{ route('application.handover', $application) }}" class="btn btn-primary">Request</a></button>
+								{{-- <a href="{{ route('application.handover.confirmation') }}" class="btn btn-primary">Request</a></button> --}}
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 							</div>
 						</div>
 					</div>
 				</div>
-								
-				
-				{{-- <a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a> --}}
 			</div>
+			{{-- <div class="alert alert-success">
+                <strong>Success!</strong> Application assign to new person.
+            </div> --}}
 			<span class="mr-1 text-truncate">
 				<i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
 			@if ($application->applicant->phone)
@@ -102,8 +103,7 @@
 		</div>
 	</td>
 	<td class="">
-
-		<img src="{{$assignee->avatar}}" alt="{{$assignee->name}}" class="w-25 h-25 rounded-circle"
+        <img src="{{$assignee->avatar}}" alt="{{$assignee->name}}" class="w-25 h-25 rounded-circle"
 			data-toggle="tooltip" data-placement="top" title="{{$assignee->name}}">
 	</td>
 	<td>

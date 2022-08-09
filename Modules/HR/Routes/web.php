@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
             ->names(['index' => 'hr.tags.index', 'edit' => 'hr.tags.edit', 'update' => 'hr.tags.update', 'store' => 'hr.tags.store', 'destroy' => 'hr.tags.delete']);
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
+            Route::get('application/{application}/handover', 'JobApplicationController@request')->name('application.handover');
+            Route::get('application/{application}/{user}', 'JobApplicationController@acceptHandoverRequest');
+
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::post('reports', 'ReportsController@searchBydate')->name('recruitment.report');
@@ -67,7 +70,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/applicant', 'ApplicantController@store')->name('hr.applicant.store');
             Route::get('/applicant/details/show/{applicationID}', 'ApplicantController@show')->name('hr.applicant.details.show');
             Route::post('/excel-import', 'ApplicantController@importExcel')->name('hr.applications.excel-import');
-
+            
             Route::resource('applications/rounds', 'ApplicationRoundController')->only(['store', 'update', 'storeReason']);
             Route::post('/applicationround/{applicationRound}/mail-content/{status}', 'ApplicationRoundController@getMailContent');
             Route::post('/applicationround/{applicationRound}/follow-up', 'ApplicationRoundController@storeFollowUp')->name('hr.application-round.follow-up.store');

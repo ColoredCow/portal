@@ -21,6 +21,8 @@ use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
+use App\Mail\ApplicationHandover;
+use Illuminate\Support\Facades\Auth;
 
 abstract class ApplicationController extends Controller
 {
@@ -148,7 +150,6 @@ abstract class ApplicationController extends Controller
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
-
         return view('hr.application.index')->with($attr);
     }
 
@@ -272,5 +273,31 @@ abstract class ApplicationController extends Controller
         return Response::make(Storage::get($application->offer_letter), 200, [
             'content-type' => 'application/pdf',
         ]);
+    }
+
+    public function request(Application $application)
+    {
+        // dd('Handover');
+		$currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
+        Mail::to($currentAssignee)->send(new ApplicationHandover($application));
+        return redirect()->back()->with("success", "You email has successfully been sent");
+
+    }
+
+    public function acceptHandoverRequest(Application $application) 
+    {
+        dd('here wer are');
+        $currentUser = Auth::user();
+        // dd('$currentUser');
+        $currentAssignee = $application->assignee;
+        if($currentUser->id !== $currentAssignee->id) {
+            return view('hr::application.render-application-row')->with("You are not assigned to this application. So you can't take this action");
+            // dd("hello");
+        }
+        $application->unassign($currentUser);
+        $application->assign($newUser);
+        return redirect()->back()->with('Handover Accepted');
+        // dd("hello");
+
     }
 }
