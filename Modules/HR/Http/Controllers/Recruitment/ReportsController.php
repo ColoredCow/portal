@@ -94,10 +94,14 @@ class ReportsController extends Controller
             'todayCount' => $todayCount, 'verifiedApplicationsCount' => $verifiedApplicationCount,
         ]);
     }
-
-    public function bargraph()
-    {
-        $jobs = Job::all();
+ public function bargraph(Request $request) {
+		$filters = $request->all();
+		$jobs = [];
+		if(!empty($filters)) {
+		$jobs = Job::whereBetween('created_at', $filters)->get();
+		} else {
+			$jobs = Job::all();
+		}
         $jobsTitle = $jobs->pluck('title')->toArray();
         $applicationCount = [];
         $totalApplicationCount = 0;

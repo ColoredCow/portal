@@ -1428,18 +1428,25 @@ function bargraph() {
 			},
 		],
 	};
-
 	var myBar = new Chart(ctx, {
 		type: "bar",
 		data: data,
 		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function(tooltipItem) {                                
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
 			indexAxis: "y",
 			scales: {
 				x: {
 					min: 0,
-					max: 20,
+					max: 1000,
 					ticks: {
-						stepSize: 2,
+						stepSize: 100,
 					},
 				},
 			},
@@ -1449,20 +1456,13 @@ function bargraph() {
 						boxWidth: 0,
 					},
 				},
-				datalabels: {
-					color: "black",
-					anchor: "center",
-					align: "right",
-					formatter: Math.round,
-					font: {
-						weight: "bold",
-						size: 16,
-					},
-				},
+			},
+			hover: {
+				mode: false
 			},
 			animation: {
-				duration: 0,
-				onComplete: function() {
+				duration: 1,
+				onProgress: function() {
 					var chart = this;
 					var ctx = chart.ctx;
 					ctx.textAlign = "top";
@@ -1479,8 +1479,10 @@ function bargraph() {
 						});
 					});
 				},
+				
 			},
 		},
+		
 	});
 }
 
