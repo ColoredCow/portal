@@ -250,7 +250,7 @@ class EffortTrackingService
                         'project' => $project,
                         'billing_start_date' => $billingStartDate,
                         'billing_end_date' => $billingEndDate,
-                     'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
+                        'sheet_index_for_billable_effort' => $sheetIndexForTotalBillableEffort,
                     ];
 
                     foreach ($projectsInSheet as $sheetProject) {
