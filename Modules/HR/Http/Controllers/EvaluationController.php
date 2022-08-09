@@ -10,8 +10,9 @@ use Modules\HR\Entities\Evaluation\Parameter;
 use Modules\HR\Entities\Evaluation\ParameterOption;
 use Modules\HR\Entities\Evaluation\Segment;
 use Modules\HR\Entities\Round;
-
+use Modules\HR\Http\Requests\ManageEvaluationRequest;
 class EvaluationController extends Controller
+
 {
     /**
      * Display a listing of the resource.
@@ -51,7 +52,7 @@ class EvaluationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function createSegment(Request $request)
+  public function createSegment(ManageEvaluationRequest $request)
     {
         $segmentId = Round::select('*')->where('name', $request->rounds)->first()->id;
         $segment = Segment::create([

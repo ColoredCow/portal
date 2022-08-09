@@ -4,7 +4,14 @@
     <br>
     <br>
     <div>
-        <div class="d-flex justify-content-between">
+
+        <div class="d-none alert alert-success fade show" role="alert" id="segmentsuccess">
+            <strong>Success!!!</strong>Congratulations!!! New segment successfully created.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="d-flex justify-content-between">
             <h1 class="mb-0">Rounds and Segments</h1>
             <div>
                 <button class="btn btn-primary" data-toggle="modal" data-target="#createNewSegment">Add New</button>
@@ -16,7 +23,7 @@
             
             @foreach ($rounds as $round)
                     <a >
-                    @foreach ($segments as $segment)
+               @foreach ($segments as $segment)
                     <tr>
                         @if($round->id == $segment->round_id )
                         </br>
@@ -24,38 +31,37 @@
                             </div>
 		                        <div id="applicant_verification{{$round->id}}" class="collapse">
 			                      <div class="card-body">
-      @foreach($segments as $segment )
-      @if($round->id == $segment->round_id )
-				<div class="form-row">
-					<div class="col-md-12">
-						<div class="form-group">
-              <div class="row">
-            <div class="col-md-10">
+                  @foreach($segments as $segment )
+                    @if($round->id == $segment->round_id )
+				    <div class="form-row">
+					 <div class="col-md-12">
+				      <div class="form-group">
+                       <div class="row">
+                        <div class="col-md-10">
 							<label for="setting_key[applicant_verification_subject]">    <a href="{{ route('hr.evaluation.segment-parameters', $segment->id) }}">
                         {{ $segment->name }}
                         </a></label>
-</div>
+                        </div>
                         <div class="col-md-2">
                     <i v-on:click="editSegment({{ $segment }})" class="fa fa-edit fz-20 text-theme-green"></i>
                     <i class="fa fa-trash fz-20 ml-4 text-theme-red"></i>
-</div>
-</div>
-            </div>
+                       </div>
+                      </div>
+                     </div>
 					</div>
-				</div>  
-      @endif             
-      @endforeach      
-      </div>
-    </div>               
-            @break
+				   </div>  
+                    @endif             
+                 @endforeach      
+                                </div>
+                               </div>               
+                         @break
                       @endif  
             </tr>
-                  @endforeach
+                @endforeach
                     </a>
-                    <h5></h5>
-                </td> 
-            </tr>
-         @endforeach
+                    <h5></h5> 
+              </tr>
+            @endforeach
         </table>
     </div>
 @include('hr::evaluation.segment.create')
