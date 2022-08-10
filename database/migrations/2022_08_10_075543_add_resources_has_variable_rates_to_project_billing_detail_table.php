@@ -14,7 +14,7 @@ class AddResourcesHasVariableRatesToProjectBillingDetailTable extends Migration
     public function up()
     {
         Schema::table('project_billing_details', function (Blueprint $table) {
-            $table->boolean('resources_has_variable_rates')->default(false);;
+            $table->boolean('resources_has_variable_rates')->default(false);
         });
     }
 
