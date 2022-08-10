@@ -115,6 +115,9 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::get('/nda-template', 'NDAAgreementController@index')->name('setting.agreement.nda');
+        Route::get('/organization-template', 'SettingController@organizationData')->name('setting.organization');
+
+        Route::post('/organization-template/create', 'SettingController@createOrganization')->name('setting.create.organization');
         Route::get('/invoice-template', 'SettingController@invoiceTemplates')->name('setting.invoice');
         Route::post('/invoice-template', 'SettingController@updateInvoiceTemplates')->name('setting.invoice.update');
     });

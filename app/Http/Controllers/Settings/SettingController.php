@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Settings;
 use App\Helpers\ContentHelper;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Setting\SettingRequest;
+use Illuminate\Http\Request;
+use App\Models\Organization;
 
 class SettingController extends Controller
 {
@@ -38,5 +39,26 @@ class SettingController extends Controller
         }
 
         return redirect()->back()->with('status', 'Settings saved!');
+    }
+
+    public function organizationData()
+    {
+        return view('settings.organization.organization');
+    }
+
+    public function createOrganization(Request $request)
+    {
+        $org = Organization::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'annual_sales' => $request->annual_sales,
+            'members' => $request->members,
+            'industry' => $request->industry,
+            'email' => $request->email,
+            'billing_details' => $request->billing_details,
+            'website' => $request->website,
+        ]);
+
+        return back();
     }
 }
