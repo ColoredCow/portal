@@ -94,7 +94,7 @@ class ReportsController extends Controller
             'todayCount' => $todayCount, 'verifiedApplicationsCount' => $verifiedApplicationCount,
         ]);
     }
-    public function bargraph(Request $request)
+    public function jobWiseApplicationsGraph(Request $request)
     {
         $filters = $request->all();
         $jobs = [];

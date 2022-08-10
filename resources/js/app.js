@@ -191,7 +191,7 @@ $(document).ready(() => {
 		barChart();
 	}
 	if ($("#myChart").length) {
-		bargraph();
+		HorizontalBarChart();
 	}
 
 	$("#save-btn-action").on("click", function() {
@@ -1412,7 +1412,7 @@ function barChart() {
 	});
 }
 
-function bargraph() {
+function HorizontalBarChart() {
 	var value = $("#myChart").data("target");
 	var cData = value;
 	var ctx = $("#myChart");

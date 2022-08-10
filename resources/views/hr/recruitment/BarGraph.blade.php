@@ -7,7 +7,7 @@
 <div class="d-flex justify-content-between align-items-center m-4">
   <p>Total Count: <span>{{$totalCount}}</span></p>
   <div>
-	  <form class="form-inline text-right" action="{{route('recruitment.graph')}}" method="get">
+	  <form class="form-inline text-right" action="{{route('applications.graph')}}" method="get">
 		<div class="form-group">
 		<input type="date" name="start_date" id="start_date" class="form-control-sm" required> 
 		</div>
