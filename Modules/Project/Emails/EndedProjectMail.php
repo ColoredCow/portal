@@ -26,7 +26,7 @@ class EndedProjectMail extends Mailable implements ShouldQueue
     /**
      * Build the message.
      *
-     * @return $this->projectData
+     * @return project
      */
     public function build()
     {
