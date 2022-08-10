@@ -103,13 +103,13 @@ class ReportsController extends Controller
         } else {
             $jobs = Job::all();
         }
-        $jobsTitle = $jobs->pluck('title')->toArray();
-        $applicationCount = [];
+        $jobsTitle = Job::pluck('title')->toArray();
+        $applicationCount = array_fill(0, count($jobsTitle), 0);
         $totalApplicationCount = 0;
         foreach ($jobs as $job) {
-            $count = Application::where('hr_job_id', $job->id)->count();
-            $applicationCount[] = $count;
+            $count = Application::whereBetween('created_at', $filters)->where('hr_job_id', $job->id)->count();
             $totalApplicationCount += $count;
+            $applicationCount[$job->id] = $count;
         }
         $chartData = [
             'jobsTitle' => $jobsTitle,
