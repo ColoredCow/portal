@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
 
+        Route::get('/employee-basic-details/{employee}/', 'EmployeeController@basicDetails')->name('employees.basic.details'); 
         Route::resource('employees', 'EmployeeController')
             ->only(['index', 'show'])
             ->names([
@@ -106,7 +107,6 @@ Route::middleware('auth')->group(function () {
                 'show' => 'employees.show',
         ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
-        Route::get('employee-basic-details', 'EmployeeController@basicDetails')->name('employees.basic.details');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

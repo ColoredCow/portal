@@ -42,11 +42,8 @@ class EmployeeController extends Controller
 
         return view('hr.employees.reports');
     }
-    public function basicDetails(Employee $basicdetails)
+    public function basicDetails(Employee $employee)
     {
-        $user = auth()->user();
-        $section = request()->input('section', 'basic-details');
-
-        return view('hr.employees.basic-details')->with(['user' => $user, 'section' => $section]);
+    return view('hr.employees.basic-details', ['employee' => $employee]);
     }
 }
