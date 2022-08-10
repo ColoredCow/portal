@@ -24,16 +24,6 @@ class Applicant extends Model
      */
     public static function _create($attr)
     {
-        $university = University::where('name', $attr['college'])->first();
-        $universityID = null;
-        if ($university && $university->id) {
-            $universityID = $university->id;
-        } else {
-            $university = University::create([
-                'name' => $attr['college'],
-            ]);
-            $universityID = $university->id;
-        }
         $applicant = self::firstOrCreate([
             'email' => $attr['email'],
         ], [
@@ -44,8 +34,6 @@ class Applicant extends Model
             'graduation_year' => isset($attr['graduation_year']) ? $attr['graduation_year'] : null,
             'course' => isset($attr['course']) ? $attr['course'] : null,
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
-            'hr_university_id' => $universityID,
-
         ]);
 
         $jobId = $attr['hr_job_id'] ?? Job::where('opportunity_id', $attr['opportunity_id'])->first()->id;
