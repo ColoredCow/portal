@@ -20,7 +20,6 @@ class ProjectService implements ProjectServiceContract
 {
     public function index(array $data = [])
     {
-
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
@@ -356,4 +355,3 @@ class ProjectService implements ProjectServiceContract
         return $projectsData;
     }
 }
-
