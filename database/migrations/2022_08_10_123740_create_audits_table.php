@@ -15,7 +15,6 @@ class CreateAuditsTable extends Migration
     public function up()
     {
         Schema::connection(config('audit.drivers.database.connection', config('database.default')))->create('audits', function (Blueprint $table) {
-
             $morphPrefix = Config::get('audit.user.morph_prefix', 'user');
 
             $table->bigIncrements('id');
