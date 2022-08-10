@@ -5,7 +5,7 @@
 <h1>Applications Per Jobs Roles</h1>
 </div>
 <div class="d-flex justify-content-between align-items-center m-4">
-  <p>Total Count: <span>{{$TotalCount}}</span></p>
+  <p>Total Count: <span>{{$totalCount}}</span></p>
   <div>
 	  <form class="form-inline text-right" action="{{route('recruitment.graph')}}" method="get">
 		<div class="form-group">

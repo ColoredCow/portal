@@ -98,18 +98,18 @@ class ReportsController extends Controller
     {
         $filters = $request->all();
         $jobs = [];
-        if (! empty($filters)) {
-            $jobs = Job::whereBetween('created_at', $filters)->get();
-        } else {
-            $jobs = Job::all();
-        }
-        $jobsTitle = Job::pluck('title')->toArray();
-        $applicationCount = array_fill(0, count($jobsTitle), 0);
+        $jobs = Job::all();
+        $jobsTitle = $jobs->pluck('title');
+        $applicationCount = [];
         $totalApplicationCount = 0;
         foreach ($jobs as $job) {
-            $count = Application::whereBetween('created_at', $filters)->where('hr_job_id', $job->id)->count();
+            if (! empty($filters)) {
+                $count = Application::whereBetween('created_at', $filters)->where('hr_job_id', $job->id)->count();
+            } else {
+                $count = Application::where('hr_job_id', $job->id)->count();
+            }
             $totalApplicationCount += $count;
-            $applicationCount[$job->id] = $count;
+            $applicationCount[] = $count;
         }
         $chartData = [
             'jobsTitle' => $jobsTitle,
@@ -117,11 +117,8 @@ class ReportsController extends Controller
         ];
 
         return view('hr.recruitment.BarGraph')->with([
-            'TotalCount' => $totalApplicationCount,
-            'jobs' => $jobs,
-            'application'=>$applicationCount,
+            'totalCount' => $totalApplicationCount,
             'chartData' => json_encode($chartData)
-
         ]);
     }
 }
