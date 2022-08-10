@@ -114,13 +114,12 @@ abstract class ApplicationController extends Controller
         $hrRoundsCounts = [];
 
         foreach ($strings as $string) {
-            $query = Application::applyFilter($countFilters)
+            $attr[camel_case($string) . 'ApplicationsCount'] = Application::applyFilter($countFilters)
                 ->where('status', $string)
                 ->whereHas('latestApplicationRound', function ($subQuery) {
                     return $subQuery->where('is_latest', true);
-                });
-
-            $attr[camel_case($string) . 'ApplicationsCount'] = $query->count();
+                })
+                ->count();
         }
 
         $jobType = $this->getApplicationType();

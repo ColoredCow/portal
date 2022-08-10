@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
                     'edit' => 'recruitment.opportunities.edit',
                     'destroy' => 'recruitment.opportunities.destroy',
                 ]);
-            Route::post('opportunities/{opportunity}/updateResources', 'RecruitmentOpportunityController@updateResources')->name('recruitment.opportunities.updateResources');
+            Route::post('opportunities/{opportunity}/update-resources-count', 'RecruitmentOpportunityController@resourcesRequiredCount')->name('recruitment.opportunities.updateResources');
 
             Route::resource('rounds', 'RoundController')->only(['update'])->names(['update' => 'hr.round.update']);
 

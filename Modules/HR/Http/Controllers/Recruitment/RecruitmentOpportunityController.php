@@ -34,7 +34,7 @@ class RecruitmentOpportunityController extends JobController
         ]);
     }
 
-    public function updateResources(HttpRequest $request, Job $opportunity)
+    public function resourcesRequiredCount(HttpRequest $request, Job $opportunity)
     {
         $validated = $request->validate([
             'resources_required' => 'required|integer'
