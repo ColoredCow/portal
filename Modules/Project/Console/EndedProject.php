@@ -39,7 +39,7 @@ class EndedProject extends Command
      * @return mixed
      */
     public function handle()
-    {        
+    {
         $service = app(ProjectService::class);
         $projectsData = $service->getMailDetailsForProjectKeyAccountManagers();
         foreach ($projectsData as $projectData) {

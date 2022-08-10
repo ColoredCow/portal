@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
-        $schedule->command('project:ended-project')->everyMinute();
+        $schedule->command('project:ended-project')->dailyAt('09:00');
     }
 
     /**
@@ -55,4 +55,3 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 }
- 
