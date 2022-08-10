@@ -354,6 +354,7 @@ class ProjectService implements ProjectServiceContract
                 ];
             }
         }
+
         return $projectsData;
     }
 }
