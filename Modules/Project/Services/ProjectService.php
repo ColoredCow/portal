@@ -20,6 +20,7 @@ class ProjectService implements ProjectServiceContract
 {
     public function index(array $data = [])
     {
+        $this->getMailDetailsForProjectKeyAccountManagers();
         $filters = [
             'status' => $data['status'] ?? 'active',
             'name' => $data['name'] ?? null,
