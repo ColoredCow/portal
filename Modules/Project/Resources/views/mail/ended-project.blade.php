@@ -5,9 +5,9 @@
 		}
 	</style>
 	<p>Hi,
-		@foreach ($projectData as $projects) 
+		@foreach ($projectData as $project) 
 	    @endforeach
-		{{$projects['name']}}
+		{{$project['name']}}
 	</p>
 	 <p>There are some projects that have reached their end date but are still marked as active. We need you to take action so that the team can get clarity on active projects, the team's availability and assign other projects accordingly.</p>
 	 <table class="table">
@@ -19,8 +19,8 @@
 		<tbody>
 				<tr>
 					<td>
-						@foreach ($projectData as $project)
-						    <li>{{$project['project']}}</li>
+						@foreach ($projectData as $projects)
+						    <li>{{$projects['project']}}</li>
 						@endforeach
 					</td>
 				</tr>
