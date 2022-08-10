@@ -30,12 +30,12 @@ class EndedProjectMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        foreach ($this->projectData as $project) {
+        $mail = $this->subject('ColoredCow Portal - Some of your projects are ended but still marked as active');
+        foreach ($this->projectData as $project) {    
+        $mail->to($project['email']);
         }
 
-        return $this
-         ->to($project['email'])
-         ->subject('ColoredCow Portal - Some of your projects are ended but still marked as active')
-         ->view('project::mail.ended-project');
+        return
+        $mail->view('project::mail.ended-project');
     }
 }
