@@ -18,7 +18,8 @@
         </form>
     </div>
     <table class="table table-striped table-bordered">
-        <tr>
+        <thead class="thead-dark">
+        <tr class="sticky-top">
             <th>Name</th>
             <th>Designation</th>
             <th>Joined on</th>
@@ -54,9 +55,10 @@
                     {{count($employee->user->activeProjectTeamMembers)}}
                 @endif
             </td>
-            <td class="{{ $employee->user ? ($employee->user->fte > 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</td>
+            <td class="{{ $employee->user ? ($employee->user->fte >= 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</td>
         </tr>
         @endforeach
     </table>
 </div>
 @endsection
+

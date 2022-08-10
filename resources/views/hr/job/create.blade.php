@@ -9,12 +9,47 @@
         // if ($job->type == 'volunteer') {
             // $menu = 'hr.volunteers.menu';
             // $formAction = route('volunteer.opportunities.store', $job->id);
-        // }
+            // }
     @endphp
     @include($menu)
     <br><br>
-    @include('status', ['errors' => $errors->all()])
-    <h2 class="mb-3">New Opportunity</h2>
+    <div class="d-none alert alert-success " id="successMessage" role="alert">
+        <strong>Updated!</strong> Submitted successfully.
+        <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
+        </button>
+    </div>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h2 class="mb-3">New Opportunity</h2>
+        </div>
+        <div>                                                   
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#domainformModal"> Add domain</button>
+        </div>
+    </div>
+    <div class="modal fade" id="domainformModal" tabindex="-1" role="dialog" aria-labelledby="domainformModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="domainformModalLabel">Domain Name </h5> 
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="domain modal-body">
+                    <form action="{{ route('hr-job-domains.storeJobdomain')}}" method="POST" id="domainForm" >
+                        @csrf
+                        <div class="form-group">
+                            <label for="domainfield">name</label><strong class="text-danger">*</strong></label>
+                            <input type="text" name="name" class="form-control"  id="name" aria-describedby="Help" placeholder="name"> 
+                            <div class="d-none text-danger" name="error" id="domainerror"></div>
+                        </div>        
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="addDomain">Save changes</button>  
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>      
     <form action="{{ $formAction }}" method="POST">
         @csrf
         <div class="card mb-3">
@@ -44,10 +79,10 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="domain" class="fz-14 leading-none text-secondary mb-1">Domain<strong class="text-danger">*</strong></label>
-                        <select class="form-control" name="domain" id="domain" value="{{ old('domain') }}" required>
-                            @foreach (config('hr.opportunities.domains') as $domain => $label)
-                                <option value="{{ $domain }}" {{ old('domain') == $domain ? 'selected' : '' }}>{{ $label }}</option>
-                            @endforeach
+                        <select class="form-control" name="domain" id="domain "> 
+                            @foreach ($domains as $domain)
+                                <option value="{{ $domain->slug }}" {{ old('domain') == $domain ? 'selected' : '' }}>{{ $domain->domain }}</option>
+                            @endforeach 
                         </select>
                     </div>
                     <div class="col-md-3 form-group">

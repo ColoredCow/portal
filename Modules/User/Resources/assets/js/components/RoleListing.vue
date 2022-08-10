@@ -5,13 +5,17 @@
 				<tr>
 					<th>Role</th>
 					<th>Permissions</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="(role, index) in allRoles" :key="index">
-					<td width="50%">
-						<p>{{ role.label }}</p>
-						<p class="text-muted" style="font-size:12px;">{{ role.description }}</p>
+					<td>
+						<div class="mb-1">{{ role.label }}</div>
+						<div class="text-muted fz-14">{{ role.description }}</div>
+					</td>
+					<td>
+						<span>Assigned: {{ role.permissions.length }}</span>
 					</td>
 					<td>
 						<button class="btn btn-sm btn-outline-info" @click="updatePermissionModal(index)" data-toggle="modal" data-target="#update_role_permissions_modal">Manage permissions</button>
@@ -19,15 +23,13 @@
 				</tr>
 			</tbody>
 		</table>
-
-		<role-permission-update-modal :updateRoute="this.updateRoute"  :role = "this.selectedRole" :permissions = "this.permissions" :rolePermissionsUpdated="onRolePressionsUpdated"/>
-
+		<role-permission-update-modal :updateRoute="this.updateRoute" :role="this.selectedRole" :permissions = "this.permissions" @rolePermissionsUpdated="onRolePressionsUpdated"/>
 	</div>
 </template>
 
 <script>
 export default {
-	props:[ "roles", "updateRoute", "permissions"],
+	props: ["roles", "updateRoute", "permissions"],
 
 	data(){
 		return {
@@ -56,10 +58,8 @@ export default {
 		},
 
 		onRolePressionsUpdated: function(selectedPermissions) {
-			Vue.set(this.selectedRole, "permissions",  selectedPermissions);
+			Vue.set(this.selectedRole, "permissions", selectedPermissions);
 		}
-
-
 	}
 };
 </script>

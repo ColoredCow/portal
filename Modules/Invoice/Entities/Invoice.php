@@ -7,10 +7,11 @@ use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Invoice extends Model
+class Invoice extends Model implements Auditable
 {
-    use Encryptable;
+    use Encryptable, \OwenIt\Auditing\Auditable;
 
     protected $fillable = ['client_id', 'project_id', 'status', 'billing_level', 'currency', 'amount', 'sent_on', 'due_on', 'receivable_date', 'gst', 'file_path', 'comments', 'amount_paid', 'bank_charges', 'conversion_rate_diff', 'conversion_rate', 'tds', 'tds_percentage', 'currency_transaction_charge', 'payment_at', 'invoice_number', 'reminder_mail_count', 'payment_confirmation_mail_sent'];
 
@@ -22,7 +23,15 @@ class Invoice extends Model
 
     public function scopeStatus($query, $status)
     {
-        return $query->where('status', $status);
+        if (is_string($status)) {
+            return $query->where('status', $status);
+        }
+
+        if (is_array($status)) {
+            return $query->whereIn('status', $status);
+        }
+
+        return $query;
     }
 
     public function scopeYear($query, $year)
@@ -61,6 +70,15 @@ class Invoice extends Model
     {
         return $query->whereBetween('sent_on', [($invoiceYear . '-' . config('invoice.financial-month-details.financial_year_start_month') . '-' . '01'), (($invoiceYear + 1) . '-' . config('invoice.financial-month-details.financial_year_end_month') . '-' . '01')]);
     }
+
+    public function scopeSentBetween($query, $startDate, $endDate)
+    {
+        $query->whereDate('sent_on', '>=', $startDate);
+        $query->whereDate('sent_on', '<=', $endDate);
+
+        return $query;
+    }
+
     public function scopeApplyFilters($query, $filters)
     {
         if ($year = Arr::get($filters, 'year', '')) {
@@ -111,6 +129,11 @@ class Invoice extends Model
         return $this->amount . ' ' . optional($country)->currency_symbol;
     }
 
+    public function getFormattedInvoiceNumberAttribute()
+    {
+        return substr($this->invoice_number, 0, -4);
+    }
+
     public function isAmountInINR()
     {
         return $this->currency == 'INR';
@@ -125,7 +148,7 @@ class Invoice extends Model
             $amount = (float) $this->amount + (float) $this->gst;
         }
 
-        return trim(optional($country)->currency_symbol . ' ' . $amount);
+        return trim(optional($country)->currency_symbol . $amount);
     }
 
     public function invoiceAmounts()
@@ -161,5 +184,25 @@ class Invoice extends Model
         } else {
             return $this->amount * $this->conversion_rate;
         }
+    }
+
+    public function getTotalAmountAttribute()
+    {
+        return $this->amount + $this->gst;
+    }
+
+    public function getTermAttribute()
+    {
+        $invoiceStartMonthNumber = $this->sent_on->subMonth()->month;
+        $currentMonthNumber = today(config('constants.timezone.indian'))->month;
+        $termStartDate = $this->client->getMonthStartDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $termEndDate = $this->client->getMonthEndDateAttribute($currentMonthNumber - $invoiceStartMonthNumber);
+        $term = $termStartDate->format('M') . ' - ' . $termEndDate->format('M');
+
+        if ($termStartDate->format('M') == $termEndDate->format('M')) {
+            $term = $termEndDate->format('F');
+        }
+
+        return $term;
     }
 }

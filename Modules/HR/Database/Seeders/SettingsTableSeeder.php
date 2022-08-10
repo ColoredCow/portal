@@ -67,7 +67,7 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => config('hr.templates.follow_up_email_for_scheduling_interview.body'),
-            'setting_value' => '<div>Hello |*applicant_name*|,</didiv> </div><div>Hope you are doing well and having a great time. We are reaching out to follow up on the interview scheduling process. You must have received an email for scheduling your interview for |*round_name*|. The email would have a link, that would take you to a calendar page, with available slots for booking. Pick one as per your convenience and schedule your interview.<br />If you didn\'t find an email, please check your spam folder.  For further queries, write at pankaj.kandpal@coloredcow.in<br />
+            'setting_value' => '<div>Hello |*applicant_name*|,</div><br></div><div>Hope you are doing well and having a great time. We are reaching out to follow up on the interview scheduling process. You must have received an email for scheduling your interview for |*round_name*|. The email would have a link, that would take you to a calendar page, with available slots for booking. Pick one as per your convenience and schedule your interview.<br>If you didn\'t find an email, please check your spam folder. For further queries, write at pankaj.kandpal@coloredcow.in<br>
             Looking forward to hearing back from you</div><div> </div><div>Thanks</div><div>HR Team,</div><div>ColoredCow</div>',
         ]);
         Setting::updateOrCreate([
