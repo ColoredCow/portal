@@ -26,7 +26,7 @@ class EffortTrackingService
         $currentDate = now(config('constants.timezone.indian'));
         $currentMonth = $data['month'] ?? Carbon::now()->format('F');
         $currentYear = $data['year'] ?? Carbon::now()->format('Y');
-        $totalMonths = $this->getFilterParameter($currentMonth, $currentYear);
+        $totalMonths = $this->getTotalMonthsFilterParameter($currentMonth, $currentYear);
         $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
         $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
         $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
@@ -50,7 +50,7 @@ class EffortTrackingService
         ];
     }
 
-    public function getFilterParameter($currentMonth, $currentYear)
+    public function getTotalMonthsFilterParameter($currentMonth, $currentYear)
     {
         $Month = intval(date('m', strtotime($currentMonth)));
         $thisMonth = intval(Carbon::now()->format('m'));
