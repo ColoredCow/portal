@@ -4,28 +4,31 @@
 			line-height: 1px;
 		}
 	</style>
-	<p>Hi{{ $projectsData['name'] }},</p>
-	<p>There are some projects that have reached their end date but are still marked as active. We need you to take action so that the team can get clarity on active projects, the team's availability and assign other projects accordingly.</p>
-	<table class="table">
+	<p>Hi,
+		@foreach ($projectData as $projects) 
+	    @endforeach
+		{{$projects['name']}}
+	</p>
+	 <p>There are some projects that have reached their end date but are still marked as active. We need you to take action so that the team can get clarity on active projects, the team's availability and assign other projects accordingly.</p>
+	 <table class="table">
 		<thead>
 			<tr>
 			<th scope="col">Project Name</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($projectsData['project'] as $projects)
 				<tr>
 					<td>
-						<a href="{{ route('project.show', $projects) }}">{{ $projects->name }}</a>
+						@foreach ($projectData as $project)
+						    <li>{{$project['project']}}</li>
+						@endforeach
 					</td>
 				</tr>
-			 @endforeach
 		</tbody>
-		</table>
+	 </table>
 	<br>
-    <p>To view all your projects, you can use this link<a href="http://portal.test/projects">My Projects</a>.</p>
+    <p>To view all your projects, you can use this link  <a href="http://portal.test/projects">My Projects</a>.</p>
     <br>
 	<p class="line">Thanks,</p>
 	<p class="line">ColoredCow Portal</p>
 </div>
-

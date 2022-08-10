@@ -5,21 +5,22 @@ namespace Modules\Project\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EndedProjectMail extends Mailable
+class EndedProjectMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    protected $projectsData;
+    public $projectData;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(array $projectsData)
+    public function __construct($projectData)
     {
-        $this->$projectsData = $projectsData;
+        $this->projectData = $projectData;
     }
 
     /**
@@ -27,13 +28,14 @@ class EndedProjectMail extends Mailable
      *
      * @return $this
      */
-    public function build($projectsData)
+    public function build()
     {
-        return $this
-        ->to($this->$projectsData['email'])
-        ->subject('ColoredCow Portal - Some of your projects are ended but still marked as active')
-        ->view('project::mail.ended-project')
-        ->with(['$projectsData' => $this->$projectsData]);
+        foreach ($this->projectData as $project){
+         return $this
+         ->to($project['email'])
+         ->subject('ColoredCow Portal - Some of your projects are ended but still marked as active')
+         ->view('project::mail.ended-project')
+         ->with(['$projectData' => $project]);
+        }
     }
 }
-
