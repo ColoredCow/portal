@@ -9,6 +9,7 @@ require("./bootstrap");
 import "jquery-ui/ui/widgets/datepicker.js";
 import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
+import Chart from "chart.js/auto";
 
 window.Vue = require("vue");
 
@@ -188,6 +189,9 @@ $(document).ready(() => {
 	if ($(".chart-data").length) {
 		datePickerChart();
 		barChart();
+	}
+	if ($("#myChart").length) {
+		HorizontalBarChart();
 	}
 
 	$("#save-btn-action").on("click", function() {
@@ -1405,6 +1409,80 @@ function barChart() {
 		type: "bar",
 		data: data,
 		options: options
+	});
+}
+
+function HorizontalBarChart() {
+	var value = $("#myChart").data("target");
+	var cData = value;
+	var ctx = $("#myChart");
+	var data = {
+		labels: cData.jobsTitle,
+	  	datasets: [
+			{
+				label: [],
+				data: cData.application,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function(tooltipItem) {                                
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 1000,
+					ticks: {
+						stepSize: 100,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function() {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function(dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							var data = dataset.data[index];
+							if (data == "0") {
+								data = "";
+							}
+							ctx.fillText(data, bar.x + 5, bar.y );
+						});
+					});
+				},
+				
+			},
+		},
+		
 	});
 }
 
