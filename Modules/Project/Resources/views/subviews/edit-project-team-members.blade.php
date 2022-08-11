@@ -36,7 +36,7 @@
                     <div class="col-1">
                         Monthly
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-1 text-center">
                         Rate
                     </div>
                     <div class="col-2 text-center">
