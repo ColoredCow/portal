@@ -17,7 +17,7 @@ class ProfileController extends ModuleBaseController
 
     public function index()
     {
-        return view('user::profile.index', $this->service->index()); 
+        return view('user::profile.index', $this->service->index());
     }
 
     public function update(Request $request, $userId)
@@ -29,9 +29,9 @@ class ProfileController extends ModuleBaseController
         $user->employee->designation = $request->designation;
         $user->employee->name = $request->name;
         $user->employee->domain_id = $request->domainId;
-        
+
         $user->push();
-        
+
         return back();
     }
 }

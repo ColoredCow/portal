@@ -5,7 +5,6 @@ namespace Modules\User\Services;
 use Modules\User\Contracts\ProfileServiceContract;
 use Modules\HR\Entities\HrJobDomain;
 
-
 class ProfileService implements ProfileServiceContract
 {
     /**
@@ -18,6 +17,5 @@ class ProfileService implements ProfileServiceContract
         $domains = HrJobDomain::select('id', 'domain')->get()->toArray();
 
         return ['user' => $user, 'section' => $section, 'domains' =>$domains];
-
     }
 }

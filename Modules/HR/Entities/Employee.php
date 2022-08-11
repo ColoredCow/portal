@@ -65,9 +65,4 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeSalary::class);
     }
-
-    public function domain()
-    {
-        return $this->belongsTo(HrJobDomain::class);
-    }
 }

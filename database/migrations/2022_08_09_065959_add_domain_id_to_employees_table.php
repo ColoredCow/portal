@@ -1,6 +1,6 @@
 <?php
 
-use Brick\Math\BigInteger;
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -30,6 +30,6 @@ class AddDomainIdToEmployeesTable extends Migration
         Schema::dropIfExists('employees');
         Schema::table('employees', function (Blueprint $table) {
             $table->dropForeign('domain_id');
-         });
+        });
     }
 }
