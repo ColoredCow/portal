@@ -116,7 +116,7 @@ class ReportsController extends Controller
             'application' => $applicationCount,
         ];
 
-        return view('hr.recruitment.horizontalBarGraph')->with([
+        return view('hr.recruitment.job-Wise-Applications-Graph')->with([
             'totalCount' => $totalApplicationCount,
             'chartData' => json_encode($chartData)
         ]);
