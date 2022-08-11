@@ -54,73 +54,73 @@
 			</div>
 		</div>
 
-        <div>
-            @if ($application->applicant->linkedin)
-                <a href="{{ $application->applicant->linkedin }}" target="_blank" data-toggle="tooltip"
-                    data-placement="top" title="LinkedIn" class="mr-1 text-decoration-none">
-                    <span><i class="fa fa-linkedin-square" aria-hidden="true"></i></span>
-                </a>
-            @endif
-            @if ($application->resume)
-                <a href="{{ $application->resume }}" target="_blank" data-toggle="tooltip" data-placement="top"
-                    title="Resume" class="mr-1 text-decoration-none">
-                    <span><i class="fa fa-file-text" aria-hidden="true"></i></span>
-                </a>
-            @endif
-        </div>
-    </td>
-    <td>
-        <div class="d-flex flex-column">
-            <span>{{ $application->job->title }}</span>
-            <span class="fz-xl-14 text-secondary">Applied on
-                {{ $application->created_at->format(config('constants.display_date_format')) }}</span>
-            <span class="font-weight-bold fz-xl-14 text-dark">
-                <span><i
-                        class="fa fa-flag mr-1"></i>{{ $application->latestApplicationRound->round->isTrialRound() ? optional($application->latestApplicationRound->trialRound)->name : $application->latestApplicationRound->round->name }}</span>
-                @if ($application->latestApplicationRound->scheduled_date &&
-                    $application->latestApplicationRound->round->name != 'Resume Screening')
-                    <p class="ml-3">
-                        {{ $application->latestApplicationRound->scheduled_date->format(config('constants.display_daydatetime_format')) }}
-                    </p>
-                @endif
-            </span>
-        </div>
-    </td>
-    <td class="">
-        @php
-            $assignee = $application->latestApplicationRound->scheduledPerson;
-        @endphp
-        <img src="{{ $assignee->avatar }}" alt="{{ $assignee->name }}" class="w-25 h-25 rounded-circle"
-            data-toggle="tooltip" data-placement="top" title="{{ $assignee->name }}">
-    </td>
-    <td>
-        <span class="d-flex flex-column align-items-start">
-            @if (!in_array($application->status, ['in-progress', 'new']))
-                <span
-                    class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
-            @endif
-            @if (!$application->latestApplicationRound->scheduled_date &&
-                $application->latestApplicationRound->hr_round_id != 14)
-                <span class="badge badge-theme-teal text-white badge-pill mr-1 mb-1 fz-12">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                    <span>Awaiting confirmation</span>
-                    @php
-                        $awaitingForDays = $application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
-                    @endphp
-                    @if ($awaitingForDays)
-                        <span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>
-                    @endif
-                </span>
-            @endif
-            @foreach ($application->tags as $tag)
-                <span class="badge badge-pill mr-1 mb-1 fz-12 c-pointer"
-                    style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color }};"
-                    data-toggle="tooltip" data-placement="top" title="{{ $tag->description }}">
-                    @if ($tag->icon)
-                        {!! config("tags.icons.{$tag->icon}") !!}
-                    @endif
-                    <span>
-                        {{ $tag->name }}
+		<div>
+			@if ($application->applicant->linkedin)
+			<a href="{{$application->applicant->linkedin}}" target="_blank" data-toggle="tooltip" data-placement="top"
+				title="LinkedIn" class="mr-1 text-decoration-none">
+				<span><i class="fa fa-linkedin-square" aria-hidden="true"></i></span>
+			</a>
+			@endif
+			@if ($application->resume)
+			<a href="{{$application->resume}}" target="_blank" data-toggle="tooltip" data-placement="top" title="Resume"
+				class="mr-1 text-decoration-none">
+				<span><i class="fa fa-file-text" aria-hidden="true"></i></span>
+			</a>
+			@endif
+		</div>
+	</td>
+	<td>
+		<div class="d-flex flex-column">
+			<span>{{ $application->job->title }}   <span data-toggle="tooltip" data-placement="right" title="Total resources required -{{$application->job->resources_required}} Total applications available -{{$openApplicationsCountForJobs[$application->job->title]}}"><i class="fa fa-info-circle"></i>&nbsp;</span></span>
+			<span class="fz-xl-14 text-secondary">Applied on
+				{{ $application->created_at->format(config('constants.display_date_format')) }}</span>
+			<span class="font-weight-bold fz-xl-14 text-dark">
+				<span><i class="fa fa-flag mr-1"></i>{{ $application->latestApplicationRound->round->isTrialRound()? optional($application->latestApplicationRound->trialRound)->name : $application->latestApplicationRound->round->name }}</span>
+				@if ($application->latestApplicationRound->scheduled_date &&
+				$application->latestApplicationRound->round->name != 'Resume Screening')
+				<p class="ml-3">
+					{{ $application->latestApplicationRound->scheduled_date->format(config('constants.display_daydatetime_format')) }}
+				</p>
+				@endif
+			</span>
+		</div>
+	</td>
+	<td class="">
+		@php
+		$assignee = $application->latestApplicationRound->scheduledPerson;
+		@endphp
+		<img src="{{$assignee->avatar}}" alt="{{$assignee->name}}" class="w-25 h-25 rounded-circle"
+			data-toggle="tooltip" data-placement="top" title="{{$assignee->name}}">
+	</td>
+	<td>
+		<span class="d-flex flex-column align-items-start">
+		@if (!in_array($application->status, ['in-progress', 'new']))
+		<span
+			class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
+		@endif
+		@if (!$application->latestApplicationRound->scheduled_date &&
+		$application->latestApplicationRound->hr_round_id != 14)
+		<span class="badge badge-theme-teal text-white badge-pill mr-1 mb-1 fz-12">
+			<i class="fa fa-calendar" aria-hidden="true"></i>
+			<span>Awaiting confirmation</span>
+			@php
+			$awaitingForDays =
+			$application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
+			@endphp
+			@if ($awaitingForDays)
+			<span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>
+			@endif
+		</span>
+		@endif
+		@foreach ($application->tags as $tag)
+		<span class="badge badge-pill mr-1 mb-1 fz-12 c-pointer"
+			style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color  }};" data-toggle="tooltip"
+			data-placement="top" title="{{ $tag->description }}">
+			@if ($tag->icon)
+			{!! config("tags.icons.{$tag->icon}") !!}
+			@endif
+			<span>
+				{{ $tag->name }}
 
                         @if ($tag->slug == 'need-follow-up' &&
                             ($attampt = optional($application->latestApplicationRound->followUps)->count()))

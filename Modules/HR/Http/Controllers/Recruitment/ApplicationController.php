@@ -127,6 +127,12 @@ abstract class ApplicationController extends Controller
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
 
+        $attr['openApplicationsCountForJobs'] = [];
+        foreach ($applications->items() as $application) {
+            $openApplicationCountForJob = Application::where('hr_job_id', $application->hr_job_id)->isOpen()->count();
+            $attr['openApplicationsCountForJobs'][$application->job->title] = $openApplicationCountForJob;
+        }
+
         return view('hr.application.index')->with($attr);
     }
 
