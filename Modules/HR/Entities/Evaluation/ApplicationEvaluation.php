@@ -31,4 +31,15 @@ class ApplicationEvaluation extends Model
     {
         return $this->belongsTo(ParameterOption::class, 'option_id');
     }
+
+    public function scopeFilterEvaluationsByRound($query, $roundId)
+    {
+        if (! $roundId) {
+            return $query;
+        }
+
+        return $query->whereHas('applicationRound', function ($query) use ($roundId) {
+            $query->where('hr_round_id', $roundId);
+        });
+    }
 }
