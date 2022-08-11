@@ -19,14 +19,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Project extends Model implements Auditable
 {
-<<<<<<< HEAD
-    use HasTags, HasFactory, Filters;
-    use HasFactory, Filters;
-=======
-    use HasFactory, Filters, \OwenIt\Auditing\Auditable;
->>>>>>> f102fc70cd2a16a8d8e6180a6e7d17d01f591122
+   use HasFactory, Filters, \OwenIt\Auditing\Auditable;
 
-    protected $guarded = [];
+   protected $guarded = [];
 
     protected $dates = ['start_date', 'end_date'];
 
@@ -153,7 +148,6 @@ class Project extends Model implements Auditable
                 $dates[] = $date->format('Y-m-d');
             }
         }
-
         return $dates;
     }
 
