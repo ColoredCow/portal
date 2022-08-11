@@ -19,8 +19,8 @@
 		<tbody>
 				<tr>
 					<td>
-						@foreach ($projectData as $projects)
-						    <li>{{$projects['project']}}</li>
+						@foreach ($projectData as $project)
+						    <li><a href="{{ route('project.show', $project['project']) }}">{{$project['project']->name}}</a></li>
 						@endforeach
 					</td>
 				</tr>

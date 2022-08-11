@@ -348,7 +348,7 @@ class ProjectService implements ProjectServiceContract
             $user = $project->client->keyAccountManager;
             if ($user) {
                 $projectsData[$user->id][] = [
-                    'project' => $project->name,
+                    'project' => $project,
                     'email' => $user->email,
                     'name' => $user->name,
                 ];
