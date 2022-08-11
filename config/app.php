@@ -163,6 +163,7 @@ return [
         App\Providers\DatabaseServiceProvider::class,
         OfficeSuite\OfficeSuitesServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        OwenIt\Auditing\AuditingServiceProvider::class,
     ],
 
     /*
