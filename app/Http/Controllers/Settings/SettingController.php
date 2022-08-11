@@ -6,7 +6,7 @@ use App\Helpers\ContentHelper;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Request\Setting\SettingRequest;
+use App\Http\Request\Setting\SettingRequest;
 use App\Models\Organization;
 
 class SettingController extends Controller
