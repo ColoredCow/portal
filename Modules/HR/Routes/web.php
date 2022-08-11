@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
             Route::get('Dailyapplicationcount', 'ReportsController@index')->name('recruitment.reports.index');
             Route::get('reportsCard', 'ReportsController@showReportCard')->name('recruitment.daily-applications-count');
-            Route::get('applications/barChart', 'ReportsController@jobWiseApplicationsGraph')->name('applications.graph');
+            Route::get('applications/barChart', 'ReportsController@jobWiseApplicationsGraph')->name('applications.job-Wise-Applications-Graph');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
                 ->only(['index', 'create', 'store', 'update', 'edit', 'destroy'])
                 ->names([
