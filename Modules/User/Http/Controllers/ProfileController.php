@@ -3,6 +3,8 @@
 namespace Modules\User\Http\Controllers;
 
 use Modules\User\Contracts\ProfileServiceContract;
+use Illuminate\Http\Request;
+use Modules\User\Entities\User;
 
 class ProfileController extends ModuleBaseController
 {
@@ -15,6 +17,21 @@ class ProfileController extends ModuleBaseController
 
     public function index()
     {
-        return view('user::profile.index', $this->service->index());
+        return view('user::profile.index', $this->service->index()); 
+    }
+
+    public function update(Request $request, $userId)
+    {
+        $user = User::find($userId);
+
+        $user->name = $request->name;
+        $user->nickname = $request->nickName;
+        $user->employee->designation = $request->designation;
+        $user->employee->name = $request->name;
+        $user->employee->domain_id = $request->domainId;
+        
+        $user->push();
+        
+        return back();
     }
 }

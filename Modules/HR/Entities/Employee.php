@@ -10,7 +10,7 @@ use Modules\Salary\Entities\EmployeeSalary;
 
 class Employee extends Model
 {
-    protected $guarded = [];
+    protected $guarded = ['domain_id'];
 
     protected $dates = ['joined_on'];
 
@@ -64,5 +64,10 @@ class Employee extends Model
     public function employeeSalaries()
     {
         return $this->hasMany(EmployeeSalary::class);
+    }
+
+    public function domain()
+    {
+        return $this->belongsTo(HrJobDomain::class);
     }
 }
