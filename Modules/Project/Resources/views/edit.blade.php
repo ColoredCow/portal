@@ -147,15 +147,8 @@
 
                 updatedDailyExpectedEffort($event, index, numberOfDays) {
                     value = $event.target.value;
-                    this.$mount();
                     this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                 }
-                all()
-                {
-                    var classDailyEffort = document.getElementbyClassname("daily-effort");
-                    if(classDailyEffort[0]._value>12) {
-                        alert('hello');
-                    }                }
             },
 
             filters: {
