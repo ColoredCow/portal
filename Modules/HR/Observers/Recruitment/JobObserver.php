@@ -54,9 +54,6 @@ class JobObserver
         if (! config('database.connections.wordpress.enabled')) {
             return;
         }
-        if (! isset(config('hr.opportunities-status-wp-mapping')[$job->status])) {
-            return;
-        }
         $corcel = new Corcel();
         $job_status = $job->status;
         $post = $corcel->hasMeta('hr_id', $job->id)->first();
@@ -64,7 +61,7 @@ class JobObserver
         $corcel->post_title = $job->title;
         $corcel->post_content = $job->description;
         $corcel->post_type = config('hr.post-type.career');
-        $corcel->post_status = (config('hr.opportunities-status-wp-mapping')[$job_status]);
+        $corcel->post_status = $job->status ? (config('hr.opportunities-status-wp-mapping')[$job_status]) : 'draft';
         $corcel->post_name = str_replace(' ', '-', strtolower($job->title));
         $corcel->update();
         $term = Term::select('term_id')->where(['name' => $job->domain])->first();
