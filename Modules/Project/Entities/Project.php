@@ -148,6 +148,7 @@ class Project extends Model implements Auditable
                 $dates[] = $date->format('Y-m-d');
             }
         }
+       
         return $dates;
     }
 
