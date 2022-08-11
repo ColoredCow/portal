@@ -21,7 +21,7 @@
         </div>
     </div> --}}
     {{-- this depends on the application round. currently hard-coded for resume-screening --}}
-    @if ($applicationRound->hr_round_id == 14)
+    @if ($applicationRound->round->name == "Telephonic Interview")
         @include('hr::evaluation.evaluation-form.knowledge')
         <div class="row py-4">
             <div class="col-12">

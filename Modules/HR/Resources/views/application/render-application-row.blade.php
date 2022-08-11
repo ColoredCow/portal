@@ -123,8 +123,8 @@
 				{{ $tag->name }}
 
                         @if ($tag->slug == 'need-follow-up' &&
-                            ($attampt = optional($application->latestApplicationRound->followUps)->count()))
-                            . attempt: {{ $attampt }}
+                            ($attempt = optional($application->latestApplicationRound->followUps)->count()))
+                            . attempt: {{ $attempt }}
                         @endif
 
                     </span>
