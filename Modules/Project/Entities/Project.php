@@ -19,9 +19,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Project extends Model implements Auditable
 {
-   use HasFactory, Filters, \OwenIt\Auditing\Auditable;
+    use HasFactory, Filters, \OwenIt\Auditing\Auditable;
 
-   protected $guarded = [];
+    protected $guarded = [];
 
     protected $dates = ['start_date', 'end_date'];
 
