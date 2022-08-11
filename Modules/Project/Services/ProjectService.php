@@ -101,10 +101,6 @@ class ProjectService implements ProjectServiceContract
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
         ]);
 
-        if (! $project->effort_sheet_url) {
-            $project->tag('project-unavailable');
-        }
-
         if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
                 [
@@ -182,11 +178,6 @@ class ProjectService implements ProjectServiceContract
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
             'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
         ]);
-        if ($data['effort_sheet_url']) {
-            $project->untag('project-unavailable');
-        } else {
-            $project->tag('project-unavailable');
-        }
 
         if ($data['billing_level'] ?? null) {
             ProjectMeta::updateOrCreate(
@@ -314,7 +305,6 @@ class ProjectService implements ProjectServiceContract
                 ['project_id' => $project->id],
                 ['contract_file_path' => $filePath]
             );
-            $project->untag('no-contract');
         } else {
             $project->tag('no-contract');
         }
