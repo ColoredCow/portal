@@ -70,7 +70,7 @@
 	</td>
 	<td>
 		<div class="d-flex flex-column">
-			<span>{{ $application->job->title }}</span>
+			<span>{{ $application->job->title }}   <span data-toggle="tooltip" data-placement="right" title="Total resources required -{{$application->job->resources_required}} Total applications available -{{$openApplicationsCountForJobs[$application->job->title]}}"><i class="fa fa-info-circle"></i>&nbsp;</span></span>
 			<span class="fz-xl-14 text-secondary">Applied on
 				{{ $application->created_at->format(config('constants.display_date_format')) }}</span>
 			<span class="font-weight-bold fz-xl-14 text-dark">
