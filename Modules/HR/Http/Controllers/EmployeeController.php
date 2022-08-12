@@ -42,4 +42,8 @@ class EmployeeController extends Controller
 
         return view('hr.employees.reports');
     }
+    public function basicDetails(Employee $employee)
+    {
+        return view('hr.employees.basic-details', ['employee' => $employee]);
+    }
 }
