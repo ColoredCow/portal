@@ -306,21 +306,22 @@ class ProjectService implements ProjectServiceContract
             );
         }
     }
-    public function getMailDetailsForKeyAccountManager() 
+
+    public function getMailDetailsForKeyAccountManager()
     {
-       $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort',0)->get('project_id');
-       $projects = Project::whereIn('id',$zeroEffortProject)->get();
-       $projectDetails = [];
-       foreach ($projects as $project) {
-        $user = $project->client->keyAccountManager;
-        if ($user) {
-            $projectDetails[$user->id][] = [
+        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort',0)->get('project_id');
+        $projects = Project::whereIn('id',$zeroEffortProject)->get();
+        $projectDetails = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectDetails[$user->id][] = [
                 'project' =>$project,
                 'email' =>$user->email,
                 'name' =>$user->name,
             ];
+            }
         }
-       }
-       return $projectDetails;
+        return $projectDetails;
     }
 }

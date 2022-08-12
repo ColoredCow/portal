@@ -17,7 +17,7 @@ class ZeroEffortInProjectMail extends Mailable
      *
      * @return void
      */
-    public function __construct( $projectDetail)
+    public function __construct($projectDetail)
     {
         $this->projectDetail = $projectDetail;
     }
