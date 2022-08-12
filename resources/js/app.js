@@ -193,6 +193,12 @@ $(document).ready(() => {
 	if ($("#myChart").length) {
 		HorizontalBarChart();
 	}
+	if ($("#myGraph").length) {
+		graphChart();
+	}
+	if ($("#myBarGraph").length) {
+		graphBarChart();
+	}
 
 	$("#save-btn-action").on("click", function() {
 		this.disabled = true;
@@ -1447,6 +1453,153 @@ function HorizontalBarChart() {
 					max: 1000,
 					ticks: {
 						stepSize: 100,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function() {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function(dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							var data = dataset.data[index];
+							if (data == "0") {
+								data = "";
+							}
+							ctx.fillText(data, bar.x + 5, bar.y );
+						});
+					});
+				},
+				
+			},
+		},
+		
+	});
+}
+function graphChart(){
+	var value = $("#myGraph").data("target");
+	var cData = value;
+	var ctx = $("#myGraph");
+	var data = {
+		labels: cData.totalapplication,
+	  	datasets: [
+			{
+				label: [],
+				data: cData.count,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: false,
+				callbacks: {
+					label: function(tooltipItem) {                                
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function() {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function(dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							var data = dataset.data[index];
+							if (data == "0") {
+								data = "";
+							}
+							ctx.fillText(data, bar.x + 5, bar.y );
+						});
+					});
+				},
+				
+			},
+		},
+		
+	});
+}
+
+function graphBarChart(){
+	var value = $("#myBarGraph").data("target");
+	var cData = value;
+	var ctx = $("#myBarGraph");
+	var data = {
+		labels: cData.reason,
+	  	datasets: [
+			{
+				label: [],
+				data: cData.Applicationcounts,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function(tooltipItem) {                                
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
 					},
 				},
 			},

@@ -8,6 +8,9 @@ use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\Round;
+use Modules\HR\Entities\HRRejectionReason;
 
 class ReportsController extends Controller
 {
@@ -88,7 +91,6 @@ class ReportsController extends Controller
         }
 
         $data['chartData'] = json_encode($data);
-
         return view('hr.recruitment.reports')->with([
             'chartData' => $data['chartData'],
             'todayCount' => $todayCount, 'verifiedApplicationsCount' => $verifiedApplicationCount,
@@ -119,6 +121,42 @@ class ReportsController extends Controller
         return view('hr.recruitment.job-Wise-Applications-Graph')->with([
             'totalCount' => $totalApplicationCount,
             'chartData' => json_encode($chartData)
+        ]);
+    }
+    public function showResult(){
+
+        $reasons = HRRejectionReason::select('reason_title as label','id')->get();
+        $rounds = Round::select('name as title', 'id')->get();
+        $count=[];
+        foreach ($rounds as $round) {
+         $count[] = ApplicationRound::where('hr_round_id',$round->id)
+         ->where('round_status', 'rejected')
+         ->count();
+        }
+
+        $Applicationcounts = [];
+        foreach ($reasons as $reason) {
+            $Applicationcounts[] = ApplicationRound::where('hr_application_id',$reason->id)
+            ->count();
+        }
+
+        $reason = $reasons->pluck('label');
+        $round = $rounds->pluck('title');
+        $chartData=[
+            'totalapplication'=> $round,
+            'count' => $count,
+        ];
+
+        $chartBarData=[
+            'reason' => $reason,
+            'Applicationcounts' => $Applicationcounts,
+        ];
+
+        return view('hr.recruitment.rejected-applications')->with([
+            'count'=>$count,
+            'Applicationcounts' => $Applicationcounts,
+            'chartData' => json_encode($chartData),
+            'chartBarData' => json_encode($chartBarData)
         ]);
     }
 }
