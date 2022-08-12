@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
             Route::get('campaigns', 'CampaignsController@index')->name('recruitment.campaigns');
             Route::get('Dailyapplicationcount', 'ReportsController@index')->name('recruitment.reports.index');
             Route::get('reportsCard', 'ReportsController@showReportCard')->name('recruitment.daily-applications-count');
+            Route::get('applications/jobWiseApplicatonReport', 'ReportsController@jobWiseApplicationsGraph')->name('applications.job-Wise-Applications-Graph');
             Route::resource('opportunities', 'RecruitmentOpportunityController')
                 ->only(['index', 'create', 'store', 'update', 'edit', 'destroy'])
                 ->names([
@@ -101,6 +102,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
 
+        Route::get('/employee-basic-details/{employee}/', 'EmployeeController@basicDetails')->name('employees.basic.details');
         Route::resource('employees', 'EmployeeController')
             ->only(['index', 'show'])
             ->names([
