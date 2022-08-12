@@ -4,237 +4,237 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
- require("./bootstrap");
+require("./bootstrap");
 
- import "jquery-ui/ui/widgets/datepicker.js";
- import ImageCompressor from "image-compressor.js";
- var clipboard = new ClipboardJS(".btn-clipboard");
- import Chart from "chart.js/auto";
- 
- window.Vue = require("vue");
- 
- import { Laue } from "laue";
- Vue.use(Laue);
- 
- // vue toast registration
- import Toast from "vue-toastification";
- import "vue-toastification/dist/index.css";
- const options = {
-	 timeout: 2000
- };
- Vue.use(Toast, options);
- 
- /**
-  * Next, we will create a fresh Vue application instance and attach it to
-  * the page. Then, you may begin adding components to this application
-  * or customize the JavaScript scaffolding to fit your unique needs.
-  */
- 
- //Vue.component('user-listing', require('./../../Modules/User/Resources/assets/js/components/UserListing.vue').default);
- //Vue.component('user-listing', require('./components/UserListing.vue').default);
- 
- /**
-  *  Module Vue Components
-  */
- require("./../../Modules/User/Resources/assets/js/vueComponents.js");
- require("./../../Modules/Salary/Resources/assets/js/vueComponents.js");
- // require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
- 
- Vue.component(
-	 "project-stage-component",
-	 require("./components/ProjectStageComponent.vue").default
- );
- Vue.component(
-	 "project-stage-billing-component",
-	 require("./components/ProjectStageBillingComponent.vue").default
- );
- Vue.component(
-	 "applicant-round-action-component",
-	 require("./components/HR/ApplicantRoundActionComponent.vue").default
- );
- Vue.component(
-	 "project-details-component",
-	 require("./components/ProjectDetailsComponent.vue").default
- );
- Vue.component(
-	 "books-comments-component",
-	 require("./components/Book/BooksCommentsComponent.vue").default
- );
- Vue.component(
-	 "effort-component",
-	 require("./components/Project/Report.vue").default
- );
- Vue.component("comment", require("./components/CommentItem.vue").default);
- Vue.component(
-	 "user-dashboard-read-books",
-	 require("./components/Dashboard/UserDashboardReadBooks.vue").default
- );
- Vue.component(
-	 "user-dashboard-wishlist-books",
-	 require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
- );
- Vue.component(
-	 "user-dashboard-projects",
-	 require("./components/Dashboard/UserDashboardProjects.vue").default
- );
- Vue.component(
-	 "user-dashboard-library",
-	 require("./components/Dashboard/UserDashboardLibrary.vue").default
- );
- Vue.component(
-	 "user-dashboard-infrastructure",
-	 require("./components/Dashboard/UserDashboardInfrastructure.vue").default
- );
- Vue.component(
-	 "user-dashboard-invoice",
-	 require("./components/Dashboard/UserDashboardInvoice.vue").default
- );
- Vue.component(
-	 "job-application-component",
-	 require("./components/HR/JobApplicationComponent.vue").default
- );
- 
- if (Vue) {
-	 Vue.filter("str_limit", function(value, size) {
-		 if (!value) return "";
-		 value = value.toString();
- 
-		 if (value.length <= size) {
-			 return value;
-		 }
-		 return value.substr(0, size) + "...";
-	 });
- }
- 
- if (document.getElementById("vueContainer")) {
-	 new Vue({
-		 el: "#vueContainer"
-	 });
- }
- 
- $(document).ready(() => {
-	 setTimeout(function() {
-		 $("#statusAlert").alert("close");
-	 }, 2000);
- 
-	 $("#job_title").on("change", function(event) {
-		 let opportunityId = $(this)
-			 .find(":selected")
-			 .attr("id");
-		 $("#opportunityId").attr("value", opportunityId);
-	 });
- 
-	 if ($(".form-create-invoice").length) {
-		 let form = $(".form-create-invoice");
-		 let client_id = form.find("#client_id").val();
-		 if (client_id) {
-			 updateClientProjects(form, client_id);
-		 }
-	 }
-	 $("[data-toggle=\"tooltip\"]").tooltip();
- 
-	 $(".status-close").on("click", function() {
-		 let wrapper = $(this).closest(".alert");
-		 wrapper.fadeOut(500);
-	 });
- 
-	 $(".client_edit_form_submission_btn").on("click", function() {
-		 if (!$("#edit_client_info_form")[0].checkValidity()) {
-			 $("#edit_client_info_form")[0].reportValidity();
-			 return false;
-		 }
-		 $("#submit_action_input").val($(this).attr("data-submit-action"));
-		 $("#edit_client_info_form").submit();
-	 });
- 
-	 $(".prospect_edit_form_submission_btn").on("click", function() {
-		 if (!$("#edit_prospect_info_form")[0].checkValidity()) {
-			 $("#edit_prospect_info_form")[0].reportValidity();
-			 return false;
-		 }
-		 $("#submit_action_input").val($(this).attr("data-submit-action"));
-		 $("#edit_prospect_info_form").submit();
-	 });
- 
-	 $("body").on("change", ".custom-file-input", function() {
-		 var fileName = $(this)
-			 .val()
-			 .split("\\")
-			 .pop();
-		 $(this)
-			 .siblings(".custom-file-label")
-			 .addClass("selected")
-			 .html(fileName);
-	 });
-	 $("#addChannel").on("submit",function(e){
-		 e.preventDefault();
-		 let form = $("#addChannel");
-		 let button = $("#channelButton");
+import "jquery-ui/ui/widgets/datepicker.js";
+import ImageCompressor from "image-compressor.js";
+var clipboard = new ClipboardJS(".btn-clipboard");
+import Chart from "chart.js/auto";
+
+window.Vue = require("vue");
+
+import { Laue } from "laue";
+Vue.use(Laue);
+
+// vue toast registration
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+const options = {
+	timeout: 2000
+};
+Vue.use(Toast, options);
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+//Vue.component('user-listing', require('./../../Modules/User/Resources/assets/js/components/UserListing.vue').default);
+//Vue.component('user-listing', require('./components/UserListing.vue').default);
+
+/**
+ *  Module Vue Components
+ */
+require("./../../Modules/User/Resources/assets/js/vueComponents.js");
+require("./../../Modules/Salary/Resources/assets/js/vueComponents.js");
+// require("./../../Modules/Prospect/Resources/assets/js/vueComponents.js");
+
+Vue.component(
+	"project-stage-component",
+	require("./components/ProjectStageComponent.vue").default
+);
+Vue.component(
+	"project-stage-billing-component",
+	require("./components/ProjectStageBillingComponent.vue").default
+);
+Vue.component(
+	"applicant-round-action-component",
+	require("./components/HR/ApplicantRoundActionComponent.vue").default
+);
+Vue.component(
+	"project-details-component",
+	require("./components/ProjectDetailsComponent.vue").default
+);
+Vue.component(
+	"books-comments-component",
+	require("./components/Book/BooksCommentsComponent.vue").default
+);
+Vue.component(
+	"effort-component",
+	require("./components/Project/Report.vue").default
+);
+Vue.component("comment", require("./components/CommentItem.vue").default);
+Vue.component(
+	"user-dashboard-read-books",
+	require("./components/Dashboard/UserDashboardReadBooks.vue").default
+);
+Vue.component(
+	"user-dashboard-wishlist-books",
+	require("./components/Dashboard/UserDashboardWishlistBooks.vue").default
+);
+Vue.component(
+	"user-dashboard-projects",
+	require("./components/Dashboard/UserDashboardProjects.vue").default
+);
+Vue.component(
+	"user-dashboard-library",
+	require("./components/Dashboard/UserDashboardLibrary.vue").default
+);
+Vue.component(
+	"user-dashboard-infrastructure",
+	require("./components/Dashboard/UserDashboardInfrastructure.vue").default
+);
+Vue.component(
+	"user-dashboard-invoice",
+	require("./components/Dashboard/UserDashboardInvoice.vue").default
+);
+Vue.component(
+	"job-application-component",
+	require("./components/HR/JobApplicationComponent.vue").default
+);
+
+if (Vue) {
+	Vue.filter("str_limit", function(value, size) {
+		if (!value) return "";
+		value = value.toString();
+
+		if (value.length <= size) {
+			return value;
+		}
+		return value.substr(0, size) + "...";
+	});
+}
+
+if (document.getElementById("vueContainer")) {
+	new Vue({
+		el: "#vueContainer"
+	});
+}
+
+$(document).ready(() => {
+	setTimeout(function() {
+		$("#statusAlert").alert("close");
+	}, 2000);
+
+	$("#job_title").on("change", function(event) {
+		let opportunityId = $(this)
+			.find(":selected")
+			.attr("id");
+		$("#opportunityId").attr("value", opportunityId);
+	});
+
+	if ($(".form-create-invoice").length) {
+		let form = $(".form-create-invoice");
+		let client_id = form.find("#client_id").val();
+		if (client_id) {
+			updateClientProjects(form, client_id);
+		}
+	}
+	$("[data-toggle=\"tooltip\"]").tooltip();
+
+	$(".status-close").on("click", function() {
+		let wrapper = $(this).closest(".alert");
+		wrapper.fadeOut(500);
+	});
+
+	$(".client_edit_form_submission_btn").on("click", function() {
+		if (!$("#edit_client_info_form")[0].checkValidity()) {
+			$("#edit_client_info_form")[0].reportValidity();
+			return false;
+		}
+		$("#submit_action_input").val($(this).attr("data-submit-action"));
+		$("#edit_client_info_form").submit();
+	});
+
+	$(".prospect_edit_form_submission_btn").on("click", function() {
+		if (!$("#edit_prospect_info_form")[0].checkValidity()) {
+			$("#edit_prospect_info_form")[0].reportValidity();
+			return false;
+		}
+		$("#submit_action_input").val($(this).attr("data-submit-action"));
+		$("#edit_prospect_info_form").submit();
+	});
+
+	$("body").on("change", ".custom-file-input", function() {
+		var fileName = $(this)
+			.val()
+			.split("\\")
+			.pop();
+		$(this)
+			.siblings(".custom-file-label")
+			.addClass("selected")
+			.html(fileName);
+	});
+	$("#addChannel").on("submit",function(e){
+		e.preventDefault();
+		let form = $("#addChannel");
+		let button = $("#channelButton");
 		 
-		 $.ajax({
-			 url: form.attr("action"),
-			 type: form.attr("method"),
-			 data: form.serialize(),
-			 success: function(response) {
-				 $("#channelName").modal("hide");
-				 $("#success").toggleClass("d-none");
-				 $("#success").fadeToggle(5000);
-			 },
-			 error: function(response) {
-				 $("#errorMessage").toggleClass("d-none");
-			 },
-		 });		
-	 });
- 
-	 if ($(".chart-data").length) {
-		 datePickerChart();
-		 barChart();
-	 }
-	 if ($("#myChart").length) {
-		 HorizontalBarChart();
-	 }
- 
-	 $("#save-btn-action").on("click", function() {
-		 this.disabled = true;
-		 if (!this.form.checkValidity()) {
-			 this.disabled = false;
-			 this.form.reportValidity();
-			 return;
-		 }
-		 this.form.submit();
-	 });
- });
- 
- $(document).ready(function(){	
-	 $("#domainformModal").on("hidden.bs.modal", function () {
-		 $(this).find("form").trigger("reset");
-		 $("#domainerror").addClass("d-none");
-	 });
- 
-	 $("#domainForm").on("submit",function(e){
-		 e.preventDefault();
-		 let form =$("#domainForm");
-		 
-		  $.ajax({
-			 type: form.attr("method"),
-			 url: form.attr("action"),
-			 data: form.serialize(),
-			 success:function (response) {
-				 $("#domainformModal").modal("hide");
-				 $("#successMessage").toggleClass("d-none");
-				 $("#successMessage").fadeToggle(3000);
-			 },
-			 error: function(response){
-				 if(response.responseJSON.errors.name){
-					 let text = response.responseJSON.errors.name[0];
-					 $("#domainerror").html(text).removeClass("d-none");
-					 return false;
-				 }
-			 },
-		 });
-	 });
- });
- 
+		$.ajax({
+			url: form.attr("action"),
+			type: form.attr("method"),
+			data: form.serialize(),
+			success: function(response) {
+				$("#channelName").modal("hide");
+				$("#success").toggleClass("d-none");
+				$("#success").fadeToggle(5000);
+			},
+			error: function(response) {
+				$("#errorMessage").toggleClass("d-none");
+			},
+		});		
+	});
+
+	if ($(".chart-data").length) {
+		datePickerChart();
+		barChart();
+	}
+	if ($("#myChart").length) {
+		HorizontalBarChart();
+	}
+
+	$("#save-btn-action").on("click", function() {
+		this.disabled = true;
+		if (!this.form.checkValidity()) {
+			this.disabled = false;
+			this.form.reportValidity();
+			return;
+		}
+		this.form.submit();
+	});
+});
+
+$(document).ready(function(){	
+	$("#domainformModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+		$("#domainerror").addClass("d-none");
+	});
+
+	$("#domainForm").on("submit",function(e){
+		e.preventDefault();
+		let form =$("#domainForm");
+		
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#domainformModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(3000);
+			},
+			error: function(response){
+				if(response.responseJSON.errors.name){
+					let text = response.responseJSON.errors.name[0];
+					$("#domainerror").html(text).removeClass("d-none");
+					return false;
+				}
+			},
+		});
+	});
+});
+
  if (document.getElementById("page_hr_applicant_edit")) {
 	 new Vue({
 		 el: "#page_hr_applicant_edit",
