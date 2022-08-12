@@ -91,6 +91,7 @@ class ReportsController extends Controller
         }
 
         $data['chartData'] = json_encode($data);
+
         return view('hr.recruitment.reports')->with([
             'chartData' => $data['chartData'],
             'todayCount' => $todayCount, 'verifiedApplicationsCount' => $verifiedApplicationCount,
@@ -123,31 +124,31 @@ class ReportsController extends Controller
             'chartData' => json_encode($chartData)
         ]);
     }
-    public function showResult(){
-
-        $reasons = HRRejectionReason::select('reason_title as label','id')->get();
+    public function showResult()
+    {
+        $reasons = HRRejectionReason::select('reason_title as label',  'id')->get();
         $rounds = Round::select('name as title', 'id')->get();
-        $count=[];
+        $count = [];
         foreach ($rounds as $round) {
-         $count[] = ApplicationRound::where('hr_round_id',$round->id)
-         ->where('round_status', 'rejected')
-         ->count();
+            $count[] = ApplicationRound::where('hr_round_id', $round->id)
+            ->where('round_status', 'rejected')
+            ->count();
         }
 
         $Applicationcounts = [];
         foreach ($reasons as $reason) {
-            $Applicationcounts[] = ApplicationRound::where('hr_application_id',$reason->id)
+            $Applicationcounts[] = ApplicationRound::where('hr_application_id', $reason->id)
             ->count();
         }
 
         $reason = $reasons->pluck('label');
         $round = $rounds->pluck('title');
-        $chartData=[
+        $chartData = [
             'totalapplication'=> $round,
             'count' => $count,
         ];
 
-        $chartBarData=[
+        $chartBarData = [
             'reason' => $reason,
             'Applicationcounts' => $Applicationcounts,
         ];
