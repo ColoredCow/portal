@@ -51,16 +51,13 @@
 							</div>
 							<div class="modal-footer justify-content-between">
 								<a href="{{ route('application.handover', $application) }}" class="btn btn-primary">Request</a></button>
-								{{-- <a href="{{ route('application.handover.confirmation') }}" class="btn btn-primary">Request</a></button> --}}
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			{{-- <div class="alert alert-success">
-                <strong>Success!</strong> Application assign to new person.
-            </div> --}}
+
 			<span class="mr-1 text-truncate">
 				<i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
 			@if ($application->applicant->phone)

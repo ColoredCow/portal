@@ -1,3 +1,3 @@
-<p>Hi,Please click the link <a href="http://portal.test/application/27/3">Handover application</a> and handover the application id : {{$application->id}}  </p>
-{{-- <a href="https://coloredcow.com/">Handover application</a> --}}
-{{-- <a href="{{ route('application.handover.confirmation', ['applicationID' => $application->id, 'userName'=>$application->name, 'applicantEmail'=>$application->email]) }}">link</a> --}}
+<p>Hi,Please click the link and handover the application id : {{$application->id}}</p>
+
+<a href="{{ route('application.handover.confirmation', ['application' => $application->id, 'user' => auth()->user()->id])}}">Handover application</a>

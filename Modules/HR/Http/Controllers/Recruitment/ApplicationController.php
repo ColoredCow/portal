@@ -23,6 +23,7 @@ use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use App\Mail\ApplicationHandover;
 use Illuminate\Support\Facades\Auth;
+use Modules\HR\Entities\ApplicationRound;
 
 abstract class ApplicationController extends Controller
 {
@@ -138,7 +139,6 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
-
         //TODO: We need to refactor the edit code and write it in the service
         $application = Application::findOrFail($id);
 
@@ -255,27 +255,18 @@ abstract class ApplicationController extends Controller
 
     public function request(Application $application)
     {
-        // dd('Handover');
-		$currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
+        $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
         Mail::to($currentAssignee)->send(new ApplicationHandover($application));
-        return redirect()->back()->with("success", "You email has successfully been sent");
+        return redirect()->back()->with("You email has successfully been sent");
 
     }
 
-    public function acceptHandoverRequest(Application $application) 
+    public function acceptHandoverRequest(Application $application, User $user) 
     {
-        dd('here wer are');
-        $currentUser = Auth::user();
-        // dd('$currentUser');
-        $currentAssignee = $application->assignee;
-        if($currentUser->id !== $currentAssignee->id) {
-            return view('hr::application.render-application-row')->with("You are not assigned to this application. So you can't take this action");
-            // dd("hello");
-        }
-        $application->unassign($currentUser);
-        $application->assign($newUser);
-        return redirect()->back()->with('Handover Accepted');
-        // dd("hello");
-
+        $hrApplicationRound =  $application->latestApplicationRound;
+        $hrApplicationRound->update([
+            'scheduled_person_id' => $user->id
+        ]);
+        return redirect(route('applications.job.index'));
     }
 }
