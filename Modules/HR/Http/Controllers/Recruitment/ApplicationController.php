@@ -263,16 +263,18 @@ abstract class ApplicationController extends Controller
         $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
         Mail::to($currentAssignee)->send(new ApplicationHandover($application));
 
-        return redirect()->back()->with('You email has successfully been sent');
+        return redirect()->back()->with('status', 'You email has successfully been sent');
     }
 
-    public function acceptHandoverRequest(Application $application, $userId)
+    public function acceptHandoverRequest(Application $application, User $user)
     {
         $applicationRound = $application->latestApplicationRound;
         $applicationRound->update([
-            'scheduled_person_id' => $userId
+            'scheduled_person_id' => $user->id
         ]);
 
-        return redirect(route('applications.job.index'));
+        $status = 'Successful Assign to ' . $user->name;
+
+        return redirect(route('applications.job.index'))->with('status', $status);
     }
 }
