@@ -297,32 +297,32 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			},
 			takeAction: function() {
 				switch (this.selectedAction) {
-						case "round":
-							if (!this.selectedActionOption) {
-								this.selectedActionOption = document.querySelector(
-									"#action_type option:checked"
-								);
-							}
-							this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
-							this.nextRoundName = this.selectedActionOption.innerText;
-							loadTemplateMail("confirm", (res) => {
-								$("#confirmMailToApplicantSubject").val(
-									res.subject
-								);
-								tinymce
-									.get("confirmMailToApplicantBody")
-									.setContent(res.body, { format: "html" });
-							});
-							$("#round_confirm").modal("show");
-							break;
-						case "send-for-approval":
-							$("#send_for_approval").modal("show");
-							break;
-						case "approve":
-							$("#approve_application").modal("show");
-							break;
-						case "onboard":
-							$("#onboard_applicant").modal("show");
+				case "round":
+					if (!this.selectedActionOption) {
+						this.selectedActionOption = document.querySelector(
+							"#action_type option:checked"
+						);
+					}
+					this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
+					this.nextRoundName = this.selectedActionOption.innerText;
+					loadTemplateMail("confirm", (res) => {
+						$("#confirmMailToApplicantSubject").val(
+							res.subject
+						);
+						tinymce
+							.get("confirmMailToApplicantBody")
+							.setContent(res.body, { format: "html" });
+					});
+					$("#round_confirm").modal("show");
+					break;
+				case "send-for-approval":
+					$("#send_for_approval").modal("show");
+					break;
+				case "approve":
+					$("#approve_application").modal("show");
+					break;
+				case "onboard":
+					$("#onboard_applicant").modal("show");
 				}
 			},
 			rejectApplication: function() {
