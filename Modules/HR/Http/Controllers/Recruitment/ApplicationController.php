@@ -257,7 +257,8 @@ abstract class ApplicationController extends Controller
         Mail::to($currentAssignee)->send(new ApplicationHandover($application));
         return redirect()->back()->with("You email has successfully been sent");
     }
-    public function acceptHandoverRequest(Application $application, $userId) 
+
+    public function acceptHandoverRequest(Application $application, $userId)
     {
         $applicationRound =  $application->latestApplicationRound;
         $applicationRound->update([
@@ -266,4 +267,5 @@ abstract class ApplicationController extends Controller
 
         return redirect(route('applications.job.index'));
     }
+
 }
