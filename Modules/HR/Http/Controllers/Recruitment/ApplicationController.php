@@ -268,7 +268,6 @@ abstract class ApplicationController extends Controller
 
     public function acceptHandoverRequest(Application $application, $userId)
     {
-
         $applicationRound = $application->latestApplicationRound;
         $applicationRound->update([
             'scheduled_person_id' => $userId
