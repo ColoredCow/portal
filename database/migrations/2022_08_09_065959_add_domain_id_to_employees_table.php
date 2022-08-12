@@ -11,6 +11,7 @@ class AddDomainIdToEmployeesTable extends Migration
      *
      * @return void
      */
+        
     public function up()
     {
         Schema::table('employees', function (Blueprint $table) {
