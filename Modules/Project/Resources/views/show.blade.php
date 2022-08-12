@@ -14,10 +14,10 @@
             <h4>Project details </h4>
         </div>
         <div id="project_detail_form" class="collapse show">
-            <div class="form-row">
+            <div class="card-body">
                 @if($contractFilePath)
                     <div class="form-row">
-                        <div class="form-group col-md-0 pl-1 ml-4">
+                        <div class="form-group col-md-0 pl-1 ml-0 mr-5">
                             <h4 class="d-inline-block ">
                                 <label for="name" class="font-weight-bold mt-3">Project Contract:</label>
                             </h4>
