@@ -4,8 +4,11 @@
 			line-height: 1px;
 		}
 	</style>
-	<p>Hello {{ $projectManager['name'] }},</p>
-	<p>We found some projects where the expected hours are zero for you or team members where you are assigned as project manager. Please update these projects:</p>
+     @foreach ($projectDetail as $project)
+		
+	 @endforeach
+	<p>Hello {{ $project['name'] }},</p>
+	<p>We found some projects where the expected hours are zero for you or team members where you are assigned as key account manager. Please update these projects:</p>
 	<table class="table">
 		<thead>
 			<tr>
@@ -13,15 +16,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($projectManager['projects'] as $project)
 				<tr>
 					<td>
-						<a href="{{ route('project.show', $project) }}">{{ $project->name }}</a>
+						@foreach ($projectDetail as $project)
+						
+						    <li><a href="{{ route('project.show', $project['project']) }}">{{ $project['project']->name }}</a></li>
+						@endforeach
 					</td>
 				</tr>
-			 @endforeach
-		</tbody>
-		</table>
+        </tbody>
+	</table>
 	<br>
 	<p class="line">Thanks,</p>
 	<p class="line">Portal Team</p>

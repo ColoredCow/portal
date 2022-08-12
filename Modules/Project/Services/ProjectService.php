@@ -306,36 +306,21 @@ class ProjectService implements ProjectServiceContract
             );
         }
     }
-
-    public function getMailDetailsForProjectManagers()
+    public function getMailDetailsForKeyAccountManager() 
     {
-        $users = User::get();
-        $dataForMail = [];
-        foreach ($users as $user) {
-            $userProjects = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
-            if (empty($userProjects)) {
-                continue;
-            }
-            $projects = Project::with(['teamMembers'])->whereIn('id', $userProjects)->get();
-            $managerProjects = [];
-            foreach ($projects as $project) {
-                foreach ($project->teamMembers as $teamMember) {
-                    if ($teamMember->getOriginal('pivot_designation') != 'project_manager' && $teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
-                        $managerProjects[] = $project;
-                        break;
-                    }
-                }
-            }
-            if (! empty($managerProjects)) {
-                $dataForMail[] = [
-                    'projects' => $managerProjects,
-                    'name' => $user->name,
-                    'email' =>$user->email,
-                ];
-            }
+       $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort',0)->get('project_id');
+       $projects = Project::whereIn('id',$zeroEffortProject)->get();
+       $projectDetails = [];
+       foreach ($projects as $project) {
+        $user = $project->client->keyAccountManager;
+        if ($user) {
+            $projectDetails[$user->id][] = [
+                'project' =>$project,
+                'email' =>$user->email,
+                'name' =>$user->name,
+            ];
         }
-        $projectDetails = Collection::make($dataForMail);
-
-        return $projectDetails;
+       }
+       return $projectDetails;
     }
 }

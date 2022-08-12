@@ -4,7 +4,7 @@ namespace Modules\Project\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Modules\Project\Contracts\ProjectServiceContract;
+use Modules\Project\Services\ProjectService;
 use Modules\Project\Emails\ZeroEffortInProjectMail;
 
 class ZeroEffortInProject extends Command
@@ -40,10 +40,10 @@ class ZeroEffortInProject extends Command
      */
     public function handle()
     {
-        $service = app(ProjectServiceContract::class);
-        $getMailDetailsForProjectManagers = $service->getMailDetailsForProjectManagers();
-        foreach ($getMailDetailsForProjectManagers as $projectManager) {
-            Mail::queue(new ZeroEffortInProjectMail($projectManager));
+        $service = app(ProjectService::class);
+        $projectDetails = $service->getMailDetailsForKeyAccountManager();
+        foreach ($projectDetails as $projectDetail) {
+            Mail::queue(new ZeroEffortInProjectMail($projectDetail));
         }
     }
 }
