@@ -10,8 +10,7 @@ class AddDomainIdToEmployeesTable extends Migration
      * Run the migrations.
      *
      * @return void
-     */
-        
+     */    
     public function up()
     {
         Schema::table('employees', function (Blueprint $table) {
@@ -24,7 +23,7 @@ class AddDomainIdToEmployeesTable extends Migration
      * Reverse the migrations.
      *
      * @return void
-     */ 
+     */
     public function down()
     {
         Schema::dropIfExists('employees');

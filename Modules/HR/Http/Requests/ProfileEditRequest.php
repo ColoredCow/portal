@@ -38,5 +38,4 @@ class ProfileEditRequest extends FormRequest
     {
         return true;
     }
-    
 }
