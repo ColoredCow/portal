@@ -127,6 +127,7 @@ abstract class ApplicationController extends Controller
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
+
         return view('hr.application.index')->with($attr);
     }
 
@@ -255,12 +256,13 @@ abstract class ApplicationController extends Controller
     {
         $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
         Mail::to($currentAssignee)->send(new ApplicationHandover($application));
-        return redirect()->back()->with("You email has successfully been sent");
+
+        return redirect()->back()->with('You email has successfully been sent');
     }
 
     public function acceptHandoverRequest(Application $application, $userId)
     {
-        $applicationRound =  $application->latestApplicationRound;
+        $applicationRound = $application->latestApplicationRound;
         $applicationRound->update([
             'scheduled_person_id' => $userId
         ]);
