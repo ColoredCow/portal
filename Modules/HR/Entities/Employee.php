@@ -10,7 +10,7 @@ use Modules\Salary\Entities\EmployeeSalary;
 
 class Employee extends Model
 {
-    protected $guarded = ['domain_id'];
+    protected $guarded = [];
 
     protected $dates = ['joined_on'];
 

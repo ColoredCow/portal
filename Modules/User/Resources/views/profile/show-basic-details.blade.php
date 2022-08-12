@@ -57,16 +57,6 @@
     <strong>Changes Saved Successfully!</strong>
 </div>
 
-
-
-<?php
-$connection = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($connection,'new_uat');
-
-if(isset($_POST['UPDATE']))
-$query = "UPDATE 'users' SET name='$_POST[name]'"
-?>
-
 <div class="d-flex justify-content-between">
     <div class="d-flex">
         <div class="rounded w-200 mr-10">

@@ -20,10 +20,8 @@ class ProfileController extends ModuleBaseController
         return view('user::profile.index', $this->service->index());
     }
 
-    public function update(ProfileEditRequest $request, $userId)
+    public function update(ProfileEditRequest $request, User $user)
     {
-        $user = User::find($userId);
-
         $user->name = $request->name;
         $user->nickname = $request->nickName;
         $user->employee->designation = $request->designation;
