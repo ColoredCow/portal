@@ -17,10 +17,7 @@
     "rules": {
         "indent": [
             "error",
-            "tab",
-            {
-                "SwitchCase": 1
-            }
+            "tab"
         ],
         "linebreak-style": [
             "error",
