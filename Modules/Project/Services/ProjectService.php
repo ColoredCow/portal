@@ -13,7 +13,6 @@ use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
-use Illuminate\Database\Eloquent\Collection;
 use Modules\Project\Entities\ProjectBillingDetail;
 
 class ProjectService implements ProjectServiceContract
