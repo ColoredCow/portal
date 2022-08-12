@@ -21,9 +21,7 @@ class ApplicationHandover extends Mailable
      */
     public function __construct(Application $application)
     {
-
-        $this->application = $application->applicant;
-        
+        $this->application = $application;
     }
 
     /**

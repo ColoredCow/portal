@@ -22,8 +22,6 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use App\Mail\ApplicationHandover;
-use Illuminate\Support\Facades\Auth;
-use Modules\HR\Entities\ApplicationRound;
 
 abstract class ApplicationController extends Controller
 {
@@ -258,15 +256,16 @@ abstract class ApplicationController extends Controller
         $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
         Mail::to($currentAssignee)->send(new ApplicationHandover($application));
         return redirect()->back()->with("You email has successfully been sent");
-
     }
 
-    public function acceptHandoverRequest(Application $application, User $user) 
+    public function acceptHandoverRequest(Application $application, $userId) 
     {
-        $hrApplicationRound =  $application->latestApplicationRound;
-        $hrApplicationRound->update([
-            'scheduled_person_id' => $user->id
+        $applicationRound =  $application->latestApplicationRound;
+        $applicationRound->update([
+            'scheduled_person_id' => $userId
         ]);
+
         return redirect(route('applications.job.index'));
     }
+
 }
