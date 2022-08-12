@@ -31,8 +31,6 @@ class ApplicationHandover extends Mailable
      */
     public function build()
     {
-    
         return $this->view('hr::application.application-handover-request');
-        
     }
 }
