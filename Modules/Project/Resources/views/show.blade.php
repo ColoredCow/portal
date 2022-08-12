@@ -17,18 +17,14 @@
             <div class="card-body">
                 @if($contractFilePath)
                     <div class="form-row">
-                        <div class="form-group col-md-0 pl-1 ml-0 mr-5">
+                        <div class="form-group col-md-0 pl-1 ml-0 mr-0 ml-3">
                             <h4 class="d-inline-block ">
                                 <label for="name" class="font-weight-bold mt-3">Project Contract:</label>
                             </h4>
-                            {{-- <div class="row"> --}}
-                                {{-- <div class="col-xs-6 py-1"> --}}
-                                    <div class="text-capitalize d-inline ml-2 fz-lg-22 "> {{pathinfo($contractFilePath)['filename']}} </div>
-                                    <a href="{{route('pdf.show', ['contract' => $contract])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
-                                </div>
-                            </div>
+                                <div class="text-capitalize d-inline ml-2 fz-lg-22 "> {{pathinfo($contractFilePath)['filename']}} </div>
+                                <a href="{{route('pdf.show', ['contract' => $contract])}}" target="_blank" class="btn btn-sm btn-primary text-white ml-4">View</a>
+                             </div>
                         </div>
-                    </div>
                     <br>
                 @endif
                 <div class="form-row">
