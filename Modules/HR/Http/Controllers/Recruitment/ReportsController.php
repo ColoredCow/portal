@@ -126,7 +126,7 @@ class ReportsController extends Controller
     }
     public function showResult()
     {
-        $reasons = HRRejectionReason::select('reason_title as label',  'id')->get();
+        $reasons = HRRejectionReason::select('reason_title as label', 'id')->get();
         $rounds = Round::select('name as title', 'id')->get();
         $count = [];
         foreach ($rounds as $round) {
