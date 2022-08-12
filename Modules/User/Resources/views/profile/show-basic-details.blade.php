@@ -2,26 +2,32 @@
 <div class="modal fade" id="edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel"><strong>Edit Profile</strong></h5>
-          <button type="button" class="close" data-dismiss="modal"><b>&times;</b></button>
-        </div>
-
-        <div class="modal-body">
-            <form action="{{route('profile.update', ['userId' => $user->id])}}" method="POST">
+          
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel"><strong>Edit Profile</strong></h5>
+              <button type="button" class="close" data-dismiss="modal"><b>&times;</b></button>
+            </div>
+            
+            <div class="modal-body">
+            <div class="alert alert-danger d-none pr-0.83" id="profileDetailsError">
+                <button type="button" id="segmentModalCloseBtn" class="float-right bg-transparent text-danger border-0 fz-16 mt-n1.33">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong class="profileDetailsError"></strong>
+            </div>
+            <form  id="editform" action="{{route('profile.update', ['userId' => $user->id])}}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required="required" value="{{$user->name}}">
+                    <input type="text" class="form-control" id="name" name="name" required value="{{$user->name}}">
                 </div>
                 <div class="form-group">
                     <label for="nickName">Nickname</label>
-                    <input type="text" class="form-control" id="nickName" name="nickName" required="required" value="{{$user->nickname}}">
+                    <input type="text" class="form-control" id="nickName" name="nickName" required value="{{$user->nickname}}">
                 </div>
                 <div class="form-group">
                     <label for="designation">Designation</label>
-                    <input type="text" class="form-control" id="designation" name="designation" required="required" value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
+                    <input type="text" class="form-control" id="designation" name="designation" required value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
                 </div>
                 <div class="form-group">
                     <label>Domain</label>
@@ -46,6 +52,12 @@
       </div>
     </div>
 </div>
+
+<div class="d-none alert alert-success " id="successmessage" role="alert">
+    <strong>Changes Saved Successfully!</strong>
+</div>
+
+
 
 <?php
 $connection = mysqli_connect("localhost","root","");
@@ -73,7 +85,7 @@ $query = "UPDATE 'users' SET name='$_POST[name]'"
         </div>
     </div>
     <div>
-        <button class="btn btn-info" data-toggle="modal" data-target="#edit">Edit</button>
+        <button class="btn btn-info" data-toggle="modal" id="editBT" data-target="#edit">Edit</button>
     </div>
 </div>
 

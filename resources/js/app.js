@@ -1451,3 +1451,31 @@ $(document).on("focusin", function(e) {
 		e.stopImmediatePropagation();
 	}
 });
+
+$("#editform").on("submit",function(e){
+	e.preventDefault();
+	let form = $("#editform");
+	let button = $("#editBT");
+
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function(response) {
+			$("#edit").modal("hide");
+			$("#edit").on("hidden.bs.modal", function (e) {
+				$("#successmessage").toggleClass("d-none");
+				$("#successmessage").fadeToggle(5000);
+			});
+		},
+		error: function(response) {
+			$("#profileDetailsError").removeClass("d-none");
+			$("#successmessage").addClass("d-none");
+				let errors = response.responseJSON.errors;
+				$(".profileDetailsError").empty();
+				for (let error in errors) {
+					$(".profileDetailsError").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			  }
+		},
+	});		
+});

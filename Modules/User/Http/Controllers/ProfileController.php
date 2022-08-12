@@ -3,8 +3,8 @@
 namespace Modules\User\Http\Controllers;
 
 use Modules\User\Contracts\ProfileServiceContract;
-use Illuminate\Http\Request;
 use Modules\User\Entities\User;
+use Modules\HR\Http\Requests\ProfileEditRequest;
 
 class ProfileController extends ModuleBaseController
 {
@@ -20,7 +20,7 @@ class ProfileController extends ModuleBaseController
         return view('user::profile.index', $this->service->index());
     }
 
-    public function update(Request $request, $userId)
+    public function update(ProfileEditRequest $request, $userId)
     {
         $user = User::find($userId);
 
