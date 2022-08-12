@@ -147,9 +147,7 @@ class Project extends Model implements Auditable
             if (! in_array($date->format('l'), $weekend)) {
                 $dates[] = $date->format('Y-m-d');
             }
-        }
-       
-        
+        }               
         return $dates;
     }
 
