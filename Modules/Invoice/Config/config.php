@@ -137,6 +137,8 @@ return [
                         'billing-person-name' => '|*billing_person_name*|',
                         'invoice-number' => '|*invoice_number*|',
                         'currency' => '|*currency*|',
+                        'amount' => '|*amount*|',
+                        'amount_paid' => '|*amount_paid*|'
                     ],
                 ],
             ]
