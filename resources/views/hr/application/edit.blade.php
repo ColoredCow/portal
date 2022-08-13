@@ -1250,7 +1250,11 @@
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2"
                                                             data-toggle="modal" data-target="#ModalCenter">
+<<<<<<< HEAD
                                                             Hold
+=======
+                                                            Put on Hold
+>>>>>>> 51d276bfac42622587448792c08ff00360a97c3d
                                                         </button>
 
                                                         <!-- Modal -->
