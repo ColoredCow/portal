@@ -262,7 +262,10 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			toggleEvaluationFrame: function() {
 				this.showEvaluationFrame = !this.showEvaluationFrame;
 			},
-			getApplicationEvaluation: function(applicationRoundID) {
+			getApplicationEvaluation: function(applicationRoundID, roundId) {
+				let roundName = $("#applicationRoundName" + roundId)[0].innerText;
+				document.getElementById("roundName").innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
+
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
 					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
 				);
