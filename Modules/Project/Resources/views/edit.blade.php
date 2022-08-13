@@ -117,8 +117,9 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            if(error)
-                            this.$toast.error('error!');
+                            if(error){
+                                this.$toast.error('Error while saving the project!');
+                            }
                         })
                 },
 
