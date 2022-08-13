@@ -1273,7 +1273,7 @@
 																	<div class="form-group col-md-12 d-flex align-items-center">
 																		<div class="py-0.67">
 																			<div class="custom-control custom-switch">
-																				<input type="checkbox" name="send_mail_to_applicant[confirm]" class="custom-control-input show" id="SendmailforonHold" checked>
+																				<input type="checkbox" name="send_mail_to_applicant[confirm]" class="custom-control-input show" id="SendmailforonHold" >
 																				<label class="custom-control-label" for="SendmailforonHold" >Send email</label>
 																			</div>
 																		</div>
