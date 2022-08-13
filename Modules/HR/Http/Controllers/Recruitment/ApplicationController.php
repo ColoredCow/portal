@@ -22,7 +22,6 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use App\Mail\ApplicationHandover;
-use Illuminate\Support\Facades\Auth;
 
 abstract class ApplicationController extends Controller
 {
