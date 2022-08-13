@@ -32,7 +32,7 @@
 		<div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
 			<div class="d-flex text-white my-2">
 				<a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-				<a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+				<a href="{{ route('applications.internship.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
 			</div>
 			<span class="mr-1 text-truncate">
 				<i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
