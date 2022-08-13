@@ -555,7 +555,7 @@ $(document).ready(function () {
 				$("#errors").empty();
 				for (let error in errors) {
 					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
-			}
+				}
 			}
 		});
 	});
