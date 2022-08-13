@@ -1529,3 +1529,22 @@ $(document).on("focusin", function(e) {
 		e.stopImmediatePropagation();
 	}
 });
+
+jQuery(document).ready(function(){
+    jQuery('.show').on('click', function(event) {   
+		var $menu = $('.menu');     
+        if($('.show').is(':checked'))
+	    {
+			$menu.show();
+		}else{
+			$menu.hide();
+		}
+    });
+});
+
+jQuery(document).ready(function(){
+    jQuery('.option-1').on('click', function(event) {   
+		var $menu = $('.mail');     
+			$menu.show();
+    });
+});

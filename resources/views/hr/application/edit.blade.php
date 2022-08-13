@@ -910,6 +910,22 @@
 														<div class="modal-body">
 															<p>Do you want to put this application on Hold?</p>
 														</div>
+														<div class="form-group col-md-12 d-flex align-items-center">
+															<div class="py-0.67">
+																<div class="custom-control custom-switch">
+																	<input type="checkbox" name="send_mail_to_applicant[confirm]" class="custom-control-input show" id="SendmailforonHold" checked>
+																	<label class="custom-control-label" for="SendmailforonHold" >Send email</label>
+																</div>
+															</div>
+														</div>
+														<ul class="nav nav-tabs menu">
+															<li class="nav-item">
+															    <a type="button" class="nav-link active option-1" >Option 1</a>
+															</li>
+															<li class="nav-item">
+															    <a type="button" class="nav-link" >Option 2</a>
+															</li>
+														</ul>
 														<div class="modal-footer">
 															<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
 															<button type="submit" class="btn btn-success px-4 round-submit" data-action="on-hold">Yes</button>

@@ -103,10 +103,10 @@
 			<span>Awaiting confirmation</span>
 			@php
 			$awaitingForDays =
-			$application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
+			$application->latestApplicationRound->getPreviousApplicationRound();
 			@endphp
 			@if ($awaitingForDays)
-			<span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>
+			{{-- <span> {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span> --}}
 			@endif
 		</span>
 		@endif
