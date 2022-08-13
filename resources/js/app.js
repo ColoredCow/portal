@@ -1535,9 +1535,9 @@ $(document).on("focusin", function(e) {
 
 $(document).ready(function(){
 	$(".show").on("click", function(event) {
-	var $menu = $(".menu");
+		var $menu = $(".menu");
 		if($(".show").is(":checked"))
-	    {
+		{
 			$menu.show();
 		}else{
 			$menu.hide();
