@@ -22,6 +22,7 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use App\Mail\ApplicationHandover;
+use Illuminate\Support\Facades\Auth;
 
 abstract class ApplicationController extends Controller
 {
@@ -261,7 +262,8 @@ abstract class ApplicationController extends Controller
     public function request(Application $application)
     {
         $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
-        Mail::to($currentAssignee)->send(new ApplicationHandover($application));
+        $requestedUser = Auth::user();
+        Mail::to($currentAssignee)->send(new ApplicationHandover($application, $requestedUser));
 
         return redirect()->back()->with('status', 'You email has successfully been sent');
     }
