@@ -1533,14 +1533,14 @@ $(document).on("focusin", function(e) {
 	}
 });
 
-jQuery(document).ready(function(){
-    jQuery(".show").on("click", function(event) {
-		var $menu = $(".menu");
-        if($(".show").is(":checked"))
+$(document).ready(function(){
+	$(".show").on("click", function(event) {
+	var $menu = $(".menu");
+		if($(".show").is(":checked"))
 	    {
 			$menu.show();
 		}else{
 			$menu.hide();
 		}
-    });
+	});
 });
