@@ -1,10 +1,11 @@
 <tr>
-	<td class="w-25p">
-		<div class="d-flex align-items-center">
-			<div class="d-flex align-items-center">
-				<h2 class="fz-16 m-0 mr-1">{{ $application->applicant->name }}</h2>
-				<button class="assignlabels outline-none " title="Assign labels" data-toggle="modal" data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
-			</div>
+    <td class="w-25p">
+        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <h2 class="fz-16 m-0 mr-1">{{ $application->applicant->name }}</h2>
+                <button class="assignlabels outline-none " title="Assign labels" data-toggle="modal"
+                    data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
+            </div>
 
 			@php
 			$formData = $application->applicationMeta()->formData()->first();
@@ -40,15 +41,17 @@
 			<span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $application->applicant->phone }}</span>
 			@endif
 			<div>
-			@if ($application->applicant->college && $application->applicant->university)
-			<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}<a href ="{{ route('universities.edit',$application->applicant->university) }}"target="_blank" ></span>
-			 	@if($application->applicant->university->universityContacts->first() && $application->applicant->university->universityContacts->first()->phone)
-					<span class="badge badge-pill badge-success mr-1  mt-1 ">See contact</span>
-		         	@else
-		           		<span class="badge badge-pill badge-danger mr-1  mt-1 ">Add contact</span>
-			  	@endif
-			@endif
-		    </div>
+				@if ($application->applicant->college && $application->applicant->university)
+				<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}</span>
+				<a href ="{{ route('universities.edit',$application->applicant->university) }}"target="_blank" >
+					 @if($application->applicant->university->universityContacts->first() && $application->applicant->university->universityContacts->first()->phone)
+						<span class="badge badge-pill badge-success mr-1  mt-1 ">See contact</span>
+					@else
+						<span class="badge badge-pill badge-danger mr-1  mt-1 ">Add contact</span>
+					@endif
+				</a>
+				@endif
+			</div>
 		</div>
 
 		<div>
@@ -68,7 +71,7 @@
 	</td>
 	<td>
 		<div class="d-flex flex-column">
-			<span>{{ $application->job->title }}</span>
+			<span>{{ $application->job->title }}   <span data-toggle="tooltip" data-placement="right" title="Total resources required -{{$application->job->resources_required}} Total applications available -{{$openApplicationsCountForJobs[$application->job->title]}}"><i class="fa fa-info-circle"></i>&nbsp;</span></span>
 			<span class="fz-xl-14 text-secondary">Applied on
 				{{ $application->created_at->format(config('constants.display_date_format')) }}</span>
 			<span class="font-weight-bold fz-xl-14 text-dark">
@@ -95,7 +98,8 @@
 		<span
 			class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
 		@endif
-		@if (!$application->latestApplicationRound->scheduled_date)
+		@if (!$application->latestApplicationRound->scheduled_date &&
+		$application->latestApplicationRound->hr_round_id != 14)
 		<span class="badge badge-theme-teal text-white badge-pill mr-1 mb-1 fz-12">
 			<i class="fa fa-calendar" aria-hidden="true"></i>
 			<span>Awaiting confirmation</span>
@@ -118,12 +122,12 @@
 			<span>
 				{{ $tag->name }}
 
-				@if($tag->slug == 'need-follow-up' && $attampt =
-				optional($application->latestApplicationRound->followUps)->count())
-				. attempt: {{$attampt}}
-				@endif
+                        @if ($tag->slug == 'need-follow-up' &&
+                            ($attempt = optional($application->latestApplicationRound->followUps)->count()))
+                            . attempt: {{ $attempt }}
+                        @endif
 
-			</span>
+                    </span>
 
 		</span>
 		@endforeach
