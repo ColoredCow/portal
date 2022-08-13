@@ -15,7 +15,7 @@
                 </button>
                 <strong class="profileDetailsError"></strong>
             </div>
-            <form  id="editform" action="{{route('profile.update', ['userId' => $user->id])}}" method="POST">
+            <form  id="editform" action="{{route('profile.update', $user->id)}}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
