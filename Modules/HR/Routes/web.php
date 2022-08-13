@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
                 'destroy' => 'universities.contacts.destroy',
                 'store' => 'universities.contacts.store',
             ]);
-            
+
         Route::resource('universities/reports', 'Universities\ReportController')
             ->names([
                 'index'=>'universitiesreports..index',
