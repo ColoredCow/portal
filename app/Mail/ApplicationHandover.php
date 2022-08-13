@@ -18,10 +18,9 @@ class ApplicationHandover extends Mailable
      *
      * @return void
      */
-    public function __construct(Application $application, $requestedUser)
+    public function __construct(Application $application)
     {
         $this->application = $application;
-        $this->user = $requestedUser;
     }
 
     /**
@@ -31,7 +30,8 @@ class ApplicationHandover extends Mailable
      */
     public function build()
     {
-        return $this->from($this->user->email)
+        return $this->from(config('hr.default.email'), config('hr.default.name'))
+            ->subject('Application handover')
             ->view('hr::application.application-handover-request');
     }
 }

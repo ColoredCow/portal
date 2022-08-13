@@ -262,8 +262,7 @@ abstract class ApplicationController extends Controller
     public function request(Application $application)
     {
         $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
-        $requestedUser = Auth::user();
-        Mail::to($currentAssignee)->send(new ApplicationHandover($application, $requestedUser));
+        Mail::to($currentAssignee)->send(new ApplicationHandover($application));
 
         return redirect()->back()->with('status', 'You email has successfully been sent');
     }
