@@ -1,10 +1,11 @@
 <tr>
-	<td class="w-25p">
-		<div class="d-flex align-items-center">
-			<div class="d-flex align-items-center">
-				<h2 class="fz-16 m-0 mr-1">{{ $application->applicant->name }}</h2>
-				<button class="assignlabels outline-none " title="Assign labels" data-toggle="modal" data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
-			</div>
+    <td class="w-25p">
+        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <h2 class="fz-16 m-0 mr-1">{{ $application->applicant->name }}</h2>
+                <button class="assignlabels outline-none " title="Assign labels" data-toggle="modal"
+                    data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
+            </div>
 
 			@php
 			$formData = $application->applicationMeta()->formData()->first();
@@ -97,19 +98,20 @@
 		<span
 			class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
 		@endif
-		{{-- @if (!$application->latestApplicationRound->scheduled_date)
+		@if (!$application->latestApplicationRound->scheduled_date &&
+		$application->latestApplicationRound->hr_round_id != 14)
 		<span class="badge badge-theme-teal text-white badge-pill mr-1 mb-1 fz-12">
 			<i class="fa fa-calendar" aria-hidden="true"></i>
 			<span>Awaiting confirmation</span>
 			@php
 			$awaitingForDays =
-			$application->latestApplicationRound->getPreviousApplicationRound();
+			$application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
 			@endphp
 			@if ($awaitingForDays)
-			{{-- <span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span> --}}
-			{{-- @endif --}}
-		{{-- </span> --}}
-		{{-- @endif --}}
+			<span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>
+			@endif 
+		 </span> 
+		 @endif
 		@foreach ($application->tags as $tag)
 		<span class="badge badge-pill mr-1 mb-1 fz-12 c-pointer"
 			style="background-color: {{ $tag->background_color }};color: {{ $tag->text_color  }};" data-toggle="tooltip"
@@ -120,12 +122,12 @@
 			<span>
 				{{ $tag->name }}
 
-				@if($tag->slug == 'need-follow-up' && $attampt =
-				optional($application->latestApplicationRound->followUps)->count())
-				. attempt: {{$attampt}}
-				@endif
+                        @if ($tag->slug == 'need-follow-up' &&
+                            ($attempt = optional($application->latestApplicationRound->followUps)->count()))
+                            . attempt: {{ $attempt }}
+                        @endif
 
-			</span>
+                    </span>
 
 		</span>
 		@endforeach
