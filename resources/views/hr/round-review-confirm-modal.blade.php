@@ -13,6 +13,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="alert alert-danger d-none pr-0.83" id="InteractionError">
+                    <button type="button" id="interactionErrorModalCloseBtn" class="float-right bg-transparent text-danger border-0 fz-16 mt-n1.33">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong id="errors"></strong>
+                </div>
                <div class="my-3 w-full border p-3" id="sendmailform">
                     <div class="form-group col-md-12">
                         <label for="">Office Location</label>

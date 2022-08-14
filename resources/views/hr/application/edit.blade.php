@@ -207,7 +207,7 @@
 															{{-- @endif --}}
 														@endif
 													@endif
-													@if (!is_null($applicationRound->round_status) && !$applicationRound->mail_sent && $applicationRound->round->name!='Team Interaction Round')
+													@if (!is_null($applicationRound->round_status) && !$applicationRound->mail_sent)
 														<button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#round_{{ $applicationRound->id }}">Send mail</button>
 													@endif
 												</div>

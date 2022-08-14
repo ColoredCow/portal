@@ -14,8 +14,11 @@ class TeamInteractionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'rounds' => 'required|string',
+            'location' => 'required|string',
+            'date' => 'required|date',
+            'starttime' => 'required|date_format:H:i',
+            'endtime' => 'required|date_format:H:i|after:starttime',
+            'applicantName' => 'required|string|exists:hr_applicants,name',
         ];
     }
 

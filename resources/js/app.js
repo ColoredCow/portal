@@ -1539,37 +1539,34 @@ $(document).on("focusin", function(e) {
 });
 
 $("#updateEmail").on("click",function(){
-	//console.log("hello");
-	let formData = {
-			"location": $("#location").val(),
-			"date": $("#date").val(),
-			"starttime": $("#starttime").val(),
-			"endtime": $("#endtime").val(),
-			"applicantName": $("#applicantName").text(),
+    let formData = {
+            "location": $("#location").val(),
+            "date": $("#date").val(),
+            "starttime": $("#starttime").val(),
+            "endtime": $("#endtime").val(),
+            "applicantName": $("#applicantName").text(),
 
-		}
-		var originUrl = window.location.origin;
-		//console.log(formData);
-		tinyMCE.triggerSave(true, true);
-		$.ajax({
-			url: originUrl +"/settings/teaminteraction",
-			type: "POST",
-			data: formData,
-			success: function(response) {
-				loadTemplateMail("confirm", res => {
-					$("#confirmMailToApplicantSubject").val(res.subject);
-					tinymce
-						.get("confirmMailToApplicantBody")
-						.setContent(res.body, { format: "html" });
-				});
-				//console.log(response.subject,response.body);
-				//tinymce.get("confirmMailToApplicantSubject").setContent(response.subject, { format: "html" });
-				//tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
-				//$("#confirmMailToApplicantSubject").text()=response.subject;
-				//$("#confirmMailToApplicantBody").text()=response.body;	
-			},
-			error: function(response) {
-				
-			},
-		});
+        }
+        var originUrl = window.location.origin;
+        $.ajax({
+            url: originUrl +"/settings/teaminteraction",
+            type: "POST",
+            data: formData,
+            success: function(response) {
+				$("#InteractionError").addClass("d-none");
+                $("#confirmMailToApplicantSubject").val(response.subject);
+                tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
+            },
+            error: function(response) {
+				$("#InteractionError").removeClass("d-none");
+				let errors = response.responseJSON.errors;
+				$("#errors").empty();
+				for (let error in errors) {
+					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			  }  
+            },
+        });
 })
+$("#interactionErrorModalCloseBtn").click(function() {
+	$("#InteractionError").toggleClass("d-none");
+});
