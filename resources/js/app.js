@@ -1543,33 +1543,32 @@ $(document).on("focusin", function(e) {
 
 $("#updateEmail").on("click",function(){
     let formData = {
-            "location": $("#location").val(),
-            "date": $("#date").val(),
-            "starttime": $("#starttime").val(),
-            "endtime": $("#endtime").val(),
-            "applicantName": $("#applicantName").text(),
-
-        }
-        var originUrl = window.location.origin;
-        $.ajax({
-            url: originUrl +"/settings/teaminteraction",
-            type: "POST",
-            data: formData,
-            success: function(response) {
-				$("#InteractionError").addClass("d-none");
-                $("#confirmMailToApplicantSubject").val(response.subject);
-                tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
-            },
-            error: function(response) {
-				$("#InteractionError").removeClass("d-none");
-				let errors = response.responseJSON.errors;
-				$("#errors").empty();
-				for (let error in errors) {
-					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
-			  }  
-            },
-        });
-})
+		"location": $("#location").val(),
+		"date": $("#date").val(),
+		"starttime": $("#starttime").val(),
+		"endtime": $("#endtime").val(),
+		"applicantName": $("#applicantName").text(),
+	};
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl +"/settings/teaminteraction",
+		type: "POST",
+		data: formData,
+		success: function(response) {
+			$("#InteractionError").addClass("d-none");
+			$("#confirmMailToApplicantSubject").val(response.subject);
+			tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
+		},
+		error: function(response) {
+			$("#InteractionError").removeClass("d-none");
+			let errors = response.responseJSON.errors;
+			$("#errors").empty();
+			for (let error in errors) {
+				$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			}
+		},
+	});
+});
 $("#interactionErrorModalCloseBtn").click(function() {
 	$("#InteractionError").toggleClass("d-none");
 });

@@ -100,7 +100,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
         Route::post('/teaminteraction', 'SettingController@teaminteraction');
 
-
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {
                 return redirect(route('permissions.module.index', ['module' => 'users']));
