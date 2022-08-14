@@ -1541,8 +1541,8 @@ $(document).on("focusin", function(e) {
 	}
 });
 
-$("#updateEmail").on("click",function(){
-    let formData = {
+$("#updateEmail").on("click", function() {
+	let formData = {
 		"location": $("#location").val(),
 		"date": $("#date").val(),
 		"starttime": $("#starttime").val(),
