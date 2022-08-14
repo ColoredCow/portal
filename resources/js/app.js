@@ -303,6 +303,13 @@ if (document.getElementById("page_hr_applicant_edit")) {
 							.get("confirmMailToApplicantBody")
 							.setContent(res.body, { format: "html" });
 					});
+					if(this.nextRoundName=="Move to Team Interaction Round") {
+						$(".next-scheduled-person-container").addClass("d-none");
+						$("#sendmailform").removeClass("d-none");
+					} else {
+						$(".next-scheduled-person-container").removeClass("d-none");
+						$("#sendmailform").addClass("d-none");
+					}
 					$("#round_confirm").modal("show");
 					break;
 				case "send-for-approval":
@@ -315,6 +322,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					$("#onboard_applicant").modal("show");
 				}
 			},
+		
 			rejectApplication: function() {
 				$("#application_reject_modal").modal("show");
 				loadTemplateMail("reject", res => {
@@ -1529,3 +1537,39 @@ $(document).on("focusin", function(e) {
 		e.stopImmediatePropagation();
 	}
 });
+
+$("#updateEmail").on("click",function(){
+	//console.log("hello");
+	let formData = {
+			"location": $("#location").val(),
+			"date": $("#date").val(),
+			"starttime": $("#starttime").val(),
+			"endtime": $("#endtime").val(),
+			"applicantName": $("#applicantName").text(),
+
+		}
+		var originUrl = window.location.origin;
+		//console.log(formData);
+		tinyMCE.triggerSave(true, true);
+		$.ajax({
+			url: originUrl +"/settings/teaminteraction",
+			type: "POST",
+			data: formData,
+			success: function(response) {
+				loadTemplateMail("confirm", res => {
+					$("#confirmMailToApplicantSubject").val(res.subject);
+					tinymce
+						.get("confirmMailToApplicantBody")
+						.setContent(res.body, { format: "html" });
+				});
+				//console.log(response.subject,response.body);
+				//tinymce.get("confirmMailToApplicantSubject").setContent(response.subject, { format: "html" });
+				//tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
+				//$("#confirmMailToApplicantSubject").text()=response.subject;
+				//$("#confirmMailToApplicantBody").text()=response.body;	
+			},
+			error: function(response) {
+				
+			},
+		});
+})
