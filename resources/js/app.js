@@ -1297,6 +1297,7 @@ function setSegmentAssignee() {
 }
 
 function toggleBlockDisplay() {
+	console.log($(this));
 	let target = $(this).data("target");
 	$(target).toggleClass("d-none");
 
@@ -1558,6 +1559,13 @@ $("#updateEmail").on("click", function() {
 			$("#InteractionError").addClass("d-none");
 			$("#confirmMailToApplicantSubject").val(response.subject);
 			tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
+			$("#interactionsuccess").toggleClass("d-none");
+			$("#interactionsuccess").fadeToggle(6000);
+	        $("#confirmMailToApplicantBlock").removeClass("d-none");
+	        var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
+	        if (toggleIcon && ! $(".fa-eye-slash ").hasClass("d-none")) {
+		    	$(".toggle-icon").toggleClass("d-none");
+	        }	
 		},
 		error: function(response) {
 			$("#InteractionError").removeClass("d-none");
@@ -1566,6 +1574,7 @@ $("#updateEmail").on("click", function() {
 			for (let error in errors) {
 				$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
 			}
+	        $("#confirmMailToApplicantBlock").addClass("d-none");
 		},
 	});
 });

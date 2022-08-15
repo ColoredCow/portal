@@ -19,21 +19,27 @@
                     </button>
                     <strong id="errors"></strong>
                 </div>
+                <div class="d-none alert alert-success fade show" role="alert" id="interactionsuccess">
+                    <strong>Success!!!</strong>Email generated successfully please find it below in the editor.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
                <div class="my-3 w-full border p-3" id="sendmailform">
                     <div class="form-group col-md-12">
-                        <label for="">Office Location</label>
+                        <label>Office Location</label>
                         <input type="text" id="location" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="">Date</label>
+                        <label>Date</label>
                         <input type="date" id="date" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="">Start time</label>
+                        <label>Start time</label>
                         <input type="time" id="startTime" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="">End time</label>
+                        <label>End time</label>
                         <input type="time" id="endTime" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
