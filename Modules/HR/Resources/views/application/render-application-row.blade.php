@@ -1,11 +1,11 @@
 <tr>
-    <td class="w-25p">
-        <div class="d-flex align-items-center">
-            <div class="d-flex align-items-center">
-                <h2 class="fz-16 m-0 mr-1">{{ $application->applicant->name }}</h2>
-                <button class="assignlabels outline-none " title="Assign labels" data-toggle="modal"
-                    data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
-            </div>
+	<td class="w-25p">
+		<div class="d-flex align-items-center">
+			<div class="d-flex align-items-center">
+				<h2 class="fz-16 m-0 mr-1">{{ $application->applicant->name }}</h2>
+				<button class="assignlabels outline-none " title="Assign labels" data-toggle="modal"
+					data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
+			</div>
 
 			@php
 			$formData = $application->applicationMeta()->formData()->first();
@@ -37,29 +37,29 @@
 			<div class="d-flex text-white my-2">
 			
 				<a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-                @if ($application->latestApplicationRound->scheduledPerson->id == auth()->user()->id)
+				@if ($application->latestApplicationRound->scheduledPerson->id == auth()->user()->id)
 					<a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
 				@else
-				    <a data-target="#evaluation{{$application->id}}" role="button" class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
-				    <div class="modal fade" id="evaluation{{$application->id}}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
-					    <div class="modal-dialog" role="document">
-				            <div class="modal-content">
-							    <div class="modal-header">
-								    <h5 class="modal-title text-secondary" id="confirmation">Request to handover</h5>
-								    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									    <span aria-hidden="true">&times;</span>
-								    </button>
-							    </div>
-							    <div class="modal-body">
-								    <p class="text-secondary">This application is already assigned to {{$assignee->name}}, to evaluate this, a confirmation would be needed from their end. Please click the request button to request the handover.</p>
-							    </div>
-							    <div class="modal-footer justify-content-between">
-								    <a href="{{ route('application.handover', $application) }}" class="btn btn-primary">Request</a></button>
-								    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-							    </div>
-						    </div>
-					    </div>
-				    </div>
+					<a data-target="#evaluation{{$application->id}}" role="button" class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
+					<div class="modal fade" id="evaluation{{$application->id}}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title text-secondary" id="confirmation">Request to handover</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p class="text-secondary">This application is already assigned to {{$assignee->name}}, to evaluate this, a confirmation would be needed from their end. Please click the request button to request the handover.</p>
+								</div>
+								<div class="modal-footer justify-content-between">
+									<a href="{{ route('application.handover', $application) }}" class="btn btn-primary">Request</a></button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				@endif
 			</div>
 
@@ -114,7 +114,7 @@
 		</div>
 	</td>
 	<td class="">
-        <img src="{{$assignee->avatar}}" alt="{{$assignee->name}}" class="w-25 h-25 rounded-circle"
+		<img src="{{$assignee->avatar}}" alt="{{$assignee->name}}" class="w-25 h-25 rounded-circle"
 			data-toggle="tooltip" data-placement="top" title="{{$assignee->name}}">
 	</td>
 	<td>
@@ -147,12 +147,12 @@
 			<span>
 				{{ $tag->name }}
 
-                        @if ($tag->slug == 'need-follow-up' &&
-                            ($attempt = optional($application->latestApplicationRound->followUps)->count()))
-                            . attempt: {{ $attempt }}
-                        @endif
+						@if ($tag->slug == 'need-follow-up' &&
+							($attempt = optional($application->latestApplicationRound->followUps)->count()))
+							. attempt: {{ $attempt }}
+						@endif
 
-                    </span>
+					</span>
 
 		</span>
 		@endforeach
