@@ -4,6 +4,7 @@ namespace Modules\HR\Database\Factories;
 
 use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\FollowUp;
 
 class HrFollowUpFactory extends Factory
@@ -26,7 +27,7 @@ class HrFollowUpFactory extends Factory
 
         return [
 
-            'hr_application_round_id'=> 1,
+            'hr_application_round_id'=> ApplicationRound::factory()->create()->id,
             'checklist'=> $faker->text(),
             'assigned_to' => null,
             'conducted_by' => null,

@@ -3,6 +3,7 @@
 namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\Evaluation\segment;
+use Modules\HR\Entities\Round;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HrApplicationEvaluationSegmentFactory extends Factory
@@ -23,7 +24,7 @@ class HrApplicationEvaluationSegmentFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'round_id' => 1,
+            'round_id' => Round::first()->id,
         ];
     }
 }

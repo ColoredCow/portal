@@ -4,6 +4,7 @@ namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\ApplicationRoundReview;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\ApplicationRound;
 
 class HrApplicationRoundReviewFactory extends Factory
 {
@@ -22,7 +23,7 @@ class HrApplicationRoundReviewFactory extends Factory
     public function definition()
     {
         return [
-            'hr_application_round_id'=> 1,
+            'hr_application_round_id'=> ApplicationRound::factory()->create()->id,
             'review_key'=> 2,
             'review_value'=> 2,
         ];
