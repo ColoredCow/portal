@@ -24,21 +24,24 @@ class RecurringExpense extends Model
         'description',
     ];
 
-    public function getDueDateAttribute() {
+    public function getDueDateAttribute()
+    {
         $initialDueDate = $this->initial_due_date;
         $frequency = $this->frequency;
 
-        if(now()->lt($initialDueDate)) {
+        if (now()->lt($initialDueDate)) {
             return $initialDueDate;
         }
 
-        if($frequency == 'monthly' && now()->gt($initialDueDate)) {
-           $month = date('m');
-           return Carbon::parse($initialDueDate->format("Y-$month-d"));
-        } 
-        
-        if($frequency == 'yearly') {
+        if ($frequency == 'monthly' && now()->gt($initialDueDate)) {
+            $month = date('m');
+
+            return Carbon::parse($initialDueDate->format("Y-$month-d"));
+        }
+
+        if ($frequency == 'yearly') {
             $year = date('Y');
+
             return Carbon::parse($initialDueDate->format("$year-m-d"));
         }
 
