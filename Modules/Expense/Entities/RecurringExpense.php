@@ -28,16 +28,20 @@ class RecurringExpense extends Model
         $initialDueDate = $this->initial_due_date;
         $frequency = $this->frequency;
 
+        if(now()->lt($initialDueDate)) {
+            return $initialDueDate;
+        }
+
         if($frequency == 'monthly' && now()->gt($initialDueDate)) {
            $month = date('m');
-           $initialDueDate = $initialDueDate->format("Y-$month-d");
+           return Carbon::parse($initialDueDate->format("Y-$month-d"));
         } 
         
         if($frequency == 'yearly') {
             $year = date('Y');
-            $initialDueDate = $initialDueDate->format("$year-m-d");
+            return Carbon::parse($initialDueDate->format("$year-m-d"));
         }
 
-        return Carbon::parse($initialDueDate);
+        return $initialDueDate;
     }
 }

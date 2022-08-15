@@ -20,7 +20,8 @@
             </tr>
             @foreach ($recurringExpenses as $recurringExpense)
                 <tr>
-                    <td>{{ $recurringExpense->name }}</td>
+                    <td><a href="{{ route('expense.recurring.edit', $recurringExpense) }}">{{ $recurringExpense->name }}</a>
+                    </td>
                     <td>{{ Str::title($recurringExpense->frequency) }}</td>
                     <td>{{ $recurringExpense->amount }}</td>
                     <td>{{ $recurringExpense->currency }}</td>
