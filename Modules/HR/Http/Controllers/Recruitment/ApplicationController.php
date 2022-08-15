@@ -22,6 +22,7 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 use App\Mail\ApplicationHandover;
+use Illuminate\Support\Facades\Auth;
 
 abstract class ApplicationController extends Controller
 {
@@ -260,6 +261,11 @@ abstract class ApplicationController extends Controller
 
     public function request(Application $application)
     {
+        $currentUser = Auth::user()->id;
+        $currentAssigneePerson = $application->latestApplicationRound->scheduledPerson->id;
+        if($currentAssigneePerson === $currentUser) {
+            return redirect()->back()->with('status', "You are not assign to this application So you cann't take this action");
+        }
         $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
         Mail::to($currentAssignee)->send(new ApplicationHandover($application));
 
