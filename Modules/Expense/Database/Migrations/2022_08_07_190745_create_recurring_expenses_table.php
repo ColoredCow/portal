@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubscriptionsTable extends Migration
+class CreateRecurringExpensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateSubscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('recurring_expenses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->string('price');
-            $table->string('currency');
+            $table->string('status')->default('active');
             $table->string('frequency')->comment('monthly, yearly');
-            $table->string('due_date')->comment('Date of every month or year');
-            $table->string('status');
+            $table->date('initial_due_date')->comment('Date of every month or year');
+            $table->string('currency');
+            $table->string('amount');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateSubscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('recurring_expenses');
     }
 }
