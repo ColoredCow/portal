@@ -6,6 +6,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
+use Google\Service\Blogger\Resource\Posts;
+use Illuminate\Support\Str;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\ApplicationRound;
@@ -124,9 +126,18 @@ class ReportsController extends Controller
             'chartData' => json_encode($chartData)
         ]);
     }
-    public function showResult()
+    public function showResult(Request $request)
     {
-        $reasons = HRRejectionReason::select('reason_title as label', 'id')->get();
+        $filters = $request->all();
+        $data = HRRejectionReason::select(\DB ::raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
+            ->groupBy('reason_title');
+
+        $reasonsList = $data->pluck('label')->toArray();
+        foreach ($reasonsList as $index => $reason) {
+            $reasonsList[$index] =  Str::of($reason)->replace('-', ' ');
+        }
+
+        $applicationCountArray = $data->pluck('count')->toArray();
         $rounds = Round::select('name as title', 'id')->get();
         $count = [];
         foreach ($rounds as $round) {
@@ -135,13 +146,6 @@ class ReportsController extends Controller
             ->count();
         }
 
-        $Applicationcounts = [];
-        foreach ($reasons as $reason) {
-            $Applicationcounts[] = ApplicationRound::where('hr_application_id', $reason->id)
-            ->count();
-        }
-
-        $reason = $reasons->pluck('label');
         $round = $rounds->pluck('title');
         $chartData = [
             'totalapplication'=> $round,
@@ -149,13 +153,13 @@ class ReportsController extends Controller
         ];
 
         $chartBarData = [
-            'reason' => $reason,
-            'Applicationcounts' => $Applicationcounts,
+            'reason' => $reasonsList,
+            'Applicationcounts' => $applicationCountArray,
         ];
 
         return view('hr.recruitment.rejected-applications')->with([
             'count'=>$count,
-            'Applicationcounts' => $Applicationcounts,
+            'Applicationcounts' => $applicationCountArray,
             'chartData' => json_encode($chartData),
             'chartBarData' => json_encode($chartBarData)
         ]);
