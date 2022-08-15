@@ -13,7 +13,7 @@ class Category extends Model
     protected $guarded = [];
 
     protected $table = 'hr_resources_categories';
-	public static function newFactory()
+    public static function newFactory()
     {
         return new HrResourcesCategoriesFactory();
     }

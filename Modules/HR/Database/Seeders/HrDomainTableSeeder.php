@@ -17,7 +17,7 @@ class HrDomainTableSeeder extends Seeder
         foreach (config('hr.opportunities.domains') as $slug => $domain) {
             HrJobDomain::updateOrCreate([
                     'slug' => $slug,
-			], [
+            ], [
                     'domain' => $domain,
                 ]);
         }

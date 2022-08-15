@@ -5,7 +5,7 @@ namespace Modules\HR\Entities\Evaluation;
 use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRound;
-use Modules\HR\Database\Factories\ApplicationEvaluationFactory;
+use Modules\HR\Database\Factories\HrApplicationEvaluationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationEvaluation extends Model
@@ -36,7 +36,7 @@ class ApplicationEvaluation extends Model
     }
     public static function newFactory()
     {
-        return new ApplicationEvaluationFactory();
+        return new HrApplicationEvaluationFactory();
     }
 
     public function scopeFilterEvaluationsByRound($query, $roundId)

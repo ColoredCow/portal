@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationEvaluationSegment extends Model
 {
-	use HasFactory;
+    use HasFactory;
     protected $fillable = ['application_id', 'application_round_id', 'evaluation_segment_id', 'comments'];
 
     protected $table = 'hr_application_segments';
@@ -18,7 +18,7 @@ class ApplicationEvaluationSegment extends Model
     {
         return $this->belongsTo(ApplicationRound::class);
     }
-	public static function newFactory()
+    public static function newFactory()
     {
         return new HrApplicationSegmentFactory();
     }
