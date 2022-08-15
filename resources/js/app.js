@@ -192,8 +192,7 @@ $(document).ready(() => {
 	}
 	if ($("#myChart").length) {
 		datePicker()
-		HorizontalBarChart();
-		
+		HorizontalBarChart();	
 	}
 
 	$("#save-btn-action").on("click", function() {
