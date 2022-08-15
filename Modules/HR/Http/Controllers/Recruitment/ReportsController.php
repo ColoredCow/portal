@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
-use Google\Service\Blogger\Resource\Posts;
 use Illuminate\Support\Str;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
@@ -129,12 +128,12 @@ class ReportsController extends Controller
     public function showResult(Request $request)
     {
         $filters = $request->all();
-        $data = HRRejectionReason::select(\DB ::raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
+        $data = HRRejectionReason::select(\DB::raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
             ->groupBy('reason_title');
 
         $reasonsList = $data->pluck('label')->toArray();
         foreach ($reasonsList as $index => $reason) {
-            $reasonsList[$index] =  Str::of($reason)->replace('-', ' ');
+            $reasonsList[$index] = Str::of($reason)->replace('-', ' ');
         }
 
         $applicationCountArray = $data->pluck('count')->toArray();
