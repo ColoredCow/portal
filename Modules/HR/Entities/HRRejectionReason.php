@@ -3,7 +3,7 @@
 namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Database\Factories\HRApplicationRejectionFactory;
+use Modules\HR\Database\Factories\HrApplicationRejectionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class HRRejectionReason extends Model
@@ -14,6 +14,6 @@ class HRRejectionReason extends Model
     protected $fillable = ['hr_application_round_id', 'reason_title', 'reason_comment'];
     public static function newFactory()
     {
-        return new HRApplicationRejectionFactory();
+        return new HrApplicationRejectionFactory();
     }
 }

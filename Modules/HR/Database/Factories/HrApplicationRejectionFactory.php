@@ -6,7 +6,7 @@ use Faker\Factory as Faker;
 use Modules\HR\Entities\HRRejectionReason;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class HRApplicationRejectionFactory extends Factory
+class HrApplicationRejectionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
