@@ -14,8 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('hr-new')->group(function () {
         Route::get('/hiring', 'HiringController@index')->name('hr-new.hiring');
         Route::get('/evaluation/segments', 'EvaluationController@index')->name('hr.evaluation');
-        Route::get('evaluation/segment/{segmentID}/parameters', 'EvaluationController@segmentParameters')->name('hr.evaluation.segment-parameters');
-        Route::get('evaluation/segment/{segmentID}/parameters', 'EvaluationController@segmentParameters')->name('hr.evaluation.segment-parameters');
+        // Route::get('evaluation/segment/{segmentID}/parameters', 'EvaluationController@segmentParameters')->name('hr.evaluation.segment-parameters');
         Route::post('evaluation/segment', 'EvaluationController@createSegment')->name('hr.evaluation.segment.store');
         Route::post('evaluation/segment/{segmentID}/update', 'EvaluationController@updateSegment')->name('hr.evaluation.segment.update');
 
@@ -44,7 +43,7 @@ Route::middleware('auth')->group(function () {
             ->names(['index' => 'hr.tags.index', 'edit' => 'hr.tags.edit', 'update' => 'hr.tags.update', 'store' => 'hr.tags.store', 'destroy' => 'hr.tags.delete']);
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
-            Route::get('application/{application}/handover', 'JobApplicationController@request')->name('application.handover');
+            Route::get('application/{application}/handover', 'JobApplicationController@applicationHandoverRequest')->name('application.handover');
             Route::get('application/{application}/assign-to/{user}', 'JobApplicationController@acceptHandoverRequest')->name('application.handover.confirmation');
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');

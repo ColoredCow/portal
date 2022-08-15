@@ -258,12 +258,12 @@ abstract class ApplicationController extends Controller
         ]);
     }
 
-    public function request(Application $application)
+    public function applicationHandoverRequest(Application $application)
     {
         $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
         Mail::to($currentAssignee)->send(new ApplicationHandover($application));
 
-        return redirect()->back()->with('status', 'You email has successfully been sent');
+        return redirect()->back()->with('status', 'Your request has successfully been sent');
     }
 
     public function acceptHandoverRequest(Application $application, User $user)
@@ -273,7 +273,7 @@ abstract class ApplicationController extends Controller
             'scheduled_person_id' => $user->id
         ]);
 
-        $status = 'Successful Assign to ' . $user->name;
+        $status = 'Successful Assigned to ' . $user->name;
 
         return redirect(route('applications.job.index'))->with('status', $status);
     }
