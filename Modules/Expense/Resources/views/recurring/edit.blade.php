@@ -10,7 +10,7 @@
                     onsubmit="return confirm('Are you sure?')">
                     @csrf
                     @method('delete')
-                    <button type="submit" class="btn btn-danger text-white">Delete</button>
+                    <button type="submit" class="btn btn-danger text-white">Remove</button>
                 </form>
 
 
