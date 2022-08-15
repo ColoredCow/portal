@@ -23,7 +23,7 @@ class HrApplicationEvaluationSegmentFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'round_id' => 2,
+            'round_id' => 1,
         ];
     }
 }

@@ -3,6 +3,8 @@
 namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\ApplicationEvaluationSegment;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\Round;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HrApplicationSegmentFactory extends Factory
@@ -22,8 +24,8 @@ class HrApplicationSegmentFactory extends Factory
     public function definition()
     {
         return [
-            'application_id' => 2,
-            'application_round_id' => 1,
+            'application_id' => Application::factory()->create()->id,
+            'application_round_id' => Round::first()->id,
             'evaluation_segment_id' => 2,
             'comments' => $this->faker->text(),
         ];

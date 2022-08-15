@@ -3,6 +3,8 @@
 namespace Modules\HR\Database\Factories;
 
 use Faker\Factory as Faker;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\Round;
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,8 +27,8 @@ class HrApplicationEvaluationFactory extends Factory
         $faker = Faker::create();
 
         return [
-            'application_id'=> 1,
-            'application_round_id'=> 2,
+            'application_id' => Application::factory()->create()->id,
+            'application_round_id'=> Round::first()->id,
             'evaluation_id'=> 2,
             'option_id'=> 1,
             'comment'=> $faker->text(),

@@ -24,9 +24,9 @@ class HrUniversitiesContactsFactory extends Factory
     {
         return [
             'hr_university_id' => University::factory()->create()->id,
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'designation' => $this->faker->text(),
-            'email' => $this->faker->email,
+            'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber,
         ];
     }

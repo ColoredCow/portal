@@ -22,9 +22,22 @@ class HrUniversitiesFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->getCollegeNames()[array_rand($this->getCollegeNames())],
             'address'=> $this->faker->address,
             'rating'=> 1,
+        ];
+    }
+
+    private function getCollegeNames()
+    {
+        return [
+            'THDC-ihet',
+            'Doon University',
+            'AMU',
+            'Delhi University',
+            'chandigarh University',
+            'Uttaranchal University',
+            'Graphic-Era University',
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HrApplicationMetaFactory extends Factory
@@ -22,8 +23,8 @@ class HrApplicationMetaFactory extends Factory
     public function definition()
     {
         return [
-            'hr_application_id'=> 1,
-            'value'=> 2,
+            'hr_application_id'=>  Application::factory()->create()->id,
+            'value'=> 1,
             'key'=> 2,
         ];
     }
