@@ -118,8 +118,11 @@
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
                             if(error){
-                                this.$toast.error('Error while saving the project!');
-                            }
+                                var concat = ' was not selected ';
+                                var errormessage =  error;
+                                var final = errormessage.concat(concat,'');
+                                this.$toast.error(final);                           
+                                }
                         })
                 },
 
