@@ -16,6 +16,7 @@ class RecurringExpenseService
     {
         $recurringExpense = RecurringExpense::create($data);
         $this->createNewExpense($recurringExpense);
+
         return $recurringExpense;
     }
 
@@ -28,6 +29,7 @@ class RecurringExpenseService
     {
         $recurringExpense = RecurringExpense::find($id);
         $recurringExpense->update($data);
+
         return $recurringExpense;
     }
 
@@ -35,6 +37,7 @@ class RecurringExpenseService
     {
         $recurringExpense = RecurringExpense::find($id);
         $recurringExpense->delete();
+
         return $recurringExpense;
     }
 
