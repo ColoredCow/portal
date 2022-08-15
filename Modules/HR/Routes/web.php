@@ -34,11 +34,9 @@ Route::middleware('auth')->group(function () {
                 'store' => 'universities.contacts.store',
             ]);
 
-        Route::resource('universities/reports', 'Universities\ReportController')
-            ->names([
-                'index'=>'universitiesreports..index',
-                'show' =>'universities.reports',
-            ]);
+        Route::get('universities/reports', 'Universities\ReportController@index')->name('hr.universities.reports');
+        Route::get('universities/{university}/reports/show', 'Universities\ReportController@show')->name('hr.universities.reports.show');
+            
 
         Route::resource('universities/aliases', 'Universities\UniversityAliasController', [
             'names' => 'universities.aliases',
