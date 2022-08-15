@@ -963,9 +963,9 @@ if (document.getElementById("show_book_info")) {
 				this.isBorrowed = true;
 				this.borrowers = response.data.borrowers;
 				}
-				else {
-				alert("Sorry ! No more copies of this book available right now.");
-				}
+				// else {
+				// alert("Sorry ! No more copies of this book available right now.");
+				// }
 			},
 
 			putTheBookBackToLibrary: async function() {
