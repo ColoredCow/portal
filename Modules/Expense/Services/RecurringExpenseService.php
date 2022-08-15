@@ -4,7 +4,7 @@ namespace Modules\Expense\Services;
 
 use Modules\Expense\Entities\RecurringExpense;
 
-class RecurringExpenseService 
+class RecurringExpenseService
 {
     public function index(array $data = [])
     {
@@ -38,8 +38,9 @@ class RecurringExpenseService
         return $recurringExpense;
     }
 
-    public function createNewExpense(RecurringExpense $recurringExpense) {
-        // ToDo:: We will create the next expense entry for this one. 
+    public function createNewExpense(RecurringExpense $recurringExpense)
+    {
+        // ToDo:: We will create the next expense entry for this one.
         return [];
     }
 }
