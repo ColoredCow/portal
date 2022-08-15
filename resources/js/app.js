@@ -191,7 +191,7 @@ $(document).ready(() => {
 		barChart();
 	}
 	if ($("#myChart").length) {
-		datePicker()
+		datePicker();
 		HorizontalBarChart();	
 	}
 
