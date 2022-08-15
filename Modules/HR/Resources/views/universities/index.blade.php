@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <br>
-    @include('hr::universities.menu')    
+    @include('hr::universities.menu')   
     <br><br>
     <div class="row">
         <div class="col-md-6">
