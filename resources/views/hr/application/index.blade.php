@@ -97,10 +97,11 @@
     <br>
     @php
         $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
+        $graduation_year = request()->has('end-year') ? '&end-year=' . request('end-year') : '';
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $hr_university_id = request()->has('hr_university_id') ? '&hr_university_id=' . request('hr_university_id') : '';
         $sort_by = request()->has('sort_by') ? '&sort_by=' . request('sort_by') : '';
-        $query_filters = $hr_job_id . $search . $hr_university_id . $sort_by
+        $query_filters = $hr_job_id . $search . $hr_university_id . $sort_by . $graduation_year
     @endphp
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">

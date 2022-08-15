@@ -184,17 +184,18 @@
                         this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
                     }
                    
-                    this.$forceUpdate()
+                         this.$forceUpdate()
 
+                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                 }
             },
 
-            filters: {
-                toDate: function(timestamp) {
-                    if (timestamp == null) {
-                        return timestamp;
+                   filters: {
+                       toDate: function(timestamp) {
+                         if (timestamp == null) {
+                            return timestamp;
                     }
-                    return timestamp.substring(0,10);
+                         return timestamp.substring(0,10);
                 }
             },
 
