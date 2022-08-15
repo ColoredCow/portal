@@ -18,7 +18,7 @@ class ReportController extends Controller
         return view('hr::universities.reports');
     }
 
-    public function show(University $university)
+    public function jobWiseApplicationsData(University $university)
     {
         $data = DB::table('hr_applications')
             ->select(['hr_jobs.title', 'hr_applicants.college', DB::raw('count(hr_applications.id) as total_applications')])

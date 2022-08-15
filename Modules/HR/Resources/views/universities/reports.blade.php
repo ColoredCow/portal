@@ -8,7 +8,7 @@
         <span>Universities</span>
     </a>
 <div class="row justify-content-center">
-<h1>Applications Per Jobs Roles</h1>
+<h1>Number of Applications per Job in {{$university->name}}</h1>
 </div>
 <div class="d-flex justify-content-between align-items-center m-4">  
 	<div>
