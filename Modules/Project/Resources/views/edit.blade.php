@@ -184,9 +184,8 @@
                         this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
                     }
                    
+                         this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                          this.$forceUpdate()
-
-                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                 }
             },
 
