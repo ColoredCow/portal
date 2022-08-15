@@ -12,5 +12,11 @@
 */
 
 Route::prefix('expense')->group(function () {
-    Route::get('/', 'ExpenseController@index');
+    Route::get('/', 'ExpenseController@index')->name('expense.index');
+
+    Route::prefix('recurring')->group(function () {
+        Route::get('/', 'RecurringExpenseController@index')->name('expense.recurring.index');
+        Route::get('/', 'RecurringExpenseController@create')->name('expense.recurring.create');
+    });
+
 });
