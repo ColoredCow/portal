@@ -33,7 +33,7 @@ class RecurringExpense extends Model
             return $initialDueDate;
         }
 
-        if ($frequency == 'monthly' && now()->gt($initialDueDate)) {
+        if ($frequency == 'monthly') {
             $month = date('m');
 
             return Carbon::parse($initialDueDate->format("Y-$month-d"));
