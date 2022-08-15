@@ -6,7 +6,8 @@ use Illuminate\Routing\Controller;
 
 class ExpenseController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('expense::index');
     }
 }

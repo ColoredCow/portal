@@ -21,7 +21,5 @@ Route::prefix('expense')->group(function () {
         Route::get('edit/{recurringExpense}', 'RecurringExpenseController@edit')->name('expense.recurring.edit');
         Route::post('/update/{recurringExpense}', 'RecurringExpenseController@update')->name('expense.recurring.update');
         Route::delete('/{recurringExpense}', 'RecurringExpenseController@destroy')->name('expense.recurring.destroy');
-       
     });
-
 });
