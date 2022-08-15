@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Modules\HR\Entities\Round;
+use Modules\HR\Database\Factories\HrApplicationEvaluationSegmentFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Segment extends Model
 {
+    use HasFactory;
     use SoftDeletes;
 
     protected $fillable = ['name', 'round_id'];
@@ -20,6 +23,10 @@ class Segment extends Model
     public function round()
     {
         return $this->belongsTo(Round::class);
+    }
+    public static function newFactory()
+    {
+        return new HrApplicationEvaluationSegmentFactory();
     }
 
     public function parameters()

@@ -3,9 +3,12 @@
 namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\HR\Database\Factories\HrApplicationMetaFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationMeta extends Model
 {
+    use HasFactory;
     protected $fillable = ['hr_application_id', 'value', 'key'];
 
     protected $table = 'hr_application_meta';
@@ -43,6 +46,10 @@ class ApplicationMeta extends Model
     public static function scopeOnboarded($query)
     {
         return $query->where('key', config('constants.hr.status.onboarded.label'));
+    }
+    public static function newFactory()
+    {
+        return new HrApplicationMetaFactory();
     }
 
     public static function scopeCustomMail($query)
