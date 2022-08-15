@@ -1237,8 +1237,7 @@
                                                                 v-on:change="onSelectNextRound($event)"
                                                                 data-application-job-rounds="{{ json_encode($application->job->exceptTrialRounds) }}">
                                                                 <option v-for="round in applicationJobRounds"
-                                                                    value="round" :data-next-round-id="round.id">Move to
-                                                                    @{{ round.name }}</option>
+                                                                    value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
                                                                 <option value="send-for-approval">Send for approval
                                                                 </option>
                                                                 <option value="approve">Approve</option>

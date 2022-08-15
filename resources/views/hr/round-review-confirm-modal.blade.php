@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <div class="d-block">
                     <h5 class="modal-title" id="round_confirm">@{{ this.nextRoundName }}</h5>
-                    <h6 class="text-secondary d-inline" id="applicantName">{{ $applicationRound->application->applicant->name }}</h6>&mdash;
+                    <h6 class="text-secondary d-inline" id="applicantName">{{ $applicationRound->application->applicant->name }}</h6> &mdash;
                    <span>{{ $applicationRound->application->applicant->email }}</span>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -22,19 +22,19 @@
                <div class="my-3 w-full border p-3" id="sendmailform">
                     <div class="form-group col-md-12">
                         <label for="">Office Location</label>
-                        <input type="text" name="location" id="location" class="form-control" placeholder="">
+                        <input type="text" id="location" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
                         <label for="">Date</label>
-                        <input type="date" name="date" id="date" class="form-control" placeholder="">
+                        <input type="date" id="date" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
                         <label for="">Start time</label>
-                        <input type="time" name="starttime" id="starttime" class="form-control" placeholder="">
+                        <input type="time" id="startTime" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
                         <label for="">End time</label>
-                        <input type="time" name="endtime" id="endtime" class="form-control" placeholder="">
+                        <input type="time" id="endTime" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
                         <button type="button" class="btn btn-success px-4" id="updateEmail">Generate Email</button>

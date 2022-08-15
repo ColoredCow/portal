@@ -306,7 +306,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 							.get("confirmMailToApplicantBody")
 							.setContent(res.body, { format: "html" });
 					});
-					if(this.nextRoundName=="Move to Team Interaction Round") {
+					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
 						$(".next-scheduled-person-container").addClass("d-none");
 						$("#sendmailform").removeClass("d-none");
 					} else {
@@ -1545,9 +1545,9 @@ $("#updateEmail").on("click", function() {
 	let formData = {
 		"location": $("#location").val(),
 		"date": $("#date").val(),
-		"starttime": $("#starttime").val(),
-		"endtime": $("#endtime").val(),
-		"applicantName": $("#applicantName").text(),
+		"start_time": $("#startTime").val(),
+		"end_time": $("#endTime").val(),
+		"applicant_name": $("#applicantName").text(),
 	};
 	var originUrl = window.location.origin;
 	$.ajax({
