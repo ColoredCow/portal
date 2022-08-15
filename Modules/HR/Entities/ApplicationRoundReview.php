@@ -3,7 +3,7 @@
 namespace Modules\HR\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\HR\Database\Factories\HRApplicationRoundReviewFactory;
+use Modules\HR\Database\Factories\HrApplicationRoundReviewFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationRoundReview extends Model
