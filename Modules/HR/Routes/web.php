@@ -36,7 +36,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('universities/reports', 'Universities\ReportController@index')->name('hr.universities.reports');
         Route::get('universities/{university}/reports/show', 'Universities\ReportController@show')->name('hr.universities.reports.show');
-            
 
         Route::resource('universities/aliases', 'Universities\UniversityAliasController', [
             'names' => 'universities.aliases',
@@ -111,7 +110,7 @@ Route::middleware('auth')->group(function () {
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
-        ]);
+            ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
     });
 });

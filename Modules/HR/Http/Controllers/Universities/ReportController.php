@@ -33,7 +33,6 @@ class ReportController extends Controller
 
         $applicationsCount = $data->pluck('total_applications');
         $applicationsCount->all();
-        
 
         $universityDataChart = [
             'jobTitle' => $jobTitle,
