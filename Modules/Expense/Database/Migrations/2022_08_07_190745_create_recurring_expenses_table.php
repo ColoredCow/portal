@@ -15,7 +15,7 @@ class CreateRecurringExpensesTable extends Migration
     {
         Schema::create('recurring_expenses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('status')->default('active');
             $table->string('frequency')->comment('monthly, yearly');
             $table->date('initial_due_date')->comment('Date of every month or year');

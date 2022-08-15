@@ -6,7 +6,8 @@
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Setup New Recurring Expenses</h4>
         </div>
-        <form method="{{ route('expense.recurring.store') }}">
+        <form action="{{ route('expense.recurring.store') }}" method="POST">
+            @csrf
             <div class="card">
                 <div id="create_recurring_expenses">
                     <div class="card-body">
@@ -37,8 +38,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="due_date" class="field-required">Next Due Date</label>
-                                    <input type="date" class="form-control" name="due_date" id="due_date"
+                                    <label for="initial_due_date" class="field-required">Next Due Date</label>
+                                    <input type="date" class="form-control" name="initial_due_date" id="initial_due_date"
                                         required="required" value="{{ now()->format('Y-m-d') }}">
                                 </div>
 
