@@ -88,7 +88,6 @@ class ProspectController extends Controller
 
         return Storage::download($prospectDocument->file_path);
     }
-
     /**
      * Write code on Method.
      *
@@ -96,8 +95,7 @@ class ProspectController extends Controller
      */
     public function delete($id)
     {
-        $prospect=Prospect::find($id)->delete();
-
+        $prospect = Prospect::find($id)->delete();
         return back();
     }
 }
