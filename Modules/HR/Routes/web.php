@@ -88,7 +88,6 @@ Route::middleware('auth')->group(function () {
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
 
-
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
                 ->names(['index' => 'applications.internship.index', 'edit' => 'applications.internship.edit']);
