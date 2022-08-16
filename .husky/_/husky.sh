@@ -1,9 +1,7 @@
 #!/bin/sh
 if [ -z "$husky_skip_init" ]; then
   debug () {
-    if [ "$HUSKY_DEBUG" = "1" ]; then
-      echo "husky (debug) - $1"
-    fi
+    [ "$HUSKY_DEBUG" = "1" ] && echo "husky (debug) - $1"
   }
 
   readonly hook_name="$(basename "$0")"

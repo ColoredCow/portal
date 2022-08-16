@@ -62,7 +62,6 @@
                     </div>
                 @endif
             </div>
-
             <span class="mr-1 text-truncate">
                 <i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
             @if ($application->applicant->phone)
