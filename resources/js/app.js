@@ -564,6 +564,40 @@ $(document).ready(function () {
 	});
 });
 
+$(document).ready(function () {
+	$("#editSegmentForm").submit(function (e) {
+		e.preventDefault();
+		let form = $("#editSegmentForm");
+		$("#editSegmentModal").on("hidden.bs.modal", function () {
+			$(this).find("form").trigger("reset");
+		});
+	
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#editSegmentModal").modal("hide");
+				$("#editSegmentModal").on("hidden.bs.modal", function (e) {
+					$("#Editsegmentsuccess").toggleClass("d-none");
+					$("#Editsegmentsuccess").fadeToggle(6000);
+				});
+			},	
+			error: function(response) {
+				$("#EditsegmentError").removeClass("d-none");
+				let errors = response.responseJSON.errors;
+				$("#Editerrors").empty();
+				for (let error in errors) {
+					$("#Editerrors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			  }
+			}
+		});
+	});
+	$("#EditsegmentModalCloseBtn").click(function() {
+		$("#EditsegmentError").toggleClass("d-none");
+	});
+});
+
 $(".hr_round_guide").on("click", ".save-guide", function() {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
