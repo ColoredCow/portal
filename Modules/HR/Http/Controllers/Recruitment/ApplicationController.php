@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
+use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\Job;
@@ -21,7 +22,6 @@ use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
-use App\Mail\ApplicationHandover;
 
 abstract class ApplicationController extends Controller
 {
