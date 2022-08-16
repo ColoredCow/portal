@@ -958,7 +958,7 @@ if (document.getElementById("show_book_info")) {
 			},
 
 			borrowTheBook: async function() {
-				if (this.borrowers.length<this.book.number_of_copies) {
+				if (this.borrowers.length < this.book.number_of_copies) {
 					let response = await axios.get(this.borrowBookRoute);
 					this.isBorrowed = true;
 					this.borrowers = response.data.borrowers;
