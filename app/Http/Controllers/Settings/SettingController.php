@@ -31,8 +31,7 @@ class SettingController extends Controller
 
     public function updateInvoiceTemplates(SettingRequest $request)
     {
-        
-        foreach ($request>['setting_key'] as $key => $value) {
+         foreach ($request->setting_key as $key => $value) {
             Setting::updateOrCreate(
                 ['module' => 'invoice', 'setting_key' => $key],
                 ['setting_value' => $value ? ContentHelper::editorFormat($value) : null]
@@ -49,7 +48,7 @@ class SettingController extends Controller
 
     public function createOrganization(Request $request)
     {
-        $org = Organization::create([
+         $org = Organization::create([
             'name' => $request->name,
             'address' => $request->address,
             'annual_sales' => $request->annual_sales,
