@@ -31,6 +31,7 @@ class SettingController extends Controller
 
     public function updateInvoiceTemplates(SettingRequest $request)
     {
+        $validated = $request->validated();
         foreach ($validated['setting_key'] as $key => $value) {
             Setting::updateOrCreate(
                 ['module' => 'invoice', 'setting_key' => $key],
