@@ -34,4 +34,5 @@ class ApplicationHandover extends Mailable
             ->subject('Application handover')
             ->view('mail.hr.application-handover-request-email');
     }
+
 }
