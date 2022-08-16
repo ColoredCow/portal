@@ -87,7 +87,7 @@ class ProspectController extends Controller
         $prospectDocument = ProspectDocument::find($documentID);
 
         return Storage::download($prospectDocument->file_path);
-        }
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -98,7 +98,6 @@ class ProspectController extends Controller
     {
         $prospect = Prospect::find($id);
         $prospect->delete();
-
         return back(); 
     }
 }
