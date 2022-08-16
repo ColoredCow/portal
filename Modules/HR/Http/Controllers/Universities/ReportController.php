@@ -34,14 +34,14 @@ class ReportController extends Controller
         $applicationsCount = $data->pluck('total_applications');
         $applicationsCount->all();
 
-        $universityDataChart = [
-            'jobTitle' => $jobTitle,
-            'applications' => $applicationsCount,
+        $chartData = [
+            'jobsTitle' => $jobTitle,
+            'application' => $applicationsCount,
         ];
 
         return view('hr::universities.reports')->with([
             'university' => $university,
-            'universityDataChart' => json_encode($universityDataChart),
+            'chartData' => json_encode($chartData),
         ]);
     }
 }

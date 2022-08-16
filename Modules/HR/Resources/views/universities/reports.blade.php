@@ -16,5 +16,5 @@
 	  </a>
   </div>
 </div>
-<canvas id="universityChart" data-target="{{ $universityDataChart }}" width="200%" height="100px"></canvas>
+<canvas id="myChart" data-target="{{ $chartData }}" width="200%" height="100px"></canvas>
 @endsection
