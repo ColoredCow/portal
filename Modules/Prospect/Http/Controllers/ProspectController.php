@@ -90,13 +90,13 @@ class ProspectController extends Controller
     }
 
     /**
-     * Write code on Method
+     * Write code on Method.
      *
      * @return back()
      */
     public function delete($id)
     {
-        Prospect::find($id)->delete();
+        $prospect=Prospect::find($id)->delete();
 
         return back();
     }
