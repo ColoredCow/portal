@@ -186,11 +186,11 @@ $(document).ready(() => {
 		});		
 	});
 
-	if ($(".chart-data").length && !$("#myChart").length) {
+	if ($(".chart-data").length){
 		datePickerChart();
 		barChart();
 	}
-	else{
+	if($("#myChart").length){
 		datePickerChart();
 		HorizontalBarChart();		
 	}

@@ -9,12 +9,12 @@
   <div>
 	  <form class="form-inline text-right" action="{{route('applications.job-Wise-Applications-Graph')}}" method="get">
 		<div class="form-group">
-		<input type="date" name="StartDate" id="StartDate" class="form-control-sm" required>
+		<input type="date" name="StartDate" id="StartDate" class="form-control-sm"
 		value="{{ old('StartDate', request()->get('StartDate')) }}" required>
 		</div>
 		<span class="mx-2">to</span>
 		<div class="form-group">
-		<input type="date" name="EndDate" id="EndDate" class="form-control-sm" required>
+		<input type="date" name="EndDate" id="EndDate" class="form-control-sm"
 		value="{{ old('EndDate', request()->get('EndDate')) }}" required>
 		</div>
 		<div class="form-group">
