@@ -29,6 +29,7 @@ class ApplicationImport implements ToCollection, WithHeadingRow
 
         foreach ($rows as $row) {
             $data = [];
+            $data['hr_job_id'] = $this->job->id;
             $data['job_title'] = $this->job->title;
             $data['first_name'] = $row['first_name'];
             $data['last_name'] = $row['last_name'];
@@ -42,6 +43,8 @@ class ApplicationImport implements ToCollection, WithHeadingRow
             $data['form_data'] = [
                 'Why Should We Pick You?' => $row['reason_for_eligibility']
             ];
+            $data['hr_channel_id'] = $row['hr_channel_id'];
+            request()->merge(['college' => $data['college']]);
 
             $this->service->saveApplication($data);
         }

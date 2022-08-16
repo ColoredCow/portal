@@ -62,16 +62,17 @@
                             <option v-for="(designation, key) in designations" :value="key">@{{ designation }}</option>
                         </select>
                     </div>
-                    <div class="col-1 daily-effort-div" >
+                    <div class="col-1 daily-effort-div">
                         <input type="number" v-model="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">
+                     <input type="number" @input="updatedDailyExpectedEffort($event, index, 1)" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
                     </div>
 
                     <div class="col-1 weekly-effort-div">
-                        <input type="number" @input="updatedDailyExpectedEffort($event, index, 5)" :value="projectTeamMember.pivot.daily_expected_effort*5" class="form-control weekly-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, 5)" :value="projectTeamMember.pivot.weekly_expected_effort" class="form-control weekly-effort">
                     </div>
 
                     <div class="col-1 monthly-effort-div">
-                        <input type="number" @input="updatedDailyExpectedEffort($event, index, workingDaysInMonth)" :value="projectTeamMember.pivot.daily_expected_effort*workingDaysInMonth" class="form-control monthly-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, workingDaysInMonth)" :value="projectTeamMember.pivot.monthly_expected_effort" class="form-control monthly-effort">
                     </div>
                     <div class="col-1">
                         <input type="number" step="0.01" :name="`project_team_member[${index}][rate]`" v-model="projectTeamMember.pivot.rate" class="form-control">
