@@ -1290,11 +1290,11 @@
                                         @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                                         @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                                         @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
+                                        @include('hr.application.put-on-hold-modal')
                                     </form>
                                     
                                 @endif
                             </div>
-                            @include('hr.application.put-on-hold-modal')
                             @include('hr.round-guide-modal', ['round' => $applicationRound->round])
                             @includeWhen($applicationRound->round_status && !$applicationRound->mail_sent,
                                 'hr.round-review-mail-modal',
