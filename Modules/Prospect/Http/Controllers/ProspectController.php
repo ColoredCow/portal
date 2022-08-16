@@ -87,15 +87,18 @@ class ProspectController extends Controller
         $prospectDocument = ProspectDocument::find($documentID);
 
         return Storage::download($prospectDocument->file_path);
-    }
+        }
     /**
-     * Write code on Method.
+     * Remove the specified resource from storage.
      *
-     * @return back()
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function delete($id)
     {
-        $prospect = Prospect::find($id)->delete();
-        return back();
+        $prospect = Prospect::find($id);
+        $prospect->delete();
+
+        return back(); 
     }
 }
