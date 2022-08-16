@@ -2,6 +2,7 @@
 
 namespace Modules\Prospect\Entities;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
 use Modules\ModuleChecklist\Entities\NDAMeta;
@@ -10,6 +11,10 @@ use Modules\ModuleChecklist\Entities\ModuleChecklist;
 
 class Prospect extends Model
 {
+    use HasFactory;
+
+    protected $table = 'prospects';
+    protected $primarykey = 'prospects_id';
     protected $fillable = ['created_by', 'status', 'assign_to', 'name', 'coming_from', 'coming_from_id', 'brief_info'];
 
     protected static function booted()

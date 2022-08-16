@@ -25,7 +25,7 @@ class CreateProspectRequirementsTable extends Migration
         });
 
         Schema::table('prospect_requirements', function (Blueprint $table) {
-            $table->foreign('prospect_id')->references('id')->on('prospects');
+            $table->foreign('prospect_id')->references('id')->on('prospects')->onDelete('cascade');
         });
     }
 

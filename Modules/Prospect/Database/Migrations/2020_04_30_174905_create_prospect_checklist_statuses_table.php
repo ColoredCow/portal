@@ -23,9 +23,9 @@ class CreateProspectChecklistStatusesTable extends Migration
         });
 
         Schema::table('prospect_checklist_statuses', function (Blueprint $table) {
-            $table->foreign('module_checklist_id')->references('id')->on('module_checklists');
-            $table->foreign('module_checklist_task_id')->references('id')->on('module_checklist_tasks');
-            $table->foreign('prospect_id')->references('id')->on('prospects');
+            $table->foreign('module_checklist_id')->references('id')->on('module_checklists')->onDelete('cascade');
+            $table->foreign('module_checklist_task_id')->references('id')->on('module_checklist_tasks')->onDelete('cascade');
+            $table->foreign('prospect_id')->references('id')->on('prospects')->onDelete('cascade');
         });
     }
 

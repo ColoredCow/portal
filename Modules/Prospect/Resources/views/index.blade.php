@@ -25,7 +25,8 @@
                 <tr class="sticky-top">
                     <th>Name</th>
                     <th>Resources</th>
-                    <th>Requirements</th
+                    <th>Requirements</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,11 +35,15 @@
                         <td>
                           <a href="{{ route('prospect.show', $prospect) }}">{{ $prospect->name }}</a>  
                         </td>
+                        <td>{{$prospect->Resources}}</td>
+                        <td>{{$prospect->Requirement}}</td>
                         <td>
-                            
-                        </td>
-                        <td>
-                            
+                            {{-- <a class="btn btn-danger" href="{{ route('prospect.destroy', $prospect->id)}}">Delete</a> --}}
+                            <form method="POST" action="{{ route('prospect.delete', $prospect->id) }}">
+                                @csrf
+                                <input name="_method" type="hidden" value="get">
+                                <button type="submit" class="btn btn-danger" onclick="if (!confirm('Are you sure?')) { return false}"><span>Delete</span></button>
+                            </form>
                         </td>
                 
                     </tr>

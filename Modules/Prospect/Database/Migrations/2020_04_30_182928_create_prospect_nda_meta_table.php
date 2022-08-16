@@ -21,8 +21,8 @@ class CreateProspectNdaMetaTable extends Migration
         });
 
         Schema::table('prospect_nda_meta', function (Blueprint $table) {
-            $table->foreign('prospect_id')->references('id')->on('prospects');
-            $table->foreign('nda_meta_id')->references('id')->on('nda_meta');
+            $table->foreign('prospect_id')->references('id')->on('prospects')->onDelete('cascade');
+            $table->foreign('nda_meta_id')->references('id')->on('nda_meta')->onDelete('cascade');
         });
     }
 
