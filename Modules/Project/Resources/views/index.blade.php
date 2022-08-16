@@ -85,7 +85,7 @@
                                 </td>
                                 <td>
                                     @if(empty($project->projectContracts->first()->contract_file_path))
-                                        <span class="badge badge-light border border-dark rounded-0">No Contract</span>
+                                        <span class="btn btn-danger font-weight-bold rounded-pill ">No Contract</span>
                                     @endif
                                 </td>
                                 <td class="w-20p">
