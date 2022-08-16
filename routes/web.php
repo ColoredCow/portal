@@ -93,7 +93,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('projects/{project}/add-employee', 'ProjectController@addEmployee');
     Route::post('projects/{project}/remove-employee', 'ProjectController@removeEmployee');
-    Route::get('my-projects/{employee}', 'hr\Employees\EmployeeController@showProjects')->name('projects.my-projects');
     Route::get('clients/{client}/get-projects', 'ClientController@getProjects');
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
