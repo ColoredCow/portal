@@ -6,7 +6,6 @@ use App\Helpers\ContentHelper;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Request\Setting\SettingRequest;
 use App\Models\Organization;
 
 class SettingController extends Controller
@@ -31,7 +30,6 @@ class SettingController extends Controller
 
     public function updateInvoiceTemplates(SettingRequest $request)
     {
-        $validated = $request->validated();
         foreach ($validated['setting_key'] as $key => $value) {
             Setting::updateOrCreate(
                 ['module' => 'invoice', 'setting_key' => $key],
