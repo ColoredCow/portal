@@ -22,6 +22,16 @@
         </ul>
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Invoices</h4>
+            <div class="d-flex">
+				<div class="row mr-2">
+					<form action="{{ route('invoice.index') }}" method="get">
+						<div class="d-flex align-items-center">
+							<input type="text" class="form-control" name="client_name" id="client_name" class="form_control" placeholder="client name" value="{{ old('client_name', request()->get('client_name')) }}"required>
+							<button type="submit" class="btn btn-info ml-2 text-white">Search</a>
+						</div>
+					</form>
+				</div>
+            </div>
             <span>
                 <a href="{{ route('invoice.create-custom-invoice') }}" class="btn btn-info text-white">Custom Invoice</a>
                 <a href="{{ route('invoice.create') }}" class="btn btn-info text-white">Add Invoice</a>

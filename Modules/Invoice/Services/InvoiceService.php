@@ -34,13 +34,22 @@ class InvoiceService implements InvoiceServiceContract
             'month' => $filters['month'] ?? null,
             'year' => $filters['year'] ?? null,
             'status' => $filters['status'] ?? null,
+            'client_name' => $filters['client_name'] ?? null,
         ];
 
         if ($invoiceStatus == 'sent') {
             $invoices = Invoice::query()->applyFilters($filters)
                 ->orderBy('sent_on', 'desc')
                 ->get();
-            $clientsReadyToSendInvoicesData = [];
+            foreach($invoices as $key => $invoice)
+            {
+                if (isset($filters['client_name'])) {
+                    if ($invoice->client->name != $filters['client_name']) {
+                        $invoices->forget($key);
+                    }
+                }
+            }
+                        $clientsReadyToSendInvoicesData = [];
             $projectsReadyToSendInvoicesData = [];
         } else {
             $invoices = [];
