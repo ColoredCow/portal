@@ -12,8 +12,6 @@
                     @method('delete')
                     <button type="submit" class="btn btn-danger text-white">Remove</button>
                 </form>
-
-
             </span>
         </div>
         <form action="{{ route('expense.recurring.update', $recurringExpense) }}" method="POST">
