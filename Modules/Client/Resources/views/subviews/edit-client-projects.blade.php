@@ -8,8 +8,11 @@
                 <div class="w-40p ml-2">
                     <h5 class="font-muli-bold">Team Members</h5>
                 </div>
-                <div class="w-20p ml-2">
+                <div class="w-20p mr-10">
                     <h5 class="font-muli-bold">Project Status</h5>
+                </div>
+                <div class="w-20p ml-15">
+                    <h5 class="font-muli-bold">Actions</h5>
                 </div>
             </div>
             <hr class="mt-0 mx-4">
@@ -20,16 +23,23 @@
                             {{ $project->name }}
                         </a>
                     </div>
-                    <div class="w-33p w-md-40p ml-2">
+                    <div class="w-30p ml-2">
                         @foreach($project->teamMembers ?:[] as $teamMember)
                             <span class="tooltip-wrapper" data-html="true" data-toggle="tooltip" title="{{ $teamMember->name }} - {{ config('project.designation')[$teamMember->pivot->designation] }}">
                                 <img src="{{ $teamMember->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">
                             </span>
                         @endforeach 
                     </div>
-                    <div class="w-20p ml-2">
+                    <div class="w-20p mr-20">
                         <h5>{{ config('project.status')[$project->status] }}</h5>
                     </div>
+                    <form action="{{ route('project.destroy', $project) }}" method="POST" id="delete-form">
+                        @csrf
+                        @method('DELETE')
+                        <div class="w-40p mr-10">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')" form="delete-form">Remove</button>
+                        </div>
+                    </form>
                 </div>
             @endforeach
         </div>

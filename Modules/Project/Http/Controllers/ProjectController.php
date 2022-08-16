@@ -78,6 +78,13 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function destroy(Project $project)
+    {
+        $project->delete();
+
+        return redirect()->back()->with('status', 'Project deleted successfully!');
+    }
+
     public static function showPdf(ProjectContract $contract)
     {
         $filePath = storage_path('app/' . $contract->contract_file_path);
