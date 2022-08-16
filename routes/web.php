@@ -98,7 +98,6 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->namespace('Settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings.index');
-        Route::post('/teaminteraction', 'SettingController@teaminteraction');
 
         Route::prefix('permissions')->group(function () {
             Route::get('/', function () {

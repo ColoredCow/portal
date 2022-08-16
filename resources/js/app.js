@@ -1551,7 +1551,7 @@ $("#updateEmail").on("click", function() {
 	};
 	var originUrl = window.location.origin;
 	$.ajax({
-		url: originUrl +"/settings/teaminteraction",
+		url: originUrl +"/hr/recruitment/teaminteraction",
 		type: "POST",
 		data: formData,
 		success: function(response) {
