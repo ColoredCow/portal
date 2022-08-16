@@ -39,7 +39,7 @@ class ApplicantEmailVerification
         $body->setting_value = str_replace(config('constants.hr.template-variables.verification-link'), $verification_link, $body->setting_value);
 
         Mail::to($applicant->email, $applicant->name)
-            ->send(new ApplicantCreateAutoResponder($subject->setting_value, $body->setting_value));
+            ->queue(new ApplicantCreateAutoResponder($subject->setting_value, $body->setting_value));
 
         $application->update([
             'applicant_verification_subject' => $subject->setting_value,
