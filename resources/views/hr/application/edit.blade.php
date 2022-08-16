@@ -1108,10 +1108,9 @@
                                                                         class="form-control form-control-sm"
                                                                         value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
                                                                 @else
-																@if($applicationRound->round->name != "Team Interaction Round")
-                                                                    <div class="fz-16 leading-tight">Pending calendar
-                                                                        confirmation</div>
-																@endif
+                                                                @if($applicationRound->round->name != "Team Interaction Round")
+                                                                    <div class="fz-16 leading-tight">Pending calendar confirmation</div>
+                                                                @endif
                                                                 @endif
                                                             </div>
                                                             <div class="form-group col-md-4">
