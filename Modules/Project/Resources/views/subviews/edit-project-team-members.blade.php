@@ -26,15 +26,18 @@
                     </div>
                     <div class="col-2">
                         Designations
-                    </div>
+                    </div>                
                     <div class="col-1">
                         Daily
+                        (@{{ totalDailyEffort }})
                     </div>
                     <div class="col-1">
                         Weekly
+                        (@{{ totalDailyEffort*5 }})
                     </div>
                     <div class="col-1">
                         Monthly
+                        (@{{ totalDailyEffort*workingDaysInMonth }})
                     </div>
                     <div class="col-2 text-center">
                         Billing Engagement %
@@ -62,7 +65,6 @@
                     <div class="col-1 daily-effort-div" >
 
                       <input type="number" @input="updatedDailyExpectedEffort($event, index, 1)" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
-                      <input type="number" v-model="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">
                     </div>
 
                     <div class="col-1 weekly-effort-div">

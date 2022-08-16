@@ -64,6 +64,7 @@
                     project: @json($project),
                     projectType: "{{ $project->type }}",
                     projectTeamMembers: @json($projectTeamMembers),
+                    dailyEffort: '',
                     projectRepositories: @json($projectRepositories),
                     workingDaysInMonth: @json($workingDaysInMonth),
                     users: @json($teamMembers->sortBy('name')->values()),
@@ -77,6 +78,18 @@
                     teamMember['pivot']['weekly_expected_effort'] = dailyEffort * 5; 
                     teamMember['pivot']['monthly_expected_effort'] = dailyEffort * this.workingDaysInMonth;
                 })
+            },
+            
+            computed: {
+                totalDailyEffort() {
+                    var total = 0
+                    this.projectTeamMembers.map((teamMember) => {
+                        total = total + teamMember['pivot']['daily_expected_effort'];
+                    })
+
+                    return total
+                }
+                    
             },
 
             methods: {
@@ -185,7 +198,8 @@
                     }
                    
                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                         this.$forceUpdate()
+                         this.dailyEffort = !this.dailyEffort;
+                         this.$forceUpdate()                        
                 }
             },
 
