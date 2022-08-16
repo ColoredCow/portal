@@ -63,8 +63,7 @@
                         </select>
                     </div>
                     <div class="col-1 daily-effort-div" >
-
-                      <input type="number" @input="updatedDailyExpectedEffort($event, index, 1)" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
+                         <input type="number" @input="updatedDailyExpectedEffort($event, index, 1)" :value="projectTeamMember.pivot.daily_expected_effort" class="form-control daily-effort">
                     </div>
 
                     <div class="col-1 weekly-effort-div">
