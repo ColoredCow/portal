@@ -186,13 +186,13 @@ $(document).ready(() => {
 		});		
 	});
 
-	if ($(".chart-data").length) {
+	if ($(".chart-data").length && !$("#myChart").length) {
 		datePickerChart();
 		barChart();
 	}
-	if ($("#myChart").length) {
-		datePicker();
-		HorizontalBarChart();	
+	else{
+		datePickerChart();
+		HorizontalBarChart();		
 	}
 
 	$("#save-btn-action").on("click", function() {
@@ -1533,14 +1533,3 @@ $(document).on("focusin", function(e) {
 		e.stopImmediatePropagation();
 	}
 });
-
-function datePicker() {
-	$("#end_date").change(function() {
-		var startDate = document.getElementById("start_date").value;
-		var endDate = document.getElementById("end_date").value;
-		if (Date.parse(endDate) <= Date.parse(startDate)) {
-			alert("End date must be greater than Start date");
-			document.getElementById("end_date").value = "";
-		}
-	});
-}
