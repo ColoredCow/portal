@@ -15,7 +15,7 @@ class EditEvaluationRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'rounds' => 'required|string',
+            'round_id' => 'required|integer',
         ];
     }
 

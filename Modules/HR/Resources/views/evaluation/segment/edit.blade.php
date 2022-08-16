@@ -23,7 +23,7 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name"  :value="segmentName">
                     </div>
                     <div class="form-group">
-                        <select class="form-control" name="rounds" id="rounds" :value="segmentRoundId">
+                        <select class="form-control" name="round_id" id="rounds" :value="segmentRoundId">
                             <option value="" >Select Round</option>
                             @foreach ($rounds as $round)
                                 <option value="{{$round->id}}">{{$round->name}}</option>

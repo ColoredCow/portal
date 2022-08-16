@@ -70,9 +70,10 @@ class EvaluationController extends Controller
     public function updateSegment(EditEvaluationRequest $request, $segmentID)
     {
         $segment = Segment::find($segmentID);
-        $segment->update(['name' => $request->name]);
-        $segmentId = Round::select('*')->where('name', $request->rounds)->first()->id;
-        $segment->update(['round_id' => $segmentId]);
+        $segment->update([
+            'name' => $request->name,
+            'round_id' => $request->round_id,
+        ]);
 
         return redirect(route('hr.evaluation'));
     }
