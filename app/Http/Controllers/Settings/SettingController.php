@@ -6,7 +6,7 @@ use App\Helpers\ContentHelper;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Request\Setting\SettingRequest;
+use App\Http\Requests\Setting\SettingRequest;
 use App\Models\Organization;
 
 class SettingController extends Controller
@@ -31,7 +31,8 @@ class SettingController extends Controller
 
     public function updateInvoiceTemplates(SettingRequest $request)
     {
-         foreach ($request->setting_key as $key => $value) {
+        $validated = $request->validated();
+        foreach ($validated['setting_key'] as $key => $value) {
             Setting::updateOrCreate(
                 ['module' => 'invoice', 'setting_key' => $key],
                 ['setting_value' => $value ? ContentHelper::editorFormat($value) : null]
@@ -48,7 +49,7 @@ class SettingController extends Controller
 
     public function createOrganization(Request $request)
     {
-         $org = Organization::create([
+        $org = Organization::create([
             'name' => $request->name,
             'address' => $request->address,
             'annual_sales' => $request->annual_sales,
