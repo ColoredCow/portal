@@ -38,16 +38,13 @@
                         <td>{{$prospect->Resources}}</td>
                         <td>{{$prospect->Requirement}}</td>
                         <td>
-                            {{-- <a class="btn btn-danger" href="{{ route('prospect.destroy', $prospect->id)}}">Delete</a> --}}
                             <form method="POST" action="{{ route('prospect.delete', $prospect->id) }}">
                                 @csrf
                                 <input name="_method" type="hidden" value="get">
                                 <button type="submit" class="btn btn-danger" onclick="if (!confirm('Are you sure?')) { return false}"><span>Delete</span></button>
                             </form>
                         </td>
-                
                     </tr>
-
                 @empty
                     <tr>
                         <td colspan="2">
