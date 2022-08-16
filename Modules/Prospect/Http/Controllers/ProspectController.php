@@ -91,13 +91,14 @@ class ProspectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $prospect
      * @return \Illuminate\Http\Response
      */
     public function delete($id)
     {
         $prospect = Prospect::find($id);
         $prospect->delete();
-        return back(); 
+
+        return back();
     }
 }
