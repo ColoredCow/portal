@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-2">
                         Designations
-                    </div>                
+                    </div>
                     <div class="col-1">
                         Daily
                         (@{{ totalDailyEffort }})
