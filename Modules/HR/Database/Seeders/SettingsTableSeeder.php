@@ -88,7 +88,7 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'hr_team_interaction_round_subject',
-            'setting_value' => 'Hr Team Interaction Round',
+            'setting_value' => 'Congratulations for making it to the Team Interaction Round',
         ]);
         Setting::updateOrCreate([
             'module' => 'hr',

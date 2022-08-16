@@ -1082,7 +1082,7 @@
 
                                                 @if (!$applicationRound->round_status)
                                                     <div class="form-row">
-                                                        @if ($application->latestApplicationRound->hr_round_id != 14)
+                                                        @if ($application->latestApplicationRound->hr_round_id != 14  && $applicationRound->round->name != "Team Interaction Round")
                                                             <div class="form-group col-md-5">
                                                                 <label for="scheduled_date"
                                                                     class="fz-14 leading-none text-secondary w-100p">

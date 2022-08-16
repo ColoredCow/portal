@@ -1297,7 +1297,6 @@ function setSegmentAssignee() {
 }
 
 function toggleBlockDisplay() {
-	console.log($(this));
 	let target = $(this).data("target");
 	$(target).toggleClass("d-none");
 
