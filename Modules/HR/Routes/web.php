@@ -14,6 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('hr-new')->group(function () {
         Route::get('/hiring', 'HiringController@index')->name('hr-new.hiring');
         Route::get('/evaluation/segments', 'EvaluationController@index')->name('hr.evaluation');
+        Route::get('evaluation/segment/{segmentID}/parameters', 'EvaluationController@segmentParameters')->name('hr.evaluation.segment-parameters');
         // Route::get('evaluation/segment/{segmentID}/parameters', 'EvaluationController@segmentParameters')->name('hr.evaluation.segment-parameters');
         Route::post('evaluation/segment', 'EvaluationController@createSegment')->name('hr.evaluation.segment.store');
         Route::post('evaluation/segment/{segmentID}/update', 'EvaluationController@updateSegment')->name('hr.evaluation.segment.update');
