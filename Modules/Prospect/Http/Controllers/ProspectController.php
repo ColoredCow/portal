@@ -88,7 +88,8 @@ class ProspectController extends Controller
 
         return Storage::download($prospectDocument->file_path);
     }
-  /**
+
+    /**
      * soft delete prospect
      *
      * @return void
@@ -99,6 +100,7 @@ class ProspectController extends Controller
   
         return redirect()->back();
     }
+
      /**
      * restore specific prospect
      *
@@ -110,6 +112,7 @@ class ProspectController extends Controller
   
         return redirect()->back();
     }
+    
      /**
      * restore all prospect
      *
