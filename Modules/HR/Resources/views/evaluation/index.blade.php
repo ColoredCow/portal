@@ -40,7 +40,7 @@
                 <td>
                     <i v-on:click="editSegment({{ $segment }})" class="fa fa-edit fz-20 text-theme-green"></i>
 
-                    <i class="fa fa-trash fz-20 ml-4 text-theme-red"></i>
+                    <i v-on:click="removeSegment({{ $segment }})" class="fa fa-trash fz-20 text-theme-red"></i>
                 </td>
             </tr>
             @endforeach
@@ -50,6 +50,7 @@
 
 @include('hr::evaluation.segment.create')
 @include('hr::evaluation.segment.edit')
+@include('hr::evaluation.segment.delete')
 </div>
 @endsection
 
@@ -60,16 +61,27 @@
 
     data() {
         return {
+            initialUpdateRoute: "{{ route('hr.evaluation.segment.update', 'SEGMENT_ID') }}",
             updateRoute: "{{ route('hr.evaluation.segment.update', 'SEGMENT_ID') }}",
-            segmentName: ''
+            segmentName: '',
+            initialDeleteRoute: "{{ route('hr.evaluation.segment.delete', 'SEGMENT_ID') }}",
+            deleteRoute: "{{ route('hr.evaluation.segment.delete', 'SEGMENT_ID') }}",
         }
     },
 
     methods: {
         editSegment(segment) {
+            this.updateRoute = this.initialUpdateRoute;
             this.updateRoute = this.updateRoute.replace('SEGMENT_ID', segment.id);
             this.segmentName = segment.name;
             $('#editSegmentModal').modal('show');
+        },
+
+        removeSegment(segment) {
+            this.deleteRoute = this.initialDeleteRoute;
+            this.deleteRoute = this.deleteRoute.replace('SEGMENT_ID', segment.id);
+            this.segmentName = segment.name;
+            $('#deleteSegmentModal').modal('show');
         }
     }
 });

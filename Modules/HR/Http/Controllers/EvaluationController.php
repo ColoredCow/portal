@@ -2,6 +2,7 @@
 
 namespace Modules\HR\Http\Controllers;
 
+use Google\Service\CloudSearch\Id;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\ApplicationRound;
@@ -70,6 +71,14 @@ class EvaluationController extends Controller
     {
         $segment = Segment::find($segmentID);
         $segment->update(['name' => $request->name]);
+
+        return redirect(route('hr.evaluation'));
+    }
+
+    public function deleteSegment(Request $request, $segmentID)
+    {
+        $segment = Segment::find($segmentID);
+        $segment->delete($segmentID);
 
         return redirect(route('hr.evaluation'));
     }
