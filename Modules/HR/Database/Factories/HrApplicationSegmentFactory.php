@@ -26,7 +26,7 @@ class HrApplicationSegmentFactory extends Factory
         return [
             'application_id' => Application::factory()->create()->id,
             'application_round_id' => ApplicationRound::factory()->create()->id,
-            'evaluation_segment_id' => 2,
+            'evaluation_segment_id' => 1,
             'comments' => $this->faker->text(),
         ];
     }

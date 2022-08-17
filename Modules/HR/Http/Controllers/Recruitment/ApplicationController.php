@@ -72,7 +72,6 @@ abstract class ApplicationController extends Controller
             $join->on('hr_application_round.hr_application_id', '=', 'hr_applications.id')
                 ->where('hr_application_round.is_latest', true);
         })->with(['applicant', 'job', 'tags', 'latestApplicationRound']);
-		
 
         $applications = $applications->whereHas('latestApplicationRound')
             ->applyFilter($filters)

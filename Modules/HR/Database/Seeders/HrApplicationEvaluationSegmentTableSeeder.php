@@ -16,7 +16,7 @@ class HrApplicationEvaluationSegmentTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
             Segment::factory()
-                ->count(10)
+                ->count(1)
                 ->create();
 
             // $this->call("OthersTableSeeder");

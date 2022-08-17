@@ -23,8 +23,21 @@ class HrApplicationEvaluationSegmentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->getSegmentNames()[array_rand($this->getSegmentNames())],
             'round_id' => Round::first()->id,
         ];
+    }
+    private function getSegmentNames()
+    {
+        return [
+        'Resume feeling',
+        'Academic achievements',
+        'Experience',
+        'Projects',
+        'CodeTrek',
+        'Test segment',
+        'Telephonic Interview Segment',
+        'Pradeep Chandra Sharaf',
+    ];
     }
 }
