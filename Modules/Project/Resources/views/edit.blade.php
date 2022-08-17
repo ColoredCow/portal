@@ -63,8 +63,7 @@
                 return {
                     project: @json($project),
                     projectType: "{{ $project->type }}",
-                    projectTeamMembers: @json($projectTeamMembers),
-                    dailyEffort: '',
+                    projectTeamMembers: @json($projectTeamMembers),                    
                     projectRepositories: @json($projectRepositories),
                     workingDaysInMonth: @json($workingDaysInMonth),
                     users: @json($teamMembers->sortBy('name')->values()),
@@ -97,6 +96,9 @@
                     return {
                         id: new Date().getTime(),
                         pivot: {
+                            daily_expected_effort: 0,
+                            weekly_expected_effort: 0,
+                            monthly_expected_effort: 0,
 
                         }
                     }
@@ -198,7 +200,6 @@
                     }
                    
                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                         this.dailyEffort = !this.dailyEffort;
                          this.$forceUpdate()                        
                 }
             },
