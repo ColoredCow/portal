@@ -88,16 +88,37 @@ class ProspectController extends Controller
 
         return Storage::download($prospectDocument->file_path);
     }
-    /**
-     * Remove the specified resource from storage.
+  /**
+     * soft delete prospect
      *
-     * @param  int  $id
+     * @return void
      */
     public function delete($id)
     {
-        $prospect = Prospect::find($id);
-        $prospect->delete();
-
-        return back();
+        Prospect::find($id)->delete();
+  
+        return redirect()->back();
     }
+     /**
+     * restore specific prospect
+     *
+     * @return void
+     */
+    public function restore($id)
+    {
+        Prospect::withTrashed()->find($id)->restore();
+  
+        return redirect()->back();
+    }
+     /**
+     * restore all prospect
+     *
+     * @return response()
+     */
+    public function restoreAll()
+    {
+        Prospect::onlyTrashed()->restore();
+  
+        return redirect()->back();
+    }  
 }

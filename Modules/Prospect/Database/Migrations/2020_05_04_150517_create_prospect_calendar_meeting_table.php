@@ -21,8 +21,8 @@ class CreateProspectCalendarMeetingTable extends Migration
         });
 
         Schema::table('prospect_calendar_meeting', function (Blueprint $table) {
-            $table->foreign('prospect_id')->references('id')->on('prospects')->onDelete('cascade');
-            $table->foreign('calendar_meeting_id')->references('id')->on('calendar_meetings')->onDelete('cascade');
+            $table->foreign('prospect_id')->references('id')->on('prospects');
+            $table->foreign('calendar_meeting_id')->references('id')->on('calendar_meetings');
         });
     }
 

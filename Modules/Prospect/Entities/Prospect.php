@@ -2,18 +2,20 @@
 
 namespace Modules\Prospect\Entities;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\ModuleChecklist\Entities\NDAMeta;
 use Modules\Communication\Entities\CalendarMeeting;
 use Modules\ModuleChecklist\Entities\ModuleChecklist;
 
 class Prospect extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'prospects';
+    protected $dates = ['deleted_at'];
     protected $primarykey = 'prospect_id';
     protected $fillable = ['created_by', 'status', 'assign_to', 'name', 'coming_from', 'coming_from_id', 'brief_info'];
 
