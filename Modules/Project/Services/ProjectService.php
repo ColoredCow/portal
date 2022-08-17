@@ -9,6 +9,7 @@ use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Entities\ProjectRepository;
+use Modules\Project\Entities\Auditable;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
