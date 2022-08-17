@@ -41,7 +41,7 @@ class InvoiceService implements InvoiceServiceContract
             $invoices = Invoice::query()->applyFilters($filters)
                 ->orderBy('sent_on', 'desc')
                 ->get();
-            foreach($invoices as $key => $invoice) {
+            foreach ($invoices as $key => $invoice) {
                 if (isset($filters['client_name'])) {
                     if ($invoice->client->name != $filters['client_name']) {
                         $invoices->forget($key);
