@@ -14,10 +14,14 @@ use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
     use HasFactory, Filters;
+    use SoftDeletes;
+
+    protected $table = 'projects';
 
     protected $guarded = [];
 

@@ -78,8 +78,13 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function destroy(Project $project)
+    public function destroy(ProjectRequest $request, Project $project)
     {
+        Project::updateOrCreate(
+            [
+                'reason_for_deletion' => $request['comment']
+            ]
+        );
         $project->delete();
 
         return redirect()->back()->with('status', 'Project deleted successfully!');
