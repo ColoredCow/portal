@@ -38,6 +38,6 @@ class HRDatabaseSeeder extends Seeder
         $this->call(HrResourcesCategoriesTableSeeder::class);
         $this->call(HrResourcesTableSeeder::class);
         $this->call(HrFollowUpTableSeeder::class);
-		$this->call(TagTableTableSeeder::class);
+        $this->call(TagTableTableSeeder::class);
     }
 }
