@@ -16,7 +16,7 @@ use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Project extends Model
+class Project extends Model implements Auditable
 {
     use HasFactory, Filters;
     use SoftDeletes;

@@ -11,6 +11,7 @@ use Modules\HR\Entities\Evaluation\ParameterOption;
 use Modules\HR\Entities\Evaluation\Segment;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\ManageEvaluationRequest;
+use Modules\HR\Http\Requests\EditEvaluationRequest;
 
 class EvaluationController extends Controller
 {
@@ -20,7 +21,7 @@ class EvaluationController extends Controller
     public function index(Request $request)
     {
         $segments = Segment::all();
-        $rounds = Round::select('name')->get();
+        $rounds = Round::select('id', 'name')->get();
 
         return view('hr::evaluation.index', [
             'segments' => $segments,
@@ -66,10 +67,13 @@ class EvaluationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function updateSegment(Request $request, $segmentID)
+    public function updateSegment(EditEvaluationRequest $request, $segmentID)
     {
         $segment = Segment::find($segmentID);
-        $segment->update(['name' => $request->name]);
+        $segment->update([
+            'name' => $request->name,
+            'round_id' => $request->round_id,
+        ]);
 
         return redirect(route('hr.evaluation'));
     }
@@ -147,7 +151,7 @@ class EvaluationController extends Controller
 
         $segmentList = [];
 
-        foreach (self::getSegments($applicationRound->hr_application_id) as $segment) {
+        foreach (self::getSegments($applicationRound->hr_application_id, $applicationRound->round) as $segment) {
             $segmentList[] = self::getSegmentDetails($segment);
         }
 
@@ -180,10 +184,17 @@ class EvaluationController extends Controller
             ->with('status', 'Evaluation updated successfully!');
     }
 
-    private function getSegments($applicationId)
+    private function getSegments($applicationId, $round)
     {
-        return Segment::whereHas('round')
-            ->orWhereNull('round_id')
+        $query = null;
+        $telephonicInterviewRound = Round::select('id')->where('name', 'Telephonic Interview')->first();
+        if ($telephonicInterviewRound && $telephonicInterviewRound->id == $round->id) {
+            $query = Segment::where('round_id', $round->id);
+        } else {
+            $query = Segment::where('round_id', '!=', $telephonicInterviewRound->id);
+        }
+
+        return $query
             ->with([
                 'round',
                 'applicationEvaluations' => function ($query) use ($applicationId) {

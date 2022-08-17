@@ -9,6 +9,7 @@ require("./bootstrap");
 import "jquery-ui/ui/widgets/datepicker.js";
 import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
+import Chart from "chart.js/auto";
 
 window.Vue = require("vue");
 
@@ -185,9 +186,13 @@ $(document).ready(() => {
 		});		
 	});
 
-	if ($(".chart-data").length) {
+	if ($(".chart-data").length){
 		datePickerChart();
 		barChart();
+	}
+	if($("#myChart").length){
+		datePickerChart();
+		HorizontalBarChart();		
 	}
 
 	$("#save-btn-action").on("click", function() {
@@ -258,7 +263,10 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			toggleEvaluationFrame: function() {
 				this.showEvaluationFrame = !this.showEvaluationFrame;
 			},
-			getApplicationEvaluation: function(applicationRoundID) {
+			getApplicationEvaluation: function(applicationRoundID, roundId) {
+				let roundName = $("#applicationRoundName" + roundId)[0].innerText;
+				document.getElementById("roundName").innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
+
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
 					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
 				);
@@ -299,6 +307,13 @@ if (document.getElementById("page_hr_applicant_edit")) {
 							.get("confirmMailToApplicantBody")
 							.setContent(res.body, { format: "html" });
 					});
+					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
+						$(".next-scheduled-person-container").addClass("d-none");
+						$("#sendmailform").removeClass("d-none");
+					} else {
+						$(".next-scheduled-person-container").removeClass("d-none");
+						$("#sendmailform").addClass("d-none");
+					}
 					$("#round_confirm").modal("show");
 					break;
 				case "send-for-approval":
@@ -311,6 +326,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					$("#onboard_applicant").modal("show");
 				}
 			},
+		
 			rejectApplication: function() {
 				$("#application_reject_modal").modal("show");
 				loadTemplateMail("reject", res => {
@@ -554,6 +570,40 @@ $(document).ready(function () {
 	});
 	$("#segmentModalCloseBtn").click(function() {
 		$("#segmentError").toggleClass("d-none");
+	});
+});
+
+$(document).ready(function () {
+	$("#editSegmentForm").submit(function (e) {
+		e.preventDefault();
+		let form = $("#editSegmentForm");
+		$("#editSegmentModal").on("hidden.bs.modal", function () {
+			$(this).find("form").trigger("reset");
+		});
+	
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#editSegmentModal").modal("hide");
+				$("#editSegmentModal").on("hidden.bs.modal", function (e) {
+					$("#editSegmentSuccess").toggleClass("d-none");
+					$("#editSegmentSuccess").fadeToggle(6000);
+				});
+			},	
+			error: function(response) {
+				$("#editSegmentError").removeClass("d-none");
+				let errors = response.responseJSON.errors;
+				$("#editErrors").empty();
+				for (let error in errors) {
+					$("#editErrors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			  }
+			}
+		});
+	});
+	$("#editSegmentModalClose").click(function() {
+		$("#editSegmentError").toggleClass("d-none");
 	});
 });
 
@@ -1408,6 +1458,80 @@ function barChart() {
 	});
 }
 
+function HorizontalBarChart() {
+	var value = $("#myChart").data("target");
+	var cData = value;
+	var ctx = $("#myChart");
+	var data = {
+		labels: cData.jobsTitle,
+	  	datasets: [
+			{
+				label: [],
+				data: cData.application,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function(tooltipItem) {                                
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 1000,
+					ticks: {
+						stepSize: 100,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function() {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function(dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function(bar, index) {
+							var data = dataset.data[index];
+							if (data == "0") {
+								data = "";
+							}
+							ctx.fillText(data, bar.x + 5, bar.y );
+						});
+					});
+				},
+				
+			},
+		},
+		
+	});
+}
+
 $(function() {
 	$(".reject-reason").on("click", function() {
 		let reasonCheckboxInput = $(this);
@@ -1450,4 +1574,44 @@ $(document).on("focusin", function(e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
 	}
+});
+
+$("#updateEmail").on("click", function() {
+	let formData = {
+		"location": $("#location").val(),
+		"date": $("#date").val(),
+		"start_time": $("#startTime").val(),
+		"end_time": $("#endTime").val(),
+		"applicant_name": $("#applicantName").text(),
+	};
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl +"/hr/recruitment/teaminteraction",
+		type: "POST",
+		data: formData,
+		success: function(response) {
+			$("#InteractionError").addClass("d-none");
+			$("#confirmMailToApplicantSubject").val(response.subject);
+			tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
+			$("#interactionsuccess").toggleClass("d-none");
+			$("#interactionsuccess").fadeToggle(6000);
+	        $("#confirmMailToApplicantBlock").removeClass("d-none");
+	        var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
+	        if (toggleIcon && ! $(".fa-eye-slash ").hasClass("d-none")) {
+		    	$(".toggle-icon").toggleClass("d-none");
+	        }	
+		},
+		error: function(response) {
+			$("#InteractionError").removeClass("d-none");
+			let errors = response.responseJSON.errors;
+			$("#errors").empty();
+			for (let error in errors) {
+				$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			}
+	        $("#confirmMailToApplicantBlock").addClass("d-none");
+		},
+	});
+});
+$("#interactionErrorModalCloseBtn").click(function() {
+	$("#InteractionError").toggleClass("d-none");
 });

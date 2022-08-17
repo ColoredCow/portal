@@ -3,7 +3,8 @@
 return [
     'name' => 'HR',
     'applicationEvaluation' => [
-        'cutoffScore' => 6,
+        'cut-off-score-resume-screening' => 6,
+        'cut-off-score-telephonic-interview' => 5,
     ],
     'opportunities' => [
         'job' => [
