@@ -579,22 +579,22 @@ $(document).ready(function () {
 			success:function (response) {
 				$("#editSegmentModal").modal("hide");
 				$("#editSegmentModal").on("hidden.bs.modal", function (e) {
-					$("#Editsegmentsuccess").toggleClass("d-none");
-					$("#Editsegmentsuccess").fadeToggle(6000);
+					$("#editSegmentSuccess").toggleClass("d-none");
+					$("#editSegmentSuccess").fadeToggle(6000);
 				});
 			},	
 			error: function(response) {
-				$("#EditsegmentError").removeClass("d-none");
+				$("#editSegmentError").removeClass("d-none");
 				let errors = response.responseJSON.errors;
-				$("#Editerrors").empty();
+				$("#editErrors").empty();
 				for (let error in errors) {
-					$("#Editerrors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+					$("#editErrors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
 			  }
 			}
 		});
 	});
-	$("#EditsegmentModalCloseBtn").click(function() {
-		$("#EditsegmentError").toggleClass("d-none");
+	$("#editSegmentModalClose").click(function() {
+		$("#editSegmentError").toggleClass("d-none");
 	});
 });
 

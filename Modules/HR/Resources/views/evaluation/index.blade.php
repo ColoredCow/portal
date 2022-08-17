@@ -11,8 +11,8 @@
                 <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="d-none alert alert-success fade show" role="alert" id="Editsegmentsuccess">
-            <strong>Success!!!</strong>Congratulations!!!  segment successfully updated.
+          <div class="d-none alert alert-success fade show" role="alert" id="editSegmentSuccess">
+            <strong>Success!</strong>Segment updated successfully.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
