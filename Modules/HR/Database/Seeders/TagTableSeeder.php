@@ -5,7 +5,7 @@ namespace Modules\HR\Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Tag;
 
-class TagTableTableSeeder extends Seeder
+class TagTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

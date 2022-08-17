@@ -21,8 +21,8 @@ class HRDatabaseSeeder extends Seeder
         $this->call(HRJobsSeederTableSeeder::class);
         $this->call(AddPreparatoryRoundsSeeder::class);
         $this->call(HrApplicantsTableSeeder::class);
-        $this->call(HrApplicationRoundTableSeeder::class);
         $this->call(HrApplicationsTableSeeder::class);
+        $this->call(HrApplicationRoundTableSeeder::class);
         $this->call(HrChannelsTableSeeder::class);
         $this->call(HrDomainTableSeeder::class);
         $this->call(ResumeScreeningEvaluationSeeder::class);
@@ -38,6 +38,6 @@ class HRDatabaseSeeder extends Seeder
         $this->call(HrResourcesCategoriesTableSeeder::class);
         $this->call(HrResourcesTableSeeder::class);
         $this->call(HrFollowUpTableSeeder::class);
-        $this->call(TagTableTableSeeder::class);
+        $this->call(TagTableSeeder::class);
     }
 }
