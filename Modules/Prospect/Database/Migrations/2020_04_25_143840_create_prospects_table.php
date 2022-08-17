@@ -20,7 +20,6 @@ class CreateProspectsTable extends Migration
             $table->string('name');
             $table->string('coming_from')->nullable();
             $table->text('brief_info')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
