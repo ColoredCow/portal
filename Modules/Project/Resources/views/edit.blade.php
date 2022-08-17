@@ -63,7 +63,7 @@
                 return {
                     project: @json($project),
                     projectType: "{{ $project->type }}",
-                    projectTeamMembers: @json($projectTeamMembers),                    
+                    projectTeamMembers: @json($projectTeamMembers),
                     projectRepositories: @json($projectRepositories),
                     workingDaysInMonth: @json($workingDaysInMonth),
                     users: @json($teamMembers->sortBy('name')->values()),
@@ -200,7 +200,7 @@
                     }
                    
                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                         this.$forceUpdate()                        
+                         this.$forceUpdate()
                 }
             },
 
