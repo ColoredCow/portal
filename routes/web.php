@@ -171,7 +171,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/crm', 'Crm\CrmController@index')->name('crm');
 
-    Route::get('user/read-books', 'UserBookController@index');
+    Route::get('user/read-books', 'BookController@index')->name('user.read.books');
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     Route::get('user/projects', 'UserController@projects');
 });

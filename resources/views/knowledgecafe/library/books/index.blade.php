@@ -24,6 +24,22 @@
             v-model="searchKey">
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
+        
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
+        <span>sort by category</span>
+            <select class="form-control bg-white form-control-st" name="category_name" v-model="searchKeys">
+				<option value="Select Category"></option>
+				@foreach ($categories as $category)
+					<option value="{{ $category->name }}" {{ request()->input('category_name') == $category->name ? "selected" : "" }}>
+                        {{ $category->name }}
+                    </option>
+				@endforeach
+			</select>
+            <button type="submit" class="btn btn-info ml-2" @click="searchBooksByCategoryName()">
+                Sort
+            </button>
+        </div>
+		
         @if(session('disable_book_suggestion'))
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
                 <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dashboard</a>
