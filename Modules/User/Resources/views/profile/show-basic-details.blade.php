@@ -9,11 +9,11 @@
             </div>
             
             <div class="modal-body">
-            <div class="alert alert-danger d-none pr-0.83" id="profileDetailsError">
+            <div class="alert alert-danger d-none pr-0.83" id="profile-details-error">
                 <button type="button" id="segmentModalCloseBtn" class="float-right bg-transparent text-danger border-0 fz-16 mt-n1.33">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <strong class="profileDetailsError"></strong>
+                <strong class="profile-details-error"></strong>
             </div>
             <form  id="editform" action="{{route('profile.update', $user->id)}}" method="POST">
                 @csrf
@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<div class="d-none alert alert-success " id="successmessage" role="alert">
+<div class="d-none alert alert-success " id="successMessage" role="alert">
     <strong>Changes Saved Successfully!</strong>
 </div>
 
@@ -89,7 +89,7 @@
         </div>
     </div>
     <div>
-        <button class="btn btn-info" data-toggle="modal" id="editBT" data-target="#edit">Edit</button>
+        <button class="btn btn-info" data-toggle="modal" id="editProfileBtn" data-target="#edit">Edit</button>
     </div>
 </div>
 

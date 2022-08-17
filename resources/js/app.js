@@ -1545,17 +1545,17 @@ $("#editform").on("submit", function(e) {
 		success: function(response) {
 			$("#edit").modal("hide");
 			$("#edit").on("hidden.bs.modal", function(e) {
-				$("#successmessage").toggleClass("d-none");
-				$("#successmessage").fadeToggle(5000);
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(5000);
 			});
 		},
 		error: function(response) {
-			$("#profileDetailsError").removeClass("d-none");
-			$("#successmessage").addClass("d-none");
+			$("#profile-details-error").removeClass("d-none");
+			$("#successMessage").addClass("d-none");
 			let errors = response.responseJSON.errors;
-			$(".profileDetailsError").empty();
+			$(".profile-details-error").empty();
 			for (let error in errors) {
-				$(".profileDetailsError").append(
+				$(".profile-details-error").append(
 					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
 				);
 			}
