@@ -30,10 +30,10 @@
                             </span>
                         @endforeach 
                     </div>
-                    <div class="w-20p mr-20">
+                    <div class="w-30p mr-10">
                         <h5>{{ config('project.status')[$project->status] }}</h5>
                     </div>
-                        <div class="w-40p mr-10">
+                        <div class="w-10p mr-10">
                             <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Remove</button>
                             <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
