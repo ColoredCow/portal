@@ -14,22 +14,14 @@ use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\SoftDeletes;
-=======
 use OwenIt\Auditing\Contracts\Auditable;
->>>>>>> e38a91db6c6479373c51ac311347deed6f724d68
 
 class Project extends Model implements Auditable
 {
-<<<<<<< HEAD
-    use HasFactory, Filters;
-    use SoftDeletes;
+    use HasFactory, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     protected $table = 'projects';
-=======
-    use HasFactory, Filters, \OwenIt\Auditing\Auditable;
->>>>>>> e38a91db6c6479373c51ac311347deed6f724d68
 
     protected $guarded = [];
 
