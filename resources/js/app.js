@@ -170,7 +170,7 @@ $(document).ready(() => {
 		e.preventDefault();
 		let form = $("#addChannel");
 		let button = $("#channelButton");
-		
+		 
 		$.ajax({
 			url: form.attr("action"),
 			type: form.attr("method"),
@@ -216,7 +216,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		let form =$("#domainForm");
 		
-	 	$.ajax({
+		$.ajax({
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
@@ -246,7 +246,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 
 				? JSON.parse(
 					document.getElementById("action_type").dataset.applicationJobRounds
-				  )
+				   )
 
 				: {},
 			selectedNextRound: "",
@@ -564,7 +564,7 @@ $(document).ready(function () {
 				$("#errors").empty();
 				for (let error in errors) {
 					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
-			  }
+				}
 			}
 		});
 	});
@@ -863,7 +863,7 @@ if (document.getElementById("books_category")) {
 				.categories
 				? JSON.parse(
 					document.getElementById("category_container").dataset.categories
-				  )
+				)
 				: [],
 			categoryNameToChange: [],
 			indexRoute:
@@ -1081,14 +1081,14 @@ if (document.getElementById("roles_permission_table")) {
 			roles: document.getElementById("roles_permission_table").dataset.roles
 				? JSON.parse(
 					document.getElementById("roles_permission_table").dataset.roles
-				  )
+				)
 				: [],
 			permissions: document.getElementById("roles_permission_table").dataset
 				.permissions
 				? JSON.parse(
 					document.getElementById("roles_permission_table").dataset
 						.permissions
-				  )
+				)
 				: [],
 			updateRoute:
 				document.getElementById("roles_permission_table").dataset.updateRoute ||
@@ -1227,8 +1227,8 @@ require("./finance/invoice");
 require("./finance/payment");
 
 /*
- * HR Module JS code start
- */
+* HR Module JS code start
+*/
 $(document).ready(function() {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
@@ -1464,7 +1464,7 @@ function HorizontalBarChart() {
 	var ctx = $("#myChart");
 	var data = {
 		labels: cData.jobsTitle,
-	  	datasets: [
+		datasets: [
 			{
 				label: [],
 				data: cData.application,
@@ -1566,14 +1566,44 @@ $(document).ready(function() {
 });
 
 /*
- * HR Module JS code end
- */
+* HR Module JS code end
+*/
 
 // fix for tinymce and bootstrap modal
 $(document).on("focusin", function(e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
 	}
+});
+
+$("#editform").on("submit", function(e) {
+	e.preventDefault();
+	let form = $("#editform");
+	let button = $("#editBT");
+
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function(response) {
+			$("#edit").modal("hide");
+			$("#edit").on("hidden.bs.modal", function(e) {
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(5000);
+			});
+		},
+		error: function(response) {
+			$("#profile-details-error").removeClass("d-none");
+			$("#successMessage").addClass("d-none");
+			let errors = response.responseJSON.errors;
+			$(".profile-details-error").empty();
+			for (let error in errors) {
+				$(".profile-details-error").append(
+					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
+				);
+			}
+		},
+	});
 });
 
 $("#updateEmail").on("click", function() {
