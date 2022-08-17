@@ -86,6 +86,7 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
+            Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
 
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
@@ -102,6 +103,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/resources/destroy/{resource}', 'ResourcesController@destroy')->name('resources.destroy');
         Route::post('/channel/create', 'HrChannelController@store')->name('channel.create');
 
+        Route::get('/employee-basic-details/{employee}/', 'EmployeeController@basicDetails')->name('employees.basic.details');
         Route::resource('employees', 'EmployeeController')
             ->only(['index', 'show'])
             ->names([
