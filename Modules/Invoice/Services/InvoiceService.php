@@ -24,6 +24,7 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Entities\LedgerAccount;
+use App\Models\InvoiceAudit;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -175,6 +176,12 @@ class InvoiceService implements InvoiceServiceContract
             $this->saveInvoiceFile($invoice, $data['invoice_file']);
             $this->setInvoiceNumber($invoice, $data['sent_on']);
         }
+
+        InvoiceAudit::updateOrCreate(
+            [
+                'reason_for_deletion' => $data['comment']
+            ]
+        );
 
         return $invoice;
     }
