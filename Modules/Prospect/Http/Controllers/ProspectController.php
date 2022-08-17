@@ -90,38 +90,32 @@ class ProspectController extends Controller
     }
 
     /**
-     * soft delete prospect
-     *
-     * @return void
+     * soft delete prospect.
      */
     public function delete($id)
     {
         Prospect::find($id)->delete();
-  
+
         return redirect()->back();
     }
 
-     /**
-     * restore specific prospect
-     *
-     * @return void
+    /**
+     * restore specific prospect.
      */
     public function restore($id)
     {
         Prospect::withTrashed()->find($id)->restore();
-  
+
         return redirect()->back();
     }
-    
-     /**
-     * restore all prospect
-     *
-     * @return response()
+
+    /**
+     * restore all prospect.
      */
     public function restoreAll()
     {
         Prospect::onlyTrashed()->restore();
-  
+
         return redirect()->back();
-    }  
+    }
 }
