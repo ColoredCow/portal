@@ -1082,7 +1082,7 @@
 
                                                 @if (!$applicationRound->round_status)
                                                     <div class="form-row">
-                                                        @if ($application->latestApplicationRound->hr_round_id != 14)
+                                                        @if ($application->latestApplicationRound->round->name != "Telephonic Interview"  && $applicationRound->round->name != "Team Interaction Round")
                                                             <div class="form-group col-md-5">
                                                                 <label for="scheduled_date"
                                                                     class="fz-14 leading-none text-secondary w-100p">
@@ -1108,8 +1108,9 @@
                                                                         class="form-control form-control-sm"
                                                                         value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
                                                                 @else
-                                                                    <div class="fz-16 leading-tight">Pending calendar
-                                                                        confirmation</div>
+                                                                @if($applicationRound->round->name != "Team Interaction Round")
+                                                                    <div class="fz-16 leading-tight">Pending calendar confirmation</div>
+                                                                @endif
                                                                 @endif
                                                             </div>
                                                             <div class="form-group col-md-4">
@@ -1237,8 +1238,7 @@
                                                                 v-on:change="onSelectNextRound($event)"
                                                                 data-application-job-rounds="{{ json_encode($application->job->exceptTrialRounds) }}">
                                                                 <option v-for="round in applicationJobRounds"
-                                                                    value="round" :data-next-round-id="round.id">Move to
-                                                                    @{{ round.name }}</option>
+                                                                    value="round" :data-next-round-id="round.id">Move to @{{ round.name }}</option>
                                                                 <option value="send-for-approval">Send for approval
                                                                 </option>
                                                                 <option value="approve">Approve</option>
