@@ -11,7 +11,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-danger d-none pr-0.83" id="EditsegmentError">
+                    <div class="alert alert-danger d-none pr-0.83" id="editSegmentError">
                         <button type="button" id="EditsegmentModalCloseBtn" class="float-right bg-transparent text-danger border-0 fz-16 mt-n1.33">
                             <span aria-hidden="true">&times;</span>
                         </button>
