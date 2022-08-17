@@ -137,7 +137,7 @@ $(document).on("click", "#show_comment", (e) => {
 	addNoteBtn.parent().find(".comment_toggle").toggleClass("d-none");
 });
 
-if ($(".effort-tracking-data").find("canvas").length) {
+if ($("#effortTrackingGraph").length) {
 	effortTrackingChart();
 }
 

@@ -614,11 +614,14 @@ class Application extends Model
 
     public function getMarksAttribute()
     {
+        $applicationRound = $this->latestApplicationRound;
+        $roundId = $applicationRound ? $applicationRound->hr_round_id : null;
+
         if ($this->evaluations->isEmpty()) {
             return;
         }
 
-        return $this->evaluations->sum(function ($evaluation) {
+        return $this->evaluations()->filterEvaluationsByRound($roundId)->get()->sum(function ($evaluation) {
             return $evaluation->evaluationOption->marks;
         });
     }
