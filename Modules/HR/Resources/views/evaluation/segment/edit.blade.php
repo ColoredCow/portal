@@ -15,7 +15,7 @@
                         <button type="button" id="editSegmentModalClose" class="float-right bg-transparent text-danger border-0 fz-16 mt-n1.33">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <strong id="Editerrors"></strong>
+                        <strong id="editErrors"></strong>
                     </div>
                 <div class="modal-body">
                     <div class="form-group">
