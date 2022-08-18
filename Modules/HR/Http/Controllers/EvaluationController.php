@@ -78,14 +78,6 @@ class EvaluationController extends Controller
         return redirect(route('hr.evaluation'));
     }
 
-    public function deleteSegment(Request $request, $segmentID)
-    {
-        $segment = Segment::find($segmentID);
-        $segment->delete();
-
-        return redirect(route('hr.evaluation'));
-    }
-
     public function createSegmentParameter(Request $request, $segmentID)
     {
         $segment = Segment::find($segmentID);
