@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\HR\Entities\ApplicationEvaluationSegment;
 use Modules\HR\Entities\Round;
-use Modules\HR\Database\Factories\HrApplicationEvaluationSegmentFactory;
+// use Modules\HR\Database\Factories\HrApplicationEvaluationSegmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Segment extends Model
@@ -24,10 +24,10 @@ class Segment extends Model
     {
         return $this->belongsTo(Round::class);
     }
-    public static function newFactory()
-    {
-        return new HrApplicationEvaluationSegmentFactory();
-    }
+    // public static function newFactory()
+    // {
+    //     return new HrApplicationEvaluationSegmentFactory();
+    // }
 
     public function parameters()
     {
