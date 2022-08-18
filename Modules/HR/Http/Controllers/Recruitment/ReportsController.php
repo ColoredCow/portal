@@ -119,7 +119,7 @@ class ReportsController extends Controller
         $chartData = [
             'jobsTitle' => $jobsTitle,
             'application' => $applicationCount,
-        ];  
+        ];
 
         return view('hr.recruitment.job-Wise-Applications-Graph')->with([
             'totalCount' => $totalApplicationCount,
@@ -127,11 +127,11 @@ class ReportsController extends Controller
         ]);
     }
     public function showResult(Request $request)
-    { 
+    {
         //Rejection reasons graph sql query
         $startDate = $request->start_date ?? today()->subYear();
         $endDate = $request->end_date ?? today();
-        
+
         $data = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
         ->whereDate('created_at', '>=', $startDate)
         ->whereDate('created_at', '<=', $endDate)
@@ -150,7 +150,8 @@ class ReportsController extends Controller
         //round wise rejection graph sql query
         $rounds = Round::select('name as title', 'id')->get();
         $count = [];
-        foreach ($rounds as $round) {
+        foreach ($rounds as $round)
+        {
             $count[] = ApplicationRound::where('hr_round_id', $round->id)
             ->where('round_status', 'rejected')
             ->count();
