@@ -107,7 +107,6 @@ class ReportsController extends Controller
         $applicationCount = [];
         $totalApplicationCount = 0;
         foreach ($jobs as $job) {
-            // dd($filters);
             if (! empty($filters)) {
                 $count = Application::whereBetween('created_at', $filters)->where('hr_job_id', $job->id)->count();
             } else {
@@ -131,12 +130,14 @@ class ReportsController extends Controller
         //Rejection reasons graph sql query
         $startDate = $request->start_date ?? today()->subYear();
         $endDate = $request->end_date ?? today();
-
+        $Rejection = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
+        ->groupBy('reason_title')
+        ->get();
         $data = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
         ->whereDate('created_at', '>=', $startDate)
         ->whereDate('created_at', '<=', $endDate)
         ->groupBy('reason_title');
-        $reasonsList = $data->pluck('label')->toArray();
+        $reasonsList = $Rejection->pluck('label')->toArray();
         $applicationCountArray = $data->pluck('count')->toArray();
         foreach ($reasonsList as $index => $reason) {
             $reasonsList[$index] = Str::of($reason)->replace('-', ' ')->title();
@@ -148,10 +149,14 @@ class ReportsController extends Controller
         ];
 
         //round wise rejection graph sql query
+        $StartDate = $request->Start_date ?? today()->subYear();
+        $EndDate = $request->End_date ?? today();
         $rounds = Round::select('name as title', 'id')->get();
         $count = [];
         foreach ($rounds as $round) {
             $count[] = ApplicationRound::where('hr_round_id', $round->id)
+            ->whereDate('conducted_date', '>=', $StartDate)
+            ->whereDate('conducted_date', '<=', $EndDate)
             ->where('round_status', 'rejected')
             ->count();
         }
