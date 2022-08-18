@@ -170,7 +170,6 @@ $(document).ready(() => {
 		e.preventDefault();
 		let form = $("#addChannel");
 		let button = $("#channelButton");
-
 		$.ajax({
 			url: form.attr("action"),
 			type: form.attr("method"),
@@ -186,12 +185,13 @@ $(document).ready(() => {
 		});
 	});
 
-	if ($(".chart-data").length) {
+	if ($(".chart-data").length){
 		datePickerChart();
 		barChart();
 	}
-	if ($("#myChart").length) {
-		HorizontalBarChart();
+	if($("#myChart").length){
+		datePickerChart();
+		HorizontalBarChart();		
 	}
 
 	$("#save-btn-action").on("click", function () {
@@ -213,8 +213,7 @@ $(document).ready(function () {
 
 	$("#domainForm").on("submit", function (e) {
 		e.preventDefault();
-		let form = $("#domainForm");
-
+		let form =$("#domainForm");
 		$.ajax({
 			type: form.attr("method"),
 			url: form.attr("action"),
@@ -245,8 +244,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 
 				? JSON.parse(
 					document.getElementById("action_type").dataset.applicationJobRounds
-				)
-
+				   )
 				: {},
 			selectedNextRound: "",
 			nextRoundName: "",
@@ -570,8 +568,41 @@ $(document).ready(function () {
 		$("#segmentError").toggleClass("d-none");
 	});
 });
+$(document).ready(function () {
+	$("#editSegmentForm").submit(function (e) {
+		e.preventDefault();
+		let form = $("#editSegmentForm");
+		$("#editSegmentModal").on("hidden.bs.modal", function () {
+			$(this).find("form").trigger("reset");
+		});
+	
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#editSegmentModal").modal("hide");
+				$("#editSegmentModal").on("hidden.bs.modal", function (e) {
+					$("#editSegmentSuccess").toggleClass("d-none");
+					$("#editSegmentSuccess").fadeToggle(6000);
+				});
+			},	
+			error: function(response) {
+				$("#editSegmentError").removeClass("d-none");
+				let errors = response.responseJSON.errors;
+				$("#editErrors").empty();
+				for (let error in errors) {
+					$("#editErrors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			  }
+			}
+		});
+	});
+	$("#editSegmentModalClose").click(function() {
+		$("#editSegmentError").toggleClass("d-none");
+	});
+});
 
-$(".hr_round_guide").on("click", ".save-guide", function () {
+$(".hr_round_guide").on("click", ".save-guide", function() {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
 	let button = $(this);
@@ -970,11 +1001,15 @@ if (document.getElementById("show_book_info")) {
 					return false;
 				}
 			},
-
-			borrowTheBook: async function () {
-				let response = await axios.get(this.borrowBookRoute);
-				this.isBorrowed = true;
-				this.borrowers = response.data.borrowers;
+			borrowTheBook: async function() {
+				if (this.borrowers.length < this.book.number_of_copies) {
+					let response = await axios.get(this.borrowBookRoute);
+					this.isBorrowed = true;
+					this.borrowers = response.data.borrowers;
+				}
+				else {
+					alert("Sorry ! No more copies of this book available right now.");
+				}
 			},
 
 			putTheBookBackToLibrary: async function () {
@@ -1191,9 +1226,9 @@ require("./finance/invoice");
 require("./finance/payment");
 
 /*
- * HR Module JS code start
- */
-$(document).ready(function () {
+* HR Module JS code start
+*/
+$(document).ready(function() {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
 	$(document).on("click", "#saveFollowUp", saveFollowUp);
@@ -1530,14 +1565,44 @@ $(document).ready(function () {
 });
 
 /*
- * HR Module JS code end
- */
+* HR Module JS code end
+*/
 
 // fix for tinymce and bootstrap modal
 $(document).on("focusin", function (e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
 	}
+});
+
+$("#editform").on("submit", function(e) {
+	e.preventDefault();
+	let form = $("#editform");
+	let button = $("#editBT");
+
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function(response) {
+			$("#edit").modal("hide");
+			$("#edit").on("hidden.bs.modal", function(e) {
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(5000);
+			});
+		},
+		error: function(response) {
+			$("#profile-details-error").removeClass("d-none");
+			$("#successMessage").addClass("d-none");
+			let errors = response.responseJSON.errors;
+			$(".profile-details-error").empty();
+			for (let error in errors) {
+				$(".profile-details-error").append(
+					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
+				);
+			}
+		},
+	});
 });
 
 $("#updateEmail").on("click", function() {
