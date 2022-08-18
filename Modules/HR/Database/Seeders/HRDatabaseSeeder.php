@@ -12,13 +12,12 @@ class HRDatabaseSeeder extends Seeder
      *
      * @return void
      */
-	public function run()
+    public function run()
     {
-		Model::unguard();
+        Model::unguard();
         $this->call(HRPermissionsTableSeeder::class);
-		$this->call(HRRoundsTableSeeder::class);
+        $this->call(HRRoundsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
-        $this->call(HRJobsSeederTableSeeder::class);
         $this->call(AddPreparatoryRoundsSeeder::class);
         $this->call(HrApplicantsTableSeeder::class);
         $this->call(HrApplicationsTableSeeder::class);
@@ -39,5 +38,6 @@ class HRDatabaseSeeder extends Seeder
         $this->call(HrResourcesTableSeeder::class);
         $this->call(HrFollowUpTableSeeder::class);
         $this->call(TagTableSeeder::class);
+        $this->call(HRJobsSeederTableSeeder::class);
     }
 }
