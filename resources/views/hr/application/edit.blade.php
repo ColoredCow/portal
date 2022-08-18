@@ -1250,11 +1250,7 @@
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary p-0 px-1 py-1 ml-2"
                                                             data-toggle="modal" data-target="#ModalCenter">
-<<<<<<< HEAD
-                                                            Hold
-=======
                                                             Put on Hold
->>>>>>> 51d276bfac42622587448792c08ff00360a97c3d
                                                         </button>
 
                                                         <!-- Modal -->
@@ -1282,14 +1278,62 @@
 																			</div>
 																		</div>
 																	</div>
-																	<ul class="nav nav-tabs menu">
-																		<li class="nav-item">
-																			<a type="button" class="nav-link active option-1" >Option 1</a>
-																		</li>
-																		<li class="nav-item">
-																			<a type="button" class="nav-link" >Option 2</a>
-																		</li>
-																	</ul>
+                                                                    <div class="container">
+                                                                        <div>
+                                                                            <ul class="nav nav-tabs menu">
+                                                                                <li class="nav-item active"><a data-toggle="tab" href="#option_1" class="nav-link active" >Option 1</a></li>
+                                                                                <li class="nav-item"><a data-toggle="tab" href="#option_2" class="nav-link" >Option 2</a></li>
+                                                                            </ul>
+                                                                            <div class="tab-content" id="tabs">
+                                                                                <div class="tab-pane " id="option_1">
+                                                                                    <div class="card-body">
+                                                                                        <div class="form-row">
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label>Subject</label>
+                                                                                                    <input type="text" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="form-row">
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label>Mail body:</label>
+                                                                                                    <textarea rows="10" class="richeditor form-control"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="card-footer">
+                                                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="tab-pane" id="option_2">
+                                                                                    <div class="card-body">
+                                                                                        <div class="form-row">
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label>Subject</label>
+                                                                                                    <input type="text" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="form-row">
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label>Mail body:</label>
+                                                                                                    <textarea rows="10" class="richeditor form-control"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="card-footer">
+                                                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">No</button>
