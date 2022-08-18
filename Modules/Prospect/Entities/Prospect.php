@@ -16,7 +16,6 @@ class Prospect extends Model
 
     protected $table = 'prospects';
     protected $dates = ['deleted_at'];
-    protected $primarykey = 'prospect_id';
     protected $fillable = ['created_by', 'status', 'assign_to', 'name', 'coming_from', 'coming_from_id', 'brief_info'];
 
     protected static function booted()
