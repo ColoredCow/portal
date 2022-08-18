@@ -55,7 +55,7 @@
                 </div>
             </div>
         </form>
-        @if($project->current_hours_for_month === 0)
+        @if($project->current_hours_for_month === 0 ||  $totalMonths != 0)
             <h2 class="text-center pb-6 mr-15 mt-5 font-weight-bold text-uppercase text-danger">No data available</h2>
         @else
             <div class="mt-4">
@@ -76,13 +76,13 @@
                         <i class="fa fa-spinner fa-spin ml-2 d-none"></i>
                         <i class="ml-2 font-weight-bold fa fa-refresh c-pointer" aria-hidden="true"
                             data-url="{{ route('effort-tracking.refresh', $project) }}"></i>
-                            <div class="fz-14 float-right">&nbsp;&nbsp;&nbsp;
-                            <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format(' Y-M-d , D h:i:s A')) }}
-                            </div > 
-                            <div class="fz-14 float-right">
-                            <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
-                            -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}              
-                            </div>
+                        <div class="fz-14 float-right">&nbsp;&nbsp;&nbsp;
+                        <strong>Last refreshed at:</strong>{{ (Carbon\Carbon::parse($project->last_updated_at)->setTimezone('Asia/Kolkata')->format(' Y-M-d , D h:i:s A')) }}
+                        </div > 
+                        <div class="fz-14 float-right">
+                        <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
+                        -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}              
+                        </div>
                     </h4>
                 </div>
             </div>
@@ -98,9 +98,12 @@
                             </div></th>
                             <th scope="col" class="w-lg-200">Expected Hours Till Today</th>
                             <th scope="col" class="pb-lg-4">Hours To Add</th>
-                            <th scope="col" class="pb-lg-4">Velocity <span data-toggle="tooltip" data-placement="right"
-                                    title="Velocity is the ratio of current hours in project and expected hours."><i
-                                        class="fa fa-question-circle"></i>&nbsp;</span></th>
+                            <th scope="col" class="pb-lg-4">Velocity 
+                                <span data-toggle="tooltip" data-placement="right"
+                                    title="Velocity is the ratio of current hours in project and expected hours.">
+                                    <i class="fa fa-question-circle"></i>&nbsp;
+                                </span>
+                            </th>
                             <th scope="col" class="pb-lg-4">
                                 FTE
                                 <span data-toggle="tooltip" data-placement="right"

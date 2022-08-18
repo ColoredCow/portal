@@ -95,5 +95,15 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'application_on_hold_body_2',
             'setting_value' => 'Your application is put on hold.Hello Lavish',
         ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'hr_team_interaction_round_subject',
+            'setting_value' => 'Congratulations for making it to the Team Interaction Round',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'hr_team_interaction_round_body',
+            'setting_value' => '<div>Hello |*APPLICANT NAME*|,</div><div>We are very pleased to inform you that you have been selected for Team Interaction Round at ColoredCow. For the proceedings, we would like to invite you to our office at  |*OFFICE LOCATION*| on |*DATE SELECTED*| between |*TIME RANGE*|.</div><div>Your presence would be awaited. In case you have any questions, feel free to reach out.</div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
+        ]);
     }
 }

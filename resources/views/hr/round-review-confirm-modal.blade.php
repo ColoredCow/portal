@@ -5,44 +5,49 @@
             <div class="modal-header">
                 <div class="d-block">
                     <h5 class="modal-title" id="round_confirm">@{{ this.nextRoundName }}</h5>
-                    <h6 class="text-secondary">{{ $applicationRound->application->applicant->name }} &mdash;
-                        {{ $applicationRound->application->applicant->email }}</h6>
+                    <h6 class="text-secondary d-inline" id="applicantName">{{ $applicationRound->application->applicant->name }}</h6> &mdash;
+                   <span>{{ $applicationRound->application->applicant->email }}</span>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                {{-- <div class="form-row">
+                <div class="alert alert-danger d-none pr-0.83" id="InteractionError">
+                    <button type="button" id="interactionErrorModalCloseBtn" class="float-right bg-transparent text-danger border-0 fz-16 mt-n1.33">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong id="errors"></strong>
+                </div>
+                <div class="d-none alert alert-success fade show" role="alert" id="interactionsuccess">
+                    <strong>Success!!!</strong>Email generated successfully please find it below in the editor.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+               <div class="my-3 w-full border p-3" id="sendmailform">
                     <div class="form-group col-md-12">
-                        <div class="form-check form-check-inline">
-                            <input class="" type="checkbox" id="create_calendar_event" name="create_calendar_event"
-                                v-model="createCalendarEvent">
-                            <label class="form-check-label leading-none" for="create_calendar_event">Create a calendar event</label>
-                        </div>
+                        <label>Office Location</label>
+                        <input type="text" id="location" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>Date</label>
+                        <input type="date" id="date" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>Start time</label>
+                        <input type="time" id="startTime" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>End time</label>
+                        <input type="time" id="endTime" class="form-control" placeholder="">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="button" class="btn btn-success px-4" id="updateEmail">Generate Email</button>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label class="leading-none" for="next_scheduled_start">Scheduled start date</label>
-                        <input type="datetime-local" name="next_scheduled_start" id="next_scheduled_start"
-                            class="form-control" required="required">
-                    </div>
-                    <div class="form-group offset-md-1 col-md-5" v-if="createCalendarEvent">
-                        <label class="leading-none" for="next_scheduled_end">Scheduled end date</label>
-                        <input type="datetime-local" name="next_scheduled_end" id="next_scheduled_end"
-                            class="form-control" required="required">
-                    </div>
-                </div>
-                <div class="form-row" v-if="createCalendarEvent">
-                    <div class="form-group col-md-5">
-                        <label class="leading-none" for="summary_calendar_event">Summary for calendar event</label>
-                        <input type="text" name="summary_calendar_event" id="summary_calendar_event"
-                            class="form-control" required="required">
-                    </div>
-                </div> --}}
-                <div class="form-row">
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-5 next-scheduled-person-container">
                         <label class="fz-14 leading-none text-secondary" for="next_scheduled_person_id">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span>{{ __('Assignee') }}</span>
