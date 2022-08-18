@@ -22,7 +22,7 @@
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <tr class="sticky-top">
+                <tr class="top">
                     <th>Name</th>
                     <th>Resources</th>
                     <th>Requirements</th

@@ -33,7 +33,9 @@ Route::middleware('auth')->group(function () {
                 'destroy' => 'universities.contacts.destroy',
                 'store' => 'universities.contacts.store',
             ]);
-        Route::get('universities/reports', 'Universities\ReportController@index')->name('universities.reports');
+
+        Route::get('universities/reports', 'Universities\ReportController@index')->name('hr.universities.reports');
+        Route::get('universities/{university}/reports/show', 'Universities\ReportController@jobWiseApplicationsData')->name('hr.universities.reports.show');
 
         Route::resource('universities/aliases', 'Universities\UniversityAliasController', [
             'names' => 'universities.aliases',
@@ -86,6 +88,7 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
+            Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
 
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
@@ -108,7 +111,7 @@ Route::middleware('auth')->group(function () {
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
-        ]);
+            ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
     });
 });

@@ -11,6 +11,12 @@
                 <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <div class="d-none alert alert-success fade show" role="alert" id="editSegmentSuccess">
+            <strong>Success!</strong>Segment updated successfully.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">Segments</h1>
             <div>
@@ -74,6 +80,7 @@
             this.updateRoute = this.initialUpdateRoute;
             this.updateRoute = this.updateRoute.replace('SEGMENT_ID', segment.id);
             this.segmentName = segment.name;
+            this.segmentRoundId = segment.round_id;
             $('#editSegmentModal').modal('show');
         },
 
