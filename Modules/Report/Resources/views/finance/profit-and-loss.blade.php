@@ -69,7 +69,7 @@
 
         <div>
 
-            <table class="table table-bordered table-responsive"  >
+            <table class="table table-bordered table-striped"  >
                 <thead class="thead-dark">
                     <tr>
                         <th>Head</th>
