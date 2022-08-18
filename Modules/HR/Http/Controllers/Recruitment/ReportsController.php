@@ -107,6 +107,7 @@ class ReportsController extends Controller
         $applicationCount = [];
         $totalApplicationCount = 0;
         foreach ($jobs as $job) {
+            // dd($filters);
             if (! empty($filters)) {
                 $count = Application::whereBetween('created_at', $filters)->where('hr_job_id', $job->id)->count();
             } else {
@@ -118,7 +119,7 @@ class ReportsController extends Controller
         $chartData = [
             'jobsTitle' => $jobsTitle,
             'application' => $applicationCount,
-        ];
+        ];  
 
         return view('hr.recruitment.job-Wise-Applications-Graph')->with([
             'totalCount' => $totalApplicationCount,
@@ -126,17 +127,27 @@ class ReportsController extends Controller
         ]);
     }
     public function showResult(Request $request)
-    {
-        $filters = $request->all();
-        $data = HRRejectionReason::select(\DB::raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
-            ->groupBy('reason_title');
-
+    { 
+        //Rejection reasons graph sql query
+        $startDate = $request->start_date ?? today()->subYear();
+        $endDate = $request->end_date ?? today();
+        
+        $data = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
+        ->whereDate('created_at', '>=', $startDate)
+        ->whereDate('created_at', '<=', $endDate)
+        ->groupBy('reason_title');
         $reasonsList = $data->pluck('label')->toArray();
+        $applicationCountArray = $data->pluck('count')->toArray();
         foreach ($reasonsList as $index => $reason) {
-            $reasonsList[$index] = Str::of($reason)->replace('-', ' ');
+            $reasonsList[$index] = Str::of($reason)->replace('-', ' ')->title();
         }
 
-        $applicationCountArray = $data->pluck('count')->toArray();
+        $chartBarData = [
+            'reason' => $reasonsList,
+            'Applicationcounts' => $applicationCountArray,
+        ];
+
+        //round wise rejection graph sql query
         $rounds = Round::select('name as title', 'id')->get();
         $count = [];
         foreach ($rounds as $round) {
@@ -151,14 +162,7 @@ class ReportsController extends Controller
             'count' => $count,
         ];
 
-        $chartBarData = [
-            'reason' => $reasonsList,
-            'Applicationcounts' => $applicationCountArray,
-        ];
-
         return view('hr.recruitment.rejected-applications')->with([
-            'count'=>$count,
-            'Applicationcounts' => $applicationCountArray,
             'chartData' => json_encode($chartData),
             'chartBarData' => json_encode($chartBarData)
         ]);

@@ -1551,9 +1551,6 @@ function graphChart(){
 						var meta = chart.getDatasetMeta(i);
 						meta.data.forEach(function(bar, index) {
 							var data = dataset.data[index];
-							if (data == "0") {
-								data = "";
-							}
 							ctx.fillText(data, bar.x + 5, bar.y );
 						});
 					});
@@ -1625,9 +1622,6 @@ function graphBarChart(){
 						var meta = chart.getDatasetMeta(i);
 						meta.data.forEach(function(bar, index) {
 							var data = dataset.data[index];
-							if (data == "0") {
-								data = "";
-							}
 							ctx.fillText(data, bar.x + 5, bar.y );
 						});
 					});
