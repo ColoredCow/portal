@@ -1667,3 +1667,21 @@ $("#updateEmail").on("click", function() {
 $("#interactionErrorModalCloseBtn").click(function() {
 	$("#InteractionError").toggleClass("d-none");
 });
+
+$(".nav-link").on("click", function() {
+	let formData = {
+		"applicant_name": $("#applicantName").text(),
+	};
+	var originUrl = window.location.origin;
+	  
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		success: function(response) {
+			$("#option1subject").val(response.subject);
+			tinymce.get("option1body").setContent(response.body, {format: "html"});
+		},
+	});
+});
+

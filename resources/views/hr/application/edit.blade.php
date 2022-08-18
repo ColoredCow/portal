@@ -1270,7 +1270,7 @@
                                                                     <div class="modal-body">
                                                                         <p>Do you want to put this application on Hold?</p>
                                                                     </div>
-																	                                  <div class="form-group col-md-12 d-flex align-items-center">
+																	<div class="form-group col-md-12 d-flex align-items-center">
                                                                       <div class="py-0.67">
                                                                         <div class="custom-control custom-switch">
                                                                           <input type="checkbox" name="send_mail_to_applicant[confirm]" class="custom-control-input show" id="SendmailforonHold" >
@@ -1281,7 +1281,7 @@
                                                                     <div class="container">
                                                                         <div>
                                                                             <ul class="nav nav-tabs menu">
-                                                                                <li class="nav-item active"><a data-toggle="tab" href="#option_1" class="nav-link active" >Option 1</a></li>
+                                                                                <li class="nav-item active"><a data-toggle="tab" href="#option_1" class="nav-link active" checked>Option 1</a></li>
                                                                                 <li class="nav-item"><a data-toggle="tab" href="#option_2" class="nav-link" >Option 2</a></li>
                                                                             </ul>
                                                                             <div class="tab-content" id="tabs">
@@ -1289,9 +1289,9 @@
                                                                                     <div class="card-body">
                                                                                         <div class="form-row">
                                                                                             <div class="col-md-12">
-                                                                                                <div class="form-group">
+                                                                                                <div class="form-group" for="confirmMailToApplicantSubject">
                                                                                                     <label>Subject</label>
-                                                                                                    <input type="text" class="form-control">
+                                                                                                    <input type="text" class="form-control" id="option1subject">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1299,7 +1299,7 @@
                                                                                             <div class="col-md-12">
                                                                                                 <div class="form-group">
                                                                                                     <label>Mail body:</label>
-                                                                                                    <textarea rows="10" class="richeditor form-control"></textarea>
+                                                                                                    <textarea id="option1body" rows="10" class="richeditor form-control"></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1314,7 +1314,7 @@
                                                                                             <div class="col-md-12">
                                                                                                 <div class="form-group">
                                                                                                     <label>Subject</label>
-                                                                                                    <input type="text" class="form-control">
+                                                                                                    <input type="text" class="form-control" id="option2subject">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1322,7 +1322,7 @@
                                                                                             <div class="col-md-12">
                                                                                                 <div class="form-group">
                                                                                                     <label>Mail body:</label>
-                                                                                                    <textarea rows="10" class="richeditor form-control"></textarea>
+                                                                                                    <textarea rows="10" class="richeditor form-control" id="option2Body"></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>

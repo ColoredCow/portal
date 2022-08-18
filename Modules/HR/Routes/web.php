@@ -87,6 +87,7 @@ Route::middleware('auth')->group(function () {
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
+            Route::get('/onHoldEmail','JobApplicationController@generateOnHoldEmail');
 
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
