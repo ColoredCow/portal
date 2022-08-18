@@ -19,6 +19,5 @@ class HrApplicationRoundTableSeeder extends Seeder
                 ->count(5)
                 ->create();
         }
-		
     }
 }

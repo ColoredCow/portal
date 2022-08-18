@@ -18,7 +18,6 @@ class HrApplicationsTableSeeder extends Seeder
             Application::factory()
             ->count(10)
             ->create();
-
-            }
         }
     }
+}
