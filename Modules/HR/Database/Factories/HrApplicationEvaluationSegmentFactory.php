@@ -30,11 +30,11 @@ class HrApplicationEvaluationSegmentFactory extends Factory
     private function getSegmentNames()
     {
         return [
-        'Resume feeling',
-        'Academic achievements',
-        'Experience',
-        'Projects',
-        'CodeTrek',
+			'Academic achievements',
+			'Experience',
+			'Projects',
+			'Resume feeling',
+			'CodeTrek',
         'Test segment',
         'Telephonic Interview Segment',
         'Pradeep Chandra Sharaf',

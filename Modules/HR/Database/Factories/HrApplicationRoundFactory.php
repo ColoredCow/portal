@@ -25,7 +25,7 @@ class HrApplicationRoundFactory extends Factory
     public function definition()
     {
         return [
-            'hr_application_id' => Application::first()->id,
+            'hr_application_id' => Application::factory()->create()->id,
              'hr_round_id' => Round::first()->id,
             'scheduled_person_id' => User::first()->id,
             'is_latest' => true,
