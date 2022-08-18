@@ -150,8 +150,7 @@ class ReportsController extends Controller
         //round wise rejection graph sql query
         $rounds = Round::select('name as title', 'id')->get();
         $count = [];
-        foreach ($rounds as $round)
-        {
+        foreach ($rounds as $round) {
             $count[] = ApplicationRound::where('hr_round_id', $round->id)
             ->where('round_status', 'rejected')
             ->count();
