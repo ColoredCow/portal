@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('evaluation/segment/{segmentID}/parameters', 'EvaluationController@segmentParameters')->name('hr.evaluation.segment-parameters');
         Route::post('evaluation/segment', 'EvaluationController@createSegment')->name('hr.evaluation.segment.store');
         Route::post('evaluation/segment/{segmentID}/update', 'EvaluationController@updateSegment')->name('hr.evaluation.segment.update');
-
+        Route::post('evaluation/segment/{segmentID}/delete', 'EvaluationController@deleteSegment')->name('hr.evaluation.segment.delete');
         Route::post('evaluation/{segmentId}/parameter/create', 'EvaluationController@createSegmentParameter')->name('hr.evaluation.parameter.store');
         Route::post('evaluation/segment/{segmentID}/parameter/{parameterID}/update', 'EvaluationController@updateSegmentParameter')->name('hr.evaluation.parameter.update');
         Route::post('evaluation/segment/{segmentID}/parameter/{parameterID}/update-parent', 'EvaluationController@updateSegmentParameterParent')->name('hr.evaluation.parameter.update-parent');
