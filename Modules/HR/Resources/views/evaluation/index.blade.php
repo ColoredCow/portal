@@ -67,7 +67,8 @@
     data() {
         return {
             updateRoute: "{{ route('hr.evaluation.segment.update', 'SEGMENT_ID') }}",
-            segmentName: ''
+            segmentName: '',
+            segmentRoundId: '',
         }
     },
 
