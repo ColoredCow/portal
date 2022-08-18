@@ -98,24 +98,4 @@ class ProspectController extends Controller
 
         return redirect()->back();
     }
-
-    /**
-     * restore specific prospect.
-     */
-    public function restore($id)
-    {
-        Prospect::withTrashed()->find($id)->restore();
-
-        return redirect()->back();
-    }
-
-    /**
-     * restore all prospect.
-     */
-    public function restoreAll()
-    {
-        Prospect::onlyTrashed()->restore();
-
-        return redirect()->back();
-    }
 }
