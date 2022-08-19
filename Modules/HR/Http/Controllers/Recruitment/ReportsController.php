@@ -167,7 +167,7 @@ class ReportsController extends Controller
             'count' => $count,
         ];
         $tabId = ['tabID' => $request->tabID];
-        
+
         return view('hr.recruitment.rejected-applications')->with([ $tabId,
             'chartData' => json_encode($chartData),
             'chartBarData' => json_encode($chartBarData),
