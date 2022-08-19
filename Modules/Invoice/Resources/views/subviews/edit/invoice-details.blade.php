@@ -183,8 +183,7 @@
     <div class="card-footer">
         <button type="submit" class="btn btn-primary mr-4">Save</button>
         @if(auth()->user()->can('finance_invoices.delete'))
-            <span class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Delete</span>
-            @include('invoice::subviews.edit.create-invoice-modal')
+        <span class="btn btn-danger" @click="deleteInvoice()" >Delete</span>
         @else
             @include('errors.403')
         @endif
@@ -199,6 +198,9 @@
 
     methods: {
         deleteInvoice: async function() {
+            if(!confirm("Are you sure?")) {
+                return true;
+            }
             await axios.delete("{{ route('invoice.delete', $invoice) }}")
             window.location.href =  "{{ route('invoice.index') }}";
         },
