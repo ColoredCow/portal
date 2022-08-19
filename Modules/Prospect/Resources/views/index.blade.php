@@ -41,7 +41,7 @@
                             <form method="POST" action="{{ route('prospect.delete', $prospect->id) }}">
                                 @csrf
                                 <input name="_method" type="hidden" value="get">
-                                <button type="submit" class="btn btn-danger" onclick="if (!confirm('Are you sure?')) { return false}"><span>Delete</span></button>
+                                                                <i  type="submit" class="fa fa-trash fz-20 text-theme-red" onclick="if (!confirm('Are you sure?')) { return false}"></i>
                             </form>
                         </td>
                     </tr>
