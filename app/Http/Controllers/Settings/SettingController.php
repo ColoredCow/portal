@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Settings;
 use App\Helpers\ContentHelper;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Setting\SettingRequest;
 use App\Models\Organization;
 use App\Http\Requests\OrganizationRequest;
