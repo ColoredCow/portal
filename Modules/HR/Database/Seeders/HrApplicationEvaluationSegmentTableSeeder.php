@@ -25,17 +25,17 @@ class HrApplicationEvaluationSegmentTableSeeder extends Seeder
     }
     private function getSegmentNames()
     {
-		return [
-			'Resume feeling',
+        return [
+            'Resume feeling',
             'Academic achievements',
             'Experience',
             'Projects',
             'CodeTrek',
-			'CodeTrek eligibility',
-			'General Information',
+            'CodeTrek eligibility',
+            'General Information',
             'Telephonic Interview Segment',
-			'testings',
-			'Test segment',
+            'testings',
+            'Test segment',
         ];
     }
 }
