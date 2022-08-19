@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Modules\HR\Entities\Applicant;
 use Carbon\Carbon;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\Job;
 
 class ReportsController extends Controller
 {
@@ -47,7 +48,10 @@ class ReportsController extends Controller
         }
         $data['chartData'] = json_encode($data);
 
-        return view('hr.recruitment.reports', $data, with($todayCount, $verifiedApplicationCount));
+        return view('hr.recruitment.reports')->with([
+        'chartData' => $data['chartData'],
+        'todayCount' => $todayCount,
+        'verifiedApplicationsCount' => $verifiedApplicationCount]);
     }
 
     private function getVerifiedApplicationsCount()
@@ -88,6 +92,33 @@ class ReportsController extends Controller
         return view('hr.recruitment.reports')->with([
             'chartData' => $data['chartData'],
             'todayCount' => $todayCount, 'verifiedApplicationsCount' => $verifiedApplicationCount,
+        ]);
+    }
+    public function jobWiseApplicationsGraph(Request $request)
+    {
+        $filters = $request->all();
+        $jobs = [];
+        $jobs = Job::all();
+        $jobsTitle = $jobs->pluck('title');
+        $applicationCount = [];
+        $totalApplicationCount = 0;
+        foreach ($jobs as $job) {
+            if (! empty($filters)) {
+                $count = Application::whereBetween('created_at', $filters)->where('hr_job_id', $job->id)->count();
+            } else {
+                $count = Application::where('hr_job_id', $job->id)->count();
+            }
+            $totalApplicationCount += $count;
+            $applicationCount[] = $count;
+        }
+        $chartData = [
+            'jobsTitle' => $jobsTitle,
+            'application' => $applicationCount,
+        ];
+
+        return view('hr.recruitment.job-Wise-Applications-Graph')->with([
+            'totalCount' => $totalApplicationCount,
+            'chartData' => json_encode($chartData)
         ]);
     }
 }
