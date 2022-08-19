@@ -71,7 +71,7 @@ class ApplicationRoundController extends Controller
         $applicationRound->load('round', 'application', 'application.applicant', 'application.job');
         $application = $applicationRound->application;
         $templateType = $status == 'confirm' ? 'confirmed_mail_template' : 'rejected_mail_template';
-        $template = $applicationRound->round->{$templateType};
+        $template = json_decode($applicationRound->round->{$templateType},true);
 
         return [
             'subject' => $template['subject'] ?? '',
