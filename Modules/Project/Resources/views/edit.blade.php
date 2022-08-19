@@ -78,12 +78,26 @@
                     teamMember['pivot']['monthly_expected_effort'] = dailyEffort * this.workingDaysInMonth;
                 })
             },
+            
+            computed: {
+                totalDailyEffort() {
+                    var total = 0
+                    this.projectTeamMembers.map((teamMember) => {
+                        total = total + teamMember['pivot']['daily_expected_effort'];
+                    })
+
+                    return total
+                }
+            },
 
             methods: {
                 defaultProjectTeamMember() {
                     return {
                         id: new Date().getTime(),
                         pivot: {
+                            daily_expected_effort: 0,
+                            weekly_expected_effort: 0,
+                            monthly_expected_effort: 0,
 
                         }
                     }
