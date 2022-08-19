@@ -399,9 +399,9 @@ class ApplicationRound extends Model
         }
 
         $scheduledDate = Carbon::parse($this->scheduled_date);
-        if ($scheduledDate < Carbon::now()->subHours(config('constants.hr.no-show-hours-limit'))) {
-            return true;
-        }
+        $noShowTimeLimit = now()->format('H') >= 21 ? now() : now()->startOfDay();
+
+        return $scheduledDate < $noShowTimeLimit;
     }
 
     public static function scheduledForToday()

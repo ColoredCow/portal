@@ -5,6 +5,7 @@ namespace Modules\EffortTracking\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\EffortTracking\Services\EffortTrackingService;
 use Modules\Project\Entities\Project;
+use Illuminate\Http\Request;
 
 class EffortTrackingController extends Controller
 {
@@ -19,9 +20,9 @@ class EffortTrackingController extends Controller
      * Show the specified resource.
      * @param Project $project
      */
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
-        $data = $this->service->show($project);
+        $data = $this->service->show($request->all(), $project);
 
         return view('efforttracking::show')->with($data);
     }
