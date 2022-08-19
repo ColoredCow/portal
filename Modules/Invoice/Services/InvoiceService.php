@@ -24,7 +24,6 @@ use Modules\Invoice\Emails\SendPaymentReceivedMail;
 use Modules\Project\Entities\Project;
 use Modules\Invoice\Exports\YearlyInvoiceReportExport;
 use Modules\Invoice\Entities\LedgerAccount;
-use App\Models\InvoiceAudit;
 
 class InvoiceService implements InvoiceServiceContract
 {
@@ -161,15 +160,21 @@ class InvoiceService implements InvoiceServiceContract
 
         return $invoice;
     }
+    // created this function just for testing
+    public function testing($data, $invoice)
+    {
+        dd($data);
+        die(0);
+        Invoice::updateOrCreate(
+            [
+                'reason_for_deletion' => $data['comment'],
+            ]
+        );
+    }
 
     public function update($data, $invoice)
     {
         $invoice->update($data);
-        InvoiceAudit::updateOrCreate(
-            [
-                'reason_for_deletion' => $data['comment']
-            ]
-        );
         if (isset($data['send_mail'])) {
             $emailData = $this->getSendEmailData($data, $invoice);
             Mail::queue(new SendPaymentReceivedMail($invoice, $emailData));

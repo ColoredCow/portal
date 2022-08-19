@@ -135,6 +135,12 @@ class InvoiceController extends Controller
     public function update(Request $request, Invoice $invoice)
     {
         $this->service->update($request->all(), $invoice);
+        // Invoice::updateOrCreate(
+        //     [
+        //         'reason_for_deletion' => $request['comment']
+        //     ]
+        // );
+        // $this->service->update($request->all(), $invoice);
 
         return redirect(route('invoice.index'))->with('success', 'Invoice updated successfully!');
     }
@@ -145,6 +151,7 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
+        dd('Hello');
         return $this->service->delete($id);
     }
 

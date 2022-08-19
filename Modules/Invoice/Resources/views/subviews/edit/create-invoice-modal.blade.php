@@ -15,7 +15,7 @@
                         <input type="text" class="form-control" name="comment">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button class="btn btn-primary" @click="deleteInvoice">Yes</button> 
+                    <button type="submit" class="btn btn-primary" >Yes</button> 
                 </form>
             </div>
         </div>
