@@ -135,7 +135,7 @@ class InvoiceController extends Controller
     public function update(Request $request, Invoice $invoice)
     {
         $this->service->update($request->all(), $invoice);
-        
+
         return redirect(route('invoice.index'))->with('success', 'Invoice updated successfully!');
     }
 
