@@ -54,7 +54,7 @@
                 </a>
             </div>
         </div>
-        @endcanany
+        @endcan
             
     </div>
 </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Setting\SettingRequest;
 use App\Models\Organization;
+use App\Http\Requests\OrganizationRequest;
 
 class SettingController extends Controller
 {
@@ -47,19 +48,20 @@ class SettingController extends Controller
         return view('settings.organization.organization');
     }
 
-    public function createOrganization(Request $request)
+    public function createOrganization(OrganizationRequest $request)
     {
+        $validatedData = $request->validated();
         $org = Organization::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'annual_sales' => $request->annual_sales,
-            'members' => $request->members,
-            'industry' => $request->industry,
-            'email' => $request->email,
-            'billing_details' => $request->billing_details,
-            'website' => $request->website,
+            'name' => $validatedData['name'],
+            'address' => $validatedData['address'],
+            'annual_sales' => $validatedData['annual_sales'],
+            'members' => $validatedData['members'],
+            'industry' => $validatedData['industry'],
+            'email' => $validatedData['email'],
+            'billing_details' => $validatedData['billing_details'],
+            'website' => $validatedData['website'],
         ]);
 
-        return back();
+        return back()->with('message', 'Organization Details Added Successfully');
     }
 }
