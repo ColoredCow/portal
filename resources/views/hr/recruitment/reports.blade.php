@@ -6,8 +6,8 @@
             <div class="d-flex justify-content-between">
                 <div class="my-2">
                     <div align="left">
-                        <h2><span class="chart-heading-mr-5">Analytics</span><span class="total-chart"> Total Verified
-                                Applications: <?php echo $verifiedApplicationsCount; ?></span></h2>
+                        <h2><span class="chart-heading-mr-5">Analytics</span></h2>
+                        <h3><span class="total-chart"> Total Verified Applications: <?php echo $verifiedApplicationsCount; ?></span><h3>
                     </div>
                 </div>
                 <div class="my-2">
