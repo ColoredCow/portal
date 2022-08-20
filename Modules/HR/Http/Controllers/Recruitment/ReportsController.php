@@ -147,10 +147,11 @@ class ReportsController extends Controller
             'reason' => $reasonsList,
             'Applicationcounts' => $applicationCountArray,
         ];
-       return $this->roundWiseRejectionsData($request, $chartBarData);
+
+        return $this->roundWiseRejectionsData($request, $chartBarData);
     }
 
-    public function roundWiseRejectionsData(Request $request, $chartBarData)    
+    public function roundWiseRejectionsData(Request $request, $chartBarData)
     {
         //round wise rejection graph sql query
         $StartDate = $request->Start_date ?? today()->subYear();
