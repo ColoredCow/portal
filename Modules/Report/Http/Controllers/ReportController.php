@@ -96,6 +96,6 @@ class ReportController extends Controller
         $data = compact('report');
         $report->delete();
 
-        return redirect('/report');
+        return back();
     }
 }
