@@ -33,6 +33,7 @@ class HrApplicationEvaluationSegmentTableSeeder extends Seeder
             'CodeTrek',
             'CodeTrek eligibility',
             'General Information',
+            'General Information',
             'Telephonic Interview Segment',
             'testings',
             'Test segment',
