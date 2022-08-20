@@ -161,7 +161,7 @@ class ReportsController extends Controller
             ->count();
         }
 
-        $round = $rounds->pluck('title');
+        $round = $rounds->pluck('title')->toArray();
         $chartData = [
             'totalapplication'=> $round,
             'count' => $count,

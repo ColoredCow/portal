@@ -1502,6 +1502,7 @@ function graphChart(){
 				label: [],
 				data: cData.count,
 				backgroundColor: ["rgba(52, 144, 220)"],
+				datacolor: ["rgba(52,144,220)"],
 				borderColor: ["rgba(52, 144, 220)"],
 				borderWidth: 10,
 			},
@@ -1511,14 +1512,9 @@ function graphChart(){
 		type: "bar",
 		data: data,
 		options: {
-			tooltip: {
-				enabled: false,
-				callbacks: {
-					label: function(tooltipItem) {                                
-						return tooltipItem.dataset.data;
-					}
-				}
-			},
+            categoryPercentage: 1.0, 
+            barPercentage: 0.8, 
+            maintainAspectRatio: true,
 			indexAxis: "y",
 			scales: {
 				x: {
@@ -1545,7 +1541,7 @@ function graphChart(){
 					var chart = this;
 					var ctx = chart.ctx;
 					ctx.textAlign = "top";
-					ctx.textBaseline = "middle";
+					// ctx.textBaseline = "middle";
 					ctx.font = "13px Arial";
 					this.data.datasets.forEach(function(dataset, i) {
 						var meta = chart.getDatasetMeta(i);

@@ -4,15 +4,15 @@
 
   <ul class="nav nav-pills justify-content-center" id="myTab" role="tablist">
     <li class="nav-item">
-      <a class="nav-link {{ request('tabId') == 'tab1' ?  'active' : ' ' }}" id="tab1" data-toggle="tab" href="#round-wise-rejections" role="tab" aria-controls="round-wise-rejections" aria-selected="false">Round wise rejections</a>
+      <a class="nav-link {{ request('tabId') == 'tab1' || !request()->has('tabId')  ?  'active' : ' ' }}" id="tab1" data-toggle="tab" href="#round-wise-rejections" role="tab" aria-controls="round-wise-rejections" aria-selected="false">Round wise rejections</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link  {{ request('tabId') == 'tab2' ?  'active' : ' ' }}" id="tab2" data-toggle="tab" href="#rejection-reasons" role="tab" aria-controls="rejection-reasons" aria-selected="false">Rejection reasons</a>
+      <a class="nav-link {{ request('tabId') == 'tab2' ?  'active' : ' ' }}" id="tab2" data-toggle="tab" href="#rejection-reasons" role="tab" aria-controls="rejection-reasons" aria-selected="false">Rejection reasons</a>
     </li>
   </ul><br>
 
   <div class="tab-content d-flex justify-content-center ">
-    <div class="tab-pane {{ request('tabId') == 'tab1' ?  'active' : ' ' }}" id="round-wise-rejections" role="tabpanel" aria-labelledby="round-wise-rejections-tab">
+    <div class="tab-pane {{ request('tabId') == 'tab1' || !request()->has('tabId') ?  'active' : ' ' }}" id="round-wise-rejections" role="tabpanel" aria-labelledby="round-wise-rejections-tab">
       <div class=" card " >
         <div class="card-header d-flex justify-content-center" align='left'>
           <span class="total-chart-count mr-25">Total rejected application count</span>
