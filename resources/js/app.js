@@ -1512,9 +1512,9 @@ function graphChart(){
 		type: "bar",
 		data: data,
 		options: {
-            categoryPercentage: 1.0, 
-            barPercentage: 0.8, 
-            maintainAspectRatio: true,
+			categoryPercentage: 1.0, 
+			barPercentage: 0.8, 
+			maintainAspectRatio: true,
 			indexAxis: "y",
 			scales: {
 				x: {
