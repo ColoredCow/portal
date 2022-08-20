@@ -194,10 +194,10 @@ $(document).ready(() => {
 		HorizontalBarChart();
 	}
 	if ($("#myGraph").length) {
-		graphChart();
+		roundWiseRejectionsGraph();
 	}
 	if ($("#myBarGraph").length) {
-		graphBarChart();
+		rejectedReasonsGraph();
 	}
 
 	$("#save-btn-action").on("click", function() {
@@ -1491,7 +1491,7 @@ function HorizontalBarChart() {
 		
 	});
 }
-function graphChart(){
+function roundWiseRejectionsGraph(){
 	var value = $("#myGraph").data("target");
 	var cData = value;
 	var ctx = $("#myGraph");
@@ -1558,7 +1558,7 @@ function graphChart(){
 	});
 }
 
-function graphBarChart(){
+function rejectedReasonsGraph(){
 	var value = $("#myBarGraph").data("target");
 	var cData = value;
 	var ctx = $("#myBarGraph");

@@ -125,7 +125,7 @@ class ReportsController extends Controller
             'chartData' => json_encode($chartData)
         ]);
     }
-    public function showResult(Request $request)
+    public function rejectedReasonsData(Request $request)
     {
         //Rejection reasons graph sql query
         $startDate = $request->start_date ?? today()->subYear();
@@ -147,7 +147,11 @@ class ReportsController extends Controller
             'reason' => $reasonsList,
             'Applicationcounts' => $applicationCountArray,
         ];
+       return $this->roundWiseRejectionsData($request, $chartBarData);
+    }
 
+    public function roundWiseRejectionsData(Request $request, $chartBarData)    
+    {
         //round wise rejection graph sql query
         $StartDate = $request->Start_date ?? today()->subYear();
         $EndDate = $request->End_date ?? today();
