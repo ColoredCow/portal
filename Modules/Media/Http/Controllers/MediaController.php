@@ -16,10 +16,8 @@ class MediaController extends Controller
      */
     public function index()
     {
-
         $posts = Post::orderBy('id', 'desc')->paginate(3);
         return view('media::post.index', ['posts' => $posts]);
-
     }
 
     /**
