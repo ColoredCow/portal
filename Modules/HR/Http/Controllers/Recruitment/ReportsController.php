@@ -136,9 +136,10 @@ class ReportsController extends Controller
         $data = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
         ->whereDate('created_at', '>=', $startDate)
         ->whereDate('created_at', '<=', $endDate)
-        ->groupBy('reason_title');
+        ->groupBy('reason_title')
+        ->count();
         $reasonsList = $Rejection->pluck('label')->toArray();
-        $applicationCountArray = $data->pluck('count')->toArray();
+        $applicationCountArray = $Rejection->pluck('count')->toArray();
         foreach ($reasonsList as $index => $reason) {
             $reasonsList[$index] = Str::of($reason)->replace('-', ' ')->title();
         }
@@ -147,11 +148,12 @@ class ReportsController extends Controller
             'reason' => $reasonsList,
             'Applicationcounts' => $applicationCountArray,
         ];
+        $rejectedReasonGraph = json_encode($chartBarData);
 
-        return $this->roundWiseRejectionsData($request, $chartBarData);
+        return $rejectedReasonGraph;
     }
 
-    public function roundWiseRejectionsData(Request $request, $chartBarData)
+    public function roundWiseRejectionsData(Request $request)
     {
         //round wise rejection graph sql query
         $StartDate = $request->Start_date ?? today()->subYear();
@@ -171,11 +173,23 @@ class ReportsController extends Controller
             'totalapplication'=> $round,
             'count' => $count,
         ];
-        $tabId = ['tabID' => $request->tabID];
 
-        return view('hr.recruitment.rejected-applications')->with([$tabId,
-            'chartData' => json_encode($chartData),
-            'chartBarData' => json_encode($chartBarData),
-        ]);
+        $roundWiseGraph = json_encode($chartData);
+
+        return $roundWiseGraph;
+    }
+
+    public function rejectedApplications(Request $request)
+    {
+        $dataToFilterTab = ['date_filter_input' => $request->date_filter_input];
+        $rejectedReasonsData = $this->rejectedReasonsData($request);
+        $roundWiseRejectionsData = $this->roundWiseRejectionsData($request);
+        $rejectedApplicationData = [
+            'rejectedReasonsData' => $rejectedReasonsData,
+            'roundWiseRejectionsData'=> $roundWiseRejectionsData,
+            'dataToFilterTab' => $dataToFilterTab,
+        ];
+
+        return view('hr.recruitment.rejected-applications', $rejectedApplicationData);
     }
 }
