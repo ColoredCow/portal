@@ -26,9 +26,9 @@ class HrApplicationRoundFactory extends Factory
     {
         return [
             'hr_application_id' => Application::factory()->create()->id,
-             'hr_round_id' => Round::first()->id,
+            'hr_round_id' => Round::first()->id,
             'scheduled_person_id' => User::first()->id,
-            'is_latest' => true,
+            'is_latest' => false,
         ];
     }
 }

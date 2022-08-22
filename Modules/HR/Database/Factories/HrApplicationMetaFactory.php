@@ -24,8 +24,8 @@ class HrApplicationMetaFactory extends Factory
     {
         return [
             'hr_application_id'=>  Application::factory()->create()->id,
-            'value'=> 1,
-            'key'=> 2,
+            'value'=> $this->faker->text(),
+            'key'=> 'form-data'
         ];
     }
 }

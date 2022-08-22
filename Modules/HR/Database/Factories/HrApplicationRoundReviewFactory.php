@@ -24,8 +24,8 @@ class HrApplicationRoundReviewFactory extends Factory
     {
         return [
             'hr_application_round_id'=> ApplicationRound::factory()->create()->id,
-            'review_key'=> 2,
-            'review_value'=> 2,
+            'review_key'=> 'feedback',
+            'review_value'=>  $this->faker->text(),
         ];
     }
 }
