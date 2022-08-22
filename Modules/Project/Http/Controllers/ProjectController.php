@@ -78,6 +78,18 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function destroy(ProjectRequest $request, Project $project)
+    {
+        Project::updateOrCreate(
+            [
+                'reason_for_deletion' => $request['comment']
+            ]
+        );
+        $project->delete();
+
+        return redirect()->back()->with('status', 'Project deleted successfully!');
+    }
+
     public static function showPdf(ProjectContract $contract)
     {
         $filePath = storage_path('app/' . $contract->contract_file_path);
