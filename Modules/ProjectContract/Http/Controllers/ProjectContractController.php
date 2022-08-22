@@ -16,6 +16,7 @@ class ProjectContractController extends Controller
     public function index()
     {
         $clients = Client::all();
+
         return view('projectcontract::index', compact('clients'));
     }
 
