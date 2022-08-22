@@ -36,7 +36,7 @@ class ProjectContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('projectcontract::store');
     }
 
     /**
@@ -67,7 +67,7 @@ class ProjectContractController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return view('projectcontract::update');
     }
 
     /**
@@ -77,6 +77,6 @@ class ProjectContractController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return view('projectcontract::destroy');
     }
 }
