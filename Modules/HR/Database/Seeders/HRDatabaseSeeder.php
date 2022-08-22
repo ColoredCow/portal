@@ -24,12 +24,12 @@ class HRDatabaseSeeder extends Seeder
         $this->call(HrApplicationRoundTableSeeder::class);
         $this->call(HrChannelsTableSeeder::class);
         $this->call(HrDomainTableSeeder::class);
+        $this->call(HrApplicationEvaluationSegmentTableSeeder::class);
         $this->call(ResumeScreeningEvaluationSeeder::class);
         $this->call(ApplicationEvaluationTableSeeder::class);
         $this->call(HrApplicationMetaTableSeeder::class);
         $this->call(HrApplicationRejectionReasonTableSeeder::class);
         $this->call(HrApplicationRoundReviewTableSeeder::class);
-        $this->call(HrApplicationEvaluationSegmentTableSeeder::class);
         $this->call(HrApplicationSegmentTableSeeder::class);
         $this->call(HrUniversitiesTableSeeder::class);
         $this->call(HrUniversitiesContactsTableSeeder::class);
