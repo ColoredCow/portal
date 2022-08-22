@@ -11,10 +11,7 @@
 |
 */
 
-Route::prefix('projectcontract')->group(function() {
+Route::prefix('projectcontract')->group(function () {
     Route::get('/index', 'ProjectContractController@index')->name('projectcontract.index');
-});
-
-Route::prefix('projectcontract')->group(function() {
     Route::get('/create', 'ProjectContractController@create')->name('projectcontract.create');
 });
