@@ -22,61 +22,61 @@ class ProjectContractController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Renderable
+    //  * @return Renderable
      */
-    public function create()
-    {
-        return view('projectcontract::create');
-    }
+    // public function create()
+    // {
+    //     return view('projectcontract::create');
+    // }
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request3
-     * @return Renderable
+    //  * @param Request $request3
+    //  * @return Renderable
      */
-    public function store(Request $request)
-    {
-        return view('projectcontract::store');
-    }
+    // public function store(Request $request)
+    // {
+    //     return view('projectcontract::store');
+    // }
 
     /**
      * Show the specified resource.
-     * @param int $id
-     * @return Renderable
+    //  * @param int $id
+    //  * @return Renderable
      */
-    public function show($id)
-    {
-        return view('projectcontract::show');
-    }
+    // public function show($id)
+    // {
+    //     return view('projectcontract::show');
+    // }
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
+    //  * @param int $id
+    //  * @return Renderable
      */
-    public function edit($id)
-    {
-        return view('projectcontract::edit');
-    }
+    // public function edit($id)
+    // {
+    //     return view('projectcontract::edit');
+    // }
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
+    //  * @param Request $request
+    //  * @param int $id
+    //  * @return Renderable
      */
-    public function update(Request $request, $id)
-    {
-        return view('projectcontract::update');
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     return view('projectcontract::update');
+    // }
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
+    //  * @param int $id
+    //  * @return Renderable
      */
-    public function destroy($id)
-    {
-        return view('projectcontract::destroy');
-    }
+    // public function destroy($id)
+    // {
+    //     return view('projectcontract::destroy');
+    // }
 }
