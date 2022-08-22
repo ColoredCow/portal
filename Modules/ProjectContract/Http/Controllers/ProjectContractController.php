@@ -20,7 +20,7 @@ class ProjectContractController extends Controller
         return view('projectcontract::index', compact('clients'));
     }
 
-    /**
+    /*
      * Show the form for creating a new resource.
     //  * @return Renderable
      */
@@ -29,7 +29,7 @@ class ProjectContractController extends Controller
     //     return view('projectcontract::create');
     // }
 
-    /**
+    /*
      * Store a newly created resource in storage.
     //  * @param Request $request3
     //  * @return Renderable
@@ -39,7 +39,7 @@ class ProjectContractController extends Controller
     //     return view('projectcontract::store');
     // }
 
-    /**
+    /*
      * Show the specified resource.
     //  * @param int $id
     //  * @return Renderable
@@ -49,7 +49,7 @@ class ProjectContractController extends Controller
     //     return view('projectcontract::show');
     // }
 
-    /**
+    /*
      * Show the form for editing the specified resource.
     //  * @param int $id
     //  * @return Renderable
@@ -59,7 +59,7 @@ class ProjectContractController extends Controller
     //     return view('projectcontract::edit');
     // }
 
-    /**
+    /*
      * Update the specified resource in storage.
     //  * @param Request $request
     //  * @param int $id
@@ -70,7 +70,7 @@ class ProjectContractController extends Controller
     //     return view('projectcontract::update');
     // }
 
-    /**
+    /*
      * Remove the specified resource from storage.
     //  * @param int $id
     //  * @return Renderable
