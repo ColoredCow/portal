@@ -241,6 +241,7 @@ class ProjectService implements ProjectServiceContract
                     'started_on' => $teamMemberData['started_on'] ?? now(),
                     'ended_on' => $teamMemberData['ended_on'],
                     'billing_engagement' => $teamMemberData['billing_engagement'],
+                    'freeze' => $teamMemberData['freeze'],
                 ]);
             }
         }

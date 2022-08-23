@@ -89,6 +89,15 @@
                                 <input class="form-control" type="date" :name="`project_team_member[${index}][ended_on]`" @input="updateEndDateForTeamMember($event, index)" :value="projectTeamMember.pivot.ended_on | toDate">
                             </div>
                         </div>
+                        <div class="d-flex flex-column ml-2">
+                            <label class="text-dark font-weight-bold fz-16">Freeze</label>
+                            <select v-model="projectTeamMember.pivot.efforts" :name="`project_team_member[${index}][freeze]`" class="custom-select">
+                                <option value="">Select Freeze</option>
+                                @foreach (config('project.efforts') as $efforts=>$label)
+                                <option {{ ($efforts) ? 'selected=selected' : '' }} value="{{ $efforts }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
 

@@ -16,6 +16,11 @@ return [
         'customer_support' => 'Customer Support',
         'consultant' => 'Consultant'
     ],
+    'efforts' => [
+        'daily_efforts' => 'Daily Efforts',
+        'weekly_efforts' => 'Weekly Efforts',
+        'monthly_efforts' => 'Monthly Efforts',
+    ],
     'type' => [
         'monthly-billing' => 'Monthly Billing',
         'fixed-budget' => 'Fixed Budget'

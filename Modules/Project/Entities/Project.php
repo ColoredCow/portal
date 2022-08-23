@@ -31,7 +31,7 @@ class Project extends Model
     public function teamMembers()
     {
         return $this->belongsToMany(User::class, 'project_team_members', 'project_id', 'team_member_id')
-            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort', 'billing_engagement', 'started_on', 'ended_on')->withTimestamps()->whereNull('project_team_members.ended_on');
+            ->withPivot('designation', 'ended_on', 'id', 'daily_expected_effort', 'billing_engagement', 'started_on', 'ended_on','freeze')->withTimestamps()->whereNull('project_team_members.ended_on');
     }
 
     public function repositories()
@@ -62,6 +62,11 @@ class Project extends Model
     public function getTeamMembersGroupedByEngagement()
     {
         return $this->getTeamMembers()->select('billing_engagement', DB::raw('count(*) as resource_count'))->groupBy('billing_engagement')->get();
+    }
+
+    public function getTeamMembersEfforts()
+    {
+        return $this->getTeamMembers()->select('freeze', DB::raw('count(*) as resource_count'))->groupBy('freeze')->get();
     }
 
     public function getInactiveTeamMembers()
