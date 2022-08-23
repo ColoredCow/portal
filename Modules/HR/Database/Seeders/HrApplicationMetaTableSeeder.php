@@ -18,8 +18,6 @@ class HrApplicationMetaTableSeeder extends Seeder
             ApplicationMeta::factory()
                 ->count(10)
                 ->create();
-
-            // $this->call("OthersTableSeeder");
         }
     }
 }

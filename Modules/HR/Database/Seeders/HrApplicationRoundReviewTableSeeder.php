@@ -18,8 +18,6 @@ class HrApplicationRoundReviewTableSeeder extends Seeder
             ApplicationRoundReview::factory()
                 ->count(10)
                 ->create();
-
-            // $this->call("OthersTableSeeder");
         }
     }
 }

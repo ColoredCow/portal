@@ -29,9 +29,38 @@ class HrApplicationEvaluationFactory extends Factory
         return [
             'application_id' => Application::factory()->create()->id,
             'application_round_id'=> ApplicationRound::factory()->create()->id,
-            'evaluation_id'=> 2,
-            'option_id'=> 1,
+            'evaluation_id'=> $this->getEvaluationId()[array_rand($this->getEvaluationId())],
+            'option_id'=>  $this->getOptionId()[array_rand($this->getOptionId())],
             'comment'=> $faker->text(),
+        ];
+    }
+
+    private function getEvaluationId()
+    {
+        return [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+        ];
+    }
+
+    private function getOptionId()
+    {
+        return [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10'
         ];
     }
 }

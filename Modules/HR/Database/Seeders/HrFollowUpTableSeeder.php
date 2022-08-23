@@ -18,8 +18,6 @@ class HrFollowUpTableSeeder extends Seeder
             FollowUp::factory()
                 ->count(5)
                 ->create();
-
-            // $this->call("OthersTableSeeder");
         }
     }
 }

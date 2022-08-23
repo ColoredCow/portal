@@ -14,12 +14,14 @@ class TagTableSeeder extends Seeder
      */
     public function run()
     {
-        $statuses = config('hr.status');
-        foreach ($statuses as $status) {
-            Tag::updateOrCreate([
-                'slug' => $status['label'],
-                'name' => $status['title'],
-            ]);
+        if (! app()->environment('production')) {
+            $hrStatus = config('hr.status');
+            foreach ($hrStatus as $status) {
+                Tag::updateOrCreate([
+                    'slug' => $status['label'],
+                    'name' => $status['title'],
+                ]);
+            }
         }
     }
 }

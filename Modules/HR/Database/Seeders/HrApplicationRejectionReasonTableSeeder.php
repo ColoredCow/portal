@@ -18,8 +18,6 @@ class HrApplicationRejectionReasonTableSeeder extends Seeder
             HRRejectionReason::factory()
                 ->count(10)
                 ->create();
-
-            // $this->call("OthersTableSeeder");
         }
     }
 }

@@ -18,8 +18,6 @@ class HrUniversityAliasesTableSeeder extends Seeder
             UniversityAlias::factory()
                 ->count(5)
                 ->create();
-
-            // $this->call("OthersTableSeeder");
         }
     }
 }

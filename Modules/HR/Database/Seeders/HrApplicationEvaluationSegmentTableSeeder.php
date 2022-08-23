@@ -15,14 +15,16 @@ class HrApplicationEvaluationSegmentTableSeeder extends Seeder
      */
     public function run()
     {
+    if (! app()->environment('production')) {
         $segmentNames = $this->getSegmentNames();
         foreach ($segmentNames as $segmentName) {
             Segment::updateOrCreate([
             'name' => $segmentName,
             'round_id'=> Round::first()->id,
-        ]);
+            ]);
         }
     }
+}
     private function getSegmentNames()
     {
         return [
@@ -39,3 +41,4 @@ class HrApplicationEvaluationSegmentTableSeeder extends Seeder
         ];
     }
 }
+

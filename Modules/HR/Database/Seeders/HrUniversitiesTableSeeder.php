@@ -18,8 +18,6 @@ class HrUniversitiesTableSeeder extends Seeder
             University::factory()
                 ->count(10)
                 ->create();
-
-            // $this->call("OthersTableSeeder");
         }
     }
 }

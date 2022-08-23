@@ -25,10 +25,10 @@ class HrUniversityAliasesFactory extends Factory
     {
         $faker = Faker::create();
 
-        return [
+        return 
+		[
             'hr_university_id' => University::factory()->create()->id,
             'name'=> $this->faker->name,
-
         ];
     }
 }

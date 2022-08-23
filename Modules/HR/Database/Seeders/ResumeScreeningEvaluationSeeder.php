@@ -16,6 +16,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
      */
     public function run()
     {
+    if (! app()->environment('production')) {
         $evaluationParametersList = [
 
             [
@@ -41,6 +42,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                 'parent_id' => 1
 
             ],
+
             [
                 'id' => 4,
                 'name' => 'Proceed to next round?',
@@ -49,6 +51,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                 'parent_id' => 1
 
             ],
+
             [
                 'id' => 5,
                 'name' => 'Possible fitment for hills?',
@@ -57,17 +60,20 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                 'parent_id' => 1
 
             ],
-             [
-                    'name' => 'Has leadership qualities? (if relevant)',
-                    'segment_id' => 2,
-                      'marks' => 1
 
-             ],
-             [
-                    'name' => 'Relevant to ColoredCow',
-                    'segment_id' => 2,
-                    'marks'=> 1
+            [
+                'name' => 'Has leadership qualities? (if relevant)',
+                'segment_id' => 2,
+                'marks' => 1
+
             ],
+
+            [
+                'name' => 'Relevant to ColoredCow',
+                'segment_id' => 2,
+                'marks'=> 1
+            ],
+
             [
                     'name' => 'Won any competition? (if relevant)',
                     'segment_id'=> 2,
@@ -81,6 +87,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                 'value' => 'Yes',
                 'marks' => '1',
             ],
+
             [
                 'value' => 'No',
                 'marks' => '-1'
@@ -93,6 +100,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
         foreach ($evaluationParameters as $evaluationParameter) {
             $evaluationParameter->options()->createMany($evaluationParametersOptions);
         }
+
         DB::table('hr_evaluation_parameters')
         ->where('id', 2)
         ->update(['parent_option_id' => 1]);
@@ -106,4 +114,5 @@ class ResumeScreeningEvaluationSeeder extends Seeder
         ->where('id', 5)
         ->update(['parent_option_id' => 2]);
     }
+}
 }

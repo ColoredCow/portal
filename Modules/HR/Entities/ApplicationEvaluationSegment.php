@@ -18,6 +18,7 @@ class ApplicationEvaluationSegment extends Model
     {
         return $this->belongsTo(ApplicationRound::class);
     }
+	
     public static function newFactory()
     {
         return new HrApplicationSegmentFactory();

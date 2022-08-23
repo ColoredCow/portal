@@ -25,9 +25,9 @@ class HrResourcesCategoriesFactory extends Factory
         $faker = Faker::create();
 
         return [
-            'id'=> null,
-            'name'=> $this->faker->name,
-             'slug'=> 1,
+
+            'name' => $this->faker->name,
+            'slug' => "interview-guidelines"
 
         ];
     }

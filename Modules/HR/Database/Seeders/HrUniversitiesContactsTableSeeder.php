@@ -18,9 +18,6 @@ class HrUniversitiesContactsTableSeeder extends Seeder
             UniversityContact::factory()
                 ->count(4)
                 ->create();
-
-            // $this->call("OthersTableSeeder");
         }
-        // $this->call("OthersTableSeeder");
     }
 }

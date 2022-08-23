@@ -27,7 +27,7 @@ class HrResourcesFactory extends Factory
         return [
             'resource_link'=> $this->faker->url,
             'hr_resource_category_id'=> 2,
-             'job_id'=> 1,
+            'job_id'=> 1,
 
         ];
     }

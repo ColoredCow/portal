@@ -23,8 +23,8 @@ class HrUniversitiesFactory extends Factory
     {
         return [
             'name' => $this->getCollegeNames()[array_rand($this->getCollegeNames())],
-            'address'=> $this->faker->address,
-            'rating'=> 1,
+            'address' => $this->faker->address,
+            'rating' => $this->getRating()[array_rand($this->getRating())],
         ];
     }
 
@@ -38,6 +38,19 @@ class HrUniversitiesFactory extends Factory
             'chandigarh University',
             'Uttaranchal University',
             'Graphic-Era University',
+        ];
+    }
+
+    private function getRating()
+    {
+        return [
+            '7.6',
+            '9.5',
+            '8.0',
+            '5.3',
+            '6.0',
+            '7.9',
+            '5.5'
         ];
     }
 }

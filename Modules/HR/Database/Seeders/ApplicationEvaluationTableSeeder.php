@@ -19,7 +19,5 @@ class ApplicationEvaluationTableSeeder extends Seeder
                 ->count(2)
                 ->create();
         }
-
-        // $this->call("OthersTableSeeder");
     }
 }

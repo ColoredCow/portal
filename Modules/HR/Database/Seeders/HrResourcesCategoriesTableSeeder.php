@@ -18,8 +18,6 @@ class HrResourcesCategoriesTableSeeder extends Seeder
             Category::factory()
                 ->count(4)
                 ->create();
-
-            // $this->call("OthersTableSeeder");
         }
     }
 }
