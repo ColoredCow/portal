@@ -34,7 +34,7 @@ class ApplicationEvaluation extends Model
     {
         return $this->belongsTo(ParameterOption::class, 'option_id');
     }
-	
+
     public static function newFactory()
     {
         return new HrApplicationEvaluationFactory();

@@ -17,7 +17,7 @@ class ApplicationRoundReview extends Model
     {
         return $this->belongsTo(ApplicationRound::class, 'hr_application_round_id');
     }
-	
+
     public static function newFactory()
     {
         return new HrApplicationRoundReviewFactory();

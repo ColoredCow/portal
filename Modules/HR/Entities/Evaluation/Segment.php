@@ -24,7 +24,7 @@ class Segment extends Model
     {
         return $this->belongsTo(Round::class);
     }
-	
+
     public function parameters()
     {
         return $this->hasMany(Parameter::class, 'segment_id');
