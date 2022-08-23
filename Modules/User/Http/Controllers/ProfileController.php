@@ -3,6 +3,8 @@
 namespace Modules\User\Http\Controllers;
 
 use Modules\User\Contracts\ProfileServiceContract;
+use Modules\User\Entities\User;
+use Modules\HR\Http\Requests\ProfileEditRequest;
 
 class ProfileController extends ModuleBaseController
 {
@@ -16,5 +18,18 @@ class ProfileController extends ModuleBaseController
     public function index()
     {
         return view('user::profile.index', $this->service->index());
+    }
+
+    public function update(ProfileEditRequest $request, User $user)
+    {
+        $user->name = $request->name;
+        $user->nickname = $request->nickName;
+        $user->employee->designation = $request->designation;
+        $user->employee->name = $request->name;
+        $user->employee->domain_id = $request->domainId;
+
+        $user->push();
+
+        return back();
     }
 }
