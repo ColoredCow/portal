@@ -2,7 +2,7 @@
 
 namespace Modules\Media\Http\Controllers;
 
-use Modules\Media\Entities\Post;
+use Modules\Media\Entities\PhotoGallery;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -16,8 +16,8 @@ class MediaController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(3);
-        return view('media::post.index', ['posts' => $posts]);
+        $photo_gallery = PhotoGallery::orderBy('id', 'desc')->paginate(4);
+        return view('media::photo-gallery.index', ['photo_gallery' => $photo_gallery]);
     }
 
     /**
@@ -26,7 +26,7 @@ class MediaController extends Controller
      */
     public function create()
     {
-        return view('media::post.create');
+        return view('media::photo-gallery.create');
     }
 
     /**
@@ -37,19 +37,15 @@ class MediaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'category' => 'required',
-            'content' => 'required|min:50',
+            'event_name' => 'required',
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
           ]);
-      
         $imageName = time() . '.' . $request->file->extension();
         $request->file->storeAs('public/images', $imageName);
       
-        $postData = ['title' => $request->title, 'category' => $request->category, 'content' => $request->content, 'image' => $imageName];
-      
-        Post::create($postData);
-        return redirect('/post')->with(['message' => 'Post added successfully!', 'status' => 'success']);
+        $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
+        PhotoGallery::create($postData);
+        return redirect('/photo-gallery')->with(['message' => 'Post added successfully!', 'status' => 'success']);
     }
 
     /**
@@ -57,10 +53,9 @@ class MediaController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show(Post $post)
+    public function show(PhotoGallery $photoGallery)
     {
-        return view('media::post.show', ['post' => $post]);
-        // return view('media::show');
+        return view('media::photo-gallery.show', ['photoGallery' => $photoGallery]);
     }
 
     /**
@@ -68,9 +63,10 @@ class MediaController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit(Post $post)
+    public function edit(PhotoGallery $PhotoGallery)
     {
-        return view('media::post.edit', ['post' => $post]);
+        // dd($PhotoGalleryPost->all());
+        return view('media::photo-gallery.edit', ['PhotoGallery' => $PhotoGallery]);
     }
 
     /**
@@ -79,31 +75,32 @@ class MediaController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, PhotoGallery $PhotoGallery)
     {
+        // dd($request->all());
         $imageName = '';
         if ($request->hasFile('file')) {
             $imageName = time() . '.' . $request->file->extension();
             $request->file->storeAs('public/images', $imageName);
-            if ($post->image) {
-                Storage::delete('public/images/' . $post->image);
+            if ($PhotoGallery->img_url) {
+                Storage::delete('public/images/' . $PhotoGallery->img_url);
             }
         } else {
-            $imageName = $post->image;
+            $imageName = $PhotoGallery->img_url;
         }
-        $postData = ['title' => $request->title, 'category' => $request->category, 'content' => $request->content, 'image' => $imageName];
-        $post->update($postData);
-        return redirect('/post')->with(['message' => 'Post updated successfully!', 'status' => 'success']);
+        $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
+        $PhotoGallery->update($postData);
+        return redirect('/photo-gallery')->with(['message' => 'Post updated successfully!', 'status' => 'success']);
     }
     /**
      * Remove the specified resource from storage.
      * @param int $id
      * @return Renderable
      */
-    public function destroy(Post $post)
+    public function destroy(PhotoGallery $PhotoGallery)
     {
-        Storage::delete('public/images/' . $post->image);
-        $post->delete();
-        return redirect('/post')->with(['message' => 'Post deleted successfully!', 'status' => 'info']);
+        Storage::delete('public/images/' . $PhotoGallery->img_url);
+        $PhotoGallery->delete();
+        return redirect('/photo-gallery')->with(['message' => 'Post deleted successfully!', 'status' => 'info']);
     }
 }

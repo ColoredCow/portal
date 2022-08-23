@@ -13,22 +13,15 @@ class PhotoGallaryTable extends Migration
      */
     public function up()
     {
-        // Schema::create('photo_gallery', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string('event_name');
-        //     $table->string('img_url');
-        //     $table->integer('uploaded_by')->unsigned();
-        //     $table->timestamps();
-        //     $table->softDeletes()->nullable();
-        //     $table->longText('description')->nullable();
-        //     $table->foreign('uploaded_by')->references('id')->on('users');
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('photo_gallery', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('category');
-            $table->longText('content');
-            $table->string('image');
+            $table->string('event_name');
+            $table->string('img_url');
+            $table->integer('uploaded_by')->unsigned();
             $table->timestamps();
+            $table->softDeletes()->nullable();
+            $table->longText('description')->nullable();
+            $table->foreign('uploaded_by')->references('id')->on('users');
         });
     }
 
@@ -39,7 +32,6 @@ class PhotoGallaryTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('photo_gallery');
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('photo_gallery');
     }
 }

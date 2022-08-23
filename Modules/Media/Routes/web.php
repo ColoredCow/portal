@@ -16,4 +16,4 @@ Route::prefix('media')->group(function () {
     Route::get('/', 'MediaController@index')->name('media.index');
 });
 
-Route::resource('post', MediaController::class);
+Route::resource('photo-gallery', MediaController::class);
