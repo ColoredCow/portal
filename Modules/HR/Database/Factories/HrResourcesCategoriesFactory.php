@@ -27,7 +27,7 @@ class HrResourcesCategoriesFactory extends Factory
         return [
 
             'name' => $this->faker->name,
-            'slug' => "interview-guidelines"
+            'slug' => 'interview-guidelines'
 
         ];
     }
