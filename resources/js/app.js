@@ -812,9 +812,6 @@ if (document.getElementById("books_listing")) {
 			searchBooks: function () {
 				window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
 			},
-			searchBooksByCategoryName: function () {
-				window.location.href = `${this.updateRoute}?category_name=${this.searchKeys}`;
-			},
 
 			strLimit: function (str, length) {
 				if (!str) {
