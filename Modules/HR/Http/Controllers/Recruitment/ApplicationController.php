@@ -149,7 +149,7 @@ abstract class ApplicationController extends Controller
         $application = Application::findOrFail($id);
 
         if ($application->latestApplicationRound->hr_round_id == 1) {
-            $application->latestApplicationRound->scheduled_date = today()->toDateString();
+            // $application->latestApplicationRound->scheduled_date = today()->toDateString();
             $application->latestApplicationRound->scheduled_end = today()->toDateString();
             $application->latestApplicationRound->scheduled_person_id = auth()->id();
             $application->latestApplicationRound->save();

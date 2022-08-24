@@ -28,6 +28,7 @@ class ApplicationRoundRequest extends FormRequest
             'action' => 'required|string',
             'refer_to' => 'nullable|string|required_if:action,refer',
             'scheduled_date' => 'nullable|date',
+            'scheduled_time' => 'nullable|date_format:H:i',
             'scheduled_person_id' => 'nullable|integer',
             'next_round' => 'nullable|string|required_if:action,confirm',
             'create_calendar_event' => 'nullable|filled',

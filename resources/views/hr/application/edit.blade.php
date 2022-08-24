@@ -142,15 +142,30 @@
                                                                     </div>
                                                                 </label>
                                                                 @if ($applicationRound->scheduled_date)
-                                                                    <input type="datetime-local" name="scheduled_date"
+                                                                    <input type="date" name="scheduled_date"
                                                                         id="scheduled_date"
                                                                         class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.date_format')) }}">
                                                                 @else
-                                                                    <div class="fz-16 leading-tight">Pending calendar
-                                                                        confirmation</div>
+                                                                @if($applicationRound->round->name != "Team Interaction Round")
+                                                                    <div class="fz-16 leading-tight">Pending calendar confirmation</div>
                                                                 @endif
-                                                            </div>
+                                                                @endif
+                                                                </div>
+                                                                <div class="form-group col-md-5">
+                                                                    <label for="scheduled_date"
+                                                                        class="fz-14 leading-none text-secondary w-100p">
+                                                                        <div>
+                                                                            <span>Scheduled Time</span>
+                                                                        </div>
+                                                                    </label>
+                                                                    @if ($applicationRound->scheduled_date)
+                                                                        <input type="Time" name="scheduled_time"
+                                                                            id="scheduled_time"
+                                                                            class="form-control form-control-sm"
+                                                                            value="{{ $applicationRound->scheduled_date->toTimeString()}}">
+                                                                    @endif
+                                                                </div>
                                                             <div class="form-group col-md-4">
                                                                 <label for="scheduled_person_id"
                                                                     class="fz-14 leading-none text-secondary">
@@ -606,29 +621,31 @@
                                                                     <div>
                                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                                         <span>Scheduled date</span>
-                                                                        @if ($applicationRound->scheduled_date)
-                                                                            @if ($applicationRound->hangout_link)
-                                                                                <a target="_blank"
-                                                                                    class="ml-5 font-muli-bold"
-                                                                                    href="{{ $applicationRound->hangout_link }}">
-                                                                                    <i class="fa fa-video-camera"
-                                                                                        aria-hidden="true"></i>
-                                                                                    <span>Meeting Link</span>
-                                                                                </a>
-                                                                            @endif
-                                                                        @endif
-                                                                    </div>
-                                                                </label>
-                                                                @if ($applicationRound->scheduled_date)
-                                                                    <input type="datetime-local" name="scheduled_date"
+                                                                    @if ($applicationRound->scheduled_date)
+                                                                        <input type="date" name="scheduled_date"
                                                                         id="scheduled_date"
                                                                         class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
-                                                                @else
-                                                                    <div class="fz-16 leading-tight">Pending calendar
-                                                                        confirmation</div>
-                                                                @endif
-                                                            </div>
+                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.date_format')) }}">
+                                                                    @else
+                                                                    @if($applicationRound->round->name != "Team Interaction Round")
+                                                                        <div class="fz-16 leading-tight">Pending calendar confirmation</div>
+                                                                    @endif
+                                                                    @endif
+                                                                    </div>
+                                                                    <div class="form-group col-md-5">
+                                                                        <label for="scheduled_date"
+                                                                            class="fz-14 leading-none text-secondary w-100p">
+                                                                            <div>
+                                                                                <span>Scheduled Time</span>
+                                                                            </div>
+                                                                        </label>
+                                                                        @if ($applicationRound->scheduled_date)
+                                                                            <input type="Time" name="scheduled_time"
+                                                                                id="scheduled_time"
+                                                                                class="form-control form-control-sm"
+                                                                                value="{{ $applicationRound->scheduled_date->toTimeString()}}">
+                                                                        @endif
+                                                                    </div>
                                                             <div class="form-group col-md-4">
                                                                 <label for="scheduled_person_id"
                                                                     class="fz-14 leading-none text-secondary">
@@ -1103,16 +1120,30 @@
                                                                     </div>
                                                                 </label>
                                                                 @if ($applicationRound->scheduled_date)
-                                                                    <input type="datetime-local" name="scheduled_date"
+                                                                    <input type="date" name="scheduled_date"
                                                                         id="scheduled_date"
                                                                         class="form-control form-control-sm"
-                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.display_datetime_format')) }}">
+                                                                        value="{{ $applicationRound->scheduled_date->format(config('constants.date_format')) }}">
                                                                 @else
                                                                 @if($applicationRound->round->name != "Team Interaction Round")
                                                                     <div class="fz-16 leading-tight">Pending calendar confirmation</div>
                                                                 @endif
                                                                 @endif
-                                                            </div>
+                                                                </div>
+                                                                <div class="form-group col-md-5">
+                                                                    <label for="scheduled_date"
+                                                                        class="fz-14 leading-none text-secondary w-100p">
+                                                                        <div>
+                                                                            <span>Scheduled Time</span>
+                                                                        </div>
+                                                                    </label>
+                                                                    @if ($applicationRound->scheduled_date)
+                                                                        <input type="Time" name="scheduled_time"
+                                                                            id="scheduled_time"
+                                                                            class="form-control form-control-sm"
+                                                                            value="{{ $applicationRound->scheduled_date->toTimeString()}}">
+                                                                    @endif
+                                                                </div>
                                                             <div class="form-group col-md-4">
                                                                 <label for="scheduled_person_id"
                                                                     class="fz-14 leading-none text-secondary">
