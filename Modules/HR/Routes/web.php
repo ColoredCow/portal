@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('evaluation/segment/{segmentID}/parameters', 'EvaluationController@segmentParameters')->name('hr.evaluation.segment-parameters');
         Route::post('evaluation/segment', 'EvaluationController@createSegment')->name('hr.evaluation.segment.store');
         Route::post('evaluation/segment/{segmentID}/update', 'EvaluationController@updateSegment')->name('hr.evaluation.segment.update');
-
+        Route::post('evaluation/segment/{segmentID}/delete', 'EvaluationController@deleteSegment')->name('hr.evaluation.segment.delete');
         Route::post('evaluation/{segmentId}/parameter/create', 'EvaluationController@createSegmentParameter')->name('hr.evaluation.parameter.store');
         Route::post('evaluation/segment/{segmentID}/parameter/{parameterID}/update', 'EvaluationController@updateSegmentParameter')->name('hr.evaluation.parameter.update');
         Route::post('evaluation/segment/{segmentID}/parameter/{parameterID}/update-parent', 'EvaluationController@updateSegmentParameterParent')->name('hr.evaluation.parameter.update-parent');
@@ -33,7 +33,9 @@ Route::middleware('auth')->group(function () {
                 'destroy' => 'universities.contacts.destroy',
                 'store' => 'universities.contacts.store',
             ]);
-        Route::get('universities/reports', 'Universities\ReportController@index')->name('universities.reports');
+
+        Route::get('universities/reports', 'Universities\ReportController@index')->name('hr.universities.reports');
+        Route::get('universities/{university}/reports/show', 'Universities\ReportController@jobWiseApplicationsData')->name('hr.universities.reports.show');
 
         Route::resource('universities/aliases', 'Universities\UniversityAliasController', [
             'names' => 'universities.aliases',
@@ -88,6 +90,7 @@ Route::middleware('auth')->group(function () {
                 ->names(['index' => 'applications.job.index', 'edit' => 'applications.job.edit', 'update' => 'applications.job.update', 'store' => 'applications.job.store']);
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
+            Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
 
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
@@ -110,7 +113,7 @@ Route::middleware('auth')->group(function () {
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
-        ]);
+            ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
     });
 });
