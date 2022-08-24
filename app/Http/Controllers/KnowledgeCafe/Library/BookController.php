@@ -25,7 +25,7 @@ class BookController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(array $data = [])
+    public function index()
     {
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
