@@ -154,9 +154,9 @@ class ReportsController extends Controller
     public function roundWiseRejectionsData(Request $request)
     {
         //round wise rejection graph sql query
-        $round_wise_rejection_start_date = $request->round_wise_rejection_start_date ?? today()->subYear(4);
+        $round_wise_rejection_start_date = $request->round_wise_rejection_start_date ?? today()->subYears(4);
         $round_wise_rejection_end_date = $request->round_wise_rejection_end_date ?? today();
-        $rejectionRounds =  \DB::table('hr_application_round')
+        $rejectionRounds = \DB::table('hr_application_round')
         ->whereDate('conducted_date', '>=', $round_wise_rejection_start_date)
         ->whereDate('conducted_date', '<=', $round_wise_rejection_end_date)
         ->select('hr_round_id', \DB::raw('count(*) as count'))
