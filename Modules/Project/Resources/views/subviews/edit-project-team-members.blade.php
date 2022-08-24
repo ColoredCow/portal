@@ -27,18 +27,40 @@
                     <div class="col-2">
                         Designations
                     </div>
+                    @if( $project->type === 'monthly-billing')
                     <div class="col-1">
-                        Daily
-                        (@{{ totalDailyEffort }} H)
+                        Daily &nbsp;
+                    (@{{ totalDailyEffort }} H)
                     </div>
+                    @elseif($project->type == 'fixed-budget')
+                    <div class="col-1">
+                        Daily &nbsp;
+                    ({{  $dailyEffort }} H)
+                    </div>
+                    @endif
+                    @if( $project->type === 'monthly-billing')
+                    <div class="col-1">
+                       Weekly
+                    (@{{ totalDailyEffort*5 }} H)
+                    </div>
+                    @elseif($project->type == 'fixed-budget')
                     <div class="col-1">
                         Weekly
-                        (@{{ totalDailyEffort*5 }} H)
+                    ({{  $dailyEffort*5 }} H)
                     </div>
+                    @endif
+                    @if( $project->type === 'monthly-billing')
                     <div class="col-1">
                         Monthly
-                        (@{{ totalDailyEffort*workingDaysInMonth }} H)
+                    (@{{ totalDailyEffort*workingDaysInMonth }} H)
                     </div>
+                    @elseif($project->type == 'fixed-budget')
+                    <div class="col-1">
+                        Monthly
+                    ({{  $monthlyEffort }} H)
+                    </div>
+                    @endif
+
                     <div class="col-2 text-center">
                         Billing Engagement %
                     </div>

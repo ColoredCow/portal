@@ -338,4 +338,38 @@ class ProjectService implements ProjectServiceContract
 
         return $projectDetails;
     }
+
+    public function getMonthDiff($project)
+    {
+        $startDate = $project->start_date;
+        $endDate = $project->end_date;
+        $date1 = strtotime($startDate);
+        $date2 = strtotime($endDate);
+        $startDate1 = date('m', $date1);
+        $endDate2 = date('m', $date2);
+        $period = intval($endDate2 - $startDate1);
+
+        return $period;
+
+    }
+
+    public function getMonthlyEffort($project)
+    {
+        $totalEstimatedHours = intval($project->total_estimated_hours);
+        $period = $this->getMonthDiff($project);
+        $monthlyEffort = round(($totalEstimatedHours) / ($period ?: 1));
+
+        return $monthlyEffort;
+        
+    }
+
+    public function getDailyEffort($project)
+    {
+        $monthlyEffort = $this->getMonthlyEffort($project);
+        $workingDays = $this->getWorkingDays($project);
+        $dailyEffort = round($monthlyEffort / $workingDays);
+
+        return $dailyEffort;
+    }
+
 }
