@@ -23,14 +23,15 @@ class ProjectContractController extends Controller
     /**
      * Show the form for creating a new resource.
      * @return Renderable
-     */ 
+     */
     public function create()
     {
         $clients = Client::all();
+
         return view('project::create')->with('clients', $clients);
     }
 
-    /** 
+    /**
      * Store a newly created resource in storage.
      * @param Request $request3
      * @return Renderable
