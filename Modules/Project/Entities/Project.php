@@ -64,11 +64,6 @@ class Project extends Model
         return $this->getTeamMembers()->select('billing_engagement', DB::raw('count(*) as resource_count'))->groupBy('billing_engagement')->get();
     }
 
-    public function getTeamMembersEfforts()
-    {
-        return $this->getTeamMembers()->select('freeze', DB::raw('count(*) as resource_count'))->groupBy('freeze')->get();
-    }
-
     public function getInactiveTeamMembers()
     {
         return $this->hasMany(ProjectTeamMember::class)->whereNotNull('ended_on')->orderBy('ended_on', 'DESC');

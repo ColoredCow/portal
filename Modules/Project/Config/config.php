@@ -16,7 +16,7 @@ return [
         'customer_support' => 'Customer Support',
         'consultant' => 'Consultant'
     ],
-    'efforts' => [
+    'project_team_member_efforts' => [
         'daily_efforts' => 'Daily Efforts',
         'weekly_efforts' => 'Weekly Efforts',
         'monthly_efforts' => 'Monthly Efforts',
