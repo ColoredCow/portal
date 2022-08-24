@@ -123,7 +123,7 @@
 			class="{{ config("constants.hr.status.$application->status.class") }} badge-pill mr-1 mb-1 fz-12">{{ config("constants.hr.status.$application->status.title") }}</span>
 		@endif
 		@if (!$application->latestApplicationRound->scheduled_date &&
-		$application->latestApplicationRound->hr_round_id != 14)
+		$application->latestApplicationRound->round->name != "Telephonic Interview" && $application->latestApplicationRound->round->name != "Team Interaction Round")
 		<span class="badge badge-theme-teal text-white badge-pill mr-1 mb-1 fz-12">
 			<i class="fa fa-calendar" aria-hidden="true"></i>
 			<span>Awaiting confirmation</span>
