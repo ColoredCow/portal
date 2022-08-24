@@ -207,10 +207,6 @@ abstract class ApplicationController extends Controller
         $body->setting_value = str_replace('|*applicant_name*|', $request->applicant_name, $body->setting_value);
         $body->setting_value = str_replace('|*job_title*|', $request->job_title, $body->setting_value);
 
-        // Mail::to($request->applicant_email, $request->applicant_name)
-        // ->send(new OnHold($subject->setting_value, $body->setting_value));
-
-
         return response()->json([
             'subject' => $subject->setting_value,
             'body' => $body->setting_value,

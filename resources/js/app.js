@@ -1592,9 +1592,9 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-	$(".tab-content").on('click',function(e){
+	$(".tab-content").on("click",function(e){
 		e.preventDefault();
-		$(this).tab('show');
+		$(this).tab("show");
 	});
 });
 
@@ -1681,7 +1681,7 @@ $(".opt").on("click", function() {
 		url: originUrl + "/hr/recruitment/onHoldEmail",
 		type: "GET",
 		data: formData,
-		contentType: 'application/json',
+		contentType: "application/json",
 		success: function(response) {
 			$("#option1subject").val(response.subject);
 			tinymce.get("option1body").setContent(response.body, {format: "html"});
@@ -1693,7 +1693,7 @@ $(".opt").on("click", function() {
 		url: originUrl + "/hr/recruitment/onHoldEmail",
 		type: "GET",
 		data: formData,
-		contentType: 'application/json',
+		contentType: "application/json",
 		success: function(response) {
 			$("#option2subject").val(response.subject);
 			tinymce.get("option2body").setContent(response.body, {format: "html"});
