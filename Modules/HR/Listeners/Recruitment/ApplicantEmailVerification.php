@@ -38,7 +38,7 @@ class ApplicantEmailVerification
         $verification_link = route('applicant.email.verification', [$encryptedEmail, $application->id]);
         $body = str_replace(config('constants.hr.template-variables.verification-link'), $verification_link, $body);
 
-        if (request() && request()->ApplicantVerificationEmail) {
+        if (request()->ApplicantVerificationEmail) {
             Mail::to($applicant->email, $applicant->name)
             ->queue(new ApplicantCreateAutoResponder($subject, $body));
         }
