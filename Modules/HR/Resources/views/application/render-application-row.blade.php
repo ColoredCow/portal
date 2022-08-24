@@ -113,9 +113,6 @@
 		</div>
 	</td>
 	<td class="">
-		@php
-		$assignee = $application->latestApplicationRound->scheduledPerson;
-		@endphp
 		<img src="{{$assignee->avatar}}" alt="{{$assignee->name}}" class="w-25 h-25 rounded-circle"
 			data-toggle="tooltip" data-placement="top" title="{{$assignee->name}}">
 	</td>
