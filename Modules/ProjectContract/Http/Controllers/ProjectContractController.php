@@ -31,18 +31,18 @@ class ProjectContractController extends Controller
         return view('project::create')->with('clients', $clients);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request3
-     * @return Renderable
-     */
-    public function store(ProjectContractRequest $request)
-    {
-        $validated = $request->validated();
-        $this->service->store($validated);
+    // /**
+    //  * Store a newly created resource in storage.
+    //  * @param Request $request3
+    //  * @return Renderable
+    //  */
+    // public function store(ProjectContractRequest $request)
+    // {
+    //     $validated = $request->validated();
+    //     $this->service->store($validated);
 
-        return redirect(route('projectcontract.index'));
-    }
+    //     return redirect(route('projectcontract.index'));
+    // }
 
     /*
      * Show the specified resource.
