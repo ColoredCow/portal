@@ -34,7 +34,7 @@ class BookController extends Controller
             $books = Book::getList($searchString);
         }
 
-        return view('knowledgecafe.library.books.index', compact('books', 'categories', ));
+        return view('know ledgecafe.library.books.index', compact('books', 'categories'));
     }
 
     /**
