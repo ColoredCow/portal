@@ -13,13 +13,13 @@
 			</tr>
 		</thead>
 		<tbody>
-				<tr>
-					<td>
-						@foreach ($projectData as $project)
-						    <li><a href="{{ route('project.show', $project['project']) }}">{{$project['project']->name}}</a></li>
-						@endforeach
-					</td>
-				</tr>
+			<tr>
+				<td>
+					@foreach ($projectData as $project)
+						<li><a href="{{ route('project.show', $project['project']) }}">{{$project['project']->name}}</a></li>
+					@endforeach
+				</td>
+			</tr>
 		</tbody>
 	 </table>
 	<br>
