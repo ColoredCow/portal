@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Services\BookServices;
 use App\Http\Controllers\Controller;
 use App\Models\KnowledgeCafe\Library\Book;
-use Modules\User\Entities\User;
-use Illuminate\Support\Facades\Auth;
 use App\Models\KnowledgeCafe\Library\BookAMonth;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
@@ -35,9 +33,9 @@ class BookController extends Controller
         } else {
             $books = Book::getList($searchString);
         }
+
         return view('knowledgecafe.library.books.index', compact('books', 'categories', ));
     }
-
 
     /**
      * Show the form for creating a new resource.
