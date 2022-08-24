@@ -128,18 +128,17 @@ class ReportsController extends Controller
     public function rejectedReasonsData(Request $request)
     {
         //Rejection reasons graph sql query
-        $startDate = $request->start_date ?? today()->subYear();
-        $endDate = $request->end_date ?? today();
+        $rejected_reason_start_date = $request->rejected_reason_start_date ?? today()->subYear();
+        $rejected_reason_end_date = $request->rejected_reason_end_date ?? today();
         $Rejection = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
         ->groupBy('reason_title')
         ->get();
-        $data = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
-        ->whereDate('created_at', '>=', $startDate)
-        ->whereDate('created_at', '<=', $endDate)
-        ->groupBy('reason_title')
-        ->count();
+        $data = HRRejectionReason::select(\DB::Raw('reason_title as label'),\DB::Raw('COUNT(id) as count'))
+        ->whereDate('created_at', '>=', $rejected_reason_start_date)
+        ->whereDate('created_at', '<=', $rejected_reason_end_date)
+        ->groupBy('reason_title');
         $reasonsList = $Rejection->pluck('label')->toArray();
-        $applicationCountArray = $Rejection->pluck('count')->toArray();
+        $applicationCountArray = $data->pluck('count')->toArray();
         foreach ($reasonsList as $index => $reason) {
             $reasonsList[$index] = Str::of($reason)->replace('-', ' ')->title();
         }
@@ -156,21 +155,27 @@ class ReportsController extends Controller
     public function roundWiseRejectionsData(Request $request)
     {
         //round wise rejection graph sql query
-        $StartDate = $request->Start_date ?? today()->subYear();
-        $EndDate = $request->End_date ?? today();
+        $round_wise_rejection_start_date = $request->round_wise_rejection_start_date ?? today()->subYear(4);
+        $round_wise_rejection_end_date = $request->round_wise_rejection_end_date ?? today();
+        $rejectionRounds =  \DB::table('hr_application_round') 
+        ->whereDate('conducted_date', '>=', $round_wise_rejection_start_date)
+        ->whereDate('conducted_date', '<=', $round_wise_rejection_end_date)
+        ->select('hr_round_id', \DB::raw('count(*) as count'))
+        ->join('hr_applications','hr_applications.id','=','hr_application_round.hr_application_id')
+        ->where('round_status','=','rejected')
+        ->whereIn('hr_application_id',function ($query) {
+            $query->from('hr_applications')
+            ->select('id')
+            ->where('status','=','rejected');
+        })
+        ->where('hr_applications.status','=','rejected')
+        ->groupBy('hr_round_id')
+        ->get();
         $rounds = Round::select('name as title', 'id')->get();
-        $count = [];
-        foreach ($rounds as $round) {
-            $count[] = ApplicationRound::where('hr_round_id', $round->id)
-            ->whereDate('conducted_date', '>=', $StartDate)
-            ->whereDate('conducted_date', '<=', $EndDate)
-            ->where('round_status', 'rejected')
-            ->count();
-        }
-
         $round = $rounds->pluck('title')->toArray();
+        $count = $rejectionRounds->pluck('count')->toArray();
         $chartData = [
-            'totalapplication'=> $round,
+            'totalapplication'=> $round, 
             'count' => $count,
         ];
 
