@@ -202,10 +202,10 @@ abstract class ApplicationController extends Controller
 
     public function generateOnHoldEmail(Request $request)
     {
-        $subject = Setting::where('module', 'hr')->where('setting_key',  $request->setting_key_subject)->first();
+        $subject = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_subject)->first();
         $body = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_body)->first();
-        $body->setting_value = str_replace('|*applicant_name*|', $request->applicant_name , $body->setting_value);
-        $body->setting_value = str_replace('|*job_title*|', $request->job_title , $body->setting_value);
+        $body->setting_value = str_replace('|*applicant_name*|', $request->applicant_name, $body->setting_value);
+        $body->setting_value = str_replace('|*job_title*|', $request->job_title, $body->setting_value);
 
         // Mail::to($request->applicant_email, $request->applicant_name)
         // ->send(new OnHold($subject->setting_value, $body->setting_value));
