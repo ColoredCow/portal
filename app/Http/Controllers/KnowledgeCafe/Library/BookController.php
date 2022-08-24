@@ -265,13 +265,6 @@ class BookController extends Controller
             'isAdded' => $isAdded,
         ]);
     }
-    // public function booksInWishlist()
-    // {
-    //     $userId = request('user_id', null);
-    //     $user = $userId ? User::find($userId) : Auth::user();
-
-    //     return $user->booksInWishlist;
-    // }
 
     public function disableSuggestion()
     {
