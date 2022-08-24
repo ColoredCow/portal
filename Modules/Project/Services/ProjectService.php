@@ -358,7 +358,7 @@ class ProjectService implements ProjectServiceContract
         $period = $this->getMonthDiff($project);
         $monthlyEffort = round(($totalEstimatedHours) / ($period ?: 1));
 
-        return $monthlyEffort;        
+        return $monthlyEffort;
     }
 
     public function getDailyEffort($project)
