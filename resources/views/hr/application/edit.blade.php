@@ -459,7 +459,7 @@
                                                                 <div class="form-group offset-md-1 col-md-5">
                                                                     <label
                                                                         class="text-secondary fz-14 leading-none mb-0.16">Email</label>
-                                                                    <div>{{ $applicant->email }}</div>
+                                                                    <div id="applicantEmail">{{ $applicant->email }}</div>
                                                                 </div>
 
                                                                 <div class="form-group col-md-5">
@@ -921,12 +921,12 @@
                                                                 </div>
                                                                 <div class="form-group offset-md-1 col-md-5">
                                                                     <label
-                                                                        class="text-secondary fz-14 leading-none mb-0.16">Applied
+                                                                        class="text-secondary fz-14 leading-none mb-0.16" >Applied
                                                                         for</label>
                                                                     <div>
                                                                         <a href="{{ $application->job->link }}"
                                                                             target="_blank">
-                                                                            <span>{{ $application->job->title }}</span>
+                                                                            <span id="jobTitle">{{ $application->job->title }}</span>
                                                                             <i class="fa fa-external-link fz-14"
                                                                                 aria-hidden="true"></i>
                                                                         </a>
@@ -1281,17 +1281,17 @@
                                                                     <div class="container">
                                                                         <div>
                                                                             <ul class="nav nav-tabs menu">
-                                                                                <li class="nav-item active"><a data-toggle="tab" href="#option_1" class="nav-link active" checked>Option 1</a></li>
-                                                                                <li class="nav-item"><a data-toggle="tab" href="#option_2" class="nav-link" >Option 2</a></li>
+                                                                                <li class="nav-item"><a data-toggle="tab" href="#option_1" class="nav-link opt" data-key-subject='application_on_hold_subject' data-key-body='application_on_hold_body' >Option 1</a></li>
+                                                                                <li class="nav-item"><a data-toggle="tab" href="#option_2" class="nav-link opt" data-key-subject='application_on_hold_subject_2' data-key-body='application_on_hold_body_2'>Option 2</a></li>
                                                                             </ul>
                                                                             <div class="tab-content" id="tabs">
                                                                                 <div class="tab-pane " id="option_1">
                                                                                     <div class="card-body">
                                                                                         <div class="form-row">
                                                                                             <div class="col-md-12">
-                                                                                                <div class="form-group" for="confirmMailToApplicantSubject">
+                                                                                                <div class="form-group">
                                                                                                     <label>Subject</label>
-                                                                                                    <input type="text" class="form-control" id="option1subject">
+                                                                                                    <input type="text" class="form-control option-subject" id="option1subject">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1299,13 +1299,13 @@
                                                                                             <div class="col-md-12">
                                                                                                 <div class="form-group">
                                                                                                     <label>Mail body:</label>
-                                                                                                    <textarea id="option1body" rows="10" class="richeditor form-control"></textarea>
+                                                                                                    <textarea id="option1body" rows="10" class="richeditor form-control option-body"></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="card-footer">
-                                                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                                                        <button type="submit" class="btn btn-primary" id="confirm">Confirm</button>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="tab-pane" id="option_2">
@@ -1322,13 +1322,13 @@
                                                                                             <div class="col-md-12">
                                                                                                 <div class="form-group">
                                                                                                     <label>Mail body:</label>
-                                                                                                    <textarea rows="10" class="richeditor form-control" id="option2Body"></textarea>
+                                                                                                    <textarea rows="10" class="richeditor form-control" id="option2body"></textarea>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="card-footer">
-                                                                                        <button type="submit" class="btn btn-primary">Confirm</button>
+                                                                                        <button type="submit" class="btn btn-primary" id="confirm">Confirm</button>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

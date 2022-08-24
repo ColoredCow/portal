@@ -1668,20 +1668,35 @@ $("#interactionErrorModalCloseBtn").click(function() {
 	$("#InteractionError").toggleClass("d-none");
 });
 
-$(".nav-link").on("click", function() {
+$(".opt").on("click", function() {
 	let formData = {
+		"setting_key_subject":  $(this).data("key-subject"),
+		"setting_key_body": $(this).data("key-body"),
 		"applicant_name": $("#applicantName").text(),
+		"job_title": $("#jobTitle").text(),
 	};
+
 	var originUrl = window.location.origin;
-	  
 	$.ajax({
 		url: originUrl + "/hr/recruitment/onHoldEmail",
 		type: "GET",
 		data: formData,
+		contentType: 'application/json',
 		success: function(response) {
 			$("#option1subject").val(response.subject);
 			tinymce.get("option1body").setContent(response.body, {format: "html"});
 		},
 	});
-});
 
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: 'application/json',
+		success: function(response) {
+			$("#option2subject").val(response.subject);
+			tinymce.get("option2body").setContent(response.body, {format: "html"});
+		},
+	});
+});
