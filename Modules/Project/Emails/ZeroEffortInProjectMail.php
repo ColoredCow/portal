@@ -21,7 +21,6 @@ class ZeroEffortInProjectMail extends Mailable
     {
         $this->projectDetail = $projectDetail;
     }
-
     /**
      * Build the message.
      *
