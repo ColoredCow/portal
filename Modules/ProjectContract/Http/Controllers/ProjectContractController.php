@@ -20,24 +20,28 @@ class ProjectContractController extends Controller
         return view('projectcontract::index', compact('clients'));
     }
 
-    /*
+    /**
      * Show the form for creating a new resource.
-    //  * @return Renderable
-     */
-    // public function create()
-    // {
-    //     return view('projectcontract::create');
-    // }
+     * @return Renderable
+     */ 
+    public function create()
+    {
+        $clients = Client::all();
+        return view('project::create')->with('clients', $clients);
+    }
 
-    /*
+    /** 
      * Store a newly created resource in storage.
-    //  * @param Request $request3
-    //  * @return Renderable
+     * @param Request $request3
+     * @return Renderable
      */
-    // public function store(Request $request)
-    // {
-    //     return view('projectcontract::store');
-    // }
+    public function store(ProjectContractRequest $request)
+    {
+        $validated = $request->validated();
+        $this->service->store($validated);
+
+        return redirect(route('projectcontract.index'));
+    }
 
     /*
      * Show the specified resource.

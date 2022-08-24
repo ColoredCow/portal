@@ -21,7 +21,7 @@
                 <h4 class="">Project Contracts</h4>
             </div>
             <div class="d-flex align-items-center">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Project Contract name"
+                <input type="text" name="name" class="form-control" id="name" placeholder="Project name"
                 value={{request()->get('name')}}>
                 <button class="btn btn-info ml-2 text-white">Search</button>
             </div>
@@ -101,5 +101,5 @@
             </tbody>
         </table>
     </div>
-22</div>
+</div>
 @endsection
