@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\Job;
-use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Round;
 use Modules\HR\Entities\HRRejectionReason;
 
@@ -133,7 +132,7 @@ class ReportsController extends Controller
         $Rejection = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
         ->groupBy('reason_title')
         ->get();
-        $data = HRRejectionReason::select(\DB::Raw('reason_title as label'),\DB::Raw('COUNT(id) as count'))
+        $data = HRRejectionReason::select(\DB::Raw('reason_title as label'), \DB::Raw('COUNT(id) as count'))
         ->whereDate('created_at', '>=', $rejected_reason_start_date)
         ->whereDate('created_at', '<=', $rejected_reason_end_date)
         ->groupBy('reason_title');
@@ -157,25 +156,25 @@ class ReportsController extends Controller
         //round wise rejection graph sql query
         $round_wise_rejection_start_date = $request->round_wise_rejection_start_date ?? today()->subYear(4);
         $round_wise_rejection_end_date = $request->round_wise_rejection_end_date ?? today();
-        $rejectionRounds =  \DB::table('hr_application_round') 
+        $rejectionRounds =  \DB::table('hr_application_round')
         ->whereDate('conducted_date', '>=', $round_wise_rejection_start_date)
         ->whereDate('conducted_date', '<=', $round_wise_rejection_end_date)
         ->select('hr_round_id', \DB::raw('count(*) as count'))
-        ->join('hr_applications','hr_applications.id','=','hr_application_round.hr_application_id')
-        ->where('round_status','=','rejected')
-        ->whereIn('hr_application_id',function ($query) {
+        ->join('hr_applications', 'hr_applications.id', '=', 'hr_application_round.hr_application_id')
+        ->where('round_status', '=', 'rejected')
+        ->whereIn('hr_application_id', function ($query) {
             $query->from('hr_applications')
             ->select('id')
-            ->where('status','=','rejected');
+            ->where('status', '=', 'rejected');
         })
-        ->where('hr_applications.status','=','rejected')
+        ->where('hr_applications.status', '=', 'rejected')
         ->groupBy('hr_round_id')
         ->get();
         $rounds = Round::select('name as title', 'id')->get();
         $round = $rounds->pluck('title')->toArray();
         $count = $rejectionRounds->pluck('count')->toArray();
         $chartData = [
-            'totalapplication'=> $round, 
+            'totalapplication'=> $round,
             'count' => $count,
         ];
 
