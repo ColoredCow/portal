@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Services\BookServices;
 use App\Http\Controllers\Controller;
 use App\Models\KnowledgeCafe\Library\Book;
+use Modules\User\Entities\User;
+use Illuminate\Support\Facades\Auth;
 use App\Models\KnowledgeCafe\Library\BookAMonth;
 use App\Models\KnowledgeCafe\Library\BookCategory;
 use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
@@ -23,15 +25,19 @@ class BookController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(array $data = [])
     {
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
-        $books = Book::getList($searchString);
         $categories = BookCategory::orderBy('name')->get();
-
-        return view('knowledgecafe.library.books.index', compact('books', 'categories'));
+        if (request()->has('show')) {
+            $books = auth()->user()->booksInWishlist;
+        } else {
+            $books = Book::getList($searchString);
+        }
+        return view('knowledgecafe.library.books.index', compact('books', 'categories', ));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -259,6 +265,13 @@ class BookController extends Controller
             'isAdded' => $isAdded,
         ]);
     }
+    // public function booksInWishlist()
+    // {
+    //     $userId = request('user_id', null);
+    //     $user = $userId ? User::find($userId) : Auth::user();
+
+    //     return $user->booksInWishlist;
+    // }
 
     public function disableSuggestion()
     {
