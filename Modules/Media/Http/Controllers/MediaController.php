@@ -23,13 +23,6 @@ class MediaController extends Controller
     /**
      * Show the form for creating a new resource.
      * @return Renderable
-     */
-    public function create()
-    {
-        return view('media::photo-gallery.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      * @param Request $request
      * @return Renderable
@@ -45,7 +38,7 @@ class MediaController extends Controller
       
         $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
         PhotoGallery::create($postData);
-        return redirect('/photo-gallery')->with(['message' => 'Post added successfully!', 'status' => 'success']);
+        return redirect('/photo-gallery')->with(['message', 'status' => 'Photo added successfully!']);
     }
 
     /**
@@ -88,7 +81,7 @@ class MediaController extends Controller
         }
         $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
         $PhotoGallery->update($postData);
-        return redirect('/photo-gallery')->with(['message' => 'Post updated successfully!', 'status' => 'success']);
+        return redirect('/photo-gallery')->with(['message', 'status' => 'Photo updated successfully!']);
     }
     /**
      * Remove the specified resource from storage.
@@ -99,6 +92,6 @@ class MediaController extends Controller
     {
         Storage::delete('public/images/' . $PhotoGallery->img_url);
         $PhotoGallery->delete();
-        return redirect('/photo-gallery')->with(['message' => 'Post deleted successfully!', 'status' => 'info']);
+        return redirect('/photo-gallery')->with(['message', 'status' => 'Photo deleted successfully!']);
     }
 }
