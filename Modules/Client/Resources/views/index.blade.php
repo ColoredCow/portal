@@ -14,7 +14,7 @@
             <form action="{{ route('client.index') }}" method="GET">
                 <div class="d-flex align-items-center">
                     <input type="hidden" name="status" value="{{ request()->get('status', 'active') }}">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Client name" value={{request()->get('name')}}>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter the client name" value={{request()->get('name')}}>
                     <button class="btn btn-primary ml-2 text-white">Search</button>
                 </div>
             </form>

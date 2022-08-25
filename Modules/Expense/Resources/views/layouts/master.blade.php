@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module Expense</title>
+@extends('layouts.app')
+@section('js_scripts')
+    <script src="{{ mix('/js/expense.js') }}"></script>
+@endsection
 
-       {{-- Laravel Mix - CSS File --}}
-       {{-- <link rel="stylesheet" href="{{ mix('css/expense.css') }}"> --}}
-
-    </head>
-    <body>
-        @yield('content')
-
-        {{-- Laravel Mix - JS File --}}
-        {{-- <script src="{{ mix('js/expense.js') }}"></script> --}}
-    </body>
-</html>
+@section('css_scripts')
+@endsection
