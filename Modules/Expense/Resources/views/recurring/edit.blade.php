@@ -83,7 +83,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="description" class="">Description</label>
+                                    <label for="description" class="field-required">Description</label>
                                     <textarea name="description" id="description" rows="5" class="form-control">{{ $recurringExpense->description }}</textarea>
                                 </div>
                             </div>
