@@ -37,7 +37,6 @@ class ApplicantController extends Controller
     {
         $hrJobs = Job::whereIn('type', ['job', 'internship'])->orderBy('title')->get();
 
-        $this->authorize('view', Setting::class);
         $verifyMail = Setting::where('module', 'hr')->get()->keyBy('setting_key');
 
         return view('hr.application.create', ['hrJobs' => $hrJobs], ['verifyMail' => $verifyMail]);
