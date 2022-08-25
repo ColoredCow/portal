@@ -33,7 +33,6 @@ class ZeroEffortInProjectMail extends Mailable
             $mail->to($project['email']);
         }
 
-        return
-        $mail->view('project::mail.zero-effort-team-member-list');
+        return $mail->view('project::mail.zero-effort-team-member-list');
     }
 }
