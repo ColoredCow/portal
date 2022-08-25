@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
+use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\Job;
@@ -144,7 +145,6 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
-
         //TODO: We need to refactor the edit code and write it in the service
         $application = Application::findOrFail($id);
 
@@ -272,5 +272,25 @@ abstract class ApplicationController extends Controller
         return Response::make(Storage::get($application->offer_letter), 200, [
             'content-type' => 'application/pdf',
         ]);
+    }
+
+    public function applicationHandoverRequest(Application $application)
+    {
+        $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
+        Mail::to($currentAssignee)->send(new ApplicationHandover($application));
+
+        return redirect()->back()->with('status', 'Your request has successfully been sent');
+    }
+
+    public function acceptHandoverRequest(Application $application, User $user)
+    {
+        $applicationRound = $application->latestApplicationRound;
+        $applicationRound->update([
+            'scheduled_person_id' => $user->id
+        ]);
+
+        $status = 'Successful Assigned to ' . $user->name;
+
+        return redirect(route('applications.job.index'))->with('status', $status);
     }
 }
