@@ -31,7 +31,7 @@ class ApplicantEmailVerification
         $applicant = $application->applicant;
         $attr['email_template'] = $applicant->emailTemplate;
 
-        if(request()->subject || request()->body) {
+        if (request()->subject || request()->body) {
             $subject = request()->subject;
             $body = request()->body;
 
