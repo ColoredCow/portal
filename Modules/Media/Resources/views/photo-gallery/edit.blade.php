@@ -6,9 +6,6 @@
 
 @section('content')
 
-<div>
-  <a href="@yield('link')" class="btn btn-success float-right justify-content-center mb-3">@yield('link_text')</a>
-</div>
 <div class="row my-3">
   <div class="col-lg-6 mx-auto">
     <div class="card shadow">
@@ -31,8 +28,10 @@
           <div class="my-2"><h3 class="text-secondary">Description</h3>
             <textarea name="description" id="description" rows="6" class="form-control" placeholder="Description" required>{{ $PhotoGallery->description }}</textarea>
           </div>
-
           <div class="my-2">
+            <div>
+                <a href="@yield('link')" class="btn btn-secondary float-right ml-3">@yield('link_text')</a>
+            </div>
             <input type="submit" value="Update Post" class="btn btn-success float-right">
           </div>
         </form>

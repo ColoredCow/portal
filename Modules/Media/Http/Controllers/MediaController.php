@@ -22,10 +22,10 @@ class MediaController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return Renderable
+     * @return RedirectResponse
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -43,7 +43,7 @@ class MediaController extends Controller
 
     /**
      * Show the specified resource.
-     * @param int $id
+     * @param int $photoGallery
      * @return Renderable
      */
     public function show(PhotoGallery $photoGallery)
@@ -53,7 +53,7 @@ class MediaController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
+     * @param int $PhotoGallery
      * @return Renderable
      */
     public function edit(PhotoGallery $PhotoGallery)
@@ -64,8 +64,8 @@ class MediaController extends Controller
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
-     * @return Renderable
+     * @param $PhotoGallery
+     * @return RedirectResponse
      */
     public function update(Request $request, PhotoGallery $PhotoGallery)
     {
@@ -85,8 +85,8 @@ class MediaController extends Controller
     }
     /**
      * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
+     * @param $PhotoGallery
+     * @return RedirectResponse
      */
     public function destroy(PhotoGallery $PhotoGallery)
     {

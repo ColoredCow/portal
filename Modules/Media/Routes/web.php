@@ -15,5 +15,4 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('media')->group(function () {
     Route::get('/', 'MediaController@index')->name('media.index');
 });
-
-Route::resource('photo-gallery', MediaController::class);
+Route::resource('photo-gallery', 'MediaController');
