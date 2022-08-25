@@ -7,52 +7,79 @@
                     data-target="#assignlabelsmodal" type="button">{!! file_get_contents(public_path('icons/three-dots-vertical.svg')) !!}</button>
             </div>
 
-			@php
-			$formData = $application->applicationMeta()->formData()->first();
-			@endphp
-			@if (isset($formData->value))
-			@php
-			$tooltipHtml = '';
-			$index = 0;
-			foreach (json_decode($formData->value) as $field => $value) {
-			if (!$value) continue;
-			$tooltipHtml .= "$field<br />";
-			$tooltipHtml .= "$value\n\n";
-			break;
-			}
-			@endphp
-			@if ($tooltipHtml)
-			<span class="mr-1">
-				<i class="fa fa-eye" aria-hidden="true" class="text-secondary c-pointer" data-toggle="tooltip"
-					data-placement="top" data-html="true" title="{!! $tooltipHtml !!}"></i>
-			</span>
-			@endif
-			@endif
-		</div>
-		@include('hr.application.assignlabels-modal')
-		<div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
-			<div class="d-flex text-white my-2">
-				<a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-				<a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
-			</div>
-			<span class="mr-1 text-truncate">
-				<i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
-			@if ($application->applicant->phone)
-			<span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $application->applicant->phone }}</span>
-			@endif
-			<div>
-				@if ($application->applicant->college && $application->applicant->university)
-				<span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}</span>
-				<a href ="{{ route('universities.edit',$application->applicant->university) }}"target="_blank" >
-					 @if($application->applicant->university->universityContacts->first() && $application->applicant->university->universityContacts->first()->phone)
-						<span class="badge badge-pill badge-success mr-1  mt-1 ">See contact</span>
-					@else
-						<span class="badge badge-pill badge-danger mr-1  mt-1 ">Add contact</span>
-					@endif
-				</a>
-				@endif
-			</div>
-		</div>
+            @php
+            $formData = $application->applicationMeta()->formData()->first();
+            @endphp
+            @if (isset($formData->value))
+            @php
+            $tooltipHtml = '';
+            $index = 0;
+            foreach (json_decode($formData->value) as $field => $value) {
+            if (!$value) continue;
+            $tooltipHtml .= "$field<br />";
+            $tooltipHtml .= "$value\n\n";
+            break;
+            }
+            @endphp
+            @if ($tooltipHtml)
+            <span class="mr-1">
+                <i class="fa fa-eye" aria-hidden="true" class="text-secondary c-pointer" data-toggle="tooltip"
+                    data-placement="top" data-html="true" title="{!! $tooltipHtml !!}"></i>
+            </span>
+            @endif
+            @endif
+        </div>
+        @include('hr.application.assignlabels-modal')
+        @php
+        $assignee = $application->latestApplicationRound->scheduledPerson;
+        @endphp
+        <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
+            <div class="d-flex text-white my-2">
+            
+                <a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
+                @if ($application->latestApplicationRound->scheduledPerson->id == auth()->user()->id)
+                    <a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+                @else
+                    <a data-target="#evaluation{{$application->id}}" role="button" class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
+                    <div class="modal fade" id="evaluation{{$application->id}}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-secondary" id="confirmation">Request to handover</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-secondary">This application is already assigned to {{$assignee->name}}, to evaluate this, a confirmation would be needed from their end. Please click the request button to request the handover.</p>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <a href="{{ route('application.handover', $application) }}" class="btn btn-primary">Request</a></button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+            <span class="mr-1 text-truncate">
+                <i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
+            @if ($application->applicant->phone)
+            <span class="mr-1"><i class="fa fa-phone mr-1"></i>{{ $application->applicant->phone }}</span>
+            @endif
+            <div>
+                @if ($application->applicant->college && $application->applicant->university)
+                <span class="mr-1"><i class="fa fa-university mr-1"></i>{{ $application->applicant->college }}</span>
+                <a href ="{{ route('universities.edit',$application->applicant->university) }}"target="_blank" >
+                     @if($application->applicant->university->universityContacts->first() && $application->applicant->university->universityContacts->first()->phone)
+                        <span class="badge badge-pill badge-success mr-1  mt-1 ">See contact</span>
+                    @else
+                        <span class="badge badge-pill badge-danger mr-1  mt-1 ">Add contact</span>
+                    @endif
+                </a>
+                @endif
+            </div>
+        </div>
 
 		<div>
 			@if ($application->applicant->linkedin)
@@ -86,9 +113,6 @@
 		</div>
 	</td>
 	<td class="">
-		@php
-		$assignee = $application->latestApplicationRound->scheduledPerson;
-		@endphp
 		<img src="{{$assignee->avatar}}" alt="{{$assignee->name}}" class="w-25 h-25 rounded-circle"
 			data-toggle="tooltip" data-placement="top" title="{{$assignee->name}}">
 	</td>
@@ -129,8 +153,8 @@
 
                     </span>
 
-		</span>
-		@endforeach
-		</span>
-	</td>
+        </span>
+        @endforeach
+        </span>
+    </td>
 </tr>
