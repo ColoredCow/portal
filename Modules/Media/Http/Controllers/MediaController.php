@@ -18,6 +18,7 @@ class MediaController extends Controller
     public function index()
     {
         $photo_gallery = PhotoGallery::orderBy('id', 'desc')->paginate(24);
+
         return view('media::photo-gallery.index', ['photo_gallery' => $photo_gallery]);
     }
 
@@ -36,7 +37,6 @@ class MediaController extends Controller
           ]);
         $imageName = time() . '.' . $request->file->extension();
         $request->file->storeAs('public/images', $imageName);
-      
         $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
         PhotoGallery::create($postData);
         return redirect('/photo-gallery')->with(['message', 'status' => 'Photo added successfully!']);
@@ -82,6 +82,7 @@ class MediaController extends Controller
         }
         $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
         $PhotoGallery->update($postData);
+
         return redirect('/photo-gallery')->with(['message', 'status' => 'Photo updated successfully!']);
     }
     /**
@@ -93,6 +94,7 @@ class MediaController extends Controller
     {
         Storage::delete('public/images/' . $PhotoGallery->img_url);
         $PhotoGallery->delete();
+
         return redirect('/photo-gallery')->with(['message', 'status' => 'Photo deleted successfully!']);
     }
 }
