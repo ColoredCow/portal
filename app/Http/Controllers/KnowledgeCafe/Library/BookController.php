@@ -28,7 +28,7 @@ class BookController extends Controller
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
-        if (request()->has('show')) {
+        if (request()->has('wishlist')) {
             $books = auth()->user()->booksInWishlist;
         } else {
             $books = Book::getList($searchString);

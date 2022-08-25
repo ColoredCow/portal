@@ -1,8 +1,8 @@
 <ul class="nav nav-pills">
     @php
-     $request['books'] = 'books';
+     $request['all books'] = 'books';
     @endphp
-        <a class="nav-item nav-link {{ $active === 'books' && request()->input('show','active') !== 'booksInWishlist' ? 'active' : '' }}"  href="{{ route('books.index', $request) }}"><i class="fa fa-book"></i>&nbsp;Books</a>
+        <a class="nav-item nav-link {{ $active === 'books' && request()->input('wishlist','active') !== 'booksInWishlist' ? 'active' : '' }}"  href="{{ route('books.index', $request) }}"><i class="fa fa-book"></i>&nbsp;Books</a>
     </li>
 
     @can('library_book_category.view')
@@ -16,8 +16,8 @@
     </li>
     <li class="nav-item">
         @php
-         $request['show'] = 'booksInWishlist';
+         $request['wishlist'] = 'booksInWishlist';
         @endphp
-        <a class="nav-item nav-link {{ (request()->input('show','active') === 'booksInWishlist') ? 'active' : '' }}"  href="{{ route('books.index', $request)  }}"><i class="fa fa-book"></i>&nbsp;Wishlist-Books</a>
+        <a class="nav-item nav-link {{ (request()->input('wishlist','active') === 'booksInWishlist') ? 'active' : '' }}"  href="{{ route('books.index', $request)  }}"><i class="fa fa-book"></i>&nbsp;Wishlist-Books</a>
     </li>
 </ul>
