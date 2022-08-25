@@ -3,7 +3,7 @@
 namespace Modules\Media\Http\Controllers;
 
 use Modules\Media\Entities\PhotoGallery;
-use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Support\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +43,7 @@ class MediaController extends Controller
 
     /**
      * Show the specified resource.
-     * @param int $photoGallery
+     * @param $photoGallery
      * @return Renderable
      */
     public function show(PhotoGallery $photoGallery)
@@ -53,7 +53,7 @@ class MediaController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $PhotoGallery
+     * @param $PhotoGallery
      * @return Renderable
      */
     public function edit(PhotoGallery $PhotoGallery)
