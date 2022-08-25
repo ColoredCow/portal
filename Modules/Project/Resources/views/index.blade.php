@@ -31,7 +31,7 @@
                 </select>
             </div>
             <div class="d-flex align-items-center">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Project name"
+                <input type="text" name="name" class="form-control" id="name" placeholder="Enter the Project name"
                 value={{request()->get('name')}}>
                 <button class="btn btn-info ml-2 text-white">Search</button>
             </div>
