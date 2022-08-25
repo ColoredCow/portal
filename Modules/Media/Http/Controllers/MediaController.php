@@ -39,6 +39,7 @@ class MediaController extends Controller
         $request->file->storeAs('public/images', $imageName);
         $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
         PhotoGallery::create($postData);
+
         return redirect('/photo-gallery')->with(['message', 'status' => 'Photo added successfully!']);
     }
 
