@@ -16,7 +16,7 @@ class MediaController extends Controller
      */
     public function index()
     {
-        $photo_gallery = PhotoGallery::orderBy('id', 'desc')->paginate(4);
+        $photo_gallery = PhotoGallery::orderBy('id', 'desc')->paginate(24);
         return view('media::photo-gallery.index', ['photo_gallery' => $photo_gallery]);
     }
 
@@ -65,7 +65,6 @@ class MediaController extends Controller
      */
     public function edit(PhotoGallery $PhotoGallery)
     {
-        // dd($PhotoGalleryPost->all());
         return view('media::photo-gallery.edit', ['PhotoGallery' => $PhotoGallery]);
     }
 
@@ -77,7 +76,6 @@ class MediaController extends Controller
      */
     public function update(Request $request, PhotoGallery $PhotoGallery)
     {
-        // dd($request->all());
         $imageName = '';
         if ($request->hasFile('file')) {
             $imageName = time() . '.' . $request->file->extension();
@@ -104,3 +102,4 @@ class MediaController extends Controller
         return redirect('/photo-gallery')->with(['message' => 'Post deleted successfully!', 'status' => 'info']);
     }
 }
+

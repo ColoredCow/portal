@@ -152,5 +152,4 @@
             <a class="nav-item nav-link" href="{{ route('media.index') }}">Media</a>
         </li>        
     @endcan
-    
 </ul>
