@@ -44,7 +44,7 @@ class MediaController extends Controller
 
     /**
      * Show the specified resource.
-     * @param PhotoGallery $PhotoGallery
+     * @param PhotoGallery $photoGallery
      * @return Renderable
      */
     public function show(PhotoGallery $photoGallery)
