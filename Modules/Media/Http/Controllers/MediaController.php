@@ -102,4 +102,3 @@ class MediaController extends Controller
         return redirect('/photo-gallery')->with(['message' => 'Post deleted successfully!', 'status' => 'info']);
     }
 }
-
