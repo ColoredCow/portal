@@ -31,7 +31,7 @@ class ApplicantEmailVerification
         $applicant = $application->applicant;
         $attr['email_template'] = $applicant->emailTemplate;
 
-        if(request()->subject || request()->body){
+        if(request()->subject || request()->body) {
             $subject = request()->subject;
             $body = request()->body;
 
@@ -49,9 +49,7 @@ class ApplicantEmailVerification
                 'applicant_verification_subject' => $subject,
                 'applicant_verification_body' => $body,
             ]);
-        }
-
-        else{
+        } else {
             $subject = Setting::where('module', 'hr')->where('setting_key', 'applicant_verification_subject')->first();
             $body = Setting::where('module', 'hr')->where('setting_key', 'applicant_verification_body')->first();
 
