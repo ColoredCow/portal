@@ -3,7 +3,7 @@
 namespace Modules\Media\Http\Controllers;
 
 use Modules\Media\Entities\PhotoGallery;
-use Illuminate\Contracts\Support\RedirectResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
