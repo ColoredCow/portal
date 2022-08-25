@@ -18,10 +18,10 @@
             <h1>@yield('heading')</h1>
           </div>
           <div>
-          <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
+          <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#photoGallery">
             <a>@yield('popup')</a>
           </button>
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="photoGallery" tabindex="-1" role="dialog" aria-labelledby="photoGalleryLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
