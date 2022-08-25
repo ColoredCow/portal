@@ -15,9 +15,12 @@ class HrApplicationsTableSeeder extends Seeder
     public function run()
     {
         if (! app()->environment('production')) {
-            Application::factory()
-            ->count(10)
-            ->create();
+            $applications = Application::factory()
+             ->count(10)
+             ->create();
+            foreach ($applications as $application) {
+                $application->tag($application->status);
+            }
         }
     }
 }
