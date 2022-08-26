@@ -19,19 +19,19 @@
     </div>
     <div class="row mt-3 mb-2 px-2">
         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
-            <input type="text" data-value="{{ request()->input('search') }}" 
+            <input type="text" data-value="{{ request()->input('search') }}"
             class="form-control" id="search_input" placeholder="search all books"
             v-model="searchKey">
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
-        
+
         <div>
             <span>sort book by category</span>
             <div class="col-lg-10 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 pl-0 d-flex justify-content-center">
                 <select class="form-control bg-white form-control-st col-15" name="category_name" v-model="searchKeys">
-                    
+
                     @foreach ($categories as $category)
-					<option value="{{ $category->name }}" {{ request()->input('category_name') == $category->name ? "selected" : "" }}>
+					<option value="{{ $category->name }}" {{ request()->input('category_name') == $category->name ? "data-value=".request()->input('category_name') : "" }}>
                         {{ $category->name }}
                     </option>
 				@endforeach
@@ -41,14 +41,14 @@
                 </button>
             </div>
         </div>
-		
-        @if(session('disable_book_suggestion'))
+        
+               @if(session('disable_book_suggestion'))
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
                 <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dashboard</a>
             </div>
         @endif
     </div>
-    @if(request()->has('search'))
+    @if(request()->has('search') || request()->has('category_name'))
         <div class="row mt-3 mb-2">
             <div class="col-6">
                 <a class="text-muted c-pointer" href="{{ route('books.index') }}">
@@ -57,10 +57,11 @@
             </div>
         </div>
     @endif
-    <div class="d-flex justify-content-start flex-wrap" id="books_table" 
-        data-books="{{ json_encode($books) }}" 
+    
+    <div class="d-flex justify-content-start flex-wrap" id="books_table"
+        data-books="{{ json_encode($books) }}"
         data-categories="{{ json_encode($categories) }}"
-        data-index-route="{{ route('books.index') }}" 
+        data-index-route="{{ route('books.index') }}"
         data-category-index-route="{{ route('books.category.index') }}">
         <div class="d-flex flex-wrap w-full">
             <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
@@ -71,7 +72,7 @@
                     <div class="pl-2 pr-3 mr-1">
                         <a  :href="updateRoute+ '/'+ book.id" class="card-title font-weight-bold mb-1 h6" :title="book.title">@{{ strLimit(book.title, 35) }}</a>
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
-                        
+
                         <p class="text-info" v-if="book.on_kindle == 1" :title="book.author">On Kindle</p>
 
                         <h3><span class="badge badge-primary position-absolute copies-count" v-if="book.number_of_copies > 1" :title="book.number_of_copies + ' copies'" >@{{ book.number_of_copies }}</span></h3>
@@ -105,7 +106,7 @@
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                           <button type="button" class="btn btn-primary" @click="updateCopiesCount(index)" data-dismiss="modal">OK</button>
                         </div>
-                      </div> 
+                      </div>
                     </div>
                   </div>
                 <div v-if="book.readers && book.readers.length">

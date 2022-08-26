@@ -741,7 +741,10 @@ if (document.getElementById("books_listing")) {
 			newCategory: "",
 			searchKey: document.getElementById("search_input")
 				? document.getElementById("search_input").dataset.value
-				: ""
+				: "",
+			searchKeys: document.getElementById("search_input")
+			    ? document.getElementById("search_input").dataset.value
+			    : ""	
 		},
 		methods: {
 			updateCategoryMode: function (index) {
