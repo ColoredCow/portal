@@ -5,7 +5,11 @@
     <div class="d-none d-md-flex justify-content-between my-2">
         @include('client::menu_header')
         @can('clients.create')
+ feature/2288/add-Plus-icon-and-change-the-background-color
             <a href= "{{ route('client.create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add client</a>
+
+            <a href= "{{ route('client.create') }}" class="btn btn-primary text-white">Add New Client</a>
+ master
         @endcan
     </div>
     <div class="d-md-flex justify-content-between mt-5 mb-2">
@@ -14,7 +18,7 @@
             <form action="{{ route('client.index') }}" method="GET">
                 <div class="d-flex align-items-center">
                     <input type="hidden" name="status" value="{{ request()->get('status', 'active') }}">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Client name" value={{request()->get('name')}}>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter the client name" value={{request()->get('name')}}>
                     <button class="btn btn-primary ml-2 text-white">Search</button>
                 </div>
             </form>
