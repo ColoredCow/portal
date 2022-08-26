@@ -311,7 +311,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 							.setContent(res.body, { format: "html" });
 					});
 					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
-						$(".next-scheduled-person-container").addClass();
 						$("#sendmailform").removeClass("d-none");
 					} else {
 						$(".next-scheduled-person-container").removeClass("d-none");
