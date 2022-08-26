@@ -18,13 +18,11 @@
         @endcan
     </div>
     <div class="row mt-3 mb-2 px-2">
-        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2  d-flex justify-content-center align-items-center">
             <input type="text" data-value="{{ request()->input('search') }}" 
             class="form-control" id="search_input" placeholder="search all books"
             v-model="searchKey">
-            <div clas="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 py-1.5">
-            <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
-            </div>
+            <button class="btn btn-info ml-2 py-1.5" @click="searchBooks()">Search</button>
         </div>
         @if(session('disable_book_suggestion'))
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
