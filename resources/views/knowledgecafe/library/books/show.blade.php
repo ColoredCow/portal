@@ -70,15 +70,15 @@
             </div>
             <div class="col-md-4 col-xl-3">
                 <span class="d-block mb-1">
-                    <button style="background-color: pink; border-color: white; color: brown;" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
-                    <button class="btn btn-success p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
+                    <button class="btn btn-success" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
+                    <button class="btn btn-primary" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
                 </span>
                 <span class="d-block mb-1">
-                    <button style="background-color: greenyellow; border-color:white; color: black;" @click="markBook(true)" v-if="!isRead">I have read this book</button>
+                    <button class="btn btn-secondary" @click="markBook(true)" v-if="!isRead">I have read this book</button>
                     <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
                 </span>
                 <span class="d-block mb-1">
-                    <button type="button" style="background-color: gold; border-color:white; color: black;" @click="addToBookAMonth()" v-if="!isBookAMonth">Pick as Book of the Month</button>
+                    <button type="button" class="btn btn-warning" @click="addToBookAMonth()" v-if="!isBookAMonth">Pick as Book of the Month</button>
                     <button type="button" class="btn btn-danger font-italic" @click="removeFromBookAMonth()" v-else>Unpick as Book of the Month</button>
                 </span>
             </div>
