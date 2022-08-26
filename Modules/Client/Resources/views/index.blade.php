@@ -5,7 +5,7 @@
     <div class="d-none d-md-flex justify-content-between my-2">
         @include('client::menu_header')
         @can('clients.create')
-            <a href= "{{ route('client.create') }}" class="btn btn-success "><i class="fa fa-plus"></i> Add client</a>
+            <a href= "{{ route('client.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i> Add new client</a>
         @endcan
     </div>
     <div class="d-md-flex justify-content-between mt-5 mb-2">
@@ -14,7 +14,7 @@
             <form action="{{ route('client.index') }}" method="GET">
                 <div class="d-flex align-items-center">
                     <input type="hidden" name="status" value="{{ request()->get('status', 'active') }}">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Client name" value={{request()->get('name')}}>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter the client name" value={{request()->get('name')}}>
                     <button class="btn btn-primary ml-2 text-white">Search</button>
                 </div>
             </form>
@@ -23,7 +23,7 @@
     <div class='d-md-none mb-2'>
         @can('clients.create')
             <div class="d-flex flex-row-reverse">
-                <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
+                <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add new client</a>
             </div>
         @endcan
         @include('client::menu_header')
