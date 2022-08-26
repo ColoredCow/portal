@@ -11,7 +11,7 @@
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
                     <a class="card-body no-transition" href="{{ route('settings.hr') }}">
-                        <br><h2 class="text-center">HR</h2><br>
+                        <br><h2 class="text-center">HR Mail Templates</h2><br>
                     </a>
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
                     <a class="card-body no-transition" href="{{ route('setting.agreement.nda') }}">
-                        <br><h2 class="text-center">NDA</h2><br>
+                        <br><h2 class="text-center">NDA Mail Templates</h2><br>
                     </a>
                 </div>
             </div>
@@ -31,7 +31,7 @@
             <div class="col-md-4">
                 <div class="card h-75 mx-4 mt-3 mb-5 ">
                     <a class="card-body no-transition" href="{{ route('setting.invoice') }}">
-                        <br><h2 class="text-center">Invoice</h2><br>
+                        <br><h2 class="text-center">Invoice Mail Templates</h2><br>
                     </a>
                 </div>
             </div>

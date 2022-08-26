@@ -24,7 +24,6 @@
             v-model="searchKey">
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
-
         <div>
             <span>sort book by category</span>
             <div class="col-lg-10 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 pl-0 d-flex justify-content-center">
@@ -43,6 +42,7 @@
         </div>
         
                @if(session('disable_book_suggestion'))
+        @if(session('disable_book_suggestion'))
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
                 <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dashboard</a>
             </div>
