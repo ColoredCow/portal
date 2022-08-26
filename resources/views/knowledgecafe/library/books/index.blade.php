@@ -13,7 +13,7 @@
         </div>
         @can('library_books.create')
             <div class="col-6">
-                <a href="{{ route('books.create') }}" class="btn btn-success float-right">&#43; Add New Book</a>
+                <a href="{{ route('books.create') }}" class="btn btn-success float-right"><i class="fa fa-plus mr-1"></i> Add New Book</a>
             </div>
         @endcan
     </div>
