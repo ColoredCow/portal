@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('effortreport')->middleware('auth')->group(function (){
+Route::prefix('effortreport')->group(function() {
     Route::get('/employee/{employee}/', 'EffortReportController@barGraph')->name('effortreport.barGraph');
 });
