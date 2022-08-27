@@ -117,4 +117,3 @@ Route::middleware('auth')->group(function () {
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
-Route::get('/finish_Interview','ApplicationController@finish' )->name('finish_Interview');
