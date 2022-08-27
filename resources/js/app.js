@@ -193,6 +193,12 @@ $(document).ready(() => {
 		datePickerChart();
 		HorizontalBarChart();
 	}
+	if ($("#myGraph").length) {
+		roundWiseRejectionsGraph();
+	}
+	if ($("#myBarGraph").length) {
+		rejectedReasonsGraph();
+	}
 
 	$("#save-btn-action").on("click", function () {
 		this.disabled = true;
@@ -321,6 +327,38 @@ if (document.getElementById("page_hr_applicant_edit")) {
 						break;
 					case "onboard":
 						$("#onboard_applicant").modal("show");
+=======
+				case "round":
+					if (!this.selectedActionOption) {
+						this.selectedActionOption = document.querySelector(
+							"#action_type option:checked"
+						);
+					}
+					this.selectedNextRound = this.selectedActionOption.dataset.nextRoundId;
+					this.nextRoundName = this.selectedActionOption.innerText;
+					loadTemplateMail("confirm", res => {
+						$("#confirmMailToApplicantSubject").val(res.subject);
+						tinymce
+							.get("confirmMailToApplicantBody")
+							.setContent(res.body, { format: "html" });
+					});
+					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
+						$("#sendmailform").removeClass("d-none");
+					} else {
+						$(".next-scheduled-person-container").removeClass("d-none");
+						$("#sendmailform").addClass("d-none");
+					}
+					$("#round_confirm").modal("show");
+					break;
+				case "send-for-approval":
+					$("#send_for_approval").modal("show");
+					break;
+				case "approve":
+					$("#approve_application").modal("show");
+					break;
+				case "onboard":
+					$("#onboard_applicant").modal("show");
+
 				}
 			},
 			rejectApplication: function () {
@@ -1530,6 +1568,143 @@ function HorizontalBarChart() {
 
 	});
 }
+function roundWiseRejectionsGraph() {
+	var value = $("#myGraph").data("target");
+	var cData = value;
+	var ctx = $("#myGraph");
+	var data = {
+		labels: cData.totalapplication,
+		datasets: [
+			{
+				label: [],
+				data: cData.count,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				datacolor: ["rgba(52,144,220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			categoryPercentage: 1.0,
+			barPercentage: 0.8,
+			maintainAspectRatio: true,
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function () {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					// ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function (dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function (bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+
+			},
+		},
+
+	});
+}
+
+function rejectedReasonsGraph() {
+	var value = $("#myBarGraph").data("target");
+	var cData = value;
+	var ctx = $("#myBarGraph");
+	var data = {
+		labels: cData.reason,
+		datasets: [
+			{
+				label: [],
+				data: cData.Applicationcounts,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function (tooltipItem) {
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function () {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function (dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function (bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+
+			},
+		},
+
+	});
+}
 
 $(function () {
 	$(".reject-reason").on("click", function () {
@@ -1609,8 +1784,7 @@ $("#updateEmail").on("click", function () {
 	let formData = {
 		"location": $("#location").val(),
 		"date": $("#date").val(),
-		"start_time": $("#startTime").val(),
-		"end_time": $("#endTime").val(),
+		"timing": $("#timing").val(),
 		"applicant_name": $("#applicantName").text(),
 	};
 	var originUrl = window.location.origin;
