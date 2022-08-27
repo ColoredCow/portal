@@ -18,7 +18,7 @@
         @endcan
     </div>
     <div class="row mt-3 mb-2 px-2">
-        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2  d-flex justify-content-center align-items-center">
+        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
             <input type="text" data-value="{{ request()->input('search') }}" 
             class="form-control" id="search_input" placeholder="search all books"
             v-model="searchKey">
