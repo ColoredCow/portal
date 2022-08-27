@@ -52,7 +52,8 @@ class EffortReportServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 
@@ -97,7 +98,7 @@ class EffortReportServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
+        if (!app()->environment('production') && $this->app->runningInConsole()) {
             app(Factory::class)->load(module_path($this->moduleName, 'Database/factories'));
         }
     }
