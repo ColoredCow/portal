@@ -17,7 +17,7 @@ class EmployeePolicy
 
     public function view(User $user, Employee $employee)
     {
-        return $user->hasPermissionTo('hr_employees.view');
+        return $user->id === $employee->user_id || $user->hasPermissionTo('hr_employees.view');
     }
 
     public function create(User $user)

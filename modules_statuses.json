@@ -17,5 +17,6 @@
     "EffortTracking": true,
     "SalesAutomation": true,
     "Report": true,
-    "EffortReport": true
+    "EffortReport": true,
+    "Expense": true
 }

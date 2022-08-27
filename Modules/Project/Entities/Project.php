@@ -14,10 +14,14 @@ use Modules\Invoice\Entities\LedgerAccount;
 use Modules\Invoice\Services\InvoiceService;
 use Modules\Project\Database\Factories\ProjectFactory;
 use Modules\User\Entities\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Project extends Model
+class Project extends Model implements Auditable
 {
-    use HasFactory, Filters;
+    use HasFactory, Filters, SoftDeletes, \OwenIt\Auditing\Auditable;
+
+    protected $table = 'projects';
 
     protected $guarded = [];
 
@@ -77,6 +81,46 @@ class Project extends Model
     public function projectContracts()
     {
         return $this->hasMany(ProjectContract::class);
+    }
+
+    public function getExpectedHoursInMonthAttribute($startDate = null, $endDate = null)
+    {
+        $startDate = $startDate ?? $this->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
+        $daysInMonth = count($this->getWorkingDaysList($startDate, $endDate));
+        $teamMembers = $this->getTeamMembers()->get();
+        $currentExpectedEffort = 0;
+
+        foreach ($teamMembers as $teamMember) {
+            $currentExpectedEffort += $teamMember->daily_expected_effort * $daysInMonth;
+        }
+
+        return round($currentExpectedEffort, 2);
+    }
+
+    public function getHoursBookedForMonth($monthToSubtract = 1, $startDate = null, $endDate = null)
+    {
+        $startDate = $startDate ?: $this->client->getMonthStartDateAttribute($monthToSubtract);
+        $endDate = $endDate ?: $this->client->getMonthEndDateAttribute($monthToSubtract);
+
+        return $this->getAllTeamMembers->sum(function ($teamMember) use ($startDate, $endDate) {
+            if (! $teamMember->projectTeamMemberEffort) {
+                return 0;
+            }
+
+            return $teamMember->projectTeamMemberEffort()
+                ->where('added_on', '>=', $startDate)
+                ->where('added_on', '<=', $endDate)
+                ->sum('actual_effort');
+        });
+    }
+
+    public function getVelocityForMonthAttribute($monthToSubtract, $startDate = null, $endDate = null)
+    {
+        $startDate = $startDate ?? $this->client->month_start_date;
+        $endDate = $endDate ?? $this->client->month_end_date;
+
+        return $this->getExpectedHoursInMonthAttribute($startDate, $endDate) ? round($this->getHoursBookedForMonth($monthToSubtract, $startDate, $endDate) / ($this->getExpectedHoursInMonthAttribute($startDate, $endDate)), 2) : 0;
     }
 
     public function getCurrentHoursForMonthAttribute()

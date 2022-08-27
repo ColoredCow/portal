@@ -10,4 +10,7 @@
     <li class="nav-item">
         <a class="nav-item nav-link {{  (Request::is('effortreport/employee.*')) ? 'active' : '' }}" href="{{ route('effortreport.barGraph', $employee) }}"><i class="fa fa-bar-chart"></i>&nbsp;Effort Report</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-item nav-link {{ Request::is('hr/employee-basic-details*') ? 'active' : ' ' }}" href="{{ route('employees.basic.details', $employee) }}"><i class="fa fa-details"></i>&nbsp;Basic Details</a>
+    </li>
 </ul>
