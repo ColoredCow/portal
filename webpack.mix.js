@@ -33,4 +33,7 @@ mix.js('Modules/Project/Resources/assets/js/app.js', 'public/js/project.js')
 mix.js('Modules/Client/Resources/assets/js/app.js', 'public/js/client.js')
 	.sass('Modules/Client/Resources/assets/sass/app.scss', 'public/css/client.css');
 
+mix.js('Modules/EffortReport/Resources/assets/js/app.js', 'public/js/effortreport.js')
+	.sass('Modules/EffortReport/Resources/assets/sass/app.scss', 'public/css/effortreport.css');
+
 mix.version();
