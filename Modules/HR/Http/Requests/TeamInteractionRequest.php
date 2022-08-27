@@ -16,8 +16,7 @@ class TeamInteractionRequest extends FormRequest
         return [
             'location' => 'required|string',
             'date' => 'required|date',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'timing' => 'required|date_format:H:i',
             'applicant_name' => 'required|string|exists:hr_applicants,name',
         ];
     }
