@@ -3,6 +3,7 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use App\Helpers\FileHelper;
+use DateTime;
 use App\Models\Setting;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
@@ -32,6 +34,20 @@ abstract class ApplicationController extends Controller
     public function __construct(ApplicationService $service)
     {
         $this->service = $service;
+    }
+    public function finish(Request $request)
+    {
+        $ApplicationRound = ApplicationRound::find($request->documentId);
+        $meetDate = new DateTime($request->duration);
+        $scheduleDate = new DateTime($ApplicationRound->scheduled_date);
+        $interval = $meetDate->diff($scheduleDate);
+        $meetDuration = $interval->format('%H:%i:%s');
+        $meet_Duration = new DateTime($meetDuration);
+        $ApplicationRound->meeting_duration= $meet_Duration;
+        $ApplicationRound->save();
+        return response()->json([
+          'status'=>200, 'meet_duration'=> $ApplicationRound->meeting_duration->format('H:i:s'),
+        ]);
     }
 
     /**

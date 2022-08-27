@@ -1644,3 +1644,27 @@ $("#updateEmail").on("click", function() {
 $("#interactionErrorModalCloseBtn").click(function() {
 	$("#InteractionError").toggleClass("d-none");
 });
+
+$(document).on('click','.finish_interview',function(e){
+		e.preventDefault();
+		console.log("Hello");
+		var dID = $('.finish_interview').val();
+		console.log(dID);
+		$('#meeting_time').hide();
+		var duration = new Date().toLocaleString();
+		console.log(duration);
+		
+		$.ajax({
+		 type: "GET",
+		 url: "/hr/recruitment/finishinterview",
+		 data: {'documentId':dID,'duration':duration},
+		 dataType: "json",
+		 success: function(response){
+			console.log(response.meet_duration);
+			// $('#meet_time').type(hidden);
+			$('#meet_time').hide();
+			// $('#meeting_time').type("Text");
+			$('#meeting_time').show();
+		 }
+	});
+});

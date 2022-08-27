@@ -105,6 +105,20 @@
                                                             {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
                                                     @endif
                                                 </div>
+                                                @if ($applicationRound->scheduled_date)
+                                                    @if ($applicationRound->hangout_link)
+                                                        @if($applicationRound->meeting_duration!= NULL)
+                                                            <input type="Text" readonly="readonly" name="meeting_time"
+                                                            id="meeting_time"
+                                                            class="form-control form-control-sm"
+                                                            value="{{"$applicationRound->meeting_duration"}}">
+                                                        @else
+                                                            <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-1 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
+                                                            <input type="Text" style="display: none;" readonly="readonly" name="meeting_time"
+                                                            id="meeting_time" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
+                                                        @endif
+                                                    @endif
+                                                @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
                                                     data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}">
                                                     <i class="fa fa-pencil"></i>
@@ -122,7 +136,7 @@
                                                 <div class="card-body">
                                                     @if (!$applicationRound->round_status)
                                                         <div class="form-row">
-                                                            <div class="form-group col-md-5">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
                                                                     class="fz-14 leading-none text-secondary w-100p">
                                                                     <div>
@@ -152,8 +166,8 @@
                                                                 @endif
                                                                 @endif
                                                                 </div>
-                                                                <div class="form-group col-md-5">
-                                                                    <label for="scheduled_date"
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="scheduled_time"
                                                                         class="fz-14 leading-none text-secondary w-100p">
                                                                         <div>
                                                                             <span>Scheduled Time</span>
@@ -161,6 +175,20 @@
                                                                     </label>
                                                                     @if ($applicationRound->scheduled_date)
                                                                         <input type="Time" name="scheduled_time"
+                                                                            id="scheduled_time"
+                                                                            class="form-control form-control-sm"
+                                                                            value="{{ $applicationRound->scheduled_date->toTimeString()}}">
+                                                                    @endif
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="expected_time"
+                                                                        class="fz-14 leading-none text-secondary w-100p">
+                                                                        <div>
+                                                                            <span>Expected End Time</span>
+                                                                        </div>
+                                                                    </label>
+                                                                    @if ($applicationRound->scheduled_date)
+                                                                        <input type="Time" readonly="readonly" name="scheduled_time"
                                                                             id="scheduled_time"
                                                                             class="form-control form-control-sm"
                                                                             value="{{ $applicationRound->scheduled_date->toTimeString()}}">
@@ -402,7 +430,20 @@
                                                             {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
                                                     @endif
                                                 </div>
-
+                                                @if ($applicationRound->scheduled_date)
+                                                    @if ($applicationRound->hangout_link)
+                                                        @if($applicationRound->meeting_duration!= NULL)
+                                                            <input type="Text" readonly="readonly" name="meeting_time"
+                                                            id="meeting_time"
+                                                            class="form-control form-control-sm"
+                                                            value="{{"$applicationRound->meeting_duration"}}">
+                                                        @else
+                                                            <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-1 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
+                                                            <input type="Text" style="display: none;" readonly="readonly" name="meeting_time"
+                                                            id="meeting_time"class="form-control form-control-sm"value="{{"$applicationRound->meeting_duration"}}">
+                                                        @endif
+                                                    @endif
+                                                @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
                                                     data-toggle="collapse"
                                                     data-target="#pre-trial-collapse_{{ $loop->iteration }}"><i
@@ -615,7 +656,7 @@
                                                 <div class="card-body">
                                                     @if (!$applicationRound->round_status)
                                                         <div class="form-row">
-                                                            <div class="form-group col-md-5">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
                                                                     class="fz-14 leading-none text-secondary w-100p">
                                                                     <div>
@@ -632,8 +673,8 @@
                                                                     @endif
                                                                     @endif
                                                                     </div>
-                                                                    <div class="form-group col-md-5">
-                                                                        <label for="scheduled_date"
+                                                                    <div class="form-group col-md-4">
+                                                                        <label for="scheduled_time"
                                                                             class="fz-14 leading-none text-secondary w-100p">
                                                                             <div>
                                                                                 <span>Scheduled Time</span>
@@ -641,6 +682,20 @@
                                                                         </label>
                                                                         @if ($applicationRound->scheduled_date)
                                                                             <input type="Time" name="scheduled_time"
+                                                                                id="scheduled_time"
+                                                                                class="form-control form-control-sm"
+                                                                                value="{{ $applicationRound->scheduled_date->toTimeString()}}">
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="form-group col-md-4">
+                                                                        <label for="expected_time"
+                                                                            class="fz-14 leading-none text-secondary w-100p">
+                                                                            <div>
+                                                                                <span>Expected End Time</span>
+                                                                            </div>
+                                                                        </label>
+                                                                        @if ($applicationRound->scheduled_date)
+                                                                            <input type="Time" readonly="readonly" name="scheduled_time"
                                                                                 id="scheduled_time"
                                                                                 class="form-control form-control-sm"
                                                                                 value="{{ $applicationRound->scheduled_date->toTimeString()}}">
@@ -883,6 +938,20 @@
                                                 <span>Conducted on:
                                                     {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
                                             @endif
+                                            @if ($applicationRound->scheduled_date)
+                                                @if ($applicationRound->hangout_link)
+                                                 @if($applicationRound->meeting_duration!= NULL)
+                                                 <input type="Text" readonly="readonly" name="meeting_time"
+                                                 id="meeting_time"
+                                                 class="form-control form-control-sm"
+                                                 value="{{"$applicationRound->meeting_duration"}}">
+                                                 @else
+                                                 <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-1 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
+                                                 <input type="Text" style="display: none;" readonly="readonly" name="meeting_time"
+                                                 id="meeting_time" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
+                                                  @endif
+                                                @endif
+                                            @endif
                                         </div>
                                         <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse"
                                             data-target="#collapse_{{ $loop->iteration }}"><i class="fa fa-pencil"></i>
@@ -1100,7 +1169,7 @@
                                                 @if (!$applicationRound->round_status)
                                                     <div class="form-row">
                                                         @if ($application->latestApplicationRound->round->name != "Telephonic Interview"  && $applicationRound->round->name != "Team Interaction Round")
-                                                            <div class="form-group col-md-5">
+                                                            <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
                                                                     class="fz-14 leading-none text-secondary w-100p">
                                                                     <div>
@@ -1130,8 +1199,8 @@
                                                                 @endif
                                                                 @endif
                                                                 </div>
-                                                                <div class="form-group col-md-5">
-                                                                    <label for="scheduled_date"
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="scheduled_time"
                                                                         class="fz-14 leading-none text-secondary w-100p">
                                                                         <div>
                                                                             <span>Scheduled Time</span>
@@ -1142,6 +1211,26 @@
                                                                             id="scheduled_time"
                                                                             class="form-control form-control-sm"
                                                                             value="{{ $applicationRound->scheduled_date->toTimeString()}}">
+                                                                    @endif
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="expected_time"
+                                                                        class="fz-14 leading-none text-secondary w-100p">
+                                                                        <div>
+                                                                            <span>Expected End Time</span>
+                                                                        </div>
+                                                                    </label>
+                                                                    @if ($applicationRound->scheduled_date)
+                                                                    @php
+                                                                        $date1 = new DateTime($applicationRound->scheduled_date);
+                                                                        $date2 = new DateTime($applicationRound->scheduled_end);
+                                                                        $time_diff = $date2->diff($date1);
+                                                                        $time=($time_diff->days * 24) + $time_diff->h;
+                                                                    @endphp
+                                                                        <input type="Text" readonly="readonly" name="expected_time"
+                                                                            id="expected_time"
+                                                                            class="form-control form-control-sm"
+                                                                            value="{{"$time hours"}}">
                                                                     @endif
                                                                 </div>
                                                             <div class="form-group col-md-4">
@@ -1340,3 +1429,4 @@
         </div>
     </div>
 @endsection
+    

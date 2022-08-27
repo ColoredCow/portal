@@ -89,6 +89,7 @@ Route::middleware('auth')->group(function () {
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
+            Route::get('/finishinterview','JobApplicationController@finish')->name('finishinterview');
 
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
@@ -116,3 +117,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
+Route::get('/finish_Interview','ApplicationController@finish' )->name('finish_Interview');
