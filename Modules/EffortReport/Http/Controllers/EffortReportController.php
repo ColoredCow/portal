@@ -15,57 +15,55 @@ use Carbon\Carbon;
 
 class EffortReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function barGraph(Request $request, $employeeId)
-    {
-        $employee = User::find($employeeId);
+	/**
+	 * Display a listing of the resource.
+	 * @return Renderable
+	 */
+	public function barGraph(Request $request, $employeeId)
+	{
+		$employee = User::find($employeeId);
 
-        $projectTeamMembers = $employee->projectTeamMembers;
+		$projectTeamMembers = $employee->projectTeamMembers;
 
-        $result = [];
+		$result = [];
 
-        $start = Carbon::now()->addDays(-7);
-        $end = Carbon::now();
-        $dates = [];
+		$start = Carbon::now()->addDays(-7);
+		$end = Carbon::now();
+		$dates = [];
 
-        for($i = 0; $i < $end->diffInDays($start); $i++){
-            $dates[] = (clone $start)->addDays($i)->format('Y-m-d');
-        }
+		for ($i = 0; $i < $end->diffInDays($start); $i++) {
+			$dates[] = (clone $start)->addDays($i)->format('Y-m-d');
+		}
 
-        $color = ['#ff0080', '#00bfff', '#ffff00'];
-       
-        foreach($projectTeamMembers as $projectTeamMember)
-        {
-            foreach($dates as $date)
-            {
-                $result[$projectTeamMember->project->name][$date] = projectTeamMemberEffort::whereDate('added_on', $date)
-                ->where('project_team_member_id', $projectTeamMember->team_member_id)->sum('actual_effort');
-            }
-        }
+		$color = ['#ff0080', '#00bfff', '#ffff00'];
 
-        $projectNames =  array_keys($result);
+		foreach ($projectTeamMembers as $projectTeamMember) {
+			foreach ($dates as $date) {
+				$result[$projectTeamMember->project->name][$date] = projectTeamMemberEffort::whereDate('added_on', $date)
+					->where('project_team_member_id', $projectTeamMember->team_member_id)->sum('actual_effort');
+			}
+		}
 
-        $efforsts = [];
+		$projectNames =  array_keys($result);
 
-        foreach($projectNames as $projectName) {
-            $projectEffort = [];
-            foreach($dates as $date) {
-              $projectEffort[] = $result[$projectName][$date];  
-            }
+		$efforsts = [];
 
-            $efforsts[] = $projectEffort;
-        }
+		foreach ($projectNames as $projectName) {
+			$projectEffort = [];
+			foreach ($dates as $date) {
+				$projectEffort[] = $result[$projectName][$date];
+			}
 
-        $chartData = array(
-        'labels' => $dates,
-        'colors' => $color,
-        'projects' => $projectNames,
-        'efforts' => $efforsts
-        );
-        
-        return view('effortreport::bar-graph', ['employee' => $employee, 'chartData' => $chartData]);
-    }
+			$efforsts[] = $projectEffort;
+		}
+
+		$chartData = array(
+			'labels' => $dates,
+			'colors' => $color,
+			'projects' => $projectNames,
+			'efforts' => $efforsts
+		);
+
+		return view('effortreport::bar-graph', ['employee' => $employee, 'chartData' => $chartData]);
+	}
 }
