@@ -16,7 +16,7 @@ class ApplicationEvaluationTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
             ApplicationEvaluation::factory()
-                ->count(4)
+                ->count(10)
                 ->create();
         }
     }

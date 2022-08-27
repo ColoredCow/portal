@@ -27,7 +27,7 @@ class HrApplicationsFactory extends Factory
             'hr_applicant_id' => Applicant::factory()->create()->id,
             'hr_job_id' => Job::factory()->create()->id,
             'resume' => 'https://coloredcow.com/wp-content/uploads/2022/08/sample.pdf',
-            'status' => array_rand(config('hr.status')),
+            'status' => array_rand(config('hr.tags')),
         ];
     }
 }

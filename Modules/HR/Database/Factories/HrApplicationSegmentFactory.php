@@ -25,9 +25,11 @@ class HrApplicationSegmentFactory extends Factory
     public function definition()
     {
         $hrEvaluationSegmentId = Segment::first();
+        $application = Application::factory()->create();
+        $application->tag($application->status);
 
         return [
-            'application_id' => Application::factory()->create()->id,
+             'application_id' => $application->id,
             'application_round_id' => ApplicationRound::factory()->create()->id,
             'evaluation_segment_id' => $hrEvaluationSegmentId,
             'comments' => $this->faker->text(),

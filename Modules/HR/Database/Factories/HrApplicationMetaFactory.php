@@ -22,10 +22,13 @@ class HrApplicationMetaFactory extends Factory
      */
     public function definition()
     {
+        $application = Application::factory()->create();
+        $application->tag($application->status);
+
         return [
-            'hr_application_id'=>  Application::factory()->create()->id,
-            'value'=> $this->faker->text(),
-            'key'=> 'form-data'
+            'hr_application_id' => $application->id,
+            'value' => $this->faker->text(),
+            'key' => 'form-data'
         ];
     }
 }

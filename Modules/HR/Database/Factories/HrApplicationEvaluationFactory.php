@@ -25,9 +25,11 @@ class HrApplicationEvaluationFactory extends Factory
     public function definition()
     {
         $faker = Faker::create();
+        $application = Application::factory()->create();
+        $application->tag($application->status);
 
         return [
-            'application_id' => Application::factory()->create()->id,
+            'application_id' => $application->id,
             'application_round_id'=> ApplicationRound::factory()->create()->id,
             'evaluation_id'=> $this->getEvaluationId()[array_rand($this->getEvaluationId())],
             'option_id'=>  $this->getOptionId()[array_rand($this->getOptionId())],
