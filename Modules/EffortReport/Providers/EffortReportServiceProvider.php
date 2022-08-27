@@ -7,14 +7,8 @@ use Illuminate\Database\Eloquent\Factory;
 
 class EffortReportServiceProvider extends ServiceProvider
 {
-    /**
-     * @var string $moduleName
-     */
     protected $moduleName = 'EffortReport';
 
-    /**
-     * @var string $moduleNameLower
-     */
     protected $moduleNameLower = 'effortreport';
 
     /**
