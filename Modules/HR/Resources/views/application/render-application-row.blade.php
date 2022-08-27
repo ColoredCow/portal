@@ -37,7 +37,7 @@
             <div class="d-flex text-white my-2">
             
                 <a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}" class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-                @if ($application->latestApplicationRound->scheduledPerson->id == auth()->user()->id)
+                @if ($application->latestApplicationRound->scheduledPerson->id == auth()->user()->id || $application->status != "new")
                     <a href="{{ route('applications.job.edit', $application->id) }}" class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
                 @else
                     <a data-target="#evaluation{{$application->id}}" role="button" class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
