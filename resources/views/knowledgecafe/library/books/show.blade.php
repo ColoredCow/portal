@@ -74,11 +74,11 @@
                     <button class="btn btn-primary p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
                 </span>
                 <span class="d-block mb-1">
-                    <button class="btn btn-secondary" @click="markBook(true)" v-if="!isRead">I have read this book</button>
+                    <button class="btn btn-secondary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
                     <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
                 </span>
                 <span class="d-block mb-1">
-                    <button type="button" class="btn btn-warning" @click="addToBookAMonth()" v-if="!isBookAMonth">Pick as Book of the Month</button>
+                    <button type="button" class="btn btn-warning font-italic" @click="addToBookAMonth()" v-if="!isBookAMonth">Pick as Book of the Month</button>
                     <button type="button" class="btn btn-danger font-italic" @click="removeFromBookAMonth()" v-else>Unpick as Book of the Month</button>
                 </span>
             </div>
