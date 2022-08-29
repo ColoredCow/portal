@@ -70,6 +70,7 @@ class SalaryController extends Controller
 
     public function salaryReport()
     {
+        $this->authorize('isSuperAdmin');
         $employees = Employee::get();
 
         return view('salary::salary.index')->with('employees', $employees);

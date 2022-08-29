@@ -11,8 +11,10 @@
 |
 */
 
+use Modules\Salary\Http\Controllers\SalaryController;
+
 Route::prefix('employee-salary')->middleware('auth')->group(function () {
-    Route::get('/', 'SalaryController@index')->name('salary.index');
+    // Route::get('/', 'SalaryController@index')->name('salary.index');
     Route::get('/employee/{employee}/', 'SalaryController@employee')->name('salary.employee');
     Route::post('/employee/store/{employee}', 'SalaryController@storeSalary')->name('salary.employee.store');
 });
@@ -24,4 +26,5 @@ Route::prefix('salary-settings')->middleware('auth')->group(function () {
 
 Route::prefix('salary')->middleware('auth')->group(function () {
     Route::get('/', 'SalaryController@salaryReport')->name('salary.report');
+    // Route::get('/salary',[SalaryController::class,'index'])->name('Salary.index');
 });

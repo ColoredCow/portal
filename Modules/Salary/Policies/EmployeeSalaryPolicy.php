@@ -68,4 +68,8 @@ class EmployeeSalaryPolicy
     {
         return $user->hasPermissionTo('employee_salary.view');
     }
+    public function isSuperAdmin(User $user)
+    {
+        return $user->hasPermissionTo('employee_salary.view');
+    }
 }
