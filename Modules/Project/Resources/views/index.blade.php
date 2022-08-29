@@ -8,7 +8,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    @endif      
+    @endif
     <div class='d-none d-md-flex justify-content-between'>
         @include('project::menu_header')
         @can('projects.create')
