@@ -17,7 +17,6 @@ class CreateExpenseFilesTable extends Migration
             $table->bigIncrements('expense_id');
             $table->string('upload_image')->nullable();
             $table->string('upload_pdf')->nullable();
-
         });
     }
 

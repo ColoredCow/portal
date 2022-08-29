@@ -11,8 +11,8 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        $expenseData = DB::table('expense')->get()->toArray(); 
-        return view('expense::index')->with('expenses',$expenseData);
+        $expenseData = DB::table('expense')->get()->toArray();
+        return view('expense::index')->with('expenses', $expenseData);
     }
     
     public function create()
