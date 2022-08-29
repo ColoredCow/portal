@@ -36,10 +36,10 @@ class Applicant extends Model
             'linkedin' => isset($attr['linkedin']) ? $attr['linkedin'] : null,
         ]);
 
-        $job = Job::where('opportunity_id', $attr['opportunity_id'])->first();
+        $jobId = $attr['hr_job_id'] ?? Job::where('opportunity_id', $attr['opportunity_id'])->first()->id;
         $hr_channel_id = ($attr['hr_channel_id']) ?? HrChannel::select('id')->where('name', 'Website')->first()->id;
         $application = Application::_create([
-            'hr_job_id' => $job->id,
+            'hr_job_id' => $jobId,
             'hr_applicant_id' => $applicant->id,
             'resume' => $attr['resume'] ?? '',
             'resume_file' => $attr['resume_file'] ?? '',

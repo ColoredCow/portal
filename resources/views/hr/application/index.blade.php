@@ -218,7 +218,7 @@
                 <div class="dropdown-menu" aria-labelledby="roundsDropdown">
                     <span class="dropdown-item-text fz-12">Round wise filter</span>
                     @foreach ($details as $detail)
-                    @php
+                        @php
                             $target =  route(request()->route()->getName(), ['details' => [$detail->id]]);
                             $class = in_array($detail->id, request()->get('details') ?? []) ? 'visible' : 'invisible';
                         @endphp
@@ -236,8 +236,8 @@
                     <span class="dropdown-item-text fz-12">Filter by assignee</span>
                     @foreach ($assignees as $assignee)
                     @php
-                    $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
-                    $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
+                        $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
+                        $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
                     @endphp
                     <a class="dropdown-item" href="{{ $target }}">
                         <i class="fa fa-check fz-12 {{ $class }}"></i>
@@ -258,7 +258,7 @@
                             $tag->id
                             ]]);
                             $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
-                            @endphp
+                        @endphp
                         <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
                             <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
                             <div class="rounded w-13 h-13 d-inline-block mr-1"
