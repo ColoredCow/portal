@@ -58,10 +58,7 @@ class SettingController extends Controller
         $validated = $request->validated();
 
         $this->service->createOrganization($validated);
-       
+
         return back()->with('message', 'Organization Details Added Successfully');
-
     }
-
-
 }
