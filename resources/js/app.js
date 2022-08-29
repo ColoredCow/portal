@@ -1786,20 +1786,20 @@ $("#interactionErrorModalCloseBtn").click(function () {
 	$("#InteractionError").toggleClass("d-none");
 });
 
-$(document).on("click", ".finish_interview", function(e) {
-  e.preventDefault();
-  var dID = $(".finish_interview").val();
-  $("#meeting_time").hide();
-  var duration = new Date().toLocaleString();
-  $.ajax({
-    type: "GET",
-    url: "/hr/recruitment/finishinterview",
-    data: { documentId: dID, duration: duration },
-    dataType: "json",
-    success: function(response) {
-      console.log(response.meet_duration);
-      $("#meet_time").hide();
-      $("#meeting_time").show();
-    },
-  });
+$(document).on("click", ".finish_interview", function (e) {
+	e.preventDefault();
+	var dID = $(".finish_interview").val();
+	$("#meeting_time").hide();
+	var duration = new Date().toLocaleString();
+	$.ajax({
+		type: "GET",
+		url: "/hr/recruitment/finishinterview",
+		data: { documentId: dID, duration: duration },
+		dataType: "json",
+		success: function (response) {
+			console.log(response.meet_duration);
+			$("#meet_time").hide();
+			$("#meeting_time").show();
+		},
+	});
 });
