@@ -213,7 +213,23 @@
     <table class="table table-striped table-bordered" id="applicants_table">
         <thead class="thead-dark sticky-top">
             <th>Name</th>
-            <th>Details</th>
+            <th>
+                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="roundsDropdown">Details</span>
+                <div class="dropdown-menu" aria-labelledby="roundsDropdown">
+                    <span class="dropdown-item-text fz-12">Round wise filter</span>
+                    @foreach ($details as $detail)
+                    @php
+                            $target =  route(request()->route()->getName(), ['details' => [$detail->id]]);
+                            $class = in_array($detail->id, request()->get('details') ?? []) ? 'visible' : 'invisible';
+                        @endphp
+                        <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                            <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
+                            <span>{{ $detail->name }}</span>
+                        </a>
+                     @endforeach
+                </div>
+            </th>
+                
             <th>
                 <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="assigneeDropdown">Assignee</span>
                 <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
@@ -242,7 +258,7 @@
                             $tag->id
                             ]]);
                             $class = in_array($tag->id, request()->get('tags') ?? []) ? 'visible' : 'invisible';
-                        @endphp
+                            @endphp
                         <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
                             <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
                             <div class="rounded w-13 h-13 d-inline-block mr-1"

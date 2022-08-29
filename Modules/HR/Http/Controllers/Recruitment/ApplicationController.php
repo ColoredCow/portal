@@ -16,6 +16,7 @@ use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\round;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
@@ -65,7 +66,8 @@ abstract class ApplicationController extends Controller
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
-            'round' =>str_replace('-', ' ', request()->get('round'))
+            'round' =>str_replace('-', ' ', request()->get('round')),
+            'details' => request()->get('details')
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
@@ -81,7 +83,7 @@ abstract class ApplicationController extends Controller
             ->select('hr_applications.*')
             ->latest()
             ->paginate(config('constants.pagination_size'))
-            ->appends(request()->except('page'));
+            ->appends(request()->except('page'));   
         $countFilters = array_except($filters, ['status', 'round']);
         $attr = [
             'applications' => $applications,
@@ -123,6 +125,7 @@ abstract class ApplicationController extends Controller
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
+        $attr['details'] = round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();

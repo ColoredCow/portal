@@ -135,6 +135,8 @@ class Application extends Model
                     break;
                 case 'round':
                     $query->filterByRoundName($value);
+                case 'details':
+                    $query->filterBydetails($value);
             }
         }
 
@@ -142,7 +144,7 @@ class Application extends Model
     }
 
     /**
-     * Apply filter on applications based on their show status.
+     * Apply filter on applications based on their show qustatus.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $status
@@ -264,6 +266,12 @@ class Application extends Model
                 ->whereHas('round', function ($subQuery) use ($round) {
                     return $subQuery->where('name', $round);
                 });
+        });
+    }
+    public function scopeFilterBydetails($query, $id)
+    {
+        return $query->whereHas('latestApplicationRound', function ($subQuery) use ($id) {
+            return $subQuery->where('is_latest', true)->where('hr_round_id', $id);
         });
     }
 
