@@ -13,7 +13,7 @@
         </div>
         @can('library_books.create')
             <div class="col-6">
-                <a href="{{ route('books.create') }}" class="btn btn-success float-right">Add New Book</a>
+                <a href="{{ route('books.create') }}" class="btn btn-success float-right"><i class="fa fa-plus mr-1"></i> Add New Book</a>
             </div>
         @endcan
     </div>
@@ -22,7 +22,7 @@
             <input type="text" data-value="{{ request()->input('search') }}" 
             class="form-control" id="search_input" placeholder="search all books"
             v-model="searchKey">
-            <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
+            <button class="btn btn-info ml-2 py-1.5" @click="searchBooks()">Search</button>
         </div>
         @if(session('disable_book_suggestion'))
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
