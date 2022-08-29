@@ -13,9 +13,10 @@ class ExpenseController extends Controller
     public function index()
     {
         $expenseData = DB::table('expense')->get()->toArray();
+
         return view('expense::index')->with('expenses', $expenseData);
     }
-    
+
     public function create()
     {
         return view('expense::expenses.create');
@@ -39,7 +40,5 @@ class ExpenseController extends Controller
         $expense->save();
 
         return redirect()->route('expense.index');
-
-        // return view('expense::index')->with('success', 'Expense has been created successfully!');
     }
 }

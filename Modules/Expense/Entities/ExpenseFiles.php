@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ExpenseFiles extends Model
 {
     protected $table = 'expense_files';
-    
+
     protected $guarded = [];
 
     protected $fillable = [
