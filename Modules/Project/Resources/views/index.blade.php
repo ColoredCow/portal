@@ -8,12 +8,12 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    @endif
+    @endif      
     <div class='d-none d-md-flex justify-content-between'>
         @include('project::menu_header')
         @can('projects.create')
             <span class='mt-4'>
-                <a href= "{{ route('project.create') }}" class="btn btn-info text-white">{{ __('Add new project') }}</a>
+                <a href= "{{ route('project.create') }}" class="btn btn-success text-white"> <div class="fa fa-plus mr-1"> {{ __('Add new project') }} </div> </a>
             </span>
         @endcan
     </div>
