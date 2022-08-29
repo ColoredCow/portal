@@ -16,7 +16,7 @@ use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\Job;
-use Modules\HR\Entities\round;
+use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;

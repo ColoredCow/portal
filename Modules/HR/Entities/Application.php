@@ -135,6 +135,7 @@ class Application extends Model
                     break;
                 case 'round':
                     $query->filterByRoundName($value);
+                    break;
                 case 'details':
                     $query->filterBydetails($value);
             }
