@@ -44,10 +44,10 @@ abstract class ApplicationController extends Controller
         $interval = $meetDate->diff($scheduleDate);
         $meetDuration = $interval->format('%H:%i:%s');
         $meet_Duration = new DateTime($meetDuration);
-        $ApplicationRound->meeting_duration= $meet_Duration;
+        $ApplicationRound->meeting_duration = $meet_Duration;
         $ApplicationRound->save();
         return response()->json([
-          'status'=>200, 'meet_duration'=> $ApplicationRound->meeting_duration->format('H:i:s'),
+            'status' => 200, 'meet_duration' => $ApplicationRound->meeting_duration->format('H:i:s'),
         ]);
     }
     /**
