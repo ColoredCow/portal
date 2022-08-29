@@ -6,6 +6,12 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
+use Modules\ProjectContract\Rules\ProjectNameExist;
+use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
+use Modules\Project\Services\ProjectService;
+use Modules\Project\Contracts\ProjectServiceContract;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Modules\ProjectContract\Entities\ProjectContractMeta;
 
 class ProjectContractController extends Controller
 {
@@ -26,62 +32,24 @@ class ProjectContractController extends Controller
      */
     public function create()
     {
-        $clients = Client::all();
+        $service = app(ProjectService::class);
+        $clients = $service->getClients();
 
-        return view('project::create')->with('clients', $clients);
+        return view('projectcontract::create')->with('clients', $clients);
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  * @param Request $request3
-    //  * @return Renderable
-    //  */
-    // public function store(ProjectContractRequest $request)
-    // {
-    //     $validated = $request->validated();
-    //     $this->service->store($validated);
-
-    //     return redirect(route('projectcontract.index'));
-    // }
-
-    /*
-     * Show the specified resource.
-    //  * @param int $id
-    //  * @return Renderable
+    /**
+     * Store a newly created resource in storage.
+     * @param Request $request3
+     * @return Renderable
      */
-    // public function show($id)
-    // {
-    //     return view('projectcontract::show');
-    // }
+    public function store(ProjectContractRequest $request)
+    {
+        $validated = $request->validated();
+        ProjectContractmeta::create($validated);
 
-    /*
-     * Show the form for editing the specified resource.
-    //  * @param int $id
-    //  * @return Renderable
-     */
-    // public function edit($id)
-    // {
-    //     return view('projectcontract::edit');
-    // }
+        $clients = Client::all();
 
-    /*
-     * Update the specified resource in storage.
-    //  * @param Request $request
-    //  * @param int $id
-    //  * @return Renderable
-     */
-    // public function update(Request $request, $id)
-    // {
-    //     return view('projectcontract::update');
-    // }
-
-    /*
-     * Remove the specified resource from storage.
-    //  * @param int $id
-    //  * @return Renderable
-     */
-    // public function destroy($id)
-    // {
-    //     return view('projectcontract::destroy');
-    // }
+        return view('projectcontract::index', compact('clients'))->with('success', 'Project Contract created successfully');
+    }
 }

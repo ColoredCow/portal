@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProjectContractTable extends Migration
+class CreateProjectContractmetaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProjectContractTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_contract', function (Blueprint $table) {
+        Schema::create('project_contract_meta', function (Blueprint $table) {
             $table->id();
             $table->string('client_name');
             $table->string('website_url');
@@ -35,6 +35,6 @@ class CreateProjectContractTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_contract');
+        Schema::dropIfExists('project_contract_meta');
     }
 }
