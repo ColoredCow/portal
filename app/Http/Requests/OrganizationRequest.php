@@ -24,38 +24,14 @@ class OrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'required',
-                'string'
-            ],
-            'address' => [
-                'required',
-                'string'
-            ],
-            'annual_sales' => [
-                'required',
-                'integer'
-            ],
-            'members' => [
-                'required',
-                'integer'
-            ],
-            'industry' => [
-                'required',
-                'string'
-            ],
-            'email' => [
-                'required',
-                'string'
-            ],
-            'billing_details' => [
-                'required',
-                'string'
-            ],
-            'website' => [
-                'required',
-                'string'
-            ],
-        ];
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'annual_sales' => 'required|integer',
+            'members' => 'required|integer',
+            'industry' => 'required|string',
+            'email' => 'required|string',
+            'billing_details' => 'required|string',
+            'website' => 'required|string',
+         ];
     }
 }

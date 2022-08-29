@@ -6,11 +6,17 @@ use App\Helpers\ContentHelper;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\SettingRequest;
-use App\Models\Organization;
 use App\Http\Requests\OrganizationRequest;
+
+use App\Services\OrganizationService;
 
 class SettingController extends Controller
 {
+    public function __construct(OrganizationService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
         $this->authorize('view', Setting::class);
@@ -49,18 +55,13 @@ class SettingController extends Controller
 
     public function createOrganization(OrganizationRequest $request)
     {
-        $validatedData = $request->validated();
-        $org = Organization::create([
-            'name' => $validatedData['name'],
-            'address' => $validatedData['address'],
-            'annual_sales' => $validatedData['annual_sales'],
-            'members' => $validatedData['members'],
-            'industry' => $validatedData['industry'],
-            'email' => $validatedData['email'],
-            'billing_details' => $validatedData['billing_details'],
-            'website' => $validatedData['website'],
-        ]);
+        $validated = $request->validated();
 
+        $this->service->createOrganization($validated);
+       
         return back()->with('message', 'Organization Details Added Successfully');
+
     }
+
+
 }
