@@ -7,7 +7,6 @@ use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\SettingRequest;
 use App\Http\Requests\OrganizationRequest;
-
 use App\Services\OrganizationService;
 
 class SettingController extends Controller
