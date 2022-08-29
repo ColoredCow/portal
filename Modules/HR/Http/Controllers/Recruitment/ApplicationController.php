@@ -3,6 +3,7 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use App\Helpers\FileHelper;
+use DateTime;
 use App\Models\Setting;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
 use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\University;
@@ -34,6 +36,20 @@ abstract class ApplicationController extends Controller
         $this->service = $service;
     }
 
+    public function finish(Request $request)
+    {
+        $ApplicationRound = ApplicationRound::find($request->documentId);
+        $meetDate = new DateTime($request->duration);
+        $scheduleDate = new DateTime($ApplicationRound->scheduled_date);
+        $interval = $meetDate->diff($scheduleDate);
+        $meetDuration = $interval->format('%H:%i:%s');
+        $meet_Duration = new DateTime($meetDuration);
+        $ApplicationRound->meeting_duration= $meet_Duration;
+        $ApplicationRound->save();
+        return response()->json([
+          'status'=>200, 'meet_duration'=> $ApplicationRound->meeting_duration->format('H:i:s'),
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -148,7 +164,6 @@ abstract class ApplicationController extends Controller
         $application = Application::findOrFail($id);
 
         if ($application->latestApplicationRound->hr_round_id == 1) {
-            $application->latestApplicationRound->scheduled_date = today()->toDateString();
             $application->latestApplicationRound->scheduled_end = today()->toDateString();
             $application->latestApplicationRound->scheduled_person_id = auth()->id();
             $application->latestApplicationRound->save();

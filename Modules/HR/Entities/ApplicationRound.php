@@ -55,8 +55,10 @@ class ApplicationRound extends Model
                 if ($application->isNoShow() && Carbon::parse($attr['scheduled_date'])->gt(now())) {
                     $application->markInProgress();
                 }
+                $date = $attr['scheduled_date'];
+                $time = $attr['scheduled_time'];
                 $fillable = [
-                    'scheduled_date' => $attr['scheduled_date'],
+                    'scheduled_date' => "$date . $time",
                     'scheduled_person_id' => $attr['scheduled_person_id'],
                 ];
                 $attr['reviews'] = [];
