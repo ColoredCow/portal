@@ -46,6 +46,7 @@ abstract class ApplicationController extends Controller
         $meet_Duration = new DateTime($meetDuration);
         $ApplicationRound->meeting_duration = $meet_Duration;
         $ApplicationRound->save();
+        
         return response()->json([
             'status' => 200, 'meet_duration' => $ApplicationRound->meeting_duration->format('H:i:s'),
         ]);
