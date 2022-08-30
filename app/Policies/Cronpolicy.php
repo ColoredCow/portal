@@ -25,7 +25,7 @@ class Cronpolicy
      * Determine whether the user can view the model.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Cron  $cron
+     * @param  \App\Models\setting\Cron  $cron
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(User $user, Cron $cron)
@@ -47,7 +47,7 @@ class Cronpolicy
      * Determine whether the user can update the model.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Cron  $cron
+     * @param  \App\Models\setting\Cron  $cron
      * @return \Illuminate\Auth\Access\Response
      */
     public function update(User $user, Cron $cron)
@@ -58,7 +58,7 @@ class Cronpolicy
      * Determine whether the user can delete the model.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Cron  $cron
+     * @param  \App\Models\setting\Cron  $cron
      * @return \Illuminate\Auth\Access\Response
      */
     public function delete(User $user, Cron $cron)
@@ -69,7 +69,7 @@ class Cronpolicy
      * Determine whether the user can restore the model.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Cron  $cron
+     * @param  \App\Models\setting\Cron  $cron
      * @return \Illuminate\Auth\Access\Response
      */
     public function restore(User $user, Cron $cron)
@@ -80,7 +80,7 @@ class Cronpolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @param  \App\Models\Cron  $cron
+     * @param  \App\Models\setting\Cron  $cron
      * @return \Illuminate\Auth\Access\Response
      */
     public function forceDelete(User $user, Cron $cron)
