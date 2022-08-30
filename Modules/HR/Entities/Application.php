@@ -137,7 +137,7 @@ class Application extends Model
                     $query->filterByRoundName($value);
                     break;
                 case 'roundFilters':
-                    $query->filterByroundFilters($value);
+                    $query->filterByRounds($value);
             }
         }
 
@@ -269,7 +269,7 @@ class Application extends Model
                 });
         });
     }
-    public function scopeFilterByroundFilters($query, $id)
+    public function scopeFilterByRounds($query, $id)
     {
         return $query->whereHas('latestApplicationRound', function ($subQuery) use ($id) {
             return $subQuery->where('is_latest', true)->where('hr_round_id', $id);
