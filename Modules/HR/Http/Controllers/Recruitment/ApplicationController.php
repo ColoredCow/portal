@@ -68,7 +68,7 @@ abstract class ApplicationController extends Controller
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
             'round' =>str_replace('-', ' ', request()->get('round')),
-            'details' => request()->get('details')
+            'roundFilters' => request()->get('roundFilters')
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
@@ -126,7 +126,7 @@ abstract class ApplicationController extends Controller
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
-        $attr['details'] = round::orderBy('name')->get();
+        $attr['roundFilters'] = round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();

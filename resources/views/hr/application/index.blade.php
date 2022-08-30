@@ -217,14 +217,14 @@
                 <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="roundsDropdown">Details</span>
                 <div class="dropdown-menu" aria-labelledby="roundsDropdown">
                     <span class="dropdown-item-text fz-12">Round wise filter</span>
-                    @foreach ($details as $detail)
+                    @foreach ($roundFilters as $roundFilter)
                         @php
-                            $target =  route(request()->route()->getName(), ['details' => [$detail->id]]);
-                            $class = in_array($detail->id, request()->get('details') ?? []) ? 'visible' : 'invisible';
+                            $target =  route(request()->route()->getName(), ['roundFilters' => [$roundFilter->id]]);
+                            $class = in_array($roundFilter->id, request()->get('roundFilters') ?? []) ? 'visible' : 'invisible';
                         @endphp
                         <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
                             <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
-                            <span>{{ $detail->name }}</span>
+                            <span>{{ $roundFilter->name }}</span>
                         </a>
                      @endforeach
                 </div>
