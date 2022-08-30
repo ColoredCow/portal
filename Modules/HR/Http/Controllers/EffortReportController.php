@@ -41,7 +41,6 @@ class EffortReportController extends Controller
         }
 
         $projectNames =  array_keys($result);
-
         $efforsts = [];
 
         foreach ($projectNames as $projectName) {
