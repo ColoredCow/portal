@@ -37,11 +37,10 @@ class Cronpolicy
      * Determine whether the user can create models.
      *
      * @param  \Modules\User\Entities\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return \Illuminate\Auth\Access\Response
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('cron.index');
     }
 
     /**
@@ -49,11 +48,10 @@ class Cronpolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Cron  $cron
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return \Illuminate\Auth\Access\Response
      */
     public function update(User $user, Cron $cron)
     {
-        return $user->hasPermissionTo('cron.index');
     }
 
     /**
@@ -61,11 +59,10 @@ class Cronpolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Cron  $cron
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return \Illuminate\Auth\Access\Response
      */
     public function delete(User $user, Cron $cron)
     {
-        return $user->hasPermissionTo('cron.index');
     }
 
     /**
@@ -73,11 +70,10 @@ class Cronpolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Cron  $cron
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return \Illuminate\Auth\Access\Response
      */
     public function restore(User $user, Cron $cron)
     {
-        return $user->hasPermissionTo('cron.index');
     }
 
     /**
@@ -85,11 +81,10 @@ class Cronpolicy
      *
      * @param  \Modules\User\Entities\User  $user
      * @param  \App\Models\Cron  $cron
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return \Illuminate\Auth\Access\Response
      */
     public function forceDelete(User $user, Cron $cron)
-    {  
-        return $user->hasPermissionTo('cron.index'); 
+    {
     }
     public function isSuperAdmin(user $user)
     {
