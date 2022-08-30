@@ -114,6 +114,7 @@ Route::middleware('auth')->group(function () {
                 'show' => 'employees.show',
             ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
+        Route::get('/employee-efforts/{employee}/', 'EffortReportController@barGraph')->name('effortreport.barGraph');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
