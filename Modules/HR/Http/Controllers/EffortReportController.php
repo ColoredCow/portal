@@ -40,6 +40,7 @@ class EffortReportController extends Controller
             }
         }
 
+
         $projectNames =  array_keys($result);
 
         $efforsts = [];
