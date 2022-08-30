@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use App\Helpers\FileHelper;
-use DateTime;
 use App\Models\Setting;
 use App\Models\Tag;
 use Carbon\Carbon;
