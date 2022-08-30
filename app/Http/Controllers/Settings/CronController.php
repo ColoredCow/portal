@@ -10,7 +10,7 @@ class CronController extends Controller
 {
     public function index()
     {
-        $this->authorize('index', 'super-admin');
+        $this->authorize('isSuperAdmin');
 
         // Collects all the content  from the kernel class.
         app()->make(\Illuminate\Contracts\Console\Kernel::class);
@@ -47,7 +47,7 @@ class CronController extends Controller
 
     public function run(string $command)
     {
-        $this->authorize('run', 'super-admin');
+        $this->authorize('isSuperAdmin');
         Artisan::call($command);
 
         return redirect()->route('settings.cron')->with('success', 'Command executed successfully');
