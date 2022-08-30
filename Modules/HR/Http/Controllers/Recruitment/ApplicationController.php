@@ -23,7 +23,6 @@ use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
 use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
-use Modules\HR\Emails\Recruitment\Applicant\OnHold;
 
 abstract class ApplicationController extends Controller
 {

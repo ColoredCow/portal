@@ -29,12 +29,12 @@ class OnHold extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($subject, $body)
     {
         $requestSubject = request()->subject_option_1;
         $requestBody = request()->body_option_1;
-        $this->subject = $requestSubject;
-        $this->body = $requestBody;
+        $this->subject = $requestSubject ?? $subject;
+        $this->body = $requestBody ?? $body;
     }
 
     /**
