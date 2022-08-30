@@ -3,8 +3,7 @@
 <div class="container" id="segments_container">
     <br>
     <br>
-    <div>
-        
+    <div> 
         <div class="d-none alert alert-success fade show" role="alert" id="segmentsuccess">
             <strong>Success!!!</strong>Congratulations!!! New segment successfully created.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -25,34 +24,61 @@
         </div>      
         <br>
 
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>Name</th>
-                <th>Marks</th>
-                <th>Actions</th>
-            </tr>
-            @foreach ($segments as $segment)
-            <tr>
-                <td>
-                    <a href="{{ route('hr.evaluation.segment-parameters', $segment->id) }}">
-                        {{ $segment->name }}
-                    </a>
-                </td>
+        <div class="container">
+            @foreach ($rounds as $round)
+            @foreach ($attr as $key=>$segment)
+            @if ($round->id == $key)
+            <div class="accordion" id="accordion">
+                <div class="accordion-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="form-row">
+                                <div class="form-group col-md-11">
+                                    <h2 class="accordion-header mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            {{ $round->name }}
+                                        </button>
+                                    </h2> 
+                                </div>   
+                                <div class="form-group col-md">
+                                    <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#segmentCollapse_{{ $round->id }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>               
+            <div id="segmentCollapse_{{ $round->id }}" class="collapse" aria-labelledby="headingOne">
+                <div class="accordion-body">
+                    @foreach ($segment as $value)
+                    <div class="card-body">
+                        <div class="d-flex flex-row d-flex justify-content-between">
+                            <h1 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <a href="{{ route('hr.evaluation.segment-parameters', $value->id) }}">
+                                    {{ $value->name }}</a>       
+                                </button>
+                            </h1>
+                            <h5>
+                                {{ $value->parameters->sum('marks') }}
+                            </h5>
+                            <i v-on:click="editSegment({{ $value }})" class="fa fa-edit fz-20 text-theme-green"></i>
 
-                <td>
-                    <h5>{{ $segment->parameters->sum('marks') }}</h5>
-                </td>
-
-                <td>
-                    <i v-on:click="editSegment({{ $segment }})" class="fa fa-edit fz-20 text-theme-green"></i>
-
-                    <i v-on:click="removeSegment({{ $segment }})" class="fa fa-trash fz-20 text-theme-red"></i>
-                </td>
-            </tr>
+                            <i v-on:click="removeSegment({{ $value }})" class="fa fa-trash fz-20 text-theme-red"></i>
+                        </div>      
+                    </div>
+                    @endforeach    
+                </div>
+            </div>    
+            @endif 
             @endforeach
-        </table>
-
+            @endforeach
+        </div>
     </div>
+
+</div>
 
 @include('hr::evaluation.segment.create')
 @include('hr::evaluation.segment.edit')
