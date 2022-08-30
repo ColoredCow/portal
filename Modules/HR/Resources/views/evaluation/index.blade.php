@@ -70,6 +70,7 @@
             initialUpdateRoute: "{{ route('hr.evaluation.segment.update', 'SEGMENT_ID') }}",
             updateRoute: "{{ route('hr.evaluation.segment.update', 'SEGMENT_ID') }}",
             segmentName: '',
+            segmentRoundId : '',
             initialDeleteRoute: "{{ route('hr.evaluation.segment.delete', 'SEGMENT_ID') }}",
             deleteRoute: "{{ route('hr.evaluation.segment.delete', 'SEGMENT_ID') }}",
         }
