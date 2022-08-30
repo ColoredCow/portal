@@ -62,7 +62,7 @@ class Cronpolicy
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, Cron $cron)
-    {   
+    {
     }
 
     /**
@@ -84,7 +84,7 @@ class Cronpolicy
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function forceDelete(User $user, Cron $cron)
-    {   
+    {
     }
     public function isSuperAdmin(user $user)
     {
