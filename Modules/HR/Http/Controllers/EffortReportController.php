@@ -2,13 +2,8 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\HR\Entities\Employee;
-use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Entities\Project;
-use Modules\EffortReport\Entities\EmployeeEffort;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Carbon\Carbon;
@@ -35,7 +30,7 @@ class EffortReportController extends Controller
 
         foreach ($projectTeamMembers as $projectTeamMember) {
             foreach ($dates as $date) {
-                $result[$projectTeamMember->project->name][$date] = projectTeamMemberEffort::whereDate('added_on', $date)
+                $result[$projectTeamMember->project->name][$date] = ProjectTeamMemberEffort::whereDate('added_on', $date)
                     ->where('project_team_member_id', $projectTeamMember->team_member_id)->sum('actual_effort');
             }
         }
