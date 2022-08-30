@@ -103,7 +103,7 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'hr_team_interaction_round_body',
-            'setting_value' => '<div>Hello |*APPLICANT NAME*|,</div><div>We are very pleased to inform you that you have been selected for Team Interaction Round at ColoredCow. For the proceedings, we would like to invite you to our office at  |*OFFICE LOCATION*| on |*DATE SELECTED*| between |*TIME RANGE*|.</div><div>Your presence would be awaited. In case you have any questions, feel free to reach out.</div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
+            'setting_value' => '<div>Hello |*APPLICANT NAME*|,</div><div> </div><div>We are very pleased to inform you that you have been selected for Team Interaction Round at ColoredCow. For the proceedings, we would like to invite you to our office at |*OFFICE LOCATION*| on |*DATE SELECTED*| at |*TIME*|.</div><div> </div><div>Your presence would be awaited. In case you have any questions, feel free to reach out.</div><div> </div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
         ]);
     }
 }

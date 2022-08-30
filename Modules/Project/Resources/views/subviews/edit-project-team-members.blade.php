@@ -29,12 +29,15 @@
                     </div>
                     <div class="col-1">
                         Daily
+                        (@{{ totalDailyEffort }} H)
                     </div>
                     <div class="col-1">
                         Weekly
+                        (@{{ totalDailyEffort*5 }} H)
                     </div>
                     <div class="col-1">
                         Monthly
+                        (@{{ totalDailyEffort*workingDaysInMonth }} H)
                     </div>
                     <div class="col-2 text-center">
                         Billing Engagement %
