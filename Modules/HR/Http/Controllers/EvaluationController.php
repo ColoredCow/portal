@@ -24,17 +24,14 @@ class EvaluationController extends Controller
         $segments = Segment::all();
         $rounds = Round::select('id', 'name')->get();
         foreach ($rounds as $value) {
-
             $attr = Round::find($value->id)->evaluationSegments;
             $segmentedRounds[$value->id] = $attr;
-
         }
         $attr = [];
         foreach ($segmentedRounds as $round => $data) {
             foreach ($data as $key => $segment) {
                 $attr[$round][$key] = $segment;
             }
-
         }
 
         return view('hr::evaluation.index', [
