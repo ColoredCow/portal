@@ -45,7 +45,7 @@
         data-index-route="{{ route('books.index') }}" 
         data-category-index-route="{{ route('books.category.index') }}">
         <div class="d-flex flex-wrap w-full">
-            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
+            <div v-for="(book, index) in books" class="col-lg-3 col-md-5 col-8 card book_card  mr-1 mb-3 p-2 mr-lg-4">
                 <div class="d-flex" >
                     <a  :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
