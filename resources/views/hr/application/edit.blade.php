@@ -954,11 +954,11 @@
                                          @if ($applicationRound->scheduled_date)
                                                 @if ($applicationRound->hangout_link)
                                                     @if($applicationRound->meeting_duration!= NULL)
-                                                        {{-- <input type="Text" readonly="readonly" name="meeting_time"
+                                                        <input type="Text" readonly="readonly" name="meeting_time"
                                                         id="meeting_time"
                                                         class="form-control form-control-sm"
                                                         value="{{"$applicationRound->meeting_duration"}}">
-                                                        @else --}}
+                                                        @else
                                                         <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-1 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
                                                         <input type="Text" style="display: none;" readonly="readonly" name="meeting_time"
                                                         id="meeting_time" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
