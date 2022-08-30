@@ -5,7 +5,7 @@
     <div class="d-none d-md-flex justify-content-between my-2">
         @include('client::menu_header')
         @can('clients.create')
-            <a href= "{{ route('client.create') }}" class="btn btn-sucess text-white"><i class="fa fa-plus"></i>Add new Client</a>
+            <a href= "{{ route('client.create') }}" class="btn btn-success text-white"><i class="fa fa-plus"></i>Add new client</a>
         @endcan
     </div>
     <div class="d-md-flex justify-content-between mt-5 mb-2">
