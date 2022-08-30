@@ -53,12 +53,12 @@ class EffortReportController extends Controller
             $efforsts[] = $projectEffort;
         }
 
-        $chartData = array(
+        $chartData = [
             'labels' => $dates,
             'colors' => $color,
             'projects' => $projectNames,
             'efforts' => $efforsts
-        );
+        ];
 
         return view('hr::effort-report.bar-graph', ['employee' => $employee, 'chartData' => $chartData]);
     }
