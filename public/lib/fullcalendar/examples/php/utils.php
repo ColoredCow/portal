@@ -73,7 +73,6 @@ class Event
     // Converts this Event object back to a plain data array, to be used for generating JSON
     public function toArray()
     {
-
         // Start with the misc properties (don't worry, PHP won't affect the original array)
         $array = $this->properties;
 
