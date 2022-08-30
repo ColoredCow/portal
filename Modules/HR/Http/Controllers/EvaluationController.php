@@ -281,7 +281,7 @@ class EvaluationController extends Controller
 
     private function getParameterInfo($parameter)
     {
-        if (!$parameter) {
+        if (! $parameter) {
             return;
         }
 
