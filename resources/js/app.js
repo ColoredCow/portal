@@ -185,13 +185,19 @@ $(document).ready(() => {
 		});
 	});
 
-	if ($(".chart-data").length){
+	if ($(".chart-data").length) {
 		datePickerChart();
 		barChart();
 	}
-	if($("#myChart").length){
+	if ($("#myChart").length) {
 		datePickerChart();
-		HorizontalBarChart();		
+		HorizontalBarChart();
+	}
+	if ($("#myGraph").length) {
+		roundWiseRejectionsGraph();
+	}
+	if ($("#myBarGraph").length) {
+		rejectedReasonsGraph();
 	}
 
 	$("#save-btn-action").on("click", function () {
@@ -213,7 +219,7 @@ $(document).ready(function () {
 
 	$("#domainForm").on("submit", function (e) {
 		e.preventDefault();
-		let form =$("#domainForm");
+		let form = $("#domainForm");
 		$.ajax({
 			type: form.attr("method"),
 			url: form.attr("action"),
@@ -244,7 +250,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 
 				? JSON.parse(
 					document.getElementById("action_type").dataset.applicationJobRounds
-				   )
+				)
 				: {},
 			selectedNextRound: "",
 			nextRoundName: "",
@@ -305,7 +311,6 @@ if (document.getElementById("page_hr_applicant_edit")) {
 							.setContent(res.body, { format: "html" });
 					});
 					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
-						$(".next-scheduled-person-container").addClass("d-none");
 						$("#sendmailform").removeClass("d-none");
 					} else {
 						$(".next-scheduled-person-container").removeClass("d-none");
@@ -322,8 +327,8 @@ if (document.getElementById("page_hr_applicant_edit")) {
 				case "onboard":
 					$("#onboard_applicant").modal("show");
 				}
-			},	
-			rejectApplication: function() {
+			},
+			rejectApplication: function () {
 				$("#application_reject_modal").modal("show");
 				loadTemplateMail("reject", res => {
 					$("#rejectMailToApplicantSubject").val(res.subject);
@@ -575,34 +580,34 @@ $(document).ready(function () {
 		$("#editSegmentModal").on("hidden.bs.modal", function () {
 			$(this).find("form").trigger("reset");
 		});
-	
+
 		$.ajax({
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success:function (response) {
+			success: function (response) {
 				$("#editSegmentModal").modal("hide");
 				$("#editSegmentModal").on("hidden.bs.modal", function (e) {
 					$("#editSegmentSuccess").toggleClass("d-none");
 					$("#editSegmentSuccess").fadeToggle(6000);
 				});
-			},	
-			error: function(response) {
+			},
+			error: function (response) {
 				$("#editSegmentError").removeClass("d-none");
 				let errors = response.responseJSON.errors;
 				$("#editErrors").empty();
 				for (let error in errors) {
 					$("#editErrors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
-			  }
+				}
 			}
 		});
 	});
-	$("#editSegmentModalClose").click(function() {
+	$("#editSegmentModalClose").click(function () {
 		$("#editSegmentError").toggleClass("d-none");
 	});
 });
 
-$(".hr_round_guide").on("click", ".save-guide", function() {
+$(".hr_round_guide").on("click", ".save-guide", function () {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
 	let button = $(this);
@@ -1270,7 +1275,7 @@ require("./finance/payment");
 /*
 * HR Module JS code start
 */
-$(document).ready(function() {
+$(document).ready(function () {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
 	$(document).on("click", "#saveFollowUp", saveFollowUp);
@@ -1572,6 +1577,143 @@ function HorizontalBarChart() {
 
 	});
 }
+function roundWiseRejectionsGraph() {
+	var value = $("#myGraph").data("target");
+	var cData = value;
+	var ctx = $("#myGraph");
+	var data = {
+		labels: cData.totalapplication,
+		datasets: [
+			{
+				label: [],
+				data: cData.count,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				datacolor: ["rgba(52,144,220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			categoryPercentage: 1.0,
+			barPercentage: 0.8,
+			maintainAspectRatio: true,
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function () {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					// ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function (dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function (bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+
+			},
+		},
+
+	});
+}
+
+function rejectedReasonsGraph() {
+	var value = $("#myBarGraph").data("target");
+	var cData = value;
+	var ctx = $("#myBarGraph");
+	var data = {
+		labels: cData.reason,
+		datasets: [
+			{
+				label: [],
+				data: cData.Applicationcounts,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function (tooltipItem) {
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function () {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function (dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function (bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+
+			},
+		},
+
+	});
+}
 
 $(function () {
 	$(".reject-reason").on("click", function () {
@@ -1617,7 +1759,7 @@ $(document).on("focusin", function (e) {
 	}
 });
 
-$("#editform").on("submit", function(e) {
+$("#editform").on("submit", function (e) {
 	e.preventDefault();
 	let form = $("#editform");
 	let button = $("#editBT");
@@ -1626,14 +1768,14 @@ $("#editform").on("submit", function(e) {
 		url: form.attr("action"),
 		type: form.attr("method"),
 		data: form.serialize(),
-		success: function(response) {
+		success: function (response) {
 			$("#edit").modal("hide");
-			$("#edit").on("hidden.bs.modal", function(e) {
+			$("#edit").on("hidden.bs.modal", function (e) {
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(5000);
 			});
 		},
-		error: function(response) {
+		error: function (response) {
 			$("#profile-details-error").removeClass("d-none");
 			$("#successMessage").addClass("d-none");
 			let errors = response.responseJSON.errors;
@@ -1647,42 +1789,41 @@ $("#editform").on("submit", function(e) {
 	});
 });
 
-$("#updateEmail").on("click", function() {
+$("#updateEmail").on("click", function () {
 	let formData = {
 		"location": $("#location").val(),
 		"date": $("#date").val(),
-		"start_time": $("#startTime").val(),
-		"end_time": $("#endTime").val(),
+		"timing": $("#timing").val(),
 		"applicant_name": $("#applicantName").text(),
 	};
 	var originUrl = window.location.origin;
 	$.ajax({
-		url: originUrl +"/hr/recruitment/teaminteraction",
+		url: originUrl + "/hr/recruitment/teaminteraction",
 		type: "POST",
 		data: formData,
-		success: function(response) {
+		success: function (response) {
 			$("#InteractionError").addClass("d-none");
 			$("#confirmMailToApplicantSubject").val(response.subject);
 			tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
 			$("#interactionsuccess").toggleClass("d-none");
 			$("#interactionsuccess").fadeToggle(6000);
-	        $("#confirmMailToApplicantBlock").removeClass("d-none");
-	        var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
-	        if (toggleIcon && ! $(".fa-eye-slash ").hasClass("d-none")) {
-		    	$(".toggle-icon").toggleClass("d-none");
-	        }	
+			$("#confirmMailToApplicantBlock").removeClass("d-none");
+			var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
+			if (toggleIcon && !$(".fa-eye-slash ").hasClass("d-none")) {
+				$(".toggle-icon").toggleClass("d-none");
+			}
 		},
-		error: function(response) {
+		error: function (response) {
 			$("#InteractionError").removeClass("d-none");
 			let errors = response.responseJSON.errors;
 			$("#errors").empty();
 			for (let error in errors) {
 				$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
 			}
-	        $("#confirmMailToApplicantBlock").addClass("d-none");
+			$("#confirmMailToApplicantBlock").addClass("d-none");
 		},
 	});
 });
-$("#interactionErrorModalCloseBtn").click(function() {
+$("#interactionErrorModalCloseBtn").click(function () {
 	$("#InteractionError").toggleClass("d-none");
 });

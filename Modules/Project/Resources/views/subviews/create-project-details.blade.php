@@ -35,9 +35,11 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
-                <input type="number" class="form-control" name="total_estimated_hours" id="total_estimated_hours"
-                    placeholder="Enter total estimated hours" value="{{ old('total_estimated_hours') }}">
+                <label for="contract_file"> {{ __('Upload Contract File') }}</label>
+                <div class="custom-file">
+                    <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
+                    <label for="contract" class="custom-file-label">Choose file</label>
+                </div>
             </div>
             <div class="form-group offset-md-1 col-md-5">
                 <label for="billing_level" class="field-required">Billing Level</label>
@@ -52,11 +54,10 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label for="contract_file"> {{ __('Upload Contract File') }}</label>
-                <div class="custom-file">
-                    <input type="file" id="contract_file" name="contract_file" class="custom-file-input">
-                    <label for="contract" class="custom-file-label">Choose file</label>
-                </div>
+                <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
+                <input type="url" class="form-control" name="google_chat_webhook_url" id="google_chat_webhook_url"
+                    placeholder="Enter Google Chat Webhook URL"
+                    value="{{ old('google_chat_webhook_url') }}">
             </div>
             <div class="form-group offset-md-1 col-md-2" v-if="projectType === 'fixed-budget'">
                 <label for="start_date">Start Date</label>
@@ -70,11 +71,10 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-5">
-                <label for="google_chat_webhook_url">{{ __('Google Chat Webhook URL') }}</label>
-                <input type="url" class="form-control" name="google_chat_webhook_url" id="google_chat_webhook_url"
-                    placeholder="Enter Google Chat Webhook URL"
-                    value="{{ old('google_chat_webhook_url') }}">
+            <div class="form-group col-md-5" v-if="projectType ==='fixed-budget'">
+                <label for="total_estimated_hours">{{ __('Total Estimated Hours') }}</label>
+                <input type="number" class="form-control" name="total_estimated_hours" id="total_estimated_hours"
+                    placeholder="Enter total estimated hours" value="{{ old('total_estimated_hours') }}">
             </div>
         </div>
     </div>
