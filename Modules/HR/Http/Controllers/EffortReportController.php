@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\HR\Entities\Employee;
 use Modules\Project\Entities\ProjectTeamMember;
-use Modules\Project\Entities\project;
+use Modules\Project\Entities\Project;
 use Modules\EffortReport\Entities\EmployeeEffort;
 use Modules\User\Entities\User;
 use Modules\Project\Entities\ProjectTeamMemberEffort;
