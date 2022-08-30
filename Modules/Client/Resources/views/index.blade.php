@@ -23,7 +23,7 @@
     <div class='d-md-none mb-2'>
         @can('clients.create')
             <div class="d-flex flex-row-reverse">
-                <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
+                <a href= "{{ route('client.create') }}" class="btn btn-primary text-white">Add client</a>
             </div>
         @endcan
         @include('client::menu_header')
