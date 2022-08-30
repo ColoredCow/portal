@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Services\BookServices;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookAMonth;
 use App\Models\KnowledgeCafe\Library\BookCategory;
-use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
+use App\Services\BookServices;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -26,11 +26,12 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $this->authorize('list', Book::class);
-        $searchString = (request()->has('search')) ? request()->input('search') : false;
+        $searchCategory = $request->category_name ?? false;
+        $searchString = $request->search ?? false;
+        $books = $searchCategory ? Book::getByCategoryName($searchCategory) : Book::getList($searchString);
         $categories = BookCategory::orderBy('name')->get();
         $loggedInUser = auth()->user();
         $books->load('wishers');
-        dd($books);
 
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
