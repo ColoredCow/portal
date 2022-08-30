@@ -51,4 +51,11 @@ class UserController extends Controller
 
         return $userProjects;
     }
+
+    public function userEffort()
+    {
+        $effort = Auth::user()->userEfforts();
+
+        return $effort;
+    }
 }

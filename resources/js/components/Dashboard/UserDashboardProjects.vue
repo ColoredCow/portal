@@ -10,8 +10,21 @@
                     <div v-for="(project, index) in this.projects" :key="index">
                         <div class="row" >
                             <div class="col-9 text-left d-flex align-items-center">
-                                <div class="w-250">
-                                    <a :href="'/projects/'+project.id+'/show/'">{{ project.name }}</a>
+                                <div class="w-389">
+                                    <table class="table table-striped w-389">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col1">Project</th>
+                                                <th scope="col2">My effort</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="col1"><a :href="'/projects/'+project.id+'/show/'">{{ project.name }}</a></td>
+                                                <td scope="col2">{{efforts}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +43,8 @@ export default {
 	props: [],
 	data() {
 		return {
-			projects:[]
+			projects:[],
+            efforts:[],
 		};
 	},
 
@@ -39,11 +53,16 @@ export default {
 			let response = await axios.get("/user/projects");
 			this.projects =  response.data;
 
-		}
+		},
+        async getEfforts() {
+            let response = await axios.get("/user/efforts");
+            this.efforts = response.data;
+        },
 	},
 
 	mounted() {
 		this.getProjects();
+        this.getEfforts();
 	},
 
 };

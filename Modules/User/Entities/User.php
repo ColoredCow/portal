@@ -10,8 +10,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\AppointmentSlots\Entities\AppointmentSlot;
 use Modules\HR\Entities\Employee;
+use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Modules\Project\Entities\ProjectTeamMember;
+use Modules\Project\Entities\ProjectTeamMemberEffort;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\User\Traits\CanBeExtended;
 use Modules\User\Traits\HasWebsiteUser;
@@ -185,5 +187,12 @@ class User extends Authenticatable
         })->get();
 
         return $projects;
+    }
+
+    public function userEfforts()
+    {
+        $efforts ="";
+
+        return $efforts;
     }
 }
