@@ -820,7 +820,7 @@ if (document.getElementById("books_listing")) {
 			searchBooks: function () {
 				window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
 			},
-			
+
 			searchBooksByCategoryName: function () {
 				window.location.href = `${this.updateRoute}?category_name=${this.searchKeys}`;
 			},
@@ -1028,7 +1028,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			addToWishlist: async function (action) {	
+			addToWishlist: async function (action) {
 				let response = await axios.post(this.addToWishlistRoute, {
 					book_id: this.book.id
 				});
@@ -1038,7 +1038,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			removeFromWishlist: async function (action) {	
+			removeFromWishlist: async function (action) {
 				let response = await axios.post(this.removeFromWishlistRoute, {
 					book_id: this.book.id
 				});
