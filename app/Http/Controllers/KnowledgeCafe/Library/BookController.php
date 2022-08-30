@@ -30,8 +30,10 @@ class BookController extends Controller
         $searchString = $request->search ?? false;
         $books = $searchCategory ? Book::getByCategoryName($searchCategory) : Book::getList($searchString);
         $categories = BookCategory::orderBy('name')->get();
+        $loggedInUser = auth()->user();
+        $books->load('wishers');
 
-        return view('knowledgecafe.library.books.index', compact('books', 'categories'));
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
 
     /**
@@ -255,6 +257,17 @@ class BookController extends Controller
         $bookID = request()->book_id;
         $book = Book::find($bookID);
         $isAdded = $book ? $book->addToWishlist() : false;
+
+        return response()->json([
+            'isAdded' => $isAdded,
+        ]);
+    }
+
+    public function removeFromUserWishList()
+    {
+        $bookID = request()->book_id;
+        $book = Book::find($bookID);
+        $isAdded = $book ? $book->removeFromWishlist() : false;
 
         return response()->json([
             'isAdded' => $isAdded,
