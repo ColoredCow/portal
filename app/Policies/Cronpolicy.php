@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Cron;
+use App\Models\setting\Cron;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\User\Entities\User;
 
@@ -28,7 +28,7 @@ class Cronpolicy
      * @param  \App\Models\Cron  $cron
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function view(User $user, Cron $cron)
     {
         return $user->hasPermissionTo('cron.index');
     }
@@ -41,6 +41,7 @@ class Cronpolicy
      */
     public function create(User $user)
     {
+        return $user->hasPermissionTo('cron.index');
     }
 
     /**
@@ -50,8 +51,9 @@ class Cronpolicy
      * @param  \App\Models\Cron  $cron
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user)
+    public function update(User $user, Cron $cron)
     {
+        return $user->hasPermissionTo('cron.index');
     }
 
     /**
@@ -61,8 +63,9 @@ class Cronpolicy
      * @param  \App\Models\Cron  $cron
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user)
+    public function delete(User $user, Cron $cron)
     {
+        return $user->hasPermissionTo('cron.index');
     }
 
     /**
@@ -72,8 +75,9 @@ class Cronpolicy
      * @param  \App\Models\Cron  $cron
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user)
+    public function restore(User $user, Cron $cron)
     {
+        return $user->hasPermissionTo('cron.index');
     }
 
     /**
@@ -83,8 +87,9 @@ class Cronpolicy
      * @param  \App\Models\Cron  $cron
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user)
-    {
+    public function forceDelete(User $user, Cron $cron)
+    {  
+        return $user->hasPermissionTo('cron.index'); 
     }
     public function isSuperAdmin(user $user)
     {
