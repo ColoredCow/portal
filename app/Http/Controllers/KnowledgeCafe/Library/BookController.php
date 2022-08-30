@@ -32,6 +32,7 @@ class BookController extends Controller
         $categories = BookCategory::orderBy('name')->get();
         $loggedInUser = auth()->user();
         $books->load('wishers');
+        dd($books);
 
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
