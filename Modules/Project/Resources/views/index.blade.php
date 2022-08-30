@@ -13,7 +13,7 @@
         @include('project::menu_header')
         @can('projects.create')
             <span class='mt-4'>
-                <a href= "{{ route('project.create') }}" class="btn btn-success text-white"> <i class="fa fa-plus mr-1"> </i> {{ __('Add new project') }} </a>
+                <a href= "{{ route('project.create') }}" class="btn btn-success text-white"> <i class="fa fa-plus mr-1"> </i>{{ __('Add new project') }}</a>
             </span>
         @endcan
     </div>
