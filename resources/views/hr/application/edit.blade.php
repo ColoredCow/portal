@@ -138,7 +138,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    class="fz-12 leading-none text-secondary w-100p">
                                                                     <div>
                                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                                         <span>Scheduled date</span>
@@ -658,7 +658,7 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    class="fz-12 leading-none text-secondary w-100p">
                                                                     <div>
                                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                                         <span>Scheduled date</span>
@@ -954,11 +954,11 @@
                                          @if ($applicationRound->scheduled_date)
                                                 @if ($applicationRound->hangout_link)
                                                     @if($applicationRound->meeting_duration!= NULL)
-                                                        <input type="Text" readonly="readonly" name="meeting_time"
+                                                        {{-- <input type="Text" readonly="readonly" name="meeting_time"
                                                         id="meeting_time"
                                                         class="form-control form-control-sm"
                                                         value="{{"$applicationRound->meeting_duration"}}">
-                                                        @else
+                                                        @else --}}
                                                         <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-1 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
                                                         <input type="Text" style="display: none;" readonly="readonly" name="meeting_time"
                                                         id="meeting_time" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
@@ -1183,7 +1183,7 @@
                                                         @if ($application->latestApplicationRound->round->name != "Telephonic Interview"  && $applicationRound->round->name != "Team Interaction Round")
                                                             <div class="form-group col-md-4">
                                                                 <label for="scheduled_date"
-                                                                    class="fz-14 leading-none text-secondary w-100p">
+                                                                    class="fz-12 leading-none text-secondary w-100p">
                                                                     <div>
                                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                                         <span>Scheduled date</span>
@@ -1225,7 +1225,7 @@
                                                                     value="{{ $applicationRound->scheduled_date->toTimeString()}}">
                                                             @endif
                                                         </div>
-                                                        <div class="form-group col-md-4">
+                                                        <div class="form-group col-md-3">
                                                             <label for="expected_time"
                                                                 class="fz-14 leading-none text-secondary w-100p">
                                                                 <div>

@@ -6,6 +6,7 @@ use App\Helpers\FileHelper;
 use DateTime;
 use App\Models\Setting;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -39,11 +40,11 @@ abstract class ApplicationController extends Controller
     public function finish(Request $request)
     {
         $ApplicationRound = ApplicationRound::find($request->documentId);
-        $meetDate = new DateTime($request->duration);
-        $scheduleDate = new DateTime($ApplicationRound->scheduled_date);
+        $meetDate = Carbon::parse($request->duration);
+        $scheduleDate = Carbon::parse($ApplicationRound->scheduled_date);
         $interval = $meetDate->diff($scheduleDate);
         $meetDuration = $interval->format('%H:%i:%s');
-        $meet_Duration = new DateTime($meetDuration);
+        $meet_Duration = Carbon::parse($meetDuration);
         $ApplicationRound->meeting_duration = $meet_Duration;
         $ApplicationRound->save();
 
