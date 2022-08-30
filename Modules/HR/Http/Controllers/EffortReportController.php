@@ -40,7 +40,7 @@ class EffortReportController extends Controller
             }
         }
 
-        $projectNames =  array_keys($result);
+        $projectNames = array_keys($result);
         $efforsts = [];
 
         foreach ($projectNames as $projectName) {
