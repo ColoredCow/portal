@@ -4,6 +4,7 @@ namespace Modules\HR\Console\Recruitment;
 
 use Illuminate\Console\Command;
 use Modules\HR\Entities\Application;
+use Modules\HR\Events\FollowUpEvent;
 
 class MarkApplicationForFollowUp extends Command
 {
@@ -58,6 +59,10 @@ class MarkApplicationForFollowUp extends Command
             // check if the previous round has been conducted more than 3 days ago
             if ($previousRoundConductedOn->diffInDays(now()) > 3 && $applicationRound->round->name != 'Trial Program') {
                 $application->tag('need-follow-up');
+                $followUpCount = $applicationRound->followUps->count();
+                if ($followUpCount < config('hr.follow-up-attempts-threshold')) {
+                    event(new FollowUpEvent($application));
+                }
             }
         }
         $this->info('complete handleAwaitingCalendarConfirmationApplications');

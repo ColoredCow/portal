@@ -23,12 +23,16 @@ class BookController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
-        $books = Book::getList($searchString);
         $categories = BookCategory::orderBy('name')->get();
+        if (request()->has('wishlist')) {
+            $books = auth()->user()->booksInWishlist;
+        } else {
+            $books = Book::getList($searchString);
+        }
 
         return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
@@ -220,8 +224,8 @@ class BookController extends Controller
     public function getBooksCount()
     {
         $books = (request()->has('cat')) ?
-            Book::getByCategoryName(request()->input('cat'))->count() :
-            Book::count();
+        Book::getByCategoryName(request()->input('cat'))->count() :
+        Book::count();
 
         return $books;
     }
@@ -234,8 +238,8 @@ class BookController extends Controller
             $pageNumber = 1;
         }
         $books = (request()->has('cat')) ?
-            Book::getByCategoryName(request()->input('cat')) :
-            Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
+        Book::getByCategoryName(request()->input('cat')) :
+        Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
         $data = [];
         foreach ($books as $index => $book) {

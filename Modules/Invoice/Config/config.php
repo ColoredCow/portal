@@ -41,6 +41,11 @@ return [
         'sgst' => '9%'
     ],
 
+    'financial-month-details' => [
+        'financial_year_start_month' => '04',
+        'financial_year_end_month' => '03'
+    ],
+
     'tax-details' => [
         'igst' => 0.18,
         'cgst' => 0.09,
@@ -65,8 +70,11 @@ return [
         'phone' => env('COLOREDCOW_PHONE', ''),
         'pan' => env('PAN_NUMBER', ''),
         'gstin' => env('GSTIN', ''),
-        'hsn-code' => env('HSN_CODE', ''),
         'cin-no' => env('CIN_NO', ''),
+        'hsn-code' => env('HSN_CODE', ''),
+        'correspondent-bank' => env('CORRESPONDENT_BANK', ''),
+        'correspondent-bank-swift-code' => env('CORRESPONDENT_BANK_SWIFT_CODE', ''),
+        'beneficiary-bank-of-usd' => env('BENEFICIARY_BANK_OF_USD', ''),
     ],
 
     'coloredcow-details' => [
@@ -83,22 +91,63 @@ return [
                 'key' => 'send_invoice',
                 'subject' => 'send_invoice_subject',
                 'body' => 'send_invoice_body',
+                'template-variables' => [
+                    'subject' => [
+                        'project-name' => '|*project_name*|',
+                        'term' => '|*term*|',
+                        'year' => '|*year*|',
+                    ],
+                    'body' => [
+                        'billing-person-name' => '|*billing_person_name*|',
+                        'invoice-amount' => '|*invoice_amount*|',
+                        'invoice-number' => '|*invoice_number*|',
+                        'term' => '|*term*|',
+                        'year' => '|*year*|',
+                    ],
+                ],
+            ],
+            'invoice-reminder' => [
+                'key' => 'invoice_reminder',
+                'subject' => 'invoice_reminder_subject',
+                'body' => 'invoice_reminder_body',
+                'template-variables' => [
+                    'subject' => [
+                        'project-name' => '|*project_name*|',
+                        'term' => '|*term*|',
+                        'year' => '|*year*|',
+                    ],
+                    'body' => [
+                        'billing-person-name' => '|*billing_person_name*|',
+                        'invoice-amount' => '|*invoice_amount*|',
+                        'invoice-number' => '|*invoice_number*|',
+                    ],
+                ],
+            ],
+            'received-invoice-payment' => [
+                'key' => 'received_invoice_payment',
+                'subject' => 'received_invoice_payment_subject',
+                'body' => 'received_invoice_payment_body',
+                'template-variables' => [
+                    'subject' => [
+                        'project-name' => '|*project_name*|',
+                        'term' => '|*term*|',
+                        'year' => '|*year*|',
+                    ],
+                    'body' => [
+                        'billing-person-name' => '|*billing_person_name*|',
+                        'invoice-number' => '|*invoice_number*|',
+                        'currency' => '|*currency*|',
+                        'amount' => '|*amount*|',
+                        'amount_paid' => '|*amount_paid*|'
+                    ],
+                ],
             ]
+        ],
+        'invoice' => [
+            'clients' => [
+                env('CUSTOM_INVOICE_CLIENT_1', '') => 'custom-invoice-template-1'
+            ],
+            'projects' => []
         ]
-    ],
-
-    'template-variables' => [
-        'subject' => [
-            'project-name' => '|*project_name*|',
-            'term' => '|*term*|',
-            'year' => '|*year*|',
-        ],
-        'body' => [
-            'billing-person-name' => '|*billing_person_name*|',
-            'invoice-amount' => '|*invoice_amount*|',
-            'invoice-number' => '|*invoice_number*|',
-            'term' => '|*term*|',
-            'year' => '|*year*|',
-        ],
     ],
 ];

@@ -2,7 +2,7 @@
     id="update_category_modal"
     tabindex="-1" 
     role="dialog" 
-    aria-labelledby="update_category_modal" 
+    aria-labeledby="update_category_modal" 
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -27,7 +27,8 @@
                                 <span>
                                     <div class="d-flex justify-content-between">
                                         <input class="form-control mr-3" type="text" v-model="newCategory" placeholder="Enter New Category" autofocus>
-                                        <button type="button" class="btn btn-info btn-sm" @click="addNewCategory()">Add New</button>
+                                        <button type="button" class="btn btn-info btn-sm w-200" @click="addNewCategory()">Add New</button>
+                                        
                                     </div>
                                 </span>
                             </li>

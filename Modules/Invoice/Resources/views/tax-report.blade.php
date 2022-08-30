@@ -21,7 +21,7 @@
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <tr>
+                <tr class="sticky-top">
                     <th></th>
                     <th>Project</th>
                     <th>Amount</th>

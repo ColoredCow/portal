@@ -2,7 +2,7 @@
 @section('content')
 <div class="container" id="project_container">
     <br>
-    @include('hr::universities.menu', ['active' => 'universities'])
+    @include('hr::universities.menu',['active' => 'universities'])
     <br><br>
     <div class="row">
         <div class="col-md-6">

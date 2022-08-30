@@ -3,17 +3,18 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use App\Imports\ApplicationImport;
+use App\Models\Setting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
-use Modules\HR\Entities\Job;
-use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\HR\Entities\Application;
-use Modules\User\Entities\User;
+use Modules\HR\Entities\Job;
 use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
+use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
+use Modules\User\Entities\User;
 
 class ApplicantController extends Controller
 {
@@ -25,7 +26,7 @@ class ApplicantController extends Controller
     {
         $this->service = $service;
         $this->authorizeResource(Applicant::class, null, [
-            'except' => ['store'],
+            'except' => ['store', 'show', 'create'],
         ]);
     }
 
@@ -36,7 +37,9 @@ class ApplicantController extends Controller
     {
         $hrJobs = Job::whereIn('type', ['job', 'internship'])->orderBy('title')->get();
 
-        return view('hr.application.create', ['hrJobs' => $hrJobs]);
+        $verifyMail = Setting::where('module', 'hr')->get()->keyBy('setting_key');
+
+        return view('hr.application.create', ['hrJobs' => $hrJobs], ['verifyMail' => $verifyMail]);
     }
 
     /**
@@ -74,7 +77,7 @@ class ApplicantController extends Controller
     public function updateUniversity(Applicant $applicant, Request $request)
     {
         $status = $applicant->update([
-            'hr_university_id' => request()->university_id
+            'hr_university_id' => request()->university_id,
         ]);
 
         return response()->json([
@@ -82,17 +85,18 @@ class ApplicantController extends Controller
         ]);
     }
 
-    public function show($applicationID)
+    public function show($applicationId)
     {
-        $application = Application::find($applicationID);
+        $application = Application::find($applicationId);
         $interviewers = User::interviewers()->orderBy('name')->get();
 
         return view('hr.application.details', ['application' => $application, 'applicant' => $application->applicant, 'applicationRound' => $application->applicationRounds, 'interviewers' => $interviewers, 'timeline' => $application->applicant->timeline(), 'applicationFormDetails' => $application->applicationMeta()->formData()->first()]);
     }
 
-    public function applicantEmailVerification($applicantEmail, $applicationID)
+    public function applicantEmailVerification($applicantEmail, $applicationId)
     {
-        $application = Application::find($applicationID);
+        $application = Application::find($applicationId);
+        $application->update(['is_verified' => true]);
         event(new ApplicantEmailVerified($application));
 
         return view('hr.application.verification')->with(['application' => $application, 'email' => decrypt($applicantEmail)]);

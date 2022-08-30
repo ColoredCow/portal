@@ -9,16 +9,22 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($projects as $project)
-            @if($project->getBillableHoursForTerm($monthNumber, $year) == 0)
+        @foreach ($projects as $project)
+            @if($project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) == 0)
                 @continue
             @endif
             <tr class="border-bottom">
                 <td>{{$project->name}}</td>
-                <td>{{$project->getBillableHoursForTerm($monthNumber, $year)}}</td>
+                <td>{{$project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate)}}</td>
                 <td>{{optional($client->billingDetails)->service_rates}}</td>
-                <td>{{round($project->getBillableHoursForTerm($monthNumber, $year) * $client->billingDetails->service_rates, 2)}}</td>
+                <td>{{round($project->getBillableHoursForMonth($monthsToSubtract, $periodStartDate, $periodEndDate) * $client->billingDetails->service_rates, 2)}}</td>
             </tr>
         @endforeach
+        @if (optional($client->billingDetails)->bank_charges) 
+            <tr class="border-bottom">
+                <td colspan=3>{{__('Bank Charges')}}</td>
+                <td>{{$client->billingDetails->bank_charges}}</td>
+            </tr>
+        @endif
     </tbody>
 </table>

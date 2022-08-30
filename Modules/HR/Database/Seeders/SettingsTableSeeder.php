@@ -57,12 +57,43 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'applicant_verification_subject',
-            'setting_value' => 'Verify the application!',
+            'setting_value' => 'Confirm your email address',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => config('hr.templates.follow_up_email_for_scheduling_interview.subject'),
+            'setting_value' => 'Follow up email for scheduling interview ',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => config('hr.templates.follow_up_email_for_scheduling_interview.body'),
+            'setting_value' => '<div>Hello |*applicant_name*|,</div><br></div><div>Hope you are doing well and having a great time. We are reaching out to follow up on the interview scheduling process. You must have received an email for scheduling your interview for |*round_name*|. The email would have a link, that would take you to a calendar page, with available slots for booking. Pick one as per your convenience and schedule your interview.<br>If you didn\'t find an email, please check your spam folder. For further queries, write at pankaj.kandpal@coloredcow.in<br>
+            Looking forward to hearing back from you</div><div> </div><div>Thanks</div><div>HR Team,</div><div>ColoredCow</div>',
         ]);
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'applicant_verification_body',
-            'setting_value' => '<div>Hello |*applicant_name*|,<br /><br /></div><p class="p1" style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #212529; font-family: Raleway, sans-serif; font-size: 14.4px; white-space: pre-wrap;">For verify the application, click on the below link <a style="box-sizing: border-box; color: #007bff; text-decoration-line: none; background-color: transparent;" href="|*verification_link*|">Verification link/</a></p>HR Team<br />ColoredCow</div>',
+            'setting_value' => '<div>Hello |*applicant_name*|,<br /><br /></div><p class="p1" style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: #212529; font-family: Raleway, sans-serif; font-size: 14.4px; white-space: pre-wrap;">You are almost there!<br><br>To begin the screening process, please verify your email address. <br><br><a style="box-sizing: border-box; color: #007bff; text-decoration-line: none; background-color: transparent;" href="|*verification_link*|">Verification link</a></p><br>Thanks,<br/>HR Team<br />ColoredCow</div>',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'application_on_hold_subject',
+            'setting_value' => 'Your application is put on hold',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'application_on_hold_body',
+            'setting_value' => '<div>Dear |*applicant_name*|,</div><div> </div><div>Thanks for applying to ColoredCow for the position |*job_title*|.We don\'t have a relevant opening for the position right now. Your application is kept under waiting and we will reach out to you if there are any possibilities we can explore together. </div><div>Thanks,</div><div> </div><div>HR Team,</div><div>ColoredCow</div> ',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'hr_team_interaction_round_subject',
+            'setting_value' => 'Congratulations for making it to the Team Interaction Round',
+        ]);
+        Setting::updateOrCreate([
+            'module' => 'hr',
+            'setting_key' => 'hr_team_interaction_round_body',
+            'setting_value' => '<div>Hello |*APPLICANT NAME*|,</div><div> </div><div>We are very pleased to inform you that you have been selected for Team Interaction Round at ColoredCow. For the proceedings, we would like to invite you to our office at |*OFFICE LOCATION*| on |*DATE SELECTED*| at |*TIME*|.</div><div> </div><div>Your presence would be awaited. In case you have any questions, feel free to reach out.</div><div> </div><div>Thanks,</div><div>HR Team,</div><div>ColoredCow</div> ',
         ]);
     }
 }

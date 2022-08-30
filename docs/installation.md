@@ -140,7 +140,7 @@ Before you start following the guidelines, make sure to go through the [prerequi
             ```
             127.0.0.1      portal.test
             ```
-        - Go to `C:\wamp64\bin\apache\apache2.4.46\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `your_project_path` is written. For example, your project path may look like `C:\wamp64\www\portal\public`.
+        - Go to `C:\wamp64\bin\apache\apache2.4.46\conf\extra\httpd-vhosts.conf` and add the following code snippet at the end of the file. Copy the absolute file path for the `public` directory of the project and paste it below where `/path/to/your/project` is written. For example, your project path may look like `C:\wamp64\www\portal\public`.
             ```apacheconf
             <VirtualHost *:80>
                 ServerName portal.test
@@ -174,6 +174,15 @@ Before you start following the guidelines, make sure to go through the [prerequi
                 </Directory>
             </VirtualHost>
             ```
+            - After adding the above code, if you are getting the "403 Forbidden" error, try to resolve it through the following addition in your code:
+            ```apacheconf
+            <Directory>
+                 # some code above
+                 Allow from all   #add this line
+                 Require all granted
+            </Directory>
+            ```
+
         - Restart XAMPP. Next, open this url in your browser: http://portal.test
 
     3. For MAMP(macOS):

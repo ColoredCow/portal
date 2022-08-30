@@ -1,10 +1,10 @@
 <template>
-  <div class="card text-center">
+  <div class="card text-center card text-center w-xl-389 h-xl-416">
     <div class="card-header p-1">
       <h3><a href="/knowledgecafe/library/books">Library</a></h3>
     </div>
     <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
+      <ul class="nav nav-tabs card-header-tabs flex-nowrap">
         <li class="nav-item">
           <a
             id="wishlist"
@@ -29,7 +29,7 @@
         </li>
       </ul>
     </div>
-    <div class="card-body pt-3" style="height: 15em;overflow: auto;">
+    <div class="card-body pt-3 h-318 w-md-389 w-389 overflow-y-scroll">
       <div v-show="this.activeTile == 'wishlist'">
         <user-dashboard-wishlist-books />
       </div>

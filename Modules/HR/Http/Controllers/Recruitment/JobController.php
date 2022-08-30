@@ -2,13 +2,16 @@
 
 namespace Modules\HR\Http\Controllers\Recruitment;
 
-use Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
+use Modules\HR\Entities\HrJobDomain as EntitiesHrJobDomain;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\Round;
 use Modules\HR\Http\Requests\Recruitment\JobRequest;
+use Modules\HR\Http\Requests\Recruitment\JobDomainRequest;
 use Modules\User\Entities\User;
+use Illuminate\Support\Str;
+use Request;
 
 class JobController extends Controller
 {
@@ -53,6 +56,7 @@ class JobController extends Controller
         return view('hr.job.create')->with([
             'rounds' => Round::all(),
             'interviewers' => User::interviewers()->get(),
+            'domains' => EntitiesHrJobDomain::all(),
         ]);
     }
 
@@ -72,6 +76,7 @@ class JobController extends Controller
             'type' => $validated['type'],
             'start_date' => $validated['start_date'] ?? null,
             'end_date' => $validated['end_date'] ?? null,
+            'resources_required' => $validated['resources_required'],
         ]);
         $route = $opportunity->type == 'volunteer' ? route('volunteer.opportunities.edit', $opportunity->id) : route('recruitment.opportunities.edit', $opportunity->id);
 
@@ -91,6 +96,7 @@ class JobController extends Controller
         return view('hr.job.edit')->with([
             'job' => $opportunity,
             'interviewers' => User::interviewers()->get(),
+            'jobs' => EntitiesHrJobDomain::all(),
         ]);
     }
 
@@ -121,5 +127,20 @@ class JobController extends Controller
         $opportunity->delete();
 
         return redirect($route)->with('status', "Successfully deleted $opportunity->title!");
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Modules\HR\Http\Requests\Recruitment\JobDomainRequest  $request
+     */
+    public function storeJobdomain(JobDomainRequest $request)
+    {
+        $hrJobDomains = new EntitiesHrJobDomain();
+        $hrJobDomains->domain = $request['name'];
+        $hrJobDomains->slug = Str::slug($request['name']);
+        $hrJobDomains->save();
+
+        return redirect()->back();
     }
 }

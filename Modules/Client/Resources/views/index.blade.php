@@ -1,18 +1,11 @@
 @extends('project::layouts.master')
 @section('content')
 <div class="container" id="vueContainer">
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+    @includeWhen(session('success'), 'toast', ['message' => session('success')])
     <div class="d-none d-md-flex justify-content-between my-2">
         @include('client::menu_header')
         @can('clients.create')
-            <a href= "{{ route('client.create') }}" class="btn btn-info text-white">Add client</a>
+            <a href= "{{ route('client.create') }}" class="btn btn-primary text-white">Add New Client</a>
         @endcan
     </div>
     <div class="d-md-flex justify-content-between mt-5 mb-2">
@@ -21,8 +14,8 @@
             <form action="{{ route('client.index') }}" method="GET">
                 <div class="d-flex align-items-center">
                     <input type="hidden" name="status" value="{{ request()->get('status', 'active') }}">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Client name" value={{request()->get('name')}}>
-                    <button class="btn btn-info ml-2 text-white">Search</button> 
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter the client name" value={{request()->get('name')}}>
+                    <button class="btn btn-primary ml-2 text-white">Search</button>
                 </div>
             </form>
         </div>
@@ -38,7 +31,7 @@
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <tr>
+                <tr class="sticky-top">
                     <th>Name</th>
                     <th>Client Type</th>
                     <th>Key Account Manager</th>
@@ -47,7 +40,7 @@
             <tbody>
                 @forelse($clients?:[] as $client)
                     @include('client::subviews.listing-client-row', ['client' => $client, 'level' => 0])
-                
+
                     @foreach($client->linkedAsPartner as $partnerClient)
                         @include('client::subviews.listing-client-row', ['client' => $partnerClient, 'level' => 1])
                     @endforeach
@@ -67,6 +60,5 @@
         </table>
 
     </div>
-    
 </div>
 @endsection

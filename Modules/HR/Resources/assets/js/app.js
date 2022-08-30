@@ -234,7 +234,6 @@ function updateUniversityFailureAction() {
 	$(".university-update-failure").removeClass("d-none");
 	showFlashMessage("university-update-failure", 2000);
 }
-
 /**
  * TODO: Need to generalize the idea.
  * Instead of showing and hiding the element,

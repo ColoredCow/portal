@@ -46,6 +46,7 @@ class InvoiceServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(InvoiceAuthServiceProvider::class);
     }
 
     /**
@@ -119,6 +120,7 @@ class InvoiceServiceProvider extends ServiceProvider
     {
         $this->commands([
             \Modules\Invoice\Console\SendUnpaidInvoiceList::class,
+            \Modules\Invoice\Console\FixInvoiceAmountsCommand::class,
         ]);
     }
 

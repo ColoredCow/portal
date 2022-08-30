@@ -32,6 +32,7 @@
     <br>
     <div class="table-responsive">
         <table class="table table-striped table-bordered" id="universities_table">
+            <thead class="thead-dark">
             <tr>
                 <th>University</th>
                 <th>Contact Details</th>
