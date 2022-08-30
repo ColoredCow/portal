@@ -745,8 +745,8 @@ if (document.getElementById("books_listing")) {
 			currentBookIndex: 0,
 			newCategory: "",
 			loggedInUser: document.getElementById("books_table").dataset.loggedInUser
-			? JSON.parse(document.getElementById("books_table").dataset.loggedInUser)
-			: {},
+				? JSON.parse(document.getElementById("books_table").dataset.loggedInUser)
+				: {},
 			searchKey: document.getElementById("search_input")
 				? document.getElementById("search_input").dataset.value
 				: ""
