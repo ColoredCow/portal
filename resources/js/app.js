@@ -1791,7 +1791,7 @@ $(document).on("click", ".finish_interview", function (e) {
 	e.preventDefault();
 	var dID = $(".finish_interview").val();
 	$("#meetingTime").hide();
-	var duration = moment().format('YYYY/MM/DD H:m:s');
+	var duration = moment().format("YYYY/MM/DD H:m:s");
 	$.ajax({
 		type: "GET",
 		url: "/hr/recruitment/finishinterview",
