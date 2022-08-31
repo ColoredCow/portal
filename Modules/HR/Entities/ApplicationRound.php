@@ -28,7 +28,7 @@ class ApplicationRound extends Model
 
     public $timestamps = false;
 
-    protected $dates = ['scheduled_date', 'conducted_date'];
+    protected $dates = ['scheduled_date', 'conducted_date', 'meeting_duration'];
 
     public static function newFactory()
     {
