@@ -191,7 +191,11 @@ class User extends Authenticatable
 
     public function userEfforts()
     {
-        $efforts ="";
+        $userId = $this->id;
+        $projectTeamMembers = ProjectTeamMember::where('team_member_id', $userId)->get();
+        foreach ($projectTeamMembers as $projectTeamMember) {
+            $efforts = $projectTeamMember->current_actual_effort;
+        }
 
         return $efforts;
     }
