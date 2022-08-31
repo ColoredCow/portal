@@ -5,7 +5,6 @@ namespace Modules\HR\Http\Controllers\Recruitment;
 use App\Helpers\FileHelper;
 use App\Models\Setting;
 use App\Models\Tag;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -45,6 +44,7 @@ abstract class ApplicationController extends Controller
             'status' => 200, 'meet_duration' => $ApplicationRound->meeting_duration->format('H:i:s'),
         ]);
     }
+
     /**
      * Display a listing of the resource.
      */

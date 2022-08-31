@@ -97,12 +97,12 @@ class ApplicationService implements ApplicationServiceContract
 
     public function markInterviewFinished($data)
     {
-    $MeetDate = Carbon::parse($data->duration);
-    $ScheduleDate = Carbon::parse($data->scheduled_date);
-    $Interval = $MeetDate->diffAsCarbonInterval($ScheduleDate);
-    $MeetDuration = $Interval->format('%H:%i:%s');
-    $MeetDuration = Carbon::parse($MeetDuration);
-    $data->meeting_duration = $MeetDuration;
-    $data->save();
+        $MeetDate = Carbon::parse($data->duration);
+        $ScheduleDate = Carbon::parse($data->scheduled_date);
+        $Interval = $MeetDate->diffAsCarbonInterval($ScheduleDate);
+        $MeetDuration = $Interval->format('%H:%i:%s');
+        $MeetDuration = Carbon::parse($MeetDuration);
+        $data->meeting_duration = $MeetDuration;
+        $data->save();
     }
 }
