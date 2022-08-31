@@ -19,6 +19,7 @@ Vue.use(Laue);
 // vue toast registration
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import moment from "moment";
 const options = {
 	timeout: 2000
 };
@@ -1789,8 +1790,8 @@ $("#interactionErrorModalCloseBtn").click(function () {
 $(document).on("click", ".finish_interview", function (e) {
 	e.preventDefault();
 	var dID = $(".finish_interview").val();
-	$("#meeting_time").hide();
-	var duration = new Date().toLocaleString();
+	$("#meetingTime").hide();
+	var duration = moment().format('YYYY/MM/DD H:m:s');
 	$.ajax({
 		type: "GET",
 		url: "/hr/recruitment/finishinterview",
@@ -1799,7 +1800,7 @@ $(document).on("click", ".finish_interview", function (e) {
 		success: function (response) {
 			console.log(response.meet_duration);
 			$("#meet_time").hide();
-			$("#meeting_time").show();
+			$("#meetingTime").show();
 		},
 	});
 });

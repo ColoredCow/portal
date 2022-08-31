@@ -105,19 +105,17 @@
                                                             {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
                                                     @endif
                                                 </div>
-                                                @if ($applicationRound->scheduled_date)
-                                                    @if ($applicationRound->hangout_link)
+                                                @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
                                                         @if($applicationRound->meeting_duration!= NULL)
-                                                            <input type="Text" readonly="readonly" name="meeting_time"
-                                                            id="meeting_time"
+                                                            <input type="Text" readonly="readonly" name="meetingTime"
+                                                            id="meetingTime"
                                                             class="form-control form-control-sm"
                                                             value="{{"$applicationRound->meeting_duration"}}">
                                                         @else
-                                                            <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-1 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
-                                                            <input type="Text" style="display: none;" readonly="readonly" name="meeting_time"
-                                                            id="meeting_time" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
+                                                            <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
+                                                            <input type="Text" style="display: none;" readonly="readonly" name="meetingTime"
+                                                            id="meetingTime" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
                                                         @endif
-                                                    @endif
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
                                                     data-toggle="collapse" data-target="#collapse_{{ $loop->iteration }}">
@@ -430,19 +428,17 @@
                                                     @endif
                                                 </div>
 
-                                                @if ($applicationRound->scheduled_date)
-                                                    @if ($applicationRound->hangout_link)
+                                                @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
                                                         @if($applicationRound->meeting_duration!= NULL)
-                                                            <input type="Text" readonly="readonly" name="meeting_time"
-                                                            id="meeting_time"
+                                                            <input type="Text" readonly="readonly" name="meetingTime"
+                                                            id="meetingTime"
                                                             class="form-control form-control-sm"
                                                             value="{{"$applicationRound->meeting_duration"}}">
                                                         @else
-                                                            <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-1 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
-                                                            <input type="Text" style="display: none;" readonly="readonly" name="meeting_time"
-                                                            id="meeting_time"class="form-control form-control-sm"value="{{"$applicationRound->meeting_duration"}}">
+                                                            <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
+                                                            <input type="Text" style="display: none;" readonly="readonly" name="meetingTime"
+                                                            id="meetingTime" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
                                                         @endif
-                                                    @endif
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
                                                     data-toggle="collapse"
@@ -951,18 +947,16 @@
                                                     {{ $applicationRound->conducted_date->format(config('constants.display_date_format')) }}</span>
                                             @endif
                                         </div>
-                                         @if ($applicationRound->scheduled_date)
-                                                @if ($applicationRound->hangout_link)
-                                                    @if($applicationRound->meeting_duration!= NULL)
-                                                        <input type="Text" readonly="readonly" name="meeting_time"
-                                                        id="meeting_time"
-                                                        class="form-control form-control-sm"
-                                                        value="{{"$applicationRound->meeting_duration"}}">
-                                                        @else
-                                                        <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-1 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
-                                                        <input type="Text" style="display: none;" readonly="readonly" name="meeting_time"
-                                                        id="meeting_time" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
-                                                  @endif
+                                            @if ($applicationRound->scheduled_date && $applicationRound->hangout_link)
+                                                @if($applicationRound->meeting_duration!= NULL)
+                                                    <input type="Text" readonly="readonly" name="meetingTime"
+                                                    id="meetingTime"
+                                                    class="form-control form-control-sm"
+                                                    value="{{"$applicationRound->meeting_duration"}}">
+                                                @else
+                                                    <button type="button" id="meet_time" value="{{$applicationRound->id}}" class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish Interview</button>
+                                                    <input type="Text" style="display: none;" readonly="readonly" name="meetingTime"
+                                                    id="meetingTime" class="form-control form-control-sm" value="{{"$applicationRound->meeting_duration"}}">
                                                 @endif
                                             @endif
                                         <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse"
@@ -1234,15 +1228,15 @@
                                                             </label>
                                                             @if ($applicationRound->scheduled_date)
                                                             @php
-                                                                $date1 = new DateTime($applicationRound->scheduled_date);
-                                                                $date2 = new DateTime($applicationRound->scheduled_end);
-                                                                $time_diff = $date2->diff($date1);
-                                                                $time=($time_diff->days * 24) + $time_diff->h;
+                                                                $ScheduleDate = new DateTime($applicationRound->scheduled_date);
+                                                                $ScheduleEnd = new DateTime($applicationRound->scheduled_end);
+                                                                $TimeDiff = $ScheduleEnd->diff($ScheduleDate);
+                                                                $Time=($TimeDiff->days * 24) + $TimeDiff->h;
                                                             @endphp
                                                                 <input type="Text" readonly="readonly" name="expected_time"
                                                                     id="expected_time"
                                                                     class="form-control form-control-sm"
-                                                                    value="{{"$time hours"}}">
+                                                                    value="{{"$Time hours"}}">
                                                             @endif
                                                         </div>
                                                             <div class="form-group col-md-4">

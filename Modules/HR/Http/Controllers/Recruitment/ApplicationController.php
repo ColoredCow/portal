@@ -36,16 +36,10 @@ abstract class ApplicationController extends Controller
         $this->service = $service;
     }
 
-    public function finish(Request $request)
+    public function markInterviewFinished(Request $request)
     {
         $ApplicationRound = ApplicationRound::find($request->documentId);
-        $meetDate = Carbon::parse($request->duration);
-        $scheduleDate = Carbon::parse($ApplicationRound->scheduled_date);
-        $interval = $meetDate->diff($scheduleDate);
-        $meetDuration = $interval->format('%H:%i:%s');
-        $meet_Duration = Carbon::parse($meetDuration);
-        $ApplicationRound->meeting_duration = $meet_Duration;
-        $ApplicationRound->save();
+        $this->service->markInterviewFinished($ApplicationRound);
 
         return response()->json([
             'status' => 200, 'meet_duration' => $ApplicationRound->meeting_duration->format('H:i:s'),

@@ -4,6 +4,7 @@ namespace Modules\HR\Services;
 
 use Module;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Modules\HR\Entities\Job;
 use Modules\User\Entities\User;
 use Modules\HR\Entities\Applicant;
@@ -92,5 +93,16 @@ class ApplicationService implements ApplicationServiceContract
         // call event that triggers send custom application mail
         $data['mail_sender_name'] = $data['mail_sender_name'] ?? auth()->user()->name;
         event(new CustomMailTriggeredForApplication($application, $data));
+    }
+
+    public function markInterviewFinished($data)
+    {
+    $MeetDate = Carbon::parse($data->duration);
+    $ScheduleDate = Carbon::parse($data->scheduled_date);
+    $Interval = $MeetDate->diffAsCarbonInterval($ScheduleDate);
+    $MeetDuration = $Interval->format('%H:%i:%s');
+    $MeetDuration = Carbon::parse($MeetDuration);
+    $data->meeting_duration = $MeetDuration;
+    $data->save();
     }
 }
