@@ -3,7 +3,6 @@
 namespace Modules\HR\Database\Factories;
 
 use Faker\Factory as Faker;
-use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\HRRejectionReason;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,9 +25,25 @@ class HrApplicationRejectionFactory extends Factory
         $faker = Faker::create();
 
         return [
-            'hr_application_round_id' => ApplicationRound::factory()->create()->id,
+            'hr_application_round_id' =>  $this->getRandomId()[array_rand($this->getRandomId())],
             'reason_title' => $faker->text(),
             'reason_comment' => $faker->text(),
+        ];
+    }
+
+    private function getRandomId()
+    {
+        return [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
         ];
     }
 }

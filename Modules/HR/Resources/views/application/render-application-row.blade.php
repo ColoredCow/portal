@@ -17,7 +17,7 @@
                 @php
                     $tooltipHtml = '';
                     $index = 0;
-                    foreach (json_decode($formData->value) as $field => $value) {
+                    foreach (json_decode($formData->value) ?? [] as $field => $value) {
                         if (!$value) {
                             continue;
                         }

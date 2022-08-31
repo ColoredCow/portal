@@ -16,7 +16,7 @@ class HrResourcesTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
             Resource::factory()
-                ->count(2)
+                ->count(20)
                 ->create();
         }
     }

@@ -3,7 +3,6 @@
 namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\ApplicationMeta;
-use Modules\HR\Entities\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HrApplicationMetaFactory extends Factory
@@ -22,13 +21,25 @@ class HrApplicationMetaFactory extends Factory
      */
     public function definition()
     {
-        $application = Application::factory()->create();
-        $application->tag($application->status);
-
         return [
-            'hr_application_id' => $application->id,
+            'hr_application_id' => $this->getapplicationId()[array_rand($this->getapplicationId())],
             'value' => $this->faker->text(),
             'key' => 'form-data'
+        ];
+    }
+
+    private function getapplicationId()
+    {
+        return [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '9',
+            '10',
         ];
     }
 }

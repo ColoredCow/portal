@@ -3,9 +3,8 @@
 namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\Application;
-use Modules\HR\Entities\Applicant;
-use Modules\HR\Entities\Job;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Database\Seeders\HrApplicationRoundTableSeeder;
 
 class HrApplicationsFactory extends Factory
 {
@@ -23,11 +22,35 @@ class HrApplicationsFactory extends Factory
      */
     public function definition()
     {
+        $status = array_rand(config('hr.status'));
+
+        if ($status == 'custom-mail') {
+            $status = 'sent-for-approval';
+        } elseif ($status == 'confirmed') {
+            $status = 'onboarded';
+        }
+
         return [
-            'hr_applicant_id' => Applicant::factory()->create()->id,
-            'hr_job_id' => Job::factory()->create()->id,
+            'hr_applicant_id' => $this->getRandomId()[array_rand($this->getRandomId())],
+            'hr_job_id' => $this->getRandomId()[array_rand($this->getRandomId())],
             'resume' => 'https://coloredcow.com/wp-content/uploads/2022/08/sample.pdf',
-            'status' => array_rand(config('hr.tags')),
+            'status' => $status
+        ];
+    }
+
+    private function getRandomId()
+    {
+        return [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
         ];
     }
 }

@@ -16,18 +16,20 @@ class HRDatabaseSeeder extends Seeder
     {
         Model::unguard();
         $this->call(HRPermissionsTableSeeder::class);
-        $this->call(TagTableSeeder::class);
         $this->call(HRRoundsTableSeeder::class);
-        $this->call(HrApplicationRoundTableSeeder::class);
-        $this->call(HrApplicationsTableSeeder::class);
+        $this->call(TagTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(AddPreparatoryRoundsSeeder::class);
-        $this->call(HrApplicationRoundReviewTableSeeder::class);
+        $this->call(HrApplicantsTableSeeder::class);
+        $this->call(HRJobsSeederTableSeeder::class);
+        $this->call(HrApplicationsTableSeeder::class);
+        $this->call(HrApplicationRoundTableSeeder::class);
         $this->call(HrChannelsTableSeeder::class);
         $this->call(HrDomainTableSeeder::class);
         $this->call(HrApplicationEvaluationSegmentTableSeeder::class);
         $this->call(ResumeScreeningEvaluationSeeder::class);
         $this->call(ApplicationEvaluationTableSeeder::class);
+        $this->call(HrApplicationRoundReviewTableSeeder::class);
         $this->call(HrApplicationMetaTableSeeder::class);
         $this->call(HrApplicationRejectionReasonTableSeeder::class);
         $this->call(HrApplicationSegmentTableSeeder::class);
@@ -37,6 +39,5 @@ class HRDatabaseSeeder extends Seeder
         $this->call(HrResourcesCategoriesTableSeeder::class);
         $this->call(HrResourcesTableSeeder::class);
         $this->call(HrFollowUpTableSeeder::class);
-        $this->call(HRJobsSeederTableSeeder::class);
     }
 }

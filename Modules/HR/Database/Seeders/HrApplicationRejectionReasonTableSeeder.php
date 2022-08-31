@@ -16,7 +16,7 @@ class HrApplicationRejectionReasonTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
             HRRejectionReason::factory()
-                ->count(10)
+                ->count(20)
                 ->create();
         }
     }

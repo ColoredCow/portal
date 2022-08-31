@@ -16,7 +16,7 @@ class HrApplicationMetaTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
             ApplicationMeta::factory()
-                ->count(10)
+                ->count(20)
                 ->create();
         }
     }

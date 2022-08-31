@@ -37,6 +37,11 @@ return [
         'new-application' => 'New application',
         'no-show' => 'No show',
         'no-show-reminded' => 'No show reminded',
+        'on-hold' => 'On hold',
+        'approved' => 'Approved',
+        'onboarded' => 'Onboarded',
+        'rejected' => 'Rejected',
+        'sent-for-approval' => 'Sent for Approval',
     ],
 
     'opportunities-status' => [

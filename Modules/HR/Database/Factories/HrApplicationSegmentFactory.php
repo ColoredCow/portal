@@ -3,8 +3,6 @@
 namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\ApplicationEvaluationSegment;
-use Modules\HR\Entities\Application;
-use Modules\HR\Entities\ApplicationRound;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\Evaluation\Segment;
 
@@ -25,14 +23,28 @@ class HrApplicationSegmentFactory extends Factory
     public function definition()
     {
         $hrEvaluationSegmentId = Segment::first();
-        $application = Application::factory()->create();
-        $application->tag($application->status);
 
         return [
-             'application_id' => $application->id,
-            'application_round_id' => ApplicationRound::factory()->create()->id,
+            'application_id' => $this->getRandomId()[array_rand($this->getRandomId())],
+            'application_round_id' => $this->getRandomId()[array_rand($this->getRandomId())],
             'evaluation_segment_id' => $hrEvaluationSegmentId,
             'comments' => $this->faker->text(),
+        ];
+    }
+
+    private function getRandomId()
+    {
+        return [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
         ];
     }
 }

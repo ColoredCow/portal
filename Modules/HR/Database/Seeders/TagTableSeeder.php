@@ -15,12 +15,17 @@ class TagTableSeeder extends Seeder
     public function run()
     {
         $colors = [
-            'in-progress' => '#ffed4a',
+           'in-progress' => '#ffed4a',
            'need-follow-up' => '#0000FF',
            'awaiting-confirmation' => '#63B2B7',
-            'new-application' => '#38c172',
+           'new-application' => '#38c172',
            'no-show'=> '#FF0000',
            'no-show-reminded' => '#FF0000',
+           'on-hold' => '#6c757d',
+           'approved' => '#38c172',
+           'onboarded' => '#38c172',
+           'rejected' => '#343a40',
+           'sent-for-approval' =>'#17a2b8',
         ];
 
         if (! app()->environment('production')) {
