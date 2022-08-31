@@ -368,6 +368,7 @@ class ProjectService implements ProjectServiceContract
         $dailyEffort = round($monthlyEffort / $workingDays);
 
         return $dailyEffort;
+    }
 
     public function getMailDetailsForProjectKeyAccountManagers()
     {
