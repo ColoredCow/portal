@@ -1721,21 +1721,15 @@ $(document).ready(function(){
 	$(".show").on("click", function(event) {
 		var $menu = $(".menu");
 		var $tabcontent = $(".tab-content");
-		if($(".show").is(":checked"))
+		if($(this).is(":checked"))
 		{
 			$menu.show();
 			$tabcontent.show();
-		}else{
+		}
+		else{
 			$menu.hide();
 			$tabcontent.hide();
 		}
-	});
-});
-
-$(document).ready(function(){
-	$(".tab-content").on("click",function(e){
-		e.preventDefault();
-		$(this).tab("show");
 	});
 });
 

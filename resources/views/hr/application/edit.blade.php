@@ -1288,7 +1288,7 @@
                                         @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                                         @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                                         @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
-                                        @include('hr.application.put-on-hold-modal')
+                                        @includeWhen($loop->last, 'hr.application.put-on-hold-modal')
                                     </form>
                                     
                                 @endif
