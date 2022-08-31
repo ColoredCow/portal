@@ -93,7 +93,7 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate([
             'module' => 'hr',
             'setting_key' => 'application_on_hold_body_2',
-            'setting_value' => 'Your application is put on hold.Hello Lavish',
+            'setting_value' => 'Your application is put on hold.',
         ]);
         Setting::updateOrCreate([
             'module' => 'hr',
