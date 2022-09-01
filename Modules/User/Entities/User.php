@@ -184,18 +184,15 @@ class User extends Authenticatable
             return $query->where('team_member_id', $userId);
         })->get();
 
-        return $projects;
-    }
-
-    public function userEfforts()
-    {
-        $userId = $this->id;
-        $efforts = [];
         $projectTeamMembers = ProjectTeamMember::where('team_member_id', $userId)->get();
         foreach ($projectTeamMembers as $projectTeamMember) {
             $efforts = $projectTeamMember->current_actual_effort;
         }
+        $data = [
+            'projects' => $projects,
+            'efforts' => $efforts,
+        ];
 
-        return $efforts;
+        return $data;
     }
 }
