@@ -56,8 +56,7 @@
                 </div>
                 <div id="segmentCollapse_{{ $round->id }}" class="collapse <?php if($count==0){
                     echo "show";}?>" aria-labelledby="headingOne">
-                    <div class="card">
-                        <div class="card-header">
+                    
                             <div class="accordion-body">
                                 <table class="table table-striped table-bordered">
                                     <tr>
@@ -86,8 +85,8 @@
                                     @endforeach 
                                 </table>       
                             </div>
-                        </div>    
-                    </div>        
+                            
+                            
                 </div>
             </div>
             <br>
