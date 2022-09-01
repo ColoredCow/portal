@@ -744,6 +744,9 @@ if (document.getElementById("books_listing")) {
 			categoryInputs: [],
 			currentBookIndex: 0,
 			newCategory: "",
+			loggedInUser: document.getElementById("books_table").dataset.loggedInUser
+				? JSON.parse(document.getElementById("books_table").dataset.loggedInUser)
+				: {},
 			searchKey: document.getElementById("search_input")
 				? document.getElementById("search_input").dataset.value
 				: ""
@@ -816,6 +819,10 @@ if (document.getElementById("books_listing")) {
 
 			searchBooks: function () {
 				window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
+			},
+
+			searchBooksByCategoryName: function () {
+				window.location.href = `${this.updateRoute}?category_name=${this.searchKeys}`;
 			},
 
 			strLimit: function (str, length) {
@@ -957,6 +964,16 @@ if (document.getElementById("show_book_info")) {
 				? document.getElementById("show_book_info").dataset
 					.bookAMonthDestroyRoute
 				: "",
+			addToWishlistRoute: document.getElementById("show_book_info").dataset
+				.addToWishlistRoute
+				? document.getElementById("show_book_info").dataset
+					.addToWishlistRoute
+				: "",
+			removeFromWishlistRoute: document.getElementById("show_book_info").dataset
+				.removeFromWishlistRoute
+				? document.getElementById("show_book_info").dataset
+					.removeFromWishlistRoute
+				: "",
 			putBackBookRoute: document.getElementById("show_book_info").dataset
 				.putBackBookRoute
 				? document.getElementById("show_book_info").dataset.putBackBookRoute
@@ -969,6 +986,10 @@ if (document.getElementById("show_book_info")) {
 				: false,
 			isBookAMonth: document.getElementById("show_book_info").dataset
 				.isBookAMonth
+				? true
+				: false,
+			isWishlisted: document.getElementById("show_book_info").dataset
+				.isWishlisted
 				? true
 				: false,
 			readers: document.getElementById("show_book_info").dataset.readers
@@ -1006,7 +1027,28 @@ if (document.getElementById("show_book_info")) {
 					return false;
 				}
 			},
-			borrowTheBook: async function () {
+
+			addToWishlist: async function (action) {
+				let response = await axios.post(this.addToWishlistRoute, {
+					book_id: this.book.id
+				});
+				this.isWishlisted = true;
+				if (!response.data) {
+					return false;
+				}
+			},
+
+			removeFromWishlist: async function (action) {
+				let response = await axios.post(this.removeFromWishlistRoute, {
+					book_id: this.book.id
+				});
+				this.isWishlisted = false;
+				if (!response.data) {
+					return false;
+				}
+			},
+
+			borrowTheBook: async function() {
 				if (this.borrowers.length < this.book.number_of_copies) {
 					let response = await axios.get(this.borrowBookRoute);
 					this.isBorrowed = true;
@@ -1717,7 +1759,22 @@ $(document).on("focusin", function (e) {
 	}
 });
 
-$("#editform").on("submit", function (e) {
+$(document).ready(function(){
+	$(".show").on("click", function(event) {
+		var $menu = $(".menu");
+		var $tabcontent = $(".tab-content");
+		if($(this).is(":checked")){
+			$menu.show();
+			$tabcontent.show();
+		}
+		else{
+			$menu.hide();
+			$tabcontent.hide();
+		}
+	});
+});
+
+$("#editform").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#editform");
 	let button = $("#editBT");
@@ -1784,4 +1841,37 @@ $("#updateEmail").on("click", function () {
 });
 $("#interactionErrorModalCloseBtn").click(function () {
 	$("#InteractionError").toggleClass("d-none");
+});
+
+$(".opt").on("click", function() {
+	let formData = {
+		"setting_key_subject":  $(this).data("key-subject"),
+		"setting_key_body": $(this).data("key-body"),
+		"applicant_name": $("#applicantName").text(),
+		"job_title": $("#jobTitle").text(),
+	};
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option1subject").val(response.subject);
+			tinymce.get("option1body").setContent(response.body, {format: "html"});
+		},
+	});
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option2subject").val(response.subject);
+			tinymce.get("option2body").setContent(response.body, {format: "html"});
+		},
+	});
 });
