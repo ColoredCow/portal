@@ -104,8 +104,7 @@
 			<i class="fa fa-calendar" aria-hidden="true"></i>
 			<span>Awaiting confirmation</span>
 			@php
-			$awaitingForDays =
-			$application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
+			$awaitingForDays  = $application->latestApplicationRound->getPreviousApplicationRound() ? $application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today()) : null ;
 			@endphp
 			@if ($awaitingForDays)
 			<span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>
