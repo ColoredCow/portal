@@ -25,11 +25,11 @@ aria-hidden="true">
             <div class="container">
                 <div>
                     <ul class="nav nav-tabs menu">
-                        <li class="nav-item "><a data-toggle="tab" href="#option_1" class="nav-link opt" data-key-subject='application_on_hold_subject' data-key-body='application_on_hold_body' >Option 1</a></li>
-                        <li class="nav-item"><a data-toggle="tab" href="#option_2" class="nav-link opt" data-key-subject='application_on_hold_subject_2' data-key-body='application_on_hold_body_2'>Option 2</a></li>
+                        <li class="nav-item "><a data-toggle="tab" href="#option1" class="nav-link opt" data-key-subject='application_on_hold_subject' data-key-body='application_on_hold_body' >Option 1</a></li>
+                        <li class="nav-item"><a data-toggle="tab" href="#option2" class="nav-link opt" data-key-subject='application_on_hold_subject_2' data-key-body='application_on_hold_body_2'>Option 2</a></li>
                     </ul>
                     <div class="tab-content" id="tabs">
-                        <div class="tab-pane" id="option_1">
+                        <div class="tab-pane" id="option1">
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12">
@@ -49,7 +49,7 @@ aria-hidden="true">
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="option_2">
+                        <div class="tab-pane" id="option2">
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12">
