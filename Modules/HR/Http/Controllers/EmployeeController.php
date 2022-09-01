@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Services\EmployeeService;
 use Modules\HR\Entities\Employee;
 use Illuminate\Routing\Controller;
+use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\Job;
+use Modules\HR\Entities\JobRequisition;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class EmployeeController extends Controller
@@ -46,4 +49,32 @@ class EmployeeController extends Controller
     {
         return view('hr.employees.basic-details', ['employee' => $employee]);
     }
+
+    public function showFTEdata(Employee $employee)
+    {
+        $employees = Employee::all();
+        $DomainName = HrJobDomain::all();
+        $opportunityName = Job::all();
+        return view('hr.employees.fte-hendler')->with([
+            'DomainName' => $DomainName,
+            'employees' => $employees,
+            'opportunityName' => $opportunityName
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $jobrequisition = $request->validate([
+            'domain' => 'required|integer',
+            'opportunity' => 'required|integer',
+        ]);
+
+        JobRequisition::create([
+            'domain_id' => $jobrequisition['domain'],
+            'opportunity_id' => $jobrequisition['opportunity']
+        ]);
+
+        return redirect()->back();
+    }
+
 }

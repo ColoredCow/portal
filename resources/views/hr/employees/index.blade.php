@@ -55,10 +55,23 @@
                     {{count($employee->user->activeProjectTeamMembers)}}
                 @endif
             </td>
-            <td class="{{ $employee->user ? ($employee->user->fte >= 1 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</td>
-        </tr>
+            <td>
+                @if ($employee->user == null)
+                  {{ $employee->user ? $employee->user->fte :'NA' }}
+                @elseif ($employee->user->fte >= 1)
+                <a class="text-danger" href={{ route('employees.alert') }} >
+                    {{ $employee->user->fte }} &nbsp;&nbsp;&nbsp;<i class="fa fa-warning fa-lg"></i>
+                </a>
+                @else
+                    {{ $employee->user ? $employee->user->fte :'NA' }}
+                    
+                @endif
+            </td>
+            </tr>
+            
         @endforeach
     </table>
+
 </div>
 @endsection
 

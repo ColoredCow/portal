@@ -108,12 +108,15 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/employee-basic-details/{employee}/', 'EmployeeController@basicDetails')->name('employees.basic.details');
         Route::resource('employees', 'EmployeeController')
-            ->only(['index', 'show'])
+            ->only(['index', 'show', 'store'])
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
+                'store' => 'employees.store',
             ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
+        Route::get('FTE-handler', 'EmployeeController@showFTEdata')->name('employees.alert');
+        Route::post('store', 'EmployeeController@store')->name('employees.store');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
