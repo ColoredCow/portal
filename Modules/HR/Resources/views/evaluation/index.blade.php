@@ -25,7 +25,11 @@
         <br>
 
         <div class="container">
-            @foreach ($rounds as $round)
+             @foreach ($rounds as $round ) 
+            <?php
+                $count = 0;
+                
+                ?>      
             @foreach ($attr as $key=>$segment)
             @if ($round->id == $key)
             <div class="accordion" id="accordion">
@@ -34,51 +38,65 @@
                         <div class="card-header">
                             <div class="form-row">
                                 <div class="form-group col-md-11">
-                                    <h2 class="accordion-header mb-0">
+                                    <h1 class="accordion-header mb-0">
                                         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                             {{ $round->name }}
                                         </button>
-                                    </h2> 
+                                    </h1> 
                                 </div>   
                                 <div class="form-group col-md">
-                                    <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#segmentCollapse_{{ $round->id }}">
-                                        <i class="fa fa-pencil"></i>
+                                    <div class="icon-arrow-down position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#segmentCollapse_{{ $round->id }}">
+                                        <i class="fa fa-arrow-down"></i>
                                     </div>
-                                </div>     
+                                </div>  
+                                
                             </div>
                         </div>
                     </div> 
                 </div>
-            </div>               
-            <div id="segmentCollapse_{{ $round->id }}" class="collapse" aria-labelledby="headingOne">
-                <div class="accordion-body">
-                    @foreach ($segment as $value)
-                    <div class="card-body">
-                        <div class="d-flex flex-row d-flex justify-content-between">
-                            <h1 class="mb-0">
-                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <a href="{{ route('hr.evaluation.segment-parameters', $value->id) }}">
-                                    {{ $value->name }}</a>       
-                                </button>
-                            </h1>
-                            <h5>
-                                {{ $value->parameters->sum('marks') }}
-                            </h5>
-                            <i v-on:click="editSegment({{ $value }})" class="fa fa-edit fz-20 text-theme-green"></i>
-
-                            <i v-on:click="removeSegment({{ $value }})" class="fa fa-trash fz-20 text-theme-red"></i>
-                        </div>      
-                    </div>
-                    @endforeach    
+                <div id="segmentCollapse_{{ $round->id }}" class="collapse <?php if($count==0){
+                    echo "show";}?>" aria-labelledby="headingOne">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="accordion-body">
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Marks</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    @foreach ($segment as $value)
+                                    <tr>
+                                        <td>
+                                            <a href="{{ route('hr.evaluation.segment-parameters', $value->id) }}">
+                                                {{ $value->name }}
+                                            </a>
+                                        </td>
+                                
+                                        <td>
+                                            <h5>{{ $value->parameters->sum('marks') }}</h5>
+                                        </td>
+                                
+                                        <td>
+                                            <i v-on:click="editSegment({{ $value }})" class="fa fa-edit fz-20 text-theme-green"></i>
+                                
+                                            <i v-on:click="removeSegment({{ $value }})" class="fa fa-trash fz-20 text-theme-red"></i>
+                                        </td>
+                                    </tr>
+                                    @endforeach 
+                                </table>       
+                            </div>
+                        </div>    
+                    </div>        
                 </div>
-            </div>    
+            </div>
+            <br>
             @endif 
+            <?php $count++ ?>
             @endforeach
             @endforeach
         </div>
     </div>
-
-</div>
 
 @include('hr::evaluation.segment.create')
 @include('hr::evaluation.segment.edit')
