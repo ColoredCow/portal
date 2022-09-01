@@ -71,11 +71,33 @@
                 }
             },
 
+            created() {
+                this.projectTeamMembers.map((teamMember) => {
+                    dailyEffort = teamMember['pivot']['daily_expected_effort'];
+                    teamMember['pivot']['weekly_expected_effort'] = dailyEffort * 5; 
+                    teamMember['pivot']['monthly_expected_effort'] = dailyEffort * this.workingDaysInMonth;
+                })
+            },
+            
+            computed: {
+                totalDailyEffort() {
+                    var total = 0
+                    this.projectTeamMembers.map((teamMember) => {
+                        total = total + teamMember['pivot']['daily_expected_effort'];
+                    })
+
+                    return total
+                }
+            },
+
             methods: {
                 defaultProjectTeamMember() {
                     return {
                         id: new Date().getTime(),
                         pivot: {
+                            daily_expected_effort: 0,
+                            weekly_expected_effort: 0,
+                            monthly_expected_effort: 0,
 
                         }
                     }
@@ -147,16 +169,46 @@
 
                 updatedDailyExpectedEffort($event, index, numberOfDays) {
                     value = $event.target.value;
-                    this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
+                    maximumExpectedEfforts = 12
+
+                    if (numberOfDays == 5) {
+                        maximumExpectedEfforts = 60
+                    } else if (numberOfDays == this.workingDaysInMonth) {
+                        maximumExpectedEfforts = 276
+                    }
+
+                    if (value > maximumExpectedEfforts) {
+                        if(! confirm('are you sure you want to enter more than ' + maximumExpectedEfforts + ' hours in expected effort?')) {
+                            $event.target.value = value.slice(0, -1)
+                            return
+                        }
+                    }
+
+                    if (numberOfDays == 5) {
+                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/5;
+                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value;
+                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = (value/5) * this.workingDaysInMonth;
+                    } else if (numberOfDays == this.workingDaysInMonth) {
+                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
+                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = (value/numberOfDays) * 5;
+                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value;
+                    } else {
+                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value;
+                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value * 5;
+                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
+                    }
+                   
+                         this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
+                         this.$forceUpdate()
                 }
             },
 
-            filters: {
-                toDate: function(timestamp) {
-                    if (timestamp == null) {
-                        return timestamp;
+                   filters: {
+                       toDate: function(timestamp) {
+                         if (timestamp == null) {
+                            return timestamp;
                     }
-                    return timestamp.substring(0,10);
+                         return timestamp.substring(0,10);
                 }
             },
 

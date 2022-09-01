@@ -9,6 +9,7 @@ require("./bootstrap");
 import "jquery-ui/ui/widgets/datepicker.js";
 import ImageCompressor from "image-compressor.js";
 var clipboard = new ClipboardJS(".btn-clipboard");
+import Chart from "chart.js/auto";
 
 window.Vue = require("vue");
 
@@ -94,7 +95,7 @@ Vue.component(
 );
 
 if (Vue) {
-	Vue.filter("str_limit", function(value, size) {
+	Vue.filter("str_limit", function (value, size) {
 		if (!value) return "";
 		value = value.toString();
 
@@ -112,11 +113,11 @@ if (document.getElementById("vueContainer")) {
 }
 
 $(document).ready(() => {
-	setTimeout(function() {
+	setTimeout(function () {
 		$("#statusAlert").alert("close");
 	}, 2000);
 
-	$("#job_title").on("change", function(event) {
+	$("#job_title").on("change", function (event) {
 		let opportunityId = $(this)
 			.find(":selected")
 			.attr("id");
@@ -132,12 +133,12 @@ $(document).ready(() => {
 	}
 	$("[data-toggle=\"tooltip\"]").tooltip();
 
-	$(".status-close").on("click", function() {
+	$(".status-close").on("click", function () {
 		let wrapper = $(this).closest(".alert");
 		wrapper.fadeOut(500);
 	});
 
-	$(".client_edit_form_submission_btn").on("click", function() {
+	$(".client_edit_form_submission_btn").on("click", function () {
 		if (!$("#edit_client_info_form")[0].checkValidity()) {
 			$("#edit_client_info_form")[0].reportValidity();
 			return false;
@@ -146,7 +147,7 @@ $(document).ready(() => {
 		$("#edit_client_info_form").submit();
 	});
 
-	$(".prospect_edit_form_submission_btn").on("click", function() {
+	$(".prospect_edit_form_submission_btn").on("click", function () {
 		if (!$("#edit_prospect_info_form")[0].checkValidity()) {
 			$("#edit_prospect_info_form")[0].reportValidity();
 			return false;
@@ -155,7 +156,7 @@ $(document).ready(() => {
 		$("#edit_prospect_info_form").submit();
 	});
 
-	$("body").on("change", ".custom-file-input", function() {
+	$("body").on("change", ".custom-file-input", function () {
 		var fileName = $(this)
 			.val()
 			.split("\\")
@@ -165,32 +166,41 @@ $(document).ready(() => {
 			.addClass("selected")
 			.html(fileName);
 	});
-	$("#addChannel").on("submit",function(e){
+	$("#addChannel").on("submit", function (e) {
 		e.preventDefault();
 		let form = $("#addChannel");
 		let button = $("#channelButton");
-		
 		$.ajax({
 			url: form.attr("action"),
 			type: form.attr("method"),
 			data: form.serialize(),
-			success: function(response) {
+			success: function (response) {
 				$("#channelName").modal("hide");
 				$("#success").toggleClass("d-none");
 				$("#success").fadeToggle(5000);
 			},
-			error: function(response) {
+			error: function (response) {
 				$("#errorMessage").toggleClass("d-none");
 			},
-		});		
+		});
 	});
 
 	if ($(".chart-data").length) {
 		datePickerChart();
 		barChart();
 	}
+	if ($("#myChart").length) {
+		datePickerChart();
+		HorizontalBarChart();
+	}
+	if ($("#myGraph").length) {
+		roundWiseRejectionsGraph();
+	}
+	if ($("#myBarGraph").length) {
+		rejectedReasonsGraph();
+	}
 
-	$("#save-btn-action").on("click", function() {
+	$("#save-btn-action").on("click", function () {
 		this.disabled = true;
 		if (!this.form.checkValidity()) {
 			this.disabled = false;
@@ -201,27 +211,26 @@ $(document).ready(() => {
 	});
 });
 
-$(document).ready(function(){	
+$(document).ready(function () {
 	$("#domainformModal").on("hidden.bs.modal", function () {
 		$(this).find("form").trigger("reset");
 		$("#domainerror").addClass("d-none");
 	});
 
-	$("#domainForm").on("submit",function(e){
+	$("#domainForm").on("submit", function (e) {
 		e.preventDefault();
-		let form =$("#domainForm");
-		
-	 	$.ajax({
+		let form = $("#domainForm");
+		$.ajax({
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success:function (response) {
+			success: function (response) {
 				$("#domainformModal").modal("hide");
 				$("#successMessage").toggleClass("d-none");
 				$("#successMessage").fadeToggle(3000);
 			},
-			error: function(response){
-				if(response.responseJSON.errors.name){
+			error: function (response) {
+				if (response.responseJSON.errors.name) {
 					let text = response.responseJSON.errors.name[0];
 					$("#domainerror").html(text).removeClass("d-none");
 					return false;
@@ -241,8 +250,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 
 				? JSON.parse(
 					document.getElementById("action_type").dataset.applicationJobRounds
-				  )
-
+				)
 				: {},
 			selectedNextRound: "",
 			nextRoundName: "",
@@ -252,38 +260,41 @@ if (document.getElementById("page_hr_applicant_edit")) {
 			createCalendarEvent: true
 		},
 		methods: {
-			toggleResumeFrame: function() {
+			toggleResumeFrame: function () {
 				this.showResumeFrame = !this.showResumeFrame;
 			},
-			toggleEvaluationFrame: function() {
+			toggleEvaluationFrame: function () {
 				this.showEvaluationFrame = !this.showEvaluationFrame;
 			},
-			getApplicationEvaluation: function(applicationRoundID) {
+			getApplicationEvaluation: function (applicationRoundID, roundId) {
+				let roundName = $("#applicationRoundName" + roundId)[0].innerText;
+				document.getElementById("roundName").innerText = `Evaluation\u00A0\u00A0•\u00A0\u00A0${roundName}`;
+
 				$("#page_hr_applicant_edit #application_evaluation_body").html(
 					"<div class=\"my-4 fz-18 text-center\">Loading...</div>"
 				);
 				if (!this.showEvaluationFrame) {
 					axios
 						.get("/hr/evaluation/" + applicationRoundID)
-						.then(function(response) {
+						.then(function (response) {
 
 							$("#page_hr_applicant_edit #application_evaluation_body").html(
 								response.data
 							);
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							alert("Error fetching application evaluation!");
 						});
 				}
 				this.toggleEvaluationFrame();
 			},
 
-			onSelectNextRound: function(event) {
+			onSelectNextRound: function (event) {
 				this.selectedAction = event.target.value;
 				this.selectedActionOption =
 					event.target.options[event.target.options.selectedIndex];
 			},
-			takeAction: function() {
+			takeAction: function () {
 				switch (this.selectedAction) {
 				case "round":
 					if (!this.selectedActionOption) {
@@ -299,6 +310,12 @@ if (document.getElementById("page_hr_applicant_edit")) {
 							.get("confirmMailToApplicantBody")
 							.setContent(res.body, { format: "html" });
 					});
+					if (this.nextRoundName.trim() == "Move to Team Interaction Round") {
+						$("#sendmailform").removeClass("d-none");
+					} else {
+						$(".next-scheduled-person-container").removeClass("d-none");
+						$("#sendmailform").addClass("d-none");
+					}
 					$("#round_confirm").modal("show");
 					break;
 				case "send-for-approval":
@@ -311,7 +328,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 					$("#onboard_applicant").modal("show");
 				}
 			},
-			rejectApplication: function() {
+			rejectApplication: function () {
 				$("#application_reject_modal").modal("show");
 				loadTemplateMail("reject", res => {
 					$("#rejectMailToApplicantSubject").val(res.subject);
@@ -336,7 +353,7 @@ if (document.getElementById("project_container")) {
 			newStage: false
 		},
 		methods: {
-			createProjectStage: function() {
+			createProjectStage: function () {
 				this.$refs.projectStage.create();
 			}
 		}
@@ -368,17 +385,17 @@ if (document.getElementById("client_form")) {
 					: document.getElementById("emails").value.split(",")
 		},
 		methods: {
-			toggleActive: function() {
+			toggleActive: function () {
 				this.isActive = !this.isActive;
 			},
-			addNewEmail: function() {
+			addNewEmail: function () {
 				this.clientEmails.push(
 					this.newEmailName + " <" + this.newEmailId + ">"
 				);
 				this.newEmailName = "";
 				this.newEmailId = "";
 			},
-			removeEmail: function(item) {
+			removeEmail: function (item) {
 				let index = this.clientEmails.indexOf(item);
 				if (index !== -1) {
 					this.clientEmails.splice(index, 1);
@@ -402,12 +419,12 @@ if (document.getElementById("finance_report")) {
 					.conversionRateUsd || 0
 		},
 		computed: {
-			convertedUSDSentAmount: function() {
+			convertedUSDSentAmount: function () {
 				let convertedAmount =
 					parseFloat(this.sentAmountUSD) * parseFloat(this.conversionRateUSD);
 				return isNaN(convertedAmount) ? 0 : convertedAmount.toFixed(2);
 			},
-			totalINREstimated: function() {
+			totalINREstimated: function () {
 				return (
 					parseFloat(this.sentAmountINR) +
 					parseFloat(this.convertedUSDSentAmount)
@@ -420,7 +437,7 @@ if (document.getElementById("finance_report")) {
 $("#page_hr_applicant_edit .applicant-round-form").on(
 	"click",
 	".round-submit",
-	function() {
+	function () {
 		let button = $(this); // reject button
 		let form = $(this).closest(".applicant-round-form"); // <form element with class "applicant-round-form" >
 		let selectedAction = $(this).data("action"); // reject
@@ -442,7 +459,7 @@ $(".date-field").datepicker({
 	dateFormat: "dd/mm/yy"
 });
 
-$("#form_invoice").on("change", "#client_id", function() {
+$("#form_invoice").on("change", "#client_id", function () {
 	let form = $(this).closest("form");
 	let client_id = $(this).val();
 	if (!client_id) {
@@ -461,7 +478,7 @@ function updateClientProjects(form, client_id) {
 	$.ajax({
 		url: "/clients/" + client_id + "/get-projects",
 		method: "GET",
-		success: function(res) {
+		success: function (res) {
 			form.find("#project_ids").html(getProjectList(res));
 		}
 	});
@@ -486,12 +503,12 @@ function setTooltip(btn, message) {
 }
 
 function hideTooltip(btn) {
-	setTimeout(function() {
+	setTimeout(function () {
 		$(btn).tooltip("hide");
 	}, 1000);
 }
 
-clipboard.on("success", function(e) {
+clipboard.on("success", function (e) {
 	setTooltip(e.trigger, "Copied!");
 	hideTooltip(e.trigger);
 });
@@ -518,7 +535,7 @@ tinymce.init({
 	convert_urls: 0
 });
 
-$(".hr_round_guide").on("click", ".edit-guide", function() {
+$(".hr_round_guide").on("click", ".edit-guide", function () {
 	let container = $(this).closest(".hr_round_guide");
 	container.find(".btn-guide, .guide-container").toggleClass("d-none");
 });
@@ -530,34 +547,67 @@ $(document).ready(function () {
 		$("#createNewSegment").on("hidden.bs.modal", function () {
 			$(this).find("form").trigger("reset");
 		});
-	
+
 		$.ajax({
 			type: form.attr("method"),
 			url: form.attr("action"),
 			data: form.serialize(),
-			success:function (response) {
+			success: function (response) {
 				$("#createNewSegment").modal("hide");
 				$("#createNewSegment").on("hidden.bs.modal", function (e) {
 					$("#segmentsuccess").toggleClass("d-none");
 					$("#segmentsuccess").fadeToggle(6000);
 				});
-			},	
-			error: function(response) {
+			},
+			error: function (response) {
 				$("#segmentError").removeClass("d-none");
 				let errors = response.responseJSON.errors;
 				$("#errors").empty();
 				for (let error in errors) {
 					$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
-			  }
+				}
 			}
 		});
 	});
-	$("#segmentModalCloseBtn").click(function() {
+	$("#segmentModalCloseBtn").click(function () {
 		$("#segmentError").toggleClass("d-none");
 	});
 });
+$(document).ready(function () {
+	$("#editSegmentForm").submit(function (e) {
+		e.preventDefault();
+		let form = $("#editSegmentForm");
+		$("#editSegmentModal").on("hidden.bs.modal", function () {
+			$(this).find("form").trigger("reset");
+		});
 
-$(".hr_round_guide").on("click", ".save-guide", function() {
+		$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success: function (response) {
+				$("#editSegmentModal").modal("hide");
+				$("#editSegmentModal").on("hidden.bs.modal", function (e) {
+					$("#editSegmentSuccess").toggleClass("d-none");
+					$("#editSegmentSuccess").fadeToggle(6000);
+				});
+			},
+			error: function (response) {
+				$("#editSegmentError").removeClass("d-none");
+				let errors = response.responseJSON.errors;
+				$("#editErrors").empty();
+				for (let error in errors) {
+					$("#editErrors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+				}
+			}
+		});
+	});
+	$("#editSegmentModalClose").click(function () {
+		$("#editSegmentError").toggleClass("d-none");
+	});
+});
+
+$(".hr_round_guide").on("click", ".save-guide", function () {
 	let container = $(this).closest(".hr_round_guide");
 	let form = container.find("form");
 	let button = $(this);
@@ -565,13 +615,13 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
 		method: form.attr("method"),
 		url: form.attr("action"),
 		data: form.serialize() + "&guidelines=" + tinyMCE.activeEditor.getContent(),
-		beforeSend: function() {
+		beforeSend: function () {
 			button
 				.prop("disabled", true)
 				.find(".item")
 				.toggleClass("d-none");
 		},
-		success: function(res) {
+		success: function (res) {
 			button
 				.prop("disabled", false)
 				.find(".item")
@@ -608,7 +658,7 @@ if (document.getElementById("show_and_save_book")) {
 			}
 		},
 		methods: {
-			onFileSelected: function(e) {
+			onFileSelected: function (e) {
 				let file = e.target.files[0];
 				if (!file) {
 					return;
@@ -616,13 +666,13 @@ if (document.getElementById("show_and_save_book")) {
 				this.compressedFile = null;
 				let image = new ImageCompressor(file, {
 					quality: 0.1,
-					success: function(result) {
+					success: function (result) {
 						this.compressedFile = result;
 					}
 				});
 			},
 
-			submitBookForm: function() {
+			submitBookForm: function () {
 				let formData = new FormData(document.getElementById("book_form"));
 				if (this.compressedFile) {
 					formData.append("book_image", compressedFile, compressedFile.name);
@@ -653,7 +703,7 @@ if (document.getElementById("show_and_save_book")) {
 				});
 			},
 
-			saveBookToRecords: function() {
+			saveBookToRecords: function () {
 				if (!this.book) {
 					alert("Error in saving records");
 				}
@@ -694,12 +744,15 @@ if (document.getElementById("books_listing")) {
 			categoryInputs: [],
 			currentBookIndex: 0,
 			newCategory: "",
+			loggedInUser: document.getElementById("books_table").dataset.loggedInUser
+				? JSON.parse(document.getElementById("books_table").dataset.loggedInUser)
+				: {},
 			searchKey: document.getElementById("search_input")
 				? document.getElementById("search_input").dataset.value
 				: ""
 		},
 		methods: {
-			updateCategoryMode: function(index) {
+			updateCategoryMode: function (index) {
 				let categories = this.books[index]["categories"];
 				if (!categories) {
 					return false;
@@ -711,11 +764,11 @@ if (document.getElementById("books_listing")) {
 				);
 			},
 
-			updateCategory: function() {
+			updateCategory: function () {
 				let selectedCategory = [];
 				let bookID = this.books[this.currentBookIndex]["id"];
 
-				this.categoryInputs.forEach(function(checkbox) {
+				this.categoryInputs.forEach(function (checkbox) {
 					if (checkbox.checked) {
 						selectedCategory.push({
 							name: checkbox.dataset.category,
@@ -736,7 +789,7 @@ if (document.getElementById("books_listing")) {
 				document.getElementById("close_update_category_modal").click();
 			},
 
-			addNewCategory: async function() {
+			addNewCategory: async function () {
 				if (!this.newCategory) {
 					alert("Please enter category name");
 					return false;
@@ -756,7 +809,7 @@ if (document.getElementById("books_listing")) {
 				}
 			},
 
-			deleteBook: async function(index) {
+			deleteBook: async function (index) {
 				let bookID = this.books[index]["id"];
 				let route = `${this.updateRoute}/${bookID}`;
 				let response = await axios.delete(route);
@@ -764,18 +817,22 @@ if (document.getElementById("books_listing")) {
 				$("#exampleModal").modal("hide");
 			},
 
-			searchBooks: function() {
+			searchBooks: function () {
 				window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
 			},
 
-			strLimit: function(str, length) {
+			searchBooksByCategoryName: function () {
+				window.location.href = `${this.updateRoute}?category_name=${this.searchKeys}`;
+			},
+
+			strLimit: function (str, length) {
 				if (!str) {
 					return "";
 				}
 				return str.length > length ? str.substring(0, length) + "..." : str;
 			},
 
-			updateCopiesCount: function(index) {
+			updateCopiesCount: function (index) {
 				var new_count = parseInt(
 					prompt(
 						"Number of copies of this book",
@@ -791,7 +848,7 @@ if (document.getElementById("books_listing")) {
 			}
 		},
 
-		mounted: function() {
+		mounted: function () {
 			let categoryInputContainer = document.querySelector(
 				"#update_category_modal"
 			);
@@ -813,7 +870,7 @@ if (document.getElementById("books_category")) {
 				.categories
 				? JSON.parse(
 					document.getElementById("category_container").dataset.categories
-				  )
+				)
 				: [],
 			categoryNameToChange: [],
 			indexRoute:
@@ -823,12 +880,12 @@ if (document.getElementById("books_category")) {
 		},
 
 		methods: {
-			showEditMode: function(index) {
+			showEditMode: function (index) {
 				this.categoryNameToChange[index] = this.categories[index]["name"];
 				this.$set(this.categories[index], "editMode", true);
 			},
 
-			updateCategoryName: function(index) {
+			updateCategoryName: function (index) {
 				this.$set(
 					this.categories[index],
 					"name",
@@ -840,10 +897,10 @@ if (document.getElementById("books_category")) {
 					name: this.categories[index]["name"]
 				});
 				this.$set(this.categories[index], "editMode", false);
-				this.$toast.success( "Updated category for books" );
+				this.$toast.success("Updated category for books");
 			},
 
-			deleteCategory: async function(index) {
+			deleteCategory: async function (index) {
 				let confirmDelete = confirm("Are you sure ?");
 
 				if (!confirmDelete) {
@@ -856,14 +913,14 @@ if (document.getElementById("books_category")) {
 				this.categories.splice(index, 1);
 			},
 
-			updateNewCategoryMode: function(mode) {
+			updateNewCategoryMode: function (mode) {
 				if (mode != "add") {
 					this.newCategoryName = "";
 				}
 				this.newCategoryMode = mode;
 			},
 
-			addNewCategory: async function() {
+			addNewCategory: async function () {
 				if (!this.newCategoryName) {
 					alert("Please enter category name");
 					return false;
@@ -907,6 +964,16 @@ if (document.getElementById("show_book_info")) {
 				? document.getElementById("show_book_info").dataset
 					.bookAMonthDestroyRoute
 				: "",
+			addToWishlistRoute: document.getElementById("show_book_info").dataset
+				.addToWishlistRoute
+				? document.getElementById("show_book_info").dataset
+					.addToWishlistRoute
+				: "",
+			removeFromWishlistRoute: document.getElementById("show_book_info").dataset
+				.removeFromWishlistRoute
+				? document.getElementById("show_book_info").dataset
+					.removeFromWishlistRoute
+				: "",
 			putBackBookRoute: document.getElementById("show_book_info").dataset
 				.putBackBookRoute
 				? document.getElementById("show_book_info").dataset.putBackBookRoute
@@ -921,6 +988,10 @@ if (document.getElementById("show_book_info")) {
 				.isBookAMonth
 				? true
 				: false,
+			isWishlisted: document.getElementById("show_book_info").dataset
+				.isWishlisted
+				? true
+				: false,
 			readers: document.getElementById("show_book_info").dataset.readers
 				? document.getElementById("show_book_info").dataset.readers
 				: [],
@@ -929,7 +1000,7 @@ if (document.getElementById("show_book_info")) {
 				: []
 		},
 		methods: {
-			markBook: async function(read) {
+			markBook: async function (read) {
 				let response = await axios.post(this.route, {
 					book_id: this.book.id,
 					is_read: read
@@ -941,7 +1012,7 @@ if (document.getElementById("show_book_info")) {
 				this.readers = response.data.readers;
 			},
 
-			addToBookAMonth: async function(action) {
+			addToBookAMonth: async function (action) {
 				let response = await axios.post(this.bookAMonthStoreRoute);
 				this.isBookAMonth = true;
 				if (!response.data) {
@@ -949,7 +1020,7 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			removeFromBookAMonth: async function(action) {
+			removeFromBookAMonth: async function (action) {
 				let response = await axios.post(this.bookAMonthDestroyRoute);
 				this.isBookAMonth = false;
 				if (!response.data) {
@@ -957,13 +1028,38 @@ if (document.getElementById("show_book_info")) {
 				}
 			},
 
-			borrowTheBook: async function() {
-				let response = await axios.get(this.borrowBookRoute);
-				this.isBorrowed = true;
-				this.borrowers = response.data.borrowers;
+			addToWishlist: async function (action) {
+				let response = await axios.post(this.addToWishlistRoute, {
+					book_id: this.book.id
+				});
+				this.isWishlisted = true;
+				if (!response.data) {
+					return false;
+				}
 			},
 
-			putTheBookBackToLibrary: async function() {
+			removeFromWishlist: async function (action) {
+				let response = await axios.post(this.removeFromWishlistRoute, {
+					book_id: this.book.id
+				});
+				this.isWishlisted = false;
+				if (!response.data) {
+					return false;
+				}
+			},
+
+			borrowTheBook: async function() {
+				if (this.borrowers.length < this.book.number_of_copies) {
+					let response = await axios.get(this.borrowBookRoute);
+					this.isBorrowed = true;
+					this.borrowers = response.data.borrowers;
+				}
+				else {
+					alert("Sorry ! No more copies of this book available right now.");
+				}
+			},
+
+			putTheBookBackToLibrary: async function () {
 				let response = await axios.get(this.putBackBookRoute);
 				this.isBorrowed = false;
 				this.borrowers = response.data.borrowers;
@@ -1031,14 +1127,14 @@ if (document.getElementById("roles_permission_table")) {
 			roles: document.getElementById("roles_permission_table").dataset.roles
 				? JSON.parse(
 					document.getElementById("roles_permission_table").dataset.roles
-				  )
+				)
 				: [],
 			permissions: document.getElementById("roles_permission_table").dataset
 				.permissions
 				? JSON.parse(
 					document.getElementById("roles_permission_table").dataset
 						.permissions
-				  )
+				)
 				: [],
 			updateRoute:
 				document.getElementById("roles_permission_table").dataset.updateRoute ||
@@ -1047,7 +1143,7 @@ if (document.getElementById("roles_permission_table")) {
 			permissionInputs: []
 		},
 		methods: {
-			updatePermissionModal: function(index) {
+			updatePermissionModal: function (index) {
 				let permissions = this.roles[index].permissions;
 				this.currentRoleIndex = index;
 				this.permissionInputs.map(checkbox => (checkbox.checked = false));
@@ -1055,11 +1151,11 @@ if (document.getElementById("roles_permission_table")) {
 					permission => (this.permissionInputs[permission.id].checked = true)
 				);
 			},
-			updatePermissions: function() {
+			updatePermissions: function () {
 				let selectedPermissions = [];
 				let roleID = this.roles[this.currentRoleIndex]["id"];
 
-				this.permissionInputs.forEach(function(checkbox) {
+				this.permissionInputs.forEach(function (checkbox) {
 					if (checkbox.checked) {
 						selectedPermissions.push({
 							name: checkbox.dataset.permission,
@@ -1081,7 +1177,7 @@ if (document.getElementById("roles_permission_table")) {
 				document.getElementById("update_role_permissions_modal").click();
 			}
 		},
-		mounted: function() {
+		mounted: function () {
 			let permissionInputContainer = document.querySelector(
 				"#update_role_permissions_modal"
 			);
@@ -1111,7 +1207,7 @@ if (document.getElementById("user_roles_table")) {
 			roleInputs: []
 		},
 		methods: {
-			updateUserRolesModal: function(index) {
+			updateUserRolesModal: function (index) {
 				let roles = this.users[index]["roles"];
 				if (!roles) {
 					return false;
@@ -1121,13 +1217,13 @@ if (document.getElementById("user_roles_table")) {
 				roles.forEach(role => (this.roleInputs[role.id].checked = true));
 			},
 
-			updateRoles: function() {
+			updateRoles: function () {
 				let selectedRoles = [];
 				if (this.users) {
 					let userID = this.users[this.currentUserIndex].id;
 				}
 
-				this.roleInputs.forEach(function(checkbox) {
+				this.roleInputs.forEach(function (checkbox) {
 					if (checkbox.checked) {
 						selectedRoles.push({
 							name: checkbox.dataset.role,
@@ -1145,7 +1241,7 @@ if (document.getElementById("user_roles_table")) {
 				document.getElementById("close_update_user_roles_modal").click();
 			},
 
-			formatRoles: function(user) {
+			formatRoles: function (user) {
 				let roleNames = [];
 				for (var i in user.roles) {
 					let roleName = user.roles[i].label;
@@ -1159,7 +1255,7 @@ if (document.getElementById("user_roles_table")) {
 				return roleNames.join(", ");
 			}
 		},
-		mounted: function() {
+		mounted: function () {
 			let roleInputContainer = document.querySelector(
 				"#update_user_roles_modal"
 			);
@@ -1177,14 +1273,14 @@ require("./finance/invoice");
 require("./finance/payment");
 
 /*
- * HR Module JS code start
- */
-$(document).ready(function() {
+* HR Module JS code start
+*/
+$(document).ready(function () {
 	$(document).on("click", ".show-comment", showCommentBlock);
 	$(document).on("click", ".section-toggle", sectionToggle);
 	$(document).on("click", "#saveFollowUp", saveFollowUp);
 	$(document).on("change", ".section-toggle-checkbox", sectionToggleCheckbox);
-	$(document).on("click", ".show-evaluation-stage", function() {
+	$(document).on("click", ".show-evaluation-stage", function () {
 		$(".evaluation-stage").addClass("d-none");
 		var target = $(this).data("target");
 		$(target).removeClass("d-none");
@@ -1193,7 +1289,7 @@ $(document).ready(function() {
 			$("#segment-general-information > span")[0].innerText ==
 			"General Information"
 		) {
-			$(".evaluation-score input").each(function() {
+			$(".evaluation-score input").each(function () {
 				if ($(this).is(":checked")) {
 					let evaluationParameterName = this.name.replace(/_/g, "-");
 					console.log(evaluationParameterName);
@@ -1221,10 +1317,10 @@ $(document).ready(function() {
 	);
 });
 
-$(function() {
+$(function () {
 	$("#categoryName")
 		.keyup(check_save)
-		.each(function() {
+		.each(function () {
 			check_save();
 		});
 });
@@ -1331,7 +1427,7 @@ function saveFollowUp() {
 }
 
 function datePickerChart() {
-	$("#EndDate").change(function() {
+	$("#EndDate").change(function () {
 		var startDate = document.getElementById("StartDate").value;
 		var endDate = document.getElementById("EndDate").value;
 		if (Date.parse(endDate) <= Date.parse(startDate)) {
@@ -1363,7 +1459,7 @@ function barChart() {
 		responsive: true,
 		tooltips: {
 			callbacks: {
-				afterBody: function(context) {
+				afterBody: function (context) {
 					console.log(context);
 					return `Verified Applications: ${cData.afterBody[context[0].index]}`;
 				}
@@ -1408,8 +1504,219 @@ function barChart() {
 	});
 }
 
-$(function() {
-	$(".reject-reason").on("click", function() {
+function HorizontalBarChart() {
+	var value = $("#myChart").data("target");
+	var cData = value;
+	var ctx = $("#myChart");
+	var data = {
+		labels: cData.jobsTitle,
+		datasets: [
+			{
+				label: [],
+				data: cData.application,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function (tooltipItem) {
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 1000,
+					ticks: {
+						stepSize: 100,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function () {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function (dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function (bar, index) {
+							var data = dataset.data[index];
+							if (data == "0") {
+								data = "";
+							}
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+
+			},
+		},
+
+	});
+}
+function roundWiseRejectionsGraph() {
+	var value = $("#myGraph").data("target");
+	var cData = value;
+	var ctx = $("#myGraph");
+	var data = {
+		labels: cData.totalapplication,
+		datasets: [
+			{
+				label: [],
+				data: cData.count,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				datacolor: ["rgba(52,144,220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			categoryPercentage: 1.0,
+			barPercentage: 0.8,
+			maintainAspectRatio: true,
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function () {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					// ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function (dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function (bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+
+			},
+		},
+
+	});
+}
+
+function rejectedReasonsGraph() {
+	var value = $("#myBarGraph").data("target");
+	var cData = value;
+	var ctx = $("#myBarGraph");
+	var data = {
+		labels: cData.reason,
+		datasets: [
+			{
+				label: [],
+				data: cData.Applicationcounts,
+				backgroundColor: ["rgba(52, 144, 220)"],
+				borderColor: ["rgba(52, 144, 220)"],
+				borderWidth: 10,
+			},
+		],
+	};
+	var myBar = new Chart(ctx, {
+		type: "bar",
+		data: data,
+		options: {
+			tooltip: {
+				enabled: true,
+				callbacks: {
+					label: function (tooltipItem) {
+						return tooltipItem.dataset.data;
+					}
+				}
+			},
+			indexAxis: "y",
+			scales: {
+				x: {
+					min: 0,
+					max: 100,
+					ticks: {
+						stepSize: 5,
+					},
+				},
+			},
+			plugins: {
+				legend: {
+					labels: {
+						boxWidth: 0,
+					},
+				},
+			},
+			hover: {
+				mode: false
+			},
+			animation: {
+				duration: 1,
+				onProgress: function () {
+					var chart = this;
+					var ctx = chart.ctx;
+					ctx.textAlign = "top";
+					ctx.textBaseline = "middle";
+					ctx.font = "13px Arial";
+					this.data.datasets.forEach(function (dataset, i) {
+						var meta = chart.getDatasetMeta(i);
+						meta.data.forEach(function (bar, index) {
+							var data = dataset.data[index];
+							ctx.fillText(data, bar.x + 5, bar.y);
+						});
+					});
+				},
+
+			},
+		},
+
+	});
+}
+
+$(function () {
+	$(".reject-reason").on("click", function () {
 		let reasonCheckboxInput = $(this);
 		let reasonCommentInput = reasonCheckboxInput
 			.closest(".rejection-reason-block")
@@ -1422,17 +1729,17 @@ $(function() {
 	});
 });
 
-$("#job_start_date").on("change", function() {
+$("#job_start_date").on("change", function () {
 	let startDate = $("#job_start_date").val();
 	$("#job_end_date").attr("min", startDate);
 });
 
-$("#job_end_date").on("change", function() {
+$("#job_end_date").on("change", function () {
 	let endDate = $("#job_end_date").val();
 	$("#job_start_date").attr("max", endDate);
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
 	var multipleCancelButton = new Choices("#choices-multiple-remove-button", {
 		removeItemButton: true,
 		maxItemCount: 9,
@@ -1442,12 +1749,129 @@ $(document).ready(function() {
 });
 
 /*
- * HR Module JS code end
- */
+* HR Module JS code end
+*/
 
 // fix for tinymce and bootstrap modal
-$(document).on("focusin", function(e) {
+$(document).on("focusin", function (e) {
 	if ($(event.target).closest(".mce-window").length) {
 		e.stopImmediatePropagation();
 	}
+});
+
+$(document).ready(function(){
+	$(".show").on("click", function(event) {
+		var $menu = $(".menu");
+		var $tabcontent = $(".tab-content");
+		if($(this).is(":checked")){
+			$menu.show();
+			$tabcontent.show();
+		}
+		else{
+			$menu.hide();
+			$tabcontent.hide();
+		}
+	});
+});
+
+$("#editform").on("submit", function(e) {
+	e.preventDefault();
+	let form = $("#editform");
+	let button = $("#editBT");
+
+	$.ajax({
+		url: form.attr("action"),
+		type: form.attr("method"),
+		data: form.serialize(),
+		success: function (response) {
+			$("#edit").modal("hide");
+			$("#edit").on("hidden.bs.modal", function (e) {
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(5000);
+			});
+		},
+		error: function (response) {
+			$("#profile-details-error").removeClass("d-none");
+			$("#successMessage").addClass("d-none");
+			let errors = response.responseJSON.errors;
+			$(".profile-details-error").empty();
+			for (let error in errors) {
+				$(".profile-details-error").append(
+					"<li class='text-danger ml-2'>" + errors[error] + "</li>"
+				);
+			}
+		},
+	});
+});
+
+$("#updateEmail").on("click", function () {
+	let formData = {
+		"location": $("#location").val(),
+		"date": $("#date").val(),
+		"timing": $("#timing").val(),
+		"applicant_name": $("#applicantName").text(),
+	};
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/teaminteraction",
+		type: "POST",
+		data: formData,
+		success: function (response) {
+			$("#InteractionError").addClass("d-none");
+			$("#confirmMailToApplicantSubject").val(response.subject);
+			tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
+			$("#interactionsuccess").toggleClass("d-none");
+			$("#interactionsuccess").fadeToggle(6000);
+			$("#confirmMailToApplicantBlock").removeClass("d-none");
+			var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
+			if (toggleIcon && !$(".fa-eye-slash ").hasClass("d-none")) {
+				$(".toggle-icon").toggleClass("d-none");
+			}
+		},
+		error: function (response) {
+			$("#InteractionError").removeClass("d-none");
+			let errors = response.responseJSON.errors;
+			$("#errors").empty();
+			for (let error in errors) {
+				$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
+			}
+			$("#confirmMailToApplicantBlock").addClass("d-none");
+		},
+	});
+});
+$("#interactionErrorModalCloseBtn").click(function () {
+	$("#InteractionError").toggleClass("d-none");
+});
+
+$(".opt").on("click", function() {
+	let formData = {
+		"setting_key_subject":  $(this).data("key-subject"),
+		"setting_key_body": $(this).data("key-body"),
+		"applicant_name": $("#applicantName").text(),
+		"job_title": $("#jobTitle").text(),
+	};
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option1subject").val(response.subject);
+			tinymce.get("option1body").setContent(response.body, {format: "html"});
+		},
+	});
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option2subject").val(response.subject);
+			tinymce.get("option2body").setContent(response.body, {format: "html"});
+		},
+	});
 });

@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Modules\Project\Console\SyncEffortsheet;
 use Modules\Project\Console\ZeroEffortInProject;
+use Modules\Project\Console\EndedProject;
 use Modules\Project\Console\SendEffortSummaryCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Modules\Project\Console\GoogleChat\SendDailyEffortSummaryForProjectsOnGoogleChat;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         SyncEffortsheet::class,
         SendEffortSummaryCommand::class,
         ZeroEffortInProject::class,
+        EndedProject::class,
         SendDailyEffortSummaryForProjectsOnGoogleChat::class,
         RemindProjectMembersToUpdateEffortOnGoogleChat::class,
         DailyEffortAlertNotificationMail::class,
@@ -35,15 +37,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('application:no-show')->everyThirtyMinutes();
+        $schedule->command('application:no-show')->dailyAt('21:00');
         $schedule->command('application:send-interview-reminders')->dailyAt('08:00');
         $schedule->command('sync:effortsheet')->weekdays()->timezone(config('constants.timezone.indian'))->everyFourHours();
         $schedule->command('effort-summary:send')->weekdays()->timezone(config('constants.timezone.indian'))->at('21:00');
         $schedule->command('hr:check-follow-ups')->daily();
+        $schedule->command('hr:send-follow-up-mail')->dailyAt('08:00');
         $schedule->command('hr:message-for-email-verified')->dailyAt('7:00');
         $schedule->command('mapping-of-jobs-and-hr-rounds');
         $schedule->command('invoice:send-unpaid-invoice-list')->weekly()->mondays()->at('09:00');
         $schedule->command('project:zero-effort-in-project')->weekly()->mondays()->at('09:00');
+        $schedule->command('project:ended-project')->dailyAt('09:00');
         $schedule->command('project:remind-to-update-effort')->dailyAt('19:00');
         $schedule->command('project:send-daily-effort-summary-google-chat')->dailyAt('21:00');
         $schedule->command('users:daily-effort-mail-alert')->daily()->at('09:00');
