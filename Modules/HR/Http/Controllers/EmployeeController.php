@@ -9,6 +9,9 @@ use Illuminate\Routing\Controller;
 use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\JobRequisition;
+use Modules\HR\Entities\HrJobDomain;
+use Modules\HR\Entities\Job;
+use Modules\HR\Entities\JobRequisition;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class EmployeeController extends Controller
