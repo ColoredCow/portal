@@ -8,17 +8,19 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
+use Modules\HR\Http\Requests\TeamInteractionRequest;
 use Modules\HR\Services\ApplicationService;
 use Modules\User\Entities\User;
 
@@ -51,12 +53,12 @@ abstract class ApplicationController extends Controller
 
         session()->put([
             'previous_application_data' => request()->all(),
-            'should_skip_page' => false
+            'should_skip_page' => false,
         ]);
 
         //#TO DO: Move this logic to application service.
         $filters = [
-            'status' =>request()->get('status') ?: 'non-rejected',
+            'status' => request()->get('status') ?: 'non-rejected',
             'job-type' => $this->getApplicationType(),
             'job' => request()->get('hr_job_id'),
             'university' => request()->get('hr_university_id'),
@@ -65,7 +67,8 @@ abstract class ApplicationController extends Controller
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
-            'round' =>str_replace('-', ' ', request()->get('round'))
+            'round' =>str_replace('-', ' ', request()->get('round')),
+            'roundFilters' => request()->get('roundFilters')
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
@@ -104,25 +107,26 @@ abstract class ApplicationController extends Controller
 
         foreach ($hrRounds as $round) {
             $applicationCount = Application::query()->filterByJobType($jobType)
-            ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
-            ->FilterByRoundName($round)
-            ->count();
+                ->whereIn('hr_applications.status', ['in-progress', 'new', 'trial-program'])
+                ->FilterByRoundName($round)
+                ->count();
             $hrRoundsCounts[$round] = $applicationCount;
             $attr[camel_case($round) . 'Count'] = Application::applyFilter($countFilters)
-            ->where('status', config('constants.hr.status.in-progress.label'))
-            ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
-                return $subQuery->where('is_latest', true)
-                         ->whereHas('round', function ($subQuery) use ($round) {
-                             return $subQuery->where('name', $round);
-                         });
-            })
-            ->count();
+                ->where('status', config('constants.hr.status.in-progress.label'))
+                ->whereHas('latestApplicationRound', function ($subQuery) use ($round) {
+                    return $subQuery->where('is_latest', true)
+                        ->whereHas('round', function ($subQuery) use ($round) {
+                            return $subQuery->where('name', $round);
+                        });
+                })
+                ->count();
         }
 
         $attr['jobs'] = Job::all();
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
+        $attr['roundFilters'] = round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
@@ -143,7 +147,6 @@ abstract class ApplicationController extends Controller
      */
     public function edit($id)
     {
-
         //TODO: We need to refactor the edit code and write it in the service
         $application = Application::findOrFail($id);
 
@@ -181,6 +184,21 @@ abstract class ApplicationController extends Controller
         }
 
         return view('hr.application.edit')->with($attr);
+    }
+
+    public function generateTeamInteractionEmail(TeamInteractionRequest $request)
+    {
+        $subject = Setting::where('module', 'hr')->where('setting_key', 'hr_team_interaction_round_subject')->first();
+        $body = Setting::where('module', 'hr')->where('setting_key', 'hr_team_interaction_round_body')->first();
+        $body->setting_value = str_replace('|*OFFICE LOCATION*|', $request->location, $body->setting_value);
+        $body->setting_value = str_replace('|*DATE SELECTED*|', date('d M Y', strtotime($request->date)), $body->setting_value);
+        $body->setting_value = str_replace('|*TIME*|', date('h:i a', strtotime($request->timing)), $body->setting_value);
+        $body->setting_value = str_replace('|*APPLICANT NAME*|', $request->applicant_name, $body->setting_value);
+
+        return response()->json([
+            'subject' => $subject->setting_value,
+            'body' => $body->setting_value,
+        ]);
     }
 
     public static function getOfferLetter(Application $application, Request $request)
