@@ -25,15 +25,25 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'] ?? null,
         ];
         $data['projects'] = $data['projects'] ?? 'my-projects';
+        $data['limit'] = $data['limit'] ?? 10;
+        $offset = $data['offset'] ?? 0;
+        // dd($offset);
+       
 
         $clients = null;
 
+
+        // if(isset($_GET['offset']) && isset($_isset['limit']))
+        //          request()->get('limit');
+        //          request()->get('offset');
+        
         if ($data['projects'] == 'all-projects') {
             $clients = Client::query()->with('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters)->orderBy('name', 'asc');
             })->whereHas('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters);
-            })->orderBy('name')->paginate(config('constants.pagination_size'));
+            })->orderBy('name')
+            ->get();
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->count();
@@ -54,7 +64,7 @@ class ProjectService implements ProjectServiceContract
                 $query->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
                     $query->where('team_member_id', $userId);
                 });
-            })->orderBy('name')->paginate(config('constants.pagination_size'));
+            })->get();
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->whereHas('getTeamMembers', function ($query) use ($userId) {
@@ -72,8 +82,12 @@ class ProjectService implements ProjectServiceContract
             })->count();
         }
 
+        $limit = 10;
+
+        $clients = $clients->slice($offset,$limit);
+
         return [
-            'clients' => $clients->appends($data),
+            'clients' => $clients,
             'activeProjectsCount' => $activeProjectsCount,
             'inactiveProjectsCount' => $inactiveProjectsCount,
             'haltedProjectsCount' => $haltedProjectsCount

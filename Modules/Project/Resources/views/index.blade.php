@@ -57,7 +57,11 @@
             </thead>
             <tbody>
                 @can('projects.view')
+                @foreach ($clients as $client)
+                <div class="client"></div>
+                @endforeach
                     @forelse($clients as $client)
+                    {{-- @dd($client); --}}
                         <tr class="bg-theme-warning-lighter">
                             <td colspan=4 class="font-weight-bold">
                                 <div class="d-flex justify-content-between">
@@ -113,7 +117,10 @@
                 @endcan
             </tbody>
         </table>
+        {{-- <div align="right">
+            <button class="submit" id="loadData" type="submit">loadData</button>
+        </div> --}}
     </div>
-    {{ $clients->links()}}
+     {{-- {{ $clients->links()}} --}}
 </div>
 @endsection
