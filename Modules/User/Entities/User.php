@@ -180,6 +180,7 @@ class User extends Authenticatable
     public function activeProjects()
     {
         $userId = $this->id;
+        $efforts = [];
         $projects = Project::whereHas('getTeamMembers', function ($query) use ($userId) {
             return $query->where('team_member_id', $userId);
         })->get();
