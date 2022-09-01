@@ -107,7 +107,7 @@
 			$awaitingForDays  = $application->latestApplicationRound->getPreviousApplicationRound() ? $application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today()) : null ;
 			@endphp
 			@if ($awaitingForDays)
-			<span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>s
+			<span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>
 			@endif
 		</span>
 		@endif

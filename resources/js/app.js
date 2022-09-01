@@ -1721,8 +1721,7 @@ $(document).ready(function(){
 	$(".show").on("click", function(event) {
 		var $menu = $(".menu");
 		var $tabcontent = $(".tab-content");
-		if($(this).is(":checked"))
-		{
+		if($(this).is(":checked")){
 			$menu.show();
 			$tabcontent.show();
 		}

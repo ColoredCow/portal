@@ -17,8 +17,8 @@ aria-hidden="true">
             <div class="form-group col-md-12 d-flex align-items-center">
             <div class="py-0.67">
                 <div class="custom-control custom-switch">
-                <input type="checkbox" name="send_mail_to_applicant[hold]" class="custom-control-input show" id="SendmailforonHold">
-                <label class="custom-control-label" for="SendmailforonHold" >Send email</label>
+                <input type="checkbox" name="send_mail_to_applicant[hold]" class="custom-control-input show" id="holdSendMailToApplicant">
+                <label class="custom-control-label" for="holdSendMailToApplicant" >Send email</label>
                 </div>
             </div>
             </div>
