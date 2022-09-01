@@ -17,7 +17,7 @@ class ZeroEffortInProjectMail extends Mailable
      *
      * @return void
      */
-    public function __construct( array $projectDetail)
+    public function __construct(array $projectDetail)
     {
         $this->projectDetail = $projectDetail;
     }
@@ -32,7 +32,7 @@ class ZeroEffortInProjectMail extends Mailable
         foreach ($this->projectDetail as $project) {
             $mail->to($project['email']);
         }
-        
+
         return $mail->view('project::mail.zero-effort-team-member-list');
     }
 }
