@@ -64,7 +64,7 @@
                             <tr>
                                 <td>
                                     <a href="{{ route('hr.evaluation.segment-parameters', $value->id) }}">
-                                        { $value->name }}
+                                        {{ $value->name }}
                                     </a>
                                 </td>
                                 
