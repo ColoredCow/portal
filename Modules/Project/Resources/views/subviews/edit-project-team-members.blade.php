@@ -94,17 +94,12 @@
                         </div>
                     </div>
                 </div>
-            
                 <div>
-                    
-                    
                     @if($project -> status == 'active')
                     <span v-on:click="addNewProjectTeamMember()" style="text-decoration: underline;" class="text-underline btn" >Add new team member</span>
                @endif
-                </div>
-                              
+                </div>          
                 <hr class='bg-dark mt-4 mb-5 pb-0.5'>
-
                 <div class="bg-theme-gray-lighter card mt-3">
                     <h4 class="ml-3 mt-2 mb-2 font-weight-bold">Team Members History</h4>
                     <table class="table table-bordered">
