@@ -29,7 +29,7 @@
             <?php
                 $count = 0;
             ?>     
-            @if(sizeOf($round[array_keys($round)[0]]))
+            @if(sizeOf($round[key($round)]))
                 <div class="accordion" id="accordion">
                     <div class="accordion-header">
                         <div class="card bg-Glidden-willow-springs">
@@ -37,7 +37,7 @@
                                 <div class="form-group col-md-11 p-3">
                                     <h1 class="accordion-header mb-0">
                                         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            {{  array_keys($round)[0] }}
+                                            {{  key($round) }}
                                         </button>
                                     </h1> 
                                 </div>   
@@ -57,7 +57,7 @@
                                     <th>Marks</th>
                                     <th>Actions</th>
                                 </tr>
-                                @foreach ($round[array_keys($round)[0]] as $singleRound)
+                                @foreach ($round[key($round)] as $singleRound)
                                 <tr>
                                     <td>
                                         <a href="{{ route('hr.evaluation.segment-parameters', $singleRound->id) }}">
