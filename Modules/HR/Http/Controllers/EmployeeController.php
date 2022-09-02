@@ -10,6 +10,8 @@ use Modules\HR\Entities\HrJobDomain;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\JobRequisition;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\SendHiringMail;
 
 class EmployeeController extends Controller
 {
@@ -56,7 +58,7 @@ class EmployeeController extends Controller
         $DomainName = HrJobDomain::all();
         $jobName = Job::all();
 
-        return view('hr.employees.fte-hendler')->with([
+        return view('hr.employees.fte-handler')->with([
             'DomainName' => $DomainName,
             'employees' => $employees,
             'jobName' => $jobName
@@ -74,6 +76,9 @@ class EmployeeController extends Controller
             'domain_id' => $jobrequisition['domain'],
             'job_id' => $jobrequisition['job']
         ]);
+
+        $jobHiring = null;
+        Mail::to('hr@coloredcow.com')->send(new SendHiringMail($jobHiring));
 
         return redirect()->back();
     }

@@ -23,7 +23,7 @@
                             @endforeach 
                         </select><br>
                     </div><br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" data-action="SendHiringMail">Submit</button>
                 </form>
             </div>
             <div class="col-sm card">
