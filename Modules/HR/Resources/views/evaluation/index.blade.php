@@ -25,10 +25,10 @@
         <br>
 
         <div class="container">
-             @foreach ($roundWithSegments as $key=>$round )
             <?php
-                $count = 0;
-            ?>     
+            $count = 0;
+            ?> 
+            @foreach ($roundWithSegments as $key=>$round )    
             @if(sizeOf($round[key($round)]))
                 <div class="accordion" id="accordion">
                     <div class="accordion-header">
@@ -80,9 +80,9 @@
                         </div>              
                     </div>
                 </div>
+                <br>
+                <?php $count++ ?>
             @endif
-            <br>
-            <?php $count++ ?>
             @endforeach
         </div>
     </div>
