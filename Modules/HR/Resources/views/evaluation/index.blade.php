@@ -59,7 +59,6 @@
                                 <th>Actions</th>
                             </tr>
                             @foreach ($segment as $value)
-                            @dd($segment);
                             <tr>
                                 <td>
                                     <a href="{{ route('hr.evaluation.segment-parameters', $value->id) }}">
