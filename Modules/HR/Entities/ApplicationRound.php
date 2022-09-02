@@ -14,13 +14,10 @@ use Modules\HR\Emails\Recruitment\SendOfferLetter;
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\User\Entities\User;
 use App\Models\Setting;
-use Modules\HR\Emails\Recruitment\Applicant\OnHold;
-use Modules\HR\Database\Factories\HrApplicationRoundFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationRound extends Model
 {
-    use HasTags, HasCalendarMeetings, HasFactory;
+    use HasTags, HasCalendarMeetings;
 
     protected $guarded = [];
 
@@ -29,11 +26,6 @@ class ApplicationRound extends Model
     public $timestamps = false;
 
     protected $dates = ['scheduled_date', 'conducted_date'];
-
-    public static function newFactory()
-    {
-        return new HrApplicationRoundFactory();
-    }
 
     public function _update($attr)
     {
