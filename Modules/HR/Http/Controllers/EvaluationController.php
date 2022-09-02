@@ -27,6 +27,7 @@ class EvaluationController extends Controller
             $attr = Round::find($value->id)->evaluationSegments;
             $roundWithSegments[$value->id][$value->name] = $attr;
         }
+        
         return view('hr::evaluation.index', [
             'roundWithSegments' => $roundWithSegments,
             'rounds' => $rounds,
