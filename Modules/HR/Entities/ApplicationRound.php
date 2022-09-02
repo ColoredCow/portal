@@ -172,12 +172,9 @@ class ApplicationRound extends Model
                 $job_title = Job::find($application->hr_job_id)->title;
                 $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
                 $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
-
                 //ToDo: We need to think of what would be the worfklow once an application is put on hold by HR team.
                 // Mail::to($applicant->email, $applicant->name)->send(new OnHold($subject->setting_value, $body->setting_value));
-
                 return redirect()->route('applications.job.index');
-
             case 'send-for-approval':
                 $application->untag('new-application');
                 $application->untag('in-progress');
