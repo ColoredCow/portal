@@ -25,66 +25,64 @@
         <br>
 
         <div class="container">
-             @foreach ($rounds as $round ) 
+             @foreach ($roundWithSegments as $key=>$round )
             <?php
                 $count = 0;
-                ?>      
-            @foreach ($attr as $key=>$segment)
-            @if ($round->id == $key)
-            <div class="accordion" id="accordion">
-                <div class="accordion-header">
-                    <div class="card bg-Glidden-willow-springs">
-                        <div class="form-row">
-                            <div class="form-group col-md-11 p-3">
-                                <h1 class="accordion-header mb-0">
-                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        {{ $key }}
-                                    </button>
-                                </h1> 
-                            </div>   
-                            <div class="form-group col-md p-3">
-                                <div class="icon-arrow-down position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#segmentCollapse_{{ $round->id }}">
-                                    <i class="fa fa-arrow-down"></i>
-                                </div>
-                            </div>    
-                        </div>
-                    </div> 
+            ?>     
+            @if(sizeOf($round[array_keys($round)[0]]))
+                <div class="accordion" id="accordion">
+                    <div class="accordion-header">
+                        <div class="card bg-Glidden-willow-springs">
+                            <div class="form-row">
+                                <div class="form-group col-md-11 p-3">
+                                    <h1 class="accordion-header mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            {{  array_keys($round)[0] }}
+                                        </button>
+                                    </h1> 
+                                </div>   
+                                <div class="form-group col-md p-3">
+                                    <div class="icon-arrow-down position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#segmentCollapse_{{ $key }}">
+                                        <i class="fa fa-arrow-down"></i>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div> 
+                    </div>
+                    <div id="segmentCollapse_{{ $key }}" class="collapse <?php echo($count == 0 ? 'show' : ' ')?>" aria-labelledby="headingOne">
+                        <div class="accordion-body">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Marks</th>
+                                    <th>Actions</th>
+                                </tr>
+                                @foreach ($round[array_keys($round)[0]] as $singleRound)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('hr.evaluation.segment-parameters', $singleRound->id) }}">
+                                            {{ $singleRound->name }}
+                                        </a>
+                                    </td>
+                                    
+                                    <td>
+                                        <h5>{{ $singleRound->parameters->sum('marks') }}</h5>
+                                    </td>
+                                    
+                                    <td>
+                                        <i v-on:click="editSegment({{ $singleRound }})" class="fa fa-edit fz-20 text-theme-green"></i>
+                                    
+                                        <i v-on:click="removeSegment({{ $singleRound }})" class="fa fa-trash fz-20 text-theme-red"></i>
+                                    </td>
+                                </tr>
+                                @endforeach 
+                            </table>       
+                        </div>              
+                    </div>
                 </div>
-                <div id="segmentCollapse_{{ $round->id }}" class="collapse <?php echo($count == 0 ? 'show' : ' ')?>" aria-labelledby="headingOne">
-                    <div class="accordion-body">
-                        <table class="table table-striped table-bordered">
-                            <tr>
-                                <th>Name</th>
-                                <th>Marks</th>
-                                <th>Actions</th>
-                            </tr>
-                            @foreach ($segment as $value)
-                            <tr>
-                                <td>
-                                    <a href="{{ route('hr.evaluation.segment-parameters', $value->id) }}">
-                                        {{ $value->name }}
-                                    </a>
-                                </td>
-                                
-                                <td>
-                                    <h5>{{ $value->parameters->sum('marks') }}</h5>
-                                </td>
-                                
-                                <td>
-                                    <i v-on:click="editSegment({{ $value }})" class="fa fa-edit fz-20 text-theme-green"></i>
-                                
-                                    <i v-on:click="removeSegment({{ $value }})" class="fa fa-trash fz-20 text-theme-red"></i>
-                                </td>
-                            </tr>
-                            @endforeach 
-                        </table>       
-                    </div>              
-                </div>
-            </div>
+            @endif
             <br>
-            @endif 
             <?php $count++ ?>
-            @endforeach
             @endforeach
         </div>
     </div>
