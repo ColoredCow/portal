@@ -21,7 +21,11 @@ class HrApplicationRoundTableSeeder extends Seeder
             $applications = Application::all();
             foreach ($applications as $application) {
                 $status = $application->status == 'new' ? 'new-application' : $application->status;
-                $application->tag($status);
+                if ($status == 'new-application' || $status == 'in-progress') {
+                    $application->tag($status);
+                } else {
+                    $application->untag('in-progress');
+                }
                 ApplicationRound::updateOrCreate(
                     [
                         'hr_application_id' => $application->id,
