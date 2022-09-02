@@ -28,18 +28,17 @@
              @foreach ($rounds as $round ) 
             <?php
                 $count = 0;
-                
                 ?>      
             @foreach ($attr as $key=>$segment)
             @if ($round->id == $key)
             <div class="accordion" id="accordion">
                 <div class="accordion-header">
-                    <div class="card" style="background-color:#E7E6E0">
+                    <div class="card bg-Glidden-willow-springs">
                         <div class="form-row">
                             <div class="form-group col-md-11 p-3">
                                 <h1 class="accordion-header mb-0">
                                     <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        {{ $round->name }}
+                                        {{ $key }}
                                     </button>
                                 </h1> 
                             </div>   
@@ -51,8 +50,7 @@
                         </div>
                     </div> 
                 </div>
-                <div id="segmentCollapse_{{ $round->id }}" class="collapse <?php if($count==0){
-                    echo "show";}?>" aria-labelledby="headingOne">
+                <div id="segmentCollapse_{{ $round->id }}" class="collapse <?php echo($count == 0 ? 'show' : ' ')?>" aria-labelledby="headingOne">
                     <div class="accordion-body">
                         <table class="table table-striped table-bordered">
                             <tr>
@@ -61,6 +59,7 @@
                                 <th>Actions</th>
                             </tr>
                             @foreach ($segment as $value)
+                            @dd($segment);
                             <tr>
                                 <td>
                                     <a href="{{ route('hr.evaluation.segment-parameters', $value->id) }}">

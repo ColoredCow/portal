@@ -20,15 +20,15 @@ class EvaluationController extends Controller
      */
     public function index(Request $request)
     {
-        $segmentedRounds = [];
+        $roundWithSegments = [];
         $segments = Segment::all();
         $rounds = Round::select('id', 'name')->get();
         foreach ($rounds as $value) {
             $attr = Round::find($value->id)->evaluationSegments;
-            $segmentedRounds[$value->id] = $attr;
+            $roundWithSegments[$value->id] = $attr;
         }
         $attr = [];
-        foreach ($segmentedRounds as $round => $data) {
+        foreach ($roundWithSegments as $round => $data) {
             foreach ($data as $key => $segment) {
                 $attr[$round][$key] = $segment;
             }
