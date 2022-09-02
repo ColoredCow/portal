@@ -54,12 +54,12 @@ class EmployeeController extends Controller
     {
         $employees = Employee::all();
         $DomainName = HrJobDomain::all();
-        $opportunityName = Job::all();
+        $jobName = Job::all();
 
         return view('hr.employees.fte-hendler')->with([
             'DomainName' => $DomainName,
             'employees' => $employees,
-            'opportunityName' => $opportunityName
+            'jobName' => $jobName
         ]);
     }
 
@@ -67,12 +67,12 @@ class EmployeeController extends Controller
     {
         $jobrequisition = $request->validate([
             'domain' => 'required|integer',
-            'opportunity' => 'required|integer',
+            'job' => 'required|integer',
         ]);
 
         JobRequisition::create([
             'domain_id' => $jobrequisition['domain'],
-            'opportunity_id' => $jobrequisition['opportunity']
+            'job_id' => $jobrequisition['job']
         ]);
 
         return redirect()->back();

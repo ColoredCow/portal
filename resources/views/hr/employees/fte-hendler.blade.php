@@ -16,10 +16,10 @@
                         </select><br>
                     </div>
                     <div>
-                        <label for="job_apportunity">select opportunity</label>
-                        <select class="form-control" name="opportunity" id="opportunity"> 
-                            @foreach ($opportunityName as $opportunityName)
-                                <option value="{{ $opportunityName->id }}">{{ $opportunityName->title }}</option>
+                        <label for="job_apportunity">select Job</label>
+                        <select class="form-control" name="job" id="job"> 
+                            @foreach ($jobName as $jobName)
+                                <option value="{{ $jobName->id }}">{{ $jobName->title }}</option>
                             @endforeach 
                         </select><br>
                     </div><br>

@@ -16,11 +16,11 @@ class CreateJobRequisitionTable extends Migration
         Schema::create('job_requisition', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('domain_id');
-            $table->unsignedInteger('opportunity_id');
+            $table->unsignedInteger('job_id');
             $table->timestamps();
 
             $table->foreign('domain_id')->references('id')->on('hr_job_domains');
-            $table->foreign('opportunity_id')->references('id')->on('hr_jobs');
+            $table->foreign('job_id')->references('id')->on('hr_jobs');
         });
     }
 
@@ -34,7 +34,7 @@ class CreateJobRequisitionTable extends Migration
         Schema::dropIfExists('job_requisition', function (Blueprint $table) {
             $table->dropForeign([
                 'domain_id',
-                'opportunity_id',
+                'job_id',
             ]);
         });
     }

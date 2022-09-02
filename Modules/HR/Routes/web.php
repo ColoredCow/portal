@@ -116,7 +116,7 @@ Route::middleware('auth')->group(function () {
                 'store' => 'employees.store',
             ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
-        Route::get('FTE-handler', 'EmployeeController@showFTEdata')->name('employees.alert');
+        Route::get('fte-handler', 'EmployeeController@showFTEdata')->name('employees.alert');
         Route::post('store', 'EmployeeController@store')->name('employees.store');
     });
 });
