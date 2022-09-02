@@ -21,7 +21,6 @@ class EvaluationController extends Controller
     public function index(Request $request)
     {
         $roundWithSegments = [];
-        $segments = Segment::all();
         $rounds = Round::select('id', 'name')->get();
         foreach ($rounds as $value) {
             $attr = Round::find($value->id)->evaluationSegments;
@@ -31,7 +30,6 @@ class EvaluationController extends Controller
         return view('hr::evaluation.index', [
             'roundWithSegments' => $roundWithSegments,
             'rounds' => $rounds,
-            'segment' => $segments,
         ]);
     }
 
