@@ -35,11 +35,9 @@
                         <div class="card bg-Glidden-willow-springs">
                             <div class="form-row">
                                 <div class="form-group col-md-11 p-3">
-                                    <h1 class="accordion-header mb-0">
-                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            {{  key($round) }}
-                                        </button>
-                                    </h1> 
+                                    <h4 class="accordion-header mb-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        {{  key($round) }}
+                                    </h4> 
                                 </div>   
                                 <div class="form-group col-md p-3">
                                     <div class="icon-arrow-down position-relative ml-3 c-pointer" data-toggle="collapse" data-target="#segmentCollapse_{{ $key }}">
