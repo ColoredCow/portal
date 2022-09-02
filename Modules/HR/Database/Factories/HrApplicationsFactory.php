@@ -4,7 +4,6 @@ namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\HR\Database\Seeders\HrApplicationRoundTableSeeder;
 
 class HrApplicationsFactory extends Factory
 {
