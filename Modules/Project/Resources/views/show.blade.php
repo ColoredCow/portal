@@ -134,6 +134,11 @@
                                             <div class="fz-lg-28 text-center mt-4">No member in the project</div>
                                         @else
                                             <tbody>
+                                                @php
+                                                    $total = 0;
+                                                    $var = 0;
+                                                    $velocity = 0;
+                                                @endphp
                                                 @foreach($project->getTeamMembers ?:[] as $teamMember)
                                                     <tr>
                                                         <th class="fz-lg-20 my-2 px-5 font-weight-normal">
@@ -143,12 +148,35 @@
                                                             </span>
                                                             {{$teamMember->user->name}}
                                                         </th>
-                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
-                                                        <td>{{$teamMember->current_expected_effort }}</td>
-                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
+                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}
+                                                                @php
+                                                                    $total +=$teamMember->current_actual_effort >= $teamMember->current_expected_effort
+                                                                @endphp
+                                                        </td>
+                                                        <td>
+                                                            {{$teamMember->current_expected_effort}}
+                                                            @php
+                                                                 $var += $teamMember->current_expected_effort;
+                                                            @endphp
+                                                        </td>
+                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}
+                                                            @php
+                                                                $velocity+= $teamMember->velocity;
+                                                            @endphp
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
+                                            <td class="font-weight-bold">Total </td>
+                                            <td>
+                                                {{$total}}
+                                            </td>
+                                            <td>
+                                                {{ $var }}
+                                            </td> 
+                                            <td> 
+                                                {{$velocity}}
+                                            </td>
                                             </table>
                                         @endif
                                 </div>
