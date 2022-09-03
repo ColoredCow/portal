@@ -33,7 +33,7 @@ class BookController extends Controller
         if (request()->has('wishlist')) {
             $books = auth()->user()->booksInWishlist;
         } else {
-            $books = Book::getList($searchString);
+            $books = Book::getList($searchString, $filter_by);
         }
         $loggedInUser = auth()->user();
         $books->load('wishers');
