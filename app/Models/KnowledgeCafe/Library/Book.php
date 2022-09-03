@@ -23,7 +23,7 @@ class Book extends Model
     public static function getList($searchString = false, $filter_by = null)
     {
         $query = self::with(['categories', 'readers', 'borrowers']);
-         if ($filter_by == 'books_i_have_read') {
+        if ($filter_by == 'books_i_have_read') {
             $query->join('book_readers', 'library_books.id', '=', 'book_readers.library_book_id')
             ->where('book_readers.user_id', auth()->user()->id);
         }

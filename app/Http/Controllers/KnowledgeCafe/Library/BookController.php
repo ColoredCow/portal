@@ -28,7 +28,7 @@ class BookController extends Controller
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $filter_by = request()->input('filter_by') ?? null;
-        $books = Book::getList($searchString , $filter_by );
+        $books = Book::getList($searchString, $filter_by );
         $categories = BookCategory::orderBy('name')->get();
         if (request()->has('wishlist')) {
             $books = auth()->user()->booksInWishlist;
@@ -37,7 +37,7 @@ class BookController extends Controller
         }
         $loggedInUser = auth()->user();
         $books->load('wishers');
-     
+
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
 
