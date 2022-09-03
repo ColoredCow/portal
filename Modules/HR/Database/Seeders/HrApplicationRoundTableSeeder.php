@@ -25,6 +25,7 @@ class HrApplicationRoundTableSeeder extends Seeder
                 } else {
                     $application->untag('in-progress');
                 }
+
                 ApplicationRound::updateOrCreate(
                     [
                         'hr_application_id' => $application->id,
@@ -39,5 +40,4 @@ class HrApplicationRoundTableSeeder extends Seeder
             }
         }
     }
-
 }
