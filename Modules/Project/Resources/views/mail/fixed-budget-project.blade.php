@@ -5,8 +5,7 @@
 		}
 	</style>
 	<p>Hi, {{ $projectData[0]['name'] }}</p>
-	<p>This is a reminder Email to let you know that, There are some fixed budget projects which are close to completion.</p>
-	<p>Please take a look at the project and updaate or modify accordingly.</p>
+	<p>This is a reminder Email to let you know that, There are some fixed budget projects which are close to completion.Please take a look at the project and updaate or modify accordingly.</p>
 	<table class="table">
 		<thead>
 			<tr>
