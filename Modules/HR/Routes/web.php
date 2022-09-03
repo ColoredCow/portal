@@ -109,14 +109,13 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/employee-basic-details/{employee}/', 'EmployeeController@basicDetails')->name('employees.basic.details');
         Route::resource('employees', 'EmployeeController')
-            ->only(['index', 'show', 'store'])
+            ->only(['index', 'show'])
             ->names([
                 'index' => 'employees',
                 'show' => 'employees.show',
-                'store' => 'employees.store',
             ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
-        Route::get('fte-handler', 'EmployeeController@showFTEdata')->name('employees.alert');
+        Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
         Route::post('store', 'EmployeeController@store')->name('employees.store');
     });
 });

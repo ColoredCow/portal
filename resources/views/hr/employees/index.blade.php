@@ -59,7 +59,7 @@
                 @if ($employee->user == null)
                   {{ $employee->user ? $employee->user->fte :'NA' }}
                 @elseif ($employee->user->fte >= 1)
-                <a class="text-danger" href={{ route('employees.alert') }} >
+                <a class="text-danger" href={{ route('employees.alert',['domain_id' => $employee->domain_id]) }} >
                     {{ $employee->user->fte }} &nbsp;&nbsp;&nbsp;<i class="fa fa-warning fa-lg"></i>
                 </a>
                 @else
