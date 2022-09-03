@@ -30,11 +30,14 @@ class BookController extends Controller
         $categories = BookCategory::orderBy('name')->get();
         if (request()->has('wishlist')) {
             $books = auth()->user()->booksInWishlist;
+        } elseif (request()->has('borrowedBook')) {
+            $books = auth()->user()->booksBorrower;
         } else {
             $books = Book::getList($searchString);
         }
         $loggedInUser = auth()->user();
         $books->load('wishers');
+        $books->load('borrowers');
 
         return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
