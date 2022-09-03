@@ -23,14 +23,15 @@ class BookController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
-        $books = Book::getList($searchString);
+        $filter_by = request()->input('filter_by') ?? null;
+        $books = Book::getList($searchString , $filter_by );
         $categories = BookCategory::orderBy('name')->get();
-
-        return view('knowledgecafe.library.books.index', compact('books', 'categories'));
+     
+            return view('knowledgecafe.library.books.index', compact('books', 'categories'));
     }
 
     /**

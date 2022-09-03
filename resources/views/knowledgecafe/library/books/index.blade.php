@@ -24,6 +24,19 @@
             v-model="searchKey">
             <button class="btn btn-info ml-2" @click="searchBooks()">Search</button>
         </div>
+        <div class="mb-2">
+            <form class="d-md-flex justify-content-left ml-md-3" action="{{ route('books.index') }}">
+                <div class='d-md-flex justify-content-left col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2'>
+                    <select class="fz-15 fz-lg-1 p-1 bg-info ml-3 my-auto text-black rounded border-0" name="filter_by"
+                        onchange="this.form.submit()">
+                        <option value = all>
+                            {{ __('All Books') }} </option>
+                        <option value="books_i_have_read" {{ request()->get('filter_by') == 'books_i_have_read' ? 'selected' : '' }}>
+                            {{ __('Books I have Read') }} </option>
+                    </select>
+                </div>
+            </form>
+        </div>
         @if(session('disable_book_suggestion'))
             <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
                 <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dashboard</a>

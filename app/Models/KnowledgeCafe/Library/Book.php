@@ -20,16 +20,20 @@ class Book extends Model
         return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
     }
 
-    public static function getList($filteredString = false)
+    public static function getList($searchString = false, $filter_by = null)
     {
         $query = self::with(['categories', 'readers', 'borrowers']);
+         if ($filter_by == 'books_i_have_read') {
+            $query->join('book_readers','library_books.id','=','book_readers.library_book_id')
+            ->where("book_readers.user_id", auth()->user()->id);
+        }
 
         return $query
-            ->where(function ($query) use ($filteredString) {
-                if ($filteredString) {
-                    $query->where('title', 'LIKE', "%$filteredString%")
-                        ->orWhere('author', 'LIKE', "%$filteredString%")
-                        ->orWhere('isbn', 'LIKE', "%$filteredString%");
+            ->where(function ($query) use ($searchString) {
+                if ($searchString) {
+                    $query->where('title', 'LIKE', "%$searchString%")
+                        ->orWhere('author', 'LIKE', "%$searchString%")
+                        ->orWhere('isbn', 'LIKE', "%$searchString%");
                 }
             })
             ->withCount('readers')
