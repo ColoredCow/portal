@@ -109,6 +109,13 @@ class Book extends Model
         return true;
     }
 
+    public function removeFromWishlist()
+    {
+        $this->wishers()->detach(auth()->user());
+
+        return true;
+    }
+
     public function getTotalBooksCountAttribute($value)
     {
         return self::count();

@@ -92,9 +92,10 @@ class ProjectService implements ProjectServiceContract
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
             'status' => 'active',
-            'start_date' => date('Y-m-d'),
-            'end_date' => date('Y-m-d'),
+            'start_date' => $data['start_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
@@ -172,9 +173,10 @@ class ProjectService implements ProjectServiceContract
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
-            'start_date' => date('Y-m-d'),
-            'end_date' => date('Y-m-d'),
+            'start_date' => $data['start_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -335,5 +337,24 @@ class ProjectService implements ProjectServiceContract
         $projectDetails = Collection::make($dataForMail);
 
         return $projectDetails;
+    }
+
+    public function getMailDetailsForProjectKeyAccountManagers()
+    {
+        $currenttime = Carbon::today(config('constants.timezone.indian'));
+        $projects = Project::wheretype('fixed-budget')->wherestatus('active')->where('end_date', '<', $currenttime)->get();
+        $projectsData = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectsData[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ];
+            }
+        }
+
+        return $projectsData;
     }
 }

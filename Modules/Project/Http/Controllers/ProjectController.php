@@ -4,18 +4,22 @@ namespace Modules\Project\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
-use Modules\Project\Contracts\ProjectServiceContract;
 use Modules\Project\Entities\Project;
-use Modules\Project\Http\Requests\ProjectRequest;
-use Modules\Project\Entities\ProjectContract;
 use Modules\Project\Rules\ProjectNameExist;
+use Modules\Project\Entities\ProjectContract;
+use Modules\Project\Http\Requests\ProjectRequest;
+use Modules\Project\Contracts\ProjectServiceContract;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProjectController extends Controller
 {
+    use AuthorizesRequests;
+
     protected $service;
 
     public function __construct(ProjectServiceContract $service)
     {
+        $this->authorizeResource(Project::class);
         $this->service = $service;
     }
 
@@ -72,6 +76,18 @@ class ProjectController extends Controller
             'contractFilePath' => $contractFilePath,
             'daysTillToday' => $daysTillToday,
         ]);
+    }
+
+    public function destroy(ProjectRequest $request, Project $project)
+    {
+        Project::updateOrCreate(
+            [
+                'reason_for_deletion' => $request['comment']
+            ]
+        );
+        $project->delete();
+
+        return redirect()->back()->with('status', 'Project deleted successfully!');
     }
 
     public static function showPdf(ProjectContract $contract)

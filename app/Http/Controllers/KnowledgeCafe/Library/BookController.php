@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\KnowledgeCafe\Library;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Services\BookServices;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
 use App\Models\KnowledgeCafe\Library\Book;
 use App\Models\KnowledgeCafe\Library\BookAMonth;
 use App\Models\KnowledgeCafe\Library\BookCategory;
-use App\Http\Requests\KnowledgeCafe\Library\BookRequest;
+use App\Services\BookServices;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -23,15 +23,22 @@ class BookController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $requestRequest $request)
     {
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $filter_by = request()->input('filter_by') ?? null;
         $books = Book::getList($searchString , $filter_by );
         $categories = BookCategory::orderBy('name')->get();
+        if (request()->has('wishlist')) {
+            $books = auth()->user()->booksInWishlist;
+        } else {
+            $books = Book::getList($searchString);
+        }
+        $loggedInUser = auth()->user();
+        $books->load('wishers');
      
-            return view('knowledgecafe.library.books.index', compact('books', 'categories'));
+            return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
 
     /**
@@ -221,8 +228,8 @@ class BookController extends Controller
     public function getBooksCount()
     {
         $books = (request()->has('cat')) ?
-            Book::getByCategoryName(request()->input('cat'))->count() :
-            Book::count();
+        Book::getByCategoryName(request()->input('cat'))->count() :
+        Book::count();
 
         return $books;
     }
@@ -235,8 +242,8 @@ class BookController extends Controller
             $pageNumber = 1;
         }
         $books = (request()->has('cat')) ?
-            Book::getByCategoryName(request()->input('cat')) :
-            Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
+        Book::getByCategoryName(request()->input('cat')) :
+        Book::with(['categories'])->orderBy('title')->skip(($pageNumber - 1) * 50)->take(50)->get();
 
         $data = [];
         foreach ($books as $index => $book) {
@@ -255,6 +262,17 @@ class BookController extends Controller
         $bookID = request()->book_id;
         $book = Book::find($bookID);
         $isAdded = $book ? $book->addToWishlist() : false;
+
+        return response()->json([
+            'isAdded' => $isAdded,
+        ]);
+    }
+
+    public function removeFromUserWishList()
+    {
+        $bookID = request()->book_id;
+        $book = Book::find($bookID);
+        $isAdded = $book ? $book->removeFromWishlist() : false;
 
         return response()->json([
             'isAdded' => $isAdded,

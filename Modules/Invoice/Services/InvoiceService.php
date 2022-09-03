@@ -214,6 +214,13 @@ class InvoiceService implements InvoiceServiceContract
         $body = optional(Setting::where('module', 'invoice')->where('setting_key', 'received_invoice_payment_body')->first())->setting_value ?: '';
         $body = str_replace($templateVariablesForBody['billing-person-name'], optional($invoice->client->billing_contact)->first_name, $body);
         $body = str_replace($templateVariablesForBody['invoice-number'], $invoice->invoice_number, $body);
+
+        if ($invoice->client->country->initials == 'IN') {
+            $body = str_replace($templateVariablesForBody['amount'], $templateVariablesForBody['amount_paid'], $body);
+        } else {
+            $body = str_replace($templateVariablesForBody['amount'], (string) $invoice->amount, $body);
+        }
+
         $body = str_replace($templateVariablesForBody['currency'], optional($invoice->client->country)->currency_symbol, $body);
 
         return [
@@ -341,13 +348,13 @@ class InvoiceService implements InvoiceServiceContract
         $sgst = [];
         $clients = [];
         $clientAddress = [];
-        foreach ($invoices->get() as $invoice) :
+        foreach ($invoices->get() as $invoice) {
             $clients[] = Client::select('*')->where('id', $invoice->client_id)->first();
-        $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
-        $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
-        $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
-        $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
-        endforeach;
+            $clientAddress[] = ClientAddress::select('*')->where('client_id', $invoice->client_id)->first();
+            $igst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.igst')) / 100;
+            $cgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.cgst')) / 100;
+            $sgst[] = ((int) $invoice->display_amount * (int) config('invoice.invoice-details.sgst')) / 100;
+        }
 
         return [
             'invoices' => $invoices->paginate(config('constants.pagination_size')),
@@ -498,7 +505,7 @@ class InvoiceService implements InvoiceServiceContract
 
         $billingEndMonth = $client ? $client->getMonthEndDateAttribute(1)->format('M') : $project->client->getMonthEndDateAttribute(1)->format('M');
         if ($data['period_end_date'] ?? false) {
-            $billingStartMonth = Carbon::parse($data['period_end_date'])->format('M');
+            $billingEndMonth = Carbon::parse($data['period_end_date'])->format('M');
         }
 
         $termText = $billingStartMonth . ' - ' . $billingEndMonth;
@@ -681,18 +688,21 @@ class InvoiceService implements InvoiceServiceContract
         $html = view(('invoice::render.' . $template), $data)->render();
         $data['receivable_date'] = $dueOn;
         $data['project_id'] = null;
+        $gst = null;
 
         if ($project) {
             if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
             } else {
-                $amount = $project->getTotalPayableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+                $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+                $gst = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
             }
         } else {
             if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount();
             } else {
-                $amount = $client->getTotalPayableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+                $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+                $gst = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
             }
         }
 
@@ -705,7 +715,8 @@ class InvoiceService implements InvoiceServiceContract
             'due_on' => $dueOn,
             'receivable_date' => $dueOn,
             'currency' => $client ? $client->country->currency : $project->client->country->currency,
-            'amount' => $amount
+            'amount' => $amount,
+            'gst' => $gst
         ]);
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';
