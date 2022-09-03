@@ -1,3 +1,3 @@
 <p>
-    {!! $mailTemplate !!}
+    {!! $mailTemplate->parse([]) !!}
 </p>
