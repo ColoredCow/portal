@@ -23,7 +23,7 @@ class BookController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $requestRequest $request)
+    public function index(Request $request)
     {
         $this->authorize('list', Book::class);
         $searchString = (request()->has('search')) ? request()->input('search') : false;
@@ -38,7 +38,7 @@ class BookController extends Controller
         $loggedInUser = auth()->user();
         $books->load('wishers');
      
-            return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
+        return view('knowledgecafe.library.books.index', compact('books', 'loggedInUser', 'categories'));
     }
 
     /**
