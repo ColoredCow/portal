@@ -17,7 +17,6 @@ class HrApplicationRoundTableSeeder extends Seeder
     public function run()
     {
         if (! app()->environment('production')) {
-            $roundId = array_rand($this->getRandomId());
             $applications = Application::all();
             foreach ($applications as $application) {
                 $status = $application->status == 'new' ? 'new-application' : $application->status;
@@ -32,7 +31,7 @@ class HrApplicationRoundTableSeeder extends Seeder
 
                     ],
                     [
-                        'hr_round_id' => $roundId == 0 ? $roundId + 1 : $roundId,
+                        'hr_round_id' => 1,
                         'scheduled_person_id' => User::first()->id,
                         'is_latest' => true,
                     ]
@@ -41,19 +40,4 @@ class HrApplicationRoundTableSeeder extends Seeder
         }
     }
 
-    private function getRandomId()
-    {
-        return [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            '10',
-        ];
-    }
 }
