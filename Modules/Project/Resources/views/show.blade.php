@@ -137,7 +137,6 @@
                                                 @php
                                                     $total = 0;
                                                     $var = 0;
-                                                    $velocity = 0;
                                                 @endphp
                                                 @foreach($project->getTeamMembers ?:[] as $teamMember)
                                                     <tr>
@@ -160,9 +159,6 @@
                                                             @endphp
                                                         </td>
                                                         <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}
-                                                            @php
-                                                                $velocity+= $teamMember->velocity;
-                                                            @endphp
                                                         </td>
                                                     </tr>
                                                 @endforeach
