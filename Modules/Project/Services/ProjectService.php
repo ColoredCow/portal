@@ -27,7 +27,7 @@ class ProjectService implements ProjectServiceContract
         $data['projects'] = $data['projects'] ?? 'my-projects';
         $data['limit'] = $data['limit'] ?? 10;
         $offset = $data['offset'] ?? 0;
-       
+
         $clients = null;
 
         if ($data['projects'] == 'all-projects') {
