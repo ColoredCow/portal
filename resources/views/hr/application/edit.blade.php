@@ -459,7 +459,7 @@
                                                                 <div class="form-group offset-md-1 col-md-5">
                                                                     <label
                                                                         class="text-secondary fz-14 leading-none mb-0.16">Email</label>
-                                                                    <div>{{ $applicant->email }}</div>
+                                                                    <div id="applicantEmail">{{ $applicant->email }}</div>
                                                                 </div>
 
                                                                 <div class="form-group col-md-5">
@@ -921,12 +921,12 @@
                                                                 </div>
                                                                 <div class="form-group offset-md-1 col-md-5">
                                                                     <label
-                                                                        class="text-secondary fz-14 leading-none mb-0.16">Applied
+                                                                        class="text-secondary fz-14 leading-none mb-0.16" >Applied
                                                                         for</label>
                                                                     <div>
                                                                         <a href="{{ $application->job->link }}"
                                                                             target="_blank">
-                                                                            <span>{{ $application->job->title }}</span>
+                                                                            <span id="jobTitle">{{ $application->job->title }}</span>
                                                                             <i class="fa fa-external-link fz-14"
                                                                                 aria-hidden="true"></i>
                                                                         </a>
@@ -1253,8 +1253,6 @@
                                                             Put on Hold
                                                         </button>
 
-                                                        <!-- Modal -->
-                                                       
                                                         @if ($loop->last && !$application->isRejected())
                                                             {{-- @if ($applicantOpenApplications->count() > 1) --}}
                                                             <button type="button" class="btn btn-outline-danger ml-2"
@@ -1290,7 +1288,7 @@
                                         @includeWhen($loop->last, 'hr.application.send-for-approval-modal')
                                         @includeWhen($loop->last, 'hr.application.onboard-applicant-modal')
                                         @includeWhen($loop->last, 'hr.application.approve-applicant-modal')
-                                        @include('hr.application.put-on-hold-modal')
+                                        @includeWhen($loop->last, 'hr.application.put-on-hold-modal')
                                     </form>
                                     
                                 @endif
