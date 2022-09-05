@@ -7,6 +7,7 @@ use Modules\Client\Entities\Client;
 use Modules\Project\Entities\Project;
 use Modules\Project\Rules\ProjectNameExist;
 use Modules\Project\Entities\ProjectContract;
+use Illuminate\Http\Request;
 use Modules\Project\Http\Requests\ProjectRequest;
 use Modules\Project\Contracts\ProjectServiceContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -26,14 +27,16 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(\Illuminate\Http\ Request $request)
+    public function index(Request $request)
     {
         $data = $this->service->index(request()->all());
-        // return view('project::index', $data);
         
-        if ($request->ajax()) {
-            return response()->json($data);
+        if ($request->ajax()) {   
+            return response()->json([
+                'html' => view('project::client-project', ['clients' => $data['clients']])->render()
+            ]);
         }
+
         return view('project::index', $data);
     }
 
@@ -139,16 +142,3 @@ class ProjectController extends Controller
         return $this->service->updateProjectData($request->all(), $project);
     }
 }
-
-    //     $posts = Project::paginate(5);
-    //     if($request->ajax()){
-    //         $view = view('data' ,compact('project'))->render();
-    //         return response()->json(['html->$client']);
-    //     } else {
-    //         $projects = Project::getList();
-    //     }
-
-    //     return view('project.index')->with([
-    //         'projects' => $projects,
-    //     ]);
-    //     }

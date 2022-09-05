@@ -15,6 +15,7 @@ use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Project\Entities\ProjectBillingDetail;
+use NunoMaduro\Larastan\Methods\Pipes\Contracts;
 
 class ProjectService implements ProjectServiceContract
 {
@@ -25,25 +26,17 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'] ?? null,
         ];
         $data['projects'] = $data['projects'] ?? 'my-projects';
-        $data['limit'] = $data['limit'] ?? 10;
-        $offset = $data['offset'] ?? 0;
-        // dd($offset);
+            $data['limit'] = $data['limit'] ?? 10;
+            $offset = $data['offset'] ?? 0;
        
-
         $clients = null;
 
-
-        // if(isset($_GET['offset']) && isset($_isset['limit']))
-        //          request()->get('limit');
-        //          request()->get('offset');
-        
         if ($data['projects'] == 'all-projects') {
             $clients = Client::query()->with('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters)->orderBy('name', 'asc');
             })->whereHas('projects', function ($query) use ($filters) {
                 $query->applyFilter($filters);
-            })->orderBy('name')
-            ->get();
+            })->orderBy('name')->get();
 
             $filters['status'] = 'active';
             $activeProjectsCount = Project::query()->applyFilter($filters)->count();
@@ -84,7 +77,7 @@ class ProjectService implements ProjectServiceContract
 
         $limit = 10;
 
-        $clients = $clients->slice($offset,$limit);
+        $clients = $clients->slice($offset, $limit);
 
         return [
             'clients' => $clients,
