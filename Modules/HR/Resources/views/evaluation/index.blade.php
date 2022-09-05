@@ -4,7 +4,6 @@
     <br>
     <br>
     <div>
-        
         <div class="d-none alert alert-success fade show" role="alert" id="segmentsuccess">
             <strong>Success!!!</strong>Congratulations!!! New segment successfully created.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -20,7 +19,7 @@
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">Segments</h1>
             <div>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#createNewSegment">Add New</button>
+            <button class="btn btn-success" data-toggle="modal" data-target="#createNewSegment"> <i class="fa fa-plus mr-1"></i> Add New Segment</button>
             </div>
         </div>      
         <br>
