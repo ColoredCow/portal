@@ -20,7 +20,7 @@ class Book extends Model
         return $this->belongsToMany(BookCategory::class, 'library_book_category', 'library_book_id', 'book_category_id');
     }
 
-    public static function getList($searchString = false, $filter_by = null)
+    public static function getList($filterString = false, $filter_by = null)
     {
         $query = self::with(['categories', 'readers', 'borrowers']);
         if ($filter_by == 'books_i_have_read') {
@@ -29,11 +29,11 @@ class Book extends Model
         }
 
         return $query
-            ->where(function ($query) use ($searchString) {
-                if ($searchString) {
-                    $query->where('title', 'LIKE', "%$searchString%")
-                        ->orWhere('author', 'LIKE', "%$searchString%")
-                        ->orWhere('isbn', 'LIKE', "%$searchString%");
+            ->where(function ($query) use ($filterString) {
+                if ($filterString) {
+                    $query->where('title', 'LIKE', "%$filterString%")
+                        ->orWhere('author', 'LIKE', "%$filterString%")
+                        ->orWhere('isbn', 'LIKE', "%$filterString%");
                 }
             })
             ->withCount('readers')
