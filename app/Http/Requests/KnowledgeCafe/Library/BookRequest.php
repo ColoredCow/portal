@@ -34,6 +34,7 @@ class BookRequest extends FormRequest
             'self_link' => 'nullable|string',
             'number_of_copies' => 'nullable|integer|gte:1',
             'on_kindle' => 'nullable'
+            //'location'  => 'filled|string',
         ];
     }
 }

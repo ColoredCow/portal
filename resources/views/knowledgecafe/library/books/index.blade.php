@@ -60,7 +60,7 @@
     <div class="d-flex justify-content-start flex-wrap" id="books_table" 
         data-books="{{ json_encode($books) }}" 
         data-categories="{{ json_encode($categories) }}"
-        data-index-route="{{ route('books.index') }}" 
+        data-index-route="{{ route('books.index') }}"
         data-category-index-route="{{ route('books.category.index') }}">
         <div class="d-flex flex-wrap w-full">
             <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
@@ -84,9 +84,10 @@
                                 </a>
                                 <ul class="dropdown-menu ">
                                     <li @click="updateCategoryMode(index)" data-toggle="modal" data-target="#update_category_modal" class="dropdown-item">Update Category</li>
-                                    <li @click="updateIndex(index)"  data-toggle="modal" :data-target="'#copiesOfBooksCountModal' + index" class="dropdown-item">Copies Available</li>
+                                    <li @click="updateIndex(index)" data-toggle="modal" :data-target="'#copiesOfBooksCountModal' + index" class="dropdown-item">Copies Available</li>
+                                    <li data-toggle="modal" data-target="#update_location_modal" class="dropdown-item">Update Location</li>
                                     <li @click="deleteBook(index)" class="dropdown-item text-danger">Delete</li>
-                                </ul>
+                                 </ul>
                             </div>
                         </div>
                     @endcan
@@ -127,9 +128,31 @@
                         <h2 v-if="index < 3" class="badge badge-secondary px-2 py-1 mr-1">@{{ category.name }} </h2>
                     </span>
                 </div>
-
-
-            </div>
+                <div class="modal" tabindex="-1" role="dialog" id="update_location_modal">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">UPDATE LOCATION</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="formvalidate" @submit="updatebooklocation($event, index)">
+                                @csrf
+                                <label for="title">SELECT LOCATION</label>
+                                <select class="form-control" name="location" id="location" value="select location">
+                                    <option value="tehri" >Tehri</option>
+                                    <option value="dwarahat" >Dwarahat</option>
+                                    <option value="gurugram" >Gurugram</option>
+                                </select>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Save</button>
+                          </form>
+                      </div>
+                    </div>
+                  </div>
+             </div>
         </div>
     </div>
     @include('knowledgecafe.library.books.update-category-modal')

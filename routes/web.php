@@ -130,6 +130,7 @@ Route::middleware('auth')->group(function () {
                     'store' => 'books.store',
                     'destroy' => 'books.delete',
                     'update' => 'books.update',
+                    // 'location' => 'books.store'
                 ]);
 
             Route::prefix('book')->group(function () {
@@ -145,6 +146,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('remove-from-bam/{book}', 'BookController@unselectBookFromCurrentMonth')->name('books.removeFromBam');
                 Route::post('add-new-comment/{book}', 'BookController@addNewComment')->name('books.addNewComment');
                 Route::post('{book}/comment', 'BookCommentController@store')->name('book-comment.store');
+                Route::post('{book}/location', 'BookController@storeBookLocation');
             });
 
             Route::resource('book-categories', 'BookCategoryController')
