@@ -170,9 +170,6 @@
                                             <td>
                                                 {{ $var }}
                                             </td> 
-                                            <td> 
-                                                {{$velocity}}
-                                            </td>
                                             </table>
                                         @endif
                                 </div>
