@@ -30,8 +30,8 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $data = $this->service->index(request()->all());
-        
-        if ($request->ajax()) {   
+
+        if ($request->ajax()) {
             return response()->json([
                 'html' => view('project::client-project', ['clients' => $data['clients']])->render()
             ]);

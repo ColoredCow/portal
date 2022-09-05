@@ -25,8 +25,8 @@ class ProjectService implements ProjectServiceContract
             'name' => $data['name'] ?? null,
         ];
         $data['projects'] = $data['projects'] ?? 'my-projects';
-            $data['limit'] = $data['limit'] ?? 10;
-            $offset = $data['offset'] ?? 0;
+        $data['limit'] = $data['limit'] ?? 10;
+        $offset = $data['offset'] ?? 0;
        
         $clients = null;
 
