@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Modules\HR\Services\RequisitionService;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
