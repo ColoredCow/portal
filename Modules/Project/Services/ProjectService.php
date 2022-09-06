@@ -339,4 +339,23 @@ class ProjectService implements ProjectServiceContract
 
         return $projectDetails;
     }
+
+    public function getMailDetailsForProjectKeyAccountManagers()
+    {
+        $currenttime = Carbon::today(config('constants.timezone.indian'));
+        $projects = Project::wheretype('fixed-budget')->wherestatus('active')->where('end_date', '<', $currenttime)->get();
+        $projectsData = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectsData[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ];
+            }
+        }
+
+        return $projectsData;
+    }
 }

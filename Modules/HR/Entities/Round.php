@@ -2,9 +2,9 @@
 
 namespace Modules\HR\Entities;
 
+use Illuminate\Database\Eloquent\Model;
 use Modules\HR\Entities\Evaluation\Parameter as EvaluationParameter;
 use Modules\HR\Entities\Evaluation\Segment as EvaluationSegment;
-use Illuminate\Database\Eloquent\Model;
 
 class Round extends Model
 {
@@ -44,6 +44,6 @@ class Round extends Model
 
     public function evaluationSegments()
     {
-        return $this->hasMany(EvaluationSegment::class, 'round_id');
+        return $this->hasMany(EvaluationSegment::class, 'round_id', 'id');
     }
 }

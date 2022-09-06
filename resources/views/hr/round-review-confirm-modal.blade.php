@@ -35,12 +35,8 @@
                         <input type="date" id="date" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
-                        <label>Start time</label>
-                        <input type="time" id="startTime" class="form-control" placeholder="">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label>End time</label>
-                        <input type="time" id="endTime" class="form-control" placeholder="">
+                        <label>Timing</label>
+                        <input type="time" id="timing" class="form-control" placeholder="">
                     </div>
                     <div class="form-group col-md-12">
                         <button type="button" class="btn btn-success px-4" id="updateEmail">Generate Email</button>
