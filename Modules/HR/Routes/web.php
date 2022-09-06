@@ -117,6 +117,13 @@ Route::middleware('auth')->group(function () {
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
         Route::post('store', 'EmployeeController@store')->name('employees.store');
+
+        Route::resource('requisition', 'RequisitionController')
+        ->only(['index', 'show'])
+        ->names([
+            'index' => 'requisition',
+            'show' => 'requisition.show',
+        ]);
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

@@ -48,7 +48,7 @@
                             @endif
                         </td>
                         <td>
-                            <span class="{{ $employee->user ? ($employee->user->fte < 0.7 ? 'text-success' : 'text-danger') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
+                            <span class="{{ $employee->user ? ($employee->user->fte < 0.7 ? 'text-danger' : 'text-success') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
                         </td>
 
                         </tr>
