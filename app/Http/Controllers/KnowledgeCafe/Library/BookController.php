@@ -181,7 +181,8 @@ class BookController extends Controller
         $data['categories'] = implode($info->get('categories', []));
         $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
         $data['self_link'] = $book->get('self_link');
-        //$data['location']  = $book->get('location');        return $data;
+        //$data['location']  = $book->get('location');       
+        return $data;
     }
 
     public function markBook(Request $request)
@@ -305,17 +306,10 @@ class BookController extends Controller
 
     public function storeBookLocation(Book $book, Request $request)
     {
-        dd('here');
-        //($book);
-        //($request->all());
-        //$book->location =$request->location;
-        // $bookID = request()->book_id;
-        // $book = Book::find($bookID);
          $book->update([
          'location' => $request->location
-         ]);
-        //$book->save();
-        
-        return redirect()->back();
+           ]);
+
+         return response()->json($book);
     }
 }

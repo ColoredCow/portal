@@ -732,16 +732,16 @@ if (document.getElementById("books_listing")) {
 			bookCategories: document.getElementById("books_table").dataset.categories
 				? JSON.parse(document.getElementById("books_table").dataset.categories)
 				: [],
-            updateRoute:
-              document.getElementById("books_table").dataset.indexRoute || "",
-            categoryIndexRoute:
-                document.getElementById("books_table").dataset.categoryIndexRoute || "",
-            categoryInputs: [],
-            currentBookIndex: 0,
-            newCategory: "",
-            searchKey: document.getElementById("search_input")
-                ? document.getElementById("search_input").dataset.value
-                : ""
+			updateRoute:
+			  document.getElementById("books_table").dataset.indexRoute || "",
+			categoryIndexRoute:
+				document.getElementById("books_table").dataset.categoryIndexRoute || "",
+			categoryInputs: [],
+			currentBookIndex: 0,
+			newCategory: "",
+			searchKey: document.getElementById("search_input")
+				? document.getElementById("search_input").dataset.value
+				: ""
 		},
 		methods: {
 			updateCategoryMode: function (index) {
@@ -757,24 +757,15 @@ if (document.getElementById("books_listing")) {
 			},
 
 			updatebooklocation: async function (event, index){
-			    event.preventDefault()
-			    let locationSelectBox = event.target.querySelector('#location')
-				//console.log(locationSelectBox);
-				//new formData(event.target);
-		        let form=event.target.;
-                console.log(form);
-				let location =$('#location').val();
-                let bookID = this.books[this.currentBookIndex]["id"];
-				//console.log(bookID)
-				// console.log('/location'+ bookID)
-                // let route = `{knowledgecafe/library/books/updateRoute}/{bookID}`;
-				// let route='book/' + bookID + 'location'
-                let response = await axios.post(`book/${bookID}/location`, formData);
-			    //console.log(`book/${bookID}/location`);
-			    this.location =response.data;
-                   this.books(index);
-                // query("#exampleModal").modal("hide");
-            },
+				let locationSelectBox = event.target.querySelector('#location')
+				let location = $(('#location')).val()
+				let bookID = this.books[this.currentBookIndex]["id"];
+				let response = await axios.post(`book/${bookID}/location`, {
+					location: location
+				});
+				this.location =response.data;
+				this.books(index);
+			},
 			
 			updateCategory: function () {
 				let selectedCategory = [];
@@ -1647,11 +1638,11 @@ $("#updateEmail").on("click", function() {
 			tinymce.get("confirmMailToApplicantBody").setContent(response.body, { format: "html" });
 			$("#interactionsuccess").toggleClass("d-none");
 			$("#interactionsuccess").fadeToggle(6000);
-	        $("#confirmMailToApplicantBlock").removeClass("d-none");
-	        var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
-	        if (toggleIcon && ! $(".fa-eye-slash ").hasClass("d-none")) {
-		    	$(".toggle-icon").toggleClass("d-none");
-	        }	
+			$("#confirmMailToApplicantBlock").removeClass("d-none");
+			var toggleIcon = $("#previewMailToApplicant").data("toggle-icon");
+			if (toggleIcon && ! $(".fa-eye-slash ").hasClass("d-none")) {
+				$(".toggle-icon").toggleClass("d-none");
+			}	
 		},
 		error: function(response) {
 			$("#InteractionError").removeClass("d-none");
@@ -1660,18 +1651,10 @@ $("#updateEmail").on("click", function() {
 			for (let error in errors) {
 				$("#errors").append("<li class='text-danger ml-2'>" + errors[error] + "</li>");
 			}
-	        $("#confirmMailToApplicantBlock").addClass("d-none");
+			$("#confirmMailToApplicantBlock").addClass("d-none");
 		},
 	});
 });
 $("#interactionErrorModalCloseBtn").click(function() {
 	$("#InteractionError").toggleClass("d-none");
 });
-
-// $(document).ready(function () {
-//  	var form = document.getElementById('formvalidate')
-
-// 	form.addEventListener('@click',function(event){
-//  		event.preventDefault()
-//  	});
-// });
