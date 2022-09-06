@@ -7,7 +7,7 @@
 			<div class="md-0">
 				<div class="card-body pt-3 h-325 w-md-389 w-389 overflow-y-scroll">
 					<ul class="list list-group unstyled-list">
-						<li style="font-size:16px;">
+						<li class="d-flex justify-content-between" style="font-size:16px;">
 						<div class="text-secondary"> Pending invoices </div>
 						<h4 v-text="sentInvoiceCount"></h4>
 						</li>
