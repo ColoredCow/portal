@@ -16,18 +16,17 @@
                     <td class="w-33p"><div class="pl-2 pl-xl-3"><a href="{{ route('project.show', $project) }}">{{ $project->name }}</a></div></td>
                 @else
                     <td class="w-33p"><div class="pl-2 pl-xl-3">{{ $project->name }}</div></td>
-                    @endcan
+                @endcan
                 <td class="w-20p">
-                    @foreach($project->getTeamMembers ?:[] as $teamMember)
-                    <span class="content tooltip-wrapper"  data-html="true" data-toggle="tooltip"  title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}} <br>    Efforts: {{$teamMember->current_actual_effort}} Hours" >
-                        
+                @foreach($project->getTeamMembers ?:[] as $teamMember)
+                    <span class="content tooltip-wrapper"  data-html="true" data-toggle="tooltip"  title="{{ $teamMember->user->name }} - {{ config('project.designation')[$teamMember->designation]}} <br>    Efforts: {{$teamMember->current_actual_effort}} Hours">
                         <a href={{ route('employees.show', $teamMember->user->employee) }}><img src="{{ $teamMember->user->avatar }}" class="w-35 h-30 rounded-circle mb-1 mr-0.5 {{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'border border-success' : 'border border-danger' }} border-2"></a>
                     </span>
-                    @endforeach
+                @endforeach
                 </td>
                 <td>
                     @if(empty($project->projectContracts->first()->contract_file_path))
-                    <span class="badge badge-light border border-dark rounded-0">No Contract</span>
+                        <span class="badge badge-light border border-dark rounded-0">No Contract</span>
                     @endif
                 </td>
                 <td class="w-20p">
@@ -47,4 +46,3 @@
         <td>
     </tr>
 @endcan
-
