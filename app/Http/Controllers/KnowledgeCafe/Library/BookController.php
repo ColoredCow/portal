@@ -186,7 +186,7 @@ class BookController extends Controller
         $data['categories'] = implode($info->get('categories', []));
         $data['thumbnail'] = $info->get('imageLinks')['thumbnail'];
         $data['self_link'] = $book->get('self_link');
-       
+
         return $data;
     }
 
