@@ -18,6 +18,7 @@ class RecurringExpenseController extends Controller
 
     public function index()
     {
+        
         return view('expense::recurring.index', [
             'recurringExpenses' => $this->service->index()
         ]);
@@ -31,8 +32,28 @@ class RecurringExpenseController extends Controller
     public function store(Request $request)
     {
         // ToDo:: we need to add validations here.
-        $this->service->store(request()->all());
+         $validated = $request->validate([
+            'name' => 'required',
+            'frequency' => 'required',
+            'initial_due_date' => 'required',
+            'currency' =>  'required',
+            'amount' => 'required',
+           
 
+        ]);
+        // [
+        //     'name',
+        //     'status',
+        //     'frequency',
+        //     'initial_due_date',
+        //     'currency',
+        //     'amount',
+        //     'description',
+        // ];
+        // dd(request()->all());
+
+        $this->service->store(request()->all());
+       
         return redirect()->route('expense.recurring.index');
     }
 
