@@ -765,8 +765,8 @@ if (document.getElementById("books_listing")) {
 			},
 
 			updatebooklocation: async function (event, index){
-				let locationSelectBox = event.target.querySelector('#location')
-				let location = $(('#location')).val()
+				let locationSelectBox = event.target.querySelector("#location");
+				let location = $(("#location")).val();
 				let bookID = this.books[this.currentBookIndex]["id"];
 				let response = await axios.post(`book/${bookID}/location`, {
 					location: location
