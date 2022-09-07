@@ -20,6 +20,7 @@ Route::prefix('report')->group(function () {
     Route::post('/update/{id}', 'ReportController@update')->name('report.update');
 
     Route::prefix('finance')->group(function () {
+        Route::get('dashboard', 'FinanceReportController@dashboard')->name('reports.finance.dashboard');
         Route::get('profit-and-loss', 'FinanceReportController@profitAndLoss')->name('reports.finance.profit-and-loss');
     });
 });

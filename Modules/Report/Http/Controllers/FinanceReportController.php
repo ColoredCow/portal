@@ -17,6 +17,11 @@ class FinanceReportController extends Controller
         $this->service = $service;
     }
 
+    public function dashboard()
+    {
+        return view('report::finance.dashboard');
+    }
+
     /**
      * Main function to fetch the P&L report.
      */
