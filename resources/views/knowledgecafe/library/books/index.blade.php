@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+
+<div class="text-center d-block" id= "preloaders" >
+  <div class="spinner-border m-5" aria-hidden="true" role="status" id="spinner">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
 <div id="books_listing" class="container">
     @include('status', ['errors' => $errors->all()])
     <br>

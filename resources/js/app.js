@@ -638,6 +638,16 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  * Knowledge Cafe
  *
  */
+ $.ajaxSetup({
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	}
+});
+
+$(window).on("load", function(){
+	let element = document.getElementById('preloaders')
+	$(element).removeClass('d-block').addClass(' d-none ');
+});
 
 if (document.getElementById("show_and_save_book")) {
 	const bookForm = new Vue({
