@@ -638,15 +638,15 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  * Knowledge Cafe
  *
  */
- $.ajaxSetup({
+$.ajaxSetup({
 	headers: {
-		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr("content")
 	}
 });
 
 $(window).on("load", function(){
-	let element = document.getElementById('preloaders')
-	$(element).removeClass('d-block').addClass(' d-none ');
+	let element = document.getElementById("preloaders")
+	$(element).removeClass("d-block").addClass(" d-none ");
 });
 
 if (document.getElementById("show_and_save_book")) {
