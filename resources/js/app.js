@@ -638,14 +638,8 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  * Knowledge Cafe
  *
  */
-$.ajaxSetup({
-	headers: {
-		"X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-	}
-});
-
 $(window).on("load", function(){
-	let element = document.getElementById("preloaders");
+	let element = document.getElementById("preloader");
 	$(element).removeClass("d-block").addClass(" d-none ");
 });
 
