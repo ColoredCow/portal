@@ -45,10 +45,6 @@
     <div class="col-4"><a href="#" id="addAadhar" data-toggle="modal" data-target="#uploadFile"> Upload New </a></div>
 </div>
 
-
-
-
-
   <br>
 <div class="row">
  
