@@ -640,12 +640,12 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  */
 $.ajaxSetup({
 	headers: {
-		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr("content")
+		"X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
 	}
 });
 
 $(window).on("load", function(){
-	let element = document.getElementById("preloaders")
+	let element = document.getElementById("preloaders");
 	$(element).removeClass("d-block").addClass(" d-none ");
 });
 
