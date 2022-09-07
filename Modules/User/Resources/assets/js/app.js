@@ -35,11 +35,5 @@ $(document).ready(function() {
 
 
 
-   $("#removeform").click(function (){
-      document.getElementById("myform").remove();
-    })
-  
-
-
-
+   
 
