@@ -17,7 +17,8 @@ class ResumeScreeningEvaluationSeeder extends Seeder
     public function run()
     {
         if (! app()->environment('production')) {
-            $evaluationParametersList = [
+            $evaluationParametersList = 
+			[
                     [
                         'id' => 1,
                         'name' => 'Resume looks good?',
@@ -69,7 +70,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                         'marks'=> 1
                     ],
 
-					[
+				    [
 						'name' => 'Won any competition? (if relevant)',
 						'segment_id'=> 2,
 						'marks'=> 1
@@ -85,7 +86,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                     'value' => 'No',
                     'marks' => '-1'
                 ],
-            ];
+			 ];
             $round = Round::where('name', 'Resume Screening')->first();
             $round->evaluationParameters()->createMany($evaluationParametersList);
             $evaluationParameters = Parameter::all();
