@@ -62,10 +62,11 @@ class FinanceReportController extends Controller
             'March (2023)',
           ];
 
-        $data = [
+        $data = [20, 12, 15, 20, 23, 35, 40, 45, 48, 52, 55, 58];
 
+        return [
+            'labels' => $labels,
+            'data' => $data
         ];
-
-        return $request->all();
     }
 }

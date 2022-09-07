@@ -10,20 +10,7 @@ $(function() {
 
 function financeReportRevenueTrendsReport(reportsData) {
   const canvasElementId = "financeReportRevenueTrends";
-  const labels = [
-    "April (2022)",
-    "May (2022)",
-    "June (2022)",
-    "July (2022)",
-    "August (2022)",
-    "September (2022)",
-    "October (2022)",
-    "November (2022)",
-    "December (2022)",
-    "January (2023)",
-    "February (2023)",
-    "March (2023)",
-  ];
+  const labels = reportsData.labels;
 
   const data = {
     labels: labels,
@@ -32,13 +19,13 @@ function financeReportRevenueTrendsReport(reportsData) {
         label: "Revenue Trends",
         backgroundColor: "rgb(255, 99, 132)",
         borderColor: "rgb(255, 99, 132)",
-        data: [11, 12, 15, 20, 23, 35, 40, 45, 48, 52, 55, 58],
+        data: reportsData.data,
       },
     ],
   };
 
   const config = {
-    type: "bar",
+    type: reportsData.graph_type || "bar",
     data: data,
     options: {
       responsive: true,
