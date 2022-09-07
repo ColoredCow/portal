@@ -130,7 +130,6 @@ Route::middleware('auth')->group(function () {
                     'store' => 'books.store',
                     'destroy' => 'books.delete',
                     'update' => 'books.update',
-                    // 'location' => 'books.store'
                 ]);
 
             Route::prefix('book')->group(function () {

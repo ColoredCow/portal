@@ -70,7 +70,7 @@
                                     <li @click="updateIndex(index)" data-toggle="modal" :data-target="'#copiesOfBooksCountModal' + index" class="dropdown-item">Copies Available</li>
                                     <li data-toggle="modal" data-target="#update_location_modal" class="dropdown-item">Update Location</li>
                                     <li @click="deleteBook(index)" class="dropdown-item text-danger">Delete</li>
-                                 </ul>
+                                </ul>
                             </div>
                         </div>
                     @endcan
@@ -111,9 +111,33 @@
                         <h2 v-if="index < 3" class="badge badge-secondary px-2 py-1 mr-1">@{{ category.name }} </h2>
                     </span>
                 </div>
-
-                <div >
-                    <span>
+                <div class="modal" tabindex="-1" role="dialog" id="update_location_modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">update location</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formvalidate" @submit="updatebooklocation($event, index)">
+                    @csrf
+                    <label for="title">Select Location</label>
+                    <select class="form-control" name="location"id="location" value="Select Location">
+                        <option value="tehri">Tehri</option>
+                        <option value="dwarahat">Dwarahat</option>
+                        <option value="gurugram">Gurugram</option>
+            </select>
+                <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </form>
+       </div>
+    </div>
+  </div>
+</div>
+<div >
+    <span>
                         <h2 class="badge badge-warning px-2 py-1 mr-1">@{{ book.wishers.find(user => user.id == loggedInUser.id) == null ? '' : 'Wishlisted' }}</h2>
                     </span>
                 </div>
@@ -121,6 +145,5 @@
             </div>
         </div>
     </div>
-    @include('knowledgecafe.library.books.update-category-modal')
-</div>
+ @include('knowledgecafe.library.books.update-category-modal')</div>
 @endsection
