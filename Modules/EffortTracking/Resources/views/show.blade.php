@@ -67,6 +67,7 @@
         @endif
         </div>
     </div>
+    @if($totalMonths === 0 || $totalMonths != 0)
     <div class="project-resource-effort-tracking-container container mt-4 pb-10">
         <div class="card">
             <div class="card-header">
@@ -117,15 +118,15 @@
                             <tr>
                                 <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{ $teamMember->user->name }}</th>
                                 <td
-                                    class="{{ $teamMember->getCurrentActualEffortAttribute($startDate, $endDate) >= $teamMember->getExpectedEffortTillTodayAttribute($startDate, $endDate) ? 'text-success' : ($teamMember->getCurrentActualEffortAttribute($startDate, $endDate) < $teamMember->getExpectedEffortTillTodayAttribute($startDate, $endDate) ? 'text-danger' : '') }}">
-                                    {{ $teamMember->getCurrentActualEffortAttribute($startDate, $endDate) }}</td>
-                                <td>{{ $teamMember->getCurrentExpectedEffortAttribute($startDate, $endDate) }}</td>
-                                <td>{{ $teamMember->getExpectedEffortTillTodayAttribute($startDate, $endDate) }}</td>
-                                <td>{{ $teamMember->getExpectedEffortTillTodayAttribute($startDate, $endDate) - $teamMember->getCurrentActualEffortAttribute($startDate, $endDate) }}
+                                    class="{{ $teamMember->currentActualEffort >= $teamMember->expectedEffortTillToday ? 'text-success' : ($teamMember->currentActualEffort < $teamMember->expectedEffortTillToday ? 'text-danger' : '') }}">
+                                    {{ $teamMember->currentActualEffort }}</td>
+                                <td>{{ $teamMember->currentExpectedEffort }}</td>
+                                <td>{{ $teamMember->expectedEffortTillToday }}</td>
+                                <td>{{ $teamMember->expectedEffortTillToday - $teamMember->currentActualEffort }}
                                 </td>
-                                <td class="{{ $teamMember->getVelocityAttribute($startDate, $endDate) >= 1 ? 'text-success' : 'text-danger' }}">
-                                    {{ $teamMember->getVelocityAttribute($startDate, $endDate) }}</td>
-                                <td>{{ $teamMember->getFteAttribute($startDate, $endDate) }}</td>
+                                <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
+                                    {{ $teamMember->velocity }}</td>
+                                <td>{{ $teamMember->fte }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -133,6 +134,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 @endsection
