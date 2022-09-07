@@ -12,7 +12,7 @@
     <div class="col-4"><a href="#"> View </a></div>
     <div class="col-4"><a href="#" id="addPancard" class="pancard" data-toggle="modal" data-target="#uploadFile"> Upload New</a></div>
     <!-- Modal -->
-    <div class="modal fade" id="uploadFile" tabindex="-1" role="dialog" aria-labelledby="uploadFileTitle" aria-hidden="true">
+  <div class="modal fade" id="uploadFile" tabindex="-1" role="dialog" aria-labelledby="uploadFileTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -38,24 +38,23 @@
   </div>
 </div>
 
-  <br>
-  <div class="row">
+<br>
+<div class="row">
     <div class="col-4">Adhar Card</div>
     <div class="col-4"><a href="#"> View </a></div>
     <div class="col-4"><a href="#" id="addAadhar" data-toggle="modal" data-target="#uploadFile"> Upload New </a></div>
-  </div>
+</div>
 
 
 
 
 
   <br>
-
-  <div class="row">
+<div class="row">
  
     <div class="col-4">Signature</div>
     <div class="col-4"><a href="#"> View </a></div>
     <div class="col-4"><a href="#"  id="addSignature" data-toggle="modal" data-target="#uploadFile"> Upload New </a></div>
   
-  </div>
+</div>
 
