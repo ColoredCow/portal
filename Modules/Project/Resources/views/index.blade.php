@@ -83,7 +83,7 @@
                                         </span>
                                     @endforeach
                                 </td>
-                                <td>  <div class="text-center">
+                                <td>  
                                 
                                     @if(empty($project->projectContracts->first()->contract_file_path))
                                      <span class="badge badge-pill badge-secondary text-center">No Contract</span>                                   @endif
