@@ -68,8 +68,10 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
                 </a>
                 <div class="dropdown-menu z-index-1100" aria-labelledby="navbarDropdown_finance">
-                    <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
+                    <a class="dropdown-item" href="{{ route('expense.index') }}">Revenue</a>
                     <a class="dropdown-item" href="{{ route('expense.index') }}">Expenses</a>
+                    <a class="dropdown-item" href="{{ route('expense.index') }}">Reports</a>
+                    <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
                     <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly Tax Report</a>
                     <a class="dropdown-item" href="{{ route('invoice.yearly-report') }}">Yearly Invoice Report</a>
                     <a class="dropdown-item" href="{{ route('invoice.details') }}">Monthly GST Report</a>
