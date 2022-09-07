@@ -4,7 +4,10 @@ $(function() {
   }
 
   if ($("#financeReportRevenueTrends").length) {
-    getData({ type: "abc", filters: {} }, financeReportRevenueTrendsReport);
+    getData(
+      { type: "revenue-trend", filters: {} },
+      financeReportRevenueTrendsReport
+    );
   }
 });
 

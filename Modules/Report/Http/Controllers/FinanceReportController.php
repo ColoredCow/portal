@@ -4,6 +4,7 @@ namespace Modules\Report\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Report\Services\Finance\ReportDataService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
 
@@ -47,26 +48,9 @@ class FinanceReportController extends Controller
 
     public function getReportData(Request $request)
     {
-        $labels = [
-            'April (2022)',
-            'May (2022)',
-            'June (2022)',
-            'July (2022)',
-            'August (2022)',
-            'September (2022)',
-            'October (2022)',
-            'November (2022)',
-            'December (2022)',
-            'January (2023)',
-            'February (2023)',
-            'March (2023)',
-          ];
+        $type = $request->type;
+        $filters = $request->filters;
 
-        $data = [20, 12, 15, 20, 23, 35, 40, 45, 48, 52, 55, 58];
-
-        return [
-            'labels' => $labels,
-            'data' => $data
-        ];
+        return app(ReportDataService::class)->getData($type, $filters);
     }
 }
