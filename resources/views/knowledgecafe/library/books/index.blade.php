@@ -122,20 +122,20 @@
                 </div>
                 <div class="modal-body">
                     <form id="formvalidate" @submit="updatebooklocation($event, index)">
-                    @csrf
-                    <label for="title">Select Location</label>
-                    <select class="form-control" name="location"id="location" value="Select Location">
+                         @csrf
+                        <label for="title">Select Location</label>
+                     <select class="form-control" name="location"id="location" value="Select Location">
                         <option value="tehri">Tehri</option>
                         <option value="dwarahat">Dwarahat</option>
                         <option value="gurugram">Gurugram</option>
-            </select>
-                <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </form>
-       </div>
+                     </select>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+             </div>
+        </div>
     </div>
-  </div>
-</div>
 <div >
     <span>
                         <h2 class="badge badge-warning px-2 py-1 mr-1">@{{ book.wishers.find(user => user.id == loggedInUser.id) == null ? '' : 'Wishlisted' }}</h2>
