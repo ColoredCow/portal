@@ -16,7 +16,7 @@ class ResumeScreeningEvaluationSeeder extends Seeder
      */
     public function run()
     {
-        if (!app()->environment('production')) {
+        if (! app()->environment('production')) {
             $evaluationParametersList =
                 [
                 [
