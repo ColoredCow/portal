@@ -28,29 +28,35 @@ class ReportDataService
 
         foreach ($reportData as $revenueHead) {
             foreach ($revenueHead['amounts'] as $key => $amount) {
-                dd($key, $amount);
+                $monthlyData[$key] = ($monthlyData[$key] ?? 0) + $amount;
             }
         }
 
+        unset($monthlyData['total']);
+
         $labels = [
-            'April (2022)',
-            'May (2022)',
-            'June (2022)',
-            'July (2022)',
-            'August (2022)',
-            'September (2022)',
-            'October (2022)',
-            'November (2022)',
-            'December (2022)',
-            'January (2023)',
-            'February (2023)',
-            'March (2023)',
+            '04-22' => 'April (2022)',
+            '05-22' => 'May (2022)',
+            '06-22' => 'June (2022)',
+            '07-22' => 'July (2022)',
+            '08-22' => 'August (2022)',
+            '09-22' => 'September (2022)',
+            '10-22' => 'October (2022)',
+            '11-22' => 'November (2022)',
+            '12-22' => 'December (2022)',
+            '01-23' => 'January (2023)',
+            '02-23' => 'February (2023)',
+            '03-23' => 'March (2023)',
           ];
 
-        $data = [20, 12, 15, 20, 23, 35, 40, 45, 48, 52, 55, 58];
+        $data = [];
+
+        foreach ($labels as $key => $label) {
+            $data[] = $monthlyData[$key] ?? 0;
+        }
 
         return [
-            'labels' => $labels,
+            'labels' => array_values($labels),
             'data' => $data
         ];
     }
