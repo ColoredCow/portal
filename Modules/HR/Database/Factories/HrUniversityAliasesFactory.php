@@ -2,7 +2,7 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Faker\Factory as Faker;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\University;
 use Modules\HR\Entities\UniversityAlias;
