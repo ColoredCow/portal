@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="text-center d-block bg-white position-fixed mw-100 mh-100" id= "preloader" >
+<div class="text-center d-block bg-white position-fixed mw-100 mh-100" id= "preloader">
   <div class="spinner-border m-5 position-absolute mt-6" aria-hidden="true" role="status" id="spinner">
     <span class="sr-only">Loading...</span>
   </div>
