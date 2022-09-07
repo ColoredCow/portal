@@ -16,7 +16,7 @@ class HrApplicationRoundReviewTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
             ApplicationRoundReview::factory()
-                ->count(20)
+                ->count(10)
                 ->create();
         }
     }

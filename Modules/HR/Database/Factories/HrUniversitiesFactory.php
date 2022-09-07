@@ -2,6 +2,7 @@
 
 namespace Modules\HR\Database\Factories;
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\University;
 
@@ -21,10 +22,11 @@ class HrUniversitiesFactory extends Factory
      */
     public function definition()
     {
+        $faker = Faker::create();
         return [
             'name' => $this->getCollegeNames()[array_rand($this->getCollegeNames())],
             'address' => $this->faker->address,
-            'rating' => $this->getRating()[array_rand($this->getRating())],
+            'rating' => $faker->numerify('#.#'),
         ];
     }
 
@@ -38,19 +40,6 @@ class HrUniversitiesFactory extends Factory
             'chandigarh University',
             'Uttaranchal University',
             'Graphic-Era University',
-        ];
-    }
-
-    private function getRating()
-    {
-        return [
-            '7.6',
-            '9.5',
-            '8.0',
-            '5.3',
-            '6.0',
-            '7.9',
-            '5.5'
         ];
     }
 }

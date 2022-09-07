@@ -23,8 +23,6 @@ class HrUniversityAliasesFactory extends Factory
      */
     public function definition()
     {
-        $faker = Faker::create();
-
         return
         [
             'hr_university_id' => University::factory()->create()->id,

@@ -16,7 +16,7 @@ class HrApplicantsTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
             Applicant::factory()
-                ->count(20)
+                ->count(10)
                 ->create();
         }
     }

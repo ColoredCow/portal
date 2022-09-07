@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Database\Seeder;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\Round;
 
 class HrApplicationRoundTableSeeder extends Seeder
 {
@@ -29,10 +30,9 @@ class HrApplicationRoundTableSeeder extends Seeder
                 ApplicationRound::updateOrCreate(
                     [
                         'hr_application_id' => $application->id,
-
                     ],
                     [
-                        'hr_round_id' => 1,
+                        'hr_round_id' => Round::first()->id,
                         'scheduled_person_id' => User::first()->id,
                         'is_latest' => true,
                     ]

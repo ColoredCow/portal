@@ -16,7 +16,7 @@ class HrFollowUpTableSeeder extends Seeder
     {
         if (! app()->environment('production')) {
             FollowUp::factory()
-                ->count(20)
+                ->count(10)
                 ->create();
         }
     }

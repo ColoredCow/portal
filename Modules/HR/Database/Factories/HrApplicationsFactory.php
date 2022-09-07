@@ -4,6 +4,8 @@ namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\Applicant;
+use Modules\HR\Entities\Job;
 
 class HrApplicationsFactory extends Factory
 {
@@ -30,26 +32,10 @@ class HrApplicationsFactory extends Factory
         }
 
         return [
-            'hr_applicant_id' => $this->getRandomId()[array_rand($this->getRandomId())],
-            'hr_job_id' => $this->getRandomId()[array_rand($this->getRandomId())],
-            'resume' => 'https://coloredcow.com/wp-content/uploads/2022/08/sample.pdf',
+            'hr_applicant_id' => Applicant::inRandomOrder()->first()->id,
+            'hr_job_id' => Job::inRandomOrder()->first()->id,
+            'resume' => config('hr.Sample-Resume'),
             'status' => $status
-        ];
-    }
-
-    private function getRandomId()
-    {
-        return [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            '10',
         ];
     }
 }

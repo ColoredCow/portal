@@ -4,6 +4,7 @@ namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\ApplicationMeta;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\Application;
 
 class HrApplicationMetaFactory extends Factory
 {
@@ -22,24 +23,9 @@ class HrApplicationMetaFactory extends Factory
     public function definition()
     {
         return [
-            'hr_application_id' => $this->getapplicationId()[array_rand($this->getapplicationId())],
+            'hr_application_id' => Application::inRandomOrder()->first()->id,
             'value' => $this->faker->text(),
             'key' => 'form-data'
-        ];
-    }
-
-    private function getapplicationId()
-    {
-        return [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '9',
-            '10',
         ];
     }
 }

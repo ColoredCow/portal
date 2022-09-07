@@ -4,6 +4,10 @@ namespace Modules\HR\Database\Factories;
 
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\Application;
+use Modules\HR\Entities\ApplicationRound;
+use Modules\HR\Entities\Evaluation\Parameter;
+use Modules\HR\Entities\Evaluation\ParameterOption;
 
 class HrApplicationEvaluationFactory extends Factory
 {
@@ -22,22 +26,10 @@ class HrApplicationEvaluationFactory extends Factory
     public function definition()
     {
         return [
-            'application_id' => $this->getRandomId()[array_rand($this->getRandomId())],
-            'application_round_id' => $this->getRandomId()[array_rand($this->getRandomId())],
-            'evaluation_id' => $this->getRandomId()[array_rand($this->getRandomId())],
-            'option_id'=> $this->getRandomId()[array_rand($this->getRandomId())],
-        ];
-    }
-    private function getRandomId()
-    {
-        return [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
+            'application_id' => Application::inRandomOrder()->first()->id,
+            'application_round_id' => ApplicationRound::inRandomOrder()->first()->id,
+            'evaluation_id' => Parameter::inRandomOrder()->first()->id,
+            'option_id'=> ParameterOption::inRandomOrder()->first()->id,
         ];
     }
 }
