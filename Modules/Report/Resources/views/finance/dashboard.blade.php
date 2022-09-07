@@ -40,7 +40,15 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div>
+            <div class="mt-4 w-60p">
+                <input type="hidden" name="team_members_effort" value="">
+                <input type="hidden" name="workingDays" value="">
+                <input type="hidden" name="users" value="">
+                <canvas class="w-full" id="financeReportRevenueTrends" style="width:38em !important"></canvas>
+            </div>
         </div>
     </div>
 @endsection
