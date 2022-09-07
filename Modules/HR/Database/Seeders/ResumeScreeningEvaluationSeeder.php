@@ -17,8 +17,8 @@ class ResumeScreeningEvaluationSeeder extends Seeder
     public function run()
     {
         if (! app()->environment('production')) {
-            $evaluationParametersList = 
-			[
+            $evaluationParametersList =
+			 [
                     [
                         'id' => 1,
                         'name' => 'Resume looks good?',
@@ -70,12 +70,12 @@ class ResumeScreeningEvaluationSeeder extends Seeder
                         'marks'=> 1
                     ],
 
-				    [
+				     [
 						'name' => 'Won any competition? (if relevant)',
 						'segment_id'=> 2,
 						'marks'=> 1
-					],
-				];
+					 ],
+				 ];
             $evaluationParametersOptions = [
                 [
                     'value' => 'Yes',
