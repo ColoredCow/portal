@@ -22,5 +22,6 @@ Route::prefix('report')->group(function () {
     Route::prefix('finance')->group(function () {
         Route::get('dashboard', 'FinanceReportController@dashboard')->name('reports.finance.dashboard');
         Route::get('profit-and-loss', 'FinanceReportController@profitAndLoss')->name('reports.finance.profit-and-loss');
+        Route::get('get-report-data', 'FinanceReportController@getReportData')->name('reports.finance.get-report-data');
     });
 });

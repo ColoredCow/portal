@@ -1,4 +1,4 @@
-@extends('report::layouts.master')
+@extends('report::layouts.finance')
 @section('content')
     <div class="container" id="vueContainer">
         <br>

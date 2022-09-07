@@ -2,6 +2,7 @@
 
 namespace Modules\Report\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\Report\Services\Finance\ProfitAndLossReportService;
@@ -42,5 +43,29 @@ class FinanceReportController extends Controller
         }, $reportData);
 
         return view('report::finance.profit-and-loss', ['reportData' => $reportData, 'currentYear' => $currentYear, 'allAmounts' => $allAmounts]);
+    }
+
+    public function getReportData(Request $request)
+    {
+        $labels = [
+            'April (2022)',
+            'May (2022)',
+            'June (2022)',
+            'July (2022)',
+            'August (2022)',
+            'September (2022)',
+            'October (2022)',
+            'November (2022)',
+            'December (2022)',
+            'January (2023)',
+            'February (2023)',
+            'March (2023)',
+          ];
+
+        $data = [
+
+        ];
+
+        return $request->all();
     }
 }

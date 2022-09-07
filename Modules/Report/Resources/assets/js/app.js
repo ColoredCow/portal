@@ -1,14 +1,14 @@
-$(document).ready(function() {
+$(function() {
   if ($(".show-modal")) {
     $(".show-modal").modal("show");
   }
 
   if ($("#financeReportRevenueTrends").length) {
-    financeReportRevenueTrendsReport();
+    getData({ type: "abc", filters: {} }, financeReportRevenueTrendsReport);
   }
 });
 
-function financeReportRevenueTrendsReport() {
+function financeReportRevenueTrendsReport(reportsData) {
   const canvasElementId = "financeReportRevenueTrends";
   const labels = [
     "April (2022)",
@@ -48,7 +48,7 @@ function financeReportRevenueTrendsReport() {
             barPercentage: 0.4,
             scaleLabel: {
               display: true,
-              labelString: "Months",
+              labelString: "months",
             },
           },
         ],
@@ -65,4 +65,9 @@ function financeReportRevenueTrendsReport() {
   };
 
   new Chart(canvasElementId, config);
+}
+
+function getData(params, callback) {
+  url = $("#get_report_data_url").val();
+  axios.get(url, { params }).then((res) => callback(res.data));
 }
