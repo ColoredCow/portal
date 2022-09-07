@@ -2,7 +2,6 @@
 
 namespace Modules\HR\Database\Factories;
 
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\HR\Entities\University;
 use Modules\HR\Entities\UniversityAlias;
