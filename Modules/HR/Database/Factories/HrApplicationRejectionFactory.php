@@ -24,6 +24,7 @@ class HrApplicationRejectionFactory extends Factory
     public function definition()
     {
         $faker = Faker::create();
+
         return [
             'hr_application_round_id' => ApplicationRound::inRandomOrder()->first()->id,
             'reason_title' => $faker->text(),

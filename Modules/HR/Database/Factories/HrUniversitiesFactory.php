@@ -23,6 +23,7 @@ class HrUniversitiesFactory extends Factory
     public function definition()
     {
         $faker = Faker::create();
+
         return [
             'name' => $this->getCollegeNames()[array_rand($this->getCollegeNames())],
             'address' => $this->faker->address,
