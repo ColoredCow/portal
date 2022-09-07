@@ -1729,6 +1729,26 @@ $(function () {
 	});
 });
 
+$(".status").on("change", function () {
+ $("#spinner").removeClass("d-none")
+	if (this.checked) {
+		$.ajax({
+			url: 'completed/change-status/' + this.dataset.id,
+			method: 'GET',
+			success: function (res) {
+				location.reload(true);
+			},
+			error: function (err) {
+				alert("there is some problem")
+			},
+			complete: function (data) {
+				$("#spinner").addClass("d-none")
+				
+			}
+		});
+	}
+});
+
 $("#job_start_date").on("change", function () {
 	let startDate = $("#job_start_date").val();
 	$("#job_end_date").attr("min", startDate);

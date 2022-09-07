@@ -124,6 +124,7 @@ Route::middleware('auth')->group(function () {
             'index' => 'requisition',
             'show' => 'requisition.show',
         ]);
+        Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@store');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

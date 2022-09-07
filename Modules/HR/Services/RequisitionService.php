@@ -8,6 +8,6 @@ class RequisitionService
 {
     public function index()
     {
-        return JobRequisition::with('hrJobDomain', 'job')->get();
+        return JobRequisition::with('hrJobDomain', 'job')->where('status', 'pending')->get();
     }
 }

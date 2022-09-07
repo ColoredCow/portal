@@ -27,4 +27,12 @@ class RequisitionController extends Controller
             'requisitions' => $requisitions,
         ]);
     }
+
+    public function store(JobRequisition $jobRequisition)
+    {
+        $jobRequisition->status = "completed";
+        $jobRequisition->save();
+
+        return redirect()->back();
+    }
 }
