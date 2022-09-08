@@ -3,7 +3,6 @@
 namespace Modules\HR\Http\Controllers\Recruitment;
 
 use Illuminate\Support\Facades\Request;
-use Illuminate\Http\Request as HttpRequest;
 use Modules\HR\Entities\Job;
 
 class RecruitmentOpportunityController extends JobController

@@ -1751,22 +1751,19 @@ $(".status").on("change", function () {
 
 $(".pending").on("change", function () {
 	$("#completeSpinner").removeClass("d-none");
-	
-		$.ajax({
-			url: "pending/" + this.dataset.id,
-			method: "GET",
-			success: function (res) {
-				location.reload(true);
-			},
-			error: function (err) {
-				alert("there is some problem");
-			},
-			complete: function (data) {
-				$("#completeSpinner").addClass("d-none");
-				
-			}
-		});
-	
+	$.ajax({
+		url: "pending/" + this.dataset.id,
+		method: "GET",
+		success: function (res) {
+			location.reload(true);
+		},
+		error: function (err) {
+			alert("there is some problem");
+		},
+		complete: function (data) {
+			$("#completeSpinner").addClass("d-none");
+		}
+	});
 });
 
 
