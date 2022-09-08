@@ -61,7 +61,13 @@
                         @endif
                     </td>
                     <td>
-                        <span class="{{ $employee->user ? ($employee->user->fte < 0.7 ? 'text-danger' : 'text-success') : 'text-secondary'}} font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
+                        @if ($employee->user == null)
+                            <span class="text-danger">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
+                        @elseif ( $employee->user->fte < 0.7 )
+                        <span class="text-danger">{{ $employee->user->fte }}</span>
+                        @endif
+                        
+                       
                     </td>
                 </tr>
             @endforeach

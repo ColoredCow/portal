@@ -79,7 +79,7 @@ class EmployeeController extends Controller
         ]);
 
         $jobHiring = null;
-        Mail::to('hr@coloredcow.com')->send(new SendHiringMail($jobHiring));
+        Mail::send(new SendHiringMail($jobHiring));
 
         return redirect()->back();
     }

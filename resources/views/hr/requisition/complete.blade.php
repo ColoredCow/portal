@@ -30,7 +30,7 @@
             </td>
             <td>
                 <input class="check-input pending"  id="checked" type="checkbox" data-id="{{ $requisition->id }}" checked>
-                <label>Unmark to Pending</label>
+                <label>mark as Pending</label>
             </td>
         </tr>
         @endforeach

@@ -28,10 +28,9 @@ class SendHiringMail extends Mailable
      */
     public function build()
     {
-        $mail = $this->subject('HR-New job requisition is available');
-        $mail->to('hr@coloredcow.com');
-
-        return
-        $mail->view('emails.send-hiring');
+        return $this->from(config('hr.default.email'), config('hr.default.name'))
+        ->subject('HR-New job requisition is available')
+        ->to('hr@coloredcow.com')
+        ->view('emails.send-hiring');
     }
 }
