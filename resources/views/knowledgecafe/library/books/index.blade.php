@@ -20,7 +20,7 @@
     <div class="row mt-3 mb-2 px-2">
         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center align-items-center">
             <input type="text" data-value="{{ request()->input('search') }}" 
-            class="form-control" id="search_input" placeholder="search all books"
+            class="form-control" id="search_input" placeholder="Search all books"
             v-model="searchKey">
             <button class="btn btn-info ml-2 py-1.5" @click="searchBooks()">Search</button>
         </div>
@@ -43,9 +43,10 @@
         data-books="{{ json_encode($books) }}" 
         data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.index') }}" 
-        data-category-index-route="{{ route('books.category.index') }}">
+        data-category-index-route="{{ route('books.category.index') }}"
+        data-logged-in-user="{{ json_encode(auth()->user()) }}">
         <div class="d-flex flex-wrap w-full">
-            <div v-for="(book, index) in books" class="card book_card  mr-1 mb-3 p-2 mr-lg-4">
+            <div v-for="(book, index) in books" class="col-lg-3 col-md-5 col-8 card book_card  mr-1 mb-3 p-2 mr-lg-4">
                 <div class="d-flex" >
                     <a  :href="updateRoute+ '/'+ book.id">
                         <img :src="book.thumbnail" class="cover_image" >
@@ -110,6 +111,11 @@
                     </span>
                 </div>
 
+                <div >
+                    <span>
+                        <h2 class="badge badge-warning px-2 py-1 mr-1">@{{ book.wishers.find(user => user.id == loggedInUser.id) == null ? '' : 'Wishlisted' }}</h2>
+                    </span>
+                </div>
 
             </div>
         </div>
