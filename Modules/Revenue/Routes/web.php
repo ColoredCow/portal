@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('revenue')->group(function() {
+Route::prefix('revenue')->group(function () {
     Route::get('/', 'RevenueController@index');
 });
