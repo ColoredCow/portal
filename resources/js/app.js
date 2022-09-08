@@ -638,6 +638,9 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  * Knowledge Cafe
  *
  */
+$(window).on("load", function(){
+	$("#preloader").removeClass("d-block").addClass(" d-none ");
+});
 
 if (document.getElementById("show_and_save_book")) {
 	const bookForm = new Vue({
