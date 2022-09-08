@@ -57,7 +57,7 @@ class MarkApplicationForFollowUp extends Command
             $previousRoundConductedOn = $applicationRound->getPreviousApplicationRound()->conducted_date;
 
             // check if the previous round has been conducted more than 3 days ago
-            if ($previousRoundConductedOn->diffInDays(now()) > 3 && $applicationRound->round->name != 'Trial Program') {
+            if ($previousRoundConductedOn->diffInDays(now()) > 3 && $applicationRound->round->name != 'Trial Program'  && $applicationRound->round->name != 'Team Interaction Round') {
                 $application->tag('need-follow-up');
                 $followUpCount = $applicationRound->followUps->count();
                 if ($followUpCount < config('hr.follow-up-attempts-threshold')) {
