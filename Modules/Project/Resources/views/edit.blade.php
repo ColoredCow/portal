@@ -200,7 +200,7 @@
                    
                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                          this.$forceUpdate()
-                }
+                },
             },
 
                    filters: {

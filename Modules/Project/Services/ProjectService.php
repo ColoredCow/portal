@@ -238,6 +238,8 @@ class ProjectService implements ProjectServiceContract
                     'team_member_id' => $teamMemberData['team_member_id'],
                     'designation' => $teamMemberData['designation'],
                     'daily_expected_effort' => $teamMemberData['daily_expected_effort'] ?? config('efforttracking.minimum_expected_hours'),
+                    'weekly_expected_effort' => $teamMemberData['weekly_expected_effort'],
+                    'monthly_expected_effort' => $teamMemberData['monthly_expected_effort'],
                     'started_on' => $teamMemberData['started_on'] ?? now(),
                     'ended_on' => $teamMemberData['ended_on'],
                     'billing_engagement' => $teamMemberData['billing_engagement'],
