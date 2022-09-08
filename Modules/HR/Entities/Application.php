@@ -609,7 +609,7 @@ class Application extends Model
     {
         $folder = '/resume/' . date('Y') . '/' . date('m');
         $fileName = $file->getClientOriginalName();
-        $file = Storage::disk('public')->put($folder, $file, $fileName, 'public');
+        $file = Storage::disk('public')->putFileAs($folder, $file, $fileName, 'public');
 
         return '/storage/' . $file;
     }

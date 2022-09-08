@@ -41,6 +41,6 @@ class SendOfferLetter extends Mailable
             ->with([
                 'body' => $this->body,
             ])
-            ->attach(storage_path('app/'. $this->application->offer_letter));
+            ->attach(storage_path('app/' . $this->application->offer_letter));
     }
 }
