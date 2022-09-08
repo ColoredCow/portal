@@ -3,7 +3,7 @@
         <form action="{{ route('project.update', $project) }}" method="POST" id="updateProjectFinancialDetails" enctype="multipart/form-data">
             @csrf
             <input type="hidden" value="project_financial_details" name="update_section">
-            <input type="hidden" name="currency" value="{{ optional($project->client->country)->currency }}">
+            <input type="hidden" name="currency" value="{{ $project->client->country->currency }}">
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-5">
@@ -12,7 +12,7 @@
                             <div class="input-group mr-5">
                                 <input value="{{ optional($project->billingDetail)->service_rates }}" name="service_rates" type="number" step="0.01" class="form-control" placeholder="amount">
                                 <div class="input-group-append">
-                                    <span class="input-group-text">{{ optional($project->client->country)->currency }}</span>
+                                    <span class="input-group-text">{{ $project->client->country->currency }}</span>
                                 </div>
                             </div>
 
