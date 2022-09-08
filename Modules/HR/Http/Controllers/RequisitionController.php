@@ -28,6 +28,23 @@ class RequisitionController extends Controller
         ]);
     }
 
+    public function showCompletedRequisition()
+    {
+        $requisitions = $this->service->showCompletedRequisition();
+
+        return view('hr.requisition.complete')->with([
+            'requisitions' => $requisitions,
+        ]);
+    }
+
+    public function storePending(JobRequisition $jobRequisition)
+    {
+        $jobRequisition->status = 'pending';
+        $jobRequisition->save();
+
+        return redirect()->back();
+    }
+
     public function store(JobRequisition $jobRequisition)
     {
         $jobRequisition->status = 'completed';

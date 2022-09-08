@@ -22,7 +22,7 @@ class RecruitmentOpportunityController extends JobController
     {
         $this->authorize('list', Job::class);
 
-        $jobs = Job::with('applications', 'applications.applicant')
+        $jobs = Job::with('applications', 'applications.applicant', 'jobRequisition')
             ->typeRecruitment()
             ->latest()
             ->paginate(config('constants.pagination_size'))
@@ -32,15 +32,5 @@ class RecruitmentOpportunityController extends JobController
             'jobs' => $jobs,
             'type' => 'recruitment',
         ]);
-    }
-
-    public function resourcesRequiredCount(HttpRequest $request, Job $opportunity)
-    {
-        $validated = $request->validate([
-            'resources_required' => 'required|integer'
-        ]);
-        $opportunity->update($validated);
-
-        return redirect(route('recruitment.opportunities'))->with('status', 'Resources updated successfully!');
     }
 }

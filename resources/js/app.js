@@ -1749,6 +1749,27 @@ $(".status").on("change", function () {
 	}
 });
 
+$(".pending").on("change", function () {
+	$("#completeSpinner").removeClass("d-none");
+	
+		$.ajax({
+			url: "pending/" + this.dataset.id,
+			method: "GET",
+			success: function (res) {
+				location.reload(true);
+			},
+			error: function (err) {
+				alert("there is some problem");
+			},
+			complete: function (data) {
+				$("#completeSpinner").addClass("d-none");
+				
+			}
+		});
+	
+});
+
+
 $("#job_start_date").on("change", function () {
 	let startDate = $("#job_start_date").val();
 	$("#job_end_date").attr("min", startDate);

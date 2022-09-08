@@ -10,4 +10,9 @@ class RequisitionService
     {
         return JobRequisition::with('hrJobDomain', 'job')->where('status', 'pending')->get();
     }
+
+    public function showCompletedRequisition()
+    {
+        return JobRequisition::with('hrJobDomain', 'job')->where('status', 'completed')->get();
+    }
 }
