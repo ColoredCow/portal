@@ -6,7 +6,7 @@ class ReportDataService
 {
     public function getData($type, $filters)
     {
-        switch($type) {
+        switch ($type) {
             case 'revenue-trend':
                 return $this->revenueTrend();
                 break;
