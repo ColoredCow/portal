@@ -44,6 +44,12 @@ class RolesTableSeeder extends Seeder
                 'label' => 'Finance Manager',
                 'guard_name' => 'web',
                 'description' => 'Someone who is in charge of the finance of the company',
+			],
+			[
+                'name' => 'Internship',
+                'label' => 'Intern',
+                'guard_name' => 'web',
+                'description' => 'Someone who is taking training',
             ]
         ];
 
