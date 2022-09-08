@@ -143,13 +143,9 @@
                                                             </span>
                                                             {{$teamMember->user->name}}
                                                         </th>
-                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}
-                                                        </td>
-                                                        <td>
-                                                            {{$teamMember->current_expected_effort}}
-                                                        </td>
-                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}
-                                                        </td>
+                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
+                                                        <td>{{$teamMember->current_expected_effort}}</td>
+                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
