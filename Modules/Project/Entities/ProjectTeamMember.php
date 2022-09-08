@@ -86,7 +86,7 @@ class ProjectTeamMember extends Model
         $startDate = $startDate ?? $this->project->client->month_start_date;
         $endDate = $endDate ?? $this->project->client->month_end_date;
 
-        return $this->getCurrentExpectedEffortAttribute($startDate = null, $endDate = null) ? round($this->getCurrentActualEffortAttribute($startDate = null, $endDate = null) / $this->getCurrentExpectedEffortAttribute($startDate = null, $endDate = null), 2) : 0;
+        return $this->getCurrentExpectedEffortAttribute($startDate = null, $endDate = null) ? round($this->getCurrentActualEffortAttribute($startDate = null) / $this->getCurrentExpectedEffortAttribute($startDate = null, $endDate = null), 2) : 0;
     }
 
     public function getFteAttribute($startDate = null, $endDate = null)
@@ -105,6 +105,6 @@ class ProjectTeamMember extends Model
             return 0;
         }
 
-        return round($this->getCurrentActualEffortAttribute($startDate = null, $endDate = null) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
+        return round($this->getCurrentActualEffortAttribute($startDate = null) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 }
