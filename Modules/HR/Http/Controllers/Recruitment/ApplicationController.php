@@ -160,6 +160,9 @@ abstract class ApplicationController extends Controller
         $application->load(['evaluations', 'evaluations.evaluationParameter', 'evaluations.evaluationOption', 'job', 'job.rounds', 'job.rounds.evaluationParameters', 'job.rounds.evaluationParameters.options', 'applicant', 'applicant.applications', 'applicationRounds', 'applicationRounds.evaluations', 'applicationRounds.round', 'applicationMeta', 'applicationRounds.followUps', 'tags']);
         $job = $application->job;
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
+        $approveMailTemplate = str_replace('|APPLICANT NAME|', $application->applicant->name , $approveMailTemplate);
+        $approveMailTemplate = str_replace('|JOB TITLE|', $application->job->title , $approveMailTemplate);
+
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
         $attr = [
             'applicant' => $application->applicant,
@@ -216,6 +219,7 @@ abstract class ApplicationController extends Controller
 
     public static function getOfferLetter(Application $application, Request $request)
     {
+        // dd( storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName));
         $pdf = FileHelper::generateOfferLetter($application, true);
 
         return response()->json([

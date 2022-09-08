@@ -54,12 +54,16 @@ class FileHelper
         $offer_letter_body = Setting::getOfferLetterTemplate()['body'];
         $job = $application->job;
         $applicant = $application->applicant;
-        $pdf = Pdf::loadView('hr.application.offer-letter', compact('applicant', 'job', 'offer_letter_body'));
+        $pdf = Pdf::loadView('hr.application.joining-letter', compact('applicant', 'job', 'offer_letter_body'));
         $fileName = self::getOfferLetterFileName($pdf, $applicant);
         if ($offerLetterPreview) {
-            return $pdf->stream('offer-letter.pdf');
+            return $pdf->stream($fileName);
         }
-        $fullPath = storage_path('app/' . config('constants.hr.offer-letters-dir') . '/' . $fileName);
+        $directory = 'app/' . config('constants.hr.offer-letters-dir');
+        if (! file_exists($directory)) {
+            mkdir(storage_path($directory), 0, true);
+        }
+        $fullPath = storage_path($directory . '/' . $fileName);
         $pdf->save($fullPath);
         $filePath = config('constants.hr.offer-letters-dir') . '/' . $fileName;
         $application->update([

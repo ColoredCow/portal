@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="d-inline-block">
-                    <h5 class="modal-title">Approve</h5>
+                    <h5 class="modal-title" id="approved_application">Approve</h5>
                     <h6 class="text-secondary">{{$application->applicant->name}} • {{$application->applicant->email}}</h6>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -30,13 +30,13 @@
                 </div>
                 <div class="form-row mt-4">
                     <div class="form-group col-md-12">
-                        <label for="body" class="field-required">Body</label>
-                        <textarea name="body" id="body" rows="5" class="form-control" required="required">{{$approveMailTemplate['body']}}</textarea>
+                        <label for="body" class="field-required" id="bigbang">Body</label>
+                        <textarea name="body" id="body" rows="10" class="richeditor form-control" required="required">{{$approveMailTemplate['body']}}</textarea>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                         <button type="button" class="btn btn-success px-4 round-submit richeditor" data-action="approve">Confirm</button>
+                         <button type="button" class="btn btn-success px-4 round-submit " data-action="approve">Confirm</button>
                     </div>
                 </div>
             </div>
