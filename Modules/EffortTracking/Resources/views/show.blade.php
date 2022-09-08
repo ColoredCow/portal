@@ -118,15 +118,15 @@
                             <tr>
                                 <th scope="row" id="user-name<?php echo $teamMember->user->id; ?>">{{ $teamMember->user->name }}</th>
                                 <td
-                                    class="{{ $teamMember->currentActualEffort >= $teamMember->expectedEffortTillToday ? 'text-success' : ($teamMember->currentActualEffort < $teamMember->expectedEffortTillToday ? 'text-danger' : '') }}">
+                                    class="{{ $teamMember->currentActualEffort >= $teamMember->getExpectedEffortTillTodayAttribute($startDate , $endDate) ? 'text-success' : ($teamMember->currentActualEffort < $teamMember->getExpectedEffortTillTodayAttribute($startDate , $endDate) ? 'text-danger' : '') }}">
                                     {{ $teamMember->currentActualEffort }}</td>
-                                <td>{{ $teamMember->currentExpectedEffort }}</td>
-                                <td>{{ $teamMember->expectedEffortTillToday }}</td>
-                                <td>{{ $teamMember->expectedEffortTillToday - $teamMember->currentActualEffort }}
+                                <td>{{ $teamMember->getCurrentExpectedEffortAttribute($startDate , $endDate) }}</td>
+                                <td>{{ $teamMember->getExpectedEffortTillTodayAttribute($startDate , $endDate) }}</td>
+                                <td>{{ $teamMember->getExpectedEffortTillTodayAttribute($startDate , $endDate) - $teamMember->currentActualEffort }}
                                 </td>
-                                <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">
-                                    {{ $teamMember->velocity }}</td>
-                                <td>{{ $teamMember->fte }}</td>
+                                <td class="{{ $teamMember->getVelocityAttribute($startDate , $endDate) >= 1 ? 'text-success' : 'text-danger' }}">
+                                    {{ $teamMember->getVelocityAttribute($startDate , $endDate) }}</td>
+                                <td>{{ $teamMember->getFteAttribute($startDate , $endDate) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -45,10 +45,9 @@ class ProjectTeamMember extends Model
         return $query->whereNull('ended_on');
     }
 
-    public function getCurrentActualEffortAttribute($startDate = null, $endDate = null)
+    public function getCurrentActualEffortAttribute($startDate = null)
     {
         $startDate = $startDate ?? $this->project->client->month_start_date;
-        $endDate = $endDate ?? $this->project->client->month_end_date;
 
         $currentActualEffort = $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('actual_effort');
 
@@ -68,9 +67,7 @@ class ProjectTeamMember extends Model
 
         $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
 
-        $currentExpectedEffort = $this->daily_expected_effort * $daysTillToday;
-
-        return $currentExpectedEffort;
+        return $this->daily_expected_effort * $daysTillToday;
     }
 
     public function getExpectedEffortTillTodayAttribute($startDate = null, $endDate = null)
@@ -81,9 +78,7 @@ class ProjectTeamMember extends Model
 
         $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
 
-        $expectedEffortTillToday = $this->daily_expected_effort * $daysTillToday;
-
-        return $expectedEffortTillToday;
+        return $this->daily_expected_effort * $daysTillToday;
     }
 
     public function getVelocityAttribute($startDate = null, $endDate = null)
@@ -91,9 +86,7 @@ class ProjectTeamMember extends Model
         $startDate = $startDate ?? $this->project->client->month_start_date;
         $endDate = $endDate ?? $this->project->client->month_end_date;
 
-        $velocity = $this->currentExpectedEffort ? round($this->currentActualEffort / $this->currentExpectedEffort, 2) : 0;
-
-        return $velocity;
+        return $this->getCurrentExpectedEffortAttribute($startDate = null, $endDate = null) ? round($this->getCurrentActualEffortAttribute($startDate = null, $endDate = null) / $this->getCurrentExpectedEffortAttribute($startDate = null, $endDate = null), 2) : 0;
     }
 
     public function getFteAttribute($startDate = null, $endDate = null)
@@ -112,8 +105,6 @@ class ProjectTeamMember extends Model
             return 0;
         }
 
-        $fte = round($this->currentActualEffort / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
-
-        return $fte;
+        return round($this->getCurrentActualEffortAttribute($startDate = null, $endDate = null) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 }
