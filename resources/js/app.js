@@ -1766,6 +1766,27 @@ $(".pending").on("change", function () {
 	});
 });
 
+$(document).ready(function(){	
+	$("#requisitionForm").on("submit",function(e){
+		e.preventDefault();
+		let form =$("#requisitionForm");
+
+	 	$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#requisitionModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(4000);
+			},
+			error: function(response){
+				alert('there is some problem')
+			},
+		});
+	});
+});
+
 
 $("#job_start_date").on("change", function () {
 	let startDate = $("#job_start_date").val();

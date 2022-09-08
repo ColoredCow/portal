@@ -6,6 +6,11 @@
             <div class="text-primary"><h1>Recommendations</h1></div>
             <div><button type="button" class="btn btn-success align-right" data-toggle="modal" data-target="#requisitionModal"><i class="fa fa-plus mr-1"></i>Add Requisition</button></div>
         </div>
+        <div class="d-none alert alert-success " id="successMessage" role="alert">
+            <strong>Updated!</strong> Submitted successfully.
+            <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
+            </button>
+        </div>
         <div class="modal fade" id="requisitionModal" tabindex="-1" role="dialog" aria-labelledby="requisition" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -16,7 +21,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('employees.store') }}" method="post">
+                        <form id="requisitionForm" action="{{ route('employees.store') }}" method="post">
                             @csrf
                             <div>
                                 <label for="domain_dropdown">select Domain</label>
@@ -51,23 +56,22 @@
             @foreach ($employees as $employee)
                 <tr>
                     <td>
-                        <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
+                    @if ($employee->user == null)
+                    @elseif ( $employee->user->fte < 0.7 )
+                     <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
+                    @endif
                     </td>
                     <td>
                         @if($employee->user == null)
-                            0
-                        @else
+                        @elseif ( $employee->user->fte < 0.7 )
                             {{count($employee->user->activeProjectTeamMembers)}}
                         @endif
                     </td>
-                    <td>
+                    <td>    
                         @if ($employee->user == null)
-                            <span class="text-danger">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
                         @elseif ( $employee->user->fte < 0.7 )
-                        <span class="text-danger">{{ $employee->user->fte }}</span>
-                        @endif
-                        
-                       
+                          <span class="text-danger">{{ $employee->user->fte  }}</span>
+                        @endif   
                     </td>
                 </tr>
             @endforeach
