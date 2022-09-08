@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<div class="text-center d-block bg-white position-fixed top-0 bottom-0 w-100p h-100p mx-10 ml-n4" style="z-index:1" id= "preloader">
-  <div class="spinner-border position-relative top-35 mt-20" id="spinner">
+<div class="text-center d-block bg-white position-fixed top-0 bottom-0 w-100p h-100p mx-10 ml-n4 z-index-100" id= "preloader">
+  <div class="spinner-border position-relative top-50p" id="spinner">
     <span class="sr-only">Loading...</span>
   </div>
 </div>

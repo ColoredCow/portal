@@ -639,8 +639,7 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  *
  */
 $(window).on("load", function(){
-	let element = document.getElementById("preloader");
-	$(element).removeClass("d-block").addClass(" d-none ");
+	$("#preloader").removeClass("d-block").addClass(" d-none ");
 });
 
 if (document.getElementById("show_and_save_book")) {
