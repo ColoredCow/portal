@@ -366,11 +366,11 @@ class ProjectService implements ProjectServiceContract
         foreach ($projects as $project) {
             foreach ($project->teamMembers as $teamMember) {
                 if ($teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
-                $projectDetails[] = [
-                    'projects' => $project,
-                    'name' => $teamMember->name,
-                    'email' =>$teamMember->email,
-                ];
+                    $projectDetails[] = [
+                        'projects' => $project,
+                        'name' => $teamMember->name,
+                        'email' =>$teamMember->email,
+                    ];
                 }
             }
         }
