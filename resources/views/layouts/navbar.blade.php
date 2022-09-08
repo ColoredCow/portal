@@ -72,10 +72,6 @@
                     <a class="dropdown-item" href="{{ route('expense.index') }}">Expenses</a>
                     <a class="dropdown-item" href="{{ route('reports.finance.dashboard') }}">Reports</a>
                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Invoices</a>
-                    {{-- <a class="dropdown-item" href="{{ route('invoice.tax-report') }}">Monthly Tax Report</a> --}}
-                    {{-- <a class="dropdown-item" href="{{ route('invoice.yearly-report') }}">Yearly Invoice Report</a> --}}
-                    {{-- <a class="dropdown-item" href="{{ route('invoice.details') }}">Monthly GST Report</a> --}}
-                    {{-- <a class="dropdown-item" href="{{ route('reports.finance.profit-and-loss') }}">P&L Report</a> --}}
                     <a class="dropdown-item" href="{{ route('ledger-accounts.index') }}">Ledger Accounts</a>
                     <a class="dropdown-item disabled" href="{{ route('salary.index') }}">Salaries</a>
                     <a class="dropdown-item disabled" href="{{ route('payment.index') }}">Payments</a>

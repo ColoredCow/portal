@@ -31,9 +31,11 @@ class ReportDataService
                 $monthlyData[$key] = ($monthlyData[$key] ?? 0) + $amount;
             }
         }
-
         unset($monthlyData['total']);
 
+        /**
+         * Will plan and see if we should move this to DB or config in the next PR.
+         */
         $labels = [
             '04-22' => 'April (2022)',
             '05-22' => 'May (2022)',
