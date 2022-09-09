@@ -34,7 +34,7 @@ class ProjectContractController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request3
+     * @param ProjectContractRequest $request
      * @return Renderable
      */
     public function store(ProjectContractRequest $request)
