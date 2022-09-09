@@ -10,7 +10,7 @@ class ProjectContractMeta extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "project_contract_meta";
+    protected $table = 'project_contract_meta';
 
     protected $casts = [
         'attributes' => 'array',
