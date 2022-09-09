@@ -20,6 +20,9 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary d-none" id="formSpinner"></div>
+                    </div>
                     <div class="modal-body">
                         <form id="requisitionForm" action="{{ route('employees.store') }}" method="post">
                             @csrf
@@ -54,26 +57,25 @@
                 <th>Current FTE</th>
             </tr>
             @foreach ($employees as $employee)
+                @if ($employee->user != null)    
                 <tr>
                     <td>
-                    @if ($employee->user == null)
-                    @elseif ( $employee->user->fte < 0.7 )
+                    @if ($employee->user->fte < 0.7)
                      <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
                     @endif
                     </td>
                     <td>
-                        @if($employee->user == null)
-                        @elseif ( $employee->user->fte < 0.7 )
+                        @if ($employee->user->fte < 0.7)
                             {{count($employee->user->activeProjectTeamMembers)}}
                         @endif
                     </td>
                     <td>    
-                        @if ($employee->user == null)
-                        @elseif ( $employee->user->fte < 0.7 )
+                        @if ($employee->user->fte < 0.7)
                           <span class="text-danger">{{ $employee->user->fte  }}</span>
                         @endif   
                     </td>
                 </tr>
+                @endif
             @endforeach
         </table> 
         </div>

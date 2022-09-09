@@ -1769,6 +1769,7 @@ $(".pending").on("change", function () {
 $(document).ready(function(){	
 	$("#requisitionForm").on("submit",function(e){
 		e.preventDefault();
+		$("#formSpinner").removeClass("d-none")
 		let form =$("#requisitionForm");
 
 	 	$.ajax({
@@ -1781,8 +1782,11 @@ $(document).ready(function(){
 				$("#successMessage").fadeToggle(4000);
 			},
 			error: function(response){
-				alert('there is some problem')
+				alert("there is some problem");
 			},
+			complete: function(response){
+				$("#formSpinner").addClass("d-none");
+			}
 		});
 	});
 });
