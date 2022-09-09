@@ -12,14 +12,16 @@ class ApplicationHandover extends Mailable
     use Queueable, SerializesModels;
 
     public $application;
+    public $userName;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Application $application)
+    public function __construct(Application $application, $userName)
     {
+        $this->userName = $userName;
         $this->application = $application;
     }
 
