@@ -47,7 +47,7 @@ class RolesTableSeeder extends Seeder
             ],
             [
                'name' => 'intern',
-               'label'=> 'intern',
+               'label'=> 'Intern',
                'guard_name' => 'web',
                'description' => 'Someone who is in training',
             ]
