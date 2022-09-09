@@ -3,7 +3,11 @@
 namespace Modules\Revenue\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
+use Modules\Revenue\Entities\Revenue;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Modules\Revenue\Http\Requests\RevenueRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller;
 
 class RevenueController extends Controller
@@ -14,7 +18,9 @@ class RevenueController extends Controller
      */
     public function index()
     {
-        return view('revenue::index');
+        $revenueData = DB::table('revenue')->get()->toArray();
+
+        return view('revenue::index')->with('revenues', $revenueData);
     }
 
     /**
@@ -33,7 +39,15 @@ class RevenueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $revenue = new Revenue();$revenue->name = $request['name'];
+        $revenue->category = $request['category'];
+        $revenue->currency = $request['currency'];
+        $revenue->amount = $request['amount'];
+        $revenue->recieved_at = $request['recieved_at'];
+        $revenue->notes = $request['notes'];
+        $revenue->save();
+
+        return redirect()->route('revenue.index');
     }
 
     /**
@@ -53,7 +67,10 @@ class RevenueController extends Controller
      */
     public function edit($id)
     {
-        return view('revenue::edit');
+        $revenue = Revenue::find($id);
+        $data = compact('revenue');
+
+        return view('revenue::edit')->with($data);
     }
 
     /**
@@ -62,9 +79,18 @@ class RevenueController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        //
+       $revenue = Revenue::find($id);
+       $revenue->name = $request['name'];
+       $revenue->category = $request['category'];
+       $revenue->currency = $request['currency'];
+       $revenue->amount = $request['amount'];
+       $revenue->recieved_at = $request['recieved_at'];
+       $revenue->notes = $request['notes'];
+       $revenue->save();
+
+       return redirect()->route('revenue.index');
     }
 
     /**
@@ -72,8 +98,18 @@ class RevenueController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        
+        $revenue = Revenue::find($id);
+        // dd($revenue);
+        $daysCount = carbon::today()->subdays(+10);
+        $revenueCreated = Revenue::where('id',$revenue)->pluck('created_at');
+        dd($revenueCreated);
+        if($daysCount > $revenueCreated) {
+            $delete = $revenue->delete();
+        }
+
+        return redirect()->route('revenue.index');
     }
 }
