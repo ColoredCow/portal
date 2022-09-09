@@ -6,11 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Client\Entities\Client;
-use Modules\ProjectContract\Rules\ProjectNameExist;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
-use Modules\Project\Services\ProjectService;
-use Modules\Project\Contracts\ProjectServiceContract;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\ProjectContract\Entities\ProjectContractMeta;
 
 class ProjectContractController extends Controller
@@ -23,7 +19,6 @@ class ProjectContractController extends Controller
     {
         $clients = Client::all();
         $projectContracts = ProjectContractMeta::all();
-        
 
         return view('projectcontract::index', compact('clients', 'projectContracts'));
     }
@@ -69,5 +64,4 @@ class ProjectContractController extends Controller
     {
         return view('projectcontract::edit');
     }
-
 }

@@ -41,6 +41,5 @@ class CreateProjectContractmetaTable extends Migration
                 'client_id',
             ]);
         });
-
     }
 }
