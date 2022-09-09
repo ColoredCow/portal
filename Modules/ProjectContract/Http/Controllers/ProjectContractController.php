@@ -4,6 +4,7 @@ namespace Modules\ProjectContract\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 use Modules\Client\Entities\Client;
 use Modules\ProjectContract\Http\Requests\ProjectContractRequest;
 use Modules\ProjectContract\Entities\ProjectContractMeta;
@@ -14,9 +15,17 @@ class ProjectContractController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::all();
+        $filters = $request->all();
+        $clients = null;
+
+        if (! empty($filters)) {
+            $clientName = $filters['name'];
+            $clients = Client::where('name', 'LIKE', "%$clientName%")->get();
+        } else {
+            $clients = Client::all();
+        }
         $projectContracts = ProjectContractMeta::all();
 
         return view('projectcontract::index', compact('clients', 'projectContracts'));
