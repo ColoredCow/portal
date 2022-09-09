@@ -1761,15 +1761,12 @@ $(document).on("focusin", function (e) {
 
 $(document).ready(function(){
 	$("#holdSendMailToApplicant").on("click", function(event) {
-		var $optionList = $("#optionList");
-		var $tabcontent = $("#optionContainer");
+		var $optionContainer = $("#optionContainer");
 		if ($(this).is(":checked")) {
-			$optionList.show();
-			$tabcontent.show();
+			$optionContainer.removeClass('d-none');
 		}
 		else{
-			$optionList.hide();
-			$tabcontent.hide();
+			$optionContainer.addClass('d-none');
 		}
 	});
 });
