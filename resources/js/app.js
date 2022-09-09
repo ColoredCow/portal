@@ -1760,10 +1760,10 @@ $(document).on("focusin", function (e) {
 });
 
 $(document).ready(function(){
-	$(".show").on("click", function(event) {
-		var $menu = $(".menu");
-		var $tabcontent = $(".tab-content");
-		if($(this).is(":checked")){
+	$("#holdSendMailToApplicant").on("click", function(event) {
+		var $menu = $("#menu");
+		var $tabcontent = $("#optionContainer");
+		if ($(this).is(":checked")) {
 			$menu.show();
 			$tabcontent.show();
 		}

@@ -17,18 +17,18 @@ aria-hidden="true">
             <div class="form-group col-md-12 d-flex align-items-center">
             <div class="py-0.67">
                 <div class="custom-control custom-switch">
-                <input type="checkbox" name="send_mail_to_applicant[hold]" class="custom-control-input show" id="holdSendMailToApplicant">
+                <input type="checkbox" name="send_mail_to_applicant[hold]" class="custom-control-input" id="holdSendMailToApplicant">
                 <label class="custom-control-label" for="holdSendMailToApplicant" >Send email</label>
                 </div>
             </div>
             </div>
             <div class="container">
                 <div>
-                    <ul class="nav nav-tabs menu">
+                    <ul class="nav nav-tabs" id="menu">
                         <li class="nav-item "><a data-toggle="tab" href="#option1" class="nav-link opt" data-key-subject='application_on_hold_subject' data-key-body='application_on_hold_body' >Option 1</a></li>
                         <li class="nav-item"><a data-toggle="tab" href="#option2" class="nav-link opt" data-key-subject='application_on_hold_subject_2' data-key-body='application_on_hold_body_2'>Option 2</a></li>
                     </ul>
-                    <div class="tab-content" id="tabs">
+                    <div class="tab-content" id="optionContainer">
                         <div class="tab-pane" id="option1">
                             <div class="card-body">
                                 <div class="form-row">
