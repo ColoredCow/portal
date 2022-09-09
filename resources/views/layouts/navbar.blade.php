@@ -1,7 +1,7 @@
 <ul class="navbar-nav mr-auto" style="font-size:16px;">
     @canany(['hr_recruitment_applications.view', 'hr_employees.view', 'hr_volunteers_applications.view',
         'hr_settings.view', 'hr_universities.view'])
-        <li class="nav-item dropdown pl-6">
+        <li class="nav-item dropdown">
             <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" v-pre>HR <span class="caret"></span>
             </a>
@@ -41,7 +41,7 @@
             auth()->user()->can('clients.view')) ||
             (Module::checkStatus('Project') &&
                 auth()->user()->can('projects.view')))
-            <li class="nav-item dropdown pl-6">
+            <li class="nav-item dropdown">
                 <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
                 </a>
@@ -63,7 +63,7 @@
         @endcan
 
         @can('finance_invoices.view')
-            <li class="nav-item dropdown pl-6">
+            <li class="nav-item dropdown">
                 <a id="navbarDropdown_finance" class="nav-link dropdown-toggle" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Finance <span class="caret"></span>
                 </a>
@@ -83,7 +83,7 @@
         @endcan
 
         @canany(['prospect.view', 'lead.view', 'sales_automation.view', 'sales_reports.view'])
-            <li class="nav-item dropdown pl-6">
+            <li class="nav-item dropdown">
                 <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Sales <span class="caret"></span>
                 </a>
@@ -105,7 +105,7 @@
         @endcan
 
         @if (auth()->user()->canAny(['weeklydoses.view', 'library_books.view']))
-            <li class="nav-item dropdown pl-6">
+            <li class="nav-item dropdown">
                 <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>KnowledgeCafe <span
                         class="caret"></span>
@@ -122,7 +122,7 @@
         @endif
 
         @can('infrastructure.billings.view')
-            <li class="nav-item dropdown pl-6">
+            <li class="nav-item dropdown">
                 <a id="navbarDropdown_sales" class="nav-link dropdown-toggle" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Infrastructure<span
                         class="caret"></span>
@@ -139,7 +139,7 @@
         @endcan
 
         @canany(['hr_settings.view', 'user_management.view', 'finance_invoices_settings.view', 'nda_settings.view'])
-            <li class="nav-item dropdown pl-6">
+            <li class="nav-item dropdown">
                 <a id="navbarDropdown_settings" class="nav-link dropdown-toggle" href="#" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Settings<span
                         class="caret"></span>
