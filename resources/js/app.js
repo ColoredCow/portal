@@ -1761,14 +1761,14 @@ $(document).on("focusin", function (e) {
 
 $(document).ready(function(){
 	$("#holdSendMailToApplicant").on("click", function(event) {
-		var $menu = $("#menu");
+		var $optionList = $("#optionList");
 		var $tabcontent = $("#optionContainer");
 		if ($(this).is(":checked")) {
-			$menu.show();
+			$optionList.show();
 			$tabcontent.show();
 		}
 		else{
-			$menu.hide();
+			$optionList.hide();
 			$tabcontent.hide();
 		}
 	});

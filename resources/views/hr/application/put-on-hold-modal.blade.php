@@ -24,7 +24,7 @@ aria-hidden="true">
             </div>
             <div class="container">
                 <div>
-                    <ul class="nav nav-tabs" id="menu">
+                    <ul class="nav nav-tabs" id="optionList">
                         <li class="nav-item "><a data-toggle="tab" href="#option1" class="nav-link opt" data-key-subject='application_on_hold_subject' data-key-body='application_on_hold_body' >Option 1</a></li>
                         <li class="nav-item"><a data-toggle="tab" href="#option2" class="nav-link opt" data-key-subject='application_on_hold_subject_2' data-key-body='application_on_hold_body_2'>Option 2</a></li>
                     </ul>
