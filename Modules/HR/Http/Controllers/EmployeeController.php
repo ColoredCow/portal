@@ -55,10 +55,10 @@ class EmployeeController extends Controller
     public function showFTEdata(request $request)
     {
         $domainId = $request->domain_id;
-        if(!empty($domainId)){
+        if (!empty($domainId)) {
         $employees = Employee::where('domain_id', $domainId)->get();
-        }else {
-            return redirect()->back();
+        }   else {
+            return redirect()->back()->with;
         }
         $DomainName = HrJobDomain::all();
         $jobName = Job::all();
