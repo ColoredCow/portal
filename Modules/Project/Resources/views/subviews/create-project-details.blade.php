@@ -6,6 +6,8 @@
                 <label for="name" class="field-required">Name</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter project name"
                     required="required" value="{{ old('name') }}">
+
+               
             </div>
             <div class="form-group offset-md-1 col-md-5">
                 <label for="client_id" class="field-required">Client</label>
@@ -59,7 +61,12 @@
                     placeholder="Enter Google Chat Webhook URL"
                     value="{{ old('google_chat_webhook_url') }}">
             </div>
-            <div class="form-group offset-md-1 col-md-2" v-if="projectType === 'fixed-budget'">
+            <div class="form-group offset-md-1 col-md-5">
+                <input type="checkbox" id="isamc" name="isamc">
+                <label for="isamc">AMC</label><br>
+
+            </div>
+            <div class="form-group offset col-md-2" v-if="projectType === 'fixed-budget'">
                 <label for="start_date">Start Date</label>
                 <input type="date" class="form-control" name="start_date" id="startDate"
                     value="{{ old('start_date') }}">
