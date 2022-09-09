@@ -2,9 +2,10 @@
 
 namespace Modules\HR\Database\Factories;
 
-use Faker\Factory as Faker;
+use App\Models\Category;
 use App\Models\Resource;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\HR\Entities\Job;
 
 class HrResourcesFactory extends Factory
 {
@@ -22,13 +23,10 @@ class HrResourcesFactory extends Factory
      */
     public function definition()
     {
-        $faker = Faker::create();
-
         return [
-            'resource_link'=> $this->faker->url,
-            'hr_resource_category_id'=> 2,
-            'job_id'=> 1,
-
+            'resource_link' => $this->faker->url,
+            'hr_resource_category_id' => Category::inRandomOrder()->first()->id,
+            'job_id'=> Job::inRandomOrder()->first()->id,
         ];
     }
 }
