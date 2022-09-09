@@ -23,7 +23,7 @@ class RevenueController extends Controller
      */
     public function create()
     {
-        return view('revenue::create');
+        return view('revenue::index');
     }
 
     /**
