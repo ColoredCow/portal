@@ -41,9 +41,9 @@ class ZeroEffortInProject extends Command
     public function handle()
     {
         $service = app(ProjectServiceContract::class);
-        $projectDetails = $service->getMailDetailsForKeyAccountManager();
-        foreach ($projectDetails as $projectDetail) {
-            Mail::queue(new ZeroEffortInProjectMail($projectDetail));
+        $keyAccountManagersDetails = $service->getMailDetailsForKeyAccountManager();
+        foreach ($keyAccountManagersDetails as $keyAccountManagerDetails) {
+            Mail::queue(new ZeroEffortInProjectMail($keyAccountManagerDetails));
         }
     }
 }

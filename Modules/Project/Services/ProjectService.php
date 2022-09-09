@@ -310,11 +310,11 @@ class ProjectService implements ProjectServiceContract
     {
         $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->get('project_id');
         $projects = Project::whereIn('id', $zeroEffortProject)->get();
-        $projectDetails = [];
+        $keyAccountManagersDetails = [];
         foreach ($projects as $project) {
             $user = $project->client->keyAccountManager;
             if ($user) {
-                $projectDetails[$user->id][] = [
+                $keyAccountManagersDetails[$user->id][] = [
                 'project' =>$project,
                 'email' =>$user->email,
                 'name' =>$user->name,
@@ -322,6 +322,6 @@ class ProjectService implements ProjectServiceContract
             }
         }
 
-        return $projectDetails;
+        return $keyAccountManagersDetails;
     }
 }
