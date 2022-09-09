@@ -64,7 +64,7 @@ class RevenueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return view('revenue::index');
     }
 
     /**
@@ -74,6 +74,6 @@ class RevenueController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return view('revenue::index');
     }
 }
