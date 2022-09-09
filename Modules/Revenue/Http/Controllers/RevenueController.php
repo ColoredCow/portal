@@ -33,7 +33,7 @@ class RevenueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('revenue::index');
     }
 
     /**

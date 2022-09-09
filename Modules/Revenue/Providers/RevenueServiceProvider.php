@@ -121,7 +121,6 @@ class RevenueServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
-
         
         return $paths;
     }
