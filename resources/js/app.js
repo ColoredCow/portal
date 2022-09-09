@@ -1763,10 +1763,10 @@ $(document).ready(function(){
 	$("#holdSendMailToApplicant").on("click", function(event) {
 		var $optionContainer = $("#optionContainer");
 		if ($(this).is(":checked")) {
-			$optionContainer.removeClass('d-none');
+			$optionContainer.removeClass("d-none");
 		}
 		else{
-			$optionContainer.addClass('d-none');
+			$optionContainer.addClass("d-none");
 		}
 	});
 });
