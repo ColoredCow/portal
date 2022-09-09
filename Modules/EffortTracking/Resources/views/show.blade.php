@@ -67,7 +67,6 @@
         @endif
         </div>
     </div>
-    @if($totalMonths === 0 || $totalMonths != 0)
     <div class="project-resource-effort-tracking-container container mt-4 pb-10">
         <div class="card">
             <div class="card-header">
@@ -141,7 +140,6 @@
             </div>
         </div>
     </div>
-    @endif
 </div>
 
 @endsection
