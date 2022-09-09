@@ -56,7 +56,7 @@ class EmployeeController extends Controller
     {
         $domainId = $request->domain_id;
         if (!empty($domainId)) {
-        $employees = Employee::where('domain_id', $domainId)->get();
+            $employees = Employee::where('domain_id', $domainId)->get();
         } else {
             return redirect()->back()->with;
         }
