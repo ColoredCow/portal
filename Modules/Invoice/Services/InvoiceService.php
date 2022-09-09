@@ -505,7 +505,7 @@ class InvoiceService implements InvoiceServiceContract
 
         $billingEndMonth = $client ? $client->getMonthEndDateAttribute(1)->format('M') : $project->client->getMonthEndDateAttribute(1)->format('M');
         if ($data['period_end_date'] ?? false) {
-            $billingStartMonth = Carbon::parse($data['period_end_date'])->format('M');
+            $billingEndMonth = Carbon::parse($data['period_end_date'])->format('M');
         }
 
         $termText = $billingStartMonth . ' - ' . $billingEndMonth;
@@ -685,21 +685,21 @@ class InvoiceService implements InvoiceServiceContract
         $html = view(('invoice::render.' . $template), $data)->render();
         $data['receivable_date'] = $dueOn;
         $data['project_id'] = null;
-        $tax = 0;
+        $gst = null;
 
         if ($project) {
             if (optional($project->client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $project->getResourceBillableAmount() + $project->getTotalLedgerAmount();
             } else {
                 $amount = $project->getBillableAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
-                $tax = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
+                $gst = $project->getTaxAmountForTerm($monthsToSubtract, $periodStartDate, $periodEndDate);
             }
         } else {
             if (optional($client->billingDetails)->service_rate_term == config('client.service-rate-terms.per_resource.slug')) {
                 $amount = $client->getResourceBasedTotalAmount() + $client->getClientProjectsTotalLedgerAmount();
             } else {
                 $amount = $client->getBillableAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
-                $tax = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
+                $gst = $client->getTaxAmountForTerm($monthsToSubtract, $client->clientLevelBillingProjects, $periodStartDate, $periodEndDate);
             }
         }
 
@@ -713,7 +713,7 @@ class InvoiceService implements InvoiceServiceContract
             'receivable_date' => $dueOn,
             'currency' => $client ? $client->country->currency : $project->client->country->currency,
             'amount' => $amount,
-            'gst' => $tax
+            'gst' => $gst
         ]);
 
         $filePath = $this->getInvoiceFilePath($invoice) . '/' . $invoiceNumber . '.pdf';

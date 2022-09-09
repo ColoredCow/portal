@@ -19,6 +19,10 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 $white: #fff;
+$Glidden-willow-springs: #E7E6E0;
+
+
+
 
 $theme-box-shadow: rgba(44, 42, 44, 0.12);
 $theme-box-shadow-dark: rgba(44, 42, 44, 0.26);
@@ -26,7 +30,7 @@ $theme-white-mild: rgba(255,255,255,0.72);
 $theme-box-shadow-light-dark : rgba(44,42,44,0.24);
 
 $theme-gray-ultra-lightest: #F8F8F8;
-$theme-gray-lightest: #F1F1F1;
+$theme-gray-lightest: hsl(0, 0%, 95%);
 $theme-gray-lighter: #E6E6E6;
 $theme-gray-light: #D6D6D6;
 $theme-gray: #909090;
@@ -122,6 +126,7 @@ $theme-colors: (
     'theme-white-mild': $theme-white-mild,
     'theme-blue-chalk': $theme-blue-chalk,
     'theme-fog': $theme-fog,
+    'Glidden-willow-springs' : $Glidden-willow-springs
 );
 $sizes: (
     'auto': auto,
@@ -326,6 +331,7 @@ $spacers: (
     21\.67: ($spacer * 65/6), //130px
     25: ($spacer * 12.5), //150px
     35: ($spacer * 35/2), //210px
+    '50p': 50%,
 );
 
 $rounded: (

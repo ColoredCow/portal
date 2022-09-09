@@ -79,7 +79,7 @@
                 <h4 class="font-weight-bold"> {{ $report->name }} </h4>
             </div>
             <a data-toggle="collapse" data-target="#report_id_{{ $report->id }}" aria-expanded="true" aria-controls="report-bar" href="{{ route('report.show', ['id' => $report->id]) }}" class="btn btn-primary ml-auto"> View </a>
-            <a href="{{ route('report.delete', ['id' => $report->id]) }}" target="_self" class="btn btn-danger ml-auto"> Delete </a>
+            <a href="{{ route('report.delete', ['id' => $report->id]) }}" target="_self" class="btn btn-danger ml-1"> Delete </a>
         </div>
         <div id="report_id_{{$report->id}}" class="collapse">
             <div class="card-body">

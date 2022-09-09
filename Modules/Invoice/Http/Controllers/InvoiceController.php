@@ -171,7 +171,7 @@ class InvoiceController extends Controller
 
     public function taxReportExport(Request $request)
     {
-        $this->authorize('tax_report_export', Invoice::class);
+        $this->authorize('taxReportExport', Invoice::class);
         $filters = $request->all();
 
         return $this->service->taxReportExport($filters, $request);
