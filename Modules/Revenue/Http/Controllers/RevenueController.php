@@ -43,7 +43,7 @@ class RevenueController extends Controller
      */
     public function show($id)
     {
-        return view('revenue::show');
+        return view('revenue::index');
     }
 
     /**
@@ -53,7 +53,7 @@ class RevenueController extends Controller
      */
     public function edit($id)
     {
-        return view('revenue::edit');
+        return view('revenue::index');
     }
 
     /**
