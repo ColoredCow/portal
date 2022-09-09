@@ -1769,7 +1769,7 @@ $(".pending").on("change", function () {
 $(document).ready(function(){	
 	$("#requisitionForm").on("submit",function(e){
 		e.preventDefault();
-		$("#formSpinner").removeClass("d-none")
+		$("#formSpinner").removeClass("d-none");
 		let form =$("#requisitionForm");
 
 	 	$.ajax({
