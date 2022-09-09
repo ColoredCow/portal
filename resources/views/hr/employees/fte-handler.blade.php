@@ -7,7 +7,7 @@
             <div><button type="button" class="btn btn-success align-right" data-toggle="modal" data-target="#requisitionModal"><i class="fa fa-plus mr-1"></i>Add Requisition</button></div>
         </div>
         <div class="d-none alert alert-success " id="successMessage" role="alert">
-            <strong>Updated!</strong> Submitted successfully.
+            <strong>Requisition!</strong> Submitted successfully.
             <button type="button" class="close" id="closeSuccessMessage" aria-label="Close">
             </button>
         </div>
@@ -15,7 +15,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="requisition">Job Requisition</h5>
+                        <h5 class="modal-title" id="requisition">Add Job Requisition</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -27,7 +27,7 @@
                         <form id="requisitionForm" action="{{ route('employees.store') }}" method="post">
                             @csrf
                             <div>
-                                <label for="domain_dropdown">select Domain</label>
+                                <label for="domain_dropdown">Select Domain</label>
                                 <select class="form-control" name="domain" id="domain "> 
                                     @foreach ($DomainName as $DomainName)
                                         <option value="{{ $DomainName->id }}">{{ $DomainName->domain }}</option>
@@ -35,7 +35,7 @@
                                 </select><br>
                             </div>
                             <div>
-                                <label for="job_apportunity">select Job</label>
+                                <label for="job_apportunity">Select Job</label>
                                 <select class="form-control" name="job" id="job"> 
                                     @foreach ($jobName as $jobName)
                                         <option value="{{ $jobName->id }}">{{ $jobName->title }}</option>
