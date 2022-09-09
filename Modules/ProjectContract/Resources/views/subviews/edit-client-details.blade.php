@@ -20,9 +20,8 @@
                     placeholder="Enter Website url" value="{{ old('website_url') }}">
             </div>
             <div class="form-group offset-md-1 col-md-5">
-                <label for="attributes">Attributes</label>
-                <input type="textarea" class="form-control" name="attributes[ ]" id="attributes"
-                    placeholder="Enter Attribute with comma separated" value="{{ old('attribute') }}">
+                <label for="logo_img" class="field-required">Logo Image</label>
+                <input type="file" name="logo_img" id="logo_img">
             </div>
         </div>
         <div class="form-row mt-4">
@@ -40,10 +39,6 @@
                 <label for="contract_expiry_date">Contract Expiry Date</label>
                 <input type="date" class="form-control" name="contract_expiry_date" id="contract_expiry_date"
                      value="{{ old('contract_expiry_date') }}">
-            </div>
-            <div class="form-group offset-md-1 col-md-5">
-                <label for="logo_img" class="field-required">Logo Image</label>
-                <input type="file" name="logo_img" id="logo_img">
             </div>
         </div>
     </div>

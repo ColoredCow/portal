@@ -15,7 +15,7 @@ class CreateProjectContractmetaTable extends Migration
     {
         Schema::create('project_contract_meta', function (Blueprint $table) {
             $table->id();
-            $table->string('client_name');
+            $table->unsignedBigInteger('client_id');
             $table->string('website_url');
             $table->string('logo_img');
             $table->string('authority_name')->nullable();
@@ -24,6 +24,7 @@ class CreateProjectContractmetaTable extends Migration
             $table->string('contract_expiry_date');
             $table->json('attributes')->nullable();
             $table->timestamps();
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->softDeletes();
         });
     }
@@ -35,6 +36,11 @@ class CreateProjectContractmetaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_contract_meta');
+        Schema::dropIfExists('project_contract_meta', function (Blueprint $table) {
+            $table->dropForeign([
+                'client_id',
+            ]);
+        });
+
     }
 }

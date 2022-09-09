@@ -53,6 +53,7 @@ class CreateProjectsTable extends Migration
             ]);
         });
 
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('projects
+        ');
     }
 }

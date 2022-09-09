@@ -12,5 +12,9 @@ class ProjectContractMeta extends Model
 
     protected $table = "project_contract_meta";
 
+    protected $casts = [
+        'attributes' => 'array',
+    ];
+
     protected $guarded = [];
 }

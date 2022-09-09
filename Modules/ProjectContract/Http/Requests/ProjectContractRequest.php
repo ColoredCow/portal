@@ -3,8 +3,6 @@
 namespace Modules\ProjectContract\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\TeamMemberDesignationRule;
-use App\Rules\TeamMemberRule;
 
 class ProjectContractRequest extends FormRequest
 {
@@ -15,15 +13,16 @@ class ProjectContractRequest extends FormRequest
      */
     public function rules()
     {
-       return [
-            'client_name' => 'string|required',
-            'website_url' => 'active_url|max:191|required',
-            'logo_img'  => 'required|mimes:png,jpg,jpeg',
-            'authority_name' => 'nullable|string',
-            'contract_date_for_signing' => 'nullable|date',
-            'contract_date_for_effective' => 'nullable|date',
-            'contract_expiry_date' => 'nullable|date',
-       ];
+        return [
+             'client_name' => 'string|required|exists:clients,name',
+             'website_url' => 'active_url|max:191|required',
+             'logo_img'  => 'required|mimes:png,jpg,jpeg',
+             'authority_name' => 'nullable|string',
+             'contract_date_for_signing' => 'nullable|date',
+             'contract_date_for_effective' => 'nullable|date',
+             'contract_expiry_date' => 'nullable|date',
+             'attributes' => 'array|required',
+        ];
     }
 
     /**
@@ -36,4 +35,3 @@ class ProjectContractRequest extends FormRequest
         return true;
     }
 }
-

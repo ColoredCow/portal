@@ -22,8 +22,10 @@ class ProjectContractController extends Controller
     public function index()
     {
         $clients = Client::all();
+        $projectContracts = ProjectContractMeta::all();
+        
 
-        return view('projectcontract::index', compact('clients'));
+        return view('projectcontract::index', compact('clients', 'projectContracts'));
     }
 
     /**
@@ -32,10 +34,7 @@ class ProjectContractController extends Controller
      */
     public function create()
     {
-        $service = app(ProjectService::class);
-        $clients = $service->getClients();
-
-        return view('projectcontract::create')->with('clients', $clients);
+        return view('projectcontract::create');
     }
 
     /**
@@ -46,10 +45,29 @@ class ProjectContractController extends Controller
     public function store(ProjectContractRequest $request)
     {
         $validated = $request->validated();
-        ProjectContractmeta::create($validated);
+        $clientId = Client::select('id')->where('name', $validated['client_name'])->first()->id;
+        ProjectContractmeta::create([
+            'client_id' => $clientId,
+            'website_url' => $validated['website_url'],
+            'logo_img' => $validated['logo_img'],
+            'authority_name' => $validated['authority_name'],
+            'contract_date_for_signing' => $validated['contract_date_for_signing'],
+            'contract_date_for_effective' => $validated['contract_date_for_effective'],
+            'contract_expiry_date' => $validated['contract_expiry_date'],
+            'attributes' => json_encode($validated['attributes']),
+        ]);
 
         $clients = Client::all();
 
         return view('projectcontract::index', compact('clients'))->with('success', 'Project Contract created successfully');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Client $client, ProjectContractMeta $projectcontract)
+    {
+        return view('projectcontract::edit');
+    }
+
 }
