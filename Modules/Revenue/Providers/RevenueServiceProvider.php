@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Factory;
 class RevenueServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
+     * @var string
      */
     protected $moduleName = 'Revenue';
 
     /**
-     * @var string $moduleNameLower
+     * @var string
      */
     protected $moduleNameLower = 'revenue';
 
@@ -121,6 +121,7 @@ class RevenueServiceProvider extends ServiceProvider
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
+        
         return $paths;
     }
 }
