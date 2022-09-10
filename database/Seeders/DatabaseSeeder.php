@@ -13,14 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (! app()->environment('production')) {
+        if (!app()->environment('production')) {
             $this->call(UsersTableSeeder::class);
-
         }
         $this->call(RolesTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
         $this->call(BooksPermissionsSeeder::class);
-        $this->call(BookCategoriesTableSeeder::class);
-        
+        $this->call(BookCategoriesTableSeeder::class);  
     }
 }
