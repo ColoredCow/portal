@@ -57,7 +57,7 @@
         @endif
 
         @can('task.view')
-            <li class="nav-item pl-6">
+            <li class="nav-item">
                 <a class="nav-item nav-link" href="/task">Task</a>
             </li>
         @endcan
