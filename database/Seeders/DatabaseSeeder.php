@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (! app()->environment('produx')) {
+        if (! app()->environment('production')) {
             $this->call(UsersTableSeeder::class);
         }
 
