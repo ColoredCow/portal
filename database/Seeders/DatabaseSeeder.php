@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
         // roles
         $this->call(RolesTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
-       // books
+        // books
         $this->call(BooksPermissionsSeeder::class);
         $this->call(BookCategoriesTableSeeder::class);
         if(!app()->environment('production'))
         {
-           $this->call(UsersTableSeeder::class);
+            $this->call(UsersTableSeeder::class);
         }
     }
 }
