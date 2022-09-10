@@ -1,37 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
-
-@belwalshubham
-ColoredCow
-/
-portal
-Public
-Code
-Issues
-496
-Pull requests
-49
-Discussions
-Actions
-Projects
-8
-Wiki
-Security
-Insights
-portal/Modules/HR/Resources/views/application/render-application-row.blade.php
-@P4NK4J
-P4NK4J Merge pull request #2275 from ColoredCow/fix/1990/Confirmation_on_tak…
-…
-Latest commit ce8f63b yesterday
-History
-11 contributors
-@aquibmoin786@ASHISH-KOHLI@NirmalNegi07@P4NK4J@Bahugunajii@srivastava-jyoti@LavishRawat@rathorevaibhav@Shivam-Samant@Ayush8923@gautam071
-158 lines (153 sloc) 8.49 KB
-
 <tr>
     <td class="w-25p">
         <div class="d-flex align-items-center">
@@ -51,7 +17,7 @@ History
                 @php
                     $tooltipHtml = '';
                     $index = 0;
-                    foreach (json_decode($formData->value) as $field => $value) {
+                    foreach (json_decode($formData->value) ?? [] as $field => $value) {
                         if (!$value) {
                             continue;
                         }
