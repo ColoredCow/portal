@@ -28,9 +28,9 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel w-lg-5">
             <div class="container-fluid">
-                <a class="navbar-brand col-xl-2" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'ColoredCow Portal') }}
                 </a>
                 @auth
