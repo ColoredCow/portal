@@ -1,3 +1,37 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+
+@belwalshubham
+ColoredCow
+/
+portal
+Public
+Code
+Issues
+496
+Pull requests
+49
+Discussions
+Actions
+Projects
+8
+Wiki
+Security
+Insights
+portal/Modules/HR/Resources/views/application/render-application-row.blade.php
+@P4NK4J
+P4NK4J Merge pull request #2275 from ColoredCow/fix/1990/Confirmation_on_tak…
+…
+Latest commit ce8f63b yesterday
+History
+11 contributors
+@aquibmoin786@ASHISH-KOHLI@NirmalNegi07@P4NK4J@Bahugunajii@srivastava-jyoti@LavishRawat@rathorevaibhav@Shivam-Samant@Ayush8923@gautam071
+158 lines (153 sloc) 8.49 KB
+
 <tr>
     <td class="w-25p">
         <div class="d-flex align-items-center">
@@ -17,7 +51,7 @@
                 @php
                     $tooltipHtml = '';
                     $index = 0;
-                    foreach (json_decode($formData->value) ?? [] as $field => $value) {
+                    foreach (json_decode($formData->value) as $field => $value) {
                         if (!$value) {
                             continue;
                         }
@@ -35,12 +69,45 @@
             @endif
         </div>
         @include('hr.application.assignlabels-modal')
+        @php
+            $assignee = $application->latestApplicationRound->scheduledPerson;
+        @endphp
         <div class="mb-2 fz-xl-14 text-secondary d-flex flex-column">
             <div class="d-flex text-white my-2">
                 <a href="{{ route('hr.applicant.details.show', ['applicationID' => $application->id]) }}"
                     class="btn-sm btn-primary mr-1 text-decoration-none" target="_self">View</a>
-                <a href="{{ route('applications.job.edit', $application->id) }}"
-                    class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+                @if ($application->latestApplicationRound->scheduledPerson->id == auth()->user()->id ||
+                    $application->status != 'new')
+                    <a href="{{ route('applications.job.edit', $application->id) }}"
+                        class="btn-sm btn-primary text-decoration-none" target="_self">Evaluate</a>
+                @else
+                    <a data-target="#evaluation{{ $application->id }}" role="button"
+                        class="btn-sm btn-primary text-decoration-none" data-toggle="modal">Evaluate</a>
+                    <div class="modal fade" id="evaluation{{ $application->id }}" tabindex="-1" role="dialog"
+                        aria-labelledby="confirmation" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-secondary" id="confirmation">Request to handover</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-secondary">This application is already assigned to
+                                        {{ $assignee->name }}, to evaluate this, a confirmation would be needed from
+                                        their end. Please click the request button to request the handover.</p>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <a href="{{ route('application.handover', $application) }}"
+                                        class="btn btn-primary">Request</a></button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
             <span class="mr-1 text-truncate">
                 <i class="fa fa-envelope-o mr-1"></i>{{ $application->applicant->email }}</span>
@@ -98,10 +165,6 @@
         </div>
     </td>
     <td class="">
-
-        @php
-            $assignee = $application->latestApplicationRound->scheduledPerson;
-        @endphp
         <img src="{{ $assignee->avatar }}" alt="{{ $assignee->name }}" class="w-25 h-25 rounded-circle"
             data-toggle="tooltip" data-placement="top" title="{{ $assignee->name }}">
     </td>
@@ -119,7 +182,7 @@
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                     <span>Awaiting confirmation</span>
                     @php
-                        $awaitingForDays = $application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today());
+                        $awaitingForDays = $application->latestApplicationRound->getPreviousApplicationRound() ? $application->latestApplicationRound->getPreviousApplicationRound()->conducted_date->diffInDays(today()) : null;
                     @endphp
                     @if ($awaitingForDays)
                         <span>• {{ $awaitingForDays == 1 ? 'day' : 'days' }} {{ $awaitingForDays }}</span>
