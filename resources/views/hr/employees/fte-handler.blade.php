@@ -57,24 +57,18 @@
                 <th>Current FTE</th>
             </tr>
             @foreach ($employees as $employee)
-                @if ($employee->user != null)    
-                <tr>
-                    <td>
-                    @if ($employee->user->fte < 0.7)
-                     <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
-                    @endif
-                    </td>
-                    <td>
-                        @if ($employee->user->fte < 0.7)
+                @if ($employee->user != null && $employee->user->fte < 0.7) 
+                    <tr>
+                        <td>
+                            <a href={{ route('employees.show', $employee->id) }}>{{ $employee->name }}</a>
+                        </td>
+                        <td>
                             {{count($employee->user->activeProjectTeamMembers)}}
-                        @endif
-                    </td>
-                    <td>    
-                        @if ($employee->user->fte < 0.7)
-                          <span class="text-danger">{{ $employee->user->fte  }}</span>
-                        @endif   
-                    </td>
-                </tr>
+                        </td>
+                        <td>    
+                            <span class="text-danger">{{ $employee->user->fte  }}</span>
+                        </td>
+                    </tr>
                 @endif
             @endforeach
         </table> 
