@@ -176,7 +176,4 @@ return [
         'primary' => env('HR_FOLLOWUP_EMAIL_PRIMARY', 'deepak.sharma@coloredcow.in'),
         'secondary' => env('HR_FOLLOWUP_EMAIL_SECONDARY', 'pk@coloredcow.in'),
     ],
-    'url' => [
-        'requisition_url' => env('REQUISITION_URL'),
-    ],
 ];
