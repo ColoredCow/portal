@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BookCategoriesTableSeeder::class);
         if(!app()->environment('production'))
         {
-        $this->call(UsersTableSeeder::class);
+           $this->call(UsersTableSeeder::class);
         }
     }
 }
