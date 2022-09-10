@@ -28,8 +28,8 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel w-lg-5">
-            <div class="container-fluid">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+            <div class="container-fluid col-md-10">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'ColoredCow Portal') }}
                 </a>
