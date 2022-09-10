@@ -116,7 +116,6 @@ Route::middleware('auth')->group(function () {
             ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
         Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
-        Route::post('store', 'EmployeeController@store')->name('employees.store');
 
         Route::resource('requisition', 'RequisitionController')
         ->only(['index', 'show'])
@@ -124,9 +123,10 @@ Route::middleware('auth')->group(function () {
             'index' => 'requisition',
             'show' => 'requisition.show',
         ]);
-        Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@store');
+        Route::post('store', 'RequisitionController@store')->name('requisition.store');
+        Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@storecompleted');
         Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
-        Route::get('/rquisition-complete', 'RequisitionController@showCompletedRequisition')->name('employees.complete');
+        Route::get('/complete', 'RequisitionController@showCompletedRequisition')->name('requisition.complete');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

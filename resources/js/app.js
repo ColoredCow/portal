@@ -1746,7 +1746,6 @@ $(".status").on("change", function () {
 			},
 			complete: function (data) {
 				$("#spinner").addClass("d-none");
-				
 			}
 		});
 	}

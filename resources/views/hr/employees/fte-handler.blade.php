@@ -24,18 +24,18 @@
                         <div class="spinner-border text-primary d-none" id="formSpinner"></div>
                     </div>
                     <div class="modal-body">
-                        <form id="requisitionForm" action="{{ route('employees.store') }}" method="post">
+                        <form id="requisitionForm" action="{{ route('requisition.store') }}" method="post">
                             @csrf
                             <div>
-                                <label for="domain_dropdown">Select Domain</label>
+                                <label for="domainDropdown">Select Domain</label>
                                 <select class="form-control" name="domain" id="domain "> 
-                                    @foreach ($DomainName as $DomainName)
-                                        <option value="{{ $DomainName->id }}">{{ $DomainName->domain }}</option>
+                                    @foreach ($domainName as $domainName)
+                                        <option value="{{ $domainName->id }}">{{ $domainName->domain }}</option>
                                     @endforeach 
                                 </select><br>
                             </div>
                             <div>
-                                <label for="job_apportunity">Select Job</label>
+                                <label for="jobAapportunity">Select Job</label>
                                 <select class="form-control" name="job" id="job"> 
                                     @foreach ($jobName as $jobName)
                                         <option value="{{ $jobName->id }}">{{ $jobName->title }}</option>
@@ -43,7 +43,7 @@
                                 </select><br>
                             </div><br>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" data-action="SendHiringMail">Submit</button>
+                            <button type="submit" class="btn btn-primary" data-action="sendHiringMail">Submit</button>
                         </form>
                     </div>
                 </div>

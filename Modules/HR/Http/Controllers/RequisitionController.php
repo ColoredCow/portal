@@ -4,8 +4,11 @@ namespace Modules\HR\Http\Controllers;
 
 use Modules\HR\Services\RequisitionService;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Modules\HR\Entities\JobRequisition;
+use Illuminate\Support\Facades\Mail;
+use Modules\HR\Emails\SendHiringMail;
 
 class RequisitionController extends Controller
 {
@@ -28,6 +31,24 @@ class RequisitionController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        $jobrequisition = $request->validate([
+            'domain' => 'required|integer',
+            'job' => 'required|integer',
+        ]);
+
+        JobRequisition::create([
+            'domain_id' => $jobrequisition['domain'],
+            'job_id' => $jobrequisition['job']
+        ]);
+
+        $jobHiring = null;
+        Mail::send(new sendHiringMail($jobHiring));
+
+        return redirect()->back();
+    }
+
     public function showCompletedRequisition()
     {
         $requisitions = $this->service->showCompletedRequisition();
@@ -45,7 +66,7 @@ class RequisitionController extends Controller
         return redirect()->back();
     }
 
-    public function store(JobRequisition $jobRequisition)
+    public function storecompleted(JobRequisition $jobRequisition)
     {
         $jobRequisition->status = 'completed';
         $jobRequisition->save();
