@@ -357,4 +357,24 @@ class ProjectService implements ProjectServiceContract
 
         return $projectsData;
     }
+
+    public function getMailForFixedBudgetProjectKeyAccountManagers()
+    {
+        $currentdate = Carbon::today()->subdays(-5);
+        $projects = Project::wheretype('fixed-budget')->where('end_date', $currentdate)->get();
+        $projectsData = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectsData[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
+                    'end date' => $project->end_date,
+                    'name' => $user->name,
+                ];
+            }
+        }
+
+        return $projectsData;
+    }
 }
