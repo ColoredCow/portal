@@ -98,6 +98,8 @@ class ProjectService implements ProjectServiceContract
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
+            'isamc' => $data['is_amc'],
+            
         ]);
 
         if ($data['billing_level'] ?? null) {
