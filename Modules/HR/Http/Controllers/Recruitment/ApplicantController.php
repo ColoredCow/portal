@@ -101,4 +101,9 @@ class ApplicantController extends Controller
 
         return view('hr.application.verification')->with(['application' => $application, 'email' => decrypt($applicantEmail)]);
     }
+
+    public function viewForm()
+    {
+        return view('hr.application.applicant-details');
+    }
 }
