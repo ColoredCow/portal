@@ -57,7 +57,7 @@ abstract class ApplicationController extends Controller
         // We need this so that we can redirect user to the older page number.
         // we can improve this logic in the future.
 
-        if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
+        if (! session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
             session()->put(['should_skip_page' => true]);
 
             return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
@@ -291,7 +291,7 @@ abstract class ApplicationController extends Controller
 
     public function viewOfferLetter(Application $application)
     {
-        if (!Storage::exists($application->offer_letter)) {
+        if (! Storage::exists($application->offer_letter)) {
             return false;
         }
 
