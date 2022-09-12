@@ -28,9 +28,9 @@
             <button class="btn btn-info ml-2 py-1.5" @click="searchBooks()">Search</button>
         </div>
         <div>
-            <span><b>Sort Book By Category</b></span>
-            <div class="col-lg-10 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 pl-0 d-flex justify-content-center">
+            <div class="col-lg-12 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 p-2 d-flex justify-content-center ">
                 <select class="form-control bg-white form-control-st col-15" id="category_input" data-value="{{request()->input('category_name')}}" v-model="sortKeys">
+                    <option value=""selected>Sort Book By Category</option>
                 @foreach ($categories as $category)
                     <option {{request()->input('category_name') == $category->name ? "selected" : "" }}>
                         {{ $category->name }}
