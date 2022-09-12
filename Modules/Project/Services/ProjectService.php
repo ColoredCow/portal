@@ -13,7 +13,6 @@ use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
-use Illuminate\Database\Eloquent\Collection;
 use Modules\Project\Entities\ProjectBillingDetail;
 
 class ProjectService implements ProjectServiceContract
@@ -310,36 +309,23 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    public function getMailDetailsForProjectManagers()
+    public function getMailDetailsForKeyAccountManagers()
     {
-        $users = User::get();
-        $dataForMail = [];
-        foreach ($users as $user) {
-            $userProjects = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
-            if (empty($userProjects)) {
-                continue;
-            }
-            $projects = Project::with(['teamMembers'])->whereIn('id', $userProjects)->get();
-            $managerProjects = [];
-            foreach ($projects as $project) {
-                foreach ($project->teamMembers as $teamMember) {
-                    if ($teamMember->getOriginal('pivot_designation') != 'project_manager' && $teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
-                        $managerProjects[] = $project;
-                        break;
-                    }
-                }
-            }
-            if (! empty($managerProjects)) {
-                $dataForMail[] = [
-                    'projects' => $managerProjects,
-                    'name' => $user->name,
-                    'email' =>$user->email,
-                ];
+        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->get('project_id');
+        $projects = Project::whereIn('id', $zeroEffortProject)->get();
+        $keyAccountManagersDetails = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $keyAccountManagersDetails[$user->id][] = [
+                'project' =>$project,
+                'email' =>$user->email,
+                'name' =>$user->name,
+            ];
             }
         }
-        $projectDetails = Collection::make($dataForMail);
 
-        return $projectDetails;
+        return $keyAccountManagersDetails;
     }
 
     public function getMailDetailsForProjectKeyAccountManagers()
@@ -353,6 +339,26 @@ class ProjectService implements ProjectServiceContract
                 $projectsData[$user->id][] = [
                     'project' => $project,
                     'email' => $user->email,
+                    'name' => $user->name,
+                ];
+            }
+        }
+
+        return $projectsData;
+    }
+
+    public function getMailForFixedBudgetProjectKeyAccountManagers()
+    {
+        $currentdate = Carbon::today()->subdays(-5);
+        $projects = Project::wheretype('fixed-budget')->where('end_date', $currentdate)->get();
+        $projectsData = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectsData[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
+                    'end date' => $project->end_date,
                     'name' => $user->name,
                 ];
             }
