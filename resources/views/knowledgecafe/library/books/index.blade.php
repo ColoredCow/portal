@@ -27,13 +27,26 @@
             <input type="text" data-value="{{ request()->input('search') }}" class="form-control" id="search_input" placeholder="Search all books" v-model="searchKey">
             <button class="btn btn-info ml-2 py-1.5" @click="searchBooks()">Search</button>
         </div>
+        <div>
+            <span><b>Sort Book By Category</b></span>
+            <div class="col-lg-10 col-md-5 col-sm-6 col-xs-12 mr-2 mb-2 pl-0 d-flex justify-content-center">
+                <select class="form-control bg-white form-control-st col-15" id="category_input" data-value="{{request()->input('category_name')}}" v-model="sortKeys">
+                @foreach ($categories as $category)
+                    <option {{request()->input('category_name') == $category->name ? "selected" : "" }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+                </select>
+                <button type="submit" class="btn btn-info ml-2" @click="searchBooksByCategoryName()">Sort</button>
+            </div>
+        </div>
         @if(session('disable_book_suggestion'))
         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-2 p-2 text-right offset-lg-3">
             <a href="{{ route('books.enableSuggestion') }}">Show me suggestions on the dashboard</a>
         </div>
         @endif
     </div>
-    @if(request()->has('search'))
+    @if(request()->has('search') || request()->has('category_name'))
     <div class="row mt-3 mb-2">
         <div class="col-6">
             <a class="text-muted c-pointer" href="{{ route('books.index') }}">

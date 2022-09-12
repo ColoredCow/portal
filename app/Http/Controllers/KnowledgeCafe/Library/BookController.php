@@ -26,13 +26,16 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $this->authorize('list', Book::class);
+        $searchCategory = $request->category_name ?? false;
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
+        
         if (request()->has('wishlist')) {
             $books = auth()->user()->booksInWishlist;
         } else {
             $books = Book::getList($searchString);
         }
+        $books = $searchCategory ? Book::getByCategoryName($searchCategory) : Book::getList($searchString);
         $loggedInUser = auth()->user();
         $books->load('wishers');
 
