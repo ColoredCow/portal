@@ -3,9 +3,9 @@
 namespace Modules\HR\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\HR\Entities\Application;
+use Modules\HR\Entities\UniversityContact;
 
-class HrApplicationsTableSeeder extends Seeder
+class HrUniversitiesContactsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,9 @@ class HrApplicationsTableSeeder extends Seeder
     public function run()
     {
         if (! app()->environment('production')) {
-            Application::factory()
-              ->count(10)
-              ->create();
+            UniversityContact::factory()
+                ->count(4)
+                ->create();
         }
     }
 }

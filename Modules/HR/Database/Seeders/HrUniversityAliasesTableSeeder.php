@@ -3,9 +3,9 @@
 namespace Modules\HR\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\HR\Entities\Application;
+use Modules\HR\Entities\UniversityAlias;
 
-class HrApplicationsTableSeeder extends Seeder
+class HrUniversityAliasesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,9 @@ class HrApplicationsTableSeeder extends Seeder
     public function run()
     {
         if (! app()->environment('production')) {
-            Application::factory()
-              ->count(10)
-              ->create();
+            UniversityAlias::factory()
+                ->count(5)
+                ->create();
         }
     }
 }
