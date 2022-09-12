@@ -29,7 +29,7 @@ class BookController extends Controller
         $searchCategory = $request->category_name ?? false;
         $searchString = (request()->has('search')) ? request()->input('search') : false;
         $categories = BookCategory::orderBy('name')->get();
-        
+ 
         if (request()->has('wishlist')) {
             $books = auth()->user()->booksInWishlist;
         } else {
