@@ -28,7 +28,7 @@
                         Designations
                     </div>
                     <div class="col-1">
-                        Daily
+                        Daily &nbsp;
                         (@{{ totalDailyEffort }} H)
                     </div>
                     <div class="col-1">
@@ -63,15 +63,15 @@
                         </select>
                     </div>
                     <div class="col-1 daily-effort-div" >
-                        <input type="number" @input="updatedDailyExpectedEffort($event, index, 1)" :value="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, projectTeamMember.pivot.freeze)" :value="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">>
                     </div>
 
                     <div class="col-1 weekly-effort-div">
-                        <input type="number" @input="updatedDailyExpectedEffort($event, index, 5)" :value="projectTeamMember.pivot.weekly_expected_effort" class="form-control weekly-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, projectTeamMember.pivot.freeze)" :value="projectTeamMember.pivot.weekly_expected_effort" :name="`project_team_member[${index}][weekly_expected_effort]`" class="form-control weekly-effort">
                     </div>
 
                     <div class="col-1 monthly-effort-div">
-                        <input type="number" @input="updatedDailyExpectedEffort($event, index, workingDaysInMonth)" :value="projectTeamMember.pivot.monthly_expected_effort" class="form-control monthly-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, projectTeamMember.pivot.freeze)" :value="projectTeamMember.pivot.monthly_expected_effort" :name="`project_team_member[${index}][monthly_expected_effort]`" class="form-control monthly-effort">
                     </div>
                     <div class="col-2">
                         <input type="number" step="0.01" :name="`project_team_member[${index}][billing_engagement]`" v-model="projectTeamMember.pivot.billing_engagement" class="form-control">
@@ -96,8 +96,8 @@
                             <label class="text-dark font-weight-bold fz-16">Freeze</label>
                             <select v-model="projectTeamMember.pivot.freeze" :name="`project_team_member[${index}][freeze]`" class="custom-select">
                                 <option value="">Select Freeze</option>
-                                @foreach (config('project.project_team_member_efforts') as $efforts=>$label)
-                                <option {{ ($efforts) ? 'selected=selected' : '' }} value="{{ $efforts }}">{{ $label }}</option>
+                                @foreach (config('project.project_team_member_efforts') as $key=>$project_team_member)
+                                    <option {{ ($key) ? 'selected' : '' }} value="{{ $key }}">{{ $project_team_member }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -167,7 +167,14 @@
                     this.projectTeamMembers[index]['pivot']['ended_on'] = newDate;
                 },
 
-                updatedDailyExpectedEffort($event, index, numberOfDays) {
+                updatedDailyExpectedEffort($event, index, freeze) {
+                    let numberOfDays = 1;
+                    if (this.projectTeamMembers[index]['pivot']['freeze'] === 'weekly_efforts') {
+                        numberOfDays = 5;
+                    } else if (this.projectTeamMembers[index]['pivot']['freeze'] === 'monthly_efforts') {
+                        numberOfDays = this.workingDaysInMonth
+                    }
+
                     value = $event.target.value;
                     maximumExpectedEfforts = 12
 
@@ -200,7 +207,7 @@
                    
                          this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
                          this.$forceUpdate()
-                },
+                }
             },
 
                    filters: {
