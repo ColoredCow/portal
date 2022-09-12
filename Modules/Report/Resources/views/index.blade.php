@@ -89,7 +89,7 @@
             @can('report.edit')
             <div class="card-footer">
                 <a href="{{route('report.edit', ['id' => $report->id]) }}">
-                    <button type="button" class="btn btn-primary report" data-json="abhishek" data-toggle="modal" data-target="#EditModal"> Edit </button>
+                    <button type="button" class="btn btn-primary report" data-toggle="modal" data-target="#EditModal"> Edit </button>
                 </a>
             </div>
             @endcan
