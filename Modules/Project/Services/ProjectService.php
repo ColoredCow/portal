@@ -13,7 +13,6 @@ use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Storage;
 use Modules\Project\Entities\ProjectMeta;
 use Modules\Project\Entities\ProjectTeamMember;
-use Illuminate\Database\Eloquent\Collection;
 use Modules\Project\Entities\ProjectBillingDetail;
 
 class ProjectService implements ProjectServiceContract
@@ -92,9 +91,10 @@ class ProjectService implements ProjectServiceContract
             'client_id' => $data['client_id'],
             'client_project_id' => $this->getClientProjectID($data['client_id']),
             'status' => 'active',
-            'start_date' => date('Y-m-d'),
-            'end_date' => date('Y-m-d'),
+            'start_date' => $data['start_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
@@ -172,9 +172,10 @@ class ProjectService implements ProjectServiceContract
             'type' => $data['project_type'],
             'total_estimated_hours' => $data['total_estimated_hours'] ?? null,
             'monthly_estimated_hours' => $data['monthly_estimated_hours'] ?? null,
-            'start_date' => date('Y-m-d'),
-            'end_date' => date('Y-m-d'),
+            'start_date' => $data['start_date'] ?? null,
+            'end_date' => $data['end_date'] ?? null,
             'effort_sheet_url' => $data['effort_sheet_url'] ?? null,
+            'google_chat_webhook_url' => $data['google_chat_webhook_url'] ?? null,
         ]);
 
         if ($data['billing_level'] ?? null) {
@@ -305,35 +306,61 @@ class ProjectService implements ProjectServiceContract
         }
     }
 
-    public function getMailDetailsForProjectManagers()
+    public function getMailDetailsForKeyAccountManagers()
     {
-        $users = User::get();
-        $dataForMail = [];
-        foreach ($users as $user) {
-            $userProjects = ProjectTeamMember::where('team_member_id', $user->id)->where('designation', 'project_manager')->pluck('project_id');
-            if (empty($userProjects)) {
-                continue;
+        $zeroEffortProject = ProjectTeamMember::where('daily_expected_effort', 0)->get('project_id');
+        $projects = Project::whereIn('id', $zeroEffortProject)->get();
+        $keyAccountManagersDetails = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $keyAccountManagersDetails[$user->id][] = [
+                'project' =>$project,
+                'email' =>$user->email,
+                'name' =>$user->name,
+            ];
             }
-            $projects = Project::with(['teamMembers'])->whereIn('id', $userProjects)->get();
-            $managerProjects = [];
-            foreach ($projects as $project) {
-                foreach ($project->teamMembers as $teamMember) {
-                    if ($teamMember->getOriginal('pivot_designation') != 'project_manager' && $teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
-                        $managerProjects[] = $project;
-                        break;
-                    }
-                }
-            }
-            if (! empty($managerProjects)) {
-                $dataForMail[] = [
-                    'projects' => $managerProjects,
+        }
+
+        return $keyAccountManagersDetails;
+    }
+
+    public function getMailDetailsForProjectKeyAccountManagers()
+    {
+        $currenttime = Carbon::today(config('constants.timezone.indian'));
+        $projects = Project::wheretype('fixed-budget')->wherestatus('active')->where('end_date', '<', $currenttime)->get();
+        $projectsData = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectsData[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
                     'name' => $user->name,
-                    'email' =>$user->email,
                 ];
             }
         }
-        $projectDetails = Collection::make($dataForMail);
 
-        return $projectDetails;
+        return $projectsData;
+    }
+
+    public function getMailForFixedBudgetProjectKeyAccountManagers()
+    {
+        $currentdate = Carbon::today()->subdays(-5);
+        $projects = Project::wheretype('fixed-budget')->where('end_date', $currentdate)->get();
+        $projectsData = [];
+        foreach ($projects as $project) {
+            $user = $project->client->keyAccountManager;
+            if ($user) {
+                $projectsData[$user->id][] = [
+                    'project' => $project,
+                    'email' => $user->email,
+                    'end date' => $project->end_date,
+                    'name' => $user->name,
+                ];
+            }
+        }
+
+        return $projectsData;
     }
 }

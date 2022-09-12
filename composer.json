@@ -7,6 +7,12 @@
         "laravel"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "url": "https://github.com/logicforte/consoletvs-charts.git",
+            "type": "git"
+        }
+    ],
     "require": {
         "php": "^7.3",
         "ext-gd": "*",
@@ -14,13 +20,13 @@
         "barryvdh/laravel-snappy": "^0.4.7",
         "bordoni/phpass": "dev-main",
         "codegreencreative/laravel-samlidp": "^5.0",
-        "consoletvs/charts": "7.*",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.4",
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "jgrossi/corcel": "^5.0",
         "jordikroon/google-vision": "^1.8",
+        "laravel-notification-channels/google-chat": "^1.0",
         "laravel/framework": "^8.0",
         "laravel/helpers": "^1.1",
         "laravel/legacy-factories": "^1.1",
@@ -32,6 +38,7 @@
         "nesbot/carbon": "^2.52",
         "niklasravnsborg/laravel-pdf": "^4.1",
         "nwidart/laravel-modules": "^7.0",
+        "owen-it/laravel-auditing": "^13.0",
         "revolution/laravel-google-sheets": "^5.6",
         "spatie/laravel-permission": "^3.3"
     },

@@ -42,8 +42,7 @@
                             <option {{ request()->input('transaction') == 'revenue' ? 'selected=selected' : '' }}
                                 value="revenue">
                                 Revenue</option>
-                            <option disabled
-                                {{ request()->input('transaction') == 'expenses' ? 'selected=selected' : '' }}
+                            <option disabled {{ request()->input('transaction') == 'expenses' ? 'selected=selected' : '' }}
                                 value="expenses">
                                 Expenses</option>
 
@@ -68,7 +67,7 @@
         @endphp
 
         <div>
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-responsive">
                 <thead class="thead-dark">
                     <tr>
                         <th>Head</th>

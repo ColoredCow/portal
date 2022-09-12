@@ -1,6 +1,4 @@
 <div class="card">
-    <div class="card-header">
-    </div>
     <a id='working_days_in_month' :data-days-count='workingDaysInMonth'></a>
     <div id="project_team_member_form">
         <form  action="{{ route('project.update', $project) }}" method="POST" id="updateProjectTeamMemberForm">
@@ -31,12 +29,15 @@
                     </div>
                     <div class="col-1">
                         Daily
+                        (@{{ totalDailyEffort }} H)
                     </div>
                     <div class="col-1">
                         Weekly
+                        (@{{ totalDailyEffort*5 }} H)
                     </div>
                     <div class="col-1">
                         Monthly
+                        (@{{ totalDailyEffort*workingDaysInMonth }} H)
                     </div>
                     <div class="col-2 text-center">
                         Billing Engagement %
@@ -62,21 +63,21 @@
                         </select>
                     </div>
                     <div class="col-1 daily-effort-div" >
-                        <input type="number" v-model="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">
+                     <input type="number" @input="updatedDailyExpectedEffort($event, index, 1)" :value="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">
                     </div>
 
                     <div class="col-1 weekly-effort-div">
-                        <input type="number" @input="updatedDailyExpectedEffort($event, index, 5)" :value="projectTeamMember.pivot.daily_expected_effort*5" class="form-control weekly-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, 5)" :value="projectTeamMember.pivot.weekly_expected_effort" class="form-control weekly-effort">
                     </div>
 
                     <div class="col-1 monthly-effort-div">
-                        <input type="number" @input="updatedDailyExpectedEffort($event, index, workingDaysInMonth)" :value="projectTeamMember.pivot.daily_expected_effort*workingDaysInMonth" class="form-control monthly-effort">
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, workingDaysInMonth)" :value="projectTeamMember.pivot.monthly_expected_effort" class="form-control monthly-effort">
                     </div>
                     <div class="col-2">
                         <input type="number" step="0.01" :name="`project_team_member[${index}][billing_engagement]`" v-model="projectTeamMember.pivot.billing_engagement" class="form-control">
                     </div>
                     <div class="col-1">
-                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14">Remove</button>
+                        <button v-on:click="removeProjectTeamMember(index)" type="button" class="btn btn-danger btn-sm mt-1 ml-2 text-white fz-14" {{ $project->status == 'active' ? '' : 'disabled' }} >Remove</button>
                     </div>
                     <div class="d-flex mt-2 ml-9 text-light">
                         <div class="mr-2">
@@ -113,17 +114,17 @@
                         <tr>
                             <th class="font-weight-normal"><img src="{{ $inactiveTeamMember->user->avatar }}" class="w-35 h-30 rounded-circle mr-1 mb-1">{{$inactiveTeamMember->user->name}}</th>
                             <th class="font-weight-light">{{ ucwords(str_replace('_', ' ', $inactiveTeamMember->designation)) }}</th>
-                            <th class="font-weight-light">{{ $inactiveTeamMember->started_on->format('Y-m-d') }}</th>
-                            <th class="font-weight-light">{{ $inactiveTeamMember->ended_on->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ optional($inactiveTeamMember->started_on)->format('Y-m-d') }}</th>
+                            <th class="font-weight-light">{{ optional($inactiveTeamMember->ended_on)->format('Y-m-d') }}</th>
                         <tr>
                         @endforeach
                     </table>
                 </div>
-                
+
             </div>
 
             <div class="card-footer">
-                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('updateProjectTeamMemberForm')">Save</button>
+                <button type="button" class="btn btn-primary save-btn" v-on:click="updateProjectForm('updateProjectTeamMemberForm')" {{ $project->status == 'active' ? '' : 'disabled' }} >Save</button>
             </div>
         </form>
     </div>

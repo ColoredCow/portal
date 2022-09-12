@@ -22,7 +22,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-lg-2 align-self-center application-search">
+                    <div class="text-right ml-5 ml-md-0-search">
                         <button class="btn btn-info ml-2 text-white active">Search</button>
                     </div>
                 </div>
@@ -35,11 +35,7 @@
             <div class="d-flex flex-row">
                 <div class="d-flex mt-2 mt-md-0">
                     <div class="mr-2 form-group">
-                        <label id="start-year">{!! __('Start Year') !!}</label><br>
-                        <input id="start-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="start-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('start-year', request()->get('start-year')) }}">
-                    </div>
-                    <div class="mr-2 form-group">
-                        <label id="end-year">{!! __('End Year') !!}</label><br>
+                        <label id="end-year">{!! __('Graduation Year') !!}</label><br>
                         <input id="end-year" class="fz-14 fz-lg-16 p-1 w-120 w-md-180 form-control rounded border-0" name="end-year" type=number min="1900" max="9999" step=1 placeholder="Graduation Year" value="{{ old('end-year', request()->get('end-year')) }}">
                     </div>
                 </div>
@@ -101,10 +97,11 @@
     <br>
     @php
         $hr_job_id = request()->has('hr_job_id') ? '&hr_job_id=' . request('hr_job_id') : '';
+        $graduation_year = request()->has('end-year') ? '&end-year=' . request('end-year') : '';
         $search = request()->has('search') ? '&search=' . request('search') : '';
         $hr_university_id = request()->has('hr_university_id') ? '&hr_university_id=' . request('hr_university_id') : '';
         $sort_by = request()->has('sort_by') ? '&sort_by=' . request('sort_by') : '';
-        $query_filters = $hr_job_id . $search . $hr_university_id . $sort_by
+        $query_filters = $hr_job_id . $search . $hr_university_id . $sort_by . $graduation_year
     @endphp
     <div class="menu_wrapper">
         <div class ="navbar"  id="navbar">
@@ -216,15 +213,31 @@
     <table class="table table-striped table-bordered" id="applicants_table">
         <thead class="thead-dark sticky-top">
             <th>Name</th>
-            <th>Details</th>
+            <th>
+                <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="roundsDropdown">Details</span>
+                <div class="dropdown-menu" aria-labelledby="roundsDropdown">
+                    <span class="dropdown-item-text fz-12">Round wise filter</span>
+                    @foreach ($roundFilters as $roundFilter)
+                        @php
+                            $target =  route(request()->route()->getName(), ['roundFilters' => [$roundFilter->id]]);
+                            $class = in_array($roundFilter->id, request()->get('roundFilters') ?? []) ? 'visible' : 'invisible';
+                        @endphp
+                        <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
+                            <i class="fa fa-check fz-12 mr-1 {{ $class }}"></i>
+                            <span>{{ $roundFilter->name }}</span>
+                        </a>
+                     @endforeach
+                </div>
+            </th>
+                
             <th>
                 <span class="dropdown-toggle c-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="assigneeDropdown">Assignee</span>
                 <div class="dropdown-menu" aria-labelledby="assigneeDropdown">
                     <span class="dropdown-item-text fz-12">Filter by assignee</span>
                     @foreach ($assignees as $assignee)
                     @php
-                    $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
-                    $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
+                        $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
+                        $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
                     @endphp
                     <a class="dropdown-item" href="{{ $target }}">
                         <i class="fa fa-check fz-12 {{ $class }}"></i>
