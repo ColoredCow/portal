@@ -63,7 +63,7 @@
                         </select>
                     </div>
                     <div class="col-1 daily-effort-div" >
-                        <input type="number" @input="updatedDailyExpectedEffort($event, index, projectTeamMember.pivot.freeze)" :value="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">>
+                        <input type="number" @input="updatedDailyExpectedEffort($event, index, projectTeamMember.pivot.freeze)" :value="projectTeamMember.pivot.daily_expected_effort" :name="`project_team_member[${index}][daily_expected_effort]`" class="form-control daily-effort">
                     </div>
 
                     <div class="col-1 weekly-effort-div">
@@ -95,7 +95,7 @@
                         <div class="d-flex flex-column ml-2">
                             <label class="text-dark font-weight-bold fz-16">Freeze</label>
                             <select v-model="projectTeamMember.pivot.freeze" :name="`project_team_member[${index}][freeze]`" class="custom-select">
-                                <option value="">Select Freeze</option>
+                                <option disabled value="">Select Freeze</option>
                                 @foreach (config('project.project_team_member_efforts') as $key=>$project_team_member)
                                     <option {{ ($key) ? 'selected' : '' }} value="{{ $key }}">{{ $project_team_member }}</option>
                                 @endforeach
