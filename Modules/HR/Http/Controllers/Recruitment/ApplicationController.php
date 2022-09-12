@@ -14,8 +14,8 @@ use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
 use Modules\HR\Entities\Application;
-use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\ApplicationMeta;
+use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
@@ -41,7 +41,7 @@ abstract class ApplicationController extends Controller
         $this->service->markInterviewFinished($ApplicationRound);
 
         return response()->json([
-            'status' => 200, 'meet_duration' => $ApplicationRound->meeting_duration->format('H:i:s'),
+            'status' => 200, 'actual_end_time' => $ApplicationRound->actual_end_time->format('H:i:s'),
         ]);
     }
 
@@ -55,7 +55,7 @@ abstract class ApplicationController extends Controller
         // We need this so that we can redirect user to the older page number.
         // we can improve this logic in the future.
 
-        if (! session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
+        if (!session()->get('should_skip_page') && Str::endsWith($referer, 'edit')) {
             session()->put(['should_skip_page' => true]);
 
             return redirect()->route(request()->route()->getName(), session()->get('previous_application_data'))->with('status', session()->get('status'));
@@ -274,7 +274,7 @@ abstract class ApplicationController extends Controller
 
     public function viewOfferLetter(Application $application)
     {
-        if (! Storage::exists($application->offer_letter)) {
+        if (!Storage::exists($application->offer_letter)) {
             return false;
         }
 

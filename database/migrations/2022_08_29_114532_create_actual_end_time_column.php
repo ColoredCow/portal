@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMeetingDurationColumn extends Migration
+class CreateActualEndTImeColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateMeetingDurationColumn extends Migration
     public function up()
     {
         Schema::table('hr_application_round', function (Blueprint $table) {
-            $table->timestamp('meeting_duration')->nullable()->after('scheduled_end');
+            $table->timestamp('actual_end_time')->nullable()->after('scheduled_end');
         });
     }
 
@@ -26,7 +26,7 @@ class CreateMeetingDurationColumn extends Migration
     public function down()
     {
         Schema::table('hr_application_round', function (Blueprint $table) {
-            $table->dropColumn(['meeting_duration']);
+            $table->dropColumn(['actual_end_time']);
         });
     }
 }

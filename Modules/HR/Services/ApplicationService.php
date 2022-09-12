@@ -2,15 +2,15 @@
 
 namespace Modules\HR\Services;
 
-use Module;
 use App\Models\Tag;
 use Carbon\Carbon;
-use Modules\HR\Entities\Job;
-use Modules\User\Entities\User;
+use Module;
+use Modules\HR\Contracts\ApplicationServiceContract;
 use Modules\HR\Entities\Applicant;
 use Modules\HR\Entities\Application;
-use Modules\HR\Contracts\ApplicationServiceContract;
+use Modules\HR\Entities\Job;
 use Modules\HR\Events\CustomMailTriggeredForApplication;
+use Modules\User\Entities\User;
 
 class ApplicationService implements ApplicationServiceContract
 {
@@ -97,12 +97,9 @@ class ApplicationService implements ApplicationServiceContract
 
     public function markInterviewFinished($data)
     {
-        $MeetDate = Carbon::parse($data->duration);
-        $ScheduleDate = Carbon::parse($data->scheduled_date);
-        $Interval = $MeetDate->diffAsCarbonInterval($ScheduleDate);
-        $MeetDuration = $Interval->format('%H:%i:%s');
-        $MeetDuration = Carbon::parse($MeetDuration);
-        $data->meeting_duration = $MeetDuration;
+        $MeetDate = config('timezone');
+        $MeetDuration = Carbon::parse($MeetDate);
+        $data->actual_end_time = $MeetDuration;
         $data->save();
     }
 }

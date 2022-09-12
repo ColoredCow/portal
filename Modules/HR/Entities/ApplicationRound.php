@@ -3,20 +3,20 @@
 namespace Modules\HR\Entities;
 
 use App\Helpers\FileHelper;
+use App\Models\Setting;
 use App\Traits\HasTags;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\Communication\Traits\HasCalendarMeetings;
+use Modules\HR\Database\Factories\HrApplicationRoundFactory;
+use Modules\HR\Emails\Recruitment\Applicant\OnHold;
 use Modules\HR\Emails\Recruitment\SendForApproval;
 use Modules\HR\Emails\Recruitment\SendOfferLetter;
 use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\User\Entities\User;
-use App\Models\Setting;
-use Modules\HR\Emails\Recruitment\Applicant\OnHold;
-use Modules\HR\Database\Factories\HrApplicationRoundFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationRound extends Model
 {
@@ -28,7 +28,7 @@ class ApplicationRound extends Model
 
     public $timestamps = false;
 
-    protected $dates = ['scheduled_date', 'conducted_date', 'meeting_duration'];
+    protected $dates = ['scheduled_date', 'conducted_date', 'actual_end_time'];
 
     public static function newFactory()
     {
@@ -81,13 +81,13 @@ class ApplicationRound extends Model
                         $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
                         $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                         $applicationRound = self::create([
-                        'hr_application_id' => $application->id,
-                        'hr_round_id' => $nextRound->id,
-                        'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
-                        'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                        'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
-                        'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
-                    ]);
+                            'hr_application_id' => $application->id,
+                            'hr_round_id' => $nextRound->id,
+                            'trial_round_id' => Round::where('name', 'Preparatory-1')->first()->id,
+                            'scheduled_date' => $attr['next_scheduled_start'] ?? null,
+                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
+                        ]);
                     }
                     //if application are requested to move to preparatory or warmup round then they are automatically moved to Trial Round
                     //and trial_round_id column is set to the id of preparatory rounds that is requested
@@ -98,13 +98,13 @@ class ApplicationRound extends Model
                         $nextApplicationRound = $application->job->rounds->where('id', Round::where('name', 'Trial Program')->first()->id)->first();
                         $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                         $applicationRound = self::create([
-                        'hr_application_id' => $application->id,
-                        'hr_round_id' => Round::where('name', 'Trial Program')->first()->id,
-                        'trial_round_id' => $nextRound->id,
-                        'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                        'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
-                        'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
-                    ]);
+                            'hr_application_id' => $application->id,
+                            'hr_round_id' => Round::where('name', 'Trial Program')->first()->id,
+                            'trial_round_id' => $nextRound->id,
+                            'scheduled_date' => $attr['next_scheduled_start'] ?? null,
+                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
+                        ]);
                     }
                     //For Pre-trial Rounds
                     else {
@@ -114,12 +114,12 @@ class ApplicationRound extends Model
                         $nextApplicationRound = $application->job->rounds->where('id', $attr['next_round'])->first();
                         $scheduledPersonId = $nextApplicationRound->pivot->hr_round_interviewer_id ?? config('constants.hr.defaults.scheduled_person_id');
                         $applicationRound = self::create([
-                        'hr_application_id' => $application->id,
-                        'hr_round_id' => $nextRound->id,
-                        'scheduled_date' => $attr['next_scheduled_start'] ?? null,
-                        'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
-                        'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
-                    ]);
+                            'hr_application_id' => $application->id,
+                            'hr_round_id' => $nextRound->id,
+                            'scheduled_date' => $attr['next_scheduled_start'] ?? null,
+                            'scheduled_end' => isset($attr['next_scheduled_end']) ? $attr['next_scheduled_end'] : null,
+                            'scheduled_person_id' => $attr['next_scheduled_person_id'] ?? null,
+                        ]);
                     }
                 }
                 break;
@@ -127,7 +127,7 @@ class ApplicationRound extends Model
             case 'reject':
                 $application->untag('new-application');
                 $fillable['round_status'] = 'rejected';
-                if (! empty($attr['follow_up_comment_for_reject'])) {
+                if (!empty($attr['follow_up_comment_for_reject'])) {
                     $this->followUps()->create([
                         'comments' => $attr['follow_up_comment_for_reject'],
                         'conducted_by' => auth()->id(),
@@ -224,7 +224,7 @@ class ApplicationRound extends Model
                 $subject = $attr['subject'];
                 $body = $attr['body'];
 
-                if (! $application->offer_letter) {
+                if (!$application->offer_letter) {
                     $application->offer_letter = FileHelper::generateOfferLetter($application);
                 }
                 Mail::send(new SendOfferLetter($application, $subject, $body));
@@ -453,7 +453,7 @@ class ApplicationRound extends Model
             return false;
         }
 
-        return is_null($this->round_status) || ! $this->isOnboarded();
+        return is_null($this->round_status) || !$this->isOnboarded();
     }
 
     public function getPreviousApplicationRound()
@@ -476,5 +476,24 @@ class ApplicationRound extends Model
             self::where('hr_application_id', $this->hr_application_id)->update(['is_latest' => false]);
             $this->update(['is_latest' => true]);
         }
+    }
+
+    public function getExpectedMeetingDurationAttribute()
+    {
+        $ScheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
+        $ScheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_end);
+        $TimeDiff = $ScheduleEnd->diffAsCarbonInterval($ScheduleDate);
+
+        return $TimeDiff;
+
+    }
+
+    public function getActualMeetingDurationAttribute()
+    {
+        $ScheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
+        $MeetDuration = Carbon::createFromFormat('Y-m-d H:i:s', $this->actual_end_time);
+        $TimeDiffer = $MeetDuration->diffAsCarbonInterval($ScheduleDate);
+
+        return $TimeDiffer;
     }
 }
