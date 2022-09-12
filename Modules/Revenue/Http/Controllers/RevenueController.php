@@ -4,6 +4,7 @@ namespace Modules\Revenue\Http\Controllers;
 
 use Modules\Revenue\Entities\Revenue;
 use Carbon\Carbon;
+use Modules\Revenue\Http\Controllers\Renderable;
 use Illuminate\Http\Request;
 use Modules\Revenue\Http\Requests\RevenueRequest;
 use Illuminate\Routing\Controller;
@@ -38,12 +39,12 @@ class RevenueController extends Controller
     public function store(Request $request)
     {
         $revenue = new Revenue;
-        $revenue->name =$request->input('name');
-        $revenue->category =$request->input('category');
-        $revenue->currency =$request->input('currency');
-        $revenue->amount =$request->input('amount');
-        $revenue->recieved_at =$request->input('recieved_at');
-        $revenue->notes =$request->input('notes');
+        $revenue->name = $request->input('name');
+        $revenue->category = $request->input('category');
+        $revenue->currency = $request->input('currency');
+        $revenue->amount = $request->input('amount');
+        $revenue->recieved_at = $request->input('recieved_at');
+        $revenue->notes = $request->input('notes');
         $revenue->save();
 
         return redirect()->route('revenue.index')->with('status', "$revenue->name created successfully!!");
@@ -79,12 +80,12 @@ class RevenueController extends Controller
     {
         $revenue = Revenue::find($id);
 
-        $revenue->name =$request->input('name');
-        $revenue->category =$request->input('category');
-        $revenue->currency =$request->input('currency');
-        $revenue->amount =$request->input('amount');
-        $revenue->recieved_at =$request->input('recieved_at');
-        $revenue->notes =$request->input('notes');
+        $revenue->name = $request->input('name');
+        $revenue->category = $request->input('category');
+        $revenue->currency = $request->input('currency');
+        $revenue->amount = $request->input('amount');
+        $revenue->recieved_at = $request->input('recieved_at');
+        $revenue->notes = $request->input('notes');
         $revenue->save();
 
         return redirect()->route('revenue.index')->with('status', "$revenue->name updated successfully!!");
