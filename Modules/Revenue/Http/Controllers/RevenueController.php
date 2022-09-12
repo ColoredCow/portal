@@ -4,6 +4,7 @@ namespace Modules\Revenue\Http\Controllers;
 
 use Modules\Revenue\Entities\Revenue;
 use Illuminate\Http\Request;
+use lluminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 
 class RevenueController extends Controller
