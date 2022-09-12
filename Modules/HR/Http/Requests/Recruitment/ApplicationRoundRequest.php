@@ -43,6 +43,7 @@ class ApplicationRoundRequest extends FormRequest
             'onboard_password' => 'nullable|string|required_if:action,onboard',
             'send_mail_to_applicant.confirm' => 'nullable|filled',
             'send_mail_to_applicant.reject' => 'nullable|filled',
+            'send_mail_to_applicant.hold' => 'nullable|filled',
             'follow_up_comment_for_reject' => 'nullable|string',
         ];
 

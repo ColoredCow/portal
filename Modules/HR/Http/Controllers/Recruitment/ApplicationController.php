@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Modules\HR\Emails\Recruitment\Application\JobChanged;
 use Modules\HR\Emails\Recruitment\Application\RoundNotConducted;
+use Modules\HR\Emails\Recruitment\Application\ApplicationHandover;
 use Modules\HR\Entities\Application;
 use Modules\HR\Entities\ApplicationMeta;
 use Modules\HR\Entities\ApplicationRound;
 use Modules\HR\Entities\Job;
+use Modules\HR\Entities\Round;
 use Modules\HR\Entities\University;
 use Modules\HR\Http\Requests\Recruitment\ApplicationRequest;
 use Modules\HR\Http\Requests\Recruitment\CustomApplicationMailRequest;
@@ -77,7 +79,8 @@ abstract class ApplicationController extends Controller
             'search' => request()->get('search'),
             'tags' => request()->get('tags'),
             'assignee' => request()->get('assignee'), // TODO
-            'round' => str_replace('-', ' ', request()->get('round')),
+            'round' =>str_replace('-', ' ', request()->get('round')),
+            'roundFilters' => request()->get('roundFilters')
         ];
         $loggedInUserId = auth()->id();
         $applications = Application::join('hr_application_round', function ($join) {
@@ -135,6 +138,7 @@ abstract class ApplicationController extends Controller
         $attr['universities'] = University::all();
         $attr['tags'] = Tag::orderBy('name')->get();
         $attr['rounds'] = $hrRoundsCounts;
+        $attr['roundFilters'] = round::orderBy('name')->get();
         $attr['assignees'] = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['super-admin', 'admin', 'hr-manager']);
         })->orderby('name', 'asc')->get();
@@ -201,6 +205,19 @@ abstract class ApplicationController extends Controller
         $body->setting_value = str_replace('|*DATE SELECTED*|', date('d M Y', strtotime($request->date)), $body->setting_value);
         $body->setting_value = str_replace('|*TIME*|', date('h:i a', strtotime($request->timing)), $body->setting_value);
         $body->setting_value = str_replace('|*APPLICANT NAME*|', $request->applicant_name, $body->setting_value);
+
+        return response()->json([
+            'subject' => $subject->setting_value,
+            'body' => $body->setting_value,
+        ]);
+    }
+
+    public function generateOnHoldEmail(Request $request)
+    {
+        $subject = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_subject)->first();
+        $body = Setting::where('module', 'hr')->where('setting_key', $request->setting_key_body)->first();
+        $body->setting_value = str_replace('|*applicant_name*|', $request->applicant_name, $body->setting_value);
+        $body->setting_value = str_replace('|*job_title*|', $request->job_title, $body->setting_value);
 
         return response()->json([
             'subject' => $subject->setting_value,
@@ -281,5 +298,26 @@ abstract class ApplicationController extends Controller
         return Response::make(Storage::get($application->offer_letter), 200, [
             'content-type' => 'application/pdf',
         ]);
+    }
+
+    public function applicationHandoverRequest(Application $application)
+    {
+        $currentAssignee = $application->latestApplicationRound->scheduledPerson->email;
+        $userName = auth()->user()->name;
+        Mail::to($currentAssignee)->queue(new ApplicationHandover($application, $userName));
+
+        return redirect()->back()->with('status', 'Your request has successfully been sent');
+    }
+
+    public function acceptHandoverRequest(Application $application)
+    {
+        $applicationRound = $application->latestApplicationRound;
+        $applicationRound->update([
+            'scheduled_person_id' => auth()->user()->id
+        ]);
+
+        $status = 'Successful Assigned to ' . auth()->user()->name;
+
+        return redirect(route('applications.job.index'))->with('status', $status);
     }
 }

@@ -6,12 +6,10 @@ use App\Helpers\FileHelper;
 use App\Models\Setting;
 use App\Traits\HasTags;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\Communication\Traits\HasCalendarMeetings;
-use Modules\HR\Database\Factories\HrApplicationRoundFactory;
 use Modules\HR\Emails\Recruitment\Applicant\OnHold;
 use Modules\HR\Emails\Recruitment\SendForApproval;
 use Modules\HR\Emails\Recruitment\SendOfferLetter;
@@ -20,7 +18,7 @@ use Modules\User\Entities\User;
 
 class ApplicationRound extends Model
 {
-    use HasTags, HasCalendarMeetings, HasFactory;
+    use HasTags, HasCalendarMeetings;
 
     protected $guarded = [];
 
@@ -29,11 +27,6 @@ class ApplicationRound extends Model
     public $timestamps = false;
 
     protected $dates = ['scheduled_date', 'conducted_date', 'actual_end_time'];
-
-    public static function newFactory()
-    {
-        return new HrApplicationRoundFactory();
-    }
 
     public function _update($attr)
     {
@@ -182,12 +175,13 @@ class ApplicationRound extends Model
                 $job_title = Job::find($application->hr_job_id)->title;
                 $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
                 $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
-
                 //ToDo: We need to think of what would be the worfklow once an application is put on hold by HR team.
                 // Mail::to($applicant->email, $applicant->name)->send(new OnHold($subject->setting_value, $body->setting_value));
+                if (isset($attr['send_mail_to_applicant']['hold'])) {
+                    Mail::to($applicant->email, $applicant->name)->queue(new OnHold($subject->setting_value, $body->setting_value));
+                }
 
                 return redirect()->route('applications.job.index');
-
             case 'send-for-approval':
                 $application->untag('new-application');
                 $application->untag('in-progress');
@@ -485,7 +479,6 @@ class ApplicationRound extends Model
         $TimeDiff = $ScheduleEnd->diffAsCarbonInterval($ScheduleDate);
 
         return $TimeDiff;
-
     }
 
     public function getActualMeetingDurationAttribute()
