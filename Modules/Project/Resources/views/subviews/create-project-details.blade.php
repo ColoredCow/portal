@@ -6,8 +6,6 @@
                 <label for="name" class="field-required">Name</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter project name"
                     required="required" value="{{ old('name') }}">
-
-               
             </div>
             <div class="form-group offset-md-1 col-md-5">
                 <label for="client_id" class="field-required">Client</label>
