@@ -3,10 +3,7 @@
 namespace Modules\Revenue\Http\Controllers;
 
 use Modules\Revenue\Entities\Revenue;
-use Carbon\Carbon;
-use Modules\Revenue\Http\Controllers\Renderable;
 use Illuminate\Http\Request;
-use Modules\Revenue\Http\Requests\RevenueRequest;
 use Illuminate\Routing\Controller;
 
 class RevenueController extends Controller
