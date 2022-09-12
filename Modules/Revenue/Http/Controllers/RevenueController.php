@@ -77,8 +77,6 @@ class RevenueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $id = $request->id;
-        // dd($id); 
         $revenue = Revenue::find($id);
 
         $revenue->name =$request->input('name');
