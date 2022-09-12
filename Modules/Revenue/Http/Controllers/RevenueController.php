@@ -27,7 +27,7 @@ class RevenueController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -66,7 +66,7 @@ class RevenueController extends Controller
      */
     public function edit($id)
     {
-        // 
+        //
     }
 
     /**
@@ -81,15 +81,15 @@ class RevenueController extends Controller
         // dd($id); 
         $revenue = Revenue::find($id);
 
-       $revenue->name =$request->input('name');
-       $revenue->category =$request->input('category');
-       $revenue->currency =$request->input('currency');
-       $revenue->amount =$request->input('amount');
-       $revenue->recieved_at =$request->input('recieved_at');
-       $revenue->notes =$request->input('notes');
-       $revenue->save();
+        $revenue->name =$request->input('name');
+        $revenue->category =$request->input('category');
+        $revenue->currency =$request->input('currency');
+        $revenue->amount =$request->input('amount');
+        $revenue->recieved_at =$request->input('recieved_at');
+        $revenue->notes =$request->input('notes');
+        $revenue->save();
 
-       return redirect()->route('revenue.index')->with('status', "$revenue->name updated successfully!!");
+        return redirect()->route('revenue.index')->with('status', "$revenue->name updated successfully!!");
     }
 
     /**
