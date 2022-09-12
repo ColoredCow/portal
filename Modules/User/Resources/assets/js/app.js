@@ -8,18 +8,18 @@ $(document).ready(function() {
 	$("#addPancard").click(function(){
 		document.getElementById("fileName").innerHTML="Upload Your Pan Card";
 		var data="<input type='file' name=pancard id='pan'><br><br><input type='submit' class='btn btn-primary' value='submit'>";
-		document.getElementById("formElement").innerHTML=data;
+		document.getElementById("FormElement").innerHTML=data;
 	});
   
 	$("#addAadhar").click(function(){
 		document.getElementById("fileName").innerHTML="Upload Your Aadhar Card";
 		var data="<input type='file' name='aadhar' id='aadhar'><br><br><input type='submit' class='btn btn-primary' value='submit'>";
-		document.getElementById("formElement").innerHTML=data;
+		document.getElementById("FormElement").innerHTML=data;
 	});
 
 	$("#addSignature").click(function(){
 		document.getElementById("fileName").innerHTML="Upload Your Signature";
 		var data="<input type='file' name='signature'  id='signature'><br><br> <input type='submit' class='btn btn-primary' value='submit'>";
-		document.getElementById("formElement").innerHTML=data;
+		document.getElementById("FormElement").innerHTML=data;
 	});
 });
