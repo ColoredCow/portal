@@ -17,6 +17,9 @@ class RevenueRequest extends FormRequest
             'name' => 'required|string',
             'currency' => 'required|string',
             'amount' => 'required|integer',
+            'category' => 'nullable|integer',
+            'notes' => 'nullable|integer',
+            'recieved_at' => 'nullable|integer',
         ];
     }
 

@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Revenue'
+    'name' => 'Revenue',
+    'disable'=> '10 days After creating'
 ];

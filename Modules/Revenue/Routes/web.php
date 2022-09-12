@@ -13,9 +13,7 @@
 
 Route::prefix('revenue')->group(function () {
     Route::get('/', 'RevenueController@index')->name('revenue.index');
-    Route::get('create', 'RevenueController@create')->name('revenue.create');
-    Route::post('/storeData', 'RevenueController@store')->name('revenue.storeData');
-    Route::get('/edit/{id}', 'RevenueController@edit')->name('revenue.edit');
-    Route::get('/delete/{id}', 'RevenueController@delete')->name('revenue.delete');
+    Route::post('/store', 'RevenueController@store')->name('revenue.store');
     Route::post('/update/{id}', 'RevenueController@update')->name('revenue.update');
+    Route::get('/delete/{id}', 'RevenueController@delete')->name('revenue.delete');
 });
