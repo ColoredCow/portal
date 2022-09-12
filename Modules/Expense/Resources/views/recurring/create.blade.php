@@ -6,15 +6,7 @@
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Setup New Recurring Expenses</h4>
         </div>
-        @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
         <form action="{{ route('expense.recurring.store') }}" method="POST">
             @csrf
             <div class="card">
@@ -29,7 +21,11 @@
                                 <div class="form-group">
                                     <label for="name" class="field-required">Name</label>
                                     <input name="name" id="name" type="text" class="form-control"
-                                       required="required"  />
+                                       required/>
+                                    @error('name')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                    
                                 </div>
 
                                 <div class="form-group">
@@ -40,7 +36,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <select name="frequency" id="frequency" class="form-control" required="required">
+                                    <select name="frequency" id="frequency" class="form-control" required>
                                         <option selected="selected" value="monthly">Monthly</option>
                                         <option value="yearly" >Yearly</option>
                                     </select>
@@ -48,8 +44,10 @@
 
                                 <div class="form-group">
                                     <label for="initial_due_date" class="field-required">Next Due Date</label>
-                                    <input type="date" class="form-control" name="initial_due_date" id="initial_due_date"
-                                      required="required"   value="{{ now()->format('Y-m-d') }}">
+                                    <input type="date" class="form-control" name="initial_due_date" id="initial_due_date" required value="{{ now()->format('Y-m-d') }}">
+                                    @error('field-name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -60,7 +58,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <select name="currency" id="currency" class="form-control" required="required">
+                                    <select name="currency" id="currency" class="form-control" required>
                                         @foreach ($countries ?? [] as $country)
                                             <option value="{{ $country->currency }}">{{ $country->currency }}</option>
                                         @endforeach
@@ -69,8 +67,11 @@
 
                                 <div class="form-group">
                                     <label for="amount" class="field-required">Amount</label>
-                                    <input name="amount" id="amount" type="number" class="form-control" required="required">
-         />
+                                    <input name="amount" id="amount" type="number" class="form-control" required>
+         
+                                 @error('amount')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
 
                                 <div class="form-group">

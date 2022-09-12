@@ -42,8 +42,7 @@
                             <option {{ request()->input('transaction') == 'revenue' ? 'selected=selected' : '' }}
                                 value="revenue">
                                 Revenue</option>
-                            <option disabled
-                                {{ request()->input('transaction') == 'expenses' ? 'selected=selected' : '' }}
+                            <option disabled {{ request()->input('transaction') == 'expenses' ? 'selected=selected' : '' }}
                                 value="expenses">
                                 Expenses</option>
 
