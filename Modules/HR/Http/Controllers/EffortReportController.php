@@ -54,6 +54,8 @@ class EffortReportController extends Controller
             'efforts' => $efforsts
         ];
 
-        return view('hr::effort-report.bar-graph', ['employee' => $employee, 'chartData' => $chartData]);
+        return view('hr.effort.bar-graph', ['employee' => $employee])->with([
+            'chartData' => json_encode($chartData)
+        ]);
     }
 }
