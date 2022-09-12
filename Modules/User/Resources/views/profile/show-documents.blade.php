@@ -24,7 +24,7 @@
           </div>
           <div class="modal-body">
             <form action=""  >
-              <div id='FormElement'></div>
+              <div id='formElement'></div>
             </form>
           </div>
           <div class="modal-footer">
