@@ -12,9 +12,7 @@
                 <div class="card-header">
                     <span>Project Details</span>
                 </div>
-               
                 @include('project::subviews.create-project-details')
-               
             </form>
         </div>
     </div>
