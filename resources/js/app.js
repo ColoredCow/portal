@@ -1768,7 +1768,10 @@ $(".pending").on("change", function () {
 	});
 });
 
-$(document).ready(function(){	
+$(document).ready(function(){
+	$("#requisitionModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+	});
 	$("#requisitionForm").on("submit",function(e){
 		e.preventDefault();
 		$("#formSpinner").removeClass("d-none");
