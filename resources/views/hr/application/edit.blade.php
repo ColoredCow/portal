@@ -1045,7 +1045,7 @@
                                                                     </div>
                                                                 @endif
                                                                 @if (isset($applicationFormDetails->value))
-                                                                    @foreach (json_decode($applicationFormDetails->value) as $field => $value)
+                                                                    @foreach (json_decode($applicationFormDetails->value) ?? [] as $field => $value)
                                                                         <div class="form-group col-md-12">
                                                                             <label
                                                                                 class="text-secondary fz-14 leading-none mb-0.16">{{ $field }}</label>

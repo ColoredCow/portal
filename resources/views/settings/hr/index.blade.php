@@ -16,12 +16,14 @@
 	@include('settings.hr.follow-up')
 	@include('settings.hr.on-hold')
 	@include('settings.hr.team-interaction')
+	@include('settings.hr.send-for-approval')
 
 	<h4 class="mt-5">Mail templates for rounds</h4>
 	@foreach ($rounds as $index => $round)
 		@foreach ($roundMailTypes as $type)
 			@php
 				$mailTemplate = $type['label'] . '_mail_template';
+				$round->{$mailTemplate} = json_decode($round->{$mailTemplate}, true);
 			@endphp
 			<div class="card mt-4">
 				<form action="{{ route('hr.round.update', $round->id) }}" method="POST">

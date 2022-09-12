@@ -56,7 +56,7 @@ class RevenueController extends Controller
      */
     public function show($id)
     {
-        return view('revenue::show');
+        return view('revenue::index');
     }
 
     /**
