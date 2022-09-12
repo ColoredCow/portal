@@ -90,7 +90,7 @@ return [
             'new' => [
                 'label' => 'new',
                 'title' => 'New',
-                'class' => 'badge badge-info',
+                'class' => 'badge badge-success',
             ],
             'on-hold' => [
                 'label' => 'on-hold',

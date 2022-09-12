@@ -638,6 +638,9 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  * Knowledge Cafe
  *
  */
+$(window).on("load", function(){
+	$("#preloader").removeClass("d-block").addClass(" d-none ");
+});
 
 if (document.getElementById("show_and_save_book")) {
 	const bookForm = new Vue({
@@ -1760,16 +1763,13 @@ $(document).on("focusin", function (e) {
 });
 
 $(document).ready(function(){
-	$(".show").on("click", function(event) {
-		var $menu = $(".menu");
-		var $tabcontent = $(".tab-content");
-		if($(this).is(":checked")){
-			$menu.show();
-			$tabcontent.show();
+	$("#holdSendMailToApplicant").on("click", function(event) {
+		var $optionContainer = $("#optionContainer");
+		if ($(this).is(":checked")) {
+			$optionContainer.removeClass("d-none");
 		}
 		else{
-			$menu.hide();
-			$tabcontent.hide();
+			$optionContainer.addClass("d-none");
 		}
 	});
 });
