@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Revenue\Services;
+
 use Modules\Revenue\Entities\RevenueProceed;
 use Illuminate\Http\Request;
 
