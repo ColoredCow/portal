@@ -20,7 +20,6 @@
                         </h4>
                         <span class="text-capitalize ml-2 fz-lg-22">{{ $project->name }}</span>
                     <span class="{{ $project->is_amc == 1 ? 'badge badge-pill badge-success mr-1  mt-1' : 'badge badge-pill badge-danger mr-1  mt-1'}}">AMC</span></a>
-             {{-- /           <span class="badge badge-pill badge-success mr-1  mt-1 ">See contact</span> --}}
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
                         <h4 class="d-inline-block">
