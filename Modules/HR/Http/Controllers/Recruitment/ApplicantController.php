@@ -139,16 +139,9 @@ class ApplicantController extends Controller
                 $uploadFile = $file->getClientOriginalName();
                 $filepath = $file->move(storage_path('uploadedimages'), $uploadFile);
                 $postData = ['imgurl'=>$filepath];
-                $string = implode(",", $postData);
-                // $content->file = $uploadFile;
-                // dd($string);
+                $string = implode(',', $postData);
             }
         }
-
-        // $uploadFile = time() . '.' . $file->Extension();
-        // dd($postData);
-        // dd($filePath);
-
 
         foreach ($keyConfigs as $key=>$label) {
             ApplicantMeta::create([
