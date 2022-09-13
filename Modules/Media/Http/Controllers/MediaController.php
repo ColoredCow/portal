@@ -93,7 +93,7 @@ class MediaController extends Controller
      */
     public function destroy(Media $media)
     {
-        Storage::delete('public/images/'. $media->img_url);
+        Storage::delete('public/images/' . $media->img_url);
         $media->delete();
 
         return redirect(route('media.index'))->with(['message', 'status' => 'Photo deleted successfully!']);
