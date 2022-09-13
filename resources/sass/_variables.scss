@@ -130,6 +130,7 @@ $theme-colors: (
 );
 $sizes: (
     'auto': auto,
+    '15p':15%,
     '20p': 20%,
     '25p': 25%,
     '30p': 30%,
@@ -331,6 +332,7 @@ $spacers: (
     21\.67: ($spacer * 65/6), //130px
     25: ($spacer * 12.5), //150px
     35: ($spacer * 35/2), //210px
+    '50p': 50%,
 );
 
 $rounded: (
