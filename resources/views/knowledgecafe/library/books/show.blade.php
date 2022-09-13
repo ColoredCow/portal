@@ -91,9 +91,8 @@
             </div>
         </div>
     </div>
-
-    <h4 class="font-italic pl-5 mt-3 text-underline">Reader's thoughts</h4>
-
+    <h4 class="font-italic pl-5 mt-3 text-underline">Reader's thoughts {{ $review }}
+    </h4> 
     <div class="mt-3 w-75">
         <books-comments-component
         :new-comment-route = "{{ json_encode(route('book-comment.store', $book->id)) }}"

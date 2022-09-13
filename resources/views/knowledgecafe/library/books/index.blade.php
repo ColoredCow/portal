@@ -56,7 +56,9 @@
                         <p class="text-dark" :title="book.author">@{{ strLimit(book.author, 20) }} </p>
                         
                         <p class="text-info" v-if="book.on_kindle == 1" :title="book.author">On Kindle</p>
-
+                        
+                        <div class="ml-lg-3 ml-xl-0 fz-md-18 fz-xl-18">Review @{{ book.comments_count }}
+                       </div>
                         <h3><span class="badge badge-primary position-absolute copies-count" v-if="book.number_of_copies > 1" :title="book.number_of_copies + ' copies'" >@{{ book.number_of_copies }}</span></h3>
                     </div>
                     @can('library_books.delete')
@@ -85,13 +87,13 @@
                         <div class="modal-body">Number of copies of this book: <br> <input type="text" name="copiesofbooks"
                             :id="'copiesOfBooks'+index":value="book.number_of_copies">  </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                          <button type="button" class="btn btn-primary" @click="updateCopiesCount(index)" data-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" @click="updateCopiesCount(index)" data-dismiss="modal">OK</button>
                         </div>
-                      </div> 
-                    </div>
-                  </div>
-                <div v-if="book.readers && book.readers.length">
+                    </div> 
+                </div>
+            </div>
+            <div v-if="book.readers && book.readers.length">
                     <p  class="mb-0 mt-1">Read by</p>
                     <div  class="pl-0 pt-2 pb-3">
                         <img v-for="reader in book.readers" :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-placement="bottom">

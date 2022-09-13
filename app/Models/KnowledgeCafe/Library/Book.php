@@ -22,7 +22,7 @@ class Book extends Model
 
     public static function getList($filteredString = false)
     {
-        $query = self::with(['categories', 'readers', 'borrowers']);
+        $query = self::with(['categories', 'readers', 'borrowers','comments']);
 
         return $query
             ->where(function ($query) use ($filteredString) {
@@ -32,7 +32,7 @@ class Book extends Model
                         ->orWhere('isbn', 'LIKE', "%$filteredString%");
                 }
             })
-            ->withCount('readers')
+            ->withCount(['readers','comments'])
             ->orderBy('readers_count', 'desc')
             ->get();
     }
