@@ -36,7 +36,7 @@
                         @endphp
                         @if ($days < 10)
                             <button class="pl-1 btn btn-link" data-toggle="modal" data-target="#modalEdit" data-json="{{$revenue}}"><i class="text-success fa fa-edit fa-lg"></i></button>
-                            <a class="pl-1 btn btn-link" id="deleteRevenue" href="{{route('revenue.delete',$revenue->id)}}"><i class="text-danger fa fa-trash fa-lg"></i></a>
+                            <a class="pl-1 btn btn-link" id="deleteRevenue" href="{{route('revenue.proceeds.delete',$revenue->id)}}"><i class="text-danger fa fa-trash fa-lg"></i></a>
                         @else
                         <span data-toggle="tooltip" class="ml-7" title="Sorry!! you can't delete it after 10days of creation."><i class="fa fa-question-circle"></i>&nbsp;</span>
                         @endif

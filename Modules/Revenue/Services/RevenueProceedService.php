@@ -1,23 +1,22 @@
 <?php
-
-namespace Modules\Revenue\Http\Controllers;
-
-use Modules\Revenue\Entities\Revenue;
+namespace Modules\Revenue\Services;
+use Modules\Revenue\Entities\RevenueProceed;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-class RevenueController extends Controller
+
+class RevenueProceedService
 {
+
     public function index()
     {
-        $revenueData = Revenue::orderby('name')->get();
+        $revenueData = RevenueProceed::orderby('name')->get();
 
-        return view('revenue::index')->with('revenues', $revenueData);
+        return ($revenueData);
     }
 
     public function store(Request $request)
     {
-        $revenue = new Revenue;
+        $revenue = new RevenueProceed;
         $revenue->name = $request->input('name');
         $revenue->category = $request->input('category');
         $revenue->currency = $request->input('currency');
@@ -26,7 +25,7 @@ class RevenueController extends Controller
         $revenue->notes = $request->input('notes');
         $revenue->save();
 
-        return redirect()->route('revenue.index')->with('status', "$revenue->name created successfully!!");
+        return $revenue;
     }
 
     public function show($id)
@@ -36,7 +35,7 @@ class RevenueController extends Controller
 
     public function update(Request $request, $id)
     {
-        $revenue = Revenue::find($id);
+        $revenue = RevenueProceed::find($id);
 
         $revenue->name = $request->input('name');
         $revenue->category = $request->input('category');
@@ -46,14 +45,11 @@ class RevenueController extends Controller
         $revenue->notes = $request->input('notes');
         $revenue->save();
 
-        return redirect()->route('revenue.index')->with('status', "$revenue->name updated successfully!!");
+        return $revenue;
     }
 
     public function delete($id)
     {
-        $revenue = Revenue::find($id);
-        $delete = $revenue->delete();
-
-        return redirect()->route('revenue.index')->with('status', "$revenue->name deleted successfully!!");
+        return RevenueProceed::find($id)->delete();
     }
 }

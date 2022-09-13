@@ -8,10 +8,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('revenue.update','id')}}" method="POST">
+                    <form action="{{route('revenue.proceeds.update','id')}}" method="POST">
                         @csrf
                         <div class="form-row">
-                            <input value="{{route('revenue.update','id')}}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
+                            <input value="{{route('revenue.proceeds.update','id')}}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
                             <div class="form-group col-md-5">
                                 <label for="" class="field-required">Name</label>
                                 <input type="text" class="form-control" required name="name">

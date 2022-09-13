@@ -4,9 +4,9 @@ namespace Modules\Revenue\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Revenue extends Model
+class RevenueProceed extends Model
 {
-    protected $table = 'revenue';
+    protected $table = 'revenue_proceeds';
 
     protected $guarded = [];
 

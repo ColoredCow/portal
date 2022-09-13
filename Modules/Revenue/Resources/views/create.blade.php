@@ -7,7 +7,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{{route('revenue.store')}}" method="POST">
+        <form action="{{route('revenue.proceeds.store')}}" method="POST">
             @csrf
             <div class="modal-body">
                 <div class="form-row">
@@ -36,8 +36,8 @@
                         <input type="number" class="form-control"  name="amount"  required>
                     </div>
                     <div class="form-group offset-md-1 col-md-5">
-                        <label for="" >Category</label>
-                        <input type="text" class="form-control" name="category"  >
+                        <label for="" class="field-required">Category</label>
+                        <input type="text" class="form-control" name="category" required>
                     </div>
                 </div>
             </div>

@@ -12,8 +12,8 @@
 */
 
 Route::prefix('revenue')->group(function () {
-    Route::get('/', 'RevenueController@index')->name('revenue.index');
-    Route::post('/store', 'RevenueController@store')->name('revenue.store');
-    Route::post('/update/{id}', 'RevenueController@update')->name('revenue.update');
-    Route::get('/delete/{id}', 'RevenueController@delete')->name('revenue.delete');
+    Route::get('/', 'RevenueProceedController@index')->name('revenue.proceeds.index');
+    Route::post('/store', 'RevenueProceedController@store')->name('revenue.proceeds.store');
+    Route::post('/update/{id}', 'RevenueProceedController@update')->name('revenue.proceeds.update');
+    Route::get('/delete/{id}', 'RevenueProceedController@delete')->name('revenue.proceeds.delete');
 });
