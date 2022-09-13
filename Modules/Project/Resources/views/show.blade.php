@@ -102,13 +102,13 @@
                                     </div>
                                  </div>
                             </div>
-                @endif
-                <br>
-                <div class="form-row ">
-                    <div class="form-group col-lg-12 pl-4">
-                        <h4 class="d-inline-block ">
-                            <label for="name" class="font-weight-bold">Team Members:</label>
-                        </h4>
+                        @endif
+                           <br>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-12 pl-4">
+                            <h4 class="d-inline-block ">
+                                <label for="name" class="font-weight-bold">Team Members:</label>
+                            </h4>
                         <div class="fz-14 float-right mr-3 mt-1">
                             <strong>Timeline:</strong>{{ (Carbon\Carbon::parse($project->client->month_start_date)->format('dS M')) }}                       
                             -{{ (Carbon\Carbon::parse($project->client->month_end_date)->format('dS M')) }}                      
@@ -170,6 +170,12 @@
                                             <td>
                                                 {{ $var }}
                                             </td> 
+                                                        <td class="{{ $teamMember->current_actual_effort >= $teamMember->current_expected_effort ? 'text-success' : 'text-danger' }}">{{$teamMember->current_actual_effort}}</td>
+                                                        <td>{{$teamMember->current_expected_effort }}</td>
+                                                        <td class="{{ $teamMember->velocity >= 1 ? 'text-success' : 'text-danger' }}">{{$teamMember->velocity}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
                                             </table>
                                         @endif
                                 </div>
@@ -180,5 +186,4 @@
             </div>
         </div>
     </div>
-
-    @endsection
+@endsection
