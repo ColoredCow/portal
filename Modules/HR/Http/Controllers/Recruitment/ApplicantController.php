@@ -129,10 +129,10 @@ class ApplicantController extends Controller
         }
         if ($request->file('scanned_copy_pan_card')) {
             $files[] = $request->file('scanned_copy_pan_card');
-        }    
+        }
         if ($request->file('passbook_first_page_img')) {
             $files[] = $request->file('passbook_first_page_img');
-        } 
+        }
 
         foreach ($files as $file) {
             if (!empty($file)) {
@@ -154,7 +154,7 @@ class ApplicantController extends Controller
                 'hr_applicant_id' => $request->get('hr_applicant_id'),
                 'key' => $label,
                 'value' => $request->get($key)
-            ]); 
+            ]);
         }
 
         foreach ($uploadConfigs as $key=>$label) {
