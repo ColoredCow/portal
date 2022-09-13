@@ -29,7 +29,8 @@ class RevenueProceedController extends Controller
     public function store(Request $request)
     {
         $this->service->store($request);
-        return redirect()->route('revenue.proceeds.index')->with('status', "Revenue created successfully!!");
+
+        return redirect()->route('revenue.proceeds.index')->with('status', 'Revenue created successfully!!');
     }
 
     public function show($id)
@@ -41,13 +42,13 @@ class RevenueProceedController extends Controller
     {
         $this->service->update($request, $id);
 
-        return redirect()->route('revenue.proceeds.index')->with('status', "Revenue updated successfully!!");
+        return redirect()->route('revenue.proceeds.index')->with('status', 'Revenue updated successfully!!');
     }
 
     public function delete($id)
     {
         $this->service->delete($id);
 
-        return redirect()->route('revenue.proceeds.index')->with('status', "Revenue deleted successfully!!");
+        return redirect()->route('revenue.proceeds.index')->with('status', 'Revenue deleted successfully!!');
     }
 }

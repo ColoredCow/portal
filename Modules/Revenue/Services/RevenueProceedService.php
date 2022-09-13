@@ -11,7 +11,7 @@ class RevenueProceedService
     {
         $revenueData = RevenueProceed::orderby('name')->get();
 
-        return ($revenueData);
+        return $revenueData;
     }
 
     public function store(Request $request)
