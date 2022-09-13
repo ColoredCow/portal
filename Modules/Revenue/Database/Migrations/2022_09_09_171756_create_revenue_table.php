@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRevenueTable extends Migration
+class CreateRevenueProceedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRevenueTable extends Migration
      */
     public function up()
     {
-        Schema::create('Revenue', function (Blueprint $table) {
+        Schema::create('Revenue_proceeds', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('category');
@@ -33,6 +33,6 @@ class CreateRevenueTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('revenue');
+        Schema::dropIfExists('Revenue_proceeds');
     }
 }
