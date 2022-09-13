@@ -4,7 +4,7 @@ namespace Modules\Revenue\Http\Controllers;
 
 use Modules\Revenue\Entities\RevenueProceed;
 use Illuminate\Http\Request;
-use Modules\Revenue\services\RevenueProceedService;
+use Modules\Revenue\Services\RevenueProceedService;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
