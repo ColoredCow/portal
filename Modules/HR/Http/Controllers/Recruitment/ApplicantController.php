@@ -120,7 +120,7 @@ class ApplicantController extends Controller
         $keyConfigs = (config('hr.applicant_form-details'));
         $uploadConfigs = (config('hr.applicant_upload_details'));
 
-        $files=[];
+        $files = [];
         if ($request->file('head_shot_image')) {
             $files[] = $request->file('head_shot_image');
         }
@@ -135,20 +135,21 @@ class ApplicantController extends Controller
         }
 
         foreach ($files as $file) {
-            if (!empty($file)) {
+            if (! empty($file)) {
                 $uploadFile = $file->getClientOriginalName();
                 $filepath = $file->move(storage_path('uploadedimages'), $uploadFile);
+                $postData = ['imgurl'=>$filepath];
+                $string = implode(",", $postData);
                 // $content->file = $uploadFile;
+                // dd($string);
             }
         }
-        
+
         // $uploadFile = time() . '.' . $file->Extension();
-        $postData = ['imgurl'=>$filepath];
-        $string=implode(",", $postData);
         // dd($postData);
         // dd($filePath);
-        
-        
+
+
         foreach ($keyConfigs as $key=>$label) {
             ApplicantMeta::create([
                 'hr_applicant_id' => $request->get('hr_applicant_id'),
