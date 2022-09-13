@@ -17,8 +17,6 @@ use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\User\Entities\User;
 use Modules\HR\Entities\ApplicantMeta;
 use Modules\HR\Http\Requests\ApplicantMetaRequest;
-use Illuminate\Http\UploadedFile;
-use App\Helpers\FileHelper;
 
 class ApplicantController extends Controller
 {
@@ -139,9 +137,9 @@ class ApplicantController extends Controller
                 $uploadFile = $file->getClientOriginalName();
                 $filepath = $file->move(storage_path('uploadedimages'), $uploadFile);
                 $postData = ['imgurl'=>$filepath];
-                $string = implode(',', $postData);
             }
         }
+        $string = implode(',', $postData);
 
         foreach ($keyConfigs as $key=>$label) {
             ApplicantMeta::create([
