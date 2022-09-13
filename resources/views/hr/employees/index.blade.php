@@ -58,9 +58,11 @@
                     @if ($employee->user == null)
                         <span class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
                     @elseif ($employee->user->fte > 1 && $employee->domain_id != null)
-                        <a class="text-success " href={{ route('employees.alert',['domain_id' => $employee->domain_id]) }} style="text-decoration: none;">
+                        <a class="text-success font-weight-bold" href={{ route('employees.alert',['domain_id' => $employee->domain_id]) }} style="text-decoration: none;">
                             {{ $employee->user->fte }} &nbsp;&nbsp;&nbsp;<span class="text-danger"><i class="fa fa-warning fa-lg"></i></span>
                         </a>
+                    @elseif ($employee->user->fte >= 1)
+                        <span class="text-success font-weight-bold">{{ $employee->user->fte }}</span>
                     @else
                         <span class="text-danger font-weight-bold">{{ $employee->user ? $employee->user->fte :'NA' }}</span>
                     @endif
