@@ -4,7 +4,7 @@
 <div class="container" id="vueContainer">
     <br>
     <div class="d-flex">
-        <h4 class="c-pointer d-inline-block" v-on:click="counter += 1">{{ $project->name }}</h4>
+        <h4 class="c-pointer d-inline-block" v-on:click="counter += 1">{{$project->name}}</h4>
         @can('update', $project)
             <a id="view_effort_sheet_badge" target="_self" href="{{route('project.edit', $project )}}" class="btn btn-primary text-white ml-auto">{{ _('Edit') }}</a>
         @endcan
