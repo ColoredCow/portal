@@ -8,7 +8,6 @@ use Modules\Revenue\services\RevenueProceedService;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-
 class RevenueProceedController extends Controller
 {
     use AuthorizesRequests;
@@ -24,12 +23,12 @@ class RevenueProceedController extends Controller
     {
         $revenueData = $this->service->index();
 
-        return view('revenue::index')->with('revenues',$revenueData);
+        return view('revenue::index')->with('revenues', $revenueData);
     }
 
     public function store(Request $request)
     {
-       $this->service->store($request);
+        $this->service->store($request);
         return redirect()->route('revenue.proceeds.index')->with('status', "Revenue created successfully!!");
     }
 
@@ -49,6 +48,6 @@ class RevenueProceedController extends Controller
     {
         $this->service->delete($id);
 
-       return redirect()->route('revenue.proceeds.index')->with('status',"Revenue deleted successfully!!");
+        return redirect()->route('revenue.proceeds.index')->with('status',"Revenue deleted successfully!!");
     }
 }
