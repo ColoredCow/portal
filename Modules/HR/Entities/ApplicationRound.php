@@ -48,10 +48,10 @@ class ApplicationRound extends Model
                 if ($application->isNoShow() && Carbon::parse($attr['scheduled_date'])->gt(now())) {
                     $application->markInProgress();
                 }
-                $date = $attr['scheduled_date'];
-                $time = $attr['scheduled_time'];
+                $scheduledDate = $attr['scheduled_date'];
+                $scheduledTime = $attr['scheduled_time'];
                 $fillable = [
-                    'scheduled_date' => "$date . $time",
+                    'scheduled_date' => "$scheduledDate . $scheduledTime",
                     'scheduled_person_id' => $attr['scheduled_person_id'],
                 ];
                 $attr['reviews'] = [];
@@ -474,19 +474,19 @@ class ApplicationRound extends Model
 
     public function getExpectedMeetingDurationAttribute()
     {
-        $ScheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
-        $ScheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_end);
-        $TimeDiff = $ScheduleEnd->diffAsCarbonInterval($ScheduleDate);
+        $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
+        $scheduleEnd = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_end);
+        $timeDiff = $scheduleEnd->diffAsCarbonInterval($scheduleDate);
 
-        return $TimeDiff;
+        return $timeDiff;
     }
 
     public function getActualMeetingDurationAttribute()
     {
-        $ScheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
-        $MeetDuration = Carbon::createFromFormat('Y-m-d H:i:s', $this->actual_end_time);
-        $TimeDiffer = $MeetDuration->diffAsCarbonInterval($ScheduleDate);
+        $scheduleDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->scheduled_date);
+        $meetDuration = Carbon::createFromFormat('Y-m-d H:i:s', $this->actual_end_time);
+        $timeDiffer = $meetDuration->diffAsCarbonInterval($scheduleDate);
 
-        return $TimeDiffer;
+        return $timeDiffer;
     }
 }

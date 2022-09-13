@@ -97,9 +97,9 @@ class ApplicationService implements ApplicationServiceContract
 
     public function markInterviewFinished($data)
     {
-        $MeetDate = config('timezone');
-        $MeetDuration = Carbon::parse($MeetDate);
-        $data->actual_end_time = $MeetDuration;
+        $meetDate = config('timezone');
+        $meetDuration = Carbon::parse($meetDate);
+        $data->actual_end_time = $meetDuration;
         $data->save();
     }
 }
