@@ -6,7 +6,7 @@
     @include('hr.employees.menu')
     <br><br>
     <div class="d-flex">
-        <h1>Employees</h1>
+        <h1>Employees ({{count($employees)}})</h1>
         <form id="employeeFilterForm">
             <input type="hidden" name="status" value="{{ request()->input('status', 'current') }}">
             <div class='form-group w-130' class="d-inline">
