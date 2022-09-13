@@ -15,6 +15,10 @@ use Modules\HR\Entities\Job;
 use Modules\HR\Events\Recruitment\ApplicantEmailVerified;
 use Modules\HR\Http\Requests\Recruitment\ApplicantRequest;
 use Modules\User\Entities\User;
+use Modules\HR\Entities\ApplicantMeta;
+use Modules\HR\Http\Requests\ApplicantMetaRequest;
+use Illuminate\Http\UploadedFile;
+use App\Helpers\FileHelper;
 
 class ApplicantController extends Controller
 {
@@ -102,8 +106,57 @@ class ApplicantController extends Controller
         return view('hr.application.verification')->with(['application' => $application, 'email' => decrypt($applicantEmail)]);
     }
 
-    public function viewForm()
+    public function viewForm($id)
     {
-        return view('hr.application.applicant-details');
+        $hr_applicant_id = $id;
+
+        return view('hr.application.applicant-details')->with(['hr_applicant_id' => $hr_applicant_id]);
+    }
+
+    public function storeDetails(ApplicantMetaRequest $request)
+    {
+        // dd($request->get('head_shot_image'));
+        // dd($request->all());
+        $keyConfigs = (config('hr.applicant_form-details'));
+        $uploadConfigs = (config('hr.applicant_upload_details'));
+
+        $files=[];
+        if ($request->file('head_shot_image')) $files[] = $request->file('head_shot_image');
+        if ($request->file('aadhar_card_scanned')) $files[] = $request->file('aadhar_card_scanned');
+        if ($request->file('scanned_copy_pan_card')) $files[] = $request->file('scanned_copy_pan_card');
+        if ($request->file('passbook_first_page_img')) $files[] = $request->file('passbook_first_page_img');
+
+        foreach ($files as $file) {
+            if (!empty($file)) {
+                $uploadFile = $file->getClientOriginalName();
+                $filepath = $file->move(storage_path('uploadedimages'), $uploadFile);
+                // $content->file = $uploadFile;
+            }
+        }
+        
+        // $uploadFile = time() . '.' . $file->Extension();
+        $postData = ['imgurl'=>$filepath];
+        $string=implode(",",$postData);
+        // dd($postData);
+        // dd($filePath);
+        
+        
+        foreach($keyConfigs as $key=>$label) {
+            ApplicantMeta::create([
+                'hr_applicant_id' => $request->get('hr_applicant_id'),
+                'key' => $label,
+                'value' => $request->get($key)
+            ]); 
+        }
+
+        foreach($uploadConfigs as $key=>$label) {
+            ApplicantMeta::create([
+                'hr_applicant_id' => $request->get('hr_applicant_id'),
+                'key' => $label,
+                'value' => $string,
+            ]);
+        }
+
+        return redirect()->back();
     }
 }

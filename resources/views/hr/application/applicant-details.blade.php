@@ -2,7 +2,8 @@
 
 @section('content')
 
-<form>
+<form action="{{route('hr.applicant.store-details')}}" enctype="multipart/form-data" method="POST">
+    @csrf
     <div class="container col-sm-6">
         <div class="card">
             <div class="card-body">
@@ -34,9 +35,9 @@
                         <input type="text" class="form-control w-300" name="name" required="required">
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="preffered_name" class="fz-14 leading-none text-secondary mb-1">Preferred Name</label>
+                        <label for="preferred_name" class="fz-14 leading-none text-secondary mb-1">Preferred Name</label>
                         <p class="fz-14 leading-none text-secondary mb-1">Other name that you prefer. If not applicable, write NA.</p>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" class="form-control" name="preferred_name">
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="contact_number" class="field-required fz-14 leading-none text-secondary mb-1">Personal Contact Number</label>
@@ -53,25 +54,25 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="current_address" class="field-required  fz-14 leading-none text-secondary mb-1">Current Address</label>
-                        <input type="text" class="form-control w-300 mt-3" name="Current_address" required="required">
+                        <input type="text" class="form-control w-300 mt-3" name="current_address" required="required">
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="permanent_address" class="field-required  fz-14 leading-none text-secondary mb-1">Permanent Address</label>
                         <p class=" fz-14 leading-none text-secondary mb-1">As per Address Proof</p>
-                        <input type="number" class="form-control w-300" name="permanent_address" required="required">
+                        <input type="text" class="form-control w-300" name="permanent_address" required="required">
                     </div>
                     <div class="col-md-3 form-group">
-                        <label for="emergency_contact_address" class="field-required  fz-14 leading-none text-secondary mb-1">Emergency Contact Number</label>
+                        <label for="emergency_contact_number" class="field-required  fz-14 leading-none text-secondary mb-1">Emergency Contact Number</label>
                         <p class=" fz-14 leading-none text-secondary mb-1">Other than personal contact number</p>
-                        <input type="text" class="form-control w-300" name="emergency_contact_address" required="required">
+                        <input type="number" class="form-control w-300" name="emergency_contact_number" required="required">
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="blood_group" class="field-required fz-14 leading-none text-secondary mb-1">Blood Group</label>
-                        <input type="number" class="form-control w-300 mt-3" name="blood_group" required="required">
+                        <input type="text" class="form-control w-300 mt-3" name="blood_group" required="required">
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="illness" class="field-required fz-14 leading-none text-secondary mb-1">Any illness related from past, that you would like to share?</label>
-                        <input type="number" class="form-control w-300" name="illness" required="required">
+                        <input type="text" class="form-control w-300" name="illness" required="required">
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="head_shot_image" class="field-required fz-14 leading-none text-secondary mb-1">Upload a head shot image</label>
@@ -100,14 +101,14 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="pan_card_number" class="field-required fz-14 leading-none text-secondary mb-1">Pan Card Number</label>
-                        <input type="number" class="form-control w-300 mt-3" name="mother_name" required="required">
+                        <input type="number" class="form-control w-300 mt-3" name="pan_card_number" required="required">
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="scanned_copy_pan_card" class="field-required fz-14 leading-none text-secondary mb-1">Upload a scanned copy of Pan Card
                         </label>
                         <div class="d-flex">
                             <div class="custom-file mb-3">
-                                <input type="file" id="invoice_file" name="scanned_copy_pan_card" class="custom-file-input"
+                                <input type="file" name="scanned_copy_pan_card" class="custom-file-input"
                                     required="required">
                                 <label for="customFile0" class="custom-file-label overflow-hidden w-300">Add File</label>
                             </div>
@@ -126,11 +127,11 @@
                 <div class="form-row">
                     <div class="col-md-4 form-group">
                         <label for="acc_holder_name" class="field-required fz-14 leading-none text-secondary mb-1">Account Holder Name</label>
-                        <input type="number" class="form-control w-300" name="acc_holder_name" required="required">
+                        <input type="text" class="form-control w-300" name="acc_holder_name" required="required">
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="bank_name" class="field-required fz-14 leading-none text-secondary mb-1">Bank Name</label>
-                        <input type="number" class="form-control w-300" name="bank_name" required="required">
+                        <input type="text" class="form-control w-300" name="bank_name" required="required">
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="acc_number" class="field-required fz-14 leading-none text-secondary mb-1">Account Number</label>
@@ -138,14 +139,14 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="ifsc_code" class="field-required fz-14 leading-none text-secondary mb-1 mt-2">IFSC Code</label>
-                        <input type="number" class="form-control w-300 mt-6" name="mother_name" required="required">
+                        <input type="number" class="form-control w-300 mt-6" name="ifsc_code" required="required">
                     </div>
                     <div class="col-md-4 form-group">
-                        <label for="passbook_first_page_IMG" class="field-required fz-14 leading-none text-secondary mb-1 mt-2">Image of cancelled cheque/ Passbook First page with bank details</label>
+                        <label for="passbook_first_page_img" class="field-required fz-14 leading-none text-secondary mb-1 mt-2">Image of cancelled cheque/ Passbook First page with bank details</label>
                         <p></p>
                         <div class="d-flex">
                             <div class="custom-file mb-3">
-                                <input type="file" name="passbook_first_page_IMG" class="custom-file-input" required="required">
+                                <input type="file" name="passbook_first_page_img" class="custom-file-input" required="required">
                                 <label for="customFile0" class="custom-file-label overflow-hidden w-300 mt-1">Add File</label>
                             </div>
                         </div>
@@ -155,6 +156,7 @@
                         <p class="fz-14 leading-none text-secondary mb-1">Please write NA if there is no pf account yet.</p>
                         <input type="number" class="form-control w-300" name="uan_number" required="required">
                     </div>
+                    <input type="hidden" name="hr_applicant_id" value={{$hr_applicant_id}}>
                 </div>
             </div>
         </div>
@@ -162,7 +164,7 @@
     <div class="container">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <button type="button" class="btn btn-success round-submit">Submit</button>
+                <button type="submit" class="btn btn-success round-submit">Submit</button>
                 <button type="reset" value="Reset" class="btn btn-danger float-right">Clear form</button>
             </div>
         </div>

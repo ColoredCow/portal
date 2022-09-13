@@ -162,6 +162,7 @@ abstract class ApplicationController extends Controller
         $approveMailTemplate = Setting::getApplicationApprovedEmail();
         $approveMailTemplate = str_replace('|APPLICANT NAME|', $application->applicant->name, $approveMailTemplate);
         $approveMailTemplate = str_replace('|JOB TITLE|', $application->job->title, $approveMailTemplate);
+        $approveMailTemplate = str_replace('|LINK|', 'http://localhost/viewForm/'.$application->applicant->id, $approveMailTemplate);
 
         $offerLetterTemplate = Setting::getOfferLetterTemplate();
         $attr = [
