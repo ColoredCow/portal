@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PhotoGallaryTable extends Migration
+class MediaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class PhotoGallaryTable extends Migration
      */
     public function up()
     {
-        Schema::create('photo_gallery', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('event_name');
             $table->string('img_url');
@@ -32,6 +32,6 @@ class PhotoGallaryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photo_gallery');
+        Schema::dropIfExists('media');
     }
 }

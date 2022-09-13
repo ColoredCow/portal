@@ -2,7 +2,7 @@
 
 namespace Modules\Media\Http\Controllers;
 
-use Modules\Media\Entities\PhotoGallery;
+use Modules\Media\Entities\Media;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -17,9 +17,9 @@ class MediaController extends Controller
      */
     public function index()
     {
-        $photo_gallery = PhotoGallery::orderBy('id', 'desc')->paginate(24);
+        $media = Media::orderBy('id', 'desc')->paginate(24);
 
-        return view('media::photo-gallery.index', ['photo_gallery' => $photo_gallery]);
+        return view('media::media.index', ['media' => $media]);
     }
 
     /**
@@ -38,64 +38,64 @@ class MediaController extends Controller
         $imageName = time() . '.' . $request->file->extension();
         $request->file->storeAs('public/images', $imageName);
         $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
-        PhotoGallery::create($postData);
+        Media::create($postData);
 
-        return redirect('/photo-gallery')->with(['message', 'status' => 'Photo added successfully!']);
+        return redirect(route('media.index'))->with(['message', 'status' => 'Photo added successfully!']);
     }
 
     /**
      * Show the specified resource.
-     * @param PhotoGallery $photoGallery
+     * @param Media $media
      * @return Renderable
      */
-    public function show(PhotoGallery $photoGallery)
+    public function show(Media $media)
     {
-        return view('media::photo-gallery.show', ['photoGallery' => $photoGallery]);
+        return view('media::media.show', ['media' => $media]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param PhotoGallery $PhotoGallery
+     * @param Media $media
      * @return Renderable
      */
-    public function edit(PhotoGallery $PhotoGallery)
+    public function edit(Media $media)
     {
-        return view('media::photo-gallery.edit', ['PhotoGallery' => $PhotoGallery]);
+        return view('media::media.edit', ['Media' => $media]);
     }
 
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param PhotoGallery $PhotoGallery
+     * @param Media $Media
      * @return RedirectResponse
      */
-    public function update(Request $request, PhotoGallery $PhotoGallery)
+    public function update(Request $request, Media $Media)
     {
         $imageName = '';
         if ($request->hasFile('file')) {
             $imageName = time() . '.' . $request->file->extension();
             $request->file->storeAs('public/images', $imageName);
-            if ($PhotoGallery->img_url) {
-                Storage::delete('public/images/' . $PhotoGallery->img_url);
+            if ($Media->img_url) {
+                Storage::delete('public/images/' . $Media->img_url);
             }
         } else {
-            $imageName = $PhotoGallery->img_url;
+            $imageName = $Media->img_url;
         }
         $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
-        $PhotoGallery->update($postData);
+        $Media->update($postData);
 
-        return redirect('/photo-gallery')->with(['message', 'status' => 'Photo updated successfully!']);
+        return redirect(route('media.index'))->with(['message', 'status' => 'Photo updated successfully!']);
     }
     /**
      * Remove the specified resource from storage.
-     * @param PhotoGallery $PhotoGallery
+     * @param Media $media
      * @return RedirectResponse
      */
-    public function destroy(PhotoGallery $PhotoGallery)
+    public function destroy(Media $media)
     {
-        Storage::delete('public/images/' . $PhotoGallery->img_url);
-        $PhotoGallery->delete();
+        Storage::delete('public/images/'. $media->img_url);
+        $media->delete();
 
-        return redirect('/photo-gallery')->with(['message', 'status' => 'Photo deleted successfully!']);
+        return redirect(route('media.index'))->with(['message', 'status' => 'Photo deleted successfully!']);
     }
 }

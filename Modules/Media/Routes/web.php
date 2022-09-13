@@ -12,7 +12,16 @@
 */
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('media')->group(function () {
-    Route::get('/', 'MediaController@index')->name('media.index');
-});
-Route::resource('photo-gallery', 'MediaController');
+Route::resource('media', 'MediaController')
+->parameters([
+    'media'=> 'media'
+])
+->names([
+        'index' => 'media.index',
+        'show' => 'media.show',
+        'create' => 'media.create',
+        'store' => 'media.store',
+        'update' => 'media.update',
+        'edit' => 'media.edit',
+        'destroy' => 'media.destroy',
+]);

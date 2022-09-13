@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PhotoGallaryMetaTable extends Migration
+class MediaMetaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class PhotoGallaryMetaTable extends Migration
      */
     public function up()
     {
-        Schema::create('photo_gallery_meta', function (Blueprint $table) {
+        Schema::create('media_meta', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('photo_gallery_id');
+            $table->unsignedBigInteger('media_id');
             $table->string('resolution');
             $table->string('iso')->nullable();
             $table->string('format');
             $table->timestamps();
             $table->softDeletes()->nullable();
-            $table->foreign('photo_gallery_id')->references('id')->on('photo_gallery');
+            $table->foreign('media_id')->references('id')->on('media');
         });
     }
 
@@ -32,6 +32,6 @@ class PhotoGallaryMetaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photo_gallery_meta');
+        Schema::dropIfExists('media_meta');
     }
 }

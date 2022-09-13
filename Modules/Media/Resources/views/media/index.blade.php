@@ -1,8 +1,8 @@
 @extends('media::layouts.master')
-@section('title', 'Home Page')
-@section('heading', 'Photo Gallery')
+@section('title', 'Media Page')
+@section('heading', 'Media')
 @section('popup', 'Add New Post')
-@section('link', '/photo-gallery/create')
+@section('link', route('media.index'))
 @section('content')
 
 @if(session('message'))
@@ -37,7 +37,7 @@
                           <h3 class="text-light fw-bold">Add New Post</h3>
                         </div>
                         <div class="card-body p-4">
-                          <form action="/photo-gallery" method="POST" enctype="multipart/form-data">
+                          <form action="{{ route('media.index') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="my-2"><h3 class="text-secondary">Event Name</h3>
                               <input type="text" name="event_name" id="event_name" class="form-control @error('event_name') is-invalid @enderror" placeholder="Event_name" value="{{ old('event_name') }}">
@@ -77,29 +77,29 @@
 </div>
 <div class="container">
     <div class="row g-3 mt-1">
-    @forelse($photo_gallery as $key => $row)
-    <div class="col-lg-3 mb-3">
+      @forelse($media as $key => $row)
+      <div class="col-lg-3 mb-3">
         <div class="card shadow">
-            <a href="photo-gallery/{{ $row->id }}">
+          <a href="{{ route('media.show', $row->id) }}">
             <img src="{{ asset('storage/images/'.$row->img_url) }}" class="card-img-top img-fluid ">
-            </a>
-            <div class="card-body">
-                <p>
-                    <td class="">
-                    <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle"
-                        data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
-                    </td>
-                </p>
-            <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>
-            <p class="text-secondary">Description - {{ Str::limit($row->description, 10) }}</p>
-            </div>
+          </a>
+          <div class="card-body">
+            <p>
+              <td class="">
+              <img src="{{auth()->user()->avatar}}" alt="{{auth()->user()->name}}" class="w-25 h-25 rounded-circle"
+                data-toggle="tooltip" data-placement="top" title="{{auth()->user()->name}}">
+              </td>
+            </p>
+          <p class="card-title fw-bold text-secondary">Event Name - {{ $row->event_name }}</p>
+          <p class="text-secondary">Description - {{ Str::limit($row->description, 10) }}</p>
+          </div>
         </div>
     </div>
     @empty
         <h2 class="text-center text-secondary p-4">No post found in the database!</h2>
     @endforelse
     <div class="d-flex justify-content-center">
-        {{ $photo_gallery->onEachSide(1)->links() }}
+        {{ $media->onEachSide(1)->links() }}
     </div>
     </div>
 </div>
