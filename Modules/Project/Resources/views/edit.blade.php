@@ -20,12 +20,12 @@
                         role="tab" aria-selected="true">Project details</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="pill" data-target="#projectTeamMembers" type="button"
-                        role="tab" aria-selected="false">Project team members</a>
+                    <a class="nav-link" data-toggle="pill" data-target="#projectTeamMembers" type="button" role="tab"
+                        aria-selected="false">Project team members</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="pill" data-target="#projectRepository" type="button"
-                        role="tab" aria-selected="false">Project repositories</a>
+                    <a class="nav-link" data-toggle="pill" data-target="#projectRepository" type="button" role="tab"
+                        aria-selected="false">Project repositories</a>
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" data-toggle="pill" data-target="#projectFinancialDetails" type="button"
@@ -74,11 +74,11 @@
             created() {
                 this.projectTeamMembers.map((teamMember) => {
                     dailyEffort = teamMember['pivot']['daily_expected_effort'];
-                    teamMember['pivot']['weekly_expected_effort'] = dailyEffort * 5; 
+                    teamMember['pivot']['weekly_expected_effort'] = dailyEffort * 5;
                     teamMember['pivot']['monthly_expected_effort'] = dailyEffort * this.workingDaysInMonth;
                 })
             },
-            
+
             computed: {
                 totalDailyEffort() {
                     var total = 0
@@ -139,7 +139,7 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            this.$toast.success('Project details updated!');
+                            this.$toast.error('Project details not updated successfully!');
                         })
                 },
 
@@ -178,37 +178,41 @@
                     }
 
                     if (value > maximumExpectedEfforts) {
-                        if(! confirm('are you sure you want to enter more than ' + maximumExpectedEfforts + ' hours in expected effort?')) {
+                        if (!confirm('are you sure you want to enter more than ' + maximumExpectedEfforts +
+                                ' hours in expected effort?')) {
                             $event.target.value = value.slice(0, -1)
                             return
                         }
                     }
 
                     if (numberOfDays == 5) {
-                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/5;
+                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value / 5;
                         this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value;
-                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = (value/5) * this.workingDaysInMonth;
+                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = (value / 5) * this
+                            .workingDaysInMonth;
                     } else if (numberOfDays == this.workingDaysInMonth) {
-                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = (value/numberOfDays) * 5;
+                        this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value / numberOfDays;
+                        this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = (value / numberOfDays) *
+                            5;
                         this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value;
                     } else {
                         this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value;
                         this.projectTeamMembers[index]['pivot']['weekly_expected_effort'] = value * 5;
-                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this.workingDaysInMonth;
+                        this.projectTeamMembers[index]['pivot']['monthly_expected_effort'] = value * this
+                            .workingDaysInMonth;
                     }
-                   
-                         this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value/numberOfDays;
-                         this.$forceUpdate()
+
+                    this.projectTeamMembers[index]['pivot']['daily_expected_effort'] = value / numberOfDays;
+                    this.$forceUpdate()
                 }
             },
 
-                   filters: {
-                       toDate: function(timestamp) {
-                         if (timestamp == null) {
-                            return timestamp;
+            filters: {
+                toDate: function(timestamp) {
+                    if (timestamp == null) {
+                        return timestamp;
                     }
-                         return timestamp.substring(0,10);
+                    return timestamp.substring(0, 10);
                 }
             },
 
