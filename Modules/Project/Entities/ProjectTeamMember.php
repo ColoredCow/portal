@@ -98,7 +98,7 @@ class ProjectTeamMember extends Model
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
+        $daysTillToday = count($project->getWorkingDaysList($startDate, $currentDate));
         if ($daysTillToday == 0) {
             return 0;
         }
