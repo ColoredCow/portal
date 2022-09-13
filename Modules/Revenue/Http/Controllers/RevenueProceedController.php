@@ -48,6 +48,6 @@ class RevenueProceedController extends Controller
     {
         $this->service->delete($id);
 
-        return redirect()->route('revenue.proceeds.index')->with('status',"Revenue deleted successfully!!");
+        return redirect()->route('revenue.proceeds.index')->with('status', "Revenue deleted successfully!!");
     }
 }

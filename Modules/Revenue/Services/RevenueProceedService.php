@@ -1,12 +1,11 @@
 <?php
+
 namespace Modules\Revenue\Services;
 use Modules\Revenue\Entities\RevenueProceed;
 use Illuminate\Http\Request;
 
-
 class RevenueProceedService
 {
-
     public function index()
     {
         $revenueData = RevenueProceed::orderby('name')->get();
