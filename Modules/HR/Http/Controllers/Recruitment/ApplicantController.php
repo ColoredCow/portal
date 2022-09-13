@@ -121,10 +121,18 @@ class ApplicantController extends Controller
         $uploadConfigs = (config('hr.applicant_upload_details'));
 
         $files=[];
-        if ($request->file('head_shot_image')) $files[] = $request->file('head_shot_image');
-        if ($request->file('aadhar_card_scanned')) $files[] = $request->file('aadhar_card_scanned');
-        if ($request->file('scanned_copy_pan_card')) $files[] = $request->file('scanned_copy_pan_card');
-        if ($request->file('passbook_first_page_img')) $files[] = $request->file('passbook_first_page_img');
+        if ($request->file('head_shot_image')) {
+            $files[] = $request->file('head_shot_image');
+        }
+        if ($request->file('aadhar_card_scanned')) {
+            $files[] = $request->file('aadhar_card_scanned');
+        }
+        if ($request->file('scanned_copy_pan_card')) {
+            $files[] = $request->file('scanned_copy_pan_card');
+        }    
+        if ($request->file('passbook_first_page_img')) {
+            $files[] = $request->file('passbook_first_page_img');
+        } 
 
         foreach ($files as $file) {
             if (!empty($file)) {
@@ -136,12 +144,12 @@ class ApplicantController extends Controller
         
         // $uploadFile = time() . '.' . $file->Extension();
         $postData = ['imgurl'=>$filepath];
-        $string=implode(",",$postData);
+        $string=implode(",", $postData);
         // dd($postData);
         // dd($filePath);
         
         
-        foreach($keyConfigs as $key=>$label) {
+        foreach ($keyConfigs as $key=>$label) {
             ApplicantMeta::create([
                 'hr_applicant_id' => $request->get('hr_applicant_id'),
                 'key' => $label,
@@ -149,7 +157,7 @@ class ApplicantController extends Controller
             ]); 
         }
 
-        foreach($uploadConfigs as $key=>$label) {
+        foreach ($uploadConfigs as $key=>$label) {
             ApplicantMeta::create([
                 'hr_applicant_id' => $request->get('hr_applicant_id'),
                 'key' => $label,
