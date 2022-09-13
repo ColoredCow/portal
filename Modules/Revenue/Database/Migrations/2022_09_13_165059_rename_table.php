@@ -22,6 +22,6 @@ class RenameTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('revenue_proceeds');
+        // 
     }
 }
