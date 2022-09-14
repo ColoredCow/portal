@@ -35,13 +35,13 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                                <a v-show="userPermissions['can-assign-roles']" class="dropdown-item" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)" href="#">Assign roles</a>
+                                <a v-show="userPermissions['can-assign-roles']" class="dropdown-item" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(user)" href="#">Assign roles</a>
                                 <a v-show="userPermissions['can-delete']" class="dropdown-item text-danger"  @click="removeUser(index)"  ref="#">Remove this user</a>
                             </div>
                         </div>
 
                         <div >
-                            <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(index)">Manage user roles</button>
+                            <button v-show="userPermissions['can-assign-roles']" class="btn btn-sm btn-outline-info mr-4" data-toggle="modal" data-target="#update_user_roles_modal" @click="updateUserRolesModal(user)">Manage user roles</button>
                             <button v-show="userPermissions['can-delete'] && user.id !== authUser.id" type="button" class="btn btn-sm btn-outline-danger " data-toggle="modal" data-target="#deleteUserModal" @click="setIndex(index)">Remove user</button>
                         </div>
                     </td>
@@ -105,9 +105,9 @@ export default {
 			return (roleNames.length) ? roleNames.join(", ") : "-";
 		},
 
-		updateUserRolesModal: function(index) {
-			this.currentUserIndex = index;
-			this.selectedUser = this.users[index];
+		updateUserRolesModal: function(user) {
+			this.currentUserIndex = user;
+			this.selectedUser = user;
 		},
 
 		onUserRoleUpdated: function(selectedRoles) {
