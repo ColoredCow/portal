@@ -13,7 +13,7 @@
         @include('project::menu_header')
         @can('projects.create')
             <span class='mt-4'>
-                <a href= "{{ route('project.create') }}" class="btn btn-info text-white">{{ __('Add new project') }}</a>
+                <a href= "{{ route('project.create') }}" class="btn btn-success text-white ml-1"><i class="fa fa-plus"></i> {{ __('Add new project') }}</a>
             </span>
         @endcan
     </div>
@@ -31,7 +31,7 @@
                 </select>
             </div>
             <div class="d-flex align-items-center">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Project name"
+                <input type="text" name="name" class="form-control" id="name" placeholder="Enter the project name"
                 value={{request()->get('name')}}>
                 <button class="btn btn-info ml-2 text-white">Search</button>
             </div>
@@ -83,9 +83,9 @@
                                         </span>
                                     @endforeach
                                 </td>
-                                <td>
+                              <td class="text-center"> 
                                     @if(empty($project->projectContracts->first()->contract_file_path))
-                                        <span class="badge badge-light border border-dark rounded-0">No Contract</span>
+                                        <span class="badge badge-pill badge-secondary">No Contract</span>
                                     @endif
                                 </td>
                                 <td class="w-20p">

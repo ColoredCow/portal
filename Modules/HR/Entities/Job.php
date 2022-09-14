@@ -23,6 +23,11 @@ class Job extends Model
         return $this->hasMany(Application::class, 'hr_job_id');
     }
 
+    public function jobRequisition()
+    {
+        return $this->hasMany(JobRequisition::class, 'job_id')->where('status', 'pending');
+    }
+
     public function rounds()
     {
         return $this->belongsToMany(Round::class, 'hr_jobs_rounds', 'hr_job_id', 'hr_round_id')->withPivot('hr_job_id', 'hr_round_id', 'hr_round_interviewer_id');

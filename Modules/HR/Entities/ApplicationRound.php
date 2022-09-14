@@ -15,12 +15,10 @@ use Modules\HR\Entities\Evaluation\ApplicationEvaluation;
 use Modules\User\Entities\User;
 use App\Models\Setting;
 use Modules\HR\Emails\Recruitment\Applicant\OnHold;
-use Modules\HR\Database\Factories\HrApplicationRoundFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ApplicationRound extends Model
 {
-    use HasTags, HasCalendarMeetings, HasFactory;
+    use HasTags, HasCalendarMeetings;
 
     protected $guarded = [];
 
@@ -29,11 +27,6 @@ class ApplicationRound extends Model
     public $timestamps = false;
 
     protected $dates = ['scheduled_date', 'conducted_date'];
-
-    public static function newFactory()
-    {
-        return new HrApplicationRoundFactory();
-    }
 
     public function _update($attr)
     {
@@ -180,12 +173,13 @@ class ApplicationRound extends Model
                 $job_title = Job::find($application->hr_job_id)->title;
                 $body->setting_value = str_replace(config('constants.hr.template-variables.applicant-name'), $applicant->name, $body->setting_value);
                 $body->setting_value = str_replace(config('constants.hr.template-variables.job-title'), $job_title, $body->setting_value);
-
                 //ToDo: We need to think of what would be the worfklow once an application is put on hold by HR team.
                 // Mail::to($applicant->email, $applicant->name)->send(new OnHold($subject->setting_value, $body->setting_value));
+                if (isset($attr['send_mail_to_applicant']['hold'])) {
+                    Mail::to($applicant->email, $applicant->name)->queue(new OnHold($subject->setting_value, $body->setting_value));
+                }
 
                 return redirect()->route('applications.job.index');
-
             case 'send-for-approval':
                 $application->untag('new-application');
                 $application->untag('in-progress');

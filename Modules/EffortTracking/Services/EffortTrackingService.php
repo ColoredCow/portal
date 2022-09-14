@@ -14,7 +14,7 @@ use Revolution\Google\Sheets\Sheets;
 
 class EffortTrackingService
 {
-    public function show($project)
+    public function show(array $data, $project)
     {
         $teamMembers = $project->getTeamMembers()->get();
         $teamMembersDetails = $this->getTeamMembersDetails($teamMembers);
@@ -22,10 +22,15 @@ class EffortTrackingService
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = now(config('constants.timezone.indian'))->subDay();
         }
-        $totalEffort = $project->current_hours_for_month;
         $workingDays = $this->getWorkingDays($project->client->month_start_date, $currentDate);
-        $startDate = $project->client->month_start_date;
-        $endDate = $project->client->month_end_date;
+        $currentDate = now(config('constants.timezone.indian'));
+        $currentMonth = $data['month'] ?? Carbon::now()->format('F');
+        $currentYear = $data['year'] ?? Carbon::now()->format('Y');
+        $totalMonths = $this->getTotalMonthsFilterParameter($currentMonth, $currentYear);
+        $startDate = $project->client->getMonthStartDateAttribute($totalMonths);
+        $endDate = $project->client->getMonthEndDateAttribute($totalMonths);
+        $totalWorkingDays = count($this->getWorkingDays($startDate, $endDate));
+        $totalEffort = $project->getCurrentHoursForMonthAttribute($startDate, $endDate);
         $totalWorkingDays = count($this->getworkingDays($startDate, $endDate));
         $daysTillToday = count($project->getWorkingDaysList($project->client->month_start_date, $currentDate));
 
@@ -38,10 +43,24 @@ class EffortTrackingService
             'totalEffort' => $totalEffort,
             'startDate' => $startDate,
             'endDate' => $endDate,
-            'currentMonth' => now()->format('F'),
+            'currentMonth' => $currentMonth,
             'daysTillToday' => $daysTillToday,
+            'totalMonths' => $totalMonths,
+            'currentYear' => $currentYear,
         ];
     }
+
+    public function getTotalMonthsFilterParameter($currentMonth, $currentYear)
+    {
+        $Month = intval(date('m', strtotime($currentMonth)));
+        $thisMonth = intval(Carbon::now()->format('m'));
+        $monthsDifference = ($thisMonth - $Month);
+        $totalYears = (Carbon::now()->format('Y') - $currentYear);
+        $totalMonths = $monthsDifference + ($totalYears * 12);
+
+        return $totalMonths;
+    }
+
     /**
      * Calculate FTE.
      * @param  int $currentHours  Current Hours.

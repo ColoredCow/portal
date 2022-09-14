@@ -8,12 +8,13 @@
     <br><br>
     <div class="d-flex justify-content-between align-items-center">
         <h1>{{ $type == 'volunteer' ? 'Projects' : 'Opportunities' }}</h1>
-        <a href="{{ route('recruitment.opportunities.create') }}" class="btn btn-primary"><i class="fa fa-plus mr-1"></i>New Opportunity</a>
+        <a href="{{ route('recruitment.opportunities.create') }}" class="btn btn-success"><i class="fa fa-plus mr-1"></i>New Opportunity</a>
     </div>
     <table class="table table-striped table-bordered">
         <tr>
             <th>Title</th>
             <th>Type</th>
+            <th>Resources Required</th>
         </tr>
         @foreach ($jobs as $job)
         <tr>
@@ -39,6 +40,9 @@
                 </div>
             </td>
             <td>{{ ucfirst($job->type) }}</td>
+            <td>
+               <span>{{$job->jobRequisition->count()}}</span>
+            </td>
         </tr>
         @endforeach
     </table>

@@ -3,7 +3,8 @@
 return [
     'name' => 'HR',
     'applicationEvaluation' => [
-        'cutoffScore' => 6,
+        'cut-off-score-resume-screening' => 6,
+        'cut-off-score-telephonic-interview' => 5,
     ],
     'opportunities' => [
         'job' => [
@@ -36,6 +37,11 @@ return [
         'new-application' => 'New application',
         'no-show' => 'No show',
         'no-show-reminded' => 'No show reminded',
+        'on-hold' => 'On hold',
+        'approved' => 'Approved',
+        'onboarded' => 'Onboarded',
+        'rejected' => 'Rejected',
+        'sent-for-approval' => 'Sent for Approval',
     ],
 
     'opportunities-status' => [
@@ -98,7 +104,7 @@ return [
         'new' => [
             'label' => 'new',
             'title' => 'New',
-            'class' => 'badge badge-info',
+            'class' => 'badge badge-success',
         ],
         'on-hold' => [
             'label' => 'on-hold',
@@ -151,6 +157,7 @@ return [
             'class' => 'badge badge-success p-1',
         ],
     ],
+   'Sample-Resume' => 'https://coloredcow.com/wp-content/uploads/2022/08/sample.pdf',
     'defaults' => [
         'scheduled_person_id' => env('HR_DEFAULT_SCHEDULED_PERSON', 1),
     ],
@@ -174,5 +181,5 @@ return [
     'hr-followup-email' => [
         'primary' => env('HR_FOLLOWUP_EMAIL_PRIMARY', 'deepak.sharma@coloredcow.in'),
         'secondary' => env('HR_FOLLOWUP_EMAIL_SECONDARY', 'pk@coloredcow.in'),
-    ]
+    ],
 ];
