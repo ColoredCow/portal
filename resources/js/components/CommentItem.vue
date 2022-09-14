@@ -18,7 +18,7 @@
         <div class="card-body pt-3">
             <div>
                 <div v-if="state == 'edit'">
-                    <textarea v-model="comment.body" class="form-control">{{comment.body}}</textarea>
+                    <textarea v-model="comment.body" class="form-control"></textarea>
                     <span class="float-right">
                         <button class="btn btn-sm btn-success mt-2 mx-3" @click="updateComment()">Save</button>
                         <button class="btn btn-sm btn-secondary mt-2" @click="disableEditMode()">Cancel</button>
