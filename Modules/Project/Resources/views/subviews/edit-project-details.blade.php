@@ -52,7 +52,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="name" class="field-required">Project Type</label>
-                        <select v-model="projectType"  name="project_type" id="project_type" class="form-control" required="required">`
+                        <select v-model="projectType"  ngitame="project_type" id="project_type" class="form-control" required="required">`
                             @foreach (config('project.type') as $key => $project_type)
                                 @php
                                     $selected = ($project->type == $key || old('project_type') == $key) ? 'selected' : '';

@@ -30,7 +30,6 @@ class RecurringExpenseController extends Controller
 
     public function store(Request $request)
     {
-        // ToDo:: we need to add validations here.
         $validated = $request->validate([
         'name' => 'required',
         'frequency' => 'required',

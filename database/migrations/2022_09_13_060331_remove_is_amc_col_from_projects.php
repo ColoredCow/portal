@@ -15,7 +15,6 @@ class RemoveIsAmcColFromProjects extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             //
-            $table->dropColumn('is_amc');
         });
     }
 
