@@ -126,7 +126,7 @@
                             $('.save-btn').attr('disabled', false);
                             $('#project-details-update-message').addClass('d-block');
                             $('#project-details-update-message').removeClass('d-none');
-                            this.$toast.success('Project details updated!');
+                            this.$toast.error('Project details not updated successfully!');
                         })
                         .catch((error) => {
                             $('#project-details-update-message').removeClass('d-block');
