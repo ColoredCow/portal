@@ -15,7 +15,7 @@ class ApplicantMetaRequest extends FormRequest
     {
         return [
             'preferred_name' => 'required|string',
-            'date_of_birth' => 'required|date_format:Y-m-d"',
+            'date_of_birth' => 'required|date',
             'father_name' => 'required|string',
             'mother_name' => 'required|string',
             'current_address' => 'required|string',

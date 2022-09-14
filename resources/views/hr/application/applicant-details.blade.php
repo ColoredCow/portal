@@ -41,8 +41,8 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="date_of_birth" class="field-required fz-14 leading-none text-secondary mb-1">Date Of Birth</label>
-                        <p class="fz-14 leading-none text-secondary mb-1">Format- DD/MM/YYYY</p>
-                        <input type="text" class="form-control w-300" name="date_of_birth" required="required">
+                        <p class="fz-14 leading-none text-secondary mb-1">Format- MM/DD/YYYY</p>
+                        <input type="date" class="form-control w-300" name="date_of_birth" required="required">
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="contact_number" class="field-required fz-14 leading-none text-secondary mb-1">Personal Contact Number</label>
