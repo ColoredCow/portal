@@ -19,7 +19,7 @@ class CreateRevenueTable extends Migration
             $table->string('category');
             $table->string('currency');
             $table->string('amount');
-            $table->string('recieved_at');
+            $table->date('recieved_at');
             $table->string('notes')->nullable();
             $table->timestamps();
             $table->softdeletes();
@@ -33,6 +33,6 @@ class CreateRevenueTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Revenue_proceeds');
+        Schema::dropIfExists('revenue_proceeds');
     }
 }

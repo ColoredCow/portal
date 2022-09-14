@@ -45,6 +45,6 @@
             @endforeach
         </table>
     </div>
-    @include('revenue::edit')
-    @include('revenue::create')
+    @include('revenue::revenue-proceeds.edit')
+    @include('revenue::revenue-proceeds.create')
 @endsection
