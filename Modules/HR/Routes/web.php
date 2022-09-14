@@ -132,5 +132,5 @@ Route::middleware('auth')->group(function () {
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');
-Route::get('/viewForm/{id}', 'Recruitment\ApplicantController@viewForm');
+Route::get('/viewForm/{id}/{email}', 'Recruitment\ApplicantController@viewForm');
 Route::post('/store', 'Recruitment\ApplicantController@storeDetails')->name('hr.applicant.store-details');
