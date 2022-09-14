@@ -16,7 +16,7 @@ class RevenueProceedService
 
     public function store(Request $request)
     {
-        $revenueProceed = new revenueProceed;
+        $revenueProceed = new RevenueProceed;
         $revenueProceed->name = $request->input('name');
         $revenueProceed->category = $request->input('category');
         $revenueProceed->currency = $request->input('currency');
