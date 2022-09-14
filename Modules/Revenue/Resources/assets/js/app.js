@@ -10,7 +10,6 @@ $("#modalEdit").on("show.bs.modal", function (e) {
 	editForm.attr("action", action);
 
 	editForm.find("select[name='category']").val(revenueProceed.category);
-	console.log(revenueProceed.category);
 	editForm.find("input[name='name']").val(revenueProceed.name);
 	editForm.find("input[name='amount']").val(revenueProceed.amount);
 	editForm.find("select[name='currency']").val(revenueProceed.currency);
