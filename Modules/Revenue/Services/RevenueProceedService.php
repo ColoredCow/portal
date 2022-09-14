@@ -17,7 +17,6 @@ class RevenueProceedService
 
     public function store(Request $request)
     {
-    
         $revenueProceed = new RevenueProceed;
 
         $revenueProceed->name = $request['name'];
@@ -47,7 +46,7 @@ class RevenueProceedService
         $revenueProceed->recieved_at = $request['recieved_at'];
         $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
-        
+
         return $revenueProceed;
     }
 
