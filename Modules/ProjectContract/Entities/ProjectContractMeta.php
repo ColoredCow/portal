@@ -12,6 +12,8 @@ class ProjectContractMeta extends Model
 
     protected $table = 'project_contract_meta';
 
+    protected $fillable = ['website_url', 'logo_img', 'authority_name', 'contract_date_for_signing', 'contract_date_for_effective', 'contract_expiry_date', 'attributes'];
+
     protected $casts = [
         'attributes' => 'array',
     ];

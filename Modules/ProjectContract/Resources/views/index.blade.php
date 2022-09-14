@@ -27,11 +27,6 @@
             </div>
         </form>
     </div>
-    <div class='d-md-none mb-2'>
-        <div class="d-flex flex-row-reverse">
-            <a href= "{{ route('projectcontract.create') }}" class="btn btn-info text-white">{{ __('Add new project contract') }}</a>
-        </div>
-    </div>
     <div>
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">

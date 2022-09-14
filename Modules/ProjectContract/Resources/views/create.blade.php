@@ -4,7 +4,7 @@
 <div class="container">
 	{{-- @include('project::menu_header') --}}
     <br><h4>Add new Client</h4>
-    <div class="">
+    <div>
         @include('status', ['errors' => $errors->all()])
         <div class="card">
             <form action="{{ route('projectcontract.store') }}" method="POST" enctype="multipart/form-data" id="form_project">
