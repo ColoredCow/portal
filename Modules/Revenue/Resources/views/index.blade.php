@@ -22,23 +22,23 @@
                 <th>Date of Recieved</th>
                 <th>Action</th>
             </tr>
-            @foreach ($revenues as $revenue)
+            @foreach ($revenueProceeds as $revenueProceed)
                 <tr>
-                    <td>{{ $revenue->name }}</td>
-                    <td>{{ $revenue->category }}</td>
-                    <td>{{ $revenue->currency }}</td>
-                    <td>{{ $revenue->amount }}</td>
-                    <td>{{ $revenue->notes }}</td>
-                    <td>{{ $revenue->recieved_at }}</td>
+                    <td>{{ $revenueProceed->name }}</td>
+                    <td>{{ $revenueProceed->category }}</td>
+                    <td>{{ $revenueProceed->currency }}</td>
+                    <td>{{ $revenueProceed->amount }}</td>
+                    <td>{{ $revenueProceed->notes }}</td>
+                    <td>{{ $revenueProceed->recieved_at }}</td>
                     <td>
                         @php
-                            $days = $revenue->created_at->diffInDays(today());
+                            $days = $revenueProceed->created_at->diffInDays(today());
                         @endphp
                         @if ($days < 10)
-                            <button class="pl-1 btn btn-link" data-toggle="modal" data-target="#modalEdit" data-json="{{$revenue}}"><i class="text-success fa fa-edit fa-lg"></i></button>
-                            <a class="pl-1 btn btn-link" id="deleteRevenue" href="{{route('revenue.proceeds.delete',$revenue->id)}}"><i class="text-danger fa fa-trash fa-lg"></i></a>
+                            <button class="pl-1 btn btn-link" data-toggle="modal" data-target="#modalEdit" data-json="{{$revenueProceed}}"><i class="text-success fa fa-edit fa-lg"></i></button>
+                            <a class="pl-1 btn btn-link" id="deleteRevenue" href="{{route('revenue.proceeds.delete',$revenueProceed->id)}}"><i class="text-danger fa fa-trash fa-lg"></i></a>
                         @else
-                        <span data-toggle="tooltip" class="ml-7" title="Sorry!! you can't delete it after 10days of creation."><i class="fa fa-question-circle"></i>&nbsp;</span>
+                        <span data-toggle="tooltip" class="ml-7" title="Sorry!! you can't Edit or Delete it after 10days of creation."><i class="fa fa-question-circle"></i>&nbsp;</span>
                         @endif
                     </td>
                 </tr>

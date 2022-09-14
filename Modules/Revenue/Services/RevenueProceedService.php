@@ -9,23 +9,23 @@ class RevenueProceedService
 {
     public function index()
     {
-        $revenueData = RevenueProceed::orderby('name')->get();
+        $revenueProceedData = RevenueProceed::orderby('name')->get();
 
-        return $revenueData;
+        return $revenueProceedData;
     }
 
     public function store(Request $request)
     {
-        $revenue = new RevenueProceed;
-        $revenue->name = $request->input('name');
-        $revenue->category = $request->input('category');
-        $revenue->currency = $request->input('currency');
-        $revenue->amount = $request->input('amount');
-        $revenue->recieved_at = $request->input('recieved_at');
-        $revenue->notes = $request->input('notes');
-        $revenue->save();
+        $revenueProceed = new revenueProceed;
+        $revenueProceed->name = $request->input('name');
+        $revenueProceed->category = $request->input('category');
+        $revenueProceed->currency = $request->input('currency');
+        $revenueProceed->amount = $request->input('amount');
+        $revenueProceed->recieved_at = $request->input('recieved_at');
+        $revenueProceed->notes = $request->input('notes');
+        $revenueProceed->save();
 
-        return $revenue;
+        return $revenueProceed;
     }
 
     public function show($id)
@@ -35,17 +35,17 @@ class RevenueProceedService
 
     public function update(Request $request, $id)
     {
-        $revenue = RevenueProceed::find($id);
+        $revenueProceed = RevenueProceed::find($id);
 
-        $revenue->name = $request->input('name');
-        $revenue->category = $request->input('category');
-        $revenue->currency = $request->input('currency');
-        $revenue->amount = $request->input('amount');
-        $revenue->recieved_at = $request->input('recieved_at');
-        $revenue->notes = $request->input('notes');
-        $revenue->save();
+        $revenueProceed->name = $request->input('name');
+        $revenueProceed->category = $request->input('category');
+        $revenueProceed->currency = $request->input('currency');
+        $revenueProceed->amount = $request->input('amount');
+        $revenueProceed->recieved_at = $request->input('recieved_at');
+        $revenueProceed->notes = $request->input('notes');
+        $revenueProceed->save();
 
-        return $revenue;
+        return $revenueProceed;
     }
 
     public function delete($id)

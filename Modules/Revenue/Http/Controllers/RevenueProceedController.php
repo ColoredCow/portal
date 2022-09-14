@@ -21,9 +21,9 @@ class RevenueProceedController extends Controller
     }
     public function index()
     {
-        $revenueData = $this->service->index();
+        $revenueProceedData = $this->service->index();
 
-        return view('revenue::index')->with('revenues', $revenueData);
+        return view('revenue::index')->with('revenueProceeds', $revenueProceedData);
     }
 
     public function store(Request $request)
