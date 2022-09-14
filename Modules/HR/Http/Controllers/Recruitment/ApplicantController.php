@@ -123,11 +123,11 @@ class ApplicantController extends Controller
                 'value' => $request->get($key)
             ]);
         }
-        
+
         foreach ($uploadConfigs as $key=>$label) {
             if ($request->file($key)) {
                 $file = $request->file($key);
-                $fileName = $key.$request->get('hr_applicant_id') . '.' . $file->extension();
+                $fileName = $key . $request->get('hr_applicant_id') . '.' . $file->extension();
                 $filepath = $file->move(storage_path('app/uploadedimages'), $fileName);
                 ApplicantMeta::create([
                     'hr_applicant_id' => $request->get('hr_applicant_id'),
