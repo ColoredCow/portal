@@ -1,5 +1,7 @@
 <?php
+
 namespace Modules\Project\Entities;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Project\Database\Factories\ProjectTeamMemberFactory;
@@ -39,6 +41,7 @@ class ProjectTeamMember extends Model
     public function getCurrentActualEffortAttribute($startDate = null)
     {
         $startDate = $startDate ?? $this->project->client->month_start_date;
+
         return $this->projectTeamMemberEffort()->where('added_on', '>=', $startDate)->sum('actual_effort');
     }
     public function getCurrentExpectedEffortAttribute($startDate = null, $endDate = null)
@@ -47,10 +50,13 @@ class ProjectTeamMember extends Model
         $currentDate = today(config('constants.timezone.indian'));
         $startDate = $startDate ?? $this->project->client->month_start_date;
         $endDate = $endDate ?? $this->project->client->month_end_date;
+
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
+
         $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
+
         return $this->daily_expected_effort * $daysTillToday;
     }
 
@@ -102,6 +108,7 @@ class ProjectTeamMember extends Model
         if ($daysTillToday == 0) {
             return 0;
         }
+    
         return round($this->getCurrentActualEffortAttribute($startDate = null) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 }
