@@ -23,7 +23,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="">Note</label>
-                        <input type="text" class="form-control" >
+                        <textarea type="text" class="form-control" name="notes"></textarea>
                     </div>  
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="" class="field-required">Date of Recieved</label>

@@ -17,29 +17,29 @@
                             <input type="text" class="form-control" required name="name">
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
-                            <label for="" >Category</label>
-                            <input type="text" class="form-control" name="category">
+                            <label for="" >Currency</label>
+                            <input type="text" class="form-control" name="currency"  >
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
-                            <label for="">Date of Recieved</label>
-                            <input type="date" class="form-control" name="recieved_at" >
-                        </div>
+                            <label for="">Note</label>
+                            <textarea type="text" class="form-control" name="notes" ></textarea>
+                        </div>  
                         <div class="form-group offset-md-1 col-md-5">
-                            <label for="" class="field-required">Currency</label>
-                            <input type="text" class="form-control" name="currency"  required>
+                            <label for="" class="field-required">Date of Recieved</label>
+                            <input type="date" class="form-control" required name="recieved_at" >
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="" class="field-required">Amount</label>
-                            <input type="number" class="form-control" name="amount"  required>
+                            <input type="number" class="form-control"  name="amount"  required>
                         </div>
                         <div class="form-group offset-md-1 col-md-5">
-                            <label for="">Note</label>
-                            <input type="text" class="form-control" name="notes">
-                        </div>          
+                            <label for="" class="field-required">Category</label>
+                            <input type="text" class="form-control" name="category" required>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

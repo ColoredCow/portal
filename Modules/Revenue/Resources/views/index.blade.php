@@ -1,13 +1,13 @@
 @extends('revenue::layouts.master')
 
 @section('content')
-    <div class="container" id="revenues">
+    <div class="container" id="revenue_proceeds">
         @if (session('status'))
 
         @endif
         <br>
         <div class="d-flex justify-content-between mb-2">
-            <h4 class="mb-1 pb-1 fz-28">Revenue</h4>
+            <h4 class="mb-1 pb-1 fz-28">Revenue Proceeds</h4>
             <span>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">Add Revenue</button>
             </span>

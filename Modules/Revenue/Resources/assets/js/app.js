@@ -1,5 +1,5 @@
 $("#modalEdit").on("show.bs.modal", function (e) {
-	const revenueProceedEdited = e.relatedTarget; // edit button
+	const revenueProceedEdited = e.relatedTarget;
 	const revenueProceed = $(revenueProceedEdited).data("json");
 
 	const editForm = $(this).find("form");
