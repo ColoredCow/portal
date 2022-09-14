@@ -191,6 +191,19 @@ class EffortTrackingService
             $columnIndex = 5;
             $projectsInSheet = [];
 
+            $range = config('efforttracking.default_start_column_in_effort_sheet') . '2:' . config('efforttracking.default_start_column_in_effort_sheet');
+            $sheet = $sheets->spreadsheet($sheetId)
+                ->range($range)
+                ->get();
+
+            foreach ($sheet as $rows) {
+                if (count($rows) == 0) {
+                    break;
+                }
+                $projectMembersCount++;
+            }
+
+
             try {
                 while (true) {
                     $range = 'C1:' . ++$lastColumn . '1';
