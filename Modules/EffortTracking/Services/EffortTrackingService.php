@@ -203,7 +203,6 @@ class EffortTrackingService
                 $projectMembersCount++;
             }
 
-
             try {
                 while (true) {
                     $range = 'C1:' . ++$lastColumn . '1';
