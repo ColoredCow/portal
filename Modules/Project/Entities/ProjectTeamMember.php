@@ -69,7 +69,6 @@ class ProjectTeamMember extends Model
         $Month = intval(date('m', strtotime($startDate)));
         $endDate = $endDate ?? $this->project->client->month_end_date;
 
-
         if ($Month == $currentMonth) {
             $daysTillToday = count($project->getWorkingDaysList($startDate, $currentDate));
         } else {
@@ -108,7 +107,7 @@ class ProjectTeamMember extends Model
         if ($daysTillToday == 0) {
             return 0;
         }
-    
+
         return round($this->getCurrentActualEffortAttribute($startDate = null) / ($daysTillToday * config('efforttracking.minimum_expected_hours')), 2);
     }
 }
