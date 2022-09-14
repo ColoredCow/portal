@@ -1,0 +1,13 @@
+{
+    "name": "Revenue",
+    "alias": "revenue",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Revenue\\Providers\\RevenueServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
