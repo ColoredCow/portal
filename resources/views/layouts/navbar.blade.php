@@ -11,7 +11,7 @@
                 @can('hr_employees.view')
                     <a class="dropdown-item" href="{{ route('employees') }}">Employees</a>
                 @endcan
-                <a class="dropdown-item" href="{{ route('requisition') }}">Resource Requisition</a>
+                    <a class="dropdown-item" href="{{ route('requisition') }}">Resource Requisition</a>
                 @can('hr_volunteers_applications.view')
                     <a class="dropdown-item" href="{{ route('applications.volunteer.index') }}">Volunteers</a>
                 @endcan
@@ -36,10 +36,7 @@
             </div>
         </li>
     @endif
-    @if ((Module::checkStatus('Client') &&
-        auth()->user()->can('clients.view')) ||
-        (Module::checkStatus('Project') &&
-            auth()->user()->can('projects.view')))
+    @if ((Module::checkStatus('Client') && auth()->user()->can('clients.view')) || (Module::checkStatus('Project') && auth()->user()->can('projects.view')))
         <li class="nav-item dropdown">
             <a id="navbarDropdown_pm" class="nav-link dropdown-toggle" href="#" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>CRM<span class="caret"></span>
@@ -147,10 +144,10 @@
                 @endcan
             </div>
         </li>
-    @endcanany    
+    @endcanany
     @can('media.view')
         <li class="nav-item">
             <a class="nav-item nav-link" href="{{ route('media.index') }}">Media</a>
-        </li>        
+        </li>
     @endcan
 </ul>

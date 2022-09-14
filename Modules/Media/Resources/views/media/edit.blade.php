@@ -30,7 +30,7 @@
           </div>
           <div class="my-2">
             <div>
-                <a href="@yield('link')" class="btn btn-secondary float-right ml-3">@yield('link_text')</a>
+              <a href="@yield('link')" class="btn btn-secondary float-right ml-3">@yield('link_text')</a>
             </div>
             <input type="submit" value="Update Post" class="btn btn-success float-right">
           </div>
