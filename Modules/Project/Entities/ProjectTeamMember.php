@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Project\Database\Factories\ProjectTeamMemberFactory;
 use Modules\User\Entities\User;
+use Carbon\Carbon;
 
 class ProjectTeamMember extends Model
 {
@@ -70,11 +71,18 @@ class ProjectTeamMember extends Model
 
     public function getExpectedEffortTillTodayAttribute($startDate = null, $endDate = null)
     {
+        $currentMonth = Carbon::now()->format('m');
         $project = new Project;
+        $currentDate = today(config('constants.timezone.indian'));
         $startDate = $startDate ?? $this->project->client->month_start_date;
+        $Month = intval(date('m', strtotime($startDate)));
         $endDate = $endDate ?? $this->project->client->month_end_date;
 
-        $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
+        if ($Month == $currentMonth) {
+            $daysTillToday = count($project->getWorkingDaysList($startDate, $currentDate));
+        } else {
+            $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
+        }
 
         return $this->daily_expected_effort * $daysTillToday;
     }
@@ -89,16 +97,22 @@ class ProjectTeamMember extends Model
 
     public function getFteAttribute($startDate = null, $endDate = null)
     {
+        $currentMonth = Carbon::now()->format('m');
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
         $startDate = $startDate ?? $this->project->client->month_start_date;
+        $Month = intval(date('m', strtotime($startDate)));
         $endDate = $endDate ?? $this->project->client->month_end_date;
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($startDate, $currentDate));
+        if ($Month == $currentMonth) {
+            $daysTillToday = count($project->getWorkingDaysList($startDate, $currentDate));
+        } else {
+            $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
+        }
         if ($daysTillToday == 0) {
             return 0;
         }
