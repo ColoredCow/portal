@@ -139,7 +139,12 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            this.$toast.success('Project details updated!');
+                            if(error){
+                                var concat = ' was not selected ';
+                                var errormessage =  error;
+                                var final = errormessage.concat(concat,'');
+                                this.$toast.error(final);                           
+                                }
                         })
                 },
 

@@ -129,6 +129,11 @@
             </div>
         </li>
     @endcan
+    @can('media.view')
+        <li class="nav-item">
+            <a class="nav-item nav-link" href="{{ route('media.index') }}">Media</a>
+        </li>
+    @endcan
     @canany(['hr_settings.view', 'user_management.view', 'finance_invoices_settings.view', 'nda_settings.view'])
         <li class="nav-item dropdown">
             <a id="navbarDropdown_settings" class="nav-link dropdown-toggle" href="#" role="button"
@@ -145,9 +150,4 @@
             </div>
         </li>
     @endcanany
-    @can('media.view')
-        <li class="nav-item">
-            <a class="nav-item nav-link" href="{{ route('media.index') }}">Media</a>
-        </li>
-    @endcan
 </ul>
