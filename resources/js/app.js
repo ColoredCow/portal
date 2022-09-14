@@ -638,6 +638,9 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  * Knowledge Cafe
  *
  */
+$(window).on("load", function(){
+	$("#preloader").removeClass("d-block").addClass(" d-none ");
+});
 
 if (document.getElementById("show_and_save_book")) {
 	const bookForm = new Vue({
@@ -1728,6 +1731,71 @@ $(function () {
 		}
 	});
 });
+
+$(".status").on("change", function () {
+	$("#spinner").removeClass("d-none");
+	if (this.checked) {
+		$.ajax({
+			url: "completed/change-status/" + this.dataset.id,
+			method: "GET",
+			success: function (res) {
+				location.reload(true);
+			},
+			error: function (err) {
+				alert("there is some problem");
+			},
+			complete: function (data) {
+				$("#spinner").addClass("d-none");
+			}
+		});
+	}
+});
+
+$(".pending").on("change", function () {
+	$("#completeSpinner").removeClass("d-none");
+	$.ajax({
+		url: "pending/" + this.dataset.id,
+		method: "GET",
+		success: function (res) {
+			location.reload(true);
+		},
+		error: function (err) {
+			alert("there is some problem");
+		},
+		complete: function (data) {
+			$("#completeSpinner").addClass("d-none");
+		}
+	});
+});
+
+$(document).ready(function(){
+	$("#requisitionModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+	});
+	$("#requisitionForm").on("submit",function(e){
+		e.preventDefault();
+		$("#formSpinner").removeClass("d-none");
+		let form =$("#requisitionForm");
+
+	 	$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#requisitionModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(4000);
+			},
+			error: function(response){
+				alert("there is some problem");
+			},
+			complete: function(response){
+				$("#formSpinner").addClass("d-none");
+			}
+		});
+	});
+});
+
 
 $("#job_start_date").on("change", function () {
 	let startDate = $("#job_start_date").val();
