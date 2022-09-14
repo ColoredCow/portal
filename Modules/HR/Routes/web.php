@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
             ->names(['index' => 'hr.tags.index', 'edit' => 'hr.tags.edit', 'update' => 'hr.tags.update', 'store' => 'hr.tags.store', 'destroy' => 'hr.tags.delete']);
 
         Route::prefix('recruitment')->namespace('Recruitment')->group(function () {
+            Route::get('application/{application}/handover', 'JobApplicationController@applicationHandoverRequest')->name('application.handover');
+            Route::get('application/{application}/assign-to', 'JobApplicationController@acceptHandoverRequest')->name('application.handover.confirmation');
             Route::post('{applicant}/update-university', 'ApplicantController@updateUniversity')->name('hr.applicant.update-university');
             Route::get('reports', 'ReportsController@index')->name('recruitment.reports');
             Route::post('reports', 'ReportsController@searchBydate')->name('recruitment.report');
@@ -90,6 +92,7 @@ Route::middleware('auth')->group(function () {
             Route::get('{application}/get-offer-letter', 'JobApplicationController@getOfferLetter')->name('applications.getOfferLetter');
             Route::post('{application}/sendmail', 'JobApplicationController@sendApplicationMail')->name('application.custom-email');
             Route::post('/teaminteraction', 'JobApplicationController@generateTeamInteractionEmail');
+            Route::get('/onHoldEmail', 'JobApplicationController@generateOnHoldEmail');
 
             Route::resource('internship', 'InternshipApplicationController')
                 ->only(['index', 'edit'])
@@ -114,6 +117,18 @@ Route::middleware('auth')->group(function () {
                 'show' => 'employees.show',
             ]);
         Route::get('employee-reports', 'EmployeeController@reports')->name('employees.reports');
+        Route::get('fte-handler/{domain_id}', 'EmployeeController@showFTEdata')->name('employees.alert');
+
+        Route::resource('requisition', 'RequisitionController')
+        ->only(['index', 'show'])
+        ->names([
+            'index' => 'requisition',
+            'show' => 'requisition.show',
+        ]);
+        Route::post('store', 'RequisitionController@store')->name('requisition.store');
+        Route::get('/completed/change-status/{jobRequisition}', 'RequisitionController@storecompleted');
+        Route::get('/pending/{jobRequisition}', 'RequisitionController@storePending');
+        Route::get('/complete', 'RequisitionController@showCompletedRequisition')->name('requisition.complete');
     });
 });
 Route::get('applicantEmailVerification/{applicantEmail}/{applicationID}', 'Recruitment\ApplicantController@applicantEmailVerification')->name('applicant.email.verification');

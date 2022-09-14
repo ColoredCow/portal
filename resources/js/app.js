@@ -638,6 +638,9 @@ $(".hr_round_guide").on("click", ".save-guide", function () {
  * Knowledge Cafe
  *
  */
+$(window).on("load", function(){
+	$("#preloader").removeClass("d-block").addClass(" d-none ");
+});
 
 if (document.getElementById("show_and_save_book")) {
 	const bookForm = new Vue({
@@ -1729,6 +1732,71 @@ $(function () {
 	});
 });
 
+$(".status").on("change", function () {
+	$("#spinner").removeClass("d-none");
+	if (this.checked) {
+		$.ajax({
+			url: "completed/change-status/" + this.dataset.id,
+			method: "GET",
+			success: function (res) {
+				location.reload(true);
+			},
+			error: function (err) {
+				alert("there is some problem");
+			},
+			complete: function (data) {
+				$("#spinner").addClass("d-none");
+			}
+		});
+	}
+});
+
+$(".pending").on("change", function () {
+	$("#completeSpinner").removeClass("d-none");
+	$.ajax({
+		url: "pending/" + this.dataset.id,
+		method: "GET",
+		success: function (res) {
+			location.reload(true);
+		},
+		error: function (err) {
+			alert("there is some problem");
+		},
+		complete: function (data) {
+			$("#completeSpinner").addClass("d-none");
+		}
+	});
+});
+
+$(document).ready(function(){
+	$("#requisitionModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+	});
+	$("#requisitionForm").on("submit",function(e){
+		e.preventDefault();
+		$("#formSpinner").removeClass("d-none");
+		let form =$("#requisitionForm");
+
+	 	$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#requisitionModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(4000);
+			},
+			error: function(response){
+				alert("there is some problem");
+			},
+			complete: function(response){
+				$("#formSpinner").addClass("d-none");
+			}
+		});
+	});
+});
+
+
 $("#job_start_date").on("change", function () {
 	let startDate = $("#job_start_date").val();
 	$("#job_end_date").attr("min", startDate);
@@ -1759,7 +1827,19 @@ $(document).on("focusin", function (e) {
 	}
 });
 
-$("#editform").on("submit", function (e) {
+$(document).ready(function(){
+	$("#holdSendMailToApplicant").on("click", function(event) {
+		var $optionContainer = $("#optionContainer");
+		if ($(this).is(":checked")) {
+			$optionContainer.removeClass("d-none");
+		}
+		else{
+			$optionContainer.addClass("d-none");
+		}
+	});
+});
+
+$("#editform").on("submit", function(e) {
 	e.preventDefault();
 	let form = $("#editform");
 	let button = $("#editBT");
@@ -1826,4 +1906,37 @@ $("#updateEmail").on("click", function () {
 });
 $("#interactionErrorModalCloseBtn").click(function () {
 	$("#InteractionError").toggleClass("d-none");
+});
+
+$(".opt").on("click", function() {
+	let formData = {
+		"setting_key_subject":  $(this).data("key-subject"),
+		"setting_key_body": $(this).data("key-body"),
+		"applicant_name": $("#applicantName").text(),
+		"job_title": $("#jobTitle").text(),
+	};
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option1subject").val(response.subject);
+			tinymce.get("option1body").setContent(response.body, {format: "html"});
+		},
+	});
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option2subject").val(response.subject);
+			tinymce.get("option2body").setContent(response.body, {format: "html"});
+		},
+	});
 });

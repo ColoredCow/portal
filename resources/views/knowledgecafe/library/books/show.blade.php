@@ -73,11 +73,11 @@
             </div>
             <div class="col-md-4 col-xl-3">
                 <span class="d-block mb-1">
-                    <button class="btn btn-info p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
-                    <button class="btn btn-success p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
+                    <button class="btn btn-success p-2" @click="borrowTheBook()" v-if="!isBorrowed">I have this book</button>
+                    <button class="btn btn-primary p-2" @click="putTheBookBackToLibrary()" v-else>I have returned it</button>
                 </span>
                 <span class="d-block mb-1">
-                    <button class="btn btn-primary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
+                    <button class="btn btn-secondary p-2" @click="markBook(true)" v-if="!isRead">I have read this book</button>
                     <button class="btn btn-danger p-2" @click="markBook(false)" v-else>Mark as unread</button>
                 </span>
                 <span class="d-block mb-1">
