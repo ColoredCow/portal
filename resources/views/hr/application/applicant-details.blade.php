@@ -40,15 +40,19 @@
                         <input type="text" class="form-control" name="preferred_name">
                     </div>
                     <div class="col-md-4 form-group">
-                        <label for="contact_number" class="field-required fz-14 leading-none text-secondary mb-1">Personal Contact Number</label>
+                        <label for="date_of_birth" class="field-required fz-14 leading-none text-secondary mb-1">Date Of Birth</label>
                         <p class="fz-14 leading-none text-secondary mb-1">Format- DD/MM/YYYY</p>
-                        <input type="number" class="form-control w-300" name="contact_number" required="required">
+                        <input type="text" class="form-control w-300" name="date_of_birth" required="required">
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="contact_number" class="field-required fz-14 leading-none text-secondary mb-1">Personal Contact Number</label>
+                        <input type="number" class="form-control w-300 mt-3" name="contact_number" required="required">
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="father_name" class="field-required fz-14 leading-none text-secondary mb-1">Father's Name</label>
                         <input type="text" class="form-control w-300 mt-3" name="father_name" required="required">
                     </div>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="mother_name" class="field-required fz-14 leading-none text-secondary mb-1">Mother's Name</label>
                         <input type="text" class="form-control w-300 mt-3" name="mother_name" required="required">
                     </div>
@@ -61,7 +65,7 @@
                         <p class=" fz-14 leading-none text-secondary mb-1">As per Address Proof</p>
                         <input type="text" class="form-control w-300" name="permanent_address" required="required">
                     </div>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="emergency_contact_number" class="field-required  fz-14 leading-none text-secondary mb-1">Emergency Contact Number</label>
                         <p class=" fz-14 leading-none text-secondary mb-1">Other than personal contact number</p>
                         <input type="number" class="form-control w-300" name="emergency_contact_number" required="required">
@@ -72,9 +76,9 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="illness" class="field-required fz-14 leading-none text-secondary mb-1">Any illness related from past, that you would like to share?</label>
-                        <input type="text" class="form-control w-300" name="illness" required="required">
+                        <input type="text" class="form-control w-300 mt-1" name="illness" required="required">
                     </div>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="head_shot_image" class="field-required fz-14 leading-none text-secondary mb-1">Upload a head shot image</label>
                         <div class="d-flex">
                             <div class="custom-file mb-3">
@@ -99,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="pan_card_number" class="field-required fz-14 leading-none text-secondary mb-1">Pan Card Number</label>
                         <input type="number" class="form-control w-300 mt-3" name="pan_card_number" required="required">
                     </div>
@@ -110,7 +114,7 @@
                             <div class="custom-file mb-3">
                                 <input type="file" name="scanned_copy_pan_card" class="custom-file-input"
                                     required="required">
-                                <label for="customFile0" class="custom-file-label overflow-hidden w-300">Add File</label>
+                                <label for="customFile0" class="custom-file-label overflow-hidden w-300 mt-2">Add File</label>
                             </div>
                         </div>
                     </div>

@@ -113,33 +113,8 @@ class ApplicantController extends Controller
 
     public function storeDetails(ApplicantMetaRequest $request)
     {
-        // dd($request->get('head_shot_image'));
-        // dd($request->all());
         $keyConfigs = (config('hr.applicant_form-details'));
         $uploadConfigs = (config('hr.applicant_upload_details'));
-
-        $files = [];
-        if ($request->file('head_shot_image')) {
-            $files[] = $request->file('head_shot_image');
-        }
-        if ($request->file('aadhar_card_scanned')) {
-            $files[] = $request->file('aadhar_card_scanned');
-        }
-        if ($request->file('scanned_copy_pan_card')) {
-            $files[] = $request->file('scanned_copy_pan_card');
-        }
-        if ($request->file('passbook_first_page_img')) {
-            $files[] = $request->file('passbook_first_page_img');
-        }
-
-        foreach ($files as $file) {
-            if (! empty($file)) {
-                $uploadFile = $file->getClientOriginalName();
-                $filepath = $file->move(storage_path('uploadedimages'), $uploadFile);
-                $postData = ['imgurl'=>$filepath];
-            }
-        }
-        $string = implode(',', $postData);
 
         foreach ($keyConfigs as $key=>$label) {
             ApplicantMeta::create([
@@ -148,13 +123,18 @@ class ApplicantController extends Controller
                 'value' => $request->get($key)
             ]);
         }
-
+        
         foreach ($uploadConfigs as $key=>$label) {
-            ApplicantMeta::create([
-                'hr_applicant_id' => $request->get('hr_applicant_id'),
-                'key' => $label,
-                'value' => $string,
-            ]);
+            if ($request->file($key)) {
+                $file = $request->file($key);
+                $fileName = $key.$request->get('hr_applicant_id') . '.' . $file->extension();
+                $filepath = $file->move(storage_path('app/uploadedimages'), $fileName);
+                ApplicantMeta::create([
+                    'hr_applicant_id' => $request->get('hr_applicant_id'),
+                    'key' => $label,
+                    'value' => $filepath,
+                ]);
+            }
         }
 
         return redirect()->back();

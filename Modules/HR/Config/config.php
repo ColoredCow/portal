@@ -184,6 +184,7 @@ return [
     ],
     'applicant_form-details' => [
         'preferred_name' => 'Preferred Name',
+        'date_of_birth' => 'Date Of Birth',
         'father_name' => 'Father Name',
         'mother_name' => 'Mother Name',
         'current_address' => 'Current Address',
