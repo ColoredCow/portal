@@ -9,12 +9,13 @@ $("#modalEdit").on("show.bs.modal", function (e) {
 
 	editForm.attr("action", action);
 
-	editForm.find("input[name='category']").val(revenueProceed.category);
+	editForm.find("select[name='category']").val(revenueProceed.category).change();
+	console.log(revenueProceed.category);
 	editForm.find("input[name='name']").val(revenueProceed.name);
 	editForm.find("input[name='amount']").val(revenueProceed.amount);
-	editForm.find("input[name='currency']").val(revenueProceed.currency);
+	editForm.find("select[name='currency']").val(revenueProceed.currency);
 	editForm.find("input[name='recieved_at']").val(revenueProceed.recieved_at);
-	editForm.find("input[name='notes']").val(revenueProceed.notes);
+	editForm.find("textarea[name='notes']").val(revenueProceed.notes);
 });
 $("body").on("click","#deleteRevenue",function(){
 	alert("Are you sure?");

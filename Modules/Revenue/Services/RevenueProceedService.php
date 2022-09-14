@@ -4,6 +4,7 @@ namespace Modules\Revenue\Services;
 
 use Modules\Revenue\Entities\RevenueProceed;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RevenueProceedService
 {
@@ -17,14 +18,15 @@ class RevenueProceedService
     public function store(Request $request)
     {
         $revenueProceed = new RevenueProceed;
-        $revenueProceed->name = $request->input('name');
-        $revenueProceed->category = $request->input('category');
-        $revenueProceed->currency = $request->input('currency');
-        $revenueProceed->amount = $request->input('amount');
-        $revenueProceed->recieved_at = $request->input('recieved_at');
-        $revenueProceed->notes = $request->input('notes');
+        
+        $revenueProceed->name = $request['name'];
+        $revenueProceed->category = Str::slug($request['category']);
+        $revenueProceed->currency = $request['currency'];
+        $revenueProceed->amount = $request['amount'];
+        $revenueProceed->recieved_at = $request['recieved_at'];
+        $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
-
+        
         return $revenueProceed;
     }
 
@@ -37,14 +39,13 @@ class RevenueProceedService
     {
         $revenueProceed = RevenueProceed::find($id);
 
-        $revenueProceed->name = $request->input('name');
-        $revenueProceed->category = $request->input('category');
-        $revenueProceed->currency = $request->input('currency');
-        $revenueProceed->amount = $request->input('amount');
-        $revenueProceed->recieved_at = $request->input('recieved_at');
-        $revenueProceed->notes = $request->input('notes');
+        $revenueProceed->name = $request['name'];
+        $revenueProceed->category = Str::slug($request['category']);
+        $revenueProceed->currency = $request['currency'];
+        $revenueProceed->amount = $request['amount'];
+        $revenueProceed->recieved_at = $request['recieved_at'];
+        $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
-
         return $revenueProceed;
     }
 
