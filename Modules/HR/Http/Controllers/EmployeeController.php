@@ -47,7 +47,8 @@ class EmployeeController extends Controller
     public function basicDetails(Employee $employee)
     {
         $domains = HrJobDomain::select('id', 'domain')->get()->toArray();
-        return view('hr.employees.basic-details', ['employee' => $employee,'domains'=>$domains]);
+
+        return view('hr.employees.basic-details', ['employee' => $employee, 'domains'=>$domains]);
     }
 
     public function showFTEdata(request $request)
