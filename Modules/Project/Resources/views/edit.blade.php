@@ -126,7 +126,7 @@
                             $('.save-btn').attr('disabled', false);
                             $('#project-details-update-message').addClass('d-block');
                             $('#project-details-update-message').removeClass('d-none');
-                            this.$toast.error('Project details not updated successfully!');
+                            this.$toast.success('Project details updated!');
                         })
                         .catch((error) => {
                             $('#project-details-update-message').removeClass('d-block');
@@ -139,7 +139,7 @@
                             }
                             $('#edit-project-errors').removeClass('d-none');
                             $('.save-btn').attr('disabled', false);
-                            this.$toast.success('Project details updated!');
+                            this.$toast.error('Project details not updated successfully!');
                         })
                 },
 
