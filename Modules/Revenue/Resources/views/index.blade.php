@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between mb-2">
             <h4 class="mb-1 pb-1 fz-28">Revenue</h4>
             <span>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add Revenue</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">Add Revenue</button>
             </span>
         </div>
         <table class="table table-striped table-bordered">

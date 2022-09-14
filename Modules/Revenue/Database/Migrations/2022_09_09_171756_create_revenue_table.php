@@ -13,7 +13,7 @@ class CreateRevenueTable extends Migration
      */
     public function up()
     {
-        Schema::create('Revenue_proceeds', function (Blueprint $table) {
+        Schema::create('revenue_proceeds', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('category');

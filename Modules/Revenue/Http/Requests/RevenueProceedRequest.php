@@ -19,7 +19,7 @@ class RevenueProceedRequest extends FormRequest
             'amount' => 'required|integer',
             'category' => 'nullable|integer',
             'notes' => 'nullable|integer',
-            'recieved_at' => 'nullable|integer',
+            'recieved_at' => 'nullable|date',
         ];
     }
 
