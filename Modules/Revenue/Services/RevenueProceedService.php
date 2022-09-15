@@ -23,7 +23,9 @@ class RevenueProceedService
         $revenueProceed->category = Str::slug($request['category']);
         $revenueProceed->currency = $request['currency'];
         $revenueProceed->amount = $request['amount'];
+        $revenueProceed->month = $request['month'];
         $revenueProceed->recieved_at = $request['recieved_at'];
+        $revenueProceed->year = $request['year'];
         $revenueProceed->notes = $request['notes'];
         $revenueProceed->save();
 
@@ -42,6 +44,8 @@ class RevenueProceedService
         $revenueProceed->name = $request['name'];
         $revenueProceed->category = Str::slug($request['category']);
         $revenueProceed->currency = $request['currency'];
+        $revenueProceed->month = $request['month'];
+        $revenueProceed->year = $request['year'];
         $revenueProceed->amount = $request['amount'];
         $revenueProceed->recieved_at = $request['recieved_at'];
         $revenueProceed->notes = $request['notes'];
