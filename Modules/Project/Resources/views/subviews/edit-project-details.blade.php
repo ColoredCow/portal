@@ -9,9 +9,7 @@
                         <label for="name" class="field-required">Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter project name"
                             required="required" value="{{ old('name') ?: $project->name }}">
-                    </div>
-                    <span class="{{ $project->is_amc == 1 ? 'badge badge-pill badge-success mr-1  mt-1' : 'badge badge-pill badge-danger mr-1  mt-1'}}">AMC</span></a>
-
+                    </div>                      
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="client_id" class="field-required">Client</label>
                         <select name="client_id" id="client_id" class="form-control" required="required">
@@ -119,6 +117,13 @@
                         <input type="date" class="form-control" name="end_date" id="end_date"
                             value="{{ optional($project->end_date)->format('Y-m-d') }}">
                     </div>                    
+                </div>
+                <div>
+                @if ($project->is_amc == 1)
+                    AMC: <input type="checkbox" id="isamc" name="is_amc" checked>   
+                 @else
+                    AMC: <input type="checkbox" id="isamc" name="is_amc" >   
+                 @endif
                 </div>
             </div>
             <div class="card-footer">

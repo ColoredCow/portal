@@ -44,6 +44,7 @@ class ProjectRequest extends FormRequest
                     'billing_level' => 'required|string|in:client,project',
                     'start_date' => 'nullable|date',
                     'end_date' => 'nullable|date',
+                    'is_amc' => 'nullable',
                 ];
                 break;
 
