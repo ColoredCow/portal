@@ -219,7 +219,7 @@
                     <span class="dropdown-item-text fz-12">Round wise filter</span>
                     @foreach ($roundFilters as $roundFilter)
                         @php
-                            $target =  route(request()->route()->getName(), ['roundFilters' => [$roundFilter->id]]);
+                            $target =  request()->fullUrlWithQuery(['roundFilters' => [$roundFilter->id]]);
                             $class = in_array($roundFilter->id, request()->get('roundFilters') ?? []) ? 'visible' : 'invisible';
                         @endphp
                         <a class="dropdown-item d-flex align-items-center" href="{{ $target }}">
@@ -236,7 +236,7 @@
                     <span class="dropdown-item-text fz-12">Filter by assignee</span>
                     @foreach ($assignees as $assignee)
                     @php
-                        $target = route(request()->route()->getName(), ['assignee' => [$assignee->id]]);
+                        $target = request()->fullUrlWithQuery(['assignee' => [$assignee->id]]);
                         $class = in_array($assignee->id, request()->get('assignee') ?? []) ? 'visible' : 'invisible';
                     @endphp
                     <a class="dropdown-item" href="{{ $target }}">
