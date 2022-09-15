@@ -69,20 +69,20 @@ class UserController extends ModuleBaseController
         $this->service->delete($user);
     }
 
-     public function showForm()
-     {
+    public function showForm()
+    {
         return view('user::roles.show-form');
-     }
+    }
 
-     public function storeRoles(Request $request)
-     {
-         $role= new Role;
-         $role ->name=$request->name;
-         $role ->label=$request->label;
-         $role ->guard_name=$request->guard_name;
-         $role ->description=$request->description;
-         $role ->save();
+    public function storeRoles(Request $request)
+    {
+        $role= new Role;
+        $role ->name=$request->name;
+        $role ->label=$request->label;
+        $role ->guard_name=$request->guard_name;
+        $role ->description=$request->description;
+        $role ->save();
 
-         return redirect()->back();
-        }
+        return redirect()->back();
+    }
 }
