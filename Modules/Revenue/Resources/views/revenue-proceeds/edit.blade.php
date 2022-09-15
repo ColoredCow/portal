@@ -38,14 +38,14 @@
                             </div> 
                             <div class="form-group offset-md-1 col-md-5">
                                 <label class="field-required">Year</label>
-                                    <select type="text" class="form-control" name="year">
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
+                                <select name="year" class="form-control" id="">
+                                    @php $year = now()->year; @endphp
+                                    @while ($year != 2017)
+                                    <option value="{{$year}}">{{$year}}</option>
+                                    @php
+                                        $year--;
+                                    @endphp
+                                    @endwhile
                                 </select>
                             </div>
                         </div>
@@ -66,19 +66,10 @@
                             <div class="form-group offset-md-1 col-md-5">
                                 <label class="field-required">Month</label>
                                 <select type="text" class="form-control" required name="month">
-                                    <option class="disabled">Select Month</option>
-                                    <option value="01">January</option>
-                                    <option value="02">February</option>
-                                    <option value="03">March</option>
-                                    <option value="04">April</option>
-                                    <option value="05">may</option>
-                                    <option value="06">June</option>
-                                    <option value="07">July</option>
-                                    <option value="08">Augusst</option>
-                                    <option value="09">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
+                                    <?php
+                                foreach (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $monthNumber => $month) {
+                                    echo "<option value='$monthNumber'>{$month}</option>";
+                                }?>
                                 </select>
                             </div>
                         </div>
