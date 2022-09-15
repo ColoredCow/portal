@@ -304,7 +304,7 @@ if (document.getElementById("page_hr_applicant_edit")) {
 						this.selectedActionOption.innerText;
 					loadTemplateMail("confirm", (res) => {
 						$("#confirmMailToApplicantSubject").val(
-								res.subject
+							res.subject
 						);
 						tinymce
 							.get("confirmMailToApplicantBody")
