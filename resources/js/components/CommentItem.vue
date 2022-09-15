@@ -35,7 +35,7 @@
 
 <script>
 export default {
-	props: ["comment.body", "editable", "bookIndex"],
+	props: ["comment", "editable", "bookIndex" ,"comment.body"],
 	data() {
 		return {
 			state:"view"
