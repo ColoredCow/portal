@@ -5,6 +5,8 @@ namespace Modules\User\Http\Controllers;
 use Modules\User\Entities\User;
 use Modules\User\Contracts\UserServiceContract;
 use Modules\User\Http\Requests\UpdateUserRolesRequest;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends ModuleBaseController
 {
@@ -66,4 +68,21 @@ class UserController extends ModuleBaseController
         $this->authorize('delete', $user);
         $this->service->delete($user);
     }
+
+     public function showForm()
+     {
+        return view('user::roles.show-form');
+     }
+
+     public function storeRoles(Request $request)
+     {
+         $role= new Role;
+         $role ->name=$request->name;
+         $role ->label=$request->label;
+         $role ->guard_name=$request->guard_name;
+         $role ->description=$request->description;
+         $role ->save();
+
+         return redirect()->back();
+        }
 }
