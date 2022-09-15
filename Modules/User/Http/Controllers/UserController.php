@@ -76,12 +76,12 @@ class UserController extends ModuleBaseController
 
     public function storeRoles(Request $request)
     {
-        $role= new Role;
-        $role ->name = $request->name;
-        $role ->label = $request->label;
-        $role ->guard_name = $request->guard_name;
-        $role ->description = $request->description;
-        $role ->save();
+        $role = new Role;
+        $role->name = $request->name;
+        $role->label = $request->label;
+        $role->guard_name = $request->guard_name;
+        $role->description = $request->description;
+        $role->save();
 
         return redirect()->back();
     }
