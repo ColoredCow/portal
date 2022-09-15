@@ -19,7 +19,7 @@ Vue.use(Laue);
 // vue toast registration
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-const options = {
+    const options = {
         timeout: 2000,
     };
     Vue.use(Toast, options);
