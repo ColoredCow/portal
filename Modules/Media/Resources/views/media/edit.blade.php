@@ -23,7 +23,7 @@
             <input type="file" name="file" id="file" accept="image/*" class="form-control">
           </div>
 
-          <img src="{{ asset('storage/images/'.$Media->img_url) }}" class="img-fluid img-thumbnail" width="150">
+          <img src="{{ asset('storage/media/'.$Media->img_url) }}" class="img-fluid img-thumbnail" width="150">
 
           <div class="my-2"><h3 class="text-secondary">Description</h3>
             <textarea name="description" id="description" rows="6" class="form-control" placeholder="Description" required>{{ $Media->description }}</textarea>

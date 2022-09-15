@@ -81,7 +81,7 @@
     <div class="col-lg-3 mb-3">
       <div class="card shadow">
         <a href="{{ route('media.show', $row->id) }}">
-          <img src="{{ asset('storage/images/'.$row->img_url) }}" class="card-img-top img-fluid ">
+          <img src="{{ asset('storage/media/'.$row->img_url) }}" class="card-img-top img-fluid ">
         </a>
         <div class="card-body">
           <p>

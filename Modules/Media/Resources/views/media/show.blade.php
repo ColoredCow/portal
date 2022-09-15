@@ -9,7 +9,7 @@
 <div class="row my-4">
   <div class="col-lg-4 mx-auto">
     <div class="card shadow">
-      <img src="{{ asset('storage/images/'.$media->img_url) }}" class="img-fluid card-img-top">
+      <img src="{{ asset('storage/media/'.$media->img_url) }}" class="img-fluid card-img-top">
       <div class="card-body p-5">
         <div class="d-flex justify-content-between align-items-center">
           <p>

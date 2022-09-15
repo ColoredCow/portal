@@ -34,7 +34,7 @@ class MediaController extends Controller
     {
         $request->validated();
         $imageName = time() . '.' . $request->file->extension();
-        $request->file->storeAs('public/images', $imageName);
+        $request->file->storeAs('public/media', $imageName);
         $postData = ['event_name' => $request->event_name, 'img_url' => $imageName, 'uploaded_by' => Auth()->user()->id, 'description' => $request->description];
         Media::create($postData);
 
@@ -72,9 +72,9 @@ class MediaController extends Controller
         $imageName = '';
         if ($request->hasFile('file')) {
             $imageName = time() . '.' . $request->file->extension();
-            $request->file->storeAs('public/images', $imageName);
+            $request->file->storeAs('public/media', $imageName);
             if ($Media->img_url) {
-                Storage::delete('public/images/' . $Media->img_url);
+                Storage::delete('public/media/' . $Media->img_url);
             }
         } else {
             $imageName = $Media->img_url;
@@ -91,7 +91,7 @@ class MediaController extends Controller
      */
     public function destroy(Media $media)
     {
-        Storage::delete('public/images/' . $media->img_url);
+        Storage::delete('public/media/' . $media->img_url);
         $media->delete();
 
         return redirect(route('media.index'))->with(['message', 'status' => 'Photo deleted successfully!']);
