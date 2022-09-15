@@ -10,6 +10,8 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter project name"
                             required="required" value="{{ old('name') ?: $project->name }}">
                     </div>
+                    <span class="{{ $project->is_amc == 1 ? 'badge badge-pill badge-success mr-1  mt-1' : 'badge badge-pill badge-danger mr-1  mt-1'}}">AMC</span></a>
+
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="client_id" class="field-required">Client</label>
                         <select name="client_id" id="client_id" class="form-control" required="required">
@@ -62,6 +64,7 @@
                             @endforeach
                         </select>
                     </div>
+                    
                     <div class="form-group offset-md-1 col-md-5">
                         <label for="billing_level" class="field-required">Billing Level</label>
                         <select name="billing_level" id="billing_level" class="form-control" required="required">

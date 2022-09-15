@@ -28,6 +28,7 @@
                         <span class="{{ $project->velocity >= 1 ? 'text-success' : 'text-danger'}} fz-lg-22">{{ $project->velocity }}</span>
                         <a target="_self" href="{{route('project.effort-tracking', $project )}}" class="btn-sm text-decoration-none btn-primary text-white ml-1 text-light rounded">{{ _('Check FTE') }}</a>
                     </div>
+                    
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6 pl-4">
