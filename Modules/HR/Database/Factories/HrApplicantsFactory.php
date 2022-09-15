@@ -22,13 +22,13 @@ class HrApplicantsFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->email,
-            'phone' =>  $this->faker->phoneNumber,
+            'name' => $this->faker->name(),
+            'email' => $this->faker->email(),
+            'phone' =>  $this->faker->phoneNumber(),
             'course' => array_rand(config('hr.opportunities.domains')),
-            'college' => $this->faker->word,
-            'graduation_year' =>  $this->faker->year,
-            'linkedin' => $this->faker->url
+            'college' => $this->faker->word(),
+            'graduation_year' =>  $this->faker->year(),
+            'linkedin' => $this->faker->url(),
         ];
     }
 }

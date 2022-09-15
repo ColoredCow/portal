@@ -19,8 +19,8 @@
         <div class="d-flex justify-content-between">
             <h1 class="mb-0">Segments</h1>
             <div>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#createNewSegment">Add New</button>
-            </div>
+                <button class="btn btn-success" data-toggle="modal" data-target="#createNewSegment"> <i class="fa fa-plus mr-1"></i> Add New Segment</button>
+            </div>  
         </div>      
         <br>
 
