@@ -14,31 +14,27 @@
                         <div class="form-row">
                             <div class="form-group ml-6 col-md-5">
                                 <input value="{{route('revenue.proceeds.update','id')}}" type="hidden" class="hidden" aria-hidden="true" name="routePlaceHolder">
-                                <label for="" class="field-required">Name</label>
+                                <label class="field-required">Name</label>
                                 <input type="text" class="form-control" required name="name">
                             </div>
                             <div class="form-group offset-md-1 col-md-5">
-                                <label for="" class="field-required">Date of Recieved</label>
+                                <label class="field-required">Date of Recieved</label>
                                 <input type="date" class="form-control" required name="recieved_at" >
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group ml-6 col-md-5">
-                                <label for="" class="field-required">Category</label>
-                                <select type="text" class="form-control" name="category" required>
+                                <label class="field-required">Category</label>
+                                <select name="category" class="form-control">
                                     <option class="disabled">Select category</option>
-                                    <option value="domestic">Domestic</option>
-                                    <option value="export">Export</option>
-                                    <option value="recieved-commission">Recieved Commission</option>
-                                    <option value="cash-back">Cash Back</option>
-                                    <option value="recieved-discount">Recieved Discount</option>
-                                    <option value="interest-on-fd">Interest On FD</option>
-                                    <option value="foreign-exchange-loss">Foreign Exchange Loss</option>
+                                    @foreach (config('report.finance.profit_and_loss.particulars.revenue') as $key => $label)
+                                        <option value="{{ $key}}" >{{ $label['name'] }}</option>
+                                    @endforeach
                                 </select>
                             </div> 
                             <div class="form-group offset-md-1 col-md-5">
                                 <label class="field-required">Year</label>
-                                <select name="year" class="form-control" id="">
+                                <select name="year" class="form-control">
                                     @php $year = now()->year; @endphp
                                     @while ($year != 2017)
                                     <option value="{{$year}}">{{$year}}</option>
@@ -51,31 +47,32 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group ml-6 col-md-5">
-                                <label for="" class="field-required">Amount</label>
+                                <label class="field-required">Amount</label>
                                 <div class="input-group">
                                     <div class=" input-group-prepend">
-                                        <select name="currency" name="currency" class="input-group-text" required>
-                                            <option value="INR">INR</option>
-                                            <option value="USD">USD</option>
-                                            <option value="CAD">CAD</option> 
+                                        <select name="currency" name="currency" class="input-group-text">
+                                            @foreach (config('constants.countries') as $country => $countryDetails)
+                                                <option value="{{ $countryDetails['currency'] }}" >{{ $countryDetails['currency'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                  <input type="number" class="form-control" name="amount">
+                                  <input type="number" class="form-control" required name="amount">
                                 </div>
                             </div>
                             <div class="form-group offset-md-1 col-md-5">
                                 <label class="field-required">Month</label>
                                 <select type="text" class="form-control" required name="month">
-                                    <?php
-                                foreach (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $monthNumber => $month) {
-                                    echo "<option value='$monthNumber'>{$month}</option>";
-                                }?>
+                                        <option class="disbled">Select month</option>
+                                        @foreach (config('constants.months') as $months => $month)
+                                            <option value="{{ $months }}" >{{ $month }}</option>
+                                        @endforeach
+                                    </select>
                                 </select>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group ml-6 col-md-7">
-                                <label for="">Note</label>
+                                <label>Note</label>
                                 <textarea type="text" class="form-control" rows="3" name="notes"></textarea>
                             </div>
                         </div>

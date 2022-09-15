@@ -25,7 +25,7 @@
             @foreach ($revenueProceeds as $revenueProceed)
                 <tr>
                     <td>{{ $revenueProceed->name }}</td>
-                    <td>{{Str::title(str_replace('-', ' ', $revenueProceed->category))}}</td>
+                    <td>{{Str::title(str_replace('_', ' ', $revenueProceed->category))}}</td>
                     <td>{{ $revenueProceed->currency }}</td>
                     <td>{{ $revenueProceed->amount }}</td>
                     <td>{{ $revenueProceed->notes }}</td>
