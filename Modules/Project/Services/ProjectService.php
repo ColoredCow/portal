@@ -345,23 +345,23 @@ class ProjectService implements ProjectServiceContract
         return $projectsData;
     }
 
-    public function getMailForFixedBudgetProjectKeyAccountManagers()
+    public function getMailDetailsForZeroExpectedHours()
     {
-        $currentdate = Carbon::today()->subdays(-5);
-        $projects = Project::wheretype('fixed-budget')->where('end_date', $currentdate)->get();
-        $projectsData = [];
-        foreach ($projects as $project) {
-            $user = $project->client->keyAccountManager;
-            if ($user) {
-                $projectsData[$user->id][] = [
-                    'project' => $project,
-                    'email' => $user->email,
-                    'end date' => $project->end_date,
-                    'name' => $user->name,
-                ];
+        $zeroEffortProjectsIds = ProjectTeamMember::where('daily_expected_effort', 0)->pluck('project_id');
+        $projectsWithZeroEffort = Project::with(['teamMembers'])->whereIn('id', $zeroEffortProjectsIds)->get();
+        $projectDetails = [];
+        foreach ($projectsWithZeroEffort as $project) {
+            foreach ($project->teamMembers as $teamMember) {
+                if ($teamMember->getOriginal('pivot_daily_expected_effort') == 0) {
+                    $projectDetails[] = [
+                        'projects' => $project,
+                        'name' => $teamMember->name,
+                        'email' =>$teamMember->email,
+                    ];
+                }
             }
         }
 
-        return $projectsData;
+        return $projectDetails;
     }
 }
