@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\KnowledgeCafe\Library\Book;
-use Google\Service\CloudSearch\Id;
 use Illuminate\Support\Facades\DB;
 
 class UserBookController extends Controller
