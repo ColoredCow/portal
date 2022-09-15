@@ -132,6 +132,7 @@ Route::middleware('auth')->group(function () {
                     'update' => 'books.update',
                 ]);
 
+
             Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
@@ -146,6 +147,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('remove-from-bam/{book}', 'BookController@unselectBookFromCurrentMonth')->name('books.removeFromBam');
                 Route::post('add-new-comment/{book}', 'BookController@addNewComment')->name('books.addNewComment');
                 Route::post('{book}/comment', 'BookCommentController@store')->name('book-comment.store');
+
             });
 
             Route::resource('book-categories', 'BookCategoryController')
@@ -164,4 +166,7 @@ Route::middleware('auth')->group(function () {
     Route::get('user/read-books', 'UserBookController@index');
     Route::get('user/wishlist-books', 'UserBookController@booksInWishlist');
     Route::get('user/projects', 'UserController@projects');
+    Route::get('knowledgecafe/library/books/reader/{user}', 'UserBookController@userBookDetails')->name('books.reader.booksdetail');
+
+
 });

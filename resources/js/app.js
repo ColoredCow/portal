@@ -741,6 +741,8 @@ if (document.getElementById("books_listing")) {
 				document.getElementById("books_table").dataset.indexRoute || "",
 			categoryIndexRoute:
 				document.getElementById("books_table").dataset.categoryIndexRoute || "",
+			readerIndexRoute:
+				document.getElementById("books_table").dataset.readerIndexRoute || "",
 			categoryInputs: [],
 			currentBookIndex: 0,
 			newCategory: "",

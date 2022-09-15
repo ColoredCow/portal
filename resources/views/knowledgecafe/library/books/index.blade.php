@@ -43,6 +43,7 @@
         data-books="{{ json_encode($books) }}" 
         data-categories="{{ json_encode($categories) }}"
         data-index-route="{{ route('books.index') }}" 
+        data-reader-index-route="books/reader" 
         data-category-index-route="{{ route('books.category.index') }}"
         data-logged-in-user="{{ json_encode(auth()->user()) }}">
         <div class="d-flex flex-wrap w-full">
@@ -94,14 +95,16 @@
                 <div v-if="book.readers && book.readers.length">
                     <p  class="mb-0 mt-1">Read by</p>
                     <div  class="pl-0 pt-2 pb-3">
-                        <img v-for="reader in book.readers" :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-placement="bottom">
+                        <a v-for="reader in book.readers"  :href="readerIndexRoute+ '/'+ reader.id">
+                        <img :src="reader.avatar" :alt="reader.name" :title="reader.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-target="userDetails" data-placement="bottom">
+                        </a>
                     </div>
                 </div>
 
                 <div v-if="book.borrowers && book.borrowers.length">
                     <p  class="mb-0 mt-1">Borrowed by</p>
                     <div  class="pl-0 pt-2 pb-3">
-                        <img v-for="borrower in book.borrowers" :src="borrower.avatar" :alt="borrower.name" :title="borrower.name" class="reader_image mr-2 rounded-circle" data-toggle="tooltip" data-placement="bottom">
+                        <img v-for="borrower in book.borrowers" :src="borrower.avatar" :alt="borrower.name" :title="borrower.name" class="reader_image mr-2 rounded-circle" data-target="userDetails" data-toggle="tooltip" data-placement="bottom">
                     </div>
                 </div>
 
@@ -116,7 +119,6 @@
                         <h2 class="badge badge-warning px-2 py-1 mr-1">@{{ book.wishers.find(user => user.id == loggedInUser.id) == null ? '' : 'Wishlisted' }}</h2>
                     </span>
                 </div>
-
             </div>
         </div>
     </div>
