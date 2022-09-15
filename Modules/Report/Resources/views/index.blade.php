@@ -6,9 +6,7 @@
         <h4 class="d-inline-block font-weight-bold">Sales & Marketing Reports</h4>
         @can('report.edit')
         <button type="button" class="btn btn-primary ml-auto report" data-toggle="modal" data-target="#Modal">
-        <i class="fa fa-plus"></i>
-             Add New Report
-
+            <i class="fa fa-plus"></i> Add New Report
         </button>
         <div class="modal @if(count($errors->all()) > 0) show-modal @endif" id="Modal" role="dialog" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
