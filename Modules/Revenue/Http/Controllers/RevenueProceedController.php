@@ -16,9 +16,9 @@ class RevenueProceedController extends Controller
 
     public function __construct(RevenueProceedService $service)
     {
-        $this->authorizeResource(RevenueProceed::class);
         $this->service = $service;
     }
+    
     public function index()
     {
         $revenueProceedData = $this->service->index();
