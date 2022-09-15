@@ -19,15 +19,15 @@
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name"  value="{{$user->name}}">
+                    <input type="text" class="form-control" id="name" name="name" required value="{{$user->name}}">
                 </div>
                 <div class="form-group">
                     <label for="nickName">Nickname</label>
-                    <input type="text" class="form-control" id="nickName" name="nickName" value="{{$user->nickname}}">
+                    <input type="text" class="form-control" id="nickName" name="nickName" required value="{{$user->nickname}}">
                 </div>
                 <div class="form-group">
                     <label for="designation">Designation</label>
-                    <input type="text" class="form-control" id="designation" name="designation"  value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
+                    <input type="text" class="form-control" id="designation" name="designation" required value="{{ $user->employee && $user->employee->designation ? $user->employee->designation : "" }}">
                 </div>
                 <div class="form-group">
                     <label>Domain</label>
