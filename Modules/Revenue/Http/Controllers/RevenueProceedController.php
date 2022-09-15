@@ -5,11 +5,9 @@ namespace Modules\Revenue\Http\Controllers;
 use Illuminate\Http\Request;
 use Modules\Revenue\Services\RevenueProceedService;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RevenueProceedController extends Controller
 {
-    
     protected $service;
 
     public function __construct(RevenueProceedService $service)
