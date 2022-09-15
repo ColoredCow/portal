@@ -1964,8 +1964,8 @@ $(document).on("click", ".finish_interview", function(e) {
 		data: { documentId: actualEndTime, duration: duration },
 		dataType: "json",
 		success: function(response) {
-			console.log(response.actual_end_time);
 			$("#meet_time").hide();
+            $("#durations").append(response.html);	
 		},
 	});
 });

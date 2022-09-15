@@ -110,10 +110,12 @@
                                                         <input type="hidden" readonly="readonly" name="meeting"
                                                             id="meeting" class="form-control form-control-sm">
                                                     @else
+                                                    <div class="text-right ml-5 ml-md-0">
                                                         <button type="button" id="meet_time"
                                                             value="{{ $applicationRound->id }}"
                                                             class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish
                                                             Interview</button>
+                                                    </div>        
                                                     @endif
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
@@ -446,10 +448,12 @@
                                                         <input type="hidden" readonly="readonly" name="meeting"
                                                             id="meeting" class="form-control form-control-sm">
                                                     @else
+                                                    <div class="text-right ml-5 ml-md-0">
                                                         <button type="button" id="meet_time"
                                                             value="{{ $applicationRound->id }}"
                                                             class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish
                                                             Interview</button>
+                                                    </div>        
                                                     @endif
                                                 @endif
                                                 <div class="icon-pencil position-relative ml-3 c-pointer"
@@ -979,10 +983,12 @@
                                                 <input type="hidden" readonly="readonly" name="meeting" id="meeting"
                                                     class="form-control form-control-sm">
                                             @else
+                                            <div class="text-right ml-5 ml-md-0">
                                                 <button type="button" id="meet_time"
                                                     value="{{ $applicationRound->id }}"
-                                                    class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview ">Finish
-                                                    Interview</button>
+                                                    class="py-0 px-0 mb-0 btn btn-info btn-sm round-submit finish_interview "><h4>Finish
+                                                    Interview</h4></button>
+                                            </div>
                                             @endif
                                         @endif
                                         <div class="icon-pencil position-relative ml-3 c-pointer" data-toggle="collapse"
@@ -1285,38 +1291,11 @@
                                                                 </div>
                                                             @endif
                                                         </div>
-                                                        @if ($applicationRound->actual_end_time != null)
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-3">
-                                                                    <label for="expected_time"
-                                                                        class="fz-14 leading-none text-secondary w-100p">
-                                                                        <div>
-                                                                            <span>Expected End Time</span>
-                                                                        </div>
-                                                                    </label>
-
-                                                                    <input type="Text" readonly="readonly"
-                                                                        name="expected_time" id="expected_time"
-                                                                        class="form-control form-control-sm"
-                                                                        value=" {{ $applicationRound->ExpectedMeetingDuration }}">
-                                                                </div>
-
-
-                                                                <div class="form-group col-md-4">
-                                                                    <label for="actualEndTime"
-                                                                        class="fz-14 leading-none text-secondary w-100p">
-                                                                        <div>
-                                                                            <span>Meeting Duration</span>
-                                                                        </div>
-                                                                    </label>
-
-                                                                    <input type="Text" readonly="readonly"
-                                                                        name="actualEndTime" id="actual_end_time"
-                                                                        class="form-control form-control-sm"
-                                                                        value=" {{ $applicationRound->ActualMeetingDuration }} ">
-                                                                </div>
-                                                            </div>
-                                                        @endif
+                                                        <div class="form-row" id="durations">
+                                                            @if ($applicationRound->actual_end_time != null)
+                                                                @include('hr.application.meeting')
+                                                            @endif
+                                                        </div>
                                                     @endif
                                                 @endif
                                                 @if ($applicationRound->round->name == 'Resume Screening')
