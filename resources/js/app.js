@@ -770,6 +770,9 @@ if (document.getElementById("books_listing")) {
 			searchKey: document.getElementById("search_input")
 				? document.getElementById("search_input").dataset.value
 				: "",
+			sortKeys: document.getElementById("category_input")
+				? document.getElementById("category_input").dataset.value
+				: "",
 		},
 		methods: {
 			updateCategoryMode: function(index) {
@@ -842,8 +845,8 @@ if (document.getElementById("books_listing")) {
 			},
 
 			searchBooksByCategoryName: function() {
-				window.location.href = `${this.updateRoute}?category_name=${this.searchKeys}`;
-			},
+				window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`;
+			},	
 
 			strLimit: function(str, length) {
 				if (!str) {

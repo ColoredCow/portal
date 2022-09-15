@@ -8,7 +8,7 @@ class JobRequisition extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'job_Requisition';
+    protected $table = 'job_requisition';
 
     public function job()
     {
