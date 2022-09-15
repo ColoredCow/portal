@@ -132,8 +132,7 @@ Route::middleware('auth')->group(function () {
                     'update' => 'books.update',
                 ]);
 
-
-            Route::prefix('book')->group(function () {
+                Route::prefix('book')->group(function () {
                 Route::post('fetchinfo', 'BookController@fetchBookInfo')->name('books.fetchInfo');
                 Route::post('markbook', 'BookController@markBook')->name('books.toggleReadStatus');
                 Route::post('addtowishlist', 'BookController@addToUserWishList')->name('books.addToWishList');
