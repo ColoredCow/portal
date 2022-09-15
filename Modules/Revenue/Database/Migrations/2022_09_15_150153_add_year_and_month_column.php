@@ -16,7 +16,6 @@ class AddYearAndMonthColumn extends Migration
         Schema::table('revenue_proceeds', function (Blueprint $table) {
             $table->integer('year')->after('notes');
             $table->integer('month')->after('notes');
-
         });
     }
 
