@@ -22,7 +22,6 @@
                         @if ($project->is_amc == 1 )
                         <span class="badge badge-pill badge-success mr-1  mt-1">AMC</span>
                         @endif
-                    {{-- <span class="{{ $project->is_amc == 1 ? '' : ' badge badge-pill badge-danger mr-1  mt-1'}}"></span></a> --}}
                     </div>
                     <div class="form-group offset-md-1 pl-4 col-md-5 mt-3">
                         <h4 class="d-inline-block">
