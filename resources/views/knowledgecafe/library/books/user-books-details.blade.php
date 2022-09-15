@@ -21,7 +21,7 @@
                     <div class="mx-5">
                         <div class="container">
                             <div class="row">
-                              <div class="col-sm border">
+                              <div class="col-sm border px-0">
                                 <h4 class="card-header">Wishlisted Books</h4>
                                 @foreach ($user->booksInWishlist as $list)
                                 <div class="px-2 py-2 border-bottom">
@@ -29,7 +29,7 @@
                                 </div>
                                 @endforeach
                               </div>
-                              <div class="col-sm border">
+                              <div class="col-sm border px-0">
                                 <h4 class="card-header">Read Books</h4>
                                 @foreach ($readBooks as $readBook)
                                 <div class=" px-2 py-2 border-bottom">
@@ -37,7 +37,7 @@
                                 </div>
                                 @endforeach
                               </div>
-                              <div class="col-sm border">
+                              <div class="col-sm border px-0">
                                 <h4 class="card-header">Borrowed Books</h4>
                                 @foreach ($borrowedBooks as $borrowedBook)
                                 <div class=" px-2 py-2 border-bottom">
