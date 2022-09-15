@@ -19,7 +19,7 @@
                     <div class="fs-2 d-flex justify-content-between mx-4 px-2 align-items-end">{{$user->name}}</div>
                     <hr class='bg-dark mx-4 pb-0.5'></div>
                     <div class="mx-5">
-                        <div class="container">
+                        <div class="container mb-3">
                             <div class="row">
                               <div class="col-sm border px-0">
                                 <h4 class="card-header">Wishlisted Books</h4>
