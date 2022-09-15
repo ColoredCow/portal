@@ -1,7 +1,7 @@
 <template>
   <div class="card text-center card text-center w-xl-389 h-xl-416">
     <div class="card-header p-1">
-      <h3><a href="/knowledgecafe/library/books">Library</a></h3>
+      <h3><a href="/knowledgecafe/Books/books">Books</a></h3>
     </div>
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs flex-nowrap">
