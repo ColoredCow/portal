@@ -46,16 +46,22 @@ class ProjectTeamMember extends Model
     }
     public function getCurrentExpectedEffortAttribute($startDate = null, $endDate = null)
     {
+        $currentMonth = Carbon::now()->format('m');
         $project = new Project;
         $currentDate = today(config('constants.timezone.indian'));
         $startDate = $startDate ?? $this->project->client->month_start_date;
+        $Month = intval(date('m', strtotime($startDate)));
         $endDate = $endDate ?? $this->project->client->month_end_date;
 
         if (now(config('constants.timezone.indian'))->format('H:i:s') < config('efforttracking.update_date_count_after_time')) {
             $currentDate = $currentDate->subDay();
         }
 
-        $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
+        if ($Month == $currentMonth) {
+            $daysTillToday = count($project->getWorkingDaysList($startDate, $currentDate));
+        } else {
+            $daysTillToday = count($project->getWorkingDaysList($startDate, $endDate));
+        }
 
         return $this->daily_expected_effort * $daysTillToday;
     }
