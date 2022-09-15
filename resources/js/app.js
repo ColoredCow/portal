@@ -1476,9 +1476,8 @@ function barChart() {
             callbacks: {
                 afterBody: function(context) {
                     console.log(context);
-                    return `Verified Applications: ${
-                         cData.afterBody[context[0].index]
-                     }`;
+                    return `Verified Applications: ${cData.afterBody[context[0].index]
+                        }`;
                 },
             },
             displayColors: false,
