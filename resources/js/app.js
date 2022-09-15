@@ -628,6 +628,9 @@ $(".hr_round_guide").on("click", ".save-guide", function() {
  * Knowledge Cafe
  *
  */
+$(window).on("load", function(){
+	$("#preloader").removeClass("d-block").addClass(" d-none ");
+});
 
 if (document.getElementById("show_and_save_book")) {
     const bookForm = new Vue({
@@ -803,12 +806,16 @@ if (document.getElementById("books_listing")) {
                 window.location.href = `${this.updateRoute}?search=${this.searchKey}`;
             },
 
-            strLimit: function(str, length) {
-                if (!str) {
-                    return "";
-                }
-                return str.length > length ? str.substring(0, length) + "..." : str;
-            },
+			searchBooksByCategoryName: function () {
+				window.location.href = `${this.updateRoute}?category_name=${this.sortKeys}`;
+			},	
+
+			strLimit: function (str, length) {
+				if (!str) {
+					return "";
+				}
+				return str.length > length ? str.substring(0, length) + "..." : str;
+			},
 
             updateCopiesCount: function(index) {
                 var new_count = parseInt(
@@ -918,50 +925,75 @@ if (document.getElementById("books_category")) {
 }
 
 if (document.getElementById("show_book_info")) {
-    const bookForm = new Vue({
-        el: "#show_book_info",
-        data: {
-            book: document.getElementById("show_book_info").dataset.book ?
-                document.getElementById("show_book_info").dataset.book : [],
-            route: document.getElementById("show_book_info").dataset.markBookRoute ?
-                document.getElementById("show_book_info").dataset.markBookRoute : "",
-            borrowBookRoute: document.getElementById("show_book_info").dataset
-                .borrowBookRoute ?
-                document.getElementById("show_book_info").dataset.borrowBookRoute : "",
-            bookAMonthStoreRoute: document.getElementById("show_book_info").dataset
-                .bookAMonthStoreRoute ?
-                document.getElementById("show_book_info").dataset.bookAMonthStoreRoute : "",
-            bookAMonthDestroyRoute: document.getElementById("show_book_info").dataset
-                .bookAMonthDestroyRoute ?
-                document.getElementById("show_book_info").dataset
-                .bookAMonthDestroyRoute : "",
-            putBackBookRoute: document.getElementById("show_book_info").dataset
-                .putBackBookRoute ?
-                document.getElementById("show_book_info").dataset.putBackBookRoute : "",
-            isRead: document.getElementById("show_book_info").dataset.isRead ?
-                true : false,
-            isBorrowed: document.getElementById("show_book_info").dataset.isBorrowed ?
-                true : false,
-            isBookAMonth: document.getElementById("show_book_info").dataset
-                .isBookAMonth ?
-                true : false,
-            readers: document.getElementById("show_book_info").dataset.readers ?
-                document.getElementById("show_book_info").dataset.readers : [],
-            borrowers: document.getElementById("show_book_info").dataset.borrowers ?
-                document.getElementById("show_book_info").dataset.borrowers : []
-        },
-        methods: {
-            markBook: async function(read) {
-                let response = await axios.post(this.route, {
-                    book_id: this.book.id,
-                    is_read: read
-                });
-                this.isRead = read;
-                if (!response.data) {
-                    return false;
-                }
-                this.readers = response.data.readers;
-            },
+	const bookForm = new Vue({
+		el: "#show_book_info",
+		data: {
+			book: document.getElementById("show_book_info").dataset.book
+				? document.getElementById("show_book_info").dataset.book
+				: [],
+			route: document.getElementById("show_book_info").dataset.markBookRoute
+				? document.getElementById("show_book_info").dataset.markBookRoute
+				: "",
+			borrowBookRoute: document.getElementById("show_book_info").dataset
+				.borrowBookRoute
+				? document.getElementById("show_book_info").dataset.borrowBookRoute
+				: "",
+			bookAMonthStoreRoute: document.getElementById("show_book_info").dataset
+				.bookAMonthStoreRoute
+				? document.getElementById("show_book_info").dataset.bookAMonthStoreRoute
+				: "",
+			bookAMonthDestroyRoute: document.getElementById("show_book_info").dataset
+				.bookAMonthDestroyRoute
+				? document.getElementById("show_book_info").dataset
+					.bookAMonthDestroyRoute
+				: "",
+			addToWishlistRoute: document.getElementById("show_book_info").dataset
+				.addToWishlistRoute
+				? document.getElementById("show_book_info").dataset
+					.addToWishlistRoute
+				: "",
+			removeFromWishlistRoute: document.getElementById("show_book_info").dataset
+				.removeFromWishlistRoute
+				? document.getElementById("show_book_info").dataset
+					.removeFromWishlistRoute
+				: "",
+			putBackBookRoute: document.getElementById("show_book_info").dataset
+				.putBackBookRoute
+				? document.getElementById("show_book_info").dataset.putBackBookRoute
+				: "",
+			isRead: document.getElementById("show_book_info").dataset.isRead
+				? true
+				: false,
+			isBorrowed: document.getElementById("show_book_info").dataset.isBorrowed
+				? true
+				: false,
+			isBookAMonth: document.getElementById("show_book_info").dataset
+				.isBookAMonth
+				? true
+				: false,
+			isWishlisted: document.getElementById("show_book_info").dataset
+				.isWishlisted
+				? true
+				: false,
+			readers: document.getElementById("show_book_info").dataset.readers
+				? document.getElementById("show_book_info").dataset.readers
+				: [],
+			borrowers: document.getElementById("show_book_info").dataset.borrowers
+				? document.getElementById("show_book_info").dataset.borrowers
+				: []
+		},
+		methods: {
+			markBook: async function (read) {
+				let response = await axios.post(this.route, {
+					book_id: this.book.id,
+					is_read: read
+				});
+				this.isRead = read;
+				if (!response.data) {
+					return false;
+				}
+				this.readers = response.data.readers;
+			},
 
             addToBookAMonth: async function(action) {
                 let response = await axios.post(this.bookAMonthStoreRoute);
@@ -971,22 +1003,44 @@ if (document.getElementById("show_book_info")) {
                 }
             },
 
-            removeFromBookAMonth: async function(action) {
-                let response = await axios.post(this.bookAMonthDestroyRoute);
-                this.isBookAMonth = false;
-                if (!response.data) {
-                    return false;
-                }
-            },
-            borrowTheBook: async function() {
-                if (this.borrowers.length < this.book.number_of_copies) {
-                    let response = await axios.get(this.borrowBookRoute);
-                    this.isBorrowed = true;
-                    this.borrowers = response.data.borrowers;
-                } else {
-                    alert("Sorry ! No more copies of this book available right now.");
-                }
-            },
+			removeFromBookAMonth: async function (action) {
+				let response = await axios.post(this.bookAMonthDestroyRoute);
+				this.isBookAMonth = false;
+				if (!response.data) {
+					return false;
+				}
+			},
+
+			addToWishlist: async function (action) {
+				let response = await axios.post(this.addToWishlistRoute, {
+					book_id: this.book.id
+				});
+				this.isWishlisted = true;
+				if (!response.data) {
+					return false;
+				}
+			},
+
+			removeFromWishlist: async function (action) {
+				let response = await axios.post(this.removeFromWishlistRoute, {
+					book_id: this.book.id
+				});
+				this.isWishlisted = false;
+				if (!response.data) {
+					return false;
+				}
+			},
+
+			borrowTheBook: async function() {
+				if (this.borrowers.length < this.book.number_of_copies) {
+					let response = await axios.get(this.borrowBookRoute);
+					this.isBorrowed = true;
+					this.borrowers = response.data.borrowers;
+				}
+				else {
+					alert("Sorry ! No more copies of this book available right now.");
+				}
+			},
 
             putTheBookBackToLibrary: async function() {
                 let response = await axios.get(this.putBackBookRoute);
@@ -1644,9 +1698,74 @@ $(function() {
     });
 });
 
-$("#job_start_date").on("change", function() {
-    let startDate = $("#job_start_date").val();
-    $("#job_end_date").attr("min", startDate);
+$(".status").on("change", function () {
+	$("#spinner").removeClass("d-none");
+	if (this.checked) {
+		$.ajax({
+			url: "completed/change-status/" + this.dataset.id,
+			method: "GET",
+			success: function (res) {
+				location.reload(true);
+			},
+			error: function (err) {
+				alert("there is some problem");
+			},
+			complete: function (data) {
+				$("#spinner").addClass("d-none");
+			}
+		});
+	}
+});
+
+$(".pending").on("change", function () {
+	$("#completeSpinner").removeClass("d-none");
+	$.ajax({
+		url: "pending/" + this.dataset.id,
+		method: "GET",
+		success: function (res) {
+			location.reload(true);
+		},
+		error: function (err) {
+			alert("there is some problem");
+		},
+		complete: function (data) {
+			$("#completeSpinner").addClass("d-none");
+		}
+	});
+});
+
+$(document).ready(function(){
+	$("#requisitionModal").on("hidden.bs.modal", function () {
+		$(this).find("form").trigger("reset");
+	});
+	$("#requisitionForm").on("submit",function(e){
+		e.preventDefault();
+		$("#formSpinner").removeClass("d-none");
+		let form =$("#requisitionForm");
+
+	 	$.ajax({
+			type: form.attr("method"),
+			url: form.attr("action"),
+			data: form.serialize(),
+			success:function (response) {
+				$("#requisitionModal").modal("hide");
+				$("#successMessage").toggleClass("d-none");
+				$("#successMessage").fadeToggle(4000);
+			},
+			error: function(response){
+				alert("there is some problem");
+			},
+			complete: function(response){
+				$("#formSpinner").addClass("d-none");
+			}
+		});
+	});
+});
+
+
+$("#job_start_date").on("change", function () {
+	let startDate = $("#job_start_date").val();
+	$("#job_end_date").attr("min", startDate);
 });
 
 $("#job_end_date").on("change", function() {
@@ -1674,10 +1793,22 @@ $(document).on("focusin", function(e) {
     }
 });
 
+$(document).ready(function(){
+	$("#holdSendMailToApplicant").on("click", function(event) {
+		var $optionContainer = $("#optionContainer");
+		if ($(this).is(":checked")) {
+			$optionContainer.removeClass("d-none");
+		}
+		else{
+			$optionContainer.addClass("d-none");
+		}
+	});
+});
+
 $("#editform").on("submit", function(e) {
-    e.preventDefault();
-    let form = $("#editform");
-    let button = $("#editBT");
+	e.preventDefault();
+	let form = $("#editform");
+	let button = $("#editBT");
 
     $.ajax({
         url: form.attr("action"),
@@ -1788,4 +1919,37 @@ window.myBar = new Chart(ctx, {
     type: 'bar',
     data: data,
     options: barChartOptions
+});
+
+$(".opt").on("click", function() {
+	let formData = {
+		"setting_key_subject":  $(this).data("key-subject"),
+		"setting_key_body": $(this).data("key-body"),
+		"applicant_name": $("#applicantName").text(),
+		"job_title": $("#jobTitle").text(),
+	};
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option1subject").val(response.subject);
+			tinymce.get("option1body").setContent(response.body, {format: "html"});
+		},
+	});
+
+	var originUrl = window.location.origin;
+	$.ajax({
+		url: originUrl + "/hr/recruitment/onHoldEmail",
+		type: "GET",
+		data: formData,
+		contentType: "application/json",
+		success: function(response) {
+			$("#option2subject").val(response.subject);
+			tinymce.get("option2body").setContent(response.body, {format: "html"});
+		},
+	});
 });
