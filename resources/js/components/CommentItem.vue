@@ -34,8 +34,7 @@
 </template>
 
 <script>
-    import 
-    { comment } from 'vue' ;
+    import {comment} from 'vue' ;
 export default {
 	props: ["comment", "editable", "bookIndex"],
 	data() {
